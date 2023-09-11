@@ -5,7 +5,9 @@ import dataclasses
 from typing import TYPE_CHECKING
 
 from randovania.game_description.db.dock_node import DockNode
-from randovania.gui.generated.preset_teleporters_prime1_ui import Ui_PresetTeleportersPrime1
+from randovania.gui.generated.preset_teleporters_prime1_ui import (
+    Ui_PresetTeleportersPrime1,
+)
 from randovania.gui.lib import signal_handling
 from randovania.gui.lib.node_list_helper import NodeListHelper
 from randovania.gui.preset_settings.preset_teleporter_tab import PresetTeleporterTab
@@ -31,26 +33,33 @@ if TYPE_CHECKING:
 
 class PresetTeleportersPrime1(PresetTeleporterTab, Ui_PresetTeleportersPrime1, NodeListHelper):
     teleporter_mode_to_description = {
-        TeleporterShuffleMode.VANILLA:
-            "All elevators are connected to where they do in the original game.",
-        TeleporterShuffleMode.TWO_WAY_RANDOMIZED:
+        TeleporterShuffleMode.VANILLA: "All elevators are connected to where they do in the original game.",
+        TeleporterShuffleMode.TWO_WAY_RANDOMIZED: (
             "After taking an elevator, the elevator in the room you are in will bring you back to where you were. "
             "An elevator will never connect to another in the same region. "
-            "This is the only setting that guarantees all regions are reachable.",
-        TeleporterShuffleMode.TWO_WAY_UNCHECKED:
-            "After taking an elevator, the elevator in the room you are in will bring you back to where you were.",
-        TeleporterShuffleMode.ONE_WAY_TELEPORTER:
+            "This is the only setting that guarantees all regions are reachable."
+        ),
+        TeleporterShuffleMode.TWO_WAY_UNCHECKED: (
+            "After taking an elevator, the elevator in the room you are in will bring you back to where you were."
+        ),
+        TeleporterShuffleMode.ONE_WAY_TELEPORTER: (
             "All elevators bring you to an elevator room, but going backwards can go somewhere else. "
-            "All rooms are used as a destination exactly once, causing all elevators to be separated into loops.",
-        TeleporterShuffleMode.ONE_WAY_TELEPORTER_REPLACEMENT:
+            "All rooms are used as a destination exactly once, causing all elevators to be separated into loops."
+        ),
+        TeleporterShuffleMode.ONE_WAY_TELEPORTER_REPLACEMENT: (
             "All elevators bring you to an elevator room, but going backwards can go somewhere else. "
             "Rooms can be used as a destination multiple times, causing elevators which you can possibly"
-             " not come back to.",
-        TeleporterShuffleMode.ONE_WAY_ANYTHING:
-            "Elevators are connected to any room from the game.",
+            " not come back to."
+        ),
+        TeleporterShuffleMode.ONE_WAY_ANYTHING: "Elevators are connected to any room from the game.",
     }
 
-    def __init__(self, editor: PresetEditor, game_description: GameDescription, window_manager: WindowManager):
+    def __init__(
+        self,
+        editor: PresetEditor,
+        game_description: GameDescription,
+        window_manager: WindowManager,
+    ):
         super().__init__(editor, game_description, window_manager)
         signal_handling.on_checked(self.skip_final_bosses_check, self._update_require_final_bosses)
 
@@ -67,15 +76,13 @@ class PresetTeleportersPrime1(PresetTeleporterTab, Ui_PresetTeleportersPrime1, N
 
         locations = TeleporterList.nodes_list(self.game_enum)
         node_identifiers: dict[NodeIdentifier, Area] = {
-            loc: region_list.area_by_area_location(loc.area_location)
-            for loc in locations
+            loc: region_list.area_by_area_location(loc.area_location) for loc in locations
         }
         checks: dict[NodeIdentifier, QtWidgets.QCheckBox] = {
             loc: self._create_check_for_source_teleporters(loc) for loc in locations
         }
-        self._teleporters_source_for_location= copy.copy(checks)
+        self._teleporters_source_for_location = copy.copy(checks)
         self._teleporters_source_destination = {}
-
 
         for location in sorted(locations):
             if location not in checks:
@@ -86,7 +93,8 @@ class PresetTeleportersPrime1(PresetTeleporterTab, Ui_PresetTeleportersPrime1, N
             other_locations = [
                 node.default_connection
                 for node in node_identifiers[location].nodes
-                if isinstance(node, DockNode) and node.dock_type in self.teleporter_types
+                if isinstance(node, DockNode)
+                and node.dock_type in self.teleporter_types
                 and region_list.identifier_for_node(node) == location
             ]
             assert len(other_locations) == 1
@@ -120,17 +128,21 @@ class PresetTeleportersPrime1(PresetTeleporterTab, Ui_PresetTeleportersPrime1, N
 
         descriptions = [
             "<p>Controls where each elevator connects to.</p>",
-            f' {self.teleporter_mode_to_description[config_teleporters.mode]}</p>',
+            f" {self.teleporter_mode_to_description[config_teleporters.mode]}</p>",
         ]
         self.teleporters_description_label.setText("".join(descriptions))
 
         signal_handling.set_combo_with_value(self.teleporters_combo, config_teleporters.mode)
-        can_shuffle_source = config_teleporters.mode not in (TeleporterShuffleMode.VANILLA,
-                                                           TeleporterShuffleMode.ECHOES_SHUFFLED)
-        can_shuffle_target = config_teleporters.mode not in (TeleporterShuffleMode.VANILLA,
-                                                           TeleporterShuffleMode.ECHOES_SHUFFLED,
-                                                           TeleporterShuffleMode.TWO_WAY_RANDOMIZED,
-                                                           TeleporterShuffleMode.TWO_WAY_UNCHECKED)
+        can_shuffle_source = config_teleporters.mode not in (
+            TeleporterShuffleMode.VANILLA,
+            TeleporterShuffleMode.ECHOES_SHUFFLED,
+        )
+        can_shuffle_target = config_teleporters.mode not in (
+            TeleporterShuffleMode.VANILLA,
+            TeleporterShuffleMode.ECHOES_SHUFFLED,
+            TeleporterShuffleMode.TWO_WAY_RANDOMIZED,
+            TeleporterShuffleMode.TWO_WAY_UNCHECKED,
+        )
         static_nodes = set(config_teleporters.static_teleporters.keys())
 
         for origin, destination in self._teleporters_source_destination.items():
@@ -146,8 +158,9 @@ class PresetTeleportersPrime1(PresetTeleporterTab, Ui_PresetTeleportersPrime1, N
             origin_check.setEnabled(can_shuffle_source and not is_locked)
             origin_check.setChecked(origin not in config_teleporters.excluded_teleporters.locations and not is_locked)
 
-            origin_check.setToolTip("The destination for this teleporter is locked due to other settings."
-                                    if is_locked else "")
+            origin_check.setToolTip(
+                "The destination for this teleporter is locked due to other settings." if is_locked else ""
+            )
 
             if dest_check is None:
                 if not can_shuffle_target:
@@ -156,8 +169,10 @@ class PresetTeleportersPrime1(PresetTeleporterTab, Ui_PresetTeleportersPrime1, N
 
             dest_check.setEnabled(can_shuffle_target and destination not in static_nodes)
             if can_shuffle_target:
-                dest_check.setChecked(destination not in config_teleporters.excluded_teleporters.locations
-                                      and destination not in static_nodes)
+                dest_check.setChecked(
+                    destination not in config_teleporters.excluded_teleporters.locations
+                    and destination not in static_nodes
+                )
             else:
                 dest_check.setChecked(origin_check.isChecked())
 
