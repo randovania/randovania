@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 from unittest.mock import AsyncMock, MagicMock, call
 
 import pytest
@@ -73,7 +74,13 @@ async def test_new_inventory_received(connector: DreadRemoteConnector):
     inventory_updated.assert_not_called()
 
     assert connector.inventory_index is None
-    connector.new_inventory_received('{"index": 69, "inventory": [0,1,0]}')
+    items = [item for item in connector.game.resource_database.item if "item_id" in item.extra]
+    inventory = [0] * len(items)
+    inventory[1] = 1
+    connector.new_inventory_received(json.dumps({
+        "index": 69,
+        "inventory": inventory
+    }))
     assert connector.inventory_index == 69
 
     # check wide beam
