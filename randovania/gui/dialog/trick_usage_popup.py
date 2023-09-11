@@ -27,9 +27,10 @@ if TYPE_CHECKING:
     from randovania.layout.preset import Preset
 
 
-def _area_requirement_sets(area: Area,
-                           database: ResourceDatabase,
-                           ) -> Iterator[RequirementSet]:
+def _area_requirement_sets(
+    area: Area,
+    database: ResourceDatabase,
+) -> Iterator[RequirementSet]:
     """
     Checks the area RequirementSet in the given Area uses the given trick at the given level.
     :param area:
@@ -51,9 +52,7 @@ def _check_used_tricks(area: Area, trick_resources: ResourceCollection, database
     for s in _area_requirement_sets(area, database):
         for alternative in s.alternatives:
             tricks: dict[TrickResourceInfo, ResourceRequirement] = {
-                req.resource: req
-                for req in alternative.values()
-                if req.resource.resource_type == ResourceType.TRICK
+                req.resource: req for req in alternative.values() if req.resource.resource_type == ResourceType.TRICK
             }
             if tricks and all(trick_resources[trick] >= tricks[trick].amount for trick in tricks):
                 line = [
@@ -66,12 +65,12 @@ def _check_used_tricks(area: Area, trick_resources: ResourceCollection, database
 
 
 class TrickUsagePopup(QtWidgets.QDialog, Ui_TrickUsagePopup):
-    def __init__(self,
-                 parent: QWidget,
-                 window_manager: WindowManager,
-                 preset: Preset,
-                 ):
-
+    def __init__(
+        self,
+        parent: QWidget,
+        window_manager: WindowManager,
+        preset: Preset,
+    ):
         super().__init__(parent)
         self.setupUi(self)
         set_default_window_icon(self)
@@ -84,18 +83,18 @@ class TrickUsagePopup(QtWidgets.QDialog, Ui_TrickUsagePopup):
         if trick_level.minimal_logic:
             trick_usage_description = "Minimal Logic"
         else:
-            trick_usage_description = ", ".join(sorted(
-                f"{trick.long_name} ({trick_level.level_for_trick(trick).long_name})"
-                for trick in database.trick
-                if trick_level.has_specific_level_for_trick(trick)
-            ))
+            trick_usage_description = ", ".join(
+                sorted(
+                    f"{trick.long_name} ({trick_level.level_for_trick(trick).long_name})"
+                    for trick in database.trick
+                    if trick_level.has_specific_level_for_trick(trick)
+                )
+            )
 
         # setup
         self.area_list_label.linkActivated.connect(self._on_click_link_to_data_editor)
         self.setWindowTitle(f"{self.windowTitle()} for preset {preset.name}")
-        self.title_label.setText(self.title_label.text().format(
-            trick_levels=trick_usage_description
-        ))
+        self.title_label.setText(self.title_label.text().format(trick_levels=trick_usage_description))
 
         # connect
         self.button_box.accepted.connect(self.button_box_close)
@@ -107,8 +106,7 @@ class TrickUsagePopup(QtWidgets.QDialog, Ui_TrickUsagePopup):
         # Update
         bootstrap = self._game_description.game.generator.bootstrap
         trick_resources = ResourceCollection.from_resource_gain(
-            database,
-            bootstrap.trick_resources_for_configuration(trick_level, database)
+            database, bootstrap.trick_resources_for_configuration(trick_level, database)
         )
 
         lines = []
@@ -119,7 +117,7 @@ class TrickUsagePopup(QtWidgets.QDialog, Ui_TrickUsagePopup):
                 if used_tricks:
                     lines.append(
                         f'<p><a href="data-editor://{region.correct_name(area.in_dark_aether)}/{area.name}">'
-                        f'{region.correct_name(area.in_dark_aether)} - {area.name}</a>'
+                        f"{region.correct_name(area.in_dark_aether)} - {area.name}</a>"
                         f'<br />{"<br />".join(used_tricks)}</p>'
                     )
 

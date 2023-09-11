@@ -25,7 +25,7 @@ class PickupCategory:
             long_name=value["long_name"],
             hint_details=frozen_lib.wrap(value["hint_details"]),
             hinted_as_major=value["hinted_as_major"],
-            is_key=value["is_key"] if "is_key" in value else False
+            is_key=value["is_key"] if "is_key" in value else False,
         )
 
     @property
@@ -54,15 +54,7 @@ class PickupCategory:
 
 
 USELESS_PICKUP_CATEGORY = PickupCategory(
-    name="useless",
-    long_name="Useless",
-    hint_details=("an ", "Energy Transfer Module"),
-    hinted_as_major=False
+    name="useless", long_name="Useless", hint_details=("an ", "Energy Transfer Module"), hinted_as_major=False
 )
 
-GENERIC_KEY_CATEGORY = PickupCategory(
-    name="key",
-    long_name="Key",
-    hint_details=("a ", "key"),
-    hinted_as_major=False
-)
+GENERIC_KEY_CATEGORY = PickupCategory(name="key", long_name="Key", hint_details=("a ", "key"), hinted_as_major=False)

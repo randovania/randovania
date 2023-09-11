@@ -13,10 +13,7 @@ __all__ = ["create_subparsers"]
 
 
 def create_subparsers(sub_parsers):
-    parser: ArgumentParser = sub_parsers.add_parser(
-        "development",
-        help="Actions that helps Randovania development"
-    )
+    parser: ArgumentParser = sub_parsers.add_parser("development", help="Actions that helps Randovania development")
     sub_parsers = parser.add_subparsers(dest="command")
     add_refresh_presets_command(sub_parsers)
     add_new_game_command(sub_parsers)

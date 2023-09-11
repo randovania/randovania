@@ -18,9 +18,11 @@ async def load_options_from_disk(options: Options) -> bool:
             None,
             QtWidgets.QMessageBox.Icon.Critical,
             "Error loading previous settings",
-            ("The following error occurred while restoring your settings:\n"
-             f"{decode_failed}\n\n"
-             "Do you want to reset this part of your settings?"),
+            (
+                "The following error occurred while restoring your settings:\n"
+                f"{decode_failed}\n\n"
+                "Do you want to reset this part of your settings?"
+            ),
             QtWidgets.QMessageBox.StandardButton.Yes | QtWidgets.QMessageBox.StandardButton.No,
             QtWidgets.QMessageBox.StandardButton.No,
         )

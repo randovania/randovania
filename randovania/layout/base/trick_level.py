@@ -39,11 +39,14 @@ class LayoutTrickLevel(BitPackEnum, Enum):
 
 
 _TRICK_LEVEL_ORDER: list[LayoutTrickLevel] = list(LayoutTrickLevel)
-enum_lib.add_long_name(LayoutTrickLevel, {
-    LayoutTrickLevel.DISABLED: "Disabled",
-    LayoutTrickLevel.BEGINNER: "Beginner",
-    LayoutTrickLevel.INTERMEDIATE: "Intermediate",
-    LayoutTrickLevel.ADVANCED: "Advanced",
-    LayoutTrickLevel.EXPERT: "Expert",
-    LayoutTrickLevel.HYPERMODE: "Hypermode",
-})
+enum_lib.add_long_name(
+    LayoutTrickLevel,
+    {
+        LayoutTrickLevel.DISABLED: "Disabled",
+        LayoutTrickLevel.BEGINNER: "Beginner",
+        LayoutTrickLevel.INTERMEDIATE: "Intermediate",
+        LayoutTrickLevel.ADVANCED: "Advanced",
+        LayoutTrickLevel.EXPERT: "Expert",
+        LayoutTrickLevel.HYPERMODE: "Hypermode",
+    },
+)

@@ -45,8 +45,9 @@ class EchoesHintDistributor(HintDistributor):
             g(115, HintLocationPrecision.GUARDIAN),  # Annihilator Beam (Quadraxis)
         ]
 
-    async def assign_other_hints(self, patches: GamePatches, identifiers: list[NodeIdentifier],
-                                 prefill: PreFillParams) -> GamePatches:
+    async def assign_other_hints(
+        self, patches: GamePatches, identifiers: list[NodeIdentifier], prefill: PreFillParams
+    ) -> GamePatches:
         all_hint_identifiers = [identifier for identifier in identifiers if identifier not in patches.hints]
         prefill.rng.shuffle(all_hint_identifiers)
 
@@ -54,8 +55,9 @@ class EchoesHintDistributor(HintDistributor):
         temple_hints = list(enum_lib.iterate_enum(HintDarkTemple))
         while all_hint_identifiers and temple_hints:
             identifier = all_hint_identifiers.pop()
-            patches = patches.assign_hint(identifier, Hint(HintType.RED_TEMPLE_KEY_SET, None,
-                                                           dark_temple=temple_hints.pop(0)))
+            patches = patches.assign_hint(
+                identifier, Hint(HintType.RED_TEMPLE_KEY_SET, None, dark_temple=temple_hints.pop(0))
+            )
             identifiers.remove(identifier)
 
         return patches
@@ -68,7 +70,6 @@ class EchoesHintDistributor(HintDistributor):
             (HintLocationPrecision.DETAILED, HintItemPrecision.DETAILED, True): 2,
             (HintLocationPrecision.DETAILED, HintItemPrecision.PRECISE_CATEGORY, True): 2,
             (HintLocationPrecision.DETAILED, HintItemPrecision.GENERAL_CATEGORY, True): 1,
-
             (HintLocationPrecision.REGION_ONLY, HintItemPrecision.DETAILED, False): 2,
             (HintLocationPrecision.REGION_ONLY, HintItemPrecision.PRECISE_CATEGORY, True): 1,
         }
@@ -86,8 +87,9 @@ class EchoesHintDistributor(HintDistributor):
             self._relative(HintLocationPrecision.RELATIVE_TO_INDEX, True, HintItemPrecision.DETAILED, 4),
         ]
 
-    async def assign_precision_to_hints(self, patches: GamePatches, rng: Random,
-                                        player_pool: PlayerPool, player_state: PlayerState) -> GamePatches:
+    async def assign_precision_to_hints(
+        self, patches: GamePatches, rng: Random, player_pool: PlayerPool, player_state: PlayerState
+    ) -> GamePatches:
         assert isinstance(player_pool.configuration, EchoesConfiguration)
         if player_pool.configuration.hints.item_hints:
             return self.add_hints_precision(player_state, patches, rng)

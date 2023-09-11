@@ -8,6 +8,7 @@ from randovania.layout.preset_describer import GamePresetDescriber
 
 def _options():
     from randovania.interface_common.options import PerGameOptions
+
     return PerGameOptions
 
 
@@ -38,11 +39,13 @@ def _generator() -> game.GameGenerator:
 
 def _patch_data_factory():
     from randovania.games.samus_returns.exporter.patch_data_factory import MSRPatchDataFactory
+
     return MSRPatchDataFactory
 
 
 def _exporter():
     from randovania.games.samus_returns.exporter.game_exporter import MSRGameExporter
+
     return MSRGameExporter()
 
 
@@ -50,28 +53,18 @@ game_data: game.GameData = game.GameData(
     short_name="MSR",
     long_name="Metroid: Samus Returns",
     development_state=game.DevelopmentState.EXPERIMENTAL,
-
     presets=[
-        {
-            "path": "starter_preset.rdvpreset"
-        },
+        {"path": "starter_preset.rdvpreset"},
     ],
-
     faq=[],
-
     layout=game.GameLayout(
         configuration=layout.MSRConfiguration,
         cosmetic_patches=layout.MSRCosmeticPatches,
         preset_describer=GamePresetDescriber(),
     ),
-
     options=_options,
-
     gui=_gui,
-
     generator=_generator,
-
     patch_data_factory=_patch_data_factory,
-
     exporter=_exporter,
 )

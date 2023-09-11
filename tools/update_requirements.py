@@ -25,12 +25,15 @@ stdout = subprocess.PIPE if is_quiet else None
 # Create requirements-setuptools.in
 pyproject = tomllib.loads(parent.joinpath("pyproject.toml").read_text())
 parent.joinpath("tools/requirements/requirements-setuptools.in").write_text(
-    "\n".join(pyproject["build-system"]["requires"] + [
-        "build",
-        "pyinstaller",
-        "pyinstaller-hooks-contrib",
-        "-c ../../requirements.txt",
-    ])
+    "\n".join(
+        pyproject["build-system"]["requires"]
+        + [
+            "build",
+            "pyinstaller",
+            "pyinstaller-hooks-contrib",
+            "-c ../../requirements.txt",
+        ]
+    )
 )
 
 
@@ -41,7 +44,8 @@ def print_arguments(args):
         "piptools",
         "compile",
         "--allow-unsafe",
-        "--resolver", "backtracking",
+        "--resolver",
+        "backtracking",
         *args,
     ]
     print("Running {}".format(" ".join(args)))
@@ -49,14 +53,16 @@ def print_arguments(args):
 
 
 subprocess.run(
-    print_arguments([
-        "--extra=gui,server,test,typing",
-        "--strip-extras",
-        "--output-file",
-        "requirements.txt",
-        *upgrade_arg,
-        "setup.py",
-    ]),
+    print_arguments(
+        [
+            "--extra=gui,server,test,typing",
+            "--strip-extras",
+            "--output-file",
+            "requirements.txt",
+            *upgrade_arg,
+            "setup.py",
+        ]
+    ),
     env=custom_env,
     check=True,
     cwd=parent,
@@ -65,12 +71,14 @@ subprocess.run(
 )
 
 subprocess.run(
-    print_arguments([
-        "--output-file",
-        "requirements-setuptools.txt",
-        *upgrade_arg,
-        "tools/requirements/requirements-setuptools.in",
-    ]),
+    print_arguments(
+        [
+            "--output-file",
+            "requirements-setuptools.txt",
+            *upgrade_arg,
+            "tools/requirements/requirements-setuptools.in",
+        ]
+    ),
     env=custom_env,
     check=True,
     cwd=parent,
@@ -79,12 +87,14 @@ subprocess.run(
 )
 
 subprocess.run(
-    print_arguments([
-        "--output-file",
-        "requirements-lint.txt",
-        *upgrade_arg,
-        "tools/requirements/requirements-lint.in",
-    ]),
+    print_arguments(
+        [
+            "--output-file",
+            "requirements-lint.txt",
+            *upgrade_arg,
+            "tools/requirements/requirements-lint.in",
+        ]
+    ),
     env=custom_env,
     check=True,
     cwd=parent,

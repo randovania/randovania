@@ -27,6 +27,6 @@ def test_cs_cosmetic_patches():
 
 
 def test_cs_preset_describer():
-    hash_bytes = b'\x00\x00\x00\x00\x00'
+    hash_bytes = b"\x00\x00\x00\x00\x00"
     assert get_ingame_hash(hash_bytes) == [1, 1, 1, 1, 1]
     assert get_ingame_hash_str(hash_bytes) != ""

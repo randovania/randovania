@@ -30,7 +30,7 @@ def test_get_preset_at_version(test_files_dir):
     # Run
     result = preset_manager._get_preset_at_version(
         test_files_dir.root.parents[1],
-        b'1f2a55862ce12938dfa806d2dbd35b346a0164d3',
+        b"1f2a55862ce12938dfa806d2dbd35b346a0164d3",
         preset_path,
     )
 
@@ -47,13 +47,15 @@ def test_history_for_file(tmp_path, test_files_dir):
     repository = tmp_path.joinpath("history_for_file_test")
 
     # Run
-    result = list(preset_manager._history_for_file(
-        repository,
-        repository.joinpath("presets/fewest_changes_v1.rdvpreset"),
-    ))
+    result = list(
+        preset_manager._history_for_file(
+            repository,
+            repository.joinpath("presets/fewest_changes_v1.rdvpreset"),
+        )
+    )
 
     # Assert
     assert result == [
-        (datetime.datetime(2023, 5, 22, 15, 47, 17), b'eeed98b72a1738c72ed74eee2cbf33af234d3b07'),
-        (datetime.datetime(2023, 5, 22, 15, 46, 49), b'37bd0129c1a5f97d71178b7d606dbcb6ff6cd211'),
+        (datetime.datetime(2023, 5, 22, 15, 47, 17), b"eeed98b72a1738c72ed74eee2cbf33af234d3b07"),
+        (datetime.datetime(2023, 5, 22, 15, 46, 49), b"37bd0129c1a5f97d71178b7d606dbcb6ff6cd211"),
     ]

@@ -93,9 +93,7 @@ class PresetDockRando(PresetTab, Ui_PresetDockRando):
                 check.setObjectName(f"{name}_check {dock_type.short_name} {weakness.name}")
                 check.setText(weakness.long_name)
                 check.setEnabled(enabled)
-                signal_handling.on_checked(check, self._persist_weakness_setting(
-                    name, dock_type, weakness
-                ))
+                signal_handling.on_checked(check, self._persist_weakness_setting(name, dock_type, weakness))
                 layout.addWidget(check)
                 self.type_checks[dock_type][weakness][name] = check
 
@@ -107,13 +105,18 @@ class PresetDockRando(PresetTab, Ui_PresetDockRando):
             return len(weakness.long_name)
 
         change_from = {weakness: True for weakness in sorted(type_params.change_from, key=keyfunc)}
-        change_to = {weakness: weakness != type_params.unlocked for weakness in
-                     sorted(type_params.change_to, key=keyfunc)}
+        change_to = {
+            weakness: weakness != type_params.unlocked for weakness in sorted(type_params.change_to, key=keyfunc)
+        }
         add_group("can_change_from", "Doors to Change", change_from)
         add_group("can_change_to", "Change Doors To", change_to)
 
-    def _persist_weakness_setting(self, field: str, dock_type: DockType, dock_weakness: DockWeakness,
-                                  ) -> Callable[[bool], None]:
+    def _persist_weakness_setting(
+        self,
+        field: str,
+        dock_type: DockType,
+        dock_weakness: DockWeakness,
+    ) -> Callable[[bool], None]:
         def _persist(value: bool):
             with self._editor as editor:
                 state = editor.dock_rando_configuration.types_state[dock_type]
@@ -129,7 +132,4 @@ class PresetDockRando(PresetTab, Ui_PresetDockRando):
 
     def _on_mode_changed(self, value: DockRandoMode):
         with self._editor as editor:
-            editor.dock_rando_configuration = dataclasses.replace(
-                editor.dock_rando_configuration,
-                mode=value
-            )
+            editor.dock_rando_configuration = dataclasses.replace(editor.dock_rando_configuration, mode=value)

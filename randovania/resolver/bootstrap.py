@@ -28,9 +28,11 @@ class EnergyConfig(NamedTuple):
 
 
 class Bootstrap:
-    def trick_resources_for_configuration(self, configuration: TrickLevelConfiguration,
-                                          resource_database: ResourceDatabase,
-                                          ) -> ResourceGain:
+    def trick_resources_for_configuration(
+        self,
+        configuration: TrickLevelConfiguration,
+        resource_database: ResourceDatabase,
+    ) -> ResourceGain:
         """
         :param configuration:
         :param resource_database:
@@ -49,15 +51,19 @@ class Bootstrap:
 
         return static_resources
 
-    def event_resources_for_configuration(self, configuration: BaseConfiguration,
-                                          resource_database: ResourceDatabase,
-                                          ) -> ResourceGain:
+    def event_resources_for_configuration(
+        self,
+        configuration: BaseConfiguration,
+        resource_database: ResourceDatabase,
+    ) -> ResourceGain:
         yield from []
 
-    def _add_minimal_logic_initial_resources(self, resources: ResourceCollection,
-                                             game: GameDescription,
-                                             standard_pickups: StandardPickupConfiguration,
-                                             ) -> None:
+    def _add_minimal_logic_initial_resources(
+        self,
+        resources: ResourceCollection,
+        game: GameDescription,
+        standard_pickups: StandardPickupConfiguration,
+    ) -> None:
         resource_database = game.resource_database
 
         if game.minimal_logic is None:
@@ -74,23 +80,24 @@ class Bootstrap:
         custom_item_count = game.minimal_logic.custom_item_amount
         events_to_skip = {it.name for it in game.minimal_logic.events_to_exclude}
 
-        resources.add_resource_gain([
-            (event, 1)
-            for event in resource_database.event
-            if event.short_name not in events_to_skip
-        ])
+        resources.add_resource_gain(
+            [(event, 1) for event in resource_database.event if event.short_name not in events_to_skip]
+        )
 
-        resources.add_resource_gain([
-            (item, custom_item_count.get(item.short_name, 1))
-            for item in resource_database.item
-            if item.short_name not in items_to_skip
-        ])
+        resources.add_resource_gain(
+            [
+                (item, custom_item_count.get(item.short_name, 1))
+                for item in resource_database.item
+                if item.short_name not in items_to_skip
+            ]
+        )
 
     def energy_config(self, configuration: BaseConfiguration) -> EnergyConfig:
         return EnergyConfig(99, 100)
 
-    def calculate_starting_state(self, game: GameDescription, patches: GamePatches,
-                                 configuration: BaseConfiguration) -> State:
+    def calculate_starting_state(
+        self, game: GameDescription, patches: GamePatches, configuration: BaseConfiguration
+    ) -> State:
         starting_node = game.region_list.node_by_identifier(patches.starting_location)
 
         initial_resources = patches.starting_resources()
@@ -100,10 +107,14 @@ class Bootstrap:
         if starting_node.is_resource_node:
             assert isinstance(starting_node, ResourceNode)
             initial_resources.add_resource_gain(
-                starting_node.resource_gain_on_collect(NodeContext(
-                    patches, initial_resources,
-                    game.resource_database, game.region_list,
-                )),
+                starting_node.resource_gain_on_collect(
+                    NodeContext(
+                        patches,
+                        initial_resources,
+                        game.resource_database,
+                        game.region_list,
+                    )
+                ),
             )
 
         initial_game_state = game.initial_states.get("Default")
@@ -117,25 +128,19 @@ class Bootstrap:
             starting_node,
             patches,
             None,
-            StateGameData(
-                game.resource_database,
-                game.region_list,
-                energy_per_tank,
-                starting_energy
-            )
+            StateGameData(game.resource_database, game.region_list, energy_per_tank, starting_energy),
         )
 
         # Being present with value 0 is troublesome since this dict is used for a simplify_requirements later on
-        keys_to_remove = [resource
-                          for resource, quantity in initial_resources.as_resource_gain()
-                          if quantity == 0]
+        keys_to_remove = [resource for resource, quantity in initial_resources.as_resource_gain() if quantity == 0]
         for resource in keys_to_remove:
             initial_resources.remove_resource(resource)
 
         return starting_state
 
-    def version_resources_for_game(self, configuration: BaseConfiguration,
-                                   resource_database: ResourceDatabase) -> ResourceGain:
+    def version_resources_for_game(
+        self, configuration: BaseConfiguration, resource_database: ResourceDatabase
+    ) -> ResourceGain:
         """
         Determines which Version resources should be enabled, according to the configuration.
         Override as needed.
@@ -144,16 +149,18 @@ class Bootstrap:
         for resource in resource_database.version:
             yield resource, 1 if resource.long_name == "NTSC" else 0
 
-    def _get_enabled_misc_resources(self, configuration: BaseConfiguration, resource_database: ResourceDatabase) -> set[
-        str]:
+    def _get_enabled_misc_resources(
+        self, configuration: BaseConfiguration, resource_database: ResourceDatabase
+    ) -> set[str]:
         """
         Returns a set of strings corresponding to Misc resource short names which should be enabled.
         Override as needed.
         """
         return set()
 
-    def misc_resources_for_configuration(self, configuration: BaseConfiguration,
-                                         resource_database: ResourceDatabase) -> ResourceGain:
+    def misc_resources_for_configuration(
+        self, configuration: BaseConfiguration, resource_database: ResourceDatabase
+    ) -> ResourceGain:
         """
         Determines which Misc resources should be enabled, according to the configuration.
         """
@@ -169,11 +176,12 @@ class Bootstrap:
         """
         return db
 
-    def logic_bootstrap(self,
-                        configuration: BaseConfiguration,
-                        game: GameDescription,
-                        patches: GamePatches,
-                        ) -> tuple[GameDescription, State]:
+    def logic_bootstrap(
+        self,
+        configuration: BaseConfiguration,
+        game: GameDescription,
+        patches: GamePatches,
+    ) -> tuple[GameDescription, State]:
         """
         Core code for starting a new Logic/State.
         :param configuration:
@@ -188,9 +196,9 @@ class Bootstrap:
         starting_state = self.calculate_starting_state(game, patches, configuration)
 
         if configuration.trick_level.minimal_logic:
-            self._add_minimal_logic_initial_resources(starting_state.resources,
-                                                      game,
-                                                      configuration.standard_pickup_configuration)
+            self._add_minimal_logic_initial_resources(
+                starting_state.resources, game, configuration.standard_pickup_configuration
+            )
 
         static_resources = ResourceCollection.with_database(game.resource_database)
         static_resources.add_resource_gain(
@@ -199,12 +207,8 @@ class Bootstrap:
         static_resources.add_resource_gain(
             self.event_resources_for_configuration(configuration, game.resource_database)
         )
-        static_resources.add_resource_gain(
-            self.version_resources_for_game(configuration, game.resource_database)
-        )
-        static_resources.add_resource_gain(
-            self.misc_resources_for_configuration(configuration, game.resource_database)
-        )
+        static_resources.add_resource_gain(self.version_resources_for_game(configuration, game.resource_database))
+        static_resources.add_resource_gain(self.misc_resources_for_configuration(configuration, game.resource_database))
 
         for resource, quantity in static_resources.as_resource_gain():
             starting_state.resources.set_resource(resource, quantity)
@@ -214,9 +218,7 @@ class Bootstrap:
         return game, starting_state
 
     def assign_pool_results(self, rng: Random, patches: GamePatches, pool_results: PoolResults) -> GamePatches:
-        return patches.assign_own_pickups(
-            pool_results.assignment.items()
-        ).assign_extra_starting_pickups(
+        return patches.assign_own_pickups(pool_results.assignment.items()).assign_extra_starting_pickups(
             pool_results.starting
         )
 

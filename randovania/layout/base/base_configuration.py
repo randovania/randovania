@@ -50,9 +50,13 @@ class BaseConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInitTypeCh
     logical_resource_action: LayoutLogicalResourceAction
     first_progression_must_be_local: bool
     minimum_available_locations_for_hint_placement: int = dataclasses.field(metadata={"min": 0, "max": 99})
-    minimum_location_weight_for_hint_placement: float = dataclasses.field(metadata={
-        "min": 0, "max": 5.0, "precision": 0.1,
-    })
+    minimum_location_weight_for_hint_placement: float = dataclasses.field(
+        metadata={
+            "min": 0,
+            "max": 5.0,
+            "precision": 0.1,
+        }
+    )
     dock_rando: DockRandoConfiguration
     single_set_for_pickups_that_solve: bool
     staggered_multi_pickup_placement: bool

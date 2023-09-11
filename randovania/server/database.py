@@ -38,12 +38,12 @@ if TYPE_CHECKING:
 class MonitoredDb(peewee.SqliteDatabase):
     def execute_sql(self, sql, params=None, commit=peewee.SENTINEL):
         with record_sql_queries(
-                sentry_sdk.Hub.current, self.cursor, sql, params, paramstyle="format", executemany=False
+            sentry_sdk.Hub.current, self.cursor, sql, params, paramstyle="format", executemany=False
         ):
             return super().execute_sql(sql, params, commit)
 
 
-db = MonitoredDb(None, pragmas={'foreign_keys': 1})
+db = MonitoredDb(None, pragmas={"foreign_keys": 1})
 
 
 def is_boolean(field, value: bool):
@@ -115,16 +115,13 @@ class UserAccessToken(BaseModel):
     last_used = peewee.DateTimeField(default=_datetime_now)
 
     class Meta:
-        primary_key = peewee.CompositeKey('user', 'name')
+        primary_key = peewee.CompositeKey("user", "name")
 
 
 @cachetools.cached(cache=cachetools.TTLCache(maxsize=64, ttl=600))
 def _decode_layout_description(layout: bytes, presets: tuple[str, ...]) -> LayoutDescription:
     decoded = json.loads(zlib.decompress(layout).decode("utf-8"))
-    decoded["info"]["presets"] = [
-        VersionedPreset.from_str(preset).as_json
-        for preset in presets
-    ]
+    decoded["info"]["presets"] = [VersionedPreset.from_str(preset).as_json for preset in presets]
     return LayoutDescription.from_json_dict(decoded)
 
 
@@ -132,8 +129,9 @@ class MultiplayerSession(BaseModel):
     id: int
     name: str = peewee.CharField(max_length=MAX_SESSION_NAME_LENGTH)
     password: str | None = peewee.CharField(null=True)
-    visibility: MultiplayerSessionVisibility = EnumField(choices=MultiplayerSessionVisibility,
-                                                         default=MultiplayerSessionVisibility.VISIBLE)
+    visibility: MultiplayerSessionVisibility = EnumField(
+        choices=MultiplayerSessionVisibility, default=MultiplayerSessionVisibility.VISIBLE
+    )
     layout_description_json: bytes | None = peewee.BlobField(null=True)
     game_details_json: str | None = peewee.CharField(null=True)
     creator: User = peewee.ForeignKeyField(User)
@@ -152,10 +150,7 @@ class MultiplayerSession(BaseModel):
         return self.layout_description_json is not None
 
     def _get_layout_description(self, ordered_worlds: list[World]) -> LayoutDescription:
-        return _decode_layout_description(
-            self.layout_description_json,
-            tuple(world.preset for world in ordered_worlds)
-        )
+        return _decode_layout_description(self.layout_description_json, tuple(world.preset for world in ordered_worlds))
 
     @property
     def layout_description(self) -> LayoutDescription | None:
@@ -171,14 +166,14 @@ class MultiplayerSession(BaseModel):
             # This will need a data migration for the server, just to introduce our little header.
             encoded = description.as_json(force_spoiler=True)
             encoded["info"].pop("presets")
-            self.layout_description_json = zlib.compress(
-                json.dumps(encoded, separators=(',', ':')).encode("utf-8")
+            self.layout_description_json = zlib.compress(json.dumps(encoded, separators=(",", ":")).encode("utf-8"))
+            self.game_details_json = json.dumps(
+                GameDetails(
+                    spoiler=description.has_spoiler,
+                    word_hash=description.shareable_word_hash,
+                    seed_hash=description.shareable_hash,
+                ).as_json
             )
-            self.game_details_json = json.dumps(GameDetails(
-                spoiler=description.has_spoiler,
-                word_hash=description.shareable_word_hash,
-                seed_hash=description.shareable_hash,
-            ).as_json)
         else:
             self.layout_description_json = None
             self.game_details_json = None
@@ -210,13 +205,13 @@ class MultiplayerSession(BaseModel):
     def allowed_games(self) -> list[RandovaniaGame]:
         dev_features = self.dev_features or ""
         return [
-            game for game in RandovaniaGame.sorted_all_games()
+            game
+            for game in RandovaniaGame.sorted_all_games()
             if game.data.defaults_available_in_game_sessions or game.value in dev_features
         ]
 
     def get_ordered_worlds(self) -> list[World]:
-        return list(World.select().where(World.session == self
-                                         ).order_by(World.order.asc()))
+        return list(World.select().where(World.session == self).order_by(World.order.asc()))
 
     def describe_actions(self):
         if not self.has_layout_description():
@@ -224,10 +219,7 @@ class MultiplayerSession(BaseModel):
 
         worlds = self.get_ordered_worlds()
         description: LayoutDescription = self._get_layout_description(worlds)
-        world_by_id = {
-            world.get_id(): world
-            for world in worlds
-        }
+        world_by_id = {world.get_id(): world for world in worlds}
 
         def _describe_action(action: WorldAction) -> multiplayer_session.MultiplayerSessionAction:
             provider = world_by_id[action.provider_id]
@@ -248,9 +240,7 @@ class MultiplayerSession(BaseModel):
             self.id,
             [
                 _describe_action(action)
-                for action in WorldAction.select().where(
-                    WorldAction.session == self
-                ).order_by(WorldAction.time.asc())
+                for action in WorldAction.select().where(WorldAction.session == self).order_by(WorldAction.time.asc())
             ],
         )
 
@@ -270,27 +260,31 @@ class MultiplayerSession(BaseModel):
         }
 
         # Fetch the members, with a Join to also fetch the member name
-        members: Iterable[MultiplayerMembership] = MultiplayerMembership.select(
-            MultiplayerMembership.admin,
-            MultiplayerMembership.ready,
-            User.id,
-            User.name,
-        ).join(
-            User
-        ).where(
-            MultiplayerMembership.session == self.id,
+        members: Iterable[MultiplayerMembership] = (
+            MultiplayerMembership.select(
+                MultiplayerMembership.admin,
+                MultiplayerMembership.ready,
+                User.id,
+                User.name,
+            )
+            .join(User)
+            .where(
+                MultiplayerMembership.session == self.id,
+            )
         )
 
         # Fetch all user associations up-front, then split per user
-        associations: Iterable[WorldUserAssociation] = WorldUserAssociation.select(
-            WorldUserAssociation.user,
-            WorldUserAssociation.world,
-            WorldUserAssociation.connection_state,
-            WorldUserAssociation.last_activity,
-        ).join(
-            World
-        ).where(
-            World.session == self.id,
+        associations: Iterable[WorldUserAssociation] = (
+            WorldUserAssociation.select(
+                WorldUserAssociation.user,
+                WorldUserAssociation.world,
+                WorldUserAssociation.connection_state,
+                WorldUserAssociation.last_activity,
+            )
+            .join(World)
+            .where(
+                World.session == self.id,
+            )
         )
 
         association_by_user: dict[int, list[WorldUserAssociation]] = collections.defaultdict(list)
@@ -319,27 +313,22 @@ class MultiplayerSession(BaseModel):
             ],
             worlds=list(worlds.values()),
             game_details=game_details,
-            generation_in_progress=(self.generation_in_progress.id
-                                    if self.generation_in_progress is not None else None),
+            generation_in_progress=(
+                self.generation_in_progress.id if self.generation_in_progress is not None else None
+            ),
             allowed_games=self.allowed_games,
             allow_coop=self.allow_coop,
             allow_everyone_claim_world=self.allow_everyone_claim_world,
         )
 
     def get_audit_log(self) -> MultiplayerSessionAuditLog:
-        audit_log = MultiplayerAuditEntry.select(
-            MultiplayerAuditEntry, User.name
-        ).join(User).where(
-            MultiplayerAuditEntry.session == self
+        audit_log = (
+            MultiplayerAuditEntry.select(MultiplayerAuditEntry, User.name)
+            .join(User)
+            .where(MultiplayerAuditEntry.session == self)
         )
 
-        return MultiplayerSessionAuditLog(
-            session_id=self.id,
-            entries=[
-                entry.as_entry()
-                for entry in audit_log
-            ]
-        )
+        return MultiplayerSessionAuditLog(session_id=self.id, entries=[entry.as_entry() for entry in audit_log])
 
 
 class World(BaseModel):
@@ -369,21 +358,29 @@ class World(BaseModel):
         )
 
     @classmethod
-    def create_for(cls, session: MultiplayerSession, name: str, preset: VersionedPreset, *,
-                   uid: uuid.UUID | None = None, order: int | None = None) -> Self:
+    def create_for(
+        cls,
+        session: MultiplayerSession,
+        name: str,
+        preset: VersionedPreset,
+        *,
+        uid: uuid.UUID | None = None,
+        order: int | None = None,
+    ) -> Self:
         if uid is None:
             uid = uuid.uuid4()
         return cls().create(
             session=session,
             uuid=uid,
             name=name,
-            preset=json.dumps(preset.as_json, separators=(',', ':')),
+            preset=json.dumps(preset.as_json, separators=(",", ":")),
             order=order,
         )
 
 
 class WorldUserAssociation(BaseModel):
     """A given user's association to one given row."""
+
     world: World = peewee.ForeignKeyField(World, backref="associations")
     world_id: int
     user: User = peewee.ForeignKeyField(User)
@@ -404,10 +401,15 @@ class WorldUserAssociation(BaseModel):
 
     @classmethod
     def get_by_ids(cls, world_uid: uuid.UUID, user_id: int) -> Self:
-        return cls.select().join(World).where(
-            World.uuid == world_uid,
-            WorldUserAssociation.user == user_id,
-        ).get()
+        return (
+            cls.select()
+            .join(World)
+            .where(
+                World.uuid == world_uid,
+                WorldUserAssociation.user == user_id,
+            )
+            .get()
+        )
 
     @classmethod
     def find_all_for_user_in_session(cls, user_id: int, session_id: int) -> Iterable[Self]:
@@ -417,7 +419,7 @@ class WorldUserAssociation(BaseModel):
         )
 
     class Meta:
-        primary_key = peewee.CompositeKey('world', 'user')
+        primary_key = peewee.CompositeKey("world", "user")
         only_save_dirty = True
 
 
@@ -444,7 +446,7 @@ class MultiplayerMembership(BaseModel):
         )
 
     class Meta:
-        primary_key = peewee.CompositeKey('user', 'session')
+        primary_key = peewee.CompositeKey("user", "session")
 
 
 class WorldAction(BaseModel):
@@ -459,7 +461,7 @@ class WorldAction(BaseModel):
     time: str = peewee.DateTimeField(default=_datetime_now)
 
     class Meta:
-        primary_key = peewee.CompositeKey('provider', 'location')
+        primary_key = peewee.CompositeKey("provider", "location")
 
 
 class MultiplayerAuditEntry(BaseModel):
@@ -488,7 +490,13 @@ class PerformedDatabaseMigrations(BaseModel):
 
 
 all_classes = [
-    User, UserAccessToken, MultiplayerSession, World,
-    WorldUserAssociation, MultiplayerMembership,
-    WorldAction, MultiplayerAuditEntry, PerformedDatabaseMigrations,
+    User,
+    UserAccessToken,
+    MultiplayerSession,
+    World,
+    WorldUserAssociation,
+    MultiplayerMembership,
+    WorldAction,
+    MultiplayerAuditEntry,
+    PerformedDatabaseMigrations,
 ]

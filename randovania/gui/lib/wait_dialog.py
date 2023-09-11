@@ -10,10 +10,10 @@ if TYPE_CHECKING:
     import asyncio
 
 
-async def cancellable_wait(parent: QtWidgets.QWidget | None, task: asyncio.Task,
-                           title: str, message: str):
+async def cancellable_wait(parent: QtWidgets.QWidget | None, task: asyncio.Task, title: str, message: str):
     message_box = QtWidgets.QMessageBox(
-        QtWidgets.QMessageBox.NoIcon, title,
+        QtWidgets.QMessageBox.NoIcon,
+        title,
         message,
         QtWidgets.QMessageBox.Cancel,
         parent,

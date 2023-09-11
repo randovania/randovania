@@ -29,13 +29,13 @@ if TYPE_CHECKING:
 
 _ALTERNATIVE_MODELS = {
     PickupModel(RandovaniaGame.METROID_DREAD, "Nothing"): ["itemsphere"],
-
     PickupModel(RandovaniaGame.METROID_DREAD, "powerup_slide"): ["itemsphere"],
     PickupModel(RandovaniaGame.METROID_DREAD, "powerup_hyperbeam"): ["powerup_plasmabeam"],
     PickupModel(RandovaniaGame.METROID_DREAD, "powerup_metroidsuit"): ["powerup_gravitysuit"],
-
     PickupModel(RandovaniaGame.METROID_DREAD, "PROGRESSIVE_BEAM"): [
-        "powerup_widebeam", "powerup_plasmabeam", "powerup_wavebeam"
+        "powerup_widebeam",
+        "powerup_plasmabeam",
+        "powerup_wavebeam",
     ],
     PickupModel(RandovaniaGame.METROID_DREAD, "PROGRESSIVE_CHARGE"): ["powerup_chargebeam", "powerup_diffusionbeam"],
     PickupModel(RandovaniaGame.METROID_DREAD, "PROGRESSIVE_MISSILE"): ["powerup_supermissile", "powerup_icemissile"],
@@ -43,6 +43,7 @@ _ALTERNATIVE_MODELS = {
     PickupModel(RandovaniaGame.METROID_DREAD, "PROGRESSIVE_BOMB"): ["powerup_bomb", "powerup_crossbomb"],
     PickupModel(RandovaniaGame.METROID_DREAD, "PROGRESSIVE_SPIN"): ["powerup_doublejump", "powerup_spacejump"],
 }
+
 
 def get_item_id_for_item(item: ItemResourceInfo) -> str:
     if "item_capacity_id" in item.extra:
@@ -65,11 +66,11 @@ def convert_conditional_resource(res: ConditionalResources) -> Iterator[dict]:
         yield {"item_id": item_id, "quantity": quantity}
 
 
-def get_resources_for_details(pickup: PickupEntry, conditional_resources: list[ConditionalResources],
-                              other_player: bool) -> list[list[dict]]:
+def get_resources_for_details(
+    pickup: PickupEntry, conditional_resources: list[ConditionalResources], other_player: bool
+) -> list[list[dict]]:
     resources = [
-        list(convert_conditional_resource(conditional_resource))
-        for conditional_resource in conditional_resources
+        list(convert_conditional_resource(conditional_resource)) for conditional_resource in conditional_resources
     ]
 
     # don't add more resources for multiworld items
@@ -79,19 +80,21 @@ def get_resources_for_details(pickup: PickupEntry, conditional_resources: list[C
     if pickup.resource_lock is not None and not pickup.respects_lock and not pickup.unlocks_resource:
         # Add the lock resource into the pickup in addition to the expansion's resources
         assert len(resources) == 1
-        resources[0].append({
-            "item_id": get_item_id_for_item(pickup.resource_lock.locked_by),
-            "quantity": 1,
-        })
+        resources[0].append(
+            {
+                "item_id": get_item_id_for_item(pickup.resource_lock.locked_by),
+                "quantity": 1,
+            }
+        )
 
     return resources
 
 
 def _get_destination_room_for_teleportal(connection: Node):
     return connection.extra.get(
-        "transporter_name",
-        f"{connection.identifier.region_name} - {connection.identifier.area_name}"
+        "transporter_name", f"{connection.identifier.region_name} - {connection.identifier.area_name}"
     )
+
 
 class DreadPatchDataFactory(PatchDataFactory):
     cosmetic_patches: DreadCosmeticPatches
@@ -133,8 +136,10 @@ class DreadPatchDataFactory(PatchDataFactory):
         return KeyError(f"{self.game.region_list.node_name(node, with_region=True)} has no extra {err}")
 
     def _key_error_for_start_node(self, node: Node):
-        return KeyError(f"{self.game.region_list.node_name(node, with_region=True)} has neither a "
-                        "start_point_actor_name nor the area has a collision_camera_name for a custom start point")
+        return KeyError(
+            f"{self.game.region_list.node_name(node, with_region=True)} has neither a "
+            "start_point_actor_name nor the area has a collision_camera_name for a custom start point"
+        )
 
     def _get_or_create_spawn_point(self, node: Node, level_name: str):
         if node in self.new_spawn_points:
@@ -145,16 +150,9 @@ class DreadPatchDataFactory(PatchDataFactory):
                 collision_camera_name = area.extra["asset_id"]
                 new_spawnpoint_name = f"{self.spawnpoint_name_prefix}{len(self.new_spawn_points):03d}"
                 self.new_spawn_points[node] = {
-                    "new_actor": {
-                        "actor": new_spawnpoint_name,
-                        "scenario": level_name
-                    },
-                    "location": {
-                        "x": node.location.x,
-                        "y": node.location.y,
-                        "z": node.location.z
-                    },
-                    "collision_camera_name": collision_camera_name
+                    "new_actor": {"actor": new_spawnpoint_name, "scenario": level_name},
+                    "location": {"x": node.location.x, "y": node.location.y, "z": node.location.z},
+                    "collision_camera_name": collision_camera_name,
                 }
                 return new_spawnpoint_name
             except KeyError:
@@ -194,7 +192,7 @@ class DreadPatchDataFactory(PatchDataFactory):
             return {
                 "scenario": self._level_name_for(node),
                 "function": node.extra["callback_function"],
-                "args": node.extra.get("callback_args", 0)
+                "args": node.extra.get("callback_args", 0),
             }
         except KeyError as e:
             raise KeyError(f"{node} has no extra {e}")
@@ -210,12 +208,7 @@ class DreadPatchDataFactory(PatchDataFactory):
             else:
                 base_icon = detail.model.name
 
-            map_icon = {
-                "custom_icon": {
-                    "label": detail.name.upper(),
-                    "base_icon": base_icon
-                }
-            }
+            map_icon = {"custom_icon": {"label": detail.name.upper(), "base_icon": base_icon}}
         elif alt_model[0] == "itemsphere":
             map_icon = {
                 "custom_icon": {
@@ -223,9 +216,7 @@ class DreadPatchDataFactory(PatchDataFactory):
                 }
             }
         else:
-            map_icon = {
-                "icon_id": detail.model.name
-            }
+            map_icon = {"icon_id": detail.model.name}
 
         resources = get_resources_for_details(detail.original_pickup, detail.conditional_resources, detail.other_player)
 
@@ -248,7 +239,7 @@ class DreadPatchDataFactory(PatchDataFactory):
             if self.cosmetic_patches.missile_cosmetic != DreadMissileCosmeticType.NONE:
                 if model_names[0] == "item_missiletank":
                     colors = self.cosmetic_patches.missile_cosmetic.colors
-                    new_model = colors[self.rng.randint(0, len(colors)-1)].value
+                    new_model = colors[self.rng.randint(0, len(colors) - 1)].value
                     model_names = [new_model]
 
             # Progressive models currently crash when placed in Hanubia.
@@ -257,21 +248,23 @@ class DreadPatchDataFactory(PatchDataFactory):
                 model_names = [model_names[0]]
 
             if "map_icon_actor" in pickup_node.extra:
-                map_icon.update({
-                    "original_actor": self._teleporter_ref_for(pickup_node, "map_icon_actor")
-                })
-            details.update({
-                "pickup_actor": pickup_actor,
-                "model": model_names,
-                "map_icon": map_icon,
-            })
+                map_icon.update({"original_actor": self._teleporter_ref_for(pickup_node, "map_icon_actor")})
+            details.update(
+                {
+                    "pickup_actor": pickup_actor,
+                    "model": model_names,
+                    "map_icon": map_icon,
+                }
+            )
         else:
             details["pickup_lua_callback"] = self._callback_ref_for(pickup_node)
             if pickup_type != "cutscene":
-                details.update({
-                    "pickup_actordef": pickup_node.extra["actor_def"],
-                    "pickup_string_key": pickup_node.extra["string_key"],
-                })
+                details.update(
+                    {
+                        "pickup_actordef": pickup_node.extra["actor_def"],
+                        "pickup_string_key": pickup_node.extra["string_key"],
+                    }
+                )
 
         return details
 
@@ -285,7 +278,9 @@ class DreadPatchDataFactory(PatchDataFactory):
                 "hint_id": logbook_node.extra["hint_id"],
                 "text": exporter.create_message_for_hint(
                     self.patches.hints[self.game.region_list.identifier_for_node(logbook_node)],
-                    self.description.all_patches, self.players_config, True
+                    self.description.all_patches,
+                    self.players_config,
+                    True,
                 ),
             }
             for logbook_node in self.game.region_list.iterate_nodes()
@@ -299,24 +294,25 @@ class DreadPatchDataFactory(PatchDataFactory):
             "GUI_DIFSELECTOR_LABEL_DESCRIPTOR_HARD_UNLOCKED",
             "GUI_DIFSELECTOR_LABEL_DESCRIPTOR_NORMAL",
             "GUI_DIFSELECTOR_LABEL_DESCRIPTOR_EASY",
-            "GUI_DIFSELECTOR_LABEL_DESCRIPTOR_EXPERT"
+            "GUI_DIFSELECTOR_LABEL_DESCRIPTOR_EXPERT",
         }
         for difficulty in difficulty_labels:
             text[difficulty] = full_hash
 
-        text["GUI_COMPANY_TITLE_SCREEN"] = "|".join([
-            "<versions>",
-            full_hash
-        ])
+        text["GUI_COMPANY_TITLE_SCREEN"] = "|".join(["<versions>", full_hash])
 
         # Warning message for continuing a non-rando game file
-        text["GUI_WARNING_NOT_RANDO_GAME_1"] = "|".join([
-            r"{c2}Error!{c0}",
-            "This save slot was created using a different Randomizer mod.",
-        ])
-        text["GUI_WARNING_NOT_RANDO_GAME_2"] = "|".join([
-            "You must start a New Game from a blank save slot. Returning to title screen.",
-        ])
+        text["GUI_WARNING_NOT_RANDO_GAME_1"] = "|".join(
+            [
+                r"{c2}Error!{c0}",
+                "This save slot was created using a different Randomizer mod.",
+            ]
+        )
+        text["GUI_WARNING_NOT_RANDO_GAME_2"] = "|".join(
+            [
+                "You must start a New Game from a blank save slot. Returning to title screen.",
+            ]
+        )
 
         return text
 
@@ -366,14 +362,16 @@ class DreadPatchDataFactory(PatchDataFactory):
 
         # rename transporters to the correct transporter rooms
         for node, connection in self.patches.all_dock_connections():
-            if (isinstance(node, DockNode)
-                and node.dock_type in self.game.dock_weakness_database.all_teleporter_dock_types):
-
+            if (
+                isinstance(node, DockNode)
+                and node.dock_type in self.game.dock_weakness_database.all_teleporter_dock_types
+            ):
                 src_region, src_area = self.game.region_list.region_and_area_by_area_identifier(
-                    node.identifier.area_identifier)
+                    node.identifier.area_identifier
+                )
                 src_cc = src_area.extra["asset_id"]
                 dest_name = _get_destination_room_for_teleportal(connection)
-                all_dict[src_region.extra["scenario_id"]][src_cc] = f'Transport to {dest_name}'
+                all_dict[src_region.extra["scenario_id"]][src_cc] = f"Transport to {dest_name}"
         return all_dict
 
     def _cosmetic_patch_data(self) -> dict:
@@ -384,7 +382,7 @@ class DreadPatchDataFactory(PatchDataFactory):
                     "bShowBossLifebar": c.show_boss_lifebar,
                     "bShowEnemyLife": c.show_enemy_life,
                     "bShowEnemyDamage": c.show_enemy_damage,
-                    "bShowPlayerDamage": c.show_player_damage
+                    "bShowPlayerDamage": c.show_player_damage,
                 }
             },
             "lua": {
@@ -392,7 +390,7 @@ class DreadPatchDataFactory(PatchDataFactory):
                     "enable_death_counter": c.show_death_counter,
                     "enable_room_name_display": c.show_room_names.value,
                 },
-                "camera_names_dict": self._build_area_name_dict()
+                "camera_names_dict": self._build_area_name_dict(),
             },
             "shield_versions": {
                 "ice_missile": c.alt_ice_missile.value,
@@ -413,30 +411,32 @@ class DreadPatchDataFactory(PatchDataFactory):
         for node, weakness in self.patches.all_dock_weaknesses():
             if "type" not in weakness.extra:
                 raise ValueError(
-                    f"Unable to change door {wl.node_name(node)} into {weakness.name}: incompatible door weakness")
+                    f"Unable to change door {wl.node_name(node)} into {weakness.name}: incompatible door weakness"
+                )
 
             if "actor_name" not in node.extra:
                 print(f"Invalid door (no actor): {node}")
                 continue
 
-            result.append({
-                "actor": (actor := self._teleporter_ref_for(node)),
-                "door_type": (door_type := weakness.extra["type"]),
-            })
+            result.append(
+                {
+                    "actor": (actor := self._teleporter_ref_for(node)),
+                    "door_type": (door_type := weakness.extra["type"]),
+                }
+            )
             actor_idef = str(actor)
             if used_actors.get(actor_idef, door_type) != door_type:
-                raise ValueError(f"Door for {wl.node_name(node)} ({actor}) previously "
-                                 f"patched to use {used_actors[actor_idef]}, tried to change to {door_type}.")
+                raise ValueError(
+                    f"Door for {wl.node_name(node)} ({actor}) previously "
+                    f"patched to use {used_actors[actor_idef]}, tried to change to {door_type}."
+                )
             used_actors[actor_idef] = door_type
 
         return result
 
     def _objective_patches(self) -> dict:
         if self.configuration.artifacts.required_artifacts == 0:
-            return {
-                "required_artifacts": 0,
-                "hints": []
-            }
+            return {"required_artifacts": 0, "hints": []}
 
         artifacts = [self.game.resource_database.get_item(f"Artifact{i + 1}") for i in range(12)]
         artifact_hints = guaranteed_item_hint.create_guaranteed_hints_for_resources(
@@ -445,7 +445,7 @@ class DreadPatchDataFactory(PatchDataFactory):
             DreadHintNamer(self.description.all_patches, self.players_config),
             True,
             artifacts,
-            True
+            True,
         )
 
         hint_text = []
@@ -463,8 +463,8 @@ class DreadPatchDataFactory(PatchDataFactory):
         return [
             # beam blocks -> speedboost blocks in Artaria EMMI zone Speed Booster puzzle to prevent softlock
             {
-                "actor": {"scenario": "s010_cave","layer": "breakables","actor": "breakabletilegroup_060"},
-                "tiletype": "SPEEDBOOST"
+                "actor": {"scenario": "s010_cave", "layer": "breakables", "actor": "breakabletilegroup_060"},
+                "tiletype": "SPEEDBOOST",
             }
         ]
 
@@ -474,8 +474,9 @@ class DreadPatchDataFactory(PatchDataFactory):
         starting_items = self._calculate_starting_inventory(self.patches.starting_resources())
         starting_text = [self._starting_inventory_text()]
 
-        useless_target = PickupTarget(pickup_creator.create_nothing_pickup(self.game.resource_database),
-                                      self.players_config.player_index)
+        useless_target = PickupTarget(
+            pickup_creator.create_nothing_pickup(self.game.resource_database), self.players_config.player_index
+        )
 
         pickup_list = pickup_exporter.export_all_indices(
             self.patches,
@@ -490,14 +491,17 @@ class DreadPatchDataFactory(PatchDataFactory):
 
         energy_per_tank = self.configuration.energy_per_tank if self.configuration.immediate_energy_parts else 100.0
 
-        teleporters =[{
-                    "teleporter": self._teleporter_ref_for(node),
-                    "destination": self._start_point_ref_for(connection),
-                    "connection_name": _get_destination_room_for_teleportal(connection)
-                }
-                for node, connection in self.patches.all_dock_connections()
-                if (isinstance(node, DockNode)
-                    and node.dock_type in self.game.dock_weakness_database.all_teleporter_dock_types)
+        teleporters = [
+            {
+                "teleporter": self._teleporter_ref_for(node),
+                "destination": self._start_point_ref_for(connection),
+                "connection_name": _get_destination_room_for_teleportal(connection),
+            }
+            for node, connection in self.patches.all_dock_connections()
+            if (
+                isinstance(node, DockNode)
+                and node.dock_type in self.game.dock_weakness_database.all_teleporter_dock_types
+            )
         ]
         return {
             "configuration_identifier": self.description.shareable_hash,
@@ -505,9 +509,7 @@ class DreadPatchDataFactory(PatchDataFactory):
             "starting_items": starting_items,
             "starting_text": starting_text,
             "pickups": [
-                data
-                for pickup_item in pickup_list
-                if (data := self._pickup_detail_for_target(pickup_item)) is not None
+                data for pickup_item in pickup_list if (data := self._pickup_detail_for_target(pickup_item)) is not None
             ],
             "elevators": teleporters if self.configuration.teleporters.mode != TeleporterShuffleMode.VANILLA else [],
             "hints": self._encode_hints(),

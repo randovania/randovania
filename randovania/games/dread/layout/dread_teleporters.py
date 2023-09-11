@@ -9,7 +9,9 @@ from randovania.layout.lib.teleporters import TeleporterConfiguration, Teleporte
 
 if TYPE_CHECKING:
     from randovania.game_description.db.node_identifier import NodeIdentifier
+
     pass
+
 
 @dataclasses.dataclass(frozen=True)
 class DreadTeleporterConfiguration(TeleporterConfiguration):
@@ -18,8 +20,10 @@ class DreadTeleporterConfiguration(TeleporterConfiguration):
     # that nothing else is selected
     @property
     def valid_targets(self) -> list[NodeIdentifier]:
-        if self.mode in {TeleporterShuffleMode.ONE_WAY_TELEPORTER,
-                         TeleporterShuffleMode.ONE_WAY_TELEPORTER_REPLACEMENT}:
+        if self.mode in {
+            TeleporterShuffleMode.ONE_WAY_TELEPORTER,
+            TeleporterShuffleMode.ONE_WAY_TELEPORTER_REPLACEMENT,
+        }:
             game_description = default_database.game_description_for(self.game)
             teleporter_dock_types = game_description.dock_weakness_database.all_teleporter_dock_types
             region_list = game_description.region_list

@@ -60,8 +60,5 @@ class Region:
     def duplicate(self) -> Region:
         return dataclasses.replace(
             self,
-            areas=[
-                area.duplicate()
-                for area in self.areas
-            ],
+            areas=[area.duplicate() for area in self.areas],
         )

@@ -57,8 +57,7 @@ def _create_user_from_discord(discord_user: flask_discord.models.User) -> User:
     if discord_name is None:
         discord_name = discord_user.name
 
-    user: User = User.get_or_create(discord_id=discord_user.id,
-                                    defaults={"name": discord_name})[0]
+    user: User = User.get_or_create(discord_id=discord_user.id, defaults={"name": discord_name})[0]
     if user.name != discord_name:
         user.name = discord_name
         user.save()
@@ -72,7 +71,7 @@ def _create_session_with_access_token(sa: ServerApp, token: UserAccessToken) -> 
         {
             "user-id": token.user.id,
             "rdv-access-token": token.name,
-        }
+        },
     )
 
 
@@ -168,8 +167,9 @@ def restore_user_session(sa: ServerApp, encrypted_session: bytes, _old_session_i
     except (KeyError, peewee.DoesNotExist, json.JSONDecodeError, InvalidTokenError) as e:
         # InvalidTokenError: discord token expired and couldn't renew
         sa.save_session({})
-        logger().info("Client at %s was unable to restore session: (%s) %s",
-                      sa.current_client_ip(), str(type(e)), str(e))
+        logger().info(
+            "Client at %s was unable to restore session: (%s) %s", sa.current_client_ip(), str(type(e)), str(e)
+        )
         raise error.InvalidSessionError
 
     except Exception:
@@ -187,13 +187,16 @@ def logout(sa: ServerApp):
 
 
 def browser_login_with_discord(sa: ServerApp):
-    sid = flask.request.args.get('sid')
+    sid = flask.request.args.get("sid")
     if sid is not None:
         if not sa.get_server().rooms(sid):
-            return flask.render_template(
-                "unable_to_login.html",
-                error_message="Invalid sid received from Randovania!",
-            ), 400
+            return (
+                flask.render_template(
+                    "unable_to_login.html",
+                    error_message="Invalid sid received from Randovania!",
+                ),
+                400,
+            )
 
         flask.session["sid"] = sid
     else:
@@ -208,7 +211,7 @@ def browser_discord_login_callback(sa: ServerApp):
             sa.discord.callback()
 
         except ValueError as v:
-            if v.args == ('not enough values to unpack (expected 2, got 1)',):
+            if v.args == ("not enough values to unpack (expected 2, got 1)",):
                 raise oauthlib.oauth2.rfc6749.errors.MismatchingStateError
             else:
                 raise
@@ -222,10 +225,13 @@ def browser_discord_login_callback(sa: ServerApp):
             try:
                 session = sa.get_session(sid=sid)
             except KeyError:
-                return flask.render_template(
-                    "unable_to_login.html",
-                    error_message="Unable to find your Randovania client.",
-                ), 401
+                return (
+                    flask.render_template(
+                        "unable_to_login.html",
+                        error_message="Unable to find your Randovania client.",
+                    ),
+                    401,
+                )
 
             result = _create_client_side_session(sa, user, session)
             flask_socketio.emit("user_session_update", result, to=sid, namespace="/")
@@ -235,24 +241,31 @@ def browser_discord_login_callback(sa: ServerApp):
             )
 
     except flask_discord.exceptions.AccessDenied:
-        return flask.render_template(
-            "unable_to_login.html",
-            error_message="Discord login was cancelled. Please try again!",
-        ), 401
+        return (
+            flask.render_template(
+                "unable_to_login.html",
+                error_message="Discord login was cancelled. Please try again!",
+            ),
+            401,
+        )
 
     except error.UserNotAuthorizedToUseServerError:
-        return flask.render_template(
-            "unable_to_login.html",
-            error_message="You're not authorized to use this build.\nPlease check #dev-builds for more details.",
-        ), 403
+        return (
+            flask.render_template(
+                "unable_to_login.html",
+                error_message="You're not authorized to use this build.\nPlease check #dev-builds for more details.",
+            ),
+            403,
+        )
 
     except oauthlib.oauth2.rfc6749.errors.MismatchingStateError:
-        return flask.render_template(
-            "unable_to_login.html",
-            error_message=(
-                "You must finish the login with the same browser that you started it with."
+        return (
+            flask.render_template(
+                "unable_to_login.html",
+                error_message=("You must finish the login with the same browser that you started it with."),
             ),
-        ), 401
+            401,
+        )
 
     except oauthlib.oauth2.rfc6749.errors.OAuth2Error as err:
         if isinstance(err, oauthlib.oauth2.rfc6749.errors.InvalidGrantError):
@@ -260,10 +273,13 @@ def browser_discord_login_callback(sa: ServerApp):
         else:
             logger().exception("OAuth2Error when finishing Discord login")
 
-        return flask.render_template(
-            "unable_to_login.html",
-            error_message=f"Unable to complete login. Please try again! {err}",
-        ), 500
+        return (
+            flask.render_template(
+                "unable_to_login.html",
+                error_message=f"Unable to complete login. Please try again! {err}",
+            ),
+            500,
+        )
 
 
 def setup_app(sa: ServerApp):
@@ -281,8 +297,9 @@ def setup_app(sa: ServerApp):
 
         for token in user.access_tokens:
             delete = f' <a href="{flask.url_for("delete_token", token=token.name)}">Delete</a>'
-            result += (f"<li>{token.name} created at {token.creation_date}."
-                       f" Last used at {token.last_used}. {delete}</li>")
+            result += (
+                f"<li>{token.name} created at {token.creation_date}. Last used at {token.last_used}. {delete}</li>"
+            )
 
         result += f'<li><form class="form-inline" method="POST" action="{flask.url_for("create_token")}">'
         result += '<input id="name" placeholder="Access token name" name="name">'
@@ -292,7 +309,7 @@ def setup_app(sa: ServerApp):
 
     @sa.route_with_user("/create_token", methods=["POST"])
     def create_token(user: User):
-        token_name: str = flask.request.form['name']
+        token_name: str = flask.request.form["name"]
         go_back = f'<a href="{flask.url_for("browser_me")}">Go back</a>'
 
         try:
@@ -301,14 +318,14 @@ def setup_app(sa: ServerApp):
                 name=token_name,
             )
             session = _create_session_with_access_token(sa, token).decode("ascii")
-            return f'Token: <pre>{session}</pre><br />{go_back}'
+            return f"Token: <pre>{session}</pre><br />{go_back}"
 
         except peewee.IntegrityError as e:
-            return f'Unable to create token: {e}<br />{go_back}'
+            return f"Unable to create token: {e}<br />{go_back}"
 
     @sa.route_with_user("/delete_token")
     def delete_token(user: User):
-        token_name: str = flask.request.args['token']
+        token_name: str = flask.request.args["token"]
         UserAccessToken.get(
             user=user,
             name=token_name,

@@ -226,7 +226,8 @@ class BitPackDataclass(BitPackValue):
             encoded_item = list(bit_pack_value.bit_pack_encode(field_meta))
             if any(not (0 <= a < b) for (a, b) in encoded_item):
                 raise ValueError(
-                    f"Encoding field {field.name} of {type(self)} generated invalid value: {encoded_item}.")
+                    f"Encoding field {field.name} of {type(self)} generated invalid value: {encoded_item}."
+                )
             should_encode = True
 
             if bit_pack_value.bit_pack_skip_if_equals() and reference_item is not None:
@@ -315,8 +316,10 @@ def _aux_pack_sorted_array_elements(elements: list[T], array: list[T]) -> Iterat
         previous_index = index
 
 
-def pack_sorted_array_elements(elements: list[SupportsRichComparisonT], array: list[SupportsRichComparisonT],
-                               ) -> Iterator[tuple[int, int]]:
+def pack_sorted_array_elements(
+    elements: list[SupportsRichComparisonT],
+    array: list[SupportsRichComparisonT],
+) -> Iterator[tuple[int, int]]:
     # elements must be sorted so the N-th element is smaller than N+1-th
     assert _is_sorted(elements)
     assert _is_sorted(array)
@@ -438,17 +441,11 @@ def encode_tuple(value: tuple[T, ...], encoder: Callable[[T], Iterator[tuple[int
 
 def decode_tuple(decoder: BitPackDecoder, item_decoder: Callable[[BitPackDecoder], T]) -> tuple[T, ...]:
     size = decode_big_int(decoder)
-    return tuple(
-        item_decoder(decoder)
-        for _ in range(size)
-    )
+    return tuple(item_decoder(decoder) for _ in range(size))
 
 
 def _format_string_for(values: list[tuple[int, int]]) -> str:
-    return "".join(
-        f"u{_bits_for_number(v)}"
-        for _, v in values
-    )
+    return "".join(f"u{_bits_for_number(v)}" for _, v in values)
 
 
 def _pack_encode_results(values: list[tuple[int, int]]) -> bytes:
@@ -457,14 +454,8 @@ def _pack_encode_results(values: list[tuple[int, int]]) -> bytes:
 
 
 def pack_results_and_bit_count(it: Iterator[tuple[int, int]]) -> tuple[bytes, int]:
-    values = [
-        (value_argument, value_format)
-        for value_argument, value_format in it
-    ]
-    bit_count = sum(
-        _bits_for_number(v)
-        for _, v in values
-    )
+    values = [(value_argument, value_format) for value_argument, value_format in it]
+    bit_count = sum(_bits_for_number(v) for _, v in values)
     return _pack_encode_results(values), bit_count
 
 
@@ -486,8 +477,7 @@ def pack_value(value: BitPackValue, metadata: dict | None = None) -> bytes:
 BoundTypeValue = typing.TypeVar("BoundTypeValue", bound=BitPackValue)
 
 
-def round_trip(value: BoundTypeValue,
-               metadata: dict | None = None) -> BoundTypeValue:
+def round_trip(value: BoundTypeValue, metadata: dict | None = None) -> BoundTypeValue:
     """
     Encodes the given value and then recreates it using the encoded value
     :param value:

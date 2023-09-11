@@ -42,12 +42,14 @@ def test_batch_distribute_helper(mocker: pytest_mock.MockerFixture):
     delta_time = batch_distribute.batch_distribute_helper(base_permalink, seed_number, timeout, validate, output_dir)
 
     # Assert
-    mock_generate_description.assert_called_once_with(generator_params=expected_permalink, status_update=None,
-                                                      validate_after_generation=validate, timeout=timeout,
-                                                      attempts=0)
-    mock_run.assert_called_once_with(
-        mock_generate_description.return_value
+    mock_generate_description.assert_called_once_with(
+        generator_params=expected_permalink,
+        status_update=None,
+        validate_after_generation=validate,
+        timeout=timeout,
+        attempts=0,
     )
+    mock_run.assert_called_once_with(mock_generate_description.return_value)
 
     assert delta_time == 4000
     output_dir.joinpath.assert_called_once_with(f"{seed_number}.rdvgame")

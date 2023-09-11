@@ -11,13 +11,15 @@ def create_box_for_exception(val: Exception) -> QtWidgets.QMessageBox:
     box = QtWidgets.QMessageBox(
         QtWidgets.QMessageBox.Critical,
         "An exception was raised",
-        (f"An unhandled Exception occurred:\n{val}\n\n"
-         "When reporting, make sure to paste the entire contents of the following box."
-         "\nIt has already be copied to your clipboard."
-         ),
+        (
+            f"An unhandled Exception occurred:\n{val}\n\n"
+            "When reporting, make sure to paste the entire contents of the following box."
+            "\nIt has already be copied to your clipboard."
+        ),
         QtWidgets.QMessageBox.Ok,
     )
     from randovania.gui.lib import common_qt_lib
+
     common_qt_lib.set_default_window_icon(box)
 
     detailed_exception = "".join(traceback.format_exception(val))
@@ -38,6 +40,9 @@ def create_box_for_exception(val: Exception) -> QtWidgets.QMessageBox:
     box_layout: QtWidgets.QGridLayout = box.layout()
     box_layout.addItem(
         QtWidgets.QSpacerItem(600, 0, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding),
-        box_layout.rowCount(), 0, 1, box_layout.columnCount(),
+        box_layout.rowCount(),
+        0,
+        1,
+        box_layout.columnCount(),
     )
     return box

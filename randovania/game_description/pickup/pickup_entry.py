@@ -45,8 +45,7 @@ class ResourceLock:
             yield resource, quantity
 
     def unlock_conversion(self) -> ResourceConversion:
-        return ResourceConversion(source=self.temporary_item,
-                                  target=self.item_to_lock)
+        return ResourceConversion(source=self.temporary_item, target=self.item_to_lock)
 
 
 @dataclass(frozen=True)
@@ -101,8 +100,9 @@ class PickupEntry:
                 raise ValueError(f"{i}-th progression second field should be a int, got {progression[1]}")
 
             if progression[1] > progression[0].max_capacity:
-                raise ValueError(f"{i}-th progression has {progression[1]} quantity, "
-                                 f"higher than max for {progression[0]}")
+                raise ValueError(
+                    f"{i}-th progression has {progression[1]} quantity, higher than max for {progression[0]}"
+                )
 
         for resource, quantity in self.extra_resources:
             if isinstance(resource, ItemResourceInfo):
@@ -162,8 +162,11 @@ class PickupEntry:
     def resource_gain(self, current_resources: ResourceCollection, force_lock: bool = False) -> ResourceGain:
         resources = self.conditional_for_resources(current_resources).resources
 
-        if (force_lock or self.respects_lock) and not self.unlocks_resource and (
-                self.resource_lock is not None and current_resources[self.resource_lock.locked_by] == 0):
+        if (
+            (force_lock or self.respects_lock)
+            and not self.unlocks_resource
+            and (self.resource_lock is not None and current_resources[self.resource_lock.locked_by] == 0)
+        ):
             yield from self.resource_lock.convert_gain(resources)
         else:
             yield from resources

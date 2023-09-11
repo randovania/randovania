@@ -17,8 +17,9 @@ if TYPE_CHECKING:
 
 
 class CSBootstrap(Bootstrap):
-    def _get_enabled_misc_resources(self, configuration: CSConfiguration,
-                                    resource_database: ResourceDatabase) -> set[str]:
+    def _get_enabled_misc_resources(
+        self, configuration: CSConfiguration, resource_database: ResourceDatabase
+    ) -> set[str]:
         enabled_resources = set()
 
         objectives = {
@@ -26,7 +27,7 @@ class CSBootstrap(Bootstrap):
             CSObjective.NORMAL_ENDING: "normalEnd",
             CSObjective.BEST_ENDING: "bestEnd",
             CSObjective.ALL_BOSSES: "allBosses",
-            CSObjective.HUNDRED_PERCENT: "hundo"
+            CSObjective.HUNDRED_PERCENT: "hundo",
         }
         enabled_resources.add(objectives[configuration.objective])
 
@@ -34,8 +35,9 @@ class CSBootstrap(Bootstrap):
 
         return enabled_resources
 
-    def version_resources_for_game(self, configuration: CSConfiguration,
-                                   resource_database: ResourceDatabase) -> ResourceGain:
+    def version_resources_for_game(
+        self, configuration: CSConfiguration, resource_database: ResourceDatabase
+    ) -> ResourceGain:
         for resource in resource_database.version:
             yield resource, 1 if resource.long_name == "Freeware" else 0
 

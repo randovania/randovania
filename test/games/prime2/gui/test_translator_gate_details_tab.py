@@ -25,9 +25,9 @@ def test_update_content(skip_qtbot, test_files_dir):
         counts[item.text(0)] = item.childCount()
 
     assert counts == {
-        'Agon Wastes': 2,
-        'Great Temple': 3,
-        'Sanctuary Fortress': 2,
-        'Temple Grounds': 7,
-        'Torvus Bog': 3,
+        "Agon Wastes": 2,
+        "Great Temple": 3,
+        "Sanctuary Fortress": 2,
+        "Temple Grounds": 7,
+        "Torvus Bog": 3,
     }

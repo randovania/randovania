@@ -15,8 +15,9 @@ if TYPE_CHECKING:
     from randovania.game_description.resources.resource_database import ResourceDatabase
 
 
-def _halt_damage_on_zero(items: Iterable[Requirement], current_resources: ResourceCollection,
-                         database: ResourceDatabase) -> Iterator[int]:
+def _halt_damage_on_zero(
+    items: Iterable[Requirement], current_resources: ResourceCollection, database: ResourceDatabase
+) -> Iterator[int]:
     for item in items:
         dmg = item.damage(current_resources, database)
         yield dmg
@@ -27,9 +28,7 @@ def _halt_damage_on_zero(items: Iterable[Requirement], current_resources: Resour
 class RequirementOr(RequirementArrayBase):
     def damage(self, current_resources: ResourceCollection, database: ResourceDatabase) -> int:
         try:
-            return min(
-                _halt_damage_on_zero(self.items, current_resources, database)
-            )
+            return min(_halt_damage_on_zero(self.items, current_resources, database))
         except ValueError:
             return MAX_DAMAGE
 
@@ -52,11 +51,7 @@ class RequirementOr(RequirementArrayBase):
                 if common_requirements is None:
                     common_requirements = list(item.items)
                 else:
-                    common_requirements = [
-                        common
-                        for common in common_requirements
-                        if common in item.items
-                    ]
+                    common_requirements = [common for common in common_requirements if common in item.items]
 
         # Only extract the common requirements if there's more than 1 requirement
         if num_and_requirements >= 2 and common_requirements:
@@ -68,8 +63,11 @@ class RequirementOr(RequirementArrayBase):
                     assert set(common_requirements) <= set(item.items)
                     simplified_condition = [it for it in item.items if it not in common_requirements]
                     if simplified_condition:
-                        common_new_or.append(RequirementAnd(simplified_condition) if len(simplified_condition) > 1
-                                             else simplified_condition[0])
+                        common_new_or.append(
+                            RequirementAnd(simplified_condition)
+                            if len(simplified_condition) > 1
+                            else simplified_condition[0]
+                        )
                 else:
                     simplified_items.append(item)
 

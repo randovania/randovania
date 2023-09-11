@@ -61,5 +61,6 @@ def test_possible_actions_with_event():
     state.node_context.assert_called_once_with()
     event.can_collect.assert_called_once_with(state.node_context.return_value)
     logic.get_additional_requirements.assert_called_once_with(event)
-    logic.get_additional_requirements.return_value.satisfied.assert_called_once_with(state.resources, 1,
-                                                                                     state.resource_database)
+    logic.get_additional_requirements.return_value.satisfied.assert_called_once_with(
+        state.resources, 1, state.resource_database
+    )

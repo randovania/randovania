@@ -18,16 +18,17 @@ class PortalDetailsTab(BaseConnectionDetailsTab):
         return "Portals"
 
     @classmethod
-    def should_appear_for(cls, configuration: EchoesConfiguration, all_patches: dict[int, GamePatches],
-                          players: PlayersConfiguration) -> bool:
+    def should_appear_for(
+        cls, configuration: EchoesConfiguration, all_patches: dict[int, GamePatches], players: PlayersConfiguration
+    ) -> bool:
         return configuration.portal_rando
 
-    def _fill_per_region_connections(self,
-                                     per_region: dict[str, dict[str, str | dict[str, str]]],
-                                     region_list: RegionList,
-                                     patches: GamePatches,
-                                     ):
-
+    def _fill_per_region_connections(
+        self,
+        per_region: dict[str, dict[str, str | dict[str, str]]],
+        region_list: RegionList,
+        patches: GamePatches,
+    ):
         per_area = collections.defaultdict(lambda: collections.defaultdict(set))
         portal_count_in_area = collections.defaultdict(lambda: collections.defaultdict(int))
 
@@ -43,9 +44,7 @@ class PortalDetailsTab(BaseConnectionDetailsTab):
                     per_area[region.name][area.name].add(node)
 
         def name_for(target):
-            target_region, target_area = region_list.region_and_area_by_area_identifier(
-                target.identifier.area_location
-            )
+            target_region, target_area = region_list.region_and_area_by_area_identifier(target.identifier.area_location)
             target_name = target_area.name
             if portal_count_in_area[target_region.name][target_area.name] > 1:
                 target_name += f" - {target.name}"

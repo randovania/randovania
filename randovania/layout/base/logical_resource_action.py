@@ -17,8 +17,11 @@ class LayoutLogicalResourceAction(BitPackEnum, Enum):
         return self == LayoutLogicalResourceAction.RANDOMLY
 
 
-enum_lib.add_long_name(LayoutLogicalResourceAction, {
-    LayoutLogicalResourceAction.RANDOMLY: "Randomly",
-    LayoutLogicalResourceAction.LAST_RESORT: "Last resort",
-    LayoutLogicalResourceAction.NEVER: "Never",
-})
+enum_lib.add_long_name(
+    LayoutLogicalResourceAction,
+    {
+        LayoutLogicalResourceAction.RANDOMLY: "Randomly",
+        LayoutLogicalResourceAction.LAST_RESORT: "Last resort",
+        LayoutLogicalResourceAction.NEVER: "Never",
+    },
+)

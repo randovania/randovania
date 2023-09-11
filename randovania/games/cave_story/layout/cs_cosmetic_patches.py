@@ -69,11 +69,15 @@ class MusicRandoType(BitPackEnum, Enum):
         if self == MusicRandoType.DEFAULT:
             return "Music will not be randomized."
         if self == MusicRandoType.SHUFFLE:
-            return ("Remap every song to a new song. For example, all instances of *Mischievous Robot* become *Pulse*. "
-                    "Songs may remap to themselves.")
+            return (
+                "Remap every song to a new song. For example, all instances of *Mischievous Robot* become *Pulse*. "
+                "Songs may remap to themselves."
+            )
         if self == MusicRandoType.RANDOM:
-            return ("Remap every cue to a new song. "
-                    "For example, entering the Egg Corridor by any means plays *Meltdown 2*.")
+            return (
+                "Remap every cue to a new song. "
+                "For example, entering the Egg Corridor by any means plays *Meltdown 2*."
+            )
         if self == MusicRandoType.CHAOS:
             return (
                 "Remap every `<CMU` to a new song. "
@@ -171,13 +175,11 @@ SONGS = {
     "sealChamber": CSSong("Seal Chamber", "0039"),
     "torokosTheme": CSSong("Toroko's Theme", "0040"),
     "white": CSSong('"White"', "0041"),
-
     "windFortress": CSSong("Wind Fortress", "0042", SongType.SONG, SongGame.BETA),
     "halloween2": CSSong("Halloween 2", "0043", SongType.SONG, SongGame.BETA),
     "peopleOfTheRoot": CSSong("People of the Root", "0044", SongType.SONG, SongGame.BETA),
     "pierWalk": CSSong("Pier Walk", "0045", SongType.SONG, SongGame.BETA),
     "snoopyCake": CSSong("Snoopy Cake", "0046", SongType.SONG, SongGame.BETA),
-
     "dataSlots": CSSong("Data Slots", "0047", SongType.SONG, SongGame.KERO),
     "catAndFrog": CSSong("Cat & Frog Corp.", "0048", SongType.SONG, SongGame.KERO),
     # "itsMyBlaster": CSSong("It's My Blaster!", "0049", SongType.SONG, SongGame.KERO),
@@ -217,10 +219,7 @@ class CSMusic(BitPackDataclass, JsonDataclass):
         return cls(MusicRandoType.DEFAULT, CSSong.defaults())
 
     def update_song_status(self, new_status: dict[str, bool]) -> CSMusic:
-        song_status = {
-            key: new_status.get(key, value)
-            for key, value in self.song_status.items()
-        }
+        song_status = {key: new_status.get(key, value) for key, value in self.song_status.items()}
         return dataclasses.replace(self, song_status=song_status)
 
 

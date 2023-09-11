@@ -93,8 +93,7 @@ def test_rename_area(game_editor):
     final = AreaIdentifier("Temple Grounds", new_area_name)
 
     # Run
-    game_editor.rename_area(region_list.area_by_area_location(loc_1),
-                            new_area_name)
+    game_editor.rename_area(region_list.area_by_area_location(loc_1), new_area_name)
 
     # Assert
     assert region_list.area_by_area_location(final) is not None

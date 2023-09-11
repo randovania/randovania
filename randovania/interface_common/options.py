@@ -82,10 +82,7 @@ def decode_uuid_list(data: list[str]) -> list[uuid.UUID]:
 
 
 def serialize_uuid_dict(elements: dict[uuid.UUID, uuid.UUID]) -> dict[str, str]:
-    return {
-        str(key): str(value)
-        for key, value in elements.items()
-    }
+    return {str(key): str(value) for key, value in elements.items()}
 
 
 def decode_uuid_dict(data: dict[str, str]) -> dict[uuid.UUID, uuid.UUID]:
@@ -137,11 +134,13 @@ _SERIALIZER_FOR_FIELD = {
     "use_user_for_crash_reporting": Serializer(identity, bool),
     "displayed_alerts": Serializer(serialize_alerts, decode_alerts),
     "hidden_preset_uuids": Serializer(serialize_uuid_set, decode_uuid_set),
-    "tracker_default_game": Serializer(lambda it: it.value if it is not None else None,
-                                       lambda it: RandovaniaGame(it) if it is not None else None),
+    "tracker_default_game": Serializer(
+        lambda it: it.value if it is not None else None, lambda it: RandovaniaGame(it) if it is not None else None
+    ),
     "parent_for_presets": Serializer(serialize_uuid_dict, decode_uuid_dict),
-    "connector_builders": Serializer(lambda obj: [it.as_json for it in obj],
-                                     lambda obj: [ConnectorBuilderOption.from_json(it) for it in obj]),
+    "connector_builders": Serializer(
+        lambda obj: [it.as_json for it in obj], lambda obj: [ConnectorBuilderOption.from_json(it) for it in obj]
+    ),
 }
 
 _PER_GAME_SERIALIZERS = {
@@ -221,12 +220,12 @@ class Options:
         if isinstance(item, str):
             game_name = None
             if item.startswith("game_"):
-                game_name = item[len("game_"):]
+                game_name = item[len("game_") :]
             else:
                 for key in _PER_GAME_SERIALIZERS.keys():
                     field_name = f"{key}_"
                     if item.startswith(field_name):
-                        game_name = item[len(field_name):]
+                        game_name = item[len(field_name) :]
                         break
             if game_name is None:
                 raise AttributeError(item)
@@ -279,10 +278,11 @@ class Options:
         self.load_from_persisted(result, ignore_decode_errors)
         return True
 
-    def load_from_persisted(self,
-                            persisted: dict,
-                            ignore_decode_errors: bool,
-                            ):
+    def load_from_persisted(
+        self,
+        persisted: dict,
+        ignore_decode_errors: bool,
+    ):
         """
         Loads fields from the given persisted options.
         :param persisted:
@@ -298,9 +298,7 @@ class Options:
                     if ignore_decode_errors:
                         decoded = None
                     else:
-                        raise DecodeFailedException(
-                            f"Unable to decode field {field_name}: {err}"
-                        )
+                        raise DecodeFailedException(f"Unable to decode field {field_name}: {err}")
 
                 if decoded is not None:
                     self._set_field(field_name, decoded)

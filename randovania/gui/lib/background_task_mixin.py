@@ -26,7 +26,6 @@ class BackgroundTaskMixin:
         self._background_thread.start()
 
     def run_in_background_thread(self, target, starting_message: str):
-
         last_progress = 0.0
 
         def progress_update(message: str, progress: float | None):

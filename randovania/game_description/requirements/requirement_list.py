@@ -128,8 +128,7 @@ class RequirementList:
             return False
 
         return all(
-            key in other._items
-            or any(req.is_obsoleted_by(other_req) for other_req in other._items.values())
+            key in other._items or any(req.is_obsoleted_by(other_req) for other_req in other._items.values())
             for key, req in self._items.items()
         )
 

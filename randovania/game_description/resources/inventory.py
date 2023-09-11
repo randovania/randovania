@@ -27,11 +27,13 @@ class Inventory:
 
     @classmethod
     def from_collection(cls, collection: ResourceCollection) -> Self:
-        return cls({
-            typing.cast(ItemResourceInfo, resource): InventoryItem(quantity, quantity)
-            for resource, quantity in collection.as_resource_gain()
-            if resource.resource_type == ResourceType.ITEM
-        })
+        return cls(
+            {
+                typing.cast(ItemResourceInfo, resource): InventoryItem(quantity, quantity)
+                for resource, quantity in collection.as_resource_gain()
+                if resource.resource_type == ResourceType.ITEM
+            }
+        )
 
     def __setitem__(self, key: ItemResourceInfo, value: InventoryItem) -> None:
         self.raw[key] = value

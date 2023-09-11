@@ -83,9 +83,10 @@ class PresetTreeWidget(QtWidgets.QTreeWidget):
         default_parent = None
         root_parents = set()
 
-        def create_item(parent: QtWidgets.QTreeWidgetItem | QtWidgets.QTreeWidget,
-                        the_preset: VersionedPreset,
-                        ) -> QtWidgets.QTreeWidgetItem:
+        def create_item(
+            parent: QtWidgets.QTreeWidgetItem | QtWidgets.QTreeWidget,
+            the_preset: VersionedPreset,
+        ) -> QtWidgets.QTreeWidgetItem:
             it = QtWidgets.QTreeWidgetItem(parent)
             it.setText(0, the_preset.name)
             it.setData(0, Qt.UserRole, the_preset.uuid)
@@ -105,18 +106,11 @@ class PresetTreeWidget(QtWidgets.QTreeWidget):
                 default_parent = item
 
         # Custom Presets
-        order_by_key = {
-            pid: i
-            for i, pid in enumerate(self.options.get_preset_order_for(self.game))
-        }
+        order_by_key = {pid: i for i, pid in enumerate(self.options.get_preset_order_for(self.game))}
         ordered_custom_presets = [
-            preset
-            for preset in self.preset_manager.custom_presets.values()
-            if preset.game == self.game
+            preset for preset in self.preset_manager.custom_presets.values() if preset.game == self.game
         ]
-        ordered_custom_presets.sort(
-            key=lambda p: (order_by_key.get(p.uuid, math.inf), p.name.lower())
-        )
+        ordered_custom_presets.sort(key=lambda p: (order_by_key.get(p.uuid, math.inf), p.name.lower()))
 
         for preset in ordered_custom_presets:
             preset_parent = self.options.get_parent_for_preset(preset.uuid)

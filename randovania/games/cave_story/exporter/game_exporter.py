@@ -41,8 +41,12 @@ class CSGameExporter(GameExporter):
     def _after_export(self):
         self._busy = False
 
-    def _do_export_game(self, patch_data: dict, export_params: GameExportParams,
-                        progress_update: status_update_lib.ProgressUpdateCallable):
+    def _do_export_game(
+        self,
+        patch_data: dict,
+        export_params: GameExportParams,
+        progress_update: status_update_lib.ProgressUpdateCallable,
+    ):
         assert isinstance(export_params, CSGameExportParams)
         try:
             caver_patcher.patch_files(patch_data, export_params.output_path, progress_update)

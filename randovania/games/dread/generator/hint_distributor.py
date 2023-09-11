@@ -24,16 +24,16 @@ class DreadHintDistributor(HintDistributor):
     def _get_relative_hint_providers(self):
         return []
 
-    async def assign_precision_to_hints(self, patches: GamePatches, rng: Random,
-                                        player_pool: PlayerPool, player_state: PlayerState) -> GamePatches:
+    async def assign_precision_to_hints(
+        self, patches: GamePatches, rng: Random, player_pool: PlayerPool, player_state: PlayerState
+    ) -> GamePatches:
         return self.add_hints_precision(player_state, patches, rng)
 
     async def assign_specific_location_hints(self, patches: GamePatches, prefill: PreFillParams) -> GamePatches:
         assert isinstance(prefill.configuration, DreadConfiguration)
         if prefill.configuration.artifacts.required_artifacts > 0:
             patches = patches.assign_hint(
-                NodeIdentifier.create("Dairon", "Navigation Station North", "Save Station"),
-                Hint(HintType.JOKE, None)
+                NodeIdentifier.create("Dairon", "Navigation Station North", "Save Station"), Hint(HintType.JOKE, None)
             )
 
         return await super().assign_specific_location_hints(patches, prefill)

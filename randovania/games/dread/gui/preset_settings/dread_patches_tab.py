@@ -34,8 +34,8 @@ class PresetDreadPatches(PresetTab, Ui_PresetDreadPatches):
             self._add_persist_option(getattr(self, f"{f}_check"), f)
 
         signal_handling.on_checked(
-            self.raven_beak_damage_table_handling_check,
-            self._on_raven_beak_damage_table_handling_changed)
+            self.raven_beak_damage_table_handling_check, self._on_raven_beak_damage_table_handling_changed
+        )
 
     @classmethod
     def tab_title(cls) -> str:
@@ -61,8 +61,8 @@ class PresetDreadPatches(PresetTab, Ui_PresetDreadPatches):
 
         with self._editor as editor:
             editor.set_configuration_field(
-                "raven_beak_damage_table_handling",
-                checked_value if value else DreadRavenBeakDamageMode.CONSISTENT_LOW)
+                "raven_beak_damage_table_handling", checked_value if value else DreadRavenBeakDamageMode.CONSISTENT_LOW
+            )
 
     def on_preset_changed(self, preset: Preset):
         config = typing.cast(DreadConfiguration, preset.configuration)
@@ -71,5 +71,4 @@ class PresetDreadPatches(PresetTab, Ui_PresetDreadPatches):
             typing.cast(QtWidgets.QCheckBox, getattr(self, f"{f}_check")).setChecked(getattr(config, f))
 
         self._orig_rb_damage_mode = config.raven_beak_damage_table_handling
-        self.raven_beak_damage_table_handling_check.setChecked(
-            not config.raven_beak_damage_table_handling.is_default)
+        self.raven_beak_damage_table_handling_check.setChecked(not config.raven_beak_damage_table_handling.is_default)

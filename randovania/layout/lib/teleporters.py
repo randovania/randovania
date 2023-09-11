@@ -31,15 +31,19 @@ class TeleporterShuffleMode(BitPackEnum, Enum):
     ONE_WAY_TELEPORTER_REPLACEMENT = "one-way-teleporter-replacement"
     ONE_WAY_ANYTHING = "one-way-anything"
 
-enum_lib.add_long_name(TeleporterShuffleMode, {
-    TeleporterShuffleMode.VANILLA: "Original connections",
-    TeleporterShuffleMode.ECHOES_SHUFFLED: "Shuffle regions",
-    TeleporterShuffleMode.TWO_WAY_RANDOMIZED: "Two-way, between regions",
-    TeleporterShuffleMode.TWO_WAY_UNCHECKED: "Two-way, unchecked",
-    TeleporterShuffleMode.ONE_WAY_TELEPORTER: "One-way, with cycles",
-    TeleporterShuffleMode.ONE_WAY_TELEPORTER_REPLACEMENT: "One-way, with replacement",
-    TeleporterShuffleMode.ONE_WAY_ANYTHING: "One-way, anywhere",
-})
+
+enum_lib.add_long_name(
+    TeleporterShuffleMode,
+    {
+        TeleporterShuffleMode.VANILLA: "Original connections",
+        TeleporterShuffleMode.ECHOES_SHUFFLED: "Shuffle regions",
+        TeleporterShuffleMode.TWO_WAY_RANDOMIZED: "Two-way, between regions",
+        TeleporterShuffleMode.TWO_WAY_UNCHECKED: "Two-way, unchecked",
+        TeleporterShuffleMode.ONE_WAY_TELEPORTER: "One-way, with cycles",
+        TeleporterShuffleMode.ONE_WAY_TELEPORTER_REPLACEMENT: "One-way, with replacement",
+        TeleporterShuffleMode.ONE_WAY_ANYTHING: "One-way, anywhere",
+    },
+)
 
 
 class TeleporterList(location_list.LocationList):
@@ -65,20 +69,22 @@ class TeleporterList(location_list.LocationList):
 
 
 def _valid_teleporter_target(area: Area, node: Node, game: RandovaniaGame):
-    if (game in (RandovaniaGame.METROID_PRIME, RandovaniaGame.METROID_PRIME_ECHOES) and
-            area.name == "Credits" and node.name in ("Event - Credits", "Event - Dark Samus 3 and 4")):
+    if (
+        game in (RandovaniaGame.METROID_PRIME, RandovaniaGame.METROID_PRIME_ECHOES)
+        and area.name == "Credits"
+        and node.name in ("Event - Credits", "Event - Dark Samus 3 and 4")
+    ):
         return True
 
     has_save_station = any(node.name == "Save Station" for node in area.nodes)
-    return (area.has_start_node() and node in area.get_start_nodes() and not has_save_station)
+    return area.has_start_node() and node in area.get_start_nodes() and not has_save_station
 
 
 class TeleporterTargetList(location_list.LocationList):
     @classmethod
     def nodes_list(cls, game: RandovaniaGame):
         return location_list.node_and_area_with_filter(
-            game,
-            lambda area, node: _valid_teleporter_target(area, node, game)
+            game, lambda area, node: _valid_teleporter_target(area, node, game)
         )
 
 
@@ -102,17 +108,25 @@ class TeleporterConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInit
 
     @property
     def editable_teleporters(self) -> list[NodeIdentifier]:
-        return [teleporter for teleporter in self.excluded_teleporters.nodes_list(self.game)
-                if teleporter not in self.excluded_teleporters.locations]
+        return [
+            teleporter
+            for teleporter in self.excluded_teleporters.nodes_list(self.game)
+            if teleporter not in self.excluded_teleporters.locations
+        ]
 
     @property
     def valid_targets(self) -> list[NodeIdentifier]:
         if self.mode == TeleporterShuffleMode.ONE_WAY_ANYTHING:
-            return [location for location in self.excluded_targets.nodes_list(self.game)
-                    if location not in self.excluded_targets.locations]
+            return [
+                location
+                for location in self.excluded_targets.nodes_list(self.game)
+                if location not in self.excluded_targets.locations
+            ]
 
-        elif self.mode in {TeleporterShuffleMode.ONE_WAY_TELEPORTER,
-                           TeleporterShuffleMode.ONE_WAY_TELEPORTER_REPLACEMENT}:
+        elif self.mode in {
+            TeleporterShuffleMode.ONE_WAY_TELEPORTER,
+            TeleporterShuffleMode.ONE_WAY_TELEPORTER_REPLACEMENT,
+        }:
             game_description = default_database.game_description_for(self.game)
             teleporter_dock_types = game_description.dock_weakness_database.all_teleporter_dock_types
             region_list = game_description.region_list
@@ -128,8 +142,9 @@ class TeleporterConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInit
                     # Hack for Metroid Prime 1, where the scripting for Metroid Prime Lair is dependent
                     # on the previous room
                     elif area.name == "Metroid Prime Lair":
-                        result.append(NodeIdentifier.create("Impact Crater",
-                                                            "Subchamber Five", "Dock to Subchamber Four"))
+                        result.append(
+                            NodeIdentifier.create("Impact Crater", "Subchamber Five", "Dock to Subchamber Four")
+                        )
             return result
         else:
             return []

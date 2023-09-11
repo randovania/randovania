@@ -43,11 +43,7 @@ class PresetGeneration(PresetTab, Ui_PresetGeneration):
         signal_handling.on_checked(self.trick_level_minimal_logic_check, self._on_trick_level_minimal_logic_check)
 
         # Minimal Logic
-        for w in [
-            self.trick_level_minimal_logic_check,
-            self.trick_level_minimal_logic_label,
-            self.minimal_logic_line
-        ]:
+        for w in [self.trick_level_minimal_logic_check, self.trick_level_minimal_logic_label, self.minimal_logic_line]:
             w.setVisible(game_description.minimal_logic is not None)
         if game_description.minimal_logic is not None:
             self.trick_level_minimal_logic_label.setText(
@@ -57,12 +53,18 @@ class PresetGeneration(PresetTab, Ui_PresetGeneration):
             )
 
         # Development
-        signal_handling.on_checked(self.single_set_for_pickups_that_solve_check,
-                                   self._persist_bool_layout_field("single_set_for_pickups_that_solve"))
-        signal_handling.on_checked(self.staggered_multi_pickup_placement_check,
-                                   self._persist_bool_layout_field("staggered_multi_pickup_placement"))
-        signal_handling.on_checked(self.check_if_beatable_after_base_patches_check,
-                                   self._persist_bool_layout_field("check_if_beatable_after_base_patches"))
+        signal_handling.on_checked(
+            self.single_set_for_pickups_that_solve_check,
+            self._persist_bool_layout_field("single_set_for_pickups_that_solve"),
+        )
+        signal_handling.on_checked(
+            self.staggered_multi_pickup_placement_check,
+            self._persist_bool_layout_field("staggered_multi_pickup_placement"),
+        )
+        signal_handling.on_checked(
+            self.check_if_beatable_after_base_patches_check,
+            self._persist_bool_layout_field("check_if_beatable_after_base_patches"),
+        )
         self.check_if_beatable_after_base_patches_check.setVisible(False)  # broken, hide it
 
         # Damage strictness
@@ -81,7 +83,8 @@ class PresetGeneration(PresetTab, Ui_PresetGeneration):
 
         self.local_first_progression_check.setChecked(layout.first_progression_must_be_local)
         self.check_major_minor.setChecked(
-            layout.available_locations.randomization_mode == RandomizationMode.MAJOR_MINOR_SPLIT)
+            layout.available_locations.randomization_mode == RandomizationMode.MAJOR_MINOR_SPLIT
+        )
 
         self.trick_level_minimal_logic_check.setChecked(layout.trick_level.minimal_logic)
         signal_handling.set_combo_with_value(self.dangerous_combo, layout.logical_resource_action)
@@ -141,9 +144,7 @@ class PresetGeneration(PresetTab, Ui_PresetGeneration):
     def _on_trick_level_minimal_logic_check(self, state: bool):
         with self._editor as options:
             options.set_configuration_field(
-                "trick_level",
-                dataclasses.replace(options.configuration.trick_level,
-                                    minimal_logic=state)
+                "trick_level", dataclasses.replace(options.configuration.trick_level, minimal_logic=state)
             )
 
     def _on_update_damage_strictness(self, new_index: int):

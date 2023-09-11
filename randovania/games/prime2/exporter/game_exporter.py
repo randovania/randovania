@@ -48,8 +48,12 @@ class EchoesGameExporter(GameExporter):
     def _after_export(self):
         self._busy = False
 
-    def _do_export_game(self, patch_data: dict, export_params: GameExportParams,
-                        progress_update: status_update_lib.ProgressUpdateCallable):
+    def _do_export_game(
+        self,
+        patch_data: dict,
+        export_params: GameExportParams,
+        progress_update: status_update_lib.ProgressUpdateCallable,
+    ):
         assert isinstance(export_params, EchoesGameExportParams)
         new_patcher = patch_data.pop("new_patcher", None)
         monitoring.set_tag("echoes_new_patcher", new_patcher is not None)
@@ -82,22 +86,15 @@ class EchoesGameExporter(GameExporter):
                 game_files_path=contents_files_path,
                 progress_update=unpack_updaters[0],
             )
-            claris_randomizer.create_pak_backups(
-                contents_files_path,
-                backup_files_path,
-                unpack_updaters[1]
-            )
+            claris_randomizer.create_pak_backups(contents_files_path, backup_files_path, unpack_updaters[1])
         else:
             try:
-                claris_randomizer.restore_pak_backups(
-                    contents_files_path,
-                    backup_files_path,
-                    backups_update
-                )
+                claris_randomizer.restore_pak_backups(contents_files_path, backup_files_path, backups_update)
             except FileNotFoundError:
                 raise UnableToExportError(
                     "Your internal copy is missing files.\nPlease press 'Delete internal copy' and select "
-                    "a clean game ISO.")
+                    "a clean game ISO."
+                )
 
         # Save patcher data
         json_lib.write_path(
@@ -107,19 +104,22 @@ class EchoesGameExporter(GameExporter):
 
         # Apply patcher
         banner_patcher.patch_game_name_and_id(
-            contents_files_path,
-            patch_data["banner_name"],
-            patch_data["publisher_id"]
+            contents_files_path, patch_data["banner_name"], patch_data["publisher_id"]
         )
         randomizer_data = copy.deepcopy(decode_randomizer_data())
 
         if export_params.use_prime_models:
             convert_update = updaters.pop(0)
             from randovania.patching.prime import asset_conversion
+
             assets_path = export_params.asset_cache_path
             asset_conversion.convert_prime1_pickups(
-                export_params.prime_path, contents_files_path, assets_path,
-                patch_data, randomizer_data, convert_update,
+                export_params.prime_path,
+                contents_files_path,
+                assets_path,
+                patch_data,
+                randomizer_data,
+                convert_update,
             )
 
         copy_coin_chest(contents_files_path)
@@ -128,11 +128,7 @@ class EchoesGameExporter(GameExporter):
         claris_update = updaters.pop(0)
         adjust_model_name(patch_data, randomizer_data)
 
-        claris_randomizer.apply_patcher_file(
-            contents_files_path,
-            patch_data,
-            randomizer_data,
-            claris_update)
+        claris_randomizer.apply_patcher_file(contents_files_path, patch_data, randomizer_data, claris_update)
 
         dol_patcher.apply_patches(
             dol_file.DolFile(contents_files_path.joinpath("sys/main.dol")),
@@ -145,20 +141,15 @@ class EchoesGameExporter(GameExporter):
 
             with monitoring.trace_block("open_prime_rando.echoes_patcher.patch_paks"):
                 import open_prime_rando.echoes_patcher
+
                 open_prime_rando.echoes_patcher.patch_paks(
-                    PathFileProvider(contents_files_path),
-                    contents_files_path,
-                    new_patcher,
-                    opr_update
+                    PathFileProvider(contents_files_path), contents_files_path, new_patcher, opr_update
                 )
 
         # Menu Mod
         if patch_data["menu_mod"]:
             menumod_update = updaters.pop(0)
-            claris_randomizer.add_menu_mod_to_files(
-                contents_files_path,
-                menumod_update
-            )
+            claris_randomizer.add_menu_mod_to_files(contents_files_path, menumod_update)
 
         # Change the color of the hud
         hud_color = patch_data["specific_patches"]["hud_color"]
@@ -185,23 +176,14 @@ def copy_coin_chest(contents_path: Path):
     Claris patcher doesn't read from Metroid6.pak, where these assets are found.
     Copy them into the main paks so that we can actually use the Coin Chest model
     """
-    manager = AssetManager(
-        PathFileProvider(contents_path),
-        RDSGame.ECHOES
-    )
+    manager = AssetManager(PathFileProvider(contents_path), RDSGame.ECHOES)
 
     coinchest_ancs = 0xE3067A51
-    paks = [
-        pak for pak in manager.all_paks
-        if "Metroid" in pak
-    ]
+    paks = [pak for pak in manager.all_paks if "Metroid" in pak]
     for dep in manager.get_dependencies_for_asset(coinchest_ancs):
         # stupid hack. it won't actually ensure they're present
         # unless it thinks the assets were modified
-        manager.replace_asset(
-            dep.id,
-            manager.get_raw_asset(dep.id)
-        )
+        manager.replace_asset(dep.id, manager.get_raw_asset(dep.id))
         for pak in paks:
             manager.ensure_present(pak, dep.id)
 

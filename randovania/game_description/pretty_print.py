@@ -35,8 +35,7 @@ def pretty_print_resource_requirement(requirement: ResourceRequirement) -> str:
         return requirement.pretty_text
 
 
-def pretty_print_requirement_array(requirement: RequirementArrayBase,
-                                   level: int) -> Iterator[tuple[int, str]]:
+def pretty_print_requirement_array(requirement: RequirementArrayBase, level: int) -> Iterator[tuple[int, str]]:
     if len(requirement.items) == 1 and requirement.comment is None:
         yield from pretty_print_requirement(requirement.items[0], level)
         return
@@ -46,10 +45,7 @@ def pretty_print_requirement_array(requirement: RequirementArrayBase,
     other_requirements = [item for item in requirement.items if isinstance(item, RequirementArrayBase)]
     assert len(resource_requirements) + len(template_requirements) + len(other_requirements) == len(requirement.items)
 
-    pretty_resources = [
-        pretty_print_resource_requirement(item)
-        for item in sorted(resource_requirements)
-    ]
+    pretty_resources = [pretty_print_resource_requirement(item) for item in sorted(resource_requirements)]
     sorted_templates = sorted(item.template_name for item in template_requirements)
 
     if isinstance(requirement, RequirementOr):
@@ -96,8 +92,9 @@ def pretty_print_node_type(node: Node, region_list: RegionList) -> str:
             other = region_list.node_by_identifier(node.default_connection)
             other_name = region_list.node_name(other)
         except IndexError as e:
-            other_name = (f"(Area {node.default_connection.area_name}, "
-                          f"index {node.default_connection.node_name}) [{e}]")
+            other_name = (
+                f"(Area {node.default_connection.area_name}, index {node.default_connection.node_name}) [{e}]"
+            )
 
         message = f"{node.default_dock_weakness.name} to {other_name}"
 
@@ -234,8 +231,9 @@ def write_human_readable_game(game: GameDescription, base_path: Path) -> None:
         write_human_readable_meta(game, meta)
 
     for region in game.region_list.regions:
-        name = REGION_NAME_TO_FILE_NAME_RE.sub(r'', region.name)
+        name = REGION_NAME_TO_FILE_NAME_RE.sub(r"", region.name)
         with base_path.joinpath(f"{name}.txt").open("w", encoding="utf-8") as region_file:
+
             def print_to_file(*args: typing.Any) -> None:
                 region_file.write("\t".join(str(arg) for arg in args) + "\n")
 

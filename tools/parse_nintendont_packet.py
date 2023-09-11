@@ -55,7 +55,7 @@ def main():
 
         # Has write
         if bool(op_byte & 0x40):
-            write_data = b[offset:offset + byte_count]
+            write_data = b[offset : offset + byte_count]
             offset += byte_count
             if len(write_data) != byte_count:
                 raise ValueError(f"At op {i}, expected {byte_count} bytes. Got {len(write_data)}")
@@ -66,5 +66,5 @@ def main():
         print(f"  * At {address_text}, {' and '.join(operation_pretty)}.")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

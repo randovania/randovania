@@ -71,11 +71,7 @@ class OldGeneratorReach(GeneratorReach):
     _is_node_safe_cache: dict[int, bool]
 
     def __deepcopy__(self, memodict):
-        reach = OldGeneratorReach(
-            self._game,
-            self._state,
-            self._digraph.copy()
-        )
+        reach = OldGeneratorReach(self._game, self._state, self._digraph.copy())
         reach._unreachable_paths = copy.copy(self._unreachable_paths)
         reach._reachable_paths = self._reachable_paths
         reach._reachable_costs = self._reachable_costs
@@ -85,12 +81,7 @@ class OldGeneratorReach(GeneratorReach):
         reach._is_node_safe_cache = copy.copy(self._is_node_safe_cache)
         return reach
 
-    def __init__(self,
-                 game: GameDescription,
-                 state: State,
-                 graph: graph_module.BaseGraph
-                 ):
-
+    def __init__(self, game: GameDescription, state: State, graph: graph_module.BaseGraph):
         self._game = game
         self.all_nodes = game.region_list.all_nodes
         self._state = state
@@ -101,11 +92,11 @@ class OldGeneratorReach(GeneratorReach):
         self._is_node_safe_cache = {}
 
     @classmethod
-    def reach_from_state(cls,
-                         game: GameDescription,
-                         initial_state: State,
-                         ) -> GeneratorReach:
-
+    def reach_from_state(
+        cls,
+        game: GameDescription,
+        initial_state: State,
+    ) -> GeneratorReach:
         reach = cls(game, initial_state, graph_module.RandovaniaGraph.new())
         game.region_list.ensure_has_node_cache()
         reach._expand_graph([GraphPath(None, initial_state.node, RequirementSet.trivial())])
@@ -126,7 +117,9 @@ class OldGeneratorReach(GeneratorReach):
                 requirement = RequirementAnd([requirement, extra_requirement])
 
             yield target_node, requirement.patch_requirements(
-                self._state.resources, 1.0, self._state.resource_database,
+                self._state.resources,
+                1.0,
+                self._state.resource_database,
             ).as_set(self._state.resource_database)
 
     def _expand_graph(self, paths_to_check: list[GraphPath]):
@@ -155,9 +148,10 @@ class OldGeneratorReach(GeneratorReach):
         # print("!! _expand_graph finished. Has {} edges".format(sum(1 for _ in self._digraph.edges_data())))
         self._safe_nodes = None
 
-    def _can_advance(self,
-                     node: Node,
-                     ) -> bool:
+    def _can_advance(
+        self,
+        node: Node,
+    ) -> bool:
         """
         Calculates if we can advance past a given node
         :param node:
@@ -222,7 +216,7 @@ class OldGeneratorReach(GeneratorReach):
             if cost == 0:
                 self._node_reachable_cache[index] = True
             elif cost == 1:
-                self._node_reachable_cache[index] = (not self._can_advance(node))
+                self._node_reachable_cache[index] = not self._can_advance(node)
             else:
                 self._node_reachable_cache[index] = False
 
@@ -275,19 +269,19 @@ class OldGeneratorReach(GeneratorReach):
         self._is_node_safe_cache[node_index] = node_index in self._safe_nodes.as_set
         return self._is_node_safe_cache[node_index]
 
-    def advance_to(self, new_state: State,
-                   is_safe: bool = False,
-                   ) -> None:
+    def advance_to(
+        self,
+        new_state: State,
+        is_safe: bool = False,
+    ) -> None:
         assert new_state.previous_state == self.state
         # assert self.is_reachable_node(new_state.node)
 
         if is_safe or self.is_safe_node(new_state.node):
-            for index in [index for index, flag in self._node_reachable_cache.items()
-                          if not flag]:
+            for index in [index for index, flag in self._node_reachable_cache.items() if not flag]:
                 del self._node_reachable_cache[index]
 
-            for node_index in [node_index for node_index, flag in self._is_node_safe_cache.items()
-                               if not flag]:
+            for node_index in [node_index for node_index, flag in self._is_node_safe_cache.items() if not flag]:
                 del self._is_node_safe_cache[node_index]
         else:
             self._node_reachable_cache = {}
@@ -346,6 +340,6 @@ class OldGeneratorReach(GeneratorReach):
         return results
 
     def victory_condition_satisfied(self):
-        return self.game.victory_condition.satisfied(self.state.resources,
-                                                     self.state.energy,
-                                                     self.state.resource_database)
+        return self.game.victory_condition.satisfied(
+            self.state.resources, self.state.energy, self.state.resource_database
+        )

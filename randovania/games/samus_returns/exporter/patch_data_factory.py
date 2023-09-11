@@ -59,7 +59,6 @@ class MSRPatchDataFactory(PatchDataFactory):
             return {}
 
     def _pickup_detail_for_target(self, detail: ExportedPickupDetails) -> dict | None:
-
         pickup_node = self.game.region_list.node_from_pickup_index(detail.index)
         pickup_type = pickup_node.extra.get("pickup_type", "actor")
 
@@ -74,15 +73,16 @@ class MSRPatchDataFactory(PatchDataFactory):
 
         return details
 
-    def _node_for(self, identifier:  NodeIdentifier) -> Node:
+    def _node_for(self, identifier: NodeIdentifier) -> Node:
         return self.game.region_list.node_by_identifier(identifier)
 
     def create_data(self) -> dict:
         starting_location = self._start_point_ref_for(self._node_for(self.patches.starting_location))
         starting_items = self._calculate_starting_inventory(self.patches.starting_resources())
 
-        useless_target = PickupTarget(pickup_creator.create_nothing_pickup(self.game.resource_database),
-                                      self.players_config.player_index)
+        useless_target = PickupTarget(
+            pickup_creator.create_nothing_pickup(self.game.resource_database), self.players_config.player_index
+        )
 
         pickup_list = pickup_exporter.export_all_indices(
             self.patches,
@@ -101,9 +101,7 @@ class MSRPatchDataFactory(PatchDataFactory):
             "starting_location": starting_location,
             "starting_items": starting_items,
             "pickups": [
-                data
-                for pickup_item in pickup_list
-                if (data := self._pickup_detail_for_target(pickup_item)) is not None
+                data for pickup_item in pickup_list if (data := self._pickup_detail_for_target(pickup_item)) is not None
             ],
             "energy_per_tank": energy_per_tank,
         }
@@ -118,8 +116,7 @@ class MSRAcquiredMemo(dict):
         result = cls()
         result["Missile Tank"] = "Missile Tank acquired.\nMissile capacity increased by {Missile}."
         result["Super Missile Tank"] = (
-            "Super Missile Tank acquired.\n"
-            "Super Missile capacity increased by {Super Missile}."
+            "Super Missile Tank acquired.\nSuper Missile capacity increased by {Super Missile}."
         )
         result["Power Bomb Tank"] = "Power Bomb Tank acquired.\nPower Bomb capacity increased by {Power Bomb}."
         result["Energy Tank"] = "Energy Tank acquired.\nEnergy capacity increased by 100."

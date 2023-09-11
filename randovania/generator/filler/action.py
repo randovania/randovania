@@ -22,10 +22,7 @@ class Action:
 
     @property
     def name(self) -> str:
-        return "[{}]".format(", ".join(
-            f"{type(a).__name__[0]}: {a.name}"
-            for a in self.steps
-        ))
+        return "[{}]".format(", ".join(f"{type(a).__name__[0]}: {a.name}" for a in self.steps))
 
     @property
     def num_pickups(self) -> int:

@@ -22,17 +22,20 @@ if TYPE_CHECKING:
 
 
 class EchoesBootstrap(MetroidBootstrap):
-    def event_resources_for_configuration(self, configuration: BaseConfiguration,
-                                          resource_database: ResourceDatabase,
-                                          ) -> ResourceGain:
+    def event_resources_for_configuration(
+        self,
+        configuration: BaseConfiguration,
+        resource_database: ResourceDatabase,
+    ) -> ResourceGain:
         assert isinstance(configuration, EchoesConfiguration)
         if configuration.use_new_patcher:
             yield resource_database.get_event("Event73"), 1  # Dynamo Chamber Gates
             yield resource_database.get_event("Event75"), 1  # Trooper Security Station Gate
             yield resource_database.get_event("Event20"), 1  # Security Station B DS Appearance
 
-    def _get_enabled_misc_resources(self, configuration: BaseConfiguration,
-                                    resource_database: ResourceDatabase) -> set[str]:
+    def _get_enabled_misc_resources(
+        self, configuration: BaseConfiguration, resource_database: ResourceDatabase
+    ) -> set[str]:
         assert isinstance(configuration, EchoesConfiguration)
         enabled_resources = set()
         allow_vanilla = {
@@ -80,8 +83,11 @@ class EchoesBootstrap(MetroidBootstrap):
             locations = sky_temple_keys.pickup_nodes_for_stk_mode(patches.game, mode)
             rng.shuffle(locations)
 
-            keys = [pickup for pickup in list(pool_results.to_place)
-                    if pickup.pickup_category is sky_temple_keys.SKY_TEMPLE_KEY_CATEGORY]
+            keys = [
+                pickup
+                for pickup in list(pool_results.to_place)
+                if pickup.pickup_category is sky_temple_keys.SKY_TEMPLE_KEY_CATEGORY
+            ]
 
             if len(keys) < len(locations):
                 raise InvalidConfiguration(

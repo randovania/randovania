@@ -13,7 +13,10 @@ class LocationCategory(BitPackEnum, Enum):
     MINOR = "minor"
 
 
-enum_lib.add_long_name(LocationCategory, {
-    LocationCategory.MAJOR: "Major",
-    LocationCategory.MINOR: "Minor",
-})
+enum_lib.add_long_name(
+    LocationCategory,
+    {
+        LocationCategory.MAJOR: "Major",
+        LocationCategory.MINOR: "Minor",
+    },
+)

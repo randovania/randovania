@@ -79,8 +79,9 @@ class EchoesGameExportDialog(GameExportDialog, Ui_EchoesGameExportDialog):
         super().__init__(options, patch_data, word_hash, spoiler, games)
 
         self.default_output_name = f"Echoes Randomizer - {word_hash}"
-        self._prompt_input_file = check_extracted_game(self.input_file_edit, self.input_file_button,
-                                                       self._contents_file_path)
+        self._prompt_input_file = check_extracted_game(
+            self.input_file_edit, self.input_file_button, self._contents_file_path
+        )
 
         per_game = options.options_for_game(self.game_enum())
         assert isinstance(per_game, EchoesPerGameOptions)
@@ -122,12 +123,13 @@ class EchoesGameExportDialog(GameExportDialog, Ui_EchoesGameExportDialog):
         add_field_validation(
             accept_button=self.accept_button,
             fields={
-                self.input_file_edit: lambda: echoes_input_validator(self.input_file, self._prompt_input_file,
-                                                                     self.input_file_edit),
+                self.input_file_edit: lambda: echoes_input_validator(
+                    self.input_file, self._prompt_input_file, self.input_file_edit
+                ),
                 self.output_file_edit: lambda: output_file_validator(self.output_file),
-                self.prime_file_edit: lambda: self._use_prime_models and is_prime1_iso_validator(self.prime_file,
-                                                                                                 iso_required=True),
-            }
+                self.prime_file_edit: lambda: self._use_prime_models
+                and is_prime1_iso_validator(self.prime_file, iso_required=True),
+            },
         )
 
     def update_per_game_options(self, per_game: EchoesPerGameOptions) -> EchoesPerGameOptions:
@@ -156,12 +158,16 @@ class EchoesGameExportDialog(GameExportDialog, Ui_EchoesGameExportDialog):
 
         with self._options as options:
             from randovania.games.prime1.exporter.options import PrimePerGameOptions
+
             prime_options = options.options_for_game(RandovaniaGame.METROID_PRIME)
             assert isinstance(prime_options, PrimePerGameOptions)
-            options.set_options_for_game(RandovaniaGame.METROID_PRIME, dataclasses.replace(
-                prime_options,
-                input_path=self.prime_file,
-            ))
+            options.set_options_for_game(
+                RandovaniaGame.METROID_PRIME,
+                dataclasses.replace(
+                    prime_options,
+                    input_path=self.prime_file,
+                ),
+            )
 
     # Getters
     @property
@@ -192,8 +198,9 @@ class EchoesGameExportDialog(GameExportDialog, Ui_EchoesGameExportDialog):
         else:
             delete_internal_copy(self._options.internal_copies_path)
             self.input_file_edit.setText("")
-            self._prompt_input_file = check_extracted_game(self.input_file_edit, self.input_file_button,
-                                                           self._contents_file_path)
+            self._prompt_input_file = check_extracted_game(
+                self.input_file_edit, self.input_file_button, self._contents_file_path
+            )
 
     # Output File
     def _on_output_file_button(self):

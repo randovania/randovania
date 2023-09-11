@@ -28,21 +28,19 @@ def _resources_in_pickup(pickup: PickupEntry, current_resources: ResourceCollect
 
 
 def interesting_resources_for_reach(reach: GeneratorReach) -> frozenset[ResourceInfo]:
-    satisfiable_requirements: frozenset[RequirementList] = frozenset(itertools.chain.from_iterable(
-        requirements.alternatives
-        for requirements in reach.unreachable_nodes_with_requirements().values()
-    ))
+    satisfiable_requirements: frozenset[RequirementList] = frozenset(
+        itertools.chain.from_iterable(
+            requirements.alternatives for requirements in reach.unreachable_nodes_with_requirements().values()
+        )
+    )
     return game_description.calculate_interesting_resources(
-        satisfiable_requirements,
-        reach.state.resources,
-        reach.state.energy,
-        reach.state.resource_database
+        satisfiable_requirements, reach.state.resources, reach.state.energy, reach.state.resource_database
     )
 
 
-def _unsatisfied_item_requirements_in_list(alternative: RequirementList,
-                                           state: State,
-                                           uncollected_resources: set[ResourceInfo]):
+def _unsatisfied_item_requirements_in_list(
+    alternative: RequirementList, state: State, uncollected_resources: set[ResourceInfo]
+):
     possible = True
     items = []
     damage = []
@@ -80,10 +78,11 @@ def _unsatisfied_item_requirements_in_list(alternative: RequirementList,
         yield items
 
 
-def _requirement_lists_without_satisfied_resources(state: State,
-                                                   possible_sets: list[RequirementSet],
-                                                   uncollected_resources: set[ResourceInfo],
-                                                   ) -> set[RequirementList]:
+def _requirement_lists_without_satisfied_resources(
+    state: State,
+    possible_sets: list[RequirementSet],
+    uncollected_resources: set[ResourceInfo],
+) -> set[RequirementList]:
     seen_lists = set()
     result = set()
 
@@ -110,9 +109,7 @@ def _requirement_lists_without_satisfied_resources(state: State,
     return result
 
 
-def pickups_to_solve_list(pickup_pool: list[PickupEntry],
-                          requirement_list: RequirementList,
-                          state: State):
+def pickups_to_solve_list(pickup_pool: list[PickupEntry], requirement_list: RequirementList, state: State):
     pickups = []
 
     db = state.resource_database
@@ -122,9 +119,7 @@ def pickups_to_solve_list(pickup_pool: list[PickupEntry],
     # Check pickups that give less items in total first
     # This means we test for expansions before the standard pickups, in case both give the same resource
     # Useful to get Dark Beam Ammo Expansion instead of Dark Beam.
-    pickups_for_this.sort(
-        key=lambda p: sum(1 for _ in p.resource_gain(resources, force_lock=True))
-    )
+    pickups_for_this.sort(key=lambda p: sum(1 for _ in p.resource_gain(resources, force_lock=True)))
 
     for individual in sorted(requirement_list.values()):
         if individual.satisfied(resources, state.energy, state.resource_database):
@@ -148,11 +143,12 @@ def pickups_to_solve_list(pickup_pool: list[PickupEntry],
     return pickups
 
 
-def get_pickups_that_solves_unreachable(pickups_left: list[PickupEntry],
-                                        reach: GeneratorReach,
-                                        uncollected_resource_nodes: list[ResourceNode],
-                                        single_set: bool,
-                                        ) -> PickupCombinations:
+def get_pickups_that_solves_unreachable(
+    pickups_left: list[PickupEntry],
+    reach: GeneratorReach,
+    uncollected_resource_nodes: list[ResourceNode],
+    single_set: bool,
+) -> PickupCombinations:
     """New logic. Given pickup list and a reach, checks the combination of pickups
     that satisfies on unreachable nodes.
     If single_set is set, all possible_sets are combined into a single one.

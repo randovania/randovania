@@ -16,9 +16,9 @@ from randovania.interface_common.preset_editor import PresetEditor
 
 @pytest.mark.parametrize("use_enemy_attribute_randomizer", [False, True])
 def test_on_preset_changed(skip_qtbot, preset_manager, use_enemy_attribute_randomizer):
-    #Setup
+    # Setup
     base = preset_manager.default_preset_for_game(RandovaniaGame.METROID_PRIME).get_preset()
-    preset = dataclasses.replace(base, uuid=uuid.UUID('b41fde84-1f57-4b79-8cd6-3e5a78077fa6'))
+    preset = dataclasses.replace(base, uuid=uuid.UUID("b41fde84-1f57-4b79-8cd6-3e5a78077fa6"))
     options = MagicMock()
     editor = PresetEditor(preset, options)
     window = PresetEnemyAttributeRandomizer(editor, default_database.game_description_for(preset.game), MagicMock())

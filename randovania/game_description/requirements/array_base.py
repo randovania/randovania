@@ -30,8 +30,9 @@ class RequirementArrayBase(Requirement):
     def satisfied(self, current_resources: ResourceCollection, current_energy: int, database: ResourceDatabase) -> bool:
         raise NotImplementedError
 
-    def patch_requirements(self, static_resources: ResourceCollection, damage_multiplier: float,
-                           database: ResourceDatabase) -> Requirement:
+    def patch_requirements(
+        self, static_resources: ResourceCollection, damage_multiplier: float, database: ResourceDatabase
+    ) -> Requirement:
         return type(self)(
             (item.patch_requirements(static_resources, damage_multiplier, database) for item in self.items),
             comment=self.comment,
@@ -85,10 +86,9 @@ def mergeable_array(req: RequirementArrayBase, keep_comments: bool) -> bool:
         return True
 
 
-def expand_items(items: tuple[Requirement, ...],
-                 cls: type[RequirementArrayBase],
-                 exclude: Requirement,
-                 keep_comments: bool) -> list[Requirement]:
+def expand_items(
+    items: tuple[Requirement, ...], cls: type[RequirementArrayBase], exclude: Requirement, keep_comments: bool
+) -> list[Requirement]:
     expanded = []
 
     def _add(_item: Requirement) -> None:

@@ -34,8 +34,9 @@ class TrickLevelConfiguration(BitPackValue):
     def __post_init__(self):
         for trick, level in self.specific_levels.items():
             if not isinstance(level, LayoutTrickLevel) or level == LayoutTrickLevel.DISABLED:
-                raise ValueError(f"Invalid level `{level}` for trick {trick}, "
-                                 f"expected a LayoutTrickLevel that isn't NO_TRICKS")
+                raise ValueError(
+                    f"Invalid level `{level}` for trick {trick}, expected a LayoutTrickLevel that isn't NO_TRICKS"
+                )
 
     def bit_pack_encode(self, metadata) -> Iterator[tuple[int, int]]:
         resource_database = default_database.resource_database_for(self.game)
@@ -105,8 +106,7 @@ class TrickLevelConfiguration(BitPackValue):
     @property
     def as_json(self) -> dict:
         specific_levels = {
-            trick_short_name: level.value
-            for trick_short_name, level in sorted(self.specific_levels.items())
+            trick_short_name: level.value for trick_short_name, level in sorted(self.specific_levels.items())
         }
 
         return {

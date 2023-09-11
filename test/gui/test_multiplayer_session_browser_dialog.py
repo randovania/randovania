@@ -15,23 +15,39 @@ from randovania.network_common.session_visibility import MultiplayerSessionVisib
 def create_sessions():
     utc = datetime.UTC
     session_a = MultiplayerSessionListEntry(
-        id=1, name="A Game", has_password=False, visibility=MultiplayerSessionVisibility.HIDDEN,
-        num_users=1, num_worlds=3, creator="You", is_user_in_session=True,
+        id=1,
+        name="A Game",
+        has_password=False,
+        visibility=MultiplayerSessionVisibility.HIDDEN,
+        num_users=1,
+        num_worlds=3,
+        creator="You",
+        is_user_in_session=True,
         creation_date=datetime.datetime.now(utc) - datetime.timedelta(days=4),
         join_date=datetime.datetime(year=2016, month=5, day=1, tzinfo=utc),
     )
     session_b = MultiplayerSessionListEntry(
-        id=2, name="B Game", has_password=True,
+        id=2,
+        name="B Game",
+        has_password=True,
         visibility=MultiplayerSessionVisibility.VISIBLE,
-        num_users=2, num_worlds=2, creator="You", is_user_in_session=False,
+        num_users=2,
+        num_worlds=2,
+        creator="You",
+        is_user_in_session=False,
         creation_date=datetime.datetime.now(utc) - datetime.timedelta(days=8),
         join_date=datetime.datetime(year=2016, month=5, day=1, tzinfo=utc),
     )
 
     session_c = MultiplayerSessionListEntry(
-        id=3, name="C Game", has_password=True,
+        id=3,
+        name="C Game",
+        has_password=True,
         visibility=MultiplayerSessionVisibility.VISIBLE,
-        num_users=2, num_worlds=0, creator="You", is_user_in_session=False,
+        num_users=2,
+        num_worlds=0,
+        creator="You",
+        is_user_in_session=False,
         creation_date=datetime.datetime.now(utc) - datetime.timedelta(days=4),
         join_date=datetime.datetime(year=2016, month=5, day=1, tzinfo=utc),
     )

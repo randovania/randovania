@@ -52,7 +52,6 @@ class BackgroundProcessDialog(QDialog, BackgroundTaskMixin, Ui_BackgroundProcess
     async def open_for_background_task(cls, target, starting_message: str):
         dialog = cls()
         result = await asyncio.gather(
-            dialog.run_in_background_async_then_close(target, starting_message),
-            async_dialog.execute_dialog(dialog)
+            dialog.run_in_background_async_then_close(target, starting_message), async_dialog.execute_dialog(dialog)
         )
         return result[0]

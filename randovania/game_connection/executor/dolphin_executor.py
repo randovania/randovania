@@ -18,7 +18,8 @@ MEM1_END = 0x81800000
 def _validate_range(address: int, size: int):
     if address < MEM1_START or address + size > MEM1_END:
         raise MemoryOperationException(
-            f"Range {address:x} -> {address + size:x} is outside of the GameCube memory range.")
+            f"Range {address:x} -> {address + size:x} is outside of the GameCube memory range."
+        )
 
 
 class DolphinExecutor(MemoryOperationExecutor):

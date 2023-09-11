@@ -33,28 +33,27 @@ _SUB_GUARDIAN_INDICES = [
 
 
 @pytest.mark.parametrize("vanilla_teleporters", [False, True])
-def test_misc_resources_for_configuration(echoes_resource_database,
-                                          default_echoes_configuration,
-                                          vanilla_teleporters: bool,
-                                          ):
+def test_misc_resources_for_configuration(
+    echoes_resource_database,
+    default_echoes_configuration,
+    vanilla_teleporters: bool,
+):
     # Setup
     teleporters = MagicMock(spec=PrimeTrilogyTeleporterConfiguration)
-    configuration = dataclasses.replace(default_echoes_configuration,
-                                        teleporters=teleporters)
+    configuration = dataclasses.replace(default_echoes_configuration, teleporters=teleporters)
     teleporters.is_vanilla = vanilla_teleporters
     gfmc_resource = echoes_resource_database.get_by_type_and_index(ResourceType.MISC, "VanillaGFMCGate")
     torvus_resource = echoes_resource_database.get_by_type_and_index(ResourceType.MISC, "VanillaTorvusTempleGate")
     great_resource = echoes_resource_database.get_by_type_and_index(ResourceType.MISC, "VanillaGreatTempleEmeraldGate")
 
     # Run
-    result = dict(configuration.game.generator.bootstrap.misc_resources_for_configuration(
-        configuration,
-        echoes_resource_database,
-    ))
-    relevant_tricks = {
-        trick: result[trick]
-        for trick in [gfmc_resource, torvus_resource, great_resource]
-    }
+    result = dict(
+        configuration.game.generator.bootstrap.misc_resources_for_configuration(
+            configuration,
+            echoes_resource_database,
+        )
+    )
+    relevant_tricks = {trick: result[trick] for trick in [gfmc_resource, torvus_resource, great_resource]}
 
     # Assert
     assert relevant_tricks == {
@@ -73,12 +72,15 @@ def test_assign_pool_results(echoes_game_description, default_echoes_configurati
 
     # Run
     result = EchoesBootstrap().assign_pool_results(
-        Random(1000), patches, pool_results,
+        Random(1000),
+        patches,
+        pool_results,
     )
 
     # Assert
-    shuffled_stks = [pickup for pickup in pool_results.to_place
-                     if pickup.pickup_category == sky_temple_keys.SKY_TEMPLE_KEY_CATEGORY]
+    shuffled_stks = [
+        pickup for pickup in pool_results.to_place if pickup.pickup_category == sky_temple_keys.SKY_TEMPLE_KEY_CATEGORY
+    ]
 
     assert result.starting_equipment == pool_results.starting
     if stk_mode == LayoutSkyTempleKeyMode.ALL_BOSSES:

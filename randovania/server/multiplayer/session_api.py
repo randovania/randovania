@@ -1,4 +1,3 @@
-
 import datetime
 
 from peewee import Case, fn
@@ -26,31 +25,31 @@ def list_sessions(sa: ServerApp, limit: int | None):
 
     user = sa.get_current_user()
     world_count_subquery = World.select(fn.COUNT(World.id)).where(World.session_id == MultiplayerSession.id)
-    sessions: list[MultiplayerSessionListEntry] = MultiplayerSession.select(
+    sessions: list[MultiplayerSessionListEntry] = (
+        MultiplayerSession.select(
             MultiplayerSession.id,
             MultiplayerSession.name,
-            Case(None, ((MultiplayerSession.password.is_null(), False),), True).alias('has_password'),
+            Case(None, ((MultiplayerSession.password.is_null(), False),), True).alias("has_password"),
             MultiplayerSession.visibility,
-            fn.COUNT(MultiplayerMembership.user_id).alias('num_users'),
+            fn.COUNT(MultiplayerMembership.user_id).alias("num_users"),
             world_count_subquery.alias("num_worlds"),
-            User.name.alias('creator'),
+            User.name.alias("creator"),
             MultiplayerSession.creation_date.alias("creation_date"),
-            fn.MAX(Case(MultiplayerMembership.user_id, ((user.id, True),), False)).alias('is_user_in_session'),
-            MultiplayerMembership.join_date.alias('join_date'),
-        ).join(
-            User, on=MultiplayerSession.creator
-        ).join(
-            MultiplayerMembership, on=MultiplayerMembership.session == MultiplayerSession.id,
-        ).group_by(
-            MultiplayerSession.id
-        ).order_by(
-            MultiplayerSession.id.desc()
-        ).limit(limit).objects(construct_helper)
+            fn.MAX(Case(MultiplayerMembership.user_id, ((user.id, True),), False)).alias("is_user_in_session"),
+            MultiplayerMembership.join_date.alias("join_date"),
+        )
+        .join(User, on=MultiplayerSession.creator)
+        .join(
+            MultiplayerMembership,
+            on=MultiplayerMembership.session == MultiplayerSession.id,
+        )
+        .group_by(MultiplayerSession.id)
+        .order_by(MultiplayerSession.id.desc())
+        .limit(limit)
+        .objects(construct_helper)
+    )
 
-    return [
-        session.as_json
-        for session in sessions
-    ]
+    return [session.as_json for session in sessions]
 
 
 def create_session(sa: ServerApp, session_name: str):

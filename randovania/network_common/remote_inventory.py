@@ -11,9 +11,7 @@ RemoteInventory = dict[str, int]
 
 def inventory_to_encoded_remote(inventory: Inventory) -> bytes:
     return construct_pack.encode(
-        {item.short_name: capacity
-         for item, capacity in inventory.as_resource_gain()},
-        RemoteInventory
+        {item.short_name: capacity for item, capacity in inventory.as_resource_gain()}, RemoteInventory
     )
 
 
@@ -27,9 +25,6 @@ def decode_remote_inventory(data: bytes) -> RemoteInventory | construct.Construc
         except construct.ConstructError:
             return e
 
-        inventory = {
-            name: it.capacity
-            for name, it in old_inventory.items()
-        }
+        inventory = {name: it.capacity for name, it in old_inventory.items()}
 
     return inventory

@@ -47,7 +47,7 @@ class AM2RGameExportDialog(GameExportDialog, Ui_AM2RGameExportDialog):
             fields={
                 self.input_file_edit: lambda: not self.input_file.is_dir(),
                 self.output_file_edit: lambda: not (self.output_file.is_dir() and self.output_file != self.input_file),
-            }
+            },
         )
 
     # Getters

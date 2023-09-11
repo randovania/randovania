@@ -84,9 +84,9 @@ class PrimeRemoteConnector(RemoteConnector):
         """Returns True if the accessible memory matches the version of this connector."""
         operation = MemoryOperation(self.version.build_string_address, read_byte_count=len(self.version.build_string))
         build_string = await self.executor.perform_single_memory_operation(operation)
-        world_uid = build_string[6:6 + 16]
+        world_uid = build_string[6 : 6 + 16]
         expected = bytearray(self.version.build_string)
-        expected[6:6 + 16] = world_uid
+        expected[6 : 6 + 16] = world_uid
         if build_string == expected:
             if build_string == self.version.build_string:
                 # Game exported with old version, act as if it's invalid uuid
@@ -131,8 +131,10 @@ class PrimeRemoteConnector(RemoteConnector):
     async def current_game_status(self) -> tuple[bool, Region | None]:
         raise NotImplementedError
 
-    async def _memory_op_for_items(self, items: list[ItemResourceInfo],
-                                   ) -> list[MemoryOperation]:
+    async def _memory_op_for_items(
+        self,
+        items: list[ItemResourceInfo],
+    ) -> list[MemoryOperation]:
         raise NotImplementedError
 
     @property
@@ -142,18 +144,15 @@ class PrimeRemoteConnector(RemoteConnector):
     async def get_inventory(self) -> Inventory:
         """Fetches the inventory represented by the given game memory."""
 
-        memory_ops = await self._memory_op_for_items([
-            item
-            for item in self.game.resource_database.item
-            if item.extra["item_id"] < 1000
-        ])
+        memory_ops = await self._memory_op_for_items(
+            [item for item in self.game.resource_database.item if item.extra["item_id"] < 1000]
+        )
         ops_result = await self.executor.perform_memory_operations(memory_ops)
 
         inventory = {}
         for item, memory_op in zip(self.game.resource_database.item, memory_ops):
             inv = InventoryItem(*struct.unpack(">II", ops_result[memory_op]))
-            if (inv.amount > inv.capacity or inv.capacity > item.max_capacity) and (
-                    item != self.multiworld_magic_item):
+            if (inv.amount > inv.capacity or inv.capacity > item.max_capacity) and (item != self.multiworld_magic_item):
                 raise MemoryOperationException(f"Received {inv} for {item.long_name}, which is an invalid state.")
             inventory[item] = inv
 
@@ -175,19 +174,26 @@ class PrimeRemoteConnector(RemoteConnector):
         if magic_inv.amount > 0:
             self.logger.info(f"magic item was at {magic_inv.amount}/{magic_inv.capacity}")
             locations = {PickupIndex(magic_inv.amount - 1)}
-            patches = [DolRemotePatch([], all_prime_dol_patches.adjust_item_amount_and_capacity_patch(
-                self.version.powerup_functions,
-                self.version.game,
-                multiworld_magic_item.extra["item_id"],
-                -magic_inv.amount,
-            ))]
+            patches = [
+                DolRemotePatch(
+                    [],
+                    all_prime_dol_patches.adjust_item_amount_and_capacity_patch(
+                        self.version.powerup_functions,
+                        self.version.game,
+                        multiworld_magic_item.extra["item_id"],
+                        -magic_inv.amount,
+                    ),
+                )
+            ]
             await self.execute_remote_patches(patches)
             return locations
         else:
             return set()
 
     async def receive_remote_pickups(
-            self, inventory: Inventory, remote_pickups: tuple[PickupEntryWithOwner, ...],
+        self,
+        inventory: Inventory,
+        remote_pickups: tuple[PickupEntryWithOwner, ...],
     ) -> bool:
         """Returns true if an operation was sent."""
 
@@ -199,15 +205,21 @@ class PrimeRemoteConnector(RemoteConnector):
 
         provider_name, pickup = remote_pickups[magic_inv.capacity]
         item_patches, message = await self._patches_for_pickup(provider_name, pickup, inventory)
-        self.logger.info(f"{len(remote_pickups)} permanent pickups, magic {magic_inv.capacity}. "
-                         f"Next pickup: {message}")
+        self.logger.info(
+            f"{len(remote_pickups)} permanent pickups, magic {magic_inv.capacity}. Next pickup: {message}"
+        )
 
         patches = [DolRemotePatch([], item_patch) for item_patch in item_patches]
-        patches.append(DolRemotePatch([], all_prime_dol_patches.increment_item_capacity_patch(
-            self.version.powerup_functions,
-            self.version.game,
-            multiworld_magic_item.extra["item_id"],
-        )))
+        patches.append(
+            DolRemotePatch(
+                [],
+                all_prime_dol_patches.increment_item_capacity_patch(
+                    self.version.powerup_functions,
+                    self.version.game,
+                    multiworld_magic_item.extra["item_id"],
+                ),
+            )
+        )
         patches.append(self._dol_patch_for_hud_message(message))
 
         await self.execute_remote_patches(patches)
@@ -228,19 +240,22 @@ class PrimeRemoteConnector(RemoteConnector):
         patch_address, patch_bytes = all_prime_dol_patches.create_remote_execution_body(
             self.version.game,
             self.version.string_display,
-            [instruction
-             for patch in patches
-             for instruction in patch.instructions],
+            [instruction for patch in patches for instruction in patch.instructions],
         )
-        memory_operations.extend([
-            MemoryOperation(patch_address, write_bytes=patch_bytes),
-            MemoryOperation(self.version.cstate_manager_global + 0x2, write_bytes=b"\x01"),
-        ])
+        memory_operations.extend(
+            [
+                MemoryOperation(patch_address, write_bytes=patch_bytes),
+                MemoryOperation(self.version.cstate_manager_global + 0x2, write_bytes=b"\x01"),
+            ]
+        )
         self.logger.debug(f"Performing {len(memory_operations)} ops with {len(patches)} patches")
         await self.executor.perform_memory_operations(memory_operations)
 
-    def _resources_to_give_for_pickup(self, pickup: PickupEntry, inventory: Inventory,
-                                      ) -> tuple[str, ResourceCollection]:
+    def _resources_to_give_for_pickup(
+        self,
+        pickup: PickupEntry,
+        inventory: Inventory,
+    ) -> tuple[str, ResourceCollection]:
         inventory_resources = ResourceCollection.with_database(self.game.resource_database)
         inventory_resources.add_resource_gain(inventory.as_resource_gain())
         conditional = pickup.conditional_for_resources(inventory_resources)
@@ -251,8 +266,11 @@ class PrimeRemoteConnector(RemoteConnector):
 
         resources_to_give = ResourceCollection.with_database(self.game.resource_database)
 
-        if pickup.respects_lock and not pickup.unlocks_resource and (
-                pickup.resource_lock is not None and inventory_resources[pickup.resource_lock.locked_by] == 0):
+        if (
+            pickup.respects_lock
+            and not pickup.unlocks_resource
+            and (pickup.resource_lock is not None and inventory_resources[pickup.resource_lock.locked_by] == 0)
+        ):
             pickup_resources = list(pickup.resource_lock.convert_gain(conditional.resources))
             item_name = f"Locked {item_name}"
         else:
@@ -264,18 +282,19 @@ class PrimeRemoteConnector(RemoteConnector):
 
         return item_name, resources_to_give
 
-    async def _patches_for_pickup(self, provider_name: str, pickup: PickupEntry, inventory: Inventory
-                                  ) -> tuple[list[list[assembler.BaseInstruction]], str]:
+    async def _patches_for_pickup(
+        self, provider_name: str, pickup: PickupEntry, inventory: Inventory
+    ) -> tuple[list[list[assembler.BaseInstruction]], str]:
         raise NotImplementedError
 
     def _write_string_to_game_buffer(self, message: str) -> MemoryOperation:
         overhead_size = 6  # 2 bytes for an extra char to differentiate sizes
-        encoded_message = message.encode("utf-16_be")[:self.version.string_display.max_message_size - overhead_size]
+        encoded_message = message.encode("utf-16_be")[: self.version.string_display.max_message_size - overhead_size]
 
         # The game doesn't handle very well a string at the same address with same size being
         # displayed multiple times
         if len(encoded_message) == self._last_message_size:
-            encoded_message += b'\x00 '
+            encoded_message += b"\x00 "
         self._last_message_size = len(encoded_message)
 
         # Add the null terminator
@@ -285,8 +304,7 @@ class PrimeRemoteConnector(RemoteConnector):
             num_to_align = (len(encoded_message) | 3) - len(encoded_message) + 1
             encoded_message += b"\x00" * num_to_align
 
-        return MemoryOperation(self.version.string_display.message_receiver_string_ref,
-                               write_bytes=encoded_message)
+        return MemoryOperation(self.version.string_display.message_receiver_string_ref, write_bytes=encoded_message)
 
     def _dol_patch_for_hud_message(self, message: str) -> DolRemotePatch:
         return DolRemotePatch(
@@ -344,18 +362,14 @@ class PrimeRemoteConnector(RemoteConnector):
                 self.PickupIndexCollected.emit(location)
             return True
         else:
-            return await self.receive_remote_pickups(
-                self.last_inventory, self.remote_pickups
-            )
+            return await self.receive_remote_pickups(self.last_inventory, self.remote_pickups)
 
     async def _send_next_pending_message(self):
         if not self.pending_messages or self.message_cooldown > 0.0:
             return False
 
         message = self.pending_messages.pop(0)
-        await self.execute_remote_patches([
-            self._dol_patch_for_hud_message(message)
-        ])
+        await self.execute_remote_patches([self._dol_patch_for_hud_message(message)])
         self.message_cooldown = 4.0
         return True
 

@@ -59,6 +59,7 @@ def is_non_major_progression(x: str):
 def iterate_with_log(x):
     try:
         import tqdm
+
         return tqdm.tqdm(x)
     except ImportError:
         print("WARNING: tqdm not found. Use `pip install tqdm` to have progress feedback.")
@@ -89,11 +90,12 @@ def _filter_item_name(name: str) -> str:
     return result
 
 
-def accumulate_results(game_modifications: dict,
-                       items: dict[str, dict[str, int]],
-                       locations: dict[str, dict[str, int]],
-                       major_progression_items_only: bool,
-                       ):
+def accumulate_results(
+    game_modifications: dict,
+    items: dict[str, dict[str, int]],
+    locations: dict[str, dict[str, int]],
+    major_progression_items_only: bool,
+):
     for world_name, world_data in game_modifications["locations"].items():
         for area_name, item_name in world_data.items():
             area_name = f"{world_name}/{area_name}"
@@ -109,25 +111,15 @@ def sort_by_count(d: dict[str, int]) -> dict[str, int]:
 
 
 def calculate_pickup_count(items: dict[str, dict[str, int]]) -> dict[str, int]:
-    return {
-        name: sum(data.values())
-        for name, data in items.items()
-    }
+    return {name: sum(data.values()) for name, data in items.items()}
 
 
 def sort_by_contents(data: dict) -> dict:
-    return {
-        item: dict(sorted(data[item].items(), key=lambda t: t[1], reverse=True))
-        for item in sorted(data.keys())
-    }
+    return {item: dict(sorted(data[item].items(), key=lambda t: t[1], reverse=True)) for item in sorted(data.keys())}
 
 
 def calculate_stddev(pickup_count: dict[str, int], item_counts: dict[str, float]) -> float | None:
-    balanced_freq = {
-        item: count / pickup_count[item]
-        for item, count in item_counts.items()
-        if item in pickup_count
-    }
+    balanced_freq = {item: count / pickup_count[item] for item, count in item_counts.items() if item in pickup_count}
     try:
         return stdev(balanced_freq.values())
     except statistics.StatisticsError:
@@ -139,8 +131,9 @@ def first_key(d: dict):
         return key
 
 
-def get_items_order(all_items: Iterable[str], item_order: list[str], major_progression_items_only: bool) -> tuple[
-    dict[str, int], set[str], set[str], set[str]]:
+def get_items_order(
+    all_items: Iterable[str], item_order: list[str], major_progression_items_only: bool
+) -> tuple[dict[str, int], set[str], set[str], set[str]]:
     locations = set()
     no_key = set()
     progression_items = set()
@@ -175,8 +168,9 @@ def _region_only_starting_loc(locations: dict[str, int]) -> dict[str, int]:
     return result
 
 
-def create_report(seeds_dir: Path, output_file: Path, csv_dir: Path | None, use_percentage: bool,
-                  major_progression_items_only: bool):
+def create_report(
+    seeds_dir: Path, output_file: Path, csv_dir: Path | None, use_percentage: bool, major_progression_items_only: bool
+):
     def item_creator():
         return collections.defaultdict(int)
 
@@ -211,8 +205,8 @@ def create_report(seeds_dir: Path, output_file: Path, csv_dir: Path | None, use_
             pickup_count = calculate_pickup_count(items)
 
         item_orders, locations_with_progression, no_key_progression, _progression_items = get_items_order(
-            list(items.keys()),
-            seed_data["item_order"], major_progression_items_only)
+            list(items.keys()), seed_data["item_order"], major_progression_items_only
+        )
         for item, order in item_orders.items():
             item_order[item].append(order)
 
@@ -231,8 +225,7 @@ def create_report(seeds_dir: Path, output_file: Path, csv_dir: Path | None, use_
         raise Exception("No seeds found")
 
     stddev_by_location = {
-        location: calculate_stddev(pickup_count, locations[location])
-        for location in locations.keys()
+        location: calculate_stddev(pickup_count, locations[location]) for location in locations.keys()
     }
 
     regions = {}
@@ -295,10 +288,7 @@ def create_report(seeds_dir: Path, output_file: Path, csv_dir: Path | None, use_
     bias_index /= 2
 
     #
-    starting_location_region_only = [
-        sort_by_count(_region_only_starting_loc(it))
-        for it in starting_locations
-    ]
+    starting_location_region_only = [sort_by_count(_region_only_starting_loc(it)) for it in starting_locations]
     starting_location_report = [sort_by_count(loc) for loc in starting_locations]
 
     for location in locations:
@@ -348,19 +338,10 @@ def create_report(seeds_dir: Path, output_file: Path, csv_dir: Path | None, use_
         "starting_location": starting_location_report,
         "starting_location_region_only": starting_location_region_only,
         "item_order": {
-            "average": {
-                name: statistics.mean(orders)
-                for name, orders in item_order.items()
-            },
-            "median": {
-                name: int(statistics.median(orders))
-                for name, orders in item_order.items()
-            },
-            "stdev": {
-                name: statistics.stdev(orders)
-                for name, orders in item_order.items()
-            },
-        }
+            "average": {name: statistics.mean(orders) for name, orders in item_order.items()},
+            "median": {name: int(statistics.median(orders)) for name, orders in item_order.items()},
+            "stdev": {name: statistics.stdev(orders) for name, orders in item_order.items()},
+        },
     }
 
     # add non-item insights to csv file
@@ -385,7 +366,7 @@ def create_report(seeds_dir: Path, output_file: Path, csv_dir: Path | None, use_
             possible_columns = sorted(possible_columns)
             possible_columns.insert(0, "row_name")
 
-            with csv_dir.joinpath(field + ".csv").open("w", newline='') as csv_file:
+            with csv_dir.joinpath(field + ".csv").open("w", newline="") as csv_file:
                 writer = csv.DictWriter(csv_file, fieldnames=possible_columns)
                 writer.writeheader()
 
@@ -402,12 +383,10 @@ def main():
     parser.add_argument("--csv-dir", type=Path)
     parser.add_argument("seeds_dir", type=Path)
     parser.add_argument("output_file", type=Path)
-    parser.add_argument('--use-percentage', action='store_true')
-    parser.add_argument('--major-progression-only', action='store_true')
+    parser.add_argument("--use-percentage", action="store_true")
+    parser.add_argument("--major-progression-only", action="store_true")
     args = parser.parse_args()
-    create_report(args.seeds_dir, args.output_file,
-                  args.csv_dir, args.use_percentage,
-                  args.major_progression_only)
+    create_report(args.seeds_dir, args.output_file, args.csv_dir, args.use_percentage, args.major_progression_only)
 
 
 if __name__ == "__main__":

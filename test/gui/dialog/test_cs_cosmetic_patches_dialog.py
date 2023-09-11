@@ -25,7 +25,8 @@ def test_change_mychar(skip_qtbot):
 
 def test_change_music_rando(skip_qtbot):
     cosmetic_patches = CSCosmeticPatches(
-        music_rando=CSMusic(randomization_type=MusicRandoType.CHAOS, song_status=CSSong.all_songs_enabled()))
+        music_rando=CSMusic(randomization_type=MusicRandoType.CHAOS, song_status=CSSong.all_songs_enabled())
+    )
 
     dialog = CSCosmeticPatchesDialog(None, cosmetic_patches)
     skip_qtbot.addWidget(dialog)

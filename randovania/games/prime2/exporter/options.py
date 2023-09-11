@@ -19,7 +19,7 @@ class EchoesPerGameOptions(PerGameOptions):
             **super().as_json,
             "input_path": str(self.input_path) if self.input_path is not None else None,
             "output_directory": str(self.output_directory) if self.output_directory is not None else None,
-            "use_external_models": [game.value for game in self.use_external_models]
+            "use_external_models": [game.value for game in self.use_external_models],
         }
 
     @classmethod

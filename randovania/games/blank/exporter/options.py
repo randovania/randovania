@@ -10,9 +10,8 @@ from randovania.interface_common.options import PerGameOptions, decode_if_not_no
 
 @dataclasses.dataclass(frozen=True)
 class BlankPerGameOptions(PerGameOptions):
-    """
+    """ """
 
-    """
     input_path: Path | None = None
     output_path: Path | None = None
 

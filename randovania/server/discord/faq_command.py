@@ -1,4 +1,3 @@
-
 import discord
 
 from randovania.games.game import RandovaniaGame
@@ -27,16 +26,18 @@ class GameFaqMessage:
             name=self.game.value,
             description=f"{self.game.long_name} frequently asked questions.",
             parent=parent,
-            options=[discord.Option(
-                input_type=str,
-                name="question",
-                description="Which question to answer?",
-                required=True,
-                choices=[
-                    discord.OptionChoice(name=_shorten(question), value=f"question_{question_id}")
-                    for question_id, (question, answer) in enumerate(list(self.game.data.faq))
-                ]
-            )],
+            options=[
+                discord.Option(
+                    input_type=str,
+                    name="question",
+                    description="Which question to answer?",
+                    required=True,
+                    choices=[
+                        discord.OptionChoice(name=_shorten(question), value=f"question_{question_id}")
+                        for question_id, (question, answer) in enumerate(list(self.game.data.faq))
+                    ],
+                )
+            ],
         )
         result.cog = None
         result.callback = self.callback
@@ -50,7 +51,7 @@ class GameFaqMessage:
                     embed=discord.Embed(
                         title=question_text,
                         description=answer,
-                    )
+                    ),
                 )
                 return
 
@@ -69,16 +70,14 @@ class FaqCommandCog(RandovaniaCog):
             title="https://randovania.github.io/",
             description=(
                 "In the website, you'll find download links to Randovania and instructions on how to get started!"
-            )
+            ),
         )
         await context.respond(embed=embed)
 
     async def add_commands(self):
         base_command = self.configuration.get("command_prefix", "") + "faq"
 
-        group = self.bot.create_group(
-            base_command
-        )
+        group = self.bot.create_group(base_command)
 
         for game in enum_lib.iterate_enum(RandovaniaGame):
             faq_entries = list(game.data.faq)

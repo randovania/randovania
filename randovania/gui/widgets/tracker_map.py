@@ -95,9 +95,9 @@ class MatplotlibWidget(QtWidgets.QWidget):
 
         networkx.draw_networkx_nodes(g, pos, ax=self.ax)
         networkx.draw_networkx_edges(g, pos, arrows=True, ax=self.ax)
-        networkx.draw_networkx_labels(g, pos, ax=self.ax,
-                                      labels={area: area.name for area in region.areas},
-                                      verticalalignment='top')
+        networkx.draw_networkx_labels(
+            g, pos, ax=self.ax, labels={area: area.name for area in region.areas}, verticalalignment="top"
+        )
 
         self.ax.set_axis_off()
 

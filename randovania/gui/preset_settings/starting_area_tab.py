@@ -35,9 +35,11 @@ class PresetStartingArea(PresetTab, Ui_PresetStartingArea, NodeListHelper):
 
         self.starting_area_layout.setAlignment(QtCore.Qt.AlignTop)
 
-        (self._starting_location_for_region,
-         self._starting_location_for_area,
-         self._starting_location_for_node) = self.create_node_list_selection(
+        (
+            self._starting_location_for_region,
+            self._starting_location_for_area,
+            self._starting_location_for_node,
+        ) = self.create_node_list_selection(
             self.starting_locations_contents,
             self.starting_locations_layout,
             StartingLocationList.nodes_list(self.game_description.game),
@@ -51,11 +53,11 @@ class PresetStartingArea(PresetTab, Ui_PresetStartingArea, NodeListHelper):
         self.create_quick_fill_buttons()
 
     def create_quick_fill_buttons(self):
-        self.starting_area_quick_fill_default = self._quick_fill_button("Default",
-                                                                        self._starting_location_on_select_default)
+        self.starting_area_quick_fill_default = self._quick_fill_button(
+            "Default", self._starting_location_on_select_default
+        )
 
-    def _quick_fill_button(self, text: str,
-                           connection: Callable[[PresetStartingArea], None]) -> QtWidgets.QPushButton:
+    def _quick_fill_button(self, text: str, connection: Callable[[PresetStartingArea], None]) -> QtWidgets.QPushButton:
         self._num_quick_fill_buttons += 1
         button = QtWidgets.QPushButton(text)
         self.starting_area_quick_fill_layout.addWidget(button)
@@ -77,14 +79,14 @@ class PresetStartingArea(PresetTab, Ui_PresetStartingArea, NodeListHelper):
     @property
     def quick_fill_description(self) -> str:
         default_name = self.game_description.region_list.correct_area_identifier_name(
-            self.game_description.starting_location)
+            self.game_description.starting_location
+        )
         return f"Default: Just {default_name}, the vanilla location."
 
     def _on_starting_area_check_changed(self, areas, checked: bool):
         with self._editor as editor:
             editor.set_configuration_field(
-                "starting_location",
-                editor.configuration.starting_location.ensure_has_locations(areas, checked)
+                "starting_location", editor.configuration.starting_location.ensure_has_locations(areas, checked)
             )
 
     def _starting_location_on_select_default(self):
@@ -94,7 +96,7 @@ class PresetStartingArea(PresetTab, Ui_PresetStartingArea, NodeListHelper):
                 editor.configuration.starting_location.with_elements(
                     [self.game_description.starting_location],
                     self.game_enum,
-                )
+                ),
             )
 
     def on_preset_changed(self, preset: Preset):
@@ -103,7 +105,7 @@ class PresetStartingArea(PresetTab, Ui_PresetStartingArea, NodeListHelper):
             False,
             self._starting_location_for_region,
             self._starting_location_for_area,
-            self._starting_location_for_node
+            self._starting_location_for_node,
         )
 
 
@@ -129,8 +131,7 @@ class PresetMetroidStartingArea(PresetStartingArea):
 
         with self._editor as editor:
             editor.set_configuration_field(
-                "starting_location",
-                editor.configuration.starting_location.with_elements(save_stations, self.game_enum)
+                "starting_location", editor.configuration.starting_location.with_elements(save_stations, self.game_enum)
             )
 
     @property

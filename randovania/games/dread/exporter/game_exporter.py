@@ -54,8 +54,12 @@ class DreadGameExporter(GameExporter):
     def _after_export(self):
         self._busy = False
 
-    def _do_export_game(self, patch_data: dict, export_params: GameExportParams,
-                        progress_update: status_update_lib.ProgressUpdateCallable):
+    def _do_export_game(
+        self,
+        patch_data: dict,
+        export_params: GameExportParams,
+        progress_update: status_update_lib.ProgressUpdateCallable,
+    ):
         assert isinstance(export_params, DreadGameExportParams)
         export_params.output_path.mkdir(parents=True, exist_ok=True)
 
@@ -86,8 +90,11 @@ class DreadGameExporter(GameExporter):
 
         with monitoring.trace_block("open_dread_rando.patch_with_status_update"):
             import open_dread_rando
+
             open_dread_rando.patch_with_status_update(
-                export_params.input_path, export_params.output_path, patch_data,
+                export_params.input_path,
+                export_params.output_path,
+                patch_data,
                 lambda progress, msg: patcher_update(msg, progress),
             )
 

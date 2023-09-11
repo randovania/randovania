@@ -12,16 +12,13 @@ if TYPE_CHECKING:
     from randovania.game_description.resources.resource_database import ResourceDatabase
 
 ENERGY_CELL_CATEGORY = pickup_category.PickupCategory(
-    name="energy_cell",
-    long_name="Energy Cell",
-    hint_details=("an ", "energy cell"),
-    hinted_as_major=True,
-    is_key=True
+    name="energy_cell", long_name="Energy Cell", hint_details=("an ", "energy cell"), hinted_as_major=True, is_key=True
 )
 
 
-def add_energy_cells(resource_database: ResourceDatabase,
-                     ) -> PoolResults:
+def add_energy_cells(
+    resource_database: ResourceDatabase,
+) -> PoolResults:
     """
     :param resource_database:
     :return:
@@ -34,14 +31,13 @@ def add_energy_cells(resource_database: ResourceDatabase,
     return PoolResults(item_pool, {}, [])
 
 
-def create_energy_cell(cell_index: int,
-                       resource_database: ResourceDatabase,
-                       ) -> PickupEntry:
+def create_energy_cell(
+    cell_index: int,
+    resource_database: ResourceDatabase,
+) -> PickupEntry:
     return PickupEntry(
         name=f"Energy Cell {cell_index + 1}",
-        progression=(
-            (resource_database.get_item(corruption_items.ENERGY_CELL_ITEMS[cell_index]), 1),
-        ),
+        progression=((resource_database.get_item(corruption_items.ENERGY_CELL_ITEMS[cell_index]), 1),),
         extra_resources=(
             (resource_database.get_item(corruption_items.ENERGY_CELL_TOTAL_ITEM), 1),
             (resource_database.get_item(corruption_items.PERCENTAGE), 1),

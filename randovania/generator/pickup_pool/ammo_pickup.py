@@ -12,9 +12,10 @@ if TYPE_CHECKING:
     from randovania.layout.base.ammo_pickup_configuration import AmmoPickupConfiguration
 
 
-def add_ammo_pickups(resource_database: ResourceDatabase,
-             ammo_configuration: AmmoPickupConfiguration,
-             ) -> Iterator[PickupEntry]:
+def add_ammo_pickups(
+    resource_database: ResourceDatabase,
+    ammo_configuration: AmmoPickupConfiguration,
+) -> Iterator[PickupEntry]:
     """
     Creates the necessary pickups for the given ammo_configuration.
     :param resource_database:

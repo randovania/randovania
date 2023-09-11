@@ -32,8 +32,7 @@ async def _run_validator(write_to_log, debug_level: int, layout: LayoutDescripti
         after = time.perf_counter()
 
         return "Took {:.3f} seconds. Game is {}.".format(
-            after - before,
-            "possible" if final_state_by_resolve is not None else "impossible"
+            after - before, "possible" if final_state_by_resolve is not None else "impossible"
         )
     finally:
         debug.print_function = old_print_function
@@ -68,9 +67,7 @@ class GameValidatorWidget(QtWidgets.QWidget, Ui_GameValidatorWidget):
         self.log_widget.setColumnCount(1)
         self.log_widget.setHeaderLabels(["Steps"])
 
-        current_tree = [
-            (-1, self.log_widget)
-        ]
+        current_tree = [(-1, self.log_widget)]
 
         def write_to_log(*a):
             scrollbar = self.log_widget.verticalScrollBar()
@@ -98,9 +95,9 @@ class GameValidatorWidget(QtWidgets.QWidget, Ui_GameValidatorWidget):
                 bar: QtWidgets.QScrollBar = self.log_widget.horizontalScrollBar()
                 bar.setValue(bar.maximum())
 
-        self._current_task = asyncio.create_task(_run_validator(
-            write_to_log, self.verbosity_combo.currentIndex(), self.layout
-        ))
+        self._current_task = asyncio.create_task(
+            _run_validator(write_to_log, self.verbosity_combo.currentIndex(), self.layout)
+        )
         try:
             time_consumed = await self._current_task
             self.status_label.setText(time_consumed)
@@ -109,4 +106,3 @@ class GameValidatorWidget(QtWidgets.QWidget, Ui_GameValidatorWidget):
         finally:
             self.start_button.setText("Start")
             self._current_task = None
-

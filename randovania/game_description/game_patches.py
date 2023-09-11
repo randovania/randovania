@@ -43,6 +43,7 @@ if typing.TYPE_CHECKING:
 @dataclass(frozen=True, slots=True)
 class GamePatches:
     """Determines patches that are made to the game's data."""
+
     game: GameDescription = dataclasses.field(compare=False)
     player_index: int
     configuration: BaseConfiguration
@@ -69,11 +70,17 @@ class GamePatches:
             raise TypeError("starting_pickups_or_items must be a ResourceCollection or list")
 
     @classmethod
-    def create_from_game(cls, game: GameDescription, player_index: int, configuration: BaseConfiguration,
-                         ) -> GamePatches:
+    def create_from_game(
+        cls,
+        game: GameDescription,
+        player_index: int,
+        configuration: BaseConfiguration,
+    ) -> GamePatches:
         game.region_list.ensure_has_node_cache()
         return GamePatches(
-            game, player_index, configuration,
+            game,
+            player_index,
+            configuration,
             pickup_assignment={},
             dock_connection=game.get_prefilled_docks(),
             dock_weakness=[None] * len(game.region_list.all_nodes),
@@ -97,8 +104,7 @@ class GamePatches:
 
     def assign_own_pickups(self, assignments: Iterable[tuple[PickupIndex, PickupEntry]]) -> GamePatches:
         return self.assign_new_pickups(
-            (index, PickupTarget(pickup, self.player_index))
-            for index, pickup in assignments
+            (index, PickupTarget(pickup, self.player_index)) for index, pickup in assignments
         )
 
     def assign_node_configuration(self, assignment: Iterable[NodeConfigurationAssociation]) -> GamePatches:
@@ -147,8 +153,9 @@ class GamePatches:
             cached_dock_connections[source.node_index] = None
             # TODO: maybe this should set the other side too?
 
-        return dataclasses.replace(self, dock_connection=connections,
-                                   cached_dock_connections_from=cached_dock_connections)
+        return dataclasses.replace(
+            self, dock_connection=connections, cached_dock_connections_from=cached_dock_connections
+        )
 
     def get_dock_connection_for(self, node: DockNode) -> Node:
         target_index = self.dock_connection[node.node_index]
@@ -182,8 +189,9 @@ class GamePatches:
             cached_dock_connections[node.node_index] = None
             cached_dock_connections[self.get_dock_connection_for(node).node_index] = None
 
-        return dataclasses.replace(self, dock_weakness=new_weakness,
-                                   cached_dock_connections_from=cached_dock_connections)
+        return dataclasses.replace(
+            self, dock_weakness=new_weakness, cached_dock_connections_from=cached_dock_connections
+        )
 
     def assign_weaknesses_to_shuffle(self, weaknesses: Iterable[tuple[DockNode, bool]]) -> GamePatches:
         new_to_shuffle = list(self.weaknesses_to_shuffle)
@@ -236,4 +244,3 @@ class GamePatches:
 
     def set_cached_dock_connections_from(self, node: DockNode, cache: tuple[tuple[Node, Requirement], ...]) -> None:
         self.cached_dock_connections_from[node.node_index] = cache
-

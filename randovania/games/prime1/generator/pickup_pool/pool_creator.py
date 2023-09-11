@@ -13,6 +13,6 @@ if TYPE_CHECKING:
 
 def prime1_specific_pool(results: PoolResults, configuration: BaseConfiguration, game: GameDescription):
     assert isinstance(configuration, PrimeConfiguration)
-    results.extend_with(add_artifacts(game.resource_database,
-                                      configuration.artifact_target,
-                                      configuration.artifact_minimum_progression))
+    results.extend_with(
+        add_artifacts(game.resource_database, configuration.artifact_target, configuration.artifact_minimum_progression)
+    )

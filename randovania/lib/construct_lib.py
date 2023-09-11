@@ -12,17 +12,10 @@ String = CString("utf-8")
 
 def convert_to_raw_python(value: Any) -> Any:
     if isinstance(value, list):
-        return [
-            convert_to_raw_python(item)
-            for item in value
-        ]
+        return [convert_to_raw_python(item) for item in value]
 
     if isinstance(value, dict):
-        return {
-            key: convert_to_raw_python(item)
-            for key, item in value.items()
-            if not key.startswith("_")
-        }
+        return {key: convert_to_raw_python(item) for key, item in value.items() if not key.startswith("_")}
 
     if isinstance(value, construct.EnumIntegerString):
         return str(value)
@@ -55,17 +48,19 @@ class DictAdapter(construct.Adapter):
         return result
 
     def _encode(self, obj: construct.Container, context: construct.Container, path: str) -> construct.ListContainer:
-        return construct.ListContainer(
-            construct.Container(key=type_, value=item)
-            for type_, item in obj.items()
-        )
+        return construct.ListContainer(construct.Container(key=type_, value=item) for type_, item in obj.items())
 
 
 def ConstructDict(subcon: construct.Construct) -> construct.Construct:
-    return DictAdapter(PrefixedArray(VarInt, Struct(
-        key=String,
-        value=subcon,
-    )))
+    return DictAdapter(
+        PrefixedArray(
+            VarInt,
+            Struct(
+                key=String,
+                value=subcon,
+            ),
+        )
+    )
 
 
 class JsonEncodedValueAdapter(construct.Adapter):
@@ -73,7 +68,7 @@ class JsonEncodedValueAdapter(construct.Adapter):
         return json.loads(obj)
 
     def _encode(self, obj: typing.Any, context: construct.Container, path: str) -> str:
-        return json.dumps(obj, separators=(',', ':'))
+        return json.dumps(obj, separators=(",", ":"))
 
 
 JsonEncodedValue = JsonEncodedValueAdapter(String)

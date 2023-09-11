@@ -60,7 +60,4 @@ class ResourceType(enum.IntEnum):
             return ""
 
 
-_NAME_TO_TYPE = {
-    name: resource_type
-    for resource_type, name in ResourceType.names().items()
-}
+_NAME_TO_TYPE = {name: resource_type for resource_type, name in ResourceType.names().items()}

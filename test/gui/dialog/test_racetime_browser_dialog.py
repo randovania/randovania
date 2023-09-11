@@ -21,43 +21,30 @@ async def test_attempt_join_success(skip_qtbot, mocker, success):
         "current_races": [
             {
                 "name": "Race 1",
-                "status": {
-                    "value": "open",
-                    "verbose_value": "Open",
-                    "help_text": "Anyone may join this race"
-                },
-                "goal": {
-                    "name": "Beat the game",
-                    "custom": False
-                },
+                "status": {"value": "open", "verbose_value": "Open", "help_text": "Anyone may join this race"},
+                "goal": {"name": "Beat the game", "custom": False},
                 "info": "<permalink>",
                 "entrants_count": 1,
                 "entrants_count_inactive": 0,
-                "opened_at": "2020-10-01T18:00:00.000Z"
+                "opened_at": "2020-10-01T18:00:00.000Z",
             },
             {
                 "name": "Race 2",
-                "status": {
-                    "value": "open",
-                    "verbose_value": "Open",
-                    "help_text": "Anyone may join this race"
-                },
-                "goal": {
-                    "name": "Beat the game",
-                    "custom": False
-                },
+                "status": {"value": "open", "verbose_value": "Open", "help_text": "Anyone may join this race"},
+                "goal": {"name": "Beat the game", "custom": False},
                 "info": "random_stuff",
                 "entrants_count": 1,
                 "entrants_count_inactive": 0,
-                "opened_at": "2020-10-01T18:00:00.000Z"
-            }
+                "opened_at": "2020-10-01T18:00:00.000Z",
+            },
         ]
     }
 
     mock_warning = mocker.patch("randovania.gui.lib.async_dialog.warning", new_callable=AsyncMock)
     mock_from_str = mocker.patch("randovania.layout.permalink.Permalink.from_str", side_effect=from_str)
-    mocker.patch("randovania.gui.dialog.racetime_browser_dialog._query_server", new_callable=AsyncMock,
-                 return_value=raw_data)
+    mocker.patch(
+        "randovania.gui.dialog.racetime_browser_dialog._query_server", new_callable=AsyncMock, return_value=raw_data
+    )
     dialog = RacetimeBrowserDialog()
 
     # Run

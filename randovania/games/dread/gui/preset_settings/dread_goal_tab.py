@@ -20,7 +20,6 @@ if TYPE_CHECKING:
 
 
 class PresetDreadGoal(PresetTab, Ui_PresetDreadGoal):
-
     def __init__(self, editor: PresetEditor, game_description: GameDescription, window_manager: WindowManager):
         super().__init__(editor, game_description, window_manager)
         self.setupUi(self)
@@ -47,10 +46,7 @@ class PresetDreadGoal(PresetTab, Ui_PresetDreadGoal):
         assert isinstance(config, DreadConfiguration)
 
         with self._editor as editor:
-            editor.set_configuration_field(
-                "artifacts",
-                call(config.artifacts)
-            )
+            editor.set_configuration_field("artifacts", call(config.artifacts))
 
     @property
     def num_preferred_locations(self) -> int:
@@ -79,8 +75,7 @@ class PresetDreadGoal(PresetTab, Ui_PresetDreadGoal):
         self.dna_slider_label.setText(f"{self.dna_slider.value()} DNA")
 
         def edit(config: DreadArtifactConfig):
-            return dataclasses.replace(config,
-                                       required_artifacts=self.dna_slider.value())
+            return dataclasses.replace(config, required_artifacts=self.dna_slider.value())
 
         self._edit_config(edit)
 

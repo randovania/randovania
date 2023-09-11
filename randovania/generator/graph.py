@@ -50,15 +50,13 @@ class RandovaniaGraph(BaseGraph):
 
     def __init__(self, edges: dict[int, dict[int, RequirementSet]]):
         import networkx
+
         self.networkx = networkx
         self.edges = edges
 
     def copy(self):
         edges = defaultdict(dict)
-        edges.update({
-            source: copy.copy(data)
-            for source, data in self.edges.items()
-        })
+        edges.update({source: copy.copy(data) for source, data in self.edges.items()})
         return RandovaniaGraph(edges)
 
     def add_node(self, node: int):

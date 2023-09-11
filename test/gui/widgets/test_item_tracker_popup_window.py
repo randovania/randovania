@@ -12,15 +12,15 @@ if TYPE_CHECKING:
     import pytest_mock
 
 
-def test_change_tracker_layout(skip_qtbot, mocker: pytest_mock.MockerFixture,
-                               tmp_path):
+def test_change_tracker_layout(skip_qtbot, mocker: pytest_mock.MockerFixture, tmp_path):
     result = QtWidgets.QWidget()
     result.update_state = MagicMock()
     result.current_state = [5, 7]
     skip_qtbot.addWidget(result)
 
-    mock_tracker = mocker.patch("randovania.gui.widgets.item_tracker_popup_window.ItemTrackerWidget",
-                                return_value=result)
+    mock_tracker = mocker.patch(
+        "randovania.gui.widgets.item_tracker_popup_window.ItemTrackerWidget", return_value=result
+    )
     on_close = MagicMock()
 
     p1 = tmp_path.joinpath("p1.json")
@@ -44,4 +44,3 @@ def test_change_tracker_layout(skip_qtbot, mocker: pytest_mock.MockerFixture,
 
     popup.close()
     on_close.assert_called_with()
-

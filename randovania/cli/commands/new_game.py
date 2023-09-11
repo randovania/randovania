@@ -59,22 +59,22 @@ def update_game_py(enum_name: str, enum_value: str):
         # Not found, so keep going
         pass
 
-    enum_index = game_py.index('    def data(self) -> GameData:\n')
+    enum_index = game_py.index("    def data(self) -> GameData:\n")
     game_py.insert(enum_index - 2, enum_entry)
 
     import_index = game_py.index('            raise ValueError(f"Missing import for game: {self.value}")\n')
-    game_py.insert(import_index - 1, f'        elif self == RandovaniaGame.{enum_name}:\n')
-    game_py.insert(import_index, f'            import randovania.games.{enum_value}.game_data as game_module\n')
+    game_py.insert(import_index - 1, f"        elif self == RandovaniaGame.{enum_name}:\n")
+    game_py.insert(import_index, f"            import randovania.games.{enum_value}.game_data as game_module\n")
 
     with _GAMES_PATH.joinpath("game.py").open("w") as f:
         f.writelines(game_py)
 
 
 def copy_python_code(
-        enum_name: str,
-        enum_value: str,
-        short_name: str,
-        long_name: str,
+    enum_name: str,
+    enum_value: str,
+    short_name: str,
+    long_name: str,
 ):
     blank_root = _GAMES_PATH.joinpath(RandovaniaGame.BLANK.value)
     new_root = _GAMES_PATH.joinpath(enum_value)
@@ -139,9 +139,7 @@ def create_new_database(game_enum: RandovaniaGame, output_path: Path) -> GameDes
     dock_weakness_database = DockWeaknessDatabase(
         dock_types,
         weaknesses={
-            dock_types[0]: {
-                "Normal": DockWeakness(0, "Normal", frozendict(), Requirement.trivial(), None)
-            },
+            dock_types[0]: {"Normal": DockWeakness(0, "Normal", frozendict(), Requirement.trivial(), None)},
             dock_types[1]: {
                 "Not Determined": impossible_weak,
             },
@@ -175,16 +173,22 @@ def create_new_database(game_enum: RandovaniaGame, output_path: Path) -> GameDes
         starting_location=intro_node.identifier,
         initial_states={},
         minimal_logic=None,
-        region_list=RegionList([Region(
-            name="Main",
-            areas=[Area(
-                name="First Area",
-                nodes=[intro_node],
-                connections={intro_node: {}},
-                extra={},
-            )],
-            extra={},
-        )]),
+        region_list=RegionList(
+            [
+                Region(
+                    name="Main",
+                    areas=[
+                        Area(
+                            name="First Area",
+                            nodes=[intro_node],
+                            connections={intro_node: {}},
+                            extra={},
+                        )
+                    ],
+                    extra={},
+                )
+            ]
+        ),
     )
 
     data = data_writer.write_game_description(game_db)
@@ -238,10 +242,7 @@ def load_presets(template: RandovaniaGame):
         v.get_preset()
         return v
 
-    return {
-        preset_config["path"]: get(preset_config["path"])
-        for preset_config in template.data.presets
-    }
+    return {preset_config["path"]: get(preset_config["path"]) for preset_config in template.data.presets}
 
 
 def copy_presets(old_presets: dict[str, VersionedPreset], gd: GameDescription, pickup_db: PickupDatabase):
@@ -279,12 +280,10 @@ def copy_presets(old_presets: dict[str, VersionedPreset], gd: GameDescription, p
                         for dock_type in gd.dock_weakness_database.dock_types
                     },
                 ),
-            )
+            ),
         )
 
-        VersionedPreset.with_preset(new_preset).save_to_file(
-            _GAMES_PATH.joinpath(new_game.value, "presets", path)
-        )
+        VersionedPreset.with_preset(new_preset).save_to_file(_GAMES_PATH.joinpath(new_game.value, "presets", path))
 
 
 def new_game_command_logic(args):
@@ -313,32 +312,28 @@ def new_game_command_logic(args):
     copy_python_code(enum_name, enum_value, short_name, long_name)
     update_game_py(enum_name, enum_value)
 
-    json_lib.write_path(
-        _GAMES_PATH.joinpath(enum_value).joinpath("assets", "migration_data.json"),
-        {}
-    )
+    json_lib.write_path(_GAMES_PATH.joinpath(enum_value).joinpath("assets", "migration_data.json"), {})
 
-    raise SystemExit(subprocess.run(
-        [
-            sys.executable,
-            "-m",
-            "randovania",
-            "development",
-            "create-new-database",
-            "--game",
-            enum_value,
-        ],
-        check=False,
-    ).returncode)
+    raise SystemExit(
+        subprocess.run(
+            [
+                sys.executable,
+                "-m",
+                "randovania",
+                "development",
+                "create-new-database",
+                "--game",
+                enum_value,
+            ],
+            check=False,
+        ).returncode
+    )
 
 
 def create_new_database_logic(args):
     new_enum = RandovaniaGame(args.game)
 
-    game_db = create_new_database(
-        new_enum,
-        _GAMES_PATH.joinpath(new_enum.value).joinpath("json_data")
-    )
+    game_db = create_new_database(new_enum, _GAMES_PATH.joinpath(new_enum.value).joinpath("json_data"))
     pickup_db = create_pickup_database(new_enum)
     copy_presets(load_presets(RandovaniaGame.BLANK), game_db, pickup_db)
     print(f"{new_enum.long_name} created successfully. New files can be found at {new_enum.data_path}")
@@ -346,8 +341,7 @@ def create_new_database_logic(args):
 
 def add_new_game_command(sub_parsers):
     parser: ArgumentParser = sub_parsers.add_parser(
-        "add-new-game",
-        help="Loads the preset files and saves then again with the latest version"
+        "add-new-game", help="Loads the preset files and saves then again with the latest version"
     )
     parser.add_argument(
         "--enum-name",
@@ -375,7 +369,7 @@ def add_new_game_command(sub_parsers):
 def add_create_databases(sub_parsers):
     parser: ArgumentParser = sub_parsers.add_parser(
         "create-new-database",
-        help="Creates initial databases for a recently created game. Automatically ran after add-new-game"
+        help="Creates initial databases for a recently created game. Automatically ran after add-new-game",
     )
     parser.add_argument(
         "--game",

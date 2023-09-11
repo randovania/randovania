@@ -10,11 +10,14 @@ from randovania.lib import enum_lib
 
 class DreadShieldType(Enum):
     """default or alternate"""
+
     DEFAULT = "DEFAULT"
     ALTERNATE = "ALTERNATE"
 
+
 class DreadRoomGuiType(Enum):
-    """Types of Room Name GUI to display. """
+    """Types of Room Name GUI to display."""
+
     long_name: str
 
     NONE = "NEVER"
@@ -22,11 +25,15 @@ class DreadRoomGuiType(Enum):
     WITH_FADE = "WITH_FADE"
 
 
-enum_lib.add_long_name(DreadRoomGuiType, {
-    DreadRoomGuiType.NONE: "Never",
-    DreadRoomGuiType.ALWAYS: "Always",
-    DreadRoomGuiType.WITH_FADE: "When entering a room"
-})
+enum_lib.add_long_name(
+    DreadRoomGuiType,
+    {
+        DreadRoomGuiType.NONE: "Never",
+        DreadRoomGuiType.ALWAYS: "Always",
+        DreadRoomGuiType.WITH_FADE: "When entering a room",
+    },
+)
+
 
 class MissileColor(Enum):
     RED = "item_missiletank"
@@ -42,8 +49,10 @@ class MissileColor(Enum):
     GRAY = "item_missiletank_gray"
     BLACK = "item_missiletank_black"
 
+
 class DreadMissileCosmeticType(Enum):
     """Color schemes for missile tanks"""
+
     long_name: str
     colors: list[MissileColor]
 
@@ -56,29 +65,53 @@ class DreadMissileCosmeticType(Enum):
     PANSEXUAL = "PANSEXUAL"
     GENDERQUEER = "GENDERQUEER"
 
-enum_lib.add_long_name(DreadMissileCosmeticType, {
-    DreadMissileCosmeticType.NONE: "Vanilla",
-    DreadMissileCosmeticType.PRIDE: "Pride Flag",
-    DreadMissileCosmeticType.TRANS: "Trans Pride",
-    DreadMissileCosmeticType.NONBINARY: "Nonbinary Pride",
-    DreadMissileCosmeticType.ASEXUAL: "Asexual Pride",
-    DreadMissileCosmeticType.BISEXUAL: "Bisexual Pride",
-    DreadMissileCosmeticType.PANSEXUAL: "Pansexual Pride",
-    DreadMissileCosmeticType.GENDERQUEER: "Genderqueer Pride"
-})
 
-enum_lib.add_per_enum_field(DreadMissileCosmeticType, "colors", {
-    DreadMissileCosmeticType.NONE: [MissileColor.RED],
-    DreadMissileCosmeticType.PRIDE: [MissileColor.RED, MissileColor.ORANGE, MissileColor.YELLOW, MissileColor.GREEN,
-                                     MissileColor.BLUE, MissileColor.PURPLE],
-    DreadMissileCosmeticType.TRANS: [MissileColor.WHITE, MissileColor.CYAN, MissileColor.PINK],
-    DreadMissileCosmeticType.NONBINARY: [MissileColor.YELLOW, MissileColor.WHITE, MissileColor.PURPLE,
-                                         MissileColor.BLACK],
-    DreadMissileCosmeticType.ASEXUAL: [MissileColor.BLACK, MissileColor.GRAY, MissileColor.WHITE, MissileColor.PURPLE],
-    DreadMissileCosmeticType.BISEXUAL: [MissileColor.MAGENTA, MissileColor.PURPLE, MissileColor.BLUE],
-    DreadMissileCosmeticType.PANSEXUAL: [MissileColor.PINK, MissileColor.YELLOW, MissileColor.BLUE],
-    DreadMissileCosmeticType.GENDERQUEER: [MissileColor.PURPLE, MissileColor.WHITE, MissileColor.GREEN]
-})
+enum_lib.add_long_name(
+    DreadMissileCosmeticType,
+    {
+        DreadMissileCosmeticType.NONE: "Vanilla",
+        DreadMissileCosmeticType.PRIDE: "Pride Flag",
+        DreadMissileCosmeticType.TRANS: "Trans Pride",
+        DreadMissileCosmeticType.NONBINARY: "Nonbinary Pride",
+        DreadMissileCosmeticType.ASEXUAL: "Asexual Pride",
+        DreadMissileCosmeticType.BISEXUAL: "Bisexual Pride",
+        DreadMissileCosmeticType.PANSEXUAL: "Pansexual Pride",
+        DreadMissileCosmeticType.GENDERQUEER: "Genderqueer Pride",
+    },
+)
+
+enum_lib.add_per_enum_field(
+    DreadMissileCosmeticType,
+    "colors",
+    {
+        DreadMissileCosmeticType.NONE: [MissileColor.RED],
+        DreadMissileCosmeticType.PRIDE: [
+            MissileColor.RED,
+            MissileColor.ORANGE,
+            MissileColor.YELLOW,
+            MissileColor.GREEN,
+            MissileColor.BLUE,
+            MissileColor.PURPLE,
+        ],
+        DreadMissileCosmeticType.TRANS: [MissileColor.WHITE, MissileColor.CYAN, MissileColor.PINK],
+        DreadMissileCosmeticType.NONBINARY: [
+            MissileColor.YELLOW,
+            MissileColor.WHITE,
+            MissileColor.PURPLE,
+            MissileColor.BLACK,
+        ],
+        DreadMissileCosmeticType.ASEXUAL: [
+            MissileColor.BLACK,
+            MissileColor.GRAY,
+            MissileColor.WHITE,
+            MissileColor.PURPLE,
+        ],
+        DreadMissileCosmeticType.BISEXUAL: [MissileColor.MAGENTA, MissileColor.PURPLE, MissileColor.BLUE],
+        DreadMissileCosmeticType.PANSEXUAL: [MissileColor.PINK, MissileColor.YELLOW, MissileColor.BLUE],
+        DreadMissileCosmeticType.GENDERQUEER: [MissileColor.PURPLE, MissileColor.WHITE, MissileColor.GREEN],
+    },
+)
+
 
 @dataclasses.dataclass(frozen=True)
 class DreadCosmeticPatches(BaseCosmeticPatches):

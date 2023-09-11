@@ -8,7 +8,6 @@ if TYPE_CHECKING:
 
 
 def prime1_preset_tabs(editor: PresetEditor, window_manager: WindowManager):
-
     from randovania.games.prime1.gui.preset_settings.prime_enemy_stat_randomizer import PresetEnemyAttributeRandomizer
     from randovania.games.prime1.gui.preset_settings.prime_generation_tab import PresetPrimeGeneration
     from randovania.games.prime1.gui.preset_settings.prime_goal_tab import PresetPrimeGoal
@@ -22,6 +21,7 @@ def prime1_preset_tabs(editor: PresetEditor, window_manager: WindowManager):
     from randovania.gui.preset_settings.patcher_energy_tab import PresetPatcherEnergy
     from randovania.gui.preset_settings.starting_area_tab import PresetMetroidStartingArea
     from randovania.gui.preset_settings.trick_level_tab import PresetTrickLevel
+
     return [
         PresetTrickLevel,
         PresetPatcherEnergy,

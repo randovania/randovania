@@ -66,11 +66,7 @@ class RegionList(NodeProvider):
         self._nodes = tuple(final_nodes)
 
         self._nodes_to_area, self._nodes_to_region = _calculate_nodes_to_area_region(self.regions)
-        self._pickup_index_to_node = {
-            node.pickup_index: node
-            for node in self._nodes
-            if isinstance(node, PickupNode)
-        }
+        self._pickup_index_to_node = {node.pickup_index: node for node in self._nodes if isinstance(node, PickupNode)}
         return self._nodes
 
     def ensure_has_node_cache(self) -> _NodesTuple:
@@ -123,8 +119,9 @@ class RegionList(NodeProvider):
                 for node in area.nodes:
                     yield region, area, node
 
-    def region_name_from_area(self, area: Area, distinguish_dark_aether: bool = False,
-                              region: Region | None = None) -> str:
+    def region_name_from_area(
+        self, area: Area, distinguish_dark_aether: bool = False, region: Region | None = None
+    ) -> str:
         if region is None:
             region = self.region_with_area(area)
 
@@ -183,8 +180,13 @@ class RegionList(NodeProvider):
         yield from node.connections_from(context)
         yield from self.area_connections_from(node)
 
-    def patch_requirements(self, static_resources: ResourceCollection, damage_multiplier: float,
-                           database: ResourceDatabase, dock_weakness_database: DockWeaknessDatabase) -> None:
+    def patch_requirements(
+        self,
+        static_resources: ResourceCollection,
+        damage_multiplier: float,
+        database: ResourceDatabase,
+        dock_weakness_database: DockWeaknessDatabase,
+    ) -> None:
         """
         Patches all Node connections, assuming the given resources will never change their quantity.
         This is removes all checking for tricks and difficulties in runtime since these never change.
@@ -206,6 +208,7 @@ class RegionList(NodeProvider):
 
         # Remove connections to event nodes that have a combo node
         from randovania.game_description.db.event_pickup import EventPickupNode
+
         for node in self.iterate_nodes():
             if isinstance(node, EventPickupNode):
                 area = self.nodes_to_area(node)
@@ -227,7 +230,8 @@ class RegionList(NodeProvider):
             else:
                 self._patches_dock_lock_requirements.append(
                     weakness.lock.requirement.patch_requirements(
-                        static_resources, damage_multiplier, database).simplify()
+                        static_resources, damage_multiplier, database
+                    ).simplify()
                 )
 
     def node_by_identifier(self, identifier: NodeIdentifier) -> Node:
@@ -298,7 +302,8 @@ def _calculate_nodes_to_area_region(regions: Iterable[Region]) -> tuple[dict[Nod
             for node in area.nodes:
                 if node.node_index in nodes_to_area:
                     raise ValueError(
-                        f"Trying to map {node} to {area}, but already mapped to {nodes_to_area[node.node_index]}")
+                        f"Trying to map {node} to {area}, but already mapped to {nodes_to_area[node.node_index]}"
+                    )
                 nodes_to_area[node.node_index] = area
                 nodes_to_region[node.node_index] = region
 

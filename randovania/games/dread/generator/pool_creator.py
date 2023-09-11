@@ -14,11 +14,7 @@ if TYPE_CHECKING:
     from randovania.layout.base.base_configuration import BaseConfiguration
 
 DREAD_ARTIFACT_CATEGORY = pickup_category.PickupCategory(
-    name="dna",
-    long_name="Metroid DNA",
-    hint_details=("some ", "Metroid DNA"),
-    hinted_as_major=False,
-    is_key=True
+    name="dna", long_name="Metroid DNA", hint_details=("some ", "Metroid DNA"), hinted_as_major=False, is_key=True
 )
 
 
@@ -30,22 +26,20 @@ def pool_creator(results: PoolResults, configuration: BaseConfiguration, game: G
 
 def artifact_pool(game: GameDescription, config: DreadArtifactConfig) -> PoolResults:
     keys = [create_dread_artifact(i, game.resource_database) for i in range(12)]
-    keys_to_shuffle = keys[:config.required_artifacts]
-    starting_keys = keys[config.required_artifacts:]
+    keys_to_shuffle = keys[: config.required_artifacts]
+    starting_keys = keys[config.required_artifacts :]
 
     return PoolResults(keys_to_shuffle, {}, starting_keys)
 
 
-def create_dread_artifact(artifact_number: int,
-                          resource_database: ResourceDatabase,
-                          ) -> PickupEntry:
+def create_dread_artifact(
+    artifact_number: int,
+    resource_database: ResourceDatabase,
+) -> PickupEntry:
     return PickupEntry(
         name=f"Metroid DNA {artifact_number + 1}",
         progression=((resource_database.get_item(f"Artifact{artifact_number + 1}"), 1),),
-        model=PickupModel(
-            game=resource_database.game_enum,
-            name=f"DNA_{artifact_number + 1}"
-        ),
+        model=PickupModel(game=resource_database.game_enum, name=f"DNA_{artifact_number + 1}"),
         pickup_category=DREAD_ARTIFACT_CATEGORY,
         broad_category=pickup_category.GENERIC_KEY_CATEGORY,
         generator_params=PickupGeneratorParams(

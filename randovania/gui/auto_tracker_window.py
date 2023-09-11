@@ -26,9 +26,7 @@ if TYPE_CHECKING:
 
 
 def load_trackers_configuration(for_solo: bool) -> dict[RandovaniaGame, dict[str, Path]]:
-    data = json_lib.read_path(
-        get_data_path().joinpath("gui_assets/tracker/trackers.json")
-    )
+    data = json_lib.read_path(get_data_path().joinpath("gui_assets/tracker/trackers.json"))
 
     if for_solo:
         exclude_trackers = {}
@@ -209,9 +207,7 @@ class AutoTrackerWindow(QtWidgets.QMainWindow, Ui_AutoTrackerWindow):
             )
 
         if not self.game_connection.connection_builders:
-            self.select_game_combo.addItem(
-                "No sources available"
-            )
+            self.select_game_combo.addItem("No sources available")
 
         if index_to_select is not None:
             self.select_game_combo.setCurrentIndex(index_to_select)

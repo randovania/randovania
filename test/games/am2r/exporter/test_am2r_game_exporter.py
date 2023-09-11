@@ -40,15 +40,16 @@ def test_export_game_raises_with_wrong_dotnet_exit_code(mocker):
     with pytest.raises(UnableToExportError):
         exporter._do_export_game(MagicMock(), MagicMock(), MagicMock())
 
+
 @pytest.mark.parametrize("patch_data_name", ["starter_preset", "door_lock"])
 def test_do_export_game(test_files_dir, mocker, patch_data_name: str, tmp_path):
     # Setup
-    def exec_mock_function(max_workers=None, mp_context=None,
-                           initializer=None, initargs=(), max_tasks_per_child=None):
+    def exec_mock_function(max_workers=None, mp_context=None, initializer=None, initargs=(), max_tasks_per_child=None):
         return None
 
-    def submit_mock_function(function: Callable, patch_data: dict, export_params: AM2RGameExportParams,
-                             pipe: Connection):
+    def submit_mock_function(
+        function: Callable, patch_data: dict, export_params: AM2RGameExportParams, pipe: Connection
+    ):
         pipe.send(("Finished", 1.0))
         return Future()
 
@@ -74,12 +75,7 @@ def test_do_export_game(test_files_dir, mocker, patch_data_name: str, tmp_path):
     exporter._do_export_game(patch_data, export_params, progress_update)
 
     # Assert
-    submit.assert_called_with(
-        ANY,
-        patch_data,
-        export_params,
-        ANY
-    )
+    submit.assert_called_with(ANY, patch_data, export_params, ANY)
 
     done_callback.assert_called_once()
     assert done.call_count == 2

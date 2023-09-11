@@ -27,16 +27,13 @@ def render_region_graph_logic(args):
         "Morph Ball Door": None,
         "Other Door": None,
         "Scan Portal": None,
-
         "Missile": "#ff1919",
         "Super Missile": "#38c914",
         "Seeker Launcher": "#b233e8",
         "Power Bomb": "#dfe833",
-
         "Wave Door": "#a30af5",
         "Ice Door": "#7cdede",
         "Plasma Door": "#870f0f",
-
         "Light Door": "#bfd9d9",
         "Dark Door": "#3b3647",
         "Annihilator Door": "#616969",
@@ -73,7 +70,10 @@ def render_region_graph_logic(args):
         dot.edge(
             f"{the_region.name}-{source_area.name}",
             f"{the_region.name}-{target_area.name}",
-            weak_name, dir=direction, color=color, fontcolor=color,
+            weak_name,
+            dir=direction,
+            color=color,
+            fontcolor=color,
         )
         added_edges.add(dock_node.identifier)
 
@@ -89,7 +89,9 @@ def render_region_graph_logic(args):
         dot.edge(
             f"{source_region.name}-{source_area.name}",
             f"{target_region.name}-{target_area.name}",
-            weak_name, color=color, fontcolor=color,
+            weak_name,
+            color=color,
+            fontcolor=color,
         )
 
     def _cross_region_dock(node: DockNode):
@@ -106,10 +108,7 @@ def render_region_graph_logic(args):
     }
     colors = per_game_colors.get(gd.game)
     if colors is None:
-        colors = {
-            region.name: _hash_to_color(region.name)
-            for region in gd.region_list.regions
-        }
+        colors = {region.name: _hash_to_color(region.name) for region in gd.region_list.regions}
 
     dark_colors = {
         "Agon Wastes": "#a88332",
@@ -120,8 +119,7 @@ def render_region_graph_logic(args):
     }
 
     if single_image:
-        full_dot = graphviz.Digraph(name=gd.game.short_name,
-                                    comment=gd.game.long_name)
+        full_dot = graphviz.Digraph(name=gd.game.short_name, comment=gd.game.long_name)
     else:
         full_dot = None
     per_region_dot = {}
@@ -136,15 +134,14 @@ def render_region_graph_logic(args):
 
         for area in region.areas:
             shape = None
-            if any(isinstance(node, DockNode) and _cross_region_dock(node)
-                   for node in area.nodes):
+            if any(isinstance(node, DockNode) and _cross_region_dock(node) for node in area.nodes):
                 shape = "polygon"
 
             c = (dark_colors if area.in_dark_aether else colors)[region.name]
-            fillcolor = "".join(f"{max(0, int(c[i * 2 + 1:i * 2 + 3], 16) - 64):02x}"
-                                for i in range(3))
+            fillcolor = "".join(f"{max(0, int(c[i * 2 + 1:i * 2 + 3], 16) - 64):02x}" for i in range(3))
             this_dot.node(
-                f"{region.name}-{area.name}", area.name,
+                f"{region.name}-{area.name}",
+                area.name,
                 color=c,
                 fillcolor=f"#{fillcolor}",
                 style="filled",
@@ -155,8 +152,9 @@ def render_region_graph_logic(args):
 
             for node in area.nodes:
                 if args.include_pickups and isinstance(node, PickupNode):
-                    this_dot.node(str(node.pickup_index), re.search(r"Pickup [^(]*\(([^)]+)\)", node.name).group(1),
-                                  shape="house")
+                    this_dot.node(
+                        str(node.pickup_index), re.search(r"Pickup [^(]*\(([^)]+)\)", node.name).group(1), shape="house"
+                    )
                     this_dot.edge(f"{region.name}-{area.name}", str(node.pickup_index))
 
     for region in regions:
@@ -179,7 +177,7 @@ def render_regions_graph(sub_parsers):
     parser: ArgumentParser = sub_parsers.add_parser(
         "render-region-graph",
         help="Renders an image with all area connections",
-        formatter_class=argparse.MetavarTypeHelpFormatter
+        formatter_class=argparse.MetavarTypeHelpFormatter,
     )
     parser.add_argument("--include-teleporters", action="store_true")
     parser.add_argument("--include-pickups", action="store_true")

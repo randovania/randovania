@@ -110,7 +110,8 @@ class ResourceDatabaseGenericModel(QtCore.QAbstractTableModel):
                 valid, new_value = field.from_qt(value)
                 if valid:
                     all_items[index.row()] = dataclasses.replace(
-                        resource, **{field.field_name: new_value},
+                        resource,
+                        **{field.field_name: new_value},
                     )
                     self.dataChanged.emit(index, index, [Qt.ItemDataRole.DisplayRole])
                     return True
@@ -223,11 +224,11 @@ class ResourceDatabaseEditor(QtWidgets.QDockWidget, Ui_ResourceDatabaseEditor):
 
     @property
     def _all_tabs(self):
-        return [self.tab_item, self.tab_event, self.tab_trick, self.tab_damage,
-                self.tab_version, self.tab_misc]
+        return [self.tab_item, self.tab_event, self.tab_trick, self.tab_damage, self.tab_version, self.tab_misc]
 
-    def _on_data_changed(self, model: ResourceDatabaseGenericModel, top_left: QtCore.QModelIndex,
-                         bottom_right: QtCore.QModelIndex, roles):
+    def _on_data_changed(
+        self, model: ResourceDatabaseGenericModel, top_left: QtCore.QModelIndex, bottom_right: QtCore.QModelIndex, roles
+    ):
         first_row = top_left.row()
         last_row = bottom_right.row()
         if first_row == last_row:
@@ -264,7 +265,8 @@ class ResourceDatabaseEditor(QtWidgets.QDockWidget, Ui_ResourceDatabaseEditor):
             item,
         )
         self.editor_for_template[name].create_connections(
-            self.tab_template, self.db.requirement_template[name],
+            self.tab_template,
+            self.db.requirement_template[name],
         )
 
         return item
@@ -276,5 +278,6 @@ class ResourceDatabaseEditor(QtWidgets.QDockWidget, Ui_ResourceDatabaseEditor):
         if result == QtWidgets.QDialog.DialogCode.Accepted:
             self.db.requirement_template[name] = editor.final_requirement
             self.editor_for_template[name].create_connections(
-                self.tab_template, self.db.requirement_template[name],
+                self.tab_template,
+                self.db.requirement_template[name],
             )
