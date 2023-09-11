@@ -43,6 +43,7 @@ def export_as_binary(data: dict, output_binary: Path):
 
 def convert_database_command_logic(args):
     from randovania.game_description import data_reader, data_writer
+
     data = decode_data_file(args)
 
     if args.decode_to_game_description:
@@ -64,13 +65,13 @@ def create_convert_database_command(sub_parsers):
     parser: ArgumentParser = sub_parsers.add_parser(
         "convert-database",
         help="Converts a database file between JSON and binary encoded formats. Input defaults to embedded database.",
-        formatter_class=argparse.MetavarTypeHelpFormatter
+        formatter_class=argparse.MetavarTypeHelpFormatter,
     )
     parser.add_argument(
         "--decode-to-game-description",
         action="store_true",
         default=False,
-        help="Decodes the input data to a GameDescription, then encodes it back."
+        help="Decodes the input data to a GameDescription, then encodes it back.",
     )
 
     group = parser.add_mutually_exclusive_group(required=True)
@@ -90,6 +91,7 @@ def create_convert_database_command(sub_parsers):
 
 def export_videos_command_logic(args):
     from randovania.cli.commands.export_db_videos import export_videos
+
     games = []
 
     if args.game is not None:
@@ -105,7 +107,7 @@ def create_export_videos_command(sub_parsers):
     parser: ArgumentParser = sub_parsers.add_parser(
         "export-videos",
         help="Create HTML pages for easy vewing of YouTube video comments.",
-        formatter_class=argparse.MetavarTypeHelpFormatter
+        formatter_class=argparse.MetavarTypeHelpFormatter,
     )
     parser.add_argument(
         "--output-dir",
@@ -124,6 +126,7 @@ def create_export_videos_command(sub_parsers):
 
 def view_area_command_logic(args):
     from randovania.game_description import pretty_print
+
     game = load_game_description(args)
     region_list = game.region_list
 
@@ -156,31 +159,18 @@ def load_game_description(args):
 
 def view_area_command(sub_parsers):
     parser: ArgumentParser = sub_parsers.add_parser(
-        "view-area",
-        help="View information about an area.",
-        formatter_class=argparse.MetavarTypeHelpFormatter
+        "view-area", help="View information about an area.", formatter_class=argparse.MetavarTypeHelpFormatter
     )
-    parser.add_argument(
-        "--simplify",
-        action="store_true",
-        help="Simplify the RequirementSets"
-    )
-    parser.add_argument(
-        "region",
-        type=str,
-        help="The name of the region that contains the area."
-    )
-    parser.add_argument(
-        "area",
-        type=str,
-        help="The name of the area."
-    )
+    parser.add_argument("--simplify", action="store_true", help="Simplify the RequirementSets")
+    parser.add_argument("region", type=str, help="The name of the region that contains the area.")
+    parser.add_argument("area", type=str, help="The name of the area.")
 
     parser.set_defaults(func=view_area_command_logic)
 
 
 def update_human_readable_logic(args):
     from randovania.game_description import data_reader, pretty_print
+
     game = RandovaniaGame(args.game)
 
     path, data = default_data.read_json_then_binary(game)
@@ -194,7 +184,7 @@ def update_human_readable(sub_parsers):
     parser: ArgumentParser = sub_parsers.add_parser(
         "update-human-readable",
         help="Update the human readable versions",
-        formatter_class=argparse.MetavarTypeHelpFormatter
+        formatter_class=argparse.MetavarTypeHelpFormatter,
     )
     parser.set_defaults(func=update_human_readable_logic)
 
@@ -225,8 +215,7 @@ def refresh_game_description_logic(args):
         for game, gd in gd_per_game.items():
             errors = integrity_check.find_database_errors(gd)
             if errors:
-                logging.warning("Integrity errors for %s:\n%s", game.long_name,
-                                "\n".join(errors))
+                logging.warning("Integrity errors for %s:\n%s", game.long_name, "\n".join(errors))
                 if game.data.development_state.is_stable:
                     should_stop = True
 
@@ -264,10 +253,7 @@ def refresh_pickup_database_command(sub_parsers):
     parser.set_defaults(func=refresh_pickup_database_logic)
 
 
-def _list_paths_with_resource(game,
-                              print_only_area: bool,
-                              resource: ResourceInfo,
-                              needed_quantity: int | None):
+def _list_paths_with_resource(game, print_only_area: bool, resource: ResourceInfo, needed_quantity: int | None):
     from randovania.game_description.game_description import GameDescription
 
     count = 0
@@ -286,13 +272,18 @@ def _list_paths_with_resource(game,
                     if needed_quantity is None or needed_quantity == individual.amount:
                         area_had_resource = True
                         if not print_only_area:
-                            print("At {}, from {} to {}:\n{}\n".format(
-                                game.region_list.area_name(area),
-                                source.name,
-                                target.name,
-                                sorted(individual for individual in alternative.values()
-                                       if individual.resource != resource)
-                            ))
+                            print(
+                                "At {}, from {} to {}:\n{}\n".format(
+                                    game.region_list.area_name(area),
+                                    source.name,
+                                    target.name,
+                                    sorted(
+                                        individual
+                                        for individual in alternative.values()
+                                        if individual.resource != resource
+                                    ),
+                                )
+                            )
                         count += 1
 
         if area_had_resource and print_only_area:
@@ -316,12 +307,14 @@ def list_paths_with_dangerous_logic(args):
                         if individual.negate:
                             area_had_resource = True
                             if not print_only_area:
-                                print("At {}, from {} to {}:\n{}\n".format(
-                                    game.region_list.area_name(area),
-                                    area,
-                                    source.name,
-                                    sorted(individual for individual in alternative.values()),
-                                ))
+                                print(
+                                    "At {}, from {} to {}:\n{}\n".format(
+                                        game.region_list.area_name(area),
+                                        area,
+                                        source.name,
+                                        sorted(individual for individual in alternative.values()),
+                                    )
+                                )
                             count += 1
 
         if area_had_resource and print_only_area:
@@ -334,10 +327,11 @@ def list_paths_with_dangerous_command(sub_parsers):
     parser: ArgumentParser = sub_parsers.add_parser(
         "list-dangerous-usage",
         help="List all connections that needs a resource to be missing.",
-        formatter_class=argparse.MetavarTypeHelpFormatter
+        formatter_class=argparse.MetavarTypeHelpFormatter,
     )
-    parser.add_argument("--print-only-area", help="Only print the area names, not each specific path",
-                        action="store_true")
+    parser.add_argument(
+        "--print-only-area", help="Only print the area names, not each specific path", action="store_true"
+    )
     parser.set_defaults(func=list_paths_with_dangerous_logic)
 
 
@@ -357,28 +351,25 @@ def list_paths_with_resource_logic(args):
         print(f"A resource named {resource_name} was not found.")
         raise SystemExit(1)
 
-    _list_paths_with_resource(
-        gd,
-        args.print_only_area,
-        resource,
-        None
-    )
+    _list_paths_with_resource(gd, args.print_only_area, resource, None)
 
 
 def list_paths_with_resource_command(sub_parsers):
     parser: ArgumentParser = sub_parsers.add_parser(
         "list-resource-usage",
         help="List all connections that needs the resource.",
-        formatter_class=argparse.MetavarTypeHelpFormatter
+        formatter_class=argparse.MetavarTypeHelpFormatter,
     )
-    parser.add_argument("--print-only-area", help="Only print the area names, not each specific path",
-                        action="store_true")
+    parser.add_argument(
+        "--print-only-area", help="Only print the area names, not each specific path", action="store_true"
+    )
     parser.add_argument("resource", type=str)
     parser.set_defaults(func=list_paths_with_resource_logic)
 
 
 def pickups_per_area_command_logic(args):
     from randovania.game_description.db.pickup_node import PickupNode
+
     gd = load_game_description(args)
 
     for region in gd.region_list.regions:
@@ -390,13 +381,14 @@ def pickups_per_area_command(sub_parsers):
     parser: ArgumentParser = sub_parsers.add_parser(
         "pickups-per-area",
         help="Print how many pickups there are in each area",
-        formatter_class=argparse.MetavarTypeHelpFormatter
+        formatter_class=argparse.MetavarTypeHelpFormatter,
     )
     parser.set_defaults(func=pickups_per_area_command_logic)
 
 
 def _find_uncommented_tricks(requirement: Requirement):
     from randovania.layout.base.trick_level import LayoutTrickLevel
+
     if not isinstance(requirement, RequirementArrayBase):
         return
 
@@ -408,10 +400,12 @@ def _find_uncommented_tricks(requirement: Requirement):
             trick_resources.append(it)
 
     if requirement.comment is None and trick_resources:
-        yield ", ".join(sorted(
-            f"{req.resource.long_name} ({LayoutTrickLevel.from_number(req.amount).long_name})"
-            for req in trick_resources
-        ))
+        yield ", ".join(
+            sorted(
+                f"{req.resource.long_name} ({LayoutTrickLevel.from_number(req.amount).long_name})"
+                for req in trick_resources
+            )
+        )
 
 
 def uncommented_trick_usages_logic(args):
@@ -422,7 +416,6 @@ def uncommented_trick_usages_logic(args):
     for region in gd.region_list.regions:
         lines.append(f"# {region.name}")
         for area in region.areas:
-
             paths = {}
             for source, connections in area.connections.items():
                 paths[source.name] = {}
@@ -451,7 +444,7 @@ def uncommented_trick_usages_command(sub_parsers):
     parser: ArgumentParser = sub_parsers.add_parser(
         "uncommented-trick-usages",
         help="Creates a list of all trick usages that are in uncommented groups.",
-        formatter_class=argparse.MetavarTypeHelpFormatter
+        formatter_class=argparse.MetavarTypeHelpFormatter,
     )
     parser.add_argument(
         "output_path",
@@ -462,10 +455,7 @@ def uncommented_trick_usages_command(sub_parsers):
 
 
 def create_subparsers(sub_parsers):
-    parser: ArgumentParser = sub_parsers.add_parser(
-        "database",
-        help="Actions for database manipulation"
-    )
+    parser: ArgumentParser = sub_parsers.add_parser("database", help="Actions for database manipulation")
 
     group = parser.add_mutually_exclusive_group()
     group.add_argument(

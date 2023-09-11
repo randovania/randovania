@@ -9,8 +9,13 @@ if TYPE_CHECKING:
 
 
 class ResourceCollection:
-    __slots__ = ("resource_bitmask", "_resource_array", "_existing_resources", "add_self_as_requirement_to_resources",
-                 "_damage_reduction_cache")
+    __slots__ = (
+        "resource_bitmask",
+        "_resource_array",
+        "_existing_resources",
+        "add_self_as_requirement_to_resources",
+        "_damage_reduction_cache",
+    )
     resource_bitmask: int
     _resource_array: list[int]
     _existing_resources: dict[int, ResourceInfo]
@@ -31,9 +36,7 @@ class ResourceCollection:
         return result
 
     def _resize_array_to(self, size: int) -> None:
-        self._resource_array.extend(
-            0 for _ in range(len(self._resource_array), size + 1)
-        )
+        self._resource_array.extend(0 for _ in range(len(self._resource_array), size + 1))
 
     def __getitem__(self, item: ResourceInfo) -> int:
         resource_index = item.resource_index
@@ -51,9 +54,7 @@ class ResourceCollection:
         return tuple(self.as_resource_gain()), self.add_self_as_requirement_to_resources
 
     def __eq__(self, other: object) -> bool:
-        return isinstance(other, ResourceCollection) and (
-                self._comparison_tuple == other._comparison_tuple
-        )
+        return isinstance(other, ResourceCollection) and (self._comparison_tuple == other._comparison_tuple)
 
     @property
     def num_resources(self) -> int:

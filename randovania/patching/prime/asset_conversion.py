@@ -105,8 +105,14 @@ prime1_assets = {
 
 
 @monitoring.trace_function
-def convert_prime1_pickups(prime1_iso: Path, echoes_files_path: Path, assets_path: Path,
-                           patch_data: dict, randomizer_data: dict, status_update: ProgressUpdateCallable):
+def convert_prime1_pickups(
+    prime1_iso: Path,
+    echoes_files_path: Path,
+    assets_path: Path,
+    patch_data: dict,
+    randomizer_data: dict,
+    status_update: ProgressUpdateCallable,
+):
     """"""
     updaters = status_update_lib.split_progress_update(status_update, 3)
 
@@ -116,18 +122,17 @@ def convert_prime1_pickups(prime1_iso: Path, echoes_files_path: Path, assets_pat
 
     else:
         converted_assets, randomizer_data_additions = _convert_prime1_assets(
-            prime1_iso, assets_path,
-            randomizer_data, updaters[0],
+            prime1_iso,
+            assets_path,
+            randomizer_data,
+            updaters[0],
         )
 
     for asset in randomizer_data_additions:
         asset["Index"] = len(randomizer_data["ModelData"])
         randomizer_data["ModelData"].append(asset)
 
-    model_name_to_data = {
-        asset["Name"]: asset
-        for asset in randomizer_data_additions
-    }
+    model_name_to_data = {asset["Name"]: asset for asset in randomizer_data_additions}
 
     wl = default_database.game_description_for(RandovaniaGame.METROID_PRIME_ECHOES).region_list
     pickup_index_to_mrea_asset_id = {
@@ -214,8 +219,9 @@ def merge_dependencies(dependencies: dict[int, set[Dependency]], asset_ids: Iter
         yield from _recurse(it)
 
 
-def _convert_prime1_assets(input_iso: Path, output_path: Path, randomizer_data: dict,
-                           status_update: ProgressUpdateCallable):
+def _convert_prime1_assets(
+    input_iso: Path, output_path: Path, randomizer_data: dict, status_update: ProgressUpdateCallable
+):
     asset_manager = prime_asset_manager(input_iso)
 
     next_id = 0xFFFF0000
@@ -253,7 +259,7 @@ def _convert_prime1_assets(input_iso: Path, output_path: Path, randomizer_data: 
     output_path.mkdir(exist_ok=True, parents=True)
     # Cache these assets here
     # This doesn't work properly so skip this for now
-    '''
+    """
     for asset in converter.converted_assets.values():
         assetdata = format_for(asset.type).build(asset.resource, target_game=Game.ECHOES)
         if len(assetdata) % 32 != 0:
@@ -261,7 +267,7 @@ def _convert_prime1_assets(input_iso: Path, output_path: Path, randomizer_data: 
         assets_path.joinpath(f"{asset.id}.{asset.type.upper()}").write_bytes(
             assetdata
         )
-    '''
+    """
     time.time()
 
     # logging.debug(f"Time took: {end - start}")
@@ -278,25 +284,22 @@ def _convert_prime1_assets(input_iso: Path, output_path: Path, randomizer_data: 
             for dep in merge_dependencies(converted_dependencies, [asset.ancs, asset.cmdl])
         ]
         pprint.pprint(dependencies)
-        randomizer_data_additions.append({
-            "Index": len(randomizer_data["ModelData"]),  # Adjust this one later
-            "Name": f"prime1_{name}",
-            "Model": asset.cmdl,
-            "ScanModel": 0xFFFFFFFF,
-            "AnimSet": asset.ancs,
-            "Character": asset.character,
-            "DefaultAnim": 0,
-            "Rotation": [0.0, 0.0, 0.0],
-            "Scale": [asset.scale, asset.scale, asset.scale],
-            "OrbitOffset": [0.0, 0.0, 0.0],
-            "Lighting": {
-                "CastShadow": True,
-                "UnknownBool1": True,
-                "UseWorldLighting": 1,
-                "UnknownBool2": False
-            },
-            "Assets": dependencies
-        })
+        randomizer_data_additions.append(
+            {
+                "Index": len(randomizer_data["ModelData"]),  # Adjust this one later
+                "Name": f"prime1_{name}",
+                "Model": asset.cmdl,
+                "ScanModel": 0xFFFFFFFF,
+                "AnimSet": asset.ancs,
+                "Character": asset.character,
+                "DefaultAnim": 0,
+                "Rotation": [0.0, 0.0, 0.0],
+                "Scale": [asset.scale, asset.scale, asset.scale],
+                "OrbitOffset": [0.0, 0.0, 0.0],
+                "Lighting": {"CastShadow": True, "UnknownBool1": True, "UseWorldLighting": 1, "UnknownBool2": False},
+                "Assets": dependencies,
+            }
+        )
     meta_dict["data"] = randomizer_data_additions
     json_lib.write_path(output_path.joinpath("meta.json"), meta_dict)
 
@@ -310,7 +313,7 @@ def _read_prime1_from_cache(assets_path: Path, updaters):
     converted_assets = {}
     # Read assets from cache if available
     for i, item in enumerate(randomizer_data_additions):
-        item_name = item["Name"].replace('prime1_', '')
+        item_name = item["Name"].replace("prime1_", "")
         updaters[0](f"Restoring Prime 1 {item_name}", i / len(randomizer_data_additions))
         for asset in item["Assets"]:
             asset_type = asset["Type"]
@@ -366,9 +369,9 @@ def convert_prime2_pickups(input_path: Path, output_path: Path, status_update: P
     # Fix the Varia Suit's character in the suits ANCS referencing a missing skin.
     # 0x3A5E2FE1 is Light Suit's skin
     # this is fixed by Claris' patcher when exporting for Echoes
-    suits_ancs = asset_manager.get_parsed_asset(0xa3e787b7)
+    suits_ancs = asset_manager.get_parsed_asset(0xA3E787B7)
     suits_ancs.raw.character_set.characters[0].skin_id = 0x3A5E2FE1
-    asset_manager.replace_asset(0xa3e787b7, suits_ancs)
+    asset_manager.replace_asset(0xA3E787B7, suits_ancs)
 
     # Use echoes missile expansion for unlimited missiles instead of missile launcher
     unlimited_missile_data = next(i for i in randomizer_data["ModelData"] if i["Index"] == 42)
@@ -379,8 +382,7 @@ def convert_prime2_pickups(input_path: Path, output_path: Path, status_update: P
     assets_to_change = [
         data
         for data in randomizer_data["ModelData"]
-        if (data["Model"] != RDSGame.ECHOES.invalid_asset_id
-            and data["AnimSet"] != RDSGame.ECHOES.invalid_asset_id)
+        if (data["Model"] != RDSGame.ECHOES.invalid_asset_id and data["AnimSet"] != RDSGame.ECHOES.invalid_asset_id)
     ]
 
     for i, data in enumerate(assets_to_change):
@@ -402,10 +404,7 @@ def convert_prime2_pickups(input_path: Path, output_path: Path, status_update: P
     start = time.time()
     converted_dependencies = all_converted_dependencies(converter)
 
-    new_id_to_old = {
-        new_id: old_id
-        for (_, old_id), new_id in converter.converted_ids.items()
-    }
+    new_id_to_old = {new_id: old_id for (_, old_id), new_id in converter.converted_ids.items()}
 
     unique_anim = {}
     unique_evnt = []
@@ -459,10 +458,7 @@ def convert_prime2_pickups(input_path: Path, output_path: Path, status_update: P
                 "old_id": new_id_to_old.get(asset.id),
                 "new_id": asset.id,
                 "type": asset.type,
-                "dependencies": [
-                    {"type": dep.type, "id": dep.id}
-                    for dep in converted_dependencies[asset.id]
-                ]
+                "dependencies": [{"type": dep.type, "id": dep.id} for dep in converted_dependencies[asset.id]],
             }
             for asset in converter.converted_assets.values()
         ],
@@ -473,9 +469,7 @@ def convert_prime2_pickups(input_path: Path, output_path: Path, status_update: P
         assetdata = format_for(asset.type).build(asset.resource, target_game=RDSGame.PRIME)
         if len(assetdata) % 32 != 0:
             assetdata += b"\xFF" * (32 - (len(assetdata) % 32))
-        output_path.joinpath(f"{asset.id}.{asset.type.upper()}").write_bytes(
-            assetdata
-        )
+        output_path.joinpath(f"{asset.id}.{asset.type.upper()}").write_bytes(assetdata)
 
     logging.info(f"Time took to write files: {time.time() - start}")
     status_update(f"Finished writing the converted assets in {end - start:.3f}.", 1.0)

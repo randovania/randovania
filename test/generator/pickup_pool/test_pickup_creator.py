@@ -30,10 +30,7 @@ def test_create_pickup_for(echoes_resource_database, generic_pickup_category):
     ammo_b = echoes_resource_database.get_item("DarkAmmo")
 
     less_generic_pickup_category = PickupCategory(
-        name="the_category",
-        long_name="The Category",
-        hint_details=("a ", " wonderful item"),
-        hinted_as_major=True
+        name="the_category", long_name="The Category", hint_details=("a ", " wonderful item"), hinted_as_major=True
     )
 
     standard_pickup = StandardPickupDefinition(
@@ -87,13 +84,17 @@ def test_create_pickup_for(echoes_resource_database, generic_pickup_category):
     )
 
 
-@pytest.mark.parametrize("ammo_quantity", [
-    0,
-    10,
-    15,
-])
-def test_create_missile_launcher(ammo_quantity: int, echoes_pickup_database, echoes_resource_database,
-                                 default_generator_params):
+@pytest.mark.parametrize(
+    "ammo_quantity",
+    [
+        0,
+        10,
+        15,
+    ],
+)
+def test_create_missile_launcher(
+    ammo_quantity: int, echoes_pickup_database, echoes_resource_database, default_generator_params
+):
     # Setup
     missile = echoes_resource_database.get_item("Missile")
     missile_launcher = echoes_resource_database.get_item("MissileLauncher")
@@ -119,9 +120,7 @@ def test_create_missile_launcher(ammo_quantity: int, echoes_pickup_database, ech
     # Assert
     assert result == PickupEntry(
         name="Missile Launcher",
-        progression=(
-            (missile_launcher, 1),
-        ),
+        progression=((missile_launcher, 1),),
         extra_resources=(
             (missile, ammo_quantity),
             (echoes_resource_database.get_item(echoes_items.PERCENTAGE), 1),
@@ -141,12 +140,13 @@ def test_create_missile_launcher(ammo_quantity: int, echoes_pickup_database, ech
 
 @pytest.mark.parametrize("ammo_quantity", [0, 10, 15])
 @pytest.mark.parametrize("ammo_requires_main_item", [False, True])
-def test_create_seeker_launcher(ammo_quantity: int,
-                                ammo_requires_main_item: bool,
-                                echoes_pickup_database,
-                                echoes_resource_database,
-                                default_generator_params,
-                                ):
+def test_create_seeker_launcher(
+    ammo_quantity: int,
+    ammo_requires_main_item: bool,
+    echoes_pickup_database,
+    echoes_resource_database,
+    default_generator_params,
+):
     # Setup
     missile = echoes_resource_database.get_item("Missile")
     missile_launcher = echoes_resource_database.get_item("MissileLauncher")
@@ -161,19 +161,20 @@ def test_create_seeker_launcher(ammo_quantity: int,
     )
 
     # Run
-    result = pickup_creator.create_standard_pickup(echoes_pickup_database.standard_pickups["Seeker Launcher"], state,
-                                                   echoes_resource_database,
-                                                   echoes_pickup_database.ammo_pickups["Missile Expansion"],
-                                                   ammo_requires_main_item)
+    result = pickup_creator.create_standard_pickup(
+        echoes_pickup_database.standard_pickups["Seeker Launcher"],
+        state,
+        echoes_resource_database,
+        echoes_pickup_database.ammo_pickups["Missile Expansion"],
+        ammo_requires_main_item,
+    )
     result = dataclasses.replace(result, offworld_models=frozendict())
 
     # Assert
 
     assert result == PickupEntry(
         name="Seeker Launcher",
-        progression=(
-            (seeker_launcher, 1),
-        ),
+        progression=((seeker_launcher, 1),),
         extra_resources=(
             (missile, ammo_quantity),
             (echoes_resource_database.get_item(echoes_items.PERCENTAGE), 1),
@@ -212,17 +213,14 @@ def test_create_ammo_expansion(requires_main_item: bool, echoes_pickup_database,
     ammo_count = (11, 150)
 
     # Run
-    result = pickup_creator.create_ammo_pickup(
-        ammo, ammo_count, requires_main_item, echoes_resource_database)
+    result = pickup_creator.create_ammo_pickup(ammo, ammo_count, requires_main_item, echoes_resource_database)
 
     # Assert
     assert result == PickupEntry(
         name="The Item",
         model=PickupModel(echoes_resource_database.game_enum, "AmmoModel"),
         progression=(),
-        extra_resources=(
-            (ammo_a, ammo_count[0]),
-        ),
+        extra_resources=((ammo_a, ammo_count[0]),),
         pickup_category=AMMO_PICKUP_CATEGORY,
         broad_category=USELESS_PICKUP_CATEGORY,
         respects_lock=requires_main_item,
@@ -252,8 +250,9 @@ def test_missile_expansion_before_launcher(include_before, echoes_pickup_databas
 
     # Run
     expansion = pickup_creator.create_ammo_pickup(ammo, [5], True, echoes_resource_database)
-    launcher = pickup_creator.create_standard_pickup(standard_pickup, StandardPickupState(included_ammo=(5,)),
-                                                     echoes_resource_database, ammo, True)
+    launcher = pickup_creator.create_standard_pickup(
+        standard_pickup, StandardPickupState(included_ammo=(5,)), echoes_resource_database, ammo, True
+    )
 
     def to_dict(col: ResourceCollection):
         return dict(col.as_resource_gain())

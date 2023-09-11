@@ -13,8 +13,12 @@ class GameConnectionStatus(Enum):
     InGame = "in-game"
 
 
-enum_lib.add_per_enum_field(GameConnectionStatus, "pretty_text", {
-    GameConnectionStatus.Disconnected: "Disconnected",
-    GameConnectionStatus.TitleScreen: "Title screen",
-    GameConnectionStatus.InGame: "In-game",
-})
+enum_lib.add_per_enum_field(
+    GameConnectionStatus,
+    "pretty_text",
+    {
+        GameConnectionStatus.Disconnected: "Disconnected",
+        GameConnectionStatus.TitleScreen: "Title screen",
+        GameConnectionStatus.InGame: "In-game",
+    },
+)

@@ -47,24 +47,23 @@ def test_do_export_broken_internal_copy(tmp_path: Path):
 @pytest.mark.parametrize("use_new_patcher", [False, True])
 @pytest.mark.parametrize("use_hud_color", [False, True])
 @pytest.mark.parametrize("use_menu_mod", [False, True])
-def test_do_export_game(mocker: pytest_mock.MockerFixture,
-                        tmp_path,
-                        has_input_iso,
-                        use_hud_color,
-                        use_new_patcher,
-                        use_prime_models,
-                        use_menu_mod):
+def test_do_export_game(
+    mocker: pytest_mock.MockerFixture,
+    tmp_path,
+    has_input_iso,
+    use_hud_color,
+    use_new_patcher,
+    use_prime_models,
+    use_menu_mod,
+):
     input_path = MagicMock() if has_input_iso else None
 
-    mock_patch_banner = mocker.patch(
-        "randovania.patching.patchers.gamecube.banner_patcher.patch_game_name_and_id")
+    mock_patch_banner = mocker.patch("randovania.patching.patchers.gamecube.banner_patcher.patch_game_name_and_id")
     mock_unpack_iso = mocker.patch("randovania.patching.patchers.gamecube.iso_packager.unpack_iso")
     mock_pack_iso = mocker.patch("randovania.patching.patchers.gamecube.iso_packager.pack_iso")
     mock_create_backup = mocker.patch("randovania.games.prime2.patcher.claris_randomizer.create_pak_backups")
-    mock_restore_backup = mocker.patch(
-        "randovania.games.prime2.patcher.claris_randomizer.restore_pak_backups")
-    mock_apply_patcher = mocker.patch(
-        "randovania.games.prime2.patcher.claris_randomizer.apply_patcher_file")
+    mock_restore_backup = mocker.patch("randovania.games.prime2.patcher.claris_randomizer.restore_pak_backups")
+    mock_apply_patcher = mocker.patch("randovania.games.prime2.patcher.claris_randomizer.apply_patcher_file")
     mock_patch_paks = mocker.patch("open_prime_rando.echoes_patcher.patch_paks")
     mock_mp2hudcolor_c = mocker.patch("mp2hudcolor.mp2hudcolor_c")
     mock_convert_prime1 = mocker.patch("randovania.patching.prime.asset_conversion.convert_prime1_pickups")
@@ -74,7 +73,8 @@ def test_do_export_game(mocker: pytest_mock.MockerFixture,
     mock_dol_file = mocker.patch("ppc_asm.dol_file.DolFile")
     mock_apply_dol = mocker.patch("open_prime_rando.dol_patching.echoes.dol_patcher.apply_patches")
     mock_dol_patches_from_json = mocker.patch(
-        "open_prime_rando.dol_patching.echoes.dol_patcher.EchoesDolPatchesData.from_json")
+        "open_prime_rando.dol_patching.echoes.dol_patcher.EchoesDolPatchesData.from_json"
+    )
 
     exporter = EchoesGameExporter()
     new_patcher_data = {
@@ -134,16 +134,16 @@ def test_do_export_game(mocker: pytest_mock.MockerFixture,
         )
 
     assert export_params.contents_files_path.joinpath("files", "patcher_data.json").read_text() == patch_data_str
-    mock_patch_banner.assert_called_once_with(
-        export_params.contents_files_path,
-        "the_name",
-        patch_data["publisher_id"]
-    )
+    mock_patch_banner.assert_called_once_with(export_params.contents_files_path, "the_name", patch_data["publisher_id"])
 
     if use_prime_models:
         mock_convert_prime1.assert_called_once_with(
-            export_params.prime_path, export_params.contents_files_path, export_params.asset_cache_path,
-            patch_data, decode_randomizer_data(), ANY,
+            export_params.prime_path,
+            export_params.contents_files_path,
+            export_params.asset_cache_path,
+            patch_data,
+            decode_randomizer_data(),
+            ANY,
         )
     else:
         mock_convert_prime1.assert_not_called()
@@ -166,24 +166,19 @@ def test_do_export_game(mocker: pytest_mock.MockerFixture,
             ANY,  # PathFileProvider(export_params.contents_files_path),
             export_params.contents_files_path,
             new_patcher_data,
-            ANY, # status update
+            ANY,  # status update
         )
     else:
         mock_patch_paks.assert_not_called()
 
     if use_hud_color:
         ntwk_file = str(export_params.contents_files_path.joinpath("files", "Standard.ntwk"))
-        mock_mp2hudcolor_c.assert_called_once_with(
-            ntwk_file, ntwk_file, 0, 1, 127 / 255
-        )
+        mock_mp2hudcolor_c.assert_called_once_with(ntwk_file, ntwk_file, 0, 1, 127 / 255)
     else:
         mock_mp2hudcolor_c.assert_not_called()
 
     if use_menu_mod:
-        mock_menu_mod.assert_called_once_with(
-            export_params.contents_files_path,
-            ANY
-        )
+        mock_menu_mod.assert_called_once_with(export_params.contents_files_path, ANY)
     else:
         mock_menu_mod.assert_not_called()
 

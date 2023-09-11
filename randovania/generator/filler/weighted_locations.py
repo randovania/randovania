@@ -42,19 +42,17 @@ class WeightedLocations:
 
     def filter_for_player(self, player: PlayerState) -> WeightedLocations:
         """Returns only the locations of one player in particular."""
-        return WeightedLocations({
-            loc: weight
-            for loc, weight in self._items.items()
-            if loc[0] is player
-        })
+        return WeightedLocations({loc: weight for loc, weight in self._items.items() if loc[0] is player})
 
     def filter_major_minor_for_pickup(self, pickup: PickupEntry) -> WeightedLocations:
         """Returns only the locations whose player's major/minor configuration allow this pickup."""
-        return WeightedLocations({
-            (player, index): weight
-            for (player, index), weight in self._items.items()
-            if player.can_place_pickup_at(pickup, index)
-        })
+        return WeightedLocations(
+            {
+                (player, index): weight
+                for (player, index), weight in self._items.items()
+                if player.can_place_pickup_at(pickup, index)
+            }
+        )
 
     def all_items(self) -> Iterator[tuple[PlayerState, PickupIndex, float]]:
         for (player, index), weight in self._items.items():

@@ -38,6 +38,7 @@ class DockNode(Node):
     TeleporterNode is expected to be used exceptionally, where it can be reasonable to list all of them in the
     UI for user selection (teleporter rando, for example).
     """
+
     dock_type: DockType
     default_connection: NodeIdentifier
     default_dock_weakness: DockWeakness
@@ -70,9 +71,11 @@ class DockNode(Node):
         else:
             return context.node_provider.lock_requirement_for(weakness)
 
-    def _open_dock_connection(self, context: NodeContext, target_node: Node,
-                              ) -> tuple[Node, Requirement]:
-
+    def _open_dock_connection(
+        self,
+        context: NodeContext,
+        target_node: Node,
+    ) -> tuple[Node, Requirement]:
         forward_weakness = context.patches.get_dock_weakness_for(self)
 
         reqs: list[Requirement] = [self._get_open_requirement(context, forward_weakness)]

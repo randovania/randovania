@@ -15,24 +15,18 @@ if TYPE_CHECKING:
     from randovania.layout.base.base_configuration import BaseConfiguration
 
 METROID_DNA_CATEGORY = pickup_category.PickupCategory(
-    name="dna",
-    long_name="Metroid DNA",
-    hint_details=("some ", "Metroid DNA"),
-    hinted_as_major=False,
-    is_key=True
+    name="dna", long_name="Metroid DNA", hint_details=("some ", "Metroid DNA"), hinted_as_major=False, is_key=True
 )
 
 
-def create_am2r_artifact(artifact_number: int,
-                         resource_database: ResourceDatabase,
-                         ) -> PickupEntry:
+def create_am2r_artifact(
+    artifact_number: int,
+    resource_database: ResourceDatabase,
+) -> PickupEntry:
     return PickupEntry(
         name=f"Metroid DNA {artifact_number + 1}",
         progression=((resource_database.get_item(f"Metroid DNA {artifact_number + 1}"), 1),),
-        model=PickupModel(
-            game=resource_database.game_enum,
-            name="sItemDNA"
-        ),
+        model=PickupModel(game=resource_database.game_enum, name="sItemDNA"),
         pickup_category=METROID_DNA_CATEGORY,
         broad_category=pickup_category.GENERIC_KEY_CATEGORY,
         generator_params=PickupGeneratorParams(
@@ -59,7 +53,7 @@ def artifact_pool(game: GameDescription, config: AM2RArtifactConfig) -> PoolResu
         raise InvalidConfiguration("More Metroid DNA than allowed!")
 
     keys: list[PickupEntry] = [create_am2r_artifact(i, game.resource_database) for i in range(46)]
-    keys_to_shuffle = keys[:config.required_artifacts]
-    starting_keys = keys[config.required_artifacts:]
+    keys_to_shuffle = keys[: config.required_artifacts]
+    starting_keys = keys[config.required_artifacts :]
 
     return PoolResults(keys_to_shuffle, {}, starting_keys)

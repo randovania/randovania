@@ -54,9 +54,11 @@ def _describe_preset(preset: Preset) -> list[str]:
     return lines
 
 
-def _calculate_previous_versions(preset_manager: PresetManager, preset: VersionedPreset,
-                                 original_lines: tuple[str, ...],
-                                 ) -> Iterator[tuple[datetime.datetime, Preset, tuple[str, ...]]]:
+def _calculate_previous_versions(
+    preset_manager: PresetManager,
+    preset: VersionedPreset,
+    original_lines: tuple[str, ...],
+) -> Iterator[tuple[datetime.datetime, Preset, tuple[str, ...]]]:
     previous_description = None
 
     for date, commit in preset_manager.get_previous_versions(preset):
@@ -100,8 +102,9 @@ class PresetHistoryDialog(QtWidgets.QDialog, Ui_PresetHistoryDialog):
         _set_item_data(item, (None, original_description))
         self.version_widget.addItem(item)
 
-        for date, old_preset, old_description in _calculate_previous_versions(self.preset_manager, self.preset,
-                                                                              self._original_lines):
+        for date, old_preset, old_description in _calculate_previous_versions(
+            self.preset_manager, self.preset, self._original_lines
+        ):
             item = QtWidgets.QListWidgetItem(date.astimezone().strftime("%c"))
             _set_item_data(item, (old_preset, old_description))
             self.version_widget.addItem(item)
@@ -143,10 +146,12 @@ class PresetHistoryDialog(QtWidgets.QDialog, Ui_PresetHistoryDialog):
         self.export_button.setEnabled(self.accept_button.isEnabled())
 
         if old_preset is not None and self._original_lines:
-            k = list(difflib.unified_diff(
-                self._original_lines,
-                old_description,
-            ))
+            k = list(
+                difflib.unified_diff(
+                    self._original_lines,
+                    old_description,
+                )
+            )
             description = "\n\n".join(k[2:])
         else:
             description = "\n\n".join(old_description)

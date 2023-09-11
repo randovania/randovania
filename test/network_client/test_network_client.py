@@ -46,13 +46,15 @@ async def test_on_connect_restore(tmpdir, valid_session: bool):
     session_data_path.write_bytes(b"foo")
 
     if valid_session:
-        call_result = {"result": {
-            "user": {
-                "id": 1234,
-                "name": "You",
-            },
-            "encoded_session_b85": b'Ze@30VtI6Ba{'
-        }}
+        call_result = {
+            "result": {
+                "user": {
+                    "id": 1234,
+                    "name": "You",
+                },
+                "encoded_session_b85": b"Ze@30VtI6Ba{",
+            }
+        }
     else:
         call_result = InvalidSessionError().as_json
 
@@ -89,8 +91,7 @@ async def test_on_connect_restore_timeout(client: NetworkClient):
 
 async def test_connect_to_server(tmp_path):
     # Setup
-    client = NetworkClient(tmp_path, {"server_address": "http://localhost:5000",
-                                      "socketio_path": "/path"})
+    client = NetworkClient(tmp_path, {"server_address": "http://localhost:5000", "socketio_path": "/path"})
 
     async def connect(*args, **kwargs):
         client._waiting_for_on_connect.set_result(True)
@@ -104,23 +105,17 @@ async def test_connect_to_server(tmp_path):
 
     # Assert
     assert client.connection_state == ConnectionState.Connecting
-    client.sio.connect.assert_awaited_once_with("http://localhost:5000",
-                                                socketio_path="/path",
-                                                transports=["websocket"],
-                                                headers=connection_headers())
+    client.sio.connect.assert_awaited_once_with(
+        "http://localhost:5000", socketio_path="/path", transports=["websocket"], headers=connection_headers()
+    )
 
 
 async def test_internal_connect_to_server_failure(tmp_path):
     # Setup
-    client = NetworkClient(tmp_path, {"server_address": "http://localhost:5000",
-                                      "socketio_path": "/path"})
+    client = NetworkClient(tmp_path, {"server_address": "http://localhost:5000", "socketio_path": "/path"})
 
     async def connect(*args, **kwargs):
-        raise (
-            aiohttp.client_exceptions.ContentTypeError(
-                MagicMock(), (), message="thing"
-            )
-        )
+        raise (aiohttp.client_exceptions.ContentTypeError(MagicMock(), (), message="thing"))
 
     client.sa = MagicMock()
     client.sio.disconnect = AsyncMock()
@@ -168,9 +163,7 @@ async def test_listen_to_session(client: NetworkClient, listen, was_listening):
     await client.listen_to_session(session_meta.id, listen)
 
     # Assert
-    client.server_call.assert_awaited_once_with(
-        "multiplayer_listen_to_session", (1234, listen)
-    )
+    client.server_call.assert_awaited_once_with("multiplayer_listen_to_session", (1234, listen))
     if listen:
         assert client._sessions_interested_in == {1234}
     else:
@@ -180,7 +173,7 @@ async def test_listen_to_session(client: NetworkClient, listen, was_listening):
 @pytest.mark.parametrize("was_listening", [False, True])
 @pytest.mark.parametrize("listen", [False, True])
 async def test_world_track_inventory(client: NetworkClient, listen, was_listening):
-    uid = uuid.UUID('8b8b9269-1e54-42fe-9e5f-82875ef986e2')
+    uid = uuid.UUID("8b8b9269-1e54-42fe-9e5f-82875ef986e2")
 
     client.server_call = AsyncMock()
     client._tracking_worlds.add((uid, 9999))
@@ -191,9 +184,7 @@ async def test_world_track_inventory(client: NetworkClient, listen, was_listenin
     await client.world_track_inventory(uid, 4567, listen)
 
     # Assert
-    client.server_call.assert_awaited_once_with(
-        "multiplayer_watch_inventory", (str(uid), 4567, listen, True)
-    )
+    client.server_call.assert_awaited_once_with("multiplayer_watch_inventory", (str(uid), 4567, listen, True))
     if listen:
         assert client._tracking_worlds == {(uid, 9999), (uid, 4567)}
     else:
@@ -248,10 +239,10 @@ async def test_refresh_received_pickups(client: NetworkClient, corruption_game_d
         "world": "00000000-0000-1111-0000-000000000000",
         "game": RandovaniaGame.METROID_PRIME_CORRUPTION.value,
         "pickups": [
-            {"provider_name": "Message A", "pickup": 'VtI6Bb3p'},
-            {"provider_name": "Message B", "pickup": 'VtI6Bb3y'},
-            {"provider_name": "Message C", "pickup": 'VtI6Bb3*'},
-        ]
+            {"provider_name": "Message A", "pickup": "VtI6Bb3p"},
+            {"provider_name": "Message B", "pickup": "VtI6Bb3y"},
+            {"provider_name": "Message C", "pickup": "VtI6Bb3*"},
+        ],
     }
 
     pickups = [MagicMock(), MagicMock(), MagicMock()]
@@ -263,20 +254,23 @@ async def test_refresh_received_pickups(client: NetworkClient, corruption_game_d
     await client._on_world_pickups_update_raw(data)
 
     # Assert
-    client.on_world_pickups_update.assert_awaited_once_with(MultiplayerWorldPickups(
-        world_id=uuid.UUID("00000000-0000-1111-0000-000000000000"),
-        game=RandovaniaGame.METROID_PRIME_CORRUPTION,
-        pickups=(
-            ("Message A", pickups[0]),
-            ("Message B", pickups[1]),
-            ("Message C", pickups[2]),
+    client.on_world_pickups_update.assert_awaited_once_with(
+        MultiplayerWorldPickups(
+            world_id=uuid.UUID("00000000-0000-1111-0000-000000000000"),
+            game=RandovaniaGame.METROID_PRIME_CORRUPTION,
+            pickups=(
+                ("Message A", pickups[0]),
+                ("Message B", pickups[1]),
+                ("Message C", pickups[2]),
+            ),
         )
-    ))
-    mock_decode.assert_has_calls([call('VtI6Bb3p', db), call('VtI6Bb3y', db), call('VtI6Bb3*', db)])
+    )
+    mock_decode.assert_has_calls([call("VtI6Bb3p", db), call("VtI6Bb3y", db), call("VtI6Bb3*", db)])
 
 
-def test_decode_pickup(client: NetworkClient, echoes_resource_database, generic_pickup_category,
-                       default_generator_params):
+def test_decode_pickup(
+    client: NetworkClient, echoes_resource_database, generic_pickup_category, default_generator_params
+):
     data = (
         "h^WxYK%Bzb%2NU&w=%giys9}cw>h&ixhA)=I<_*yXJu|>a%p3j6&;nimC2=yfhEzEw1EwU(UqOO$>p%O5KI8-+"
         "~(lQ#?s8v%E&;{=*rqdXJu|>a%p3j6&;nimC2=yfhEzEw1EwU(UqOO$>p%O5KI8-+~(lQ#?s8v%E&;{=*rpvSO"
@@ -350,14 +344,14 @@ async def test_on_world_user_inventory_raw(client: NetworkClient):
     uid = "00000000-0000-1111-0000-000000000000"
     item = ItemResourceInfo(0, "Super Key", "MyKey", 1)
 
-    inventory = Inventory({
-        item: InventoryItem(1, 4)
-    })
+    inventory = Inventory({item: InventoryItem(1, 4)})
     encoded = remote_inventory.inventory_to_encoded_remote(inventory)
 
     await client._on_world_user_inventory_raw(uid, 1234, encoded)
-    client.on_world_user_inventory.assert_called_once_with(WorldUserInventory(
-        world_id=uuid.UUID(uid),
-        user_id=1234,
-        inventory={"MyKey": 4},
-    ))
+    client.on_world_user_inventory.assert_called_once_with(
+        WorldUserInventory(
+            world_id=uuid.UUID(uid),
+            user_id=1234,
+            inventory={"MyKey": 4},
+        )
+    )

@@ -10,13 +10,16 @@ from randovania.game_description.db.region import Region
 from randovania.game_description.db.region_list import RegionList
 
 
-@pytest.mark.parametrize(("danger_a", "danger_b", "expected_result"), [
-    ([], [], []),
-    (["a"], [], ["a"]),
-    ([], ["b"], ["b"]),
-    (["a"], ["b"], ["a", "b"]),
-    (["a"], ["a"], ["a"]),
-])
+@pytest.mark.parametrize(
+    ("danger_a", "danger_b", "expected_result"),
+    [
+        ([], [], []),
+        (["a"], [], ["a"]),
+        ([], ["b"], ["b"]),
+        (["a"], ["b"], ["a", "b"]),
+        (["a"], ["a"], ["a"]),
+    ],
+)
 def test_calculate_dangerous_resources(danger_a: list[str], danger_b: list[str], expected_result: list[str]):
     set_a = MagicMock()
     set_b = MagicMock()
@@ -34,26 +37,8 @@ def test_calculate_dangerous_resources(danger_a: list[str], danger_b: list[str],
     n4 = MagicMock()
     n4.node_index = 3
 
-    area_a = Area(
-        "area_a", [n1, n2],
-        {
-            n1: {
-                n2: set_a
-            },
-            n2: {}
-        },
-        {}
-    )
-    area_b = Area(
-        "area_b", [n3, n4],
-        {
-            n3: {},
-            n4: {
-                n3: set_b
-            }
-        },
-        {}
-    )
+    area_a = Area("area_a", [n1, n2], {n1: {n2: set_a}, n2: {}}, {})
+    area_b = Area("area_b", [n3, n4], {n3: {}, n4: {n3: set_b}}, {})
     region = Region("W", [area_a, area_b], {})
     wl = RegionList([region])
 

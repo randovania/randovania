@@ -41,6 +41,7 @@ class TeleporterNetworkNode(ResourceNode):
       - `requirement_to_activate` is satisfied
       - this node was already collected
     """
+
     is_unlocked: Requirement
     network: str
     requirement_to_activate: Requirement

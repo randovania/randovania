@@ -6,7 +6,7 @@ if TYPE_CHECKING:
     from collections.abc import Callable, Iterable, Iterator
     from random import Random
 
-T = TypeVar('T')
+T = TypeVar("T")
 
 
 def shuffle(rng: Random, x: Iterator[T]) -> list[T]:
@@ -21,10 +21,11 @@ def shuffle(rng: Random, x: Iterator[T]) -> list[T]:
     return result
 
 
-def iterate_with_weights(items: Iterable[T],
-                         item_weights: dict[T, float],
-                         rng: Random,
-                         ) -> Iterator[T]:
+def iterate_with_weights(
+    items: Iterable[T],
+    item_weights: dict[T, float],
+    rng: Random,
+) -> Iterator[T]:
     """
     Iterates over the given list randomly, with each item having the probability listed in item_weigths
     :param items:
@@ -48,19 +49,18 @@ def iterate_with_weights(items: Iterable[T],
 
 
 def select_element_with_weight(weighted_items: dict[T, float], rng: Random) -> T:
-    return next(iterate_with_weights(items=list(weighted_items.keys()),
-                                     item_weights=weighted_items,
-                                     rng=rng))
+    return next(iterate_with_weights(items=list(weighted_items.keys()), item_weights=weighted_items, rng=rng))
 
 
 def random_key(d: dict[T, Any], rng: Random) -> T:
     return rng.choice(list(d.keys()))
 
 
-def create_weighted_list(rng: Random,
-                         current: list[T],
-                         factory: Callable[[], list[T]],
-                         ) -> list[T]:
+def create_weighted_list(
+    rng: Random,
+    current: list[T],
+    factory: Callable[[], list[T]],
+) -> list[T]:
     """
     Ensures we always have a non-empty list.
     :param rng:

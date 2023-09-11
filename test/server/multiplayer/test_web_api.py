@@ -16,10 +16,7 @@ def test_admin_sessions(server_app, solo_two_world_session):
     with server_app.app.test_request_context("/sessions"):
         result = web_api.admin_sessions(MagicMock())
 
-    entry = (
-        "<td>The Name</td>"
-        '<td>2020-05-02 10:20:00+00:00</td><td>1</td><td>2</td></tr>'
-    )
+    entry = "<td>The Name</td><td>2020-05-02 10:20:00+00:00</td><td>1</td><td>2</td></tr>"
     assert entry in result
 
 
@@ -38,11 +35,7 @@ def test_admin_session(server_app, solo_two_world_session):
     with server_app.app.test_request_context("/session/1"):
         result = web_api.admin_session(MagicMock(), 1)
 
-    entry1 = (
-        '<td>The Name</td><td>World 1</td><td>Disconnected</td><td>Charge Beam x1</td>'
-    )
-    entry2 = (
-        '<td>The Name</td><td>World 2</td><td>Disconnected</td><td>Missing</td>'
-    )
+    entry1 = "<td>The Name</td><td>World 1</td><td>Disconnected</td><td>Charge Beam x1</td>"
+    entry2 = "<td>The Name</td><td>World 2</td><td>Disconnected</td><td>Missing</td>"
     assert entry1 in result
     assert entry2 in result

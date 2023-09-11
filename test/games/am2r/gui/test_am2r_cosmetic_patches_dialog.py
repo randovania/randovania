@@ -43,13 +43,17 @@ def test_custom_hud_colors(skip_qtbot):
     assert dialog.custom_dna_rotation_square.styleSheet() == "background-color: rgb(49,208,5)"
 
     # Run
-    for field in [dialog.custom_health_rotation_field, dialog.custom_etank_rotation_field,
-                  dialog.custom_dna_rotation_field]:
+    for field in [
+        dialog.custom_health_rotation_field,
+        dialog.custom_etank_rotation_field,
+        dialog.custom_dna_rotation_field,
+    ]:
         field.setValue(50)
 
     # Assert
-    assert dialog.cosmetic_patches == AM2RCosmeticPatches(health_hud_rotation=50, etank_hud_rotation=50,
-                                                          dna_hud_rotation=50)
+    assert dialog.cosmetic_patches == AM2RCosmeticPatches(
+        health_hud_rotation=50, etank_hud_rotation=50, dna_hud_rotation=50
+    )
     assert dialog.custom_health_rotation_square.styleSheet() == "background-color: rgb(76,255,0)"
     assert dialog.custom_etank_rotation_square.styleSheet() == "background-color: rgb(116,112,250)"
     assert dialog.custom_dna_rotation_square.styleSheet() == "background-color: rgb(5,208,130)"

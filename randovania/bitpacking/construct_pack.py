@@ -57,24 +57,16 @@ class ConstructTypedStruct(construct.Adapter, typing.Generic[T]):
         super().__init__(construct.Struct(*fields))
 
     def _decode(self, obj: construct.Container, context: construct.Container, path: str) -> T:
-        return self.cls(**{
-            field_name: obj[field_name]
-            for field_name in self.field_types.keys()
-        })
+        return self.cls(**{field_name: obj[field_name] for field_name in self.field_types.keys()})
 
     def _encode(self, obj: T, context: construct.Container, path: str) -> construct.Container:
-        return construct.Container(
-            (field_name, getattr(obj, field_name))
-            for field_name in self.field_types.keys()
-        )
+        return construct.Container((field_name, getattr(obj, field_name)) for field_name in self.field_types.keys())
 
 
 def _construct_dataclass(cls: type[DataclassInstance]) -> ConstructTypedStruct:
     resolved_types = typing.get_type_hints(cls)
     field_types: dict[str, type] = {
-        field.name: resolved_types[field.name]
-        for field in dataclasses.fields(cls)
-        if field.init
+        field.name: resolved_types[field.name] for field in dataclasses.fields(cls) if field.init
     }
     return ConstructTypedStruct(cls, field_types)
 
@@ -82,10 +74,7 @@ def _construct_dataclass(cls: type[DataclassInstance]) -> ConstructTypedStruct:
 def _construct_for_named_tuple(cls: type[typing.NamedTuple]) -> construct.Construct:
     resolved_types = typing.get_type_hints(cls)
 
-    field_types: dict[str, type] = {
-        field_name: resolved_types[field_name]
-        for field_name in cls._fields
-    }
+    field_types: dict[str, type] = {field_name: resolved_types[field_name] for field_name in cls._fields}
 
     return ConstructTypedStruct(cls, field_types)
 
@@ -174,10 +163,7 @@ def construct_for_type(type_: type) -> construct.Construct:
             if len(type_args) == 2 and type_args[1] == Ellipsis:
                 return _tuple_unwrap(construct.PrefixedArray(construct.VarInt, construct_for_type(type_args[0])))
             else:
-                return _tuple_unwrap(construct.Sequence(*[
-                    construct_for_type(value_type)
-                    for value_type in type_args
-                ]))
+                return _tuple_unwrap(construct.Sequence(*[construct_for_type(value_type) for value_type in type_args]))
         else:
             return _tuple_unwrap(construct.PrefixedArray(construct.VarInt, construct_for_type(typing.Any)))
 
@@ -187,13 +173,15 @@ def construct_for_type(type_: type) -> construct.Construct:
         else:
             key_type, value_type = str, typing.Any
 
-        return DictAdapter(construct.PrefixedArray(
-            construct.VarInt,
-            construct.Sequence(
-                construct_for_type(key_type),
-                construct_for_type(value_type),
-            ),
-        ))
+        return DictAdapter(
+            construct.PrefixedArray(
+                construct.VarInt,
+                construct.Sequence(
+                    construct_for_type(key_type),
+                    construct_for_type(value_type),
+                ),
+            )
+        )
 
     elif dataclasses.is_dataclass(type_):
         return _construct_dataclass(type_)
@@ -202,7 +190,7 @@ def construct_for_type(type_: type) -> construct.Construct:
         json_type: type[JsonEncodable] = type_
         return construct.ExprAdapter(
             BinStr,
-            encoder=lambda obj, ctx: json.dumps(obj.as_json, separators=(',', ':')),
+            encoder=lambda obj, ctx: json.dumps(obj.as_json, separators=(",", ":")),
             decoder=lambda obj, ctx: json_type.from_json(json.loads(obj)),
         )
 

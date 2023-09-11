@@ -17,8 +17,7 @@ __all__ = ["create_subparsers"]
 
 def create_subparsers(sub_parsers):
     parser: ArgumentParser = sub_parsers.add_parser(
-        "layout",
-        help="Actions regarding generating layouts and permalinks"
+        "layout", help="Actions regarding generating layouts and permalinks"
     )
     sub_parsers = parser.add_subparsers(dest="command")
     add_validate_command(sub_parsers)

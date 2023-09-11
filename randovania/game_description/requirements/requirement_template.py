@@ -29,8 +29,9 @@ class RequirementTemplate(Requirement):
     def satisfied(self, current_resources: ResourceCollection, current_energy: int, database: ResourceDatabase) -> bool:
         return self.template_requirement(database).satisfied(current_resources, current_energy, database)
 
-    def patch_requirements(self, static_resources: ResourceCollection, damage_multiplier: float,
-                           database: ResourceDatabase) -> Requirement:
+    def patch_requirements(
+        self, static_resources: ResourceCollection, damage_multiplier: float, database: ResourceDatabase
+    ) -> Requirement:
         template = self.template_requirement(database)
         result = template.patch_requirements(static_resources, damage_multiplier, database)
         if result != template:

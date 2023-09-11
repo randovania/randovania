@@ -84,8 +84,5 @@ class Area:
         return dataclasses.replace(
             self,
             nodes=list(self.nodes),
-            connections={
-                node: copy.copy(connection)
-                for node, connection in self.connections.items()
-            },
+            connections={node: copy.copy(connection) for node, connection in self.connections.items()},
         )

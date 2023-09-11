@@ -25,10 +25,7 @@ class DependenciesModel(QtCore.QAbstractTableModel):
 
     def __init__(self, parent):
         super().__init__(parent)
-        self._packages = [
-            (dist.name, dist.version, _get_license(dist))
-            for dist in importlib.metadata.distributions()
-        ]
+        self._packages = [(dist.name, dist.version, _get_license(dist)) for dist in importlib.metadata.distributions()]
 
     def columnCount(self, parent: QtCore.QModelIndex = ...) -> int:
         return len(self._headers)

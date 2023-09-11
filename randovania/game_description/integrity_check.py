@@ -28,8 +28,9 @@ dock_node_suffix_re = re.compile(r" \([^()]+?\)$")
 layer_name_re = re.compile(r"[a-zA-Z0-9 _-]+")
 
 
-def raw_expected_dock_names(dock_type: DockType, weakness: DockWeakness,
-                            connection: AreaIdentifier, source_region_name: str) -> Iterator[str]:
+def raw_expected_dock_names(
+    dock_type: DockType, weakness: DockWeakness, connection: AreaIdentifier, source_region_name: str
+) -> Iterator[str]:
     """
     Provides valid names for a node created with these fields. The first result is the recommended name.
     """
@@ -48,17 +49,17 @@ def expected_dock_names(node: DockNode) -> Iterator[str]:
     Provides valid names for this node. The first result is the recommended name.
     """
     yield from raw_expected_dock_names(
-        node.dock_type, node.default_dock_weakness,
-        node.default_connection.area_identifier, node.identifier.region_name
+        node.dock_type, node.default_dock_weakness, node.default_connection.area_identifier, node.identifier.region_name
     )
 
 
 def docks_with_same_base_name(area: Area, expected_name: str) -> list[DockNode]:
     return [
-        other for other in area.nodes
-        if isinstance(other, DockNode) and any(
-            expected == expected_name and other.name.startswith(expected)
-            for expected in expected_dock_names(other)
+        other
+        for other in area.nodes
+        if isinstance(other, DockNode)
+        and any(
+            expected == expected_name and other.name.startswith(expected) for expected in expected_dock_names(other)
         )
     ]
 
@@ -75,7 +76,7 @@ def dock_has_correct_name(area: Area, node: DockNode) -> bool:
 
         if node.name.startswith(expected_name):
             if len(docks_same_base_name) > 1:
-                m = dock_node_suffix_re.match(node.name[len(expected_name):])
+                m = dock_node_suffix_re.match(node.name[len(expected_name) :])
                 if m is not None:
                     return True
             else:
@@ -125,11 +126,15 @@ def find_node_errors(game: GameDescription, node: Node) -> Iterator[str]:
         if other_node is not None:
             if isinstance(other_node, DockNode):
                 if other_node.default_connection != region_list.identifier_for_node(node):
-                    yield (f"{node.name} connects to '{node.default_connection}', but that dock connects "
-                           f"to '{other_node.default_connection}' instead.")
+                    yield (
+                        f"{node.name} connects to '{node.default_connection}', but that dock connects "
+                        f"to '{other_node.default_connection}' instead."
+                    )
 
-    elif any(re.match(fr"{dock_type.long_name}\s*(to|from)", node.name)
-             for dock_type in game.dock_weakness_database.dock_types):
+    elif any(
+        re.match(rf"{dock_type.long_name}\s*(to|from)", node.name)
+        for dock_type in game.dock_weakness_database.dock_types
+    ):
         yield f"{node.name} is not a Dock Node, naming suggests it should be."
 
 
@@ -174,6 +179,7 @@ def find_region_errors(game: GameDescription, region: Region) -> Iterator[str]:
 
 def find_invalid_strongly_connected_components(game: GameDescription) -> Iterator[str]:
     import networkx  # type: ignore
+
     graph = networkx.DiGraph()
 
     for node in game.region_list.iterate_nodes():
@@ -228,10 +234,7 @@ def find_invalid_strongly_connected_components(game: GameDescription) -> Iterato
             if not graph.in_edges(node) and not graph.edges(node):
                 continue
 
-        names = sorted(
-            game.region_list.node_name(node, with_region=True)
-            for node in strong_comp
-        )
+        names = sorted(game.region_list.node_name(node, with_region=True) for node in strong_comp)
         yield f"Unknown strongly connected component detected containing {len(names)} nodes:\n{names}"
 
 

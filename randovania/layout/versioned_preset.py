@@ -22,10 +22,7 @@ if TYPE_CHECKING:
 BinaryVersionedPreset = construct.Struct(
     magic=construct.Const(b"RDVP"),
     version=construct.Const(1, construct.VarInt),
-    data=construct.Prefixed(
-        construct.VarInt,
-        construct.Compressed(JsonEncodedValue, "zlib")
-    ),
+    data=construct.Prefixed(construct.VarInt, construct.Compressed(JsonEncodedValue, "zlib")),
 )
 
 
@@ -100,9 +97,9 @@ class VersionedPreset:
     def ensure_converted(self):
         if not self._converted:
             try:
-                self._preset = Preset.from_json_dict(preset_migration.convert_to_current_version(
-                    copy.deepcopy(self.data)
-                ))
+                self._preset = Preset.from_json_dict(
+                    preset_migration.convert_to_current_version(copy.deepcopy(self.data))
+                )
             except (ValueError, KeyError, TypeError) as e:
                 self.exception = InvalidPreset(e)
                 raise self.exception from e
@@ -142,16 +139,13 @@ class VersionedPreset:
         json_lib.write_path(path, self.as_json)
 
     def save_to_io(self, data: io.BytesIO):
-        data.write(
-            json.dumps(self.as_json, indent=4).encode("utf-8")
-        )
+        data.write(json.dumps(self.as_json, indent=4).encode("utf-8"))
 
     @property
     def as_json(self) -> dict:
         if self._preset is not None:
             preset_json = {
                 "schema_version": preset_migration.CURRENT_VERSION,
-
                 # It's important to keep this field in order to keep old Randovania versions working
                 "base_preset_uuid": None,
             }
@@ -162,9 +156,11 @@ class VersionedPreset:
             return self.data
 
     def as_bytes(self) -> bytes:
-        return BinaryVersionedPreset.build({
-            "data": self.as_json,
-        })
+        return BinaryVersionedPreset.build(
+            {
+                "data": self.as_json,
+            }
+        )
 
     def recover_old_base_uuid(self) -> UUID | None:
         """Returns the base preset uuid that existed in old versions.

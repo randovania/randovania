@@ -80,8 +80,11 @@ class WorldWidgetEntry:
         if detail is not None:
             self.item.setText(4, "Last Activity:")
             self.item.setTextAlignment(4, QtCore.Qt.AlignmentFlag.AlignRight)
-            self.item.setData(5, QtCore.Qt.ItemDataRole.DisplayRole,
-                              QtCore.QDateTime.fromSecsSinceEpoch(int(detail.last_activity.timestamp())))
+            self.item.setData(
+                5,
+                QtCore.Qt.ItemDataRole.DisplayRole,
+                QtCore.QDateTime.fromSecsSinceEpoch(int(detail.last_activity.timestamp())),
+            )
 
 
 class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
@@ -127,10 +130,7 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
         you = session.users.get(self.your_id)
         return [
             you is not None and you.admin,
-            [
-                (user.id, user.name, list(user.worlds.keys()))
-                for user in session.users_list
-            ],
+            [(user.id, user.name, list(user.worlds.keys())) for user in session.users_list],
             [w.id for w in session.worlds],
             session.generation_in_progress,
             session.game_details,
@@ -139,10 +139,13 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
     #
 
     def _create_select_preset_dialog(self, include_world_name_prompt: bool, default_game: RandovaniaGame | None):
-        return MultiplayerSelectPresetDialog(self._window_manager, self._options,
-                                             allowed_games=self._session.allowed_games,
-                                             default_game=default_game,
-                                             include_world_name_prompt=include_world_name_prompt)
+        return MultiplayerSelectPresetDialog(
+            self._window_manager,
+            self._options,
+            allowed_games=self._session.allowed_games,
+            default_game=default_game,
+            include_world_name_prompt=include_world_name_prompt,
+        )
 
     async def _prompt_for_preset(self, default_game: RandovaniaGame | None):
         dialog = self._create_select_preset_dialog(False, default_game)
@@ -199,7 +202,8 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
         if new_name is not None:
             if any(new_name == world.name for world in self._session.worlds):
                 return await async_dialog.warning(
-                    self, "Name already exists", f"A world named '{new_name}' already exists.")
+                    self, "Name already exists", f"A world named '{new_name}' already exists."
+                )
 
             await self._session_api.rename_world(world_uid, new_name)
 
@@ -245,9 +249,13 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
         options = self._options
 
         if not options.is_alert_displayed(InfoAlert.MULTIWORLD_FAQ):
-            await async_dialog.message_box(self, QtWidgets.QMessageBox.Icon.Information, "Multiworld FAQ",
-                                           "Have you read the Multiworld FAQ?\n"
-                                           "It can be found in the main Randovania window → Help → Multiworld")
+            await async_dialog.message_box(
+                self,
+                QtWidgets.QMessageBox.Icon.Information,
+                "Multiworld FAQ",
+                "Have you read the Multiworld FAQ?\n"
+                "It can be found in the main Randovania window → Help → Multiworld",
+            )
             options.mark_alert_as_displayed(InfoAlert.MULTIWORLD_FAQ)
 
         game_enum = self._get_preset(world_uid).game
@@ -271,7 +279,8 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
 
         if any(new_name == world.name for world in self._session.worlds):
             return await async_dialog.warning(
-                self, "Name already exists", f"A world named '{new_name}' already exists.")
+                self, "Name already exists", f"A world named '{new_name}' already exists."
+            )
 
         # Temp
         await self._session_api.create_new_world(new_name, preset, user_id)
@@ -285,8 +294,9 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
         result = await async_dialog.execute_dialog(dialog)
         if result == QtWidgets.QDialog.DialogCode.Accepted:
             with self._options as options:
-                options.set_options_for_game(preset.game, dataclasses.replace(per_game_options,
-                                                                              cosmetic_patches=dialog.cosmetic_patches))
+                options.set_options_for_game(
+                    preset.game, dataclasses.replace(per_game_options, cosmetic_patches=dialog.cosmetic_patches)
+                )
 
     def _register_debug_connector(self, world_uid: uuid.UUID):
         common_qt_lib.get_game_connection().add_connection_builder(
@@ -305,9 +315,9 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
     def is_admin(self) -> bool:
         return self._session.users[self.your_id].admin
 
-    def _create_world_item(self, world_id: uuid.UUID, parent: QtWidgets.QTreeWidgetItem,
-                           owner: int | None) -> WorldWidgetEntry:
-
+    def _create_world_item(
+        self, world_id: uuid.UUID, parent: QtWidgets.QTreeWidgetItem, owner: int | None
+    ) -> WorldWidgetEntry:
         in_generation = self._session.generation_in_progress is not None
         has_layout = self._session.game_details is not None
         can_change_preset = not has_layout and not in_generation
@@ -321,13 +331,13 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
 
         world_menu = QtWidgets.QMenu(world_tool)
         preset_menu = world_menu.addMenu("Preset: <preset name>")
-        connect_to(preset_menu.addAction("View summary"),
-                   self._preset_view_summary, world_id)
+        connect_to(preset_menu.addAction("View summary"), self._preset_view_summary, world_id)
 
         if owner == self.your_id or self.is_admin():
             connect_to(
                 preset_menu.addAction("Replace with"),
-                self._world_replace_preset, world_id,
+                self._world_replace_preset,
+                world_id,
             ).setEnabled(can_change_preset)
 
         export_menu = preset_menu.addMenu("Export preset")
@@ -339,26 +349,21 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
             export_action.setEnabled(has_layout)
             connect_to(export_action, self.world_export, world_id)
 
-            connect_to(world_menu.addAction("Customize cosmetic options"), self._customize_cosmetic,
-                       world_id)
+            connect_to(world_menu.addAction("Customize cosmetic options"), self._customize_cosmetic, world_id)
             if ConnectorBuilderChoice.DEBUG.is_usable():
-                connect_to(world_menu.addAction("Connect via debug connector"),
-                           self._register_debug_connector,
-                           world_id)
+                connect_to(
+                    world_menu.addAction("Connect via debug connector"), self._register_debug_connector, world_id
+                )
 
         if self.is_admin() or self._session.allow_everyone_claim_world:
             if owner is None:
                 world_menu.addSeparator()
-                connect_to(world_menu.addAction("Claim for yourself"),
-                           self._world_claim_with, world_id,
-                           self.your_id)
+                connect_to(world_menu.addAction("Claim for yourself"), self._world_claim_with, world_id, self.your_id)
 
                 if self.is_admin():
                     claim_menu = world_menu.addMenu("Claim for")
                     for p in self._session.users.values():
-                        connect_to(claim_menu.addAction(p.name),
-                                   self._world_claim_with, world_id,
-                                   p.id)
+                        connect_to(claim_menu.addAction(p.name), self._world_claim_with, world_id, p.id)
 
             else:
                 world_menu.addSeparator()
@@ -393,10 +398,7 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
         in_generation = self._session.generation_in_progress is not None
         has_layout = self._session.game_details is not None
 
-        world_by_id: dict[uuid.UUID, MultiplayerWorld] = {
-            world.id: world
-            for world in self._session.worlds
-        }
+        world_by_id: dict[uuid.UUID, MultiplayerWorld] = {world.id: world for world in self._session.worlds}
         used_worlds = set()
 
         for user in self._session.users.values():
@@ -411,9 +413,7 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
             for world_uid, state in user.worlds.items():
                 used_worlds.add(world_uid)
                 the_item = self._create_world_item(world_uid, item, user.id)
-                the_item.update(
-                    world_by_id[world_uid], state
-                )
+                the_item.update(world_by_id[world_uid], state)
 
             if user.id != self.your_id and self.is_admin():
                 tool = make_tool("Administrate")
@@ -451,7 +451,8 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
             for world_uid, world in world_by_id.items():
                 if world_uid in unclaimed_worlds:
                     self._create_world_item(world_uid, unclaimed_world_item, None).update(
-                        world_by_id[world_uid], None,
+                        world_by_id[world_uid],
+                        None,
                     )
 
         self.resizeColumnToContents(0)

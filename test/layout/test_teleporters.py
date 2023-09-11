@@ -27,8 +27,16 @@ class Data(NamedTuple):
     description: str
 
 
-def _m(encoded: bytes, bit_count: int, description: str, mode: str = "vanilla", skip_final_bosses=False,
-       allow_unvisited_room_names=True, excluded_teleporters=None, excluded_targets=None):
+def _m(
+    encoded: bytes,
+    bit_count: int,
+    description: str,
+    mode: str = "vanilla",
+    skip_final_bosses=False,
+    allow_unvisited_room_names=True,
+    excluded_teleporters=None,
+    excluded_targets=None,
+):
     if excluded_teleporters is None:
         excluded_teleporters = []
     if excluded_targets is None:
@@ -55,16 +63,23 @@ def _a(region, area, instance_id=None):
 
 @pytest.fixture(
     params=[
-        _m(b'\x08', 5, 'Original connections'),
-        _m(b'\x18', 5, 'Original connections', skip_final_bosses=True),
-        _m(b'\xc1', 8, 'One-way, with cycles', mode="one-way-teleporter"),
-        _m(b'\xc81d', 22, 'One-way, with cycles; excluded 1 elevators',
-           mode="one-way-teleporter", excluded_teleporters=[
-                _a("Temple Grounds", "Temple Transport C", "Elevator to Great Temple")
-            ]),
-        _m(b'\xe4\x03,\xd0', 28, 'One-way, anywhere; excluded 1 targets', mode="one-way-anything", excluded_targets=[
-            _a("Temple Grounds", "Temple Transport C", "Elevator to Great Temple")
-        ]),
+        _m(b"\x08", 5, "Original connections"),
+        _m(b"\x18", 5, "Original connections", skip_final_bosses=True),
+        _m(b"\xc1", 8, "One-way, with cycles", mode="one-way-teleporter"),
+        _m(
+            b"\xc81d",
+            22,
+            "One-way, with cycles; excluded 1 elevators",
+            mode="one-way-teleporter",
+            excluded_teleporters=[_a("Temple Grounds", "Temple Transport C", "Elevator to Great Temple")],
+        ),
+        _m(
+            b"\xe4\x03,\xd0",
+            28,
+            "One-way, anywhere; excluded 1 targets",
+            mode="one-way-anything",
+            excluded_targets=[_a("Temple Grounds", "Temple Transport C", "Elevator to Great Temple")],
+        ),
     ],
 )
 def test_data(request):
@@ -88,9 +103,7 @@ def test_data(request):
 def test_decode(test_data):
     # Run
     decoder = BitPackDecoder(test_data.encoded)
-    result = PrimeTrilogyTeleporterConfiguration.bit_pack_unpack(decoder, {
-        "reference": test_data.reference
-    })
+    result = PrimeTrilogyTeleporterConfiguration.bit_pack_unpack(decoder, {"reference": test_data.reference})
 
     # Assert
     assert result == test_data.expected
@@ -101,9 +114,7 @@ def test_encode(test_data):
     value = test_data.expected
 
     # Run
-    result, bit_count = bitpacking.pack_results_and_bit_count(value.bit_pack_encode({
-        "reference": test_data.reference
-    }))
+    result, bit_count = bitpacking.pack_results_and_bit_count(value.bit_pack_encode({"reference": test_data.reference}))
 
     # Assert
     assert result == test_data.encoded

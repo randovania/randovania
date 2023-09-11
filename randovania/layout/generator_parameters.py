@@ -16,12 +16,12 @@ from randovania.layout.preset import Preset
 if TYPE_CHECKING:
     from collections.abc import Iterator
 
-_PERMALINK_MAX_SEED = 2 ** 31
+_PERMALINK_MAX_SEED = 2**31
 _PERMALINK_PLAYER_COUNT_LIMITS = (2, 256)
 
 
 def raw_database_hash(data: dict) -> int:
-    return bitpacking.single_byte_hash(json.dumps(data, separators=(',', ':')).encode("UTF-8"))
+    return bitpacking.single_byte_hash(json.dumps(data, separators=(",", ":")).encode("UTF-8"))
 
 
 def game_db_hash(game: RandovaniaGame) -> int:
@@ -98,19 +98,20 @@ class GeneratorParameters(BitPackValue):
             development = bitpacking.decode_bool(decoder)
 
         manager = PresetManager(None)
-        presets = [
-            Preset.bit_pack_unpack(decoder, {"manager": manager, "game": game})
-            for game in games
-        ]
+        presets = [Preset.bit_pack_unpack(decoder, {"manager": manager, "game": game}) for game in games]
 
         if not development:
             for game in _get_unique_games(presets):
                 included_data_hash = decoder.decode_single(256)
                 expected_data_hash = game_db_hash(game)
                 if included_data_hash != expected_data_hash:
-                    raise ValueError("Expected {} database with hash {}, but found {} instead.".format(
-                        game.long_name, included_data_hash, expected_data_hash,
-                    ))
+                    raise ValueError(
+                        "Expected {} database with hash {}, but found {} instead.".format(
+                            game.long_name,
+                            included_data_hash,
+                            expected_data_hash,
+                        )
+                    )
 
         return GeneratorParameters(seed_number, spoiler, presets, development=development)
 

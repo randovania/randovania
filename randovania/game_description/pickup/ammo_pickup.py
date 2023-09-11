@@ -44,8 +44,9 @@ class AmmoPickupDefinition(JsonDataclass):
             raise ValueError("If temporaries is not set, unlocked_by must not be set.")
 
     @classmethod
-    def from_json_with_categories(cls, name: str, game: RandovaniaGame, pickup_categories: dict[str, PickupCategory],
-                                  value: dict) -> Self:
+    def from_json_with_categories(
+        cls, name: str, game: RandovaniaGame, pickup_categories: dict[str, PickupCategory], value: dict
+    ) -> Self:
         return cls.from_json(
             value,
             game=game,
@@ -76,8 +77,5 @@ class AmmoPickupDefinition(JsonDataclass):
 
 
 AMMO_PICKUP_CATEGORY = PickupCategory(
-    name="expansion",
-    long_name="Expansion",
-    hint_details=("an ", "expansion"),
-    hinted_as_major=False
+    name="expansion", long_name="Expansion", hint_details=("an ", "expansion"), hinted_as_major=False
 )

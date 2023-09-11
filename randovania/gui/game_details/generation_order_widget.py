@@ -12,10 +12,7 @@ class GenerationOrderWidget(QtWidgets.QWidget):
         super().__init__(parent)
         self.root_layout = QtWidgets.QVBoxLayout(self)
 
-        numbered_players = [
-            f"Player {i + 1}"
-            for i in range(description.world_count)
-        ]
+        numbered_players = [f"Player {i + 1}" for i in range(description.world_count)]
 
         self.filter_edit = QtWidgets.QLineEdit(self)
         self.filter_edit.setPlaceholderText("Type here to filter the log below")

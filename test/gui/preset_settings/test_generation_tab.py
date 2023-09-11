@@ -16,17 +16,20 @@ from randovania.gui.preset_settings.generation_tab import PresetGeneration
 from randovania.interface_common.preset_editor import PresetEditor
 
 
-@pytest.mark.parametrize("game_data", [
-    (RandovaniaGame.METROID_DREAD, True, False, PresetDreadGeneration),
-    (RandovaniaGame.METROID_PRIME, True, True, PresetPrimeGeneration),
-    (RandovaniaGame.METROID_PRIME_ECHOES, False, True, PresetGeneration),
-    (RandovaniaGame.CAVE_STORY, True, False, PresetCSGeneration)
-])
+@pytest.mark.parametrize(
+    "game_data",
+    [
+        (RandovaniaGame.METROID_DREAD, True, False, PresetDreadGeneration),
+        (RandovaniaGame.METROID_PRIME, True, True, PresetPrimeGeneration),
+        (RandovaniaGame.METROID_PRIME_ECHOES, False, True, PresetGeneration),
+        (RandovaniaGame.CAVE_STORY, True, False, PresetCSGeneration),
+    ],
+)
 def test_on_preset_changed(skip_qtbot, preset_manager, game_data):
     # Setup
     game, has_specific_settings, has_min_logic, tab = game_data
     base = preset_manager.default_preset_for_game(game).get_preset()
-    preset = dataclasses.replace(base, uuid=uuid.UUID('b41fde84-1f57-4b79-8cd6-3e5a78077fa6'))
+    preset = dataclasses.replace(base, uuid=uuid.UUID("b41fde84-1f57-4b79-8cd6-3e5a78077fa6"))
     options = MagicMock()
     editor = PresetEditor(preset, options)
     window: PresetGeneration = tab(editor, default_database.game_description_for(game), MagicMock())
@@ -53,4 +56,5 @@ def test_persist_local_first_progression(skip_qtbot, preset_manager):
 
     # Assert
     editor.__enter__.return_value.set_configuration_field.assert_called_once_with(
-        "first_progression_must_be_local", True)
+        "first_progression_must_be_local", True
+    )

@@ -15,9 +15,10 @@ if TYPE_CHECKING:
     from randovania.layout.base.standard_pickup_configuration import StandardPickupConfiguration
 
 
-def _find_ammo_for(ammo_names: tuple[str, ...],
-                   ammo_pickup_configuration: AmmoPickupConfiguration,
-                   ) -> tuple[AmmoPickupDefinition | None, bool]:
+def _find_ammo_for(
+    ammo_names: tuple[str, ...],
+    ammo_pickup_configuration: AmmoPickupConfiguration,
+) -> tuple[AmmoPickupDefinition | None, bool]:
     for ammo, ammo_state in ammo_pickup_configuration.pickups_state.items():
         if ammo.items == ammo_names:
             return ammo, ammo_state.requires_main_item
@@ -25,10 +26,11 @@ def _find_ammo_for(ammo_names: tuple[str, ...],
     return None, False
 
 
-def add_standard_pickups(resource_database: ResourceDatabase,
-                    standard_pickup_configuration: StandardPickupConfiguration,
-                    ammo_pickup_configuration: AmmoPickupConfiguration,
-                    ) -> PoolResults:
+def add_standard_pickups(
+    resource_database: ResourceDatabase,
+    standard_pickup_configuration: StandardPickupConfiguration,
+    ammo_pickup_configuration: AmmoPickupConfiguration,
+) -> PoolResults:
     """
 
     :param resource_database:
@@ -45,7 +47,9 @@ def add_standard_pickups(resource_database: ResourceDatabase,
         if len(pickup.ammo) != len(state.included_ammo):
             raise InvalidConfiguration(
                 "Item {0.name} uses {0.ammo_index} as ammo, but there's only {1} values in included_ammo".format(
-                    pickup, len(state.included_ammo)))
+                    pickup, len(state.included_ammo)
+                )
+            )
 
         ammo, locked_ammo = _find_ammo_for(pickup.ammo, ammo_pickup_configuration)
 
@@ -54,8 +58,9 @@ def add_standard_pickups(resource_database: ResourceDatabase,
                 raise InvalidConfiguration(
                     f"Item {pickup.name} does not exist in the original game, cannot use state {state}",
                 )
-            new_assignment[pickup.original_location] = create_standard_pickup(pickup, state, resource_database, ammo,
-                                                                              locked_ammo)
+            new_assignment[pickup.original_location] = create_standard_pickup(
+                pickup, state, resource_database, ammo, locked_ammo
+            )
 
         for _ in range(state.num_shuffled_pickups):
             item_pool.append(create_standard_pickup(pickup, state, resource_database, ammo, locked_ammo))

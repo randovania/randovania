@@ -14,10 +14,7 @@ def test_search_pickup(skip_qtbot, test_files_dir):
     root = QtWidgets.QWidget()
     skip_qtbot.addWidget(root)
 
-    players = PlayersConfiguration(
-        0,
-        {0: "You", 1: "They"}
-    )
+    players = PlayersConfiguration(0, {0: "You", 1: "They"})
 
     tab = PickupDetailsTab(root, layout.all_patches[0].game.game)
     tab.update_content(layout.all_patches[0].configuration, layout.all_patches, players)
@@ -27,12 +24,12 @@ def test_search_pickup(skip_qtbot, test_files_dir):
 
     signal_handling.set_combo_with_value(tab.search_pickup_combo, "Progressive Beam")
     assert model_lib.get_texts(tab.search_pickup_proxy) == [
-        ['You', 'Artaria', 'Speed Hallway', 'Pickup (Energy Part)'],
-        ['You', 'Cataris', 'Central Unit Access', 'Pickup (Morph Ball)'],
-        ['They', 'Tallon Overworld', 'Frigate Crash Site', 'Pickup (Missile Expansion)']
+        ["You", "Artaria", "Speed Hallway", "Pickup (Energy Part)"],
+        ["You", "Cataris", "Central Unit Access", "Pickup (Morph Ball)"],
+        ["They", "Tallon Overworld", "Frigate Crash Site", "Pickup (Missile Expansion)"],
     ]
 
     signal_handling.set_combo_with_value(tab.search_pickup_combo, "Screw Attack")
     assert model_lib.get_texts(tab.search_pickup_proxy) == [
-        ['They', 'Magmoor Caverns', 'Storage Cavern', 'Pickup (Missile)'],
+        ["They", "Magmoor Caverns", "Storage Cavern", "Pickup (Missile)"],
     ]

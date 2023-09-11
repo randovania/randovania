@@ -86,16 +86,20 @@ class Logic:
             for action, _ in actions:
                 debug.print_function(f"{self._indent(-1)}= {n(action, region_list=state.region_list)}")
 
-    def log_rollback(self, state: State, has_action, possible_action: bool,
-                     additional_requirements: RequirementSet | None = None):
+    def log_rollback(
+        self, state: State, has_action, possible_action: bool, additional_requirements: RequirementSet | None = None
+    ):
         if debug.debug_level() > 0:
             show_reqs = debug.debug_level() > 1 and additional_requirements is not None
-            debug.print_function("{}* Rollback {}; Had action? {}; Possible Action? {}{}".format(
-                self._indent(),
-                n(state.node, region_list=state.region_list),
-                has_action, possible_action,
-                "; Additional Requirements:" if show_reqs else "",
-            ))
+            debug.print_function(
+                "{}* Rollback {}; Had action? {}; Possible Action? {}{}".format(
+                    self._indent(),
+                    n(state.node, region_list=state.region_list),
+                    has_action,
+                    possible_action,
+                    "; Additional Requirements:" if show_reqs else "",
+                )
+            )
             if show_reqs:
                 self.print_requirement_set(additional_requirements, -1)
         self._current_indent -= 1
@@ -104,11 +108,11 @@ class Logic:
         if debug.debug_level() > 1:
             requirement_set = self.get_additional_requirements(node)
             if node in self._last_printed_additional and self._last_printed_additional[node] == requirement_set:
-                debug.print_function(
-                    f"{self._indent()}* Skip {n(node, region_list=game.region_list)}, same additional")
+                debug.print_function(f"{self._indent()}* Skip {n(node, region_list=game.region_list)}, same additional")
             else:
                 debug.print_function(
-                    f"{self._indent()}* Skip {n(node, region_list=game.region_list)}, missing additional:")
+                    f"{self._indent()}* Skip {n(node, region_list=game.region_list)}, missing additional:"
+                )
                 self.print_requirement_set(requirement_set, -1)
                 self._last_printed_additional[node] = requirement_set
 

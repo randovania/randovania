@@ -31,5 +31,5 @@ def preset_tabs(editor: PresetEditor, window_manager: WindowManager):
         PresetMetroidStartingArea,
         PresetDockRando,
         # TODO: add elevator rando. at one point:tm:
-        PresetAM2RPatches
+        PresetAM2RPatches,
     ]

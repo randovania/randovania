@@ -4,11 +4,7 @@ from randovania.lib import migration_lib
 
 
 def _migrate_v6(data: dict) -> dict:
-    lore_types = {
-        "luminoth-lore": "requires-item",
-        "luminoth-warrior": "specific-pickup",
-        "pirate-lore": "generic"
-    }
+    lore_types = {"luminoth-lore": "requires-item", "luminoth-warrior": "specific-pickup", "pirate-lore": "generic"}
     for world in data["worlds"]:
         for area in world["areas"].values():
             for node in area["nodes"].values():
@@ -70,12 +66,7 @@ def _migrate_v9(data: dict) -> dict:
 
 def _migrate_v10(data: dict) -> dict:
     for dock_type in data["dock_weakness_database"]["types"].values():
-        dock_type["dock_rando"] = {
-            "unlocked": None,
-            "locked": None,
-            "change_from": [],
-            "change_to": []
-        }
+        dock_type["dock_rando"] = {"unlocked": None, "locked": None, "change_from": [], "change_to": []}
 
     return data
 
@@ -85,7 +76,7 @@ def _migrate_v11(data: dict) -> dict:
         "enable_one_way": False,
         "force_change_two_way": False,
         "resolver_attempts": 125,
-        "to_shuffle_proportion": 1.0
+        "to_shuffle_proportion": 1.0,
     }
     return data
 
@@ -98,24 +89,14 @@ def _migrate_v12(data: dict) -> dict:
                     node["node_type"] = "teleporter_network"
                     node["network"] = "default"
 
-                    node["requirement_to_activate"] = {
-                        "type": "and",
-                        "data": {
-                            "comment": None,
-                            "items": [
-                            ]
-                        }
-                    }
+                    node["requirement_to_activate"] = {"type": "and", "data": {"comment": None, "items": []}}
                     if data["game"] == "prime3":
-                        node["requirement_to_activate"]["data"]["items"].append({
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "CommandVisor",
-                                "amount": 1,
-                                "negate": False
+                        node["requirement_to_activate"]["data"]["items"].append(
+                            {
+                                "type": "resource",
+                                "data": {"type": "items", "name": "CommandVisor", "amount": 1, "negate": False},
                             }
-                        })
+                        )
 
                 elif node["node_type"] == "logbook":
                     node["node_type"] = "hint"
@@ -139,16 +120,11 @@ def _migrate_v12(data: dict) -> dict:
                             "items": [
                                 {
                                     "type": "resource",
-                                    "data": {
-                                        "type": "items",
-                                        "name": item,
-                                        "amount": 1,
-                                        "negate": False
-                                    }
+                                    "data": {"type": "items", "name": item, "amount": 1, "negate": False},
                                 }
                                 for item in required_items
-                            ]
-                        }
+                            ],
+                        },
                     }
 
     return data
@@ -238,8 +214,9 @@ def _migrate_v19(data: dict) -> dict:
         node_to_change["default_connection"] = node_to_change.pop("destination")
 
         # find the default node
-        target_region_data = next(region for region in regions_data if region["name"]
-                                  == node_to_change["default_connection"]["region"])
+        target_region_data = next(
+            region for region in regions_data if region["name"] == node_to_change["default_connection"]["region"]
+        )
         area_data = target_region_data["areas"][node_to_change["default_connection"]["area"]]
         node_to_change["default_connection"]["node"] = area_data["default_node"]
 
@@ -260,22 +237,11 @@ def _migrate_v19(data: dict) -> dict:
             "items": {
                 "Teleporter": {
                     "extra": {},
-                    "requirement": {
-                        "type": "and",
-                        "data": {
-                            "comment": None,
-                            "items": []
-                        }
-                    },
-                    "lock": None
+                    "requirement": {"type": "and", "data": {"comment": None, "items": []}},
+                    "lock": None,
                 }
             },
-            "dock_rando": {
-                "unlocked": None,
-                "locked": None,
-                "change_from": [],
-                "change_to": []
-            }
+            "dock_rando": {"unlocked": None, "locked": None, "change_from": [], "change_to": []},
         }
 
         data["dock_weakness_database"]["types"]["teleporter"] = teleporter_weakness
@@ -289,7 +255,8 @@ def _migrate_v19(data: dict) -> dict:
         node
         for region in regions_data
         for area_name, area in region["areas"].items()
-        for node_name, node in area["nodes"].items() if node["node_type"] == "teleporter"
+        for node_name, node in area["nodes"].items()
+        if node["node_type"] == "teleporter"
     ]
     for node in all_nodes:
         change_node(node, regions_data)
@@ -340,5 +307,4 @@ CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 
 
 def migrate_to_current(data: dict) -> dict:
-    return migration_lib.apply_migrations(data, _MIGRATIONS,
-                                          copy_before_migrating=True)
+    return migration_lib.apply_migrations(data, _MIGRATIONS, copy_before_migrating=True)

@@ -40,23 +40,24 @@ def _filter_reachable(nodes: Iterator[Node], reach: GeneratorReach) -> Iterator[
             yield node
 
 
-def _filter_out_dangerous_actions(resource_nodes: Iterator[ResourceNode],
-                                  game: GameDescription,
-                                  context: NodeContext,
-                                  ) -> Iterator[ResourceNode]:
+def _filter_out_dangerous_actions(
+    resource_nodes: Iterator[ResourceNode],
+    game: GameDescription,
+    context: NodeContext,
+) -> Iterator[ResourceNode]:
     for resource_node in resource_nodes:
-        if all(resource not in game.dangerous_resources
-               for resource, _ in resource_node.resource_gain_on_collect(context)):
+        if all(
+            resource not in game.dangerous_resources for resource, _ in resource_node.resource_gain_on_collect(context)
+        ):
             yield resource_node
 
 
 def _get_safe_resources(reach: GeneratorReach) -> Iterator[ResourceNode]:
     yield from _filter_reachable(
         _filter_out_dangerous_actions(
-            collectable_resource_nodes(reach.safe_nodes, reach),
-            reach.game,
-            reach.node_context()),
-        reach
+            collectable_resource_nodes(reach.safe_nodes, reach), reach.game, reach.node_context()
+        ),
+        reach,
     )
 
 
@@ -93,6 +94,7 @@ def reach_with_all_safe_resources(game: GameDescription, initial_state: State) -
     :return:
     """
     from randovania.generator.old_generator_reach import OldGeneratorReach as GR
+
     # from randovania.generator.trust_generator_reach import TrustGeneratorReach as GR
     reach = GR.reach_from_state(game, initial_state)
     collect_all_safe_resources_in_reach(reach)

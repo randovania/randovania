@@ -22,6 +22,7 @@ def test_render_region_graph_logic(mocker, single_image, include_pickups, blank_
     args.include_teleporters = True
 
     import graphviz
+
     mock_digraph: MagicMock = mocker.patch.object(graphviz, "Digraph")
 
     # Run
@@ -29,10 +30,7 @@ def test_render_region_graph_logic(mocker, single_image, include_pickups, blank_
 
     # Assert
     if single_image:
-        mock_digraph.assert_called_once_with(
-            name=gd.game.short_name,
-            comment=gd.game.long_name
-        )
+        mock_digraph.assert_called_once_with(name=gd.game.short_name, comment=gd.game.long_name)
     else:
         mock_digraph.assert_called_once_with(
             name="Intro",
@@ -40,7 +38,8 @@ def test_render_region_graph_logic(mocker, single_image, include_pickups, blank_
 
     def calls_for(region, area: Area):
         yield call(
-            f"{region.name}-{area.name}", area.name,
+            f"{region.name}-{area.name}",
+            area.name,
             color=ANY,
             fillcolor=ANY,
             style="filled",
@@ -53,11 +52,11 @@ def test_render_region_graph_logic(mocker, single_image, include_pickups, blank_
                 if isinstance(node, PickupNode):
                     yield call(str(node.pickup_index), ANY, shape="house")
 
-    area_node = list(itertools.chain.from_iterable(
-        calls_for(region, area)
-        for region in gd.region_list.regions
-        for area in region.areas
-    ))
+    area_node = list(
+        itertools.chain.from_iterable(
+            calls_for(region, area) for region in gd.region_list.regions for area in region.areas
+        )
+    )
 
     dot = mock_digraph.return_value
     dot.node.assert_has_calls(area_node)

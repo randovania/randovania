@@ -38,11 +38,14 @@ class DreadRavenBeakDamageMode(BitPackEnum, Enum):
         return self == DreadRavenBeakDamageMode.CONSISTENT_LOW
 
 
-enum_lib.add_long_name(DreadRavenBeakDamageMode, {
-    DreadRavenBeakDamageMode.UNMODIFIED: "Unmodified",
-    DreadRavenBeakDamageMode.CONSISTENT_LOW: "Consistent, with damage reduction",
-    DreadRavenBeakDamageMode.CONSISTENT_HIGH: "Consistent, without damage reduction",
-})
+enum_lib.add_long_name(
+    DreadRavenBeakDamageMode,
+    {
+        DreadRavenBeakDamageMode.UNMODIFIED: "Unmodified",
+        DreadRavenBeakDamageMode.CONSISTENT_LOW: "Consistent, with damage reduction",
+        DreadRavenBeakDamageMode.CONSISTENT_HIGH: "Consistent, without damage reduction",
+    },
+)
 
 
 @dataclasses.dataclass(frozen=True)

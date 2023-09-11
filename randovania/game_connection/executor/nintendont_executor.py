@@ -54,9 +54,11 @@ class RequestBatch:
         return self.num_read_bytes + self.num_validator_bytes
 
     def is_compatible_with(self, holder: SocketHolder):
-        return (len(self.addresses) < holder.max_addresses
-                and self.output_bytes <= holder.max_output
-                and self.input_bytes <= holder.max_input)
+        return (
+            len(self.addresses) < holder.max_addresses
+            and self.output_bytes <= holder.max_output
+            and self.input_bytes <= holder.max_input
+        )
 
     def add_op(self, op: MemoryOperation):
         if op.address not in self.addresses:
@@ -165,10 +167,11 @@ class NintendontExecutor(MemoryOperationExecutor):
                 continue
             op.validate_byte_sizes()
 
-            if op.read_byte_count is None and (op.write_bytes is not None
-                                               and len(op.write_bytes) > max_write_size):
-                self.logger.debug(f"Operation {i} had {len(op.write_bytes)} bytes, "
-                                  f"above the limit of {max_write_size}. Splitting.")
+            if op.read_byte_count is None and (op.write_bytes is not None and len(op.write_bytes) > max_write_size):
+                self.logger.debug(
+                    f"Operation {i} had {len(op.write_bytes)} bytes, "
+                    f"above the limit of {max_write_size}. Splitting."
+                )
                 for offset in range(0, len(op.write_bytes), max_write_size):
                     if op.offset is None:
                         address = op.address + offset
@@ -176,11 +179,13 @@ class NintendontExecutor(MemoryOperationExecutor):
                     else:
                         address = op.address
                         op_offset = op.offset + offset
-                    processes_ops.append(MemoryOperation(
-                        address=address,
-                        offset=op_offset,
-                        write_bytes=op.write_bytes[offset:min(offset + max_write_size, len(op.write_bytes))],
-                    ))
+                    processes_ops.append(
+                        MemoryOperation(
+                            address=address,
+                            offset=op_offset,
+                            write_bytes=op.write_bytes[offset : min(offset + max_write_size, len(op.write_bytes))],
+                        )
+                    )
             else:
                 processes_ops.append(op)
 
@@ -244,7 +249,7 @@ class NintendontExecutor(MemoryOperationExecutor):
                 if _was_invalid_address(response, i):
                     raise MemoryOperationException("Operation tried to read an invalid address")
 
-                split = response[read_index:read_index + op.read_byte_count]
+                split = response[read_index : read_index + op.read_byte_count]
                 if len(split) != op.read_byte_count:
                     raise MemoryOperationException(f"Received {len(split)} bytes, expected {op.read_byte_count}")
                 else:

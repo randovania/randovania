@@ -13,7 +13,6 @@ from randovania.layout.preset import Preset
 
 
 class PresetAM2RHints(PresetTab, Ui_PresetAM2RHints):
-
     def __init__(self, editor: PresetEditor, game_description: GameDescription, window_manager: WindowManager):
         super().__init__(editor, game_description, window_manager)
         self.setupUi(self)
@@ -39,15 +38,15 @@ class PresetAM2RHints(PresetTab, Ui_PresetAM2RHints):
         with self._editor as editor:
             editor.set_configuration_field(
                 "hints",
-                dataclasses.replace(editor.configuration.hints,
-                                    artifacts=self.hint_artifact_combo.currentData()))
+                dataclasses.replace(editor.configuration.hints, artifacts=self.hint_artifact_combo.currentData()),
+            )
 
     def _on_ibeam_combo_changed(self, new_index: int):
         with self._editor as editor:
             editor.set_configuration_field(
                 "hints",
-                dataclasses.replace(editor.configuration.hints,
-                                    ice_beam=self.ice_beam_hint_combo.currentData()))
+                dataclasses.replace(editor.configuration.hints, ice_beam=self.ice_beam_hint_combo.currentData()),
+            )
 
     def on_preset_changed(self, preset: Preset):
         set_combo_with_value(self.hint_artifact_combo, preset.configuration.hints.artifacts)

@@ -13,25 +13,33 @@ from randovania.layout.lib.location_list import LocationList
 
 @pytest.fixture(
     params=[
-        {"encoded": b'\x00', "json": []},
-        {"encoded": b'\x0cP', "json": [{"region": "Temple Grounds", "area": "Landing Site", "node": "Save Station"}]},
-        {"encoded": b'\x12\x8a', "json": [
-            {"region": "Temple Grounds", "area": "Hall of Honored Dead", "node": "Door to Path of Honor"},
-            {"region": "Temple Grounds", "area": "Path of Eyes", "node": "Portal from Abandoned Base"}
-        ]},
+        {"encoded": b"\x00", "json": []},
+        {"encoded": b"\x0cP", "json": [{"region": "Temple Grounds", "area": "Landing Site", "node": "Save Station"}]},
+        {
+            "encoded": b"\x12\x8a",
+            "json": [
+                {"region": "Temple Grounds", "area": "Hall of Honored Dead", "node": "Door to Path of Honor"},
+                {"region": "Temple Grounds", "area": "Path of Eyes", "node": "Portal from Abandoned Base"},
+            ],
+        },
     ],
 )
 def location_with_data(request, mocker, echoes_game_description):
     region_list = echoes_game_description.region_list
-    nodes = list(itertools.islice(
-        (NodeIdentifier.create(region.name, area.name, node.name)
-         for region in region_list.regions
-         for area in region.areas
-         for node in area.actual_nodes
-         if area.has_start_node() and node.valid_starting_location), 15))
+    nodes = list(
+        itertools.islice(
+            (
+                NodeIdentifier.create(region.name, area.name, node.name)
+                for region in region_list.regions
+                for area in region.areas
+                for node in area.actual_nodes
+                if area.has_start_node() and node.valid_starting_location
+            ),
+            15,
+        )
+    )
 
-    mocker.patch("randovania.layout.lib.location_list.LocationList.nodes_list",
-                 return_value=sorted(nodes))
+    mocker.patch("randovania.layout.lib.location_list.LocationList.nodes_list", return_value=sorted(nodes))
     return request.param["encoded"], LocationList.from_json(request.param["json"], RandovaniaGame.METROID_PRIME_ECHOES)
 
 
@@ -42,7 +50,8 @@ def test_decode(location_with_data):
     # Run
     decoder = BitPackDecoder(data)
     result = LocationList.bit_pack_unpack(
-        decoder, {"reference": LocationList.with_elements([], RandovaniaGame.METROID_PRIME_ECHOES)})
+        decoder, {"reference": LocationList.with_elements([], RandovaniaGame.METROID_PRIME_ECHOES)}
+    )
 
     # Assert
     assert result == expected

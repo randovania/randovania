@@ -44,18 +44,19 @@ def test_create_tracker_no_game(skip_qtbot):
 
 
 @pytest.mark.parametrize(
-    ("game", "tracker_name"), [
+    ("game", "tracker_name"),
+    [
         (RandovaniaGame.METROID_PRIME, "Game Art (Standard)"),
         (RandovaniaGame.METROID_PRIME_ECHOES, "Game Art (Standard)"),
-    ])
+    ],
+)
 def test_create_tracker_valid(skip_qtbot, game, tracker_name):
     # Setup
     connection = MagicMock()
     connector = connection.get_connector_for_builder.return_value
     connector.game_enum = game
     connection.connected_states = {
-        connector: ConnectedGameState(uuid.UUID(int=0), connector,
-                                      GameConnectionStatus.Disconnected)
+        connector: ConnectedGameState(uuid.UUID(int=0), connector, GameConnectionStatus.Disconnected)
     }
 
     # Run
@@ -70,8 +71,7 @@ def test_create_tracker_valid(skip_qtbot, game, tracker_name):
     assert window._current_tracker_game == game
 
     # Select new theme
-    action = [action for action in window._tracker_actions[game]
-              if action.text() == tracker_name][0]
+    action = [action for action in window._tracker_actions[game] if action.text() == tracker_name][0]
     action.setChecked(True)
 
     window.create_tracker()
@@ -127,11 +127,14 @@ def test_on_game_state_updated(skip_qtbot, mocker, correct_source):
     window.selected_builder = MagicMock()
     window.item_tracker = MagicMock()
     skip_qtbot.addWidget(window)
-    window.on_game_state_updated(ConnectedGameState(
-        uuid.UUID(int=0), connector if correct_source else MagicMock(),
-        status=GameConnectionStatus.TitleScreen,
-        current_inventory=inventory,
-    ))
+    window.on_game_state_updated(
+        ConnectedGameState(
+            uuid.UUID(int=0),
+            connector if correct_source else MagicMock(),
+            status=GameConnectionStatus.TitleScreen,
+            current_inventory=inventory,
+        )
+    )
 
     # Assert
     connection.get_connector_for_builder.assert_called_once_with(window.selected_builder.return_value)

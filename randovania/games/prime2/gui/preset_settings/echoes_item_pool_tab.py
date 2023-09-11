@@ -39,7 +39,8 @@ class EchoesPresetItemPool(MetroidPresetItemPool):
 
         if self.game == RandovaniaGame.METROID_PRIME_ECHOES:
             beam_ammo = SplitAmmoWidget(
-                parent, self._editor,
+                parent,
+                self._editor,
                 unified_ammo=pickup_database.ammo_pickups["Beam Ammo Expansion"],
                 split_ammo=[
                     pickup_database.ammo_pickups["Dark Ammo Expansion"],

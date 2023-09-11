@@ -42,39 +42,44 @@ def handle_network_errors(fn):
             await async_dialog.warning(self, "Invalid action", f"{e}")
 
         except error.ServerError:
-            await async_dialog.warning(self, "Server error",
-                                       "An error occurred on the server while processing your request.")
+            await async_dialog.warning(
+                self, "Server error", "An error occurred on the server while processing your request."
+            )
 
         except error.NotLoggedInError:
-            await async_dialog.warning(self, "Unauthenticated",
-                                       "You must be logged in.")
+            await async_dialog.warning(self, "Unauthenticated", "You must be logged in.")
 
         except error.NotAuthorizedForActionError:
-            await async_dialog.warning(self, "Unauthorized",
-                                       "You're not authorized to perform that action.")
+            await async_dialog.warning(self, "Unauthorized", "You're not authorized to perform that action.")
 
         except error.UserNotAuthorizedToUseServerError:
             await async_dialog.warning(
-                self, "Unauthorized",
+                self,
+                "Unauthorized",
                 "You're not authorized to use this build.\nPlease check #dev-builds for more details.",
             )
 
         except error.UnsupportedClientError as e:
-            s = e.detail.replace('\n', '<br />')
+            s = e.detail.replace("\n", "<br />")
             await async_dialog.warning(
-                self, "Unsupported client",
+                self,
+                "Unsupported client",
                 s,
             )
 
         except UnableToConnect as e:
-            s = e.reason.replace('\n', '<br />')
-            await async_dialog.warning(self, "Connection Error",
-                                       f"<b>Unable to connect to the server:</b><br /><br />{s}")
+            s = e.reason.replace("\n", "<br />")
+            await async_dialog.warning(
+                self, "Connection Error", f"<b>Unable to connect to the server:</b><br /><br />{s}"
+            )
 
         except error.RequestTimeoutError as e:
-            await async_dialog.warning(self, "Connection Error",
-                                       f"<b>Timeout while communicating with the server:</b><br /><br />{e}"
-                                       f"<br />Further attempts will wait for longer.")
+            await async_dialog.warning(
+                self,
+                "Connection Error",
+                f"<b>Timeout while communicating with the server:</b><br /><br />{e}"
+                f"<br />Further attempts will wait for longer.",
+            )
 
         return None
 
@@ -100,9 +105,7 @@ class QtNetworkClient(QtCore.QObject, NetworkClient):
         user_data_dir = user_data_dir.joinpath("network_client")
 
         if PySide6.__version_info__ >= (6, 5):
-            super().__init__(None,
-                             user_data_dir=user_data_dir,
-                             configuration=configuration)
+            super().__init__(None, user_data_dir=user_data_dir, configuration=configuration)
         else:
             super().__init__(None)
             NetworkClient.__init__(self, user_data_dir=user_data_dir, configuration=configuration)
@@ -161,11 +164,16 @@ class QtNetworkClient(QtCore.QObject, NetworkClient):
             raise RuntimeError("Missing guest configuration for Randovania")
 
         from cryptography.fernet import Fernet
+
         fernet = Fernet(self.configuration["guest_secret"].encode("ascii"))
-        login_request = fernet.encrypt(json.dumps({
-            "name": name,
-            "date": datetime.datetime.now(datetime.UTC).isoformat(),
-        }).encode("utf-8"))
+        login_request = fernet.encrypt(
+            json.dumps(
+                {
+                    "name": name,
+                    "date": datetime.datetime.now(datetime.UTC).isoformat(),
+                }
+            ).encode("utf-8")
+        )
 
         new_session = await self.server_call("login_with_guest", login_request)
         await self.on_user_session_updated(new_session)
@@ -207,7 +215,8 @@ class QtNetworkClient(QtCore.QObject, NetworkClient):
                 )
             except UnableToConnect as e:
                 await async_dialog.warning(
-                    parent, "Unable to connect",
+                    parent,
+                    "Unable to connect",
                     e.reason,
                 )
                 return False
@@ -217,6 +226,7 @@ class QtNetworkClient(QtCore.QObject, NetworkClient):
 
         if self.current_user is None:
             from randovania.gui.dialog.login_prompt_dialog import LoginPromptDialog
+
             await async_dialog.execute_dialog(LoginPromptDialog(self))
 
         return self.current_user is not None

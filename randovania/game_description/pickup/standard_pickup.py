@@ -43,8 +43,9 @@ class StandardPickupDefinition(JsonDataclass):
             raise ValueError(f"Standard Pickup {self.name} has no progression nor ammo.")
 
     @classmethod
-    def from_json_with_categories(cls, name: str, game: RandovaniaGame, pickup_categories: dict[str, PickupCategory],
-                                  value: dict) -> Self:
+    def from_json_with_categories(
+        cls, name: str, game: RandovaniaGame, pickup_categories: dict[str, PickupCategory], value: dict
+    ) -> Self:
         return cls.from_json(
             value,
             game=game,

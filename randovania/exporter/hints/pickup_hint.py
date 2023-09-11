@@ -27,13 +27,11 @@ _DET_AN = [
     "Energy Tank",
     "Ice Beam",
     "Ice Spreader",
-    "X-Ray Visor"
+    "X-Ray Visor",
 ]
 
 _DET_NULL = []
-_DET_NULL.extend(f"{temple} Key {i}"
-                 for i in range(1, 4)
-                 for temple in ("Dark Agon", "Dark Torvus", "Ing Hive"))
+_DET_NULL.extend(f"{temple} Key {i}" for i in range(1, 4) for temple in ("Dark Agon", "Dark Torvus", "Ing Hive"))
 _DET_NULL.extend(f"Sky Temple Key {i}" for i in range(1, 10))
 
 
@@ -66,13 +64,14 @@ def _calculate_determiner(pickup_assignment: PickupAssignment, pickup: PickupEnt
     return determiner
 
 
-def create_pickup_hint(pickup_assignment: PickupAssignment,
-                       region_list: RegionList,
-                       precision: HintItemPrecision,
-                       target: PickupTarget | None,
-                       players_config: PlayersConfiguration,
-                       include_owner: bool,
-                       ) -> PickupHint:
+def create_pickup_hint(
+    pickup_assignment: PickupAssignment,
+    region_list: RegionList,
+    precision: HintItemPrecision,
+    target: PickupTarget | None,
+    players_config: PlayersConfiguration,
+    include_owner: bool,
+) -> PickupHint:
     """
 
     :param pickup_assignment:

@@ -14,10 +14,11 @@ if TYPE_CHECKING:
 
 class GeneratorReach:
     @classmethod
-    def reach_from_state(cls,
-                         game: GameDescription,
-                         initial_state: State,
-                         ) -> GeneratorReach:
+    def reach_from_state(
+        cls,
+        game: GameDescription,
+        initial_state: State,
+    ) -> GeneratorReach:
         raise NotImplementedError
 
     # Game related methods
@@ -27,8 +28,9 @@ class GeneratorReach:
         raise NotImplementedError
 
     def victory_condition_satisfied(self):
-        return self.game.victory_condition.satisfied(self.state.resources, self.state.energy,
-                                                     self.state.resource_database)
+        return self.game.victory_condition.satisfied(
+            self.state.resources, self.state.energy, self.state.resource_database
+        )
 
     @property
     def iterate_nodes(self) -> Iterator[Node]:
@@ -40,9 +42,11 @@ class GeneratorReach:
     def state(self) -> State:
         raise NotImplementedError
 
-    def advance_to(self, new_state: State,
-                   is_safe: bool = False,
-                   ) -> None:
+    def advance_to(
+        self,
+        new_state: State,
+        is_safe: bool = False,
+    ) -> None:
         raise NotImplementedError
 
     def act_on(self, node: ResourceNode) -> None:

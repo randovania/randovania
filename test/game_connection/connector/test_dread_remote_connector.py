@@ -22,6 +22,7 @@ def dread_remote_connector():
     connector = DreadRemoteConnector(executor_mock)
     return connector
 
+
 async def test_general_class_content(connector: DreadRemoteConnector):
     assert connector.game_enum == RandovaniaGame.METROID_DREAD
     assert connector.description() == f"{RandovaniaGame.METROID_DREAD.long_name}: 2.1.0"
@@ -54,7 +55,6 @@ async def test_new_player_location(connector: DreadRemoteConnector):
     assert connector.current_region.name == "Artaria"
     connector.PlayerLocationChanged.emit.assert_called_once_with(PlayerLocationEvent(connector.current_region, None))
     await connector.current_game_status() == (False, connector.current_region)
-
 
     connector.PlayerLocationChanged = MagicMock(QtCore.SignalInstance)
     connector.new_player_location_received("MAINMENU")
@@ -130,10 +130,13 @@ async def test_receive_remote_pickups(connector: DreadRemoteConnector, dread_spi
     connector.inventory_index = 2
     await connector.receive_remote_pickups()
     assert connector.in_cooldown is True
-    execute_string = ("RL.ReceivePickup('Received Spider Magnet from Dummy 1.',"
-                      "RandomizerPowerup,'{\\n{\\n{\\nitem_id = "
-                      "\"ITEM_MAGNET_GLOVE\",\\nquantity = 1,\\n},\\n},\\n}',0,2)")
+    execute_string = (
+        "RL.ReceivePickup('Received Spider Magnet from Dummy 1.',"
+        "RandomizerPowerup,'{\\n{\\n{\\nitem_id = "
+        '"ITEM_MAGNET_GLOVE",\\nquantity = 1,\\n},\\n},\\n}\',0,2)'
+    )
     connector.executor.run_lua_code.assert_called_once_with(execute_string)
+
 
 async def test_new_collected_locations_received_wrong_answer(connector: DreadRemoteConnector):
     connector.logger = MagicMock()
@@ -142,6 +145,7 @@ async def test_new_collected_locations_received_wrong_answer(connector: DreadRem
 
     connector.logger.warning.assert_called_once_with("Unknown response: %s", new_indices)
 
+
 async def test_new_collected_locations_received(connector: DreadRemoteConnector):
     connector.logger = MagicMock()
     connector.PickupIndexCollected = MagicMock()
@@ -149,8 +153,6 @@ async def test_new_collected_locations_received(connector: DreadRemoteConnector)
     connector.new_collected_locations_received(new_indices)
 
     connector.logger.warning.assert_not_called
-    connector.PickupIndexCollected.emit.assert_has_calls([
-        call(PickupIndex(0)),
-        call(PickupIndex(4)),
-        call(PickupIndex(5))
-    ])
+    connector.PickupIndexCollected.emit.assert_has_calls(
+        [call(PickupIndex(0)), call(PickupIndex(4)), call(PickupIndex(5))]
+    )

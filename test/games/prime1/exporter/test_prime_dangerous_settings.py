@@ -9,11 +9,11 @@ def test_dangerous_settings(test_files_dir, rdvgame_filename="prime1_crazy_seed.
     preset = layout_description.get_preset(0)
 
     assert preset.dangerous_settings() == [
-        'One-way anywhere teleporters',
-        'Shuffled Item Position',
-        'Room Randomizer',
-        'Extra Superheated Rooms',
-        'Submerged Rooms',
-        'Dangerous Gravity Suit Logic',
-        'Dangerous Random Enemy Attributes',
+        "One-way anywhere teleporters",
+        "Shuffled Item Position",
+        "Room Randomizer",
+        "Extra Superheated Rooms",
+        "Submerged Rooms",
+        "Dangerous Gravity Suit Logic",
+        "Dangerous Random Enemy Attributes",
     ]

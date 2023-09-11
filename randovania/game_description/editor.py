@@ -25,8 +25,7 @@ class Editor:
         self.next_node_index += 1
         return result
 
-    def edit_connections(self, area: Area, from_node: Node, target_node: Node,
-                         requirement: Requirement | None) -> None:
+    def edit_connections(self, area: Area, from_node: Node, target_node: Node, requirement: Requirement | None) -> None:
         current_connections = area.connections[from_node]
 
         if requirement is None:
@@ -35,9 +34,7 @@ class Editor:
             area.connections[from_node][target_node] = requirement
 
         area.connections[from_node] = {
-            node: current_connections[node]
-            for node in area.nodes
-            if node in current_connections
+            node: current_connections[node] for node in area.nodes if node in current_connections
         }
 
     def add_node(self, area: Area, node: Node) -> None:
@@ -65,11 +62,15 @@ class Editor:
             return new_node if n == old_node else n
 
         if old_node not in area.nodes:
-            raise ValueError("Given {} does does not belong to {}{}".format(
-                old_node.name, area.name,
-                ", but the area contains a node with that name."
-                if area.node_with_name(old_node.name) is not None else "."
-            ))
+            raise ValueError(
+                "Given {} does does not belong to {}{}".format(
+                    old_node.name,
+                    area.name,
+                    ", but the area contains a node with that name."
+                    if area.node_with_name(old_node.name) is not None
+                    else ".",
+                )
+            )
 
         if old_node.name != new_node.name and area.node_with_name(new_node.name) is not None:
             raise ValueError(f"A node named {new_node.name} already exists.")
@@ -86,10 +87,7 @@ class Editor:
         area.nodes[area.nodes.index(old_node)] = new_node
 
         new_connections = {
-            sub(source_node): {
-                sub(target_node): requirements
-                for target_node, requirements in connection.items()
-            }
+            sub(source_node): {sub(target_node): requirements for target_node, requirements in connection.items()}
             for source_node, connection in area.connections.items()
         }
         area.connections.clear()
@@ -99,8 +97,9 @@ class Editor:
         area.clear_dock_cache()
 
         if isinstance(new_node, DockNode):
-            self.add_node(area, DockLockNode.create_from_dock(new_node, self.new_node_index(),
-                                                              self.game.resource_database))
+            self.add_node(
+                area, DockLockNode.create_from_dock(new_node, self.new_node_index(), self.game.resource_database)
+            )
 
         self.game.region_list.invalidate_node_cache()
 
@@ -122,8 +121,9 @@ class Editor:
 
         self.game.region_list.invalidate_node_cache()
 
-    def replace_references_to_area_identifier(self, old_identifier: AreaIdentifier, new_identifier: AreaIdentifier
-                                              ) -> None:
+    def replace_references_to_area_identifier(
+        self, old_identifier: AreaIdentifier, new_identifier: AreaIdentifier
+    ) -> None:
         if old_identifier == new_identifier:
             return
 
@@ -149,8 +149,11 @@ class Editor:
                     if new_node is not None:
                         self.replace_node(area, node, new_node)
 
-    def replace_references_to_node_identifier(self, old_identifier: NodeIdentifier, new_identifier: NodeIdentifier,
-                                              ) -> None:
+    def replace_references_to_node_identifier(
+        self,
+        old_identifier: NodeIdentifier,
+        new_identifier: NodeIdentifier,
+    ) -> None:
         if old_identifier == new_identifier:
             return
 

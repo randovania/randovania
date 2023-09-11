@@ -60,7 +60,7 @@ def adjust_model_names(patch_data: dict, assets_meta: dict, use_external_assets:
                 if converted_model_name not in model_list:
                     converted_model_name = model.name
 
-                pickup['model'] = converted_model_name
+                pickup["model"] = converted_model_name
 
 
 def create_map_using_matplotlib(room_connections: list[tuple[str, str]], filepath: Path):
@@ -75,6 +75,7 @@ def create_map_using_matplotlib(room_connections: list[tuple[str, str]], filepat
         logger.disabled = True
 
     import matplotlib
+
     matplotlib._log.disabled = True
     from matplotlib import pyplot
 
@@ -86,8 +87,8 @@ def create_map_using_matplotlib(room_connections: list[tuple[str, str]], filepat
     pos = networkx.spring_layout(graph, k=1.2 / numpy.sqrt(len(graph.nodes())), iterations=100, seed=0)
     pyplot.figure(3, figsize=(22, 22))
     networkx.draw(graph, pos=pos, node_size=800)
-    networkx.draw_networkx_labels(graph, pos=pos, font_weight='bold', font_size=4)
-    pyplot.savefig(filepath, bbox_inches='tight', dpi=220)
+    networkx.draw_networkx_labels(graph, pos=pos, font_weight="bold", font_size=4)
+    pyplot.savefig(filepath, bbox_inches="tight", dpi=220)
 
     # reset for next graph
     pyplot.clf()
@@ -97,7 +98,7 @@ def make_one_map(filepath: Path, level_data: dict, region: Region, dock_types_to
     from randovania.game_description.db.dock_node import DockNode
 
     def wrap_text(text):
-        return '\n'.join(wrap(text, 18))
+        return "\n".join(wrap(text, 18))
 
     # make list of all edges between rooms
     room_connections = []
@@ -165,8 +166,12 @@ class PrimeGameExporter(GameExporter):
             filepath = directory.with_name(f"{base_filename} {region_name}.png")
             make_one_map(filepath, level_data, rl.region_with_name(region_name), dock_types_to_ignore)
 
-    def _do_export_game(self, patch_data: dict, export_params: GameExportParams,
-                        progress_update: status_update_lib.ProgressUpdateCallable) -> None:
+    def _do_export_game(
+        self,
+        patch_data: dict,
+        export_params: GameExportParams,
+        progress_update: status_update_lib.ProgressUpdateCallable,
+    ) -> None:
         assert isinstance(export_params, PrimeGameExportParams)
 
         input_file = export_params.input_path
@@ -188,7 +193,8 @@ class PrimeGameExporter(GameExporter):
             assembler.assemble_instructions(
                 symbols["UpdateHintState__13CStateManagerFf"],
                 all_prime_dol_patches.remote_execution_patch(RDSGame.PRIME),
-                symbols=symbols)
+                symbols=symbols,
+            )
         )
         new_config["preferences"]["cacheDir"] = cache_dir
 
@@ -206,11 +212,13 @@ class PrimeGameExporter(GameExporter):
             enemy_updater = split_updater.create_split()
 
         from randovania.patching.prime import asset_conversion
+
         assets_meta = {}
         if export_params.use_echoes_models:
             assets_path = export_params.asset_cache_path
-            assets_meta = asset_conversion.convert_prime2_pickups(export_params.echoes_input_path,
-                                                                  assets_path, asset_updater)
+            assets_meta = asset_conversion.convert_prime2_pickups(
+                export_params.echoes_input_path, assets_path, asset_updater
+            )
             new_config["externAssetsDir"] = os.fspath(assets_path)
         else:
             asset_conversion.delete_converted_assets(export_params.asset_cache_path)
@@ -218,7 +226,7 @@ class PrimeGameExporter(GameExporter):
         # Replace models
         adjust_model_names(new_config, assets_meta, export_params.use_echoes_models)
 
-        patch_as_str = json.dumps(new_config, indent=4, separators=(',', ': '))
+        patch_as_str = json.dumps(new_config, indent=4, separators=(",", ": "))
         if has_spoiler:
             output_file.with_name(f"{output_file.stem}-patcher.json").write_text(patch_as_str)
             if room_rando_mode != RoomRandoMode.NONE.value:
@@ -240,17 +248,19 @@ class PrimeGameExporter(GameExporter):
         if random_enemy_attributes is not None:
             enemy_updater("Randomizing enemy attributes", 0)
             PyRandom_Enemy_Attributes(
-                new_config["inputIso"], new_config["outputIso"], random_enemy_attributes_seed,
-                random_enemy_attributes['enemy_rando_range_scale_low'],
-                random_enemy_attributes['enemy_rando_range_scale_high'],
-                random_enemy_attributes['enemy_rando_range_health_low'],
-                random_enemy_attributes['enemy_rando_range_health_high'],
-                random_enemy_attributes['enemy_rando_range_speed_low'],
-                random_enemy_attributes['enemy_rando_range_speed_high'],
-                random_enemy_attributes['enemy_rando_range_damage_low'],
-                random_enemy_attributes['enemy_rando_range_damage_high'],
-                random_enemy_attributes['enemy_rando_range_knockback_low'],
-                random_enemy_attributes['enemy_rando_range_knockback_high'],
-                random_enemy_attributes['enemy_rando_diff_xyz'],
+                new_config["inputIso"],
+                new_config["outputIso"],
+                random_enemy_attributes_seed,
+                random_enemy_attributes["enemy_rando_range_scale_low"],
+                random_enemy_attributes["enemy_rando_range_scale_high"],
+                random_enemy_attributes["enemy_rando_range_health_low"],
+                random_enemy_attributes["enemy_rando_range_health_high"],
+                random_enemy_attributes["enemy_rando_range_speed_low"],
+                random_enemy_attributes["enemy_rando_range_speed_high"],
+                random_enemy_attributes["enemy_rando_range_damage_low"],
+                random_enemy_attributes["enemy_rando_range_damage_high"],
+                random_enemy_attributes["enemy_rando_range_knockback_low"],
+                random_enemy_attributes["enemy_rando_range_knockback_high"],
+                random_enemy_attributes["enemy_rando_diff_xyz"],
             )
             enemy_updater("Finished randomizing enemy attributes", 1)

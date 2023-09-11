@@ -37,10 +37,7 @@ def _decode_with_type(arg: typing.Any, type_: type, extra_args: dict) -> typing.
         else:
             value_types = typing.Any
 
-        return [
-            _decode_with_type(value, value_types, {})
-            for value in arg
-        ]
+        return [_decode_with_type(value, value_types, {}) for value in arg]
 
     elif type_origin == tuple:
         type_args = typing.get_args(type_)
@@ -53,8 +50,7 @@ def _decode_with_type(arg: typing.Any, type_: type, extra_args: dict) -> typing.
             value_types = [typing.Any] * len(arg)
 
         return tuple(
-            _decode_with_type(value, value_type, {})
-            for value, value_type in zip(arg, value_types, strict=True)
+            _decode_with_type(value, value_type, {}) for value, value_type in zip(arg, value_types, strict=True)
         )
 
     elif type_origin in (dict, frozendict):
@@ -77,11 +73,14 @@ def _decode_with_type(arg: typing.Any, type_: type, extra_args: dict) -> typing.
     elif hasattr(type_, "from_json"):
         arg_spec = inspect.getfullargspec(type_.from_json)
 
-        return type_.from_json(arg, **{
-            name: value
-            for name, value in extra_args.items()
-            if arg_spec.varkw is not None or name in arg_spec.args or name in arg_spec.kwonlyargs
-        })
+        return type_.from_json(
+            arg,
+            **{
+                name: value
+                for name, value in extra_args.items()
+                if arg_spec.varkw is not None or name in arg_spec.args or name in arg_spec.kwonlyargs
+            },
+        )
 
     return arg
 
@@ -97,16 +96,10 @@ def _encode_value(value: typing.Any) -> typing.Any:
         return _encode_value(value._asdict())
 
     elif isinstance(value, tuple | list):
-        return [
-            _encode_value(v)
-            for v in value
-        ]
+        return [_encode_value(v) for v in value]
 
     elif isinstance(value, dict | frozendict):
-        result = {
-            _encode_value(k): _encode_value(v)
-            for k, v in value.items()
-        }
+        result = {_encode_value(k): _encode_value(v) for k, v in value.items()}
         if isinstance(value, frozendict):
             return frozendict(result)
         return result
@@ -158,8 +151,10 @@ class JsonDataclass:
 
         new_instance = {}
         for field in dataclasses.fields(dc):
-            if not field.init or (field.name not in json_dict and (field.default != dataclasses.MISSING
-                                                                   or field.default_factory != dataclasses.MISSING)):
+            if not field.init or (
+                field.name not in json_dict
+                and (field.default != dataclasses.MISSING or field.default_factory != dataclasses.MISSING)
+            ):
                 continue
 
             if field.metadata.get("init_from_extra"):

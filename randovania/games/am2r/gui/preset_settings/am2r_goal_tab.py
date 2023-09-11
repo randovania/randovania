@@ -20,7 +20,6 @@ if TYPE_CHECKING:
 
 
 class PresetAM2RGoal(PresetTab, Ui_PresetAM2RGoal):
-
     def __init__(self, editor: PresetEditor, game_description: GameDescription, window_manager: WindowManager):
         super().__init__(editor, game_description, window_manager)
         self.setupUi(self)
@@ -47,19 +46,15 @@ class PresetAM2RGoal(PresetTab, Ui_PresetAM2RGoal):
         assert isinstance(config, AM2RConfiguration)
 
         with self._editor as editor:
-            editor.set_configuration_field(
-                "artifacts",
-                call(config.artifacts)
-            )
+            editor.set_configuration_field("artifacts", call(config.artifacts))
 
     @property
     def num_preferred_locations(self) -> int:
         if self.prefer_metroids_check.isChecked():
-           return 46
+            return 46
         if self.prefer_bosses_check.isChecked():
             return 6
         return 0
-
 
     def _on_prefer_metroids(self, value: bool):
         def edit(config: AM2RArtifactConfig):
@@ -79,8 +74,7 @@ class PresetAM2RGoal(PresetTab, Ui_PresetAM2RGoal):
         self.dna_slider_label.setText(f"{self.dna_slider.value()} DNA")
 
         def edit(config: AM2RArtifactConfig):
-            return dataclasses.replace(config,
-                                       required_artifacts=self.dna_slider.value())
+            return dataclasses.replace(config, required_artifacts=self.dna_slider.value())
 
         self._edit_config(edit)
 
@@ -90,4 +84,3 @@ class PresetAM2RGoal(PresetTab, Ui_PresetAM2RGoal):
         self.prefer_metroids_check.setChecked(artifacts.prefer_metroids)
         self.prefer_bosses_check.setChecked(artifacts.prefer_bosses)
         self.dna_slider.setValue(artifacts.required_artifacts)
-

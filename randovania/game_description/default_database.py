@@ -41,8 +41,7 @@ def _write_pickup_database_in_path(pickup_db: pickup_database.PickupDatabase, pa
 
 @functools.lru_cache
 def pickup_database_for_game(game: RandovaniaGame) -> pickup_database.PickupDatabase:
-    return _read_pickup_database_in_path(game.data_path.joinpath("pickup_database"),
-                                         game)
+    return _read_pickup_database_in_path(game.data_path.joinpath("pickup_database"), game)
 
 
 def write_pickup_database_for_game(pickup_db: pickup_database.PickupDatabase, game: RandovaniaGame) -> None:

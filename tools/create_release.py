@@ -32,8 +32,9 @@ def is_production():
 
 
 def open_zip(platform_name: str) -> zipfile.ZipFile:
-    return zipfile.ZipFile(_ROOT_FOLDER.joinpath(f"dist/{zip_folder}-{platform_name}.zip"),
-                           "w", compression=zipfile.ZIP_DEFLATED)
+    return zipfile.ZipFile(
+        _ROOT_FOLDER.joinpath(f"dist/{zip_folder}-{platform_name}.zip"), "w", compression=zipfile.ZIP_DEFLATED
+    )
 
 
 async def get_nintendont_releases(session: aiohttp.ClientSession):
@@ -53,9 +54,7 @@ async def get_nintendont_releases(session: aiohttp.ClientSession):
 async def download_nintendont():
     headers = None
     if "GITHUB_TOKEN" in os.environ:
-        headers = {
-            "Authorization": f"Bearer {os.environ['GITHUB_TOKEN']}"
-        }
+        headers = {"Authorization": f"Bearer {os.environ['GITHUB_TOKEN']}"}
 
     async with aiohttp.ClientSession(headers=headers) as session:
         print("Fetching list of Nintendont releases.")
@@ -63,9 +62,7 @@ async def download_nintendont():
         latest_release = releases[0]
 
         download_urls = [
-            asset["browser_download_url"]
-            for asset in latest_release["assets"]
-            if asset["name"] == "boot.dol"
+            asset["browser_download_url"] for asset in latest_release["assets"] if asset["name"] == "boot.dol"
         ]
         if not download_urls:
             raise RuntimeError("No boot.dol found in latest release")
@@ -82,12 +79,14 @@ async def download_nintendont():
 
 def write_obfuscator_secret(path: Path, secret: bytes):
     numbers = str(list(secret))
-    path.write_text(f"""# Generated file
+    path.write_text(
+        f"""# Generated file
 secret = b"".join(
     bytes([x]) for x in
     {numbers}
 )
-""")
+"""
+    )
 
 
 async def main():
@@ -102,7 +101,8 @@ async def main():
     for game in iterate_enum(RandovaniaGame):
         database.export_as_binary(
             default_data.read_json_then_binary(game)[1],
-            _ROOT_FOLDER.joinpath("randovania", "data", "binary_data", f"{game.value}.bin"))
+            _ROOT_FOLDER.joinpath("randovania", "data", "binary_data", f"{game.value}.bin"),
+        )
 
     icon_path = randovania.get_icon_path()
     shutil.copyfile(icon_path, icon_path.with_name("executable_icon.ico"))
@@ -133,13 +133,12 @@ async def main():
     # There's also timeouts on Windows so we're expanding this to everyone
     print("Will patch timeout in PyInstaller compat")
     import PyInstaller.compat
+
     compat_path = Path(PyInstaller.compat.__file__)
     compat_text = compat_path.read_text().replace("timeout=60", "timeout=180")
     compat_path.write_text(compat_text)
 
-    subprocess.run([sys.executable, "-m", "PyInstaller",
-                    "randovania.spec"],
-                   check=True)
+    subprocess.run([sys.executable, "-m", "PyInstaller", "randovania.spec"], check=True)
 
     if platform.system() == "Windows":
         create_windows_zip(package_folder)
@@ -187,5 +186,5 @@ def add_readme_to_zip(release_zip):
         release_zip.writestr(zip_folder + "/README.html", readme_html)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     asyncio.run(main())

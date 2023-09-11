@@ -58,21 +58,35 @@ class HasDict(JsonDataclass):
 
 @pytest.fixture(
     params=[
-        {"instance": D2(a=A.bar, b=D1(a=5, b='foo', c=1), c=uuid.UUID("00000000-0000-1111-0000-000000000000"),
-                        d=()),
-         "json": {'a': 'bar', 'b': {'a': 5, 'b': 'foo', 'c': 1}, 'c': "00000000-0000-1111-0000-000000000000",
-                  'd': []},
-         },
-        {"instance": D2(a=None, b=D1(a=5, b='foo', c=2), c=uuid.UUID("00000000-0000-1111-0000-000000000000"),
-                        d=(10, 25, 20)),
-         "json": {'a': None, 'b': {'a': 5, 'b': 'foo', 'c': 2}, 'c': "00000000-0000-1111-0000-000000000000",
-                  'd': [10, 25, 20]},
-         },
-        {"instance": D2(a=None, b=D1(a=5, b='foo'), c=uuid.UUID("00000000-0000-1111-0000-000000000000"),
-                        d=(50,)),
-         "json": {'a': None, 'b': {'a': 5, 'b': 'foo', 'c': 5}, 'c': "00000000-0000-1111-0000-000000000000",
-                  'd': [50]},
-         }
+        {
+            "instance": D2(a=A.bar, b=D1(a=5, b="foo", c=1), c=uuid.UUID("00000000-0000-1111-0000-000000000000"), d=()),
+            "json": {
+                "a": "bar",
+                "b": {"a": 5, "b": "foo", "c": 1},
+                "c": "00000000-0000-1111-0000-000000000000",
+                "d": [],
+            },
+        },
+        {
+            "instance": D2(
+                a=None, b=D1(a=5, b="foo", c=2), c=uuid.UUID("00000000-0000-1111-0000-000000000000"), d=(10, 25, 20)
+            ),
+            "json": {
+                "a": None,
+                "b": {"a": 5, "b": "foo", "c": 2},
+                "c": "00000000-0000-1111-0000-000000000000",
+                "d": [10, 25, 20],
+            },
+        },
+        {
+            "instance": D2(a=None, b=D1(a=5, b="foo"), c=uuid.UUID("00000000-0000-1111-0000-000000000000"), d=(50,)),
+            "json": {
+                "a": None,
+                "b": {"a": 5, "b": "foo", "c": 5},
+                "c": "00000000-0000-1111-0000-000000000000",
+                "d": [50],
+            },
+        },
     ],
 )
 def sample_values(request):
@@ -90,8 +104,8 @@ def test_from_json(sample_values):
 
 
 def test_from_json_old():
-    value = D2OldSyntax(a=A.bar, b=D1(a=5, b='foo', c=1))
-    data = {'a': 'bar', 'b': {'a': 5, 'b': 'foo', 'c': 1}}
+    value = D2OldSyntax(a=A.bar, b=D1(a=5, b="foo", c=1))
+    data = {"a": "bar", "b": {"a": 5, "b": "foo", "c": 1}}
     assert D2OldSyntax.from_json(data) == value
 
 
@@ -102,14 +116,23 @@ def test_from_json_missing_field_with_default():
 
 
 def test_has_dict():
-    value = HasDict(10, {uuid.UUID("77000000-0000-1111-0000-000000000000"): 15},
-                    [RandovaniaGame.BLANK], [None], {},
-                    datetime.datetime(2019, 1, 3, 2, 50, tzinfo=datetime.UTC),
-                    N(2403, True),
-                    (60, RandovaniaGame.METROID_PRIME_ECHOES, "foo"))
+    value = HasDict(
+        10,
+        {uuid.UUID("77000000-0000-1111-0000-000000000000"): 15},
+        [RandovaniaGame.BLANK],
+        [None],
+        {},
+        datetime.datetime(2019, 1, 3, 2, 50, tzinfo=datetime.UTC),
+        N(2403, True),
+        (60, RandovaniaGame.METROID_PRIME_ECHOES, "foo"),
+    )
     data = {
-        "a": 10, "b": {"77000000-0000-1111-0000-000000000000": 15},
-        "c": ["blank"], "d": [None], "e": {}, "f": "2019-01-03T02:50:00+00:00",
+        "a": 10,
+        "b": {"77000000-0000-1111-0000-000000000000": 15},
+        "c": ["blank"],
+        "d": [None],
+        "e": {},
+        "f": "2019-01-03T02:50:00+00:00",
         "g": {"a": 2403, "b": True},
         "h": [60, "prime2", "foo"],
     }

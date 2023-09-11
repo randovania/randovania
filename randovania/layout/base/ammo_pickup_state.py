@@ -29,8 +29,10 @@ class AmmoPickupState(BitPackValue):
             ammo_item = db.get_item(ammo_name)
             minimum_count = -ammo_item.max_capacity if ammo.allows_negative else 0
             if not (minimum_count <= count <= ammo_item.max_capacity):
-                raise ValueError(f"Ammo count for item {ammo_name} of value {count} is not "
-                                 f"in range [{minimum_count}, {ammo_item.max_capacity}].")
+                raise ValueError(
+                    f"Ammo count for item {ammo_name} of value {count} is not "
+                    f"in range [{minimum_count}, {ammo_item.max_capacity}]."
+                )
 
         if self.pickup_count < 0:
             raise ValueError(f"Pickup count must be at least 0, got {self.pickup_count}")
@@ -46,7 +48,7 @@ class AmmoPickupState(BitPackValue):
                 (ammo_item.max_capacity // 2, ammo_item.max_capacity + 1),
             )
             if ammo.allows_negative:
-                yield from bitpacking.encode_bool(count < 0) # Negative?
+                yield from bitpacking.encode_bool(count < 0)  # Negative?
 
         yield from bitpacking.encode_big_int(self.pickup_count)
         if ammo.unlocked_by is not None:
@@ -65,7 +67,7 @@ class AmmoPickupState(BitPackValue):
                 decoder,
                 (ammo_item.max_capacity // 2, ammo_item.max_capacity + 1),
             )
-            if ammo.allows_negative and bitpacking.decode_bool(decoder): # Negative?
+            if ammo.allows_negative and bitpacking.decode_bool(decoder):  # Negative?
                 count *= -1
             ammo_count.append(count)
 

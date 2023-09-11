@@ -51,27 +51,46 @@ class PresetEnemyAttributeRandomizer(PresetTab, Ui_EnemyAttributeRandomizer):
 
     def _on_activation(self):
         checked: bool = self.activate_randomizer.isChecked()
-        widget_arr = [self.minimum_label, self.maximum_label, self.scale_attribute_label, self.range_scale_low,
-                      self.range_scale_high, self.health_attribute_label,
-                      self.range_health_low, self.range_health_high, self.speed_attribute_label, self.range_speed_low,
-                      self.range_speed_high, self.damage_attribute_label,
-                      self.range_damage_low, self.range_damage_high, self.knockback_attribute_label,
-                      self.range_knockback_low, self.range_knockback_high, self.diff_xyz,
-                      self.label, self.label_2]
+        widget_arr = [
+            self.minimum_label,
+            self.maximum_label,
+            self.scale_attribute_label,
+            self.range_scale_low,
+            self.range_scale_high,
+            self.health_attribute_label,
+            self.range_health_low,
+            self.range_health_high,
+            self.speed_attribute_label,
+            self.range_speed_low,
+            self.range_speed_high,
+            self.damage_attribute_label,
+            self.range_damage_low,
+            self.range_damage_high,
+            self.knockback_attribute_label,
+            self.range_knockback_low,
+            self.range_knockback_high,
+            self.diff_xyz,
+            self.label,
+            self.label_2,
+        ]
         with self._editor as editor:
             if checked:
-                editor.set_configuration_field("enemy_attributes",
-                                               EnemyAttributeRandomizer(self.range_scale_low.value(),
-                                                                        self.range_scale_high.value(),
-                                                                        self.range_health_low.value(),
-                                                                        self.range_health_high.value(),
-                                                                        self.range_speed_low.value(),
-                                                                        self.range_speed_high.value(),
-                                                                        self.range_damage_low.value(),
-                                                                        self.range_damage_high.value(),
-                                                                        self.range_knockback_low.value(),
-                                                                        self.range_knockback_high.value(),
-                                                                        self.diff_xyz.isChecked()))
+                editor.set_configuration_field(
+                    "enemy_attributes",
+                    EnemyAttributeRandomizer(
+                        self.range_scale_low.value(),
+                        self.range_scale_high.value(),
+                        self.range_health_low.value(),
+                        self.range_health_high.value(),
+                        self.range_speed_low.value(),
+                        self.range_speed_high.value(),
+                        self.range_damage_low.value(),
+                        self.range_damage_high.value(),
+                        self.range_knockback_low.value(),
+                        self.range_knockback_high.value(),
+                        self.diff_xyz.isChecked(),
+                    ),
+                )
             else:
                 editor.set_configuration_field("enemy_attributes", None)
         for e in widget_arr:

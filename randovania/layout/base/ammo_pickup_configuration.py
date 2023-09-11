@@ -33,9 +33,11 @@ class AmmoPickupConfiguration(bitpacking.BitPackValue):
             is_different = this != reference
             yield from bitpacking.encode_bool(is_different)
             if is_different:
-                yield from this.bit_pack_encode({
-                    "ammo": ammo,
-                })
+                yield from this.bit_pack_encode(
+                    {
+                        "ammo": ammo,
+                    }
+                )
 
     @classmethod
     def bit_pack_unpack(cls, decoder: bitpacking.BitPackDecoder, metadata):
@@ -54,10 +56,7 @@ class AmmoPickupConfiguration(bitpacking.BitPackValue):
     @property
     def as_json(self) -> dict:
         return {
-            "pickups_state": {
-                ammo.name: state.as_json
-                for ammo, state in self.pickups_state.items()
-            },
+            "pickups_state": {ammo.name: state.as_json for ammo, state in self.pickups_state.items()},
         }
 
     @classmethod

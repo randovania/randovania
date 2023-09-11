@@ -14,6 +14,7 @@ def preset_tabs(editor: PresetEditor, window_manager: WindowManager):
     from randovania.gui.preset_settings.location_pool_tab import PresetLocationPool
     from randovania.gui.preset_settings.starting_area_tab import PresetMetroidStartingArea
     from randovania.gui.preset_settings.trick_level_tab import PresetTrickLevel
+
     # from randovania.games.samus_returns.gui.preset_settings.msr_generation_tab import PresetMSRGeneration
     # from randovania.games.samus_returns.gui.preset_settings.msr_item_pool_tab import MSRPresetItemPool
     # from randovania.games.samus_returns.gui.preset_settings.msr_energy_tab import PresetMSREnergy

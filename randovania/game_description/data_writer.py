@@ -37,9 +37,9 @@ if TYPE_CHECKING:
     from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
     from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
 
-    _Resource = TypeVar('_Resource', SimpleResourceInfo, ItemResourceInfo, TrickResourceInfo)
+    _Resource = TypeVar("_Resource", SimpleResourceInfo, ItemResourceInfo, TrickResourceInfo)
 
-REGION_NAME_TO_FILE_NAME_RE = re.compile(r'[^a-zA-Z0-9\- ]')
+REGION_NAME_TO_FILE_NAME_RE = re.compile(r"[^a-zA-Z0-9\- ]")
 
 
 def write_resource_requirement(requirement: ResourceRequirement) -> dict:
@@ -50,28 +50,19 @@ def write_resource_requirement(requirement: ResourceRequirement) -> dict:
             "name": requirement.resource.short_name,
             "amount": requirement.amount,
             "negate": requirement.negate,
-        }
+        },
     }
 
 
 def write_requirement_array(requirement: RequirementArrayBase, type_name: str) -> dict:
     return {
         "type": type_name,
-        "data": {
-            "comment": requirement.comment,
-            "items": [
-                write_requirement(item)
-                for item in requirement.items
-            ]
-        }
+        "data": {"comment": requirement.comment, "items": [write_requirement(item) for item in requirement.items]},
     }
 
 
 def write_requirement_template(requirement: RequirementTemplate) -> dict:
-    return {
-        "type": "template",
-        "data": requirement.template_name
-    }
+    return {"type": "template", "data": requirement.template_name}
 
 
 def write_requirement(requirement: Requirement) -> dict:
@@ -99,6 +90,7 @@ def write_optional_requirement(requirement: Requirement | None) -> dict | None:
 
 
 # Resource
+
 
 def write_resource_gain(resource_gain: ResourceGain) -> list:
     def sorter(item: tuple[ResourceInfo, int]) -> tuple[ResourceType, str, int]:
@@ -138,10 +130,7 @@ def write_trick_resource(resource: TrickResourceInfo) -> dict:
 
 
 def write_array(array: list[_Resource], writer: Callable[[_Resource], dict]) -> dict:
-    return {
-        item.short_name: writer(item)
-        for item in array
-    }
+    return {item.short_name: writer(item) for item in array}
 
 
 def check_for_duplicated_index(array: Iterable[ResourceInfo], field: str) -> Iterator[str]:
@@ -156,8 +145,14 @@ def check_for_duplicated_index(array: Iterable[ResourceInfo], field: str) -> Ite
 def write_resource_database(resource_database: ResourceDatabase) -> dict:
     errors: list[str] = []
 
-    for array in (resource_database.item, resource_database.event, resource_database.trick, resource_database.damage,
-                  resource_database.version, resource_database.misc):
+    for array in (
+        resource_database.item,
+        resource_database.event,
+        resource_database.trick,
+        resource_database.damage,
+        resource_database.version,
+        resource_database.misc,
+    ):
         assert isinstance(array, list)
         errors.extend(check_for_duplicated_index(array, "short_name"))
 
@@ -172,8 +167,7 @@ def write_resource_database(resource_database: ResourceDatabase) -> dict:
         "versions": write_array(resource_database.version, write_simple_resource),
         "misc": write_array(resource_database.misc, write_simple_resource),
         "requirement_template": {
-            name: write_requirement(requirement)
-            for name, requirement in resource_database.requirement_template.items()
+            name: write_requirement(requirement) for name, requirement in resource_database.requirement_template.items()
         },
         "damage_reductions": [
             {
@@ -181,10 +175,10 @@ def write_resource_database(resource_database: ResourceDatabase) -> dict:
                 "reductions": [
                     {
                         "name": reduction.inventory_item.short_name if reduction.inventory_item is not None else None,
-                        "multiplier": reduction.damage_multiplier
+                        "multiplier": reduction.damage_multiplier,
                     }
                     for reduction in reductions
-                ]
+                ],
             }
             for resource, reductions in resource_database.damage_reductions.items()
         ],
@@ -194,14 +188,12 @@ def write_resource_database(resource_database: ResourceDatabase) -> dict:
 
 # Dock Weakness Database
 
+
 def write_dock_lock(dock_lock: DockLock | None) -> dict | None:
     if dock_lock is None:
         return None
 
-    return {
-        "lock_type": dock_lock.lock_type.value,
-        "requirement": write_requirement(dock_lock.requirement)
-    }
+    return {"lock_type": dock_lock.lock_type.value, "requirement": write_requirement(dock_lock.requirement)}
 
 
 def write_dock_weakness(dock_weakness: DockWeakness) -> dict:
@@ -228,12 +220,12 @@ def write_dock_weakness_database(database: DockWeaknessDatabase) -> dict:
                 "name": dock_type.long_name,
                 "extra": frozen_lib.unwrap(dock_type.extra),
                 "items": {
-                    name: write_dock_weakness(weakness)
-                    for name, weakness in database.weaknesses[dock_type].items()
+                    name: write_dock_weakness(weakness) for name, weakness in database.weaknesses[dock_type].items()
                 },
                 "dock_rando": (
                     write_dock_rando_params(database.dock_rando_params[dock_type])
-                    if dock_type in database.dock_rando_params else None
+                    if dock_type in database.dock_rando_params
+                    else None
                 ),
             }
             for dock_type in database.dock_types
@@ -266,7 +258,7 @@ def write_node(node: Node) -> dict:
         "description": node.description,
         "layers": frozen_lib.unwrap(node.layers),
         "extra": frozen_lib.unwrap(node.extra),
-        "valid_starting_location": frozen_lib.unwrap(node.valid_starting_location)
+        "valid_starting_location": frozen_lib.unwrap(node.valid_starting_location),
     }
 
     if isinstance(node, GenericNode):
@@ -341,8 +333,7 @@ def write_area(area: Area) -> dict:
             errors.append(str(e))
 
     if errors:
-        raise ValueError("Area {} nodes has the following errors:\n* {}".format(
-            area.name, "\n* ".join(errors)))
+        raise ValueError("Area {} nodes has the following errors:\n* {}".format(area.name, "\n* ".join(errors)))
 
     extra = frozen_lib.unwrap(area.extra)
     return {
@@ -362,8 +353,7 @@ def write_region(region: Region) -> dict:
             errors.append(str(e))
 
     if errors:
-        raise ValueError("Region {} has the following errors:\n> {}".format(
-            region.name, "\n\n> ".join(errors)))
+        raise ValueError("Region {} has the following errors:\n> {}".format(region.name, "\n\n> ".join(errors)))
 
     return {
         "name": region.name,
@@ -385,8 +375,10 @@ def write_region_list(region_list: RegionList) -> list:
                 if isinstance(node, PickupNode):
                     name = region_list.node_name(node, with_region=True, distinguish_dark_aether=True)
                     if node.pickup_index in known_indices:
-                        errors.append(f"{name} has {node.pickup_index}, "
-                                      f"but it was already used in {known_indices[node.pickup_index]}")
+                        errors.append(
+                            f"{name} has {node.pickup_index}, "
+                            f"but it was already used in {known_indices[node.pickup_index]}"
+                        )
                     else:
                         known_indices[node.pickup_index] = name
 
@@ -401,11 +393,9 @@ def write_region_list(region_list: RegionList) -> list:
 
 # Game Description
 
+
 def write_initial_states(initial_states: dict[str, ResourceGainTuple]) -> dict:
-    return {
-        name: write_resource_gain(initial_state)
-        for name, initial_state in initial_states.items()
-    }
+    return {name: write_resource_gain(initial_state) for name, initial_state in initial_states.items()}
 
 
 def write_minimal_logic_db(db: MinimalLogicData | None) -> dict | None:
@@ -413,30 +403,15 @@ def write_minimal_logic_db(db: MinimalLogicData | None) -> dict | None:
         return None
 
     return {
-        "items_to_exclude": [
-            {"name": it.name, "when_shuffled": it.reason}
-            for it in db.items_to_exclude
-        ],
-        "custom_item_amount": [
-            {
-                "name": index,
-                "value": value
-            }
-            for index, value in db.custom_item_amount.items()
-        ],
-        "events_to_exclude": [
-            {"name": it.name, "reason": it.reason}
-            for it in db.events_to_exclude
-        ],
+        "items_to_exclude": [{"name": it.name, "when_shuffled": it.reason} for it in db.items_to_exclude],
+        "custom_item_amount": [{"name": index, "value": value} for index, value in db.custom_item_amount.items()],
+        "events_to_exclude": [{"name": it.name, "reason": it.reason} for it in db.events_to_exclude],
         "description": db.description,
     }
 
 
 def write_used_trick_levels(game: GameDescription) -> dict[str, list[int]]:
-    return {
-        trick.short_name: sorted(levels)
-        for trick, levels in game.get_used_trick_levels(ignore_cache=True).items()
-    }
+    return {trick.short_name: sorted(levels) for trick, levels in game.get_used_trick_levels(ignore_cache=True).items()}
 
 
 def write_game_description(game: GameDescription) -> dict:
@@ -445,12 +420,10 @@ def write_game_description(game: GameDescription) -> dict:
         "game": game.game.value,
         "resource_database": write_resource_database(game.resource_database),
         "layers": frozen_lib.unwrap(game.layers),
-
         "starting_location": game.starting_location.as_json,
         "initial_states": write_initial_states(game.initial_states),
         "minimal_logic": write_minimal_logic_db(game.minimal_logic),
         "victory_condition": write_requirement(game.victory_condition),
-
         "dock_weakness_database": write_dock_weakness_database(game.dock_weakness_database),
         "used_trick_levels": write_used_trick_levels(game),
         "regions": write_region_list(game.region_list),
@@ -465,7 +438,7 @@ def write_as_split_files(data: dict, base_path: Path) -> None:
     base_path.mkdir(parents=True, exist_ok=True)
 
     for region in regions:
-        name = REGION_NAME_TO_FILE_NAME_RE.sub(r'', region["name"])
+        name = REGION_NAME_TO_FILE_NAME_RE.sub(r"", region["name"])
         data["regions"].append(f"{name}.json")
         json_lib.write_path(
             base_path.joinpath(f"{name}.json"),

@@ -8,10 +8,7 @@ from randovania.lib import obfuscator
 
 
 def test_round_trip_json(obfuscator_test_secret: None) -> None:
-    original = {
-        "foo": 1234,
-        "bar": ["a", "b", 5]
-    }
+    original = {"foo": 1234, "bar": ["a", "b", 5]}
     encrypted = obfuscator.obfuscate_json(copy.deepcopy(original))
     result = obfuscator.deobfuscate_json(encrypted)
 
@@ -28,7 +25,4 @@ def test_round_trip_raw(obfuscator_test_secret: None) -> None:
 
 def test_obfuscate_no_secret(obfuscator_no_secret: None) -> None:
     with pytest.raises(obfuscator.MissingSecret):
-        obfuscator.obfuscate_json({
-            "foo": 1234,
-            "bar": ["a", "b", 5]
-        })
+        obfuscator.obfuscate_json({"foo": 1234, "bar": ["a", "b", 5]})

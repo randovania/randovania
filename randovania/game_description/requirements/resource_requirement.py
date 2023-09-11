@@ -45,12 +45,9 @@ class ResourceRequirement(Requirement):
         return cls.create(simple, 1, False)
 
     @classmethod
-    def with_data(cls,
-                  database: ResourceDatabase,
-                  resource_type: ResourceType,
-                  requirement_name: str,
-                  amount: int,
-                  negate: bool) -> ResourceRequirement:
+    def with_data(
+        cls, database: ResourceDatabase, resource_type: ResourceType, requirement_name: str, amount: int, negate: bool
+    ) -> ResourceRequirement:
         return cls.create(
             database.get_by_type_and_index(resource_type, requirement_name),
             amount,
@@ -75,10 +72,7 @@ class ResourceRequirement(Requirement):
         return self
 
     def __repr__(self) -> str:
-        return "{} {} {}".format(
-            self.resource,
-            "<" if self.negate else "≥",
-            self.amount)
+        return "{} {} {}".format(self.resource, "<" if self.negate else "≥", self.amount)
 
     @property
     def pretty_text(self) -> str:
@@ -100,8 +94,9 @@ class ResourceRequirement(Requirement):
     def multiply_amount(self, multiplier: float) -> ResourceRequirement:
         return self
 
-    def patch_requirements(self, static_resources: ResourceCollection, damage_multiplier: float,
-                           database: ResourceDatabase) -> Requirement:
+    def patch_requirements(
+        self, static_resources: ResourceCollection, damage_multiplier: float, database: ResourceDatabase
+    ) -> Requirement:
         if static_resources.is_resource_set(self.resource):
             if self.satisfied(static_resources, 0, database):
                 return Requirement.trivial()
@@ -113,11 +108,7 @@ class ResourceRequirement(Requirement):
             return self.multiply_amount(damage_multiplier)
 
     def as_set(self, database: ResourceDatabase) -> RequirementSet:
-        return RequirementSet([
-            RequirementList([
-                self
-            ])
-        ])
+        return RequirementSet([RequirementList([self])])
 
     def iterate_resource_requirements(self, database: ResourceDatabase) -> Iterator[ResourceRequirement]:
         yield self

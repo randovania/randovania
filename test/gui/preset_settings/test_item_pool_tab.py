@@ -18,7 +18,7 @@ def test_on_default_item_updated(skip_qtbot, echoes_game_description, preset_man
     # Setup
     game = echoes_game_description.game
     base = preset_manager.default_preset_for_game(game).get_preset()
-    preset = dataclasses.replace(base, uuid=uuid.UUID('b41fde84-1f57-4b79-8cd6-3e5a78077fa6'))
+    preset = dataclasses.replace(base, uuid=uuid.UUID("b41fde84-1f57-4b79-8cd6-3e5a78077fa6"))
     options = MagicMock()
 
     editor = PresetEditor(preset, options)
@@ -35,18 +35,18 @@ def test_on_default_item_updated(skip_qtbot, echoes_game_description, preset_man
     # Assert
     assert editor.standard_pickup_configuration.default_pickups[category] == item
     assert editor.standard_pickup_configuration.pickups_state[item] == StandardPickupState(
-        num_included_in_starting_pickups=1,
-        included_ammo=(50,)
+        num_included_in_starting_pickups=1, included_ammo=(50,)
     )
 
 
 @pytest.mark.parametrize("randomization_mode", RandomizationMode)
-def test_item_pool_count_label(skip_qtbot, blank_game_description, preset_manager,
-                               randomization_mode: RandomizationMode):
+def test_item_pool_count_label(
+    skip_qtbot, blank_game_description, preset_manager, randomization_mode: RandomizationMode
+):
     base = preset_manager.default_preset_for_game(blank_game_description.game).get_preset()
     preset = dataclasses.replace(
         base,
-        uuid=uuid.UUID('b41fde84-1f57-4b79-8cd6-3e5a78077fa6'),
+        uuid=uuid.UUID("b41fde84-1f57-4b79-8cd6-3e5a78077fa6"),
         configuration=dataclasses.replace(
             base.configuration,
             available_locations=dataclasses.replace(

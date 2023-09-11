@@ -27,7 +27,7 @@ from randovania.resolver.exceptions import GenerationFailure
 from randovania.server.discord.bot import RandovaniaBot
 from randovania.server.discord.randovania_cog import RandovaniaCog
 
-possible_links_re = re.compile(r'([A-Za-z0-9-_]{8,})')
+possible_links_re = re.compile(r"([A-Za-z0-9-_]{8,})")
 _MAXIMUM_PRESETS_FOR_GENERATION = 4
 
 
@@ -39,7 +39,9 @@ def _add_preset_description_to_embed(embed: discord.Embed, preset: Preset):
 def _git_describe(randovania_version: bytes) -> str:
     return subprocess.run(
         ["git", "describe", "--tags", randovania_version.hex()],
-        check=True, capture_output=True, text=True,
+        check=True,
+        capture_output=True,
+        text=True,
     ).stdout.strip()
 
 
@@ -53,16 +55,14 @@ def get_version(original_permalink: str, randovania_version: bytes) -> str | Non
         if len(version_split) > 1:
             # dev version
             if not is_dev_version:
-                logging.info("Skipping permalink %s from dev version %s", original_permalink,
-                             version_raw)
+                logging.info("Skipping permalink %s from dev version %s", original_permalink, version_raw)
                 return None
 
             major, minor, revision = version_split[0][1:].split(".")
             version = f"{major}.{int(minor) + 1}.0.dev{version_split[1]}"
         else:
             if is_dev_version:
-                logging.info("Skipping permalink %s from stable version %s", original_permalink,
-                             version_raw)
+                logging.info("Skipping permalink %s from stable version %s", original_permalink, version_raw)
                 return None
             # Exclude starting `v`
             version = version_split[0][1:]
@@ -120,8 +120,7 @@ async def look_for_permalinks(message: discord.Message):
             pretty_hash = "Unknown seed hash"
 
         player_count = len(games)
-        embed = discord.Embed(title=f"`{word.group(1)}`",
-                              description=f"{player_count} player multiworld permalink")
+        embed = discord.Embed(title=f"`{word.group(1)}`", description=f"{player_count} player multiworld permalink")
 
         if player_count == 1:
             embed.description = f"{games[0].long_name} permalink"
@@ -157,8 +156,7 @@ async def reply_for_preset(message: discord.Message, versioned_preset: Versioned
         logging.info(f"Invalid preset '{versioned_preset.name}' from {message.author.display_name}: {e}")
         return
 
-    embed = discord.Embed(title=preset.name,
-                          description=preset.description)
+    embed = discord.Embed(title=preset.name, description=preset.description)
     _add_preset_description_to_embed(embed, preset)
 
     try:
@@ -181,7 +179,8 @@ async def reply_for_layout_description(message: discord.Message, description: La
     if description.world_count == 1:
         preset = description.get_preset(0)
         embed.description = "{}, with preset {}.\nSeed Hash: {}\nPermalink: {}".format(
-            preset.game.long_name, preset.name,
+            preset.game.long_name,
+            preset.name,
             description.shareable_word_hash,
             description.permalink.as_base64_str,
         )
@@ -258,7 +257,7 @@ async def _try_get(message: discord.Message, attachment: discord.Attachment, dec
                 title=f"Unable to process `{attachment.filename}`",
                 description=str(e),
             ),
-            mention_author=False
+            mention_author=False,
         )
         return None
 
@@ -304,11 +303,11 @@ class PermalinkLookupCog(RandovaniaCog):
         if len(presets) > _MAXIMUM_PRESETS_FOR_GENERATION:
             return await context.respond(
                 content=f"Found {len(presets)}, can only generate up to {_MAXIMUM_PRESETS_FOR_GENERATION}.",
-                ephemeral=True)
+                ephemeral=True,
+            )
 
         response: discord.Interaction = await context.respond(
-            content=f"Generating game with {len(presets)} players...",
-            ephemeral=True
+            content=f"Generating game with {len(presets)} players...", ephemeral=True
         )
 
         content = ""
@@ -320,28 +319,30 @@ class PermalinkLookupCog(RandovaniaCog):
             layout: LayoutDescription = await asyncio.wait_for(
                 generator.generate_and_validate_description(
                     generator_params=GeneratorParameters(
-                        seed_number=random.randint(0, 2 ** 31),
+                        seed_number=random.randint(0, 2**31),
                         spoiler=True,
                         presets=presets,
                     ),
                     status_update=None,
                     validate_after_generation=False,
-                    timeout=60
+                    timeout=60,
                 ),
                 timeout=60,
             )
             content = f"Hash: {layout.shareable_word_hash}. Generated in "
             files = [
                 discord.File(
-                    io.BytesIO(json.dumps(layout.as_json(), indent=4, separators=(',', ': ')).encode("utf-8")),
-                    filename=f"{layout.shareable_word_hash}.{LayoutDescription.file_extension()}"
+                    io.BytesIO(json.dumps(layout.as_json(), indent=4, separators=(",", ": ")).encode("utf-8")),
+                    filename=f"{layout.shareable_word_hash}.{LayoutDescription.file_extension()}",
                 )
             ]
         except GenerationFailure as e:
-            embeds = [discord.Embed(
-                title="Unable to generate a game",
-                description=str(e.source),
-            )]
+            embeds = [
+                discord.Embed(
+                    title="Unable to generate a game",
+                    description=str(e.source),
+                )
+            ]
         except asyncio.TimeoutError:
             content = "Timeout after "
         except Exception as e:
@@ -359,7 +360,10 @@ class PermalinkLookupCog(RandovaniaCog):
         try:
             await message.reply(
                 content=f"{content}\nRequested by {context.user.display_name}.",
-                files=files, embeds=embeds, mention_author=False)
+                files=files,
+                embeds=embeds,
+                mention_author=False,
+            )
         except discord.errors.Forbidden:
             return await response.edit_original_response(content=content, files=files, embeds=embeds)
 

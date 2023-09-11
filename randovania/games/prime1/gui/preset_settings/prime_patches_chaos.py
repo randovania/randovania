@@ -24,6 +24,7 @@ _FIELDS = [
     "random_boss_sizes",
 ]
 
+
 class PresetPrimeChaos(PresetTab, Ui_PresetPrimeChaos):
     def __init__(self, editor: PresetEditor, game_description: GameDescription, window_manager: WindowManager):
         super().__init__(editor, game_description, window_manager)
@@ -89,14 +90,8 @@ class PresetPrimeChaos(PresetTab, Ui_PresetPrimeChaos):
 
     def _update_editor(self):
         with self._editor as editor:
-            editor.set_configuration_field(
-                "superheated_probability",
-                self.superheated_slider.value()
-            )
-            editor.set_configuration_field(
-                "submerged_probability",
-                self.submerged_slider.value()
-            )
+            editor.set_configuration_field("superheated_probability", self.superheated_slider.value())
+            editor.set_configuration_field("submerged_probability", self.submerged_slider.value())
 
     def _on_slider_changed(self):
         self.superheated_slider_label.setText(f"{self.superheated_slider.value() / 10.0:.1f}%")

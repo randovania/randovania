@@ -20,6 +20,7 @@ class RequirementSet:
     Represents multiple alternatives of satisfying a requirement.
     For example, going from A to B may be possible by having Grapple+Space Jump or Screw Attack.
     """
+
     alternatives: frozenset[RequirementList]
     _cached_hash: int | None = None
 
@@ -40,8 +41,7 @@ class RequirementSet:
         return self
 
     def __eq__(self, other: object) -> bool:
-        return isinstance(
-            other, RequirementSet) and self.alternatives == other.alternatives
+        return isinstance(other, RequirementSet) and self.alternatives == other.alternatives
 
     def __hash__(self) -> int:
         if self._cached_hash is None:
@@ -58,10 +58,7 @@ class RequirementSet:
         elif self == RequirementSet.trivial():
             to_print.append("Trivial")
         else:
-            to_print.extend(
-                str(alternative)
-                for alternative in self.alternatives
-            )
+            to_print.extend(str(alternative) for alternative in self.alternatives)
         for line in sorted(to_print):
             print_function(indent + line)
 
@@ -102,11 +99,7 @@ class RequirementSet:
 
     def union(self, other: RequirementSet) -> RequirementSet:
         """Create a new RequirementSet that is only satisfied when both are satisfied"""
-        return RequirementSet(
-            a.union(b)
-            for a in self.alternatives
-            for b in other.alternatives
-        )
+        return RequirementSet(a.union(b) for a in self.alternatives for b in other.alternatives)
 
     def expand_alternatives(self, other: RequirementSet) -> RequirementSet:
         """Create a new RequirementSet that is satisfied when either are satisfied."""
@@ -133,10 +126,8 @@ class RequirementSet:
     def patch_requirements(self, resources: ResourceCollection, database: ResourceDatabase) -> RequirementSet:
         from randovania.game_description.requirements.requirement_and import RequirementAnd
         from randovania.game_description.requirements.requirement_or import RequirementOr
+
         return RequirementOr(
-            RequirementAnd(
-                individual.patch_requirements(resources, 1, database)
-                for individual in alternative.values()
-            )
+            RequirementAnd(individual.patch_requirements(resources, 1, database) for individual in alternative.values())
             for alternative in self.alternatives
         ).as_set(database)

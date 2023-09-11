@@ -17,7 +17,6 @@ if TYPE_CHECKING:
 
 
 class LoginPromptDialog(QDialog, Ui_LoginPromptDialog):
-
     def __init__(self, network_client: QtNetworkClient):
         super().__init__()
         self.setupUi(self)
@@ -28,9 +27,7 @@ class LoginPromptDialog(QDialog, Ui_LoginPromptDialog):
         self.guest_button.setVisible("guest" in login_methods)
         self.discord_button.setEnabled("discord" in login_methods)
         self.discord_button.setToolTip(
-            ""
-            if self.discord_button.isEnabled() else
-            "This Randovania build is not configured to login with Discord."
+            "" if self.discord_button.isEnabled() else "This Randovania build is not configured to login with Discord."
         )
         self.privacy_policy_label.setText(self.privacy_policy_label.text().replace("color:#0000ff;", ""))
 

@@ -72,8 +72,9 @@ class MetroidPresetItemPool(PresetItemPool):
             major_configuration = options.standard_pickup_configuration
             options.standard_pickup_configuration = major_configuration.replace_state_for_pickup(
                 self._energy_tank_item,
-                dataclasses.replace(major_configuration.pickups_state[self._energy_tank_item],
-                                    num_included_in_starting_pickups=value)
+                dataclasses.replace(
+                    major_configuration.pickups_state[self._energy_tank_item], num_included_in_starting_pickups=value
+                ),
             )
 
     def _on_update_shuffled_energy_tank(self, value: int):
@@ -81,6 +82,7 @@ class MetroidPresetItemPool(PresetItemPool):
             major_configuration = options.standard_pickup_configuration
             options.standard_pickup_configuration = major_configuration.replace_state_for_pickup(
                 self._energy_tank_item,
-                dataclasses.replace(major_configuration.pickups_state[self._energy_tank_item],
-                                    num_shuffled_pickups=value)
+                dataclasses.replace(
+                    major_configuration.pickups_state[self._energy_tank_item], num_shuffled_pickups=value
+                ),
             )
