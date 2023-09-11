@@ -72,6 +72,12 @@ jobs:
         env:
           WEBHOOK_URL: ${{ secrets.SR_DEV_TALK_WEBHOOK }}
 
+      - name: Bulk Generate (AM2R)
+        run: venv/bin/python tools/bulk_generate_for_discord.py --game am2r
+        if: inputs.game == 'am2r' || github.event.schedule == '0 10 * * 1,5'
+        env:
+          WEBHOOK_URL: ${{ secrets.AM2R_DEV_TALK_WEBHOOK }}
+
 
   notify_failure:
     runs-on: ubuntu-latest
