@@ -98,7 +98,7 @@ def render_area_with_pillow(area: Area, data_path: Path) -> io.BytesIO | None:
                 source = location_to_pos(source_node.location)
                 target = location_to_pos(target_node.location)
 
-                if sum((a - b) ** 2 for a, b in zip(source, target)) < 4:
+                if sum((a - b) ** 2 for a, b in zip(source, target, strict=True)) < 4:
                     continue
 
                 draw.line(source + target, width=2, fill=(255, 255, 255, 255))

@@ -53,7 +53,7 @@ def create_beam_configuration_description(
         a1 = format_ammo_cost(actual)
         d1 = format_ammo_cost(default)
 
-        return "/".join(a for a, d in zip(a1, d1) if a != d)
+        return "/".join(a for a, d in zip(a1, d1, strict=True) if a != d)
 
     def format_ammo_name(b: BeamAmmoConfiguration) -> str:
         if b.ammo_a == b.ammo_b == -1:
@@ -71,7 +71,7 @@ def create_beam_configuration_description(
     def format_missile_cost(b: BeamAmmoConfiguration) -> str:
         return f"{b.combo_missile_cost} missiles for combo"
 
-    for name, default_beam, actual_beam in zip(beam_names, default_config.all_beams, beams.all_beams):
+    for name, default_beam, actual_beam in zip(beam_names, default_config.all_beams, beams.all_beams, strict=True):
         different = []
 
         ammo_cost = format_different_ammo_cost(actual_beam, default_beam)

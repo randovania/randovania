@@ -199,7 +199,7 @@ class StandardPickupConfiguration(BitPackValue):
             if state.include_copy_in_original_location:
                 total_pickups += 1
 
-            for ammo_name, ammo_count in zip(pickup.ammo, state.included_ammo):
+            for ammo_name, ammo_count in zip(pickup.ammo, state.included_ammo, strict=True):
                 result[ammo_name] = result.get(ammo_name, 0) + ammo_count * total_pickups
 
         return result

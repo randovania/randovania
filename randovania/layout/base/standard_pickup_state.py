@@ -172,7 +172,7 @@ class StandardPickupState:
                 if len(pickup.ammo) > 1:
                     yield from bitpacking.encode_bool(all_equal)
 
-                for ammo_name, ammo in zip(pickup.ammo, self.included_ammo):
+                for ammo_name, ammo in zip(pickup.ammo, self.included_ammo, strict=True):
                     yield ammo, db.get_item(ammo_name).max_capacity + 1
                     if all_equal:
                         break

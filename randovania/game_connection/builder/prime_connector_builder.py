@@ -73,7 +73,7 @@ class PrimeConnectorBuilder(ConnectorBuilder):
 
         possible_connectors: list[PrimeRemoteConnector] = [
             connector
-            for connector, read_op in zip(all_connectors, read_first_ops)
+            for connector, read_op in zip(all_connectors, read_first_ops, strict=True)
             if first_ops_result.get(read_op) == connector.version.build_string[:4]
         ]
 

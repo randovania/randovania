@@ -32,5 +32,5 @@ def validate_game_files_path(game_files_path: Path):
     if not all(missing_files):
         raise ValueError(
             f"Is not a valid game folder. "
-            f"Missing files: {[filename for filename, exists in zip(required_files, missing_files) if not exists]}"
+            f"Missing files: {[filename for filename, exists in zip(required_files, missing_files, strict=True) if not exists]}"
         )

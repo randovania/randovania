@@ -86,7 +86,7 @@ def create_ammo_pickup(
     :param resource_database:
     :return:
     """
-    resources = [(resource_database.get_item(item), count) for item, count in zip(ammo.items, ammo_count)]
+    resources = [(resource_database.get_item(item), count) for item, count in zip(ammo.items, ammo_count, strict=True)]
     resources.extend((resource_database.get_item(item), count) for item, count in ammo.additional_resources.items())
 
     return PickupEntry(

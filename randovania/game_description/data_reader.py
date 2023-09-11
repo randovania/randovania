@@ -244,7 +244,7 @@ def read_dock_weakness_database(
         next_index += 1
         return result
 
-    for dock_type, type_data in zip(dock_types, data["types"].values()):
+    for dock_type, type_data in zip(dock_types, data["types"].values(), strict=True):
         weaknesses[dock_type] = {
             weak_name: read_dock_weakness(get_index(), weak_name, weak_data, resource_database)
             for weak_name, weak_data in type_data["items"].items()

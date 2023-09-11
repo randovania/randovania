@@ -185,7 +185,7 @@ class PrimeRemoteConnector(RemoteConnector):
         ops_result = await self.executor.perform_memory_operations(memory_ops)
 
         inventory = {}
-        for item, memory_op in zip(self.game.resource_database.item, memory_ops):
+        for item, memory_op in zip(self.game.resource_database.item, memory_ops, strict=True):
             inv = InventoryItem(*struct.unpack(">II", ops_result[memory_op]))
             if (inv.amount > inv.capacity or inv.capacity > item.max_capacity) and (item != self.multiworld_magic_item):
                 raise MemoryOperationException(f"Received {inv} for {item.long_name}, which is an invalid state.")

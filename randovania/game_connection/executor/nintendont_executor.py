@@ -245,7 +245,7 @@ class NintendontExecutor(MemoryOperationExecutor):
 
         result = {}
 
-        for request, response in zip(requests, all_responses):
+        for request, response in zip(requests, all_responses, strict=True):
             read_index = request.num_validator_bytes
             for i, op in enumerate(request.ops):
                 if op.read_byte_count is None:

@@ -25,7 +25,7 @@ class AmmoPickupState(BitPackValue):
         if len(self.ammo_count) != len(ammo.items):
             raise ValueError(f"Ammo state has {len(self.ammo_count)} ammo counts, expected {len(ammo.items)}")
 
-        for count, ammo_name in zip(self.ammo_count, ammo.items):
+        for count, ammo_name in zip(self.ammo_count, ammo.items, strict=True):
             ammo_item = db.get_item(ammo_name)
             minimum_count = -ammo_item.max_capacity if ammo.allows_negative else 0
             if not (minimum_count <= count <= ammo_item.max_capacity):
@@ -41,7 +41,7 @@ class AmmoPickupState(BitPackValue):
         ammo: AmmoPickupDefinition = metadata["ammo"]
         db = default_database.resource_database_for(ammo.game)
 
-        for count, ammo_name in zip(self.ammo_count, ammo.items):
+        for count, ammo_name in zip(self.ammo_count, ammo.items, strict=True):
             ammo_item = db.get_item(ammo_name)
             yield from bitpacking.encode_int_with_limits(
                 abs(count),

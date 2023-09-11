@@ -54,7 +54,7 @@ class PrimeCosmeticPatchesDialog(BaseCosmeticPatchesDialog[PrimeCosmeticPatches]
             self.phazon_suit_color_layout,
         ]
         self.suit_color_preview_squares = []
-        for suit_layout, suit_colors in zip(suit_layouts, SUIT_DEFAULT_COLORS):
+        for suit_layout, suit_colors in zip(suit_layouts, SUIT_DEFAULT_COLORS, strict=True):
             self.suit_color_preview_squares.append(
                 [self._add_preview_color_square_to_layout(suit_layout, color) for color in suit_colors]
             )

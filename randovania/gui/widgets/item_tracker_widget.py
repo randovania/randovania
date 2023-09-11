@@ -40,7 +40,7 @@ class Element:
         if len(self.labels) > 1 and len(self.labels) != len(self.resources):
             raise ValueError(
                 f"Label has {len(self.labels)} progressive icons, "
-                f"but has {len(self.resources)} resources ({str([r.long_name for r in self.resources])})."
+                f"but has {len(self.resources)} resources ({[r.long_name for r in self.resources]!s})."
             )
 
 
@@ -122,7 +122,7 @@ class ItemTrackerWidget(QtWidgets.QGroupBox):
                 find_resource_info_with_long_name(resource_database.item, resource_name)
                 for resource_name in element["resources"]
             ]
-            for resource, label in zip(resources, labels):
+            for resource, label in zip(resources, labels, strict=True):
                 label.setToolTip(resource.long_name)
 
             self.tracker_elements.append(

@@ -384,7 +384,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         for game_menu in self.game_menus:
             self.menu_open.removeAction(game_menu.menuAction())
 
-        for game_menu, edit_action in zip(self.game_menus, self.menu_action_edits):
+        for game_menu, edit_action in zip(self.game_menus, self.menu_action_edits, strict=True):
             game: RandovaniaGame = game_menu.game
             if game.data.development_state.can_view():
                 self.menu_open.addAction(game_menu.menuAction())
@@ -870,7 +870,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
                 functools.partial(find_bad_installation, hash_list), "Verifying installation..."
             )
         except asyncio.exceptions.CancelledError:
-            return
+            return None
 
         if bad_files or extra_files:
             errors = []

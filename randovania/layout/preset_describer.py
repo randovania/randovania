@@ -243,7 +243,7 @@ def message_for_required_mains(
 ) -> dict:
     item_names = list(message_to_item.values())
     main_required = _require_majors_check(ammo_configuration, item_names, mains_are_default_required)
-    return dict(zip(message_to_item.keys(), main_required))
+    return dict(zip(message_to_item.keys(), main_required, strict=True))
 
 
 def has_shuffled_item(configuration: StandardPickupConfiguration, item_name: str) -> bool:

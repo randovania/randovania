@@ -246,7 +246,9 @@ def _distribute_remaining_items(rng: Random, filler_results: FillerResults, pres
             f"but there's only {len(unassigned_pickup_nodes)} unassigned locations."
         )
 
-    for (node_player, remaining_node), remaining_pickup in zip(unassigned_pickup_nodes, all_remaining_pickups):
+    for (node_player, remaining_node), remaining_pickup in zip(
+        unassigned_pickup_nodes, all_remaining_pickups, strict=False
+    ):
         assign_pickup(node_player, remaining_node, remaining_pickup)
 
     return dataclasses.replace(

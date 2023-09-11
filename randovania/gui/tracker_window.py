@@ -569,7 +569,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
             layout = QtWidgets.QGridLayout(group)
 
             for i, (node, location, name) in enumerate(
-                sorted(zip(nodes, nodes_locations, nodes_names), key=lambda it: it[2])
+                sorted(zip(nodes, nodes_locations, nodes_names, strict=True), key=lambda it: it[2])
             ):
                 node_name = QtWidgets.QLabel(group)
                 node_name.setText(name)

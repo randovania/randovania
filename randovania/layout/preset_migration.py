@@ -344,7 +344,7 @@ def _migrate_v13(preset: dict, game: RandovaniaGame) -> None:
         if item_state.get("include_copy_in_original_location", False):
             count += 1
 
-        for ammo_id, ammo in zip(ids, item_state["included_ammo"]):
+        for ammo_id, ammo in zip(ids, item_state["included_ammo"], strict=True):
             maximum_ammo[ammo_id] -= ammo * count
 
     for name, config in preset["configuration"]["ammo_configuration"]["items_state"].items():

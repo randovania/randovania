@@ -112,7 +112,7 @@ def distribute_pre_fill_weaknesses(patches: GamePatches, rng: Random) -> GamePat
 
             rng.shuffle(source_weaknesses)
             rng.shuffle(target_weaknesses)
-            all_mapping.update(zip(source_weaknesses, target_weaknesses))
+            all_mapping.update(zip(source_weaknesses, target_weaknesses, strict=False))
 
         if weakness_database.dock_rando_config.force_change_two_way:
             for source in list(nodes_to_shuffle):
