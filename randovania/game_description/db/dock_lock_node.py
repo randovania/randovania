@@ -65,9 +65,10 @@ class DockLockNode(ResourceNode):
                 return True
 
         target = dock.get_target_node(context)
-        if not context.has_resource(NodeResourceInfo.from_node(target, context)):
-            if front_weak.can_unlock_from_back(dock.get_back_weakness(context)):
-                return True
+        if not context.has_resource(NodeResourceInfo.from_node(target, context)) and front_weak.can_unlock_from_back(
+            dock.get_back_weakness(context)
+        ):
+            return True
 
         return False
 

@@ -54,6 +54,7 @@ class CSConfiguration(BaseConfiguration):
     objective: CSObjective
     no_blocks: bool
     starting_hp: int = dataclasses.field(metadata={"min": 1, "max": 56, "precision": 1})
+    hints: HintConfiguration = dataclasses.field(default_factory=HintConfiguration)
 
     @classmethod
     def game_enum(cls) -> RandovaniaGame:

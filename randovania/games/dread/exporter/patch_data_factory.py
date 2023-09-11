@@ -230,11 +230,13 @@ class DreadPatchDataFactory(PatchDataFactory[DreadConfiguration, DreadCosmeticPa
         if pickup_type == "actor":
             pickup_actor = self._teleporter_ref_for(pickup_node)
 
-            if self.cosmetic_patches.missile_cosmetic != DreadMissileCosmeticType.NONE:
-                if model_names[0] == "item_missiletank":
-                    colors = self.cosmetic_patches.missile_cosmetic.colors
-                    new_model = colors[self.rng.randint(0, len(colors) - 1)].value
-                    model_names = [new_model]
+            if (
+                self.cosmetic_patches.missile_cosmetic != DreadMissileCosmeticType.NONE
+                and model_names[0] == "item_missiletank"
+            ):
+                colors = self.cosmetic_patches.missile_cosmetic.colors
+                new_model = colors[self.rng.randint(0, len(colors) - 1)].value
+                model_names = [new_model]
 
             # Progressive models currently crash when placed in Hanubia.
             # See https://github.com/randovania/open-dread-rando/issues/141

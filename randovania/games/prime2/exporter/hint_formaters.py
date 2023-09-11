@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, ClassVar
 
 from randovania.exporter.hints.hint_formatters import LocationFormatter
 from randovania.game_description.hint import LocationHint
@@ -15,7 +15,7 @@ if TYPE_CHECKING:
 
 
 class GuardianFormatter(LocationFormatter):
-    _GUARDIAN_NAMES = {
+    _GUARDIAN_NAMES: ClassVar = {
         PickupIndex(43): "Amorbis",
         PickupIndex(79): "Chykka",
         PickupIndex(115): "Quadraxis",

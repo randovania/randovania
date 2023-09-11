@@ -21,7 +21,7 @@ class EchoesCosmeticPatches(BaseCosmeticPatches):
     convert_other_game_assets: bool = False
     use_hud_color: bool = False
     hud_color: tuple[int, int, int] = DEFAULT_HUD_COLOR
-    suit_colors: EchoesSuitPreferences = EchoesSuitPreferences()
+    suit_colors: EchoesSuitPreferences = dataclasses.field(default_factory=EchoesSuitPreferences)
 
     @classmethod
     def default(cls) -> EchoesCosmeticPatches:
