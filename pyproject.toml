@@ -216,28 +216,48 @@ extend-exclude = [
 
 [tool.ruff.lint]
 select = [
-    "E", "F", "W", "C90", "I", "UP", "C4",
-    "RSE",
-    "TCH",
-    "PTH",
-    "COM818", "COM819",
-    "ISC",
-    "PIE",
-    "PT",
+  "E", "F", "W", # flake8
+  "B",           # flake8-bugbear
+  "I",           # isort
+  "C4",          # flake8-comprehensions
+  # "EM",          # flake8-errmsg
+  # "ICN",         # flake8-import-conventions
+  "ISC",         # flake8-implicit-str-concat
+  # "G",           # flake8-logging-format
+  "PGH",         # pygrep-hooks
+  "PIE",         # flake8-pie
+  "PL",          # pylint
+  "PT",          # flake8-pytest-style
+  "PTH",         # flake8-use-pathlib
+  "RET",         # flake8-return
+  "RUF",         # Ruff-specific
+  "SIM",         # flake8-simplify
+  # "T20",         # flake8-print
+  "UP",          # pyupgrade
+  "YTT",         # flake8-2020
+  "EXE",         # flake8-executable
+  "NPY",         # NumPy specific rules
+  "PD",          # pandas-vet
 
-    "PLC",
-    "PLC0208",  # iterating over set is also not deterministic, so we shouldn't do that!
+  "C90",         # mccabe
+  "COM818", "COM819",  # flake8-commas
+  "TCH",         # flake8-type-checking
+  "RSE",         # flake8-raise
 
-    "PLE",
-    "PLR0402", "PLR1711", "PLR1722", "PLR0206",
-    "PLR0133", "PLR0124",
-    "PLW",
-    "SIM101",
+  "PLC",
+  "PLC0208",  # iterating over set is also not deterministic, so we shouldn't do that!
 ]
 extend-ignore = [
-    "ISC001",  # may cause conflicts with formatter
-    "PLW0603",  # we use some globals here and there
-    "PLW2901",  # TODO: should actually fix these
+  "PLR",    # Design related pylint codes
+
+  "ISC001",  # may cause conflicts with formatter
+  "PLW0603",  # we use some globals here and there
+  "PLW2901",  # FIXME: redefined-loop-name
+  "B904",     # FIXME: raise-without-from-inside-except
+
+  "SIM108",   # if-else-block-instead-of-if-exp
+  "SIM118",   # in-dict-keys
+  "RET505", "RET506", "RET507", "RET508",  # no autofix
     "PLC0415",  # we explicitly use the import within a function to postpone the loading of a module
 
 ]
