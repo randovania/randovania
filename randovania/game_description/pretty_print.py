@@ -92,9 +92,7 @@ def pretty_print_node_type(node: Node, region_list: RegionList) -> str:
             other = region_list.node_by_identifier(node.default_connection)
             other_name = region_list.node_name(other)
         except IndexError as e:
-            other_name = (
-                f"(Area {node.default_connection.area_name}, index {node.default_connection.node_name}) [{e}]"
-            )
+            other_name = f"(Area {node.default_connection.area_name}, index {node.default_connection.node_name}) [{e}]"
 
         message = f"{node.default_dock_weakness.name} to {other_name}"
 

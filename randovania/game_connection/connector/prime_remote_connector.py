@@ -205,9 +205,7 @@ class PrimeRemoteConnector(RemoteConnector):
 
         provider_name, pickup = remote_pickups[magic_inv.capacity]
         item_patches, message = await self._patches_for_pickup(provider_name, pickup, inventory)
-        self.logger.info(
-            f"{len(remote_pickups)} permanent pickups, magic {magic_inv.capacity}. Next pickup: {message}"
-        )
+        self.logger.info(f"{len(remote_pickups)} permanent pickups, magic {magic_inv.capacity}. Next pickup: {message}")
 
         patches = [DolRemotePatch([], item_patch) for item_patch in item_patches]
         patches.append(

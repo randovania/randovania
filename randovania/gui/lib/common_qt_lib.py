@@ -188,9 +188,7 @@ def set_default_window_icon(window: QtWidgets.QWidget):
 def set_error_border_stylesheet(edit: QtWidgets.QWidget, has_error: bool):
     edit.has_error = has_error
     if has_error:
-        edit.setStyleSheet(
-            ":enabled { border: 1px solid red; }:disabled { border: 1px solid red; background: #CCC }"
-        )
+        edit.setStyleSheet(":enabled { border: 1px solid red; }:disabled { border: 1px solid red; background: #CCC }")
     else:
         edit.setStyleSheet("")
 
