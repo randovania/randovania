@@ -44,16 +44,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Logic Database
 
-- Added: Several videos for tricks to the Crateria database.
+- Added: Two videos for tricks in Crateria have been added to the database.
 
 #### Crateria
 
-- Added: Wall-jumps as a method for traversing Crab Maze.
-- Added: Energy requirements to some shinesparks in Crateria.
-- Added: Advanced Shinespark in Crateria Super Missile Room that does not need Ice Beam.
-- Added: Damage boosting as an option of traversing the top of Crateria Super Missile Room.
-- Added: Wall jumps and spring ball jumps as an option for traverse East Ocean.
-- Fixed: Missing node connections in Crateria Power Bomb Room. 
+- Added: Wall-jumps can be used as a method for traversing Crab Maze.
+- Added: Energy requirements are now in place for some shinesparks in Crateria.
+- Added: Crateria Super Missile Room can now be navigated using and advanced shinespark that does not require ice beam.
+- Added: Damage boosting is now an option for traversing the top of Crateria Super Missile Room.
+- Added: Wall jumps and spring ball jumps are now an option to traverse East Ocean.
+- Fixed: A missing node connection in Crateria Power Bomb Room has been restored. 
 
 ## [6.2.1] - 2023-09-??
 
