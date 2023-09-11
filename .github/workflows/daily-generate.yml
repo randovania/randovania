@@ -12,6 +12,7 @@ on:
           - prime1
           - prime2
           - samus_returns
+          - am2r
 
   schedule:
     - cron: '0 16 * * 3'  # Cave Story
@@ -19,6 +20,7 @@ on:
     - cron: '0 16 * * 2'  # Prime 1
     - cron: '0 16 * * 1'  # Prime 2
     - cron: '0 16 * * 4'  # Samus Returns
+    - cron: '0 10 * * 1,5' # AM2R
 
 jobs:
   report:
@@ -69,6 +71,12 @@ jobs:
         if: inputs.game == 'samus_returns' || github.event.schedule == '0 16 * * 4'
         env:
           WEBHOOK_URL: ${{ secrets.SR_DEV_TALK_WEBHOOK }}
+
+      - name: Bulk Generate (AM2R)
+        run: venv/bin/python tools/bulk_generate_for_discord.py --game am2r
+        if: inputs.game == 'am2r' || github.event.schedule == '0 10 * * 1,5'
+        env:
+          WEBHOOK_URL: ${{ secrets.AM2R_DEV_TALK_WEBHOOK }}
 
 
   notify_failure:
