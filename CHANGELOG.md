@@ -40,21 +40,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed: The connection of EMMI Zone Exit Southeast and EMMI Zone Exit West is now a proper door. This enables it to now be shuffled in door lock rando.
 
-### Super Metroid
-
-#### Logic Database
-
-- Added: Two videos for tricks in Crateria have been added to the database.
-
-#### Crateria
-
-- Added: Wall-jumps can be used as a method for traversing Crab Maze.
-- Added: Energy requirements are now in place for some shinesparks in Crateria.
-- Added: Crateria Super Missile Room can now be navigated using and advanced shinespark that does not require ice beam.
-- Added: Damage boosting is now an option for traversing the top of Crateria Super Missile Room.
-- Added: Wall jumps and spring ball jumps are now an option to traverse East Ocean.
-- Fixed: A missing node connection in Crateria Power Bomb Room has been restored. 
-
 ## [6.2.1] - 2023-09-??
 
 ### Metroid Prime
