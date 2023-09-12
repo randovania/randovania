@@ -131,13 +131,14 @@ _ignore_pickups_for_game = {
     # These 3 indices are in Olympus and are unreachable given the default preset
     RandovaniaGame.METROID_PRIME_CORRUPTION: {0, 1, 2},
     # Unknown reason why
-    RandovaniaGame.SUPER_METROID: {0, 11, 78, 129},
     RandovaniaGame.CAVE_STORY: {30, 31, 41, 45},
 }
 
 _include_tricks_for_game = {
     # Some items require shinesparking to reach in vanilla, which due to varying difficulty has been made into a trick
-    RandovaniaGame.AM2R: {("Shinesparking", LayoutTrickLevel.ADVANCED)}
+    RandovaniaGame.AM2R: {("Shinesparking", LayoutTrickLevel.ADVANCED)},
+    # Same reasons as above
+    RandovaniaGame.SUPER_METROID: {("Shinespark", LayoutTrickLevel.BEGINNER)},
 }
 
 
