@@ -20,10 +20,12 @@ if TYPE_CHECKING:
 
 def format_received_item(item_name: str, player_name: str) -> str:
     special = {
-        "Locked Missile Expansion": ("Received Missile Expansion from {provider_name}, "
-                                     "but the Missile Launcher is required to use it."),
-        "Locked Ship Missile Expansion": ("Received Ship Missile Expansion from {provider_name}, "
-                                          "but the main launcher is required to use it."),
+        "Locked Missile Expansion": (
+            "Received Missile Expansion from {provider_name}, but the Missile Launcher is required to use it."
+        ),
+        "Locked Ship Missile Expansion": (
+            "Received Ship Missile Expansion from {provider_name}, but the main launcher is required to use it."
+        ),
     }
 
     generic = "Received {item_name} from {provider_name}."
@@ -34,7 +36,7 @@ def format_received_item(item_name: str, player_name: str) -> str:
 def _corruption_powerup_offset(item_index: int) -> int:
     powerups_offset = 0x50
     vector_data_offset = 0x4
-    powerup_size = 0xc
+    powerup_size = 0xC
     return (powerups_offset + vector_data_offset) + (item_index * powerup_size)
 
 
@@ -74,20 +76,33 @@ class CorruptionRemoteConnector(PrimeRemoteConnector):
         player_pointer = results.get(memory_ops[2])
         player_vtable = None
         if player_pointer is not None:
-            player_vtable = await self.executor.perform_single_memory_operation(MemoryOperation(
-                struct.unpack(">I", player_pointer)[0], read_byte_count=4,
-            ))
+            player_vtable = await self.executor.perform_single_memory_operation(
+                MemoryOperation(
+                    struct.unpack(">I", player_pointer)[0],
+                    read_byte_count=4,
+                )
+            )
 
         pending_op_byte = results[memory_ops[1]]
         has_pending_op = pending_op_byte != b"\x00"
         return has_pending_op, self._current_status_world(results.get(memory_ops[0]), player_vtable)
 
-    async def _memory_op_for_items(self, items: list[ItemResourceInfo],
-                                   ) -> list[MemoryOperation]:
-        player_state_pointer = int.from_bytes(await self.executor.perform_single_memory_operation(MemoryOperation(
-            address=self.version.game_state_pointer,
-            read_byte_count=4,
-        )), "big") + 36
+    async def _memory_op_for_items(
+        self,
+        items: list[ItemResourceInfo],
+    ) -> list[MemoryOperation]:
+        player_state_pointer = (
+            int.from_bytes(
+                await self.executor.perform_single_memory_operation(
+                    MemoryOperation(
+                        address=self.version.game_state_pointer,
+                        read_byte_count=4,
+                    )
+                ),
+                "big",
+            )
+            + 36
+        )
 
         return [
             MemoryOperation(
@@ -104,8 +119,10 @@ class CorruptionRemoteConnector(PrimeRemoteConnector):
         self.logger.debug(f"Resource changes for {pickup.name} from {provider_name}: {resources_to_give}")
         patches = [
             all_prime_dol_patches.adjust_item_amount_and_capacity_patch(
-                self.version.powerup_functions, self.version.game,
-                item.extra["item_id"], delta,
+                self.version.powerup_functions,
+                self.version.game,
+                item.extra["item_id"],
+                delta,
             )
             for item, delta in resources_to_give.as_resource_gain()
         ]
@@ -115,7 +132,9 @@ class CorruptionRemoteConnector(PrimeRemoteConnector):
         raise RuntimeError("Unable to prepare dol patches for hud display in Corruption")
 
     async def receive_remote_pickups(
-            self, inventory: Inventory, remote_pickups: tuple[PickupEntryWithOwner, ...],
+        self,
+        inventory: Inventory,
+        remote_pickups: tuple[PickupEntryWithOwner, ...],
     ) -> bool:
         # Not yet implemented
         return False

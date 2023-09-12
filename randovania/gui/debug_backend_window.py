@@ -38,8 +38,7 @@ class RangeSpinBoxItemEditorCreator(QtWidgets.QItemEditorCreatorBase):
 
 def _create_delegate_for(item: ItemResourceInfo):
     factory = QtWidgets.QItemEditorFactory()
-    factory.registerEditor(QtCore.QMetaType.Int.value,
-                           RangeSpinBoxItemEditorCreator(0, item.max_capacity))
+    factory.registerEditor(QtCore.QMetaType.Int.value, RangeSpinBoxItemEditorCreator(0, item.max_capacity))
 
     delegate = QtWidgets.QStyledItemDelegate()
     delegate.setItemEditorFactory(factory)
@@ -108,10 +107,12 @@ class DebugConnectorWindow(Ui_DebugConnectorWindow):
             self._timer.stop()
 
     def _on_current_region_changed(self, _):
-        self.connector.PlayerLocationChanged.emit(PlayerLocationEvent(
-            self.current_region_combo.currentData(),
-            None,
-        ))
+        self.connector.PlayerLocationChanged.emit(
+            PlayerLocationEvent(
+                self.current_region_combo.currentData(),
+                None,
+            )
+        )
 
     def _collect_randomly(self):
         row = random.randint(0, self.collect_location_combo.count())

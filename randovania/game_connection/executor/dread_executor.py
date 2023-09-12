@@ -24,6 +24,7 @@ if TYPE_CHECKING:
 class DreadLuaException(Exception):
     pass
 
+
 @dataclasses.dataclass()
 class DreadSocketHolder:
     reader: StreamReader
@@ -34,40 +35,42 @@ class DreadSocketHolder:
 
 
 class PacketType(IntEnum):
-    PACKET_HANDSHAKE = b'1'
-    PACKET_LOG_MESSAGE = b'2'
-    PACKET_REMOTE_LUA_EXEC = b'3'
-    PACKET_KEEP_ALIVE = b'4'
-    PACKET_NEW_INVENTORY = b'5'
-    PACKET_COLLECTED_INDICES = b'6'
-    PACKET_RECEIVED_PICKUPS = b'7'
-    PACKET_GAME_STATE = b'8'
-    PACKET_MALFORMED = b'9'
+    PACKET_HANDSHAKE = b"1"
+    PACKET_LOG_MESSAGE = b"2"
+    PACKET_REMOTE_LUA_EXEC = b"3"
+    PACKET_KEEP_ALIVE = b"4"
+    PACKET_NEW_INVENTORY = b"5"
+    PACKET_COLLECTED_INDICES = b"6"
+    PACKET_RECEIVED_PICKUPS = b"7"
+    PACKET_GAME_STATE = b"8"
+    PACKET_MALFORMED = b"9"
 
 
 class ClientInterests(IntEnum):
-    LOGGING = b'1'
-    MULTIWORLD = b'2'
+    LOGGING = b"1"
+    MULTIWORLD = b"2"
 
 
 # FIXME: This is a copy of ODR's implementation just that the first param is a path instead of a name
 # for a file within ODR's template folder
 def replace_lua_template(file: Path, replacement: dict[str, Any], wrap_strings: bool = False) -> str:
     from open_dread_rando.misc_patches.lua_util import lua_convert
+
     code = file.read_text()
     for key, content in replacement.items():
         # Replace `TEMPLATE("key")`-style replacements
         code = code.replace(f'TEMPLATE("{key}")', lua_convert(content, wrap_strings))
         # Replace `T__key__T`-style replacements
-        code = code.replace(f'T__{key}__T', lua_convert(content, wrap_strings))
+        code = code.replace(f"T__{key}__T", lua_convert(content, wrap_strings))
 
     unknown_templates = re.findall(r'TEMPLATE\("([^"]+)"\)', code)
-    unknown_templates.extend(re.findall(r'T__(\w+)__T', code))
+    unknown_templates.extend(re.findall(r"T__(\w+)__T", code))
 
     if unknown_templates:
         raise ValueError("The following templates were left unfulfilled: " + str(unknown_templates))
 
     return code
+
 
 # This is stupid but DreadExecutor defines a "connect" method which makes a lot of trouble if it would
 # inherit QObject
@@ -78,17 +81,16 @@ class DreadExecutorToConnectorSignals(QObject):
     new_player_location = Signal(str)
     connection_lost = Signal()
 
+
 def get_bootstrapper_for(game: GameDescription) -> list[str]:
     all_code = []
     bootstrap_path = game.game.data_path.joinpath("assets", "lua")
     replacements = {
         "num_pickup_nodes": game.region_list.num_pickup_nodes,
-        "inventory": "{{{}}}".format(",".join(
-                repr(r.extra["item_id"])
-                for r in game.resource_database.item
-                if "item_id" in r.extra
-            ))
-        }
+        "inventory": "{{{}}}".format(
+            ",".join(repr(r.extra["item_id"]) for r in game.resource_database.item if "item_id" in r.extra)
+        ),
+    }
 
     for i in range(4):
         bootstrap_part = bootstrap_path.joinpath(f"bootstrap_part_{i}.lua")
@@ -104,13 +106,13 @@ def get_bootstrapper_for(game: GameDescription) -> list[str]:
                     key = node.extra["actor_name"]
                 else:
                     key = node.extra["callback_function"]
-                entries.append(f'{key}={node.pickup_index.index + 1}')
+                entries.append(f"{key}={node.pickup_index.index + 1}")
 
         if not entries:
             continue
 
         replacements["pairs"] = "{}".format(",".join(entries))
-        replacements["location"] = "{}".format(repr(world.extra["scenario_id"] + '_'))
+        replacements["location"] = "{}".format(repr(world.extra["scenario_id"] + "_"))
         code = replace_lua_template(locations_lua, replacements)
         all_code.append(code)
 
@@ -152,23 +154,32 @@ class DreadExecutor:
 
             # Send interests
             self.logger.debug("Connection open, set interests.")
-            interests = ClientInterests.MULTIWORLD # | ClientInterests.LOGGING
+            interests = ClientInterests.MULTIWORLD  # | ClientInterests.LOGGING
             writer.write(self._build_packet(PacketType.PACKET_HANDSHAKE, interests.to_bytes(1, "little")))
             await asyncio.wait_for(writer.drain(), timeout=30)
             await self._read_response()
 
             # Send API details request
             self.logger.debug("Requesting API details.")
-            await self.run_lua_code("return string.format('%d,%d,%s,%s,%s', RL.Version, RL.BufferSize,"
-                                     "tostring(RL.Bootstrap), Init.sLayoutUUID, GameVersion)")
+            await self.run_lua_code(
+                "return string.format('%d,%d,%s,%s,%s', RL.Version, RL.BufferSize,"
+                "tostring(RL.Bootstrap), Init.sLayoutUUID, GameVersion)"
+            )
             await asyncio.wait_for(writer.drain(), timeout=30)
 
             self.logger.debug("Waiting for API details response.")
             response = await self._read_response()
-            (api_version, buffer_size, bootstrap, self.layout_uuid_str,
-             self.version) = response.decode("ascii").split(",")
-            self.logger.debug("Remote replied with API level %s, buffer_size %s, bootstrap %s and layout_uuid %s, "
-                              "connection successful.", api_version, buffer_size, bootstrap, self.layout_uuid_str)
+            (api_version, buffer_size, bootstrap, self.layout_uuid_str, self.version) = response.decode("ascii").split(
+                ","
+            )
+            self.logger.debug(
+                "Remote replied with API level %s, buffer_size %s, bootstrap %s and layout_uuid %s, "
+                "connection successful.",
+                api_version,
+                buffer_size,
+                bootstrap,
+                self.layout_uuid_str,
+            )
             self._socket.api_version = int(api_version)
             self._socket.buffer_size = int(buffer_size)
 
@@ -187,8 +198,16 @@ class DreadExecutor:
 
             return None
 
-        except (OSError, AttributeError, asyncio.TimeoutError, struct.error,
-                UnicodeError, RuntimeError, DreadLuaException, ValueError) as e:
+        except (
+            OSError,
+            AttributeError,
+            asyncio.TimeoutError,
+            struct.error,
+            UnicodeError,
+            RuntimeError,
+            DreadLuaException,
+            ValueError,
+        ) as e:
             # UnicodeError is for some invalid ip addresses
             self._socket = None
             message = f"Unable to connect to {self._ip}:{self._port} - ({type(e).__name__}) {e}"
@@ -209,7 +228,7 @@ class DreadExecutor:
         retBytes: bytearray = bytearray()
         retBytes.append(type.value)
         if type == PacketType.PACKET_REMOTE_LUA_EXEC:
-            retBytes.extend(len(msg).to_bytes(length=4, byteorder='little'))
+            retBytes.extend(len(msg).to_bytes(length=4, byteorder="little"))
         if type in [PacketType.PACKET_REMOTE_LUA_EXEC, PacketType.PACKET_HANDSHAKE]:
             retBytes.extend(msg)
         return retBytes
@@ -229,9 +248,12 @@ class DreadExecutor:
                 recv_packet_type = response[0]
                 dread_received_bytes = struct.unpack("<l", response[1:4] + b"\x00")[0]
                 dread_should_bytes = struct.unpack("<l", response[5:8] + b"\x00")[0]
-                self.logger.warning("Dread received a malformed packet. Type %d, received bytes %d, "
-                                    "should receive bytes %d", recv_packet_type,
-                                    dread_received_bytes, dread_should_bytes)
+                self.logger.warning(
+                    "Dread received a malformed packet. Type %d, received bytes %d, should receive bytes %d",
+                    recv_packet_type,
+                    dread_received_bytes,
+                    dread_should_bytes,
+                )
                 raise DreadLuaException
             case PacketType.PACKET_HANDSHAKE:
                 await self._check_header()

@@ -22,6 +22,7 @@ class PrimeHintDistributor(HintDistributor):
     def _get_relative_hint_providers(self):
         return []
 
-    async def assign_precision_to_hints(self, patches: GamePatches, rng: Random,
-                                        player_pool: PlayerPool, player_state: PlayerState) -> GamePatches:
+    async def assign_precision_to_hints(
+        self, patches: GamePatches, rng: Random, player_pool: PlayerPool, player_state: PlayerState
+    ) -> GamePatches:
         return self.add_hints_precision(player_state, patches, rng)

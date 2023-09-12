@@ -27,8 +27,9 @@ if TYPE_CHECKING:
 
 
 class DreadBasePatchesFactory(BasePatchesFactory):
-    def configurable_node_assignment(self, configuration: DreadConfiguration, game: GameDescription,
-                                     rng: Random) -> Iterator[NodeConfigurationAssociation]:
+    def configurable_node_assignment(
+        self, configuration: DreadConfiguration, game: GameDescription, rng: Random
+    ) -> Iterator[NodeConfigurationAssociation]:
         result = []
 
         rsb = game.resource_database
@@ -48,21 +49,26 @@ class DreadBasePatchesFactory(BasePatchesFactory):
             if not isinstance(node, ConfigurableNode):
                 continue
 
-            result.append((game.region_list.identifier_for_node(node), RequirementAnd([
-                requirement_for_type[block_type]
-                for block_type in node.extra["tile_types"]
-            ]).simplify()))
+            result.append(
+                (
+                    game.region_list.identifier_for_node(node),
+                    RequirementAnd(
+                        [requirement_for_type[block_type] for block_type in node.extra["tile_types"]]
+                    ).simplify(),
+                )
+            )
 
         return result
 
-    def create_base_patches(self,
-                            configuration: BaseConfiguration,
-                            rng: Random,
-                            game: GameDescription,
-                            is_multiworld: bool,
-                            player_index: int,
-                            rng_required: bool = True
-                            ) -> GamePatches:
+    def create_base_patches(
+        self,
+        configuration: BaseConfiguration,
+        rng: Random,
+        game: GameDescription,
+        is_multiworld: bool,
+        player_index: int,
+        rng_required: bool = True,
+    ) -> GamePatches:
         assert isinstance(configuration, DreadConfiguration)
         parent = super().create_base_patches(configuration, rng, game, is_multiworld, player_index, rng_required)
 
@@ -71,19 +77,22 @@ class DreadBasePatchesFactory(BasePatchesFactory):
             nic = NodeIdentifier.create
             power_weak = game.dock_weakness_database.get_by_weakness("door", "Power Beam Door")
 
-            dock_weakness.extend([
-                (nic("Hanubia", "Entrance Tall Room", "Door to Total Recharge Station North"), power_weak),
-                (nic("Hanubia", "Total Recharge Station North", "Door to Gold Chozo Warrior Arena"), power_weak),
-            ])
+            dock_weakness.extend(
+                [
+                    (nic("Hanubia", "Entrance Tall Room", "Door to Total Recharge Station North"), power_weak),
+                    (nic("Hanubia", "Total Recharge Station North", "Door to Gold Chozo Warrior Arena"), power_weak),
+                ]
+            )
 
-        return parent.assign_dock_weakness((
-            (game.region_list.node_by_identifier(identifier), target)
-            for identifier, target in dock_weakness
-        ))
+        return parent.assign_dock_weakness(
+            ((game.region_list.node_by_identifier(identifier), target) for identifier, target in dock_weakness)
+        )
 
-    def dock_connections_assignment(self, configuration: DreadConfiguration,
-                                    game: GameDescription, rng: Random ) -> Iterable[tuple[DockNode, Node]]:
+    def dock_connections_assignment(
+        self, configuration: DreadConfiguration, game: GameDescription, rng: Random
+    ) -> Iterable[tuple[DockNode, Node]]:
         teleporter_connection = get_teleporter_connections(configuration.teleporters, game, rng)
-        dock_assignment = get_dock_connections_assignment_for_teleporter(configuration.teleporters,
-                                                                         game, teleporter_connection)
+        dock_assignment = get_dock_connections_assignment_for_teleporter(
+            configuration.teleporters, game, teleporter_connection
+        )
         yield from dock_assignment

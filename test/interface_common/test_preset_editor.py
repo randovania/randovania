@@ -28,13 +28,11 @@ def initial_layout_configuration_params(request) -> dict:
 
 
 @pytest.mark.parametrize("menu_mod", [False, True])
-def test_edit_menu_mod(editor: PresetEditor,
-                       initial_layout_configuration_params: dict,
-                       default_echoes_configuration,
-                       menu_mod):
+def test_edit_menu_mod(
+    editor: PresetEditor, initial_layout_configuration_params: dict, default_echoes_configuration, menu_mod
+):
     # Setup
-    editor._configuration = dataclasses.replace(default_echoes_configuration,
-                                                **initial_layout_configuration_params)
+    editor._configuration = dataclasses.replace(default_echoes_configuration, **initial_layout_configuration_params)
     editor._nested_autosave_level = 1
 
     # Run
@@ -42,5 +40,6 @@ def test_edit_menu_mod(editor: PresetEditor,
     editor.set_configuration_field("menu_mod", menu_mod)
 
     # Assert
-    assert editor.configuration == dataclasses.replace(default_echoes_configuration,
-                                                       **initial_layout_configuration_params)
+    assert editor.configuration == dataclasses.replace(
+        default_echoes_configuration, **initial_layout_configuration_params
+    )

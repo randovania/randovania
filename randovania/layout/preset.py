@@ -75,7 +75,8 @@ class Preset(BitPackValue):
 
     def fork(self) -> Preset:
         return dataclasses.replace(
-            self, name=f"{self.name} Copy",
+            self,
+            name=f"{self.name} Copy",
             description=f"A copy version of {self.name}.",
             uuid=uuid_module.uuid4(),
         )

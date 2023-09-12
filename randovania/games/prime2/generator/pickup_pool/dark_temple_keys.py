@@ -12,8 +12,9 @@ if TYPE_CHECKING:
     from randovania.game_description.resources.resource_database import ResourceDatabase
 
 
-def add_dark_temple_keys(resource_database: ResourceDatabase,
-                         ) -> PoolResults:
+def add_dark_temple_keys(
+    resource_database: ResourceDatabase,
+) -> PoolResults:
     """
     :param resource_database:
     :return:
@@ -27,10 +28,11 @@ def add_dark_temple_keys(resource_database: ResourceDatabase,
     return PoolResults(item_pool, {}, [])
 
 
-def create_dark_temple_key(key_number: int,
-                           temple_index: int,
-                           resource_database: ResourceDatabase,
-                           ) -> PickupEntry:
+def create_dark_temple_key(
+    key_number: int,
+    temple_index: int,
+    resource_database: ResourceDatabase,
+) -> PickupEntry:
     """
     Creates a Dark Temple Key
     :param key_number:
@@ -43,7 +45,7 @@ def create_dark_temple_key(key_number: int,
         long_name="Dark Temple Key",
         hint_details=("a ", "red Temple Key"),
         hinted_as_major=False,
-        is_key=True
+        is_key=True,
     )
 
     return PickupEntry(

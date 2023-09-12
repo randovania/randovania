@@ -44,12 +44,9 @@ class CorruptionLayoutEditor(QtWidgets.QWidget, Ui_CorruptionLayoutEditor):
 
         region_count = 0
         for i, region in enumerate(region_list.regions):
-            if region.extra['asset_id'] in ids_to_merge:
+            if region.extra["asset_id"] in ids_to_merge:
                 nodes_to_merge.extend(
-                    node
-                    for area in region.areas
-                    for node in area.nodes
-                    if isinstance(node, PickupNode)
+                    node for area in region.areas for node in area.nodes if isinstance(node, PickupNode)
                 )
                 continue
 
@@ -103,8 +100,5 @@ class CorruptionLayoutEditor(QtWidgets.QWidget, Ui_CorruptionLayoutEditor):
         self.update_layout_string()
 
     def update_layout_string(self):
-        item_names = [
-            combo.currentData()
-            for combo in self._index_to_combo.values()
-        ]
+        item_names = [combo.currentData() for combo in self._index_to_combo.values()]
         self.layout_edit.setText(layout_string_for_items(item_names))

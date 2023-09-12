@@ -37,10 +37,14 @@ def common_generate_logic(args, permalink: Permalink):
     for _ in range(args.repeat):
         before = time.perf_counter()
         layout_description = asyncio.run(
-            generator.generate_and_validate_description(generator_params=permalink.parameters,
-                                                        status_update=status_update,
-                                                        validate_after_generation=args.validate,
-                                                        timeout=None, **extra_args))
+            generator.generate_and_validate_description(
+                generator_params=permalink.parameters,
+                status_update=status_update,
+                validate_after_generation=args.validate,
+                timeout=None,
+                **extra_args,
+            )
+        )
         after = time.perf_counter()
         total_times.append(after - before)
         shareable_hashes.append(layout_description.shareable_hash)
@@ -57,6 +61,7 @@ def common_generate_logic(args, permalink: Permalink):
 
 def generate_from_permalink_logic(args):
     from randovania.layout.permalink import Permalink
+
     permalink = Permalink.from_str(args.permalink)
     common_generate_logic(args, permalink)
 
@@ -76,25 +81,19 @@ def common_generate_arguments(parser: ArgumentParser):
     parser.add_argument("--repeat", default=1, type=int, help="Generate multiple times. Used for benchmarking.")
     parser.add_argument("--no-retry", default=False, action="store_true", help="Disable retries in the generation.")
     parser.add_argument("--status-update", default=False, action="store_true", help="Print the status updates.")
-    parser.add_argument(
-        "output_file",
-        type=Path,
-        help="Where to place the seed log."
-    )
+    parser.add_argument("output_file", type=Path, help="Where to place the seed log.")
 
 
 def add_generate_commands(sub_parsers):
     parser_permalink: ArgumentParser = sub_parsers.add_parser(
-        "generate-from-permalink",
-        help="Generate a layout from a permalink."
+        "generate-from-permalink", help="Generate a layout from a permalink."
     )
     common_generate_arguments(parser_permalink)
     parser_permalink.add_argument("--permalink", required=True, type=str, help="The permalink to use")
     parser_permalink.set_defaults(func=generate_from_permalink_logic)
 
     parser_presets: ArgumentParser = sub_parsers.add_parser(
-        "generate-from-presets",
-        help="Generate a layout from a list of presets."
+        "generate-from-presets", help="Generate a layout from a list of presets."
     )
     common_generate_arguments(parser_presets)
     permalink_command.add_permalink_arguments(parser_presets)

@@ -31,6 +31,7 @@ class DockLockType(Enum):
         blocks access from the back. Can be destroyed from the back if both sides of the dock matches.
         Used by Metroid Dread.
     """
+
     FRONT_BLAST_BACK_FREE_UNLOCK = "front-blast-back-free-unlock"
     FRONT_BLAST_BACK_BLAST = "front-blast-back-blast"
     FRONT_BLAST_BACK_IMPOSSIBLE = "front-blast-back-impossible"
@@ -43,10 +44,11 @@ class DockLock:
     Represents the dock has a lock that must be destroyed before it can be used.
     Used by things like `Door locked by Missiles`.
     """
+
     lock_type: DockLockType
     requirement: Requirement
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return self.lock_type.name
 
 
@@ -58,16 +60,17 @@ class DockWeakness:
     The requirements for the weakness is required for every single use, but
     only from the front. The lock's requirement (if a lock is present) only needs to be satisfied once.
     """
+
     weakness_index: int | None = dataclasses.field(compare=False)
     name: str
     extra: frozendict
     requirement: Requirement
     lock: DockLock | None
 
-    def __hash__(self):
+    def __hash__(self) -> int:
         return hash((self.name, self.extra))
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return self.name
 
     @property
@@ -76,8 +79,7 @@ class DockWeakness:
 
     def can_unlock_from_back(self: DockWeakness, back_weak: DockWeakness | None) -> bool:
         if back_weak is not None and back_weak.lock is not None:
-            opens_from_back = {DockLockType.FRONT_BLAST_BACK_FREE_UNLOCK,
-                               DockLockType.FRONT_BLAST_BACK_BLAST}
+            opens_from_back = {DockLockType.FRONT_BLAST_BACK_FREE_UNLOCK, DockLockType.FRONT_BLAST_BACK_BLAST}
             if self == back_weak:
                 opens_from_back.add(DockLockType.FRONT_BLAST_BACK_IF_MATCHING)
 
@@ -97,6 +99,7 @@ class DockRandoParams:
 @dataclass(frozen=True, slots=True, order=True)
 class DockType:
     """Represents a kind of dock for the game. Can be things like Door, Tunnel, Portal."""
+
     short_name: str
     long_name: str
     extra: frozendict
@@ -138,14 +141,8 @@ class DockWeaknessDatabase:
     # FIXME: Make is_teleporter and ignore_for_hints proper DockType fields
     @property
     def all_teleporter_dock_types(self) -> list[DockType]:
-        return [
-            dock_type
-            for dock_type in self.dock_types if dock_type.extra.get("is_teleporter", False)
-        ]
+        return [dock_type for dock_type in self.dock_types if dock_type.extra.get("is_teleporter", False)]
 
     @property
     def all_ignore_hints_dock_types(self) -> list[DockType]:
-        return [
-            dock_type
-            for dock_type in self.dock_types if dock_type.extra.get("ignore_for_hints", False)
-        ]
+        return [dock_type for dock_type in self.dock_types if dock_type.extra.get("ignore_for_hints", False)]

@@ -34,10 +34,12 @@ class EventPickupNode(ResourceNode):
                 "event": event_node.extra,
                 "pickup": next_node.extra,
             },
-            False, event_node, next_node
+            False,
+            event_node,
+            next_node,
         )
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return "EventPickupNode({!r} -> {}+{})".format(
             self.name,
             self.event_node.event.long_name,
@@ -71,8 +73,9 @@ class EventPickupNode(ResourceNode):
         yield from self.pickup_node.resource_gain_on_collect(context)
 
 
-def find_nodes_to_combine(nodes: list[Node], connections: dict[Node, dict[Node, Requirement]]
-                          ) -> list[tuple[EventNode, PickupNode]]:
+def find_nodes_to_combine(
+    nodes: list[Node], connections: dict[Node, dict[Node, Requirement]]
+) -> list[tuple[EventNode, PickupNode]]:
     """Searches for pairs of Event+Pickup nodes that match the necessary rules for combination"""
     result: list[tuple[EventNode, PickupNode]] = []
 
@@ -80,8 +83,9 @@ def find_nodes_to_combine(nodes: list[Node], connections: dict[Node, dict[Node, 
         if not isinstance(event_node, EventNode):
             continue
 
-        valid_options = [next_node for next_node in connections[event_node].keys()
-                         if next_node.layers == event_node.layers]
+        valid_options = [
+            next_node for next_node in connections[event_node].keys() if next_node.layers == event_node.layers
+        ]
 
         if len(valid_options) != 1:
             continue

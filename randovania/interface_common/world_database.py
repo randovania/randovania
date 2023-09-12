@@ -23,8 +23,7 @@ CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 
 
 def migrate_to_current(data: dict):
-    return migration_lib.apply_migrations(data, _MIGRATIONS,
-                                          copy_before_migrating=True)
+    return migration_lib.apply_migrations(data, _MIGRATIONS, copy_before_migrating=True)
 
 
 @dataclasses.dataclass(frozen=True)
@@ -88,7 +87,7 @@ class WorldDatabase(QObject):
             {
                 "schema_version": CURRENT_VERSION,
                 "data": data.as_json,
-            }
+            },
         )
 
     async def load_existing_data(self):
@@ -124,8 +123,7 @@ class WorldDatabase(QObject):
 
     def get_locations_to_upload(self, uid: uuid.UUID) -> tuple[int, ...]:
         data = self.get_data_for(uid)
-        return tuple(i for i in sorted(data.collected_locations)
-                     if i not in data.uploaded_locations)
+        return tuple(i for i in sorted(data.collected_locations) if i not in data.uploaded_locations)
 
     def all_known_data(self) -> Iterable[uuid.UUID]:
         yield from self._all_data.keys()

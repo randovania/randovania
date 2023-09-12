@@ -21,9 +21,7 @@ if TYPE_CHECKING:
 MAX_SESSION_NAME_LENGTH = 50
 MAX_WORLD_NAME_LENGTH = 30
 
-WORLD_NAME_RE = re.compile(
-    r"^[a-zA-Z0-9 _\-!?()]{1," + str(MAX_WORLD_NAME_LENGTH) + "}$"
-)
+WORLD_NAME_RE = re.compile(r"^[a-zA-Z0-9 _\-!?()]{1," + str(MAX_WORLD_NAME_LENGTH) + "}$")
 
 
 @dataclasses.dataclass(frozen=True)
@@ -119,10 +117,7 @@ class MultiplayerSessionEntry(JsonDataclass):
 
     @property
     def users(self) -> dict[int, MultiplayerUser]:
-        return {
-            user.id: user
-            for user in self.users_list
-        }
+        return {user.id: user for user in self.users_list}
 
     @property
     def num_admins(self) -> int:
@@ -135,10 +130,7 @@ class MultiplayerSessionEntry(JsonDataclass):
         raise KeyError(f"No world with id {world_id}")
 
     def get_world_names(self) -> list[str]:
-        return [
-            world.name
-            for world in self.worlds
-        ]
+        return [world.name for world in self.worlds]
 
 
 @dataclasses.dataclass(frozen=True)

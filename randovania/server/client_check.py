@@ -33,8 +33,7 @@ def check_client_headers(expected_headers: dict[str, str], environ: dict[str, st
 
     if wrong_headers:
         message = "\n".join(
-            f"Expected '{expected_headers[name]}' for '{name}', got '{value}'."
-            for name, value in wrong_headers.items()
+            f"Expected '{expected_headers[name]}' for '{name}', got '{value}'." for name, value in wrong_headers.items()
         )
         return (
             f"Incompatible client:\n{message}\n\nServer is version {randovania.VERSION}, please confirm you're updated."

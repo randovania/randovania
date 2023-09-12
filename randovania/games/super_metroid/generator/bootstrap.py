@@ -7,16 +7,15 @@ from randovania.games.super_metroid.layout.super_metroid_configuration import Su
 from randovania.resolver.bootstrap import MetroidBootstrap
 
 if TYPE_CHECKING:
-
     from randovania.game_description.resources.resource_collection import ResourceCollection
     from randovania.game_description.resources.resource_database import ResourceDatabase
     from randovania.layout.base.base_configuration import BaseConfiguration
 
 
 class SuperMetroidBootstrap(MetroidBootstrap):
-    def _get_enabled_misc_resources(self, configuration: BaseConfiguration,
-                                    resource_database: ResourceDatabase) -> set[str]:
-
+    def _get_enabled_misc_resources(
+        self, configuration: BaseConfiguration, resource_database: ResourceDatabase
+    ) -> set[str]:
         assert isinstance(configuration, SuperMetroidConfiguration)
 
         enabled_resources = set()
@@ -41,8 +40,7 @@ class SuperMetroidBootstrap(MetroidBootstrap):
         return enabled_resources
 
     def _damage_reduction(self, db: ResourceDatabase, current_resources: ResourceCollection):
-        num_suits = sum(current_resources[db.get_item_by_name(suit)]
-                        for suit in ["Varia Suit", "Gravity Suit"])
+        num_suits = sum(current_resources[db.get_item_by_name(suit)] for suit in ["Varia Suit", "Gravity Suit"])
         return 2 ** (-num_suits)
 
     def patch_resource_database(self, db: ResourceDatabase, configuration: BaseConfiguration) -> ResourceDatabase:

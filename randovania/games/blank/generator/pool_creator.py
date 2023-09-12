@@ -18,10 +18,7 @@ def create_victory_key(resource_database: ResourceDatabase):
     return PickupEntry(
         name="Victory Key",
         progression=((resource_database.get_item("VictoryKey"), 1),),
-        model=PickupModel(
-            game=resource_database.game_enum,
-            name="VictoryKey"
-        ),
+        model=PickupModel(game=resource_database.game_enum, name="VictoryKey"),
         pickup_category=pickup_category.GENERIC_KEY_CATEGORY,
         broad_category=pickup_category.GENERIC_KEY_CATEGORY,
         generator_params=PickupGeneratorParams(
@@ -34,6 +31,4 @@ def create_victory_key(resource_database: ResourceDatabase):
 def pool_creator(results: PoolResults, configuration: BaseConfiguration, game: GameDescription) -> None:
     assert isinstance(configuration, BlankConfiguration)
 
-    results.to_place.append(
-        create_victory_key(game.resource_database)
-    )
+    results.to_place.append(create_victory_key(game.resource_database))

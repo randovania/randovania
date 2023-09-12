@@ -10945,13 +10945,6 @@
                     "pickup_index": 86,
                     "location_category": "minor",
                     "connections": {
-                        "Door to Quarantine Access A": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
                         "Door to Elevator Access B": {
                             "type": "or",
                             "data": {
@@ -11713,10 +11706,29 @@
                     "valid_starting_location": false,
                     "connections": {
                         "Door to Quarantine Access A": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Event28",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "backwards_lower_mines",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         },
                         "Pickup (Missile)": {

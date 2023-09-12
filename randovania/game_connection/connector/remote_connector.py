@@ -27,16 +27,20 @@ class PlayerLocationEvent(typing.NamedTuple):
 
 class ImportantStatusMessage(enum.Enum):
     """Messages that Randovania can request the game displays."""
+
     DISCONNECTED_FROM_SERVER = "disconnected-from-server"
 
     long_name: str
 
 
-enum_lib.add_long_name(ImportantStatusMessage, {
-    ImportantStatusMessage.DISCONNECTED_FROM_SERVER: (
-        "Connection to the server has been lost. Please check Randovania application for details."
-    )
-})
+enum_lib.add_long_name(
+    ImportantStatusMessage,
+    {
+        ImportantStatusMessage.DISCONNECTED_FROM_SERVER: (
+            "Connection to the server has been lost. Please check Randovania application for details."
+        )
+    },
+)
 
 
 class RemoteConnector(QtCore.QObject):

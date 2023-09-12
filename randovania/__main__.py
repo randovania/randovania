@@ -11,11 +11,13 @@ def main():
     multiprocessing.freeze_support()
 
     import randovania
-    randovania.setup_logging('INFO', None, quiet=True)
+
+    randovania.setup_logging("INFO", None, quiet=True)
 
     logging.debug("Starting Randovania...")
 
     from randovania import cli
+
     cli.run_cli(sys.argv)
 
 

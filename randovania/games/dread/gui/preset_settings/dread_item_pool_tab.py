@@ -86,15 +86,12 @@ class DreadPresetItemPool(PresetItemPool):
             major_configuration = options.standard_pickup_configuration
             options.standard_pickup_configuration = major_configuration.replace_state_for_pickup(
                 item,
-                dataclasses.replace(major_configuration.pickups_state[item],
-                                    num_included_in_starting_pickups=value)
+                dataclasses.replace(major_configuration.pickups_state[item], num_included_in_starting_pickups=value),
             )
 
     def _on_update_shuffled(self, value: int, item: StandardPickupDefinition):
         with self._editor as options:
             major_configuration = options.standard_pickup_configuration
             options.standard_pickup_configuration = major_configuration.replace_state_for_pickup(
-                item,
-                dataclasses.replace(major_configuration.pickups_state[item],
-                                    num_shuffled_pickups=value)
+                item, dataclasses.replace(major_configuration.pickups_state[item], num_shuffled_pickups=value)
             )

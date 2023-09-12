@@ -25,8 +25,7 @@ def refresh_presets_command_logic(args):
 
 def add_refresh_presets_command(sub_parsers):
     parser: ArgumentParser = sub_parsers.add_parser(
-        "refresh-presets",
-        help="Loads the preset files and saves then again with the latest version"
+        "refresh-presets", help="Loads the preset files and saves then again with the latest version"
     )
 
     parser.set_defaults(func=refresh_presets_command_logic)

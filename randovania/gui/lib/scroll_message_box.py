@@ -35,7 +35,7 @@ class ScrollMessageBox(QtWidgets.QMessageBox):
         grid.addWidget(scroll, *position)
         self.scroll_area = scroll
 
-        old_label.setText('')
+        old_label.setText("")
 
     def text(self) -> str:
         return self.label.text()
@@ -45,13 +45,13 @@ class ScrollMessageBox(QtWidgets.QMessageBox):
 
     @classmethod
     def create_new(
-            cls,
-            parent: QtWidgets.QWidget,
-            icon: QtWidgets.QMessageBox.Icon,
-            title: str,
-            body: str,
-            buttons: QtWidgets.QMessageBox.StandardButtons,
-            default_button: QtWidgets.QMessageBox.StandardButton = QtWidgets.QMessageBox.StandardButton.Ok,
+        cls,
+        parent: QtWidgets.QWidget,
+        icon: QtWidgets.QMessageBox.Icon,
+        title: str,
+        body: str,
+        buttons: QtWidgets.QMessageBox.StandardButtons,
+        default_button: QtWidgets.QMessageBox.StandardButton = QtWidgets.QMessageBox.StandardButton.Ok,
     ) -> ScrollMessageBox:
         box = cls(icon, title, body, buttons, parent)
         box.setDefaultButton(default_button)

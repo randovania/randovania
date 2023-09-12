@@ -22,11 +22,14 @@ class HintNodeKind(Enum):
     SPECIFIC_ITEM = "specific-item"
 
 
-enum_lib.add_long_name(HintNodeKind, {
-    HintNodeKind.GENERIC: "Generic",
-    HintNodeKind.SPECIFIC_PICKUP: "Specific Pickup",
-    HintNodeKind.SPECIFIC_ITEM: "Specific Item",
-})
+enum_lib.add_long_name(
+    HintNodeKind,
+    {
+        HintNodeKind.GENERIC: "Generic",
+        HintNodeKind.SPECIFIC_PICKUP: "Specific Pickup",
+        HintNodeKind.SPECIFIC_ITEM: "Specific Item",
+    },
+)
 
 
 @dataclasses.dataclass(frozen=True, slots=True)
@@ -34,7 +37,7 @@ class HintNode(ResourceNode):
     kind: HintNodeKind
     requirement_to_collect: Requirement
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"HintNode({self.name!r})"
 
     def requirement_to_leave(self, context: NodeContext) -> Requirement:

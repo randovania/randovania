@@ -41,9 +41,7 @@ class TestFilesDir:
         return self.root.joinpath(*paths)
 
     def read_json(self, *paths) -> dict | list:
-        return json_lib.read_path(
-            self.joinpath(*paths)
-        )
+        return json_lib.read_path(self.joinpath(*paths))
 
 
 @pytest.fixture(scope="session")
@@ -112,7 +110,7 @@ def customized_preset(default_preset) -> Preset:
         description="A customized preset.",
         uuid=uuid.uuid4(),
         game=default_preset.game,
-        configuration=default_preset.configuration
+        configuration=default_preset.configuration,
     )
 
 
@@ -231,7 +229,7 @@ def generic_pickup_category() -> PickupCategory:
         name="generic",
         long_name="Generic Item Category",
         hint_details=("an ", "unspecified item"),
-        hinted_as_major=False
+        hinted_as_major=False,
     )
 
 
@@ -271,10 +269,16 @@ def dread_spider_pickup(default_generator_params) -> PickupEntry:
         pickup_category=dread_pickup_database.pickup_categories["misc"],
         broad_category=dread_pickup_database.pickup_categories["misc"],
         progression=(
-            (ItemResourceInfo(
-                resource_index=24, long_name='Spider Magnet',
-                short_name='Magnet', max_capacity=1,
-                extra=frozendict({'item_id': 'ITEM_MAGNET_GLOVE'})), 1),
+            (
+                ItemResourceInfo(
+                    resource_index=24,
+                    long_name="Spider Magnet",
+                    short_name="Magnet",
+                    max_capacity=1,
+                    extra=frozendict({"item_id": "ITEM_MAGNET_GLOVE"}),
+                ),
+                1,
+            ),
         ),
         generator_params=default_generator_params,
         resource_lock=None,
@@ -285,9 +289,8 @@ def dread_spider_pickup(default_generator_params) -> PickupEntry:
 @pytest.fixture()
 def small_echoes_game_description(test_files_dir) -> GameDescription:
     from randovania.game_description import data_reader
-    return data_reader.decode_data(
-        json_lib.read_path(test_files_dir.joinpath("prime2_small.json"))
-    )
+
+    return data_reader.decode_data(json_lib.read_path(test_files_dir.joinpath("prime2_small.json")))
 
 
 class DataclassTestLib:
@@ -309,6 +312,7 @@ def empty_patches(default_blank_configuration, blank_game_description) -> GamePa
 @pytest.fixture()
 def obfuscator_test_secret(monkeypatch):
     from randovania.lib import obfuscator
+
     monkeypatch.setattr(obfuscator, "_secret", "cNGtDlTqCYF3BFCAQTaDSo5O7DQtzjsd3mS801MPM_M=")
     yield None
     obfuscator._encrypt = None
@@ -317,27 +321,43 @@ def obfuscator_test_secret(monkeypatch):
 @pytest.fixture()
 def obfuscator_no_secret(monkeypatch):
     from randovania.lib import obfuscator
+
     monkeypatch.setattr(obfuscator, "_secret", None)
     yield None
     obfuscator._encrypt = None
 
 
 def pytest_addoption(parser):
-    parser.addoption('--skip-generation-tests', action='store_true', dest="skip_generation_tests",
-                     default=False, help="Skips running layout generation tests")
-    parser.addoption('--skip-resolver-tests', action='store_true', dest="skip_resolver_tests",
-                     default=False, help="Skips running validation tests")
-    parser.addoption('--skip-gui-tests', action='store_true', dest="skip_gui_tests",
-                     default=False, help="Skips running GUI tests")
-    parser.addoption('--skip-echo-tool', action='store_true', dest="skip_echo_tool",
-                     default=False, help="Skips running tests that uses the echo tool")
+    parser.addoption(
+        "--skip-generation-tests",
+        action="store_true",
+        dest="skip_generation_tests",
+        default=False,
+        help="Skips running layout generation tests",
+    )
+    parser.addoption(
+        "--skip-resolver-tests",
+        action="store_true",
+        dest="skip_resolver_tests",
+        default=False,
+        help="Skips running validation tests",
+    )
+    parser.addoption(
+        "--skip-gui-tests", action="store_true", dest="skip_gui_tests", default=False, help="Skips running GUI tests"
+    )
+    parser.addoption(
+        "--skip-echo-tool",
+        action="store_true",
+        dest="skip_echo_tool",
+        default=False,
+        help="Skips running tests that uses the echo tool",
+    )
 
 
 if all(find_spec(n) is not None for n in ("pytestqt", "qasync")):
     import asyncio.events
 
     import qasync
-
 
     class EventLoopWithRunningFlag(qasync.QEventLoop):
         def _before_run_forever(self):
@@ -348,7 +368,6 @@ if all(find_spec(n) is not None for n in ("pytestqt", "qasync")):
             asyncio.events._set_running_loop(None)
             super()._after_run_forever()
 
-
     @pytest.fixture()
     def skip_qtbot(request, qtbot):
         if request.config.option.skip_gui_tests:
@@ -356,18 +375,17 @@ if all(find_spec(n) is not None for n in ("pytestqt", "qasync")):
 
         return qtbot
 
-
     @pytest.fixture()
     def event_loop(request: pytest.FixtureRequest):
         if "skip_qtbot" in request.fixturenames:
-            loop = EventLoopWithRunningFlag(request.getfixturevalue("qapp"),
-                                            set_running_loop=False)
+            loop = EventLoopWithRunningFlag(request.getfixturevalue("qapp"), set_running_loop=False)
         else:
             loop = asyncio.get_event_loop_policy().new_event_loop()
         yield loop
         loop.close()
 
 else:
+
     @pytest.fixture()
     def skip_qtbot(request):
         pytest.skip()
@@ -378,12 +396,12 @@ def pytest_configure(config: pytest.Config):
     markers = []
 
     if config.option.skip_generation_tests:
-        markers.append('not skip_generation_tests')
+        markers.append("not skip_generation_tests")
 
     if config.option.skip_resolver_tests:
-        markers.append('not skip_resolver_tests')
+        markers.append("not skip_resolver_tests")
 
     if config.option.skip_gui_tests:
-        markers.append('not skip_gui_tests')
+        markers.append("not skip_gui_tests")
 
     config.option.markexpr = " and ".join(markers)

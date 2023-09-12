@@ -9,6 +9,8 @@ from typing import TYPE_CHECKING
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.region_list import RegionList
 from randovania.game_description.resources.resource_type import ResourceType
+from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
+from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
 
 if TYPE_CHECKING:
     from collections.abc import Iterator
@@ -20,15 +22,13 @@ if TYPE_CHECKING:
     from randovania.game_description.resources.resource_collection import ResourceCollection
     from randovania.game_description.resources.resource_database import ResourceDatabase
     from randovania.game_description.resources.resource_info import ResourceGainTuple, ResourceInfo
-    from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
-    from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
     from randovania.games.game import RandovaniaGame
 
 
 def _calculate_dangerous_resources_in_db(
-        rl: RegionList,
-        db: DockWeaknessDatabase,
-        database: ResourceDatabase,
+    rl: RegionList,
+    db: DockWeaknessDatabase,
+    database: ResourceDatabase,
 ) -> Iterator[ResourceInfo]:
     for dock_type in db.dock_types:
         for dock_weakness in db.weaknesses[dock_type].values():
@@ -38,8 +38,8 @@ def _calculate_dangerous_resources_in_db(
 
 
 def _calculate_dangerous_resources_in_areas(
-        rl: RegionList,
-        database: ResourceDatabase,
+    rl: RegionList,
+    database: ResourceDatabase,
 ) -> Iterator[ResourceInfo]:
     for area in rl.all_areas:
         for node in area.nodes:
@@ -76,7 +76,7 @@ class GameDescription:
     _used_trick_levels: dict[TrickResourceInfo, set[int]] | None = None
     mutable: bool = False
 
-    def __deepcopy__(self, memodict):
+    def __deepcopy__(self, memodict: dict) -> GameDescription:
         new_game = GameDescription(
             game=self.game,
             resource_database=self.resource_database,
@@ -91,19 +91,19 @@ class GameDescription:
         new_game._dangerous_resources = self._dangerous_resources
         return new_game
 
-    def __init__(self,
-                 game: RandovaniaGame,
-                 dock_weakness_database: DockWeaknessDatabase,
-
-                 resource_database: ResourceDatabase,
-                 layers: tuple[str, ...],
-                 victory_condition: Requirement,
-                 starting_location: NodeIdentifier,
-                 initial_states: dict[str, ResourceGainTuple],
-                 minimal_logic: MinimalLogicData | None,
-                 region_list: RegionList,
-                 used_trick_levels: dict[TrickResourceInfo, set[int]] | None = None,
-                 ):
+    def __init__(
+        self,
+        game: RandovaniaGame,
+        dock_weakness_database: DockWeaknessDatabase,
+        resource_database: ResourceDatabase,
+        layers: tuple[str, ...],
+        victory_condition: Requirement,
+        starting_location: NodeIdentifier,
+        initial_states: dict[str, ResourceGainTuple],
+        minimal_logic: MinimalLogicData | None,
+        region_list: RegionList,
+        used_trick_levels: dict[TrickResourceInfo, set[int]] | None = None,
+    ):
         self.game = game
         self.dock_weakness_database = dock_weakness_database
 
@@ -116,18 +116,19 @@ class GameDescription:
         self.region_list = region_list
         self._used_trick_levels = used_trick_levels
 
-    def patch_requirements(self, resources: ResourceCollection, damage_multiplier: float):
+    def patch_requirements(self, resources: ResourceCollection, damage_multiplier: float) -> None:
         if not self.mutable:
             raise ValueError("self is not mutable")
 
-        self.region_list.patch_requirements(resources, damage_multiplier, self.resource_database,
-                                            self.dock_weakness_database)
+        self.region_list.patch_requirements(
+            resources, damage_multiplier, self.resource_database, self.dock_weakness_database
+        )
         self._dangerous_resources = None
 
     def get_prefilled_docks(self) -> list[int | None]:
         region_list = self.region_list
         dock_connection = [None] * len(region_list.all_nodes)
-        connections = list(dock_connection)
+        connections: list[int | None] = list(dock_connection)
         teleporter_dock_types = self.dock_weakness_database.all_teleporter_dock_types
         for source in region_list.iterate_nodes():
             if isinstance(source, DockNode) and source.dock_type in teleporter_dock_types:
@@ -152,10 +153,12 @@ class GameDescription:
 
         result = collections.defaultdict(set)
 
-        def process(req: Requirement):
+        def process(req: Requirement) -> None:
             for resource_requirement in req.iterate_resource_requirements(self.resource_database):
-                if resource_requirement.resource.resource_type == ResourceType.TRICK:
-                    result[resource_requirement.resource].add(resource_requirement.amount)
+                resource = resource_requirement.resource
+                if resource.resource_type == ResourceType.TRICK:
+                    assert isinstance(resource, TrickResourceInfo)
+                    result[resource].add(resource_requirement.amount)
 
         for dock_weakness in self.dock_weakness_database.all_weaknesses:
             process(dock_weakness.requirement)
@@ -178,10 +181,7 @@ class GameDescription:
                 resource_database=self.resource_database,
                 layers=self.layers,
                 dock_weakness_database=self.dock_weakness_database,
-                region_list=RegionList([
-                    region.duplicate()
-                    for region in self.region_list.regions
-                ]),
+                region_list=RegionList([region.duplicate() for region in self.region_list.regions]),
                 victory_condition=self.victory_condition,
                 starting_location=self.starting_location,
                 initial_states=copy.copy(self.initial_states),
@@ -191,31 +191,34 @@ class GameDescription:
             return result
 
 
-def _resources_for_damage(resource: SimpleResourceInfo, database: ResourceDatabase,
-                          collection: ResourceCollection) -> Iterator[ResourceInfo]:
+def _resources_for_damage(
+    resource: SimpleResourceInfo, database: ResourceDatabase, collection: ResourceCollection
+) -> Iterator[ResourceInfo]:
     yield database.energy_tank
     for reduction in database.damage_reductions.get(resource, []):
         if reduction.inventory_item is not None and not collection.has_resource(reduction.inventory_item):
             yield reduction.inventory_item
 
 
-def calculate_interesting_resources(satisfiable_requirements: SatisfiableRequirements,
-                                    resources: ResourceCollection,
-                                    energy: int,
-                                    database: ResourceDatabase) -> frozenset[ResourceInfo]:
-    """A resource is considered interesting if it isn't satisfied and it belongs to any satisfiable RequirementList """
+def calculate_interesting_resources(
+    satisfiable_requirements: SatisfiableRequirements,
+    resources: ResourceCollection,
+    energy: int,
+    database: ResourceDatabase,
+) -> frozenset[ResourceInfo]:
+    """A resource is considered interesting if it isn't satisfied and it belongs to any satisfiable RequirementList"""
 
-    def helper():
+    def helper() -> Iterator[ResourceInfo]:
         # For each possible requirement list
         for requirement_list in satisfiable_requirements:
             # If it's not satisfied, there's at least one IndividualRequirement in it that can be collected
             if not requirement_list.satisfied(resources, energy, database):
-
                 for individual in requirement_list.values():
                     # Ignore those with the `negate` flag. We can't "uncollect" a resource to satisfy these.
                     # Finally, if it's not satisfied then we're interested in collecting it
                     if not individual.negate and not individual.satisfied(resources, energy, database):
                         if individual.is_damage:
+                            assert isinstance(individual.resource, SimpleResourceInfo)
                             yield from _resources_for_damage(individual.resource, database, resources)
                         else:
                             yield individual.resource

@@ -25,15 +25,17 @@ def default_online_interactions(skip_qtbot, preset_manager) -> OnlineInteraction
 async def test_browse_for_game_session(skip_qtbot, default_online_interactions, mocker, refresh_success):
     # Setup
     mock_game_session_browser: MagicMock = mocker.patch(
-        "randovania.gui.main_online_interaction.MultiplayerSessionBrowserDialog", autospec=True)
+        "randovania.gui.main_online_interaction.MultiplayerSessionBrowserDialog", autospec=True
+    )
     mock_ensure_session_window = AsyncMock(return_value=MagicMock())
     default_online_interactions.window_manager.ensure_multiplayer_session_window = mock_ensure_session_window
 
     default_online_interactions._ensure_logged_in = AsyncMock(return_value=True)
     message_box = mocker.patch("PySide6.QtWidgets.QMessageBox")
 
-    mock_execute_dialog: AsyncMock = mocker.patch("randovania.gui.lib.async_dialog.execute_dialog",
-                                                  new_callable=AsyncMock)
+    mock_execute_dialog: AsyncMock = mocker.patch(
+        "randovania.gui.lib.async_dialog.execute_dialog", new_callable=AsyncMock
+    )
     mock_execute_dialog.return_value = QtWidgets.QDialog.DialogCode.Accepted
     mock_game_session_browser.return_value.refresh = AsyncMock(return_value=refresh_success)
 
@@ -57,8 +59,7 @@ async def test_browse_for_game_session(skip_qtbot, default_online_interactions, 
 
 
 @patch("randovania.gui.lib.async_dialog.execute_dialog", new_callable=AsyncMock)
-async def test_host_game_session(mock_execute_dialog: AsyncMock,
-                                 skip_qtbot, default_online_interactions, mocker):
+async def test_host_game_session(mock_execute_dialog: AsyncMock, skip_qtbot, default_online_interactions, mocker):
     # Setup
     mock_ensure_session_window = AsyncMock(return_value=MagicMock())
     default_online_interactions.window_manager.ensure_multiplayer_session_window = mock_ensure_session_window
@@ -77,4 +78,3 @@ async def test_host_game_session(mock_execute_dialog: AsyncMock,
         default_online_interactions.network_client.create_new_session.return_value.id,
         default_online_interactions.options,
     )
-

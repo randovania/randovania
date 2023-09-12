@@ -22,24 +22,12 @@ sample_data = {
         "damage": {},
         "versions": {},
         "misc": {},
-        "requirement_template": {
-            "Foo": {
-                "type": "or",
-                "data": {"comment": None, "items": []}
-            }
-        },
+        "requirement_template": {"Foo": {"type": "or", "data": {"comment": None, "items": []}}},
         "damage_reductions": [],
     },
     "layers": ["default"],
-    "starting_location": {
-        "region": "Temple Grounds",
-        "area": "Landing Site",
-        "node": "Save Station"
-    },
-    "initial_states": {
-        "Default": [
-        ]
-    },
+    "starting_location": {"region": "Temple Grounds", "area": "Landing Site", "node": "Save Station"},
+    "initial_states": {"Default": []},
     "minimal_logic": None,
     "victory_condition": {
         "type": "and",
@@ -51,11 +39,7 @@ sample_data = {
             "type": "",
             "name": "",
         },
-        "dock_rando": {
-            "force_change_two_way": False,
-            "resolver_attempts": 200,
-            "to_shuffle_proportion": 1.0
-        }
+        "dock_rando": {"force_change_two_way": False, "resolver_attempts": 200, "to_shuffle_proportion": 1.0},
     },
     "used_trick_levels": {},
     "regions": [],
@@ -100,10 +84,7 @@ def test_complex_decode(test_files_dir):
 
 def _comparable_dict(value):
     if isinstance(value, dict):
-        return [
-            (key, _comparable_dict(item))
-            for key, item in value.items()
-        ]
+        return [(key, _comparable_dict(item)) for key, item in value.items()]
 
     if isinstance(value, list):
         return [_comparable_dict(item) for item in value]
@@ -167,4 +148,4 @@ def test_encode_resource_database():
     encoded = binary_data.ConstructResourceDatabase.build(resource_database)
 
     # Assert
-    assert encoded == b'\x00\x00\x00\x00\x00\x00\x01Foo\x00\x02\x00\x00\x00\x00'
+    assert encoded == b"\x00\x00\x00\x00\x00\x00\x01Foo\x00\x02\x00\x00\x00\x00"

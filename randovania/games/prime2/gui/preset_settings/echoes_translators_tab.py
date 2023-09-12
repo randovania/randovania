@@ -35,10 +35,7 @@ def gate_data():
     db = default_database.game_description_for(RandovaniaGame.METROID_PRIME_ECHOES)
     randomizer_data = decode_randomizer_data()
 
-    gate_index_to_name = {
-        gate["Index"]: gate["Name"]
-        for gate in randomizer_data["TranslatorLocationData"]
-    }
+    gate_index_to_name = {gate["Index"]: gate["Name"] for gate in randomizer_data["TranslatorLocationData"]}
     identifier_to_gate = {
         db.region_list.identifier_for_node(node): node.extra["gate_index"]
         for node in db.region_list.iterate_nodes()
@@ -57,7 +54,8 @@ class PresetEchoesTranslators(PresetTab, Ui_PresetEchoesTranslators):
         self.translators_layout.setAlignment(QtCore.Qt.AlignTop)
         self.translator_randomize_all_button.clicked.connect(self._on_randomize_all_gates_pressed)
         self.translator_randomize_all_with_unlocked_button.clicked.connect(
-            self._on_randomize_all_gates_with_unlocked_pressed)
+            self._on_randomize_all_gates_with_unlocked_pressed
+        )
         self.translator_vanilla_actual_button.clicked.connect(self._on_vanilla_actual_gates_pressed)
         self.translator_vanilla_colors_button.clicked.connect(self._on_vanilla_colors_gates_pressed)
 
@@ -89,34 +87,28 @@ class PresetEchoesTranslators(PresetTab, Ui_PresetEchoesTranslators):
 
     def _on_randomize_all_gates_pressed(self):
         with self._editor as editor:
-            editor.set_configuration_field(
-                "translator_configuration",
-                _translator_config(editor).with_full_random())
+            editor.set_configuration_field("translator_configuration", _translator_config(editor).with_full_random())
 
     def _on_randomize_all_gates_with_unlocked_pressed(self):
         with self._editor as editor:
             editor.set_configuration_field(
-                "translator_configuration",
-                _translator_config(editor).with_full_random_with_unlocked())
+                "translator_configuration", _translator_config(editor).with_full_random_with_unlocked()
+            )
 
     def _on_vanilla_actual_gates_pressed(self):
         with self._editor as editor:
-            editor.set_configuration_field(
-                "translator_configuration",
-                _translator_config(editor).with_vanilla_actual())
+            editor.set_configuration_field("translator_configuration", _translator_config(editor).with_vanilla_actual())
 
     def _on_vanilla_colors_gates_pressed(self):
         with self._editor as editor:
-            editor.set_configuration_field(
-                "translator_configuration",
-                _translator_config(editor).with_vanilla_colors())
+            editor.set_configuration_field("translator_configuration", _translator_config(editor).with_vanilla_colors())
 
     def _on_gate_combo_box_changed(self, combo: QComboBox, new_index: int):
         with self._editor as editor:
             editor.set_configuration_field(
                 "translator_configuration",
-                _translator_config(editor).replace_requirement_for_gate(
-                    combo.identifier, combo.currentData()))
+                _translator_config(editor).replace_requirement_for_gate(combo.identifier, combo.currentData()),
+            )
 
     def on_preset_changed(self, preset: Preset):
         config = preset.configuration

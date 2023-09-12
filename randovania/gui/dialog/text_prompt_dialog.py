@@ -9,9 +9,18 @@ from randovania.gui.lib import async_dialog, common_qt_lib
 
 
 class TextPromptDialog(QtWidgets.QDialog, Ui_TextPromptDialog):
-    def __init__(self, parent: QtWidgets.QWidget | None, title: str, description: str, *,
-                 is_modal: bool, initial_value: str | None,
-                 max_length: int | None, is_password: bool, check_re: typing.Pattern | None):
+    def __init__(
+        self,
+        parent: QtWidgets.QWidget | None,
+        title: str,
+        description: str,
+        *,
+        is_modal: bool,
+        initial_value: str | None,
+        max_length: int | None,
+        is_password: bool,
+        check_re: typing.Pattern | None,
+    ):
         super().__init__(parent)
         self.setupUi(self)
         common_qt_lib.set_default_window_icon(self)
@@ -56,9 +65,18 @@ class TextPromptDialog(QtWidgets.QDialog, Ui_TextPromptDialog):
         self.error_label.setText(error_message or "")
 
     @classmethod
-    async def prompt(cls, *, title: str, description: str, parent: QtWidgets.QWidget | None = None,
-                     max_length: int | None = None, is_password: bool = False, initial_value: str | None = None,
-                     is_modal: bool = False, check_re: typing.Pattern | None = None) -> str | None:
+    async def prompt(
+        cls,
+        *,
+        title: str,
+        description: str,
+        parent: QtWidgets.QWidget | None = None,
+        max_length: int | None = None,
+        is_password: bool = False,
+        initial_value: str | None = None,
+        is_modal: bool = False,
+        check_re: typing.Pattern | None = None,
+    ) -> str | None:
         inst = cls(
             parent=parent,
             title=title,

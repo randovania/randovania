@@ -113,8 +113,14 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
     def is_preview_mode(self) -> bool:
         return self._is_preview_mode
 
-    def __init__(self, options: Options, preset_manager: PresetManager,
-                 network_client: QtNetworkClient, multiworld_client: MultiworldClient, preview: bool):
+    def __init__(
+        self,
+        options: Options,
+        preset_manager: PresetManager,
+        network_client: QtNetworkClient,
+        multiworld_client: MultiworldClient,
+        preview: bool,
+    ):
         super().__init__()
         self.setupUi(self)
         self.setWindowTitle(f"Randovania {VERSION}")
@@ -166,6 +172,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
 
         from randovania.gui.lib.clickable_label import ClickableLabel
         from randovania.gui.lib.flow_layout import FlowLayout
+
         self.play_flow_layout = FlowLayout(self.game_list_contents, True)
         self.play_flow_layout.setSpacing(15)
         self.play_flow_layout.setAlignment(Qt.AlignHCenter)
@@ -260,10 +267,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
             LayoutDescription.file_extension(),
             VersionedPreset.file_extension(),
         ]
-        valid_extensions_with_dot = {
-            f".{extension}"
-            for extension in valid_extensions
-        }
+        valid_extensions_with_dot = {f".{extension}" for extension in valid_extensions}
 
         for url in event.mimeData().urls():
             ext = Path(url.toLocalFile()).suffix
@@ -333,7 +337,6 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         self.set_games_selector_visible(False)
         self._set_main_tab(self.tab_game_details)
 
-
     # Delayed Initialization
     @asyncSlot()
     async def initialize_post_show(self):
@@ -345,9 +348,11 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
     async def _initialize_post_show_body(self):
         logging.info("Will load OnlineInteractions")
         from randovania.gui.main_online_interaction import OnlineInteractions
+
         logging.info("Creating OnlineInteractions...")
-        self.online_interactions = OnlineInteractions(self, self.preset_manager, self.network_client, self,
-                                                      self._options)
+        self.online_interactions = OnlineInteractions(
+            self, self.preset_manager, self.network_client, self, self._options
+        )
         self.game_connection_button.clicked.connect(self.open_game_connection_window)
 
         logging.info("Will update for modified options")
@@ -360,9 +365,10 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
 
         def work(progress_update: ProgressUpdateCallable):
             from randovania.interface_common import generator_frontend
-            layout = generator_frontend.generate_layout(progress_update=progress_update,
-                                                        parameters=permalink.parameters,
-                                                        options=self._options)
+
+            layout = generator_frontend.generate_layout(
+                progress_update=progress_update, parameters=permalink.parameters, options=self._options
+            )
             progress_update(f"Success! (Seed hash: {layout.shareable_hash})", 1)
             return layout
 
@@ -373,7 +379,8 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
 
         if permalink.seed_hash is not None and permalink.seed_hash != new_layout.shareable_hash_bytes:
             response = await async_dialog.warning(
-                self, "Unexpected hash",
+                self,
+                "Unexpected hash",
                 "Expected has to be {}. got {}. Do you wish to continue?".format(
                     base64.b32encode(permalink.seed_hash).decode(),
                     new_layout.shareable_hash,
@@ -388,6 +395,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
     @asyncSlot()
     async def _import_permalink(self):
         from randovania.gui.dialog.permalink_dialog import PermalinkDialog
+
         dialog = PermalinkDialog()
         result = await async_dialog.execute_dialog(dialog)
         if result == QtWidgets.QDialog.DialogCode.Accepted:
@@ -397,6 +405,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
     @asyncSlot()
     async def _import_spoiler_log(self):
         from randovania.gui.lib import layout_loader
+
         layout = await layout_loader.prompt_and_load_layout_description(self)
         if layout is not None:
             self.open_game_details(layout)
@@ -404,6 +413,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
     @asyncSlot()
     async def _browse_racetime(self):
         from randovania.gui.dialog.racetime_browser_dialog import RacetimeBrowserDialog
+
         dialog = RacetimeBrowserDialog()
         if not await dialog.refresh():
             return
@@ -416,6 +426,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
 
     def _open_game_details(self, layout: LayoutWithPlayers):
         from randovania.gui.game_details.game_details_window import GameDetailsWindow
+
         details_window = GameDetailsWindow(self, self._options)
         details_window.update_layout_description(layout.layout, layout.players)
         details_window.show()
@@ -424,6 +435,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
     @asyncSlot(Path)
     async def _request_open_layout(self, path: Path):
         from randovania.gui.lib import layout_loader
+
         layout = await layout_loader.load_layout_description(self, path)
         if layout is not None:
             self.open_game_details(layout)
@@ -431,6 +443,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
     # Releases info
     async def request_new_data(self):
         from randovania.interface_common import github_releases_data
+
         await self._on_releases_data(await github_releases_data.get_releases())
 
     async def _on_releases_data(self, releases: list[dict] | None):
@@ -438,7 +451,8 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         last_changelog = self._options.last_changelog_displayed
 
         all_change_logs, new_change_logs, version_to_display = update_checker.versions_to_display_for_releases(
-            current_version, last_changelog, releases)
+            current_version, last_changelog, releases
+        )
 
         if version_to_display is not None:
             self.display_new_version(version_to_display)
@@ -451,8 +465,10 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
             from randovania.gui.lib.scroll_message_box import ScrollMessageBox
 
             message_box = ScrollMessageBox.create_new(
-                self, QtWidgets.QMessageBox.Icon.Information,
-                "What's new", "\n".join(new_change_logs),
+                self,
+                QtWidgets.QMessageBox.Icon.Information,
+                "What's new",
+                "\n".join(new_change_logs),
                 QtWidgets.QMessageBox.StandardButton.Ok,
             )
             message_box.label.setTextFormat(QtCore.Qt.TextFormat.MarkdownText)
@@ -479,9 +495,11 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
 
     def open_game_connection_window(self):
         from randovania.gui.widgets.game_connection_window import GameConnectionWindow
+
         if self.game_connection_window is None:
-            self.game_connection_window = GameConnectionWindow(self, self.network_client,
-                                                               self._options, common_qt_lib.get_game_connection())
+            self.game_connection_window = GameConnectionWindow(
+                self, self.network_client, self._options, common_qt_lib.get_game_connection()
+            )
 
         self.game_connection_window.show()
         self.game_connection_window.raise_()
@@ -490,7 +508,8 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
     def on_options_changed(self):
         self.menu_action_validate_seed_after.setChecked(self._options.advanced_validate_seed_after)
         self.menu_action_timeout_generation_after_a_time_limit.setChecked(
-            self._options.advanced_timeout_during_generation)
+            self._options.advanced_timeout_during_generation
+        )
         self.menu_action_generate_in_another_process.setChecked(self._options.advanced_generate_in_another_process)
         self.menu_action_dark_mode.setChecked(self._options.dark_mode)
         self.menu_action_experimental_settings.setChecked(self._options.experimental_settings)
@@ -504,13 +523,15 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
     def _open_data_visualizer_for_game(self, game: RandovaniaGame):
         self.open_data_visualizer_at(None, None, game)
 
-    def open_data_visualizer_at(self,
-                                region_name: str | None,
-                                area_name: str | None,
-                                game: RandovaniaGame,
-                                trick_levels: TrickLevelConfiguration | None = None,
-                                ):
+    def open_data_visualizer_at(
+        self,
+        region_name: str | None,
+        area_name: str | None,
+        game: RandovaniaGame,
+        trick_levels: TrickLevelConfiguration | None = None,
+    ):
         from randovania.gui.data_editor import DataEditorWindow
+
         data_visualizer = DataEditorWindow.open_internal_data(game, False)
         self._data_visualizer = data_visualizer
 
@@ -527,6 +548,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
 
     def _open_data_editor_for_game(self, game: RandovaniaGame):
         from randovania.gui.data_editor import DataEditorWindow
+
         self._data_editor = DataEditorWindow.open_internal_data(game, True)
         self._data_editor.show()
 
@@ -546,11 +568,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         try:
             self._map_tracker = await TrackerWindow.create_new(self._options.tracker_files_path, configuration)
         except InvalidLayoutForTracker as e:
-            QtWidgets.QMessageBox.critical(
-                self,
-                "Unsupported configuration for Tracker",
-                str(e)
-            )
+            QtWidgets.QMessageBox.critical(self, "Unsupported configuration for Tracker", str(e))
             return
 
         self._map_tracker.show()
@@ -564,6 +582,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
 
     def _open_trick_details_popup(self, game, trick: TrickResourceInfo, level: LayoutTrickLevel):
         from randovania.gui.dialog.trick_details_popup import TrickDetailsPopup
+
         self._exec_trick_details(TrickDetailsPopup(self, self, game, trick, level))
 
     def _setup_trick_difficulties_menu_on_show(self, menu: QtWidgets.QMenu, game: RandovaniaGame):
@@ -596,7 +615,8 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
                     difficulty_action.setText(trick_level.long_name)
                     trick_menu.addAction(difficulty_action)
                     difficulty_action.triggered.connect(
-                        functools.partial(self._open_trick_details_popup, game, trick, trick_level))
+                        functools.partial(self._open_trick_details_popup, game, trick, trick_level)
+                    )
 
     # Background Update
 
@@ -623,9 +643,10 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
 
         if old_value and not new_value:
             if not await async_dialog.yes_no_prompt(
-                    self, "Disable validation?",
-                    text=_DISABLE_VALIDATION_WARNING,
-                    icon=QtWidgets.QMessageBox.Icon.Warning,
+                self,
+                "Disable validation?",
+                text=_DISABLE_VALIDATION_WARNING,
+                icon=QtWidgets.QMessageBox.Icon.Warning,
             ):
                 self.menu_action_validate_seed_after.setChecked(True)
                 return
@@ -645,8 +666,9 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
 
         if old_value and not new_value:
             if not await async_dialog.yes_no_prompt(
-                    self, "Run generation in the same process?",
-                    text=_ANOTHER_PROCESS_GENERATION_WARNING,
+                self,
+                "Run generation in the same process?",
+                text=_ANOTHER_PROCESS_GENERATION_WARNING,
             ):
                 self.menu_action_generate_in_another_process.setChecked(True)
                 return
@@ -664,24 +686,31 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
 
     def _open_auto_tracker(self):
         from randovania.gui.auto_tracker_window import AutoTrackerWindow
+
         self.auto_tracker_window = AutoTrackerWindow(common_qt_lib.get_game_connection(), self, self._options)
         self.auto_tracker_window.show()
 
     def _on_menu_action_previously_generated_games(self):
         path = self._options.game_history_path
-        common_qt_lib.open_directory_in_explorer(path, common_qt_lib.FallbackDialog(
-            "Game History",
-            f"Previously generated games can be found at:\n{path}",
-            self,
-        ))
+        common_qt_lib.open_directory_in_explorer(
+            path,
+            common_qt_lib.FallbackDialog(
+                "Game History",
+                f"Previously generated games can be found at:\n{path}",
+                self,
+            ),
+        )
 
     def _on_menu_action_log_files_directory(self):
         path = self._options.logs_path
-        common_qt_lib.open_directory_in_explorer(path, common_qt_lib.FallbackDialog(
-            "Logs",
-            f"Randovania logs can be found at:\n{path}",
-            self,
-        ))
+        common_qt_lib.open_directory_in_explorer(
+            path,
+            common_qt_lib.FallbackDialog(
+                "Logs",
+                f"Randovania logs can be found at:\n{path}",
+                self,
+            ),
+        )
 
     def setup_welcome_text(self):
         self.intro_label.setText(self.intro_label.text().format(version=VERSION))
@@ -707,6 +736,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
 
     def _on_menu_action_help(self):
         from randovania.gui.widgets.randovania_help_widget import RandovaniaHelpWidget
+
         if self.help_window is None:
             self.help_window = self._create_generic_window(RandovaniaHelpWidget(), "Randovania Help")
         self.help_window.show()
@@ -715,19 +745,18 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
     async def _on_menu_action_verify_installation(self):
         try:
             hash_list: dict[str, str] = await json_lib.read_path_async(
-                randovania.get_data_path().joinpath("frozen_file_list.json"))
+                randovania.get_data_path().joinpath("frozen_file_list.json")
+            )
         except FileNotFoundError:
             return await async_dialog.warning(
-                self, "File List Missing",
-                "Unable to verify installation: file list is missing."
+                self, "File List Missing", "Unable to verify installation: file list is missing."
             )
 
         from randovania.gui.dialog.background_process_dialog import BackgroundProcessDialog
 
         try:
             bad_files, extra_files = await BackgroundProcessDialog.open_for_background_task(
-                functools.partial(find_bad_installation, hash_list),
-                "Verifying installation..."
+                functools.partial(find_bad_installation, hash_list), "Verifying installation..."
             )
         except asyncio.exceptions.CancelledError:
             return
@@ -740,12 +769,12 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
                 errors.append(f"- {len(extra_files)} files are unexpected")
 
             await async_dialog.warning(
-                self, "Bad Installation",
-                "The following errors were found:\n" + "\n".join(errors)
+                self, "Bad Installation", "The following errors were found:\n" + "\n".join(errors)
             )
         else:
             await async_dialog.message_box(
-                self, QtWidgets.QMessageBox.Icon.Information,
+                self,
+                QtWidgets.QMessageBox.Icon.Information,
                 "Clean Installation",
                 f"No issues found out of {len(hash_list)} files.",
             )
@@ -756,6 +785,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
 
         if self.changelog_window is None:
             from randovania.gui.widgets.changelog_widget import ChangeLogWidget
+
             self.changelog_tab = ChangeLogWidget(self.all_change_logs)
             self.changelog_window = self._create_generic_window(self.changelog_tab, "Change Log")
 
@@ -763,6 +793,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
 
     def _on_menu_action_about(self):
         from randovania.gui.widgets.about_widget import AboutWidget
+
         if self.about_window is None:
             self.about_window = self._create_generic_window(AboutWidget(), "About Randovania")
         self.about_window.show()
@@ -776,6 +807,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
 
     def _on_menu_action_automatic_reporting(self):
         from randovania.gui.widgets.reporting_optout_widget import ReportingOptOutWidget
+
         if self.reporting_widget is None:
             self.reporting_widget = ReportingOptOutWidget()
 
@@ -797,18 +829,21 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         if tab is not None:
             self.help_window.centralWidget().setCurrentWidget(tab)
 
-    async def ensure_multiplayer_session_window(self, network_client: QtNetworkClient,
-                                                session_id: int, options: Options
-                                                ):
+    async def ensure_multiplayer_session_window(
+        self, network_client: QtNetworkClient, session_id: int, options: Options
+    ):
         session_window = self.opened_session_windows.get(session_id, None)
         if session_window is not None and not session_window.has_closed:
             session_window.activateWindow()
             return
 
         from randovania.gui.multiplayer_session_window import MultiplayerSessionWindow
+
         session_window = await MultiplayerSessionWindow.create_and_update(
-            network_client, session_id,
-            self, options,
+            network_client,
+            session_id,
+            self,
+            options,
         )
         if session_window is not None:
             self.opened_session_windows[session_id] = session_window

@@ -17,19 +17,24 @@ from randovania.lib import json_lib
     [
         ("starter_preset.rdvgame", "starter_preset.json", 1),  # starter preset
         ("door_lock.rdvgame", "door_lock.json", 1),  # starter preset+door lock rando
-    ]
+    ],
 )
-def test_create_patch_data(test_files_dir, rdvgame_filename,
-                           expected_results_filename, num_of_players, mocker):
+def test_create_patch_data(test_files_dir, rdvgame_filename, expected_results_filename, num_of_players, mocker):
     # Setup
     rdvgame = test_files_dir.joinpath("log_files", "am2r", rdvgame_filename)
     players_config = PlayersConfiguration(0, {i: f"Player {i + 1}" for i in range(num_of_players)})
     description = LayoutDescription.from_file(rdvgame)
     cosmetic_patches = AM2RCosmeticPatches()
-    mocker.patch("randovania.layout.layout_description.LayoutDescription.shareable_word_hash",
-                 new_callable=PropertyMock, return_value="Words Hash")
-    mocker.patch("randovania.layout.layout_description.LayoutDescription.shareable_hash",
-                 new_callable=PropertyMock, return_value="$$$$$")
+    mocker.patch(
+        "randovania.layout.layout_description.LayoutDescription.shareable_word_hash",
+        new_callable=PropertyMock,
+        return_value="Words Hash",
+    )
+    mocker.patch(
+        "randovania.layout.layout_description.LayoutDescription.shareable_hash",
+        new_callable=PropertyMock,
+        return_value="$$$$$",
+    )
 
     # Run
     data = AM2RPatchDataFactory(description, players_config, cosmetic_patches).create_data()
@@ -49,32 +54,37 @@ def test_create_patch_data(test_files_dir, rdvgame_filename,
     ("rdvgame_filename", "expected_results_filename", "num_of_players"),
     [
         ("starter_preset.rdvgame", "shiny_pickups_dict_from_starter_preset.json", 1),  # starter preset
-    ]
+    ],
 )
-def test_create_pickups_dict_shiny(test_files_dir, rdvgame_filename,
-                                   expected_results_filename, num_of_players, mocker):
+def test_create_pickups_dict_shiny(test_files_dir, rdvgame_filename, expected_results_filename, num_of_players, mocker):
     # Setup
     rdvgame = test_files_dir.joinpath("log_files", "am2r", rdvgame_filename)
     players_config = PlayersConfiguration(0, {i: f"Player {i + 1}" for i in range(num_of_players)})
     description = LayoutDescription.from_file(rdvgame)
     cosmetic_patches = AM2RCosmeticPatches()
-    mocker.patch("randovania.layout.layout_description.LayoutDescription.shareable_word_hash",
-                 new_callable=PropertyMock, return_value="Words Hash")
-    mocker.patch("randovania.layout.layout_description.LayoutDescription.shareable_hash",
-                 new_callable=PropertyMock, return_value="$$$$$")
-    mocker.patch("random.Random.randint",
-                 new_callable=MagicMock, return_value=0)
+    mocker.patch(
+        "randovania.layout.layout_description.LayoutDescription.shareable_word_hash",
+        new_callable=PropertyMock,
+        return_value="Words Hash",
+    )
+    mocker.patch(
+        "randovania.layout.layout_description.LayoutDescription.shareable_hash",
+        new_callable=PropertyMock,
+        return_value="$$$$$",
+    )
+    mocker.patch("random.Random.randint", new_callable=MagicMock, return_value=0)
 
     data = AM2RPatchDataFactory(description, players_config, cosmetic_patches)
 
     db = data.game
 
-    useless_target = PickupTarget(pickup_creator.create_nothing_pickup(db.resource_database, "sItemNothing"),
-                                  data.players_config.player_index)
+    useless_target = PickupTarget(
+        pickup_creator.create_nothing_pickup(db.resource_database, "sItemNothing"), data.players_config.player_index
+    )
 
     item_data = data._get_item_data()
     memo_data = {}
-    for (key, value) in item_data.items():
+    for key, value in item_data.items():
         memo_data[key] = value["text_desc"]
     memo_data["Energy Tank"] = memo_data["Energy Tank"].format(Energy=data.patches.configuration.energy_per_tank)
 

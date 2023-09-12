@@ -37,7 +37,7 @@ Extra - save_index: 0
 
 > Event - Win Game; Heals? False
   * Layers: default
-  * Event Defeat Mother Brain
+  * Event Win Game
   > Landing Site Save Station
       Trivial
 
@@ -71,7 +71,7 @@ Extra - save_index: 0
               Morph Ball
               Morph Ball Bombs or Power Bombs
   > Event - Win Game
-      After Win Game
+      After Defeat Mother Brain
 
 ----------------
 Crateria Tube
@@ -361,10 +361,14 @@ Extra - asset_id: 10
 > Door to Landing Site; Heals? False; Default Node
   * Layers: default
   * Normal Door to Landing Site/Door to Crateria Power Bomb Room
+  > Pickup (Power Bomb Expansion)
+      Trivial
 
 > Pickup (Power Bomb Expansion); Heals? False
   * Layers: default
   * Pickup 0; Category? Minor
+  > Door to Landing Site
+      Trivial
 
 ----------------
 Gauntlet

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import dataclasses
+import typing
 from dataclasses import dataclass
 from typing import TYPE_CHECKING
 
@@ -11,7 +12,7 @@ from randovania.game_description.resources.item_resource_info import ItemResourc
 from randovania.games.game import RandovaniaGame
 
 if TYPE_CHECKING:
-    from collections.abc import Iterator
+    from collections.abc import Iterable, Iterator
 
     from randovania.game_description.pickup.pickup_category import PickupCategory
     from randovania.game_description.resources.location_category import LocationCategory
@@ -44,8 +45,7 @@ class ResourceLock:
             yield resource, quantity
 
     def unlock_conversion(self) -> ResourceConversion:
-        return ResourceConversion(source=self.temporary_item,
-                                  target=self.item_to_lock)
+        return ResourceConversion(source=self.temporary_item, target=self.item_to_lock)
 
 
 @dataclass(frozen=True)
@@ -75,15 +75,17 @@ class PickupEntry:
     model: PickupModel
     pickup_category: PickupCategory
     broad_category: PickupCategory
-    progression: ResourceGainTuple
+    progression: tuple[tuple[ItemResourceInfo, int], ...]
     generator_params: PickupGeneratorParams
     extra_resources: ResourceGainTuple = ()
     unlocks_resource: bool = False
     resource_lock: ResourceLock | None = None
     respects_lock: bool = True
-    offworld_models: frozendict[RandovaniaGame, str] = dataclasses.field(default_factory=frozendict)
+    offworld_models: frozendict[RandovaniaGame, str] = dataclasses.field(
+        default_factory=typing.cast(typing.Callable[[], frozendict[RandovaniaGame, str]], frozendict),
+    )
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if not isinstance(self.progression, tuple):
             raise ValueError(f"resources should be a tuple, got {self.progression}")
 
@@ -98,22 +100,24 @@ class PickupEntry:
                 raise ValueError(f"{i}-th progression second field should be a int, got {progression[1]}")
 
             if progression[1] > progression[0].max_capacity:
-                raise ValueError(f"{i}-th progression has {progression[1]} quantity, "
-                                 f"higher than max for {progression[0]}")
+                raise ValueError(
+                    f"{i}-th progression has {progression[1]} quantity, higher than max for {progression[0]}"
+                )
 
         for resource, quantity in self.extra_resources:
             if isinstance(resource, ItemResourceInfo):
                 if quantity > resource.max_capacity:
                     raise ValueError(f"Attempt to give {quantity} of {resource.long_name}, more than max capacity")
 
-    def __hash__(self):
+    def __hash__(self) -> int:
         return hash(self.name)
 
-    def __lt__(self, other):
+    def __lt__(self, other: object) -> bool:
+        assert isinstance(other, PickupEntry)
         return self.name < other.name
 
     @property
-    def conditional_resources(self):
+    def conditional_resources(self) -> Iterable[ConditionalResources]:
         previous: ItemResourceInfo | None = None
         for progression in self.progression:
             yield ConditionalResources(
@@ -158,15 +162,18 @@ class PickupEntry:
     def resource_gain(self, current_resources: ResourceCollection, force_lock: bool = False) -> ResourceGain:
         resources = self.conditional_for_resources(current_resources).resources
 
-        if (force_lock or self.respects_lock) and not self.unlocks_resource and (
-                self.resource_lock is not None and current_resources[self.resource_lock.locked_by] == 0):
+        if (
+            (force_lock or self.respects_lock)
+            and not self.unlocks_resource
+            and (self.resource_lock is not None and current_resources[self.resource_lock.locked_by] == 0)
+        ):
             yield from self.resource_lock.convert_gain(resources)
         else:
             yield from resources
 
         yield from self.conversion_resource_gain(current_resources)
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"Pickup {self.name}"
 
     @property

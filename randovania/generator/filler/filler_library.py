@@ -22,9 +22,10 @@ def filter_pickup_nodes(nodes: Iterator[Node]) -> Iterator[PickupNode]:
             yield node
 
 
-def filter_unassigned_pickup_nodes(nodes: Iterator[Node],
-                                   pickup_assignment: PickupAssignment,
-                                   ) -> Iterator[PickupNode]:
+def filter_unassigned_pickup_nodes(
+    nodes: Iterator[Node],
+    pickup_assignment: PickupAssignment,
+) -> Iterator[PickupNode]:
     for node in filter_pickup_nodes(nodes):
         if node.pickup_index not in pickup_assignment:
             yield node
@@ -37,9 +38,10 @@ class UnableToGenerate(RuntimeError):
 X = TypeVar("X")
 
 
-def _filter_not_in_dict(elements: Iterator[X],
-                        dictionary: dict[X, Any],
-                        ) -> set[X]:
+def _filter_not_in_dict(
+    elements: Iterator[X],
+    dictionary: dict[X, Any],
+) -> set[X]:
     return set(elements) - set(dictionary.keys())
 
 
@@ -55,7 +57,7 @@ class UncollectedState(NamedTuple):
             _filter_not_in_dict(reach.state.collected_pickup_indices, reach.state.patches.pickup_assignment),
             _filter_not_in_dict(reach.state.collected_hints, reach.state.patches.hints),
             set(reach.state.collected_events),
-            {node.node_index for node in reach.nodes if reach.is_reachable_node(node)}
+            {node.node_index for node in reach.nodes if reach.is_reachable_node(node)},
         )
 
     def __sub__(self, other: UncollectedState) -> UncollectedState:
@@ -67,10 +69,11 @@ class UncollectedState(NamedTuple):
         )
 
 
-def find_node_with_resource(resource: ResourceInfo,
-                            context: NodeContext,
-                            haystack: Iterator[Node],
-                            ) -> ResourceNode:
+def find_node_with_resource(
+    resource: ResourceInfo,
+    context: NodeContext,
+    haystack: Iterator[Node],
+) -> ResourceNode:
     for node in haystack:
         if isinstance(node, ResourceNode) and node.resource(context) == resource:
             return node

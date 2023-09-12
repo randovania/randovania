@@ -1,14 +1,16 @@
 from __future__ import annotations
 
+from enum import Enum
 from typing import TYPE_CHECKING, TypeVar
 
 if TYPE_CHECKING:
     from collections.abc import Iterator
 
-T = TypeVar("T")
+T = TypeVar("T", bound=Enum)
 
 
 def iterate_enum(enum_class: type[T]) -> Iterator[T]:
+    assert issubclass(enum_class, Enum)
     yield from enum_class
 
 

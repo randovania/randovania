@@ -93,19 +93,16 @@ def _add_pickup_to_inventory(inventory: bytes, pickup: PickupEntry, game: Randov
 
     db = default_database.resource_database_for(game)
     collection = ResourceCollection.with_database(db)
-    collection.add_resource_gain(
-        (db.get_item(name), quantity)
-        for name, quantity in decoded_or_err.items()
-    )
+    collection.add_resource_gain((db.get_item(name), quantity) for name, quantity in decoded_or_err.items())
     collection.add_resource_gain(pickup.resource_gain(collection))
 
     return remote_inventory.inventory_to_encoded_remote(Inventory.from_collection(collection))
 
 
 @sentry_sdk.trace
-def _collect_location(sa: ServerApp, session: MultiplayerSession, world: World,
-                      description: LayoutDescription,
-                      pickup_location: int) -> World | None:
+def _collect_location(
+    sa: ServerApp, session: MultiplayerSession, world: World, description: LayoutDescription, pickup_location: int
+) -> World | None:
     """
     Collects the pickup in the given location. Returns
     :param session:
@@ -117,8 +114,9 @@ def _collect_location(sa: ServerApp, session: MultiplayerSession, world: World,
     pickup_target = _get_pickup_target(description, world.order, pickup_location)
 
     def log(msg: str, *args):
-        logger().info("%s found item at %d. " + msg,
-                      session_common.describe_session(session, world), pickup_location, *args)
+        logger().info(
+            "%s found item at %d. " + msg, session_common.describe_session(session, world), pickup_location, *args
+        )
 
     if pickup_target is None:
         log("It's nothing.")
@@ -134,7 +132,6 @@ def _collect_location(sa: ServerApp, session: MultiplayerSession, world: World,
         WorldAction.create(
             provider=world,
             location=pickup_location,
-
             session=session,
             receiver=target_world,
         )
@@ -147,7 +144,7 @@ def _collect_location(sa: ServerApp, session: MultiplayerSession, world: World,
     associations: Iterable[WorldUserAssociation] = WorldUserAssociation.select().where(
         WorldUserAssociation.world == target_world,
         WorldUserAssociation.connection_state == GameConnectionStatus.Disconnected,
-        WorldUserAssociation.inventory.is_null(False)
+        WorldUserAssociation.inventory.is_null(False),
     )
     for assoc in associations:
         new_inventory = _add_pickup_to_inventory(assoc.inventory, pickup_target.pickup, target_game)
@@ -161,8 +158,11 @@ def _collect_location(sa: ServerApp, session: MultiplayerSession, world: World,
 
 
 @sentry_sdk.trace
-def collect_locations(sa: ServerApp, source_world: World, pickup_locations: tuple[int, ...],
-                      ) -> set[World]:
+def collect_locations(
+    sa: ServerApp,
+    source_world: World,
+    pickup_locations: tuple[int, ...],
+) -> set[World]:
     session = source_world.session
 
     logger().info(f"{session_common.describe_session(session, source_world)} found items {pickup_locations}")
@@ -208,8 +208,12 @@ def _check_user_is_associated(user: User, world: World) -> WorldUserAssociation:
 
 
 @sentry_sdk.trace
-def sync_one_world(sa: ServerApp, user: User, uid: uuid.UUID, world_request: ServerWorldSync,
-                   ) -> tuple[ServerWorldResponse | None, int | None, set[World]]:
+def sync_one_world(
+    sa: ServerApp,
+    user: User,
+    uid: uuid.UUID,
+    world_request: ServerWorldSync,
+) -> tuple[ServerWorldResponse | None, int | None, set[World]]:
     sentry_sdk.set_tag("world_uuid", str(uid))
     world = World.get_by_uuid(uid)
     sentry_sdk.set_tag("session_id", world.session_id)
@@ -235,7 +239,9 @@ def sync_one_world(sa: ServerApp, user: User, uid: uuid.UUID, world_request: Ser
         session_id_to_return = world.session_id
         logger().info(
             "Session %d, World %s has new connection state: %s",
-            world.session_id, world.name, world_request.status.pretty_text,
+            world.session_id,
+            world.name,
+            world_request.status.pretty_text,
         )
 
     # Update association inventory
@@ -245,7 +251,8 @@ def sync_one_world(sa: ServerApp, user: User, uid: uuid.UUID, world_request: Ser
         emit_inventory_update(sa, world, user.id, world_request.inventory)
         logger().info(
             "Session %d, World %s has new inventory",
-            world.session_id, world.name,
+            world.session_id,
+            world.name,
         )
 
     if world_request.request_details:
@@ -322,27 +329,29 @@ def emit_world_pickups_update(sa: ServerApp, world: World):
     resource_database = _get_resource_database(description, world.order)
 
     result = []
-    actions: list[WorldAction] = WorldAction.select(
-        WorldAction.location,
-        World.order,
-        World.name,
-    ).join(
-        World, on=WorldAction.provider
-    ).where(
-        WorldAction.receiver == world
-    ).order_by(WorldAction.time.asc())
+    actions: list[WorldAction] = (
+        WorldAction.select(
+            WorldAction.location,
+            World.order,
+            World.name,
+        )
+        .join(World, on=WorldAction.provider)
+        .where(WorldAction.receiver == world)
+        .order_by(WorldAction.time.asc())
+    )
 
     for action in actions:
-        pickup_target = _get_pickup_target(description, action.provider.order,
-                                           action.location)
+        pickup_target = _get_pickup_target(description, action.provider.order, action.location)
 
         if pickup_target is None:
             result.append(None)
         else:
-            result.append({
-                "provider_name": action.provider.name,
-                "pickup": _base64_encode_pickup(pickup_target.pickup, resource_database),
-            })
+            result.append(
+                {
+                    "provider_name": action.provider.name,
+                    "pickup": _base64_encode_pickup(pickup_target.pickup, resource_database),
+                }
+            )
 
     logger().info(
         "%s notifying %s of %s pickups.",

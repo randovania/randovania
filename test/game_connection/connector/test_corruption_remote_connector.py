@@ -19,8 +19,9 @@ def corruption_remote_connector():
 @pytest.mark.parametrize("has_cplayer", [False, True])
 @pytest.mark.parametrize("has_pending_op", [False, True])
 @pytest.mark.parametrize("has_world", [False, True])
-async def test_fetch_game_status(connector: CorruptionRemoteConnector, has_world, has_pending_op,
-                                 has_cplayer, correct_vtable):
+async def test_fetch_game_status(
+    connector: CorruptionRemoteConnector, has_world, has_pending_op, has_cplayer, correct_vtable
+):
     # Setup
     expected_world = connector.game.region_list.regions[1]
 
@@ -48,8 +49,11 @@ async def test_fetch_game_status(connector: CorruptionRemoteConnector, has_world
         assert actual_world is None
     assert actual_has_op == has_pending_op
     if has_cplayer:
-        connector.executor.perform_single_memory_operation.assert_awaited_once_with(MemoryOperation(
-            cplayer_address, read_byte_count=4,
-        ))
+        connector.executor.perform_single_memory_operation.assert_awaited_once_with(
+            MemoryOperation(
+                cplayer_address,
+                read_byte_count=4,
+            )
+        )
     else:
         connector.executor.perform_single_memory_operation.assert_not_awaited()

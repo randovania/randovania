@@ -25,8 +25,7 @@ class RandovaniaBot(discord.Bot):
 
         intents = discord.Intents.default()
         intents.message_content = True
-        super().__init__(debug_guilds=debug_guilds, auto_sync_commands=False,
-                         intents=intents)
+        super().__init__(debug_guilds=debug_guilds, auto_sync_commands=False, intents=intents)
 
         self.configuration = configuration
         self.add_listener(application_command_error, "on_application_command_error")
@@ -35,7 +34,6 @@ class RandovaniaBot(discord.Bot):
         self.load_extension("randovania.server.discord.faq_command")
 
     async def on_ready(self):
-
         for cog in self.cogs.values():
             if isinstance(cog, RandovaniaCog):
                 await cog.add_commands()

@@ -32,17 +32,15 @@ async def test_has_messages(window: DebugConnectorWindow):
 
 
 async def test_remote_pickups(window: DebugConnectorWindow, blank_pickup):
-    await window.connector.set_remote_pickups((
-        ("The Source", blank_pickup),
-    ))
-    assert model_lib.get_texts(window.messages_item_model) == [
-        "Received Blank Pickup from The Source"
-    ]
+    await window.connector.set_remote_pickups((("The Source", blank_pickup),))
+    assert model_lib.get_texts(window.messages_item_model) == ["Received Blank Pickup from The Source"]
 
-    await window.connector.set_remote_pickups((
-        ("The Source", blank_pickup),
-        ("Your Boss", blank_pickup),
-    ))
+    await window.connector.set_remote_pickups(
+        (
+            ("The Source", blank_pickup),
+            ("Your Boss", blank_pickup),
+        )
+    )
     assert model_lib.get_texts(window.messages_item_model) == [
         "Received Blank Pickup from The Source",
         "Received Blank Pickup from Your Boss",

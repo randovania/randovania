@@ -41,7 +41,7 @@ class BaseGameTabWidget(QtWidgets.QTabWidget):
         self.setCornerWidget(return_button, QtCore.Qt.Corner.TopLeftCorner)
 
         if self.game_cover_label is not None:
-            self.game_cover_label.setPixmap(QtGui.QPixmap(game.data_path.joinpath('assets/cover.png').as_posix()))
+            self.game_cover_label.setPixmap(QtGui.QPixmap(game.data_path.joinpath("assets/cover.png").as_posix()))
             self.game_cover_label.setScaledContents(True)
             self.game_cover_label.setFixedSize(150, 200)
 

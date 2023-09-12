@@ -23,10 +23,11 @@ if TYPE_CHECKING:
     from randovania.game_description.resources.resource_info import ResourceInfo
 
 
-def _energy_tank_difference(new_resources: ResourceCollection,
-                            old_resources: ResourceCollection,
-                            database: ResourceDatabase,
-                            ) -> int:
+def _energy_tank_difference(
+    new_resources: ResourceCollection,
+    old_resources: ResourceCollection,
+    database: ResourceDatabase,
+) -> int:
     return new_resources[database.energy_tank] - old_resources[database.energy_tank]
 
 
@@ -56,15 +57,16 @@ class State:
     def region_list(self) -> RegionList:
         return self.game_data.region_list
 
-    def __init__(self,
-                 resources: ResourceCollection,
-                 collected_resource_nodes: tuple[ResourceNode, ...],
-                 energy: int | None,
-                 node: Node,
-                 patches: GamePatches,
-                 previous: Self | None,
-                 game_data: StateGameData):
-
+    def __init__(
+        self,
+        resources: ResourceCollection,
+        collected_resource_nodes: tuple[ResourceNode, ...],
+        energy: int | None,
+        node: Node,
+        patches: GamePatches,
+        previous: Self | None,
+        game_data: StateGameData,
+    ):
         self.resources = resources
         self.collected_resource_nodes = collected_resource_nodes
         self.node = node
@@ -79,13 +81,15 @@ class State:
         self.energy = min(energy, self.maximum_energy)
 
     def copy(self) -> Self:
-        return State(self.resources.duplicate(),
-                     self.collected_resource_nodes,
-                     self.energy,
-                     self.node,
-                     self.patches,
-                     self.previous_state,
-                     self.game_data)
+        return State(
+            self.resources.duplicate(),
+            self.collected_resource_nodes,
+            self.energy,
+            self.node,
+            self.patches,
+            self.previous_state,
+            self.game_data,
+        )
 
     @property
     def collected_pickup_indices(self) -> Iterator[PickupIndex]:
@@ -111,12 +115,26 @@ class State:
                 yield resource
 
     def take_damage(self, damage: int) -> Self:
-        return State(self.resources, self.collected_resource_nodes, self.energy - damage, self.node, self.patches, self,
-                     self.game_data)
+        return State(
+            self.resources,
+            self.collected_resource_nodes,
+            self.energy - damage,
+            self.node,
+            self.patches,
+            self,
+            self.game_data,
+        )
 
     def heal(self) -> Self:
-        return State(self.resources, self.collected_resource_nodes, self.maximum_energy, self.node, self.patches, self,
-                     self.game_data)
+        return State(
+            self.resources,
+            self.collected_resource_nodes,
+            self.maximum_energy,
+            self.node,
+            self.patches,
+            self,
+            self.game_data,
+        )
 
     def _energy_for(self, resources: ResourceCollection) -> int:
         num_tanks = resources[self.game_data.resource_database.energy_tank]
@@ -136,8 +154,7 @@ class State:
         """
 
         if not node.can_collect(self.node_context()):
-            raise ValueError(
-                f"Trying to collect an uncollectable node'{node}'")
+            raise ValueError(f"Trying to collect an uncollectable node'{node}'")
 
         new_resources = self.resources.duplicate()
         new_resources.add_resource_gain(node.resource_gain_on_collect(self.node_context()))
@@ -146,8 +163,15 @@ class State:
         if _energy_tank_difference(new_resources, self.resources, self.resource_database) > 0:
             energy = self._energy_for(new_resources)
 
-        return State(new_resources, self.collected_resource_nodes + (node,), energy, self.node, self.patches, self,
-                     self.game_data)
+        return State(
+            new_resources,
+            self.collected_resource_nodes + (node,),
+            energy,
+            self.node,
+            self.patches,
+            self,
+            self.game_data,
+        )
 
     def act_on_node(self, node: ResourceNode, path: tuple[Node, ...] = (), new_energy: int | None = None) -> Self:
         if new_energy is None:
@@ -181,8 +205,7 @@ class State:
 
     def assign_pickup_to_starting_items(self, pickup: PickupEntry) -> Self:
         pickup_resources = ResourceCollection.from_resource_gain(
-            self.resource_database,
-            pickup.resource_gain(self.resources, force_lock=True)
+            self.resource_database, pickup.resource_gain(self.resources, force_lock=True)
         )
 
         new_resources = self.resources.duplicate()
@@ -220,9 +243,10 @@ def add_pickup_to_state(state: State, pickup: PickupEntry):
     state.resources.add_resource_gain(pickup.resource_gain(state.resources, force_lock=True))
 
 
-def state_with_pickup(state: State,
-                      pickup: PickupEntry,
-                      ) -> State:
+def state_with_pickup(
+    state: State,
+    pickup: PickupEntry,
+) -> State:
     """
     Returns a new State that follows the given State and also has the resource gain of the given pickup
     :param state:

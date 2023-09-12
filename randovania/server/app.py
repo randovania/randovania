@@ -47,34 +47,35 @@ class ServerLoggingFormatter(logging.Formatter):
 def create_app():
     configuration = randovania.get_configuration()
 
-    dictConfig({
-        'version': 1,
-        'formatters': {
-            'default': {
-                'format': '[%(asctime)s] %(context)s [%(who)s] %(levelname)s in %(where)s: %(message)s',
-                'class': 'randovania.server.app.ServerLoggingFormatter',
-            }
-        },
-        'handlers': {'wsgi': {
-            'class': 'logging.StreamHandler',
-            'stream': 'ext://flask.logging.wsgi_errors_stream',
-            'formatter': 'default'
-        }},
-        'loggers': {
-            # Enable peewee logging to see the queries being made
-            # 'peewee': {
-            #     'level': 'DEBUG',
-            # },
-        },
-        'root': {
-            'level': 'INFO',
-            'handlers': ['wsgi']
+    dictConfig(
+        {
+            "version": 1,
+            "formatters": {
+                "default": {
+                    "format": "[%(asctime)s] %(context)s [%(who)s] %(levelname)s in %(where)s: %(message)s",
+                    "class": "randovania.server.app.ServerLoggingFormatter",
+                }
+            },
+            "handlers": {
+                "wsgi": {
+                    "class": "logging.StreamHandler",
+                    "stream": "ext://flask.logging.wsgi_errors_stream",
+                    "formatter": "default",
+                }
+            },
+            "loggers": {
+                # Enable peewee logging to see the queries being made
+                # 'peewee': {
+                #     'level': 'DEBUG',
+                # },
+            },
+            "root": {"level": "INFO", "handlers": ["wsgi"]},
         }
-    })
+    )
 
     app = flask.Flask(__name__)
     app.wsgi_app = werkzeug.middleware.proxy_fix.ProxyFix(app.wsgi_app, x_proto=1, x_prefix=1)
-    app.config['SECRET_KEY'] = configuration["server_config"]["secret_key"]
+    app.config["SECRET_KEY"] = configuration["server_config"]["secret_key"]
     app.config["GUEST_KEY"] = configuration["guest_secret"].encode("ascii") if "guest_secret" in configuration else None
     app.config["DISCORD_CLIENT_ID"] = configuration["discord_client_id"]
     app.config["DISCORD_CLIENT_SECRET"] = configuration["server_config"]["discord_client_secret"]
@@ -83,8 +84,8 @@ def create_app():
     app.config["ENFORCE_ROLE"] = configuration["server_config"].get("enforce_role")
     version_checking = client_check.ClientVersionCheck(configuration["server_config"]["client_version_checking"])
 
-    db_existed = Path(configuration["server_config"]['database_path']).exists()
-    database.db.init(configuration["server_config"]['database_path'])
+    db_existed = Path(configuration["server_config"]["database_path"]).exists()
+    database.db.init(configuration["server_config"]["database_path"])
     database.db.connect(reuse_if_open=True)
     database.db.create_tables(database.all_classes)
     if not db_existed:
@@ -92,6 +93,7 @@ def create_app():
             database.PerformedDatabaseMigrations.create(migration=entry)
 
     from randovania.server import database_migration
+
     database_migration.apply_migrations()
 
     sa = ServerApp(app)
@@ -104,9 +106,11 @@ def create_app():
 
     @app.route("/")
     def index():
-        app.logger.info("Version checked by %s (%s)",
-                        flask.request.environ["REMOTE_ADDR"],
-                        flask.request.environ.get("HTTP_X_FORWARDED_FOR"))
+        app.logger.info(
+            "Version checked by %s (%s)",
+            flask.request.environ["REMOTE_ADDR"],
+            flask.request.environ.get("HTTP_X_FORWARDED_FOR"),
+        )
         return randovania.VERSION
 
     server_version = randovania.VERSION
@@ -122,17 +126,21 @@ def create_app():
             if error_message is None and not randovania.is_dev_version():
                 error_message = client_check.check_client_headers(sa.expected_headers, environ)
 
-            forwarded_for = environ.get('HTTP_X_FORWARDED_FOR')
+            forwarded_for = environ.get("HTTP_X_FORWARDED_FOR")
 
             if error_message is not None:
-                app.logger.info(f"Client {sid} at {environ['REMOTE_ADDR']} ({forwarded_for}) with "
-                                f"version {client_app_version} tried to connect, but refused with {error_message}.")
+                app.logger.info(
+                    f"Client {sid} at {environ['REMOTE_ADDR']} ({forwarded_for}) with "
+                    f"version {client_app_version} tried to connect, but refused with {error_message}."
+                )
                 raise ConnectionRefusedError(error_message)
 
             connected_clients.inc()
 
-            app.logger.info(f"Client {sid} at {environ['REMOTE_ADDR']} ({forwarded_for}) with "
-                            f"version {client_app_version} connected.")
+            app.logger.info(
+                f"Client {sid} at {environ['REMOTE_ADDR']} ({forwarded_for}) with "
+                f"version {client_app_version} connected."
+            )
 
         except ConnectionRefusedError:
             # Do not wrap if it's already a ConnectionRefusedError
@@ -140,8 +148,7 @@ def create_app():
 
         except Exception as e:
             logging.exception(f"Unknown exception when testing the client's headers: {e}")
-            raise ConnectionRefusedError(f"Unable to check if request is valid: {e}.\n"
-                                         f"Please file a bug report.")
+            raise ConnectionRefusedError(f"Unable to check if request is valid: {e}.\nPlease file a bug report.")
 
     @sa.get_server().on("disconnect")
     def disconnect(sid):

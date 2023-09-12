@@ -5,11 +5,10 @@ import typing
 from randovania.game_description.requirements.base import Requirement
 
 if typing.TYPE_CHECKING:
-    from collections.abc import Iterable
+    from collections.abc import Iterable, Iterator
 
-    from randovania.game_description.requirements.requirement_and import RequirementAnd
-    from randovania.game_description.requirements.requirement_or import RequirementOr
     from randovania.game_description.requirements.requirement_set import RequirementSet
+    from randovania.game_description.requirements.resource_requirement import ResourceRequirement
     from randovania.game_description.resources.resource_collection import ResourceCollection
     from randovania.game_description.resources.resource_database import ResourceDatabase
 
@@ -31,8 +30,9 @@ class RequirementArrayBase(Requirement):
     def satisfied(self, current_resources: ResourceCollection, current_energy: int, database: ResourceDatabase) -> bool:
         raise NotImplementedError
 
-    def patch_requirements(self, static_resources: ResourceCollection, damage_multiplier: float,
-                           database: ResourceDatabase) -> Requirement:
+    def patch_requirements(
+        self, static_resources: ResourceCollection, damage_multiplier: float, database: ResourceDatabase
+    ) -> Requirement:
         return type(self)(
             (item.patch_requirements(static_resources, damage_multiplier, database) for item in self.items),
             comment=self.comment,
@@ -48,7 +48,7 @@ class RequirementArrayBase(Requirement):
     def sorted(self) -> tuple[Requirement, ...]:
         return tuple(sorted(self.items))
 
-    def __eq__(self, other):
+    def __eq__(self, other: object) -> bool:
         return isinstance(other, self.__class__) and self.items == other.items
 
     def __hash__(self) -> int:
@@ -56,10 +56,10 @@ class RequirementArrayBase(Requirement):
             self._cached_hash = hash(self.items)
         return self._cached_hash
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return repr(self.items)
 
-    def iterate_resource_requirements(self, database: ResourceDatabase):
+    def iterate_resource_requirements(self, database: ResourceDatabase) -> Iterator[ResourceRequirement]:
         for item in self.items:
             yield from item.iterate_resource_requirements(database)
 
@@ -71,28 +71,27 @@ class RequirementArrayBase(Requirement):
             return self._str_no_items()
 
     @classmethod
-    def combinator(cls):
+    def combinator(cls) -> str:
         raise NotImplementedError
 
     @classmethod
-    def _str_no_items(cls):
+    def _str_no_items(cls) -> str:
         raise NotImplementedError
 
 
-def mergeable_array(req: RequirementAnd | RequirementOr, keep_comments: bool) -> bool:
+def mergeable_array(req: RequirementArrayBase, keep_comments: bool) -> bool:
     if keep_comments:
         return req.comment is None
     else:
         return True
 
 
-def expand_items(items: tuple[Requirement, ...],
-                 cls: type[RequirementAnd | RequirementOr],
-                 exclude: Requirement,
-                 keep_comments: bool) -> list[Requirement]:
+def expand_items(
+    items: tuple[Requirement, ...], cls: type[RequirementArrayBase], exclude: Requirement, keep_comments: bool
+) -> list[Requirement]:
     expanded = []
 
-    def _add(_item):
+    def _add(_item: Requirement) -> None:
         if _item not in expanded and _item != exclude:
             expanded.append(_item)
 

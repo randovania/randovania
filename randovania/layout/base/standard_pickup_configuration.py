@@ -48,20 +48,16 @@ class StandardPickupConfiguration(BitPackValue):
                 raise ValueError(f"Category {category} is missing an item.")
 
             if self.default_pickups[category] not in options:
-                raise ValueError(f"Category {category} has {self.default_pickups[category]} as default item, "
-                                 f"but that's not a valid option.")
+                raise ValueError(
+                    f"Category {category} has {self.default_pickups[category]} as default item, "
+                    f"but that's not a valid option."
+                )
 
     @property
     def as_json(self) -> dict:
         return {
-            "pickups_state": {
-                pickup.name: state.as_json
-                for pickup, state in self.pickups_state.items()
-            },
-            "default_pickups": {
-                category.name: pickup.name
-                for category, pickup in self.default_pickups.items()
-            },
+            "pickups_state": {pickup.name: state.as_json for pickup, state in self.pickups_state.items()},
+            "default_pickups": {category.name: pickup.name for category, pickup in self.default_pickups.items()},
             "minimum_random_starting_pickups": self.minimum_random_starting_pickups,
             "maximum_random_starting_pickups": self.maximum_random_starting_pickups,
         }
@@ -99,8 +95,7 @@ class StandardPickupConfiguration(BitPackValue):
         }
 
         modified_pickups = sorted(
-            pickup.name for pickup, state in self.pickups_state.items()
-            if state != reference.pickups_state[pickup]
+            pickup.name for pickup, state in self.pickups_state.items() if state != reference.pickups_state[pickup]
         )
         yield from bitpacking.pack_sorted_array_elements(modified_pickups, sorted(name_to_pickup.keys()))
         for pickup_name in modified_pickups:
@@ -128,8 +123,9 @@ class StandardPickupConfiguration(BitPackValue):
         pickups_state = copy.copy(reference.pickups_state)
         for pickup_name in modified_pickups:
             pickup = name_to_pickup[pickup_name]
-            pickups_state[pickup] = StandardPickupState.bit_pack_unpack(decoder, pickup,
-                                                               reference=reference.pickups_state[pickup])
+            pickups_state[pickup] = StandardPickupState.bit_pack_unpack(
+                decoder, pickup, reference=reference.pickups_state[pickup]
+            )
 
         # default_pickups
         default_pickups = {}
@@ -155,14 +151,17 @@ class StandardPickupConfiguration(BitPackValue):
                 return pickup
         raise KeyError(name)
 
-    def replace_state_for_pickup(self, pickup: StandardPickupDefinition, state: StandardPickupState,
-                                 ) -> StandardPickupConfiguration:
-        return self.replace_states({
-            pickup: state
-        })
+    def replace_state_for_pickup(
+        self,
+        pickup: StandardPickupDefinition,
+        state: StandardPickupState,
+    ) -> StandardPickupConfiguration:
+        return self.replace_states({pickup: state})
 
-    def replace_states(self, new_states: dict[StandardPickupDefinition, StandardPickupState],
-                       ) -> StandardPickupConfiguration:
+    def replace_states(
+        self,
+        new_states: dict[StandardPickupDefinition, StandardPickupState],
+    ) -> StandardPickupConfiguration:
         """
         Creates a copy of this MajorItemsConfiguration where the state of all given pickups are replaced by the given
         states.
@@ -176,8 +175,11 @@ class StandardPickupConfiguration(BitPackValue):
 
         return dataclasses.replace(self, pickups_state=pickups_state)
 
-    def replace_default_pickup(self, category: PickupCategory, pickup: StandardPickupDefinition,
-                               ) -> StandardPickupConfiguration:
+    def replace_default_pickup(
+        self,
+        category: PickupCategory,
+        pickup: StandardPickupDefinition,
+    ) -> StandardPickupConfiguration:
         """
         Creates a copy of this MajorItemsConfiguration where the default pickup for the given category
         is replaced by the given pickup.
@@ -203,4 +205,4 @@ class StandardPickupConfiguration(BitPackValue):
         return result
 
     def dangerous_settings(self) -> list[str]:
-        return [] # TODO: remove this if it won't be used?
+        return []  # TODO: remove this if it won't be used?

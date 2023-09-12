@@ -23,14 +23,15 @@ if TYPE_CHECKING:
 
 
 class PrimeBasePatchesFactory(BasePatchesFactory):
-    def create_base_patches(self,
-                            configuration: BaseConfiguration,
-                            rng: Random,
-                            game: GameDescription,
-                            is_multiworld: bool,
-                            player_index: int,
-                            rng_required: bool = True
-                            ) -> GamePatches:
+    def create_base_patches(
+        self,
+        configuration: BaseConfiguration,
+        rng: Random,
+        game: GameDescription,
+        is_multiworld: bool,
+        player_index: int,
+        rng_required: bool = True,
+    ) -> GamePatches:
         assert isinstance(configuration, PrimeConfiguration)
         parent = super().create_base_patches(configuration, rng, game, is_multiworld, player_index, rng_required)
 
@@ -56,9 +57,11 @@ class PrimeBasePatchesFactory(BasePatchesFactory):
 
         return parent.assign_dock_weakness(dock_weakness)
 
-    def dock_connections_assignment(self, configuration: PrimeConfiguration,
-                                    game: GameDescription, rng: Random ) -> Iterable[tuple[DockNode, Node]]:
+    def dock_connections_assignment(
+        self, configuration: PrimeConfiguration, game: GameDescription, rng: Random
+    ) -> Iterable[tuple[DockNode, Node]]:
         teleporter_connection = get_teleporter_connections(configuration.teleporters, game, rng)
-        dock_assignment = get_dock_connections_assignment_for_teleporter(configuration.teleporters,
-                                                                         game, teleporter_connection)
+        dock_assignment = get_dock_connections_assignment_for_teleporter(
+            configuration.teleporters, game, teleporter_connection
+        )
         yield from dock_assignment

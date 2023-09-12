@@ -36,8 +36,9 @@ def _check_user_associated_with(sa: ServerApp, world: World):
         raise error.NotAuthorizedForActionError
 
 
-def verify_has_admin(sa: ServerApp, session_id: int, admin_user_id: int | None,
-                     *, allow_when_no_admins: bool = False) -> None:
+def verify_has_admin(
+    sa: ServerApp, session_id: int, admin_user_id: int | None, *, allow_when_no_admins: bool = False
+) -> None:
     """
     Checks if the logged user can do admin operations to the given session,
     :param sa:
@@ -50,10 +51,13 @@ def verify_has_admin(sa: ServerApp, session_id: int, admin_user_id: int | None,
     current_membership = session_common.get_membership_for(current_user, session_id)
 
     if not (current_membership.admin or (admin_user_id is not None and current_user.id == admin_user_id)):
-        if allow_when_no_admins and MultiplayerMembership.select().where(
-                MultiplayerMembership.session == session_id,
-                is_boolean(MultiplayerMembership.admin, True)
-        ).count() == 0:
+        if (
+            allow_when_no_admins
+            and MultiplayerMembership.select()
+            .where(MultiplayerMembership.session == session_id, is_boolean(MultiplayerMembership.admin, True))
+            .count()
+            == 0
+        ):
             return
         raise error.NotAuthorizedForActionError
 
@@ -95,8 +99,9 @@ def _get_preset(preset_bytes: bytes) -> VersionedPreset:
         raise error.InvalidActionError(f"invalid preset: {e}")
 
 
-def _create_world(sa: ServerApp, session: MultiplayerSession, name: str, preset_bytes: bytes,
-                  for_user: int | None = None):
+def _create_world(
+    sa: ServerApp, session: MultiplayerSession, name: str, preset_bytes: bytes, for_user: int | None = None
+):
     verify_has_admin(sa, session.id, for_user)
 
     _verify_no_layout_description(session)
@@ -180,10 +185,7 @@ def _delete_world(sa: ServerApp, session: MultiplayerSession, world_uid: str):
 def _update_layout_generation(sa: ServerApp, session: MultiplayerSession, world_order: list[str]):
     verify_has_admin(sa, session.id, None)
 
-    world_objects: dict[str, World] = {
-        str(world.uuid): world
-        for world in session.worlds
-    }
+    world_objects: dict[str, World] = {str(world.uuid): world for world in session.worlds}
     if world_order:
         _verify_no_layout_description(session)
         used_ids = set(world_objects.keys())
@@ -207,8 +209,11 @@ def _update_layout_generation(sa: ServerApp, session: MultiplayerSession, world_
         else:
             session.generation_in_progress = None
 
-        logger().info("%s: Making generation in progress to %s", session_common.describe_session(session),
-                      str(session.generation_in_progress))
+        logger().info(
+            "%s: Making generation in progress to %s",
+            session_common.describe_session(session),
+            str(session.generation_in_progress),
+        )
         session.save()
 
 
@@ -238,10 +243,9 @@ def _change_layout_description(sa: ServerApp, session: MultiplayerSession, descr
             raise error.InvalidActionError("One of the worlds has undefined order field.")
 
         try:
-            description = LayoutDescription.from_bytes(description_bytes, presets=[
-                VersionedPreset.from_str(world.preset)
-                for world in worlds
-            ])
+            description = LayoutDescription.from_bytes(
+                description_bytes, presets=[VersionedPreset.from_str(world.preset) for world in worlds]
+            )
         except InvalidLayoutDescription as e:
             raise error.InvalidActionError(f"Invalid layout: {e}") from e
 
@@ -259,9 +263,11 @@ def _change_layout_description(sa: ServerApp, session: MultiplayerSession, descr
         session.save()
 
         session_common.emit_session_actions_update(session)
-        session_common.add_audit_entry(sa, session,
-                                       "Removed generated game" if description is None
-                                       else f"Set game to {description.shareable_word_hash}")
+        session_common.add_audit_entry(
+            sa,
+            session,
+            "Removed generated game" if description is None else f"Set game to {description.shareable_word_hash}",
+        )
 
 
 def _download_layout_description(sa: ServerApp, session: MultiplayerSession) -> bytes:
@@ -413,14 +419,19 @@ def admin_session(sa: ServerApp, session_id: int, action: str, *args):
 
 def _kick_user(sa: ServerApp, session: MultiplayerSession, membership: MultiplayerMembership, user_id: int):
     session_common.add_audit_entry(
-        sa, session,
-        f"Kicked {membership.effective_name}" if membership.user != sa.get_current_user() else "Left session"
+        sa,
+        session,
+        f"Kicked {membership.effective_name}" if membership.user != sa.get_current_user() else "Left session",
     )
 
     with database.db.atomic():
-        for association in WorldUserAssociation.select().join(World).where(
+        for association in (
+            WorldUserAssociation.select()
+            .join(World)
+            .where(
                 World.session == session.id,
                 WorldUserAssociation.user == user_id,
+            )
         ):
             association.delete_instance()
         membership.delete_instance()
@@ -431,16 +442,16 @@ def _kick_user(sa: ServerApp, session: MultiplayerSession, membership: Multiplay
             logger().info(f"{session_common.describe_session(session)}. Kicking user {user_id}.")
 
 
-def _create_world_for(sa: ServerApp, session: MultiplayerSession, membership: MultiplayerMembership,
-                      name: str, preset_bytes: bytes):
+def _create_world_for(
+    sa: ServerApp, session: MultiplayerSession, membership: MultiplayerMembership, name: str, preset_bytes: bytes
+):
     with database.db.atomic():
         new_world = _create_world(sa, session, name, preset_bytes, membership.user.id)
         WorldUserAssociation.create(
             world=new_world,
             user=membership.user,
         )
-        session_common.add_audit_entry(sa, session,
-                                       f"Associated new world {new_world.name} for {membership.user.name}")
+        session_common.add_audit_entry(sa, session, f"Associated new world {new_world.name} for {membership.user.name}")
 
 
 def _claim_world(sa: ServerApp, session: MultiplayerSession, user_id: int, world_uid: uuid.UUID):
@@ -457,8 +468,9 @@ def _claim_world(sa: ServerApp, session: MultiplayerSession, user_id: int, world
         world=world,
         user=user_id,
     )
-    session_common.add_audit_entry(sa, session,
-                                   f"Associated world {world.name} for {database.User.get_by_id(user_id).name}")
+    session_common.add_audit_entry(
+        sa, session, f"Associated world {world.name} for {database.User.get_by_id(user_id).name}"
+    )
 
 
 def _unclaim_world(sa: ServerApp, session: MultiplayerSession, user_id: int, world_uid: uuid.UUID):
@@ -469,8 +481,7 @@ def _unclaim_world(sa: ServerApp, session: MultiplayerSession, user_id: int, wor
     user = database.User.get_by_id(user_id)
 
     WorldUserAssociation.get_by_instances(world=world, user=user).delete_instance()
-    session_common.add_audit_entry(sa, session,
-                                   f"Unassociated world {world.name} from {user.name}")
+    session_common.add_audit_entry(sa, session, f"Unassociated world {world.name} from {user.name}")
 
 
 def _switch_admin(sa: ServerApp, session: MultiplayerSession, membership: MultiplayerMembership):
@@ -478,17 +489,23 @@ def _switch_admin(sa: ServerApp, session: MultiplayerSession, membership: Multip
 
     # Must be admin for this
     verify_has_admin(sa, session_id, None, allow_when_no_admins=True)
-    num_admins = MultiplayerMembership.select().where(MultiplayerMembership.session == session_id,
-                                                      is_boolean(MultiplayerMembership.admin, True)).count()
+    num_admins = (
+        MultiplayerMembership.select()
+        .where(MultiplayerMembership.session == session_id, is_boolean(MultiplayerMembership.admin, True))
+        .count()
+    )
 
     if membership.admin and num_admins <= 1:
         raise error.InvalidActionError("can't demote the only admin")
 
     membership.admin = not membership.admin
-    session_common.add_audit_entry(sa, session,
-                                   f"Made {membership.effective_name} {'' if membership.admin else 'not '}an admin")
-    logger().info(f"{session_common.describe_session(session)}, User {membership.user.id}. Performing admin switch, "
-                  f"new status is {membership.admin}.")
+    session_common.add_audit_entry(
+        sa, session, f"Made {membership.effective_name} {'' if membership.admin else 'not '}an admin"
+    )
+    logger().info(
+        f"{session_common.describe_session(session)}, User {membership.user.id}. Performing admin switch, "
+        f"new status is {membership.admin}."
+    )
     membership.save()
 
 
@@ -505,8 +522,7 @@ def _set_allow_everyone_claim(sa: ServerApp, session: MultiplayerSession, new_st
     with database.db.atomic():
         session.allow_everyone_claim_world = new_state
         new_operation = "Allowing" if session.allow_everyone_claim_world else "Disallowing"
-        session_common.add_audit_entry(sa, session,
-                                       f"{new_operation} everyone to claim worlds.")
+        session_common.add_audit_entry(sa, session, f"{new_operation} everyone to claim worlds.")
         session.save()
 
 
@@ -536,8 +552,9 @@ def _create_patcher_file(sa: ServerApp, session: MultiplayerSession, world_uid: 
     preset = layout_description.get_preset(players_config.player_index)
     cosmetic_patches = preset.game.data.layout.cosmetic_patches.from_json(cosmetic_json)
 
-    session_common.add_audit_entry(sa, session,
-                                   f"Exporting game named {players_config.player_names[players_config.player_index]}")
+    session_common.add_audit_entry(
+        sa, session, f"Exporting game named {players_config.player_names[players_config.player_index]}"
+    )
 
     data_factory = preset.game.patch_data_factory(layout_description, players_config, cosmetic_patches)
     try:

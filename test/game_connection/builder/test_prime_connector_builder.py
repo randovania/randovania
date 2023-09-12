@@ -40,11 +40,7 @@ async def test_identify_game_ntsc(mocker):
 
     def side_effect(ops: list[MemoryOperation]):
         if len(ops) > 1:
-            return {
-                op: b"!#$M"
-                for op in ops
-                if op.address == 0x803ac3b0
-            }
+            return {op: b"!#$M" for op in ops if op.address == 0x803AC3B0}
         return {}
 
     con_builder = MockedPrimeConnectorBuilder()
@@ -69,11 +65,7 @@ async def test_identify_game_fail_second(via_exception):
     # Setup
     def side_effect(ops: list[MemoryOperation]):
         if len(ops) > 1:
-            return {
-                op: b"!#$M"
-                for op in ops
-                if op.address == 0x803ac3b0
-            }
+            return {op: b"!#$M" for op in ops if op.address == 0x803AC3B0}
         return {}
 
     con_builder = MockedPrimeConnectorBuilder()
@@ -102,11 +94,7 @@ async def test_is_this_version_throws_error():
     # Setup
     def side_effect(ops: list[MemoryOperation]):
         if len(ops) > 1:
-            return {
-                op: b"!#$M"
-                for op in ops
-                if op.address == 0x803ac3b0
-            }
+            return {op: b"!#$M" for op in ops if op.address == 0x803AC3B0}
         return {}
 
     con_builder = MockedPrimeConnectorBuilder()

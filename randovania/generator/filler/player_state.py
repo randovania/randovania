@@ -46,18 +46,20 @@ class PlayerState:
     num_starting_pickups_placed: int
     num_assigned_pickups: int
 
-    def __init__(self,
-                 index: int,
-                 game: GameDescription,
-                 initial_state: State,
-                 pickups_left: list[PickupEntry],
-                 configuration: FillerConfiguration,
-                 ):
+    def __init__(
+        self,
+        index: int,
+        game: GameDescription,
+        initial_state: State,
+        pickups_left: list[PickupEntry],
+        configuration: FillerConfiguration,
+    ):
         self.index = index
         self.game = game
 
         self.reach = reach_lib.advance_reach_with_possible_unsafe_resources(
-            reach_lib.reach_with_all_safe_resources(game, initial_state))
+            reach_lib.reach_with_all_safe_resources(game, initial_state)
+        )
         self.pickups_left = pickups_left
         self.configuration = configuration
 
@@ -105,10 +107,12 @@ class PlayerState:
     def _calculate_potential_actions(self):
         uncollected_resource_nodes = reach_lib.get_collectable_resource_nodes_of_reach(self.reach)
 
-        usable_pickups = [pickup for pickup in self.pickups_left
-                          if self.num_actions >= pickup.generator_params.required_progression]
-        pickups = get_pickups_that_solves_unreachable(usable_pickups, self.reach, uncollected_resource_nodes,
-                                                      self.configuration.single_set_for_pickups_that_solve)
+        usable_pickups = [
+            pickup for pickup in self.pickups_left if self.num_actions >= pickup.generator_params.required_progression
+        ]
+        pickups = get_pickups_that_solves_unreachable(
+            usable_pickups, self.reach, uncollected_resource_nodes, self.configuration.single_set_for_pickups_that_solve
+        )
         filler_logging.print_retcon_loop_start(self.game, usable_pickups, self.reach, self.index)
 
         self._unfiltered_potential_actions = pickups, tuple(uncollected_resource_nodes)
@@ -124,25 +128,25 @@ class PlayerState:
         ]
 
         logical_resource_action = self.configuration.logical_resource_action
-        if (logical_resource_action == LayoutLogicalResourceAction.RANDOMLY
-                or (logical_resource_action == LayoutLogicalResourceAction.LAST_RESORT and not result)):
-            result.extend(
-                Action((resource_node,))
-                for resource_node in uncollected_resource_nodes
-            )
+        if logical_resource_action == LayoutLogicalResourceAction.RANDOMLY or (
+            logical_resource_action == LayoutLogicalResourceAction.LAST_RESORT and not result
+        ):
+            result.extend(Action((resource_node,)) for resource_node in uncollected_resource_nodes)
 
         return result
 
     def victory_condition_satisfied(self):
-        return self.game.victory_condition.satisfied(self.reach.state.resources,
-                                                     self.reach.state.energy,
-                                                     self.reach.state.resource_database)
+        return self.game.victory_condition.satisfied(
+            self.reach.state.resources, self.reach.state.energy, self.reach.state.resource_database
+        )
 
     def assign_pickup(self, pickup_index: PickupIndex, target: PickupTarget):
         self.num_assigned_pickups += 1
-        self.reach.state.patches = self.reach.state.patches.assign_new_pickups([
-            (pickup_index, target),
-        ])
+        self.reach.state.patches = self.reach.state.patches.assign_new_pickups(
+            [
+                (pickup_index, target),
+            ]
+        )
 
     def current_state_report(self) -> str:
         state = UncollectedState.from_reach(self.reach)
@@ -152,9 +156,11 @@ class PlayerState:
         for pickup in self.pickups_left:
             pickups_by_name_and_quantity[_KEY_MATCH.sub("Key", pickup.name)] += 1
 
-        to_progress = {_KEY_MATCH.sub("Key", resource.long_name)
-                       for resource in interesting_resources_for_reach(self.reach)
-                       if resource.resource_type == ResourceType.ITEM}
+        to_progress = {
+            _KEY_MATCH.sub("Key", resource.long_name)
+            for resource in interesting_resources_for_reach(self.reach)
+            if resource.resource_type == ResourceType.ITEM
+        }
 
         wl = self.reach.game.region_list
         s = self.reach.state
@@ -162,33 +168,50 @@ class PlayerState:
         paths_to_be_opened = set()
         for node, requirement in self.reach.unreachable_nodes_with_requirements().items():
             for alternative in requirement.alternatives:
-                if any(r.negate or (r.resource.resource_type != ResourceType.ITEM
-                                    and not r.satisfied(s.resources, s.energy, self.game.resource_database))
-                       for r in alternative.values()):
+                if any(
+                    r.negate
+                    or (
+                        r.resource.resource_type != ResourceType.ITEM
+                        and not r.satisfied(s.resources, s.energy, self.game.resource_database)
+                    )
+                    for r in alternative.values()
+                ):
                     continue
 
-                paths_to_be_opened.add("* {}: {}".format(
-                    wl.node_name(node, with_region=True),
-                    " and ".join(sorted(
-                        r.pretty_text for r in alternative.values()
-                        if not r.satisfied(s.resources, s.energy, self.game.resource_database)
-                    ))
-                ))
+                paths_to_be_opened.add(
+                    "* {}: {}".format(
+                        wl.node_name(node, with_region=True),
+                        " and ".join(
+                            sorted(
+                                r.pretty_text
+                                for r in alternative.values()
+                                if not r.satisfied(s.resources, s.energy, self.game.resource_database)
+                            )
+                        ),
+                    )
+                )
 
         teleporters = []
         teleporter_dock_types = self.reach.game.dock_weakness_database.all_teleporter_dock_types
         for node in wl.iterate_nodes():
-            if (isinstance(node, DockNode) and node.dock_type in teleporter_dock_types
-                    and self.reach.is_reachable_node(node)):
+            if (
+                isinstance(node, DockNode)
+                and node.dock_type in teleporter_dock_types
+                and self.reach.is_reachable_node(node)
+            ):
                 other = wl.resolve_dock_node(node, s.patches)
-                teleporters.append("* {} to {}".format(
-                    elevators.get_elevator_or_area_name(self.game.game, wl,
-                                                        wl.identifier_for_node(node).area_location, True),
-
-                    elevators.get_elevator_or_area_name(self.game.game, wl,
-                                                        wl.identifier_for_node(other).area_location, True)
-                    if other is not None else "<Not connected>",
-                ))
+                teleporters.append(
+                    "* {} to {}".format(
+                        elevators.get_elevator_or_area_name(
+                            self.game.game, wl, wl.identifier_for_node(node).area_location, True
+                        ),
+                        elevators.get_elevator_or_area_name(
+                            self.game.game, wl, wl.identifier_for_node(other).area_location, True
+                        )
+                        if other is not None
+                        else "<Not connected>",
+                    )
+                )
 
         accessible_nodes = [
             wl.node_name(n, with_region=True) for n in self.reach.iterate_nodes if self.reach.is_reachable_node(n)
@@ -207,16 +230,19 @@ class PlayerState:
             self.num_assigned_pickups,
             len(state.indices),
             sum(1 for n in self.reach.iterate_nodes if self.reach.is_safe_node(n)),
-            ", ".join(name if quantity == 1 else f"{name} x{quantity}"
-                      for name, quantity in sorted(pickups_by_name_and_quantity.items())),
+            ", ".join(
+                name if quantity == 1 else f"{name} x{quantity}"
+                for name, quantity in sorted(pickups_by_name_and_quantity.items())
+            ),
             ", ".join(sorted(to_progress)),
             "\n".join(sorted(paths_to_be_opened)) or "None",
             "\n".join(teleporters) or "None",
             "\n".join(accessible_nodes) if len(accessible_nodes) < 15 else f"{len(accessible_nodes)} nodes total",
         )
 
-    def filter_usable_locations(self, locations_weighted: WeightedLocations,
-                                pickup: PickupEntry | None = None) -> WeightedLocations:
+    def filter_usable_locations(
+        self, locations_weighted: WeightedLocations, pickup: PickupEntry | None = None
+    ) -> WeightedLocations:
         weighted = locations_weighted
 
         if self.configuration.first_progression_must_be_local and self.num_assigned_pickups == 0:
@@ -227,9 +253,9 @@ class PlayerState:
 
         return weighted
 
-    def should_have_hint(self, pickup: PickupEntry, current_uncollected: UncollectedState,
-                         all_locations: WeightedLocations) -> bool:
-
+    def should_have_hint(
+        self, pickup: PickupEntry, current_uncollected: UncollectedState, all_locations: WeightedLocations
+    ) -> bool:
         if not pickup.pickup_category.hinted_as_major:
             return False
 
@@ -238,9 +264,11 @@ class PlayerState:
         valid_locations = [
             index
             for owner, index, weight in all_locations.all_items()
-            if (owner == self
+            if (
+                owner == self
                 and weight >= config.minimum_location_weight_for_hint_placement
-                and index in current_uncollected.indices)
+                and index in current_uncollected.indices
+            )
         ]
         can_hint = len(valid_locations) >= config.minimum_available_locations_for_hint_placement
         if not can_hint:
@@ -261,15 +289,14 @@ class PlayerState:
             return True
 
 
-def build_available_indices(region_list: RegionList, configuration: FillerConfiguration,
-                            ) -> tuple[list[set[PickupIndex]], set[PickupIndex]]:
+def build_available_indices(
+    region_list: RegionList,
+    configuration: FillerConfiguration,
+) -> tuple[list[set[PickupIndex]], set[PickupIndex]]:
     """
     Groups indices into separated groups, so each group can be weighted separately.
     """
-    indices_groups = [
-        set(region.pickup_indices) - configuration.indices_to_exclude
-        for region in region_list.regions
-    ]
+    indices_groups = [set(region.pickup_indices) - configuration.indices_to_exclude for region in region_list.regions]
     all_indices = set().union(*indices_groups)
 
     return indices_groups, all_indices

@@ -19,6 +19,7 @@ if TYPE_CHECKING:
 @pytest.fixture(name="version")
 def prime1_version():
     from open_prime_rando.dol_patching.prime1 import dol_versions
+
     return dol_versions.ALL_VERSIONS[0]
 
 
@@ -31,15 +32,19 @@ def remote_connector(version: Prime1DolVersion):
 
 
 @pytest.mark.parametrize("artifact", [False, True])
-async def test_patches_for_pickup(connector: Prime1RemoteConnector, mocker, artifact: bool, generic_pickup_category,
-                                  default_generator_params):
+async def test_patches_for_pickup(
+    connector: Prime1RemoteConnector, mocker, artifact: bool, generic_pickup_category, default_generator_params
+):
     # Setup
     mock_item_patch: MagicMock = mocker.patch(
-        "open_prime_rando.dol_patching.all_prime_dol_patches.adjust_item_amount_and_capacity_patch")
+        "open_prime_rando.dol_patching.all_prime_dol_patches.adjust_item_amount_and_capacity_patch"
+    )
     mock_increment_capacity: MagicMock = mocker.patch(
-        "open_prime_rando.dol_patching.all_prime_dol_patches.increment_item_capacity_patch")
+        "open_prime_rando.dol_patching.all_prime_dol_patches.increment_item_capacity_patch"
+    )
     mock_artifact_layer: MagicMock = mocker.patch(
-        "open_prime_rando.dol_patching.prime1.dol_patches.set_artifact_layer_active_patch")
+        "open_prime_rando.dol_patching.prime1.dol_patches.set_artifact_layer_active_patch"
+    )
 
     db = connector.game.resource_database
     if artifact:
@@ -47,15 +52,21 @@ async def test_patches_for_pickup(connector: Prime1RemoteConnector, mocker, arti
     else:
         extra = (db.energy_tank, db.energy_tank.max_capacity)
 
-    pickup = PickupEntry("Pickup", 0, generic_pickup_category, generic_pickup_category, progression=(),
-                         generator_params=default_generator_params,
-                         extra_resources=(
-                             extra,
-                         ))
-    inventory = Inventory({
-        connector.multiworld_magic_item: InventoryItem(0, 0),
-        db.energy_tank: InventoryItem(1, 1),
-    })
+    pickup = PickupEntry(
+        "Pickup",
+        0,
+        generic_pickup_category,
+        generic_pickup_category,
+        progression=(),
+        generator_params=default_generator_params,
+        extra_resources=(extra,),
+    )
+    inventory = Inventory(
+        {
+            connector.multiworld_magic_item: InventoryItem(0, 0),
+            db.energy_tank: InventoryItem(1, 1),
+        }
+    )
 
     # Run
     patches, message = await connector._patches_for_pickup("Someone", pickup, inventory)
@@ -72,10 +83,9 @@ async def test_patches_for_pickup(connector: Prime1RemoteConnector, mocker, arti
         used_patch, unused_patch = mock_item_patch, mock_increment_capacity
 
     expected_patches.insert(0, used_patch.return_value)
-    used_patch.assert_called_once_with(connector.version.powerup_functions,
-                                       RDSGame.PRIME,
-                                       extra[0].extra["item_id"],
-                                       extra[1])
+    used_patch.assert_called_once_with(
+        connector.version.powerup_functions, RDSGame.PRIME, extra[0].extra["item_id"], extra[1]
+    )
     unused_patch.assert_not_called()
 
     assert patches == expected_patches
@@ -84,8 +94,7 @@ async def test_patches_for_pickup(connector: Prime1RemoteConnector, mocker, arti
 
 @pytest.mark.parametrize("has_cooldown", [False, True])
 @pytest.mark.parametrize("has_patches", [False, True])
-async def test_multiworld_interaction_missing_remote_pickups(has_cooldown: bool, has_patches: bool,
-                                                             version):
+async def test_multiworld_interaction_missing_remote_pickups(has_cooldown: bool, has_patches: bool, version):
     connector = Prime1RemoteConnector(version, AsyncMock())
 
     # Setup
@@ -126,9 +135,7 @@ async def test_multiworld_interaction(connector: Prime1RemoteConnector, depth: i
     connector.PickupIndexCollected.connect(location_collected)
 
     connector.receive_remote_pickups = AsyncMock(return_value=([], False))
-    connector.known_collected_locations = AsyncMock(
-        return_value=[PickupIndex(2), PickupIndex(5)] if depth == 0 else []
-    )
+    connector.known_collected_locations = AsyncMock(return_value=[PickupIndex(2), PickupIndex(5)] if depth == 0 else [])
 
     # Run
     await connector._multiworld_interaction()
@@ -137,17 +144,17 @@ async def test_multiworld_interaction(connector: Prime1RemoteConnector, depth: i
     connector.known_collected_locations.assert_awaited_once_with()
 
     if depth == 0:
-        location_collected.assert_has_calls([
-            call(PickupIndex(2)),
-            call(PickupIndex(5)),
-        ])
+        location_collected.assert_has_calls(
+            [
+                call(PickupIndex(2)),
+                call(PickupIndex(5)),
+            ]
+        )
     else:
         location_collected.assert_not_called()
 
     if depth == 1:
-        connector.receive_remote_pickups.assert_awaited_once_with(
-            connector.last_inventory, connector.remote_pickups
-        )
+        connector.receive_remote_pickups.assert_awaited_once_with(connector.last_inventory, connector.remote_pickups)
     else:
         connector.receive_remote_pickups.assert_not_awaited()
 
@@ -161,10 +168,12 @@ async def test_interact_with_game(connector: Prime1RemoteConnector, depth: int, 
     connector.executor.disconnect = MagicMock()
 
     connector.get_inventory = AsyncMock()
-    connector.current_game_status = AsyncMock(return_value=(
-        depth <= 1,  # has pending op
-        MagicMock() if depth > 0 else None,  # db
-    ))
+    connector.current_game_status = AsyncMock(
+        return_value=(
+            depth <= 1,  # has pending op
+            MagicMock() if depth > 0 else None,  # db
+        )
+    )
 
     should_disconnect = False
     if failure_at == 1:
@@ -172,9 +181,7 @@ async def test_interact_with_game(connector: Prime1RemoteConnector, depth: int, 
         should_disconnect = depth > 0
 
     connector._send_next_pending_message = AsyncMock()
-    connector._multiworld_interaction = AsyncMock(
-        return_value=depth <= 2
-    )
+    connector._multiworld_interaction = AsyncMock(return_value=depth <= 2)
     if failure_at == 2:
         connector._multiworld_interaction.side_effect = MemoryOperationException("error at _check_for_collected_index")
         should_disconnect = depth > 1

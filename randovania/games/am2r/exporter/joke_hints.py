@@ -18,15 +18,20 @@ JOKE_HINTS = [
     "*You know, you should never trust strangers, Sammy.*",
     "*Ash was here! Gary is a Looser!*",
     "*Don't worry, one Metroid kill doesn't make you a serial killer.*",
-
     # Multi line hints here, for easier viewing
-    ("*According to all known laws of aviation, there is no way that a Septogg should be able to fly. "
-     "Its wings are too small to get its fat little body off the ground. "
-     "The Septogg, of course, flies anyway.*"),
-    ("*Join Septogg Plus to support hard-working hint-bugs, demonstrate your status, "
-     "and earn a FREE gallon of Septogg Juice (while supplies last)*"),
-    ("*Ancient tongue, non-decipherable. The contents in full:#"
-     "ＮＡＧＧＩＮＧＳ　ＦＲＯＭ　ＰＡＳＴ ＳＯ#"
-     "ＮＯＷ　ＩＭ　ＨＥＬＰＩＮＧ　ＶＩＡ　ＤＥＶ#"
-     "ＡＬＡＳ　ＧＬＡＤ　ＦＯＲ　ＹＥ*"),
+    (
+        "*According to all known laws of aviation, there is no way that a Septogg should be able to fly. "
+        "Its wings are too small to get its fat little body off the ground. "
+        "The Septogg, of course, flies anyway.*"
+    ),
+    (
+        "*Join Septogg Plus to support hard-working hint-bugs, demonstrate your status, "
+        "and earn a FREE gallon of Septogg Juice (while supplies last)*"
+    ),
+    (
+        "*Ancient tongue, non-decipherable. The contents in full:#"
+        "ＮＡＧＧＩＮＧＳ　ＦＲＯＭ　ＰＡＳＴ ＳＯ#"
+        "ＮＯＷ　ＩＭ　ＨＥＬＰＩＮＧ　ＶＩＡ　ＤＥＶ#"
+        "ＡＬＡＳ　ＧＬＡＤ　ＦＯＲ　ＹＥ*"
+    ),
 ]

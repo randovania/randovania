@@ -15,8 +15,8 @@ if TYPE_CHECKING:
 
 
 def create_dialog_for_cosmetic_patches(
-        parent: QtWidgets.QWidget,
-        initial_patches: BaseCosmeticPatches,
+    parent: QtWidgets.QWidget,
+    initial_patches: BaseCosmeticPatches,
 ) -> BaseCosmeticPatchesDialog:
     game = initial_patches.game()
     dialog_class = game.gui.cosmetic_dialog

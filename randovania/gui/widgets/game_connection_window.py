@@ -156,8 +156,13 @@ class GameConnectionWindow(QtWidgets.QMainWindow, Ui_GameConnectionWindow):
     ui_for_builder: dict[ConnectorBuilder, BuilderUi]
     layout_uuid_for_builder: dict[ConnectorBuilder, uuid.UUID]
 
-    def __init__(self, window_manager: MainWindow, network_client: QtNetworkClient,
-                 options: Options, game_connection: GameConnection):
+    def __init__(
+        self,
+        window_manager: MainWindow,
+        network_client: QtNetworkClient,
+        options: Options,
+        game_connection: GameConnection,
+    ):
         super().__init__()
         common_qt_lib.set_default_window_icon(self)
         self.setupUi(self)
@@ -196,8 +201,7 @@ class GameConnectionWindow(QtWidgets.QMainWindow, Ui_GameConnectionWindow):
 
     async def _prompt_for_game(self, title: str, label: str) -> RandovaniaGame | None:
         games_by_name = {
-            game.long_name: game
-            for game in sorted(RandovaniaGame.all_games(), key=lambda it: it.long_name)
+            game.long_name: game for game in sorted(RandovaniaGame.all_games(), key=lambda it: it.long_name)
         }
 
         dialog = QtWidgets.QInputDialog(self)
@@ -222,7 +226,7 @@ class GameConnectionWindow(QtWidgets.QMainWindow, Ui_GameConnectionWindow):
             new_ip = await self._prompt_for_text(
                 "Enter Wii's IP",
                 "Enter the IP address of your Wii. "
-                "You can check the IP address on the pause screen of Homebrew Channel."
+                "You can check the IP address on the pause screen of Homebrew Channel.",
             )
             if new_ip is None:
                 return
@@ -232,26 +236,20 @@ class GameConnectionWindow(QtWidgets.QMainWindow, Ui_GameConnectionWindow):
             new_ip = await DreadConnectorPromptDialog.prompt(
                 parent=self,
                 is_modal=True,
-
                 title="Select Ryujinx or Switch to connect to",
-                description="Enter the IP address of your Switch. It can be found in the system settings."
+                description="Enter the IP address of your Switch. It can be found in the system settings.",
             )
             if new_ip is None:
                 return
             args["ip"] = new_ip
 
         if choice == ConnectorBuilderChoice.DEBUG:
-            new_game = await self._prompt_for_game(
-                "Choose Game",
-                "Select the game to use for the debug connection."
-            )
+            new_game = await self._prompt_for_game("Choose Game", "Select the game to use for the debug connection.")
             if new_game is None:
                 return
             args["game"] = new_game.value
 
-        self.game_connection.add_connection_builder(
-            ConnectorBuilderOption(choice, args).create_builder()
-        )
+        self.game_connection.add_connection_builder(ConnectorBuilderOption(choice, args).create_builder())
 
     def setup_builder_ui(self):
         for child in self.builders_content.findChildren(QtWidgets.QWidget):
@@ -291,13 +289,9 @@ class GameConnectionWindow(QtWidgets.QMainWindow, Ui_GameConnectionWindow):
         session_id = self._check_session_data(layout_uuid)
         try:
             await self.network_client.listen_to_session(session_id, True)
-            await self.window_manager.ensure_multiplayer_session_window(
-                self.network_client, session_id,
-                self.options
-            )
+            await self.window_manager.ensure_multiplayer_session_window(self.network_client, session_id, self.options)
         except error.NotAuthorizedForActionError:
-            await async_dialog.warning(self, "Unauthorized",
-                                       "You're not a member of this session.")
+            await async_dialog.warning(self, "Unauthorized", "You're not a member of this session.")
 
     def _check_session_data(self, layout_uuid: uuid.UUID) -> int | None:
         world_data = self.world_database.get_data_for(layout_uuid)
@@ -323,9 +317,7 @@ class GameConnectionWindow(QtWidgets.QMainWindow, Ui_GameConnectionWindow):
 
         ui.menu.addSeparator()
         ui.open_session_action = ui.menu.addAction("Open Session Window")
-        ui.open_session_action.triggered.connect(
-            functools.partial(self._attempt_join, builder)
-        )
+        ui.open_session_action.triggered.connect(functools.partial(self._attempt_join, builder))
 
         # TODO: add the auto tracker action
         # ui.menu.addAction("Open Auto-Tracker").triggered.connect(
@@ -357,12 +349,16 @@ class GameConnectionWindow(QtWidgets.QMainWindow, Ui_GameConnectionWindow):
     async def on_upload_nintendont_action(self, builder: NintendontConnectorBuilder):
         nintendont_file = randovania.get_data_path().joinpath("nintendont", "boot.dol")
         if not nintendont_file.is_file():
-            return await async_dialog.warning(self, "Missing Nintendont",
-                                              "Unable to find a Nintendont executable.")
+            return await async_dialog.warning(self, "Missing Nintendont", "Unable to find a Nintendont executable.")
 
         text = f"Uploading Nintendont to the Wii at {builder.ip}..."
-        box = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Icon.NoIcon, "Uploading to Homebrew Channel",
-                                    text, QtWidgets.QMessageBox.StandardButton.Ok, self)
+        box = QtWidgets.QMessageBox(
+            QtWidgets.QMessageBox.Icon.NoIcon,
+            "Uploading to Homebrew Channel",
+            text,
+            QtWidgets.QMessageBox.StandardButton.Ok,
+            self,
+        )
         common_qt_lib.set_default_window_icon(box)
         box.button(QtWidgets.QMessageBox.StandardButton.Ok).setEnabled(False)
         box.show()

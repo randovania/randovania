@@ -20,8 +20,13 @@ if TYPE_CHECKING:
 class StandardPickupWidget(QWidget, Ui_StandardPickupWidget):
     Changed = Signal()
 
-    def __init__(self, parent: QWidget, pickup: StandardPickupDefinition, starting_state: StandardPickupState,
-                 resources_database: ResourceDatabase):
+    def __init__(
+        self,
+        parent: QWidget,
+        pickup: StandardPickupDefinition,
+        starting_state: StandardPickupState,
+        resources_database: ResourceDatabase,
+    ):
         super().__init__(parent)
         self.setupUi(self)
         self._pickup = pickup
@@ -76,15 +81,13 @@ class StandardPickupWidget(QWidget, Ui_StandardPickupWidget):
             self.starting_check.setToolTip("Progressive items are not allowed to be marked as starting.")
 
         if pickup.ammo:
-            ammo_names = " and ".join(
-                resources_database.get_item(ammo_index).long_name for ammo_index in pickup.ammo)
+            ammo_names = " and ".join(resources_database.get_item(ammo_index).long_name for ammo_index in pickup.ammo)
             self.provided_ammo_label.setText(
                 f"<html><head/><body><p>{ammo_names} provided by {pickup.name}</p></body></html>"
             )
-            self.provided_ammo_spinbox.setMaximum(min(
-                resources_database.get_item(ammo_index).max_capacity
-                for ammo_index in pickup.ammo
-            ))
+            self.provided_ammo_spinbox.setMaximum(
+                min(resources_database.get_item(ammo_index).max_capacity for ammo_index in pickup.ammo)
+            )
         else:
             self.provided_ammo_label.hide()
             self.provided_ammo_spinbox.hide()
@@ -97,15 +100,21 @@ class StandardPickupWidget(QWidget, Ui_StandardPickupWidget):
         self.set_custom_fields_visible(False)
         if self._pickup.must_be_starting:
             self.pickup_name_label.setToolTip(
-                "This item is necessary for the game to function properly and can't be removed.")
+                "This item is necessary for the game to function properly and can't be removed."
+            )
             self.case = StandardPickupStateCase.STARTING_ITEM
             self.state_case_combo.setEnabled(False)
         else:
             self.set_new_state(starting_state)
 
     def set_custom_fields_visible(self, visible: bool):
-        for item in [self.vanilla_check, self.starting_check, self.priority_label,
-                     self.priority_combo, self.shuffled_spinbox]:
+        for item in [
+            self.vanilla_check,
+            self.starting_check,
+            self.priority_label,
+            self.priority_combo,
+            self.shuffled_spinbox,
+        ]:
             item.setVisible(visible)
 
     @property
@@ -136,8 +145,7 @@ class StandardPickupWidget(QWidget, Ui_StandardPickupWidget):
             return StandardPickupState(num_included_in_starting_pickups=1, included_ammo=included_ammo)
 
         elif case == StandardPickupStateCase.SHUFFLED:
-            return StandardPickupState(num_shuffled_pickups=len(self._pickup.progression),
-                                       included_ammo=included_ammo)
+            return StandardPickupState(num_shuffled_pickups=len(self._pickup.progression), included_ammo=included_ammo)
 
         else:
             return None
@@ -196,7 +204,4 @@ class StandardPickupWidget(QWidget, Ui_StandardPickupWidget):
 
     @property
     def included_ammo(self) -> tuple[int, ...]:
-        return tuple(
-            self.provided_ammo_spinbox.value()
-            for _ in self._pickup.ammo
-        )
+        return tuple(self.provided_ammo_spinbox.value() for _ in self._pickup.ammo)

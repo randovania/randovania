@@ -93,4 +93,3 @@ def test_round_trip_binary_no_presets(multiworld_rdvgame):
 
     encoded = layout.as_binary(include_presets=False)
     assert LayoutDescription.from_bytes(encoded, presets=presets) == layout
-

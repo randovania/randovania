@@ -22,5 +22,5 @@ def preset_tabs(editor: PresetEditor, window_manager: WindowManager):
         PresetItemPool,
         PresetBlankPatches,
         PresetDockRando,
-        PresetStartingArea
+        PresetStartingArea,
     ]

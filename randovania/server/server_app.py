@@ -139,11 +139,13 @@ class ServerApp:
                 try:
                     user = self.get_current_user()
                     flask.request.current_user = user
-                    sentry_sdk.set_user({
-                        "id": user.discord_id,
-                        "username": user.name,
-                        "server_id": user.id,
-                    })
+                    sentry_sdk.set_user(
+                        {
+                            "id": user.discord_id,
+                            "username": user.name,
+                            "server_id": user.id,
+                        }
+                    )
                 except (error.NotLoggedInError, error.InvalidSessionError):
                     flask.request.current_user = None
                     sentry_sdk.set_user(None)
@@ -214,7 +216,7 @@ class ServerApp:
     def current_client_ip(self, sid=None) -> str:
         try:
             environ = self.get_server().get_environ(sid or self.request_sid)
-            forwarded_for = environ.get('HTTP_X_FORWARDED_FOR')
+            forwarded_for = environ.get("HTTP_X_FORWARDED_FOR")
             return f"{environ['REMOTE_ADDR']} ({forwarded_for})"
         except KeyError as e:
             return f"<unknown sid {e}>"

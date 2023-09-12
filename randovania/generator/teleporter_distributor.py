@@ -17,6 +17,7 @@ if TYPE_CHECKING:
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.game_patches import TeleporterConnection
 
+
 class TeleporterHelper:
     teleporter: NodeIdentifier
     destination: NodeIdentifier
@@ -46,9 +47,10 @@ class TeleporterHelper:
         return self.teleporter.area_location
 
 
-def try_randomize_teleporters(rng: Random,
-                            teleporters: tuple[TeleporterHelper, ...],
-                            ) -> list[TeleporterHelper]:
+def try_randomize_teleporters(
+    rng: Random,
+    teleporters: tuple[TeleporterHelper, ...],
+) -> list[TeleporterHelper]:
     telepoter_database: list[TeleporterHelper] = list(teleporters)
     assert len(telepoter_database) % 2 == 0
 
@@ -60,9 +62,7 @@ def try_randomize_teleporters(rng: Random,
     while teleporter_list:
         source_teleporters: list[TeleporterHelper] = max(teleporters_by_region.values(), key=len)
         target_teleporters: list[TeleporterHelper] = [
-            teleporter
-            for teleporter in teleporter_list
-            if teleporter not in source_teleporters
+            teleporter for teleporter in teleporter_list if teleporter not in source_teleporters
         ]
         source_teleporter = source_teleporters[0]
         target_teleporter = rng.choice(target_teleporters)
@@ -83,8 +83,10 @@ def try_randomize_teleporters(rng: Random,
             index = 0
             while index < len(list3):
                 cteleporter2 = list3[index]
-                if (cteleporter2.region_name == cteleporter1.region_name
-                        or cteleporter2.area_name == cteleporter1.destination.area_name):
+                if (
+                    cteleporter2.region_name == cteleporter1.region_name
+                    or cteleporter2.area_name == cteleporter1.destination.area_name
+                ):
                     cteleporter_list1.append(cteleporter2)
                     list3.remove(cteleporter2)
                 else:
@@ -98,10 +100,9 @@ def try_randomize_teleporters(rng: Random,
     return telepoter_database
 
 
-def two_way_teleporter_connections(rng: Random,
-                                 teleporter_database: tuple[TeleporterHelper, ...],
-                                 between_areas: bool
-                                 ) -> TeleporterConnection:
+def two_way_teleporter_connections(
+    rng: Random, teleporter_database: tuple[TeleporterHelper, ...], between_areas: bool
+) -> TeleporterConnection:
     if len(teleporter_database) % 2 != 0:
         raise ValueError("Two-way teleporter shuffle, but odd number of teleporters to shuffle.")
     if between_areas:
@@ -112,17 +113,15 @@ def two_way_teleporter_connections(rng: Random,
         while teleporters:
             teleporters.pop().connect_to(teleporters.pop())
 
-    return {
-        teleporter.teleporter: teleporter.connected_teleporter.teleporter
-        for teleporter in teleporter_database
-    }
+    return {teleporter.teleporter: teleporter.connected_teleporter.teleporter for teleporter in teleporter_database}
 
 
-def one_way_teleporter_connections(rng: Random,
-                                 teleporter_database: tuple[TeleporterHelper, ...],
-                                 target_locations: list[NodeIdentifier],
-                                 replacement: bool,
-                                 ) -> TeleporterConnection:
+def one_way_teleporter_connections(
+    rng: Random,
+    teleporter_database: tuple[TeleporterHelper, ...],
+    target_locations: list[NodeIdentifier],
+    replacement: bool,
+) -> TeleporterConnection:
     target_locations.sort()
     rng.shuffle(target_locations)
 
@@ -132,16 +131,12 @@ def one_way_teleporter_connections(rng: Random,
         else:
             return target_locations.pop()
 
-    return {
-        teleporter.teleporter: _create_target()
-        for teleporter in teleporter_database
-    }
+    return {teleporter.teleporter: _create_target() for teleporter in teleporter_database}
 
 
-def create_teleporter_database(region_list: RegionList,
-                             all_teleporters: list[NodeIdentifier],
-                             allowed_dock_types: list[DockType]
-                             ) -> tuple[TeleporterHelper, ...]:
+def create_teleporter_database(
+    region_list: RegionList, all_teleporters: list[NodeIdentifier], allowed_dock_types: list[DockType]
+) -> tuple[TeleporterHelper, ...]:
     """
     Creates a tuple of Teleporter objects, exclude those that belongs to one of the areas provided.
     :param region_list:
@@ -150,20 +145,15 @@ def create_teleporter_database(region_list: RegionList,
     """
     all_helpers = [
         TeleporterHelper(region_list.identifier_for_node(node), node.default_connection.area_identifier)
-
         for region, area, node in region_list.all_regions_areas_nodes
         if isinstance(node, DockNode) and node.dock_type in allowed_dock_types
     ]
-    return tuple(
-        helper
-        for helper in all_helpers
-        if helper.teleporter in all_teleporters
-    )
+    return tuple(helper for helper in all_helpers if helper.teleporter in all_teleporters)
 
 
-def get_dock_connections_assignment_for_teleporter(teleporters: TeleporterConfiguration,
-                                       game: GameDescription, teleporter_connection: TeleporterConnection
-                                        ):
+def get_dock_connections_assignment_for_teleporter(
+    teleporters: TeleporterConfiguration, game: GameDescription, teleporter_connection: TeleporterConnection
+):
     region_list = game.region_list
 
     for teleporter, destination in teleporters.static_teleporters.items():
@@ -177,8 +167,9 @@ def get_dock_connections_assignment_for_teleporter(teleporters: TeleporterConfig
     return assignment
 
 
-def get_teleporter_connections(teleporters: TeleporterConfiguration,
-                               game: GameDescription, rng: Random) -> TeleporterConnection:
+def get_teleporter_connections(
+    teleporters: TeleporterConfiguration, game: GameDescription, rng: Random
+) -> TeleporterConnection:
     region_list = game.region_list
     teleporter_connection: TeleporterConnection = {}
 
@@ -187,15 +178,14 @@ def get_teleporter_connections(teleporters: TeleporterConfiguration,
             raise MissingRng("Teleporter")
 
         teleporter_dock_types = game.dock_weakness_database.all_teleporter_dock_types
-        teleporter_db = create_teleporter_database(region_list, teleporters.editable_teleporters,
-                                                                    teleporter_dock_types)
+        teleporter_db = create_teleporter_database(region_list, teleporters.editable_teleporters, teleporter_dock_types)
 
         # TODO: Error on unsupported modes
         if teleporters.mode in {TeleporterShuffleMode.TWO_WAY_RANDOMIZED, TeleporterShuffleMode.TWO_WAY_UNCHECKED}:
             connections = two_way_teleporter_connections(
                 rng=rng,
                 teleporter_database=teleporter_db,
-                between_areas=teleporters.mode == TeleporterShuffleMode.TWO_WAY_RANDOMIZED
+                between_areas=teleporters.mode == TeleporterShuffleMode.TWO_WAY_RANDOMIZED,
             )
         else:
             connections = one_way_teleporter_connections(

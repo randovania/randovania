@@ -52,35 +52,46 @@ async def window(skip_qtbot) -> MultiplayerSessionWindow:
 
 @pytest.fixture()
 def sample_session(preset_manager):
-    u1 = uuid.UUID('53308c10-c283-4be5-b5d2-1761c81a871b')
-    u2 = uuid.UUID('4bdb294e-9059-4fdf-9822-3f649023249a')
-    u3 = uuid.UUID('47a8aec3-3149-4c76-b5c1-f86a9d3a5190')
+    u1 = uuid.UUID("53308c10-c283-4be5-b5d2-1761c81a871b")
+    u2 = uuid.UUID("4bdb294e-9059-4fdf-9822-3f649023249a")
+    u3 = uuid.UUID("47a8aec3-3149-4c76-b5c1-f86a9d3a5190")
 
     return MultiplayerSessionEntry(
         id=1234,
         name="The Session",
         worlds=[
             MultiplayerWorld(
-                name="W1", id=u1, preset_raw=json.dumps(
+                name="W1",
+                id=u1,
+                preset_raw=json.dumps(
                     preset_manager.default_preset_for_game(RandovaniaGame.METROID_PRIME_ECHOES).as_json
                 ),
             ),
             MultiplayerWorld(
-                name="W2", id=u2, preset_raw=json.dumps(
-                    preset_manager.default_preset.as_json
-                ),
+                name="W2",
+                id=u2,
+                preset_raw=json.dumps(preset_manager.default_preset.as_json),
             ),
             MultiplayerWorld(
-                name="W3", id=u3, preset_raw=json.dumps(
+                name="W3",
+                id=u3,
+                preset_raw=json.dumps(
                     preset_manager.default_preset_for_game(RandovaniaGame.METROID_PRIME_ECHOES).as_json
                 ),
             ),
         ],
         users_list=[
-            MultiplayerUser(12, "Player A", True, True, worlds={
-                u1: UserWorldDetail(GameConnectionStatus.InGame,
-                                    datetime.datetime(2019, 1, 3, 2, 50, tzinfo=datetime.UTC))
-            }),
+            MultiplayerUser(
+                12,
+                "Player A",
+                True,
+                True,
+                worlds={
+                    u1: UserWorldDetail(
+                        GameConnectionStatus.InGame, datetime.datetime(2019, 1, 3, 2, 50, tzinfo=datetime.UTC)
+                    )
+                },
+            ),
         ],
         game_details=None,
         visibility=MultiplayerSessionVisibility.VISIBLE,
@@ -101,7 +112,7 @@ async def test_on_session_meta_update(preset_manager, skip_qtbot, sample_session
     game_connection.pretty_current_status = "Maybe Connected"
     game_connection.lock_identifier = None
 
-    u1 = uuid.UUID('53308c10-c283-4be5-b5d2-1761c81a871b')
+    u1 = uuid.UUID("53308c10-c283-4be5-b5d2-1761c81a871b")
 
     initial_session = sample_session
     second_session = MultiplayerSessionEntry(
@@ -109,16 +120,25 @@ async def test_on_session_meta_update(preset_manager, skip_qtbot, sample_session
         name="The Session",
         worlds=[
             MultiplayerWorld(
-                name="W1", id=u1, preset_raw=json.dumps(
+                name="W1",
+                id=u1,
+                preset_raw=json.dumps(
                     preset_manager.default_preset_for_game(RandovaniaGame.METROID_PRIME_ECHOES).as_json
                 ),
             ),
         ],
         users_list=[
-            MultiplayerUser(12, "Player A", True, True, worlds={
-                u1: UserWorldDetail(GameConnectionStatus.InGame,
-                                    datetime.datetime(2019, 1, 3, 2, 50, tzinfo=datetime.UTC))
-            }),
+            MultiplayerUser(
+                12,
+                "Player A",
+                True,
+                True,
+                worlds={
+                    u1: UserWorldDetail(
+                        GameConnectionStatus.InGame, datetime.datetime(2019, 1, 3, 2, 50, tzinfo=datetime.UTC)
+                    )
+                },
+            ),
             MultiplayerUser(24, "Player B", False, False, {}),
         ],
         game_details=GameDetails(
@@ -132,15 +152,14 @@ async def test_on_session_meta_update(preset_manager, skip_qtbot, sample_session
         allow_coop=False,
         allow_everyone_claim_world=True,
     )
-    window = await MultiplayerSessionWindow.create_and_update(network_client, initial_session.id,
-                                                              MagicMock(spec=WindowManager), MagicMock())
+    window = await MultiplayerSessionWindow.create_and_update(
+        network_client, initial_session.id, MagicMock(spec=WindowManager), MagicMock()
+    )
     skip_qtbot.addWidget(window)
 
     # Run
     await window.on_meta_update(second_session)
-    network_client.server_call.assert_awaited_once_with(
-        'multiplayer_request_session_update', 1234
-    )
+    network_client.server_call.assert_awaited_once_with("multiplayer_request_session_update", 1234)
 
 
 async def test_on_session_actions_update(window: MultiplayerSessionWindow, sample_session):
@@ -158,28 +177,28 @@ async def test_on_session_actions_update(window: MultiplayerSessionWindow, sampl
                     receiver=sample_session.worlds[1].id,
                     pickup="Bombs",
                     location=0,
-                    time=timestamp
+                    time=timestamp,
                 ),
                 MultiplayerSessionAction(
                     provider=sample_session.worlds[0].id,
                     receiver=sample_session.worlds[2].id,
                     pickup="Bombs",
                     location=1,
-                    time=timestamp
+                    time=timestamp,
                 ),
                 MultiplayerSessionAction(
                     provider=sample_session.worlds[2].id,
                     receiver=sample_session.worlds[1].id,
                     pickup="Missile",
                     location=2,
-                    time=timestamp
+                    time=timestamp,
                 ),
                 MultiplayerSessionAction(
                     provider=sample_session.worlds[1].id,
                     receiver=sample_session.worlds[0].id,
                     pickup="Missile",
                     location=2,
-                    time=timestamp
+                    time=timestamp,
                 ),
             ],
         )
@@ -188,52 +207,56 @@ async def test_on_session_actions_update(window: MultiplayerSessionWindow, sampl
     dt = QtCore.QDateTime(2020, 1, 5, 0, 0, 0, 0, 0)
 
     assert model_lib.get_texts(window.history_item_proxy) == [
-        ['W1', 'W2', 'Bombs', 'Temple Grounds/Hive Chamber A/Pickup (Missile)', dt],
-        ['W1', 'W3', 'Bombs', 'Temple Grounds/Hall of Honored Dead/Pickup (Seeker Launcher)', dt],
-        ['W3', 'W2', 'Missile', 'Temple Grounds/Hive Chamber B/Pickup (Missile)', dt],
-        ['W2', 'W1', 'Missile', 'Intro/Explosive Depot/Pickup (Explosive)', dt],
+        ["W1", "W2", "Bombs", "Temple Grounds/Hive Chamber A/Pickup (Missile)", dt],
+        ["W1", "W3", "Bombs", "Temple Grounds/Hall of Honored Dead/Pickup (Seeker Launcher)", dt],
+        ["W3", "W2", "Missile", "Temple Grounds/Hive Chamber B/Pickup (Missile)", dt],
+        ["W2", "W1", "Missile", "Intro/Explosive Depot/Pickup (Explosive)", dt],
     ]
 
     window.history_filter_edit.setText("Missile")
     assert model_lib.get_texts(window.history_item_proxy) == [
-        ['W1', 'W2', 'Bombs', 'Temple Grounds/Hive Chamber A/Pickup (Missile)', dt],
-        ['W3', 'W2', 'Missile', 'Temple Grounds/Hive Chamber B/Pickup (Missile)', dt],
-        ['W2', 'W1', 'Missile', 'Intro/Explosive Depot/Pickup (Explosive)', dt],
+        ["W1", "W2", "Bombs", "Temple Grounds/Hive Chamber A/Pickup (Missile)", dt],
+        ["W3", "W2", "Missile", "Temple Grounds/Hive Chamber B/Pickup (Missile)", dt],
+        ["W2", "W1", "Missile", "Intro/Explosive Depot/Pickup (Explosive)", dt],
     ]
 
     window.history_filter_edit.setText("Hive Chamber")
     assert model_lib.get_texts(window.history_item_proxy) == [
-        ['W1', 'W2', 'Bombs', 'Temple Grounds/Hive Chamber A/Pickup (Missile)', dt],
-        ['W3', 'W2', 'Missile', 'Temple Grounds/Hive Chamber B/Pickup (Missile)', dt],
+        ["W1", "W2", "Bombs", "Temple Grounds/Hive Chamber A/Pickup (Missile)", dt],
+        ["W3", "W2", "Missile", "Temple Grounds/Hive Chamber B/Pickup (Missile)", dt],
     ]
 
     window.history_item_proxy.set_provider_filter("W1")
     assert model_lib.get_texts(window.history_item_proxy) == [
-        ['W1', 'W2', 'Bombs', 'Temple Grounds/Hive Chamber A/Pickup (Missile)', dt],
+        ["W1", "W2", "Bombs", "Temple Grounds/Hive Chamber A/Pickup (Missile)", dt],
     ]
 
     window.history_filter_edit.setText("")
     assert model_lib.get_texts(window.history_item_proxy) == [
-        ['W1', 'W2', 'Bombs', 'Temple Grounds/Hive Chamber A/Pickup (Missile)', dt],
-        ['W1', 'W3', 'Bombs', 'Temple Grounds/Hall of Honored Dead/Pickup (Seeker Launcher)', dt],
+        ["W1", "W2", "Bombs", "Temple Grounds/Hive Chamber A/Pickup (Missile)", dt],
+        ["W1", "W3", "Bombs", "Temple Grounds/Hall of Honored Dead/Pickup (Seeker Launcher)", dt],
     ]
 
     window.history_item_proxy.set_receiver_filter("W3")
     assert model_lib.get_texts(window.history_item_proxy) == [
-        ['W1', 'W3', 'Bombs', 'Temple Grounds/Hall of Honored Dead/Pickup (Seeker Launcher)', dt],
+        ["W1", "W3", "Bombs", "Temple Grounds/Hall of Honored Dead/Pickup (Seeker Launcher)", dt],
     ]
 
     window.history_filter_edit.setText("Missile")
     assert model_lib.get_texts(window.history_item_proxy) == []
 
 
-@pytest.mark.parametrize(('generation_in_progress', 'game_details', 'expected_text'), [
-    (True, None, "Abort generation"),
-    (None, None, "Generate game"),
-    (None, True, "Clear generated game"),
-])
-async def test_update_generate_game_button(window: MultiplayerSessionWindow,
-                                     generation_in_progress, game_details, expected_text):
+@pytest.mark.parametrize(
+    ("generation_in_progress", "game_details", "expected_text"),
+    [
+        (True, None, "Abort generation"),
+        (None, None, "Generate game"),
+        (None, True, "Clear generated game"),
+    ],
+)
+async def test_update_generate_game_button(
+    window: MultiplayerSessionWindow, generation_in_progress, game_details, expected_text
+):
     window._session = MagicMock()
     window._session.generation_in_progress = generation_in_progress
     window._session.game_details = game_details
@@ -307,11 +330,14 @@ async def test_update_logic_settings_window(window: MultiplayerSessionWindow, mo
 
 
 @pytest.mark.parametrize("accept", [QtWidgets.QDialog.DialogCode.Accepted, QtWidgets.QDialog.DialogCode.Rejected])
-@pytest.mark.parametrize("method_name", [
-    "rename_session",
-    "change_password",
-    "duplicate_session",
-])
+@pytest.mark.parametrize(
+    "method_name",
+    [
+        "rename_session",
+        "change_password",
+        "duplicate_session",
+    ],
+)
 async def test_change_password_title_or_duplicate(window: MultiplayerSessionWindow, mocker, method_name, accept):
     def set_text_value(dialog: TextPromptDialog):
         dialog.prompt_edit.setText("magoo")
@@ -320,8 +346,9 @@ async def test_change_password_title_or_duplicate(window: MultiplayerSessionWind
     api_method = AsyncMock()
     setattr(window.game_session_api, method_name, api_method)
 
-    execute_dialog = mocker.patch("randovania.gui.lib.async_dialog.execute_dialog", new_callable=AsyncMock,
-                                  side_effect=set_text_value)
+    execute_dialog = mocker.patch(
+        "randovania.gui.lib.async_dialog.execute_dialog", new_callable=AsyncMock, side_effect=set_text_value
+    )
     window._session = MagicMock()
     window._session.name = "OldName"
 
@@ -345,19 +372,19 @@ def prepare_to_upload_layout():
 
 
 @pytest.mark.parametrize("is_ready", [False, True])
-async def test_generate_game(window: MultiplayerSessionWindow, mocker, preset_manager, prepare_to_upload_layout,
-                             is_ready):
+async def test_generate_game(
+    window: MultiplayerSessionWindow, mocker, preset_manager, prepare_to_upload_layout, is_ready
+):
     mock_generate_layout: MagicMock = mocker.patch("randovania.interface_common.generator_frontend.generate_layout")
     mock_randint: MagicMock = mocker.patch("random.randint", return_value=5000)
-    mock_yes_no_prompt: AsyncMock = mocker.patch("randovania.gui.lib.async_dialog.yes_no_prompt",
-                                                 new_callable=AsyncMock, return_value=True)
+    mock_yes_no_prompt: AsyncMock = mocker.patch(
+        "randovania.gui.lib.async_dialog.yes_no_prompt", new_callable=AsyncMock, return_value=True
+    )
     mock_warning: AsyncMock = mocker.patch("randovania.gui.lib.async_dialog.warning", new_callable=AsyncMock)
 
     spoiler = True
     session = MagicMock()
-    session.users = {
-        1: MultiplayerUser(1, "You", False, is_ready, {})
-    }
+    session.users = {1: MultiplayerUser(1, "You", False, is_ready, {})}
     session.worlds = [
         MultiplayerWorld(id=uuid.uuid4(), name="W1", preset_raw=json.dumps(preset_manager.default_preset.as_json)),
         MultiplayerWorld(id=uuid.uuid4(), name="W2", preset_raw=json.dumps(preset_manager.default_preset.as_json)),
@@ -377,14 +404,17 @@ async def test_generate_game(window: MultiplayerSessionWindow, mocker, preset_ma
         mock_yes_no_prompt.assert_not_awaited()
     else:
         mock_yes_no_prompt.assert_awaited_once_with(
-            window, "User not Ready",
-            "The following users are not ready. Do you want to continue generating a game?\n\nYou"
+            window,
+            "User not Ready",
+            "The following users are not ready. Do you want to continue generating a game?\n\nYou",
         )
 
     mock_warning.assert_awaited_once_with(
-        window, "Multiworld Limitation", ANY,
+        window,
+        "Multiworld Limitation",
+        ANY,
     )
-    mock_randint.assert_called_once_with(0, 2 ** 31)
+    mock_randint.assert_called_once_with(0, 2**31)
     mock_generate_layout.assert_called_once_with(
         progress_update=ANY,
         parameters=GeneratorParameters(
@@ -407,18 +437,16 @@ async def test_generate_game(window: MultiplayerSessionWindow, mocker, preset_ma
     )
 
 
-async def test_generate_game_no_ready_abort(window: MultiplayerSessionWindow, mocker,
-                                            preset_manager):
+async def test_generate_game_no_ready_abort(window: MultiplayerSessionWindow, mocker, preset_manager):
     mock_generate_layout: MagicMock = mocker.patch("randovania.interface_common.generator_frontend.generate_layout")
-    mock_yes_no_prompt: AsyncMock = mocker.patch("randovania.gui.lib.async_dialog.yes_no_prompt",
-                                                 new_callable=AsyncMock, return_value=False)
+    mock_yes_no_prompt: AsyncMock = mocker.patch(
+        "randovania.gui.lib.async_dialog.yes_no_prompt", new_callable=AsyncMock, return_value=False
+    )
     mock_warning: AsyncMock = mocker.patch("randovania.gui.lib.async_dialog.warning", new_callable=AsyncMock)
 
     spoiler = True
     session = MagicMock()
-    session.users = {
-        1: MultiplayerUser(1, "You", False, False, {})
-    }
+    session.users = {1: MultiplayerUser(1, "You", False, False, {})}
     window._session = session
 
     window.game_session_api.prepare_to_upload_layout = MagicMock()
@@ -428,8 +456,7 @@ async def test_generate_game_no_ready_abort(window: MultiplayerSessionWindow, mo
 
     # Assert
     mock_yes_no_prompt.assert_awaited_once_with(
-        window, "User not Ready",
-        "The following users are not ready. Do you want to continue generating a game?\n\nYou"
+        window, "User not Ready", "The following users are not ready. Do you want to continue generating a game?\n\nYou"
     )
     mock_warning.assert_not_awaited()
     mock_generate_layout.assert_not_called()
@@ -460,10 +487,12 @@ async def test_check_dangerous_presets_incompatible(window: MultiplayerSessionWi
     result = await window._check_dangerous_presets(permalink)
 
     # Assert
-    message = ("The following worlds have settings that are incompatible with Multiworld:\n"
-               "\nCrazy Person: Cake"
-               "\nWorld 2: Bomb, Knife"
-               "\n\nDo you want to continue?")
+    message = (
+        "The following worlds have settings that are incompatible with Multiworld:\n"
+        "\nCrazy Person: Cake"
+        "\nWorld 2: Bomb, Knife"
+        "\n\nDo you want to continue?"
+    )
     mock_warning.assert_awaited_once_with(window, "Incompatible preset", message)
     assert not result
 
@@ -496,13 +525,18 @@ async def test_check_dangerous_presets_impossible(window: MultiplayerSessionWind
     result = await window._check_dangerous_presets(permalink)
 
     # Assert
-    message = ("The following worlds have settings that can cause an impossible game:\n"
-               "\nCrazy Person: Cake"
-               "\nWorld 2: Bomb, Knife"
-               "\n\nDo you want to continue?")
+    message = (
+        "The following worlds have settings that can cause an impossible game:\n"
+        "\nCrazy Person: Cake"
+        "\nWorld 2: Bomb, Knife"
+        "\n\nDo you want to continue?"
+    )
     mock_warning.assert_awaited_once_with(
-        window, "Dangerous preset", message,
-        QtWidgets.QMessageBox.StandardButton.Yes | QtWidgets.QMessageBox.StandardButton.No)
+        window,
+        "Dangerous preset",
+        message,
+        QtWidgets.QMessageBox.StandardButton.Yes | QtWidgets.QMessageBox.StandardButton.No,
+    )
     assert not result
 
 
@@ -540,15 +574,11 @@ async def test_import_permalink(window: MultiplayerSessionWindow, end_state, moc
     mock_permalink_dialog = mocker.patch("randovania.gui.multiplayer_session_window.PermalinkDialog")
     execute_dialog = mocker.patch("randovania.gui.lib.async_dialog.execute_dialog", new_callable=AsyncMock)
     execute_dialog.return_value = (
-        QtWidgets.QDialog.DialogCode.Rejected
-        if end_state == "reject" else
-        QtWidgets.QDialog.DialogCode.Accepted
+        QtWidgets.QDialog.DialogCode.Rejected if end_state == "reject" else QtWidgets.QDialog.DialogCode.Accepted
     )
     mock_warning = mocker.patch("randovania.gui.lib.async_dialog.warning", new_callable=AsyncMock)
     mock_warning.return_value = (
-        QtWidgets.QMessageBox.StandardButton.No
-        if end_state == "abort" else
-        QtWidgets.QMessageBox.StandardButton.Yes
+        QtWidgets.QMessageBox.StandardButton.No if end_state == "abort" else QtWidgets.QMessageBox.StandardButton.Yes
     )
 
     permalink = mock_permalink_dialog.return_value.get_permalink_from_field.return_value
@@ -577,14 +607,17 @@ async def test_import_permalink(window: MultiplayerSessionWindow, end_state, moc
     if end_state == "wrong_count":
         mock_warning.assert_awaited_once_with(window, "Incompatible permalink", ANY)
     else:
-        mock_warning.assert_awaited_once_with(window, "Different presets", ANY, ANY,
-                                              QtWidgets.QMessageBox.StandardButton.No)
+        mock_warning.assert_awaited_once_with(
+            window, "Different presets", ANY, ANY, QtWidgets.QMessageBox.StandardButton.No
+        )
 
     if end_state == "import":
-        window.game_session_api.replace_preset_for.assert_has_awaits([
-            call(world.id, VersionedPreset.with_preset(preset))
-            for world, preset in zip2(session.worlds, permalink.parameters.presets)
-        ])
+        window.game_session_api.replace_preset_for.assert_has_awaits(
+            [
+                call(world.id, VersionedPreset.with_preset(preset))
+                for world, preset in zip2(session.worlds, permalink.parameters.presets)
+            ]
+        )
         window.generate_game_with_permalink.assert_awaited_once_with(permalink, retries=None)
     else:
         window.generate_game_with_permalink.assert_not_awaited()
@@ -592,11 +625,13 @@ async def test_import_permalink(window: MultiplayerSessionWindow, end_state, moc
 
 
 @pytest.mark.parametrize("end_state", ["reject", "wrong_count", "import"])
-async def test_import_layout(window: MultiplayerSessionWindow, end_state, mocker: MockerFixture,
-                             prepare_to_upload_layout):
+async def test_import_layout(
+    window: MultiplayerSessionWindow, end_state, mocker: MockerFixture, prepare_to_upload_layout
+):
     mock_warning = mocker.patch("randovania.gui.lib.async_dialog.warning", new_callable=AsyncMock)
-    mock_load_layout = mocker.patch("randovania.gui.lib.layout_loader.prompt_and_load_layout_description",
-                                    new_callable=AsyncMock)
+    mock_load_layout = mocker.patch(
+        "randovania.gui.lib.layout_loader.prompt_and_load_layout_description", new_callable=AsyncMock
+    )
     layout = mock_load_layout.return_value
     layout.save_to_file = MagicMock()
     layout.as_json = MagicMock()
@@ -632,9 +667,7 @@ async def test_import_layout(window: MultiplayerSessionWindow, end_state, mocker
         window.game_session_api.create_unclaimed_world.assert_awaited_once_with("World 3", ANY)
         assert window.game_session_api.create_unclaimed_world.await_args[0][1]._preset is preset
         mock_warning.assert_awaited_once_with(
-            window,
-            "Temporary error",
-            "New worlds created to fit the imported game file. Please import it again."
+            window, "Temporary error", "New worlds created to fit the imported game file. Please import it again."
         )
     else:
         mock_warning.assert_not_awaited()
@@ -642,10 +675,9 @@ async def test_import_layout(window: MultiplayerSessionWindow, end_state, mocker
 
     if end_state == "import":
         window.game_session_api.prepare_to_upload_layout.assert_called_once_with(["uid1", "uid2"])
-        window.game_session_api.replace_preset_for.assert_has_awaits([
-            call(world.id, VersionedPreset.with_preset(preset))
-            for world in session.worlds
-        ])
+        window.game_session_api.replace_preset_for.assert_has_awaits(
+            [call(world.id, VersionedPreset.with_preset(preset)) for world in session.worlds]
+        )
         uploader.assert_awaited_once_with(layout)
     else:
         window.game_session_api.prepare_to_upload_layout.assert_not_called()
@@ -676,10 +708,14 @@ async def test_on_kicked(skip_qtbot, window: MultiplayerSessionWindow, mocker, a
         window.close.assert_called_once_with()
 
 
-async def test_game_export_listener(window: MultiplayerSessionWindow, mocker: pytest_mock.MockerFixture,
-                                    echoes_game_description, preset_manager):
-    mock_execute_dialog = mocker.patch("randovania.gui.lib.async_dialog.execute_dialog", new_callable=AsyncMock,
-                                       return_value=QtWidgets.QDialog.DialogCode.Accepted)
+async def test_game_export_listener(
+    window: MultiplayerSessionWindow, mocker: pytest_mock.MockerFixture, echoes_game_description, preset_manager
+):
+    mock_execute_dialog = mocker.patch(
+        "randovania.gui.lib.async_dialog.execute_dialog",
+        new_callable=AsyncMock,
+        return_value=QtWidgets.QDialog.DialogCode.Accepted,
+    )
     mock_preset_from = mocker.patch("randovania.layout.versioned_preset.VersionedPreset.from_str")
 
     game = mock_preset_from.return_value.game
@@ -688,7 +724,7 @@ async def test_game_export_listener(window: MultiplayerSessionWindow, mocker: py
     world = MultiplayerWorld(
         id=uuid.uuid4(),
         name="W1",
-        preset_raw=json.dumps(preset_manager.default_preset_for_game(RandovaniaGame.METROID_PRIME_ECHOES).as_json)
+        preset_raw=json.dumps(preset_manager.default_preset_for_game(RandovaniaGame.METROID_PRIME_ECHOES).as_json),
     )
     window._session.get_world.return_value = world
     window._session.worlds = [world]
@@ -747,7 +783,7 @@ async def test_update_session_audit_log(window: MultiplayerSessionWindow):
         entries=[
             MultiplayerSessionAuditEntry("You", f"Did something for the {i}-th time.", datetime.datetime.now())
             for i in range(50)
-        ]
+        ],
     )
     scrollbar = window.tab_audit.verticalScrollBar()
 
@@ -764,7 +800,7 @@ async def test_update_session_audit_log(window: MultiplayerSessionWindow):
 
 
 async def test_on_close_item_tracker(window: MultiplayerSessionWindow, mocker: pytest_mock.MockerFixture):
-    world_uid = uuid.UUID('53308c10-c283-4be5-b5d2-1761c81a871b')
+    world_uid = uuid.UUID("53308c10-c283-4be5-b5d2-1761c81a871b")
     user_id = 10
     mocked_tracker = MagicMock()
     window.tracker_windows[(world_uid, user_id)] = mocked_tracker
@@ -790,7 +826,7 @@ async def test_on_close_item_tracker(window: MultiplayerSessionWindow, mocker: p
 
 
 async def test_track_world_listener_existing_window(window: MultiplayerSessionWindow):
-    world_uid = uuid.UUID('53308c10-c283-4be5-b5d2-1761c81a871b')
+    world_uid = uuid.UUID("53308c10-c283-4be5-b5d2-1761c81a871b")
     user_id = 10
     mocked_tracker = MagicMock()
     window.tracker_windows[(world_uid, user_id)] = mocked_tracker
@@ -802,9 +838,10 @@ async def test_track_world_listener_existing_window(window: MultiplayerSessionWi
     mocked_tracker.raise_.assert_called_once_with()
 
 
-async def test_track_world_listener_create(window: MultiplayerSessionWindow, mocker: pytest_mock.MockerFixture,
-                                           preset_manager):
-    world_uid = uuid.UUID('53308c10-c283-4be5-b5d2-1761c81a871b')
+async def test_track_world_listener_create(
+    window: MultiplayerSessionWindow, mocker: pytest_mock.MockerFixture, preset_manager
+):
+    world_uid = uuid.UUID("53308c10-c283-4be5-b5d2-1761c81a871b")
     user_id = 10
     mock_popup_window = mocker.patch("randovania.gui.multiplayer_session_window.ItemTrackerPopupWindow")
 
@@ -820,9 +857,7 @@ async def test_track_world_listener_create(window: MultiplayerSessionWindow, moc
     # Assert
     window._session.get_world.assert_called_once_with(world_uid)
     mock_popup_window.return_value.show.assert_called_once_with()
-    assert window.tracker_windows == {
-        (world_uid, user_id): mock_popup_window.return_value
-    }
+    assert window.tracker_windows == {(world_uid, user_id): mock_popup_window.return_value}
     window.network_client.world_track_inventory.assert_awaited_once_with(world_uid, user_id, True)
 
 
@@ -844,17 +879,19 @@ async def test_session_visibility_button_clicked(window: MultiplayerSessionWindo
     if visibility is not None:
         window.game_session_api.change_visibility.assert_called_once_with(
             MultiplayerSessionVisibility.VISIBLE
-            if visibility == MultiplayerSessionVisibility.HIDDEN else
-            MultiplayerSessionVisibility.HIDDEN
+            if visibility == MultiplayerSessionVisibility.HIDDEN
+            else MultiplayerSessionVisibility.HIDDEN
         )
 
 
 @pytest.mark.parametrize("accept", [False, True])
 @pytest.mark.parametrize("has_actions", [False, True])
-async def test_clear_generated_game(window: MultiplayerSessionWindow, mocker: pytest_mock.MockerFixture,
-                                    has_actions, accept):
-    execute_dialog = mocker.patch("randovania.gui.lib.async_dialog.yes_no_prompt", new_callable=AsyncMock,
-                                  return_value=accept)
+async def test_clear_generated_game(
+    window: MultiplayerSessionWindow, mocker: pytest_mock.MockerFixture, has_actions, accept
+):
+    execute_dialog = mocker.patch(
+        "randovania.gui.lib.async_dialog.yes_no_prompt", new_callable=AsyncMock, return_value=accept
+    )
 
     window._last_actions = MultiplayerSessionActions(0, [1] if has_actions else [])
     window.game_session_api.clear_generated_game = AsyncMock()
@@ -864,7 +901,9 @@ async def test_clear_generated_game(window: MultiplayerSessionWindow, mocker: py
 
     # Assert
     execute_dialog.assert_awaited_once_with(
-        window, "Clear generated game?", ANY,
+        window,
+        "Clear generated game?",
+        ANY,
         icon=QtWidgets.QMessageBox.Icon.Critical if has_actions else QtWidgets.QMessageBox.Icon.Warning,
     )
     if accept:

@@ -50,10 +50,13 @@ class PrimeFamilyHintNamer(HintNamer):
                 self,
             ),
             HintLocationPrecision.RELATIVE_TO_AREA: RelativeAreaFormatter(
-                patches, lambda msg, with_color: colorize_text(self.color_location, msg, with_color),
+                patches,
+                lambda msg, with_color: colorize_text(self.color_location, msg, with_color),
             ),
             HintLocationPrecision.RELATIVE_TO_INDEX: RelativeItemFormatter(
-                patches, lambda msg, with_color: colorize_text(self.color_location, msg, with_color), players_config,
+                patches,
+                lambda msg, with_color: colorize_text(self.color_location, msg, with_color),
+                players_config,
             ),
         }
 
@@ -77,8 +80,7 @@ class PrimeFamilyHintNamer(HintNamer):
         return self.location_formatters[hint.precision.location].format(
             game,
             dataclasses.replace(
-                pick_hint,
-                pickup_name=colorize_text(self.color_item, pick_hint.pickup_name, with_color)
+                pick_hint, pickup_name=colorize_text(self.color_item, pick_hint.pickup_name, with_color)
             ),
             hint,
             with_color,
@@ -88,8 +90,14 @@ class PrimeFamilyHintNamer(HintNamer):
         """Used when for when an item has a guaranteed hint, but is a starting item."""
         return f"{colorize_text(self.color_item, resource.long_name, with_color)} has no need to be located."
 
-    def format_guaranteed_resource(self, resource: ItemResourceInfo, player_name: str | None,
-                                   location: PickupLocation, hide_area: bool, with_color: bool) -> str:
+    def format_guaranteed_resource(
+        self,
+        resource: ItemResourceInfo,
+        player_name: str | None,
+        location: PickupLocation,
+        hide_area: bool,
+        with_color: bool,
+    ) -> str:
         determiner = ""
         if player_name is not None:
             determiner = self.format_player(player_name, with_color=with_color) + "'s "

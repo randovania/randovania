@@ -66,7 +66,7 @@ async def test_on_database_world_selected():
                 f"{RandovaniaGame.METROID_PRIME_CORRUPTION.value}_world_1",
                 view,
             )
-        ]
+        ],
     )
 
     ctx = AsyncMock()
@@ -99,10 +99,9 @@ async def test_on_database_area_selected(tmp_path, echoes_game_description, mock
     view = MagicMock()
 
     split_world = SplitRegion(
-        region, "The World",
-        [MagicMock(),
-         AreaWidget(area, "area_1", view)
-         ],
+        region,
+        "The World",
+        [MagicMock(), AreaWidget(area, "area_1", view)],
         "split_world",
     )
 
@@ -122,11 +121,7 @@ async def test_on_database_area_selected(tmp_path, echoes_game_description, mock
         view=view,
     )
     mock_digraph.assert_called_once_with(comment=area.name)
-    dot.node.assert_has_calls([
-        call(node.name)
-        for node in area.nodes
-        if not node.is_derived_node
-    ])
+    dot.node.assert_has_calls([call(node.name) for node in area.nodes if not node.is_derived_node])
     dot.render.assert_called_once_with(directory=os.fspath(tmp_path), format="png", cleanup=True)
     mock_file.assert_called_once_with(ANY, filename=f"{area.name}_graph.png")
     v = mock_file.call_args[0][0]
@@ -160,9 +155,9 @@ async def test_on_area_node_selection(echoes_game_description, mocker):
     # Assert
     ctx.original_response.assert_awaited_once_with()
     original_response.edit.assert_awaited_once_with(embeds=[mock_embed.return_value, mock_embed.return_value])
-    mock_embed.assert_has_calls([
-        call(title=area.nodes[0].name,
-             description=ANY),
-        call(title=area.nodes[2].name,
-             description=ANY),
-    ])
+    mock_embed.assert_has_calls(
+        [
+            call(title=area.nodes[0].name, description=ANY),
+            call(title=area.nodes[2].name, description=ANY),
+        ]
+    )

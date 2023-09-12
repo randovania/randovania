@@ -27,6 +27,7 @@ _FIELDS = [
     "spring_ball",
 ]
 
+
 class PresetPrimeQol(PresetTab, Ui_PresetPrimeQol):
     def __init__(self, editor: PresetEditor, game_description: GameDescription, window_manager: WindowManager):
         super().__init__(editor, game_description, window_manager)
@@ -41,7 +42,8 @@ class PresetPrimeQol(PresetTab, Ui_PresetPrimeQol):
         self.cutscene_combo.setItemData(3, LayoutCutsceneMode.MAJOR)
 
         if editor._options.experimental_settings:
-            self.cutscene_label.setText("""
+            self.cutscene_label.setText(
+                """
 <html>
 <head/>
 <body>
@@ -54,7 +56,8 @@ competitive play. All others are skippable.</p>
 cutscenes happen. Inferior to the above options, but kept around because it's funny.</p>
 </body>
 </html>
-            """)
+            """
+            )
         else:
             self.cutscene_combo.removeItem(3)
 

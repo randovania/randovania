@@ -29,19 +29,16 @@ class CSPresetDescriber(GamePresetDescriber):
             "Item Placement": [
                 {
                     "Puppies anywhere": configuration.puppies_anywhere,
-                    "Puppies in Sand Zone only": not configuration.puppies_anywhere
+                    "Puppies in Sand Zone only": not configuration.puppies_anywhere,
                 }
             ],
             "Game Changes": [
                 message_for_required_mains(
-                    configuration.ammo_pickup_configuration,
-                    {"Missiles need main Launcher": "Missile Expansion"}
+                    configuration.ammo_pickup_configuration, {"Missiles need main Launcher": "Missile Expansion"}
                 ),
-                {"No falling blocks in B2": configuration.no_blocks}
+                {"No falling blocks in B2": configuration.no_blocks},
             ],
-            "Difficulty": [
-                {f"Starting HP: {configuration.starting_hp}": configuration.starting_hp != 3}
-            ]
+            "Difficulty": [{f"Starting HP: {configuration.starting_hp}": configuration.starting_hp != 3}],
         }
         fill_template_strings_from_tree(template_strings, extra_message_tree)
 
@@ -52,7 +49,8 @@ class CSPresetDescriber(GamePresetDescriber):
         majors = configuration.standard_pickup_configuration
 
         from randovania.games.cave_story.pickup_database import progressive_items
-        for (progressive_item_name, non_progressive_items) in progressive_items.tuples():
+
+        for progressive_item_name, non_progressive_items in progressive_items.tuples():
             handle_progressive_expected_counts(count, majors, progressive_item_name, non_progressive_items)
 
         return count
@@ -97,7 +95,7 @@ hash_items = {
     36: "Alien Medal",
     37: "Chaco's Lipstick",
     38: "Whimsical Star",
-    39: "Iron Bond"
+    39: "Iron Bond",
 }
 
 
@@ -115,8 +113,8 @@ def get_ingame_hash_str(hash_bytes: bytes) -> str:
 def get_ingame_hash(hash_bytes: bytes) -> list[int]:
     NUM_HASH_ITEMS = 39
 
-    num = int.from_bytes(hash_bytes, 'big', signed=False)
-    num %= NUM_HASH_ITEMS ** 5
+    num = int.from_bytes(hash_bytes, "big", signed=False)
+    num %= NUM_HASH_ITEMS**5
 
     out = []
     for i in range(5):

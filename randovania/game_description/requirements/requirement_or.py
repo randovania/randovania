@@ -8,14 +8,16 @@ from randovania.game_description.requirements.requirement_and import Requirement
 from randovania.game_description.requirements.requirement_set import RequirementSet
 
 if TYPE_CHECKING:
-    from collections.abc import Iterable
+    from collections.abc import Iterable, Iterator
 
+    from randovania.game_description.requirements.requirement_list import RequirementList
     from randovania.game_description.resources.resource_collection import ResourceCollection
     from randovania.game_description.resources.resource_database import ResourceDatabase
 
 
-def _halt_damage_on_zero(items: Iterable[Requirement], current_resources: ResourceCollection,
-                         database: ResourceDatabase):
+def _halt_damage_on_zero(
+    items: Iterable[Requirement], current_resources: ResourceCollection, database: ResourceDatabase
+) -> Iterator[int]:
     for item in items:
         dmg = item.damage(current_resources, database)
         yield dmg
@@ -26,9 +28,7 @@ def _halt_damage_on_zero(items: Iterable[Requirement], current_resources: Resour
 class RequirementOr(RequirementArrayBase):
     def damage(self, current_resources: ResourceCollection, database: ResourceDatabase) -> int:
         try:
-            return min(
-                _halt_damage_on_zero(self.items, current_resources, database)
-            )
+            return min(_halt_damage_on_zero(self.items, current_resources, database))
         except ValueError:
             return MAX_DAMAGE
 
@@ -44,18 +44,14 @@ class RequirementOr(RequirementArrayBase):
             return Requirement.trivial()
 
         num_and_requirements = 0
-        common_requirements = None
+        common_requirements: list[Requirement] | None = None
         for item in new_items:
             if isinstance(item, RequirementAnd) and mergeable_array(item, keep_comments):
                 num_and_requirements += 1
                 if common_requirements is None:
-                    common_requirements = item.items
+                    common_requirements = list(item.items)
                 else:
-                    common_requirements = [
-                        common
-                        for common in common_requirements
-                        if common in item.items
-                    ]
+                    common_requirements = [common for common in common_requirements if common in item.items]
 
         # Only extract the common requirements if there's more than 1 requirement
         if num_and_requirements >= 2 and common_requirements:
@@ -67,8 +63,11 @@ class RequirementOr(RequirementArrayBase):
                     assert set(common_requirements) <= set(item.items)
                     simplified_condition = [it for it in item.items if it not in common_requirements]
                     if simplified_condition:
-                        common_new_or.append(RequirementAnd(simplified_condition) if len(simplified_condition) > 1
-                                             else simplified_condition[0])
+                        common_new_or.append(
+                            RequirementAnd(simplified_condition)
+                            if len(simplified_condition) > 1
+                            else simplified_condition[0]
+                        )
                 else:
                     simplified_items.append(item)
 
@@ -85,15 +84,15 @@ class RequirementOr(RequirementArrayBase):
         return RequirementOr(final_items, comment=self.comment)
 
     def as_set(self, database: ResourceDatabase) -> RequirementSet:
-        alternatives = set()
+        alternatives: set[RequirementList] = set()
         for item in self.items:
             alternatives |= item.as_set(database).alternatives
         return RequirementSet(alternatives)
 
     @classmethod
-    def combinator(cls):
+    def combinator(cls) -> str:
         return " or "
 
     @classmethod
-    def _str_no_items(cls):
+    def _str_no_items(cls) -> str:
         return "Impossible"

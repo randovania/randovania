@@ -2,11 +2,16 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from open_prime_rando.dol_patching.echoes.beam_configuration import BeamAmmoConfiguration
+from open_prime_rando.dol_patching.echoes.beam_configuration import (
+    BeamAmmoConfiguration,
+)
 
 from randovania.game_description import default_database
 from randovania.games.prime2.layout.beam_configuration import BeamConfiguration
-from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration, LayoutSkyTempleKeyMode
+from randovania.games.prime2.layout.echoes_configuration import (
+    EchoesConfiguration,
+    LayoutSkyTempleKeyMode,
+)
 from randovania.layout.preset_describer import (
     GamePresetDescriber,
     fill_template_strings_from_tree,
@@ -16,11 +21,15 @@ from randovania.layout.preset_describer import (
 )
 
 if TYPE_CHECKING:
-    from randovania.game_description.pickup.standard_pickup import StandardPickupDefinition
+    from randovania.game_description.pickup.standard_pickup import (
+        StandardPickupDefinition,
+    )
     from randovania.layout.base.base_configuration import BaseConfiguration
 
 
-def create_beam_configuration_description(beams: BeamConfiguration) -> list[dict[str, bool]]:
+def create_beam_configuration_description(
+    beams: BeamConfiguration,
+) -> list[dict[str, bool]]:
     beam_names = ["Power", "Dark", "Light", "Annihilator"]
     default_config = BeamConfiguration(
         power=BeamAmmoConfiguration(0, -1, -1, 0, 0, 5, 0),
@@ -52,11 +61,7 @@ def create_beam_configuration_description(beams: BeamConfiguration) -> list[dict
         a1 = format_ammo_cost(actual)
         d1 = format_ammo_cost(default)
 
-        return "/".join(
-            a
-            for a, d in zip(a1, d1)
-            if a != d
-        )
+        return "/".join(a for a, d in zip(a1, d1) if a != d)
 
     def format_ammo_name(b: BeamAmmoConfiguration) -> str:
         if b.ammo_a == b.ammo_b == -1:
@@ -90,10 +95,7 @@ def create_beam_configuration_description(beams: BeamConfiguration) -> list[dict
             different.append(missile_cost)
 
         if different:
-            description = "{beam} Beam uses {different}".format(
-                beam=name,
-                different=", ".join(different)
-            )
+            description = "{beam} Beam uses {different}".format(beam=name, different=", ".join(different))
             result.append({description: True})
 
     return result
@@ -111,11 +113,15 @@ class EchoesPresetDescriber(GamePresetDescriber):
         ]
 
         # Difficulty
-        if (configuration.varia_suit_damage, configuration.dark_suit_damage) != (6, 1.2):
+        if (configuration.varia_suit_damage, configuration.dark_suit_damage) != (
+            6,
+            1.2,
+        ):
             template_strings["Difficulty"].append(
                 "Dark Aether deals {:.2f} dmg/s to Varia, {:.2f} dmg/s to Dark Suit".format(
                     configuration.varia_suit_damage, configuration.dark_suit_damage
-                ))
+                )
+            )
 
         if configuration.energy_per_tank != 100:
             template_strings["Difficulty"].append(f"{configuration.energy_per_tank} energy per Energy Tank")
@@ -138,8 +144,11 @@ class EchoesPresetDescriber(GamePresetDescriber):
             ],
             "Gameplay": [
                 {f"Translator Gates: {configuration.translator_configuration.description()}": True},
-                {f"Elevators: {configuration.teleporters.description('elevators')}":
-                 not configuration.teleporters.is_vanilla},
+                {
+                    f"Elevators: {configuration.teleporters.description('elevators')}": (
+                        not configuration.teleporters.is_vanilla
+                    )
+                },
                 {"Portals: Randomized": configuration.portal_rando},
             ],
             "Game Changes": [
@@ -148,16 +157,18 @@ class EchoesPresetDescriber(GamePresetDescriber):
                     {
                         "Missiles needs Launcher": "Missile Expansion",
                         "Power Bomb needs Main": "Power Bomb Expansion",
-                    }
+                    },
                 ),
-                {"Warp to start": configuration.warp_to_start,
-                 "Menu Mod": configuration.menu_mod,
-                 "Final bosses removed": configuration.teleporters.skip_final_bosses,
-                 "Unlocked Save Station doors": configuration.blue_save_doors,
-                 "Inverted Aether": configuration.inverted_mode},
+                {
+                    "Warp to start": configuration.warp_to_start,
+                    "Menu Mod": configuration.menu_mod,
+                    "Final bosses removed": configuration.teleporters.skip_final_bosses,
+                    "Unlocked Save Station doors": configuration.blue_save_doors,
+                    "Inverted Aether": configuration.inverted_mode,
+                },
                 {"New Patcher": configuration.use_new_patcher},
                 *create_beam_configuration_description(configuration.beam_configuration),
-            ]
+            ],
         }
         fill_template_strings_from_tree(template_strings, extra_message_tree)
 
@@ -176,7 +187,8 @@ class EchoesPresetDescriber(GamePresetDescriber):
         majors = configuration.standard_pickup_configuration
 
         from randovania.games.prime2.pickup_database import progressive_items
-        for (progressive_item_name, non_progressive_items) in progressive_items.tuples():
+
+        for progressive_item_name, non_progressive_items in progressive_items.tuples():
             handle_progressive_expected_counts(count, majors, progressive_item_name, non_progressive_items)
 
         return count

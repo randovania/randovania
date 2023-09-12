@@ -27,32 +27,28 @@ HintTargetPrecision = tuple[PickupIndex, HintLocationPrecision, HintItemPrecisio
 
 
 class BasePatchesFactory:
-    def create_base_patches(self,
-                            configuration: BaseConfiguration,
-                            rng: Random,
-                            game: GameDescription,
-                            is_multiworld: bool,
-                            player_index: int,
-                            rng_required: bool = True
-                            ) -> GamePatches:
-        """
-        """
+    def create_base_patches(
+        self,
+        configuration: BaseConfiguration,
+        rng: Random,
+        game: GameDescription,
+        is_multiworld: bool,
+        player_index: int,
+        rng_required: bool = True,
+    ) -> GamePatches:
+        """ """
         patches = GamePatches.create_from_game(game, player_index, configuration)
 
         # Teleporters
         try:
-            patches = patches.assign_dock_connections(
-                self.dock_connections_assignment(configuration, game, rng)
-            )
+            patches = patches.assign_dock_connections(self.dock_connections_assignment(configuration, game, rng))
         except MissingRng as e:
             if rng_required:
                 raise e
 
         # Configurable Nodes
         try:
-            patches = patches.assign_node_configuration(
-                self.configurable_node_assignment(configuration, game, rng)
-            )
+            patches = patches.assign_node_configuration(self.configurable_node_assignment(configuration, game, rng))
         except MissingRng as e:
             if rng_required:
                 raise e
@@ -60,15 +56,17 @@ class BasePatchesFactory:
         # Starting Location
         try:
             patches = patches.assign_starting_location(
-                self.starting_location_for_configuration(configuration, game, rng))
+                self.starting_location_for_configuration(configuration, game, rng)
+            )
         except MissingRng as e:
             if rng_required:
                 raise e
 
         return patches
 
-    def dock_connections_assignment(self, configuration: BaseConfiguration,
-                                    game: GameDescription, rng: Random ) -> Iterable[tuple[DockNode, Node]]:
+    def dock_connections_assignment(
+        self, configuration: BaseConfiguration, game: GameDescription, rng: Random
+    ) -> Iterable[tuple[DockNode, Node]]:
         """
         Adds dock connections if a game's patcher factory overwrites it. e.g. add teleporters
         :param configuration:
@@ -78,11 +76,12 @@ class BasePatchesFactory:
         """
         yield from []
 
-    def starting_location_for_configuration(self,
-                                            configuration: BaseConfiguration,
-                                            game: GameDescription,
-                                            rng: Random,
-                                            ) -> NodeIdentifier:
+    def starting_location_for_configuration(
+        self,
+        configuration: BaseConfiguration,
+        game: GameDescription,
+        rng: Random,
+    ) -> NodeIdentifier:
         locations = list(configuration.starting_location.locations)
         if len(locations) == 0:
             raise InvalidConfiguration("No starting locations are selected")
@@ -95,6 +94,10 @@ class BasePatchesFactory:
 
         return location
 
-    def configurable_node_assignment(self, configuration: BaseConfiguration, game: GameDescription, rng: Random,
-                                     ) -> Iterable[NodeConfigurationAssociation]:
+    def configurable_node_assignment(
+        self,
+        configuration: BaseConfiguration,
+        game: GameDescription,
+        rng: Random,
+    ) -> Iterable[NodeConfigurationAssociation]:
         yield from []

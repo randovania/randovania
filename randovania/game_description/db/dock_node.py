@@ -11,6 +11,8 @@ from randovania.game_description.requirements.resource_requirement import Resour
 from randovania.game_description.resources.node_resource_info import NodeResourceInfo
 
 if typing.TYPE_CHECKING:
+    from collections.abc import Iterable, Iterator
+
     from randovania.game_description.db.node_identifier import NodeIdentifier
 
 
@@ -36,6 +38,7 @@ class DockNode(Node):
     TeleporterNode is expected to be used exceptionally, where it can be reasonable to list all of them in the
     UI for user selection (teleporter rando, for example).
     """
+
     dock_type: DockType
     default_connection: NodeIdentifier
     default_dock_weakness: DockWeakness
@@ -43,10 +46,10 @@ class DockNode(Node):
     override_default_lock_requirement: Requirement | None
     exclude_from_dock_rando: bool
     incompatible_dock_weaknesses: tuple[DockWeakness, ...]
-    lock_node: Node | None = dataclasses.field(init=False, hash=False, compare=False, default=None)
+    lock_node: Node = dataclasses.field(init=False, hash=False, compare=False)
     cache_default_connection: int | None = dataclasses.field(init=False, hash=False, compare=False, default=None)
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"DockNode({self.name!r} -> {self.default_connection})"
 
     def get_back_weakness(self, context: NodeContext) -> DockWeakness | None:
@@ -68,9 +71,11 @@ class DockNode(Node):
         else:
             return context.node_provider.lock_requirement_for(weakness)
 
-    def _open_dock_connection(self, context: NodeContext, target_node: Node,
-                              ) -> tuple[Node, Requirement]:
-
+    def _open_dock_connection(
+        self,
+        context: NodeContext,
+        target_node: Node,
+    ) -> tuple[Node, Requirement]:
         forward_weakness = context.patches.get_dock_weakness_for(self)
 
         reqs: list[Requirement] = [self._get_open_requirement(context, forward_weakness)]
@@ -83,6 +88,7 @@ class DockNode(Node):
         if (other_lock_req := _requirement_from_back(context, target_node)) is not None:
             reqs.append(other_lock_req)
 
+        final_req: Requirement
         if len(reqs) != 1:
             final_req = RequirementAnd(reqs)
         else:
@@ -115,17 +121,18 @@ class DockNode(Node):
     def get_target_node(self, context: NodeContext) -> Node:
         return context.patches.get_dock_connection_for(self)
 
-    def connections_from(self, context: NodeContext) -> typing.Iterator[tuple[Node, Requirement]]:
-        result = context.patches.get_cached_dock_connections_from(self)
+    def connections_from(self, context: NodeContext) -> Iterator[tuple[Node, Requirement]]:
+        result: Iterable[tuple[Node, Requirement]] | None = context.patches.get_cached_dock_connections_from(self)
         if result is None:
-            result = []
+            connections = []
 
             target_node = context.patches.get_dock_connection_for(self)
-            result.append(self._open_dock_connection(context, target_node))
+            connections.append(self._open_dock_connection(context, target_node))
 
             if (lock_connection := self._lock_connection(context)) is not None:
-                result.append(lock_connection)
+                connections.append(lock_connection)
 
-            context.patches.set_cached_dock_connections_from(self, tuple(result))
+            context.patches.set_cached_dock_connections_from(self, tuple(connections))
+            result = connections
 
         yield from result

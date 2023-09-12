@@ -15,47 +15,31 @@ def test_elevator_echoes_shuffled(echoes_game_patches):
     result = elevator_echoes_shuffled(echoes_game_patches.game, rng)
 
     # Assert
-    simpler = {
-        source.as_string: target.as_string
-        for source, target in result.items()
-    }
+    gt = "Great Temple"
+    tg = "Temple Grounds"
+    sf = "Sanctuary Fortress"
+    aw = "Agon Wastes"
+
+    simpler = {source.as_string: target.as_string for source, target in result.items()}
     assert simpler == {
-        'Agon Wastes/Transport to Sanctuary Fortress/Elevator to Sanctuary Fortress':
-        'Temple Grounds/Temple Transport B/Elevator to Great Temple',
-        'Agon Wastes/Transport to Temple Grounds/Elevator to Temple Grounds':
-        'Temple Grounds/Temple Transport A/Elevator to Great Temple',
-        'Agon Wastes/Transport to Torvus Bog/Elevator to Torvus Bog':
-        'Temple Grounds/Temple Transport C/Elevator to Great Temple',
-        'Great Temple/Temple Transport A/Elevator to Temple Grounds':
-        'Temple Grounds/Transport to Agon Wastes/Elevator to Agon Wastes',
-        'Great Temple/Temple Transport B/Elevator to Temple Grounds':
-        'Sanctuary Fortress/Transport to Agon Wastes/Elevator to Agon Wastes',
-        'Great Temple/Temple Transport C/Elevator to Temple Grounds':
-        'Torvus Bog/Transport to Agon Wastes/Elevator to Agon Wastes',
-        'Sanctuary Fortress/Transport to Agon Wastes/Elevator to Agon Wastes':
-        'Great Temple/Temple Transport B/Elevator to Temple Grounds',
-        'Sanctuary Fortress/Transport to Temple Grounds/Elevator to Temple Grounds':
-        'Temple Grounds/Transport to Sanctuary Fortress/Elevator to Sanctuary Fortress',
-        'Sanctuary Fortress/Transport to Torvus Bog/Elevator to Torvus Bog':
-        'Torvus Bog/Transport to Sanctuary Fortress/Elevator to Sanctuary Fortress',
-        'Temple Grounds/Temple Transport A/Elevator to Great Temple':
-        'Agon Wastes/Transport to Temple Grounds/Elevator to Temple Grounds',
-        'Temple Grounds/Temple Transport B/Elevator to Great Temple':
-        'Agon Wastes/Transport to Sanctuary Fortress/Elevator to Sanctuary Fortress',
-        'Temple Grounds/Temple Transport C/Elevator to Great Temple':
-        'Agon Wastes/Transport to Torvus Bog/Elevator to Torvus Bog',
-        'Temple Grounds/Transport to Agon Wastes/Elevator to Agon Wastes':
-        'Great Temple/Temple Transport A/Elevator to Temple Grounds',
-        'Temple Grounds/Transport to Sanctuary Fortress/Elevator to Sanctuary Fortress':
-        'Sanctuary Fortress/Transport to Temple Grounds/Elevator to Temple Grounds',
-        'Temple Grounds/Transport to Torvus Bog/Elevator to Torvus Bog':
-        'Torvus Bog/Transport to Temple Grounds/Elevator to Temple Grounds',
-        'Torvus Bog/Transport to Agon Wastes/Elevator to Agon Wastes':
-        'Great Temple/Temple Transport C/Elevator to Temple Grounds',
-        'Torvus Bog/Transport to Sanctuary Fortress/Elevator to Sanctuary Fortress':
-        'Sanctuary Fortress/Transport to Torvus Bog/Elevator to Torvus Bog',
-        'Torvus Bog/Transport to Temple Grounds/Elevator to Temple Grounds':
-        'Temple Grounds/Transport to Torvus Bog/Elevator to Torvus Bog',
+        f"{aw}/Transport to {sf}/Elevator to {sf}": f"{tg}/Temple Transport B/Elevator to {gt}",
+        f"{aw}/Transport to {tg}/Elevator to {tg}": f"{tg}/Temple Transport A/Elevator to {gt}",
+        f"{aw}/Transport to Torvus Bog/Elevator to Torvus Bog": f"{tg}/Temple Transport C/Elevator to {gt}",
+        f"{gt}/Temple Transport A/Elevator to {tg}": f"{tg}/Transport to {aw}/Elevator to {aw}",
+        f"{gt}/Temple Transport B/Elevator to {tg}": f"{sf}/Transport to {aw}/Elevator to {aw}",
+        f"{gt}/Temple Transport C/Elevator to {tg}": f"Torvus Bog/Transport to {aw}/Elevator to {aw}",
+        f"{sf}/Transport to {aw}/Elevator to {aw}": f"{gt}/Temple Transport B/Elevator to {tg}",
+        f"{sf}/Transport to {tg}/Elevator to {tg}": f"{tg}/Transport to {sf}/Elevator to {sf}",
+        f"{sf}/Transport to Torvus Bog/Elevator to Torvus Bog": f"Torvus Bog/Transport to {sf}/Elevator to {sf}",
+        f"{tg}/Temple Transport A/Elevator to {gt}": f"{aw}/Transport to {tg}/Elevator to {tg}",
+        f"{tg}/Temple Transport B/Elevator to {gt}": f"{aw}/Transport to {sf}/Elevator to {sf}",
+        f"{tg}/Temple Transport C/Elevator to {gt}": f"{aw}/Transport to Torvus Bog/Elevator to Torvus Bog",
+        f"{tg}/Transport to {aw}/Elevator to {aw}": f"{gt}/Temple Transport A/Elevator to {tg}",
+        f"{tg}/Transport to {sf}/Elevator to {sf}": f"{sf}/Transport to {tg}/Elevator to {tg}",
+        f"{tg}/Transport to Torvus Bog/Elevator to Torvus Bog": f"Torvus Bog/Transport to {tg}/Elevator to {tg}",
+        f"Torvus Bog/Transport to {aw}/Elevator to {aw}": f"{gt}/Temple Transport C/Elevator to {tg}",
+        f"Torvus Bog/Transport to {sf}/Elevator to {sf}": f"{sf}/Transport to Torvus Bog/Elevator to Torvus Bog",
+        f"Torvus Bog/Transport to {tg}/Elevator to {tg}": f"{tg}/Transport to Torvus Bog/Elevator to Torvus Bog",
     }
 
 
@@ -64,7 +48,8 @@ def test_save_stations_not_unlocked(echoes_game_patches, default_echoes_configur
 
     # Run
     result = factory.assign_save_door_weaknesses(
-        echoes_game_patches, default_echoes_configuration, echoes_game_description)
+        echoes_game_patches, default_echoes_configuration, echoes_game_description
+    )
 
     # Result
     assert list(result.all_dock_weaknesses()) == []
@@ -72,8 +57,7 @@ def test_save_stations_not_unlocked(echoes_game_patches, default_echoes_configur
 
 def test_save_stations_unlocked(echoes_game_patches, default_echoes_configuration, echoes_game_description):
     factory = EchoesBasePatchesFactory()
-    config = dataclasses.replace(default_echoes_configuration,
-                                 blue_save_doors=True)
+    config = dataclasses.replace(default_echoes_configuration, blue_save_doors=True)
 
     # Run
     result = factory.assign_save_door_weaknesses(echoes_game_patches, config, echoes_game_description)

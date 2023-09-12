@@ -19,18 +19,20 @@ class AboutWidget(QtWidgets.QTextBrowser):
         return super().showEvent(arg)
 
     def setup_about_text(self):
-        ABOUT_TEXT = "\n".join([
-            "# Randovania",
-            "",
-            "<https://github.com/randovania/randovania>",
-            "",
-            "This software is covered by the"
-            " [GNU General Public License v3 (GPLv3)](https://www.gnu.org/licenses/gpl-3.0.en.html)",
-            "",
-            "{community}",
-            "",
-            "{credits}",
-        ])
+        ABOUT_TEXT = "\n".join(
+            [
+                "# Randovania",
+                "",
+                "<https://github.com/randovania/randovania>",
+                "",
+                "This software is covered by the"
+                " [GNU General Public License v3 (GPLv3)](https://www.gnu.org/licenses/gpl-3.0.en.html)",
+                "",
+                "{community}",
+                "",
+                "{credits}",
+            ]
+        )
 
         about_document = self.document()
 

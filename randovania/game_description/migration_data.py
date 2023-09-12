@@ -7,26 +7,20 @@ from randovania.lib import json_lib
 
 
 @functools.lru_cache
-def get_raw_data(game: RandovaniaGame):
-    return json_lib.read_path(game.data_path.joinpath("assets", "migration_data.json"))
+def get_raw_data(game: RandovaniaGame) -> dict:
+    return json_lib.read_dict(game.data_path.joinpath("assets", "migration_data.json"))
 
 
 @functools.lru_cache
 def _get_id_to_world_name_mapping(game: RandovaniaGame) -> dict[int, str]:
     world_name_to_id = get_raw_data(game)["world_name_to_id"]
-    return {
-        asset_id: name
-        for name, asset_id in world_name_to_id.items()
-    }
+    return {asset_id: name for name, asset_id in world_name_to_id.items()}
 
 
 @functools.lru_cache
 def _get_id_to_area_name_mapping(game: RandovaniaGame, world_name: str) -> dict[int, str]:
     area_name_to_id = get_raw_data(game)["area_name_to_id"][world_name]
-    return {
-        asset_id: name
-        for name, asset_id in area_name_to_id.items()
-    }
+    return {asset_id: name for name, asset_id in area_name_to_id.items()}
 
 
 def get_world_name_from_id(game: RandovaniaGame, asset_id: int) -> str:
@@ -47,8 +41,11 @@ def convert_area_loc_id_to_name(game: RandovaniaGame, loc: dict[str, int]) -> di
 
 def get_teleporter_area_to_node_mapping() -> dict[str, str]:
     result = {}
-    for g in [RandovaniaGame.METROID_PRIME, RandovaniaGame.METROID_PRIME_ECHOES,
-              RandovaniaGame.METROID_PRIME_CORRUPTION]:
+    for g in [
+        RandovaniaGame.METROID_PRIME,
+        RandovaniaGame.METROID_PRIME_ECHOES,
+        RandovaniaGame.METROID_PRIME_CORRUPTION,
+    ]:
         result.update(get_raw_data(g)["teleporter_mapping"])
     return result
 

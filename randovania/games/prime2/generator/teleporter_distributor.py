@@ -8,8 +8,9 @@ from randovania.generator.teleporter_distributor import get_teleporter_connectio
 from randovania.layout.lib.teleporters import TeleporterConfiguration, TeleporterShuffleMode
 
 
-def get_teleporter_connections_echoes(teleporters: TeleporterConfiguration,
-                                      game: GameDescription, rng: Random) -> TeleporterConnection:
+def get_teleporter_connections_echoes(
+    teleporters: TeleporterConfiguration, game: GameDescription, rng: Random
+) -> TeleporterConnection:
     teleporter_connection: TeleporterConnection = {}
 
     if not teleporters.is_vanilla:
@@ -28,6 +29,7 @@ def get_teleporter_connections_echoes(teleporters: TeleporterConfiguration,
 
 def elevator_echoes_shuffled(game_description: GameDescription, rng: Random) -> TeleporterConnection:
     from randovania.games.prime2.generator.base_patches_factory import WORLDS
+
     worlds = list(WORLDS)
     rng.shuffle(worlds)
 

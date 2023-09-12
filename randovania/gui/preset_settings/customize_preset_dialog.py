@@ -81,20 +81,19 @@ class CustomizePresetDialog(QtWidgets.QDialog, Ui_CustomizePresetDialog):
             if isinstance(tab_widget, QtWidgets.QTabWidget):
                 self.main_tab_widget.setTabVisible(i, tab_widget.count() > 0)
 
-
         self.name_edit.textEdited.connect(self._edit_name)
         self.description_edit.textChanged.connect(self._edit_description)
         self.button_box.accepted.connect(self.accept)
         self.button_box.rejected.connect(self.reject)
 
     def update_experimental_visibility(self):
-        for (parent, tabs) in [
+        for parent, tabs in [
             (self.patches_tab_widget, [x for x in self._tab_types if x.uses_patches_tab()]),
             (self.logic_tab_widget, [x for x in self._tab_types if not x.uses_patches_tab()]),
         ]:
             for i in range(parent.count()):
                 tab = tabs[i]
-                visible = (self.editor._options.experimental_settings or not tab.is_experimental())
+                visible = self.editor._options.experimental_settings or not tab.is_experimental()
                 parent.setTabVisible(i, visible)
 
     def set_visible_tab(self, tab: PresetTabRoot):
@@ -117,7 +116,6 @@ class CustomizePresetDialog(QtWidgets.QDialog, Ui_CustomizePresetDialog):
     def _edit_description(self):
         with self._editor as editor:
             editor.description = self.description_edit.toPlainText()
-
 
     @property
     def editor(self):

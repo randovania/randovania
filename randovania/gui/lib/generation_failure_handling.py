@@ -48,7 +48,10 @@ class GenerationFailureHandler(QtWidgets.QWidget):
         box = ScrollMessageBox(
             QtWidgets.QMessageBox.Icon.Critical,
             "An error occurred while generating game",
-            str(exception), QtWidgets.QMessageBox.StandardButton.Ok, self.parent)
+            str(exception),
+            QtWidgets.QMessageBox.StandardButton.Ok,
+            self.parent,
+        )
         common_qt_lib.set_default_window_icon(box)
 
         if isinstance(exception.source, UnableToGenerate):
@@ -56,11 +59,14 @@ class GenerationFailureHandler(QtWidgets.QWidget):
             box.setText(
                 f"{box.text()}\n\n"
                 "Double check if your settings aren't impossible, or try again.\n\n"
-                f"Details: {exception.source}")
+                f"Details: {exception.source}"
+            )
 
         elif isinstance(exception.source, multiprocessing.TimeoutError):
-            box.setText(box.text() + "\n\nRandovania sometimes gets stuck infinitely when trying to verify a game, "
-                                     "so there's a timeout. Please try generating again.")
+            box.setText(
+                box.text() + "\n\nRandovania sometimes gets stuck infinitely when trying to verify a game, "
+                "so there's a timeout. Please try generating again."
+            )
 
         await async_dialog.execute_dialog(box)
 

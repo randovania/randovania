@@ -27,16 +27,19 @@ class InhibitorSource:
 
 class WindowsInhibitorSource(InhibitorSource):
     """https://msdn.microsoft.com/en-us/library/windows/desktop/aa373208(v=vs.85).aspx"""
+
     ES_CONTINUOUS = 0x80000000
     ES_SYSTEM_REQUIRED = 0x00000001
 
     def __init__(self):
         import ctypes
+
         self.ctypes = ctypes
 
     def inhibit(self):
         self.ctypes.windll.kernel32.SetThreadExecutionState(
-            WindowsInhibitorSource.ES_CONTINUOUS | WindowsInhibitorSource.ES_SYSTEM_REQUIRED)
+            WindowsInhibitorSource.ES_CONTINUOUS | WindowsInhibitorSource.ES_SYSTEM_REQUIRED
+        )
 
     def uninhibit(self):
         self.ctypes.windll.kernel32.SetThreadExecutionState(WindowsInhibitorSource.ES_CONTINUOUS)

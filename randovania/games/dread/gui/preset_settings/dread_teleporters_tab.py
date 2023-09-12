@@ -4,7 +4,9 @@ import copy
 from typing import TYPE_CHECKING
 
 from randovania.game_description.db.dock_node import DockNode
-from randovania.gui.generated.preset_teleporters_dread_ui import Ui_PresetTeleportersDread
+from randovania.gui.generated.preset_teleporters_dread_ui import (
+    Ui_PresetTeleportersDread,
+)
 from randovania.gui.lib import signal_handling
 from randovania.gui.lib.node_list_helper import NodeListHelper
 from randovania.gui.preset_settings.preset_teleporter_tab import PresetTeleporterTab
@@ -25,22 +27,25 @@ if TYPE_CHECKING:
 
 class PresetTeleportersDread(PresetTeleporterTab, Ui_PresetTeleportersDread, NodeListHelper):
     teleporter_mode_to_description = {
-        TeleporterShuffleMode.VANILLA:
-            "All transporters are connected to where they do in the original game.",
-        TeleporterShuffleMode.TWO_WAY_RANDOMIZED:
+        TeleporterShuffleMode.VANILLA: "All transporters are connected to where they do in the original game.",
+        TeleporterShuffleMode.TWO_WAY_RANDOMIZED: (
             "After taking a transporter, the transporter in the room you are in will bring you back to where you were. "
             "An transporter will never connect to another in the same region. "
-            "This is the only setting that guarantees all regions are reachable.",
-        TeleporterShuffleMode.TWO_WAY_UNCHECKED:
+            "This is the only setting that guarantees all regions are reachable."
+        ),
+        TeleporterShuffleMode.TWO_WAY_UNCHECKED: (
             "After taking an transporter, the transporter in the room you are in"
-             " will bring you back to where you were.",
-        TeleporterShuffleMode.ONE_WAY_TELEPORTER:
+            " will bring you back to where you were."
+        ),
+        TeleporterShuffleMode.ONE_WAY_TELEPORTER: (
             "All transporters bring you to an elevator room, but going backwards can go somewhere else. "
-            "All rooms are used as a destination exactly once, causing all transporters to be separated into loops.",
-        TeleporterShuffleMode.ONE_WAY_TELEPORTER_REPLACEMENT:
+            "All rooms are used as a destination exactly once, causing all transporters to be separated into loops."
+        ),
+        TeleporterShuffleMode.ONE_WAY_TELEPORTER_REPLACEMENT: (
             "All transporters bring you to an elevator room, but going backwards can go somewhere else. "
             "Rooms can be used as a destination multiple times, causing transporter which you can possibly"
-             " not come back to.",
+            " not come back to."
+        ),
     }
 
     def setup_ui(self):
@@ -56,8 +61,7 @@ class PresetTeleportersDread(PresetTeleporterTab, Ui_PresetTeleportersDread, Nod
 
         locations = TeleporterList.nodes_list(self.game_enum)
         node_identifiers: dict[NodeIdentifier, Area] = {
-            loc: region_list.area_by_area_location(loc.area_location)
-            for loc in locations
+            loc: region_list.area_by_area_location(loc.area_location) for loc in locations
         }
         checks: dict[NodeIdentifier, QtWidgets.QCheckBox] = {
             loc: self._create_check_for_source_teleporters(loc) for loc in locations
@@ -65,8 +69,7 @@ class PresetTeleportersDread(PresetTeleporterTab, Ui_PresetTeleportersDread, Nod
         self._teleporters_source_for_location = copy.copy(checks)
         self._teleporters_source_destination = {}
 
-        for location in sorted(locations,
-                                key=lambda loc: (0, checks[loc].text())):
+        for location in sorted(locations, key=lambda loc: (0, checks[loc].text())):
             if location not in checks:
                 continue
 
@@ -75,7 +78,8 @@ class PresetTeleportersDread(PresetTeleporterTab, Ui_PresetTeleportersDread, Nod
             other_locations = [
                 node.default_connection
                 for node in node_identifiers[location].nodes
-                if isinstance(node, DockNode) and node.dock_type in self.teleporter_types
+                if isinstance(node, DockNode)
+                and node.dock_type in self.teleporter_types
                 and region_list.identifier_for_node(node) == location
             ]
             assert len(other_locations) == 1
@@ -96,22 +100,23 @@ class PresetTeleportersDread(PresetTeleporterTab, Ui_PresetTeleportersDread, Nod
 
             row += 1
 
-
     def on_preset_changed(self, preset: Preset):
         config: DreadConfiguration = preset.configuration
         config_teleporters: TeleporterConfiguration = config.teleporters
 
         descriptions = [
             "<p>Controls where each transporter connects to.</p>",
-            f' {self.teleporter_mode_to_description[config_teleporters.mode]}</p>',
+            f" {self.teleporter_mode_to_description[config_teleporters.mode]}</p>",
         ]
         self.teleporters_description_label.setText("".join(descriptions))
 
         signal_handling.set_combo_with_value(self.teleporters_combo, config_teleporters.mode)
         can_shuffle_source = config_teleporters.mode not in (TeleporterShuffleMode.VANILLA,)
-        can_shuffle_target = config_teleporters.mode not in (TeleporterShuffleMode.VANILLA,
-                                                           TeleporterShuffleMode.TWO_WAY_RANDOMIZED,
-                                                           TeleporterShuffleMode.TWO_WAY_UNCHECKED)
+        can_shuffle_target = config_teleporters.mode not in (
+            TeleporterShuffleMode.VANILLA,
+            TeleporterShuffleMode.TWO_WAY_RANDOMIZED,
+            TeleporterShuffleMode.TWO_WAY_UNCHECKED,
+        )
 
         for origin, destination in self._teleporters_source_destination.items():
             origin_check = self._teleporters_source_for_location[origin]

@@ -8,8 +8,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [6.3.0] - 2023-10-??
 
 - Added: During generation, if no alternatives have a non-zero weight, try weighting by how many additional Nodes are reachable.
+- Fixed: The menu option for viewing all Randovania dependencies and their licenses has been restored.
 
 ### Metroid Dread
+
+- Changed: Exporting games is now significantly faster.
 
 #### Logic Database
 
@@ -39,6 +42,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ##### Ghavoran
 
 - Changed: The connection of EMMI Zone Exit Southeast and EMMI Zone Exit West is now a proper door. This enables it to now be shuffled in door lock rando.
+
+### Metroid Prime
+
+- Fixed: Traversing from the Spider Track Bridge to the Quarantine Access A door in Metroid Quarantine A now properly requires the barrier to be removed or `Backwards Lower Mines` to be enabled.
+
+### Metroid Prime 2: Echoes
+
+- Changed: When Progressive Grapple is enabled, it will now show `2 shuffled copies` rather than `Shuffled` for better consistency.
+- Changed: A proper error message is displayed when mono is not found, when exporting a game on macOS and Linux.
 
 ## [6.2.1] - 2023-09-??
 

@@ -8,7 +8,7 @@ import pytest
 from randovania.lib.infinite_timer import InfiniteTimer
 
 
-def test_start(skip_qtbot):
+def test_start(skip_qtbot) -> None:
     target = AsyncMock()
 
     timer = InfiniteTimer(target, 0.001)
@@ -18,21 +18,22 @@ def test_start(skip_qtbot):
 
 
 @pytest.mark.parametrize("has_task", [False, True])
-def test_stop(skip_qtbot, has_task):
+def test_stop(skip_qtbot, has_task: bool) -> None:
     target = AsyncMock()
 
     timer = InfiniteTimer(target, 0.001)
     timer._timer = MagicMock()
     if has_task:
-        timer._current_task = MagicMock()
+        cur_task = MagicMock()
+        timer._current_task = cur_task
     timer.stop()
 
     timer._timer.stop.assert_called_once_with()
     if has_task:
-        timer._current_task.cancel.assert_called_once_with()
+        cur_task.cancel.assert_called_once_with()
 
 
-async def test_on_timeout(skip_qtbot, event_loop):
+async def test_on_timeout(skip_qtbot) -> None:
     target = AsyncMock()
 
     timer = InfiniteTimer(target, 0.001)
@@ -48,7 +49,7 @@ async def test_on_timeout(skip_qtbot, event_loop):
     assert timer._current_task is None
 
 
-async def test_on_timeout_and_cancel(skip_qtbot, event_loop):
+async def test_on_timeout_and_cancel(skip_qtbot) -> None:
     target = AsyncMock()
 
     timer = InfiniteTimer(target, 0.001)

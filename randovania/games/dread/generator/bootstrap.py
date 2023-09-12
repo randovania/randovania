@@ -35,8 +35,9 @@ def all_dna_locations(game: GameDescription, config: DreadArtifactConfig):
 
 
 class DreadBootstrap(MetroidBootstrap):
-    def _get_enabled_misc_resources(self, configuration: BaseConfiguration,
-                                    resource_database: ResourceDatabase) -> set[str]:
+    def _get_enabled_misc_resources(
+        self, configuration: BaseConfiguration, resource_database: ResourceDatabase
+    ) -> set[str]:
         assert isinstance(configuration, DreadConfiguration)
 
         enabled_resources = {"SeparateBeams", "SeparateMissiles"}
@@ -56,9 +57,11 @@ class DreadBootstrap(MetroidBootstrap):
 
         return enabled_resources
 
-    def event_resources_for_configuration(self, configuration: BaseConfiguration,
-                                          resource_database: ResourceDatabase,
-                                          ) -> ResourceGain:
+    def event_resources_for_configuration(
+        self,
+        configuration: BaseConfiguration,
+        resource_database: ResourceDatabase,
+    ) -> ResourceGain:
         assert isinstance(configuration, DreadConfiguration)
 
         if configuration.hanubia_shortcut_no_grapple:
@@ -78,8 +81,9 @@ class DreadBootstrap(MetroidBootstrap):
         locations = all_dna_locations(patches.game, config)
         rng.shuffle(locations)
 
-        all_dna = [pickup for pickup in list(pool_results.to_place)
-                   if pickup.pickup_category is DREAD_ARTIFACT_CATEGORY]
+        all_dna = [
+            pickup for pickup in list(pool_results.to_place) if pickup.pickup_category is DREAD_ARTIFACT_CATEGORY
+        ]
         if len(all_dna) > len(locations):
             raise InvalidConfiguration(
                 f"Has {len(all_dna)} DNA in the pool, but only {len(locations)} valid locations."

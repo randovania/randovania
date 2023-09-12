@@ -16,34 +16,28 @@ def test_migrations(empty_database):
         ' "generation_in_progress_id" INTEGER, "dev_features" VARCHAR(255), "allow_coop" INTEGER NOT NULL,'
         ' "allow_everyone_claim_world" INTEGER NOT NULL, FOREIGN KEY ("creator_id") REFERENCES "user" ("id"),'
         ' FOREIGN KEY ("generation_in_progress_id") REFERENCES "user" ("id"))',
-
         'CREATE INDEX "multiplayer_session_creator_id" ON "multiplayer_session" ("creator_id")',
         'CREATE INDEX "multiplayer_session_generation_in_progress_id" ON "multiplayer_session"'
         ' ("generation_in_progress_id")',
-
         'CREATE TABLE "multiplayer_audit_entry" ("id" INTEGER NOT NULL PRIMARY KEY, "session_id" INTEGER NOT NULL,'
         ' "user_id" INTEGER NOT NULL, "message" TEXT NOT NULL, "time" DATETIME NOT NULL, FOREIGN KEY ("session_id")'
         ' REFERENCES "multiplayer_session" ("id"), FOREIGN KEY ("user_id") REFERENCES "user" ("id"))',
-
         'CREATE INDEX "multiplayer_audit_entry_session_id" ON "multiplayer_audit_entry" ("session_id")',
         'CREATE INDEX "multiplayer_audit_entry_user_id" ON "multiplayer_audit_entry" ("user_id")',
         'CREATE TABLE "multiplayer_membership" ("user_id" INTEGER NOT NULL, "session_id" INTEGER NOT NULL,'
         ' "admin" INTEGER NOT NULL, "join_date" DATETIME NOT NULL, "can_help_layout_generation" INTEGER NOT NULL,'
         ' PRIMARY KEY ("user_id", "session_id"), FOREIGN KEY ("user_id") REFERENCES "user" ("id"),'
         ' FOREIGN KEY ("session_id") REFERENCES "multiplayer_session" ("id"))',
-
         'CREATE INDEX "multiplayer_membership_user_id" ON "multiplayer_membership" ("user_id")',
         'CREATE INDEX "multiplayer_membership_session_id" ON "multiplayer_membership" ("session_id")',
         'CREATE TABLE "performed_database_migrations" ("id" INTEGER NOT NULL PRIMARY KEY,'
         ' "migration" VARCHAR(255) NOT NULL)',
         'CREATE UNIQUE INDEX "performed_database_migrations_migration"'
         ' ON "performed_database_migrations" ("migration")',
-
         'CREATE TABLE "user_access_token" ("user_id" INTEGER NOT NULL, "name" VARCHAR(255) NOT NULL,'
         ' "creation_date" DATETIME NOT NULL, "last_used" DATETIME NOT NULL, PRIMARY KEY ("user_id", "name"),'
         ' FOREIGN KEY ("user_id") REFERENCES "user" ("id"))',
         'CREATE INDEX "user_access_token_user_id" ON "user_access_token" ("user_id")',
-
         'CREATE TABLE "world" ("id" INTEGER NOT NULL PRIMARY KEY, "session_id" INTEGER NOT NULL, "uuid" TEXT NOT NULL,'
         ' "name" VARCHAR(30) NOT NULL, "preset" TEXT NOT NULL, "order" INTEGER, FOREIGN KEY ("session_id")'
         ' REFERENCES "multiplayer_session" ("id"))',

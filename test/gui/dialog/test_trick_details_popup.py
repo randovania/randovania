@@ -12,8 +12,7 @@ from randovania.layout.base.trick_level import LayoutTrickLevel
 
 
 @pytest.mark.parametrize("trick_levels", [None, MagicMock()])
-def test_click_on_link(echoes_game_description,
-                       skip_qtbot, trick_levels):
+def test_click_on_link(echoes_game_description, skip_qtbot, trick_levels):
     # Setup
     main_window = QWidget()
     main_window.open_data_visualizer_at = MagicMock()
@@ -34,7 +33,8 @@ def test_click_on_link(echoes_game_description,
 
     # Assert
     main_window.open_data_visualizer_at.assert_called_once_with(
-        world_name, area_name,
+        world_name,
+        area_name,
         game=RandovaniaGame.METROID_PRIME_ECHOES,
         trick_levels=trick_levels,
     )

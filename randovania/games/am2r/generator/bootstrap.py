@@ -38,15 +38,17 @@ def all_dna_locations(game: GameDescription, config: AM2RArtifactConfig):
 
 
 class AM2RBootstrap(MetroidBootstrap):
-    def _get_enabled_misc_resources(self, configuration: BaseConfiguration,
-                                    resource_database: ResourceDatabase) -> set[str]:
-
+    def _get_enabled_misc_resources(
+        self, configuration: BaseConfiguration, resource_database: ResourceDatabase
+    ) -> set[str]:
         enabled_resources = set()
 
         logical_patches = {
             "septogg_helpers": "Septogg",
             "screw_blocks": "ScrewBlocks",
             "skip_cutscenes": "SkipCutscenes",
+            "fusion_mode": "FusionMode",
+            "softlock_prevention_blocks": "SoftlockPrevention",
             "respawn_bomb_blocks": "RespawnBombBlocks",
             "a3_entrance_blocks": "A3Entrance",
             "grave_grotto_blocks": "GraveGrottoBlocks",
@@ -60,8 +62,7 @@ class AM2RBootstrap(MetroidBootstrap):
         return enabled_resources
 
     def _damage_reduction(self, db: ResourceDatabase, current_resources: ResourceCollection):
-        num_suits = sum(current_resources[db.get_item_by_name(suit)]
-                        for suit in ["Varia Suit", "Gravity Suit"])
+        num_suits = sum(current_resources[db.get_item_by_name(suit)] for suit in ["Varia Suit", "Gravity Suit"])
         return 2 ** (-num_suits)
 
     def patch_resource_database(self, db: ResourceDatabase, configuration: BaseConfiguration) -> ResourceDatabase:
@@ -76,8 +77,9 @@ class AM2RBootstrap(MetroidBootstrap):
         locations = all_dna_locations(patches.game, config)
         rng.shuffle(locations)
 
-        dna_to_assign = [pickup for pickup in list(pool_results.to_place)
-                     if pickup.pickup_category is METROID_DNA_CATEGORY]
+        dna_to_assign = [
+            pickup for pickup in list(pool_results.to_place) if pickup.pickup_category is METROID_DNA_CATEGORY
+        ]
 
         if len(dna_to_assign) > len(locations):
             raise InvalidConfiguration(
@@ -91,11 +93,4 @@ class AM2RBootstrap(MetroidBootstrap):
         return super().assign_pool_results(rng, patches, pool_results)
 
 
-_boss_items = [
-    "oItemM_111",
-    "oItemJumpBall",
-    "oItemSpaceJump",
-    "oItemPBeam",
-    "oItemIBeam",
-    "oItemETank_50"
-]
+_boss_items = ["oItemM_111", "oItemJumpBall", "oItemSpaceJump", "oItemPBeam", "oItemIBeam", "oItemETank_50"]

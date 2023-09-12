@@ -18,7 +18,7 @@ class Region:
     areas: list[Area]
     extra: dict[str, typing.Any]
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"World[{self.name}]"
 
     @property
@@ -60,8 +60,5 @@ class Region:
     def duplicate(self) -> Region:
         return dataclasses.replace(
             self,
-            areas=[
-                area.duplicate()
-                for area in self.areas
-            ],
+            areas=[area.duplicate() for area in self.areas],
         )

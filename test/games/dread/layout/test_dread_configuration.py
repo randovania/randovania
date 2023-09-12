@@ -29,8 +29,8 @@ def test_has_unsupported_features(preset_manager):
     )
 
     assert configuration.unsupported_features() == [
-        'Metroid DNA on non-boss/EMMI',
-        'Enabled Heat/Cold Runs',
+        "Metroid DNA on non-boss/EMMI",
+        "Enabled Heat/Cold Runs",
     ]
 
 
