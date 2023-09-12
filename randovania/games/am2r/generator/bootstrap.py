@@ -47,6 +47,8 @@ class AM2RBootstrap(MetroidBootstrap):
             "septogg_helpers": "Septogg",
             "screw_blocks": "ScrewBlocks",
             "skip_cutscenes": "SkipCutscenes",
+            "fusion_mode": "FusionMode",
+            "softlock_prevention_blocks": "SoftlockPrevention",
             "respawn_bomb_blocks": "RespawnBombBlocks",
             "a3_entrance_blocks": "A3Entrance",
             "grave_grotto_blocks": "GraveGrottoBlocks",
