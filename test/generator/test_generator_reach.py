@@ -102,17 +102,7 @@ _ignore_events_for_game = {
     RandovaniaGame.METROID_PRIME: {"Event33"},
     RandovaniaGame.METROID_PRIME_ECHOES: {"Event91", "Event92", "Event97"},
     RandovaniaGame.METROID_PRIME_CORRUPTION: {"Event1", "Event146", "Event147", "Event148", "Event154"},
-    RandovaniaGame.SUPER_METROID: {
-        "Event4",
-        "Event6",
-        "Event7",
-        "Event8",
-        "Event13",
-        "Event14",
-        "Event15",
-        "Event16",
-        "Event17",
-    },
+    RandovaniaGame.SUPER_METROID: {"Event6"},
     RandovaniaGame.METROID_DREAD: {},
     RandovaniaGame.CAVE_STORY: {
         "camp",
