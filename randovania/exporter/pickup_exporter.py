@@ -92,7 +92,9 @@ def _pickup_description(pickup: PickupEntry) -> str:
 
         text = f"{provides_text(ammo_desc[0][1])} {ammo_desc[0][0]}"
         for desc, is_negative in ammo_desc[1:-1]:
-            text += f" and {provides_text(is_negative).lower()} {desc}"
+            text += f", {provides_text(is_negative).lower()} {desc}"
+        if len(ammo_desc) > 1:
+            text += f" and {provides_text(ammo_desc[-1][1]).lower()} {ammo_desc[-1][0]}"
         text += "."
         return text
     else:

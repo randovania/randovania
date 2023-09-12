@@ -274,7 +274,7 @@ def test_create_pickup_list(
     assert result[4] == pickup_exporter.ExportedPickupDetails(
         index=PickupIndex(4),
         name="P-C" if has_scan_text else "Unknown item",
-        description="Provides 2 B and 1 A." if has_scan_text else "",
+        description="Provides 2 B and provides 1 A." if has_scan_text else "",
         collection_text=["P-C acquired!"] if model_style != PickupModelStyle.HIDE_ALL else ["Unknown item acquired!"],
         conditional_resources=[
             ConditionalResources(
@@ -476,8 +476,12 @@ def test_pickup_scan_for_progressive_suit(echoes_pickup_database, echoes_resourc
 @pytest.mark.parametrize(
     ("item", "ammo", "expected"),
     [
-        ("Beam Ammo Expansion", [4, 20], "Provides 4 Dark Ammo, 20 Light Ammo and 1 Item Percentage."),
-        ("Missile Expansion", [4], "Provides 4 Missiles and 1 Item Percentage."),
+        (
+            "Beam Ammo Expansion",
+            [4, 20],
+            "Provides 4 Dark Ammo, provides 20 Light Ammo and provides 1 Item Percentage.",
+        ),
+        ("Missile Expansion", [4], "Provides 4 Missiles and provides 1 Item Percentage."),
     ],
 )
 def test_pickup_scan_for_ammo_expansion(echoes_pickup_database, echoes_resource_database, item, ammo, expected):
