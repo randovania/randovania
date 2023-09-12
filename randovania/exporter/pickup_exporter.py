@@ -79,15 +79,22 @@ def _pickup_description(pickup: PickupEntry) -> str:
             return ""
 
     ammo_desc = [
-        item_names.add_quantity_to_resource(item_names.resource_user_friendly_name(resource), quantity, True)
+        (
+            item_names.add_quantity_to_resource(item_names.resource_user_friendly_name(resource), abs(quantity), True),
+            quantity < 0,
+        )
         for resource, quantity in pickup.extra_resources
     ]
     if ammo_desc:
-        return "Provides {}{}{}.".format(
-            ", ".join(ammo_desc[:-1]),
-            " and " if len(ammo_desc) > 1 else "",
-            ammo_desc[-1],
-        )
+
+        def provides_text(negative):
+            return "Provides" if not negative else "Removes"
+
+        text = f"{provides_text(ammo_desc[0][1])} {ammo_desc[0][0]}"
+        for desc, is_negative in ammo_desc[1:-1]:
+            text += f" and {provides_text(is_negative).lower()} {desc}"
+        text += "."
+        return text
     else:
         return ""
 

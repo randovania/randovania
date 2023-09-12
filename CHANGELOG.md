@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Searching for your own pickup in Multiworld sessions will now show only pickups which match *exactly* the name, instead of showing pickups which start with that name.
 - Fixed: The import in a multiworld session is blocked if it contains an unsupported game.
 - Fixed: Opening the webbrowser for Discord Login doesn't fail on Linux anymore.
+- Changed: Scanning ammo in the Prime games will now show nicer text for negative ammo.
 
 ### AM2R
 
