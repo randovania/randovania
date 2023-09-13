@@ -41,15 +41,10 @@ def interesting_resources_for_reach(reach: GeneratorReach) -> frozenset[Resource
 def _unsatisfied_item_requirements_in_list(
     alternative: RequirementList, state: State, uncollected_resources: set[ResourceInfo]
 ):
-    possible = True
     items = []
     damage = []
 
     for individual in alternative.values():
-        if individual.negate:
-            possible = False
-            break
-
         if individual.resource.resource_type == ResourceType.DAMAGE:
             damage.append(individual)
             continue
@@ -57,15 +52,16 @@ def _unsatisfied_item_requirements_in_list(
         if individual.satisfied(state.resources, state.energy, state.resource_database):
             continue
 
-        if individual.resource.resource_type != ResourceType.ITEM:
-            if individual.resource not in uncollected_resources:
-                possible = False
-                break
+        if individual.negate or (
+            individual.resource.resource_type != ResourceType.ITEM and individual.resource not in uncollected_resources
+        ):
+            # The whole requirement chain is marked as impossible to fulfill if
+            # - There is a negative requirement which is unsatisfied, as that means we have lost the chance to
+            #   ever satisfy it
+            # - There is a non-item requirement for something that is not reachable
+            return
 
         items.append(individual)
-
-    if not possible:
-        return
 
     sum_damage = sum(req.damage(state.resources, state.resource_database) for req in damage)
     if state.energy <= sum_damage:
