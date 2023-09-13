@@ -37,11 +37,11 @@ class Element:
 
     def __post_init__(self):
         if len(self.labels) > 1 and len(self.labels) != len(self.resources):
-            raise ValueError("Label has {} progressive icons, but has {} resources ({}).".format(
-                len(self.labels),
-                len(self.resources),
-                str([r.long_name for r in self.resources])
-            ))
+            raise ValueError(
+                "Label has {} progressive icons, but has {} resources ({}).".format(
+                    len(self.labels), len(self.resources), str([r.long_name for r in self.resources])
+                )
+            )
 
 
 class ItemTrackerWidget(QtWidgets.QGroupBox):
@@ -122,29 +122,20 @@ class ItemTrackerWidget(QtWidgets.QGroupBox):
             for resource, label in zip(resources, labels):
                 label.setToolTip(resource.long_name)
 
-            self.tracker_elements.append(Element(
-                list(labels),
-                resources,
-                text_template,
-                minimum_to_check,
-                field_to_check,
-                disabled_image
-            ))
+            self.tracker_elements.append(
+                Element(list(labels), resources, text_template, minimum_to_check, field_to_check, disabled_image)
+            )
             if disabled_image is not None:
                 labels.append(disabled_image)
 
             for label in labels:
                 self._layout.addWidget(
-                    label,
-                    element["row"],
-                    element["column"],
-                    row_span,
-                    col_span,
-                    QtCore.Qt.AlignmentFlag.AlignCenter
+                    label, element["row"], element["column"], row_span, col_span, QtCore.Qt.AlignmentFlag.AlignCenter
                 )
 
-        self.inventory_spacer = QtWidgets.QSpacerItem(5, 5, QtWidgets.QSizePolicy.Policy.Expanding,
-                                                      QtWidgets.QSizePolicy.Policy.Expanding)
+        self.inventory_spacer = QtWidgets.QSpacerItem(
+            5, 5, QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Expanding
+        )
         self._layout.addItem(self.inventory_spacer, self._layout.rowCount(), self._layout.columnCount())
 
     def update_state(self, inventory: Inventory):
@@ -155,8 +146,11 @@ class ItemTrackerWidget(QtWidgets.QGroupBox):
                 satisfied = False
                 for i, resource in reversed(list(enumerate(element.resources))):
                     current = inventory.get(resource)
-                    fields = {"amount": current.amount, "capacity": current.capacity,
-                              "max_capacity": resource.max_capacity}
+                    fields = {
+                        "amount": current.amount,
+                        "capacity": current.capacity,
+                        "max_capacity": resource.max_capacity,
+                    }
 
                     if satisfied:
                         element.labels[i].setVisible(False)
@@ -199,8 +193,10 @@ class ItemTrackerWidget(QtWidgets.QGroupBox):
                     label.setValue(amount)
 
                 else:
-                    label.setText(element.text_template.format(
-                        amount=amount,
-                        capacity=capacity,
-                        max_capacity=max_capacity,
-                    ))
+                    label.setText(
+                        element.text_template.format(
+                            amount=amount,
+                            capacity=capacity,
+                            max_capacity=max_capacity,
+                        )
+                    )

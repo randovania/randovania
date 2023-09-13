@@ -61,10 +61,11 @@ def _get_major_entries(log: str) -> str:
     return "\n".join(result)
 
 
-def versions_to_display_for_releases(current_version: StrictVersion,
-                                     last_changelog_version: StrictVersion,
-                                     releases: list[dict],
-                                     ) -> tuple[dict[str, str], list[str], VersionDescription | None]:
+def versions_to_display_for_releases(
+    current_version: StrictVersion,
+    last_changelog_version: StrictVersion,
+    releases: list[dict],
+) -> tuple[dict[str, str], list[str], VersionDescription | None]:
     all_change_logs = {}
     new_change_logs = []
     displayed_new_version = False

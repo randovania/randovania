@@ -16,7 +16,6 @@ if TYPE_CHECKING:
 
 
 class PresetPrimeGoal(PresetTab, Ui_PresetPrimeGoal):
-
     def __init__(self, editor: PresetEditor, game_description: GameDescription, window_manager: WindowManager):
         super().__init__(editor, game_description, window_manager)
         self.setupUi(self)
@@ -34,10 +33,7 @@ class PresetPrimeGoal(PresetTab, Ui_PresetPrimeGoal):
 
     def _update_editor(self):
         with self._editor as editor:
-            editor.set_configuration_field(
-                "artifact_target",
-                LayoutArtifactMode(self.slider.value())
-            )
+            editor.set_configuration_field("artifact_target", LayoutArtifactMode(self.slider.value()))
 
     def _on_slider_changed(self):
         self.slider_label.setText(str(self.slider.value()))

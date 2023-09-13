@@ -18,8 +18,9 @@ async def post_to_discord():
     version = args.version
 
     try:
-        current_branch = subprocess.run(["git", "rev-parse", "--abbrev-ref", "HEAD"],
-                                        check=True, stdout=subprocess.PIPE, text=True).stdout.strip()
+        current_branch = subprocess.run(
+            ["git", "rev-parse", "--abbrev-ref", "HEAD"], check=True, stdout=subprocess.PIPE, text=True
+        ).stdout.strip()
     except subprocess.SubprocessError:
         current_branch = "<Unknown Branch>"
 
@@ -42,22 +43,24 @@ async def post_to_discord():
         {
             "name": artifact.replace("Executable", "").replace("Randovania", "").strip(),
             "value": f"[Download](https://nightly.link/{org_name}/{repo_name}/"
-                     f"actions/runs/{run_id}/{artifact.replace(' ', '%20')}.zip)",
-            "inline": True
+            f"actions/runs/{run_id}/{artifact.replace(' ', '%20')}.zip)",
+            "inline": True,
         }
         for artifact in os.listdir("packages")
         if artifact != "Python Package"
     ]
 
     webhook_data = {
-        "embeds": [{
-            "color": 0x2ecc71,
-            "title": f"{current_branch} - Randovania {version}",
-            "url": f"https://github.com/randovania/randovania/commit/{commit_hash}",
-            "description": message.strip(),
-            "fields": fields,
-            "timestamp": datetime.datetime.now().isoformat()
-        }]
+        "embeds": [
+            {
+                "color": 0x2ECC71,
+                "title": f"{current_branch} - Randovania {version}",
+                "url": f"https://github.com/randovania/randovania/commit/{commit_hash}",
+                "description": message.strip(),
+                "fields": fields,
+                "timestamp": datetime.datetime.now().isoformat(),
+            }
+        ]
     }
     pprint.pprint(webhook_data)
 
@@ -67,5 +70,5 @@ async def post_to_discord():
             print(await response.text())
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     asyncio.run(post_to_discord())

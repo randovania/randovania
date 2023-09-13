@@ -8,18 +8,61 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [6.3.0] - 2023-10-??
 
 - Added: During generation, if no alternatives have a non-zero weight, try weighting by how many additional Nodes are reachable.
+- Changed: The generator will now consider placing Energy Tanks, if there's a damage requirement that's exactly high enough to kill the player.
+- Fixed: The menu option for viewing all Randovania dependencies and their licenses has been restored.
+- Fixed: The generator should now handle cases with negative requirements a little better.
 
 ### Metroid Dread
 
+- Changed: Exporting games is now significantly faster.
+
 #### Logic Database
+
+- Added: 3 videos to the logic the database for a diagonal bomb jump in Ghavoran, a single-wall jump in Cataris, and a diffusion abuse trick in Artaria.
+
+##### Artaria
+
+- Changed: EMMI Zone Spinner: The connection to the pickup that is available before flipping the spinner now also requires door lock rando and Highly Dangerous Logic to be enabled.
+
+##### Burenia
+
+- Changed: Teleport to Ferenia: Using Speed Booster to get past the Shutter Gate now requires Speed Booster Conservation Beginner.
+
+##### Cataris
+
+- Changed: Thermal Device Room South: The connections to the thermal door that closes after using the thermal device now logically remains open when door lock rando is disabled and the "Can Slide" and "Shoot Beam" templates are satisfied. This is a handwave that makes the thermal device no longer a dangerous resource.
+- Changed: Single-wall Jump trick in Cataris Teleport to Artaria (Blue) now requires a slide jump.
+
+##### Dairon
+
+- Changed: Yellow EMMI Introduction: Using Speed Booster to go through the Shutter Gate, right to left, no longer requires Flash Shift Skip.
+
+##### Ferenia
+
+- Changed: Purple EMMI Introduction: Using Speed Booster to get past the Shutter Gate now requires Speed Booster Conservation Intermediate instead of Flash Shift Skip Beginner.
 
 ##### Ghavoran
 
 - Changed: The connection of EMMI Zone Exit Southeast and EMMI Zone Exit West is now a proper door. This enables it to now be shuffled in door lock rando.
 
+### Metroid Prime
+
+- Fixed: Traversing from the Spider Track Bridge to the Quarantine Access A door in Metroid Quarantine A now properly requires the barrier to be removed or `Backwards Lower Mines` to be enabled.
+
+### Metroid Prime 2: Echoes
+
+- Changed: When Progressive Grapple is enabled, it will now show `2 shuffled copies` rather than `Shuffled` for better consistency.
+- Changed: A proper error message is displayed when mono is not found, when exporting a game on macOS and Linux.
+
 ## [6.2.1] - 2023-09-??
 
-- Nothing.
+### Metroid Prime
+
+- Fixed: Door from Quarantine Access A to Central Dynamo being inoperable with Reverse Lower Mines enabled.
+- Fixed: Minor issues with new skippable cutscenes option.
+- Changed: Remove white screen flash effect when crates explode.
+- Changed: Skippable cutscene modes are no longer experimental. Skippable is the new default. Competitive cutscene mode has been updated appropriately.
+- Removed: Major/Minor Cutscene Mode (Major hidden behind experimental options)
 
 ## [6.2.0] - 2023-09-??
 

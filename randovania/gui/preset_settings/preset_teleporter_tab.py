@@ -58,8 +58,11 @@ class PresetTeleporterTab(PresetTab, NodeListHelper):
             TeleporterTargetList.nodes_list(self.game_enum),
             self._on_teleporter_target_check_changed,
         )
-        (self._teleporters_target_for_region, self._teleporters_target_for_area,
-            self._teleporters_target_for_node) = result
+        (
+            self._teleporters_target_for_region,
+            self._teleporters_target_for_area,
+            self._teleporters_target_for_node,
+        ) = result
 
     def setup_ui(self):
         raise NotImplementedError
@@ -84,12 +87,14 @@ class PresetTeleporterTab(PresetTab, NodeListHelper):
             config = editor.layout_configuration_teleporters
             editor.layout_configuration_teleporters = dataclasses.replace(
                 config,
-                excluded_teleporters=TeleporterList.with_elements([
-                    location
-                    for location, check in self._teleporters_source_for_location.items()
-                    if not check.isChecked()
-
-                ], self.game_enum)
+                excluded_teleporters=TeleporterList.with_elements(
+                    [
+                        location
+                        for location, check in self._teleporters_source_for_location.items()
+                        if not check.isChecked()
+                    ],
+                    self.game_enum,
+                ),
             )
 
     def _on_teleporter_target_check_changed(self, areas: list[NodeIdentifier], checked: bool):
@@ -101,8 +106,9 @@ class PresetTeleporterTab(PresetTab, NodeListHelper):
             )
 
     def _create_check_for_source_teleporters(self, location: NodeIdentifier):
-        name = elevators.get_elevator_or_area_name(self.game_enum, self.game_description.region_list,
-                                                   location.area_location, True)
+        name = elevators.get_elevator_or_area_name(
+            self.game_enum, self.game_description.region_list, location.area_location, True
+        )
 
         check = QtWidgets.QCheckBox(self.teleporters_source_group)
         check.setText(name)

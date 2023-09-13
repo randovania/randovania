@@ -25,39 +25,45 @@ def test_encode_world_sync():
 
 def test_encode_sync_request():
     request = world_sync.ServerSyncRequest(
-        worlds=frozendict({
-            uuid.UUID("2fb143a7-f48b-41d0-915a-0276a021f558"): world_sync.ServerWorldSync(
-                status=GameConnectionStatus.Disconnected,
-                collected_locations=(1, 2, 5),
-                inventory=None,
-                request_details=True,
-            ),
-        })
+        worlds=frozendict(
+            {
+                uuid.UUID("2fb143a7-f48b-41d0-915a-0276a021f558"): world_sync.ServerWorldSync(
+                    status=GameConnectionStatus.Disconnected,
+                    collected_locations=(1, 2, 5),
+                    inventory=None,
+                    request_details=True,
+                ),
+            }
+        )
     )
 
     encoded = construct_pack.encode(request)
 
-    assert encoded == b'\x01/\xb1C\xa7\xf4\x8bA\xd0\x91Z\x02v\xa0!\xf5X\x00\x03\x02\x04\n\x00\x01'
+    assert encoded == b"\x01/\xb1C\xa7\xf4\x8bA\xd0\x91Z\x02v\xa0!\xf5X\x00\x03\x02\x04\n\x00\x01"
 
 
 def test_encode_sync_response():
     response = world_sync.ServerSyncResponse(
-        worlds=frozendict({
-            uuid.UUID('268e8d33-38cc-4a9b-b73f-419fada748b7'): ServerWorldResponse(
-                world_name="World",
-                session_id=5,
-                session_name="Our Session",
-            ),
-        }),
-        errors=frozendict({
-            uuid.UUID('9755efc7-77e4-4711-8f03-ba71c366ef81'): error.ServerError(),
-        }),
+        worlds=frozendict(
+            {
+                uuid.UUID("268e8d33-38cc-4a9b-b73f-419fada748b7"): ServerWorldResponse(
+                    world_name="World",
+                    session_id=5,
+                    session_name="Our Session",
+                ),
+            }
+        ),
+        errors=frozendict(
+            {
+                uuid.UUID("9755efc7-77e4-4711-8f03-ba71c366ef81"): error.ServerError(),
+            }
+        ),
     )
 
     encoded = construct_pack.encode(response)
 
     assert encoded == (
-        b'\x01&\x8e\x8d38\xccJ\x9b\xb7?A\x9f\xad\xa7H\xb7\x05World\n\x01\x0bOur Sessio'
+        b"\x01&\x8e\x8d38\xccJ\x9b\xb7?A\x9f\xad\xa7H\xb7\x05World\n\x01\x0bOur Sessio"
         b'n\x01\x97U\xef\xc7w\xe4G\x11\x8f\x03\xbaq\xc3f\xef\x81"{"error":{"code"'
         b':6,"detail":null}}'
     )

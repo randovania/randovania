@@ -13,14 +13,17 @@ from randovania.game_description.db.teleporter_network_node import TeleporterNet
 from randovania.gui.dialog.node_details_popup import NodeDetailsPopup
 
 
-@pytest.mark.parametrize("node_type", [
-    GenericNode,
-    DockNode,
-    PickupNode,
-    EventNode,
-    ConfigurableNode,
-    HintNode,
-])
+@pytest.mark.parametrize(
+    "node_type",
+    [
+        GenericNode,
+        DockNode,
+        PickupNode,
+        EventNode,
+        ConfigurableNode,
+        HintNode,
+    ],
+)
 def test_unchanged_create_new_node_echoes(skip_qtbot, echoes_game_description, node_type):
     node = next(node for node in echoes_game_description.region_list.iterate_nodes() if isinstance(node, node_type))
     dialog = NodeDetailsPopup(echoes_game_description, node)
@@ -33,9 +36,12 @@ def test_unchanged_create_new_node_echoes(skip_qtbot, echoes_game_description, n
     assert node == new_node
 
 
-@pytest.mark.parametrize("node_type", [
-    TeleporterNetworkNode,
-])
+@pytest.mark.parametrize(
+    "node_type",
+    [
+        TeleporterNetworkNode,
+    ],
+)
 def test_unchanged_create_new_node_corruption(skip_qtbot, corruption_game_description, node_type):
     node = next(node for node in corruption_game_description.region_list.iterate_nodes() if isinstance(node, node_type))
     dialog = NodeDetailsPopup(corruption_game_description, node)

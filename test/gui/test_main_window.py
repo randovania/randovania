@@ -27,8 +27,7 @@ if TYPE_CHECKING:
     from randovania.interface_common.preset_manager import PresetManager
 
 
-def create_window(options: Options | MagicMock,
-                  preset_manager: PresetManager) -> MainWindow:
+def create_window(options: Options | MagicMock, preset_manager: PresetManager) -> MainWindow:
     return MainWindow(options, preset_manager, MagicMock(), MagicMock(), False)
 
 
@@ -40,17 +39,21 @@ def default_main_window(skip_qtbot, preset_manager, mocker) -> MainWindow:
     return window
 
 
-def test_drop_random_event(default_main_window: MainWindow,
-                           ):
+def test_drop_random_event(
+    default_main_window: MainWindow,
+):
     # Creating a window should not fail
     pass
 
 
-@pytest.mark.parametrize(("url", "should_accept"), [
-    ("something/game.iso", False),
-    ("other/game.rdvgame", True),
-    ("boss/custom.rdvpreset", True),
-])
+@pytest.mark.parametrize(
+    ("url", "should_accept"),
+    [
+        ("something/game.iso", False),
+        ("other/game.rdvgame", True),
+        ("boss/custom.rdvpreset", True),
+    ],
+)
 def test_dragEnterEvent(default_main_window: MainWindow, url, should_accept):
     mock_url = MagicMock()
     mock_url.toLocalFile.return_value = url
@@ -103,8 +106,9 @@ def test_drop_event_layout(default_main_window):
 
 async def test_browse_racetime(default_main_window, mocker):
     mock_new_dialog = mocker.patch("randovania.gui.dialog.racetime_browser_dialog.RacetimeBrowserDialog")
-    mock_execute_dialog = mocker.patch("randovania.gui.lib.async_dialog.execute_dialog", new_callable=AsyncMock,
-                                       return_value=QDialog.Accepted)
+    mock_execute_dialog = mocker.patch(
+        "randovania.gui.lib.async_dialog.execute_dialog", new_callable=AsyncMock, return_value=QDialog.Accepted
+    )
     dialog = mock_new_dialog.return_value
     dialog.refresh = AsyncMock(return_value=True)
     default_main_window.generate_seed_from_permalink = AsyncMock()
@@ -123,13 +127,14 @@ async def test_generate_seed_from_permalink(default_main_window, mocker):
     permalink = MagicMock(spec=Permalink)
     permalink.seed_hash = None
     permalink.parameters = MagicMock(spec=GeneratorParameters)
-    mock_generate_layout: MagicMock = mocker.patch("randovania.interface_common.generator_frontend.generate_layout",
-                                                   autospec=True)
+    mock_generate_layout: MagicMock = mocker.patch(
+        "randovania.interface_common.generator_frontend.generate_layout", autospec=True
+    )
     default_main_window.open_game_details = MagicMock()
     mock_open_for_background_task = mocker.patch(
         "randovania.gui.dialog.background_process_dialog.BackgroundProcessDialog.open_for_background_task",
         new_callable=AsyncMock,
-        side_effect=lambda a, b: a(MagicMock())
+        side_effect=lambda a, b: a(MagicMock()),
     )
 
     # Run
@@ -137,9 +142,9 @@ async def test_generate_seed_from_permalink(default_main_window, mocker):
 
     # Assert
     mock_open_for_background_task.assert_awaited_once()
-    mock_generate_layout.assert_called_once_with(progress_update=ANY,
-                                                 parameters=permalink.parameters,
-                                                 options=default_main_window._options)
+    mock_generate_layout.assert_called_once_with(
+        progress_update=ANY, parameters=permalink.parameters, options=default_main_window._options
+    )
     default_main_window.open_game_details.assert_called_once_with(mock_generate_layout.return_value)
 
 
@@ -283,8 +288,9 @@ async def test_create_game_session_window(default_main_window, mocker):
     session_entry = MagicMock(MultiplayerSessionEntry)
     session_entry.id = 1
     mock_return = MagicMock(MultiplayerSessionWindow)
-    mocker.patch("randovania.gui.multiplayer_session_window.MultiplayerSessionWindow.create_and_update",
-                                      return_value=mock_return)
+    mocker.patch(
+        "randovania.gui.multiplayer_session_window.MultiplayerSessionWindow.create_and_update", return_value=mock_return
+    )
     # run
     await default_main_window.ensure_multiplayer_session_window(network_client, session_entry.id, MagicMock())
 
@@ -301,8 +307,9 @@ async def test_existing_game_session_window(default_main_window, has_closed: boo
     session_entry.id = 1
     mock_return = MagicMock(MultiplayerSessionWindow)
     mock_return.has_closed = has_closed
-    mocker.patch("randovania.gui.multiplayer_session_window.MultiplayerSessionWindow.create_and_update",
-                                      return_value=mock_return)
+    mocker.patch(
+        "randovania.gui.multiplayer_session_window.MultiplayerSessionWindow.create_and_update", return_value=mock_return
+    )
     default_main_window.opened_session_windows[session_entry.id] = mock_return
 
     # run

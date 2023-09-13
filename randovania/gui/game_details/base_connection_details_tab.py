@@ -28,15 +28,17 @@ class BaseConnectionDetailsTab(GameDetailsTab):
     def tab_title(self) -> str:
         raise NotImplementedError
 
-    def _fill_per_region_connections(self,
-                                     per_region: dict[str, dict[str, str | dict[str, str]]],
-                                     region_list: RegionList,
-                                     patches: GamePatches,
-                                     ):
+    def _fill_per_region_connections(
+        self,
+        per_region: dict[str, dict[str, str | dict[str, str]]],
+        region_list: RegionList,
+        patches: GamePatches,
+    ):
         raise NotImplementedError
 
-    def update_content(self, configuration: BaseConfiguration, all_patches: dict[int, GamePatches],
-                       players: PlayersConfiguration):
+    def update_content(
+        self, configuration: BaseConfiguration, all_patches: dict[int, GamePatches], players: PlayersConfiguration
+    ):
         self.tree_widget.clear()
         self.tree_widget.setColumnCount(2)
         self.tree_widget.setHeaderLabels(["Source", "Destination"])

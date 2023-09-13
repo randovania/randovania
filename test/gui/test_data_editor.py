@@ -14,9 +14,10 @@ from randovania.games.game import RandovaniaGame
 from randovania.gui.data_editor import DataEditorWindow
 
 
-def test_select_area_by_name(echoes_game_data,
-                             skip_qtbot,
-                             ):
+def test_select_area_by_name(
+    echoes_game_data,
+    skip_qtbot,
+):
     # Setup
     window = DataEditorWindow(echoes_game_data, None, False, True)
     skip_qtbot.addWidget(window)
@@ -33,12 +34,13 @@ def test_select_area_by_name(echoes_game_data,
 
 @pytest.mark.parametrize("accept", [False, True])
 @patch("randovania.gui.data_editor.ConnectionsEditor")
-async def test_open_edit_connection(mock_connections_editor: MagicMock,
-                                    accept: bool,
-                                    echoes_game_data,
-                                    skip_qtbot,
-                                    mocker,
-                                    ):
+async def test_open_edit_connection(
+    mock_connections_editor: MagicMock,
+    accept: bool,
+    echoes_game_data,
+    skip_qtbot,
+    mocker,
+):
     # Setup
     execute_dialog = mocker.patch("randovania.gui.lib.async_dialog.execute_dialog", new_callable=AsyncMock)
     window = DataEditorWindow(echoes_game_data, None, False, True)
@@ -55,18 +57,13 @@ async def test_open_edit_connection(mock_connections_editor: MagicMock,
     mock_connections_editor.assert_called_once_with(window, window.resource_database, ANY)
     if accept:
         window.editor.edit_connections.assert_called_once_with(
-            window.current_area,
-            window.current_node,
-            window.current_connection_node,
-            editor.final_requirement
+            window.current_area, window.current_node, window.current_connection_node, editor.final_requirement
         )
     else:
         window.editor.edit_connections.assert_not_called()
 
 
-def test_create_node_and_save(tmp_path,
-                              echoes_game_data,
-                              skip_qtbot):
+def test_create_node_and_save(tmp_path, echoes_game_data, skip_qtbot):
     # Setup
     tmp_path.joinpath("test-game", "game").mkdir(parents=True)
     tmp_path.joinpath("human-readable").mkdir()
@@ -86,11 +83,9 @@ def test_create_node_and_save(tmp_path,
     exported_game = data_reader.decode_data(exported_data)
 
     pretty_print.write_human_readable_game(exported_game, tmp_path.joinpath("human-readable"))
-    new_files = {f.name: f.read_text("utf-8")
-                 for f in tmp_path.joinpath("human-readable").glob("*.txt")}
+    new_files = {f.name: f.read_text("utf-8") for f in tmp_path.joinpath("human-readable").glob("*.txt")}
 
-    existing_files = {f.name: f.read_text("utf-8")
-                      for f in tmp_path.joinpath("test-game", "game").glob("*.txt")}
+    existing_files = {f.name: f.read_text("utf-8") for f in tmp_path.joinpath("test-game", "game").glob("*.txt")}
 
     assert list(new_files.keys()) == list(existing_files.keys())
     assert new_files == existing_files
@@ -98,8 +93,9 @@ def test_create_node_and_save(tmp_path,
 
 def test_save_database_integrity_failure(tmp_path, echoes_game_data, skip_qtbot, mocker):
     # Setup
-    mock_find_database_errors = mocker.patch("randovania.game_description.integrity_check.find_database_errors",
-                                             return_value=["DB Errors", "Unknown"])
+    mock_find_database_errors = mocker.patch(
+        "randovania.game_description.integrity_check.find_database_errors", return_value=["DB Errors", "Unknown"]
+    )
     mock_write_human_readable_game = mocker.patch("randovania.game_description.pretty_print.write_human_readable_game")
     mock_create_new = mocker.patch("randovania.gui.lib.scroll_message_box.ScrollMessageBox.create_new")
     mock_create_new.return_value.exec_.return_value = QtWidgets.QMessageBox.No
@@ -119,10 +115,12 @@ def test_save_database_integrity_failure(tmp_path, echoes_game_data, skip_qtbot,
     mock_find_database_errors.assert_called_once_with(window.game_description)
     mock_write_human_readable_game.assert_not_called()
     mock_create_new.assert_called_once_with(
-        window, QtWidgets.QMessageBox.Icon.Critical, "Integrity Check",
+        window,
+        QtWidgets.QMessageBox.Icon.Critical,
+        "Integrity Check",
         "Database has the following errors:\n\nDB Errors\n\nUnknown\n\nIgnore?",
         QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.No,
-        QtWidgets.QMessageBox.No
+        QtWidgets.QMessageBox.No,
     )
 
 

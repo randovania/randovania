@@ -49,19 +49,23 @@ ITEM_NAMES = {
     LayoutTranslatorRequirement.COBALT: "Cobalt",
     LayoutTranslatorRequirement.REMOVED: "Scan",
 }
-enum_lib.add_long_name(LayoutTranslatorRequirement, {
-    LayoutTranslatorRequirement.VIOLET: "Violet Translator",
-    LayoutTranslatorRequirement.AMBER: "Amber Translator",
-    LayoutTranslatorRequirement.EMERALD: "Emerald Translator",
-    LayoutTranslatorRequirement.COBALT: "Cobalt Translator",
-    LayoutTranslatorRequirement.RANDOM: "Random",
-    LayoutTranslatorRequirement.REMOVED: "Unlocked",
-    LayoutTranslatorRequirement.RANDOM_WITH_REMOVED: "Random with Unlocked",
-})
+enum_lib.add_long_name(
+    LayoutTranslatorRequirement,
+    {
+        LayoutTranslatorRequirement.VIOLET: "Violet Translator",
+        LayoutTranslatorRequirement.AMBER: "Amber Translator",
+        LayoutTranslatorRequirement.EMERALD: "Emerald Translator",
+        LayoutTranslatorRequirement.COBALT: "Cobalt Translator",
+        LayoutTranslatorRequirement.RANDOM: "Random",
+        LayoutTranslatorRequirement.REMOVED: "Unlocked",
+        LayoutTranslatorRequirement.RANDOM_WITH_REMOVED: "Random with Unlocked",
+    },
+)
 
 
 def _get_vanilla_translator_configuration(extra_field: str) -> dict[NodeIdentifier, LayoutTranslatorRequirement]:
     from randovania.game_description import default_database
+
     game = default_database.game_description_for(RandovaniaGame.METROID_PRIME_ECHOES)
     return {
         game.region_list.identifier_for_node(node): LayoutTranslatorRequirement.from_item_short_name(
@@ -122,10 +126,7 @@ class TranslatorConfiguration(BitPackValue):
     @property
     def as_json(self) -> dict:
         return {
-            "translator_requirement": {
-                key.as_string: item.value
-                for key, item in self.translator_requirement.items()
-            },
+            "translator_requirement": {key.as_string: item.value for key, item in self.translator_requirement.items()},
         }
 
     @classmethod
@@ -160,21 +161,23 @@ class TranslatorConfiguration(BitPackValue):
         return dataclasses.replace(
             self,
             translator_requirement={
-                key: LayoutTranslatorRequirement.RANDOM
-                for key in self.translator_requirement.keys()
-            })
+                key: LayoutTranslatorRequirement.RANDOM for key in self.translator_requirement.keys()
+            },
+        )
 
     def with_full_random_with_unlocked(self) -> Self:
         return dataclasses.replace(
             self,
             translator_requirement={
-                key: LayoutTranslatorRequirement.RANDOM_WITH_REMOVED
-                for key in self.translator_requirement.keys()
-            })
+                key: LayoutTranslatorRequirement.RANDOM_WITH_REMOVED for key in self.translator_requirement.keys()
+            },
+        )
 
-    def replace_requirement_for_gate(self, gate: NodeIdentifier,
-                                     requirement: LayoutTranslatorRequirement,
-                                     ) -> Self:
+    def replace_requirement_for_gate(
+        self,
+        gate: NodeIdentifier,
+        requirement: LayoutTranslatorRequirement,
+    ) -> Self:
         """
         Replaces the requirement for the given gate. The gate must already have a requirement.
         :param gate:
@@ -194,7 +197,7 @@ class TranslatorConfiguration(BitPackValue):
             (self.with_vanilla_actual(), "Vanilla (Actual)"),
             (self.with_vanilla_colors(), "Vanilla (Colors)"),
             (self.with_full_random(), "Random"),
-            (self.with_full_random_with_unlocked(), "Random with Unlocked")
+            (self.with_full_random_with_unlocked(), "Random with Unlocked"),
         ]
         for translator_config, name in translator_configurations:
             if translator_config == self:

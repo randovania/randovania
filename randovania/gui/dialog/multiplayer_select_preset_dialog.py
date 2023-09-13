@@ -18,9 +18,15 @@ if TYPE_CHECKING:
 class MultiplayerSelectPresetDialog(QtWidgets.QDialog, Ui_MultiplayerSelectPresetDialog):
     valid_preset: bool
 
-    def __init__(self, window_manager: WindowManager, options: Options, *,
-                 allowed_games: list[RandovaniaGame] | None = None, default_game: RandovaniaGame | None = None,
-                 include_world_name_prompt: bool = False):
+    def __init__(
+        self,
+        window_manager: WindowManager,
+        options: Options,
+        *,
+        allowed_games: list[RandovaniaGame] | None = None,
+        default_game: RandovaniaGame | None = None,
+        include_world_name_prompt: bool = False,
+    ):
         super().__init__()
         self.setupUi(self)
         common_qt_lib.set_default_window_icon(self)
@@ -36,9 +42,7 @@ class MultiplayerSelectPresetDialog(QtWidgets.QDialog, Ui_MultiplayerSelectPrese
             signal_handling.set_combo_with_value(self.game_selection_combo, default_game)
 
         self.select_preset_widget.for_multiworld = True
-        self.select_preset_widget.setup_ui(
-            default_game or self.allowed_games[0], window_manager, options
-        )
+        self.select_preset_widget.setup_ui(default_game or self.allowed_games[0], window_manager, options)
 
         signal_handling.on_combo(self.game_selection_combo, self._on_select_game)
 

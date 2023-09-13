@@ -21,7 +21,8 @@ def find_resource_info_with_id(info_list: typing.Sequence[T], short_name: str, r
         if info.short_name == short_name:
             return info
     raise MissingResource(
-        f"{resource_type.name} Resource with short_name '{short_name}' not found in {len(info_list)} resources")
+        f"{resource_type.name} Resource with short_name '{short_name}' not found in {len(info_list)} resources"
+    )
 
 
 def find_resource_info_with_long_name(info_list: typing.Sequence[T], long_name: str) -> T:

@@ -140,9 +140,12 @@ async def test_auto_update_remove_connector(connection, qapp):
     await connection._auto_update()
 
     # Assert
-    connector.force_finish.assert_has_awaits([
-        call(), call(),
-    ])
+    connector.force_finish.assert_has_awaits(
+        [
+            call(),
+            call(),
+        ]
+    )
     assert connection.remote_connectors == {}
 
 
@@ -165,9 +168,12 @@ async def test_connector_state_update(connection, qapp, blank_resource_db):
     def make(status: GameConnectionStatus, inv: dict[ItemResourceInfo, InventoryItem], indices: set):
         return ConnectedGameState(debug_connector_uuid, connector, status, Inventory(inv), indices)
 
-    assert connection.get_backend_choice_for_state(ConnectedGameState(debug_connector_uuid, connector,
-                                                                      GameConnectionStatus.TitleScreen)
-                                                   ) == ConnectorBuilderChoice.DEBUG
+    assert (
+        connection.get_backend_choice_for_state(
+            ConnectedGameState(debug_connector_uuid, connector, GameConnectionStatus.TitleScreen)
+        )
+        == ConnectorBuilderChoice.DEBUG
+    )
 
     game_state_updated.assert_called_once_with(make(GameConnectionStatus.TitleScreen, {}, set()))
 
@@ -181,8 +187,6 @@ async def test_connector_state_update(connection, qapp, blank_resource_db):
     game_state_updated.assert_called_with(make(GameConnectionStatus.InGame, {}, {PickupIndex(1)}))
 
     connector.InventoryUpdated.emit(Inventory({item: InventoryItem(2, 4)}))
-    game_state_updated.assert_called_with(make(GameConnectionStatus.InGame,
-                                               {item: InventoryItem(2, 4)}, {PickupIndex(1)}))
-
-
-
+    game_state_updated.assert_called_with(
+        make(GameConnectionStatus.InGame, {item: InventoryItem(2, 4)}, {PickupIndex(1)})
+    )

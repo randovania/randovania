@@ -38,7 +38,7 @@ def delete_path(ftp: FTP, path: str, progress_update: Callable[[str], None]):
     try:
         file_list = list(ftp.mlsd(path))
     except ftplib.error_perm as e:
-        if str(e) == '501 Not a directory':
+        if str(e) == "501 Not a directory":
             ftp.delete(path)
             return
         elif str(e) in ("550 No such file or directory", "501 No such directory."):

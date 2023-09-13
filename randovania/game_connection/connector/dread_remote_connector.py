@@ -33,8 +33,11 @@ def format_received_item(item_name: str, player_name: str) -> str:
     return special.get(item_name, generic).format(item_name=item_name, provider_name=player_name)
 
 
-def resources_to_give_for_pickup(db: ResourceDatabase, pickup: PickupEntry, inventory: Inventory,
-                                 ) -> tuple[str, list[list[dict]]]:
+def resources_to_give_for_pickup(
+    db: ResourceDatabase,
+    pickup: PickupEntry,
+    inventory: Inventory,
+) -> tuple[str, list[list[dict]]]:
     inventory_resources = ResourceCollection.with_database(db)
     inventory_resources.add_resource_gain(inventory.as_resource_gain())
     conditional = pickup.conditional_for_resources(inventory_resources)
@@ -103,9 +106,10 @@ class DreadRemoteConnector(RemoteConnector):
             self.reset_values()
             self.current_region = None
         else:
-            self.current_region = next((region for region in self.game.region_list.regions
-                                       if region.extra["scenario_id"] == state_or_region),
-                                        None)
+            self.current_region = next(
+                (region for region in self.game.region_list.regions if region.extra["scenario_id"] == state_or_region),
+                None,
+            )
         self.PlayerLocationChanged.emit(PlayerLocationEvent(self.current_region, None))
 
     def new_collected_locations_received(self, new_indices: bytes):
@@ -113,7 +117,7 @@ class DreadRemoteConnector(RemoteConnector):
         start_of_bytes = b"locations:"
         if new_indices.startswith(start_of_bytes):
             index = 0
-            for c in new_indices[len(start_of_bytes):]:
+            for c in new_indices[len(start_of_bytes) :]:
                 for i in range(8):
                     if c & (1 << i):
                         locations.add(PickupIndex(index))
@@ -135,10 +139,9 @@ class DreadRemoteConnector(RemoteConnector):
 
         items = [r for r in self.game.resource_database.item if "item_id" in r.extra]
 
-        inventory = Inventory({
-            item: InventoryItem(quantity, quantity)
-            for item, quantity in zip(items, inventory_ints)
-        })
+        inventory = Inventory(
+            {item: InventoryItem(quantity, quantity) for item, quantity in zip(items, inventory_ints)}
+        )
         self.last_inventory = inventory
         self.InventoryUpdated.emit(inventory)
 
@@ -175,22 +178,19 @@ class DreadRemoteConnector(RemoteConnector):
         self.logger.debug("Resource changes for %s from %s", pickup.name, provider_name)
 
         from open_dread_rando.misc_patches.lua_util import lua_convert
+
         progression_as_lua = lua_convert(items_list, True)
         message = format_received_item(item_name, provider_name)
 
-        self.logger.info("%d permanent pickups, magic %d. Next pickup: %s",
-                          len(remote_pickups), num_pickups, message)
+        self.logger.info("%d permanent pickups, magic %d. Next pickup: %s", len(remote_pickups), num_pickups, message)
 
         main_item_id = items_list[0][0]["item_id"]
         from open_dread_rando.pickups.lua_editor import LuaEditor
+
         parent = LuaEditor.get_parent_for(None, main_item_id)
 
         execute_string = "RL.ReceivePickup({},{},{},{},{})".format(
-            repr(message),
-            parent,
-            repr(progression_as_lua),
-            num_pickups,
-            self.inventory_index
+            repr(message), parent, repr(progression_as_lua), num_pickups, self.inventory_index
         )
 
         await self.executor.run_lua_code(execute_string)

@@ -24,8 +24,14 @@ class OnlineInteractions(QtWidgets.QWidget):
     network_client: QtNetworkClient
     _login_window: QtWidgets.QDialog | None = None
 
-    def __init__(self, window_manager: WindowManager, preset_manager: PresetManager, network_client: QtNetworkClient,
-                 main_window: Ui_MainWindow, options: Options):
+    def __init__(
+        self,
+        window_manager: WindowManager,
+        preset_manager: PresetManager,
+        network_client: QtNetworkClient,
+        main_window: Ui_MainWindow,
+        options: Options,
+    ):
         super().__init__(window_manager)
 
         self.window_manager = window_manager

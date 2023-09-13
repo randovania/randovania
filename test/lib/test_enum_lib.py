@@ -13,4 +13,4 @@ def test_add_missing_fields():
         second = 2
 
     with pytest.raises(ValueError, match="long_name for <enum 'A'> are not synchronized"):
-        enum_lib.add_long_name(A, {})
+        enum_lib.add_long_name(A, {A.first: "FIRST"})

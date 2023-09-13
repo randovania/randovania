@@ -22,7 +22,6 @@ if TYPE_CHECKING:
 
 
 class CSGameExportDialog(GameExportDialog, Ui_CSGameExportDialog):
-
     @classmethod
     def game_enum(cls):
         return RandovaniaGame.CAVE_STORY
@@ -44,7 +43,7 @@ class CSGameExportDialog(GameExportDialog, Ui_CSGameExportDialog):
             accept_button=self.accept_button,
             fields={
                 self.output_file_edit: lambda: is_directory_validator(self.output_file_edit),
-            }
+            },
         )
 
     def update_per_game_options(self, per_game: CSPerGameOptions) -> CSPerGameOptions:

@@ -31,8 +31,9 @@ class MultiplayerSessionBrowserDialog(QDialog, Ui_MultiplayerSessionBrowserDialo
         self.network_client = network_client
 
         self.item_model = QtGui.QStandardItemModel(0, 8, self)
-        self.item_model.setHorizontalHeaderLabels(["Name", "Is Member?", "Join Date", "Players", "Worlds",
-                                                   "Password?", "Creator", "Creation Date"])
+        self.item_model.setHorizontalHeaderLabels(
+            ["Name", "Is Member?", "Join Date", "Players", "Worlds", "Password?", "Creator", "Creation Date"]
+        )
 
         self.table_widget.setModel(self.item_model)
         self.table_widget.sortByColumn(8, QtCore.Qt.SortOrder.DescendingOrder)
@@ -110,8 +111,7 @@ class MultiplayerSessionBrowserDialog(QDialog, Ui_MultiplayerSessionBrowserDialo
             self.joined_session = await self.network_client.attempt_join_with_password_check(session)
 
         except error.WrongPasswordError:
-            return await async_dialog.warning(self, "Incorrect Password",
-                                              "The password entered was incorrect.")
+            return await async_dialog.warning(self, "Incorrect Password", "The password entered was incorrect.")
 
         if self.joined_session is not None:
             return self.accept()
@@ -134,8 +134,10 @@ class MultiplayerSessionBrowserDialog(QDialog, Ui_MultiplayerSessionBrowserDialo
             displayed_is_member.add(False)
 
         displayed_visibilities = set()
-        for (check, visibility) in ((self.state_visibile_check, MultiplayerSessionVisibility.VISIBLE),
-                                    (self.state_hidden_check, MultiplayerSessionVisibility.HIDDEN)):
+        for check, visibility in (
+            (self.state_visibile_check, MultiplayerSessionVisibility.VISIBLE),
+            (self.state_hidden_check, MultiplayerSessionVisibility.HIDDEN),
+        ):
             if check.isChecked():
                 displayed_visibilities.add(visibility)
 
@@ -146,11 +148,13 @@ class MultiplayerSessionBrowserDialog(QDialog, Ui_MultiplayerSessionBrowserDialo
         visible_sessions = [
             session
             for session in self.sessions
-            if (session.has_password in displayed_has_password
+            if (
+                session.has_password in displayed_has_password
                 and session.visibility in displayed_visibilities
                 and name_filter.lower() in session.name.lower()
                 and (dont_filter_age or (now - session.creation_date) < max_session_age)
-                and session.is_user_in_session in displayed_is_member)
+                and session.is_user_in_session in displayed_is_member
+            )
         ]
         self.visible_sessions = visible_sessions
 
@@ -166,7 +170,8 @@ class MultiplayerSessionBrowserDialog(QDialog, Ui_MultiplayerSessionBrowserDialo
             join_date = model_lib.create_date_item(session.join_date)
 
             name.setData(session, Qt.ItemDataRole.UserRole)
-            for col, item in enumerate((
+            for col, item in enumerate(
+                (
                     name,
                     is_user_in_session,
                     join_date,
@@ -175,7 +180,8 @@ class MultiplayerSessionBrowserDialog(QDialog, Ui_MultiplayerSessionBrowserDialo
                     has_password,
                     creator,
                     creation_date,
-            )):
+                )
+            ):
                 self.item_model.setItem(i, col, item)
         self.status_label.setText(f"{len(self.sessions)} sessions total, {len(visible_sessions)} displayed.")
         for i in range(9):

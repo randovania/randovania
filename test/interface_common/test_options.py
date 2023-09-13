@@ -22,14 +22,17 @@ def option() -> Options:
 
 
 def test_migrate_from_v11(option):
-    old_data = {"version": 11,
-                "options": {
-                    "cosmetic_patches": {
-                        "disable_hud_popup": True,
-                        "speed_up_credits": True,
-                        "open_map": True,
-                        "pickup_markers": True,
-                    }}}
+    old_data = {
+        "version": 11,
+        "options": {
+            "cosmetic_patches": {
+                "disable_hud_popup": True,
+                "speed_up_credits": True,
+                "open_map": True,
+                "pickup_markers": True,
+            }
+        },
+    }
 
     # Run
     new_data = persisted_options.get_persisted_options_from_data(old_data)
@@ -43,22 +46,21 @@ def test_migrate_from_v11(option):
                 "speed_up_credits": True,
                 "open_map": True,
                 "pickup_markers": True,
-                "unvisited_room_names": True
+                "unvisited_room_names": True,
             },
-            'input_path': None,
-            'output_directory': None,
-            'output_format': None,
-            'use_external_models': []
+            "input_path": None,
+            "output_directory": None,
+            "output_format": None,
+            "use_external_models": [],
         },
         "connector_builders": [],
-        'schema_version': persisted_options._CURRENT_OPTIONS_FILE_VERSION,
+        "schema_version": persisted_options._CURRENT_OPTIONS_FILE_VERSION,
     }
     assert new_data == expected_data
 
 
 @patch("randovania.interface_common.options.Options._save_to_disk", autospec=True)
-def test_context_manager_with_no_changes_doesnt_save(mock_save_to_disk: MagicMock,
-                                                     option: Options):
+def test_context_manager_with_no_changes_doesnt_save(mock_save_to_disk: MagicMock, option: Options):
     # Setup
     settings_changed = MagicMock()
     option.on_options_changed = settings_changed
@@ -73,8 +75,7 @@ def test_context_manager_with_no_changes_doesnt_save(mock_save_to_disk: MagicMoc
 
 
 @patch("randovania.interface_common.options.Options._save_to_disk", autospec=True)
-def test_save_with_context_manager(mock_save_to_disk: MagicMock,
-                                   option: Options):
+def test_save_with_context_manager(mock_save_to_disk: MagicMock, option: Options):
     # Setup
     settings_changed = MagicMock()
     option._dark_mode = False
@@ -90,8 +91,7 @@ def test_save_with_context_manager(mock_save_to_disk: MagicMock,
 
 
 @patch("randovania.interface_common.options.Options._save_to_disk", autospec=True)
-def test_single_save_with_nested_context_manager(mock_save_to_disk: MagicMock,
-                                                 option: Options):
+def test_single_save_with_nested_context_manager(mock_save_to_disk: MagicMock, option: Options):
     # Setup
     option._dark_mode = False
 
@@ -140,9 +140,12 @@ def test_set_options_for_game_with_wrong_type(option: Options):
 
     # Run
     with pytest.raises(ValueError, match=err):
-        option.set_options_for_game(RandovaniaGame.METROID_PRIME, EchoesPerGameOptions(
-            cosmetic_patches=RandovaniaGame.METROID_PRIME_ECHOES.data.layout.cosmetic_patches.default(),
-        ))
+        option.set_options_for_game(
+            RandovaniaGame.METROID_PRIME,
+            EchoesPerGameOptions(
+                cosmetic_patches=RandovaniaGame.METROID_PRIME_ECHOES.data.layout.cosmetic_patches.default(),
+            ),
+        )
 
 
 def test_load_from_disk_no_data(tmp_path, mocker):
@@ -161,14 +164,16 @@ def test_load_from_disk_no_data(tmp_path, mocker):
 
 def test_load_from_disk_first_successful(tmp_path, mocker):
     mocker.patch(
-        "randovania.interface_common.persisted_options.find_config_files", autospec=True,
+        "randovania.interface_common.persisted_options.find_config_files",
+        autospec=True,
         return_value=[
             "[1]",
             "[2]",
-        ]
+        ],
     )
     mock_get_persisted_options_from_data = mocker.patch(
-        "randovania.interface_common.persisted_options.get_persisted_options_from_data", autospec=True,
+        "randovania.interface_common.persisted_options.get_persisted_options_from_data",
+        autospec=True,
     )
     option = Options(tmp_path)
     option.load_from_persisted = MagicMock()
@@ -185,18 +190,20 @@ def test_load_from_disk_first_successful(tmp_path, mocker):
 def test_load_from_disk_first_failure(tmp_path, mocker):
     persisted_result = MagicMock()
     mocker.patch(
-        "randovania.interface_common.persisted_options.find_config_files", autospec=True,
+        "randovania.interface_common.persisted_options.find_config_files",
+        autospec=True,
         return_value=[
             "[1]",
             "[2]",
-        ]
+        ],
     )
     mock_get_persisted_options_from_data = mocker.patch(
-        "randovania.interface_common.persisted_options.get_persisted_options_from_data", autospec=True,
+        "randovania.interface_common.persisted_options.get_persisted_options_from_data",
+        autospec=True,
         side_effect=[
             migration_lib.UnsupportedVersion(),
             persisted_result,
-        ]
+        ],
     )
     option = Options(tmp_path)
     option.load_from_persisted = MagicMock()
@@ -207,10 +214,12 @@ def test_load_from_disk_first_failure(tmp_path, mocker):
     # Assert
     assert result
     option.load_from_persisted.assert_called_once_with(persisted_result, True)
-    mock_get_persisted_options_from_data.assert_has_calls([
-        call([1]),
-        call([2]),
-    ])
+    mock_get_persisted_options_from_data.assert_has_calls(
+        [
+            call([1]),
+            call([2]),
+        ]
+    )
 
 
 @pytest.mark.parametrize(
@@ -218,29 +227,20 @@ def test_load_from_disk_first_failure(tmp_path, mocker):
     [
         pytest.param(combination, id=",".join(combination))
         for combination in itertools.combinations(randovania.interface_common.options._SERIALIZER_FOR_FIELD.keys(), 2)
-    ]
+    ],
 )
-def test_load_from_disk_with_data(fields_to_test: list[str],
-                                  tmp_path, mocker):
+def test_load_from_disk_with_data(fields_to_test: list[str], tmp_path, mocker):
     # Setup
     mock_get_persisted_options_from_data: MagicMock = mocker.patch(
         "randovania.interface_common.persisted_options.get_persisted_options_from_data", autospec=True
     )
-    mock_set_field: MagicMock = mocker.patch(
-        "randovania.interface_common.options.Options._set_field", autospec=True
-    )
+    mock_set_field: MagicMock = mocker.patch("randovania.interface_common.options.Options._set_field", autospec=True)
     tmp_path.joinpath("config.json").write_text("[1, 2, 54, 69]")
 
     option = Options(tmp_path)
 
-    persisted_options = {
-        field_name: MagicMock()
-        for field_name in fields_to_test
-    }
-    new_serializers = {
-        field_name: MagicMock()
-        for field_name in fields_to_test
-    }
+    persisted_options = {field_name: MagicMock() for field_name in fields_to_test}
+    new_serializers = {field_name: MagicMock() for field_name in fields_to_test}
     mock_get_persisted_options_from_data.return_value = persisted_options
 
     # Run
@@ -252,10 +252,9 @@ def test_load_from_disk_with_data(fields_to_test: list[str],
     for field_name, serializer in new_serializers.items():
         serializer.decode.assert_called_once_with(persisted_options[field_name])
 
-    mock_set_field.assert_has_calls([
-        call(option, field_name, new_serializers[field_name].decode.return_value)
-        for field_name in fields_to_test
-    ])
+    mock_set_field.assert_has_calls(
+        [call(option, field_name, new_serializers[field_name].decode.return_value) for field_name in fields_to_test]
+    )
 
 
 # TODO: test with an actual field as well
@@ -270,7 +269,7 @@ def test_serialize_fields(option: Options):
         "version": randovania.interface_common.persisted_options._CURRENT_OPTIONS_FILE_VERSION,
         "options": {
             "last_changelog_displayed": str(update_checker.strict_current_version()),
-        }
+        },
     }
 
 
@@ -298,8 +297,7 @@ def test_edit_during_options_changed(tmpdir):
 
 
 @pytest.mark.parametrize("ignore_decode_errors", [False, True])
-def test_load_from_disk_missing_json(ignore_decode_errors: bool,
-                                     tmpdir):
+def test_load_from_disk_missing_json(ignore_decode_errors: bool, tmpdir):
     # Setup
     option = Options(Path(tmpdir))
     tmpdir.join("config.json").write_text("wtf", "utf-8")
@@ -313,19 +311,17 @@ def test_load_from_disk_missing_json(ignore_decode_errors: bool,
 
 
 @pytest.mark.parametrize("ignore_decode_errors", [False])
-def test_load_from_disk_invalid_json(ignore_decode_errors: bool,
-                                     tmpdir):
+def test_load_from_disk_invalid_json(ignore_decode_errors: bool, tmpdir):
     # Setup
     option = Options(Path(tmpdir))
     tmpdir.join("config.json").write_text(
-        json.dumps(randovania.interface_common.persisted_options.serialized_data_for_options({
-            "game_prime2": {
-                "cosmetic_patches": {
-                    "pickup_model_style": "invalid-value"
-                }
-            }
-        })),
-        "utf-8")
+        json.dumps(
+            randovania.interface_common.persisted_options.serialized_data_for_options(
+                {"game_prime2": {"cosmetic_patches": {"pickup_model_style": "invalid-value"}}}
+            )
+        ),
+        "utf-8",
+    )
 
     if ignore_decode_errors:
         result = option.load_from_disk(ignore_decode_errors)
@@ -386,8 +382,8 @@ def test_mark_alert_as_displayed(tmp_path):
 
 def test_set_parent_for_preset(tmp_path):
     opt = Options(tmp_path)
-    u1 = uuid.UUID('b41fde84-1f57-4b79-8cd6-3e5a78077fa6')
-    u2 = uuid.UUID('b51fdeaa-1fff-4b79-8cd6-3e5a78077fa6')
+    u1 = uuid.UUID("b41fde84-1f57-4b79-8cd6-3e5a78077fa6")
+    u2 = uuid.UUID("b51fdeaa-1fff-4b79-8cd6-3e5a78077fa6")
 
     assert opt.get_parent_for_preset(u1) is None
     opt.set_parent_for_preset(u1, u2)

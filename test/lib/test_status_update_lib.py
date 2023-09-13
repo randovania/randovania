@@ -5,7 +5,7 @@ from unittest.mock import MagicMock, call
 from randovania.lib.status_update_lib import DynamicSplitProgressUpdate
 
 
-def test_dynamic_split_progress_single():
+def test_dynamic_split_progress_single() -> None:
     # Setup
     raw_updater = MagicMock()
 
@@ -16,13 +16,15 @@ def test_dynamic_split_progress_single():
     u1("Hello2", 1.0)
 
     # Assert
-    raw_updater.assert_has_calls([
-        call("Hello", 0.0),
-        call("Hello2", 1.0),
-    ])
+    raw_updater.assert_has_calls(
+        [
+            call("Hello", 0.0),
+            call("Hello2", 1.0),
+        ]
+    )
 
 
-def test_dynamic_split_progress_two():
+def test_dynamic_split_progress_two() -> None:
     # Setup
     raw_updater = MagicMock()
 
@@ -36,15 +38,17 @@ def test_dynamic_split_progress_two():
     u2("Finish", 1.0)
 
     # Assert
-    raw_updater.assert_has_calls([
-        call("Hello", 0.0),
-        call("Hello2", 0.5),
-        call("Tests", 0.5),
-        call("Finish", 1.0),
-    ])
+    raw_updater.assert_has_calls(
+        [
+            call("Hello", 0.0),
+            call("Hello2", 0.5),
+            call("Tests", 0.5),
+            call("Finish", 1.0),
+        ]
+    )
 
 
-def test_dynamic_split_progress_weighted():
+def test_dynamic_split_progress_weighted() -> None:
     # Setup
     raw_updater = MagicMock()
 
@@ -61,11 +65,13 @@ def test_dynamic_split_progress_weighted():
     u3("Finish", 1.0)
 
     # Assert
-    raw_updater.assert_has_calls([
-        call("Hello", 0.0),
-        call("Hello2", 0.25),
-        call("Tests", 0.25),
-        call("Middle", 0.75),
-        call("Final", 0.75),
-        call("Finish", 1.0),
-    ])
+    raw_updater.assert_has_calls(
+        [
+            call("Hello", 0.0),
+            call("Hello2", 0.25),
+            call("Tests", 0.25),
+            call("Middle", 0.75),
+            call("Final", 0.75),
+            call("Finish", 1.0),
+        ]
+    )

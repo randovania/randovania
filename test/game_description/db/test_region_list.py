@@ -26,9 +26,10 @@ from randovania.layout import filtered_database
 
 if TYPE_CHECKING:
     from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.game_patches import GamePatches
 
 
-def test_connections_from_dock_blast_shield(empty_patches):
+def test_connections_from_dock_blast_shield(empty_patches: GamePatches):
     # Setup
     db = empty_patches.game.resource_database
     trivial = Requirement.trivial()
@@ -41,11 +42,41 @@ def test_connections_from_dock_blast_shield(empty_patches):
     node_1_identifier = NodeIdentifier.create("W", "Area 1", "Node 1")
     node_2_identifier = NodeIdentifier.create("W", "Area 2", "Node 2")
 
-    node_1 = DockNode(node_1_identifier, 0, False, None, "", ("default",), {}, False, dock_type,
-                      node_2_identifier, weak_1, None, None, False, ())
+    node_1 = DockNode(
+        node_1_identifier,
+        0,
+        False,
+        None,
+        "",
+        ("default",),
+        {},
+        False,
+        dock_type,
+        node_2_identifier,
+        weak_1,
+        None,
+        None,
+        False,
+        (),
+    )
     node_1_lock = DockLockNode.create_from_dock(node_1, 1, db)
-    node_2 = DockNode(node_2_identifier, 2, False, None, "", ("default",), {}, False, dock_type,
-                      node_1_identifier, weak_2, None, None, False, ())
+    node_2 = DockNode(
+        node_2_identifier,
+        2,
+        False,
+        None,
+        "",
+        ("default",),
+        {},
+        False,
+        dock_type,
+        node_1_identifier,
+        weak_2,
+        None,
+        None,
+        False,
+        (),
+    )
     node_2_lock = DockLockNode.create_from_dock(node_2, 3, db)
 
     area_1 = Area("Area 1", [node_1, node_1_lock], {}, {})

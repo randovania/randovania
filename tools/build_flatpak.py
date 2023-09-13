@@ -22,7 +22,9 @@ def main():
 
     if flatpak_id != _production_id:
         _here.joinpath(f"flatpak/{flatpak_id}.yml").write_text(
-            _here.joinpath(f"flatpak/{_production_id}.yml").read_text().replace(
+            _here.joinpath(f"flatpak/{_production_id}.yml")
+            .read_text()
+            .replace(
                 _production_id,
                 flatpak_id,
             )
@@ -32,13 +34,16 @@ def main():
         executable_tar,
         os.fspath(_here.joinpath("flatpak/randovania-linux.tar.gz")),
     )
-    subprocess.run([
-        "flatpak-builder",
-        f"--repo={os.fspath(repository.absolute())}",
-        "./flatpak-build-dir",
-        os.fspath(_here.joinpath(f"flatpak/{flatpak_id}.yml")),
-    ], check=True)
+    subprocess.run(
+        [
+            "flatpak-builder",
+            f"--repo={os.fspath(repository.absolute())}",
+            "./flatpak-build-dir",
+            os.fspath(_here.joinpath(f"flatpak/{flatpak_id}.yml")),
+        ],
+        check=True,
+    )
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

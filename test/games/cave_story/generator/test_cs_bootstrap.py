@@ -24,24 +24,31 @@ if TYPE_CHECKING:
 
 
 @pytest.mark.parametrize("puppies", [False, True])
-@pytest.mark.parametrize("starting_area", [
-    NodeIdentifier.create("Mimiga Village", "Start Point", "Area Spawn"),
-    NodeIdentifier.create("Labyrinth", "Camp", "Area Spawn")
-])
+@pytest.mark.parametrize(
+    "starting_area",
+    [
+        NodeIdentifier.create("Mimiga Village", "Start Point", "Area Spawn"),
+        NodeIdentifier.create("Labyrinth", "Camp", "Area Spawn"),
+    ],
+)
 def test_assign_pool_results(default_cs_configuration: CSConfiguration, puppies, starting_area):
     game_description = default_database.game_description_for(default_cs_configuration.game)
 
     default_cs_configuration = dataclasses.replace(default_cs_configuration, puppies_anywhere=puppies)
     tricks = default_cs_configuration.trick_level.set_level_for_trick(
         game_description.resource_database.get_by_type_and_index(ResourceType.TRICK, "SNBubbler"),
-        LayoutTrickLevel.HYPERMODE)
+        LayoutTrickLevel.HYPERMODE,
+    )
     tricks = tricks.set_level_for_trick(
         game_description.resource_database.get_by_type_and_index(ResourceType.TRICK, "SNMissiles"),
-        LayoutTrickLevel.HYPERMODE)
+        LayoutTrickLevel.HYPERMODE,
+    )
     default_cs_configuration = dataclasses.replace(default_cs_configuration, trick_level=tricks)
 
     patches = GamePatches.create_from_game(
-        game_description, 0, default_cs_configuration,
+        game_description,
+        0,
+        default_cs_configuration,
     ).assign_starting_location(starting_area)
 
     pool_result = pool_creator.calculate_pool_results(default_cs_configuration, game_description)
@@ -53,18 +60,19 @@ def test_assign_pool_results(default_cs_configuration: CSConfiguration, puppies,
     assert puppies != names.issuperset(expected_puppies)
 
     # First Cave Weapon
-    first_cave_assignment = [target.pickup for index, target in result.pickup_assignment.items()
-                             if index in FIRST_CAVE_INDICES]
+    first_cave_assignment = [
+        target.pickup for index, target in result.pickup_assignment.items() if index in FIRST_CAVE_INDICES
+    ]
     expected_first_cave_len = 1 if starting_area.area_name == "Start Point" else 0
 
     assert len(first_cave_assignment) == expected_first_cave_len
     assert starting_area.area_name != "Start Point" or first_cave_assignment[0].broad_category.name in {
-        "weapon", "missile_related"
+        "weapon",
+        "missile_related",
     }
 
     # Camp weapon/life capsule
-    camp_assignment = [target.pickup for index, target in result.pickup_assignment.items()
-                       if index in CAMP_INDICES]
+    camp_assignment = [target.pickup for index, target in result.pickup_assignment.items() if index in CAMP_INDICES]
 
     if starting_area.area_name != "Camp":
         assert len(camp_assignment) == 0

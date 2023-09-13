@@ -39,10 +39,7 @@ class ConnectorBuilderChoice(Enum):
 
     @classmethod
     def all_usable_choices(cls) -> list[Self]:
-        return [
-            r for r in cls
-            if r.is_usable()
-        ]
+        return [r for r in cls if r.is_usable()]
 
 
 _pretty_backend_name = {

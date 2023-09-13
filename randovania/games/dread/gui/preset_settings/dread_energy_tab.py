@@ -18,7 +18,6 @@ if TYPE_CHECKING:
 
 
 class PresetDreadEnergy(PresetTab, Ui_PresetDreadEnergy):
-
     def __init__(self, editor: PresetEditor, game_description: GameDescription, window_manager: WindowManager):
         super().__init__(editor, game_description, window_manager)
         self.setupUi(self)
@@ -36,8 +35,9 @@ class PresetDreadEnergy(PresetTab, Ui_PresetDreadEnergy):
                 check,
                 functools.partial(
                     self._persist_constant_environment_damage_enabled,
-                    field_name, spin,
-                )
+                    field_name,
+                    spin,
+                ),
             )
             spin.valueChanged.connect(self._persist_argument(field_name))
 

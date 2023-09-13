@@ -68,24 +68,17 @@ _TEST_RESPONSE = {
             "twitch_name": "golloppp",
             "twitch_display_name": "golloppp",
             "twitch_channel": "https://www.twitch.tv/golloppp",
-            "can_moderate": True
+            "can_moderate": True,
         }
     ],
     "moderators": [],
     "current_races": [
         {
             "name": "mp2r/proud-stadium-7340",
-            "status": {
-                "value": "in_progress",
-                "verbose_value": "In progress",
-                "help_text": "Race is in progress"
-            },
+            "status": {"value": "in_progress", "verbose_value": "In progress", "help_text": "Race is in progress"},
             "url": "/mp2r/proud-stadium-7340",
             "data_url": "/mp2r/proud-stadium-7340/data",
-            "goal": {
-                "name": "Beat the game",
-                "custom": False
-            },
+            "goal": {"name": "Beat the game", "custom": False},
             "info": (
                 "zasj0oGRVOUaUwbx6LFMgLrjmF0kH2aEFX9OMr1tu7xcW8az || Seed Hash: Command Caretaker Alcove (67J3ZJPT)"
             ),
@@ -93,29 +86,22 @@ _TEST_RESPONSE = {
             "entrants_count_inactive": 0,
             "opened_at": "2020-10-03T18:44:17.865Z",
             "started_at": "2020-10-03T18:45:17.865Z",
-            "time_limit": "P1DT00H00M00S"
+            "time_limit": "P1DT00H00M00S",
         },
         {
             "name": "mp2r/proud-arena-4584",
-            "status": {
-                "value": "open",
-                "verbose_value": "Open",
-                "help_text": "Anyone may join this race"
-            },
+            "status": {"value": "open", "verbose_value": "Open", "help_text": "Anyone may join this race"},
             "url": "/mp2r/proud-arena-4584",
             "data_url": "/mp2r/proud-arena-4584/data",
-            "goal": {
-                "name": "Beat the game",
-                "custom": False
-            },
+            "goal": {"name": "Beat the game", "custom": False},
             "info": "yevhOB287u6SOly2HFReAapCZprQOvB9fVaU5-EAvS08qoQi  || Seed Hash: Sandigger Module Boom (GN73RSFH)",
             "entrants_count": 5,
             "entrants_count_inactive": 0,
             "opened_at": "2020-10-03T18:46:17.865Z",
             "started_at": None,
-            "time_limit": "P1DT00H00M00S"
-        }
-    ]
+            "time_limit": "P1DT00H00M00S",
+        },
+    ],
 }
 
 
@@ -178,8 +164,9 @@ class RacetimeBrowserDialog(QDialog, Ui_RacetimeBrowserDialog):
                 try:
                     raw_races = await _query_server(race_url)
                 except aiohttp.ClientError as e:
-                    await async_dialog.warning(self, "Connection error",
-                                               f"Unable to retrieve races from `{race_url}`: {e}")
+                    await async_dialog.warning(
+                        self, "Connection error", f"Unable to retrieve races from `{race_url}`: {e}"
+                    )
                     return False
 
                 self.races.extend([RaceEntry.from_json(item, game) for item in raw_races["current_races"]])
@@ -218,35 +205,33 @@ class RacetimeBrowserDialog(QDialog, Ui_RacetimeBrowserDialog):
                 continue
 
         if permalink is None:
-            await async_dialog.warning(self, "Missing permalink",
-                                       "Unable to get a valid Permalink from this race's info.")
+            await async_dialog.warning(
+                self, "Missing permalink", "Unable to get a valid Permalink from this race's info."
+            )
         else:
             self.permalink = permalink
             return self.accept()
 
     def update_list(self):
         self.table_widget.clear()
-        self.table_widget.setHorizontalHeaderLabels(["Name", "Game", "Status", "Entrants",
-                                                     "Goal", "Info", "Opened At"])
+        self.table_widget.setHorizontalHeaderLabels(["Name", "Game", "Status", "Entrants", "Goal", "Info", "Opened At"])
 
         name_filter = self.filter_name_edit.text().strip()
 
         displayed_status = set()
-        for (check, status) in self._status_checks:
+        for check, status in self._status_checks:
             if check.isChecked():
                 displayed_status.add(status)
 
         displayed_games = set()
-        for (check, game) in self._game_checks:
+        for check, game in self._game_checks:
             if check.isChecked():
                 displayed_games.add(game)
 
         visible_races = [
             race
             for race in self.races
-            if (race.status in displayed_status
-                and name_filter in race.name
-                and race.game in displayed_games)
+            if (race.status in displayed_status and name_filter in race.name and race.game in displayed_games)
         ]
 
         self.table_widget.setRowCount(len(visible_races))

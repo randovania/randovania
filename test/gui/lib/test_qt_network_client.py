@@ -21,11 +21,14 @@ if TYPE_CHECKING:
 
 @pytest.fixture(name="client")
 def network_client_fixture(skip_qtbot, mocker, tmpdir):
-    mocker.patch("randovania.get_configuration", return_value={
-        "server_address": "http://localhost:5000",
-        "socketio_path": "/path",
-        "discord_client_id": 1234,
-    })
+    mocker.patch(
+        "randovania.get_configuration",
+        return_value={
+            "server_address": "http://localhost:5000",
+            "socketio_path": "/path",
+            "discord_client_id": 1234,
+        },
+    )
     return qt_network_client.QtNetworkClient(Path(tmpdir))
 
 
@@ -43,17 +46,21 @@ async def test_handle_network_errors_success(skip_qtbot, qapp):
     assert result is callee.return_value
 
 
-@pytest.mark.parametrize(("exception", "title", "message"), [
-    (error.InvalidActionError("something"), "Invalid action", "Invalid Action: something"),
-    (error.ServerError(), "Server error", "An error occurred on the server while processing your request."),
-    (error.NotAuthorizedForActionError(), "Unauthorized", "You're not authorized to perform that action."),
-    (error.NotLoggedInError(), "Unauthenticated", "You must be logged in."),
-    (
-            error.RequestTimeoutError("5s timeout"), "Connection Error",
+@pytest.mark.parametrize(
+    ("exception", "title", "message"),
+    [
+        (error.InvalidActionError("something"), "Invalid action", "Invalid Action: something"),
+        (error.ServerError(), "Server error", "An error occurred on the server while processing your request."),
+        (error.NotAuthorizedForActionError(), "Unauthorized", "You're not authorized to perform that action."),
+        (error.NotLoggedInError(), "Unauthenticated", "You must be logged in."),
+        (
+            error.RequestTimeoutError("5s timeout"),
+            "Connection Error",
             "<b>Timeout while communicating with the server:</b><br /><br />Request timed out: 5s timeout<br />"
-            "Further attempts will wait for longer."
-    ),
-])
+            "Further attempts will wait for longer.",
+        ),
+    ],
+)
 async def test_handle_network_errors_exception(skip_qtbot, qapp, mocker, exception, title, message):
     mock_dialog = mocker.patch("randovania.gui.lib.async_dialog.warning", new_callable=AsyncMock)
     callee = AsyncMock()
@@ -87,7 +94,8 @@ async def test_ensure_logged_in(client, mocker, connection_state):
     # Setup
     mock_message_box = mocker.patch("PySide6.QtWidgets.QMessageBox")
 
-    async def true(): return True
+    async def true():
+        return True
 
     connect_task = asyncio.create_task(true())
 
@@ -107,13 +115,23 @@ async def test_ensure_logged_in(client, mocker, connection_state):
 @pytest.mark.parametrize("in_session", [False, True])
 async def test_attempt_join(client, mocker, in_session):
     # Setup
-    mocked_execute_dialog = mocker.patch("randovania.gui.lib.async_dialog.execute_dialog", new_callable=AsyncMock,
-                                         return_value=QtWidgets.QDialog.DialogCode.Accepted)
-    mocker.patch("randovania.network_client.network_client.NetworkClient.join_multiplayer_session",
-                 return_value="A Session")
+    mocked_execute_dialog = mocker.patch(
+        "randovania.gui.lib.async_dialog.execute_dialog",
+        new_callable=AsyncMock,
+        return_value=QtWidgets.QDialog.DialogCode.Accepted,
+    )
+    mocker.patch(
+        "randovania.network_client.network_client.NetworkClient.join_multiplayer_session", return_value="A Session"
+    )
     session = MultiplayerSessionListEntry(
-        id=1, name="A Game", has_password=True, visibility=MultiplayerSessionVisibility.HIDDEN,
-        num_users=1, num_worlds=0, creator="You", is_user_in_session=in_session,
+        id=1,
+        name="A Game",
+        has_password=True,
+        visibility=MultiplayerSessionVisibility.HIDDEN,
+        num_users=1,
+        num_worlds=0,
+        creator="You",
+        is_user_in_session=in_session,
         creation_date=datetime.datetime(year=2015, month=5, day=1, tzinfo=datetime.UTC),
         join_date=datetime.datetime(year=2016, month=5, day=1, tzinfo=datetime.UTC),
     )

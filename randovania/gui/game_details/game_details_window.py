@@ -18,7 +18,10 @@ from randovania.gui.generated.game_details_window_ui import Ui_GameDetailsWindow
 from randovania.gui.lib import async_dialog, common_qt_lib, game_exporter
 from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin
 from randovania.gui.lib.close_event_widget import CloseEventWidget
-from randovania.gui.lib.common_qt_lib import prompt_user_for_output_game_log, set_default_window_icon
+from randovania.gui.lib.common_qt_lib import (
+    prompt_user_for_output_game_log,
+    set_default_window_icon,
+)
 from randovania.gui.widgets.game_validator_widget import GameValidatorWidget
 from randovania.interface_common import generator_frontend
 from randovania.interface_common.options import InfoAlert, Options
@@ -129,9 +132,11 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
         else:
             game_name = f"{list(all_games)[0].short_name} Randomizer"
 
-        default_name = "{} - {}.{}".format(game_name,
-                                           self.layout_description.shareable_word_hash,
-                                           self.layout_description.file_extension())
+        default_name = "{} - {}.{}".format(
+            game_name,
+            self.layout_description.shareable_word_hash,
+            self.layout_description.file_extension(),
+        )
         json_path = prompt_user_for_output_game_log(self, default_name=default_name)
         if json_path is not None:
             self.layout_description.save_to_file(json_path)
@@ -144,6 +149,7 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
 
     def _view_trick_usages(self):
         from randovania.gui.dialog.trick_usage_popup import TrickUsagePopup
+
         preset = self.layout_description.get_preset(self.current_player_index)
         self._trick_usage_popup = TrickUsagePopup(self, self._window_manager, preset)
         self._trick_usage_popup.setWindowModality(QtCore.Qt.WindowModal)
@@ -151,8 +157,12 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
 
     async def _show_dialog_for_prime3_layout(self):
         from randovania.game_description import default_database
-        from randovania.games.prime3.layout.corruption_configuration import CorruptionConfiguration
-        from randovania.games.prime3.layout.corruption_cosmetic_patches import CorruptionCosmeticPatches
+        from randovania.games.prime3.layout.corruption_configuration import (
+            CorruptionConfiguration,
+        )
+        from randovania.games.prime3.layout.corruption_cosmetic_patches import (
+            CorruptionCosmeticPatches,
+        )
         from randovania.games.prime3.patcher import gollop_corruption_patcher
 
         cosmetic = typing.cast(
@@ -179,26 +189,35 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
         starting_location = patches.starting_location
 
         starting_items = patches.starting_resources()
-        starting_items.add_resource_gain([
-            (game.resource_database.get_item_by_name("Suit Type"), cosmetic.player_suit.value),
-        ])
+        starting_items.add_resource_gain(
+            [
+                (
+                    game.resource_database.get_item_by_name("Suit Type"),
+                    cosmetic.player_suit.value,
+                ),
+            ]
+        )
         if configuration.start_with_corrupted_hypermode:
             hypermode_original = 0
         else:
             hypermode_original = 1
 
-        commands = "\n".join([
-            f'set seed="{layout_string}"',
-            f'set "starting_items={gollop_corruption_patcher.starting_items_for(starting_items, hypermode_original)}"',
-            f'set "starting_location={gollop_corruption_patcher.starting_location_for(game, starting_location)}"',
-            f'set "random_door_colors={str(cosmetic.random_door_colors).lower()}"',
-            f'set "random_welding_colors={str(cosmetic.random_welding_colors).lower()}"',
-        ])
+        starting_items = gollop_corruption_patcher.starting_items_for(starting_items, hypermode_original)
+        commands = "\n".join(
+            [
+                f'set seed="{layout_string}"',
+                f'set "starting_items={starting_items}"',
+                f'set "starting_location={gollop_corruption_patcher.starting_location_for(game, starting_location)}"',
+                f'set "random_door_colors={str(cosmetic.random_door_colors).lower()}"',
+                f'set "random_welding_colors={str(cosmetic.random_welding_colors).lower()}"',
+            ]
+        )
         dialog_text = (
             "There is no integrated patcher for Metroid Prime 3: Corruption games.\n"
             "Download the randomizer for it from #corruption-general in the Metroid Prime Randomizer Discord, "
             "and use the following commands as a seed.\n\n"
-            f"\n{commands}")
+            f"\n{commands}"
+        )
 
         message_box = ScrollLabelDialog(dialog_text, "Commands for patcher", self)
         message_box.resize(750, 200)
@@ -217,9 +236,12 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
         options = self._options
 
         if not options.is_alert_displayed(InfoAlert.FAQ):
-            await async_dialog.message_box(self, QtWidgets.QMessageBox.Icon.Information, "FAQ",
-                                           "Have you read the Randovania FAQ?\n"
-                                           "It can be found in the main Randovania window → Help → FAQ")
+            await async_dialog.message_box(
+                self,
+                QtWidgets.QMessageBox.Icon.Information,
+                "FAQ",
+                "Have you read the Randovania FAQ?\nIt can be found in the main Randovania window → Help → FAQ",
+            )
             options.mark_alert_as_displayed(InfoAlert.FAQ)
 
         game = self.current_player_game
@@ -230,8 +252,13 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
         data_factory = game.patch_data_factory(layout, self.players_configuration, cosmetic_patches)
         patch_data = data_factory.create_data()
 
-        dialog = game.gui.export_dialog(options, patch_data, layout.shareable_word_hash, has_spoiler,
-                                        list(layout.all_games))
+        dialog = game.gui.export_dialog(
+            options,
+            patch_data,
+            layout.shareable_word_hash,
+            has_spoiler,
+            list(layout.all_games),
+        )
         result = await async_dialog.execute_dialog(dialog)
         if result != QtWidgets.QDialog.DialogCode.Accepted:
             return
@@ -260,13 +287,9 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
         self.layout_info_tab.show()
 
         self.setWindowTitle(f"Game Details: {description.shareable_word_hash}")
-        self.export_log_button.setText("Save Spoiler" if description.has_spoiler
-                                       else "Save to file")
+        self.export_log_button.setText("Save Spoiler" if description.has_spoiler else "Save to file")
 
-        numbered_players = [
-            f"Player {i + 1}"
-            for i in range(description.world_count)
-        ]
+        numbered_players = [f"Player {i + 1}" for i in range(description.world_count)]
         if players is None:
             players = numbered_players
         self._player_names = dict(enumerate(players))
@@ -297,7 +320,7 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
             if not any(preset.configuration.should_hide_generation_log() for preset in description.all_presets):
                 self.layout_info_tab.addTab(
                     GenerationOrderWidget(None, description, players),
-                    "Spoiler: Generation Order"
+                    "Spoiler: Generation Order",
                 )
 
         self._update_current_player()
@@ -352,8 +375,10 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
         result = dialog.exec_()
         if result == QtWidgets.QDialog.DialogCode.Accepted:
             with self._options as options:
-                options.set_options_for_game(game, dataclasses.replace(per_game_options,
-                                                                       cosmetic_patches=dialog.cosmetic_patches))
+                options.set_options_for_game(
+                    game,
+                    dataclasses.replace(per_game_options, cosmetic_patches=dialog.cosmetic_patches),
+                )
 
     def enable_buttons_with_background_tasks(self, value: bool):
         self.stop_background_process_button.setEnabled(not value and self._can_stop_background_process)

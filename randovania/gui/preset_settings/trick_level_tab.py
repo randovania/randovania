@@ -24,7 +24,6 @@ if TYPE_CHECKING:
 
 
 class PresetTrickLevel(PresetTab, Ui_PresetTrickLevel):
-
     def __init__(self, editor: PresetEditor, game_description: GameDescription, window_manager: WindowManager):
         super().__init__(editor, game_description, window_manager)
         self.setupUi(self)
@@ -54,11 +53,9 @@ class PresetTrickLevel(PresetTab, Ui_PresetTrickLevel):
                 continue
 
             if row > 1:
-                self.trick_difficulties_layout.addItem(QtWidgets.QSpacerItem(
-                    20, 40,
-                    QtWidgets.QSizePolicy.Minimum,
-                    QtWidgets.QSizePolicy.Expanding
-                ))
+                self.trick_difficulties_layout.addItem(
+                    QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+                )
 
             trick_label = QtWidgets.QLabel(self.trick_level_scroll_contents)
             trick_label.setSizePolicy(size_policy)
@@ -156,10 +153,7 @@ class PresetTrickLevel(PresetTab, Ui_PresetTrickLevel):
             with self._editor as options:
                 options.set_configuration_field(
                     "trick_level",
-                    options.configuration.trick_level.set_level_for_trick(
-                        trick,
-                        LayoutTrickLevel.from_number(value)
-                    )
+                    options.configuration.trick_level.set_level_for_trick(trick, LayoutTrickLevel.from_number(value)),
                 )
 
     def _on_underwater_abuse_check(self, state: bool):
@@ -170,12 +164,14 @@ class PresetTrickLevel(PresetTab, Ui_PresetTrickLevel):
             )
 
     def _on_click_link_underwater_details(self, link: str):
-        self._exec_trick_details(ResourceDetailsPopup(
-            self,
-            self._window_manager,
-            self.game_description,
-            self.game_description.resource_database.get_by_type_and_index(ResourceType.MISC, "NoGravity"),
-        ))
+        self._exec_trick_details(
+            ResourceDetailsPopup(
+                self,
+                self._window_manager,
+                self.game_description,
+                self.game_description.resource_database.get_by_type_and_index(ResourceType.MISC, "NoGravity"),
+            )
+        )
 
     def _exec_trick_details(self, popup: BaseResourceDetailsPopup):
         self._trick_details_popup = popup
@@ -183,11 +179,13 @@ class PresetTrickLevel(PresetTab, Ui_PresetTrickLevel):
         self._trick_details_popup.open()
 
     def _open_trick_details_popup(self, trick: TrickResourceInfo):
-        self._exec_trick_details(TrickDetailsPopup(
-            self,
-            self._window_manager,
-            self.game_description,
-            trick,
-            self._editor.configuration.trick_level.level_for_trick(trick),
-            self._editor.configuration.trick_level,
-        ))
+        self._exec_trick_details(
+            TrickDetailsPopup(
+                self,
+                self._window_manager,
+                self.game_description,
+                trick,
+                self._editor.configuration.trick_level.level_for_trick(trick),
+                self._editor.configuration.trick_level,
+            )
+        )

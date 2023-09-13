@@ -85,6 +85,7 @@ def _init(include_flask: bool, default_url: str, sampling_rate: float = 1.0, exc
     profiles_sample_rate = sampling_rate
     if include_flask:
         from sentry_sdk.integrations.flask import FlaskIntegration
+
         integrations.append(FlaskIntegration())
     else:
         profiles_sample_rate = 0.0
@@ -100,7 +101,7 @@ def _init(include_flask: bool, default_url: str, sampling_rate: float = 1.0, exc
 
     def traces_sampler(sampling_context):
         # Ignore the websocket request
-        if sampling_context['transaction_context']['name'] == 'generic WSGI request':
+        if sampling_context["transaction_context"]["name"] == "generic WSGI request":
             return 0
 
         return sampling_rate
@@ -116,10 +117,13 @@ def _init(include_flask: bool, default_url: str, sampling_rate: float = 1.0, exc
         auto_session_tracking=include_flask,
         event_scrubber=HomeEventScrubber(),
     )
-    sentry_sdk.set_context("os", {
-        "name": platform.system(),
-        "version": platform.release(),
-    })
+    sentry_sdk.set_context(
+        "os",
+        {
+            "name": platform.system(),
+            "version": platform.release(),
+        },
+    )
 
 
 def client_init():
@@ -127,8 +131,7 @@ def client_init():
         # TODO: It'd be nice to catch these running from source, but only for unmodified main.
         return
 
-    _init(False, _CLIENT_DEFAULT_URL,
-          exclude_server_name=True)
+    _init(False, _CLIENT_DEFAULT_URL, exclude_server_name=True)
     sentry_sdk.set_tag("frozen", randovania.is_frozen())
 
     # Ignore the "packet queue is empty, aborting" message

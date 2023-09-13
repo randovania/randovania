@@ -33,9 +33,11 @@ class PickupStyleWidget(QDialog, Ui_PickupStyleWidget):
         # TODO: implement the LOCATION data source
         self.pickup_data_source_combo.removeItem(self.pickup_data_source_combo.findData(PickupModelDataSource.LOCATION))
         self.pickup_model_combo.currentIndexChanged.connect(
-            self._persist_enum(self.pickup_model_combo, "pickup_model_style"))
+            self._persist_enum(self.pickup_model_combo, "pickup_model_style")
+        )
         self.pickup_data_source_combo.currentIndexChanged.connect(
-            self._persist_enum(self.pickup_data_source_combo, "pickup_model_data_source"))
+            self._persist_enum(self.pickup_data_source_combo, "pickup_model_data_source")
+        )
 
     def _persist_enum(self, combo: QtWidgets.QComboBox, attribute_name: str):
         def persist(index: int):

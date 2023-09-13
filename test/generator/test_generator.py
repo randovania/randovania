@@ -17,18 +17,22 @@ if TYPE_CHECKING:
 @patch("randovania.generator.generator._validate_item_pool_size", autospec=True)
 @patch("randovania.generator.generator.create_player_pool", autospec=True)
 @patch("randovania.generator.generator._distribute_remaining_items", autospec=True)
-async def test_create_patches(mock_distribute_remaining_items: MagicMock,
-                              mock_create_player_pool: MagicMock,
-                              mock_validate_item_pool_size: MagicMock,
-                              mocker,
-                              ):
+async def test_create_patches(
+    mock_distribute_remaining_items: MagicMock,
+    mock_create_player_pool: MagicMock,
+    mock_validate_item_pool_size: MagicMock,
+    mocker,
+):
     # Setup
     filler_result = MagicMock()
-    mock_run_filler: AsyncMock = mocker.patch("randovania.generator.generator.run_filler", new_callable=AsyncMock,
-                                              return_value=filler_result)
+    mock_run_filler: AsyncMock = mocker.patch(
+        "randovania.generator.generator.run_filler", new_callable=AsyncMock, return_value=filler_result
+    )
     mock_dock_weakness_distributor: AsyncMock = mocker.patch(
         "randovania.generator.dock_weakness_distributor.distribute_post_fill_weaknesses",
-        new_callable=AsyncMock, return_value=filler_result)
+        new_callable=AsyncMock,
+        return_value=filler_result,
+    )
     mock_distribute_remaining_items.return_value = filler_result
 
     generator_parameters = MagicMock()
@@ -47,14 +51,12 @@ async def test_create_patches(mock_distribute_remaining_items: MagicMock,
 
     # Assert
     generator_parameters.create_rng.assert_called_once_with()
-    mock_create_player_pool.assert_has_calls([
-        call(rng, presets[i].configuration, i, num_players, status_update)
-        for i in range(num_players)
-    ])
-    mock_validate_item_pool_size.assert_has_calls([
-        call(player_pools[i].pickups, player_pools[i].game, player_pools[i].configuration)
-        for i in range(num_players)
-    ])
+    mock_create_player_pool.assert_has_calls(
+        [call(rng, presets[i].configuration, i, num_players, status_update) for i in range(num_players)]
+    )
+    mock_validate_item_pool_size.assert_has_calls(
+        [call(player_pools[i].pickups, player_pools[i].game, player_pools[i].configuration) for i in range(num_players)]
+    )
     mock_run_filler.assert_awaited_once_with(rng, [player_pools[i] for i in range(num_players)], status_update)
     mock_distribute_remaining_items.assert_called_once_with(rng, filler_result, presets)
     mock_dock_weakness_distributor.assert_called_once_with(rng, filler_result, status_update)
@@ -66,8 +68,9 @@ async def test_create_patches(mock_distribute_remaining_items: MagicMock,
     )
 
 
-def test_distribute_remaining_items_no_locations_left(echoes_game_description, echoes_game_patches,
-                                                      default_echoes_preset):
+def test_distribute_remaining_items_no_locations_left(
+    echoes_game_description, echoes_game_patches, default_echoes_preset
+):
     # Setup
     rng = MagicMock()
     player_result = FillerPlayerResult(
@@ -78,6 +81,7 @@ def test_distribute_remaining_items_no_locations_left(echoes_game_description, e
     filler_results = FillerResults({0: player_result}, ())
 
     # Run
-    with pytest.raises(InvalidConfiguration,
-                       match=r"Received 881 remaining pickups, but there's only \d+ unassigned locations."):
+    with pytest.raises(
+        InvalidConfiguration, match=r"Received 881 remaining pickups, but there's only \d+ unassigned locations."
+    ):
         generator._distribute_remaining_items(rng, filler_results, [default_echoes_preset])

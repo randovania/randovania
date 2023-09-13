@@ -18,12 +18,13 @@ from randovania.interface_common.preset_editor import PresetEditor
 from randovania.layout.lib.teleporters import TeleporterShuffleMode, TeleporterTargetList
 
 
-@pytest.mark.parametrize("game", [RandovaniaGame.METROID_PRIME,
-                                  RandovaniaGame.METROID_PRIME_ECHOES, RandovaniaGame.METROID_DREAD])
+@pytest.mark.parametrize(
+    "game", [RandovaniaGame.METROID_PRIME, RandovaniaGame.METROID_PRIME_ECHOES, RandovaniaGame.METROID_DREAD]
+)
 def test_on_preset_changed(skip_qtbot, preset_manager, game):
     # Setup
     base = preset_manager.default_preset_for_game(game).get_preset()
-    preset = dataclasses.replace(base, uuid=uuid.UUID('b41fde84-1f57-4b79-8cd6-3e5a78077fa6'))
+    preset = dataclasses.replace(base, uuid=uuid.UUID("b41fde84-1f57-4b79-8cd6-3e5a78077fa6"))
     options = MagicMock()
     editor = PresetEditor(preset, options)
     if game == RandovaniaGame.METROID_PRIME:
@@ -47,14 +48,14 @@ def test_check_credits(skip_qtbot, preset_manager):
     assert isinstance(base.configuration, prime_configuration.PrimeConfiguration)
     preset = dataclasses.replace(
         base,
-        uuid=uuid.UUID('b41fde84-1f57-4b79-8cd6-3e5a78077fa6'),
+        uuid=uuid.UUID("b41fde84-1f57-4b79-8cd6-3e5a78077fa6"),
         configuration=dataclasses.replace(
             base.configuration,
             teleporters=dataclasses.replace(
                 base.configuration.teleporters,
                 mode=TeleporterShuffleMode.ONE_WAY_ANYTHING,
             ),
-        )
+        ),
     )
     options = MagicMock()
     editor = PresetEditor(preset, options)

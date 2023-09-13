@@ -30,9 +30,7 @@ class CSHintNamer(HintNamer):
             HintLocationPrecision.LITTLE: TemplatedFormatter(
                 "He was exploring the island with {determiner}{pickup}...", self
             ),
-            HintLocationPrecision.NUMAHACHI: TemplatedFormatter(
-                "{determiner.capitalize}{pickup}.", self
-            ),
+            HintLocationPrecision.NUMAHACHI: TemplatedFormatter("{determiner.capitalize}{pickup}.", self),
             HintLocationPrecision.DETAILED: TemplatedFormatter(
                 "{{start}} {determiner}{pickup} {{mid}} in {node}.", self
             ),
@@ -40,10 +38,13 @@ class CSHintNamer(HintNamer):
                 "{{start}} {determiner}{pickup} {{mid}} in {node}.", self
             ),
             HintLocationPrecision.RELATIVE_TO_AREA: RelativeAreaFormatter(
-                patches, lambda msg, with_color: msg,
+                patches,
+                lambda msg, with_color: msg,
             ),
             HintLocationPrecision.RELATIVE_TO_INDEX: RelativeItemFormatter(
-                patches, lambda msg, with_color: msg, players_config,
+                patches,
+                lambda msg, with_color: msg,
+                players_config,
             ),
         }
 
@@ -74,8 +75,14 @@ class CSHintNamer(HintNamer):
         # TODO
         raise RuntimeError("Not implemented")
 
-    def format_guaranteed_resource(self, resource: ItemResourceInfo, player_name: str | None,
-                                   location: PickupLocation, hide_area: bool, with_color: bool) -> str:
+    def format_guaranteed_resource(
+        self,
+        resource: ItemResourceInfo,
+        player_name: str | None,
+        location: PickupLocation,
+        hide_area: bool,
+        with_color: bool,
+    ) -> str:
         # TODO
         raise RuntimeError("Not implemented")
 

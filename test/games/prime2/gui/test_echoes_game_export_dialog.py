@@ -47,8 +47,7 @@ def test_on_output_file_button_exists(skip_qtbot, tmp_path, mocker, has_output_d
     skip_qtbot.mouseClick(window.output_file_button, QtCore.Qt.LeftButton)
 
     # Assert
-    mock_prompt.assert_called_once_with(window, expected_default_name + ".iso",
-                                        ["iso"])
+    mock_prompt.assert_called_once_with(window, expected_default_name + ".iso", ["iso"])
     assert window.output_file_edit.text() == str(tmp_path.joinpath("foo", "game.iso"))
     assert tmp_path.joinpath("foo").is_dir()
 
@@ -93,23 +92,28 @@ def test_save_options(skip_qtbot, tmp_path, is_prime_multi):
     if is_prime_multi:
         assert options.options_for_game(RandovaniaGame.METROID_PRIME).input_path == Path("somewhere/prime.iso")
         assert options.options_for_game(RandovaniaGame.METROID_PRIME_ECHOES).use_external_models == {
-            RandovaniaGame.METROID_PRIME}
+            RandovaniaGame.METROID_PRIME
+        }
 
 
 def test_on_input_file_button(skip_qtbot, tmp_path, mocker):
     # Setup
     tmp_path.joinpath("existing.iso").write_bytes(b"foo")
     mock_discover: MagicMock = mocker.patch(
-        "randovania.games.common.prime_family.gui.export_validator.discover_game", autospec=True,
-        return_value=("G2ME01", "Metroid Prime 2")
+        "randovania.games.common.prime_family.gui.export_validator.discover_game",
+        autospec=True,
+        return_value=("G2ME01", "Metroid Prime 2"),
     )
-    mock_prompt = mocker.patch("randovania.gui.lib.common_qt_lib.prompt_user_for_vanilla_input_file", autospec=True,
-                               side_effect=[
-                                   None,
-                                   tmp_path.joinpath("some/game.iso"),
-                                   tmp_path.joinpath("existing.iso"),
-                                   tmp_path.joinpath("missing_again.iso"),
-                               ])
+    mock_prompt = mocker.patch(
+        "randovania.gui.lib.common_qt_lib.prompt_user_for_vanilla_input_file",
+        autospec=True,
+        side_effect=[
+            None,
+            tmp_path.joinpath("some/game.iso"),
+            tmp_path.joinpath("existing.iso"),
+            tmp_path.joinpath("missing_again.iso"),
+        ],
+    )
 
     options = MagicMock()
     options.internal_copies_path = tmp_path.joinpath("internal_copies")
@@ -120,10 +124,13 @@ def test_on_input_file_button(skip_qtbot, tmp_path, mocker):
 
     contents_path = tmp_path.joinpath("internal_copies", "prime2", "contents")
     contents_path.mkdir(parents=True)
-    mocker.patch("randovania.interface_common.game_workdir.discover_game", side_effect=[
-        ("G2M", 1),
-        None,
-    ])
+    mocker.patch(
+        "randovania.interface_common.game_workdir.discover_game",
+        side_effect=[
+            ("G2M", 1),
+            None,
+        ],
+    )
 
     window = EchoesGameExportDialog(options, {}, "MyHash", True, [])
     assert window.input_file_edit.text() == "(internal game copy)"
@@ -151,12 +158,14 @@ def test_on_input_file_button(skip_qtbot, tmp_path, mocker):
     assert window.input_file_edit.text() == str(tmp_path.joinpath("missing_again.iso"))
     assert window.input_file_edit.has_error
 
-    mock_prompt.assert_has_calls([
-        call(window, ["iso"], existing_file=None),
-        call(window, ["iso"], existing_file=None),
-        call(window, ["iso"], existing_file=None),
-        call(window, ["iso"], existing_file=tmp_path.joinpath("existing.iso")),
-    ])
+    mock_prompt.assert_has_calls(
+        [
+            call(window, ["iso"], existing_file=None),
+            call(window, ["iso"], existing_file=None),
+            call(window, ["iso"], existing_file=None),
+            call(window, ["iso"], existing_file=tmp_path.joinpath("existing.iso")),
+        ]
+    )
     mock_discover.assert_called_once_with(tmp_path.joinpath("existing.iso"))
 
 
@@ -188,7 +197,7 @@ def test_get_game_export_params(skip_qtbot, tmp_path, is_prime_multi, use_extern
         PrimePerGameOptions(
             cosmetic_patches=PrimeCosmeticPatches.default(),
             input_path=prime_path,
-        )
+        ),
     ]
     window = EchoesGameExportDialog(options, {}, "MyHash", True, games)
 

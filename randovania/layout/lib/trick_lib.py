@@ -12,15 +12,8 @@ T = TypeVar("T")
 
 
 def difficulties_for_trick(game: GameDescription, trick: TrickResourceInfo) -> set[LayoutTrickLevel]:
-    return {
-        LayoutTrickLevel.from_number(level)
-        for level in game.get_used_trick_levels().get(trick, set())
-    }
+    return {LayoutTrickLevel.from_number(level) for level in game.get_used_trick_levels().get(trick, set())}
 
 
 def used_tricks(game: GameDescription) -> set[TrickResourceInfo]:
-    return {
-        trick
-        for trick, uses in game.get_used_trick_levels().items()
-        if uses
-    }
+    return {trick for trick, uses in game.get_used_trick_levels().items() if uses}

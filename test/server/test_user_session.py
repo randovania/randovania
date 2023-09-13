@@ -55,7 +55,7 @@ def test_browser_login_with_discord(has_sio, flask_app, mocker: pytest_mock.Mock
 @pytest.mark.parametrize("has_global_name", [False, True])
 @pytest.mark.parametrize("existing", [False, True])
 def test_browser_discord_login_callback_with_sid(
-        mocker: pytest_mock.MockerFixture, clean_database, flask_app, existing, has_global_name
+    mocker: pytest_mock.MockerFixture, clean_database, flask_app, existing, has_global_name
 ):
     # Setup
     mock_emit = mocker.patch("flask_socketio.emit")
@@ -90,22 +90,23 @@ def test_browser_discord_login_callback_with_sid(
     sa.discord.callback.fetch_user()
 
     mock_emit.assert_called_once_with(
-        "user_session_update", {
-            'encoded_session_b85': b'Wo~0~d2n=PWB',
-            'user': {'discord_id': 1234, 'id': 1, 'name': expected_name}
-        },
-        to="TheSid", namespace="/"
+        "user_session_update",
+        {"encoded_session_b85": b"Wo~0~d2n=PWB", "user": {"discord_id": 1234, "id": 1, "name": expected_name}},
+        to="TheSid",
+        namespace="/",
     )
     mock_render.assert_called_once_with("return_to_randovania.html", user=user)
     assert result is mock_render.return_value
     assert user.name == expected_name
-    assert session == {'discord-access-token': 'The_Token', 'user-id': 1}
+    assert session == {"discord-access-token": "The_Token", "user-id": 1}
 
 
 def test_browser_discord_login_callback_not_authorized(flask_app, mocker: pytest_mock.MockerFixture):
     mock_render = mocker.patch("flask.render_template")
-    mock_create = mocker.patch("randovania.server.user_session._create_session_with_discord_token",
-                               side_effect=error.UserNotAuthorizedToUseServerError)
+    mock_create = mocker.patch(
+        "randovania.server.user_session._create_session_with_discord_token",
+        side_effect=error.UserNotAuthorizedToUseServerError,
+    )
 
     sa = MagicMock()
 
@@ -124,15 +125,16 @@ def test_browser_discord_login_callback_not_authorized(flask_app, mocker: pytest
 
 
 @pytest.mark.parametrize("via_value_error", [False, True])
-def test_browser_discord_login_callback_mismatching_state(flask_app, mocker: pytest_mock.MockerFixture,
-                                                          via_value_error):
+def test_browser_discord_login_callback_mismatching_state(
+    flask_app, mocker: pytest_mock.MockerFixture, via_value_error
+):
     mock_render = mocker.patch("flask.render_template")
 
     sa = MagicMock()
     sa.discord.callback.side_effect = (
-        ValueError('not enough values to unpack (expected 2, got 1)')
-        if via_value_error else
-        oauthlib.oauth2.rfc6749.errors.MismatchingStateError()
+        ValueError("not enough values to unpack (expected 2, got 1)")
+        if via_value_error
+        else oauthlib.oauth2.rfc6749.errors.MismatchingStateError()
     )
 
     # Run
@@ -210,10 +212,12 @@ def test_restore_user_session_with_discord(flask_app, fernet, clean_database, mo
     discord_user = MagicMock()
     discord_user.id = 3452
     discord_result = MagicMock()
-    mock_create_session = mocker.patch("randovania.server.user_session._create_session_with_discord_token",
-                                       autospec=True, return_value=discord_user)
-    mock_create_client_side = mocker.patch("randovania.server.user_session._create_client_side_session",
-                                           autospec=True, return_value=discord_result)
+    mock_create_session = mocker.patch(
+        "randovania.server.user_session._create_session_with_discord_token", autospec=True, return_value=discord_user
+    )
+    mock_create_client_side = mocker.patch(
+        "randovania.server.user_session._create_client_side_session", autospec=True, return_value=discord_result
+    )
 
     sa = MagicMock()
     sa.fernet_encrypt = fernet
@@ -244,10 +248,12 @@ def test_login_with_guest(flask_app, clean_database, mocker):
     enc_request = b"encrypted stuff"
 
     sa = MagicMock()
-    sa.guest_encrypt.decrypt.return_value = json.dumps({
-        "name": "Someone",
-        "date": '2020-09-05T17:12:09.941661',
-    }).encode("utf-8")
+    sa.guest_encrypt.decrypt.return_value = json.dumps(
+        {
+            "name": "Someone",
+            "date": "2020-09-05T17:12:09.941661",
+        }
+    ).encode("utf-8")
 
     with flask_app.test_request_context():
         flask.request.sid = 7890
@@ -263,8 +269,7 @@ def test_login_with_guest(flask_app, clean_database, mocker):
 
 
 def test_logout(flask_app, mocker: MockerFixture):
-    mock_leave_all_rooms = mocker.patch(
-        "randovania.server.multiplayer.session_common.leave_all_rooms", autospec=True)
+    mock_leave_all_rooms = mocker.patch("randovania.server.multiplayer.session_common.leave_all_rooms", autospec=True)
 
     session = {
         "user-id": 1234,

@@ -83,7 +83,7 @@ class GamePresetDescriber:
         if unsupported:
             template_strings["WARNING!"] = [
                 "This preset uses the following unsupported features:",
-                ", ".join(unsupported)
+                ", ".join(unsupported),
             ]
 
         # Item Placement
@@ -130,12 +130,12 @@ class GamePresetDescriber:
 
         # Difficulty
         if configuration.damage_strictness != LayoutDamageStrictness.MEDIUM:
-            template_strings["Difficulty"].append(
-                f"{configuration.damage_strictness.long_name} damage strictness"
-        )
+            template_strings["Difficulty"].append(f"{configuration.damage_strictness.long_name} damage strictness")
         if configuration.pickup_model_style != PickupModelStyle.ALL_VISIBLE:
-            template_strings["Difficulty"].append(f"Pickup: {configuration.pickup_model_style.long_name} "
-                                                  f"({configuration.pickup_model_data_source.long_name})")
+            template_strings["Difficulty"].append(
+                f"Pickup: {configuration.pickup_model_style.long_name} "
+                f"({configuration.pickup_model_data_source.long_name})"
+            )
 
         # Gameplay
         starting_locations = configuration.starting_location.locations
@@ -230,9 +230,12 @@ def merge_categories(categories: Iterable[PresetDescription]) -> str:
     )
 
 
-def handle_progressive_expected_counts(counts: dict[StandardPickupDefinition, int],
-                                       configuration: StandardPickupConfiguration,
-                                       progressive: str, non_progressive: Sequence[str]) -> None:
+def handle_progressive_expected_counts(
+    counts: dict[StandardPickupDefinition, int],
+    configuration: StandardPickupConfiguration,
+    progressive: str,
+    non_progressive: Sequence[str],
+) -> None:
     progressive_item = configuration.get_pickup_with_name(progressive)
     non_progressive_items = [configuration.get_pickup_with_name(name) for name in non_progressive]
 

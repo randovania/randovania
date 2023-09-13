@@ -19,16 +19,19 @@ def logbook_node(request, blank_game_description):
     has_translator = request.param
     translator = blank_game_description.resource_database.get_item("BlueKey")
 
-    node = blank_game_description.region_list.node_by_identifier(NodeIdentifier.create(
-        "Intro", "Hint Room", "Hint with Translator" if has_translator else "Hint no Translator",
-    ))
+    node = blank_game_description.region_list.node_by_identifier(
+        NodeIdentifier.create(
+            "Intro",
+            "Hint Room",
+            "Hint with Translator" if has_translator else "Hint no Translator",
+        )
+    )
     assert isinstance(node, HintNode)
 
     return has_translator, translator, node
 
 
-def test_logbook_node_requirements_to_leave(logbook_node,
-                                            empty_patches):
+def test_logbook_node_requirements_to_leave(logbook_node, empty_patches):
     # Setup
     has_translator, translator, node = logbook_node
     db = empty_patches.game.resource_database
@@ -47,8 +50,7 @@ def test_logbook_node_requirements_to_leave(logbook_node,
     assert to_leave.satisfied(rc3, 99, None)
 
 
-def test_logbook_node_can_collect(logbook_node,
-                                  empty_patches):
+def test_logbook_node_can_collect(logbook_node, empty_patches):
     # Setup
     db = empty_patches.game.resource_database
     has_translator, translator, node = logbook_node
@@ -66,8 +68,7 @@ def test_logbook_node_can_collect(logbook_node,
     assert not node.can_collect(ctx(resource, translator))
 
 
-def test_logbook_node_resource_gain_on_collect(logbook_node,
-                                               empty_patches):
+def test_logbook_node_resource_gain_on_collect(logbook_node, empty_patches):
     # Setup
     db = empty_patches.game.resource_database
     node = logbook_node[-1]

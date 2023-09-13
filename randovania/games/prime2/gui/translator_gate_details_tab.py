@@ -29,9 +29,9 @@ class TranslatorGateDetailsTab(GameDetailsTab):
     def tab_title(self) -> str:
         return "Translator Gate"
 
-    def update_content(self, configuration: BaseConfiguration, all_patches: dict[int, GamePatches],
-                       players: PlayersConfiguration):
-
+    def update_content(
+        self, configuration: BaseConfiguration, all_patches: dict[int, GamePatches], players: PlayersConfiguration
+    ):
         self.tree_widget.clear()
         self.tree_widget.setColumnCount(2)
         self.tree_widget.setHeaderLabels(["Gate", "Requirement"])
@@ -43,11 +43,7 @@ class TranslatorGateDetailsTab(GameDetailsTab):
         gate_index_to_name, identifier_to_gate = gate_data()
 
         resource_db = game.resource_database
-        items_by_id = {
-            item.extra["item_id"]: item.long_name
-            for item in resource_db.item
-            if "item_id" in item.extra
-        }
+        items_by_id = {item.extra["item_id"]: item.long_name for item in resource_db.item if "item_id" in item.extra}
 
         per_region: dict[str, dict[str, str]] = collections.defaultdict(dict)
 

@@ -14,8 +14,8 @@ if TYPE_CHECKING:
     from randovania.layout.base.base_configuration import BaseConfiguration
 
 _RESOURCE_NAME_TRANSLATION = {
-    'Temporary Missile': 'Missile',
-    'Temporary Power Bomb': 'Power Bomb',
+    "Temporary Missile": "Missile",
+    "Temporary Power Bomb": "Power Bomb",
 }
 _ITEMS_TO_PLURALIZE = {
     "Missile",
@@ -55,9 +55,9 @@ def _pickups_count_by_name(pickups: list[PickupEntry]) -> dict[str, int]:
     return result
 
 
-def additional_starting_pickups(layout_configuration: BaseConfiguration,
-                                game: GameDescription,
-                                starting_pickups: list[PickupEntry]) -> list[str]:
+def additional_starting_pickups(
+    layout_configuration: BaseConfiguration, game: GameDescription, starting_pickups: list[PickupEntry]
+) -> list[str]:
     initial_pickups = _pickups_count_by_name(calculate_pool_results(layout_configuration, game).starting)
     final_pickups = _pickups_count_by_name(starting_pickups)
 
@@ -68,24 +68,23 @@ def additional_starting_pickups(layout_configuration: BaseConfiguration,
     ]
 
 
-def additional_starting_items(layout_configuration: BaseConfiguration,
-                              game: GameDescription,
-                              starting_items: ResourceCollection) -> list[str]:
+def additional_starting_items(
+    layout_configuration: BaseConfiguration, game: GameDescription, starting_items: ResourceCollection
+) -> list[str]:
     initial_items = ResourceCollection.with_database(game.resource_database)
     for pickup in calculate_pool_results(layout_configuration, game).starting:
         initial_items.add_resource_gain(pickup.resource_gain(initial_items))
 
     return [
         add_quantity_to_resource(resource_user_friendly_name(item), quantity)
-        for item, quantity in sorted(starting_items.as_resource_gain(),
-                                     key=lambda a: resource_user_friendly_name(a[0]))
+        for item, quantity in sorted(starting_items.as_resource_gain(), key=lambda a: resource_user_friendly_name(a[0]))
         if 0 < quantity != initial_items[item]
     ]
 
 
-def additional_starting_equipment(layout_configuration: BaseConfiguration,
-                                  game: GameDescription,
-                                  patches: GamePatches) -> list[str]:
+def additional_starting_equipment(
+    layout_configuration: BaseConfiguration, game: GameDescription, patches: GamePatches
+) -> list[str]:
     if isinstance(patches.starting_equipment, ResourceCollection):
         return additional_starting_items(layout_configuration, game, patches.starting_equipment)
     else:

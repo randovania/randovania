@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import copy
+import typing
 from collections.abc import Callable
 
 
@@ -8,11 +9,12 @@ class UnsupportedVersion(ValueError):
     pass
 
 
-Migrations = list[Callable[[dict], dict] | None]
+Migrations = typing.Sequence[Callable[[dict], dict] | None]
 
 
-def apply_migrations(data: dict, migrations: Migrations, *, copy_before_migrating: bool = False,
-                     version_name: str = "version") -> dict:
+def apply_migrations(
+    data: dict, migrations: Migrations, *, copy_before_migrating: bool = False, version_name: str = "version"
+) -> dict:
     schema_version = data.get("schema_version", 1)
     version = get_version(migrations)
 
@@ -32,8 +34,10 @@ def apply_migrations(data: dict, migrations: Migrations, *, copy_before_migratin
         schema_version += 1
 
     if schema_version > version:
-        raise UnsupportedVersion(f"Found {version_name} {schema_version}, but only up to {version} is supported. "
-                                 f"This file was created using a newer Randovania version.")
+        raise UnsupportedVersion(
+            f"Found {version_name} {schema_version}, but only up to {version} is supported. "
+            f"This file was created using a newer Randovania version."
+        )
 
     data["schema_version"] = schema_version
 

@@ -25,7 +25,7 @@ class NodeLocation:
     y: float
     z: float
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         assert isinstance(self.x, float)
         assert isinstance(self.y, float)
         assert isinstance(self.z, float)
@@ -53,17 +53,18 @@ class Node:
     extra: dict[str, typing.Any]
     valid_starting_location: bool
 
-    def __lt__(self, other: Node):
+    def __lt__(self, other: object) -> bool:
+        assert isinstance(other, Node)
         return self.identifier < other.identifier
 
-    def __hash__(self):
+    def __hash__(self) -> int:
         return hash(self.identifier)
 
     @property
-    def name(self):
+    def name(self) -> str:
         return self.identifier.node_name
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if not self.layers:
             raise ValueError("Expected at least one layer")
 

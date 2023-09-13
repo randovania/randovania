@@ -24,9 +24,11 @@ class MemoryOperation:
         return 0
 
     def validate_byte_sizes(self):
-        if (self.write_bytes is not None
-                and self.read_byte_count is not None
-                and len(self.write_bytes) != self.read_byte_count):
+        if (
+            self.write_bytes is not None
+            and self.read_byte_count is not None
+            and len(self.write_bytes) != self.read_byte_count
+        ):
             raise ValueError(f"Attempting to read {self.read_byte_count} bytes while writing {len(self.write_bytes)}.")
 
     def __str__(self):

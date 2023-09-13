@@ -20,8 +20,9 @@ def test_unpack_iso_bad_iso(mocker):
     disc.get_data_partition.return_value = None
 
     # Run
-    with pytest.raises(RuntimeError, match=f"Could not find a data partition in '{iso}'."
-                                           f"\nIs it a valid Metroid Prime 2 ISO?"):
+    with pytest.raises(
+        RuntimeError, match=f"Could not find a data partition in '{iso}'.\nIs it a valid Metroid Prime 2 ISO?"
+    ):
         iso_packager.unpack_iso(iso, game_files_path, MagicMock())
 
     # Assert
@@ -49,7 +50,8 @@ def test_unpack_iso_success(mocker):
     mock_nod.open_disc_from_image.assert_called_once_with(iso)
     mock_disc.get_data_partition.assert_called_once_with()
     mock_disc.get_data_partition.return_value.extract_to_directory.assert_called_once_with(
-        os.fspath(game_files_path), mock_nod.ExtractionContext.return_value,
+        os.fspath(game_files_path),
+        mock_nod.ExtractionContext.return_value,
     )
     mock_nod.ExtractionContext.return_value.set_progress_callback.assert_called_once_with(progress_update)
 
@@ -75,9 +77,7 @@ def test_unpack_iso_failure():
 @pytest.mark.parametrize("iso_too_big", [False, True])
 @patch("randovania.patching.patchers.gamecube.iso_packager.nod")
 @patch("randovania.patching.patchers.gamecube.iso_packager.validate_game_files_path", autospec=True)
-def test_pack_iso(mock_validate_game_files_path: MagicMock,
-                  mock_nod: MagicMock,
-                  iso_too_big: bool):
+def test_pack_iso(mock_validate_game_files_path: MagicMock, mock_nod: MagicMock, iso_too_big: bool):
     # Setup
     iso = MagicMock()
     game_files_path = MagicMock()
@@ -102,10 +102,7 @@ def test_pack_iso(mock_validate_game_files_path: MagicMock,
     # Assert
     mock_validate_game_files_path.assert_called_once_with(game_files_path.joinpath.return_value)
 
-    mock_calculate_total_size_required.assert_has_calls([
-        call(game_files_path)
-        for _ in sizes
-    ])
+    mock_calculate_total_size_required.assert_has_calls([call(game_files_path) for _ in sizes])
 
     if iso_too_big:
         mock_nod.DiscBuilderGCN.assert_not_called()

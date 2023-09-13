@@ -4,6 +4,8 @@ import typing
 from functools import lru_cache
 
 if typing.TYPE_CHECKING:
+    from collections.abc import Iterator
+
     from randovania.game_description.requirements.requirement_set import RequirementSet
     from randovania.game_description.requirements.resource_requirement import ResourceRequirement
     from randovania.game_description.resources.resource_collection import ResourceCollection
@@ -19,8 +21,9 @@ class Requirement:
     def satisfied(self, current_resources: ResourceCollection, current_energy: int, database: ResourceDatabase) -> bool:
         raise NotImplementedError
 
-    def patch_requirements(self, static_resources: ResourceCollection, damage_multiplier: float,
-                           database: ResourceDatabase) -> Requirement:
+    def patch_requirements(
+        self, static_resources: ResourceCollection, damage_multiplier: float, database: ResourceDatabase
+    ) -> Requirement:
         """
         Creates a new Requirement that does not contain reference to resources in static_resources.
         For those that contains a reference, they're replaced with Trivial when satisfied and Impossible otherwise.
@@ -49,6 +52,7 @@ class Requirement:
     def trivial(cls) -> Requirement:
         # empty RequirementAnd.satisfied is True
         from randovania.game_description.requirements.requirement_and import RequirementAnd
+
         return RequirementAnd([])
 
     @classmethod
@@ -56,10 +60,11 @@ class Requirement:
     def impossible(cls) -> Requirement:
         # empty RequirementOr.satisfied is False
         from randovania.game_description.requirements.requirement_or import RequirementOr
+
         return RequirementOr([])
 
-    def __lt__(self, other: Requirement):
+    def __lt__(self, other: Requirement) -> bool:
         return str(self) < str(other)
 
-    def iterate_resource_requirements(self, database: ResourceDatabase) -> typing.Iterator[ResourceRequirement]:
+    def iterate_resource_requirements(self, database: ResourceDatabase) -> Iterator[ResourceRequirement]:
         raise NotImplementedError

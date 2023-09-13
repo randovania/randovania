@@ -8,7 +8,6 @@ from randovania.layout.permalink import Permalink, UnsupportedPermalink
 
 
 class PermalinkDialog(QDialog, Ui_PermalinkDialog):
-
     def __init__(self):
         super().__init__()
         self.setupUi(self)

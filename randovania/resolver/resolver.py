@@ -25,8 +25,10 @@ if TYPE_CHECKING:
     from randovania.resolver.state import State
 
 
-def _simplify_requirement_list(self: RequirementList, state: State,
-                               ) -> RequirementList | None:
+def _simplify_requirement_list(
+    self: RequirementList,
+    state: State,
+) -> RequirementList | None:
     items = []
     for item in self.values():
         if item.satisfied(state.resources, state.energy, state.resource_database):
@@ -42,23 +44,21 @@ def _simplify_requirement_list(self: RequirementList, state: State,
     return RequirementList(items)
 
 
-def _simplify_additional_requirement_set(alternatives: Iterable[RequirementList],
-                                         state: State,
-                                         ) -> RequirementSet:
-    new_alternatives = [
-        _simplify_requirement_list(alternative, state)
-        for alternative in alternatives
-    ]
-    return RequirementSet(alternative
-                          for alternative in new_alternatives
-
-                          # RequirementList.simplify may return None
-                          if alternative is not None)
+def _simplify_additional_requirement_set(
+    alternatives: Iterable[RequirementList],
+    state: State,
+) -> RequirementSet:
+    new_alternatives = [_simplify_requirement_list(alternative, state) for alternative in alternatives]
+    return RequirementSet(
+        alternative
+        for alternative in new_alternatives
+        # RequirementList.simplify may return None
+        if alternative is not None
+    )
 
 
 def _is_action_dangerous(state: State, action: ResourceNode, dangerous_resources: frozenset[ResourceInfo]) -> bool:
-    return any(resource in dangerous_resources
-               for resource, _ in action.resource_gain_on_collect(state.node_context()))
+    return any(resource in dangerous_resources for resource, _ in action.resource_gain_on_collect(state.node_context()))
 
 
 def _is_major_or_key_pickup_node(action: ResourceNode, state: State) -> bool:
@@ -69,15 +69,15 @@ def _is_major_or_key_pickup_node(action: ResourceNode, state: State) -> bool:
 
     if isinstance(pickup_node, PickupNode):
         target = state.patches.pickup_assignment.get(pickup_node.pickup_index)
-        return target is not None and (target.pickup.pickup_category.hinted_as_major or
-                                       target.pickup.pickup_category.is_key)
+        return target is not None and (
+            target.pickup.pickup_category.hinted_as_major or target.pickup.pickup_category.is_key
+        )
     return False
 
 
-def _should_check_if_action_is_safe(state: State,
-                                    action: ResourceNode,
-                                    dangerous_resources: frozenset[ResourceInfo]
-                                    ) -> bool:
+def _should_check_if_action_is_safe(
+    state: State, action: ResourceNode, dangerous_resources: frozenset[ResourceInfo]
+) -> bool:
     """
     Determines if we should _check_ if the given action is safe that state
     :param state:
@@ -85,18 +85,19 @@ def _should_check_if_action_is_safe(state: State,
     :param dangerous_resources:
     :return:
     """
-    return not _is_action_dangerous(state, action, dangerous_resources) \
-        and (isinstance(action, EventNode | EventPickupNode)
-             or _is_major_or_key_pickup_node(action, state))
+    return not _is_action_dangerous(state, action, dangerous_resources) and (
+        isinstance(action, EventNode | EventPickupNode) or _is_major_or_key_pickup_node(action, state)
+    )
 
 
-async def _inner_advance_depth(state: State,
-                               logic: Logic,
-                               status_update: Callable[[str], None],
-                               *,
-                               reach: ResolverReach | None = None,
-                               max_attempts: int | None = None,
-                               ) -> tuple[State | None, bool]:
+async def _inner_advance_depth(
+    state: State,
+    logic: Logic,
+    status_update: Callable[[str], None],
+    *,
+    reach: ResolverReach | None = None,
+    max_attempts: int | None = None,
+) -> tuple[State | None, bool]:
     """
 
     :param state:
@@ -143,8 +144,7 @@ async def _inner_advance_depth(state: State,
                     additional = logic.get_additional_requirements(action).alternatives
 
                     logic.set_additional_requirements(
-                        state.node,
-                        _simplify_additional_requirement_set(additional, state)
+                        state.node, _simplify_additional_requirement_set(additional, state)
                     )
                     logic.log_rollback(state, True, True, logic.get_additional_requirements(state.node))
 
@@ -164,14 +164,15 @@ async def _inner_advance_depth(state: State,
         else:
             rest_of_actions.append(action_tuple)
 
-    actions = list(reach.satisfiable_actions(
-        state, logic.victory_condition,
-        itertools.chain(major_pickup_actions,
-                        lock_actions,
-                        rest_of_actions,
-                        point_of_no_return_actions,
-                        dangerous_actions)
-    ))
+    actions = list(
+        reach.satisfiable_actions(
+            state,
+            logic.victory_condition,
+            itertools.chain(
+                major_pickup_actions, lock_actions, rest_of_actions, point_of_no_return_actions, dangerous_actions
+            ),
+        )
+    )
     logic.log_checking_satisfiable_actions(state, actions)
     has_action = False
     for action, energy in actions:
@@ -197,20 +198,15 @@ async def _inner_advance_depth(state: State,
 
         additional_requirements = additional_requirements.union(additional)
 
-    logic.set_additional_requirements(
-        state.node,
-        _simplify_additional_requirement_set(
-            additional_requirements,
-            state
-        )
-    )
+    logic.set_additional_requirements(state.node, _simplify_additional_requirement_set(additional_requirements, state))
     logic.log_rollback(state, has_action, False, logic.get_additional_requirements(state.node))
 
     return None, has_action
 
 
-async def advance_depth(state: State, logic: Logic, status_update: Callable[[str], None],
-                        max_attempts: int | None = None) -> State | None:
+async def advance_depth(
+    state: State, logic: Logic, status_update: Callable[[str], None], max_attempts: int | None = None
+) -> State | None:
     logic.resolver_start()
     return (await _inner_advance_depth(state, logic, status_update, max_attempts=max_attempts))[0]
 
@@ -232,10 +228,11 @@ def setup_resolver(configuration: BaseConfiguration, patches: GamePatches) -> tu
     return starting_state, logic
 
 
-async def resolve(configuration: BaseConfiguration,
-                  patches: GamePatches,
-                  status_update: Callable[[str], None] | None = None,
-                  ) -> State | None:
+async def resolve(
+    configuration: BaseConfiguration,
+    patches: GamePatches,
+    status_update: Callable[[str], None] | None = None,
+) -> State | None:
     if status_update is None:
         status_update = _quiet_print
 

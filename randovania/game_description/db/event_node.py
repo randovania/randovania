@@ -16,7 +16,7 @@ if TYPE_CHECKING:
 class EventNode(ResourceNode):
     event: ResourceInfo
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"EventNode({self.name!r} -> {self.event.long_name})"
 
     def requirement_to_leave(self, context: NodeContext) -> Requirement:

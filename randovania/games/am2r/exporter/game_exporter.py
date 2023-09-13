@@ -16,6 +16,7 @@ if TYPE_CHECKING:
 
     from randovania.lib import status_update_lib
 
+
 @dataclasses.dataclass(frozen=True)
 class AM2RGameExportParams(GameExportParams):
     input_path: Path
@@ -39,8 +40,12 @@ class AM2RGameExporter(GameExporter):
         """
         return False
 
-    def _do_export_game(self, patch_data: dict, export_params: AM2RGameExportParams,
-                        progress_update: status_update_lib.ProgressUpdateCallable) -> None:
+    def _do_export_game(
+        self,
+        patch_data: dict,
+        export_params: AM2RGameExportParams,
+        progress_update: status_update_lib.ProgressUpdateCallable,
+    ) -> None:
         # Check if dotnet is available
         dotnet_ran_fine = False
         try:
@@ -49,10 +54,12 @@ class AM2RGameExporter(GameExporter):
         except FileNotFoundError:
             dotnet_ran_fine = False
         if not dotnet_ran_fine:
-            raise UnableToExportError("You do not have .NET installed!\n"
-                                      "Please ensure that it is installed and located in PATH. It can be installed "
-                                      "from here:\n"
-                                      "https://aka.ms/dotnet/download")
+            raise UnableToExportError(
+                "You do not have .NET installed!\n"
+                "Please ensure that it is installed and located in PATH. It can be installed "
+                "from here:\n"
+                "https://aka.ms/dotnet/download"
+            )
 
         receiving_pipe, output_pipe = multiprocessing.Pipe(True)
 

@@ -146,10 +146,7 @@ class PresetEditor:
         self.set_configuration_field("dock_rando", value)
 
     def set_configuration_field(self, field_name: str, value):
-        self._edit_field(
-            "configuration",
-            dataclasses.replace(self.configuration, **{field_name: value})
-        )
+        self._edit_field("configuration", dataclasses.replace(self.configuration, **{field_name: value}))
 
     ######
 

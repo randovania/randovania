@@ -76,10 +76,7 @@ class CSCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_CSCosmeticPatchesDia
 
     def _persist_option_then_notify(self, attribute_name: str):
         def persist(value: int):
-            self._cosmetic_patches = dataclasses.replace(
-                self._cosmetic_patches,
-                **{attribute_name: bool(value)}
-            )
+            self._cosmetic_patches = dataclasses.replace(self._cosmetic_patches, **{attribute_name: bool(value)})
 
         return persist
 
@@ -100,8 +97,7 @@ class CSCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_CSCosmeticPatchesDia
                 new_status[name] = enabled
 
         self._cosmetic_patches = dataclasses.replace(
-            self._cosmetic_patches,
-            music_rando=self._cosmetic_patches.music_rando.update_song_status(new_status)
+            self._cosmetic_patches, music_rando=self._cosmetic_patches.music_rando.update_song_status(new_status)
         )
 
     def _read_songs(self, status: dict[str, bool]):

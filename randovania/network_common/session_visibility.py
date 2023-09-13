@@ -5,6 +5,7 @@ from enum import Enum
 
 class MultiplayerSessionVisibility(Enum):
     """Visibility of a multiplayer session"""
+
     VISIBLE = "visible"
     HIDDEN = "hidden"
 

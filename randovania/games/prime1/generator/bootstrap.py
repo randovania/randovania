@@ -16,8 +16,9 @@ if TYPE_CHECKING:
 
 
 class PrimeBootstrap(MetroidBootstrap):
-    def _get_enabled_misc_resources(self, configuration: BaseConfiguration,
-                                    resource_database: ResourceDatabase) -> set[str]:
+    def _get_enabled_misc_resources(
+        self, configuration: BaseConfiguration, resource_database: ResourceDatabase
+    ) -> set[str]:
         enabled_resources = set()
 
         logical_patches = {
@@ -47,8 +48,9 @@ class PrimeBootstrap(MetroidBootstrap):
         return enabled_resources
 
     def prime1_progressive_damage_reduction(self, db: ResourceDatabase, current_resources: ResourceCollection):
-        num_suits = sum(current_resources[db.get_item_by_name(suit)]
-                        for suit in ["Varia Suit", "Gravity Suit", "Phazon Suit"])
+        num_suits = sum(
+            current_resources[db.get_item_by_name(suit)] for suit in ["Varia Suit", "Gravity Suit", "Phazon Suit"]
+        )
         if num_suits >= 3:
             return 0.5
         elif num_suits == 2:
@@ -88,5 +90,9 @@ class PrimeBootstrap(MetroidBootstrap):
         else:
             base_damage_reduction = self.prime1_absolute_damage_reduction
 
-        return dataclasses.replace(db, damage_reductions=damage_reductions, base_damage_reduction=base_damage_reduction,
-                                   requirement_template=requirement_template)
+        return dataclasses.replace(
+            db,
+            damage_reductions=damage_reductions,
+            base_damage_reduction=base_damage_reduction,
+            requirement_template=requirement_template,
+        )

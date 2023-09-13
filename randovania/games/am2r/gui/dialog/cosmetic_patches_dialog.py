@@ -66,12 +66,12 @@ class AM2RCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_AM2RCosmeticPatche
         box_color_rotation_mapping = [
             (self.custom_health_rotation_square, DEFAULT_HEALTH_COLOR, self._cosmetic_patches.health_hud_rotation),
             (self.custom_etank_rotation_square, DEFAULT_ETANK_COLOR, self._cosmetic_patches.etank_hud_rotation),
-            (self.custom_dna_rotation_square, DEFAULT_DNA_COLOR, self._cosmetic_patches.dna_hud_rotation)
+            (self.custom_dna_rotation_square, DEFAULT_DNA_COLOR, self._cosmetic_patches.dna_hud_rotation),
         ]
 
-        for (box, orig_color, rotation) in box_color_rotation_mapping:
+        for box, orig_color, rotation in box_color_rotation_mapping:
             color = hue_rotate_color(orig_color, rotation)
-            style = 'background-color: rgb({},{},{})'.format(*color)
+            style = "background-color: rgb({},{},{})".format(*color)
             box.setStyleSheet(style)
 
     def connect_signals(self):
@@ -88,10 +88,7 @@ class AM2RCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_AM2RCosmeticPatche
 
     def _persist_option_then_notify(self, attribute_name: str):
         def persist(value: int):
-            self._cosmetic_patches = dataclasses.replace(
-                self._cosmetic_patches,
-                **{attribute_name: bool(value)}
-            )
+            self._cosmetic_patches = dataclasses.replace(self._cosmetic_patches, **{attribute_name: bool(value)})
 
         return persist
 
@@ -100,16 +97,17 @@ class AM2RCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_AM2RCosmeticPatche
             self._cosmetic_patches = dataclasses.replace(self._cosmetic_patches, music=option)
 
     def _persist_hud_rotations(self):
-        self._cosmetic_patches = dataclasses.replace(self._cosmetic_patches,
-                                                     health_hud_rotation=self.custom_health_rotation_field.value(),
-                                                     etank_hud_rotation=self.custom_etank_rotation_field.value(),
-                                                     dna_hud_rotation=self.custom_dna_rotation_field.value())
+        self._cosmetic_patches = dataclasses.replace(
+            self._cosmetic_patches,
+            health_hud_rotation=self.custom_health_rotation_field.value(),
+            etank_hud_rotation=self.custom_etank_rotation_field.value(),
+            dna_hud_rotation=self.custom_dna_rotation_field.value(),
+        )
         self._update_color_squares()
 
     def _on_room_name_mode_update(self):
         self._cosmetic_patches = dataclasses.replace(
-            self._cosmetic_patches,
-            show_room_names=self.room_name_dropdown.currentData()
+            self._cosmetic_patches, show_room_names=self.room_name_dropdown.currentData()
         )
 
     def on_new_cosmetic_patches(self, patches: AM2RCosmeticPatches):

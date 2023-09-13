@@ -49,20 +49,18 @@ class PrimeConnectorBuilder(ConnectorBuilder):
 
         self._status_message("Identifying game...", log=False)
         all_connectors: list[PrimeRemoteConnector] = [
-            Prime1RemoteConnector(version, executor)
-            for version in prime1_dol_versions.ALL_VERSIONS
+            Prime1RemoteConnector(version, executor) for version in prime1_dol_versions.ALL_VERSIONS
         ]
-        all_connectors.extend([
-            EchoesRemoteConnector(version, executor)
-            for version in echoes_dol_versions.ALL_VERSIONS
-        ])
-        all_connectors.extend([
-            CorruptionRemoteConnector(version, executor)
-            for version in corruption_dol_versions.ALL_VERSIONS
-        ])
+        all_connectors.extend(
+            [EchoesRemoteConnector(version, executor) for version in echoes_dol_versions.ALL_VERSIONS]
+        )
+        all_connectors.extend(
+            [CorruptionRemoteConnector(version, executor) for version in corruption_dol_versions.ALL_VERSIONS]
+        )
         read_first_ops = [
-            MemoryOperation(connectors.version.build_string_address,
-                            read_byte_count=min(len(connectors.version.build_string), 4))
+            MemoryOperation(
+                connectors.version.build_string_address, read_byte_count=min(len(connectors.version.build_string), 4)
+            )
             for connectors in all_connectors
         ]
         try:

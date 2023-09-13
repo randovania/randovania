@@ -18,7 +18,7 @@ resource_list = [
     ("Bombs", "Morph Ball"),
     ("Spider Ball", "Morph Ball"),
     ("Spring Ball", "Morph Ball"),
-    ("Power Bombs", "Morph Ball")
+    ("Power Bombs", "Morph Ball"),
 ]
 
 
@@ -57,15 +57,18 @@ def test_all_tricks_should_have_proper_requirements():
                     required_resource_collection[i] = False
 
                 for i in range(size):
-                    required_resource_collection[i] = \
-                        does_requirement_contain_resource(requirements, required_resources[i], db)
+                    required_resource_collection[i] = does_requirement_contain_resource(
+                        requirements, required_resources[i], db
+                    )
                     if not required_resource_collection[i]:
                         break
 
                 if len(set(required_resource_collection.values())) > 1:
                     database_dict[required_resources].append(
-                        (f"{node.name} ({node.identifier.area_name})",
-                         f"{dest_node.name} ({dest_node.identifier.area_name})")
+                        (
+                            f"{node.name} ({node.identifier.area_name})",
+                            f"{dest_node.name} ({dest_node.identifier.area_name})",
+                        )
                     )
 
     assert database_dict == expected_dict

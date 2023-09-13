@@ -28,6 +28,7 @@ class LayoutCutsceneMode(BitPackEnum, Enum):
     SKIPPABLE = "skippable"
     SKIPPABLE_COMPETITIVE = "skippablecompetitive"
 
+
 @dataclasses.dataclass(frozen=True)
 class EnemyAttributeRandomizer(BitPackDataclass, JsonDataclass):
     enemy_rando_range_scale_low: float = dataclasses.field(metadata={"min": 0.01, "max": 25.0, "precision": 1.0})
@@ -61,9 +62,11 @@ class PrimeConfiguration(BaseConfiguration):
     random_boss_sizes: bool
     no_doors: bool
     superheated_probability: int = dataclasses.field(
-        metadata={"min": 0, "max": 1000})  # div 1000 to get coefficient, div 10 to get %
+        metadata={"min": 0, "max": 1000}
+    )  # div 1000 to get coefficient, div 10 to get %
     submerged_probability: int = dataclasses.field(
-        metadata={"min": 0, "max": 1000})  # div 1000 to get coefficient, div 10 to get %
+        metadata={"min": 0, "max": 1000}
+    )  # div 1000 to get coefficient, div 10 to get %
     room_rando: RoomRandoMode
     spring_ball: bool
 

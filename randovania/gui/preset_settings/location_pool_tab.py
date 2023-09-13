@@ -130,6 +130,5 @@ class PresetLocationPool(PresetTab, Ui_PresetLocationPool, NodeListHelper):
             return
         with self._editor as editor:
             editor.available_locations = editor.available_locations.ensure_index(
-                node.pickup_index,
-                not self._row_widget_for_node[node].can_have_progression
+                node.pickup_index, not self._row_widget_for_node[node].can_have_progression
             )

@@ -27,7 +27,7 @@ SUIT_DEFAULT_COLORS = [
     [(255, 173, 50), (220, 25, 45), (132, 240, 60)],  # Power
     [(255, 173, 50), (220, 25, 45), (255, 125, 50), (132, 240, 60)],  # Varia
     [(170, 170, 145), (70, 25, 50), (40, 20, 90), (140, 240, 240)],  # Gravity
-    [(50, 50, 50), (20, 20, 20), (230, 50, 62)]  # Phazon
+    [(50, 50, 50), (20, 20, 20), (230, 50, 62)],  # Phazon
 ]
 
 
@@ -85,15 +85,16 @@ class PrimeCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_PrimeCosmeticPatc
 
         # Build dynamically preview color squares for suits
         suit_layouts = [
-            self.power_suit_color_layout, self.varia_suit_color_layout,
-            self.gravity_suit_color_layout, self.phazon_suit_color_layout
+            self.power_suit_color_layout,
+            self.varia_suit_color_layout,
+            self.gravity_suit_color_layout,
+            self.phazon_suit_color_layout,
         ]
         self.suit_color_preview_squares = []
         for suit_layout, suit_colors in zip(suit_layouts, SUIT_DEFAULT_COLORS):
-            self.suit_color_preview_squares.append([
-                self._add_preview_color_square_to_layout(suit_layout, color)
-                for color in suit_colors
-            ])
+            self.suit_color_preview_squares.append(
+                [self._add_preview_color_square_to_layout(suit_layout, color) for color in suit_colors]
+            )
 
         self.on_new_cosmetic_patches(current)
         self.connect_signals()
@@ -150,10 +151,7 @@ class PrimeCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_PrimeCosmeticPatc
 
     def _persist_option_then_notify(self, attribute_name: str):
         def persist(value: int):
-            self._cosmetic_patches = dataclasses.replace(
-                self._cosmetic_patches,
-                **{attribute_name: bool(value)}
-            )
+            self._cosmetic_patches = dataclasses.replace(self._cosmetic_patches, **{attribute_name: bool(value)})
 
         return persist
 
@@ -162,10 +160,11 @@ class PrimeCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_PrimeCosmeticPatc
             self.power_suit_rotation_field.value(),
             self.varia_suit_rotation_field.value(),
             self.gravity_suit_rotation_field.value(),
-            self.phazon_suit_rotation_field.value()
+            self.phazon_suit_rotation_field.value(),
         )
-        self._cosmetic_patches = dataclasses.replace(self._cosmetic_patches,
-                                                     suit_color_rotations=suit_color_rotations_tuple)
+        self._cosmetic_patches = dataclasses.replace(
+            self._cosmetic_patches, suit_color_rotations=suit_color_rotations_tuple
+        )
         self._update_color_squares()
 
     def _open_color_picker(self):
@@ -176,29 +175,33 @@ class PrimeCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_PrimeCosmeticPatc
             color_tuple = (color.red(), color.green(), color.blue())
             estimated_ingame_alpha = max(color_tuple)
             if estimated_ingame_alpha < 150:
-                QMessageBox.warning(self, "Dangerous preset",
-                                    ("Be careful, desaturated colors like this one tend to produce a transparent HUD.\n"
-                                     "Use at your own risk.")
-                                    )
+                QMessageBox.warning(
+                    self,
+                    "Dangerous preset",
+                    (
+                        "Be careful, desaturated colors like this one tend to produce a transparent HUD.\n"
+                        "Use at your own risk."
+                    ),
+                )
             self._cosmetic_patches = dataclasses.replace(self._cosmetic_patches, hud_color=color_tuple)
             self._update_color_squares()
 
     def _update_color_squares(self):
         color = self._cosmetic_patches.hud_color
-        style = 'background-color: rgb({},{},{})'.format(*color)
+        style = "background-color: rgb({},{},{})".format(*color)
         self.custom_hud_color_square.setStyleSheet(style)
 
         for i, suit_colors in enumerate(SUIT_DEFAULT_COLORS):
             for j, color in enumerate(suit_colors):
                 color = hue_rotate_color(color, self._cosmetic_patches.suit_color_rotations[i])
-                style = 'background-color: rgb({},{},{})'.format(*color)
+                style = "background-color: rgb({},{},{})".format(*color)
                 self.suit_color_preview_squares[i][j].setStyleSheet(style)
 
     def _add_preview_color_square_to_layout(self, layout: QLayout, default_color: tuple[int, int, int]):
         color_square = QFrame(self.game_changes_box)
         color_square.setMinimumSize(QSize(22, 22))
         color_square.setSizePolicy(QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed))
-        color_square.setStyleSheet('background-color: rgb({},{},{})'.format(*default_color))
+        color_square.setStyleSheet("background-color: rgb({},{},{})".format(*default_color))
         layout.addWidget(color_square)
         return color_square
 
@@ -218,23 +221,14 @@ class PrimeCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_PrimeCosmeticPatc
         )
 
     def _on_sound_mode_update(self):
-        self.preferences = dataclasses.replace(
-            self.preferences,
-            sound_mode=self.sound_mode_combo.currentData()
-        )
+        self.preferences = dataclasses.replace(self.preferences, sound_mode=self.sound_mode_combo.currentData())
 
     def _on_slider_update(self, slider: QSlider, field_name: str, _):
-        self.preferences = dataclasses.replace(
-            self.preferences,
-            **{field_name: slider.value()}
-        )
+        self.preferences = dataclasses.replace(self.preferences, **{field_name: slider.value()})
         update_label_with_slider(getattr(self, f"{field_name}_value_label"), slider)
 
     def _on_check_update(self, check: QCheckBox, field_name: str, _):
-        self.preferences = dataclasses.replace(
-            self.preferences,
-            **{field_name: check.isChecked()}
-        )
+        self.preferences = dataclasses.replace(self.preferences, **{field_name: check.isChecked()})
 
     def reset(self):
         self.on_new_cosmetic_patches(PrimeCosmeticPatches())

@@ -22,8 +22,10 @@ if typing.TYPE_CHECKING:
 
 
 def _build_satisfiable_requirements(
-        logic: Logic, all_nodes: tuple[Node | None, ...], resource_db: ResourceDatabase,
-        requirements_by_node: dict[int, list[Requirement]],
+    logic: Logic,
+    all_nodes: tuple[Node | None, ...],
+    resource_db: ResourceDatabase,
+    requirements_by_node: dict[int, list[Requirement]],
 ) -> SatisfiableRequirements:
     def _for_node(node_index: int, reqs: list[Requirement]) -> frozenset[RequirementList]:
         additional = logic.get_additional_requirements(all_nodes[node_index]).alternatives
@@ -32,16 +34,9 @@ def _build_satisfiable_requirements(
         for req in set(reqs):
             set_param.update(fast_as_set.fast_as_alternatives(req, resource_db))
 
-        yield from (
-            a.union(b)
-            for a in set_param
-            for b in additional
-        )
+        yield from (a.union(b) for a in set_param for b in additional)
 
-    return frozenset(itertools.chain.from_iterable(
-        _for_node(*it)
-        for it in requirements_by_node.items()
-    ))
+    return frozenset(itertools.chain.from_iterable(_for_node(*it) for it in requirements_by_node.items()))
 
 
 class ResolverReach:
@@ -63,16 +58,15 @@ class ResolverReach:
 
     def path_to_node(self, node: Node) -> tuple[Node, ...]:
         all_nodes = self._logic.game.region_list.all_nodes
-        return tuple(
-            all_nodes[part]
-            for part in self._path_to_node[node.node_index]
-        )
+        return tuple(all_nodes[part] for part in self._path_to_node[node.node_index])
 
-    def __init__(self,
-                 nodes: dict[int, int],
-                 path_to_node: dict[int, list[int]],
-                 requirements: SatisfiableRequirements,
-                 logic: Logic):
+    def __init__(
+        self,
+        nodes: dict[int, int],
+        path_to_node: dict[int, list[int]],
+        requirements: SatisfiableRequirements,
+        logic: Logic,
+    ):
         self._node_indices = tuple(nodes.keys())
         self._energy_at_node = nodes
         self._logic = logic
@@ -80,10 +74,7 @@ class ResolverReach:
         self._satisfiable_requirements = requirements
 
     @classmethod
-    def calculate_reach(cls,
-                        logic: Logic,
-                        initial_state: State) -> ResolverReach:
-
+    def calculate_reach(cls, logic: Logic, initial_state: State) -> ResolverReach:
         all_nodes = logic.game.region_list.all_nodes
         checked_nodes: dict[int, int] = {}
         database = initial_state.resource_database
@@ -91,9 +82,7 @@ class ResolverReach:
 
         # Keys: nodes to check
         # Value: how much energy was available when visiting that node
-        nodes_to_check: dict[int, int] = {
-            initial_state.node.node_index: initial_state.energy
-        }
+        nodes_to_check: dict[int, int] = {initial_state.node.node_index: initial_state.energy}
 
         reach_nodes: dict[int, int] = {}
         requirements_by_node: dict[int, list[Requirement]] = defaultdict(list)
@@ -119,8 +108,10 @@ class ResolverReach:
             for target_node, requirement in logic.game.region_list.potential_nodes_from(node, context):
                 target_node_index = target_node.node_index
 
-                if checked_nodes.get(target_node_index, -math.inf) >= energy or nodes_to_check.get(target_node_index,
-                                                                                                   -math.inf) >= energy:
+                if (
+                    checked_nodes.get(target_node_index, -math.inf) >= energy
+                    or nodes_to_check.get(target_node_index, -math.inf) >= energy
+                ):
                     continue
 
                 if requirement_to_leave != Requirement.trivial():
@@ -131,9 +122,7 @@ class ResolverReach:
                 if satisfied:
                     # If it is, check if we additional requirements figured out by backtracking is satisfied
                     satisfied = logic.get_additional_requirements(node).satisfied(
-                        initial_state.resources,
-                        energy,
-                        initial_state.resource_database
+                        initial_state.resources, energy, initial_state.resource_database
                     )
 
                 if satisfied:
@@ -157,13 +146,9 @@ class ResolverReach:
         else:
             satisfiable_requirements = frozenset()
 
-        return ResolverReach(reach_nodes, path_to_node,
-                             satisfiable_requirements,
-                             logic)
+        return ResolverReach(reach_nodes, path_to_node, satisfiable_requirements, logic)
 
-    def possible_actions(self,
-                         state: State) -> Iterator[tuple[ResourceNode, int]]:
-
+    def possible_actions(self, state: State) -> Iterator[tuple[ResourceNode, int]]:
         for node in self.collectable_resource_nodes(state):
             additional_requirements = self._logic.get_additional_requirements(node)
             energy = self._energy_at_node[node.node_index]
@@ -172,17 +157,18 @@ class ResolverReach:
             else:
                 self._logic.log_skip_action_missing_requirement(node, self._logic.game)
 
-    def satisfiable_actions(self,
-                            state: State,
-                            victory_condition: Requirement,
-                            actions: typing.Iterable[tuple[ResourceNode, int]],
-                            ) -> Iterator[tuple[ResourceNode, int]]:
-
+    def satisfiable_actions(
+        self,
+        state: State,
+        victory_condition: Requirement,
+        actions: typing.Iterable[tuple[ResourceNode, int]],
+    ) -> Iterator[tuple[ResourceNode, int]]:
         interesting_resources = calculate_interesting_resources(
             self._satisfiable_requirements.union(victory_condition.as_set(state.resource_database).alternatives),
             state.resources,
             state.energy,
-            state.resource_database)
+            state.resource_database,
+        )
 
         # print(" > satisfiable actions, with {} interesting resources".format(len(interesting_resources)))
         for action, energy in actions:
@@ -191,8 +177,7 @@ class ResolverReach:
                     yield action, energy
                     break
 
-    def collectable_resource_nodes(self,
-                                   state: State) -> Iterator[ResourceNode]:
+    def collectable_resource_nodes(self, state: State) -> Iterator[ResourceNode]:
         for node in self.nodes:
             if not node.is_resource_node:
                 continue

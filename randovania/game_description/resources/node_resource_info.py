@@ -17,8 +17,9 @@ class NodeResourceInfo:
     node_identifier: NodeIdentifier
     long_name: str = dataclasses.field(hash=False, repr=False)
     short_name: str = dataclasses.field(hash=False, repr=False)
-    resource_type: ResourceType = dataclasses.field(init=False, hash=False, repr=False,
-                                                    default=ResourceType.NODE_IDENTIFIER)
+    resource_type: ResourceType = dataclasses.field(
+        init=False, hash=False, repr=False, default=ResourceType.NODE_IDENTIFIER
+    )
 
     def __str__(self) -> str:
         return self.long_name

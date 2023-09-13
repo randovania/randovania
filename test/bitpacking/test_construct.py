@@ -31,7 +31,7 @@ def test_encode_uuid():
     decoded = construct_pack.decode(encoded, uuid.UUID)
 
     assert decoded == data
-    assert encoded == b'\x94\x8c\x17\x953\x05O\x9f\xac\xa8\x81\xaf\xf79$\xae'
+    assert encoded == b"\x94\x8c\x17\x953\x05O\x9f\xac\xa8\x81\xaf\xf79$\xae"
 
 
 def test_encode_datetime():
@@ -41,7 +41,7 @@ def test_encode_datetime():
     decoded = construct_pack.decode(encoded, datetime.datetime)
 
     assert decoded == data
-    assert encoded == b'\xc4\xdb\xee\xb8\xb4\xe6\x928'
+    assert encoded == b"\xc4\xdb\xee\xb8\xb4\xe6\x928"
 
 
 def test_encode_dict():
@@ -67,8 +67,7 @@ def test_encode_dataclass():
     data = D(
         a=2,
         b=None,
-        c=[uuid.UUID("00000000-0000-1111-0000-000000000000"),
-           uuid.UUID("00000000-0000-1111-0000-000000000001")],
+        c=[uuid.UUID("00000000-0000-1111-0000-000000000000"), uuid.UUID("00000000-0000-1111-0000-000000000001")],
         d=("foo", 50),
     )
 
@@ -95,7 +94,7 @@ def test_encode_namedtuple():
     decoded = construct_pack.decode(encoded, L)
 
     assert decoded == data
-    assert encoded == b'\x14\x00'
+    assert encoded == b"\x14\x00"
 
 
 @dataclasses.dataclass()
@@ -125,8 +124,10 @@ def test_encode_complex_dataclass():
     )
 
     encoded = construct_pack.encode(reference)
-    assert encoded == (b'\x14\x00\x01\x00\x00\x00\x00\x00\x00\x11\x11\x00\x00\x00\x00\x00'
-                       b'\x00\x00\x01\x80\xa0\x83\xdc\xb0\xe6\x928\x01\x03foo\x01\xc6%\x01')
+    assert encoded == (
+        b"\x14\x00\x01\x00\x00\x00\x00\x00\x00\x11\x11\x00\x00\x00\x00\x00"
+        b"\x00\x00\x01\x80\xa0\x83\xdc\xb0\xe6\x928\x01\x03foo\x01\xc6%\x01"
+    )
 
     decoded = construct_pack.decode(encoded, J)
     assert decoded == reference

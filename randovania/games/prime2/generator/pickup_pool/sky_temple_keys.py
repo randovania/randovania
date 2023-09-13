@@ -20,7 +20,7 @@ SKY_TEMPLE_KEY_CATEGORY = pickup_category.PickupCategory(
     long_name="Sky Temple Key",
     hint_details=("a ", "Sky Temple Key"),
     hinted_as_major=False,
-    is_key=True
+    is_key=True,
 )
 
 
@@ -37,9 +37,10 @@ def pickup_nodes_for_stk_mode(game: GameDescription, mode: LayoutSkyTempleKeyMod
     return locations
 
 
-def add_sky_temple_key_distribution_logic(game: GameDescription,
-                                          mode: LayoutSkyTempleKeyMode,
-                                          ) -> PoolResults:
+def add_sky_temple_key_distribution_logic(
+    game: GameDescription,
+    mode: LayoutSkyTempleKeyMode,
+) -> PoolResults:
     """
     Adds the given Sky Temple Keys to the item pool
     :return:
@@ -68,9 +69,10 @@ def add_sky_temple_key_distribution_logic(game: GameDescription,
     return PoolResults(item_pool, {}, starting)
 
 
-def create_sky_temple_key(key_number: int,
-                          resource_database: ResourceDatabase,
-                          ) -> PickupEntry:
+def create_sky_temple_key(
+    key_number: int,
+    resource_database: ResourceDatabase,
+) -> PickupEntry:
     """
 
     :param key_number:

@@ -13,24 +13,27 @@ from randovania.games.am2r.layout.am2r_cosmetic_patches import AM2RCosmeticPatch
 
 if TYPE_CHECKING:
     from pytestqt.qtbot import QtBot
+
     pass
 
 
-@pytest.mark.parametrize(("music_start_value", "option_to_click", "music_end_value"), [
-    (MusicMode.VANILLA, "vanilla_music_option", MusicMode.VANILLA),
-    (MusicMode.VANILLA, "type_music_option", MusicMode.TYPE),
-    (MusicMode.VANILLA, "full_music_option", MusicMode.FULL),
-
-    (MusicMode.TYPE, "vanilla_music_option", MusicMode.VANILLA),
-    (MusicMode.TYPE, "type_music_option", MusicMode.TYPE),
-    (MusicMode.TYPE, "full_music_option", MusicMode.FULL),
-
-    (MusicMode.FULL, "vanilla_music_option", MusicMode.VANILLA),
-    (MusicMode.FULL, "type_music_option", MusicMode.TYPE),
-    (MusicMode.FULL, "full_music_option", MusicMode.FULL),
-])
-def test_change_music_option(skip_qtbot: QtBot, music_start_value: MusicMode,
-                             option_to_click: str, music_end_value: MusicMode) -> None:
+@pytest.mark.parametrize(
+    ("music_start_value", "option_to_click", "music_end_value"),
+    [
+        (MusicMode.VANILLA, "vanilla_music_option", MusicMode.VANILLA),
+        (MusicMode.VANILLA, "type_music_option", MusicMode.TYPE),
+        (MusicMode.VANILLA, "full_music_option", MusicMode.FULL),
+        (MusicMode.TYPE, "vanilla_music_option", MusicMode.VANILLA),
+        (MusicMode.TYPE, "type_music_option", MusicMode.TYPE),
+        (MusicMode.TYPE, "full_music_option", MusicMode.FULL),
+        (MusicMode.FULL, "vanilla_music_option", MusicMode.VANILLA),
+        (MusicMode.FULL, "type_music_option", MusicMode.TYPE),
+        (MusicMode.FULL, "full_music_option", MusicMode.FULL),
+    ],
+)
+def test_change_music_option(
+    skip_qtbot: QtBot, music_start_value: MusicMode, option_to_click: str, music_end_value: MusicMode
+) -> None:
     cosmetic_patches = AM2RCosmeticPatches(music=music_start_value)
 
     dialog = AM2RCosmeticPatchesDialog(None, cosmetic_patches)
@@ -81,13 +84,17 @@ def test_custom_hud_colors(skip_qtbot):
     assert dialog.custom_dna_rotation_square.styleSheet() == "background-color: rgb(49,208,5)"
 
     # Run
-    for field in [dialog.custom_health_rotation_field, dialog.custom_etank_rotation_field,
-                  dialog.custom_dna_rotation_field]:
+    for field in [
+        dialog.custom_health_rotation_field,
+        dialog.custom_etank_rotation_field,
+        dialog.custom_dna_rotation_field,
+    ]:
         field.setValue(50)
 
     # Assert
-    assert dialog.cosmetic_patches == AM2RCosmeticPatches(health_hud_rotation=50, etank_hud_rotation=50,
-                                                          dna_hud_rotation=50)
+    assert dialog.cosmetic_patches == AM2RCosmeticPatches(
+        health_hud_rotation=50, etank_hud_rotation=50, dna_hud_rotation=50
+    )
     assert dialog.custom_health_rotation_square.styleSheet() == "background-color: rgb(76,255,0)"
     assert dialog.custom_etank_rotation_square.styleSheet() == "background-color: rgb(116,112,250)"
     assert dialog.custom_dna_rotation_square.styleSheet() == "background-color: rgb(5,208,130)"

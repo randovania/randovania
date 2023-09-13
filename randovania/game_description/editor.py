@@ -25,19 +25,19 @@ class Editor:
         self.next_node_index += 1
         return result
 
-    def edit_connections(self, area: Area, from_node: Node, target_node: Node, requirement: Requirement | None):
+    def edit_connections(self, area: Area, from_node: Node, target_node: Node, requirement: Requirement | None) -> None:
         current_connections = area.connections[from_node]
-        area.connections[from_node][target_node] = requirement
-        if area.connections[from_node][target_node] is None:
+
+        if requirement is None:
             del area.connections[from_node][target_node]
+        else:
+            area.connections[from_node][target_node] = requirement
 
         area.connections[from_node] = {
-            node: current_connections[node]
-            for node in area.nodes
-            if node in current_connections
+            node: current_connections[node] for node in area.nodes if node in current_connections
         }
 
-    def add_node(self, area: Area, node: Node):
+    def add_node(self, area: Area, node: Node) -> None:
         if area.node_with_name(node.name) is not None:
             raise ValueError(f"A node named {node.name} already exists.")
         area.nodes.append(node)
@@ -45,7 +45,7 @@ class Editor:
         area.clear_dock_cache()
         self.game.region_list.invalidate_node_cache()
 
-    def remove_node(self, area: Area, node: Node):
+    def remove_node(self, area: Area, node: Node) -> None:
         area.nodes.remove(node)
         area.connections.pop(node, None)
         for connection in area.connections.values():
@@ -57,16 +57,20 @@ class Editor:
         if isinstance(node, DockNode):
             self.remove_node(area, node.lock_node)
 
-    def replace_node(self, area: Area, old_node: Node, new_node: Node):
-        def sub(n: Node):
+    def replace_node(self, area: Area, old_node: Node, new_node: Node) -> None:
+        def sub(n: Node) -> Node:
             return new_node if n == old_node else n
 
         if old_node not in area.nodes:
-            raise ValueError("Given {} does does not belong to {}{}".format(
-                old_node.name, area.name,
-                ", but the area contains a node with that name."
-                if area.node_with_name(old_node.name) is not None else "."
-            ))
+            raise ValueError(
+                "Given {} does does not belong to {}{}".format(
+                    old_node.name,
+                    area.name,
+                    ", but the area contains a node with that name."
+                    if area.node_with_name(old_node.name) is not None
+                    else ".",
+                )
+            )
 
         if old_node.name != new_node.name and area.node_with_name(new_node.name) is not None:
             raise ValueError(f"A node named {new_node.name} already exists.")
@@ -83,10 +87,7 @@ class Editor:
         area.nodes[area.nodes.index(old_node)] = new_node
 
         new_connections = {
-            sub(source_node): {
-                sub(target_node): requirements
-                for target_node, requirements in connection.items()
-            }
+            sub(source_node): {sub(target_node): requirements for target_node, requirements in connection.items()}
             for source_node, connection in area.connections.items()
         }
         area.connections.clear()
@@ -96,15 +97,16 @@ class Editor:
         area.clear_dock_cache()
 
         if isinstance(new_node, DockNode):
-            self.add_node(area, DockLockNode.create_from_dock(new_node, self.new_node_index(),
-                                                              self.game.resource_database))
+            self.add_node(
+                area, DockLockNode.create_from_dock(new_node, self.new_node_index(), self.game.resource_database)
+            )
 
         self.game.region_list.invalidate_node_cache()
 
-    def rename_node(self, area: Area, node: Node, new_name: str):
+    def rename_node(self, area: Area, node: Node, new_name: str) -> None:
         self.replace_node(area, node, dataclasses.replace(node, identifier=node.identifier.renamed(new_name)))
 
-    def rename_area(self, current_area: Area, new_name: str):
+    def rename_area(self, current_area: Area, new_name: str) -> None:
         current_world = self.game.region_list.region_with_area(current_area)
         old_identifier = self.game.region_list.identifier_for_area(current_area)
         new_identifier = dataclasses.replace(old_identifier, area_name=new_name)
@@ -119,7 +121,9 @@ class Editor:
 
         self.game.region_list.invalidate_node_cache()
 
-    def replace_references_to_area_identifier(self, old_identifier: AreaIdentifier, new_identifier: AreaIdentifier):
+    def replace_references_to_area_identifier(
+        self, old_identifier: AreaIdentifier, new_identifier: AreaIdentifier
+    ) -> None:
         if old_identifier == new_identifier:
             return
 
@@ -145,7 +149,11 @@ class Editor:
                     if new_node is not None:
                         self.replace_node(area, node, new_node)
 
-    def replace_references_to_node_identifier(self, old_identifier: NodeIdentifier, new_identifier: NodeIdentifier):
+    def replace_references_to_node_identifier(
+        self,
+        old_identifier: NodeIdentifier,
+        new_identifier: NodeIdentifier,
+    ) -> None:
         if old_identifier == new_identifier:
             return
 
@@ -168,7 +176,7 @@ class Editor:
                     if new_node is not None:
                         self.replace_node(area, node, new_node)
 
-    def move_node_from_area_to_area(self, old_area: Area, new_area: Area, node: Node):
+    def move_node_from_area_to_area(self, old_area: Area, new_area: Area, node: Node) -> None:
         assert node in old_area.nodes
 
         if new_area.node_with_name(node.name) is not None:

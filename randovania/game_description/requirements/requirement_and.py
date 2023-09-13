@@ -44,9 +44,9 @@ class RequirementAnd(RequirementArrayBase):
         return result
 
     @classmethod
-    def combinator(cls):
+    def combinator(cls) -> str:
         return " and "
 
     @classmethod
-    def _str_no_items(cls):
+    def _str_no_items(cls) -> str:
         return "Trivial"

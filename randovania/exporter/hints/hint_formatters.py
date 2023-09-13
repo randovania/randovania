@@ -64,15 +64,18 @@ class RelativeFormatter(LocationFormatter):
         source = self.region_list.node_from_pickup_index(source_location)
         dock_types_to_ignore = []
 
-        return node_search.distances_to_node(self.region_list, source, dock_types_to_ignore,
-                                             patches=self.patches)[target]
+        return node_search.distances_to_node(self.region_list, source, dock_types_to_ignore, patches=self.patches)[
+            target
+        ]
 
-    def relative_format(self, pick_hint: PickupHint,
-                        hint: Hint,
-                        other_area: Area,
-                        other_name: str,
-                        with_color: bool,
-                        ) -> str:
+    def relative_format(
+        self,
+        pick_hint: PickupHint,
+        hint: Hint,
+        other_area: Area,
+        other_name: str,
+        with_color: bool,
+    ) -> str:
         distance = self._calculate_distance(hint.target, other_area) + (hint.precision.relative.distance_offset or 0)
         if distance == 1:
             distance_msg = "one room"
@@ -81,8 +84,10 @@ class RelativeFormatter(LocationFormatter):
             distance_msg = f"{precise_msg}{distance} rooms"
 
         colored_dist = self.distance_painter(distance_msg, with_color)
-        return (f"{pick_hint.determiner.title}{pick_hint.pickup_name}"
-                f" can be found {colored_dist} away from {other_name}.")
+        return (
+            f"{pick_hint.determiner.title}{pick_hint.pickup_name}"
+            f" can be found {colored_dist} away from {other_name}."
+        )
 
     def format(self, game: RandovaniaGame, pick_hint: PickupHint, hint: Hint, with_color: bool) -> str:
         raise NotImplementedError

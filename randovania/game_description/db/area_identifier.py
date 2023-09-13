@@ -9,7 +9,7 @@ class AreaIdentifier:
     region_name: str
     area_name: str
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         assert isinstance(self.region_name, str)
         assert isinstance(self.area_name, str)
 
@@ -39,5 +39,5 @@ class AreaIdentifier:
     def from_string(cls, value: str) -> Self:
         return cls(*value.split("/", 1))
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"region {self.region_name}/area {self.area_name}"

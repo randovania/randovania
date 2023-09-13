@@ -61,7 +61,11 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 113701,
+                        "source_x": 0,
+                        "source_y": 176
+                    },
                     "valid_starting_location": false,
                     "dock_type": "area_transition",
                     "default_connection": {
@@ -362,7 +366,7 @@
                         }
                     }
                 },
-                "Horizontal Dock to EMP Sentry Cavern": {
+                "Horizontal Dock to EMP Sentry Cavern (Top)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -380,7 +384,7 @@
                     "default_connection": {
                         "region": "Industrial Complex",
                         "area": "EMP Sentry Cavern",
-                        "node": "Horizontal Dock to Pincherfly Parlor"
+                        "node": "Horizontal Dock to Pincherfly Parlor (Top)"
                     },
                     "default_dock_weakness": "4-Tiles High Dock",
                     "exclude_from_dock_rando": false,
@@ -407,7 +411,7 @@
                         }
                     }
                 },
-                "Dock to EMP Sentry Cavern": {
+                "Horizontal Dock to EMP Sentry Cavern (Bottom)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -421,13 +425,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Industrial Complex",
                         "area": "EMP Sentry Cavern",
-                        "node": "Dock to Pincherfly Parlor"
+                        "node": "Horizontal Dock to Pincherfly Parlor (Bottom)"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "5-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -476,7 +480,7 @@
                                 ]
                             }
                         },
-                        "Horizontal Dock to EMP Sentry Cavern": {
+                        "Horizontal Dock to EMP Sentry Cavern (Top)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -497,7 +501,7 @@
                                 ]
                             }
                         },
-                        "Dock to EMP Sentry Cavern": {
+                        "Horizontal Dock to EMP Sentry Cavern (Bottom)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2357,7 +2361,7 @@
                 ]
             },
             "nodes": {
-                "Horizontal Dock to Pincherfly Parlor": {
+                "Horizontal Dock to Pincherfly Parlor (Top)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2375,7 +2379,7 @@
                     "default_connection": {
                         "region": "Industrial Complex",
                         "area": "Pincherfly Parlor",
-                        "node": "Horizontal Dock to EMP Sentry Cavern"
+                        "node": "Horizontal Dock to EMP Sentry Cavern (Top)"
                     },
                     "default_dock_weakness": "4-Tiles High Dock",
                     "exclude_from_dock_rando": false,
@@ -2392,7 +2396,7 @@
                         }
                     }
                 },
-                "Dock to Pincherfly Parlor": {
+                "Horizontal Dock to Pincherfly Parlor (Bottom)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2406,13 +2410,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Industrial Complex",
                         "area": "Pincherfly Parlor",
-                        "node": "Dock to EMP Sentry Cavern"
+                        "node": "Horizontal Dock to EMP Sentry Cavern (Bottom)"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "5-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -2510,7 +2514,7 @@
                     "pickup_index": 214,
                     "location_category": "minor",
                     "connections": {
-                        "Dock to Pincherfly Parlor": {
+                        "Horizontal Dock to Pincherfly Parlor (Bottom)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2534,7 +2538,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Horizontal Dock to Pincherfly Parlor": {
+                        "Horizontal Dock to Pincherfly Parlor (Top)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2810,32 +2814,6 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": "Item requirements",
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Space Jump",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "Combat",
-                                                        "amount": 4,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
                                             "comment": "Energy requirements",
                                             "items": [
                                                 {
@@ -2843,15 +2821,6 @@
                                                     "data": {
                                                         "comment": "With space jump",
                                                         "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Space Jump",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
                                                             {
                                                                 "type": "or",
                                                                 "data": {
@@ -2877,6 +2846,15 @@
                                                                         }
                                                                     ]
                                                                 }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Space Jump",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
                                                             }
                                                         ]
                                                     }
@@ -2886,15 +2864,6 @@
                                                     "data": {
                                                         "comment": "Without space jump",
                                                         "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Space Jump",
-                                                                    "amount": 1,
-                                                                    "negate": true
-                                                                }
-                                                            },
                                                             {
                                                                 "type": "or",
                                                                 "data": {
@@ -3522,6 +3491,76 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
+                        "Dock to Upper Factory Save Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Speed Booster",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Shinesparking",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "EntranceRando",
+                                            "amount": 1,
+                                            "negate": true
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Hi-Jump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Power Grip",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Walljump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
                         "Horizontal Dock to Upper Factory Gamma Nest": {
                             "type": "or",
                             "data": {
@@ -3670,17 +3709,8 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "tricks",
-                                                        "name": "Knowledge",
-                                                        "amount": 2,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
                                                         "name": "Shinesparking",
-                                                        "amount": 2,
+                                                        "amount": 1,
                                                         "negate": false
                                                     }
                                                 }
@@ -3745,17 +3775,8 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "tricks",
-                                            "name": "Knowledge",
-                                            "amount": 2,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "tricks",
                                             "name": "Shinesparking",
-                                            "amount": 2,
+                                            "amount": 1,
                                             "negate": false
                                         }
                                     }
@@ -3771,7 +3792,7 @@
                         }
                     }
                 },
-                "Dock to Upper Factory Pipe": {
+                "Horizontal Dock to Upper Factory Pipe": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3785,13 +3806,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Industrial Complex",
                         "area": "Upper Factory Pipe",
-                        "node": "Dock to Spazer Beam Chamber Access"
+                        "node": "Horizontal Dock to Spazer Beam Chamber Access"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "3-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -3864,7 +3885,7 @@
                                 ]
                             }
                         },
-                        "Dock to Upper Factory Pipe": {
+                        "Horizontal Dock to Upper Factory Pipe": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -4021,12 +4042,29 @@
                                         "data": "Power Grip Climb"
                                     },
                                     {
-                                        "type": "resource",
+                                        "type": "or",
                                         "data": {
-                                            "type": "items",
-                                            "name": "Missiles",
-                                            "amount": 1,
-                                            "negate": false
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Missiles",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Super Missiles",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -4108,12 +4146,29 @@
                                             "comment": "Get past missile block",
                                             "items": [
                                                 {
-                                                    "type": "resource",
+                                                    "type": "and",
                                                     "data": {
-                                                        "type": "tricks",
-                                                        "name": "Movement",
-                                                        "amount": 1,
-                                                        "negate": false
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Movement",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "misc",
+                                                                    "name": "EntranceRando",
+                                                                    "amount": 1,
+                                                                    "negate": true
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 },
                                                 {
@@ -4122,12 +4177,29 @@
                                                         "comment": null,
                                                         "items": [
                                                             {
-                                                                "type": "resource",
+                                                                "type": "or",
                                                                 "data": {
-                                                                    "type": "items",
-                                                                    "name": "Missiles",
-                                                                    "amount": 1,
-                                                                    "negate": false
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Missiles",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Super Missiles",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
                                                                 }
                                                             },
                                                             {
@@ -9076,7 +9148,7 @@
             }
         },
         "Upper Factory Pipe": {
-            "default_node": "Dock to Spazer Beam Chamber Access",
+            "default_node": "Horizontal Dock to Spazer Beam Chamber Access",
             "extra": {
                 "map_name": "rm_a3a27",
                 "minimap_data": [
@@ -9091,7 +9163,7 @@
                 ]
             },
             "nodes": {
-                "Dock to Spazer Beam Chamber Access": {
+                "Horizontal Dock to Spazer Beam Chamber Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -9105,13 +9177,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Industrial Complex",
                         "area": "Spazer Beam Chamber Access",
-                        "node": "Dock to Upper Factory Pipe"
+                        "node": "Horizontal Dock to Upper Factory Pipe"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "3-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -9170,7 +9242,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Spazer Beam Chamber Access": {
+                        "Horizontal Dock to Spazer Beam Chamber Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -9369,7 +9441,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Breeding Grounds Gamma Nest West": {
+                        "Horizontal Dock to Breeding Grounds Gamma Nest West": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -9378,7 +9450,7 @@
                         }
                     }
                 },
-                "Dock to Breeding Grounds Gamma Nest West": {
+                "Horizontal Dock to Breeding Grounds Gamma Nest West": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -9392,19 +9464,19 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Industrial Complex",
                         "area": "Breeding Grounds Gamma Nest West",
-                        "node": "Dock to Breeding Grounds Crossroads"
+                        "node": "Horizontal Dock to Breeding Grounds Crossroads"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "3-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Breeding Grounds Gamma Nest Middle": {
+                        "Horizontal Dock to Breeding Grounds Gamma Nest Middle": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -9413,7 +9485,7 @@
                         }
                     }
                 },
-                "Dock to Breeding Grounds Gamma Nest Middle": {
+                "Horizontal Dock to Breeding Grounds Gamma Nest Middle": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -9427,13 +9499,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Industrial Complex",
                         "area": "Breeding Grounds Gamma Nest Middle",
-                        "node": "Dock to Breeding Grounds Crossroads"
+                        "node": "Horizontal Dock to Breeding Grounds Crossroads"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "3-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -9609,7 +9681,7 @@
                                 ]
                             }
                         },
-                        "Dock to Breeding Grounds Gamma Nest West": {
+                        "Horizontal Dock to Breeding Grounds Gamma Nest West": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -9626,15 +9698,6 @@
                                                         "name": "Septogg",
                                                         "amount": 1,
                                                         "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Hi-Jump",
-                                                        "amount": 1,
-                                                        "negate": true
                                                     }
                                                 }
                                             ]
@@ -9696,7 +9759,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Breeding Grounds Gamma Nest Middle": {
+                        "Horizontal Dock to Breeding Grounds Gamma Nest Middle": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -9766,7 +9829,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Breeding Grounds Crossroads": {
+                        "Horizontal Dock to Breeding Grounds Crossroads": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -9775,7 +9838,7 @@
                         }
                     }
                 },
-                "Dock to Breeding Grounds Crossroads": {
+                "Horizontal Dock to Breeding Grounds Crossroads": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -9789,13 +9852,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Industrial Complex",
                         "area": "Breeding Grounds Crossroads",
-                        "node": "Dock to Breeding Grounds Gamma Nest West"
+                        "node": "Horizontal Dock to Breeding Grounds Gamma Nest West"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "3-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -9895,7 +9958,7 @@
                     "valid_starting_location": false,
                     "event_name": "Gamma5",
                     "connections": {
-                        "Dock to Breeding Grounds Crossroads": {
+                        "Horizontal Dock to Breeding Grounds Crossroads": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -9957,7 +10020,7 @@
                 ]
             },
             "nodes": {
-                "Dock to Breeding Grounds Crossroads": {
+                "Horizontal Dock to Breeding Grounds Crossroads": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -9971,19 +10034,19 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Industrial Complex",
                         "area": "Breeding Grounds Crossroads",
-                        "node": "Dock to Breeding Grounds Gamma Nest Middle"
+                        "node": "Horizontal Dock to Breeding Grounds Gamma Nest Middle"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "3-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Breeding Grounds Alpha Nest Access": {
+                        "Horizontal Dock to Breeding Grounds Alpha Nest Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -10013,7 +10076,7 @@
                         }
                     }
                 },
-                "Dock to Breeding Grounds Alpha Nest Access": {
+                "Horizontal Dock to Breeding Grounds Alpha Nest Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -10027,19 +10090,19 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Industrial Complex",
                         "area": "Breeding Grounds Alpha Nest Access",
-                        "node": "Dock to Breeding Grounds Gamma Nest Middle"
+                        "node": "Horizontal Dock to Breeding Grounds Gamma Nest Middle"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "3-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Breeding Grounds Crossroads": {
+                        "Horizontal Dock to Breeding Grounds Crossroads": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -10069,7 +10132,7 @@
                     "valid_starting_location": false,
                     "event_name": "Gamma7",
                     "connections": {
-                        "Dock to Breeding Grounds Crossroads": {
+                        "Horizontal Dock to Breeding Grounds Crossroads": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -10165,7 +10228,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Breeding Grounds Gamma Nest Middle": {
+                        "Horizontal Dock to Breeding Grounds Gamma Nest Middle": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -10174,7 +10237,7 @@
                         }
                     }
                 },
-                "Dock to Breeding Grounds Gamma Nest Middle": {
+                "Horizontal Dock to Breeding Grounds Gamma Nest Middle": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -10188,13 +10251,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Industrial Complex",
                         "area": "Breeding Grounds Gamma Nest Middle",
-                        "node": "Dock to Breeding Grounds Alpha Nest Access"
+                        "node": "Horizontal Dock to Breeding Grounds Alpha Nest Access"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "3-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -11034,7 +11097,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Breeding Grounds Fly Stadium": {
+                        "Horizontal Dock to Breeding Grounds Fly Stadium": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -11048,7 +11111,7 @@
                         }
                     }
                 },
-                "Dock to Breeding Grounds Fly Stadium": {
+                "Horizontal Dock to Breeding Grounds Fly Stadium": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -11062,13 +11125,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Industrial Complex",
                         "area": "Breeding Grounds Fly Stadium",
-                        "node": "Dock to Breeding Grounds Fly Stadium Access"
+                        "node": "Horizontal Dock to Breeding Grounds Fly Stadium Access"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "3-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -11125,7 +11188,7 @@
                 ]
             },
             "nodes": {
-                "Dock to Breeding Grounds Fly Stadium Access": {
+                "Horizontal Dock to Breeding Grounds Fly Stadium Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -11139,13 +11202,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Industrial Complex",
                         "area": "Breeding Grounds Fly Stadium Access",
-                        "node": "Dock to Breeding Grounds Fly Stadium"
+                        "node": "Horizontal Dock to Breeding Grounds Fly Stadium"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "3-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -11204,7 +11267,7 @@
                         }
                     }
                 },
-                "Dock to Breeding Grounds Maze": {
+                "Horizontal Dock to Breeding Grounds Maze": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -11218,13 +11281,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Industrial Complex",
                         "area": "Breeding Grounds Maze",
-                        "node": "Dock to Breeding Grounds Fly Stadium"
+                        "node": "Horizontal Dock to Breeding Grounds Fly Stadium"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "3-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -11259,14 +11322,14 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Dock to Breeding Grounds Fly Stadium Access": {
+                        "Horizontal Dock to Breeding Grounds Fly Stadium Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Dock to Breeding Grounds Maze": {
+                        "Horizontal Dock to Breeding Grounds Maze": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -11334,7 +11397,7 @@
                     "pickup_index": 209,
                     "location_category": "minor",
                     "connections": {
-                        "Dock to Breeding Grounds Fly Stadium Access": {
+                        "Horizontal Dock to Breeding Grounds Fly Stadium Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -11373,7 +11436,7 @@
                 ]
             },
             "nodes": {
-                "Dock to Breeding Grounds Gamma Nest East": {
+                "Horizontal Dock to Breeding Grounds Gamma Nest East": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -11387,19 +11450,19 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Industrial Complex",
                         "area": "Breeding Grounds Gamma Nest East",
-                        "node": "Dock to Breeding Grounds Maze"
+                        "node": "Horizontal Dock to Breeding Grounds Maze"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "3-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Breeding Grounds Fly Stadium": {
+                        "Horizontal Dock to Breeding Grounds Fly Stadium": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -11474,7 +11537,7 @@
                         }
                     }
                 },
-                "Dock to Breeding Grounds Fly Stadium": {
+                "Horizontal Dock to Breeding Grounds Fly Stadium": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -11488,19 +11551,19 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Industrial Complex",
                         "area": "Breeding Grounds Fly Stadium",
-                        "node": "Dock to Breeding Grounds Maze"
+                        "node": "Horizontal Dock to Breeding Grounds Maze"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "3-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Breeding Grounds Gamma Nest East": {
+                        "Horizontal Dock to Breeding Grounds Gamma Nest East": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -11561,7 +11624,7 @@
                 ]
             },
             "nodes": {
-                "Dock to Breeding Grounds Maze": {
+                "Horizontal Dock to Breeding Grounds Maze": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -11575,13 +11638,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Industrial Complex",
                         "area": "Breeding Grounds Maze",
-                        "node": "Dock to Breeding Grounds Gamma Nest East"
+                        "node": "Horizontal Dock to Breeding Grounds Gamma Nest East"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "3-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -11617,7 +11680,7 @@
                     "valid_starting_location": false,
                     "event_name": "Gamma9",
                     "connections": {
-                        "Dock to Breeding Grounds Maze": {
+                        "Horizontal Dock to Breeding Grounds Maze": {
                             "type": "and",
                             "data": {
                                 "comment": null,

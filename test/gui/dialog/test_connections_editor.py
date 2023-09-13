@@ -12,17 +12,20 @@ def test_build_no_changes(skip_qtbot, echoes_resource_database):
     def mk_req(name: str):
         return ResourceRequirement.with_data(echoes_resource_database, ResourceType.ITEM, name, 1, False)
 
-    requirement = RequirementOr([
-        RequirementAnd([
-            mk_req("Dark"),
-            mk_req("Light"),
-        ]),
-        mk_req("Power"),
-    ])
+    requirement = RequirementOr(
+        [
+            RequirementAnd(
+                [
+                    mk_req("Dark"),
+                    mk_req("Light"),
+                ]
+            ),
+            mk_req("Power"),
+        ]
+    )
 
     # Run
-    editor = connections_editor.ConnectionsEditor(None, echoes_resource_database,
-                                                  requirement)
+    editor = connections_editor.ConnectionsEditor(None, echoes_resource_database, requirement)
     skip_qtbot.addWidget(editor)
     result = editor.final_requirement
 

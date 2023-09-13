@@ -1,14 +1,20 @@
+from __future__ import annotations
+
+import operator
 import typing
+
+if typing.TYPE_CHECKING:
+    from _typeshed import SupportsRichComparisonT
 
 X = typing.TypeVar("X")
 Y = typing.TypeVar("Y")
 
 
-def iterate_key_sorted(obj: dict[X, Y]) -> list[tuple[X, Y]]:
-    return sorted(obj.items(), key=lambda it: it[0])
+def iterate_key_sorted(obj: dict[SupportsRichComparisonT, Y]) -> list[tuple[SupportsRichComparisonT, Y]]:
+    return sorted(obj.items(), key=operator.itemgetter(0))
 
 
-def ensure_in_set(element: X, the_set: set[X], present: bool):
+def ensure_in_set(element: X, the_set: set[X], present: bool) -> None:
     if present:
         the_set.add(element)
     elif element in the_set:

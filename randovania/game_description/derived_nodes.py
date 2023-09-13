@@ -18,9 +18,7 @@ def remove_inactive_layers(game: GameDescription, active_layers: set[str]) -> Ga
         areas = []
         for area in region.areas:
             nodes = copy.copy(area.nodes)
-            connections = {
-                node: copy.copy(connection) for node, connection in area.connections.items()
-            }
+            connections = {node: copy.copy(connection) for node, connection in area.connections.items()}
             for node in area.nodes:
                 if set(node.layers).isdisjoint(active_layers):
                     nodes.remove(node)
@@ -28,12 +26,14 @@ def remove_inactive_layers(game: GameDescription, active_layers: set[str]) -> Ga
                     for connection in connections.values():
                         connection.pop(node, None)
 
-            areas.append(Area(
-                name=area.name,
-                nodes=nodes,
-                connections=connections,
-                extra=area.extra,
-            ))
+            areas.append(
+                Area(
+                    name=area.name,
+                    nodes=nodes,
+                    connections=connections,
+                    extra=area.extra,
+                )
+            )
 
         regions.append(dataclasses.replace(region, areas=areas))
 

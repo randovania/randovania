@@ -46,18 +46,16 @@ class DreadCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_DreadCosmeticPatc
         self.room_names_dropdown.currentIndexChanged.connect(self._on_room_name_mode_update)
         self.missile_cosmetic_dropdown.currentIndexChanged.connect(self._on_missile_cosmetic_update)
 
-        self.alt_ice_missile.stateChanged.connect(
-            self._on_shield_type_update("alt_ice_missile", self.alt_ice_missile))
+        self.alt_ice_missile.stateChanged.connect(self._on_shield_type_update("alt_ice_missile", self.alt_ice_missile))
         self.alt_storm_missile.stateChanged.connect(
-            self._on_shield_type_update("alt_storm_missile", self.alt_storm_missile))
+            self._on_shield_type_update("alt_storm_missile", self.alt_storm_missile)
+        )
         self.alt_diffusion_beam.stateChanged.connect(
-            self._on_shield_type_update("alt_diffusion_beam", self.alt_diffusion_beam))
-        self.alt_bomb.stateChanged.connect(
-            self._on_shield_type_update("alt_bomb", self.alt_bomb))
-        self.alt_cross_bomb.stateChanged.connect(
-            self._on_shield_type_update("alt_cross_bomb", self.alt_cross_bomb))
-        self.alt_power_bomb.stateChanged.connect(
-            self._on_shield_type_update("alt_power_bomb", self.alt_power_bomb))
+            self._on_shield_type_update("alt_diffusion_beam", self.alt_diffusion_beam)
+        )
+        self.alt_bomb.stateChanged.connect(self._on_shield_type_update("alt_bomb", self.alt_bomb))
+        self.alt_cross_bomb.stateChanged.connect(self._on_shield_type_update("alt_cross_bomb", self.alt_cross_bomb))
+        self.alt_power_bomb.stateChanged.connect(self._on_shield_type_update("alt_power_bomb", self.alt_power_bomb))
 
     def on_new_cosmetic_patches(self, patches: DreadCosmeticPatches):
         self.show_boss_life.setChecked(patches.show_boss_lifebar)
@@ -78,33 +76,25 @@ class DreadCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_DreadCosmeticPatc
 
     def _persist_option_then_notify(self, attribute_name: str):
         def persist(value: int):
-            self._cosmetic_patches = dataclasses.replace(
-                self._cosmetic_patches,
-                **{attribute_name: bool(value)}
-            )
+            self._cosmetic_patches = dataclasses.replace(self._cosmetic_patches, **{attribute_name: bool(value)})
 
         return persist
 
     def _on_shield_type_update(self, attribute_name: str, checkbox: QCheckBox):
         def persist(value: int):
             shield_type = DreadShieldType.ALTERNATE if checkbox.isChecked() else DreadShieldType.DEFAULT
-            self._cosmetic_patches = dataclasses.replace(
-                self._cosmetic_patches,
-                **{attribute_name: shield_type}
-            )
+            self._cosmetic_patches = dataclasses.replace(self._cosmetic_patches, **{attribute_name: shield_type})
 
         return persist
 
     def _on_room_name_mode_update(self):
         self._cosmetic_patches = dataclasses.replace(
-            self._cosmetic_patches,
-            show_room_names=self.room_names_dropdown.currentData()
+            self._cosmetic_patches, show_room_names=self.room_names_dropdown.currentData()
         )
 
     def _on_missile_cosmetic_update(self):
         self._cosmetic_patches = dataclasses.replace(
-            self._cosmetic_patches,
-            missile_cosmetic=self.missile_cosmetic_dropdown.currentData()
+            self._cosmetic_patches, missile_cosmetic=self.missile_cosmetic_dropdown.currentData()
         )
 
     @property

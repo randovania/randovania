@@ -10,24 +10,30 @@ from randovania.lib import enum_lib
 
 
 class AM2RRoomGuiType(Enum):
-    """Types of Room Name GUI to display. """
+    """Types of Room Name GUI to display."""
+
     long_name: str
 
     NONE = "NEVER"
     WITH_FADE = "WITH_FADE"
     ALWAYS = "ALWAYS"
 
-enum_lib.add_long_name(AM2RRoomGuiType, {
-    AM2RRoomGuiType.NONE: "Never",
-    AM2RRoomGuiType.WITH_FADE: "When entering a room",
-    AM2RRoomGuiType.ALWAYS: "Always"
-})
+
+enum_lib.add_long_name(
+    AM2RRoomGuiType,
+    {
+        AM2RRoomGuiType.NONE: "Never",
+        AM2RRoomGuiType.WITH_FADE: "When entering a room",
+        AM2RRoomGuiType.ALWAYS: "Always",
+    },
+)
 
 
 class MusicMode(BitPackEnum, Enum):
     VANILLA = "vanilla_music"
     TYPE = "type_music"
     FULL = "full_music"
+
 
 @dataclasses.dataclass(frozen=True)
 class AM2RCosmeticPatches(BaseCosmeticPatches):
