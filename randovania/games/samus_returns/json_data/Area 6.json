@@ -152,7 +152,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "events",
-                                            "name": "Area 6 - Transport to Area 7 Grapple Block",
+                                            "name": "Area 6 - Transport to Area 7 Grapple Block Top",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -266,7 +266,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Event - Grapple Blocks Top": {
+                        "Event - Grapple Block Top": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -300,12 +300,21 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "events",
-                                            "name": "Area 6 - Transport to Area 7 Grapple Block",
+                                            "name": "Area 6 - Transport to Area 7 Grapple Block Top",
                                             "amount": 1,
                                             "negate": false
                                         }
                                     }
                                 ]
+                            }
+                        },
+                        "Event - Grapple Block Pull": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Grapple",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -352,12 +361,12 @@
                         }
                     }
                 },
-                "Event - Grapple Blocks Top": {
+                "Event - Grapple Block Top": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
-                        "x": -15825.100908173563,
-                        "y": -5734.7965018499835,
+                        "x": -15825.1,
+                        "y": -5734.8,
                         "z": 0.0
                     },
                     "description": "",
@@ -366,7 +375,7 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "event_name": "Area 6 - Transport to Area 7 Grapple Block",
+                    "event_name": "Area 6 - Transport to Area 7 Grapple Block Top",
                     "connections": {
                         "Door to Diggernaut Hallway": {
                             "type": "template",
@@ -407,7 +416,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "events",
-                                            "name": "Area 6 - Transport to Area 7 Grapple Block",
+                                            "name": "Area 6 - Transport to Area 7 Grapple Block Pull",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -437,7 +446,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "events",
-                                            "name": "Area 6 - Transport to Area 7 Grapple Block",
+                                            "name": "Area 6 - Transport to Area 7 Grapple Block Top",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -935,6 +944,31 @@
                     "valid_starting_location": false,
                     "connections": {
                         "Door to Diggernaut Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Grapple Block Pull": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -15566.07,
+                        "y": -5143.13,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "Area 6 - Transport to Area 7 Grapple Block Pull",
+                    "connections": {
+                        "Door to Diggernaut Hallway": {
                             "type": "and",
                             "data": {
                                 "comment": null,
