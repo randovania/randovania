@@ -18,7 +18,7 @@ Extra - asset_id: collision_camera_034
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: ST_FromArea09
   > Before Diggernaut Area
-      Morph Ball and After Area 6 - Transport to Area 7 Grapple Blocks Top
+      Morph Ball and After Area 6 - Transport to Area 7 Grapple Block Top
 
 > Save Station; Heals? False; Spawn Point; Default Node
   * Layers: default
@@ -43,10 +43,12 @@ Extra - asset_id: collision_camera_034
   * Power Beam Door to Diggernaut Hallway/Door to Transport to Area 7
   * Extra - actor_name: Door016
   * Extra - actor_type: doorpowerpower
-  > Event - Grapple Blocks Top
+  > Event - Grapple Block Top
       Grapple Beam and Lay Any Bomb
   > Before Diggernaut Area
-      After Area 6 - Transport to Area 7 Grapple Blocks Top and Lay Any Bomb
+      After Area 6 - Transport to Area 7 Grapple Block Top and Lay Any Bomb
+  > Event - Grapple Block Pull
+      Grapple Beam
 
 > Door to Diggernaut Arena; Heals? False
   * Layers: default
@@ -58,20 +60,20 @@ Extra - asset_id: collision_camera_034
   > Start Point
       Trivial
 
-> Event - Grapple Blocks Top; Heals? False
+> Event - Grapple Block Top; Heals? False
   * Layers: default
-  * Event Area 6 - Transport to Area 7 Grapple Blocks Top
+  * Event Area 6 - Transport to Area 7 Grapple Block Top
   > Door to Diggernaut Hallway
       Lay Any Bomb
 
 > Before Diggernaut Area; Heals? False
   * Layers: default
   > Elevator to Area 7
-      Morph Ball and After Area 6 - Transport to Area 7 Grapple Blocks Top
+      Morph Ball and After Area 6 - Transport to Area 7 Grapple Block Pull
   > Save Station
       Morph Ball
   > Door to Diggernaut Hallway
-      After Area 6 - Transport to Area 7 Grapple Blocks Top and Lay Any Bomb
+      After Area 6 - Transport to Area 7 Grapple Block Top and Lay Any Bomb
   > Door to Diggernaut Arena
       Lay Any Bomb
   > Above Pickup
@@ -125,6 +127,12 @@ Extra - asset_id: collision_camera_034
   * Layers: default
   * Extra - start_point_actor_name: ST_SG_ManicMiner
   > Door to Diggernaut Arena
+      Trivial
+
+> Event - Grapple Block Pull; Heals? False
+  * Layers: default
+  * Event Area 6 - Transport to Area 7 Grapple Block Pull
+  > Door to Diggernaut Hallway
       Trivial
 
 ----------------
