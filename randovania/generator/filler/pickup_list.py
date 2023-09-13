@@ -48,7 +48,7 @@ def _unsatisfied_item_requirements_in_list(
     for individual in alternative.values():
         # We should only skip negative requirements, if we can not satisfy them anymore, as that means
         # we have lost the chance to do so
-        if individual.negate and not individual.satisfied(state.resoures, state.energy, state.resource_database):
+        if individual.negate and not individual.satisfied(state.resources, state.energy, state.resource_database):
             possible = False
             break
 
