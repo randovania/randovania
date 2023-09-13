@@ -68,7 +68,7 @@ def _unsatisfied_item_requirements_in_list(
         return
 
     sum_damage = sum(req.damage(state.resources, state.resource_database) for req in damage)
-    if state.energy < sum_damage:
+    if state.energy <= sum_damage:
         # A requirement for many "Energy Tanks" is added,
         # which is then decreased by how many tanks is in the state by pickups_to_solve_list
         tank_count = sum_damage // state.game_data.energy_per_tank
