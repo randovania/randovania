@@ -22,10 +22,10 @@ class WeightedLocations:
     def __init__(self, items: dict[tuple[PlayerState, PickupIndex], float]):
         self._items = items
 
-    def __eq__(self, other):
+    def __eq__(self, other: object) -> bool:
         return isinstance(other, WeightedLocations) and self._items == other._items
 
-    def __str__(self):
+    def __str__(self) -> str:
         return str(self._items)
 
     def is_empty(self) -> bool:
@@ -61,7 +61,7 @@ class WeightedLocations:
     def select_location(self, rng: Random) -> tuple[PlayerState, PickupIndex]:
         return random_lib.select_element_with_weight(self._items, rng)
 
-    def remove(self, player: PlayerState, index: PickupIndex):
+    def remove(self, player: PlayerState, index: PickupIndex) -> None:
         self._items.pop((player, index))
 
     def can_fit(self, action: Action, *, extra_indices: int = 0) -> bool:

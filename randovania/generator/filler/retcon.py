@@ -117,15 +117,15 @@ def weighted_potential_actions(
     actions = player_state.potential_actions(locations_weighted)
     options_considered = 0
 
-    def update_for_option():
+    def update_for_option() -> None:
         nonlocal options_considered
         options_considered += 1
         status_update(f"Checked {options_considered} of {len(actions)} options.")
 
     for action in actions:
         state = player_state.reach.state
-        multiplier = 1
-        offset = 0
+        multiplier = 1.0
+        offset = 0.0
 
         resources, pickups = action.split_pickups()
 
@@ -175,7 +175,7 @@ def select_weighted_action(rng: Random, weighted_actions: dict[Action, float]) -
         return rng.choice(list(weighted_actions.keys()))
 
 
-def increment_considered_count(locations_weighted: WeightedLocations):
+def increment_considered_count(locations_weighted: WeightedLocations) -> None:
     for player, location, _ in locations_weighted.all_items():
         was_present = location in player.pickup_index_considered_count
         player.pickup_index_considered_count[location] += 1
@@ -184,8 +184,8 @@ def increment_considered_count(locations_weighted: WeightedLocations):
             filler_logging.print_new_pickup_index(player.index, player.game, location)
 
 
-def _print_header(player_states: list[PlayerState]):
-    def _name_for_index(state: PlayerState, index: PickupIndex):
+def _print_header(player_states: list[PlayerState]) -> None:
+    def _name_for_index(state: PlayerState, index: PickupIndex) -> str:
         return state.game.region_list.node_name(
             state.game.region_list.node_from_pickup_index(index),
             with_region=True,
@@ -241,7 +241,7 @@ def retcon_playthrough_filler(
     _print_header(player_states)
     last_message = "Starting."
 
-    def action_report(message: str):
+    def action_report(message: str) -> None:
         status_update(f"{last_message} {message}")
 
     for player_state in player_states:
@@ -298,7 +298,7 @@ def retcon_playthrough_filler(
     return all_patches, tuple(actions_log)
 
 
-def debug_print_weighted_locations(all_locations_weighted: WeightedLocations):
+def debug_print_weighted_locations(all_locations_weighted: WeightedLocations) -> None:
     print("==> Weighted Locations")
     for owner, index, weight in all_locations_weighted.all_items():
         print(

@@ -13,6 +13,8 @@ from randovania.game_description.resources.resource_type import ResourceType
 from randovania.resolver import debug
 
 if TYPE_CHECKING:
+    from collections.abc import Iterator
+
     from randovania.game_description.db.resource_node import ResourceNode
     from randovania.game_description.resources.resource_info import ResourceInfo
     from randovania.generator.generator_reach import GeneratorReach
@@ -40,7 +42,7 @@ def interesting_resources_for_reach(reach: GeneratorReach) -> frozenset[Resource
 
 def _unsatisfied_item_requirements_in_list(
     alternative: RequirementList, state: State, uncollected_resources: set[ResourceInfo]
-):
+) -> Iterator[list[ResourceRequirement]]:
     items = []
     damage = []
 
@@ -82,7 +84,7 @@ def _requirement_lists_without_satisfied_resources(
     seen_lists = set()
     result = set()
 
-    def _add_items(it):
+    def _add_items(it: list[ResourceRequirement]) -> None:
         items_tuple = RequirementList(it)
         if items_tuple not in result:
             result.add(items_tuple)
@@ -99,13 +101,17 @@ def _requirement_lists_without_satisfied_resources(
 
     if debug.debug_level() > 2:
         print(">> All requirement lists:")
-        for items in sorted(result, key=lambda it: it.as_stable_sort_tuple):
-            print(f"* {items}")
+        for result_it in sorted(result, key=lambda it: it.as_stable_sort_tuple):
+            print(f"* {result_it}")
 
     return result
 
 
-def pickups_to_solve_list(pickup_pool: list[PickupEntry], requirement_list: RequirementList, state: State):
+def pickups_to_solve_list(
+    pickup_pool: list[PickupEntry],
+    requirement_list: RequirementList,
+    state: State,
+) -> list[PickupEntry] | None:
     pickups = []
 
     db = state.resource_database
@@ -160,7 +166,7 @@ def get_pickups_that_solves_unreachable(
             uncollected_resources.add(resource)
 
     if single_set:
-        desired_lists = []
+        desired_lists: list[RequirementList] = []
         for req_set in possible_sets:
             desired_lists.extend(req_set.alternatives)
         possible_sets = [RequirementSet(desired_lists)]
