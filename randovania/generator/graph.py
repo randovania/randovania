@@ -14,7 +14,7 @@ if TYPE_CHECKING:
 
 
 class BaseGraph:
-    def copy(self) -> BaseGraph:
+    def copy(self) -> typing.Self:
         raise NotImplementedError
 
     def add_node(self, node: int) -> None:
