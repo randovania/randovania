@@ -1,24 +1,28 @@
 from __future__ import annotations
 
 import copy
+import typing
 from typing import TYPE_CHECKING
 
 from randovania.game_description.db.pickup_node import PickupNode
+from randovania.game_description.db.resource_node import ResourceNode
 
 if TYPE_CHECKING:
     from collections.abc import Iterator
 
     from randovania.game_description.db.node import Node, NodeContext
-    from randovania.game_description.db.resource_node import ResourceNode
     from randovania.game_description.game_description import GameDescription
     from randovania.generator.generator_reach import GeneratorReach
     from randovania.resolver.state import State
+
+    NodeT = typing.TypeVar("NodeT", bound=Node)
+    ResourceNodeT = typing.TypeVar("ResourceNodeT", bound=ResourceNode)
 
 
 def _filter_resource_nodes(nodes: Iterator[Node]) -> Iterator[ResourceNode]:
     for node in nodes:
         if node.is_resource_node:
-            yield node
+            yield typing.cast(ResourceNode, node)
 
 
 def filter_pickup_nodes(nodes: Iterator[Node]) -> Iterator[PickupNode]:
@@ -27,24 +31,24 @@ def filter_pickup_nodes(nodes: Iterator[Node]) -> Iterator[PickupNode]:
             yield node
 
 
-def _filter_collectable(resource_nodes: Iterator[ResourceNode], reach: GeneratorReach) -> Iterator[ResourceNode]:
+def _filter_collectable(resource_nodes: Iterator[ResourceNodeT], reach: GeneratorReach) -> Iterator[ResourceNodeT]:
     context = reach.node_context()
     for resource_node in resource_nodes:
         if resource_node.can_collect(context):
             yield resource_node
 
 
-def _filter_reachable(nodes: Iterator[Node], reach: GeneratorReach) -> Iterator[Node]:
+def _filter_reachable(nodes: Iterator[NodeT], reach: GeneratorReach) -> Iterator[NodeT]:
     for node in nodes:
         if reach.is_reachable_node(node):
             yield node
 
 
 def _filter_out_dangerous_actions(
-    resource_nodes: Iterator[ResourceNode],
+    resource_nodes: Iterator[ResourceNodeT],
     game: GameDescription,
     context: NodeContext,
-) -> Iterator[ResourceNode]:
+) -> Iterator[ResourceNodeT]:
     for resource_node in resource_nodes:
         if all(
             resource not in game.dangerous_resources for resource, _ in resource_node.resource_gain_on_collect(context)
