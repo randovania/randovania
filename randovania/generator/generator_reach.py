@@ -27,7 +27,7 @@ class GeneratorReach:
     def game(self) -> GameDescription:
         raise NotImplementedError
 
-    def victory_condition_satisfied(self):
+    def victory_condition_satisfied(self) -> bool:
         return self.game.victory_condition.satisfied(
             self.state.resources, self.state.energy, self.state.resource_database
         )

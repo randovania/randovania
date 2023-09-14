@@ -172,10 +172,10 @@ def _distribute_remaining_items(rng: Random, filler_results: FillerResults, pres
 
         assignments[player] = []
 
-    def assign_pickup(node_player: int, node: PickupNode, pickup_target: PickupTarget):
+    def assign_pickup(node_player: int, node: PickupNode, pickup_target: PickupTarget) -> None:
         assignments[node_player].append((node.pickup_index, pickup_target))
 
-    def assign_while_both_non_empty(nodes: list[tuple[int, PickupNode]], pickups: list[PickupTarget]):
+    def assign_while_both_non_empty(nodes: list[tuple[int, PickupNode]], pickups: list[PickupTarget]) -> None:
         rng.shuffle(nodes)
         rng.shuffle(pickups)
 
@@ -203,8 +203,8 @@ def _distribute_remaining_items(rng: Random, filler_results: FillerResults, pres
             )
         )
 
-    for (node_player, node), pickup in zip(unassigned_pickup_nodes, all_remaining_pickups):
-        assign_pickup(node_player, node, pickup)
+    for (node_player, remaining_node), remaining_pickup in zip(unassigned_pickup_nodes, all_remaining_pickups):
+        assign_pickup(node_player, remaining_node, remaining_pickup)
 
     return dataclasses.replace(
         filler_results,
@@ -237,7 +237,7 @@ async def _create_description(
         reraise=True,
     )
 
-    filler_results = await retrying(_create_pools_and_fill, rng, presets, status_update)
+    filler_results: FillerResults = await retrying(_create_pools_and_fill, rng, presets, status_update)
 
     filler_results = _distribute_remaining_items(rng, filler_results, presets)
     filler_results = await dock_weakness_distributor.distribute_post_fill_weaknesses(rng, filler_results, status_update)
@@ -265,13 +265,19 @@ async def generate_and_validate_description(
     :param attempts: Attempt this many generations.
     :return:
     """
+    actual_status_update: Callable[[str], None]
     if status_update is None:
-        status_update = id
+
+        def actual_status_update(msg: str) -> None:
+            pass
+
+    else:
+        actual_status_update = status_update
 
     try:
         result = await _create_description(
             generator_params=generator_params,
-            status_update=status_update,
+            status_update=actual_status_update,
             attempts=attempts,
         )
     except UnableToGenerate as e:
@@ -283,7 +289,7 @@ async def generate_and_validate_description(
         final_state_async = resolver.resolve(
             configuration=generator_params.get_preset(0).configuration,
             patches=result.all_patches[0],
-            status_update=status_update,
+            status_update=actual_status_update,
         )
         try:
             final_state_by_resolve = await asyncio.wait_for(final_state_async, timeout)

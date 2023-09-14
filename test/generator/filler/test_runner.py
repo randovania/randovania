@@ -14,6 +14,7 @@ from randovania.game_description.hint import (
     Hint,
     HintItemPrecision,
     HintLocationPrecision,
+    HintRelativeAreaName,
     HintType,
     PrecisionPair,
     RelativeDataArea,
@@ -173,8 +174,7 @@ def test_add_relative_hint(
 ):
     # Setup
     rng = Random(5000)
-    target_precision = MagicMock(spec=HintItemPrecision)
-    precision = MagicMock(spec=HintItemPrecision)
+    target_precision = HintItemPrecision.PRECISE_CATEGORY
     patches = echoes_game_patches.assign_new_pickups(
         [
             (
@@ -189,6 +189,7 @@ def test_add_relative_hint(
 
     if location_precision == HintLocationPrecision.RELATIVE_TO_AREA:
         max_distance = 8
+        precision = HintRelativeAreaName.NAME
         data = RelativeDataArea(
             None if precise_distance else 3,
             # Was Industrial Site
@@ -197,6 +198,7 @@ def test_add_relative_hint(
         )
     else:
         max_distance = 20
+        precision = HintItemPrecision.GENERAL_CATEGORY
         data = RelativeDataItem(
             None if precise_distance else 11,
             PickupIndex(8),

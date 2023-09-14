@@ -34,7 +34,7 @@ if TYPE_CHECKING:
     from randovania.resolver.state import State
 
 
-def distribute_pre_fill_weaknesses(patches: GamePatches, rng: Random):
+def distribute_pre_fill_weaknesses(patches: GamePatches, rng: Random) -> GamePatches:
     dock_rando = patches.configuration.dock_rando
 
     if not dock_rando.is_enabled():
@@ -43,7 +43,7 @@ def distribute_pre_fill_weaknesses(patches: GamePatches, rng: Random):
     game = default_database.game_description_for(patches.configuration.game)
     weakness_database = game.dock_weakness_database
     all_docks: dict[DockNode, DockNode] = {
-        node: game.region_list.node_by_identifier(node.default_connection)
+        node: game.region_list.typed_node_by_identifier(node.default_connection, DockNode)
         for node in game.region_list.all_nodes
         if isinstance(node, DockNode)
     }
@@ -83,10 +83,10 @@ def distribute_pre_fill_weaknesses(patches: GamePatches, rng: Random):
         )
         # weakness_priority.sort()  - sort by priority (TODO)
 
-        def priority_check(a: DockNode, b: DockNode):
+        def priority_check(a: DockNode, b: DockNode) -> bool:
             return weakness_priority.index(a.default_dock_weakness) < weakness_priority.index(b.default_dock_weakness)
 
-        def compatible_weakness(dock: DockNode, weakness: DockWeakness):
+        def compatible_weakness(dock: DockNode, weakness: DockWeakness) -> bool:
             if (
                 weakness_database.dock_rando_config.force_change_two_way
                 and weakness in all_docks[dock].incompatible_dock_weaknesses
@@ -156,15 +156,8 @@ class DockRandoLogic(Logic):
     def from_logic(cls, logic: Logic, dock: DockNode) -> Self:
         return cls(logic.game, logic.configuration, dock)
 
-    @property
-    def victory_condition(self) -> Requirement:
-        context = NodeContext(
-            None,
-            None,
-            self.game.resource_database,
-            self.game.region_list,
-        )
-        return ResourceRequirement.simple(NodeResourceInfo.from_node(self.dock, context))
+    def victory_condition(self, state: State) -> Requirement:
+        return ResourceRequirement.simple(NodeResourceInfo.from_node(self.dock, state.node_context()))
 
     @staticmethod
     @lru_cache
@@ -218,12 +211,14 @@ def _get_docks_to_assign(rng: Random, filler_results: FillerResults) -> list[tup
     return unassigned_docks
 
 
-async def _run_resolver(state: State, logic: Logic, max_attempts: int):
+async def _run_resolver(state: State, logic: Logic, max_attempts: int) -> State | None:
     with debug.with_level(0):
         return await resolver.advance_depth(state, logic, lambda s: None, max_attempts=max_attempts)
 
 
-async def _run_dock_resolver(dock: DockNode, target: DockNode, setup: tuple[State, Logic]) -> tuple[State, Logic]:
+async def _run_dock_resolver(
+    dock: DockNode, target: DockNode, setup: tuple[State, Logic]
+) -> tuple[State | None, Logic]:
     """
     Run the resolver with the objective of reaching the dock, assuming the dock is locked.
     """
@@ -259,7 +254,7 @@ def _determine_valid_weaknesses(
     target: DockNode,
     dock_type_params: DockRandoParams,
     dock_type_state: DockTypeState,
-    state: State,
+    state: State | None,
     logic: Logic,
 ) -> dict[DockWeakness, float]:
     """
@@ -271,7 +266,7 @@ def _determine_valid_weaknesses(
     if state is not None:
         reach = ResolverReach.calculate_reach(logic, state)
 
-        exclusions = set()
+        exclusions: set[DockWeakness] = set()
         exclusions.update(dock.incompatible_dock_weaknesses)
         exclusions.update(target.incompatible_dock_weaknesses)  # two-way
 
