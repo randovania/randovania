@@ -30,7 +30,7 @@ class BaseCosmeticPatchesDialog(QtWidgets.QDialog):
         raise NotImplementedError
 
     def _persist_check_field(self, check: QtWidgets.QCheckBox, attribute_name: str) -> None:
-        def persist_field(value: bool):
+        def persist_field(value: bool) -> None:
             self._cosmetic_patches = dataclasses.replace(
                 self._cosmetic_patches, **{attribute_name: value}  # type: ignore[arg-type]
             )

@@ -70,7 +70,7 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
         super().__init__(editor, game_description, window_manager)
         self.setupUi(self)
 
-        size_policy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Fixed)
+        size_policy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Fixed)
         self.item_pool_layout.setAlignment(QtCore.Qt.AlignmentFlag.AlignTop)
 
         # Relevant Items
