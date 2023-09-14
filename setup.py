@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from mypyc.build import mypycify
 from setuptools import setup
 from setuptools.command.build_py import build_py
 from wheel.bdist_wheel import bdist_wheel
@@ -23,6 +24,11 @@ class BDistWheelCommand(bdist_wheel):
 
 
 setup(
+    ext_modules=mypycify(
+        [
+            "randovania/game_description/requirements/",
+        ]
+    ),
     cmdclass={
         "build_ui": build_ui,
         "build_py": BuildPyCommand,
