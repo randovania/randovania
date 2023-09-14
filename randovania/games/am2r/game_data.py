@@ -56,6 +56,18 @@ game_data: game.GameData = game.GameData(
     ],
     faq=[
         (
+            "AM2R already has a build-in randomizer, what does this do differently?",
+            "The Randovania implementation provides additional robustness and more features compared to the built-"
+            "in randomizer."
+            "\n\n"
+            "Key features supported by Randovania include, but are not limited to, full item logic, toggleable tricks "
+            "and difficulties, Door Lock Rando, and Multiworld support (WIP). "
+            "\n\n"
+            "All Metroids now also drop items. This can include progression, expansions, or DNA. DNA are like keys and "
+            "are used to enter the path to the Queen. The amount of DNA is configurable and a hint system has been "
+            "implemented (no more fighting all the Metroids!). ",
+        ),
+        (
             "Which versions of AM2R are supported?",
             "Only version 1.5.5 is supported. Currently there are no plans to support other versions.",
         ),
@@ -97,14 +109,6 @@ game_data: game.GameData = game.GameData(
             "Some items have a 1 in 1024 chance of being a Pokémon-style shiny: "
             "they look different but behave entirely the same as normal. "
             "In a multiworld game, only your own items can be shiny.",
-        ),
-        (
-            "Why play Randovania vs the built in randomizer?",
-            "The Randovania implementation provides additional robustness and features beyond the built in randomizer."
-            "\n\n"
-            "Key features supported by Randovania include full item logic, Door Lock Rando, and Multiworld support. "
-            "All metroids now drop items including progression and expansions. This feature pairs with a configurable "
-            "amount of DNA for entrance to the Queen and a hint system (no more mandatory fighting of all metroids). ",
         ),
     ],
     layout=game.GameLayout(
