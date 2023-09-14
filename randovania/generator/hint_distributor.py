@@ -32,10 +32,9 @@ if TYPE_CHECKING:
     from randovania.game_description.db.area import Area
     from randovania.game_description.db.node_identifier import NodeIdentifier
     from randovania.game_description.db.region_list import RegionList
-    from randovania.game_description.game_description import GameDescription
     from randovania.game_description.pickup.pickup_entry import PickupEntry
-    from randovania.generator.filler.runner import PlayerPool
-    from randovania.layout.base.base_configuration import BaseConfiguration
+    from randovania.generator.filler.filler_configuration import PlayerPool
+    from randovania.generator.pre_fill_params import PreFillParams
 
 HintProvider = Callable[[PlayerState, GamePatches, Random, PickupIndex], Hint | None]
 
@@ -45,14 +44,6 @@ def _not_empty(it: Iterator) -> bool:
 
 
 HintTargetPrecision = tuple[PickupIndex, PrecisionPair]
-
-
-@dataclasses.dataclass(frozen=True)
-class PreFillParams:
-    rng: Random
-    configuration: BaseConfiguration
-    game: GameDescription
-    is_multiworld: bool
 
 
 class HintDistributor(ABC):

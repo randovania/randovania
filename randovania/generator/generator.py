@@ -10,10 +10,11 @@ import tenacity
 from randovania.game_description.assignment import PickupTarget, PickupTargetAssociation
 from randovania.game_description.resources.location_category import LocationCategory
 from randovania.generator import dock_weakness_distributor
+from randovania.generator.filler.filler_configuration import FillerResults, PlayerPool
 from randovania.generator.filler.filler_library import UnableToGenerate, filter_unassigned_pickup_nodes
-from randovania.generator.filler.runner import FillerResults, PlayerPool, run_filler
-from randovania.generator.hint_distributor import PreFillParams
+from randovania.generator.filler.runner import run_filler
 from randovania.generator.pickup_pool import PoolResults, pool_creator
+from randovania.generator.pre_fill_params import PreFillParams
 from randovania.layout import filtered_database
 from randovania.layout.base.available_locations import RandomizationMode
 from randovania.layout.exceptions import InvalidConfiguration

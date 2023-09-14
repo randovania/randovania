@@ -36,7 +36,7 @@ def test_requirement_lists_without_satisfied_resources(
             (item("Space Jump Boots"), 1),
         ]
     )
-    uncollected_resources = []
+    uncollected_resources = set()
     possible_sets = [
         RequirementSet(
             [

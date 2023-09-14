@@ -6,7 +6,7 @@ from unittest.mock import AsyncMock, MagicMock, call, patch
 import pytest
 
 from randovania.generator import generator
-from randovania.generator.filler.runner import FillerPlayerResult, FillerResults
+from randovania.generator.filler.filler_configuration import FillerPlayerResult, FillerResults
 from randovania.layout.exceptions import InvalidConfiguration
 from randovania.layout.layout_description import LayoutDescription
 

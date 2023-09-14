@@ -16,7 +16,7 @@ from randovania.game_description.hint import (
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime2.generator.hint_distributor import EchoesHintDistributor
-from randovania.generator.hint_distributor import PreFillParams
+from randovania.generator.pre_fill_params import PreFillParams
 
 
 @pytest.mark.parametrize("is_multiworld", [False, True])

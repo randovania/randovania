@@ -29,7 +29,7 @@ if TYPE_CHECKING:
 
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.game_patches import GamePatches
-    from randovania.generator.filler.runner import FillerResults
+    from randovania.generator.filler.filler_configuration import FillerResults
     from randovania.layout.base.base_configuration import BaseConfiguration
     from randovania.resolver.state import State
 
