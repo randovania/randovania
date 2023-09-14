@@ -22,10 +22,9 @@ def _sorted_node_identifiers(elements: Iterable[NodeIdentifier]) -> list[NodeIde
 
 def node_and_area_with_filter(game: RandovaniaGame, condition: Callable[[Area, Node], bool]) -> list[NodeIdentifier]:
     region_list = default_database.game_description_for(game).region_list
-    identifiers = {
+    return _sorted_node_identifiers(
         node.identifier for area in region_list.all_areas for node in area.actual_nodes if condition(area, node)
-    }
-    return _sorted_node_identifiers(identifiers)
+    )
 
 
 def node_locations_with_filter(game: RandovaniaGame, condition: Callable[[Node], bool]) -> list[NodeIdentifier]:
