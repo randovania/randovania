@@ -98,6 +98,14 @@ game_data: game.GameData = game.GameData(
             "they look different but behave entirely the same as normal. "
             "In a multiworld game, only your own items can be shiny.",
         ),
+        (
+            "Why play Randovania vs the built in randomizer?",
+            "The Randovania implementation provides additional robustness and features beyond the built in randomizer."
+            "\n\n"
+            "Key features supported by Randovania include full item logic, Door Lock Rando, and Multiworld support. "
+            "All metroids now drop items including progression and expansions. This feature pairs with a configurable "
+            "amount of DNA for entrance to the Queen and a hint system (no more mandatory fighting of all metroids). ",
+        ),
     ],
     layout=game.GameLayout(
         configuration=layout.AM2RConfiguration,
