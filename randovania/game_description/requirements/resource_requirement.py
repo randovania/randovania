@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import dataclasses
 import functools
 from math import ceil
 from typing import TYPE_CHECKING
@@ -20,14 +19,26 @@ if TYPE_CHECKING:
     from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 
 
-@dataclasses.dataclass(frozen=True, slots=True)
 class ResourceRequirement(Requirement):
+    __slots__ = ("resource", "amount", "negate")
     resource: ResourceInfo
     amount: int
     negate: bool
 
     def __post_init__(self) -> None:
         assert TypeError("No ResourceRequirement should be directly created")
+
+    def __copy__(self) -> ResourceRequirement:
+        return type(self)(self.resource, self.amount, self.negate)
+
+    def __reduce__(self) -> tuple[type[ResourceRequirement], tuple[ResourceInfo, int, bool]]:
+        return type(self), (self.resource, self.amount, self.negate)
+
+    def __init__(self, resource: ResourceInfo, amount: int, negate: bool):
+        self.resource = resource
+        self.amount = amount
+        self.negate = negate
+        self.__post_init__()
 
     @classmethod
     def create(cls, resource: ResourceInfo, amount: int, negate: bool) -> ResourceRequirement:
@@ -87,9 +98,17 @@ class ResourceRequirement(Requirement):
     def _as_comparison_tuple(self) -> tuple[ResourceType, str, int, bool]:
         return self.resource.resource_type, self.resource.short_name, self.amount, self.negate
 
+    def __eq__(self, other: object) -> bool:
+        if not isinstance(other, ResourceRequirement):
+            return False
+        return self._as_comparison_tuple == other._as_comparison_tuple
+
     def __lt__(self, other: Requirement) -> bool:
         assert isinstance(other, ResourceRequirement)
         return self._as_comparison_tuple < other._as_comparison_tuple
+
+    def __hash__(self) -> int:
+        return hash(self._as_comparison_tuple)
 
     def multiply_amount(self, multiplier: float) -> ResourceRequirement:
         return self
