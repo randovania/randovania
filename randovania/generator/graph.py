@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import copy
 import itertools
+import typing
 from collections import defaultdict
 from heapq import heappop, heappush
 from typing import TYPE_CHECKING
@@ -13,28 +14,32 @@ if TYPE_CHECKING:
 
 
 class BaseGraph:
-    def copy(self):
+    def copy(self) -> BaseGraph:
         raise NotImplementedError
 
-    def add_node(self, node: int):
+    def add_node(self, node: int) -> None:
         raise NotImplementedError
 
-    def add_edge(self, previous_node: int, next_node: int, requirement: RequirementSet):
+    def add_edge(self, previous_node: int, next_node: int, requirement: RequirementSet) -> None:
         raise NotImplementedError
 
-    def remove_edge(self, previous: int, target: int):
+    def remove_edge(self, previous: int, target: int) -> None:
         raise NotImplementedError
 
     def has_edge(self, previous_node: int, next_node: int) -> bool:
         raise NotImplementedError
 
-    def __contains__(self, item: int):
+    def __contains__(self, item: int) -> bool:
         raise NotImplementedError
 
     def edges_data(self) -> Iterator[tuple[int, int, RequirementSet]]:
         raise NotImplementedError
 
-    def multi_source_dijkstra(self, sources: set[int], weight: Callable[[int, int, RequirementSet], float]):
+    def multi_source_dijkstra(
+        self,
+        sources: set[int],
+        weight: Callable[[int, int, RequirementSet], int],
+    ) -> tuple[dict[int, int], dict[int, list[int]]]:
         raise NotImplementedError
 
     def strongly_connected_components(self) -> Iterator[set[int]]:
@@ -45,54 +50,55 @@ class RandovaniaGraph(BaseGraph):
     edges: dict[int, dict[int, RequirementSet]]
 
     @classmethod
-    def new(cls):
+    def new(cls) -> typing.Self:
         return cls(defaultdict(dict))
 
     def __init__(self, edges: dict[int, dict[int, RequirementSet]]):
-        import networkx
-
-        self.networkx = networkx
         self.edges = edges
 
-    def copy(self):
-        edges = defaultdict(dict)
+    def copy(self) -> RandovaniaGraph:
+        edges: dict[int, dict[int, RequirementSet]] = defaultdict(dict)
         edges.update({source: copy.copy(data) for source, data in self.edges.items()})
         return RandovaniaGraph(edges)
 
-    def add_node(self, node: int):
+    def add_node(self, node: int) -> None:
         if node not in self.edges:
             self.edges[node] = {}
 
-    def add_edge(self, previous_node: int, next_node: int, requirement: RequirementSet):
+    def add_edge(self, previous_node: int, next_node: int, requirement: RequirementSet) -> None:
         self.edges[previous_node][next_node] = requirement
 
-    def remove_edge(self, previous: int, target: int):
+    def remove_edge(self, previous: int, target: int) -> None:
         self.edges[previous].pop(target)
 
     def has_edge(self, previous_node: int, next_node: int) -> bool:
         return next_node in self.edges.get(previous_node, {})
 
-    def __contains__(self, item: int):
+    def __contains__(self, item: int) -> bool:
         return item in self.edges
 
-    def edges_data(self):
+    def edges_data(self) -> Iterator[tuple[int, int, RequirementSet]]:
         for source, data in self.edges.items():
             for target, requirement in data.items():
                 yield source, target, requirement
 
-    def multi_source_dijkstra(self, sources: set[int], weight: Callable[[int, int, RequirementSet], float]):
+    def multi_source_dijkstra(
+        self,
+        sources: set[int],
+        weight: Callable[[int, int, RequirementSet], int],
+    ) -> tuple[dict[int, int], dict[int, list[int]]]:
         paths = {source: [source] for source in sources}  # dictionary of paths
         edges = self.edges
 
         push = heappush
         pop = heappop
 
-        dist = {}  # dictionary of final distances
+        dist: dict[int, int] = {}  # dictionary of final distances
         seen = {}
         # fringe is heapq with 3-tuples (distance,c,node)
         # use the count c to avoid comparing nodes (may not be able to)
         c = itertools.count()
-        fringe = []
+        fringe: list[tuple[int, int, int]] = []
         for source in sources:
             seen[source] = 0
             push(fringe, (0, next(c), source))
@@ -122,7 +128,7 @@ class RandovaniaGraph(BaseGraph):
         preorder = {}
         lowlink = {}
         scc_found = set()
-        scc_queue = []
+        scc_queue: list[int] = []
         i = 0  # Preorder counter
         neighbors = {v: iter(self.edges[v]) for v in self.edges.keys()}
         for source in self.edges.keys():
