@@ -16,7 +16,7 @@ class BlankPerGameOptions(PerGameOptions):
     output_path: Path | None = None
 
     @property
-    def as_json(self):
+    def as_json(self) -> dict:
         return {
             **super().as_json,
             "input_path": str(self.input_path) if self.input_path is not None else None,

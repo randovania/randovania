@@ -202,7 +202,11 @@ def has_vanilla_item(configuration: StandardPickupConfiguration, item_name: str)
     return False
 
 
-def fill_template_strings_from_tree(template_strings: dict[str, list[str]], tree: dict[str, list[dict[str, bool]]]):
+ConditionalMessages = dict[str, bool]
+ConditionalMessageTree = dict[str, list[ConditionalMessages]]
+
+
+def fill_template_strings_from_tree(template_strings: dict[str, list[str]], tree: ConditionalMessageTree) -> None:
     for category, entries in tree.items():
         if category not in template_strings:
             template_strings[category] = []

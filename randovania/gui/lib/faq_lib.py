@@ -9,5 +9,5 @@ if TYPE_CHECKING:
 
 
 def format_game_faq(game: RandovaniaGame, widget: QtWidgets.QLabel):
-    widget.setTextFormat(QtCore.Qt.MarkdownText)
+    widget.setTextFormat(QtCore.Qt.TextFormat.MarkdownText)
     widget.setText("\n\n&nbsp;\n".join(f"### {question}\n{answer}" for question, answer in game.data.faq))

@@ -28,7 +28,7 @@ class PresetTrickLevel(PresetTab, Ui_PresetTrickLevel):
         super().__init__(editor, game_description, window_manager)
         self.setupUi(self)
 
-        self.trick_level_layout.setAlignment(QtCore.Qt.AlignTop)
+        self.trick_level_layout.setAlignment(QtCore.Qt.AlignmentFlag.AlignTop)
         signal_handling.on_checked(self.underwater_abuse_check, self._on_underwater_abuse_check)
         self.underwater_abuse_label.linkActivated.connect(self._on_click_link_underwater_details)
 
@@ -36,7 +36,7 @@ class PresetTrickLevel(PresetTab, Ui_PresetTrickLevel):
         self._slider_for_trick = {}
 
         tricks_in_use = trick_lib.used_tricks(self.game_description)
-        size_policy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Preferred)
+        size_policy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Policy.Preferred)
 
         self.trick_level_line_1.setVisible(self.game_enum != RandovaniaGame.METROID_PRIME_CORRUPTION)
         self.underwater_abuse_label.setText(self.underwater_abuse_label.text().replace("color:#0000ff;", ""))
@@ -54,7 +54,7 @@ class PresetTrickLevel(PresetTab, Ui_PresetTrickLevel):
 
             if row > 1:
                 self.trick_difficulties_layout.addItem(
-                    QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+                    QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Expanding)
                 )
 
             trick_label = QtWidgets.QLabel(self.trick_level_scroll_contents)

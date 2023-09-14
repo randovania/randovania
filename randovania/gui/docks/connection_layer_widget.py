@@ -86,7 +86,7 @@ class ConnectionLayerWidget(QtWidgets.QDockWidget):
         self.contents_layout.addWidget(self.load_preset_button)
 
         self.vertical_spacer = QtWidgets.QSpacerItem(
-            20, 30, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding
+            20, 30, QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Expanding
         )
         self.contents_layout.addItem(self.vertical_spacer)
 

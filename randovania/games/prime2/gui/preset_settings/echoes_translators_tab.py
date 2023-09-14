@@ -51,7 +51,7 @@ class PresetEchoesTranslators(PresetTab, Ui_PresetEchoesTranslators):
         super().__init__(editor, game_description, window_manager)
         self.setupUi(self)
 
-        self.translators_layout.setAlignment(QtCore.Qt.AlignTop)
+        self.translators_layout.setAlignment(QtCore.Qt.AlignmentFlag.AlignTop)
         self.translator_randomize_all_button.clicked.connect(self._on_randomize_all_gates_pressed)
         self.translator_randomize_all_with_unlocked_button.clicked.connect(
             self._on_randomize_all_gates_with_unlocked_pressed

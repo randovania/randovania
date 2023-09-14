@@ -21,7 +21,7 @@ class PresetEchoesGoal(PresetTab, Ui_PresetEchoesGoal):
         super().__init__(editor, game_description, window_manager)
         self.setupUi(self)
 
-        self.goal_layout.setAlignment(QtCore.Qt.AlignTop)
+        self.goal_layout.setAlignment(QtCore.Qt.AlignmentFlag.AlignTop)
         self.skytemple_combo.setItemData(0, LayoutSkyTempleKeyMode.ALL_BOSSES)
         self.skytemple_combo.setItemData(1, LayoutSkyTempleKeyMode.ALL_GUARDIANS)
         self.skytemple_combo.setItemData(2, int)

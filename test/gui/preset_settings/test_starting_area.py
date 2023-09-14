@@ -177,46 +177,46 @@ def test_area_with_multiple_nodes(skip_qtbot, preset_manager):
     assert len(editor.configuration.starting_location.locations) == 1
 
     # test checkboxes
-    assert intro_world_box.checkState() == QtCore.Qt.PartiallyChecked
-    assert starting_area_box.checkState() == QtCore.Qt.PartiallyChecked
-    assert blue_key_room_box.checkState() == QtCore.Qt.Unchecked
+    assert intro_world_box.checkState() == QtCore.Qt.CheckState.PartiallyChecked
+    assert starting_area_box.checkState() == QtCore.Qt.CheckState.PartiallyChecked
+    assert blue_key_room_box.checkState() == QtCore.Qt.CheckState.Unchecked
 
     # click "Test Start" and check states
     test_node_checkbox = checkbox_node_list[second_start_point]
     skip_qtbot.mouseClick(test_node_checkbox, Qt.LeftButton)
     window.on_preset_changed(editor.create_custom_preset_with())
     assert len(editor.configuration.starting_location.locations) == 2
-    assert intro_world_box.checkState() == QtCore.Qt.PartiallyChecked
-    assert starting_area_box.checkState() == QtCore.Qt.Checked
-    assert blue_key_room_box.checkState() == QtCore.Qt.Unchecked
+    assert intro_world_box.checkState() == QtCore.Qt.CheckState.PartiallyChecked
+    assert starting_area_box.checkState() == QtCore.Qt.CheckState.Checked
+    assert blue_key_room_box.checkState() == QtCore.Qt.CheckState.Unchecked
 
     # toggle the area button
     skip_qtbot.mouseClick(starting_area_box, Qt.LeftButton)
     window.on_preset_changed(editor.create_custom_preset_with())
     assert len(editor.configuration.starting_location.locations) == 0
-    assert intro_world_box.checkState() == QtCore.Qt.Unchecked
-    assert starting_area_box.checkState() == QtCore.Qt.Unchecked
-    assert blue_key_room_box.checkState() == QtCore.Qt.Unchecked
+    assert intro_world_box.checkState() == QtCore.Qt.CheckState.Unchecked
+    assert starting_area_box.checkState() == QtCore.Qt.CheckState.Unchecked
+    assert blue_key_room_box.checkState() == QtCore.Qt.CheckState.Unchecked
 
     skip_qtbot.mouseClick(starting_area_box, Qt.LeftButton)
     window.on_preset_changed(editor.create_custom_preset_with())
     assert len(editor.configuration.starting_location.locations) == 2
-    assert starting_area_box.checkState() == QtCore.Qt.Checked
-    assert intro_world_box.checkState() == QtCore.Qt.PartiallyChecked
-    assert blue_key_room_box.checkState() == QtCore.Qt.Unchecked
+    assert starting_area_box.checkState() == QtCore.Qt.CheckState.Checked
+    assert intro_world_box.checkState() == QtCore.Qt.CheckState.PartiallyChecked
+    assert blue_key_room_box.checkState() == QtCore.Qt.CheckState.Unchecked
 
     # toggle db box
     # don't ask me why qtbot clicks at the wrong position by default on this box
-    skip_qtbot.mouseClick(intro_world_box, Qt.LeftButton, pos=QtCore.QPoint(2, intro_world_box.height() / 2))
+    skip_qtbot.mouseClick(intro_world_box, Qt.LeftButton, pos=QtCore.QPoint(2, intro_world_box.height() // 2))
     window.on_preset_changed(editor.create_custom_preset_with())
     assert len(editor.configuration.starting_location.locations) == 3
-    assert starting_area_box.checkState() == QtCore.Qt.Checked
-    assert intro_world_box.checkState() == QtCore.Qt.Checked
-    assert blue_key_room_box.checkState() == QtCore.Qt.Checked
+    assert starting_area_box.checkState() == QtCore.Qt.CheckState.Checked
+    assert intro_world_box.checkState() == QtCore.Qt.CheckState.Checked
+    assert blue_key_room_box.checkState() == QtCore.Qt.CheckState.Checked
 
-    skip_qtbot.mouseClick(intro_world_box, Qt.LeftButton, pos=QtCore.QPoint(2, intro_world_box.height() / 2))
+    skip_qtbot.mouseClick(intro_world_box, Qt.LeftButton, pos=QtCore.QPoint(2, intro_world_box.height() // 2))
     window.on_preset_changed(editor.create_custom_preset_with())
     assert len(editor.configuration.starting_location.locations) == 0
-    assert starting_area_box.checkState() == QtCore.Qt.Unchecked
-    assert intro_world_box.checkState() == QtCore.Qt.Unchecked
-    assert blue_key_room_box.checkState() == QtCore.Qt.Unchecked
+    assert starting_area_box.checkState() == QtCore.Qt.CheckState.Unchecked
+    assert intro_world_box.checkState() == QtCore.Qt.CheckState.Unchecked
+    assert blue_key_room_box.checkState() == QtCore.Qt.CheckState.Unchecked
