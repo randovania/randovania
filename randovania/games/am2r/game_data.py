@@ -56,7 +56,7 @@ game_data: game.GameData = game.GameData(
     ],
     faq=[
         (
-            "AM2R already has a build-in randomizer, what does this do differently?",
+            "AM2R already has a built-in randomizer, what does this do differently?",
             "The Randovania implementation provides additional robustness and more features compared to the built-"
             "in randomizer."
             "\n\n"
