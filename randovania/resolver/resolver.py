@@ -39,6 +39,12 @@ def _simplify_requirement_list(
         if item.resource.resource_type in (ResourceType.NODE_IDENTIFIER, ResourceType.EVENT):
             continue
 
+        # We have no way to combine the damage requirements to both get here and escape
+        if item.resource.resource_type == ResourceType.DAMAGE and item.satisfied(
+            state.resources, state.maximum_energy, state.resource_database
+        ):
+            continue
+
         items.append(item)
 
     return RequirementList(items)

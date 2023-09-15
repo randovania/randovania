@@ -12,6 +12,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: The menu option for viewing all Randovania dependencies and their licenses has been restored.
 - Fixed: The generator should now handle cases with negative requirements a little better.
 
+### Resolver
+
+- Fixed: An issue where a damage requirement would be skipped permanently. 
+
 ### Metroid Dread
 
 - Changed: Exporting games is now significantly faster.
