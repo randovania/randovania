@@ -131,7 +131,7 @@ jobs:
         if: matrix.executable
 
       - name: codecov
-        uses: codecov/codecov-action@v3
+        uses: codecov/codecov-action@v4
         if: ${{ !matrix.executable }}
         with:
           fail_ci_if_error: false  # Ideally this would be true, but codecov's action keep getting errors with GH api and it doesn't do retries
