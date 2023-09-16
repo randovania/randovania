@@ -49,6 +49,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Metroid Prime
 
 - Fixed: Traversing from the Spider Track Bridge to the Quarantine Access A door in Metroid Quarantine A now properly requires the barrier to be removed or `Backwards Lower Mines` to be enabled.
+- Fixed: PAL export with skippable cutscenes
+- Fixed: Flaahgra crash with skippable cutscenes (fingers crossed)
+- Fixed: Warrior shrine loading behavior
+- Changed: Update tournament winner scan in Artifact Temple
 
 ### Metroid Prime 2: Echoes
 
