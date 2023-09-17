@@ -970,8 +970,8 @@ def _migrate_v64(preset: dict) -> dict:
     config = preset["configuration"]
     game = preset["game"]
 
-    if game in {"dread"}:
-        config["nerf_power_bombs"] = False
+    if game == "dread":
+        config["nerf_power_bombs"] = True
 
     return preset
 
