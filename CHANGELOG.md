@@ -58,7 +58,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed: When Progressive Grapple is enabled, it will now show `2 shuffled copies` rather than `Shuffled` for better consistency.
 - Changed: A proper error message is displayed when mono is not found, when exporting a game on macOS and Linux.
-  
+
 ## [6.2.1] - 2023-09-??
 
 ### Metroid Prime
