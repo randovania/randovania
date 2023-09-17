@@ -115,7 +115,7 @@ class MSRPatchDataFactory(PatchDataFactory):
         else:
             return {}
 
-    def _key_error_for_node(self, node: Node, err: KeyError):
+    def _key_error_for_node(self, node: Node, err: KeyError) -> KeyError:
         return KeyError(f"{self.game.region_list.node_name(node, with_region=True)} has no extra {err}")
 
     def _level_name_for(self, node: Node) -> str:
@@ -126,22 +126,11 @@ class MSRPatchDataFactory(PatchDataFactory):
         try:
             return {
                 "scenario": self._level_name_for(node),
-                # "layer": node.extra.get("actor_layer", "default"),
                 "actor": node.extra[actor_key],
             }
         except KeyError as e:
             return {}
             raise self._key_error_for_node(node, e)
-
-    def _callback_ref_for(self, node: Node) -> dict:
-        try:
-            return {
-                "scenario": self._level_name_for(node),
-                "function": node.extra["callback_function"],
-                "args": node.extra.get("callback_args", 0),
-            }
-        except KeyError as e:
-            raise KeyError(f"{node} has no extra {e}")
 
     def _pickup_detail_for_target(self, detail: ExportedPickupDetails) -> dict | None:
         alt_model = _ALTERNATIVE_MODELS.get(detail.model, [detail.model.name])
@@ -184,7 +173,6 @@ class MSRPatchDataFactory(PatchDataFactory):
                 {
                     "pickup_actor": pickup_actor,
                     "model": model_names,
-                    # "map_icon": map_icon,
                 }
             )
 

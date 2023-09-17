@@ -27,24 +27,15 @@ class PresetMSRPatches(PresetTab, Ui_PresetMSRPatches):
         super().__init__(editor, game_description, window_manager)
         self.setupUi(self)
 
-        self.setCentralWidget(self.centralWidget)
-
-        # Signals
-        for f in _FIELDS:
-            self._add_persist_option(getattr(self, f"{f}_check"), f)
+        self.setCentralWidget(self.root_widget)
 
     @classmethod
     def tab_title(cls) -> str:
-        return "Other"
+        return "Optional Patches"
 
     @classmethod
     def uses_patches_tab(cls) -> bool:
         return True
-
-    def _add_persist_option(self, check: QtWidgets.QCheckBox, attribute_name: str):
-        def persist(value: bool):
-            with self._editor as editor:
-                editor.set_configuration_field(attribute_name, value)
 
     def on_preset_changed(self, preset: Preset):
         config = typing.cast(MSRConfiguration, preset.configuration)
