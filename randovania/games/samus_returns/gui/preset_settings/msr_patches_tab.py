@@ -39,7 +39,6 @@ class PresetMSRPatches(PresetTab, Ui_PresetMSRPatches):
 
     def on_preset_changed(self, preset: Preset):
         config = typing.cast(MSRConfiguration, preset.configuration)
-        assert isinstance(config, MSRConfiguration)
 
         for f in _FIELDS:
             typing.cast(QtWidgets.QCheckBox, getattr(self, f"{f}_check")).setChecked(getattr(config, f))

@@ -136,23 +136,6 @@ class MSRPatchDataFactory(PatchDataFactory):
         alt_model = _ALTERNATIVE_MODELS.get(detail.model, [detail.model.name])
         model_names = alt_model
 
-        if detail.other_player:
-            if model_names == ["offworld"]:
-                base_icon = "unknown"
-                model_names = ["itemsphere"]
-            else:
-                base_icon = detail.model.name
-
-            map_icon = {"custom_icon": {"label": detail.name.upper(), "base_icon": base_icon}}
-        elif alt_model[0] == "itemsphere":
-            map_icon = {
-                "custom_icon": {
-                    "label": detail.original_pickup.name.upper(),
-                }
-            }
-        else:
-            map_icon = {"icon_id": detail.model.name}
-
         resources = get_resources_for_details(detail.original_pickup, detail.conditional_resources, detail.other_player)
 
         pickup_node = self.game.region_list.node_from_pickup_index(detail.index)
@@ -166,9 +149,6 @@ class MSRPatchDataFactory(PatchDataFactory):
 
         if pickup_type == "actor":
             pickup_actor = self._teleporter_ref_for(pickup_node)
-
-            if "map_icon_actor" in pickup_node.extra:
-                map_icon.update({"original_actor": self._teleporter_ref_for(pickup_node, "map_icon_actor")})
             details.update(
                 {
                     "pickup_actor": pickup_actor,
@@ -231,5 +211,5 @@ class MSRAcquiredMemo(dict):
         ] = "Super Missile Tank acquired.\nSuper Missile capacity increased by {Super Missile}."
         result["Power Bomb Tank"] = "Power Bomb Tank acquired.\nPower Bomb capacity increased by {Power Bomb}."
         result["Energy Tank"] = "Energy Tank acquired.\nEnergy capacity increased by 100."
-        result["Aeion Tank"] = "Aeion Tank acquired.\nAieon Gauge expanded."
+        result["Aeion Tank"] = "Aeion Tank acquired.\nAeion Gauge expanded."
         return result
