@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Resolver
 - Fixed: Bug where nested requirements were combined wrongly.
+- Improved: Order of exploring certain dangerous events.
 
 ### Metroid Dread
 
