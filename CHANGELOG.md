@@ -43,6 +43,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ##### Ferenia
 
+- Added: Emmi Zone West Exit now has a Damage Boost trick to move from the center platform to the west door.
 - Changed: Purple EMMI Introduction: Using Speed Booster to get past the Shutter Gate now requires Speed Booster Conservation Intermediate instead of Flash Shift Skip Beginner.
 
 ##### Ghavoran
