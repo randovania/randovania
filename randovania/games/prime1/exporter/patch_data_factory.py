@@ -921,7 +921,7 @@ class PrimePatchDataFactory(PatchDataFactory):
                 "elitePirate3": get_random_size(0.05, 2.0),
                 "phazonElite": get_random_size(0.1, 2.0),
                 "omegaPirate": get_random_size(0.05, 2.0),
-                "Ridley": get_random_size(0.2, 1.5),
+                "ridley": get_random_size(0.2, 1.5),
                 "exo": get_random_size(0.15, 2.0),
                 "essence": get_random_size(0.05, 2.25),
                 "flaahgra": get_random_size(0.15, 3.3),
