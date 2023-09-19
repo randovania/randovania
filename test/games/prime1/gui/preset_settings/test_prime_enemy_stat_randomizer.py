@@ -24,7 +24,7 @@ def test_on_preset_changed(skip_qtbot, preset_manager, use_enemy_attribute_rando
     window = PresetEnemyAttributeRandomizer(editor, default_database.game_description_for(preset.game), MagicMock())
 
     if use_enemy_attribute_randomizer:
-        skip_qtbot.mouseClick(window.activate_randomizer, Qt.LeftButton)
+        skip_qtbot.mouseClick(window.activate_randomizer, Qt.MouseButton.LeftButton)
 
         window.range_scale_low.setValue(1.2)
         window.range_scale_high.setValue(1.7)
@@ -41,7 +41,7 @@ def test_on_preset_changed(skip_qtbot, preset_manager, use_enemy_attribute_rando
         window.range_knockback_low.setValue(0.2)
         window.range_knockback_high.setValue(0.5147)
 
-        skip_qtbot.mouseClick(window.diff_xyz, Qt.LeftButton)
+        skip_qtbot.mouseClick(window.diff_xyz, Qt.MouseButton.LeftButton)
     else:
         pass
 

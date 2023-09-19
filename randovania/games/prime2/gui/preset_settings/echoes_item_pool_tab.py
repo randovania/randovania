@@ -52,8 +52,8 @@ class EchoesPresetItemPool(MetroidPresetItemPool):
 
         if self._split_ammo_widgets:
             line = QtWidgets.QFrame(parent)
-            line.setFrameShape(QtWidgets.QFrame.HLine)
-            line.setFrameShadow(QtWidgets.QFrame.Sunken)
+            line.setFrameShape(QtWidgets.QFrame.Shape.HLine)
+            line.setFrameShadow(QtWidgets.QFrame.Shadow.Sunken)
             layout.addWidget(line, layout.rowCount(), 0, 1, -1)
 
         for widget in self._split_ammo_widgets:

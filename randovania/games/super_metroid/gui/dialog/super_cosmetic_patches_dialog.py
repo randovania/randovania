@@ -9,15 +9,17 @@ from randovania.gui.dialog.base_cosmetic_patches_dialog import BaseCosmeticPatch
 from randovania.gui.generated.super_cosmetic_patches_dialog_ui import Ui_SuperCosmeticPatchesDialog
 
 if TYPE_CHECKING:
-    from PySide6.QtWidgets import QWidget
+    from PySide6 import QtWidgets
+
+    pass
 
 
 class SuperCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_SuperCosmeticPatchesDialog):
     _cosmetic_patches: SuperMetroidCosmeticPatches
-    checkboxes = {}
-    radio_buttons = {}
+    checkboxes: dict[str, QtWidgets.QCheckBox]
+    radio_buttons: dict[MusicMode, QtWidgets.QRadioButton]
 
-    def __init__(self, parent: QWidget, current: SuperMetroidCosmeticPatches):
+    def __init__(self, parent: QtWidgets.QWidget | None, current: SuperMetroidCosmeticPatches):
         super().__init__(parent)
         self.setupUi(self)
         self.checkboxes = {
@@ -37,27 +39,22 @@ class SuperCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_SuperCosmeticPatc
         self.on_new_cosmetic_patches(current)
         self.connect_signals()
 
-    def connect_signals(self):
+    def connect_signals(self) -> None:
         super().connect_signals()
 
         for name, checkbox in self.checkboxes.items():
-            checkbox.stateChanged.connect(self._persist_option_then_notify(name))
+            self._persist_check_field(checkbox, name)
+
         for music_mode, radio_button in self.radio_buttons.items():
             radio_button.toggled.connect(functools.partial(self._on_music_option_changed, music_mode))
 
-    def on_new_cosmetic_patches(self, patches: SuperMetroidCosmeticPatches):
+    def on_new_cosmetic_patches(self, patches: SuperMetroidCosmeticPatches) -> None:
         for name, checkbox in self.checkboxes.items():
             checkbox.setChecked(getattr(patches, name))
         for music_mode, radio_button in self.radio_buttons.items():
             radio_button.setChecked(music_mode == patches.music)
 
-    def _persist_option_then_notify(self, attribute_name: str):
-        def persist(value: int):
-            self._cosmetic_patches = dataclasses.replace(self._cosmetic_patches, **{attribute_name: bool(value)})
-
-        return persist
-
-    def _on_music_option_changed(self, option: MusicMode, value: bool):
+    def _on_music_option_changed(self, option: MusicMode, value: bool) -> None:
         if value:
             self._cosmetic_patches = dataclasses.replace(self._cosmetic_patches, music=option)
 
@@ -65,5 +62,5 @@ class SuperCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_SuperCosmeticPatc
     def cosmetic_patches(self) -> SuperMetroidCosmeticPatches:
         return self._cosmetic_patches
 
-    def reset(self):
+    def reset(self) -> None:
         self.on_new_cosmetic_patches(SuperMetroidCosmeticPatches())

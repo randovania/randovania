@@ -24,7 +24,7 @@ class PresetAM2RGoal(PresetTab, Ui_PresetAM2RGoal):
         super().__init__(editor, game_description, window_manager)
         self.setupUi(self)
 
-        self.goal_layout.setAlignment(QtCore.Qt.AlignTop)
+        self.goal_layout.setAlignment(QtCore.Qt.AlignmentFlag.AlignTop)
         signal_handling.on_checked(self.prefer_metroids_check, self._on_prefer_metroids)
         signal_handling.on_checked(self.prefer_bosses_check, self._on_prefer_bosses)
         self.dna_slider.valueChanged.connect(self._on_dna_slider_changed)
