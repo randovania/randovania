@@ -28,28 +28,44 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ##### Artaria
 
 - Changed: EMMI Zone Spinner: The connection to the pickup that is available before flipping the spinner now also requires door lock rando and Highly Dangerous Logic to be enabled.
+- Changed: Going to Transport to Dairon with Speed Booster now requires the Speed Booster Conservation trick set to Beginner.
 
 ##### Burenia
 
 - Changed: Teleport to Ferenia: Using Speed Booster to get past the Shutter Gate now requires Speed Booster Conservation Beginner.
+- Changed: The Early Gravity sequence now requires the Speed Booster Conservation trick set to Beginner.
 
 ##### Cataris
 
 - Changed: Thermal Device Room South: The connections to the thermal door that closes after using the thermal device now logically remains open when door lock rando is disabled and the "Can Slide" and "Shoot Beam" templates are satisfied. This is a handwave that makes the thermal device no longer a dangerous resource.
 - Changed: Single-wall Jump trick in Cataris Teleport to Artaria (Blue) now requires a slide jump.
 - Changed: Exclude Door above First Thermal Device from Door Randomization. Effectively making the First Thermal Device a safe action also when doors are randomized.
+- Changed: The item in Dairon Transport Access now requires the Speed Booster Conservation trick set to Beginner.
+- Changed: The speed blocks leading to Underlava Puzzle Room 2 now require the Speed Booster Conservation trick set to Beginner or Power Bombs.
 
 ##### Dairon
 
 - Changed: Yellow EMMI Introduction: Using Speed Booster to go through the Shutter Gate, right to left, no longer requires Flash Shift Skip.
+- Changed: The lower item in the Freezer now requires the Speed Booster Conservation trick set to Beginner.
+- Changed: The item in Ghavoran Transport now requires the Speed Booster Conservation trick set to Beginner when using Space Jump.
+- Changed: The item in Storm Missile Gate Room now requires the Speed Booster Conservation trick set to Beginner when coming from above.
+
+##### Elun
+
+- Changed: The item in Fan Room now requires the Speed Booster Conservation trick set to Beginner.
 
 ##### Ferenia
 
 - Changed: Purple EMMI Introduction: Using Speed Booster to get past the Shutter Gate now requires Speed Booster Conservation Intermediate instead of Flash Shift Skip Beginner.
+- Changed: The item in Fan Room now requires the Speed Booster Conservation trick set to Beginner or Gravity Suit with door lock rando disabled.
+- Changed: The item in Speedboost Slopes Maze now requires the Speed Booster Conservation trick set to Beginner.
+- Changed: The Missile+ Tank in Space Jump Room now requires the Speed Booster Conservation trick set to Beginner.
 
 ##### Ghavoran
 
 - Changed: The connection of EMMI Zone Exit Southeast and EMMI Zone Exit West is now a proper door. This enables it to now be shuffled in door lock rando.
+- Changed: Going up Right Entrance with Speed Booster now requires the Speed Booster Conservation trick set to Beginner.
+- Changed: The upper item in Golzuna Tower now requires the Speed Booster Conservation trick set to Beginner when using Spin Boost from the top.
 
 ### Metroid Prime
 
