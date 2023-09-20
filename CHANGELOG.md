@@ -63,6 +63,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: When Progressive Grapple is enabled, it will now show `2 shuffled copies` rather than `Shuffled` for better consistency.
 - Changed: A proper error message is displayed when mono is not found, when exporting a game on macOS and Linux.
 
+#### Logic Database
+
+- Added: 15 videos to the logic database. see the [Video Directory]
+(https://randovania.github.io/Metroid%20Prime%202%20Echoes/) for the full collection 
+- Added: Comments to some Beginner Bomb Jump tricks
+
+##### Sanctuary Fortress:
+
+- Added: Watch Staton: Bomb Space Jump (Advanced) to reach the Spidertrack (Standable Terrain (Advanced)) to reach the Bomb Slot with an Instant Morph (Advanced)
+
 ## [6.2.1] - 2023-09-??
 
 ### Metroid Prime
