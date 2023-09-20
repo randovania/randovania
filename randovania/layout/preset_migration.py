@@ -977,6 +977,7 @@ def _migrate_v64(preset: dict) -> dict:
         preset["configuration"]["qol_cutscenes"] = x
     return preset
 
+
 def _migrate_v65(preset: dict) -> dict:
     config = preset["configuration"]
     game = preset["game"]
