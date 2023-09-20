@@ -7,16 +7,27 @@ on:
         description: 'Which game to generate for'
         type: choice
         options:
+          - am2r
+          - blank
           - cave_story
           - dread
           - prime1
           - prime2
           - samus_returns
-          - am2r
 
   schedule:
+    #        ┌────────── minute (0 - 59)
+    #        │  ┌────────── hour (0 - 23)
+    #        │  │ ┌────────── day of the month (1 - 31)
+    #        │  │ │ ┌────────── month (1 - 12 or JAN-DEC)
+    #        │  │ │ │ ┌────────── day of the week (0 - 6 or SUN-SAT)
+    #        │  │ │ │ │
+    #        │  │ │ │ │
+    #        │  │ │ │ │
+    #        *  * * * *
+    - cron: '0 16 * * 0'  # Blank
     - cron: '0 16 * * 3'  # Cave Story
-    - cron: '0 23 * * *'  # Dread
+    - cron: '0 16 * * 5'  # Dread
     - cron: '0 16 * * 2'  # Prime 1
     - cron: '0 16 * * 1'  # Prime 2
     - cron: '0 16 * * 4'  # Samus Returns
@@ -42,6 +53,18 @@ jobs:
       - name: Install Python packages
         run: venv/bin/python -m pip install -c requirements.txt -e .[server]
 
+      - name: Bulk Generate (AM2R)
+        run: venv/bin/python tools/bulk_generate_for_discord.py --game am2r
+        if: inputs.game == 'am2r' || github.event.schedule == '0 10 * * 1,5'
+        env:
+          WEBHOOK_URL: ${{ secrets.AM2R_DEV_TALK_WEBHOOK }}
+
+      - name: Bulk Generate (Blank)
+        run: venv/bin/python tools/bulk_generate_for_discord.py --game blank
+        if: inputs.game == 'blank' || github.event.schedule == '0 16 * * 0'
+        env:
+          WEBHOOK_URL: ${{ secrets.GENERAL_TALK_WEBHOOK }}
+
       - name: Bulk Generate (Cave Story)
         run: venv/bin/python tools/bulk_generate_for_discord.py --game cave_story
         if: inputs.game == 'cave_story' || github.event.schedule == '0 16 * * 3'
@@ -50,7 +73,7 @@ jobs:
 
       - name: Bulk Generate (Dread)
         run: venv/bin/python tools/bulk_generate_for_discord.py --game dread
-        if: inputs.game == 'dread' || github.event.schedule == '0 23 * * *'
+        if: inputs.game == 'dread' || github.event.schedule == '0 16 * * 5'
         env:
           WEBHOOK_URL: ${{ secrets.DREAD_DEV_TALK_WEBHOOK }}
 
@@ -72,11 +95,6 @@ jobs:
         env:
           WEBHOOK_URL: ${{ secrets.SR_DEV_TALK_WEBHOOK }}
 
-      - name: Bulk Generate (AM2R)
-        run: venv/bin/python tools/bulk_generate_for_discord.py --game am2r
-        if: inputs.game == 'am2r' || github.event.schedule == '0 10 * * 1,5'
-        env:
-          WEBHOOK_URL: ${{ secrets.AM2R_DEV_TALK_WEBHOOK }}
 
 
   notify_failure:
