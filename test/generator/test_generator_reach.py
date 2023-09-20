@@ -128,7 +128,7 @@ _include_tricks_for_game = {
     # Some items require shinesparking to reach in vanilla, which due to varying difficulty has been made into a trick
     RandovaniaGame.AM2R: {("Shinesparking", LayoutTrickLevel.ADVANCED)},
     # Same reasons as above, with some still trickless
-    RandovaniaGame.DREAD: {("Speedbooster", LayoutTrickLevel.BEGINNER)},
+    RandovaniaGame.METROID_DREAD: {("Speedbooster", LayoutTrickLevel.BEGINNER)},
     # Same reasons as above
     RandovaniaGame.SUPER_METROID: {("Shinespark", LayoutTrickLevel.BEGINNER)},
 }
