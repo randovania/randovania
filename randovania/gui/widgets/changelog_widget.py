@@ -20,7 +20,7 @@ class ChangeLogWidget(QtWidgets.QTabWidget):
             scroll_area.setWidgetResizable(True)
 
             label = DelayedTextLabel()
-            label.setAlignment(QtCore.Qt.AlignTop)
+            label.setAlignment(QtCore.Qt.AlignmentFlag.AlignTop)
             label.setObjectName(f"label {version_name}")
             label.setTextFormat(QtCore.Qt.MarkdownText)
             label.setText(version_text)

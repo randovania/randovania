@@ -47,7 +47,7 @@ def test_on_output_file_button_exists(skip_qtbot, patch_data, tmp_path, mocker, 
     mock_prompt.return_value = tmp_path.joinpath("foo", "game.iso")
 
     # Run
-    skip_qtbot.mouseClick(window.output_file_button, QtCore.Qt.LeftButton)
+    skip_qtbot.mouseClick(window.output_file_button, QtCore.Qt.MouseButton.LeftButton)
 
     # Assert
     mock_prompt.assert_called_once_with(window, expected_default_name + ".iso", window.valid_output_file_types)
@@ -70,7 +70,7 @@ def test_on_output_file_button_cancel(skip_qtbot, patch_data, tmp_path, mocker):
     assert window.output_file_edit.text() == ""
 
     # Run
-    skip_qtbot.mouseClick(window.output_file_button, QtCore.Qt.LeftButton)
+    skip_qtbot.mouseClick(window.output_file_button, QtCore.Qt.MouseButton.LeftButton)
 
     # Assert
     mock_prompt.assert_called_once_with(window, "Prime Randomizer - MyHash.iso", window.valid_output_file_types)
@@ -87,7 +87,7 @@ def test_save_options(skip_qtbot, patch_data, tmp_path, is_prime_multi):
     window.output_file_edit.setText("somewhere/game.iso")
 
     if is_prime_multi:
-        skip_qtbot.mouseClick(window.echoes_models_check, QtCore.Qt.LeftButton)
+        skip_qtbot.mouseClick(window.echoes_models_check, QtCore.Qt.MouseButton.LeftButton)
         window.echoes_file_edit.setText("somewhere/echoes.iso")
 
     # Run
