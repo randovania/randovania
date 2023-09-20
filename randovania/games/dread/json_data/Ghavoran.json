@@ -702,6 +702,15 @@
                                                                                             "amount": 1,
                                                                                             "negate": true
                                                                                         }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "Speedbooster",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
                                                                                     }
                                                                                 ]
                                                                             }
@@ -9710,17 +9719,21 @@
                         "Pickup (Energy Part)": {
                             "type": "and",
                             "data": {
-                                "comment": "Eye doors are exluded from door lock shuffe",
+                                "comment": "Eye doors are exluded from door lock randomizer",
                                 "items": [
                                     {
                                         "type": "template",
                                         "data": "Ballspark"
                                     },
                                     {
+                                        "type": "template",
+                                        "data": "Use Spin Boost"
+                                    },
+                                    {
                                         "type": "resource",
                                         "data": {
-                                            "type": "items",
-                                            "name": "Spin",
+                                            "type": "tricks",
+                                            "name": "Speedbooster",
                                             "amount": 1,
                                             "negate": false
                                         }
