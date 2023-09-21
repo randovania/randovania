@@ -1,7 +1,7 @@
 ----------------
 Eerie Cave
 Extra - map_name: Ridley/x392_y360
-> Teleporter to Norfair; Heals? True
+> Teleporter to Norfair; Heals? True; Spawn Point
   * Layers: default
   * Teleporter to Ridley Elevator/Teleporter to Ridley
   * Extra - object_id: 100066
@@ -44,7 +44,10 @@ Extra - map_name: Ridley/x360_y359
   * Layers: default
   * Normal Door to Block room/Door to Cocoon cavern
   > Door to Imago's hideout
-      Hi-Jump Boots
+      Any of the following:
+          Hi-Jump Boots
+          # TODO: Add movement/IBJ
+          Can Use Bombs
   > Door to Hall of pillars
       Trivial
 
@@ -83,27 +86,27 @@ Extra - map_name: Ridley/x312_y367
   * Layers: default
   * Normal Door to Cocoon cavern/Door to Hall of pillars
   > Tunnel entrance (Right)
-      Can Use Bombs
+      Trivial
 
 > Door to Artificial Passage; Heals? False
   * Layers: default
   * Missile Door to Artificial Passage/Door to Hall of pillars
   > Tunnel entrance (Left)
-      Can Use Bombs
+      Trivial
 
 > Tunnel entrance (Right); Heals? False
   * Layers: default
   > Door to Cocoon cavern
-      Can Use Bombs
-  > Tunnel entrance (Left)
       Trivial
+  > Tunnel entrance (Left)
+      Can Use Bombs
 
 > Tunnel entrance (Left); Heals? False
   * Layers: default
   > Door to Artificial Passage
-      Can Use Bombs
-  > Tunnel entrance (Right)
       Trivial
+  > Tunnel entrance (Right)
+      Can Use Bombs
 
 ----------------
 Artificial Passage
@@ -111,7 +114,7 @@ Extra - map_name: Ridley/x264_y382
 > Door to Hall of pillars; Heals? False
   * Layers: default
   * Missile Door to Hall of pillars/Door to Artificial Passage
-  > Door to Pronged hall
+  > Pickup (Energy Tank)
       Trivial
   > Pit
       Trivial
@@ -120,14 +123,14 @@ Extra - map_name: Ridley/x264_y382
   * Layers: default
   * Pickup 28; Category? Minor
   * Extra - object_id: 100054
+  > Door to Hall of pillars
+      Trivial
   > Door to Pronged hall
       Trivial
 
 > Door to Pronged hall; Heals? False
   * Layers: default
   * Normal Door to Pronged hall/Door to Artificial Passage
-  > Door to Hall of pillars
-      Trivial
   > Pickup (Energy Tank)
       Trivial
 
@@ -146,6 +149,9 @@ Extra - map_name: Ridley/x264_y382
 > Pit; Heals? False
   * Layers: default
   * The pit is 2 block large
+  > Door to Hall of pillars
+      # TODO: ADD IBJ
+      Can Use Bombs
   > Bottom part
       Trivial
 
@@ -206,6 +212,9 @@ Extra - map_name: Ridley/x216_y404
 > Door to Zebbo Nest; Heals? False
   * Layers: default
   * Normal Door to Zebbo Nest/Door to Shaft of doom
+  > Door to Path over lava
+      # TODO: IBJ
+      Can Use Bombs
 
 ----------------
 Zebbo Nest
@@ -215,8 +224,6 @@ Extra - map_name: Ridley/x344_y442
   * Normal Door to Shaft of doom/Door to Zebbo Nest
   > Pickup (Missile Tank)
       Trivial
-  > Door to Ridley's rightmost shaft
-      Trivial
 
 > Pickup (Missile Tank); Heals? False
   * Layers: default
@@ -224,11 +231,13 @@ Extra - map_name: Ridley/x344_y442
   * Extra - object_id: 100056
   > Door to Shaft of doom
       Trivial
+  > Door to Ridley's rightmost shaft
+      Trivial
 
 > Door to Ridley's rightmost shaft; Heals? False
   * Layers: default
   * Normal Door to Ridley's rightmost shaft/Door to Zebbo Nest
-  > Door to Shaft of doom
+  > Pickup (Missile Tank)
       Trivial
 
 ----------------
@@ -286,6 +295,8 @@ Extra - map_name: Ridley/x344_y412
   * Normal Door to Cache Access/Door to Gambit shaft
   > Door to Middle corridor
       Trivial
+  > Bottom part
+      Trivial
 
 > Door to Middle corridor; Heals? False
   * Layers: default
@@ -307,6 +318,9 @@ Extra - map_name: Ridley/x344_y412
 
 > Bottom part; Heals? False
   * Layers: default
+  > Door to Cache Access
+      # TODO: ADD IBJ
+      Can Use Bombs
   > Door to Multiviola Nest
       Trivial
   > Door to Ridley's room access
@@ -370,7 +384,10 @@ Extra - map_name: Ridley/x264_y427
   * Layers: default
   * 10 Missiles Door to Ridley's reliquary/Door to Ridley's room
   > Platform
-      Trivial
+      All of the following:
+          Morph Ball
+          # TODO: add movement
+          Bombs
 
 > Event - Ridley Killed; Heals? False
   * Layers: default
@@ -381,11 +398,14 @@ Extra - map_name: Ridley/x264_y427
 > Platform; Heals? False
   * Layers: default
   > Door to Ridley's room access
-      After Ridley Boss Killed
-  > Door to Ridley's reliquary
-      After Ridley Boss Killed
-  > Event - Ridley Killed
       Trivial
+  > Door to Ridley's reliquary
+      Can Use Bombs
+  > Event - Ridley Killed
+      All of the following:
+          # TODO: combat reqs
+          # Energy requirements
+          Combat (Advanced) or Normal Damage ≥ 250
 
 ----------------
 Ridley's reliquary
