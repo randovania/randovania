@@ -23,7 +23,7 @@
                     "extra": {
                         "object_id": 100025
                     },
-                    "valid_starting_location": false,
+                    "valid_starting_location": true,
                     "dock_type": "teleporter",
                     "default_connection": {
                         "region": "Brinstar",
@@ -156,7 +156,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Tunnel entrance (Right)": {
+                        "Pickup (Missile Tank)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -184,6 +184,13 @@
                     "pickup_index": 21,
                     "location_category": "major",
                     "connections": {
+                        "Door to Transport to Brinstar": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Tunnel entrance (Right)": {
                             "type": "and",
                             "data": {
@@ -243,13 +250,6 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Transport to Brinstar": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
                         "Pickup (Missile Tank)": {
                             "type": "and",
                             "data": {
@@ -790,12 +790,10 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Gauntlet": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "items",
-                                "name": "Hi-Jump",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         },
                         "Door to Path of vines": {
@@ -886,12 +884,37 @@
                                         "data": "Can Use Bombs"
                                     },
                                     {
-                                        "type": "resource",
+                                        "type": "or",
                                         "data": {
-                                            "type": "items",
-                                            "name": "Ice Beam",
-                                            "amount": 1,
-                                            "negate": false
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Ice Beam",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "TODO: make this IBJ",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Bombs",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -1023,13 +1046,6 @@
                                 "comment": null,
                                 "items": []
                             }
-                        },
-                        "Tunnel entrance (Right)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
                         }
                     }
                 },
@@ -1059,11 +1075,28 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Tunnel entrance (Right)": {
+                        "Pickup (Ice Beam)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
+                            }
+                        },
+                        "Tunnel entrance (Right)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph Ball",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -1094,9 +1127,12 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Ice Beam access corridor": {
-                            "type": "template",
-                            "data": "Can Use Bombs"
+                        "Tunnel entrance (Left)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -1115,13 +1151,6 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Pickup (Ice Beam)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
                         "Door to Ice Beam access corridor": {
                             "type": "resource",
                             "data": {
@@ -1301,6 +1330,13 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
+                        "Door to Long bubble shaft": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Tunnel entrance (Right)": {
                             "type": "template",
                             "data": "Can Use Bombs"
@@ -1326,21 +1362,7 @@
                             "type": "template",
                             "data": "Can Use Bombs"
                         },
-                        "Door to Blue-bubble shaft": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
                         "Pickup (Missile Tank)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Pickup (Missile Tank 2)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1375,7 +1397,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Tunnel entrance (Right)": {
+                        "Pickup (Missile Tank 2)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1409,6 +1431,13 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Pickup (Missile Tank 2)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -1431,7 +1460,14 @@
                     "pickup_index": 15,
                     "location_category": "minor",
                     "connections": {
-                        "Tunnel entrance (Right)": {
+                        "Door to Blue-bubble shaft": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (Missile Tank)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1474,20 +1510,6 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Pickup (Missile Tank)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Pickup (Missile Tank 2)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
                         "Pickup (Missile Tank 3)": {
                             "type": "and",
                             "data": {
@@ -1516,7 +1538,7 @@
                     "pickup_index": 11,
                     "location_category": "minor",
                     "connections": {
-                        "Door to Blue-bubble shaft": {
+                        "Pickup (Missile Tank 2)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1544,7 +1566,14 @@
                     "pickup_index": 12,
                     "location_category": "minor",
                     "connections": {
-                        "Door to Blue-bubble shaft": {
+                        "Pickup (Missile Tank)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (Missile Tank 3)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1573,6 +1602,13 @@
                     "location_category": "minor",
                     "connections": {
                         "Door to Blue-bubble shaft": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (Missile Tank 2)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1718,6 +1754,13 @@
                     "pickup_index": 19,
                     "location_category": "minor",
                     "connections": {
+                        "Pickup (Missile Tank 2)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Tall wall": {
                             "type": "and",
                             "data": {
@@ -1746,7 +1789,7 @@
                     "pickup_index": 20,
                     "location_category": "minor",
                     "connections": {
-                        "Tall wall": {
+                        "Pickup (Missile Tank)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1778,13 +1821,6 @@
                             }
                         },
                         "Pickup (Missile Tank)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Pickup (Missile Tank 2)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2254,12 +2290,10 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Screw Attack corridor": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "items",
-                                "name": "Hi-Jump",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         },
                         "Door to Three rock corridor": {
@@ -2404,12 +2438,10 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Brutal path": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "items",
-                                "name": "Hi-Jump",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         },
                         "Door to Twin hill corridor": {
@@ -2530,12 +2562,10 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Vine-infested passage": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "items",
-                                "name": "Hi-Jump",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -3119,8 +3149,21 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Pickup (Energy Tank)": {
-                            "type": "template",
-                            "data": "Can Use Bombs"
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph Ball",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
                         }
                     }
                 }
@@ -3204,7 +3247,12 @@
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Use Bombs"
+                                    }
+                                ]
                             }
                         }
                     }
@@ -3236,12 +3284,32 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Twin hill corridor": {
-                            "type": "resource",
+                            "type": "or",
                             "data": {
-                                "type": "items",
-                                "name": "Hi-Jump",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Hi-Jump",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "TODO: Add movement/IBJ",
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Use Bombs"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -3442,13 +3510,6 @@
                                 "comment": null,
                                 "items": []
                             }
-                        },
-                        "Pickup (Missile Tank 2)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
                         }
                     }
                 },
@@ -3477,6 +3538,13 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Pickup (Missile Tank 2)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -3499,7 +3567,7 @@
                     "pickup_index": 26,
                     "location_category": "minor",
                     "connections": {
-                        "Door to East green bubble shaft (Bottom)": {
+                        "Pickup (Missile Tank)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4080,7 +4148,7 @@
                     "extra": {
                         "object_id": 100026
                     },
-                    "valid_starting_location": false,
+                    "valid_starting_location": true,
                     "dock_type": "teleporter",
                     "default_connection": {
                         "region": "Ridley",
