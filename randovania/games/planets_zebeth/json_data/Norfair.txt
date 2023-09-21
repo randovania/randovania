@@ -1,7 +1,7 @@
 ----------------
 Transport to Brinstar
 Extra - map_name: Norfair/x344_y195
-> Teleporter to Brinstar; Heals? True
+> Teleporter to Brinstar; Heals? True; Spawn Point
   * Layers: default
   * Teleporter to Transport to Norfair/Teleporter to Norfair; Excluded from Dock Lock Rando
   * Extra - object_id: 100025
@@ -28,13 +28,15 @@ Extra - map_name: Norfair/x272_y202
 > Door to Transport to Brinstar; Heals? False
   * Layers: default
   * Normal Door to Transport to Brinstar/Door to Western lava-filled path
-  > Tunnel entrance (Right)
+  > Pickup (Missile Tank)
       Trivial
 
 > Pickup (Missile Tank); Heals? False
   * Layers: default
   * Pickup 21; Category? Major
   * Extra - object_id: 100047
+  > Door to Transport to Brinstar
+      Trivial
   > Tunnel entrance (Right)
       Trivial
 
@@ -46,8 +48,6 @@ Extra - map_name: Norfair/x272_y202
 
 > Tunnel entrance (Right); Heals? False
   * Layers: default
-  > Door to Transport to Brinstar
-      Trivial
   > Pickup (Missile Tank)
       Trivial
   > Tunnel entrance (Left)
@@ -151,7 +151,7 @@ Extra - map_name: Norfair/x472_y225
   * Layers: default
   * Normal Door to Hi-Jump access corridor/Door to Blue-bubble shaft
   > Door to Gauntlet
-      Hi-Jump Boots
+      Trivial
   > Door to Path of vines
       Trivial
 
@@ -168,7 +168,12 @@ Extra - map_name: Norfair/x440_y172
   * Layers: default
   * Normal Door to Blue-bubble shaft/Door to Ice Beam access corridor
   > Tunnel entrance (Right)
-      Ice Beam and Can Use Bombs
+      All of the following:
+          Can Use Bombs
+          Any of the following:
+              Ice Beam
+              # TODO: make this IBJ
+              Bombs
 
 > Tunnel entrance (Right); Heals? False
   * Layers: default
@@ -199,25 +204,23 @@ Extra - map_name: Norfair/x400_y172
   * Extra - object_id: 100036
   > Door to Ice Beam access corridor
       Trivial
-  > Tunnel entrance (Right)
-      Trivial
 
 > Door to Ice Beam access corridor; Heals? False
   * Layers: default
   * Missile Door to Ice Beam access corridor/Door to Ice Beam room
-  > Tunnel entrance (Right)
+  > Pickup (Ice Beam)
       Trivial
+  > Tunnel entrance (Right)
+      Morph Ball
 
 > Door to Long bubble shaft; Heals? False
   * Layers: default
   * Normal Door to Long bubble shaft/Door to Ice Beam room
-  > Door to Ice Beam access corridor
-      Can Use Bombs
+  > Tunnel entrance (Left)
+      Trivial
 
 > Tunnel entrance (Right); Heals? False
   * Layers: default
-  > Pickup (Ice Beam)
-      Trivial
   > Door to Ice Beam access corridor
       Morph Ball
   > Tunnel entrance (Left)
@@ -256,6 +259,8 @@ Extra - map_name: Norfair/x424_y142
 
 > Tunnel entrance (Left); Heals? False
   * Layers: default
+  > Door to Long bubble shaft
+      Trivial
   > Tunnel entrance (Right)
       Can Use Bombs
 
@@ -263,17 +268,13 @@ Extra - map_name: Norfair/x424_y142
   * Layers: default
   > Tunnel entrance (Left)
       Can Use Bombs
-  > Door to Blue-bubble shaft
-      Trivial
   > Pickup (Missile Tank)
-      Trivial
-  > Pickup (Missile Tank 2)
       Trivial
 
 > Door to Blue-bubble shaft; Heals? False
   * Layers: default
   * Normal Door to Blue-bubble shaft/Door to Upper-right path
-  > Tunnel entrance (Right)
+  > Pickup (Missile Tank 2)
       Trivial
 
 > Pickup (Missile Tank); Heals? False
@@ -282,12 +283,16 @@ Extra - map_name: Norfair/x424_y142
   * Extra - object_id: 100040
   > Tunnel entrance (Right)
       Trivial
+  > Pickup (Missile Tank 2)
+      Trivial
 
 > Pickup (Missile Tank 2); Heals? False
   * Layers: default
   * Pickup 15; Category? Minor
   * Extra - object_id: 100041
-  > Tunnel entrance (Right)
+  > Door to Blue-bubble shaft
+      Trivial
+  > Pickup (Missile Tank)
       Trivial
 
 ----------------
@@ -296,10 +301,6 @@ Extra - map_name: Norfair/x431_y157
 > Door to Blue-bubble shaft; Heals? False
   * Layers: default
   * Normal Door to Blue-bubble shaft/Door to Heated Missile corridor
-  > Pickup (Missile Tank)
-      Trivial
-  > Pickup (Missile Tank 2)
-      Trivial
   > Pickup (Missile Tank 3)
       Trivial
 
@@ -307,14 +308,16 @@ Extra - map_name: Norfair/x431_y157
   * Layers: default
   * Pickup 11; Category? Minor
   * Extra - object_id: 100037
-  > Door to Blue-bubble shaft
+  > Pickup (Missile Tank 2)
       Trivial
 
 > Pickup (Missile Tank 2); Heals? False
   * Layers: default
   * Pickup 12; Category? Minor
   * Extra - object_id: 100038
-  > Door to Blue-bubble shaft
+  > Pickup (Missile Tank)
+      Trivial
+  > Pickup (Missile Tank 3)
       Trivial
 
 > Pickup (Missile Tank 3); Heals? False
@@ -322,6 +325,8 @@ Extra - map_name: Norfair/x431_y157
   * Pickup 13; Category? Minor
   * Extra - object_id: 100039
   > Door to Blue-bubble shaft
+      Trivial
+  > Pickup (Missile Tank 2)
       Trivial
 
 ----------------
@@ -351,6 +356,8 @@ Extra - map_name: Norfair/x375_y217
   * Layers: default
   * Pickup 19; Category? Minor
   * Extra - object_id: 100045
+  > Pickup (Missile Tank 2)
+      Trivial
   > Tall wall
       Trivial
 
@@ -358,7 +365,7 @@ Extra - map_name: Norfair/x375_y217
   * Layers: default
   * Pickup 20; Category? Minor
   * Extra - object_id: 100046
-  > Tall wall
+  > Pickup (Missile Tank)
       Trivial
 
 > Tall wall; Heals? False
@@ -366,8 +373,6 @@ Extra - map_name: Norfair/x375_y217
   > Tunnel entrance (Left)
       Trivial
   > Pickup (Missile Tank)
-      Trivial
-  > Pickup (Missile Tank 2)
       Trivial
 
 ----------------
@@ -460,7 +465,7 @@ Extra - map_name: Norfair/x280_y247
   * Layers: default
   * Normal Door to Brutal path/Door to East green bubble shaft (Top)
   > Door to Screw Attack corridor
-      Hi-Jump Boots
+      Trivial
   > Door to Three rock corridor
       Trivial
   > Door to Precarious path
@@ -488,7 +493,7 @@ Extra - map_name: Norfair/x280_y247
   * Layers: default
   * Normal Door to Precarious path/Door to East green bubble shaft (Top)
   > Door to Brutal path
-      Hi-Jump Boots
+      Trivial
   > Door to Twin hill corridor
       Trivial
 
@@ -513,7 +518,7 @@ Extra - map_name: Norfair/x264_y307
   * Layers: default
   * Normal Door to Dual tank chamber/Door to East green bubble shaft (Bottom)
   > Door to Vine-infested passage
-      Hi-Jump Boots
+      Trivial
 
 ----------------
 Screw Attack corridor
@@ -636,7 +641,7 @@ Extra - map_name: Norfair/x423_y277
   * Layers: default
   * Normal Door to Short green shaft/Door to Fire-Sea Room
   > Pickup (Energy Tank)
-      Can Use Bombs
+      Morph Ball
 
 ----------------
 West green bubble shaft
@@ -653,13 +658,16 @@ Extra - map_name: Norfair/x200_y269
   > Door to Three rock corridor
       Trivial
   > Door to Hopping-Mad Corridor
-      Trivial
+      Can Use Bombs
 
 > Door to Hopping-Mad Corridor; Heals? False
   * Layers: default
   * Normal Door to Hopping-Mad Corridor/Door to West green bubble shaft
   > Door to Twin hill corridor
-      Hi-Jump Boots
+      Any of the following:
+          Hi-Jump Boots
+          # TODO: Add movement/IBJ
+          Can Use Bombs
 
 ----------------
 Hopping-Mad Corridor
@@ -699,8 +707,6 @@ Extra - map_name: Norfair/x296_y322
   * Normal Door to East green bubble shaft (Bottom)/Door to Dual tank chamber
   > Pickup (Missile Tank)
       Trivial
-  > Pickup (Missile Tank 2)
-      Trivial
 
 > Pickup (Missile Tank); Heals? False
   * Layers: default
@@ -708,12 +714,14 @@ Extra - map_name: Norfair/x296_y322
   * Extra - object_id: 100051
   > Door to East green bubble shaft (Bottom)
       Trivial
+  > Pickup (Missile Tank 2)
+      Trivial
 
 > Pickup (Missile Tank 2); Heals? False
   * Layers: default
   * Pickup 26; Category? Minor
   * Extra - object_id: 100052
-  > Door to East green bubble shaft (Bottom)
+  > Pickup (Missile Tank)
       Trivial
 
 ----------------
@@ -833,7 +841,7 @@ Extra - map_name: Norfair/x376_y315
 ----------------
 Ridley Elevator
 Extra - map_name: Norfair/x392_y321
-> Teleporter to Ridley; Heals? True
+> Teleporter to Ridley; Heals? True; Spawn Point
   * Layers: default
   * Teleporter to Eerie Cave/Teleporter to Norfair
   * Extra - object_id: 100026
