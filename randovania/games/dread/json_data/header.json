@@ -1250,6 +1250,10 @@
             "Teleporters": {
                 "long_name": "Transport Randomizer",
                 "extra": {}
+            },
+            "NerfPowerBombs": {
+                "long_name": "Power Bomb Limitations",
+                "extra": {}
             }
         },
         "requirement_template": {
@@ -1879,6 +1883,15 @@
                                     {
                                         "type": "template",
                                         "data": "Lay Power Bomb"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "NerfPowerBombs",
+                                            "amount": 1,
+                                            "negate": true
+                                        }
                                     }
                                 ]
                             }
@@ -2210,6 +2223,15 @@
                                             "name": "Knowledge",
                                             "amount": 1,
                                             "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "NerfPowerBombs",
+                                            "amount": 1,
+                                            "negate": true
                                         }
                                     }
                                 ]
