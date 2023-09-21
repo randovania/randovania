@@ -23,7 +23,7 @@
                     "extra": {
                         "object_id": 100066
                     },
-                    "valid_starting_location": false,
+                    "valid_starting_location": true,
                     "dock_type": "teleporter",
                     "default_connection": {
                         "region": "Norfair",
@@ -235,12 +235,32 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Imago's hideout": {
-                            "type": "resource",
+                            "type": "or",
                             "data": {
-                                "type": "items",
-                                "name": "Hi-Jump",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Hi-Jump",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "TODO: Add movement/IBJ",
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Use Bombs"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
                             }
                         },
                         "Door to Hall of pillars": {
@@ -425,8 +445,11 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Tunnel entrance (Right)": {
-                            "type": "template",
-                            "data": "Can Use Bombs"
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -457,8 +480,11 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Tunnel entrance (Left)": {
-                            "type": "template",
-                            "data": "Can Use Bombs"
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -478,14 +504,22 @@
                     "valid_starting_location": false,
                     "connections": {
                         "Door to Cocoon cavern": {
-                            "type": "template",
-                            "data": "Can Use Bombs"
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         },
                         "Tunnel entrance (Left)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Use Bombs"
+                                    }
+                                ]
                             }
                         }
                     }
@@ -506,14 +540,22 @@
                     "valid_starting_location": false,
                     "connections": {
                         "Door to Artificial Passage": {
-                            "type": "template",
-                            "data": "Can Use Bombs"
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         },
                         "Tunnel entrance (Right)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Use Bombs"
+                                    }
+                                ]
                             }
                         }
                     }
@@ -552,7 +594,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Pronged hall": {
+                        "Pickup (Energy Tank)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -587,6 +629,13 @@
                     "pickup_index": 28,
                     "location_category": "minor",
                     "connections": {
+                        "Door to Hall of pillars": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Door to Pronged hall": {
                             "type": "and",
                             "data": {
@@ -622,13 +671,6 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Hall of pillars": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
                         "Pickup (Energy Tank)": {
                             "type": "and",
                             "data": {
@@ -723,6 +765,18 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
+                        "Door to Hall of pillars": {
+                            "type": "and",
+                            "data": {
+                                "comment": "TODO: ADD IBJ",
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Use Bombs"
+                                    }
+                                ]
+                            }
+                        },
                         "Bottom part": {
                             "type": "and",
                             "data": {
@@ -1029,7 +1083,20 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Door to Path over lava": {
+                            "type": "and",
+                            "data": {
+                                "comment": "TODO: IBJ",
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Use Bombs"
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -1071,13 +1138,6 @@
                                 "comment": null,
                                 "items": []
                             }
-                        },
-                        "Door to Ridley's rightmost shaft": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
                         }
                     }
                 },
@@ -1101,6 +1161,13 @@
                     "location_category": "minor",
                     "connections": {
                         "Door to Shaft of doom": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Ridley's rightmost shaft": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1135,7 +1202,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Shaft of doom": {
+                        "Pickup (Missile Tank)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1417,6 +1484,13 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Bottom part": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -1540,6 +1614,18 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
+                        "Door to Cache Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": "TODO: ADD IBJ",
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Use Bombs"
+                                    }
+                                ]
+                            }
+                        },
                         "Door to Multiviola Nest": {
                             "type": "and",
                             "data": {
@@ -1863,7 +1949,34 @@
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph Ball",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": "TODO: add movement",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Bombs",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -1871,7 +1984,11 @@
                 "Event - Ridley Killed": {
                     "node_type": "event",
                     "heal": false,
-                    "coordinates": null,
+                    "coordinates": {
+                        "x": 134.5625250340463,
+                        "y": 161.42593927741729,
+                        "z": 0.0
+                    },
                     "description": "",
                     "layers": [
                         "default"
@@ -1905,28 +2022,56 @@
                     "valid_starting_location": false,
                     "connections": {
                         "Door to Ridley's room access": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "events",
-                                "name": "Event2",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         },
                         "Door to Ridley's reliquary": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "events",
-                                "name": "Event2",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Use Bombs"
+                                    }
+                                ]
                             }
                         },
                         "Event - Ridley Killed": {
                             "type": "and",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "comment": "TODO: combat reqs",
+                                "items": [
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": "Energy requirements",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "damage",
+                                                        "name": "Damage",
+                                                        "amount": 250,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Combat",
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
