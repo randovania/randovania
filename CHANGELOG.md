@@ -72,7 +72,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ##### Sky Temple Grounds:
 
-- Changed: War Ritual Grounds, Shrine Access, Lake Access, Accursed Lake, Phazon Pit and Phazon Grounds all require a Suit on trickless settings
+- Changed: War Ritual Grounds, Shrine Access, Lake Access, Accursed Lake, Phazon Pit and Phazon Grounds will now require a Suit on trickless settings
 
 ##### Agon Wastes:
 
@@ -80,21 +80,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ##### Dark Agon Wastes:
 
--Added: Hall of Stairs: Bomb Space Jump (Advanced) to reach Save Station without Space Jump
+-Added: Hall of Stairs: Bomb Space Jump (Advanced) to reach Save Station 3 Door without Space Jump
 
 ##### Sanctuary Fortress:
 
-- Added: Main Gyro Chamber: Instant Morph (Hypermode) to destroy the glass to Checkpoint Station
-- Added: Reactor Core: Item pickup now possible with just Spider Ball and Morph Ball Bombs via Standable Terrain and Bomb Jump (Intermediate)
-- Added: Vault: Added Extended Dash (Expert) and Boost Jump (Expert) Method to reach the Spinner Side
-- Added: Watch Staton: Bomb Space Jump (Advanced) to reach the Spidertrack (Standable Terrain (Advanced)) to reach the Bomb Slot with an Instant Morph (Advanced)
+- Added: Main Gyro Chamber: Instant Morph (Hypermode) into boost, to destroy the glass to Checkpoint Station
+- Added: Reactor Core Item pickup now possible with just Spider Ball and Morph Ball Bombs via Standable Terrain (Intermediate) and Bomb Jump (Intermediate)
+- Added: Vault: Extended Dash (Expert) and Boost Jump (Expert) Method to reach the Spinner Side
+- Added: Accessing the portal in Watch Station with a Bomb Space Jump (Advanced) to reach the Spider Track, Standable Terrain (Advanced) to reach the Bomb Slot, and an Instant Morph (Advanced)
 
 ##### Ing Hive:
 
 - Added: Hive Temple Access: Slope Jump (Expert) into Screw Attack to skip Hive Temple Key Gate
-- Changed: Temple Security Access: Screw Attack Z-Axis Trick is changed into Screw Attack into Tunnels (Advanced)
-- Changed: Culling Chamber: Now requires a Suit on trickless settings
-- Changed: Hazing Cliff: Now requires a Suit on trickless settings
+- Changed: Temple Security Access: Z-Axis Screw Attack Trick is changed into Screw Attack into Tunnels (Advanced)
+- Changed: Culling Chamber and Hazing Cliff will now require a Suit on trickless settings
+
 
 ## [6.2.1] - 2023-09-??
 
