@@ -83,6 +83,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
     dependencies_window: QtWidgets.QMainWindow | None = None
     reporting_widget: QtWidgets.QWidget | None = None
     all_change_logs: dict[str, str] | None = None
+    all_change_log_published_dates: dict[str, str] | None = None
     changelog_tab: QtWidgets.QWidget | None = None
     changelog_window: QtWidgets.QMainWindow | None = None
     help_window: QtWidgets.QMainWindow | None = None
@@ -450,9 +451,12 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         current_version = update_checker.strict_current_version()
         last_changelog = self._options.last_changelog_displayed
 
-        all_change_logs, new_change_logs, version_to_display = update_checker.versions_to_display_for_releases(
-            current_version, last_changelog, releases
-        )
+        (
+            all_change_logs,
+            new_change_logs,
+            version_to_display,
+            all_change_log_published_dates,
+        ) = update_checker.versions_to_display_for_releases(current_version, last_changelog, releases)
 
         if version_to_display is not None:
             self.display_new_version(version_to_display)
@@ -477,6 +481,9 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
 
             with self._options as options:
                 options.last_changelog_displayed = current_version
+
+        if all_change_log_published_dates:
+            self.all_change_log_published_dates = all_change_log_published_dates
 
     def display_new_version(self, version: update_checker.VersionDescription):
         if self.menu_new_version is None:
@@ -786,7 +793,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         if self.changelog_window is None:
             from randovania.gui.widgets.changelog_widget import ChangeLogWidget
 
-            self.changelog_tab = ChangeLogWidget(self.all_change_logs)
+            self.changelog_tab = ChangeLogWidget(self.all_change_logs, self.all_change_log_published_dates)
             self.changelog_window = self._create_generic_window(self.changelog_tab, "Change Log")
 
         self.changelog_window.show()

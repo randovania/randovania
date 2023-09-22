@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from datetime import datetime
 from distutils.version import StrictVersion
 from typing import NamedTuple
 
@@ -10,6 +11,7 @@ class VersionDescription(NamedTuple):
     tag_name: str
     change_log: str
     html_url: str
+    published_at: str
 
     @property
     def as_strict_version(self) -> StrictVersion:
@@ -31,7 +33,7 @@ def strict_current_version() -> StrictVersion:
 
 
 def get_version_for_release(release: dict) -> VersionDescription:
-    return VersionDescription(release["tag_name"], release["body"], release["html_url"])
+    return VersionDescription(release["tag_name"], release["body"], release["html_url"], release["published_at"])
 
 
 MAJOR_ENTRY = "- **Major** "
@@ -68,6 +70,7 @@ def versions_to_display_for_releases(
 ) -> tuple[dict[str, str], list[str], VersionDescription | None]:
     all_change_logs = {}
     new_change_logs = []
+    all_change_log_publish_dates = {}
     displayed_new_version = False
     version_to_display = None
 
@@ -84,6 +87,9 @@ def versions_to_display_for_releases(
             log = f"## {version.tag_name}\n\n{version.change_log}"
             all_change_logs[version.tag_name] = log
 
+            published_time = datetime.strptime(version.published_at, "%Y-%m-%dT%H:%M:%SZ")
+            all_change_log_publish_dates[version.tag_name] = published_time.strftime("%b %d, %Y")
+
             if strict_version > last_changelog_version:
                 if MAJOR_ENTRY in log:
                     log = "## {} - Major Changes\n---\n\n{}\n\n---\nFor more details, check the Change Log tab.".format(
@@ -92,4 +98,4 @@ def versions_to_display_for_releases(
                     )
                 new_change_logs.append(log)
 
-    return all_change_logs, new_change_logs, version_to_display
+    return all_change_logs, new_change_logs, version_to_display, all_change_log_publish_dates
