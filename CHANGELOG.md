@@ -72,7 +72,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ##### Sanctuary Fortress:
 
-- Added: Watch Station: Bomb Space Jump (Advanced) to reach the Spider Track (Standable Terrain (Advanced)) to reach the Bomb Slot with an Instant Morph (Advanced)
+- Added: Accessing the portal in Watch Station with a Bomb Space Jump (Advanced) to reach the Spider Track, Standable Terrain (Advanced) to reach the Bomb Slot, and an Instant Morph (Advanced)
 
 ## [6.2.1] - 2023-09-??
 
