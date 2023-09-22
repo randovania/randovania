@@ -1,12 +1,17 @@
 from __future__ import annotations
 
+import typing
+
 from PySide6 import QtCore
 
 from randovania.games.super_metroid.gui.dialog.super_cosmetic_patches_dialog import SuperCosmeticPatchesDialog
 from randovania.games.super_metroid.layout.super_metroid_cosmetic_patches import SuperMetroidCosmeticPatches
 
+if typing.TYPE_CHECKING:
+    import pytestqt.qtbot  # type: ignore[import]
 
-def test_dialog_checkboxes(skip_qtbot):
+
+def test_dialog_checkboxes(skip_qtbot: pytestqt.qtbot.QtBot) -> None:
     cosmetic_patches = SuperMetroidCosmeticPatches()
 
     dialog = SuperCosmeticPatchesDialog(None, cosmetic_patches)
@@ -15,11 +20,11 @@ def test_dialog_checkboxes(skip_qtbot):
     default_settings = SuperMetroidCosmeticPatches()
 
     for field_name, checkbox in dialog.checkboxes.items():
-        skip_qtbot.mouseClick(checkbox, QtCore.Qt.LeftButton)
+        skip_qtbot.mouseClick(checkbox, QtCore.Qt.MouseButton.LeftButton)
         assert getattr(dialog.cosmetic_patches, field_name) == (not getattr(default_settings, field_name))
 
 
-def test_music_settings(skip_qtbot):
+def test_music_settings(skip_qtbot: pytestqt.qtbot.QtBot) -> None:
     cosmetic_patches = SuperMetroidCosmeticPatches()
 
     dialog = SuperCosmeticPatchesDialog(None, cosmetic_patches)

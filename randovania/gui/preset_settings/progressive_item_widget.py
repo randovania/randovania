@@ -51,9 +51,9 @@ class ProgressiveItemWidget(QtWidgets.QCheckBox):
             has_non_progressive = not has_progressive
 
         if has_non_progressive:
-            new_state = Qt.PartiallyChecked if has_progressive else Qt.Unchecked
+            new_state = Qt.CheckState.PartiallyChecked if has_progressive else Qt.CheckState.Unchecked
         else:
-            new_state = Qt.Checked
+            new_state = Qt.CheckState.Checked
         self.setCheckState(new_state)
 
         for item in self.non_progressive_items:

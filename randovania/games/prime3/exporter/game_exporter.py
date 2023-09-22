@@ -30,5 +30,5 @@ class CorruptionGameExporter(GameExporter):
         patch_data: dict,
         export_params: GameExportParams,
         progress_update: status_update_lib.ProgressUpdateCallable,
-    ):
+    ) -> None:
         raise RuntimeError("Needs to be implemented")

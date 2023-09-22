@@ -22,7 +22,7 @@ class PresetPrimeHints(PresetTab, Ui_PresetPrimeHints):
         super().__init__(editor, game_description, window_manager)
         self.setupUi(self)
 
-        self.hint_layout.setAlignment(QtCore.Qt.AlignTop)
+        self.hint_layout.setAlignment(QtCore.Qt.AlignmentFlag.AlignTop)
 
         for i, art_hint_mode in enumerate(ArtifactHintMode):
             self.hint_artifact_combo.setItemData(i, art_hint_mode)

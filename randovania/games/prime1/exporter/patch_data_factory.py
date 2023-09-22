@@ -744,7 +744,7 @@ class PrimePatchDataFactory(PatchDataFactory):
                     dock_index = node.extra["dock_index"]
                     dock_data = {
                         "shieldType": weakness.extra["shieldType"],
-                        "blastShieldType": weakness.extra.get("blastShieldType", "Empty"),
+                        "blastShieldType": weakness.extra.get("blastShieldType", "None"),
                     }
 
                     level_data[region.name]["rooms"][area.name]["doors"][str(dock_index)] = dock_data
@@ -800,15 +800,16 @@ class PrimePatchDataFactory(PatchDataFactory):
             if "rooms" not in region_item:
                 region_item["rooms"] = {}
 
-        starting_memo = None
         extra_starting = item_names.additional_starting_equipment(self.configuration, db, self.patches)
         if extra_starting:
             starting_memo = ", ".join(extra_starting)
+        else:
+            starting_memo = None
 
         if self.cosmetic_patches.open_map and self.configuration.teleporters.is_vanilla:
-            map_default_state = "visible"
+            map_default_state = "Visible"
         else:
-            map_default_state = "default"
+            map_default_state = "Default"
 
         credits_string = credits_spoiler.prime_trilogy_credits(
             self.configuration.standard_pickup_configuration,
@@ -888,14 +889,11 @@ class PrimePatchDataFactory(PatchDataFactory):
         else:
             maze_seeds = None
 
-        seed = self.description.get_seed_for_player(self.players_config.player_index)
-
         if self.configuration.legacy_mode:
             qol_cutscenes = LayoutCutsceneMode.ORIGINAL.value
         else:
             qol_cutscenes = self.configuration.qol_cutscenes.value
 
-        boss_sizes = None
         random_enemy_sizes = False
         if self.configuration.enemy_attributes is not None:
             random_enemy_sizes = (
@@ -923,16 +921,19 @@ class PrimePatchDataFactory(PatchDataFactory):
                 "elitePirate3": get_random_size(0.05, 2.0),
                 "phazonElite": get_random_size(0.1, 2.0),
                 "omegaPirate": get_random_size(0.05, 2.0),
-                "Ridley": get_random_size(0.2, 1.5),
+                "ridley": get_random_size(0.2, 1.5),
                 "exo": get_random_size(0.15, 2.0),
                 "essence": get_random_size(0.05, 2.25),
                 "flaahgra": get_random_size(0.15, 3.3),
                 "platedBeetle": get_random_size(0.05, 6.0),
-                "cloakedDrone": get_random_size(0.05, 6.0),  # only scales width (lmao)
+                "cloakedDrone": get_random_size(0.05, 6.0),
             }
+        else:
+            boss_sizes = {}
 
-        return {
-            "seed": seed,
+        data: dict = {
+            "$schema": "https://toasterparty.github.io/randomprime/randomprime.schema.json",
+            "seed": self.description.get_seed_for_player(self.players_config.player_index),
             "preferences": {
                 "defaultGameOptions": self.get_default_game_options(),
                 "qolGameBreaking": not self.configuration.legacy_mode,
@@ -941,9 +942,9 @@ class PrimePatchDataFactory(PatchDataFactory):
                 "qolGeneral": not self.configuration.legacy_mode,
                 "qolCutscenes": qol_cutscenes,
                 "mapDefaultState": map_default_state,
-                "artifactHintBehavior": None,
+                "artifactHintBehavior": "All",
                 "automaticCrashScreen": True,
-                "trilogyDiscPath": None,
+                # "trilogyDiscPath": None,
                 "quickplay": False,
                 "quiet": False,
                 "suitColors": suit_colors,
@@ -956,7 +957,6 @@ class PrimePatchDataFactory(PatchDataFactory):
                 "shufflePickupPosition": self.configuration.shuffle_item_pos,
                 "shufflePickupPosAllRooms": False,  # functionality is handled in randovania as of v4.3
                 "startingRoom": starting_room,
-                "startingMemo": starting_memo,
                 "warpToStart": self.configuration.warp_to_start,
                 "springBall": self.configuration.spring_ball,
                 "incineratorDroneConfig": idrone_config,
@@ -1005,6 +1005,9 @@ class PrimePatchDataFactory(PatchDataFactory):
             "uuid": list(
                 self.players_config.get_own_uuid().bytes,
             ),
-            # TODO
-            # "externAssetsDir": path_to_converted_assets,
         }
+
+        if starting_memo:
+            data["gameConfig"]["startingMemo"] = starting_memo
+
+        return data
