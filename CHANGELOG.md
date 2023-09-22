@@ -66,13 +66,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Logic Database
 
-- Added: 15 videos to the logic database. see the [Video Directory]
+- Added: 15 videos to the logic database. See the [Video Directory]
 (https://randovania.github.io/Metroid%20Prime%202%20Echoes/) for the full collection 
 - Added: Comments to some Beginner Bomb Jump tricks
 
 ##### Sanctuary Fortress:
 
-- Added: Watch Staton: Bomb Space Jump (Advanced) to reach the Spidertrack (Standable Terrain (Advanced)) to reach the Bomb Slot with an Instant Morph (Advanced)
+- Added: Watch Station: Bomb Space Jump (Advanced) to reach the Spider Track (Standable Terrain (Advanced)) to reach the Bomb Slot with an Instant Morph (Advanced)
 
 ## [6.2.1] - 2023-09-??
 
