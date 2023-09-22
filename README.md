@@ -19,6 +19,7 @@ New here or looking to install? Check [our website](https://randovania.github.io
 <!-- Begin EXPERIMENTAL -->
 
 ### Experimental Games
+ - Another Metroid 2 Remake
  - Metroid Prime 3: Corruption
  - Metroid: Samus Returns
  - Super Metroid
@@ -160,9 +161,27 @@ Linux Flatpak build contributed by [Ethan Lee](https://flibitijibibo.com/).
   * Spider Magnet pickup texture by duncathan_salt with help from BigSharkZ.
   * New map icons by [SkyTheLucario](https://github.com/TheSkyknight100).
 
+### Another Metroid 2 Remake
+* Game Patching by:
+  * [Miepee](https://github.com/Miepee)
+  * [JesRight](https://github.com/Jesright73)
+  
+* Logic Database by:
+  * [Miepee](https://github.com/Miepee)
+  * [DruidVorse](https://www.youtube.com/@DruidVorse)
+  * [JeffGainsNGames](https://www.youtube.com/@jeffgainsngames)
+
+* Assets by:
+  * Morph Ball, and the Missile Launcher sprites were made by ShirtyScarab554 licensed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
+  * Power Grip and the Shiny Nothing Orb were made by ShirtyScarab554, used under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/), modified by [AbyssalCreature](https://github.com/AbyssalCreature) and licensed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
+  * New door sprites and other AM2R item sprites were made by [AbyssalCreature](https://github.com/AbyssalCreature) licensed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
+  
 ## Auto Tracker
 * Game theme assets were provided by [MaskedTAS](https://twitter.com/MaskedTAS).
 * Pixel theme assets were provided by [Uncle Reggie](https://www.twitch.tv/unclereggie).
+* AM2R 1.5.5 item sprites were made by [Eskimode7](https://twitter.com/shmegleskimo) licensed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
+* The AM2R DNA sprite was made by [AbyssalCreature](https://github.com/AbyssalCreature) licensed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
+* The AM2R Morph Ball and Power Grip sprites were made by ShirtyScarab554 licensed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
 
 ## Multiworld
 Server and logic written by Henrique, including Dolphin and Nintendont integrations. These were based on [Dolphin Memory Engine](https://github.com/aldelaro5/Dolphin-memory-engine) and Pwootage's Nintendont fork, respectively. In-game message alert initially written by [encounter](https://github.com/encounter).
@@ -210,8 +229,10 @@ In order to run the server:
    4. Run `python tools/prepare_dev_server_config.py` once.
    5. If you wish to use any Discord functionality, you'll need to create an app in Discord 
    and fill both ids in `tools/dev-server-configuration.json`.  
-   6. Run the server with `tools/start_dev_server.bat` and the client with `tools/start_debug_client.bat`.
-
+   6. Run the server and client. You can this on
+      1. Windows with `tools/start_dev_server.bat` for the server and `tools/start_debug_client.bat` for the client
+      2. Linux/macOS with `tools/start_dev_server.sh` for the server and `tools_start_debug_client.sh` for client
+   
 This repository uses [pre-commit](https://pre-commit.com/). The hook is automatically configured with 
 the `prepare_virtual_env` scripts.
 

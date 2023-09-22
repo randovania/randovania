@@ -1,17 +1,23 @@
-import dataclasses
-import uuid
-from typing import Callable
+from __future__ import annotations
 
-from randovania.games.game import RandovaniaGame
-from randovania.layout.base.ammo_pickup_configuration import AmmoPickupConfiguration
-from randovania.layout.base.available_locations import AvailableLocationsConfiguration
-from randovania.layout.base.base_configuration import BaseConfiguration
-from randovania.layout.base.damage_strictness import LayoutDamageStrictness
-from randovania.layout.base.dock_rando_configuration import DockRandoConfiguration
-from randovania.layout.base.standard_pickup_configuration import StandardPickupConfiguration
-from randovania.layout.lib.teleporters import TeleporterConfiguration
+import dataclasses
+from typing import TYPE_CHECKING
+
 from randovania.layout.preset import Preset
-from randovania.interface_common.options import Options
+
+if TYPE_CHECKING:
+    import uuid
+    from collections.abc import Callable
+
+    from randovania.games.game import RandovaniaGame
+    from randovania.interface_common.options import Options
+    from randovania.layout.base.ammo_pickup_configuration import AmmoPickupConfiguration
+    from randovania.layout.base.available_locations import AvailableLocationsConfiguration
+    from randovania.layout.base.base_configuration import BaseConfiguration
+    from randovania.layout.base.damage_strictness import LayoutDamageStrictness
+    from randovania.layout.base.dock_rando_configuration import DockRandoConfiguration
+    from randovania.layout.base.standard_pickup_configuration import StandardPickupConfiguration
+    from randovania.layout.lib.teleporters import TeleporterConfiguration
 
 
 class PresetEditor:
@@ -78,11 +84,11 @@ class PresetEditor:
     @property
     def game(self):
         return self._game
-        
+
     @property
     def description(self):
         return self._description
-        
+
     @description.setter
     def description(self, value):
         self._set_field("description", value)
@@ -100,12 +106,12 @@ class PresetEditor:
         self.set_configuration_field("damage_strictness", value)
 
     @property
-    def layout_configuration_elevators(self) -> TeleporterConfiguration:
-        return self.configuration.elevators
+    def layout_configuration_teleporters(self) -> TeleporterConfiguration:
+        return self.configuration.teleporters
 
-    @layout_configuration_elevators.setter
-    def layout_configuration_elevators(self, value: TeleporterConfiguration):
-        self.set_configuration_field("elevators", value)
+    @layout_configuration_teleporters.setter
+    def layout_configuration_teleporters(self, value: TeleporterConfiguration):
+        self.set_configuration_field("teleporters", value)
 
     @property
     def available_locations(self) -> AvailableLocationsConfiguration:
@@ -140,10 +146,7 @@ class PresetEditor:
         self.set_configuration_field("dock_rando", value)
 
     def set_configuration_field(self, field_name: str, value):
-        self._edit_field(
-            "configuration",
-            dataclasses.replace(self.configuration, **{field_name: value})
-        )
+        self._edit_field("configuration", dataclasses.replace(self.configuration, **{field_name: value}))
 
     ######
 

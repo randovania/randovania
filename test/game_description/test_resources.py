@@ -1,31 +1,33 @@
+from __future__ import annotations
+
 import dataclasses
+from typing import TYPE_CHECKING
 
 import pytest
 
-from randovania.game_description.resources.pickup_entry import ResourceLock
+from randovania.game_description.pickup.pickup_entry import ResourceLock
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.game_description.resources.resource_database import ResourceDatabase
-from randovania.game_description.resources.resource_info import ResourceCollection
+from randovania.game_description.resources.resource_collection import ResourceCollection
 from randovania.game_description.resources.resource_type import ResourceType
+
+if TYPE_CHECKING:
+    from randovania.game_description.resources.resource_database import ResourceDatabase
 
 
 def wrap(db: ResourceDatabase, data):
     if isinstance(data, dict):
-        return {
-            db.get_item(key): value
-            for key, value in data.items()
-        }
+        return {db.get_item(key): value for key, value in data.items()}
     else:
-        return [
-            (db.get_item(key), value)
-            for key, value in data
-        ]
+        return [(db.get_item(key), value) for key, value in data]
 
 
-@pytest.mark.parametrize(["a", "b", "result"], [
-    ({"Ammo": 5}, {"Health": 6}, {"Ammo": 5, "Health": 6}),
-    ({"Ammo": 5}, {"Ammo": 6}, {"Ammo": 11}),
-])
+@pytest.mark.parametrize(
+    ("a", "b", "result"),
+    [
+        ({"Ammo": 5}, {"Health": 6}, {"Ammo": 5, "Health": 6}),
+        ({"Ammo": 5}, {"Ammo": 6}, {"Ammo": 11}),
+    ],
+)
 def test_add_resources_into_another(blank_resource_db, a, b, result):
     a = wrap(blank_resource_db, a)
     b = wrap(blank_resource_db, b)
@@ -55,7 +57,9 @@ def test_add_resource_gain_to_current_resources_convert(blank_resource_db, blank
 
     pickup = dataclasses.replace(
         blank_pickup,
-        progression=(), resource_lock=ResourceLock(resource_b, resource_b, resource_a), unlocks_resource=True,
+        progression=(),
+        resource_lock=ResourceLock(resource_b, resource_b, resource_a),
+        unlocks_resource=True,
     )
     current_resources = ResourceCollection()
     current_resources.add_resource_gain([(resource_a, 5)])
@@ -64,18 +68,18 @@ def test_add_resource_gain_to_current_resources_convert(blank_resource_db, blank
     current_resources.add_resource_gain(pickup.resource_gain(current_resources))
 
     # Assert
-    assert dict(current_resources.as_resource_gain()) == {
-        resource_a: 0,
-        resource_b: 5
-    }
+    assert dict(current_resources.as_resource_gain()) == {resource_a: 0, resource_b: 5}
 
 
-@pytest.mark.parametrize(["resource_gain", "expected"], [
-    ([], {}),
-    ([("Ammo", 5), ("Health", 6)], {"Ammo": 5, "Health": 6}),
-    ([("Ammo", 5), ("Ammo", 6)], {"Ammo": 11}),
-    ([("Ammo", 5), ("Ammo", -5)], {"Ammo": 0}),
-])
+@pytest.mark.parametrize(
+    ("resource_gain", "expected"),
+    [
+        ([], {}),
+        ([("Ammo", 5), ("Health", 6)], {"Ammo": 5, "Health": 6}),
+        ([("Ammo", 5), ("Ammo", 6)], {"Ammo": 11}),
+        ([("Ammo", 5), ("Ammo", -5)], {"Ammo": 0}),
+    ],
+)
 def test_convert_resource_gain_to_current_resources(blank_resource_db, resource_gain, expected):
     # Setup
     db = blank_resource_db

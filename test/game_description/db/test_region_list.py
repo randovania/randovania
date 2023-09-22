@@ -1,30 +1,37 @@
+from __future__ import annotations
+
 import dataclasses
+from typing import TYPE_CHECKING
 from unittest.mock import MagicMock
 
 from frozendict import frozendict
 
-from randovania.game_description.game_description import GameDescription
-from randovania.game_description.requirements.base import Requirement
-from randovania.game_description.requirements.requirement_and import RequirementAnd
-from randovania.game_description.requirements.resource_requirement import ResourceRequirement
-from randovania.game_description.resources.node_resource_info import NodeResourceInfo
-from randovania.game_description.resources.resource_info import ResourceCollection
-from randovania.game_description.resources.resource_type import ResourceType
-from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 from randovania.game_description.db.area import Area
-from randovania.game_description.db.dock import DockWeakness, DockLockType, DockType, DockLock
+from randovania.game_description.db.dock import DockLock, DockLockType, DockType, DockWeakness
 from randovania.game_description.db.dock_lock_node import DockLockNode
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.node import NodeContext
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.db.region import Region
 from randovania.game_description.db.region_list import RegionList
+from randovania.game_description.requirements.base import Requirement
+from randovania.game_description.requirements.requirement_and import RequirementAnd
+from randovania.game_description.requirements.resource_requirement import ResourceRequirement
+from randovania.game_description.resources.node_resource_info import NodeResourceInfo
+from randovania.game_description.resources.resource_collection import ResourceCollection
+from randovania.game_description.resources.resource_type import ResourceType
+from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 from randovania.games.prime1.layout.prime_configuration import PrimeConfiguration
 from randovania.layout import filtered_database
 
+if TYPE_CHECKING:
+    from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.game_patches import GamePatches
 
-def test_connections_from_dock_blast_shield(empty_patches):
+
+def test_connections_from_dock_blast_shield(empty_patches: GamePatches):
     # Setup
+    db = empty_patches.game.resource_database
     trivial = Requirement.trivial()
     req_1 = ResourceRequirement.simple(SimpleResourceInfo(0, "Ev1", "Ev1", ResourceType.EVENT))
     req_2 = ResourceRequirement.simple(SimpleResourceInfo(1, "Ev2", "Ev2", ResourceType.EVENT))
@@ -35,15 +42,45 @@ def test_connections_from_dock_blast_shield(empty_patches):
     node_1_identifier = NodeIdentifier.create("W", "Area 1", "Node 1")
     node_2_identifier = NodeIdentifier.create("W", "Area 2", "Node 2")
 
-    node_1 = DockNode(node_1_identifier, 0, False, None, "", ("default",), {}, False, dock_type,
-                      node_2_identifier, weak_1, None, None, False, tuple())
-    node_1_lock = DockLockNode.create_from_dock(node_1, 1)
-    node_2 = DockNode(node_2_identifier, 2, False, None, "", ("default",), {}, False, dock_type,
-                      node_1_identifier, weak_2, None, None, False, tuple())
-    node_2_lock = DockLockNode.create_from_dock(node_2, 3)
+    node_1 = DockNode(
+        node_1_identifier,
+        0,
+        False,
+        None,
+        "",
+        ("default",),
+        {},
+        False,
+        dock_type,
+        node_2_identifier,
+        weak_1,
+        None,
+        None,
+        False,
+        (),
+    )
+    node_1_lock = DockLockNode.create_from_dock(node_1, 1, db)
+    node_2 = DockNode(
+        node_2_identifier,
+        2,
+        False,
+        None,
+        "",
+        ("default",),
+        {},
+        False,
+        dock_type,
+        node_1_identifier,
+        weak_2,
+        None,
+        None,
+        False,
+        (),
+    )
+    node_2_lock = DockLockNode.create_from_dock(node_2, 3, db)
 
-    area_1 = Area("Area 1", None, [node_1, node_1_lock], {}, {})
-    area_2 = Area("Area 2", None, [node_2, node_2_lock], {}, {})
+    area_1 = Area("Area 1", [node_1, node_1_lock], {}, {})
+    area_2 = Area("Area 2", [node_2, node_2_lock], {}, {})
 
     region = Region("W", [area_1, area_2], {})
     region_list = RegionList([region])

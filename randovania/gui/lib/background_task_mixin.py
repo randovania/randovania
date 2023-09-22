@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import asyncio
 import asyncio.futures
 import concurrent.futures
@@ -24,8 +26,7 @@ class BackgroundTaskMixin:
         self._background_thread.start()
 
     def run_in_background_thread(self, target, starting_message: str):
-
-        last_progress = 0
+        last_progress = 0.0
 
         def progress_update(message: str, progress: float | None):
             nonlocal last_progress
@@ -36,7 +37,7 @@ class BackgroundTaskMixin:
 
             if self.abort_background_task_requested:
                 self.progress_update_signal.emit(f"{message} - Aborted", int(progress * 100))
-                raise AbortBackgroundTask()
+                raise AbortBackgroundTask
             else:
                 self.progress_update_signal.emit(message, int(progress * 100))
 

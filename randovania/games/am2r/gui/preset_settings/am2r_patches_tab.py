@@ -1,27 +1,33 @@
+from __future__ import annotations
+
 import typing
 
 from PySide6 import QtWidgets
 
-from randovania.game_description.game_description import GameDescription
 from randovania.games.am2r.layout import AM2RConfiguration
 from randovania.gui.generated.preset_am2r_patches_ui import Ui_PresetAM2RPatches
 from randovania.gui.lib import signal_handling
-from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.preset_settings.preset_tab import PresetTab
-from randovania.interface_common.preset_editor import PresetEditor
-from randovania.layout.preset import Preset
+
+if typing.TYPE_CHECKING:
+    from randovania.game_description.game_description import GameDescription
+    from randovania.gui.lib.window_manager import WindowManager
+    from randovania.interface_common.preset_editor import PresetEditor
+    from randovania.layout.preset import Preset
 
 _FIELDS = [
     "septogg_helpers",
-    "change_level_design",
     "respawn_bomb_blocks",
     "skip_cutscenes",
+    "skip_save_cutscene",
+    "skip_item_cutscenes",
     "grave_grotto_blocks",
     "fusion_mode",
+    "supers_on_missile_doors",
     "nest_pipes",
     "softlock_prevention_blocks",
     "a3_entrance_blocks",
-    "screw_blocks"
+    "screw_blocks",
 ]
 
 

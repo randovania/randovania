@@ -1,15 +1,21 @@
-from PySide6.QtWidgets import QWidget
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
 
 from randovania.games.blank.layout.blank_cosmetic_patches import BlankCosmeticPatches
 from randovania.gui.dialog.base_cosmetic_patches_dialog import BaseCosmeticPatchesDialog
 from randovania.gui.generated.blank_cosmetic_patches_dialog_ui import Ui_BlankCosmeticPatchesDialog
-from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
+
+if TYPE_CHECKING:
+    from PySide6 import QtWidgets
+
+    from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
 
 
 class BlankCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_BlankCosmeticPatchesDialog):
     _cosmetic_patches: BlankCosmeticPatches
 
-    def __init__(self, parent: QWidget, current: BaseCosmeticPatches):
+    def __init__(self, parent: QtWidgets.QWidget | None, current: BaseCosmeticPatches):
         super().__init__(parent)
         self.setupUi(self)
 
@@ -19,12 +25,12 @@ class BlankCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_BlankCosmeticPatc
         self.on_new_cosmetic_patches(current)
         self.connect_signals()
 
-    def connect_signals(self):
+    def connect_signals(self) -> None:
         super().connect_signals()
         # More signals here!
         pass
 
-    def on_new_cosmetic_patches(self, patches: BlankCosmeticPatches):
+    def on_new_cosmetic_patches(self, patches: BlankCosmeticPatches) -> None:
         # Update fields with the new values
         pass
 
@@ -32,5 +38,5 @@ class BlankCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_BlankCosmeticPatc
     def cosmetic_patches(self) -> BlankCosmeticPatches:
         return self._cosmetic_patches
 
-    def reset(self):
+    def reset(self) -> None:
         self.on_new_cosmetic_patches(BlankCosmeticPatches())

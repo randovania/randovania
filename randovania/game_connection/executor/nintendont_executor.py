@@ -1,10 +1,15 @@
+from __future__ import annotations
+
 import asyncio
 import dataclasses
 import struct
 from asyncio import StreamReader, StreamWriter
 
-from randovania.game_connection.executor.memory_operation import MemoryOperationException, MemoryOperation, \
-    MemoryOperationExecutor
+from randovania.game_connection.executor.memory_operation import (
+    MemoryOperation,
+    MemoryOperationException,
+    MemoryOperationExecutor,
+)
 
 
 @dataclasses.dataclass(frozen=True)
@@ -24,7 +29,7 @@ class RequestBatch:
         self.num_read_bytes = 0
         self.addresses = []
 
-    def copy(self) -> "RequestBatch":
+    def copy(self) -> RequestBatch:
         new = RequestBatch()
         new.data = self.data
         new.ops = list(self.ops)
@@ -49,9 +54,11 @@ class RequestBatch:
         return self.num_read_bytes + self.num_validator_bytes
 
     def is_compatible_with(self, holder: SocketHolder):
-        return (len(self.addresses) < holder.max_addresses
-                and self.output_bytes <= holder.max_output
-                and self.input_bytes <= holder.max_input)
+        return (
+            len(self.addresses) < holder.max_addresses
+            and self.output_bytes <= holder.max_output
+            and self.input_bytes <= holder.max_input
+        )
 
     def add_op(self, op: MemoryOperation):
         if op.address not in self.addresses:
@@ -111,11 +118,11 @@ class NintendontExecutor(MemoryOperationExecutor):
 
         try:
             self._socket_error = None
-            # self.logger.info(f"Connecting to {self._ip}:{self._port}.")
+            self.logger.debug(f"Connecting to {self._ip}:{self._port}.")
             reader, writer = await asyncio.open_connection(self._ip, self._port)
 
             # Send API details request
-            self.logger.info("Connection open, requesting API details.")
+            self.logger.debug("Connection open, requesting API details.")
 
             writer.write(struct.pack(">BBBB", 1, 0, 0, 1))
             await asyncio.wait_for(writer.drain(), timeout=30)
@@ -124,7 +131,7 @@ class NintendontExecutor(MemoryOperationExecutor):
             response = await asyncio.wait_for(reader.read(1024), timeout=15)
             api_version, max_input, max_output, max_addresses = struct.unpack_from(">IIII", response, 0)
 
-            self.logger.info(f"Remote replied with API level {api_version}, connection successful.")
+            self.logger.debug(f"Remote replied with API level {api_version}, connection successful.")
             self._socket = SocketHolder(reader, writer, api_version, max_input, max_output, max_addresses)
             return None
 
@@ -160,10 +167,11 @@ class NintendontExecutor(MemoryOperationExecutor):
                 continue
             op.validate_byte_sizes()
 
-            if op.read_byte_count is None and (op.write_bytes is not None
-                                               and len(op.write_bytes) > max_write_size):
-                self.logger.debug(f"Operation {i} had {len(op.write_bytes)} bytes, "
-                                  f"above the limit of {max_write_size}. Splitting.")
+            if op.read_byte_count is None and (op.write_bytes is not None and len(op.write_bytes) > max_write_size):
+                self.logger.debug(
+                    f"Operation {i} had {len(op.write_bytes)} bytes, "
+                    f"above the limit of {max_write_size}. Splitting."
+                )
                 for offset in range(0, len(op.write_bytes), max_write_size):
                     if op.offset is None:
                         address = op.address + offset
@@ -171,11 +179,13 @@ class NintendontExecutor(MemoryOperationExecutor):
                     else:
                         address = op.address
                         op_offset = op.offset + offset
-                    processes_ops.append(MemoryOperation(
-                        address=address,
-                        offset=op_offset,
-                        write_bytes=op.write_bytes[offset:min(offset + max_write_size, len(op.write_bytes))],
-                    ))
+                    processes_ops.append(
+                        MemoryOperation(
+                            address=address,
+                            offset=op_offset,
+                            write_bytes=op.write_bytes[offset : min(offset + max_write_size, len(op.write_bytes))],
+                        )
+                    )
             else:
                 processes_ops.append(op)
 
@@ -239,7 +249,7 @@ class NintendontExecutor(MemoryOperationExecutor):
                 if _was_invalid_address(response, i):
                     raise MemoryOperationException("Operation tried to read an invalid address")
 
-                split = response[read_index:read_index + op.read_byte_count]
+                split = response[read_index : read_index + op.read_byte_count]
                 if len(split) != op.read_byte_count:
                     raise MemoryOperationException(f"Received {len(split)} bytes, expected {op.read_byte_count}")
                 else:

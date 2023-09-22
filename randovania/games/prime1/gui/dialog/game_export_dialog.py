@@ -1,19 +1,29 @@
+from __future__ import annotations
+
 import dataclasses
 from pathlib import Path
+from typing import TYPE_CHECKING
 
-from randovania.exporter.game_exporter import GameExportParams
 from randovania.games.common.prime_family.gui.export_validator import is_prime1_iso_validator, is_prime2_iso_validator
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime1.exporter.game_exporter import PrimeGameExportParams
 from randovania.games.prime1.exporter.options import PrimePerGameOptions
 from randovania.games.prime2.exporter.options import EchoesPerGameOptions
 from randovania.gui.dialog.game_export_dialog import (
-    GameExportDialog, prompt_for_output_file, prompt_for_input_file,
-    spoiler_path_for, add_field_validation, output_file_validator, update_validation,
+    GameExportDialog,
+    add_field_validation,
+    output_file_validator,
+    prompt_for_input_file,
+    prompt_for_output_file,
+    spoiler_path_for,
+    update_validation,
 )
 from randovania.gui.generated.prime_game_export_dialog_ui import Ui_PrimeGameExportDialog
 from randovania.gui.lib.multi_format_output_mixin import MultiFormatOutputMixin
-from randovania.interface_common.options import Options
+
+if TYPE_CHECKING:
+    from randovania.exporter.game_exporter import GameExportParams
+    from randovania.interface_common.options import Options
 
 
 class PrimeGameExportDialog(GameExportDialog, MultiFormatOutputMixin, Ui_PrimeGameExportDialog):
@@ -80,7 +90,7 @@ class PrimeGameExportDialog(GameExportDialog, MultiFormatOutputMixin, Ui_PrimeGa
                 self.input_file_edit: lambda: is_prime1_iso_validator(self.input_file),
                 self.output_file_edit: lambda: output_file_validator(self.output_file),
                 self.echoes_file_edit: lambda: self._use_echoes_models and is_prime2_iso_validator(self.echoes_file),
-            }
+            },
         )
 
     @property
@@ -110,8 +120,7 @@ class PrimeGameExportDialog(GameExportDialog, MultiFormatOutputMixin, Ui_PrimeGa
             per_game,
             input_path=self.input_file,
             output_directory=self.output_file.parent,
-            output_format=(per_game.output_format if self.has_enemy_attribute_rando
-                           else self._selected_output_format),
+            output_format=(per_game.output_format if self.has_enemy_attribute_rando else self._selected_output_format),
             use_external_models=use_external_models,
         )
 
@@ -122,12 +131,16 @@ class PrimeGameExportDialog(GameExportDialog, MultiFormatOutputMixin, Ui_PrimeGa
 
         with self._options as options:
             from randovania.games.prime2.exporter.options import EchoesPerGameOptions
+
             echoes_options = options.options_for_game(RandovaniaGame.METROID_PRIME_ECHOES)
             assert isinstance(echoes_options, EchoesPerGameOptions)
-            options.set_options_for_game(RandovaniaGame.METROID_PRIME_ECHOES, dataclasses.replace(
-                echoes_options,
-                input_path=self.echoes_file,
-            ))
+            options.set_options_for_game(
+                RandovaniaGame.METROID_PRIME_ECHOES,
+                dataclasses.replace(
+                    echoes_options,
+                    input_path=self.echoes_file,
+                ),
+            )
 
     # Getters
     @property
@@ -155,8 +168,9 @@ class PrimeGameExportDialog(GameExportDialog, MultiFormatOutputMixin, Ui_PrimeGa
 
     # Output File
     def _on_output_file_button(self):
-        output_file = prompt_for_output_file(self, self.available_output_file_types, self.default_output_name,
-                                             self.output_file_edit)
+        output_file = prompt_for_output_file(
+            self, self.available_output_file_types, self.default_output_name, self.output_file_edit
+        )
         if output_file is not None:
             self.output_file_edit.setText(str(output_file))
 

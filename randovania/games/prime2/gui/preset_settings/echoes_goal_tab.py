@@ -1,13 +1,19 @@
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+
 from PySide6 import QtCore
 
-from randovania.game_description.game_description import GameDescription
-from randovania.games.prime2.layout.echoes_configuration import LayoutSkyTempleKeyMode, EchoesConfiguration
+from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration, LayoutSkyTempleKeyMode
 from randovania.gui.generated.preset_echoes_goal_ui import Ui_PresetEchoesGoal
 from randovania.gui.lib.signal_handling import set_combo_with_value
-from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.preset_settings.preset_tab import PresetTab
-from randovania.interface_common.preset_editor import PresetEditor
-from randovania.layout.preset import Preset
+
+if TYPE_CHECKING:
+    from randovania.game_description.game_description import GameDescription
+    from randovania.gui.lib.window_manager import WindowManager
+    from randovania.interface_common.preset_editor import PresetEditor
+    from randovania.layout.preset import Preset
 
 
 class PresetEchoesGoal(PresetTab, Ui_PresetEchoesGoal):
@@ -15,7 +21,7 @@ class PresetEchoesGoal(PresetTab, Ui_PresetEchoesGoal):
         super().__init__(editor, game_description, window_manager)
         self.setupUi(self)
 
-        self.goal_layout.setAlignment(QtCore.Qt.AlignTop)
+        self.goal_layout.setAlignment(QtCore.Qt.AlignmentFlag.AlignTop)
         self.skytemple_combo.setItemData(0, LayoutSkyTempleKeyMode.ALL_BOSSES)
         self.skytemple_combo.setItemData(1, LayoutSkyTempleKeyMode.ALL_GUARDIANS)
         self.skytemple_combo.setItemData(2, int)

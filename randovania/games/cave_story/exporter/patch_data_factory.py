@@ -1,30 +1,37 @@
+from __future__ import annotations
+
 from random import Random
+from typing import TYPE_CHECKING
 
 from tsc_utils.flags import set_flag
 from tsc_utils.numbers import num_to_tsc_value
 
 from randovania.exporter.hints.hint_exporter import HintExporter
 from randovania.exporter.hints.joke_hints import JOKE_HINTS
-from randovania.exporter.patch_data_factory import BasePatchDataFactory
+from randovania.exporter.patch_data_factory import PatchDataFactory
 from randovania.game_description.assignment import PickupTarget
-from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.pickup.pickup_category import USELESS_PICKUP_CATEGORY
-from randovania.game_description.resources.location_category import LocationCategory
-from randovania.game_description.resources.pickup_entry import PickupEntry, PickupModel, PickupGeneratorParams
-from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.db.hint_node import HintNode
-from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.db.pickup_node import PickupNode
+from randovania.game_description.pickup.pickup_category import USELESS_PICKUP_CATEGORY
+from randovania.game_description.pickup.pickup_entry import PickupEntry, PickupGeneratorParams, PickupModel
+from randovania.game_description.resources.location_category import LocationCategory
+from randovania.game_description.resources.resource_type import ResourceType
 from randovania.games.cave_story.exporter.hint_namer import CSHintNamer
-from randovania.games.cave_story.layout.cs_configuration import CSConfiguration
-from randovania.games.cave_story.layout.cs_cosmetic_patches import CSCosmeticPatches
 from randovania.games.cave_story.layout.preset_describer import get_ingame_hash
 from randovania.games.cave_story.patcher.caver_music_shuffle import CaverMusic
 from randovania.games.game import RandovaniaGame
-from randovania.interface_common.players_configuration import PlayersConfiguration
+
+if TYPE_CHECKING:
+    from randovania.game_description.db.node_identifier import NodeIdentifier
+    from randovania.game_description.game_patches import GamePatches
+    from randovania.games.cave_story.layout.cs_configuration import CSConfiguration
+    from randovania.games.cave_story.layout.cs_cosmetic_patches import CSCosmeticPatches
+    from randovania.interface_common.players_configuration import PlayersConfiguration
+
+# ruff: noqa: C901
 
 
-class CSPatchDataFactory(BasePatchDataFactory):
+class CSPatchDataFactory(PatchDataFactory):
     cosmetic_patches: CSCosmeticPatches
     configuration: CSConfiguration
 
@@ -41,21 +48,25 @@ class CSPatchDataFactory(BasePatchDataFactory):
         mychar_rng = Random(seed_number)
         hint_rng = Random(seed_number)
 
-        nothing_item = PickupTarget(PickupEntry(
-            "Nothing",
-            PickupModel(RandovaniaGame.CAVE_STORY, "Nothing"),
-            USELESS_PICKUP_CATEGORY,
-            USELESS_PICKUP_CATEGORY,
-            tuple(),
-            generator_params=PickupGeneratorParams(
-                preferred_location_category=LocationCategory.MAJOR,  # TODO
+        nothing_item = PickupTarget(
+            PickupEntry(
+                "Nothing",
+                PickupModel(RandovaniaGame.CAVE_STORY, "Nothing"),
+                USELESS_PICKUP_CATEGORY,
+                USELESS_PICKUP_CATEGORY,
+                (),
+                generator_params=PickupGeneratorParams(
+                    preferred_location_category=LocationCategory.MAJOR,  # TODO
+                ),
             ),
-        ), self.players_config.player_index)
+            self.players_config.player_index,
+        )
         nothing_item_script = "<PRI<MSG<TUR<IT+0000\r\nGot =Nothing=!<WAI0025<NOD<EVE0015"
 
         pickups = {area.extra["map_name"]: {} for area in game_description.region_list.all_areas}
-        for index in sorted(node.pickup_index for node in game_description.region_list.iterate_nodes()
-                            if isinstance(node, PickupNode)):
+        for index in sorted(
+            node.pickup_index for node in game_description.region_list.iterate_nodes() if isinstance(node, PickupNode)
+        ):
             target = self.patches.pickup_assignment.get(index, nothing_item)
 
             if target.player != self.players_config.player_index:
@@ -71,8 +82,9 @@ class CSPatchDataFactory(BasePatchDataFactory):
             if target == nothing_item:
                 pickup_script = nothing_item_script
             else:
-                pickup_script = self.pickup_db.get_pickup_with_name(target.pickup.name).extra.get("script",
-                                                                                              nothing_item_script)
+                pickup_script = self.pickup_db.get_pickup_with_name(target.pickup.name).extra.get(
+                    "script", nothing_item_script
+                )
             pickups[mapname][event] = pickup_script
 
         music = CaverMusic.get_shuffled_mapping(music_rng, self.cosmetic_patches)
@@ -85,8 +97,9 @@ class CSPatchDataFactory(BasePatchDataFactory):
             if not isinstance(logbook_node, HintNode):
                 continue
 
-            mapname = logbook_node.extra.get("event_map",
-                                             game_description.region_list.nodes_to_area(logbook_node).extra["map_name"])
+            mapname = logbook_node.extra.get(
+                "event_map", game_description.region_list.nodes_to_area(logbook_node).extra["map_name"]
+            )
             event = logbook_node.extra["event"]
 
             if hints.get(mapname) is None:
@@ -95,16 +108,19 @@ class CSPatchDataFactory(BasePatchDataFactory):
             hints[mapname][event] = {
                 "text": hints_for_identifier[game_description.region_list.identifier_for_node(logbook_node)],
                 "facepic": logbook_node.extra.get("facepic", "0000"),
-                "ending": logbook_node.extra.get("ending", "<END")
+                "ending": logbook_node.extra.get("ending", "<END"),
             }
 
         mapnames = pickups.keys() | music.keys() | entrances.keys()
-        maps = {mapname: {
-            "pickups": pickups.get(mapname, {}),
-            "music": music.get(mapname, {}),
-            "entrances": entrances.get(mapname, {}),
-            "hints": hints.get(mapname, {}),
-        } for mapname in sorted(mapnames)}
+        maps = {
+            mapname: {
+                "pickups": pickups.get(mapname, {}),
+                "music": music.get(mapname, {}),
+                "entrances": entrances.get(mapname, {}),
+                "hints": hints.get(mapname, {}),
+            }
+            for mapname in sorted(mapnames)
+        }
 
         # objective flags
         starting_script = self.configuration.objective.script
@@ -112,8 +128,12 @@ class CSPatchDataFactory(BasePatchDataFactory):
         if self.configuration.no_blocks:
             starting_script += "<FL+1351"
         # rocket skip enabled
-        if self.configuration.trick_level.level_for_trick(
-                self.game.resource_database.get_by_type_and_index(ResourceType.TRICK, "Dboost")).as_number >= 4:
+        if (
+            self.configuration.trick_level.level_for_trick(
+                self.game.resource_database.get_by_type_and_index(ResourceType.TRICK, "Dboost")
+            ).as_number
+            >= 4
+        ):
             starting_script += "<FL+6400"
         # initialize HP counter
         starting_script += set_flag(4011, self.configuration.starting_hp, bits=6)
@@ -140,9 +160,9 @@ class CSPatchDataFactory(BasePatchDataFactory):
         starting_items = self.patches.starting_resources()
 
         starting_msg = ""
-        missile = next((res for res, _ in starting_items.as_resource_gain()
-                        if res.short_name in {"missile", "tempMissile"}),
-                       None)
+        missile = next(
+            (res for res, _ in starting_items.as_resource_gain() if res.short_name in {"missile", "tempMissile"}), None
+        )
         for item, _ in starting_items.as_resource_gain():
             if item.resource_type != ResourceType.ITEM or item == missile:
                 continue
@@ -164,7 +184,7 @@ class CSPatchDataFactory(BasePatchDataFactory):
                     2: "two =Puppies=",
                     3: "three =Puppies=",
                     4: "four =Puppies=",
-                    5: "all five =Puppies="
+                    5: "all five =Puppies=",
                 }
 
                 starting_msg += (
@@ -186,15 +206,15 @@ class CSPatchDataFactory(BasePatchDataFactory):
             trade = item.extra.get("trade", "none")
             trades[trade] += 1
 
-            git = num_to_tsc_value(arms_num or item_num + 1000).decode('utf-8')
-            ammo = num_to_tsc_value(item.extra.get("ammo", 0)).decode('utf-8')
+            git = num_to_tsc_value(arms_num or item_num + 1000).decode("utf-8")
+            ammo = num_to_tsc_value(item.extra.get("ammo", 0)).decode("utf-8")
             if item.short_name in {"missiles", "supers"}:
-                ammo = num_to_tsc_value(starting_items[missile]).decode('utf-8')
+                ammo = num_to_tsc_value(starting_items[missile]).decode("utf-8")
             if item_num:
                 plus = f"<IT+{num_to_tsc_value(item_num).decode('utf-8')}"
             else:
                 plus = f"<AM+{num_to_tsc_value(arms_num).decode('utf-8')}:{ammo}"
-            flag = num_to_tsc_value(item.extra["flag"]).decode('utf-8')
+            flag = num_to_tsc_value(item.extra["flag"]).decode("utf-8")
             text = item.extra["text"]
 
             starting_msg += f"<GIT{git}{plus}<FL+{flag}\r\n{text}<WAI0010<NOD\r\n<CLR"
@@ -278,9 +298,9 @@ class CSPatchDataFactory(BasePatchDataFactory):
                 # started outside mimiga village
                 starting_script += "<FL+6201"
 
-        tra = game_description.region_list.area_by_area_location(
-            self.patches.starting_location.area_identifier
-        ).extra["starting_script"]
+        tra = game_description.region_list.area_by_area_location(self.patches.starting_location.area_identifier).extra[
+            "starting_script"
+        ]
         starting_script += tra
 
         # Softlock debug cat warps
@@ -312,38 +332,42 @@ class CSPatchDataFactory(BasePatchDataFactory):
             "0035": (missile_id, hell_missile + base_missiles),  # normal hell launcher
             "0036": (missile_id, hell_missile),  # normal hell expansion
             "0037": (supers_id, hell_missile),  # supers hell expansion
-            "0038": (supers_id, base_missiles)  # supers launcher
+            "0038": (supers_id, base_missiles),  # supers launcher
         }
         head = {}
         for event, m_ammo in missile_events.items():
             head[event] = {
                 "needle": "<AM%+....:....",
-                "script": f"<AM+{m_ammo[0]}:{num_to_tsc_value(m_ammo[1]).decode('utf-8')}"
+                "script": f"<AM+{m_ammo[0]}:{num_to_tsc_value(m_ammo[1]).decode('utf-8')}",
             }
 
-        life_capsules = [("Small Life Capsule", "0012"), ("Medium Life Capsule", "0013"),
-                         ("Large Life Capsule", "0014")]
+        life_capsules = [
+            ("Small Life Capsule", "0012"),
+            ("Medium Life Capsule", "0013"),
+            ("Large Life Capsule", "0014"),
+        ]
         for name, event in life_capsules:
-            amount = \
-                self.configuration.standard_pickup_configuration.pickups_state[self.pickup_db.standard_pickups[name]].included_ammo[
-                    0]
+            amount = self.configuration.standard_pickup_configuration.pickups_state[
+                self.pickup_db.standard_pickups[name]
+            ].included_ammo[0]
             head[event] = {
                 "needle": ".!<ML%+....",
-                "script": f"{amount}!<ML+{num_to_tsc_value(amount).decode('utf-8')}"
+                "script": f"{amount}!<ML+{num_to_tsc_value(amount).decode('utf-8')}",
             }
 
         return {
             "maps": maps,
-            "other_tsc": {
-                "Head": head
-            },
+            "other_tsc": {"Head": head},
             "mychar": self.cosmetic_patches.mychar.mychar_bmp(mychar_rng),
-            "hash": get_ingame_hash(self.description.shareable_hash_bytes)
+            "hash": get_ingame_hash(self.description.shareable_hash_bytes),
         }
 
 
-def get_hints(all_patches: dict[int, GamePatches], players_config: PlayersConfiguration, hint_rng: Random,
-              ) -> dict[NodeIdentifier, str]:
+def get_hints(
+    all_patches: dict[int, GamePatches],
+    players_config: PlayersConfiguration,
+    hint_rng: Random,
+) -> dict[NodeIdentifier, str]:
     namer = CSHintNamer(all_patches, players_config)
     exporter = HintExporter(namer, hint_rng, JOKE_HINTS)
 

@@ -1,13 +1,19 @@
-from randovania.exporter.hints.hint_formatters import TemplatedFormatter, RelativeAreaFormatter
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+
+from randovania.exporter.hints.hint_formatters import RelativeAreaFormatter, TemplatedFormatter
 from randovania.exporter.hints.hint_namer import HintNamer, PickupLocation
-from randovania.exporter.hints.pickup_hint import PickupHint
 from randovania.exporter.hints.relative_item_formatter import RelativeItemFormatter
 from randovania.game_description import default_database
-from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.hint import HintLocationPrecision, Hint
-from randovania.game_description.resources.item_resource_info import ItemResourceInfo
-from randovania.games.game import RandovaniaGame
-from randovania.interface_common.players_configuration import PlayersConfiguration
+from randovania.game_description.hint import Hint, HintLocationPrecision
+
+if TYPE_CHECKING:
+    from randovania.exporter.hints.pickup_hint import PickupHint
+    from randovania.game_description.game_patches import GamePatches
+    from randovania.game_description.resources.item_resource_info import ItemResourceInfo
+    from randovania.games.game import RandovaniaGame
+    from randovania.interface_common.players_configuration import PlayersConfiguration
 
 
 class CSHintNamer(HintNamer):
@@ -24,9 +30,7 @@ class CSHintNamer(HintNamer):
             HintLocationPrecision.LITTLE: TemplatedFormatter(
                 "He was exploring the island with {determiner}{pickup}...", self
             ),
-            HintLocationPrecision.NUMAHACHI: TemplatedFormatter(
-                "{determiner.capitalize}{pickup}.", self
-            ),
+            HintLocationPrecision.NUMAHACHI: TemplatedFormatter("{determiner.capitalize}{pickup}.", self),
             HintLocationPrecision.DETAILED: TemplatedFormatter(
                 "{{start}} {determiner}{pickup} {{mid}} in {node}.", self
             ),
@@ -34,10 +38,13 @@ class CSHintNamer(HintNamer):
                 "{{start}} {determiner}{pickup} {{mid}} in {node}.", self
             ),
             HintLocationPrecision.RELATIVE_TO_AREA: RelativeAreaFormatter(
-                patches, lambda msg, with_color: msg,
+                patches,
+                lambda msg, with_color: msg,
             ),
             HintLocationPrecision.RELATIVE_TO_INDEX: RelativeItemFormatter(
-                patches, lambda msg, with_color: msg, players_config,
+                patches,
+                lambda msg, with_color: msg,
+                players_config,
             ),
         }
 
@@ -68,8 +75,14 @@ class CSHintNamer(HintNamer):
         # TODO
         raise RuntimeError("Not implemented")
 
-    def format_guaranteed_resource(self, resource: ItemResourceInfo, player_name: str | None,
-                                   location: PickupLocation, hide_area: bool, with_color: bool) -> str:
+    def format_guaranteed_resource(
+        self,
+        resource: ItemResourceInfo,
+        player_name: str | None,
+        location: PickupLocation,
+        hide_area: bool,
+        with_color: bool,
+    ) -> str:
         # TODO
         raise RuntimeError("Not implemented")
 

@@ -1,13 +1,19 @@
+from __future__ import annotations
+
 from dataclasses import dataclass
-from typing import Iterator, Callable, TypeVar, Iterable
+from typing import TYPE_CHECKING, TypeVar
 
 from randovania.bitpacking import bitpacking
-from randovania.bitpacking.bitpacking import BitPackValue, BitPackDecoder
+from randovania.bitpacking.bitpacking import BitPackDecoder, BitPackValue
 from randovania.game_description import default_database
-from randovania.game_description.db.area import Area
-from randovania.game_description.db.node import Node
 from randovania.game_description.db.node_identifier import NodeIdentifier
-from randovania.games.game import RandovaniaGame
+
+if TYPE_CHECKING:
+    from collections.abc import Callable, Iterable, Iterator
+
+    from randovania.game_description.db.area import Area
+    from randovania.game_description.db.node import Node
+    from randovania.games.game import RandovaniaGame
 
 
 def _sorted_node_identifiers(elements: Iterable[NodeIdentifier]) -> list[NodeIdentifier]:
@@ -16,22 +22,14 @@ def _sorted_node_identifiers(elements: Iterable[NodeIdentifier]) -> list[NodeIde
 
 def node_and_area_with_filter(game: RandovaniaGame, condition: Callable[[Area, Node], bool]) -> list[NodeIdentifier]:
     region_list = default_database.game_description_for(game).region_list
-    identifiers = {
-        node.identifier
-        for area in region_list.all_areas
-        for node in area.actual_nodes
-        if condition(area, node)
-    }
-    return _sorted_node_identifiers(identifiers)
+    return _sorted_node_identifiers(
+        node.identifier for area in region_list.all_areas for node in area.actual_nodes if condition(area, node)
+    )
 
 
 def node_locations_with_filter(game: RandovaniaGame, condition: Callable[[Node], bool]) -> list[NodeIdentifier]:
     region_list = default_database.game_description_for(game).region_list
-    identifiers = [
-        node.identifier
-        for node in region_list.all_nodes
-        if not node.is_derived_node and condition(node)
-    ]
+    identifiers = [node.identifier for node in region_list.all_nodes if not node.is_derived_node and condition(node)]
     return _sorted_node_identifiers(identifiers)
 
 
@@ -70,7 +68,7 @@ class LocationList(BitPackValue):
         yield from bitpacking.pack_sorted_array_elements(list(self.locations), nodes)
 
     @classmethod
-    def bit_pack_unpack(cls, decoder: BitPackDecoder, metadata) -> "LocationList":
+    def bit_pack_unpack(cls, decoder: BitPackDecoder, metadata) -> LocationList:
         game = metadata["reference"].game
         return cls.with_elements(bitpacking.decode_sorted_array_elements(decoder, cls.nodes_list(game)), game)
 
@@ -79,21 +77,11 @@ class LocationList(BitPackValue):
         return [location.as_json for location in self.locations]
 
     @classmethod
-    def from_json(cls, value: list[dict], game: RandovaniaGame) -> "LocationList":
+    def from_json(cls, value: list[dict], game: RandovaniaGame) -> LocationList:
         if not isinstance(value, list):
             raise ValueError(f"StartingLocation from_json must receive a list, got {type(value)}")
         elements = [cls.element_type().from_json(location) for location in value]
         return cls.with_elements(elements, game)
-
-    def ensure_has_location(self: SelfType, node_location: NodeIdentifier, enabled: bool) -> SelfType:
-        new_locations = set(self.locations)
-
-        if enabled:
-            new_locations.add(node_location)
-        elif node_location in new_locations:
-            new_locations.remove(node_location)
-
-        return self.with_elements(iter(new_locations), self.game)
 
     def ensure_has_locations(self: SelfType, node_locations: list[NodeIdentifier], enabled: bool) -> SelfType:
         new_locations = set(self.locations)

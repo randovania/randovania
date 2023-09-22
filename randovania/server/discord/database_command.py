@@ -6,16 +6,16 @@ import shutil
 import tempfile
 from pathlib import Path
 
-import PIL.Image
 import discord
 import graphviz
-from PIL import ImageDraw
+import PIL.Image
 from discord import Embed
-from discord.ext.commands import Converter, Context
+from discord.ext.commands import Context, Converter
+from PIL import ImageDraw
 
 from randovania.game_description import default_database, pretty_print
 from randovania.game_description.db.area import Area
-from randovania.game_description.db.node import NodeLocation, Node
+from randovania.game_description.db.node import Node, NodeLocation
 from randovania.game_description.db.region import Region
 from randovania.game_description.game_description import GameDescription
 from randovania.games.game import RandovaniaGame
@@ -115,10 +115,18 @@ def render_area_with_pillow(area: Area, data_path: Path) -> io.BytesIO | None:
             p = location_to_pos(node.location)
             draw.ellipse((p[0] - 5, p[1] - 5, p[0] + 5, p[1] + 5), fill=(255, 255, 255, 255), width=5)
             draw.ellipse((p[0] - 5, p[1] - 5, p[0] + 5, p[1] + 5), fill=(0, 0, 0, 255), width=4)
-            draw.text((p[0] - draw.textlength(node.name) / 2, p[1] + 15), node.name, stroke_width=2,
-                      stroke_fill=(255, 255, 255, 255))
-            draw.text((p[0] - draw.textlength(node.name) / 2, p[1] + 15), node.name, stroke_width=1,
-                      stroke_fill=(0, 0, 0, 255))
+            draw.text(
+                (p[0] - draw.textlength(node.name) / 2, p[1] + 15),
+                node.name,
+                stroke_width=2,
+                stroke_fill=(255, 255, 255, 255),
+            )
+            draw.text(
+                (p[0] - draw.textlength(node.name) / 2, p[1] + 15),
+                node.name,
+                stroke_width=1,
+                stroke_fill=(0, 0, 0, 255),
+            )
 
         result = io.BytesIO()
         im.save(result, "PNG")
@@ -134,12 +142,7 @@ async def create_split_regions(db: GameDescription) -> list[SplitRegion]:
         return f"{db.game.value}_region_{len(region_options)}"
 
     def create_areas(a):
-        return [
-            AreaWidget(
-                it, f"{create_id()}_area_{i}"
-            )
-            for i, it in enumerate(a)
-        ]
+        return [AreaWidget(it, f"{create_id()}_area_{i}") for i, it in enumerate(a)]
 
     for region in db.region_list.regions:
         for use_dark_name in [False, True]:
@@ -147,10 +150,7 @@ async def create_split_regions(db: GameDescription) -> list[SplitRegion]:
                 continue
 
             areas = sorted(
-                (
-                    area for area in region.areas
-                    if area.in_dark_aether == use_dark_name and area.nodes
-                ),
+                (area for area in region.areas if area.in_dark_aether == use_dark_name and area.nodes),
                 key=lambda it: it.name,
             )
             name = region.correct_name(use_dark_name)
@@ -161,12 +161,14 @@ async def create_split_regions(db: GameDescription) -> list[SplitRegion]:
                     areas_part = areas[:per_part]
                     del areas[:per_part]
 
-                    region_options.append(SplitRegion(
-                        region, "{} ({}-{})".format(name, areas_part[0].name[:2],
-                                                    areas_part[-1].name[:2]),
-                        create_areas(areas_part),
-                        create_id(),
-                    ))
+                    region_options.append(
+                        SplitRegion(
+                            region,
+                            f"{name} ({areas_part[0].name[:2]}-{areas_part[-1].name[:2]})",
+                            create_areas(areas_part),
+                            create_id(),
+                        )
+                    )
             else:
                 region_options.append(SplitRegion(region, name, create_areas(areas), create_id()))
 
@@ -183,9 +185,8 @@ _GameChoices = discord.Option(
     str,
     description="The game's database to check.",
     choices=[
-        discord.OptionChoice(name=game.long_name, value=game.value)
-        for game in enum_lib.iterate_enum(RandovaniaGame)
-    ]
+        discord.OptionChoice(name=game.long_name, value=game.value) for game in enum_lib.iterate_enum(RandovaniaGame)
+    ],
 )
 _GameChoices.converter = EnumConverter()
 _GameChoices._raw_type = RandovaniaGame
@@ -196,10 +197,7 @@ class SelectNodesItem(discord.ui.Select):
         self.game = game
         self.area = area
 
-        options = [
-            discord.SelectOption(label=node.name)
-            for node in self.valid_nodes()
-        ]
+        options = [discord.SelectOption(label=node.name) for node in self.valid_nodes()]
 
         super().__init__(
             custom_id=area.command_id,
@@ -209,8 +207,7 @@ class SelectNodesItem(discord.ui.Select):
         )
 
     def valid_nodes(self):
-        return [node for node in sorted(self.area.area.nodes, key=lambda it: it.name)
-                if not node.is_derived_node]
+        return [node for node in sorted(self.area.area.nodes, key=lambda it: it.name) if not node.is_derived_node]
 
     def _describe_selected_connections(self, original_content: str):
         db = default_database.game_description_for(self.game)
@@ -279,10 +276,12 @@ class SelectNodesItem(discord.ui.Select):
                 body_by_node[name] = snipped
 
         for name, body in body_by_node.items():
-            embeds.append(discord.Embed(
-                title=name,
-                description=body,
-            ))
+            embeds.append(
+                discord.Embed(
+                    title=name,
+                    description=body,
+                )
+            )
 
         return embeds
 
@@ -297,10 +296,12 @@ class SelectNodesItem(discord.ui.Select):
             embeds = self._describe_selected_connections(original_response.content)
         except Exception as e:
             logging.exception("Error updating visible nodes of %s: %s", self.area.area.name, str(self.values))
-            embeds = [discord.Embed(
-                title="Error describing area",
-                description=str(e),
-            )]
+            embeds = [
+                discord.Embed(
+                    title="Error describing area",
+                    description=str(e),
+                )
+            ]
 
         logging.info("Updating visible nodes of %s: %s", self.area.area.name, str(self.values))
         await original_response.edit(
@@ -331,15 +332,13 @@ class SelectAreaItem(discord.ui.Select):
         assert isinstance(r, discord.InteractionResponse)
         option_selected = self.values[0]
 
-        valid_items = [
-            area for area in self.split_region.areas
-            if area.command_id == option_selected
-        ]
+        valid_items = [area for area in self.split_region.areas if area.command_id == option_selected]
         if not valid_items:
             await r.defer()
             return await interaction.edit_original_response(
-                view=None, embeds=[],
-                content=f"Invalid selected option, unable to find given db subset '{option_selected}'."
+                view=None,
+                embeds=[],
+                content=f"Invalid selected option, unable to find given db subset '{option_selected}'.",
             )
         area = valid_items[0]
 
@@ -386,23 +385,23 @@ class SelectSplitRegionItem(discord.ui.Select):
 
         option_selected = self.values[0]
 
-        valid_items = [
-            it
-            for it in self.split_regions
-            if it.command_id == option_selected
-        ]
+        valid_items = [it for it in self.split_regions if it.command_id == option_selected]
         if not valid_items:
             return await r.send_message(
-                view=None, embeds=[], ephemeral=True,
-                content=f"Invalid selected option, unable to find given db subset '{option_selected}'."
+                view=None,
+                embeds=[],
+                ephemeral=True,
+                content=f"Invalid selected option, unable to find given db subset '{option_selected}'.",
             )
         split_region = valid_items[0]
 
-        embed = Embed(title=f"{self.game.long_name} Database",
-                      description=f"Choose the room in {split_region.name} to visualize.")
+        embed = Embed(
+            title=f"{self.game.long_name} Database", description=f"Choose the room in {split_region.name} to visualize."
+        )
 
-        logging.info("Responding to area selection for section %s with %d options.",
-                     split_region.name, len(split_region.areas))
+        logging.info(
+            "Responding to area selection for section %s with %d options.", split_region.name, len(split_region.areas)
+        )
         return await r.send_message(
             embed=embed,
             view=split_region.view,

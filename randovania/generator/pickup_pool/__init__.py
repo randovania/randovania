@@ -1,7 +1,12 @@
-import dataclasses
+from __future__ import annotations
 
-from randovania.game_description.resources.pickup_entry import PickupEntry
+import dataclasses
+from typing import TYPE_CHECKING
+
 from randovania.game_description.resources.pickup_index import PickupIndex
+
+if TYPE_CHECKING:
+    from randovania.game_description.pickup.pickup_entry import PickupEntry
 
 
 @dataclasses.dataclass(frozen=True)
@@ -14,3 +19,8 @@ class PoolResults:
         for key in self.assignment:
             if not isinstance(key, PickupIndex):
                 raise TypeError(f"{key} is not a PickupIndex")
+
+    def extend_with(self, extension: PoolResults):
+        self.to_place.extend(extension.to_place)
+        self.assignment.update(extension.assignment)
+        self.starting.extend(extension.starting)

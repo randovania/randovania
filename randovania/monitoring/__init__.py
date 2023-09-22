@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import contextlib
 import json
 import platform
@@ -6,10 +8,10 @@ import typing
 from pathlib import Path
 
 import sentry_sdk
+import sentry_sdk.integrations.logging
 import sentry_sdk.scrubber
 
 import randovania
-from randovania.version_hash import full_git_hash
 
 _CLIENT_DEFAULT_URL = "https://44282e1a237c48cfaf8120c40debc2fa@o4504594031509504.ingest.sentry.io/4504594037211137"
 _SERVER_DEFAULT_URL = "https://c2147c86fecc490f8e7dcfc201d35895@o4504594031509504.ingest.sentry.io/4504594037276672"
@@ -80,9 +82,13 @@ def _init(include_flask: bool, default_url: str, sampling_rate: float = 1.0, exc
         AioHttpIntegration(),
     ]
 
+    profiles_sample_rate = sampling_rate
     if include_flask:
         from sentry_sdk.integrations.flask import FlaskIntegration
+
         integrations.append(FlaskIntegration())
+    else:
+        profiles_sample_rate = 0.0
 
     server_name = None
     if exclude_server_name:
@@ -95,7 +101,7 @@ def _init(include_flask: bool, default_url: str, sampling_rate: float = 1.0, exc
 
     def traces_sampler(sampling_context):
         # Ignore the websocket request
-        if sampling_context['transaction_context']['name'] == 'generic WSGI request':
+        if sampling_context["transaction_context"]["name"] == "generic WSGI request":
             return 0
 
         return sampling_rate
@@ -103,17 +109,21 @@ def _init(include_flask: bool, default_url: str, sampling_rate: float = 1.0, exc
     sentry_sdk.init(
         dsn=sentry_url,
         integrations=integrations,
-        release=full_git_hash,
+        release=f"v{randovania.VERSION}",
         environment="staging" if randovania.is_dev_version() else "production",
         traces_sampler=traces_sampler,
+        profiles_sample_rate=profiles_sample_rate,
         server_name=server_name,
         auto_session_tracking=include_flask,
         event_scrubber=HomeEventScrubber(),
     )
-    sentry_sdk.set_context("os", {
-        "name": platform.system(),
-        "version": platform.release(),
-    })
+    sentry_sdk.set_context(
+        "os",
+        {
+            "name": platform.system(),
+            "version": platform.release(),
+        },
+    )
 
 
 def client_init():
@@ -121,9 +131,12 @@ def client_init():
         # TODO: It'd be nice to catch these running from source, but only for unmodified main.
         return
 
-    _init(False, _CLIENT_DEFAULT_URL,
-          exclude_server_name=True)
+    _init(False, _CLIENT_DEFAULT_URL, exclude_server_name=True)
     sentry_sdk.set_tag("frozen", randovania.is_frozen())
+
+    # Ignore the "packet queue is empty, aborting" message
+    # It causes a disconnect, but we smoothly reconnect in that case.
+    sentry_sdk.integrations.logging.ignore_logger("engineio.client")
 
 
 def server_init(sampling_rate: float):

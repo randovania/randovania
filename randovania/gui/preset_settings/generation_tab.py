@@ -1,19 +1,25 @@
+from __future__ import annotations
+
 import dataclasses
-from typing import Iterable
+from typing import TYPE_CHECKING
 
-from PySide6 import QtWidgets
-
-from randovania.game_description.game_description import GameDescription
-from randovania.games.game import RandovaniaGame
 from randovania.gui.generated.preset_generation_ui import Ui_PresetGeneration
 from randovania.gui.lib import signal_handling
-from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.preset_settings.preset_tab import PresetTab
-from randovania.interface_common.preset_editor import PresetEditor
 from randovania.layout.base.available_locations import RandomizationMode
 from randovania.layout.base.damage_strictness import LayoutDamageStrictness
 from randovania.layout.base.logical_resource_action import LayoutLogicalResourceAction
-from randovania.layout.preset import Preset
+
+if TYPE_CHECKING:
+    from collections.abc import Iterable
+
+    from PySide6 import QtWidgets
+
+    from randovania.game_description.game_description import GameDescription
+    from randovania.games.game import RandovaniaGame
+    from randovania.gui.lib.window_manager import WindowManager
+    from randovania.interface_common.preset_editor import PresetEditor
+    from randovania.layout.preset import Preset
 
 
 class PresetGeneration(PresetTab, Ui_PresetGeneration):
@@ -37,11 +43,7 @@ class PresetGeneration(PresetTab, Ui_PresetGeneration):
         signal_handling.on_checked(self.trick_level_minimal_logic_check, self._on_trick_level_minimal_logic_check)
 
         # Minimal Logic
-        for w in [
-            self.trick_level_minimal_logic_check,
-            self.trick_level_minimal_logic_label,
-            self.minimal_logic_line
-        ]:
+        for w in [self.trick_level_minimal_logic_check, self.trick_level_minimal_logic_label, self.minimal_logic_line]:
             w.setVisible(game_description.minimal_logic is not None)
         if game_description.minimal_logic is not None:
             self.trick_level_minimal_logic_label.setText(
@@ -51,10 +53,19 @@ class PresetGeneration(PresetTab, Ui_PresetGeneration):
             )
 
         # Development
-        signal_handling.on_checked(self.single_set_for_pickups_that_solve_check,
-                                   self._persist_bool_layout_field("single_set_for_pickups_that_solve"))
-        signal_handling.on_checked(self.staggered_multi_pickup_placement_check,
-                                   self._persist_bool_layout_field("staggered_multi_pickup_placement"))
+        signal_handling.on_checked(
+            self.single_set_for_pickups_that_solve_check,
+            self._persist_bool_layout_field("single_set_for_pickups_that_solve"),
+        )
+        signal_handling.on_checked(
+            self.staggered_multi_pickup_placement_check,
+            self._persist_bool_layout_field("staggered_multi_pickup_placement"),
+        )
+        signal_handling.on_checked(
+            self.check_if_beatable_after_base_patches_check,
+            self._persist_bool_layout_field("check_if_beatable_after_base_patches"),
+        )
+        self.check_if_beatable_after_base_patches_check.setVisible(False)  # broken, hide it
 
         # Damage strictness
         self.damage_strictness_combo.setItemData(0, LayoutDamageStrictness.STRICT)
@@ -72,13 +83,17 @@ class PresetGeneration(PresetTab, Ui_PresetGeneration):
 
         self.local_first_progression_check.setChecked(layout.first_progression_must_be_local)
         self.check_major_minor.setChecked(
-            layout.available_locations.randomization_mode == RandomizationMode.MAJOR_MINOR_SPLIT)
+            layout.available_locations.randomization_mode == RandomizationMode.MAJOR_MINOR_SPLIT
+        )
 
         self.trick_level_minimal_logic_check.setChecked(layout.trick_level.minimal_logic)
         signal_handling.set_combo_with_value(self.dangerous_combo, layout.logical_resource_action)
 
         self.single_set_for_pickups_that_solve_check.setChecked(layout.single_set_for_pickups_that_solve)
         self.staggered_multi_pickup_placement_check.setChecked(layout.staggered_multi_pickup_placement)
+        self.check_if_beatable_after_base_patches_check.setChecked(
+            layout.check_if_beatable_after_base_patches and False  # always disable it when changing from the UI
+        )
 
         signal_handling.set_combo_with_value(self.damage_strictness_combo, preset.configuration.damage_strictness)
 
@@ -102,6 +117,8 @@ class PresetGeneration(PresetTab, Ui_PresetGeneration):
     def experimental_settings(self) -> Iterable[QtWidgets.QWidget]:
         yield self.single_set_for_pickups_that_solve_check
         yield self.staggered_multi_pickup_placement_check
+        # Always hidden right now
+        # yield self.check_if_beatable_after_base_patches_check
         yield self.local_first_progression_check
         yield self.local_first_progression_label
         yield self.dangerous_combo
@@ -127,9 +144,7 @@ class PresetGeneration(PresetTab, Ui_PresetGeneration):
     def _on_trick_level_minimal_logic_check(self, state: bool):
         with self._editor as options:
             options.set_configuration_field(
-                "trick_level",
-                dataclasses.replace(options.configuration.trick_level,
-                                    minimal_logic=state)
+                "trick_level", dataclasses.replace(options.configuration.trick_level, minimal_logic=state)
             )
 
     def _on_update_damage_strictness(self, new_index: int):

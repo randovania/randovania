@@ -1,15 +1,31 @@
+from __future__ import annotations
+
 import copy
-from pathlib import Path
-from typing import BinaryIO
+from typing import TYPE_CHECKING, BinaryIO
 
 import construct
-from construct import (Struct, Int32ub, Const, Byte, Float32b, Flag,
-                       Short, PrefixedArray, Switch, VarInt, Float64b, Compressed)
+from construct import (
+    Byte,
+    Compressed,
+    Const,
+    Flag,
+    Float32b,
+    Float64b,
+    Int32ub,
+    PrefixedArray,
+    Short,
+    Struct,
+    Switch,
+    VarInt,
+)
 
 from randovania.game_description import game_migration
 from randovania.game_description.db.hint_node import HintNodeKind
 from randovania.games.game import RandovaniaGame
-from randovania.lib.construct_lib import String, convert_to_raw_python, OptionalValue, ConstructDict, JsonEncodedValue
+from randovania.lib.construct_lib import ConstructDict, JsonEncodedValue, OptionalValue, String, convert_to_raw_python
+
+if TYPE_CHECKING:
+    from pathlib import Path
 
 current_format_version = 10
 
@@ -23,6 +39,7 @@ _EXPECTED_FIELDS = [
     "minimal_logic",
     "victory_condition",
     "dock_weakness_database",
+    "used_trick_levels",
     "regions",
 ]
 
@@ -81,10 +98,13 @@ ConstructTrickResourceInfo = _build_resource_info(
 
 ConstructDamageReductions = Struct(
     name=String,
-    reductions=PrefixedArray(VarInt, Struct(
-        name=String,
-        multiplier=Float32b,
-    ))
+    reductions=PrefixedArray(
+        VarInt,
+        Struct(
+            name=String,
+            multiplier=Float32b,
+        ),
+    ),
 )
 
 ConstructResourceType = construct.Enum(Byte, items=0, events=1, tricks=2, damage=3, versions=4, misc=5)
@@ -103,7 +123,7 @@ requirement_type_map = {
 
 ConstructRequirement = Struct(
     type=construct.Enum(Byte, resource=0, **{"and": 1, "or": 2}, template=3),
-    data=Switch(lambda this: this.type, requirement_type_map)
+    data=Switch(lambda this: this.type, requirement_type_map),
 )
 ConstructRequirementArray = Struct(
     comment=OptionalValue(String),
@@ -176,50 +196,54 @@ class NodeAdapter(construct.Adapter):
         )
 
 
-ConstructNode = NodeAdapter(Struct(
-    node_type=construct.Enum(Byte, generic=0, dock=1, pickup=2, event=4, configurable_node=5,
-                             hint=6, teleporter_network=7),
-    data=Switch(
-        lambda this: this.node_type,
-        {
-            "generic": Struct(
-                **NodeBaseFields,
-            ),
-            "dock": Struct(
-                **NodeBaseFields,
-                dock_type=String,
-                default_connection=ConstructNodeIdentifier,
-                default_dock_weakness=String,
-                exclude_from_dock_rando=Flag,
-                incompatible_dock_weaknesses=PrefixedArray(VarInt, String),
-                override_default_open_requirement=OptionalValue(ConstructRequirement),
-                override_default_lock_requirement=OptionalValue(ConstructRequirement),
-            ),
-            "pickup": Struct(
-                **NodeBaseFields,
-                pickup_index=VarInt,
-                location_category=construct.Enum(Byte, major=0, minor=1),
-            ),
-            "event": Struct(
-                **NodeBaseFields,
-                event_name=String,
-            ),
-            "configurable_node": Struct(
-                **NodeBaseFields,
-            ),
-            "hint": Struct(
-                **NodeBaseFields,
-                kind=ConstructHintNodeKind,
-                requirement_to_collect=ConstructRequirement,
-            ),
-            "teleporter_network": Struct(
-                **NodeBaseFields,
-                is_unlocked=ConstructRequirement,
-                network=String,
-                requirement_to_activate=ConstructRequirement,
-            )
-        }
-    )))
+ConstructNode = NodeAdapter(
+    Struct(
+        node_type=construct.Enum(
+            Byte, generic=0, dock=1, pickup=2, event=4, configurable_node=5, hint=6, teleporter_network=7
+        ),
+        data=Switch(
+            lambda this: this.node_type,
+            {
+                "generic": Struct(
+                    **NodeBaseFields,
+                ),
+                "dock": Struct(
+                    **NodeBaseFields,
+                    dock_type=String,
+                    default_connection=ConstructNodeIdentifier,
+                    default_dock_weakness=String,
+                    exclude_from_dock_rando=Flag,
+                    incompatible_dock_weaknesses=PrefixedArray(VarInt, String),
+                    override_default_open_requirement=OptionalValue(ConstructRequirement),
+                    override_default_lock_requirement=OptionalValue(ConstructRequirement),
+                ),
+                "pickup": Struct(
+                    **NodeBaseFields,
+                    pickup_index=VarInt,
+                    location_category=construct.Enum(Byte, major=0, minor=1),
+                ),
+                "event": Struct(
+                    **NodeBaseFields,
+                    event_name=String,
+                ),
+                "configurable_node": Struct(
+                    **NodeBaseFields,
+                ),
+                "hint": Struct(
+                    **NodeBaseFields,
+                    kind=ConstructHintNodeKind,
+                    requirement_to_collect=ConstructRequirement,
+                ),
+                "teleporter_network": Struct(
+                    **NodeBaseFields,
+                    is_unlocked=ConstructRequirement,
+                    network=String,
+                    requirement_to_activate=ConstructRequirement,
+                ),
+            },
+        ),
+    )
+)
 
 ConstructArea = Struct(
     default_node=OptionalValue(String),
@@ -236,33 +260,46 @@ ConstructRegion = Struct(
 ConstructGameEnum = construct.Enum(Byte, **{enum_item.value: i for i, enum_item in enumerate(RandovaniaGame)})
 
 ConstructMinimalLogicDatabase = Struct(
-    items_to_exclude=PrefixedArray(VarInt, Struct(
-        name=String,
-        when_shuffled=OptionalValue(String),
-    )),
-    custom_item_amount=PrefixedArray(VarInt, Struct(
-        name=String,
-        value=VarInt,
-    )),
-    events_to_exclude=PrefixedArray(VarInt, Struct(
-        name=String,
-        reason=OptionalValue(String),
-    )),
+    items_to_exclude=PrefixedArray(
+        VarInt,
+        Struct(
+            name=String,
+            when_shuffled=OptionalValue(String),
+        ),
+    ),
+    custom_item_amount=PrefixedArray(
+        VarInt,
+        Struct(
+            name=String,
+            value=VarInt,
+        ),
+    ),
+    events_to_exclude=PrefixedArray(
+        VarInt,
+        Struct(
+            name=String,
+            reason=OptionalValue(String),
+        ),
+    ),
     description=String,
 )
 
 ConstructDockWeaknessDatabase = Struct(
-    types=ConstructDict(Struct(
-        name=String,
-        extra=JsonEncodedValue,
-        items=ConstructDict(ConstructDockWeakness),
-        dock_rando=Struct(
-            unlocked=OptionalValue(String),
-            locked=OptionalValue(String),
-            change_from=PrefixedArray(VarInt, String),
-            change_to=PrefixedArray(VarInt, String),
-        ),
-    )),
+    types=ConstructDict(
+        Struct(
+            name=String,
+            extra=JsonEncodedValue,
+            items=ConstructDict(ConstructDockWeakness),
+            dock_rando=OptionalValue(
+                Struct(
+                    unlocked=String,
+                    locked=String,
+                    change_from=PrefixedArray(VarInt, String),
+                    change_to=PrefixedArray(VarInt, String),
+                )
+            ),
+        )
+    ),
     default_weakness=Struct(
         type=String,
         name=String,
@@ -274,21 +311,25 @@ ConstructDockWeaknessDatabase = Struct(
     ),
 )
 
+ConstructUsedTrickLevels = OptionalValue(ConstructDict(PrefixedArray(VarInt, construct.Byte)))
+
 ConstructGame = Struct(
     magic_number=Const(b"Req."),
     format_version=Const(current_format_version, Int32ub),
-    db=Compressed(Struct(
-        schema_version=Const(game_migration.CURRENT_VERSION, VarInt),
-        game=ConstructGameEnum,
-        resource_database=ConstructResourceDatabase,
-        layers=PrefixedArray(VarInt, String),
-
-        starting_location=ConstructNodeIdentifier,
-        initial_states=ConstructDict(PrefixedArray(VarInt, ConstructResourceGain)),
-        minimal_logic=OptionalValue(ConstructMinimalLogicDatabase),
-        victory_condition=ConstructRequirement,
-
-        dock_weakness_database=ConstructDockWeaknessDatabase,
-        regions=PrefixedArray(VarInt, ConstructRegion),
-    ), "lzma")
+    db=Compressed(
+        Struct(
+            schema_version=Const(game_migration.CURRENT_VERSION, VarInt),
+            game=ConstructGameEnum,
+            resource_database=ConstructResourceDatabase,
+            layers=PrefixedArray(VarInt, String),
+            starting_location=ConstructNodeIdentifier,
+            initial_states=ConstructDict(PrefixedArray(VarInt, ConstructResourceGain)),
+            minimal_logic=OptionalValue(ConstructMinimalLogicDatabase),
+            victory_condition=ConstructRequirement,
+            dock_weakness_database=ConstructDockWeaknessDatabase,
+            used_trick_levels=ConstructUsedTrickLevels,
+            regions=PrefixedArray(VarInt, ConstructRegion),
+        ),
+        "lzma",
+    ),
 )

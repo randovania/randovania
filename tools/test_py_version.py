@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import struct
 import sys
 
@@ -19,10 +21,7 @@ expected_ver = version_str(REQUIRED_VERSION_MAJOR, REQUIRED_VERSION_MINOR, REQUI
 actual_ver = version_str(major, minor, bits)
 
 if (major, minor, bits) != (REQUIRED_VERSION_MAJOR, REQUIRED_VERSION_MINOR, REQUIRED_WORD_SIZE_BITS):
-    error_msg = "Default python installation must be %s; Found %s" % (
-        expected_ver,
-        actual_ver,
-    )
+    error_msg = f"Default python installation must be {expected_ver}; Found {actual_ver}"
     raise Exception(error_msg)
 
 print("Using " + actual_ver)

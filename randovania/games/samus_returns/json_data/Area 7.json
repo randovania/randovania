@@ -188,7 +188,7 @@
                         },
                         "3rd Level": {
                             "type": "template",
-                            "data": "Destroy Bomb Block"
+                            "data": "Lay Any Bomb"
                         }
                     }
                 },
@@ -619,7 +619,7 @@
                         },
                         "3rd Level": {
                             "type": "template",
-                            "data": "Destroy Bomb Block"
+                            "data": "Lay Any Bomb"
                         }
                     }
                 },
@@ -693,7 +693,7 @@
                                                 },
                                                 {
                                                     "type": "template",
-                                                    "data": "Destroy Bomb Block"
+                                                    "data": "Lay Any Bomb"
                                                 }
                                             ]
                                         }
@@ -826,7 +826,7 @@
                                                         "items": [
                                                             {
                                                                 "type": "template",
-                                                                "data": "Destroy Bomb Block"
+                                                                "data": "Lay Any Bomb"
                                                             },
                                                             {
                                                                 "type": "or",
@@ -1026,21 +1026,16 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "or",
+                                                    "type": "and",
                                                     "data": {
                                                         "comment": null,
                                                         "items": [
                                                             {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "PBAmmo",
-                                                                    "amount": 2,
-                                                                    "negate": false
-                                                                }
+                                                                "type": "template",
+                                                                "data": "Lay Power Bomb"
                                                             },
                                                             {
-                                                                "type": "and",
+                                                                "type": "or",
                                                                 "data": {
                                                                     "comment": null,
                                                                     "items": [
@@ -1058,7 +1053,7 @@
                                                                             "data": {
                                                                                 "type": "items",
                                                                                 "name": "PBAmmo",
-                                                                                "amount": 1,
+                                                                                "amount": 2,
                                                                                 "negate": false
                                                                             }
                                                                         }
@@ -1076,11 +1071,11 @@
                         },
                         "Next to Teleporter": {
                             "type": "template",
-                            "data": "Destroy Bomb Block"
+                            "data": "Lay Any Bomb"
                         },
                         "2nd Level": {
                             "type": "template",
-                            "data": "Destroy Bomb Block"
+                            "data": "Lay Any Bomb"
                         }
                     }
                 },
@@ -1120,12 +1115,24 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "resource",
+                                                    "type": "and",
                                                     "data": {
-                                                        "type": "items",
-                                                        "name": "PBAmmo",
-                                                        "amount": 2,
-                                                        "negate": false
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Lay Power Bomb"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "PBAmmo",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -1598,7 +1605,7 @@
                     "connections": {
                         "Tunnel to Exit Puzzle Room 2": {
                             "type": "template",
-                            "data": "Destroy Bomb Block"
+                            "data": "Lay Any Bomb"
                         }
                     }
                 },
@@ -1625,7 +1632,7 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Destroy Bomb Block"
+                                        "data": "Lay Any Bomb"
                                     },
                                     {
                                         "type": "resource",
@@ -1897,7 +1904,7 @@
                         },
                         "Above Save Station": {
                             "type": "template",
-                            "data": "Destroy Bomb Block"
+                            "data": "Lay Any Bomb"
                         }
                     }
                 },
@@ -2053,7 +2060,7 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Destroy Bomb Block"
+                                        "data": "Lay Any Bomb"
                                     },
                                     {
                                         "type": "or",
@@ -2221,7 +2228,7 @@
                                             "items": [
                                                 {
                                                     "type": "template",
-                                                    "data": "Destroy Bomb Block"
+                                                    "data": "Lay Any Bomb"
                                                 },
                                                 {
                                                     "type": "resource",
@@ -2772,12 +2779,10 @@
                     "valid_starting_location": false,
                     "connections": {
                         "Door to Omega+ Arena Access": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "events",
-                                "name": "Omega 4",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         },
                         "Event - Omega Metroid+": {
@@ -3507,7 +3512,7 @@
             }
         },
         "Transport to Area 6": {
-            "default_node": "Elevator to Area 6 - Transport to Area 7",
+            "default_node": "Elevator to Area 6",
             "extra": {
                 "total_boundings": {
                     "x1": -19650.0,
@@ -3650,7 +3655,7 @@
                                                 },
                                                 {
                                                     "type": "template",
-                                                    "data": "Destroy Bomb Block"
+                                                    "data": "Lay Any Bomb"
                                                 }
                                             ]
                                         }
@@ -3907,7 +3912,7 @@
                         }
                     }
                 },
-                "Elevator to Area 6 - Transport to Area 7": {
+                "Elevator to Area 6": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3922,18 +3927,16 @@
                     "extra": {
                         "actor_name": "LE_Platform_Elevator_FromArea07",
                         "actor_type": "weightactivatedplatform",
-                        "start_point_actor_name": "ST_FromArea07",
-                        "keep_name_when_vanilla": false,
-                        "editable": true
+                        "start_point_actor_name": "ST_FromArea07"
                     },
                     "valid_starting_location": true,
-                    "dock_type": "teleporter",
+                    "dock_type": "elevator",
                     "default_connection": {
                         "region": "Area 6",
                         "area": "Transport to Area 7",
-                        "node": "Save Station"
+                        "node": "Elevator to Area 7"
                     },
-                    "default_dock_weakness": "Teleporter",
+                    "default_dock_weakness": "Elevator",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -3992,7 +3995,7 @@
                                                 },
                                                 {
                                                     "type": "template",
-                                                    "data": "Destroy Bomb Block"
+                                                    "data": "Lay Any Bomb"
                                                 }
                                             ]
                                         }
@@ -4037,7 +4040,7 @@
                         },
                         "Inside Mountain": {
                             "type": "template",
-                            "data": "Destroy Bomb Block"
+                            "data": "Lay Any Bomb"
                         }
                     }
                 },
@@ -4291,7 +4294,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Elevator to Area 6 - Transport to Area 7": {
+                        "Elevator to Area 6": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4359,7 +4362,7 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Destroy Missile Block"
+                                        "data": "Shoot Any Missile"
                                     },
                                     {
                                         "type": "resource",
@@ -4535,13 +4538,13 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Elevator to Area 6 - Transport to Area 7": {
+                        "Elevator to Area 6": {
                             "type": "template",
                             "data": "Lay Power Bomb"
                         },
                         "Save Station": {
                             "type": "template",
-                            "data": "Destroy Bomb Block"
+                            "data": "Lay Any Bomb"
                         },
                         "Pickup (Super Missile Tank)": {
                             "type": "and",
@@ -4549,17 +4552,12 @@
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "SMAmmo",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
+                                        "type": "template",
+                                        "data": "Shoot Super Missile"
                                     },
                                     {
                                         "type": "template",
-                                        "data": "Destroy Bomb Block"
+                                        "data": "Lay Any Bomb"
                                     },
                                     {
                                         "type": "or",
@@ -4848,7 +4846,7 @@
                         }
                     }
                 },
-                "Dock to Omega Arena South": {
+                "Tunnel to Omega Arena South": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4862,13 +4860,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Area 7",
                         "area": "Omega Arena South",
                         "node": "Tunnel to Omega Arena South Access"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "Tunnel",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -4983,8 +4981,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -10759.566655454648,
-                        "y": -1901.3790783720149,
+                        "x": -10759.57,
+                        "y": -1901.38,
                         "z": 0.0
                     },
                     "description": "",
@@ -4997,7 +4995,7 @@
                     "default_connection": {
                         "region": "Area 7",
                         "area": "Omega Arena South Access",
-                        "node": "Dock to Omega Arena South"
+                        "node": "Tunnel to Omega Arena South"
                     },
                     "default_dock_weakness": "Tunnel",
                     "exclude_from_dock_rando": false,
@@ -5049,12 +5047,10 @@
                     "valid_starting_location": false,
                     "connections": {
                         "Door to Omega Arena South Access": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "events",
-                                "name": "Omega 3",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         },
                         "Tunnel to Omega Arena South Access": {
@@ -5073,7 +5069,7 @@
                                     },
                                     {
                                         "type": "template",
-                                        "data": "Destroy Missile Block"
+                                        "data": "Shoot Any Missile"
                                     }
                                 ]
                             }
@@ -5197,12 +5193,10 @@
                     "valid_starting_location": false,
                     "connections": {
                         "Door to Omega Arena North Access": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "events",
-                                "name": "Omega 2",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         },
                         "Event - Omega Metroid": {
@@ -5265,7 +5259,7 @@
                     "connections": {
                         "Tunnel to Omega Shaft West": {
                             "type": "template",
-                            "data": "Destroy Bomb Block"
+                            "data": "Lay Any Bomb"
                         }
                     }
                 },
@@ -5304,13 +5298,8 @@
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
+                                        "type": "template",
+                                        "data": "Lay Power Bomb"
                                     },
                                     {
                                         "type": "or",
@@ -5631,13 +5620,8 @@
                                             "comment": null,
                                             "items": [
                                                 {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Morph",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
+                                                    "type": "template",
+                                                    "data": "Lay Power Bomb"
                                                 },
                                                 {
                                                     "type": "resource",
@@ -5780,12 +5764,24 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "resource",
+                                                    "type": "and",
                                                     "data": {
-                                                        "type": "items",
-                                                        "name": "PBAmmo",
-                                                        "amount": 2,
-                                                        "negate": false
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Lay Power Bomb"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "PBAmmo",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -6026,7 +6022,7 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Destroy Missile Block"
+                                        "data": "Shoot Any Missile"
                                     },
                                     {
                                         "type": "resource",
@@ -6464,7 +6460,7 @@
                                     },
                                     {
                                         "type": "template",
-                                        "data": "Destroy Bomb Block"
+                                        "data": "Lay Any Bomb"
                                     },
                                     {
                                         "type": "template",
@@ -6543,15 +6539,15 @@
                     "connections": {
                         "Door to Omega Arena North Access": {
                             "type": "template",
-                            "data": "Destroy Bomb Block"
+                            "data": "Lay Any Bomb"
                         },
                         "Tunnel to Launch Tunnel North (Top)": {
                             "type": "template",
-                            "data": "Destroy Bomb Block"
+                            "data": "Lay Any Bomb"
                         },
                         "Tunnel to Launch Tunnel North (Bottom)": {
                             "type": "template",
-                            "data": "Destroy Bomb Block"
+                            "data": "Lay Any Bomb"
                         }
                     }
                 },
@@ -7059,7 +7055,7 @@
                     "connections": {
                         "Tunnel to Omega Shaft West (Bottom)": {
                             "type": "template",
-                            "data": "Destroy Bomb Block"
+                            "data": "Lay Any Bomb"
                         }
                     }
                 },
@@ -7257,7 +7253,7 @@
             }
         },
         "Transport to Area 8": {
-            "default_node": "Elevator to Area 8 - Transport to Area 7",
+            "default_node": "Elevator to Area 8",
             "extra": {
                 "total_boundings": {
                     "x1": -30850.0,
@@ -7314,7 +7310,7 @@
                 "asset_id": "collision_camera_021"
             },
             "nodes": {
-                "Elevator to Area 8 - Transport to Area 7": {
+                "Elevator to Area 8": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7329,18 +7325,16 @@
                     "extra": {
                         "actor_name": "LE_Platform_Elevator_FromArea10",
                         "actor_type": "weightactivatedplatform",
-                        "start_point_actor_name": "ST_FromArea10",
-                        "keep_name_when_vanilla": false,
-                        "editable": true
+                        "start_point_actor_name": "ST_FromArea10"
                     },
                     "valid_starting_location": true,
-                    "dock_type": "teleporter",
+                    "dock_type": "elevator",
                     "default_connection": {
                         "region": "Area 8",
                         "area": "Transport to Area 7",
-                        "node": "Elevator to Area 7 - Transport to Area 8"
+                        "node": "Elevator to Area 7"
                     },
-                    "default_dock_weakness": "Teleporter",
+                    "default_dock_weakness": "Elevator",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -7369,7 +7363,7 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "events",
-                                                        "name": "Area 7 - Transport to Area 8",
+                                                        "name": "Area 7 - Transport to Area 8 Grapple Block",
                                                         "amount": 1,
                                                         "negate": false
                                                     }
@@ -7446,7 +7440,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Elevator to Area 8 - Transport to Area 7": {
+                        "Elevator to Area 8": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7464,7 +7458,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "events",
-                                            "name": "Area 7 - Transport to Area 8",
+                                            "name": "Area 7 - Transport to Area 8 Grapple Block",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -7479,7 +7473,7 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Destroy Missile Block"
+                                        "data": "Shoot Any Missile"
                                     },
                                     {
                                         "type": "resource",
@@ -7518,7 +7512,7 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "event_name": "Area 7 - Transport to Area 8",
+                    "event_name": "Area 7 - Transport to Area 8 Grapple Block",
                     "connections": {
                         "Door to Exit Puzzle Room 2": {
                             "type": "and",
@@ -7541,11 +7535,11 @@
                                             "items": [
                                                 {
                                                     "type": "template",
-                                                    "data": "Destroy Missile Block"
+                                                    "data": "Shoot Any Missile"
                                                 },
                                                 {
                                                     "type": "template",
-                                                    "data": "Destroy Bomb Block"
+                                                    "data": "Lay Any Bomb"
                                                 }
                                             ]
                                         }

@@ -1,14 +1,19 @@
-import asyncio
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
 
 from PySide6 import QtWidgets
 
 from randovania.gui.lib import common_qt_lib
 
+if TYPE_CHECKING:
+    import asyncio
 
-async def cancellable_wait(parent: QtWidgets.QWidget | None, task: asyncio.Task,
-                           title: str, message: str):
+
+async def cancellable_wait(parent: QtWidgets.QWidget | None, task: asyncio.Task, title: str, message: str):
     message_box = QtWidgets.QMessageBox(
-        QtWidgets.QMessageBox.NoIcon, title,
+        QtWidgets.QMessageBox.NoIcon,
+        title,
         message,
         QtWidgets.QMessageBox.Cancel,
         parent,

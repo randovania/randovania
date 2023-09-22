@@ -494,17 +494,16 @@
                         "target_spawn_point": "elevator_skybase_000_platform",
                         "start_point_actor_name": "elevator_shipyard_000_platform",
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad",
-                        "keep_name_when_vanilla": true,
-                        "editable": true
+                        "transporter_name": "Itorash"
                     },
                     "valid_starting_location": true,
-                    "dock_type": "teleporter",
+                    "dock_type": "elevator",
                     "default_connection": {
                         "region": "Hanubia",
                         "area": "Transport to Itorash",
-                        "node": "Elevator to Itorash - Transport to Hanubia"
+                        "node": "Elevator to Itorash"
                     },
-                    "default_dock_weakness": "Teleporter",
+                    "default_dock_weakness": "Elevator",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -696,7 +695,7 @@
                             "type": "template",
                             "data": "Lay Power Bomb"
                         },
-                        "Elevator to Raven Beak Arena": {
+                        "Dock to Raven Beak Arena": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -843,7 +842,7 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Elevator to Raven Beak Arena": {
+                        "Dock to Raven Beak Arena": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -852,7 +851,7 @@
                         }
                     }
                 },
-                "Elevator to Raven Beak Arena": {
+                "Dock to Raven Beak Arena": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -868,18 +867,16 @@
                         "actor_name": "commander_elevator",
                         "actor_def": "actordef:actors/props/commander_elevator/charclasses/commander_elevator.bmsad",
                         "start_point_actor_name": "weightactivatedplatform_commanderelevator_000",
-                        "start_point_actor_def": "actordef:actors/props/wplatform_cm_elevator/charclasses/weightactivatedplatform_commanderelevator.bmsad",
-                        "keep_name_when_vanilla": false,
-                        "editable": false
+                        "start_point_actor_def": "actordef:actors/props/wplatform_cm_elevator/charclasses/weightactivatedplatform_commanderelevator.bmsad"
                     },
                     "valid_starting_location": false,
-                    "dock_type": "teleporter",
+                    "dock_type": "other",
                     "default_connection": {
                         "region": "Itorash",
                         "area": "Raven Beak Arena",
                         "node": "Before Fight"
                     },
-                    "default_dock_weakness": "Teleporter",
+                    "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -1148,16 +1145,11 @@
                                                             {
                                                                 "type": "and",
                                                                 "data": {
-                                                                    "comment": "52 wave shots",
+                                                                    "comment": "52 wide + plasma + wave shots",
                                                                     "items": [
                                                                         {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "items",
-                                                                                "name": "Wave",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
+                                                                            "type": "template",
+                                                                            "data": "Beam Damage 240"
                                                                         }
                                                                     ]
                                                                 }
@@ -1165,11 +1157,11 @@
                                                             {
                                                                 "type": "and",
                                                                 "data": {
-                                                                    "comment": "83 plasma shots",
+                                                                    "comment": "83 wide + plasma shots or 105 wide + wave shots",
                                                                     "items": [
                                                                         {
                                                                             "type": "template",
-                                                                            "data": "Shoot Plasma Beam"
+                                                                            "data": "Beam Damage 120"
                                                                         },
                                                                         {
                                                                             "type": "resource",
@@ -1186,11 +1178,11 @@
                                                             {
                                                                 "type": "and",
                                                                 "data": {
-                                                                    "comment": "167 wide shots",
+                                                                    "comment": "167 wide shots or 157 plasma + wave shots",
                                                                     "items": [
                                                                         {
                                                                             "type": "template",
-                                                                            "data": "Shoot Wide Beam"
+                                                                            "data": "Beam Damage 75"
                                                                         },
                                                                         {
                                                                             "type": "resource",
@@ -1207,7 +1199,7 @@
                                                             {
                                                                 "type": "and",
                                                                 "data": {
-                                                                    "comment": "500 power beam shots",
+                                                                    "comment": "500 power beam shots or 250 plasma shots or 313 wave shots",
                                                                     "items": [
                                                                         {
                                                                             "type": "template",
@@ -1232,7 +1224,7 @@
                                                                     "items": [
                                                                         {
                                                                             "type": "template",
-                                                                            "data": "Shoot Ice Missile"
+                                                                            "data": "Shoot Super Ice Missile"
                                                                         },
                                                                         {
                                                                             "type": "resource",
@@ -1332,7 +1324,139 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Escape Sequence": {
+                        "Event - Escape Sequence": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Lay Power Bomb"
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Space",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Simple IBJ"
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Spin",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Speed",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "or",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Movement",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Speedbooster",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "or",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Walljump",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "SWJ",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Event - Escape Sequence": {
+                    "node_type": "event",
+                    "heal": true,
+                    "coordinates": {
+                        "x": 5736.34,
+                        "y": 2267.28,
+                        "z": 0.0
+                    },
+                    "description": "End of the game",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "SP_Checkpoint_Endgame",
+                        "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
+                    },
+                    "valid_starting_location": false,
+                    "event_name": "Ship",
+                    "connections": {
+                        "Dock to Elevator to Raven Beak": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1341,30 +1465,27 @@
                         }
                     }
                 },
-                "Escape Sequence": {
+                "Dock to Elevator to Raven Beak": {
                     "node_type": "dock",
-                    "heal": true,
+                    "heal": false,
                     "coordinates": {
-                        "x": 5736.34,
-                        "y": 2267.28,
+                        "x": 6299.61,
+                        "y": 2370.1,
                         "z": 0.0
                     },
                     "description": "",
                     "layers": [
                         "default"
                     ],
-                    "extra": {
-                        "keep_name_when_vanilla": false,
-                        "editable": false
-                    },
+                    "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "teleporter",
+                    "dock_type": "other",
                     "default_connection": {
-                        "region": "Hanubia",
-                        "area": "Raven Beak X Arena",
-                        "node": "Raven Beak X Checkpoint"
+                        "region": "Itorash",
+                        "area": "Elevator to Raven Beak",
+                        "node": "Start Point"
                     },
-                    "default_dock_weakness": "Teleporter",
+                    "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,

@@ -1,16 +1,21 @@
+from __future__ import annotations
+
 import collections
 from random import Random
+from typing import TYPE_CHECKING
 
 from PySide6 import QtWidgets
 
-from randovania.game_description.game_patches import GamePatches
 from randovania.games.cave_story.exporter.patch_data_factory import get_hints
-from randovania.games.game import RandovaniaGame
 from randovania.gui.game_details.game_details_tab import GameDetailsTab
-from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout import filtered_database
-from randovania.layout.base.base_configuration import BaseConfiguration
-from randovania.lib.dict_lib import iterate_key_sorted
+from randovania.lib.container_lib import iterate_key_sorted
+
+if TYPE_CHECKING:
+    from randovania.game_description.game_patches import GamePatches
+    from randovania.games.game import RandovaniaGame
+    from randovania.interface_common.players_configuration import PlayersConfiguration
+    from randovania.layout.base.base_configuration import BaseConfiguration
 
 
 class CSHintDetailsTab(GameDetailsTab):
@@ -24,8 +29,9 @@ class CSHintDetailsTab(GameDetailsTab):
     def tab_title(self) -> str:
         return "Hints"
 
-    def update_content(self, configuration: BaseConfiguration, all_patches: dict[int, GamePatches],
-                       players: PlayersConfiguration):
+    def update_content(
+        self, configuration: BaseConfiguration, all_patches: dict[int, GamePatches], players: PlayersConfiguration
+    ):
         self.tree_widget.clear()
         self.tree_widget.setColumnCount(3)
         self.tree_widget.setHeaderLabels(["Hint", "Pickup", "In-Game Text"])

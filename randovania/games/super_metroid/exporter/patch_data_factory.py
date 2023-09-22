@@ -1,24 +1,29 @@
+from __future__ import annotations
+
 import dataclasses
+from typing import TYPE_CHECKING
 
 from randovania.exporter import pickup_exporter
-from randovania.exporter.patch_data_factory import BasePatchDataFactory
+from randovania.exporter.patch_data_factory import PatchDataFactory
 from randovania.game_description.assignment import PickupTarget
-from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.games.game import RandovaniaGame
-from randovania.games.super_metroid.layout.super_metroid_configuration import SuperMetroidConfiguration
-from randovania.games.super_metroid.layout.super_metroid_cosmetic_patches import SuperMetroidCosmeticPatches, MusicMode
+from randovania.games.super_metroid.layout.super_metroid_cosmetic_patches import MusicMode, SuperMetroidCosmeticPatches
 from randovania.generator.pickup_pool import pickup_creator
 
+if TYPE_CHECKING:
+    from randovania.game_description.resources.item_resource_info import ItemResourceInfo
+    from randovania.games.super_metroid.layout.super_metroid_configuration import SuperMetroidConfiguration
+
 _multiplier_for_item = {
-    "Energy Tank": 100, "Reserve Tank": 100,
+    "Energy Tank": 100,
+    "Reserve Tank": 100,
 }
 
 _mapping = {
     "Missile": "Missile Expansion",
     "Super Missile": "Super Missile Expansion",
     "Power Bombs": "Power Bomb Expansion",
-
     "Nothing": "No Item",
 }
 
@@ -48,8 +53,7 @@ _effect = {
 }
 
 
-def sm_pickup_details_to_patcher(detail: pickup_exporter.ExportedPickupDetails
-                                 ) -> dict:
+def sm_pickup_details_to_patcher(detail: pickup_exporter.ExportedPickupDetails) -> dict:
     pickup_type = "Nothing"
     count = 0
 
@@ -87,7 +91,7 @@ def sm_starting_items_to_patcher(item: ItemResourceInfo, quantity: int) -> dict:
     return result
 
 
-class SuperMetroidPatchDataFactory(BasePatchDataFactory):
+class SuperMetroidPatchDataFactory(PatchDataFactory):
     cosmetic_patches: SuperMetroidCosmeticPatches
     configuration: SuperMetroidConfiguration
 
@@ -96,8 +100,9 @@ class SuperMetroidPatchDataFactory(BasePatchDataFactory):
 
     def create_data(self) -> dict:
         db = self.game
-        useless_target = PickupTarget(pickup_creator.create_nothing_pickup(db.resource_database),
-                                      self.players_config.player_index)
+        useless_target = PickupTarget(
+            pickup_creator.create_nothing_pickup(db.resource_database), self.players_config.player_index
+        )
 
         pickup_list = pickup_exporter.export_all_indices(
             self.patches,
@@ -106,8 +111,10 @@ class SuperMetroidPatchDataFactory(BasePatchDataFactory):
             self.rng,
             self.configuration.pickup_model_style,
             self.configuration.pickup_model_data_source,
-            exporter=pickup_exporter.create_pickup_exporter(pickup_exporter.GenericAcquiredMemo(), self.players_config),
-            visual_etm=pickup_creator.create_visual_etm(),
+            exporter=pickup_exporter.create_pickup_exporter(
+                pickup_exporter.GenericAcquiredMemo(), self.players_config, self.game_enum()
+            ),
+            visual_nothing=pickup_creator.create_visual_nothing(self.game_enum(), "Nothing"),
         )
 
         gameplay_patch_list = [field.name for field in dataclasses.fields(self.configuration.patches)]
@@ -135,14 +142,11 @@ class SuperMetroidPatchDataFactory(BasePatchDataFactory):
         }
 
         return {
-            "pickups": [
-                sm_pickup_details_to_patcher(detail)
-                for detail in pickup_list
-            ],
+            "pickups": [sm_pickup_details_to_patcher(detail) for detail in pickup_list],
             "starting_items": [
                 sm_starting_items_to_patcher(item, qty)
                 for item, qty in self.patches.starting_resources().as_resource_gain()
             ],
             "specific_patches": specific_patches,
-            "starting_conditions": starting_location_info
+            "starting_conditions": starting_location_info,
         }

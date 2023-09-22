@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from randovania.games.dread.exporter.game_exporter import DreadModPlatform
 from randovania.games.dread.exporter.options import DreadPerGameOptions
 from randovania.games.game import RandovaniaGame

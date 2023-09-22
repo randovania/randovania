@@ -1,20 +1,24 @@
+from __future__ import annotations
+
 import dataclasses
 from enum import Enum
+from typing import TYPE_CHECKING
 
-from randovania.exporter.hints.hint_formatters import LocationFormatter, TemplatedFormatter, RelativeAreaFormatter
+from randovania.exporter.hints.hint_formatters import LocationFormatter, RelativeAreaFormatter, TemplatedFormatter
 from randovania.exporter.hints.hint_namer import HintNamer, PickupLocation
-from randovania.exporter.hints.pickup_hint import PickupHint
 from randovania.exporter.hints.relative_item_formatter import RelativeItemFormatter
 from randovania.game_description import default_database
-from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.hint import Hint, HintLocationPrecision
-from randovania.game_description.resources.item_resource_info import ItemResourceInfo
-from randovania.game_description.db.pickup_node import PickupNode
-from randovania.game_description.db.region_list import RegionList
 from randovania.games.dread.layout.dread_configuration import DreadConfiguration
-from randovania.games.game import RandovaniaGame
-from randovania.interface_common.players_configuration import PlayersConfiguration
 
+if TYPE_CHECKING:
+    from randovania.exporter.hints.pickup_hint import PickupHint
+    from randovania.game_description.db.pickup_node import PickupNode
+    from randovania.game_description.db.region_list import RegionList
+    from randovania.game_description.game_patches import GamePatches
+    from randovania.game_description.resources.item_resource_info import ItemResourceInfo
+    from randovania.games.game import RandovaniaGame
+    from randovania.interface_common.players_configuration import PlayersConfiguration
 
 # {c0}	White	(Default)
 # {c1}	Yellow
@@ -60,23 +64,27 @@ class DreadHintNamer(HintNamer):
         location_hint_template = "{determiner.title}{pickup} can be found in {node}."
 
         if isinstance(patches.configuration, DreadConfiguration) and patches.configuration.april_fools_hints:
-            location_hint_template = "|".join([
-                "Can you guess where {determiner}{pickup} goes?",
-                "That's right! It goes in the {node} hole!"
-            ])
+            location_hint_template = "|".join(
+                ["Can you guess where {determiner}{pickup} goes?", "That's right! It goes in the {node} hole!"]
+            )
 
         self.location_formatters = {
             HintLocationPrecision.DETAILED: TemplatedFormatter(
-                location_hint_template, self,
+                location_hint_template,
+                self,
             ),
             HintLocationPrecision.REGION_ONLY: TemplatedFormatter(
-                location_hint_template, self,
+                location_hint_template,
+                self,
             ),
             HintLocationPrecision.RELATIVE_TO_AREA: RelativeAreaFormatter(
-                patches, lambda msg, with_color: colorize_text(self.color_location, msg, with_color),
+                patches,
+                lambda msg, with_color: colorize_text(self.color_location, msg, with_color),
             ),
             HintLocationPrecision.RELATIVE_TO_INDEX: RelativeItemFormatter(
-                patches, lambda msg, with_color: colorize_text(self.color_location, msg, with_color), players_config,
+                patches,
+                lambda msg, with_color: colorize_text(self.color_location, msg, with_color),
+                players_config,
             ),
         }
 
@@ -100,8 +108,7 @@ class DreadHintNamer(HintNamer):
         return self.location_formatters[hint.precision.location].format(
             game,
             dataclasses.replace(
-                pick_hint,
-                pickup_name=colorize_text(self.color_item, pick_hint.pickup_name, with_color)
+                pick_hint, pickup_name=colorize_text(self.color_item, pick_hint.pickup_name, with_color)
             ),
             hint,
             with_color,
@@ -112,12 +119,16 @@ class DreadHintNamer(HintNamer):
         if resource.short_name.startswith("Artifact"):
             return ""
 
-        return "{} has no need to be located.".format(
-            colorize_text(self.color_item, resource.long_name, with_color)
-        )
+        return f"{colorize_text(self.color_item, resource.long_name, with_color)} has no need to be located."
 
-    def format_guaranteed_resource(self, resource: ItemResourceInfo, player_name: str | None,
-                                   location: PickupLocation, hide_area: bool, with_color: bool) -> str:
+    def format_guaranteed_resource(
+        self,
+        resource: ItemResourceInfo,
+        player_name: str | None,
+        location: PickupLocation,
+        hide_area: bool,
+        with_color: bool,
+    ) -> str:
         determiner = ""
         if player_name is not None:
             determiner = self.format_player(player_name, with_color=with_color) + "'s "

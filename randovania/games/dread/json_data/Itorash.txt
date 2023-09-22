@@ -78,15 +78,14 @@ Extra - asset_id: collision_camera_001
 
 > Elevator to Hanubia; Heals? False; Spawn Point; Default Node
   * Layers: default
-  * Teleporter to Transport to Itorash/Elevator to Itorash - Transport to Hanubia
+  * Elevator to Transport to Itorash/Elevator to Itorash
   * Extra - actor_name: capsuleelevatorskybase_000
   * Extra - actor_def: actordef:actors/props/capsuleelevatorskybase/charclasses/capsuleelevatorskybase.bmsad
   * Extra - elevator_component: CCapsuleUsableComponent
   * Extra - target_spawn_point: elevator_skybase_000_platform
   * Extra - start_point_actor_name: elevator_shipyard_000_platform
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad
-  * Extra - keep_name_when_vanilla: True
-  * Extra - editable: True
+  * Extra - transporter_name: Itorash
   > Start Point
       Trivial
   > Artifact Gate
@@ -118,7 +117,7 @@ Extra - asset_id: collision_camera_002
   * Extra - right_shield_def: None
   > Event - Destroy Generator
       Lay Power Bomb
-  > Elevator to Raven Beak Arena
+  > Dock to Raven Beak Arena
       All of the following:
           After Itorash - Destroy Generator
           Any of the following:
@@ -138,18 +137,16 @@ Extra - asset_id: collision_camera_002
   * Layers: default
   * Extra - start_point_actor_name: SP_Checkpoint_Commander
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
-  > Elevator to Raven Beak Arena
+  > Dock to Raven Beak Arena
       Trivial
 
-> Elevator to Raven Beak Arena; Heals? False
+> Dock to Raven Beak Arena; Heals? False
   * Layers: default
-  * Teleporter to Raven Beak Arena/Before Fight
+  * Open Passage to Raven Beak Arena/Before Fight
   * Extra - actor_name: commander_elevator
   * Extra - actor_def: actordef:actors/props/commander_elevator/charclasses/commander_elevator.bmsad
   * Extra - start_point_actor_name: weightactivatedplatform_commanderelevator_000
   * Extra - start_point_actor_def: actordef:actors/props/wplatform_cm_elevator/charclasses/weightactivatedplatform_commanderelevator.bmsad
-  * Extra - keep_name_when_vanilla: False
-  * Extra - editable: False
   > Door to Save Station
       Trivial
   > Start Point
@@ -180,40 +177,48 @@ Extra - asset_id: collision_camera_004
               Combat (Intermediate) and Normal Damage ≥ 299
           All of the following:
               # Methods of dodging
-              Any of the following:
-                  # Phase 1 and 3
-                  Flash Shift or Combat (Beginner)
-              Any of the following:
-                  # Phase 2
-                  Space Jump or Combat (Intermediate)
+              # Phase 1 and 3
+              Flash Shift or Combat (Beginner)
+              # Phase 2
+              Space Jump or Combat (Intermediate)
           All of the following:
               # Methods of fighting
               Any of the following:
                   # Phase 1
-                  All of the following:
-                      # 52 wave shots
-                      Wave Beam
-                  All of the following:
-                      # 83 plasma shots
-                      Combat (Beginner) and Shoot Plasma Beam
-                  All of the following:
-                      # 167 wide shots
-                      Combat (Advanced) and Shoot Wide Beam
-                  All of the following:
-                      # 500 power beam shots
-                      Combat (Hypermode) and Shoot Beam
-                  Missiles ≥ 34 and Shoot Ice Missile
+                  # 52 wide + plasma + wave shots
+                  Beam Damage 240
+                  # 83 wide + plasma shots or 105 wide + wave shots
+                  Combat (Beginner) and Beam Damage 120
+                  # 167 wide shots or 157 plasma + wave shots
+                  Combat (Advanced) and Beam Damage 75
+                  # 500 power beam shots or 250 plasma shots or 313 wave shots
+                  Combat (Hypermode) and Shoot Beam
+                  Missiles ≥ 34 and Shoot Super Ice Missile
                   Missiles ≥ 45 and Combat (Intermediate) and Shoot Super Missile
                   Missiles ≥ 134 and Combat (Expert) and Shoot Missile
 
 > Boss - Raven Beak; Heals? False
   * Layers: default
-  > Escape Sequence
+  > Event - Escape Sequence
+      All of the following:
+          Lay Power Bomb
+          Any of the following:
+              Space Jump or Simple IBJ
+              All of the following:
+                  Speed Booster and Spin Boost
+                  Movement (Intermediate) or Speed Booster Conservation (Beginner)
+                  Single-wall Wall Jump (Intermediate) or Wall Jump (Beginner)
+
+> Event - Escape Sequence; Heals? True
+  * Layers: default
+  * Event Ship
+  * End of the game
+  * Extra - start_point_actor_name: SP_Checkpoint_Endgame
+  * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
+  > Dock to Elevator to Raven Beak
       Trivial
 
-> Escape Sequence; Heals? True
+> Dock to Elevator to Raven Beak; Heals? False
   * Layers: default
-  * Teleporter to Raven Beak X Arena/Raven Beak X Checkpoint
-  * Extra - keep_name_when_vanilla: False
-  * Extra - editable: False
+  * Open Passage to Elevator to Raven Beak/Start Point
 

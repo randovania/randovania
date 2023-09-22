@@ -1,6 +1,8 @@
+from __future__ import annotations
+
 from pathlib import Path
-from unittest.mock import MagicMock, ANY, AsyncMock
-from unittest.mock import call
+from typing import TYPE_CHECKING
+from unittest.mock import ANY, MagicMock, call
 
 import pytest
 
@@ -8,15 +10,22 @@ import randovania.cli.commands.generate
 from randovania.games.game import RandovaniaGame
 from randovania.layout.generator_parameters import GeneratorParameters
 
+if TYPE_CHECKING:
+    import pytest_mock
+
 
 @pytest.mark.parametrize("repeat", [1, 2])
 @pytest.mark.parametrize("preset_name", [None, "Starter Preset"])
 @pytest.mark.parametrize("no_retry", [False, True])
-def test_generate_logic(no_retry: bool, preset_name: str | None, repeat: int, mocker, preset_manager):
+def test_generate_logic(
+    no_retry: bool, preset_name: str | None, repeat: int, mocker: pytest_mock.MockerFixture, preset_manager
+):
     # Setup
-    mock_generate: AsyncMock = mocker.patch("randovania.generator.generator.generate_and_validate_description",
-                                            new_callable=AsyncMock)
-    mock_generate.return_value = MagicMock()
+    layout_description = MagicMock()
+    mock_run = mocker.patch("asyncio.run", return_value=layout_description)
+    mock_generate = mocker.patch(
+        "randovania.generator.generator.generate_and_validate_description", new_callable=MagicMock
+    )
     mock_from_str: MagicMock = mocker.patch("randovania.layout.permalink.Permalink.from_str", autospec=True)
 
     args = MagicMock()
@@ -58,7 +67,7 @@ def test_generate_logic(no_retry: bool, preset_name: str | None, repeat: int, mo
     else:
         mock_from_str.assert_not_called()
 
-    mock_generate.assert_has_awaits(
+    mock_generate.assert_has_calls(
         [
             call(
                 generator_params=generator_params,
@@ -67,8 +76,10 @@ def test_generate_logic(no_retry: bool, preset_name: str | None, repeat: int, mo
                 timeout=None,
                 **extra_args,
             )
-        ] * repeat
+        ]
+        * repeat
     )
+    mock_run.assert_has_calls([call(mock_generate.return_value)] * repeat)
 
-    save_file_mock: MagicMock = mock_generate.return_value.save_to_file
+    save_file_mock: MagicMock = layout_description.save_to_file
     save_file_mock.assert_called_once_with(args.output_file)

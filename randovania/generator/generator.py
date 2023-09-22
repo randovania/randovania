@@ -1,95 +1,121 @@
+from __future__ import annotations
+
 import asyncio
 import dataclasses
-from random import Random
-from typing import Callable
+import itertools
+from typing import TYPE_CHECKING
 
 import tenacity
 
-from randovania.game_description.assignment import (PickupTarget, PickupTargetAssociation)
-from randovania.game_description.game_description import GameDescription
+from randovania.game_description.assignment import PickupTarget, PickupTargetAssociation
 from randovania.game_description.resources.location_category import LocationCategory
-from randovania.game_description.resources.pickup_entry import PickupEntry
-from randovania.game_description.db.pickup_node import PickupNode
 from randovania.generator import dock_weakness_distributor
-from randovania.generator.filler.filler_library import (
-    UnableToGenerate, filter_unassigned_pickup_nodes)
-from randovania.generator.filler.runner import (FillerResults, PlayerPool,
-                                                run_filler)
+from randovania.generator.filler.filler_library import UnableToGenerate, filter_unassigned_pickup_nodes
+from randovania.generator.filler.runner import FillerResults, PlayerPool, run_filler
 from randovania.generator.hint_distributor import PreFillParams
-from randovania.generator.pickup_pool import pool_creator
+from randovania.generator.pickup_pool import PoolResults, pool_creator
 from randovania.layout import filtered_database
 from randovania.layout.base.available_locations import RandomizationMode
-from randovania.layout.base.base_configuration import BaseConfiguration
-from randovania.layout.generator_parameters import GeneratorParameters
-from randovania.layout.layout_description import LayoutDescription
-from randovania.layout.preset import Preset
-from randovania.resolver import resolver
-from randovania.resolver.exceptions import (GenerationFailure,
-                                            ImpossibleForSolver)
 from randovania.layout.exceptions import InvalidConfiguration
+from randovania.layout.layout_description import LayoutDescription
+from randovania.resolver import debug, exceptions, resolver
+from randovania.resolver.exceptions import GenerationFailure, ImpossibleForSolver
 
+if TYPE_CHECKING:
+    from collections.abc import Callable
+    from random import Random
+
+    from randovania.game_description.db.pickup_node import PickupNode
+    from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.game_patches import GamePatches
+    from randovania.game_description.pickup.pickup_entry import PickupEntry
+    from randovania.layout.base.base_configuration import BaseConfiguration
+    from randovania.layout.generator_parameters import GeneratorParameters
+    from randovania.layout.preset import Preset
 
 DEFAULT_ATTEMPTS = 15
 
 
-def _validate_item_pool_size(item_pool: list[PickupEntry], game: GameDescription,
-                             configuration: BaseConfiguration) -> None:
+def _validate_item_pool_size(
+    item_pool: list[PickupEntry], game: GameDescription, configuration: BaseConfiguration
+) -> None:
     min_starting_items = configuration.standard_pickup_configuration.minimum_random_starting_pickups
     if len(item_pool) > game.region_list.num_pickup_nodes + min_starting_items:
         raise InvalidConfiguration(
             "Item pool has {} items, which is more than {} (game) + {} (minimum starting items)".format(
-                len(item_pool), game.region_list.num_pickup_nodes, min_starting_items))
+                len(item_pool), game.region_list.num_pickup_nodes, min_starting_items
+            )
+        )
 
 
-async def create_player_pool(rng: Random, configuration: BaseConfiguration,
-                             player_index: int, num_players: int, rng_required: bool = True) -> PlayerPool:
+async def check_if_beatable(patches: GamePatches, pool: PoolResults) -> bool:
+    patches = patches.assign_extra_starting_pickups(itertools.chain(pool.starting, pool.to_place)).assign_own_pickups(
+        pool.assignment.items()
+    )
+
+    state, logic = resolver.setup_resolver(patches.configuration, patches)
+
+    with debug.with_level(0):
+        try:
+            return await resolver.advance_depth(state, logic, lambda s: None, max_attempts=1000) is not None
+        except exceptions.ResolverTimeoutError:
+            return False
+
+
+async def create_player_pool(
+    rng: Random,
+    configuration: BaseConfiguration,
+    player_index: int,
+    num_players: int,
+    status_update: Callable[[str], None],
+) -> PlayerPool:
     game = filtered_database.game_description_for_layout(configuration).get_mutable()
 
     game_generator = game.game.generator
     game.resource_database = game_generator.bootstrap.patch_resource_database(game.resource_database, configuration)
 
-    base_patches = game_generator.base_patches_factory.create_base_patches(configuration, rng, game,
-                                                                           num_players > 1,
-                                                                           player_index=player_index,
-                                                                           rng_required=rng_required)
+    for i in range(10):
+        status_update(f"Attempt {i + 1} for initial state for world {player_index + 1}")
+        patches = game_generator.base_patches_factory.create_base_patches(
+            configuration, rng, game, num_players > 1, player_index=player_index, rng_required=True
+        )
+        patches = dock_weakness_distributor.distribute_pre_fill_weaknesses(patches, rng)
+        patches = await game_generator.hint_distributor.assign_pre_filler_hints(
+            patches,
+            PreFillParams(
+                rng,
+                configuration,
+                game,
+                num_players > 1,
+            ),
+            rng_required=True,
+        )
 
-    base_patches = dock_weakness_distributor.distribute_pre_fill_weaknesses(base_patches, rng)
+        pool_results = pool_creator.calculate_pool_results(configuration, game)
+        if configuration.check_if_beatable_after_base_patches and not await check_if_beatable(patches, pool_results):
+            continue
 
-    base_patches = await game_generator.hint_distributor.assign_pre_filler_hints(
-        base_patches,
-        PreFillParams(
-            rng,
-            configuration,
-            game,
-            num_players > 1,
-        ),
-        rng_required=rng_required
+        patches = game_generator.bootstrap.assign_pool_results(rng, patches, pool_results)
+
+        return PlayerPool(
+            game=game,
+            game_generator=game_generator,
+            configuration=configuration,
+            patches=patches,
+            pickups=pool_results.to_place,
+        )
+
+    raise InvalidConfiguration(
+        "Unable to find a valid starting state. "
+        "Please check settings related to random starting locations, elevators/teleporters/portals, door locks."
     )
 
-    pool_results = pool_creator.calculate_pool_results(configuration,
-                                                       game,
-                                                       base_patches,
-                                                       rng,
-                                                       rng_required=rng_required)
-    target_assignment = [
-        (index, PickupTarget(pickup, player_index))
-        for index, pickup in pool_results.assignment.items()
-    ]
-    patches = base_patches.assign_new_pickups(target_assignment).assign_extra_starting_pickups(pool_results.starting)
 
-    return PlayerPool(
-        game=game,
-        game_generator=game_generator,
-        configuration=configuration,
-        patches=patches,
-        pickups=pool_results.to_place,
-    )
-
-
-async def _create_pools_and_fill(rng: Random,
-                                 presets: list[Preset],
-                                 status_update: Callable[[str], None],
-                                 ) -> FillerResults:
+async def _create_pools_and_fill(
+    rng: Random,
+    presets: list[Preset],
+    status_update: Callable[[str], None],
+) -> FillerResults:
     """
     Runs the rng-dependant parts of the generation, with retries
     :param rng:
@@ -101,7 +127,15 @@ async def _create_pools_and_fill(rng: Random,
 
     for player_index, player_preset in enumerate(presets):
         status_update(f"Creating item pool for player {player_index + 1}")
-        player_pools.append(await create_player_pool(rng, player_preset.configuration, player_index, len(presets)))
+        player_pools.append(
+            await create_player_pool(
+                rng,
+                player_preset.configuration,
+                player_index,
+                len(presets),
+                status_update,
+            )
+        )
 
     for player_pool in player_pools:
         _validate_item_pool_size(player_pool.pickups, player_pool.game, player_pool.configuration)
@@ -109,23 +143,21 @@ async def _create_pools_and_fill(rng: Random,
     return await run_filler(rng, player_pools, status_update)
 
 
-def _distribute_remaining_items(rng: Random,
-                                filler_results: FillerResults,
-                                presets: list[Preset]
-                                ) -> FillerResults:
+def _distribute_remaining_items(rng: Random, filler_results: FillerResults, presets: list[Preset]) -> FillerResults:
     major_pickup_nodes: list[tuple[int, PickupNode]] = []
     minor_pickup_nodes: list[tuple[int, PickupNode]] = []
     all_remaining_pickups: list[PickupTarget] = []
     remaining_major_pickups: list[PickupTarget] = []
 
     assignments: dict[int, list[PickupTargetAssociation]] = {}
-    
+
     modes = [preset.configuration.available_locations.randomization_mode for preset in presets]
 
     for player, filler_result in filler_results.player_results.items():
         split_major = modes[player] is RandomizationMode.MAJOR_MINOR_SPLIT
-        for pickup_node in filter_unassigned_pickup_nodes(filler_result.game.region_list.iterate_nodes(),
-                                                          filler_result.patches.pickup_assignment):
+        for pickup_node in filter_unassigned_pickup_nodes(
+            filler_result.game.region_list.iterate_nodes(), filler_result.patches.pickup_assignment
+        ):
             if split_major and pickup_node.location_category == LocationCategory.MAJOR:
                 major_pickup_nodes.append((player, pickup_node))
             else:
@@ -167,9 +199,9 @@ def _distribute_remaining_items(rng: Random,
     if len(all_remaining_pickups) > len(unassigned_pickup_nodes):
         raise InvalidConfiguration(
             "Received {} remaining pickups, but there's only {} unassigned locations.".format(
-                len(all_remaining_pickups),
-                len(unassigned_pickup_nodes)
-            ))
+                len(all_remaining_pickups), len(unassigned_pickup_nodes)
+            )
+        )
 
     for (node_player, node), pickup in zip(unassigned_pickup_nodes, all_remaining_pickups):
         assign_pickup(node_player, node, pickup)
@@ -177,18 +209,17 @@ def _distribute_remaining_items(rng: Random,
     return dataclasses.replace(
         filler_results,
         player_results={
-            player: dataclasses.replace(
-                result,
-                patches=result.patches.assign_new_pickups(assignments[player])
-            ) for player, result in filler_results.player_results.items()
-        }
+            player: dataclasses.replace(result, patches=result.patches.assign_new_pickups(assignments[player]))
+            for player, result in filler_results.player_results.items()
+        },
     )
 
 
-async def _create_description(generator_params: GeneratorParameters,
-                              status_update: Callable[[str], None],
-                              attempts: int,
-                              ) -> LayoutDescription:
+async def _create_description(
+    generator_params: GeneratorParameters,
+    status_update: Callable[[str], None],
+    attempts: int,
+) -> LayoutDescription:
     """
     :param generator_params:
     :param status_update:
@@ -196,17 +227,14 @@ async def _create_description(generator_params: GeneratorParameters,
     """
     rng = generator_params.create_rng()
 
-    presets = [
-        generator_params.get_preset(i)
-        for i in range(generator_params.player_count)
-    ]
+    presets = [generator_params.get_preset(i) for i in range(generator_params.world_count)]
     if not presets:
         raise InvalidConfiguration("Must have at least one World")
 
     retrying = tenacity.AsyncRetrying(
         stop=tenacity.stop_after_attempt(attempts),
         retry=tenacity.retry_if_exception_type(UnableToGenerate),
-        reraise=True
+        reraise=True,
     )
 
     filler_results = await retrying(_create_pools_and_fill, rng, presets, status_update)
@@ -216,20 +244,18 @@ async def _create_description(generator_params: GeneratorParameters,
 
     return LayoutDescription.create_new(
         generator_parameters=generator_params,
-        all_patches={
-            player: result.patches
-            for player, result in filler_results.player_results.items()
-        },
+        all_patches={player: result.patches for player, result in filler_results.player_results.items()},
         item_order=filler_results.action_log,
     )
 
 
-async def generate_and_validate_description(generator_params: GeneratorParameters,
-                                            status_update: Callable[[str], None] | None,
-                                            validate_after_generation: bool,
-                                            timeout: int | None = 600,
-                                            attempts: int = DEFAULT_ATTEMPTS,
-                                            ) -> LayoutDescription:
+async def generate_and_validate_description(
+    generator_params: GeneratorParameters,
+    status_update: Callable[[str], None] | None,
+    validate_after_generation: bool,
+    timeout: int | None = 600,
+    attempts: int = DEFAULT_ATTEMPTS,
+) -> LayoutDescription:
     """
     Creates a LayoutDescription for the given Permalink.
     :param generator_params:
@@ -249,10 +275,11 @@ async def generate_and_validate_description(generator_params: GeneratorParameter
             attempts=attempts,
         )
     except UnableToGenerate as e:
-        raise GenerationFailure("Could not generate a game with the given settings",
-                                generator_params=generator_params, source=e) from e
+        raise GenerationFailure(
+            "Could not generate a game with the given settings", generator_params=generator_params, source=e
+        ) from e
 
-    if validate_after_generation and generator_params.player_count == 1:
+    if validate_after_generation and generator_params.world_count == 1:
         final_state_async = resolver.resolve(
             configuration=generator_params.get_preset(0).configuration,
             patches=result.all_patches[0],
@@ -261,11 +288,15 @@ async def generate_and_validate_description(generator_params: GeneratorParameter
         try:
             final_state_by_resolve = await asyncio.wait_for(final_state_async, timeout)
         except asyncio.TimeoutError as e:
-            raise ImpossibleForSolver("Timeout reached when validating possibility",
-                                      generator_params=generator_params, layout=result) from e
+            raise ImpossibleForSolver(
+                "Timeout reached when validating possibility", generator_params=generator_params, layout=result
+            ) from e
 
         if final_state_by_resolve is None:
-            raise ImpossibleForSolver("Generated game was considered impossible by the solver",
-                                      generator_params=generator_params, layout=result)
+            raise ImpossibleForSolver(
+                "Generated game was considered impossible by the solver",
+                generator_params=generator_params,
+                layout=result,
+            )
 
     return result

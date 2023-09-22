@@ -1,27 +1,36 @@
-import re
-from typing import Iterator
+from __future__ import annotations
 
-from randovania.game_description.db.area import Area
-from randovania.game_description.db.area_identifier import AreaIdentifier
-from randovania.game_description.db.dock import DockWeakness, DockType
+import re
+import typing
+from typing import TYPE_CHECKING
+
 from randovania.game_description.db.dock_lock_node import DockLockNode
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.event_node import EventNode
 from randovania.game_description.db.node import Node, NodeContext
 from randovania.game_description.db.pickup_node import PickupNode
-from randovania.game_description.db.region import Region
-from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.requirements.base import Requirement
-from randovania.game_description.resources.resource_info import ResourceCollection
+from randovania.game_description.resources.resource_collection import ResourceCollection
+from randovania.layout.base.base_configuration import BaseConfiguration
+
+if TYPE_CHECKING:
+    from collections.abc import Iterator
+
+    from randovania.game_description.db.area import Area
+    from randovania.game_description.db.area_identifier import AreaIdentifier
+    from randovania.game_description.db.dock import DockType, DockWeakness
+    from randovania.game_description.db.region import Region
+    from randovania.game_description.game_description import GameDescription
 
 pickup_node_re = re.compile(r"^Pickup (\d+ )?\(.*\)$")
 dock_node_suffix_re = re.compile(r" \([^()]+?\)$")
 layer_name_re = re.compile(r"[a-zA-Z0-9 _-]+")
 
 
-def raw_expected_dock_names(dock_type: DockType, weakness: DockWeakness,
-                            connection: AreaIdentifier, source_region_name: str) -> Iterator[str]:
+def raw_expected_dock_names(
+    dock_type: DockType, weakness: DockWeakness, connection: AreaIdentifier, source_region_name: str
+) -> Iterator[str]:
     """
     Provides valid names for a node created with these fields. The first result is the recommended name.
     """
@@ -40,17 +49,17 @@ def expected_dock_names(node: DockNode) -> Iterator[str]:
     Provides valid names for this node. The first result is the recommended name.
     """
     yield from raw_expected_dock_names(
-        node.dock_type, node.default_dock_weakness,
-        node.default_connection.area_identifier, node.identifier.region_name
+        node.dock_type, node.default_dock_weakness, node.default_connection.area_identifier, node.identifier.region_name
     )
 
 
 def docks_with_same_base_name(area: Area, expected_name: str) -> list[DockNode]:
     return [
-        other for other in area.nodes
-        if isinstance(other, DockNode) and any(
-            expected == expected_name and other.name.startswith(expected)
-            for expected in expected_dock_names(other)
+        other
+        for other in area.nodes
+        if isinstance(other, DockNode)
+        and any(
+            expected == expected_name and other.name.startswith(expected) for expected in expected_dock_names(other)
         )
     ]
 
@@ -67,7 +76,7 @@ def dock_has_correct_name(area: Area, node: DockNode) -> bool:
 
         if node.name.startswith(expected_name):
             if len(docks_same_base_name) > 1:
-                m = dock_node_suffix_re.match(node.name[len(expected_name):])
+                m = dock_node_suffix_re.match(node.name[len(expected_name) :])
                 if m is not None:
                     return True
             else:
@@ -117,14 +126,20 @@ def find_node_errors(game: GameDescription, node: Node) -> Iterator[str]:
         if other_node is not None:
             if isinstance(other_node, DockNode):
                 if other_node.default_connection != region_list.identifier_for_node(node):
-                    yield (f"{node.name} connects to '{node.default_connection}', but that dock connects "
-                           f"to '{other_node.default_connection}' instead.")
+                    yield (
+                        f"{node.name} connects to '{node.default_connection}', but that dock connects "
+                        f"to '{other_node.default_connection}' instead."
+                    )
 
-    elif any(node.name.startswith(dock_type.long_name) for dock_type in game.dock_weakness_database.dock_types):
+    elif any(
+        re.match(rf"{dock_type.long_name}\s*(to|from)", node.name)
+        for dock_type in game.dock_weakness_database.dock_types
+    ):
         yield f"{node.name} is not a Dock Node, naming suggests it should be."
 
+
 def find_area_errors(game: GameDescription, area: Area) -> Iterator[str]:
-    nodes_with_paths_in = set()
+    nodes_with_paths_in: set[Node] = set()
     for node in area.nodes:
         nodes_with_paths_in.update(area.connections[node].keys())
 
@@ -137,14 +152,8 @@ def find_area_errors(game: GameDescription, area: Area) -> Iterator[str]:
     # make sure only one start node exists per area like before refacor. this can be removed later if a game supports it
     start_nodes = area.get_start_nodes()
     if len(start_nodes) > 1 and not game.game.data.multiple_start_nodes_per_area:
-        names = list(node.name for node in start_nodes)
+        names = [node.name for node in start_nodes]
         yield f"{area.name} has multiple valid start nodes {names}, but is not allowed for {game.game.long_name}"
-
-    if area.default_node is not None and area.node_with_name(area.default_node) is None:
-        yield f"{area.name} has default node {area.default_node}, but no node with that name exists"
-
-    # elif area.default_node is not None:
-    #     nodes_with_paths_in.add(area.node_with_name(area.default_node))
 
     for node in area.nodes:
         if isinstance(node, DockNode) or area.connections[node]:
@@ -153,7 +162,8 @@ def find_area_errors(game: GameDescription, area: Area) -> Iterator[str]:
         # FIXME: cannot implement this for PickupNodes because their resource gain depends on GamePatches
         if isinstance(node, EventNode):
             # if this node would satisfy the victory condition, it does not need outgoing connections
-            current = ResourceCollection.from_resource_gain(game.resource_database, node.resource_gain_on_collect(None))
+            current = ResourceCollection.with_database(game.resource_database)
+            current.set_resource(node.event, 1)
             if game.victory_condition.satisfied(current, 0, game.resource_database):
                 continue
 
@@ -168,7 +178,8 @@ def find_region_errors(game: GameDescription, region: Region) -> Iterator[str]:
 
 
 def find_invalid_strongly_connected_components(game: GameDescription) -> Iterator[str]:
-    import networkx
+    import networkx  # type: ignore
+
     graph = networkx.DiGraph()
 
     for node in game.region_list.iterate_nodes():
@@ -177,7 +188,7 @@ def find_invalid_strongly_connected_components(game: GameDescription) -> Iterato
         graph.add_node(node)
 
     context = NodeContext(
-        patches=GamePatches.create_from_game(game, 0, None),
+        patches=GamePatches.create_from_game(game, 0, typing.cast(BaseConfiguration, None)),
         current_resources=ResourceCollection.with_database(game.resource_database),
         database=game.resource_database,
         node_provider=game.region_list,
@@ -223,10 +234,7 @@ def find_invalid_strongly_connected_components(game: GameDescription) -> Iterato
             if not graph.in_edges(node) and not graph.edges(node):
                 continue
 
-        names = sorted(
-            game.region_list.node_name(node, with_region=True)
-            for node in strong_comp
-        )
+        names = sorted(game.region_list.node_name(node, with_region=True) for node in strong_comp)
         yield f"Unknown strongly connected component detected containing {len(names)} nodes:\n{names}"
 
 

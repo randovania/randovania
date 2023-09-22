@@ -1,18 +1,29 @@
 from __future__ import annotations
 
 import copy
-import io
 import json
+from typing import TYPE_CHECKING
 from uuid import UUID
-from pathlib import Path
 
 import aiofiles
+import construct
 import slugify
 
 from randovania.games.game import RandovaniaGame
 from randovania.layout import preset_migration
 from randovania.layout.preset import Preset
 from randovania.lib import json_lib
+from randovania.lib.construct_lib import JsonEncodedValue
+
+if TYPE_CHECKING:
+    import io
+    from pathlib import Path
+
+BinaryVersionedPreset = construct.Struct(
+    magic=construct.Const(b"RDVP"),
+    version=construct.Const(1, construct.VarInt),
+    data=construct.Prefixed(construct.VarInt, construct.Compressed(JsonEncodedValue, "zlib")),
+)
 
 
 class InvalidPreset(Exception):
@@ -86,9 +97,9 @@ class VersionedPreset:
     def ensure_converted(self):
         if not self._converted:
             try:
-                self._preset = Preset.from_json_dict(preset_migration.convert_to_current_version(
-                    copy.deepcopy(self.data)
-                ))
+                self._preset = Preset.from_json_dict(
+                    preset_migration.convert_to_current_version(copy.deepcopy(self.data))
+                )
             except (ValueError, KeyError, TypeError) as e:
                 self.exception = InvalidPreset(e)
                 raise self.exception from e
@@ -105,6 +116,11 @@ class VersionedPreset:
         return cls(json.loads(contents))
 
     @classmethod
+    def from_bytes(cls, contents: bytes) -> VersionedPreset:
+        decoded = BinaryVersionedPreset.parse(contents)
+        return cls(decoded["data"])
+
+    @classmethod
     async def from_file(cls, path: Path) -> VersionedPreset:
         async with aiofiles.open(path) as f:
             return cls.from_str(await f.read())
@@ -114,7 +130,7 @@ class VersionedPreset:
         return VersionedPreset(json_lib.read_path(path))
 
     @classmethod
-    def with_preset(cls, preset: Preset) -> "VersionedPreset":
+    def with_preset(cls, preset: Preset) -> VersionedPreset:
         result = VersionedPreset(None)
         result._preset = preset
         return result
@@ -123,16 +139,13 @@ class VersionedPreset:
         json_lib.write_path(path, self.as_json)
 
     def save_to_io(self, data: io.BytesIO):
-        data.write(
-            json.dumps(self.as_json, indent=4).encode("utf-8")
-        )
+        data.write(json.dumps(self.as_json, indent=4).encode("utf-8"))
 
     @property
     def as_json(self) -> dict:
         if self._preset is not None:
             preset_json = {
                 "schema_version": preset_migration.CURRENT_VERSION,
-
                 # It's important to keep this field in order to keep old Randovania versions working
                 "base_preset_uuid": None,
             }
@@ -142,9 +155,12 @@ class VersionedPreset:
             assert self.data is not None
             return self.data
 
-    @property
-    def as_str(self) -> str:
-        return json.dumps(self.as_json)
+    def as_bytes(self) -> bytes:
+        return BinaryVersionedPreset.build(
+            {
+                "data": self.as_json,
+            }
+        )
 
     def recover_old_base_uuid(self) -> UUID | None:
         """Returns the base preset uuid that existed in old versions.

@@ -1,16 +1,23 @@
-from typing import Callable
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
 
 from randovania.exporter.hints.hint_formatters import RelativeFormatter
 from randovania.exporter.hints.pickup_hint import PickupHint, create_pickup_hint
-from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.hint import Hint, RelativeDataItem
-from randovania.games.game import RandovaniaGame
-from randovania.interface_common.players_configuration import PlayersConfiguration
+
+if TYPE_CHECKING:
+    from collections.abc import Callable
+
+    from randovania.game_description.game_patches import GamePatches
+    from randovania.games.game import RandovaniaGame
+    from randovania.interface_common.players_configuration import PlayersConfiguration
 
 
 class RelativeItemFormatter(RelativeFormatter):
-    def __init__(self, patches: GamePatches, distance_painter: Callable[[str, bool], str],
-                 players_config: PlayersConfiguration):
+    def __init__(
+        self, patches: GamePatches, distance_painter: Callable[[str, bool], str], players_config: PlayersConfiguration
+    ):
         super().__init__(patches, distance_painter)
         self.players_config = players_config
 
@@ -20,7 +27,8 @@ class RelativeItemFormatter(RelativeFormatter):
 
         other_area = self.region_list.nodes_to_area(self.region_list.node_from_pickup_index(index))
         phint = create_pickup_hint(
-            self.patches.pickup_assignment, self.region_list,
+            self.patches.pickup_assignment,
+            self.region_list,
             hint.precision.relative.precision,
             self.patches.pickup_assignment.get(index),
             self.players_config,

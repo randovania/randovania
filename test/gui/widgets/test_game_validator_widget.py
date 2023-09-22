@@ -1,4 +1,6 @@
-from unittest.mock import MagicMock, ANY
+from __future__ import annotations
+
+from unittest.mock import ANY, MagicMock
 
 import pytest
 
@@ -6,8 +8,8 @@ from randovania.gui.widgets import game_validator_widget
 from randovania.resolver import debug
 
 
-@pytest.fixture(name="widget")
-def _widget(skip_qtbot):
+@pytest.fixture()
+def widget(skip_qtbot):
     layout = MagicMock()
     widget = game_validator_widget.GameValidatorWidget(layout)
     skip_qtbot.addWidget(widget)
@@ -87,16 +89,15 @@ async def test_on_start_button_no_task(widget, mocker, cancel):
         return "Final result!"
 
     mock_run_validator = mocker.patch(
-        "randovania.gui.widgets.game_validator_widget._run_validator", side_effect=side_effect,
+        "randovania.gui.widgets.game_validator_widget._run_validator",
+        side_effect=side_effect,
     )
 
     # Run
     await widget.on_start_button()
 
     # Assert
-    mock_run_validator.assert_awaited_once_with(
-        ANY, verbosity, widget.layout
-    )
+    mock_run_validator.assert_awaited_once_with(ANY, verbosity, widget.layout)
     assert widget.log_widget.topLevelItemCount() == 2
     assert not widget.log_widget.topLevelItem(0).isExpanded()
     assert widget.log_widget.topLevelItem(0).child(0).text(0) == "We are nesting"
@@ -104,4 +105,3 @@ async def test_on_start_button_no_task(widget, mocker, cancel):
     assert widget.start_button.text() == "Start"
     assert widget.status_label.text() == "Cancelled!" if cancel else "Final result!"
     assert widget._current_task is None
-

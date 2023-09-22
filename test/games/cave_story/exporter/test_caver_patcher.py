@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from pathlib import Path
 from unittest.mock import PropertyMock
 
@@ -5,30 +7,55 @@ import pytest
 
 from randovania.games.cave_story.exporter.patch_data_factory import CSPatchDataFactory
 from randovania.games.cave_story.layout.cs_cosmetic_patches import (
-    CSCosmeticPatches, CSMusic, CSSong, MusicRandoType, MyChar
+    CSCosmeticPatches,
+    CSMusic,
+    CSSong,
+    MusicRandoType,
+    MyChar,
 )
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout.layout_description import LayoutDescription
 from randovania.lib import json_lib
 
 
-@pytest.mark.parametrize("rdvgame", [
-    "start",
-    "arthur",
-    "camp",
-])
+@pytest.mark.parametrize(
+    "rdvgame",
+    [
+        "start",
+        "arthur",
+        "camp",
+    ],
+)
 def test_create_patch_data_layout(test_files_dir, mocker, rdvgame):
     _create_patch_data(test_files_dir, mocker, rdvgame, rdvgame, CSCosmeticPatches())
 
 
-@pytest.mark.parametrize("patches", [
-    ("shuffle", CSCosmeticPatches(mychar=MyChar.SUE, music_rando=CSMusic(randomization_type=MusicRandoType.SHUFFLE,
-                                                                         song_status=CSSong.defaults()))),
-    ("random", CSCosmeticPatches(mychar=MyChar.CUSTOM, music_rando=CSMusic(randomization_type=MusicRandoType.RANDOM,
-                                                                           song_status=CSSong.defaults()))),
-    ("chaos", CSCosmeticPatches(mychar=MyChar.RANDOM, music_rando=CSMusic(randomization_type=MusicRandoType.CHAOS,
-                                                                          song_status=CSSong.defaults()))),
-])
+@pytest.mark.parametrize(
+    "patches",
+    [
+        (
+            "shuffle",
+            CSCosmeticPatches(
+                mychar=MyChar.SUE,
+                music_rando=CSMusic(randomization_type=MusicRandoType.SHUFFLE, song_status=CSSong.defaults()),
+            ),
+        ),
+        (
+            "random",
+            CSCosmeticPatches(
+                mychar=MyChar.CUSTOM,
+                music_rando=CSMusic(randomization_type=MusicRandoType.RANDOM, song_status=CSSong.defaults()),
+            ),
+        ),
+        (
+            "chaos",
+            CSCosmeticPatches(
+                mychar=MyChar.RANDOM,
+                music_rando=CSMusic(randomization_type=MusicRandoType.CHAOS, song_status=CSSong.defaults()),
+            ),
+        ),
+    ],
+)
 def test_create_patch_data_cosmetic(test_files_dir, mocker, patches):
     test_file, cosmetic_patches = patches
     _create_patch_data(test_files_dir, mocker, "arthur", test_file, cosmetic_patches)
@@ -47,7 +74,7 @@ def _create_patch_data(test_files_dir, mocker, in_file, out_file, cosmetic):
     mocker.patch(
         "randovania.layout.layout_description.LayoutDescription.shareable_hash_bytes",
         new_callable=PropertyMock,
-        return_value=b'\x00\x00\x00\x00\x00'
+        return_value=b"\x00\x00\x00\x00\x00",
     )
 
     # Run

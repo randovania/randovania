@@ -1,4 +1,6 @@
-from unittest.mock import MagicMock, call, ANY
+from __future__ import annotations
+
+from unittest.mock import ANY, MagicMock, call
 
 import pytest
 from PySide6.QtCore import QPoint
@@ -8,8 +10,8 @@ from randovania.games.game import RandovaniaGame
 from randovania.gui.lib.data_editor_canvas import DataEditorCanvas
 
 
-@pytest.fixture(name="canvas")
-def _canvas(skip_qtbot, dread_game_description):
+@pytest.fixture()
+def canvas(skip_qtbot, dread_game_description):
     canvas = DataEditorCanvas()
     skip_qtbot.addWidget(canvas)
 
@@ -69,7 +71,7 @@ def test_contextMenuEvent(skip_qtbot, canvas, mocker):
 
     # Assert
     mock_qmenu.assert_any_call(canvas)
-    mock_qmenu.assert_any_call('Area: First Tutorial Access', canvas)
+    mock_qmenu.assert_any_call("Area: First Tutorial Access", canvas)
     event.globalPos.assert_has_calls([call(), call()])
     mock_qmenu.return_value.exec_.assert_called_once_with(QPoint(100, 200))
 

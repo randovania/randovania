@@ -10,7 +10,7 @@
     },
     "areas": {
         "Transport to Burenia": {
-            "default_node": "Elevator to Burenia - Transport to Ghavoran",
+            "default_node": "Elevator to Burenia",
             "extra": {
                 "total_boundings": {
                     "x1": -11000.0,
@@ -121,7 +121,7 @@
                                 "items": []
                             }
                         },
-                        "Elevator to Burenia - Transport to Ghavoran": {
+                        "Elevator to Burenia": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -130,7 +130,7 @@
                         }
                     }
                 },
-                "Elevator to Burenia - Transport to Ghavoran": {
+                "Elevator to Burenia": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -149,17 +149,16 @@
                         "target_spawn_point": "elevator_forest_000_platform",
                         "start_point_actor_name": "elevator_aqua_000_platform",
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad",
-                        "keep_name_when_vanilla": true,
-                        "editable": true
+                        "transporter_name": "Ghavoran - Robot"
                     },
                     "valid_starting_location": false,
-                    "dock_type": "teleporter",
+                    "dock_type": "elevator",
                     "default_connection": {
                         "region": "Burenia",
                         "area": "Transport to Ghavoran",
-                        "node": "Elevator to Ghavoran - Transport to Burenia"
+                        "node": "Elevator to Ghavoran"
                     },
-                    "default_dock_weakness": "Teleporter",
+                    "default_dock_weakness": "Elevator",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -1558,7 +1557,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "Bomb horizontally to reach the item",
+                                                        "comment": "DBJ: https://youtu.be/8T5vedkSQRM",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -2111,10 +2110,6 @@
                                         "data": "Use Spin Boost"
                                     },
                                     {
-                                        "type": "template",
-                                        "data": "Ballspark"
-                                    },
-                                    {
                                         "type": "and",
                                         "data": {
                                             "comment": null,
@@ -2169,7 +2164,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "https://www.youtube.com/watch?v=c12yQVQB2BY",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -2195,7 +2190,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "https://www.youtube.com/watch?v=aqBoiZywFr8",
                                             "items": [
                                                 {
                                                     "type": "template",
@@ -2666,7 +2661,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": "TODO: If the elevator to Dairon is shuffled is also an alternative",
+                                            "comment": null,
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -2685,6 +2680,15 @@
                                                         "amount": 1,
                                                         "negate": false
                                                     }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "Teleporters",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
                                                 }
                                             ]
                                         }
@@ -2695,6 +2699,58 @@
                         "Event - Super Missile Rotatable Enky": {
                             "type": "template",
                             "data": "Destroy Enky"
+                        },
+                        "Event - Super Missile Rotatable with Ledge Warp": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "LedgeWarp",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "HighDanger",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "GhavoranSupersAreaAccess",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
                         }
                     }
                 },
@@ -2727,7 +2783,9 @@
                     },
                     "default_dock_weakness": "Super Missile Door",
                     "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
+                    "incompatible_dock_weaknesses": [
+                        "Grapple Beam Door"
+                    ],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -2741,12 +2799,29 @@
                             }
                         },
                         "Tunnel to Spider Magnet Elevator": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "events",
-                                "name": "GhavoranSupersRotatable",
-                                "amount": 1,
-                                "negate": true
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "GhavoranSupersRotatable",
+                                            "amount": 1,
+                                            "negate": true
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "Teleporters",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -2908,15 +2983,6 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Elun Transport Access": {
-                            "type": "resource",
-                            "data": {
-                                "type": "events",
-                                "name": "GhavoranSupersRotatable",
-                                "amount": 1,
-                                "negate": true
-                            }
-                        },
-                        "Event - Super Missile Rotatable": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2933,10 +2999,92 @@
                                     {
                                         "type": "resource",
                                         "data": {
+                                            "type": "misc",
+                                            "name": "Teleporters",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Event - Super Missile Rotatable": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
                                             "type": "items",
                                             "name": "Morph",
                                             "amount": 1,
                                             "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Knowledge",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Event - Super Missile Rotatable with Ledge Warp": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "LedgeWarp",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Knowledge",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Lay Bomb"
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "GhavoranSupersAreaAccess",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "HighDanger",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -2961,6 +3109,31 @@
                     "event_name": "GhavoranSuperRotatableEnky",
                     "connections": {
                         "Dock to Spin Boost Tower": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Super Missile Rotatable with Ledge Warp": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -1992.84,
+                        "y": -1598.56,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "GhavoranSupersRotatable",
+                    "connections": {
+                        "Door to Navigation Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3167,6 +3340,13 @@
                                     }
                                 ]
                             }
+                        },
+                        "Event - Super Missile Area Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -3271,6 +3451,31 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Super Missile Room Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Super Missile Area Access": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -532.81,
+                        "y": -4457.73,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "GhavoranSupersAreaAccess",
                     "connections": {
                         "Door to Super Missile Room Access": {
                             "type": "and",
@@ -4118,7 +4323,7 @@
                                 "items": []
                             }
                         },
-                        "Dock to EMMI Zone Exit West": {
+                        "Door to EMMI Zone Exit West": {
                             "type": "and",
                             "data": {
                                 "comment": "If you start in the room direclty below this one, you can carry a speed boost all the way to here",
@@ -4443,7 +4648,7 @@
                                 "items": []
                             }
                         },
-                        "Dock to EMMI Zone Exit West": {
+                        "Door to EMMI Zone Exit West": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -4543,7 +4748,7 @@
                         }
                     }
                 },
-                "Dock to EMMI Zone Exit West": {
+                "Door to EMMI Zone Exit West": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4564,13 +4769,13 @@
                         "right_shield_def": null
                     },
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Ghavoran",
                         "area": "EMMI Zone Exit West",
-                        "node": "Dock to EMMI Zone Exit Southeast"
+                        "node": "Door to EMMI Zone Exit Southeast"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "Access Open",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -4676,7 +4881,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to EMMI Zone Exit West": {
+                        "Door to EMMI Zone Exit West": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5406,7 +5611,7 @@
                         }
                     }
                 },
-                "Dock to EMMI Zone Exit Southeast": {
+                "Door to EMMI Zone Exit Southeast": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5427,13 +5632,13 @@
                         "right_shield_def": null
                     },
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Ghavoran",
                         "area": "EMMI Zone Exit Southeast",
-                        "node": "Dock to EMMI Zone Exit West"
+                        "node": "Door to EMMI Zone Exit West"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "Access Open",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -5618,7 +5823,7 @@
                                 "items": []
                             }
                         },
-                        "Dock to EMMI Zone Exit Southeast": {
+                        "Door to EMMI Zone Exit Southeast": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -9660,16 +9865,14 @@
                         "elevator_component": "CTeleporterUsableComponent",
                         "target_spawn_point": "teleporter_forest_000_platform",
                         "start_point_actor_name": "teleporter_magma_000_platform",
-                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad",
-                        "keep_name_when_vanilla": true,
-                        "editable": true
+                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad"
                     },
                     "valid_starting_location": false,
                     "dock_type": "teleporter",
                     "default_connection": {
                         "region": "Cataris",
                         "area": "Teleport to Ghavoran",
-                        "node": "Teleporter to Ghavoran - Teleport to Cataris"
+                        "node": "Teleporter to Ghavoran"
                     },
                     "default_dock_weakness": "Teleporter",
                     "exclude_from_dock_rando": false,
@@ -10148,7 +10351,7 @@
             }
         },
         "Teleport to Burenia": {
-            "default_node": "Teleporter to Burenia - Teleport to Ghavoran",
+            "default_node": "Teleporter to Burenia",
             "extra": {
                 "total_boundings": {
                     "x1": 4000.0,
@@ -10185,7 +10388,7 @@
                 "asset_id": "collision_camera_024"
             },
             "nodes": {
-                "Teleporter to Burenia - Teleport to Ghavoran": {
+                "Teleporter to Burenia": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -10203,16 +10406,14 @@
                         "elevator_component": "CTeleporterUsableComponent",
                         "target_spawn_point": "teleporter_forest_000_platform",
                         "start_point_actor_name": "teleporter_aqua_000_platform",
-                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad",
-                        "keep_name_when_vanilla": true,
-                        "editable": true
+                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad"
                     },
                     "valid_starting_location": false,
                     "dock_type": "teleporter",
                     "default_connection": {
                         "region": "Burenia",
                         "area": "Teleport to Ghavoran",
-                        "node": "Teleporter to Ghavoran - Teleport to Burenia"
+                        "node": "Teleporter to Ghavoran"
                     },
                     "default_dock_weakness": "Teleporter",
                     "exclude_from_dock_rando": false,
@@ -10321,7 +10522,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Teleporter to Burenia - Teleport to Ghavoran": {
+                        "Teleporter to Burenia": {
                             "type": "template",
                             "data": "Lay Power Bomb"
                         },
@@ -10457,7 +10658,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Teleporter to Burenia - Teleport to Ghavoran": {
+                        "Teleporter to Burenia": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -10483,8 +10684,8 @@
                                                 {
                                                     "type": "resource",
                                                     "data": {
-                                                        "type": "tricks",
-                                                        "name": "CrossSkip",
+                                                        "type": "items",
+                                                        "name": "Morph",
                                                         "amount": 1,
                                                         "negate": false
                                                     }
@@ -10495,28 +10696,61 @@
                                                         "comment": null,
                                                         "items": [
                                                             {
-                                                                "type": "resource",
+                                                                "type": "and",
                                                                 "data": {
-                                                                    "type": "items",
-                                                                    "name": "Flash",
-                                                                    "amount": 1,
-                                                                    "negate": false
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "CrossSkip",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "or",
+                                                                            "data": {
+                                                                                "comment": null,
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "items",
+                                                                                            "name": "Flash",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "template",
+                                                                                        "data": "Use Spin Boost"
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        }
+                                                                    ]
                                                                 }
                                                             },
                                                             {
-                                                                "type": "template",
-                                                                "data": "Use Spin Boost"
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": "https://youtu.be/4YU9S5yxUXY",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "CrossSkip",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
                                                             }
                                                         ]
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Morph",
-                                                        "amount": 1,
-                                                        "negate": false
                                                     }
                                                 }
                                             ]
@@ -10584,7 +10818,7 @@
                     "pickup_index": 103,
                     "location_category": "minor",
                     "connections": {
-                        "Teleporter to Burenia - Teleport to Ghavoran": {
+                        "Teleporter to Burenia": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -10608,9 +10842,9 @@
                                                 {
                                                     "type": "resource",
                                                     "data": {
-                                                        "type": "tricks",
-                                                        "name": "CrossSkip",
-                                                        "amount": 2,
+                                                        "type": "items",
+                                                        "name": "Morph",
+                                                        "amount": 1,
                                                         "negate": false
                                                     }
                                                 },
@@ -10620,28 +10854,61 @@
                                                         "comment": null,
                                                         "items": [
                                                             {
-                                                                "type": "resource",
+                                                                "type": "and",
                                                                 "data": {
-                                                                    "type": "items",
-                                                                    "name": "Flash",
-                                                                    "amount": 1,
-                                                                    "negate": false
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "CrossSkip",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "or",
+                                                                            "data": {
+                                                                                "comment": null,
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "items",
+                                                                                            "name": "Flash",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "template",
+                                                                                        "data": "Use Spin Boost"
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        }
+                                                                    ]
                                                                 }
                                                             },
                                                             {
-                                                                "type": "template",
-                                                                "data": "Use Spin Boost"
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": "https://youtu.be/4YU9S5yxUXY",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "CrossSkip",
+                                                                                "amount": 3,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
                                                             }
                                                         ]
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Morph",
-                                                        "amount": 1,
-                                                        "negate": false
                                                     }
                                                 }
                                             ]
@@ -10678,7 +10945,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Teleporter to Burenia - Teleport to Ghavoran": {
+                        "Teleporter to Burenia": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
@@ -11800,7 +12067,7 @@
                                                                                 "items": [
                                                                                     {
                                                                                         "type": "template",
-                                                                                        "data": "Shoot Ice Missile"
+                                                                                        "data": "Shoot Super Ice Missile"
                                                                                     },
                                                                                     {
                                                                                         "type": "or",
@@ -12186,7 +12453,7 @@
             }
         },
         "Transport to Ferenia": {
-            "default_node": "Tram to Ferenia - Transport to Ghavoran",
+            "default_node": "Shuttle to Ferenia",
             "extra": {
                 "total_boundings": {
                     "x1": 10000.0,
@@ -12215,7 +12482,7 @@
                 "asset_id": "collision_camera_027"
             },
             "nodes": {
-                "Tram to Ferenia - Transport to Ghavoran": {
+                "Shuttle to Ferenia": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -12234,17 +12501,16 @@
                         "target_spawn_point": "wagontrain_forest_000_platform",
                         "start_point_actor_name": "wagontrain_sanctuary_000_platform",
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_train/charclasses/weightactivatedplatform_train.bmsad",
-                        "keep_name_when_vanilla": true,
-                        "editable": true
+                        "transporter_name": "Ghavoran - Storm Gate"
                     },
                     "valid_starting_location": false,
-                    "dock_type": "teleporter",
+                    "dock_type": "shuttle",
                     "default_connection": {
                         "region": "Ferenia",
                         "area": "Transport to Ghavoran",
-                        "node": "Tram to Ghavoran - Transport to Ferenia"
+                        "node": "Shuttle to Ghavoran"
                     },
-                    "default_dock_weakness": "Teleporter",
+                    "default_dock_weakness": "Shuttle",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -12285,7 +12551,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Tram to Ferenia - Transport to Ghavoran": {
+                        "Shuttle to Ferenia": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -12553,7 +12819,9 @@
                     },
                     "default_dock_weakness": "Super Missile Door",
                     "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
+                    "incompatible_dock_weaknesses": [
+                        "Grapple Beam Door"
+                    ],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -14181,7 +14449,7 @@
             }
         },
         "Transport to Hanubia": {
-            "default_node": "Tram to Hanubia - Transport to Ghavoran",
+            "default_node": "Shuttle to Hanubia",
             "extra": {
                 "total_boundings": {
                     "x1": 12000.0,
@@ -14243,7 +14511,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Tram to Hanubia - Transport to Ghavoran": {
+                        "Shuttle to Hanubia": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -14259,7 +14527,7 @@
                         }
                     }
                 },
-                "Tram to Hanubia - Transport to Ghavoran": {
+                "Shuttle to Hanubia": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -14278,17 +14546,16 @@
                         "target_spawn_point": "wagontrain_forest_000_platform",
                         "start_point_actor_name": "wagontrain_shipyard_000_platform",
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_train/charclasses/weightactivatedplatform_train.bmsad",
-                        "keep_name_when_vanilla": true,
-                        "editable": true
+                        "transporter_name": "Ghavoran - Golzuna"
                     },
                     "valid_starting_location": false,
-                    "dock_type": "teleporter",
+                    "dock_type": "shuttle",
                     "default_connection": {
                         "region": "Hanubia",
                         "area": "Transport to Ghavoran",
-                        "node": "Tram to Ghavoran - Transport to Hanubia"
+                        "node": "Shuttle to Ghavoran"
                     },
-                    "default_dock_weakness": "Teleporter",
+                    "default_dock_weakness": "Shuttle",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -14941,7 +15208,7 @@
             }
         },
         "Transport to Elun": {
-            "default_node": "Tram to Elun - Transport to Ghavoran",
+            "default_node": "Shuttle to Elun",
             "extra": {
                 "total_boundings": {
                     "x1": 4000.0,
@@ -15003,7 +15270,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Tram to Elun - Transport to Ghavoran": {
+                        "Shuttle to Elun": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -15012,28 +15279,7 @@
                         }
                     }
                 },
-                "Elevator (wagontrain_quarantine_000)": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 7400.0,
-                        "y": -3000.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "wagontrain_quarantine_000",
-                        "actor_def": "actordef:actors/props/wagontrain/charclasses/wagontrain.bmsad",
-                        "elevator_component": "CTrainUsableComponent",
-                        "target_spawn_point": "wagontrain_forest_000_platform"
-                    },
-                    "valid_starting_location": false,
-                    "connections": {}
-                },
-                "Tram to Elun - Transport to Ghavoran": {
+                "Shuttle to Elun": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -15052,17 +15298,16 @@
                         "target_spawn_point": "wagontrain_forest_000_platform",
                         "start_point_actor_name": "wagontrain_quarantine_000_platform",
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_train/charclasses/weightactivatedplatform_train.bmsad",
-                        "keep_name_when_vanilla": true,
-                        "editable": true
+                        "transporter_name": "Ghavoran - Flipper"
                     },
                     "valid_starting_location": false,
-                    "dock_type": "teleporter",
+                    "dock_type": "shuttle",
                     "default_connection": {
                         "region": "Elun",
                         "area": "Transport to Ghavoran",
-                        "node": "Tram to Ghavoran - Transport to Elun"
+                        "node": "Shuttle to Ghavoran"
                     },
-                    "default_dock_weakness": "Teleporter",
+                    "default_dock_weakness": "Shuttle",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -15080,7 +15325,7 @@
             }
         },
         "Transport to Dairon": {
-            "default_node": "Elevator to Dairon - Transport to Ghavoran",
+            "default_node": "Elevator to Dairon",
             "extra": {
                 "total_boundings": {
                     "x1": 4000.0,
@@ -15142,7 +15387,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Elevator to Dairon - Transport to Ghavoran": {
+                        "Elevator to Dairon": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -15151,7 +15396,7 @@
                         }
                     }
                 },
-                "Elevator to Dairon - Transport to Ghavoran": {
+                "Elevator to Dairon": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -15170,17 +15415,16 @@
                         "target_spawn_point": "elevator_forest_000_platform",
                         "start_point_actor_name": "elevator_baselab_000_platform",
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad",
-                        "keep_name_when_vanilla": true,
-                        "editable": true
+                        "transporter_name": "Ghavoran - Early Supers"
                     },
                     "valid_starting_location": false,
-                    "dock_type": "teleporter",
+                    "dock_type": "elevator",
                     "default_connection": {
                         "region": "Dairon",
                         "area": "Transport to Ghavoran",
-                        "node": "Elevator to Ghavoran - Transport to Dairon"
+                        "node": "Elevator to Ghavoran"
                     },
-                    "default_dock_weakness": "Teleporter",
+                    "default_dock_weakness": "Elevator",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,

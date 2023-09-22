@@ -1,8 +1,13 @@
-from dataclasses import dataclass
-from random import Random
-from typing import Iterable
+from __future__ import annotations
 
-from randovania.games.cave_story.layout.cs_cosmetic_patches import CSSong, CSCosmeticPatches, MusicRandoType, SONGS
+from dataclasses import dataclass
+from typing import TYPE_CHECKING
+
+from randovania.games.cave_story.layout.cs_cosmetic_patches import SONGS, CSCosmeticPatches, CSSong, MusicRandoType
+
+if TYPE_CHECKING:
+    from collections.abc import Iterable
+    from random import Random
 
 
 @dataclass(frozen=True)
@@ -133,7 +138,7 @@ class CaverMusic:
     )
 
     @classmethod
-    def get_randomizer(cls, rando_type: MusicRandoType) -> "CaverMusic":
+    def get_randomizer(cls, rando_type: MusicRandoType) -> CaverMusic:
         if rando_type == MusicRandoType.SHUFFLE:
             return CaverMusicShuffle()
         if rando_type == MusicRandoType.RANDOM:
@@ -143,7 +148,7 @@ class CaverMusic:
         return CaverMusicDefault()
 
     def shuffle(self, rng: Random, cosmetic: CSCosmeticPatches) -> dict[CaverCue, dict[str, CSSong]]:
-        raise NotImplementedError()
+        raise NotImplementedError
 
     @classmethod
     def get_shuffled_mapping(cls, rng: Random, cosmetic: CSCosmeticPatches) -> dict[str, dict[str, str]]:
@@ -153,10 +158,7 @@ class CaverMusic:
             if mapping.get(cue.map_name) is None:
                 mapping[cue.map_name] = {}
             events = {
-                event: {
-                    "song_id": song.song_id,
-                    "original_id": cue.default_song.song_id
-                }
+                event: {"song_id": song.song_id, "original_id": cue.default_song.song_id}
                 for event, song in events.items()
             }
             mapping[cue.map_name].update(events)
@@ -165,10 +167,7 @@ class CaverMusic:
 
 class CaverMusicDefault(CaverMusic):
     def shuffle(self, rng: Random, cosmetic: CSCosmeticPatches) -> dict[CaverCue, dict[str, CSSong]]:
-        return {
-            cue: cue.assign_song(cue.default_song)
-            for cue in CaverMusic.CUES
-        }
+        return {cue: cue.assign_song(cue.default_song) for cue in CaverMusic.CUES}
 
 
 class CaverMusicShuffle(CaverMusic):
@@ -176,39 +175,18 @@ class CaverMusicShuffle(CaverMusic):
         shuffled = CSSong.valid_songs(cosmetic.music_rando.song_status)
         rng.shuffle(shuffled)
 
-        mapping = {
-            song: shuffled[i % len(shuffled)]
-            for i, song in enumerate(CSSong.songs_to_shuffle())
-        }
+        mapping = {song: shuffled[i % len(shuffled)] for i, song in enumerate(CSSong.songs_to_shuffle())}
 
-        return {
-            cue: cue.assign_song(
-                mapping[cue.default_song]
-            )
-            for cue in CaverMusic.CUES
-        }
+        return {cue: cue.assign_song(mapping[cue.default_song]) for cue in CaverMusic.CUES}
 
 
 class CaverMusicRandom(CaverMusic):
     def shuffle(self, rng: Random, cosmetic: CSCosmeticPatches) -> dict[CaverCue, dict[str, CSSong]]:
         valid = CSSong.valid_songs(cosmetic.music_rando.song_status)
-        return {
-            cue: cue.assign_song(
-                rng.choice(valid)
-            )
-            for cue in CaverMusic.CUES
-        }
+        return {cue: cue.assign_song(rng.choice(valid)) for cue in CaverMusic.CUES}
 
 
 class CaverMusicChaos(CaverMusic):
     def shuffle(self, rng: Random, cosmetic: CSCosmeticPatches) -> dict[CaverCue, dict[str, CSSong]]:
         valid = CSSong.valid_songs(cosmetic.music_rando.song_status)
-        return {
-            cue: cue.assign_songs(
-                {
-                    event: rng.choice(valid)
-                    for event in cue.events
-                }
-            )
-            for cue in CaverMusic.CUES
-        }
+        return {cue: cue.assign_songs({event: rng.choice(valid) for event in cue.events}) for cue in CaverMusic.CUES}

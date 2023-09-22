@@ -1,8 +1,13 @@
+from __future__ import annotations
+
 import logging
+from typing import TYPE_CHECKING
 
 from randovania.game_connection.builder.connector_builder import ConnectorBuilder
-from randovania.game_connection.connector.remote_connector import RemoteConnector
 from randovania.game_connection.connector_builder_choice import ConnectorBuilderChoice
+
+if TYPE_CHECKING:
+    from randovania.game_connection.connector.remote_connector import RemoteConnector
 
 
 class DreadConnectorBuilder(ConnectorBuilder):
@@ -23,10 +28,10 @@ class DreadConnectorBuilder(ConnectorBuilder):
         from randovania.game_connection.executor.dread_executor import DreadExecutor
 
         self.executor = DreadExecutor(self.ip)
-        self._status_message(f"Connecting to {self.ip}")
+        self._status_message(f"Connecting to {self.ip}", log=False)
         connect_error = await self.executor.connect()
         if connect_error is not None:
-            self._status_message("Unable to connect to Dread")
+            self._status_message("Unable to connect to Dread", log=False)
             return
         self._status_message(f"Connected to {self.ip}")
         return DreadRemoteConnector(self.executor)

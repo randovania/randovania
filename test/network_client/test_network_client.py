@@ -1,30 +1,35 @@
+from __future__ import annotations
+
 import uuid
 from pathlib import Path
-from unittest.mock import MagicMock, AsyncMock, call
+from typing import TYPE_CHECKING
+from unittest.mock import AsyncMock, MagicMock, call
 
 import aiohttp.client_exceptions
 import pytest
-import pytest_mock
 import socketio.exceptions
 
-from randovania.bitpacking import construct_pack
-from randovania.game_description.resources.item_resource_info import InventoryItem
-from randovania.game_description.resources.pickup_entry import PickupEntry, PickupModel
+from randovania.game_description.pickup.pickup_entry import PickupEntry, PickupModel
+from randovania.game_description.resources.inventory import Inventory, InventoryItem
+from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.games.game import RandovaniaGame
-from randovania.network_client.network_client import NetworkClient, ConnectionState, _decode_pickup, UnableToConnect
-from randovania.network_common import connection_headers
+from randovania.network_client.network_client import ConnectionState, NetworkClient, UnableToConnect, _decode_pickup
+from randovania.network_common import connection_headers, remote_inventory
 from randovania.network_common.admin_actions import SessionAdminGlobalAction
 from randovania.network_common.error import InvalidSessionError, RequestTimeoutError, ServerError
-from randovania.network_common.multiplayer_session import MultiplayerWorldPickups, RemoteInventory, WorldUserInventory
+from randovania.network_common.multiplayer_session import MultiplayerWorldPickups, WorldUserInventory
+
+if TYPE_CHECKING:
+    import pytest_mock
 
 
-@pytest.fixture(name="client")
-def _client(tmpdir):
-    return NetworkClient(Path(tmpdir), {"server_address": "http://localhost:5000"})
+@pytest.fixture()
+def client(tmp_path):
+    return NetworkClient(tmp_path, {"server_address": "http://localhost:5000"})
 
 
-async def test_on_connect_no_restore(tmpdir):
-    client = NetworkClient(Path(tmpdir), {"server_address": "http://localhost:5000"})
+async def test_on_connect_no_restore(tmp_path):
+    client = NetworkClient(tmp_path, {"server_address": "http://localhost:5000"})
 
     # Run
     await client.on_connect()
@@ -41,17 +46,19 @@ async def test_on_connect_restore(tmpdir, valid_session: bool):
     session_data_path.write_bytes(b"foo")
 
     if valid_session:
-        call_result = {"result": {
-            "user": {
-                "id": 1234,
-                "name": "You",
-            },
-            "encoded_session_b85": b'Ze@30VtI6Ba{'
-        }}
+        call_result = {
+            "result": {
+                "user": {
+                    "id": 1234,
+                    "name": "You",
+                },
+                "encoded_session_b85": b"Ze@30VtI6Ba{",
+            }
+        }
     else:
         call_result = InvalidSessionError().as_json
 
-    client.sio = MagicMock()
+    client.sa = MagicMock()
     client.sio.call = AsyncMock(return_value=call_result)
 
     # Run
@@ -84,13 +91,12 @@ async def test_on_connect_restore_timeout(client: NetworkClient):
 
 async def test_connect_to_server(tmp_path):
     # Setup
-    client = NetworkClient(tmp_path, {"server_address": "http://localhost:5000",
-                                      "socketio_path": "/path"})
+    client = NetworkClient(tmp_path, {"server_address": "http://localhost:5000", "socketio_path": "/path"})
 
     async def connect(*args, **kwargs):
         client._waiting_for_on_connect.set_result(True)
 
-    client.sio = MagicMock()
+    client.sa = MagicMock()
     client.sio.connect = AsyncMock(side_effect=connect)
     client.sio.connected = False
 
@@ -99,25 +105,19 @@ async def test_connect_to_server(tmp_path):
 
     # Assert
     assert client.connection_state == ConnectionState.Connecting
-    client.sio.connect.assert_awaited_once_with("http://localhost:5000",
-                                                socketio_path="/path",
-                                                transports=["websocket"],
-                                                headers=connection_headers())
+    client.sio.connect.assert_awaited_once_with(
+        "http://localhost:5000", socketio_path="/path", transports=["websocket"], headers=connection_headers()
+    )
 
 
 async def test_internal_connect_to_server_failure(tmp_path):
     # Setup
-    client = NetworkClient(tmp_path, {"server_address": "http://localhost:5000",
-                                      "socketio_path": "/path"})
+    client = NetworkClient(tmp_path, {"server_address": "http://localhost:5000", "socketio_path": "/path"})
 
     async def connect(*args, **kwargs):
-        raise (
-            aiohttp.client_exceptions.ContentTypeError(
-                MagicMock(), (), message="thing"
-            )
-        )
+        raise (aiohttp.client_exceptions.ContentTypeError(MagicMock(), (), message="thing"))
 
-    client.sio = MagicMock()
+    client.sa = MagicMock()
     client.sio.disconnect = AsyncMock()
     client.sio.connect = AsyncMock(side_effect=connect)
     client.sio.connected = False
@@ -163,13 +163,32 @@ async def test_listen_to_session(client: NetworkClient, listen, was_listening):
     await client.listen_to_session(session_meta.id, listen)
 
     # Assert
-    client.server_call.assert_awaited_once_with(
-        "multiplayer_listen_to_session", (1234, listen)
-    )
+    client.server_call.assert_awaited_once_with("multiplayer_listen_to_session", (1234, listen))
     if listen:
         assert client._sessions_interested_in == {1234}
     else:
         assert client._sessions_interested_in == set()
+
+
+@pytest.mark.parametrize("was_listening", [False, True])
+@pytest.mark.parametrize("listen", [False, True])
+async def test_world_track_inventory(client: NetworkClient, listen, was_listening):
+    uid = uuid.UUID("8b8b9269-1e54-42fe-9e5f-82875ef986e2")
+
+    client.server_call = AsyncMock()
+    client._tracking_worlds.add((uid, 9999))
+    if was_listening:
+        client._tracking_worlds.add((uid, 4567))
+
+    # Run
+    await client.world_track_inventory(uid, 4567, listen)
+
+    # Assert
+    client.server_call.assert_awaited_once_with("multiplayer_watch_inventory", (str(uid), 4567, listen, True))
+    if listen:
+        assert client._tracking_worlds == {(uid, 9999), (uid, 4567)}
+    else:
+        assert client._tracking_worlds == {(uid, 9999)}
 
 
 async def test_emit_with_result_timeout(client: NetworkClient):
@@ -220,10 +239,10 @@ async def test_refresh_received_pickups(client: NetworkClient, corruption_game_d
         "world": "00000000-0000-1111-0000-000000000000",
         "game": RandovaniaGame.METROID_PRIME_CORRUPTION.value,
         "pickups": [
-            {"provider_name": "Message A", "pickup": 'VtI6Bb3p'},
-            {"provider_name": "Message B", "pickup": 'VtI6Bb3y'},
-            {"provider_name": "Message C", "pickup": 'VtI6Bb3*'},
-        ]
+            {"provider_name": "Message A", "pickup": "VtI6Bb3p"},
+            {"provider_name": "Message B", "pickup": "VtI6Bb3y"},
+            {"provider_name": "Message C", "pickup": "VtI6Bb3*"},
+        ],
     }
 
     pickups = [MagicMock(), MagicMock(), MagicMock()]
@@ -235,20 +254,23 @@ async def test_refresh_received_pickups(client: NetworkClient, corruption_game_d
     await client._on_world_pickups_update_raw(data)
 
     # Assert
-    client.on_world_pickups_update.assert_awaited_once_with(MultiplayerWorldPickups(
-        world_id=uuid.UUID("00000000-0000-1111-0000-000000000000"),
-        game=RandovaniaGame.METROID_PRIME_CORRUPTION,
-        pickups=(
-            ("Message A", pickups[0]),
-            ("Message B", pickups[1]),
-            ("Message C", pickups[2]),
+    client.on_world_pickups_update.assert_awaited_once_with(
+        MultiplayerWorldPickups(
+            world_id=uuid.UUID("00000000-0000-1111-0000-000000000000"),
+            game=RandovaniaGame.METROID_PRIME_CORRUPTION,
+            pickups=(
+                ("Message A", pickups[0]),
+                ("Message B", pickups[1]),
+                ("Message C", pickups[2]),
+            ),
         )
-    ))
-    mock_decode.assert_has_calls([call('VtI6Bb3p', db), call('VtI6Bb3y', db), call('VtI6Bb3*', db)])
+    )
+    mock_decode.assert_has_calls([call("VtI6Bb3p", db), call("VtI6Bb3y", db), call("VtI6Bb3*", db)])
 
 
-def test_decode_pickup(client: NetworkClient, echoes_resource_database, generic_pickup_category,
-                       default_generator_params):
+def test_decode_pickup(
+    client: NetworkClient, echoes_resource_database, generic_pickup_category, default_generator_params
+):
     data = (
         "h^WxYK%Bzb%2NU&w=%giys9}cw>h&ixhA)=I<_*yXJu|>a%p3j6&;nimC2=yfhEzEw1EwU(UqOO$>p%O5KI8-+"
         "~(lQ#?s8v%E&;{=*rqdXJu|>a%p3j6&;nimC2=yfhEzEw1EwU(UqOO$>p%O5KI8-+~(lQ#?s8v%E&;{=*rpvSO"
@@ -261,7 +283,7 @@ def test_decode_pickup(client: NetworkClient, echoes_resource_database, generic_
         ),
         pickup_category=generic_pickup_category,
         broad_category=generic_pickup_category,
-        progression=tuple(),
+        progression=(),
         generator_params=default_generator_params,
     )
 
@@ -320,14 +342,16 @@ async def test_join_multiplayer_session(client: NetworkClient, mocker: pytest_mo
 async def test_on_world_user_inventory_raw(client: NetworkClient):
     client.on_world_user_inventory = AsyncMock()
     uid = "00000000-0000-1111-0000-000000000000"
-    inventory = {
-        "MyKey": InventoryItem(1, 4)
-    }
-    encoded = construct_pack.encode(inventory, RemoteInventory)
+    item = ItemResourceInfo(0, "Super Key", "MyKey", 1)
+
+    inventory = Inventory({item: InventoryItem(1, 4)})
+    encoded = remote_inventory.inventory_to_encoded_remote(inventory)
 
     await client._on_world_user_inventory_raw(uid, 1234, encoded)
-    client.on_world_user_inventory.assert_called_once_with(WorldUserInventory(
-        world_id=uuid.UUID(uid),
-        user_id=1234,
-        inventory=inventory,
-    ))
+    client.on_world_user_inventory.assert_called_once_with(
+        WorldUserInventory(
+            world_id=uuid.UUID(uid),
+            user_id=1234,
+            inventory={"MyKey": 4},
+        )
+    )

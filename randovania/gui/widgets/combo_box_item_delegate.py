@@ -1,4 +1,6 @@
-from PySide6 import QtWidgets, QtCore
+from __future__ import annotations
+
+from PySide6 import QtCore, QtWidgets
 from PySide6.QtCore import Qt
 
 
@@ -7,8 +9,9 @@ class ComboBoxItemDelegate(QtWidgets.QStyledItemDelegate):
         super().__init__()
         self.items = []
 
-    def createEditor(self, parent: QtWidgets.QWidget, option: QtWidgets.QStyleOptionViewItem,
-                     index: QtCore.QModelIndex) -> QtWidgets.QWidget:
+    def createEditor(
+        self, parent: QtWidgets.QWidget, option: QtWidgets.QStyleOptionViewItem, index: QtCore.QModelIndex
+    ) -> QtWidgets.QWidget:
         combo = QtWidgets.QComboBox(parent)
         for item in self.items:
             combo.addItem(item)
@@ -20,6 +23,7 @@ class ComboBoxItemDelegate(QtWidgets.QStyledItemDelegate):
         if idx >= 0:
             editor.setCurrentIndex(idx)
 
-    def setModelData(self, editor: QtWidgets.QComboBox, model: QtCore.QAbstractItemModel,
-                     index: QtCore.QModelIndex) -> None:
+    def setModelData(
+        self, editor: QtWidgets.QComboBox, model: QtCore.QAbstractItemModel, index: QtCore.QModelIndex
+    ) -> None:
         model.setData(index, editor.currentText(), Qt.ItemDataRole.EditRole)

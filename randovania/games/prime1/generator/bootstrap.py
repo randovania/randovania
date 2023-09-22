@@ -1,18 +1,24 @@
+from __future__ import annotations
+
 import copy
 import dataclasses
+from typing import TYPE_CHECKING
 
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
-from randovania.game_description.resources.damage_resource_info import DamageReduction
-from randovania.game_description.resources.resource_database import ResourceDatabase
-from randovania.game_description.resources.resource_info import ResourceCollection
+from randovania.game_description.resources.damage_reduction import DamageReduction
 from randovania.game_description.resources.resource_type import ResourceType
-from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.resolver.bootstrap import MetroidBootstrap
+
+if TYPE_CHECKING:
+    from randovania.game_description.resources.resource_collection import ResourceCollection
+    from randovania.game_description.resources.resource_database import ResourceDatabase
+    from randovania.layout.base.base_configuration import BaseConfiguration
 
 
 class PrimeBootstrap(MetroidBootstrap):
-    def _get_enabled_misc_resources(self, configuration: BaseConfiguration,
-                                    resource_database: ResourceDatabase) -> set[str]:
+    def _get_enabled_misc_resources(
+        self, configuration: BaseConfiguration, resource_database: ResourceDatabase
+    ) -> set[str]:
         enabled_resources = set()
 
         logical_patches = {
@@ -35,15 +41,16 @@ class PrimeBootstrap(MetroidBootstrap):
         for name, index in logical_patches.items():
             if getattr(configuration, name):
                 enabled_resources.add(index)
-        
+
         if configuration.dock_rando.is_enabled():
             enabled_resources.add("dock_rando")
 
         return enabled_resources
 
     def prime1_progressive_damage_reduction(self, db: ResourceDatabase, current_resources: ResourceCollection):
-        num_suits = sum(current_resources[db.get_item_by_name(suit)]
-                        for suit in ["Varia Suit", "Gravity Suit", "Phazon Suit"])
+        num_suits = sum(
+            current_resources[db.get_item_by_name(suit)] for suit in ["Varia Suit", "Gravity Suit", "Phazon Suit"]
+        )
         if num_suits >= 3:
             return 0.5
         elif num_suits == 2:
@@ -83,5 +90,9 @@ class PrimeBootstrap(MetroidBootstrap):
         else:
             base_damage_reduction = self.prime1_absolute_damage_reduction
 
-        return dataclasses.replace(db, damage_reductions=damage_reductions, base_damage_reduction=base_damage_reduction,
-                                   requirement_template=requirement_template)
+        return dataclasses.replace(
+            db,
+            damage_reductions=damage_reductions,
+            base_damage_reduction=base_damage_reduction,
+            requirement_template=requirement_template,
+        )

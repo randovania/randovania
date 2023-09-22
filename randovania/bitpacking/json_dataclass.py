@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import dataclasses
 import datetime
 import inspect
@@ -8,6 +10,9 @@ from enum import Enum
 from frozendict import frozendict
 
 from randovania.lib import type_lib
+
+if typing.TYPE_CHECKING:
+    from _typeshed import DataclassInstance
 
 T = typing.TypeVar("T")
 
@@ -32,10 +37,7 @@ def _decode_with_type(arg: typing.Any, type_: type, extra_args: dict) -> typing.
         else:
             value_types = typing.Any
 
-        return [
-            _decode_with_type(value, value_types, {})
-            for value in arg
-        ]
+        return [_decode_with_type(value, value_types, {}) for value in arg]
 
     elif type_origin == tuple:
         type_args = typing.get_args(type_)
@@ -48,8 +50,7 @@ def _decode_with_type(arg: typing.Any, type_: type, extra_args: dict) -> typing.
             value_types = [typing.Any] * len(arg)
 
         return tuple(
-            _decode_with_type(value, value_type, {})
-            for value, value_type in zip(arg, value_types, strict=True)
+            _decode_with_type(value, value_type, {}) for value, value_type in zip(arg, value_types, strict=True)
         )
 
     elif type_origin in (dict, frozendict):
@@ -72,11 +73,14 @@ def _decode_with_type(arg: typing.Any, type_: type, extra_args: dict) -> typing.
     elif hasattr(type_, "from_json"):
         arg_spec = inspect.getfullargspec(type_.from_json)
 
-        return type_.from_json(arg, **{
-            name: value
-            for name, value in extra_args.items()
-            if arg_spec.varkw is not None or name in arg_spec.args or name in arg_spec.kwonlyargs
-        })
+        return type_.from_json(
+            arg,
+            **{
+                name: value
+                for name, value in extra_args.items()
+                if arg_spec.varkw is not None or name in arg_spec.args or name in arg_spec.kwonlyargs
+            },
+        )
 
     return arg
 
@@ -91,23 +95,17 @@ def _encode_value(value: typing.Any) -> typing.Any:
     elif type_lib.is_named_tuple(type(value)):
         return _encode_value(value._asdict())
 
-    elif isinstance(value, (tuple, list)):
-        return [
-            _encode_value(v)
-            for v in value
-        ]
+    elif isinstance(value, tuple | list):
+        return [_encode_value(v) for v in value]
 
-    elif isinstance(value, (dict, frozendict)):
-        result = {
-            _encode_value(k): _encode_value(v)
-            for k, v in value.items()
-        }
+    elif isinstance(value, dict | frozendict):
+        result = {_encode_value(k): _encode_value(v) for k, v in value.items()}
         if isinstance(value, frozendict):
-            result = frozendict(result)
+            return frozendict(result)
         return result
 
     elif isinstance(value, datetime.datetime):
-        return value.astimezone(datetime.timezone.utc).isoformat()
+        return value.astimezone(datetime.UTC).isoformat()
 
     elif value is not None and hasattr(value, "as_json"):
         return value.as_json
@@ -118,7 +116,7 @@ def _encode_value(value: typing.Any) -> typing.Any:
 
 class JsonDataclass:
     @property
-    def as_json(self) -> dict:
+    def as_json(self: DataclassInstance) -> dict:
         result = {}
         for field in dataclasses.fields(self):
             if not field.init or field.metadata.get("init_from_extra"):
@@ -139,20 +137,24 @@ class JsonDataclass:
         return result
 
     @classmethod
-    def json_extra_arguments(cls):
+    def json_extra_arguments(cls) -> dict:
         return {}
 
     @classmethod
-    def from_json(cls: type[T], json_dict: dict, **extra) -> T:
+    def from_json(cls, json_dict: dict, **extra: typing.Any) -> typing.Self:
+        assert issubclass(cls, JsonDataclass)
         extra_args = cls.json_extra_arguments()
         extra_args.update(extra)
 
         resolved_types = typing.get_type_hints(cls)
+        dc: type[DataclassInstance] = cls  # type: ignore[assignment]
 
         new_instance = {}
-        for field in dataclasses.fields(cls):
-            if not field.init or (field.name not in json_dict and (field.default != dataclasses.MISSING
-                                                                   or field.default_factory != dataclasses.MISSING)):
+        for field in dataclasses.fields(dc):
+            if not field.init or (
+                field.name not in json_dict
+                and (field.default != dataclasses.MISSING or field.default_factory != dataclasses.MISSING)
+            ):
                 continue
 
             if field.metadata.get("init_from_extra"):

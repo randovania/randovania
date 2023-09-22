@@ -10,7 +10,7 @@
     },
     "areas": {
         "Outer Hub": {
-            "default_node": "Elevator to Area 2 Entrance - Transport to Area 2 Exterior",
+            "default_node": "Elevator to Area 2 - Entrance",
             "extra": {
                 "total_boundings": {
                     "x1": -13000.0,
@@ -163,7 +163,7 @@
                     "pickup_index": 34,
                     "location_category": "minor",
                     "connections": {
-                        "Elevator to Area 2 Entrance - Transport to Area 2 Exterior": {
+                        "Elevator to Area 2 - Entrance": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -172,7 +172,7 @@
                         }
                     }
                 },
-                "Elevator to Area 2 Interior - Main Hub": {
+                "Elevator to Area 2 - Interior": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -187,18 +187,16 @@
                     "extra": {
                         "actor_name": "LE_Platform_Elevator_FromArea02B",
                         "actor_type": "weightactivatedplatform",
-                        "start_point_actor_name": "ST_FromArea02B",
-                        "keep_name_when_vanilla": false,
-                        "editable": true
+                        "start_point_actor_name": "ST_FromArea02B"
                     },
                     "valid_starting_location": false,
-                    "dock_type": "teleporter",
+                    "dock_type": "elevator",
                     "default_connection": {
                         "region": "Area 2 - Interior",
                         "area": "Main Hub",
-                        "node": "Elevator to Area 2 Exterior - Outer Hub"
+                        "node": "Elevator to Area 2 - Exterior"
                     },
-                    "default_dock_weakness": "Teleporter",
+                    "default_dock_weakness": "Elevator",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -229,7 +227,7 @@
                                     },
                                     {
                                         "type": "template",
-                                        "data": "Destroy Bomb Block"
+                                        "data": "Lay Any Bomb"
                                     }
                                 ]
                             }
@@ -257,7 +255,7 @@
                         }
                     }
                 },
-                "Elevator to Area 2 Entrance - Transport to Area 2 Exterior": {
+                "Elevator to Area 2 - Entrance": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -272,18 +270,16 @@
                     "extra": {
                         "actor_name": "LE_Platform_Elevator_FromArea02C",
                         "actor_type": "weightactivatedplatform",
-                        "start_point_actor_name": "ST_FromArea02C",
-                        "keep_name_when_vanilla": false,
-                        "editable": true
+                        "start_point_actor_name": "ST_FromArea02C"
                     },
                     "valid_starting_location": true,
-                    "dock_type": "teleporter",
+                    "dock_type": "elevator",
                     "default_connection": {
                         "region": "Area 2 - Entrance",
                         "area": "Transport to Area 2 Exterior",
-                        "node": "Elevator to Area 2 Exterior - Outer Hub"
+                        "node": "Elevator to Area 2 - Exterior"
                     },
-                    "default_dock_weakness": "Teleporter",
+                    "default_dock_weakness": "Elevator",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -428,7 +424,7 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Elevator to Area 2 Entrance - Transport to Area 2 Exterior": {
+                        "Elevator to Area 2 - Entrance": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -473,7 +469,7 @@
                         }
                     },
                     "connections": {
-                        "Elevator to Area 2 Interior - Main Hub": {
+                        "Elevator to Area 2 - Interior": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -570,7 +566,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Elevator to Area 2 Interior - Main Hub": {
+                        "Elevator to Area 2 - Interior": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -586,7 +582,7 @@
                                     },
                                     {
                                         "type": "template",
-                                        "data": "Destroy Bomb Block"
+                                        "data": "Lay Any Bomb"
                                     }
                                 ]
                             }
@@ -622,7 +618,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Elevator to Area 2 Interior - Main Hub": {
+                        "Elevator to Area 2 - Interior": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -660,7 +656,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Elevator to Area 2 Interior - Main Hub": {
+                        "Elevator to Area 2 - Interior": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -798,7 +794,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Elevator to Area 2 Entrance - Transport to Area 2 Exterior": {
+                        "Elevator to Area 2 - Entrance": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -868,7 +864,7 @@
                     "valid_starting_location": false,
                     "event_name": "Area 2 Exterior Teleporter Upper",
                     "connections": {
-                        "Elevator to Area 2 Interior - Main Hub": {
+                        "Elevator to Area 2 - Interior": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -903,7 +899,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Elevator to Area 2 Entrance - Transport to Area 2 Exterior": {
+                        "Elevator to Area 2 - Entrance": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -929,7 +925,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Elevator to Area 2 Entrance - Transport to Area 2 Exterior": {
+                        "Elevator to Area 2 - Entrance": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1189,7 +1185,7 @@
                         },
                         "Tunnel to Spring Ball Tutorial": {
                             "type": "template",
-                            "data": "Destroy Bomb Block"
+                            "data": "Lay Any Bomb"
                         },
                         "Event - Arachnus": {
                             "type": "and",
@@ -1321,7 +1317,7 @@
                     "connections": {
                         "Tunnel to Arachnus Arena": {
                             "type": "template",
-                            "data": "Destroy Bomb Block"
+                            "data": "Lay Any Bomb"
                         }
                     }
                 }
@@ -1589,7 +1585,7 @@
                     "connections": {
                         "Pickup (Missile Tank)": {
                             "type": "template",
-                            "data": "Destroy Bomb Block"
+                            "data": "Lay Any Bomb"
                         }
                     }
                 },
@@ -1956,7 +1952,7 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Destroy Bomb Block"
+                                        "data": "Lay Any Bomb"
                                     },
                                     {
                                         "type": "or",
@@ -1964,13 +1960,8 @@
                                             "comment": null,
                                             "items": [
                                                 {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "SMAmmo",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
+                                                    "type": "template",
+                                                    "data": "Shoot Super Missile"
                                                 },
                                                 {
                                                     "type": "resource",
@@ -2024,7 +2015,7 @@
                         },
                         "Tunnel to Grapple Gap (Top)": {
                             "type": "template",
-                            "data": "Destroy Bomb Block"
+                            "data": "Lay Any Bomb"
                         }
                     }
                 },
@@ -2262,8 +2253,39 @@
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "template",
-                                        "data": "Climb Rooms Vertically (No High Jump)"
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Morph",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Space",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Movement",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     },
                                     {
                                         "type": "and",
@@ -2285,38 +2307,30 @@
                                                 }
                                             ]
                                         }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Simple IBJ"
                                     }
                                 ]
                             }
                         },
                         "Tunnel to Outer Hub Shaft (Top)": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Destroy Bomb Block"
+                                        "data": "Climb Rooms Vertically (No High Jump)"
                                     },
                                     {
-                                        "type": "or",
+                                        "type": "resource",
                                         "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "template",
-                                                    "data": "Climb Rooms Vertically (No High Jump)"
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "SWJ",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
+                                            "type": "tricks",
+                                            "name": "SWJ",
+                                            "amount": 1,
+                                            "negate": false
                                         }
                                     }
                                 ]
@@ -2553,7 +2567,7 @@
                     "connections": {
                         "Tunnel to Alpha Shaft": {
                             "type": "template",
-                            "data": "Destroy Bomb Block"
+                            "data": "Lay Any Bomb"
                         }
                     }
                 },
@@ -2585,7 +2599,7 @@
                     "connections": {
                         "Pickup (Missile Tank)": {
                             "type": "template",
-                            "data": "Destroy Bomb Block"
+                            "data": "Lay Any Bomb"
                         }
                     }
                 }
@@ -2773,7 +2787,7 @@
                         },
                         "Tunnel to Glow Fly Tunnel": {
                             "type": "template",
-                            "data": "Destroy Bomb Block"
+                            "data": "Lay Any Bomb"
                         }
                     }
                 },
@@ -2998,71 +3012,66 @@
                     "valid_starting_location": false,
                     "connections": {
                         "Door to Hot Split": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
                                         "type": "resource",
                                         "data": {
-                                            "type": "events",
-                                            "name": "Alpha 10",
+                                            "type": "items",
+                                            "name": "Boots",
                                             "amount": 1,
                                             "negate": false
                                         }
                                     },
                                     {
-                                        "type": "or",
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Gravity",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Space",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Use Spider Ball"
+                                    },
+                                    {
+                                        "type": "and",
                                         "data": {
                                             "comment": null,
                                             "items": [
                                                 {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Boots",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Space",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Gravity",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
                                                     "type": "template",
-                                                    "data": "Use Spider Ball"
+                                                    "data": "Lay Bomb"
                                                 },
                                                 {
-                                                    "type": "and",
+                                                    "type": "or",
                                                     "data": {
                                                         "comment": null,
                                                         "items": [
                                                             {
                                                                 "type": "resource",
                                                                 "data": {
-                                                                    "type": "items",
-                                                                    "name": "Bomb",
+                                                                    "type": "tricks",
+                                                                    "name": "DBJ",
                                                                     "amount": 1,
                                                                     "negate": false
                                                                 }
                                                             },
                                                             {
-                                                                "type": "or",
+                                                                "type": "and",
                                                                 "data": {
                                                                     "comment": null,
                                                                     "items": [
@@ -3070,49 +3079,32 @@
                                                                             "type": "resource",
                                                                             "data": {
                                                                                 "type": "tricks",
-                                                                                "name": "DBJ",
+                                                                                "name": "IBJ",
                                                                                 "amount": 1,
                                                                                 "negate": false
                                                                             }
                                                                         },
                                                                         {
-                                                                            "type": "and",
+                                                                            "type": "or",
                                                                             "data": {
                                                                                 "comment": null,
                                                                                 "items": [
                                                                                     {
                                                                                         "type": "resource",
                                                                                         "data": {
-                                                                                            "type": "tricks",
-                                                                                            "name": "IBJ",
+                                                                                            "type": "items",
+                                                                                            "name": "Spring",
                                                                                             "amount": 1,
                                                                                             "negate": false
                                                                                         }
                                                                                     },
                                                                                     {
-                                                                                        "type": "or",
+                                                                                        "type": "resource",
                                                                                         "data": {
-                                                                                            "comment": null,
-                                                                                            "items": [
-                                                                                                {
-                                                                                                    "type": "resource",
-                                                                                                    "data": {
-                                                                                                        "type": "items",
-                                                                                                        "name": "Spring",
-                                                                                                        "amount": 1,
-                                                                                                        "negate": false
-                                                                                                    }
-                                                                                                },
-                                                                                                {
-                                                                                                    "type": "resource",
-                                                                                                    "data": {
-                                                                                                        "type": "tricks",
-                                                                                                        "name": "AirMorph",
-                                                                                                        "amount": 2,
-                                                                                                        "negate": false
-                                                                                                    }
-                                                                                                }
-                                                                                            ]
+                                                                                            "type": "tricks",
+                                                                                            "name": "AirMorph",
+                                                                                            "amount": 2,
+                                                                                            "negate": false
                                                                                         }
                                                                                     }
                                                                                 ]
@@ -3131,71 +3123,66 @@
                             }
                         },
                         "Door to Alpha Shaft": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
                                         "type": "resource",
                                         "data": {
-                                            "type": "events",
-                                            "name": "Alpha 10",
+                                            "type": "items",
+                                            "name": "Boots",
                                             "amount": 1,
                                             "negate": false
                                         }
                                     },
                                     {
-                                        "type": "or",
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Gravity",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Space",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Use Spider Ball"
+                                    },
+                                    {
+                                        "type": "and",
                                         "data": {
                                             "comment": null,
                                             "items": [
                                                 {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Boots",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Gravity",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Space",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
                                                     "type": "template",
-                                                    "data": "Use Spider Ball"
+                                                    "data": "Lay Bomb"
                                                 },
                                                 {
-                                                    "type": "and",
+                                                    "type": "or",
                                                     "data": {
                                                         "comment": null,
                                                         "items": [
                                                             {
                                                                 "type": "resource",
                                                                 "data": {
-                                                                    "type": "items",
-                                                                    "name": "Bomb",
+                                                                    "type": "tricks",
+                                                                    "name": "DBJ",
                                                                     "amount": 1,
                                                                     "negate": false
                                                                 }
                                                             },
                                                             {
-                                                                "type": "or",
+                                                                "type": "and",
                                                                 "data": {
                                                                     "comment": null,
                                                                     "items": [
@@ -3203,49 +3190,32 @@
                                                                             "type": "resource",
                                                                             "data": {
                                                                                 "type": "tricks",
-                                                                                "name": "DBJ",
+                                                                                "name": "IBJ",
                                                                                 "amount": 1,
                                                                                 "negate": false
                                                                             }
                                                                         },
                                                                         {
-                                                                            "type": "and",
+                                                                            "type": "or",
                                                                             "data": {
                                                                                 "comment": null,
                                                                                 "items": [
                                                                                     {
                                                                                         "type": "resource",
                                                                                         "data": {
-                                                                                            "type": "tricks",
-                                                                                            "name": "IBJ",
+                                                                                            "type": "items",
+                                                                                            "name": "Spring",
                                                                                             "amount": 1,
                                                                                             "negate": false
                                                                                         }
                                                                                     },
                                                                                     {
-                                                                                        "type": "or",
+                                                                                        "type": "resource",
                                                                                         "data": {
-                                                                                            "comment": null,
-                                                                                            "items": [
-                                                                                                {
-                                                                                                    "type": "resource",
-                                                                                                    "data": {
-                                                                                                        "type": "items",
-                                                                                                        "name": "Spring",
-                                                                                                        "amount": 1,
-                                                                                                        "negate": false
-                                                                                                    }
-                                                                                                },
-                                                                                                {
-                                                                                                    "type": "resource",
-                                                                                                    "data": {
-                                                                                                        "type": "tricks",
-                                                                                                        "name": "AirMorph",
-                                                                                                        "amount": 2,
-                                                                                                        "negate": false
-                                                                                                    }
-                                                                                                }
-                                                                                            ]
+                                                                                            "type": "tricks",
+                                                                                            "name": "AirMorph",
+                                                                                            "amount": 2,
+                                                                                            "negate": false
                                                                                         }
                                                                                     }
                                                                                 ]
@@ -3683,7 +3653,7 @@
                     "connections": {
                         "Dock to Alpha Shaft": {
                             "type": "template",
-                            "data": "Destroy Bomb Block"
+                            "data": "Lay Any Bomb"
                         },
                         "Start Point": {
                             "type": "resource",
@@ -3793,7 +3763,7 @@
                     "connections": {
                         "Tunnel to Alpha Arena South": {
                             "type": "template",
-                            "data": "Destroy Bomb Block"
+                            "data": "Lay Any Bomb"
                         }
                     }
                 }
@@ -4211,7 +4181,7 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Destroy Missile Block"
+                                        "data": "Shoot Any Missile"
                                     },
                                     {
                                         "type": "or",
@@ -4359,7 +4329,7 @@
                         },
                         "Below Pickup": {
                             "type": "template",
-                            "data": "Destroy Missile Block"
+                            "data": "Shoot Any Missile"
                         }
                     }
                 },
@@ -4549,12 +4519,10 @@
                             }
                         },
                         "Door to Outer Hub": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "events",
-                                "name": "Alpha 8",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         },
                         "Event - Alpha Metroid+": {
@@ -4851,29 +4819,12 @@
                     "valid_starting_location": false,
                     "connections": {
                         "Door to Fiery Crossing": {
-                            "type": "and",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Varia",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "Alpha 12",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "type": "items",
+                                "name": "Varia",
+                                "amount": 1,
+                                "negate": false
                             }
                         },
                         "Event - Alpha Metroid+": {
@@ -5012,12 +4963,10 @@
                     "valid_starting_location": false,
                     "connections": {
                         "Door to Split Pathways": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "events",
-                                "name": "Alpha 7",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         },
                         "Event - Alpha Metroid": {
@@ -5197,7 +5146,7 @@
                     "connections": {
                         "Tunnel to Spring Ball Tutorial": {
                             "type": "template",
-                            "data": "Destroy Bomb Block"
+                            "data": "Lay Any Bomb"
                         }
                     }
                 },
@@ -5479,7 +5428,7 @@
                                                 },
                                                 {
                                                     "type": "template",
-                                                    "data": "Destroy Bomb Block"
+                                                    "data": "Lay Any Bomb"
                                                 }
                                             ]
                                         }

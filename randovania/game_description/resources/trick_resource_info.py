@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import dataclasses
 
 from frozendict import frozendict
@@ -14,7 +16,7 @@ class TrickResourceInfo:
     extra: frozendict = dataclasses.field(hash=False, default_factory=frozendict)
     resource_type: ResourceType = dataclasses.field(init=False, hash=False, repr=False, default=ResourceType.TRICK)
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.long_name
 
     @property

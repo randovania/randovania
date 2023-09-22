@@ -1,7 +1,12 @@
-from pathlib import Path
-from typing import Iterator
+from __future__ import annotations
 
-from randovania.lib import migration_lib, json_lib
+from typing import TYPE_CHECKING
+
+from randovania.lib import json_lib, migration_lib
+
+if TYPE_CHECKING:
+    from collections.abc import Iterator
+    from pathlib import Path
 
 _FIRST_VERSION_IN_SUBFOLDER = 18
 
@@ -47,8 +52,8 @@ def _convert_v13(options: dict) -> dict:
                     "hud_lag": False,
                     "invert_y_axis": False,
                     "rumble": True,
-                    "hint_system": False
-                }
+                    "hint_system": False,
+                },
             }
         options["per_game_options"] = {
             "prime2": {
@@ -125,10 +130,12 @@ def _convert_v21(options: dict) -> dict:
             choice = None
 
     if choice is not None:
-        options["connector_builders"].append({
-            "choice": choice,
-            "params": params,
-        })
+        options["connector_builders"].append(
+            {
+                "choice": choice,
+                "params": params,
+            }
+        )
 
     return options
 
@@ -186,11 +193,13 @@ _CONVERTER_FOR_VERSION = [
     _convert_v24,
     _convert_v25,
     _only_new_fields,  # added allow_crash_reporting
+    _only_new_fields,  # added DebugConnectorBuilder's layout_uuid
 ]
 _CURRENT_OPTIONS_FILE_VERSION = migration_lib.get_version(_CONVERTER_FOR_VERSION)
 
 
 # debug_locations_check
+
 
 def get_persisted_options_from_data(persisted_data: dict) -> dict:
     options = persisted_data.get("options", {})
@@ -203,10 +212,7 @@ def get_persisted_options_from_data(persisted_data: dict) -> dict:
 
 
 def serialized_data_for_options(data_to_persist: dict) -> dict:
-    return {
-        "version": _CURRENT_OPTIONS_FILE_VERSION,
-        "options": data_to_persist
-    }
+    return {"version": _CURRENT_OPTIONS_FILE_VERSION, "options": data_to_persist}
 
 
 def _try_read_file(file_path: Path) -> str | None:

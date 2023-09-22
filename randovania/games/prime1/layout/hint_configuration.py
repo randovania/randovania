@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import dataclasses
 from enum import Enum
 
@@ -12,7 +14,7 @@ class ArtifactHintMode(BitPackEnum, Enum):
     PRECISE = "precise"
 
     @classmethod
-    def default(cls) -> "ArtifactHintMode":
+    def default(cls) -> ArtifactHintMode:
         return cls.PRECISE
 
 
@@ -22,7 +24,7 @@ class PhazonSuitHintMode(BitPackEnum, Enum):
     PRECISE = "precise"
 
     @classmethod
-    def default(cls) -> "PhazonSuitHintMode":
+    def default(cls) -> PhazonSuitHintMode:
         return cls.PRECISE
 
 

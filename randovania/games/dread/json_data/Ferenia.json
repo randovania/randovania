@@ -9,8 +9,8 @@
         "scenario_id": "s070_basesanc"
     },
     "areas": {
-        "East Transport to Darion": {
-            "default_node": "Elevator to Dairon - East Transport to Ferenia",
+        "East Transport to Dairon": {
+            "default_node": "Elevator to Dairon",
             "extra": {
                 "total_boundings": {
                     "x1": -4500.0,
@@ -64,7 +64,7 @@
                     "default_connection": {
                         "region": "Ferenia",
                         "area": "Total Recharge Station",
-                        "node": "Door to East Transport to Darion"
+                        "node": "Door to East Transport to Dairon"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -72,7 +72,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Elevator to Dairon - East Transport to Ferenia": {
+                        "Elevator to Dairon": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -81,7 +81,7 @@
                         }
                     }
                 },
-                "Elevator to Dairon - East Transport to Ferenia": {
+                "Elevator to Dairon": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -100,17 +100,16 @@
                         "target_spawn_point": "elevator_sanctuary_000_platform",
                         "start_point_actor_name": "elevator_baselab_000_platform",
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad",
-                        "keep_name_when_vanilla": true,
-                        "editable": true
+                        "transporter_name": "Ferenia - Quiet Robe Entrance"
                     },
                     "valid_starting_location": false,
-                    "dock_type": "teleporter",
+                    "dock_type": "elevator",
                     "default_connection": {
                         "region": "Dairon",
                         "area": "East Transport to Ferenia",
-                        "node": "Elevator to Ferenia - East Transport to Darion"
+                        "node": "Elevator to Ferenia"
                     },
-                    "default_dock_weakness": "Teleporter",
+                    "default_dock_weakness": "Elevator",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -292,7 +291,7 @@
                 "asset_id": "collision_camera_002"
             },
             "nodes": {
-                "Door to East Transport to Darion": {
+                "Door to East Transport to Dairon": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -316,7 +315,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Ferenia",
-                        "area": "East Transport to Darion",
+                        "area": "East Transport to Dairon",
                         "node": "Door to Total Recharge Station"
                     },
                     "default_dock_weakness": "Power Beam Door",
@@ -517,7 +516,7 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to East Transport to Darion": {
+                        "Door to East Transport to Dairon": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -543,7 +542,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to East Transport to Darion": {
+                        "Door to East Transport to Dairon": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -1764,7 +1763,7 @@
             }
         },
         "Teleport to Burenia (Cyan)": {
-            "default_node": "Teleporter to Burenia - Teleport to Ferenia",
+            "default_node": "Teleporter to Burenia",
             "extra": {
                 "total_boundings": {
                     "x1": -13500.0,
@@ -1929,7 +1928,7 @@
                         }
                     }
                 },
-                "Teleporter to Burenia - Teleport to Ferenia": {
+                "Teleporter to Burenia": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1947,16 +1946,14 @@
                         "elevator_component": "CTeleporterUsableComponent",
                         "target_spawn_point": "LE_Platform_Teleport_Secret",
                         "start_point_actor_name": "teleporter_000_platform",
-                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad",
-                        "keep_name_when_vanilla": true,
-                        "editable": true
+                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad"
                     },
                     "valid_starting_location": false,
                     "dock_type": "teleporter",
                     "default_connection": {
                         "region": "Burenia",
                         "area": "Teleport to Ferenia",
-                        "node": "Teleporter to Ferenia - Teleport to Burenia (Cyan)"
+                        "node": "Teleporter to Ferenia"
                     },
                     "default_dock_weakness": "Teleporter",
                     "exclude_from_dock_rando": false,
@@ -1999,7 +1996,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Teleporter to Burenia - Teleport to Ferenia": {
+                        "Teleporter to Burenia": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2048,7 +2045,7 @@
             }
         },
         "Transport to Dairon": {
-            "default_node": "Elevator to Dairon - West Transport to Ferenia",
+            "default_node": "Elevator to Dairon",
             "extra": {
                 "total_boundings": {
                     "x1": -16500.0,
@@ -2110,7 +2107,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Elevator to Dairon - West Transport to Ferenia": {
+                        "Elevator to Dairon": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2119,7 +2116,7 @@
                         }
                     }
                 },
-                "Elevator to Dairon - West Transport to Ferenia": {
+                "Elevator to Dairon": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2138,17 +2135,16 @@
                         "target_spawn_point": "elevator_sanctuary_001_platform",
                         "start_point_actor_name": "elevator_baselab_001_platform",
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad",
-                        "keep_name_when_vanilla": true,
-                        "editable": true
+                        "transporter_name": "Ferenia - Quiet Robe Exit"
                     },
                     "valid_starting_location": false,
-                    "dock_type": "teleporter",
+                    "dock_type": "elevator",
                     "default_connection": {
                         "region": "Dairon",
                         "area": "West Transport to Ferenia",
-                        "node": "Elevator to Ferenia - Transport to Dairon"
+                        "node": "Elevator to Ferenia"
                     },
-                    "default_dock_weakness": "Teleporter",
+                    "default_dock_weakness": "Elevator",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -2198,7 +2194,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Elevator to Dairon - West Transport to Ferenia": {
+                        "Elevator to Dairon": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
@@ -2654,6 +2650,32 @@
                                                         "name": "Speed",
                                                         "amount": 1,
                                                         "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "DBJ",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Bomb",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -5247,7 +5269,7 @@
             }
         },
         "Transport to Ghavoran": {
-            "default_node": "Tram to Ghavoran - Transport to Ferenia",
+            "default_node": "Shuttle to Ghavoran",
             "extra": {
                 "total_boundings": {
                     "x1": -28200.0,
@@ -5305,7 +5327,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Tram to Ghavoran - Transport to Ferenia": {
+                        "Shuttle to Ghavoran": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5314,7 +5336,7 @@
                         }
                     }
                 },
-                "Tram to Ghavoran - Transport to Ferenia": {
+                "Shuttle to Ghavoran": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5333,17 +5355,16 @@
                         "target_spawn_point": "wagontrain_sanctuary_000_platform",
                         "start_point_actor_name": "wagontrain_forest_000_platform",
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_train/charclasses/weightactivatedplatform_train.bmsad",
-                        "keep_name_when_vanilla": true,
-                        "editable": true
+                        "transporter_name": "Ferenia - Main Gate"
                     },
                     "valid_starting_location": false,
-                    "dock_type": "teleporter",
+                    "dock_type": "shuttle",
                     "default_connection": {
                         "region": "Ghavoran",
                         "area": "Transport to Ferenia",
-                        "node": "Tram to Ferenia - Transport to Ghavoran"
+                        "node": "Shuttle to Ferenia"
                     },
-                    "default_dock_weakness": "Teleporter",
+                    "default_dock_weakness": "Shuttle",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -9816,7 +9837,7 @@
                                                                                 "items": [
                                                                                     {
                                                                                         "type": "template",
-                                                                                        "data": "Shoot Ice Missile"
+                                                                                        "data": "Shoot Super Ice Missile"
                                                                                     },
                                                                                     {
                                                                                         "type": "or",
@@ -10098,7 +10119,7 @@
             }
         },
         "Transport to Hanubia": {
-            "default_node": "Elevator to Hanubia - Transport to Ferenia",
+            "default_node": "Elevator to Hanubia",
             "extra": {
                 "total_boundings": {
                     "x1": -1500.0,
@@ -10256,7 +10277,7 @@
                                 ]
                             }
                         },
-                        "Elevator to Hanubia - Transport to Ferenia": {
+                        "Elevator to Hanubia": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
@@ -10295,7 +10316,7 @@
                         }
                     }
                 },
-                "Elevator to Hanubia - Transport to Ferenia": {
+                "Elevator to Hanubia": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -10314,17 +10335,16 @@
                         "target_spawn_point": "elevator_sanctuary_000_platform",
                         "start_point_actor_name": "elevator_shipyard_000_platform",
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad",
-                        "keep_name_when_vanilla": true,
-                        "editable": true
+                        "transporter_name": "Ferenia - Central Unit"
                     },
                     "valid_starting_location": false,
-                    "dock_type": "teleporter",
+                    "dock_type": "elevator",
                     "default_connection": {
                         "region": "Hanubia",
                         "area": "Transport to Ferenia",
-                        "node": "Elevator to Ferenia - Transport to Hanubia"
+                        "node": "Elevator to Ferenia"
                     },
-                    "default_dock_weakness": "Teleporter",
+                    "default_dock_weakness": "Elevator",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -11787,6 +11807,82 @@
                                                 }
                                             ]
                                         }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Movement",
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": "Ledge Warp (Advanced Movement) makes this viable https://youtu.be/ND5zby3zaz8",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Lay Normal Bomb"
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "DBJ",
+                                                                                "amount": 5,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "IBJ",
+                                                                                "amount": 5,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": "Ledge Warp is optional but makes attempts easier https://youtu.be/AqlUANN4F_k",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Lay Cross Bomb"
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Slide",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -12851,25 +12947,8 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "or",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Speed",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "template",
-                                                                "data": "Lay Cross Bomb"
-                                                            }
-                                                        ]
-                                                    }
+                                                    "type": "template",
+                                                    "data": "Lay Cross Bomb"
                                                 }
                                             ]
                                         }
@@ -12891,6 +12970,32 @@
                                                 {
                                                     "type": "template",
                                                     "data": "Lay Bomb"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Speed",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Speedbooster",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
                                                 }
                                             ]
                                         }

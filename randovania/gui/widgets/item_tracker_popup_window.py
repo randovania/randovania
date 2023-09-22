@@ -1,12 +1,17 @@
+from __future__ import annotations
+
 import functools
 import typing
-from pathlib import Path
 
-from PySide6 import QtWidgets, QtGui
+from PySide6 import QtGui, QtWidgets
 
+from randovania.game_description.resources.inventory import Inventory
 from randovania.gui.lib import common_qt_lib
 from randovania.gui.widgets.item_tracker_widget import ItemTrackerWidget
 from randovania.lib import json_lib
+
+if typing.TYPE_CHECKING:
+    from pathlib import Path
 
 
 class ItemTrackerPopupWindow(QtWidgets.QWidget):
@@ -36,7 +41,7 @@ class ItemTrackerPopupWindow(QtWidgets.QWidget):
 
         self.main_layout.addWidget(self.menu_bar)
         self.item_tracker = ItemTrackerWidget(tracker_layout)
-        self.item_tracker.update_state({})
+        self.item_tracker.update_state(Inventory.empty())
         self.main_layout.addWidget(self.item_tracker)
 
     def _on_select_theme(self, path: Path):

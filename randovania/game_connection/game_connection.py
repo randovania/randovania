@@ -1,23 +1,29 @@
+from __future__ import annotations
+
 import asyncio
 import dataclasses
 import functools
 import logging
-import uuid
+from typing import TYPE_CHECKING
 
-from PySide6.QtCore import Signal, QObject
+from PySide6.QtCore import QObject, Signal
 
-from randovania.game_connection.builder.connector_builder import ConnectorBuilder
 from randovania.game_connection.builder.connector_builder_option import ConnectorBuilderOption
-from randovania.game_connection.connector.remote_connector import RemoteConnector
-from randovania.game_connection.connector_builder_choice import ConnectorBuilderChoice
-from randovania.game_description.db.area import Area
-from randovania.game_description.db.region import Region
-from randovania.game_description.resources.item_resource_info import Inventory
-from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.interface_common.options import Options
-from randovania.interface_common.world_database import WorldDatabase
+from randovania.game_description.resources.inventory import Inventory
 from randovania.lib.infinite_timer import InfiniteTimer
 from randovania.network_common.game_connection_status import GameConnectionStatus
+
+if TYPE_CHECKING:
+    import uuid
+
+    from randovania.game_connection.builder.connector_builder import ConnectorBuilder
+    from randovania.game_connection.connector.remote_connector import RemoteConnector
+    from randovania.game_connection.connector_builder_choice import ConnectorBuilderChoice
+    from randovania.game_description.db.area import Area
+    from randovania.game_description.db.region import Region
+    from randovania.game_description.resources.pickup_index import PickupIndex
+    from randovania.interface_common.options import Options
+    from randovania.interface_common.world_database import WorldDatabase
 
 
 @dataclasses.dataclass()
@@ -25,7 +31,7 @@ class ConnectedGameState:
     id: uuid.UUID
     source: RemoteConnector
     status: GameConnectionStatus
-    current_inventory: Inventory = dataclasses.field(default_factory=dict)
+    current_inventory: Inventory = dataclasses.field(default_factory=Inventory.empty)
     collected_indices: set[PickupIndex] = dataclasses.field(default_factory=set)
 
 
@@ -81,11 +87,13 @@ class GameConnection(QObject):
                 self.remote_connectors[build] = c
                 self._handle_new_connector(c)
 
-        await asyncio.gather(*[
-            try_build_connector(builder)
-            for builder in list(self.connection_builders)
-            if builder not in self.remote_connectors
-        ])
+        await asyncio.gather(
+            *[
+                try_build_connector(builder)
+                for builder in list(self.connection_builders)
+                if builder not in self.remote_connectors
+            ]
+        )
 
     def add_connection_builder(self, builder: ConnectorBuilder):
         self.connection_builders.append(builder)
@@ -129,8 +137,9 @@ class GameConnection(QObject):
 
     def _ensure_connected_state_exists(self, connector: RemoteConnector) -> ConnectedGameState:
         if connector not in self.connected_states:
-            self.connected_states[connector] = ConnectedGameState(connector.layout_uuid, connector,
-                                                                  GameConnectionStatus.TitleScreen)
+            self.connected_states[connector] = ConnectedGameState(
+                connector.layout_uuid, connector, GameConnectionStatus.TitleScreen
+            )
         return self.connected_states[connector]
 
     def _on_player_location_changed(self, connector: RemoteConnector, location: tuple[Region | None, Area | None]):
@@ -151,6 +160,12 @@ class GameConnection(QObject):
         connected_state = self._ensure_connected_state_exists(connector)
         connected_state.current_inventory = inventory
         self.GameStateUpdated.emit(connected_state)
+
+    def get_builder_for_connector(self, connector: RemoteConnector) -> ConnectorBuilder:
+        for builder, this_connector in self.remote_connectors.items():
+            if this_connector == connector:
+                return builder
+        raise KeyError("Unknown connector")
 
     def get_backend_choice_for_state(self, state: ConnectedGameState) -> ConnectorBuilderChoice:
         for builder, connector in self.remote_connectors.items():

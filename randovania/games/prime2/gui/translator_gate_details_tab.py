@@ -1,16 +1,21 @@
+from __future__ import annotations
+
 import collections
+from typing import TYPE_CHECKING
 
 from PySide6 import QtWidgets
 
-from randovania.game_description.game_patches import GamePatches
-from randovania.games.game import RandovaniaGame
 from randovania.games.prime2.exporter import patch_data_factory
 from randovania.games.prime2.gui.preset_settings.echoes_translators_tab import gate_data
 from randovania.gui.game_details.game_details_tab import GameDetailsTab
-from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout import filtered_database
-from randovania.layout.base.base_configuration import BaseConfiguration
-from randovania.lib.dict_lib import iterate_key_sorted
+from randovania.lib.container_lib import iterate_key_sorted
+
+if TYPE_CHECKING:
+    from randovania.game_description.game_patches import GamePatches
+    from randovania.games.game import RandovaniaGame
+    from randovania.interface_common.players_configuration import PlayersConfiguration
+    from randovania.layout.base.base_configuration import BaseConfiguration
 
 
 class TranslatorGateDetailsTab(GameDetailsTab):
@@ -24,9 +29,9 @@ class TranslatorGateDetailsTab(GameDetailsTab):
     def tab_title(self) -> str:
         return "Translator Gate"
 
-    def update_content(self, configuration: BaseConfiguration, all_patches: dict[int, GamePatches],
-                       players: PlayersConfiguration):
-
+    def update_content(
+        self, configuration: BaseConfiguration, all_patches: dict[int, GamePatches], players: PlayersConfiguration
+    ):
         self.tree_widget.clear()
         self.tree_widget.setColumnCount(2)
         self.tree_widget.setHeaderLabels(["Gate", "Requirement"])
@@ -38,11 +43,7 @@ class TranslatorGateDetailsTab(GameDetailsTab):
         gate_index_to_name, identifier_to_gate = gate_data()
 
         resource_db = game.resource_database
-        items_by_id = {
-            item.extra["item_id"]: item.long_name
-            for item in resource_db.item
-            if "item_id" in item.extra
-        }
+        items_by_id = {item.extra["item_id"]: item.long_name for item in resource_db.item if "item_id" in item.extra}
 
         per_region: dict[str, dict[str, str]] = collections.defaultdict(dict)
 

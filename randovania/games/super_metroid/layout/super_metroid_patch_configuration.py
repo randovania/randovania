@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import dataclasses
 
 from randovania.bitpacking.bitpacking import BitPackDataclass
@@ -30,3 +32,4 @@ class SuperPatchConfiguration(BitPackDataclass, JsonDataclass):
     fix_heat_echoes: bool
     fix_screw_attack_menu: bool
     no_gt_code: bool
+    no_ln_chozo_inventory_check: bool

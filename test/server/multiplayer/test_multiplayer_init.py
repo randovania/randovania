@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from unittest.mock import MagicMock
 
 from randovania.server import multiplayer
@@ -13,11 +15,11 @@ def test_setup_app(mocker):
             "world_api",
         ]
     ]
-    sio = MagicMock()
+    sa = MagicMock()
 
     # Run
-    multiplayer.setup_app(sio)
+    multiplayer.setup_app(sa)
 
     # Assert
     for mock in mocks:
-        mock.assert_called_once_with(sio)
+        mock.assert_called_once_with(sa)

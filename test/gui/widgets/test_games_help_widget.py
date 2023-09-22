@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from unittest.mock import MagicMock
 
 from PySide6 import QtGui
@@ -17,14 +19,8 @@ def test_on_first_show_tab_visibility(skip_qtbot, is_dev_version):
     widget._on_first_show()
 
     # Assert
-    visibility = {
-        game: widget.isTabVisible(index)
-        for game, index in widget._index_for_game.items()
-    }
-    assert visibility == {
-        game: game.data.development_state.can_view()
-        for game in RandovaniaGame.all_games()
-    }
+    visibility = {game: widget.isTabVisible(index) for game, index in widget._index_for_game.items()}
+    assert visibility == {game: game.data.development_state.can_view() for game in RandovaniaGame.all_games()}
 
 
 def test_showEvent_twice(skip_qtbot):

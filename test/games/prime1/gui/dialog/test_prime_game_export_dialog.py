@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from pathlib import Path
 from unittest.mock import MagicMock, call
 
@@ -45,11 +47,10 @@ def test_on_output_file_button_exists(skip_qtbot, patch_data, tmp_path, mocker, 
     mock_prompt.return_value = tmp_path.joinpath("foo", "game.iso")
 
     # Run
-    skip_qtbot.mouseClick(window.output_file_button, QtCore.Qt.LeftButton)
+    skip_qtbot.mouseClick(window.output_file_button, QtCore.Qt.MouseButton.LeftButton)
 
     # Assert
-    mock_prompt.assert_called_once_with(window, expected_default_name + ".iso",
-                                        window.valid_output_file_types)
+    mock_prompt.assert_called_once_with(window, expected_default_name + ".iso", window.valid_output_file_types)
     assert window.output_file_edit.text() == str(tmp_path.joinpath("foo", "game.iso"))
     assert tmp_path.joinpath("foo").is_dir()
 
@@ -69,7 +70,7 @@ def test_on_output_file_button_cancel(skip_qtbot, patch_data, tmp_path, mocker):
     assert window.output_file_edit.text() == ""
 
     # Run
-    skip_qtbot.mouseClick(window.output_file_button, QtCore.Qt.LeftButton)
+    skip_qtbot.mouseClick(window.output_file_button, QtCore.Qt.MouseButton.LeftButton)
 
     # Assert
     mock_prompt.assert_called_once_with(window, "Prime Randomizer - MyHash.iso", window.valid_output_file_types)
@@ -86,7 +87,7 @@ def test_save_options(skip_qtbot, patch_data, tmp_path, is_prime_multi):
     window.output_file_edit.setText("somewhere/game.iso")
 
     if is_prime_multi:
-        skip_qtbot.mouseClick(window.echoes_models_check, QtCore.Qt.LeftButton)
+        skip_qtbot.mouseClick(window.echoes_models_check, QtCore.Qt.MouseButton.LeftButton)
         window.echoes_file_edit.setText("somewhere/echoes.iso")
 
     # Run
@@ -96,7 +97,8 @@ def test_save_options(skip_qtbot, patch_data, tmp_path, is_prime_multi):
     assert options.options_for_game(RandovaniaGame.METROID_PRIME).output_directory == Path("somewhere")
     if is_prime_multi:
         assert options.options_for_game(RandovaniaGame.METROID_PRIME).use_external_models == {
-            RandovaniaGame.METROID_PRIME_ECHOES}
+            RandovaniaGame.METROID_PRIME_ECHOES
+        }
         assert options.options_for_game(RandovaniaGame.METROID_PRIME_ECHOES).input_path == Path("somewhere/echoes.iso")
 
 
@@ -105,15 +107,19 @@ def test_on_input_file_button(skip_qtbot, patch_data, tmp_path, mocker, test_ech
     # Setup
     tmp_path.joinpath("existing.iso").write_bytes(b"foo")
     mock_discover: MagicMock = mocker.patch(
-        "randovania.games.common.prime_family.gui.export_validator.discover_game", autospec=True,
+        "randovania.games.common.prime_family.gui.export_validator.discover_game",
+        autospec=True,
     )
-    mock_prompt = mocker.patch("randovania.gui.lib.common_qt_lib.prompt_user_for_vanilla_input_file", autospec=True,
-                               side_effect=[
-                                   None,
-                                   tmp_path.joinpath("some/game.iso"),
-                                   tmp_path.joinpath("existing.iso"),
-                                   tmp_path.joinpath("missing_again.iso"),
-                               ])
+    mock_prompt = mocker.patch(
+        "randovania.gui.lib.common_qt_lib.prompt_user_for_vanilla_input_file",
+        autospec=True,
+        side_effect=[
+            None,
+            tmp_path.joinpath("some/game.iso"),
+            tmp_path.joinpath("existing.iso"),
+            tmp_path.joinpath("missing_again.iso"),
+        ],
+    )
 
     options = MagicMock()
     options.options_for_game.side_effect = [
@@ -126,7 +132,7 @@ def test_on_input_file_button(skip_qtbot, patch_data, tmp_path, mocker, test_ech
         EchoesPerGameOptions(
             cosmetic_patches=EchoesCosmeticPatches.default(),
             input_path=None,
-        )
+        ),
     ]
 
     games = [RandovaniaGame.METROID_PRIME]
@@ -165,12 +171,14 @@ def test_on_input_file_button(skip_qtbot, patch_data, tmp_path, mocker, test_ech
     assert file_edit.has_error
 
     if not test_echoes:
-        mock_prompt.assert_has_calls([
-            call(window, window.valid_input_file_types, existing_file=None),
-            call(window, window.valid_input_file_types, existing_file=None),
-            call(window, window.valid_input_file_types, existing_file=None),
-            call(window, window.valid_input_file_types, existing_file=tmp_path.joinpath("existing.iso")),
-        ])
+        mock_prompt.assert_has_calls(
+            [
+                call(window, window.valid_input_file_types, existing_file=None),
+                call(window, window.valid_input_file_types, existing_file=None),
+                call(window, window.valid_input_file_types, existing_file=None),
+                call(window, window.valid_input_file_types, existing_file=tmp_path.joinpath("existing.iso")),
+            ]
+        )
     mock_discover.assert_called_once_with(tmp_path.joinpath("existing.iso"))
 
 
@@ -200,10 +208,7 @@ def test_get_game_export_params(skip_qtbot, patch_data, tmp_path, is_echoes_mult
             output_format="iso",
             use_external_models=models,
         ),
-        EchoesPerGameOptions(
-            cosmetic_patches=EchoesCosmeticPatches.default(),
-            input_path=echoes_path
-        ),
+        EchoesPerGameOptions(cosmetic_patches=EchoesCosmeticPatches.default(), input_path=echoes_path),
     ]
 
     window = PrimeGameExportDialog(options, patch_data, "MyHash", True, games)

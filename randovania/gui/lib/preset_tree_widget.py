@@ -1,13 +1,18 @@
-import math
-import uuid
+from __future__ import annotations
 
-from PySide6 import QtWidgets, QtGui
+import math
+from typing import TYPE_CHECKING
+
+from PySide6 import QtGui, QtWidgets
 from PySide6.QtCore import Qt
 
-from randovania.games.game import RandovaniaGame
-from randovania.interface_common.options import Options
-from randovania.interface_common.preset_manager import PresetManager
-from randovania.layout.versioned_preset import VersionedPreset
+if TYPE_CHECKING:
+    import uuid
+
+    from randovania.games.game import RandovaniaGame
+    from randovania.interface_common.options import Options
+    from randovania.interface_common.preset_manager import PresetManager
+    from randovania.layout.versioned_preset import VersionedPreset
 
 
 class PresetTreeWidget(QtWidgets.QTreeWidget):
@@ -78,9 +83,10 @@ class PresetTreeWidget(QtWidgets.QTreeWidget):
         default_parent = None
         root_parents = set()
 
-        def create_item(parent: QtWidgets.QTreeWidgetItem | QtWidgets.QTreeWidget,
-                        the_preset: VersionedPreset,
-                        ) -> QtWidgets.QTreeWidgetItem:
+        def create_item(
+            parent: QtWidgets.QTreeWidgetItem | QtWidgets.QTreeWidget,
+            the_preset: VersionedPreset,
+        ) -> QtWidgets.QTreeWidgetItem:
             it = QtWidgets.QTreeWidgetItem(parent)
             it.setText(0, the_preset.name)
             it.setData(0, Qt.UserRole, the_preset.uuid)
@@ -100,18 +106,11 @@ class PresetTreeWidget(QtWidgets.QTreeWidget):
                 default_parent = item
 
         # Custom Presets
-        order_by_key = {
-            pid: i
-            for i, pid in enumerate(self.options.get_preset_order_for(self.game))
-        }
+        order_by_key = {pid: i for i, pid in enumerate(self.options.get_preset_order_for(self.game))}
         ordered_custom_presets = [
-            preset
-            for preset in self.preset_manager.custom_presets.values()
-            if preset.game == self.game
+            preset for preset in self.preset_manager.custom_presets.values() if preset.game == self.game
         ]
-        ordered_custom_presets.sort(
-            key=lambda p: (order_by_key.get(p.uuid, math.inf), p.name.lower())
-        )
+        ordered_custom_presets.sort(key=lambda p: (order_by_key.get(p.uuid, math.inf), p.name.lower()))
 
         for preset in ordered_custom_presets:
             preset_parent = self.options.get_parent_for_preset(preset.uuid)

@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import dataclasses
 import uuid
 from unittest.mock import MagicMock
@@ -17,14 +19,14 @@ def test_on_preset_changed(skip_qtbot, preset_manager):
     options = MagicMock()
 
     base = preset_manager.default_preset_for_game(game).get_preset()
-    preset = dataclasses.replace(base, uuid=uuid.UUID('b41fde84-1f57-4b79-8cd6-3e5a78077fa6'))
+    preset = dataclasses.replace(base, uuid=uuid.UUID("b41fde84-1f57-4b79-8cd6-3e5a78077fa6"))
     editor = PresetEditor(preset, options)
     window = PresetDreadPatches(editor, default_database.game_description_for(game), MagicMock())
     skip_qtbot.addWidget(window)
 
     # Run
     window.on_preset_changed(editor.create_custom_preset_with())
-    skip_qtbot.mouseClick(window.raven_beak_damage_table_handling_check, QtCore.Qt.LeftButton)
+    skip_qtbot.mouseClick(window.raven_beak_damage_table_handling_check, QtCore.Qt.MouseButton.LeftButton)
 
     # Assert
     final_preset = editor.create_custom_preset_with()

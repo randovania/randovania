@@ -1,19 +1,25 @@
+from __future__ import annotations
+
 import datetime
-from pathlib import Path
-from typing import Iterable
+from typing import TYPE_CHECKING
 
 from randovania.game_description import default_database
 from randovania.game_description.requirements.array_base import RequirementArrayBase
-from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.game_description.requirements.requirement_or import RequirementOr
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.resource_type import ResourceType
-from randovania.games.game import RandovaniaGame
 from randovania.layout.base.trick_level import LayoutTrickLevel
 
+if TYPE_CHECKING:
+    from collections.abc import Iterable
+    from pathlib import Path
+
+    from randovania.game_description.requirements.base import Requirement
+    from randovania.games.game import RandovaniaGame
+
 # (tab title, page title, time)
-HTML_HEADER_FORMAT = '''
+HTML_HEADER_FORMAT = """
 <!DOCTYPE html>
 <html>
     <head>
@@ -21,7 +27,7 @@ HTML_HEADER_FORMAT = '''
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>%s</title>
         <style type="text/css">
-    
+
             body{
                 margin:30px auto;max-width:1000px;line-height:1.6;font-size:19px;padding:0 10px
             }
@@ -50,31 +56,31 @@ HTML_HEADER_FORMAT = '''
     <body>
         <h1>%s</h1>
         <p><i>File generated on %s by <a href="https://github.com/randovania/randovania">Randovania</a></i></p>
-'''
+"""
 
-HTML_AREA_FORMAT = '''
+HTML_AREA_FORMAT = """
         <strong><h2 id="%s">%s</h2></strong>\n
-'''
+"""
 
-HTML_CONNECTION_FORMAT = '''
+HTML_CONNECTION_FORMAT = """
         <h4 id="%s">%s</h4>\n
-'''
+"""
 
-HTML_VIDEO_FORMAT = '''
+HTML_VIDEO_FORMAT = """
         <p><i>%s</i></p>
         <iframe width="560" height="420" src="https://www.youtube.com/embed/%s?start=%d" title="YouTube video player"
             frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope;
             picture-in-picture" allowfullscreen></iframe>\n
-'''
+"""
 
-HTML_FOOTER = '''
+HTML_FOOTER = """
     </body>
 </html>
-'''
+"""
 
 
 def get_date():
-    return str(datetime.datetime.now()).split('.')[0].split(" ")[0]
+    return str(datetime.datetime.now()).split(".")[0].split(" ")[0]
 
 
 def get_difficulty(req: Requirement) -> int | None:
@@ -164,17 +170,17 @@ def generate_region_html(name: str, areas: dict[str, dict[str, dict[str, list[tu
         <ul class="toc_list">
     """
 
-    TOC_AREA_FORMAT = '''
+    TOC_AREA_FORMAT = """
             <li><strong><a>%s</a></strong>
                 <ul>
                     %s
                 </ul>
             </li>
-    '''
+    """
 
-    TOC_CONNECTION_FORMAT = '''
+    TOC_CONNECTION_FORMAT = """
                 <li><a href="#%s">%s</a></li>\n
-    '''
+    """
 
     for area in sorted(areas.keys()):
         area_body = HTML_AREA_FORMAT % (area, area)
@@ -186,11 +192,14 @@ def generate_region_html(name: str, areas: dict[str, dict[str, dict[str, list[tu
                 connection_name = f"{node} -> {connection}"
                 area_body += HTML_CONNECTION_FORMAT % (connection_name, connection_name)
                 yt_ids = connections[connection]
-                for (id, start_time, highest_diff) in sorted(yt_ids, key=lambda x: x[2]):
+                for id, start_time, highest_diff in sorted(yt_ids, key=lambda x: x[2]):
                     if "https://www.youtube.com/embed/%s?start=%d" % (id, start_time) in area_body:
                         continue
                     area_body += HTML_VIDEO_FORMAT % (
-                        LayoutTrickLevel.from_number(highest_diff).long_name, id, start_time)
+                        LayoutTrickLevel.from_number(highest_diff).long_name,
+                        id,
+                        start_time,
+                    )
                 toc_connections += TOC_CONNECTION_FORMAT % (connection_name, connection_name)
         toc += TOC_AREA_FORMAT % (area, toc_connections)
         body += area_body
@@ -206,10 +215,7 @@ def generate_region_html(name: str, areas: dict[str, dict[str, dict[str, list[tu
 
 
 def filename_friendly_game_name(game: RandovaniaGame):
-    return "".join(
-        x for x in game.long_name
-        if x.isalnum() or x in [" "]
-    )
+    return "".join(x for x in game.long_name if x.isalnum() or x in [" "])
 
 
 def export_videos(game: RandovaniaGame, out_dir: Path):
@@ -232,9 +238,9 @@ def export_videos(game: RandovaniaGame, out_dir: Path):
         <ul>
     """
 
-    toc_region_format = '''
+    toc_region_format = """
         <li><a href="%s">%s</a>\n
-    '''
+    """
 
     for region_name in sorted(regions):
         toc += toc_region_format % (region_name + ".html", region_name)

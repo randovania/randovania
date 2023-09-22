@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import copy
 import math
 import uuid
@@ -17,7 +19,7 @@ def _migrate_v1(preset: dict) -> dict:
             "uncharged_cost": 0,
             "charged_cost": 0,
             "combo_missile_cost": 5,
-            "combo_ammo_cost": 0
+            "combo_ammo_cost": 0,
         },
         "dark": {
             "item_index": 1,
@@ -26,7 +28,7 @@ def _migrate_v1(preset: dict) -> dict:
             "uncharged_cost": 1,
             "charged_cost": 5,
             "combo_missile_cost": 5,
-            "combo_ammo_cost": 30
+            "combo_ammo_cost": 30,
         },
         "light": {
             "item_index": 2,
@@ -35,7 +37,7 @@ def _migrate_v1(preset: dict) -> dict:
             "uncharged_cost": 1,
             "charged_cost": 5,
             "combo_missile_cost": 5,
-            "combo_ammo_cost": 30
+            "combo_ammo_cost": 30,
         },
         "annihilator": {
             "item_index": 3,
@@ -44,8 +46,8 @@ def _migrate_v1(preset: dict) -> dict:
             "uncharged_cost": 1,
             "charged_cost": 5,
             "combo_missile_cost": 5,
-            "combo_ammo_cost": 30
-        }
+            "combo_ammo_cost": 30,
+        },
     }
     layout_configuration["skip_final_bosses"] = False
     layout_configuration["energy_per_tank"] = 100
@@ -111,10 +113,7 @@ def _migrate_v4(preset: dict) -> dict:
     global_level = trick_level.pop("global_level")
 
     trick_level["minimal_logic"] = global_level == "minimal-logic"
-    specific_levels = {
-        trick_name_mapping[int(index)]: level
-        for index, level in trick_level["specific_levels"].items()
-    }
+    specific_levels = {trick_name_mapping[int(index)]: level for index, level in trick_level["specific_levels"].items()}
     if global_level == "minimal-logic":
         specific_levels = {}
     elif global_level == "beginner":
@@ -138,10 +137,7 @@ def _migrate_v5(preset: dict) -> dict:
         "included_ammo": [],
         "allowed_as_random_starting_item": True,
     }
-    included_item = {
-        **excluded_item,
-        "num_included_in_starting_items": 1
-    }
+    included_item = {**excluded_item, "num_included_in_starting_items": 1}
     shuffled_item = {
         **excluded_item,
         "num_shuffled_pickups": 1,
@@ -161,9 +157,23 @@ def _migrate_v5(preset: dict) -> dict:
 
     for item in ["Combat Visor", "Scan Visor", "Varia Suit", "Power Beam", "Charge Beam", "Morph Ball"]:
         default_items_state[item] = included_item
-    for item in ["Dark Visor", "Echo Visor", "Morph Ball Bomb", "Boost Ball", "Spider Ball", "Space Jump Boots",
-                 "Gravity Boost", "Super Missile", "Sunburst", "Darkburst", "Sonic Boom", "Violet Translator",
-                 "Amber Translator", "Emerald Translator", "Cobalt Translator"]:
+    for item in [
+        "Dark Visor",
+        "Echo Visor",
+        "Morph Ball Bomb",
+        "Boost Ball",
+        "Spider Ball",
+        "Space Jump Boots",
+        "Gravity Boost",
+        "Super Missile",
+        "Sunburst",
+        "Darkburst",
+        "Sonic Boom",
+        "Violet Translator",
+        "Amber Translator",
+        "Emerald Translator",
+        "Cobalt Translator",
+    ]:
         default_items_state[item] = shuffled_item
 
     major_items = preset["layout_configuration"]["major_items_configuration"]["items_state"]
@@ -219,33 +229,16 @@ def _migrate_v8(preset: dict) -> dict:
         preset["configuration"]["energy_per_tank"] = int(preset["configuration"]["energy_per_tank"])
 
     preset["configuration"]["starting_location"] = [
-        _name_to_location(location)
-        for location in preset["configuration"]["starting_location"]
+        _name_to_location(location) for location in preset["configuration"]["starting_location"]
     ]
 
     excluded_teleporters = []
     if preset["game"] == "prime2":
         excluded_teleporters = [
-            {
-                "world_asset_id": 464164546,
-                "area_asset_id": 3136899603,
-                "instance_id": 204865660
-            },
-            {
-                "world_asset_id": 2252328306,
-                "area_asset_id": 2068511343,
-                "instance_id": 589949
-            },
-            {
-                "world_asset_id": 464164546,
-                "area_asset_id": 1564082177,
-                "instance_id": 4260106
-            },
-            {
-                "world_asset_id": 1006255871,
-                "area_asset_id": 2278776548,
-                "instance_id": 136970379
-            },
+            {"world_asset_id": 464164546, "area_asset_id": 3136899603, "instance_id": 204865660},
+            {"world_asset_id": 2252328306, "area_asset_id": 2068511343, "instance_id": 589949},
+            {"world_asset_id": 464164546, "area_asset_id": 1564082177, "instance_id": 4260106},
+            {"world_asset_id": 1006255871, "area_asset_id": 2278776548, "instance_id": 136970379},
         ]
 
     preset["configuration"]["elevators"] = {
@@ -391,8 +384,7 @@ def _migrate_v13(preset: dict) -> dict:
 
     for name, config in preset["configuration"]["ammo_configuration"]["items_state"].items():
         config["ammo_count"] = [
-            math.ceil(max(maximum_ammo[ammo_id], 0) / max(config["pickup_count"], 1))
-            for ammo_id in ammo_ids[name]
+            math.ceil(max(maximum_ammo[ammo_id], 0) / max(config["pickup_count"], 1)) for ammo_id in ammo_ids[name]
         ]
         config.pop("variance")
 
@@ -406,21 +398,16 @@ def _migrate_v14(preset: dict) -> dict:
         return migration_data.convert_area_loc_id_to_name(game, old_loc)
 
     preset["configuration"]["starting_location"] = [
-        _migrate_area_location(old_loc)
-        for old_loc in preset["configuration"]["starting_location"]
+        _migrate_area_location(old_loc) for old_loc in preset["configuration"]["starting_location"]
     ]
 
     if "elevators" in preset["configuration"]:
         elevators = preset["configuration"]["elevators"]
 
         elevators["excluded_teleporters"] = [
-            _migrate_area_location(old_loc)
-            for old_loc in elevators["excluded_teleporters"]
+            _migrate_area_location(old_loc) for old_loc in elevators["excluded_teleporters"]
         ]
-        elevators["excluded_targets"] = [
-            _migrate_area_location(old_loc)
-            for old_loc in elevators["excluded_targets"]
-        ]
+        elevators["excluded_targets"] = [_migrate_area_location(old_loc) for old_loc in elevators["excluded_targets"]]
 
         preset["configuration"]["elevators"] = elevators
 
@@ -428,30 +415,31 @@ def _migrate_v14(preset: dict) -> dict:
 
 
 def _migrate_v15(preset: dict) -> dict:
-    gate_mapping = {'Temple Grounds/Hive Access Tunnel/Translator Gate': 0,
-                    'Temple Grounds/Meeting Grounds/Translator Gate': 1,
-                    'Temple Grounds/Hive Transport Area/Translator Gate': 2,
-                    'Temple Grounds/Industrial Site/Translator Gate': 3,
-                    'Temple Grounds/Path of Eyes/Translator Gate': 4,
-                    'Temple Grounds/Temple Assembly Site/Translator Gate': 5,
-                    'Temple Grounds/GFMC Compound/Translator Gate': 6,
-                    'Great Temple/Temple Sanctuary/Transport A Translator Gate': 9,
-                    'Great Temple/Temple Sanctuary/Transport B Translator Gate': 7,
-                    'Great Temple/Temple Sanctuary/Transport C Translator Gate': 8,
-                    'Agon Wastes/Mining Plaza/Translator Gate': 10,
-                    'Agon Wastes/Mining Station A/Translator Gate': 11,
-                    'Torvus Bog/Great Bridge/Translator Gate': 12,
-                    'Torvus Bog/Torvus Temple/Translator Gate': 13,
-                    'Torvus Bog/Torvus Temple/Elevator Translator Scan': 14,
-                    'Sanctuary Fortress/Reactor Core/Translator Gate': 15,
-                    'Sanctuary Fortress/Sanctuary Temple/Translator Gate': 16}
+    gate_mapping = {
+        "Temple Grounds/Hive Access Tunnel/Translator Gate": 0,
+        "Temple Grounds/Meeting Grounds/Translator Gate": 1,
+        "Temple Grounds/Hive Transport Area/Translator Gate": 2,
+        "Temple Grounds/Industrial Site/Translator Gate": 3,
+        "Temple Grounds/Path of Eyes/Translator Gate": 4,
+        "Temple Grounds/Temple Assembly Site/Translator Gate": 5,
+        "Temple Grounds/GFMC Compound/Translator Gate": 6,
+        "Great Temple/Temple Sanctuary/Transport A Translator Gate": 9,
+        "Great Temple/Temple Sanctuary/Transport B Translator Gate": 7,
+        "Great Temple/Temple Sanctuary/Transport C Translator Gate": 8,
+        "Agon Wastes/Mining Plaza/Translator Gate": 10,
+        "Agon Wastes/Mining Station A/Translator Gate": 11,
+        "Torvus Bog/Great Bridge/Translator Gate": 12,
+        "Torvus Bog/Torvus Temple/Translator Gate": 13,
+        "Torvus Bog/Torvus Temple/Elevator Translator Scan": 14,
+        "Sanctuary Fortress/Reactor Core/Translator Gate": 15,
+        "Sanctuary Fortress/Sanctuary Temple/Translator Gate": 16,
+    }
 
     if preset["game"] == "prime2":
         translator_configuration = preset["configuration"]["translator_configuration"]
         old = translator_configuration["translator_requirement"]
         translator_configuration["translator_requirement"] = {
-            identifier: old[str(gate_index)]
-            for identifier, gate_index in gate_mapping.items()
+            identifier: old[str(gate_index)] for identifier, gate_index in gate_mapping.items()
         }
 
     return preset
@@ -468,17 +456,13 @@ def _migrate_v16(preset: dict) -> dict:
 def _migrate_v17(preset: dict) -> dict:
     if preset["game"] == "prime1":
         preset["configuration"]["elevators"]["excluded_teleporters"].append(
-            {
-                "world_name": "Impact Crater",
-                "area_name": "Metroid Prime Lair",
-                "node_name": "Teleporter to Credits"
-            }
+            {"world_name": "Impact Crater", "area_name": "Metroid Prime Lair", "node_name": "Teleporter to Credits"}
         )
         preset["configuration"]["elevators"]["excluded_teleporters"].append(
             {
                 "world_name": "Frigate Orpheon",
                 "area_name": "Exterior Docking Hangar",
-                "node_name": "Teleport to Landing Site"
+                "node_name": "Teleport to Landing Site",
             }
         )
     return preset
@@ -712,9 +696,7 @@ def _migrate_v43(preset: dict) -> dict:
 
 def _migrate_v44(preset: dict) -> dict:
     def add_node_name(location):
-        node_name = migration_data.get_node_name_for_area(
-            preset["game"], location["world_name"], location["area_name"]
-        )
+        node_name = migration_data.get_node_name_for_area(preset["game"], location["world_name"], location["area_name"])
         location["node_name"] = node_name
 
     for loc in preset["configuration"]["starting_location"]:
@@ -851,7 +833,157 @@ def _migrate_v55(preset: dict) -> dict:
     game = preset["game"]
     if game in {"blank", "cave_story", "am2r"}:
         return preset
-    preset["configuration"]["dock_rando"]["types_state"]["teleporter"] = {"can_change_from": [],"can_change_to": []}
+    preset["configuration"]["dock_rando"]["types_state"]["teleporter"] = {"can_change_from": [], "can_change_to": []}
+    return preset
+
+
+def _migrate_v56(preset: dict) -> dict:
+    if preset["game"] in {"dread", "samus_returns", "prime3"}:
+        preset["configuration"].pop("elevators")
+
+    return preset
+
+
+def _migrate_v57(preset: dict) -> dict:
+    types_table = {
+        "am2r": ["tunnel", "teleporter", "other"],
+        "blank": ["other"],
+        "cave_story": ["door", "trigger", "entrance", "exit", "teleporter", "debug cat", "other"],
+        "dread": ["tunnel", "other", "teleporter"],
+        "prime1": ["morph_ball", "other", "teleporter"],
+        "prime2": ["morph_ball", "other", "teleporter"],
+        "prime3": ["door", "morph_ball", "other", "teleporter"],
+        "samus_returns": ["door", "tunnel", "other", "teleporter"],
+        "super_metroid": ["door", "morph_ball", "other", "teleporter"],
+    }
+
+    for type_name in types_table[preset["game"]]:
+        preset["configuration"]["dock_rando"]["types_state"].pop(type_name)
+
+    return preset
+
+
+def _migrate_v58(preset: dict) -> dict:
+    config = preset["configuration"]
+    game = preset["game"]
+
+    if game in {"prime1", "prime2", "prime3"}:
+        mapping = migration_data.get_raw_data(RandovaniaGame(game))["rename_teleporter_nodes"]
+
+        def replace_location(old_location):
+            identifier = f'{old_location["region"]}/{old_location["area"]}/{old_location["node"]}'
+            new_node_name = mapping.get(identifier, None)
+            if new_node_name is not None:
+                old_location["node"] = new_node_name
+
+        for old_location in config["starting_location"]:
+            replace_location(old_location)
+
+        if game in {"prime1", "prime2"}:
+            elevators = config["elevators"]
+            excluded_teleporters = elevators["excluded_teleporters"]
+            for teleporter_obj in excluded_teleporters:
+                replace_location(teleporter_obj)
+
+            excluded_targets = elevators["excluded_targets"]
+            for target_obj in excluded_targets:
+                replace_location(target_obj)
+
+    return preset
+
+
+def _migrate_v59(preset: dict) -> dict:
+    game = preset["game"]
+
+    if game != "prime1":
+        return preset
+
+    configuration = preset["configuration"]
+
+    dock_rando = configuration.get("dock_rando")
+    if dock_rando is None:
+        return preset
+
+    types_state = dock_rando.get("types_state")
+    if types_state is None:
+        return preset
+
+    door = types_state.get("door")
+    if door is None:
+        return preset
+
+    can_change_to: list[str] = door.get("can_change_to")
+    if can_change_to is None:
+        return preset
+
+    for i, x in enumerate(can_change_to):
+        if x == "Charge Beam Door":
+            can_change_to[i] = "Charge Beam Blast Shield"
+        elif x == "Bomb Door":
+            can_change_to[i] = "Bomb Blast Shield"
+
+    return preset
+
+
+def _migrate_v60(preset: dict) -> dict:
+    preset["configuration"]["check_if_beatable_after_base_patches"] = False
+
+    return preset
+
+
+def _migrate_v61(preset: dict) -> dict:
+    config = preset["configuration"]
+    game = preset["game"]
+
+    if game in {"dread"}:
+        config["elevators"] = {
+            "mode": "vanilla",
+            "excluded_teleporters": [],
+            "excluded_targets": [],
+        }
+
+    return preset
+
+
+def _migrate_v62(preset: dict) -> dict:
+    config = preset["configuration"]
+    if "elevators" in config:
+        if config["elevators"]["mode"] == "one-way-elevator":
+            config["elevators"]["mode"] = "one-way-teleporter"
+        elif config["elevators"]["mode"] == "one-way-elevator-replacement":
+            config["elevators"]["mode"] = "one-way-teleporter-replacement"
+        config["teleporters"] = config.pop("elevators")
+    return preset
+
+
+def _migrate_v63(preset: dict) -> dict:
+    if preset["game"] == "prime1":
+        if preset["configuration"]["qol_cutscenes"] in ["original", "skippable"]:
+            preset["configuration"]["qol_cutscenes"] = "skippable"
+        else:
+            preset["configuration"]["qol_cutscenes"] = "skippablecompetitive"
+
+    return preset
+
+
+def _migrate_v64(preset: dict) -> dict:
+    if preset["game"] == "prime1":
+        x: str = preset["configuration"]["qol_cutscenes"]
+        if x == "skippablecompetitive":
+            x = "SkippableCompetitive"
+        else:
+            x = x.title()
+
+        preset["configuration"]["qol_cutscenes"] = x
+    return preset
+
+
+def _migrate_v65(preset: dict) -> dict:
+    config = preset["configuration"]
+    game = preset["game"]
+
+    if game == "dread":
+        config["nerf_power_bombs"] = True
     return preset
 
 
@@ -911,6 +1043,16 @@ _MIGRATIONS = [
     _migrate_v53,
     _migrate_v54,
     _migrate_v55,
+    _migrate_v56,
+    _migrate_v57,
+    _migrate_v58,
+    _migrate_v59,
+    _migrate_v60,
+    _migrate_v61,
+    _migrate_v62,
+    _migrate_v63,
+    _migrate_v64,
+    _migrate_v65,
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 
@@ -919,4 +1061,5 @@ def convert_to_current_version(preset: dict) -> dict:
     return migration_lib.apply_migrations(
         preset,
         _MIGRATIONS,
+        version_name="preset version",
     )

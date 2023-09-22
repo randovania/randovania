@@ -72,7 +72,7 @@ Extra - asset_id: collision_camera_001
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
   > Event - Push Wide Beam Block
-      Wave Beam and Push Wide Beam Block
+      Push Wide Beam Block with Wave Beam
   > Wide Beam Block - Adjacent
       After Dairon - Wide Beam Block Cataris Transport
   > Wide Beam Block - Above
@@ -91,12 +91,10 @@ Extra - asset_id: collision_camera_001
       Trivial
   > Event - Speed Booster blocks Destroyed
       Any of the following:
-          All of the following:
-              # Regular speed charge possible with 1.0 second charge time
-              Speed Booster and Speed Booster Upgrade ≥ 2 and Before Dairon - Teleport To Artaria Speed Blocks Destroyed
-          All of the following:
-              # Short boost speed charge possible with 1.25 second charge time
-              Speed Booster Upgrade and Before Dairon - Teleport To Artaria Speed Blocks Destroyed and Short Boost (Intermediate) and Can Short Boost
+          # Regular speed charge possible with 1.0 second charge time
+          Speed Booster and Speed Booster Upgrade ≥ 2
+          # Short boost speed charge possible with 1.25 second charge time
+          Speed Booster Upgrade and Short Boost (Intermediate) and Can Short Boost
 
 > Life Recharge; Heals? True
   * Layers: default
@@ -107,17 +105,15 @@ Extra - asset_id: collision_camera_001
   > Door to Save Station East
       Trivial
 
-> Teleporter to Artaria - Teleport to Dairon; Heals? False; Default Node
+> Teleporter to Artaria; Heals? False; Default Node
   * Layers: default
-  * Teleporter to Teleport to Dairon/Teleporter to Dairon - Teleport to Artaria
+  * Teleporter to Teleport to Dairon/Teleporter to Dairon
   * Extra - actor_name: teleport_cave_000
   * Extra - actor_def: actordef:actors/props/teleporter/charclasses/teleporter.bmsad
   * Extra - elevator_component: CTeleporterUsableComponent
   * Extra - target_spawn_point: teleport_baselab_000_platform
   * Extra - start_point_actor_name: teleport_cave_000_platform
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad
-  * Extra - keep_name_when_vanilla: True
-  * Extra - editable: True
   > Top Floor
       Any of the following:
           Space Jump or Wall Jump (Intermediate) or Simple IBJ
@@ -167,7 +163,7 @@ Extra - asset_id: collision_camera_001
   * Layers: default
   > Pickup (Missile Tank)
       Trivial
-  > Teleporter to Artaria - Teleport to Dairon
+  > Teleporter to Artaria
       Trivial
   > Wide Beam Block - Above
       After Dairon - Teleport To Artaria Speed Blocks Destroyed
@@ -199,7 +195,7 @@ Extra - asset_id: collision_camera_002
   > Tunnel to Big Hub
       Lay Bomb or Lay Power Bomb
   > Event - Push Wide Beam Block
-      Wave Beam and Movement (Beginner) and Push Wide Beam Block
+      Movement (Beginner) and Push Wide Beam Block with Wave Beam
 
 > Dock to EMMI Zone Exit East; Heals? False
   * Layers: default
@@ -245,22 +241,21 @@ Extra - asset_id: collision_camera_003
   * EMMI Door to EMMI Zone Exit East/Dock to East Transport to Ferenia
   * Extra - actor_name: dooremmy_002
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
-  > Elevator to Ferenia - East Transport to Darion
+  > Elevator to Ferenia
       After Dairon - Pull Grapple Block below Ferenia Elevator
   > Event - Grapple Block
       Grapple Beam
 
-> Elevator to Ferenia - East Transport to Darion; Heals? False; Default Node
+> Elevator to Ferenia; Heals? False; Default Node
   * Layers: default
-  * Teleporter to East Transport to Darion/Elevator to Dairon - East Transport to Ferenia
+  * Elevator to East Transport to Dairon/Elevator to Dairon
   * Extra - actor_name: elevator_sanctuary_000
   * Extra - actor_def: actordef:actors/props/elevator/charclasses/elevator.bmsad
   * Extra - elevator_component: CElevatorUsableComponent
   * Extra - target_spawn_point: elevator_baselab_000_platform
   * Extra - start_point_actor_name: elevator_sanctuary_000_platform
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad
-  * Extra - keep_name_when_vanilla: True
-  * Extra - editable: True
+  * Extra - transporter_name: Dairon - Grapple Block
   > Dock to EMMI Zone Exit East
       After Dairon - Pull Grapple Block below Ferenia Elevator
   > Event - Grapple Block
@@ -591,17 +586,15 @@ Extra - asset_id: collision_camera_008
   > Bottom-Left Corner
       Trivial
 
-> Teleporter to Cataris - Teleport to Dairon; Heals? False; Default Node
+> Teleporter to Cataris; Heals? False; Default Node
   * Layers: default
-  * Teleporter to Teleport to Dairon/Teleporter to Dairon - Teleport to Cataris
+  * Teleporter to Teleport to Dairon/Teleporter to Dairon
   * Extra - actor_name: teleport_magma_000
   * Extra - actor_def: actordef:actors/props/teleporter/charclasses/teleporter.bmsad
   * Extra - elevator_component: CTeleporterUsableComponent
   * Extra - target_spawn_point: teleport_baselab_000_platform
   * Extra - start_point_actor_name: teleport_magma_000_platform
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad
-  * Extra - keep_name_when_vanilla: True
-  * Extra - editable: True
   > Event - Blob, from teleporter
       Shoot Diffusion or Wave
   > Bottom-Left Corner
@@ -621,7 +614,7 @@ Extra - asset_id: collision_camera_008
       Trivial
   > Event - Blob, from teleporter
       Shoot Diffusion or Wave
-  > Teleporter to Cataris - Teleport to Dairon
+  > Teleporter to Cataris
       All of the following:
           After Dairon - Teleport to Cataris Blob
           Any of the following:
@@ -841,7 +834,7 @@ Extra - asset_id: collision_camera_011
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Elevator to Artaria - Transport to Dairon
+  > Elevator to Artaria
       Any of the following:
           Varia Suit
           Heat/Cold Runs (Beginner) and Heat Damage ≥ 100
@@ -852,9 +845,8 @@ Extra - asset_id: collision_camera_011
               All of the following:
                   # Vanilla
                   Spider Magnet
-                  Any of the following:
-                      # Ways to get up there
-                      Grapple Beam or Space Jump or Speed Booster or Simple IBJ
+                  # Ways to get up there
+                  Grapple Beam or Space Jump or Speed Booster or Simple IBJ
               Any of the following:
                   # Movement Tricks
                   All of the following:
@@ -865,31 +857,29 @@ Extra - asset_id: collision_camera_011
           Any of the following:
               # Varia check
               Varia Suit
-              All of the following:
-                  # heat runs
-                  Heat/Cold Runs (Intermediate) and Heat Damage ≥ 300
+              # heat runs
+              Heat/Cold Runs (Intermediate) and Heat Damage ≥ 300
 
 > Event - Grapple Block; Heals? False
   * Layers: default
   * Event Dairon - Transport to Artaria Grapple Block
   * Extra - actor_name: grapplepulloff1x2_006
   * Extra - actor_def: actordef:actors/props/grapplepulloff1x2/charclasses/grapplepulloff1x2.bmsad
-  > Elevator to Artaria - Transport to Dairon
+  > Elevator to Artaria
       Any of the following:
           Varia Suit
           Heat/Cold Runs (Beginner) and Heat Damage ≥ 50
 
-> Elevator to Artaria - Transport to Dairon; Heals? False; Default Node
+> Elevator to Artaria; Heals? False; Default Node
   * Layers: default
-  * Teleporter to Transport to Dairon/Elevator to Dairon
+  * Elevator to Transport to Dairon/Elevator to Dairon
   * Extra - actor_name: elevator_cave_000
   * Extra - actor_def: actordef:actors/props/elevator/charclasses/elevator.bmsad
   * Extra - elevator_component: CElevatorUsableComponent
   * Extra - target_spawn_point: elevator_baselab_000_platform
   * Extra - start_point_actor_name: elevator_cave_000_platform
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad
-  * Extra - keep_name_when_vanilla: True
-  * Extra - editable: True
+  * Extra - transporter_name: Dairon - Superheated
   > Door to Early Grapple Room
       Any of the following:
           Varia Suit
@@ -923,7 +913,7 @@ Extra - asset_id: collision_camera_011
 > Tunnel to Hub Access; Heals? False
   * Layers: default
   * Morph Ball Launcher to Hub Access/Dock from Transport to Artaria
-  > Elevator to Artaria - Transport to Dairon
+  > Elevator to Artaria
       All of the following:
           After Dairon - Transport to Artaria Grapple Block
           Any of the following:
@@ -1404,11 +1394,10 @@ Extra - asset_id: collision_camera_018
           Morph Ball and After Dairon - Central Unit
           All of the following:
               Flash Shift Skip (Beginner)
-              Any of the following:
-                  Movement (Beginner) or Lay Cross Bomb or Use Spin Boost
-                  All of the following:
-                      Speed Booster
-                      After Dairon - Yellow Introduction Speed Blocks Destroyed or Disabled Door Lock Randomizer
+              Movement (Beginner) or Lay Cross Bomb or Use Spin Boost
+          All of the following:
+              Speed Booster
+              After Dairon - Yellow Introduction Speed Blocks Destroyed or Disabled Door Lock Randomizer
   > Dock to EMMI Zone Exit North
       After Dairon - Yellow Introduction Speed Blocks Destroyed
 
@@ -1484,20 +1473,21 @@ Extra - asset_id: collision_camera_019
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Elevator to Ferenia - Transport to Dairon
+  > Elevator to Ferenia
       Trivial
+  > Event - Ferenia Transport Wide Beam Block  Above
+      Push Wide Beam Block with Wave Beam
 
-> Elevator to Ferenia - Transport to Dairon; Heals? False; Default Node
+> Elevator to Ferenia; Heals? False; Default Node
   * Layers: default
-  * Teleporter to Transport to Dairon/Elevator to Dairon - West Transport to Ferenia
+  * Elevator to Transport to Dairon/Elevator to Dairon
   * Extra - actor_name: elevator_sanctuary_001
   * Extra - actor_def: actordef:actors/props/elevator/charclasses/elevator.bmsad
   * Extra - elevator_component: CElevatorUsableComponent
   * Extra - target_spawn_point: elevator_baselab_001_platform
   * Extra - start_point_actor_name: elevator_sanctuary_001_platform
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad
-  * Extra - keep_name_when_vanilla: True
-  * Extra - editable: True
+  * Extra - transporter_name: Dairon - DNA Station
   > Door to Navigation Station North (Upper)
       Trivial
 
@@ -1505,6 +1495,12 @@ Extra - asset_id: collision_camera_019
   * Layers: default
   * Event Dairon - Wide Beam Block Ferenia Elevator
   > Door to Navigation Station North (Lower)
+      Trivial
+
+> Event - Ferenia Transport Wide Beam Block  Above; Heals? False
+  * Layers: default
+  * Event Dairon - Wide Beam Block Ferenia Elevator
+  > Door to Navigation Station North (Upper)
       Trivial
 
 ----------------
@@ -1540,9 +1536,8 @@ Extra - asset_id: collision_camera_020
                   Disabled Door Lock Randomizer and Ballspark
                   Any of the following:
                       Speed Booster Conservation (Intermediate) and Lay Bomb
-                      All of the following:
-                          # https://clips.twitch.tv/SpunkyTiredTarsierLeeroyJenkins-72uq7xr0vk0iDHSJ
-                          After Dairon - Power Switch 2 and Speed Booster Conservation (Advanced) and Lay Power Bomb
+                      # https://clips.twitch.tv/SpunkyTiredTarsierLeeroyJenkins-72uq7xr0vk0iDHSJ
+                      After Dairon - Power Switch 2 and Speed Booster Conservation (Advanced) and Lay Power Bomb
               All of the following:
                   Cross Bomb Skip (Advanced)
                   Lay Bomb or Lay Power Bomb
@@ -2469,9 +2464,8 @@ Extra - asset_id: collision_camera_033
                   # From above
                   Speed Booster Conservation (Beginner)
                   Lay Bomb or Lay Power Bomb
-              All of the following:
-                  # From below
-                  After Dairon - Storm Missile Gate and Speed Booster Conservation (Intermediate)
+              # From below
+              After Dairon - Storm Missile Gate and Speed Booster Conservation (Intermediate)
 
 > Event - Storm Gate Speed Blocks Destroyed; Heals? False
   * Layers: default
@@ -2569,9 +2563,8 @@ Extra - asset_id: collision_camera_035
   > Event - Lake Puzzle Grapple Block
       All of the following:
           Grapple Beam
-          Any of the following:
-              # Power Bombs require desyncing the beam blocks
-              Lay Cross Bomb or Lay Power Bomb
+          # Power Bombs require desyncing the beam blocks
+          Lay Cross Bomb or Lay Power Bomb
   > Above Grapple Block
       All of the following:
           Morph Ball and After Dairon - Lake Puzzle Grapple Block
@@ -2925,20 +2918,19 @@ Extra - asset_id: collision_camera_043
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Elevator to Cataris - Transport to Dairon
+  > Shuttle to Cataris
       Trivial
 
-> Elevator to Cataris - Transport to Dairon; Heals? False; Default Node
+> Shuttle to Cataris; Heals? False; Default Node
   * Layers: default
-  * Teleporter to Transport to Dairon/Elevator to Dairon - Transport to Cataris
+  * Shuttle to Transport to Dairon/Shuttle to Dairon
   * Extra - actor_name: wagontrain_magma_000
   * Extra - actor_def: actordef:actors/props/wagontrain/charclasses/wagontrain.bmsad
   * Extra - elevator_component: CTrainUsableComponent
   * Extra - target_spawn_point: wagontrain_baselab_000_platform
   * Extra - start_point_actor_name: wagontrain_magma_000_platform
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_train/charclasses/weightactivatedplatform_train.bmsad
-  * Extra - keep_name_when_vanilla: True
-  * Extra - editable: True
+  * Extra - transporter_name: Dairon - Entrance
   > Door to Teleport to Artaria
       Trivial
 
@@ -2999,20 +2991,19 @@ Extra - asset_id: collision_camera_045
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Tram to Burenia - Lower Transport to Dairon
+  > Shuttle to Burenia
       Trivial
 
-> Tram to Burenia - Lower Transport to Dairon; Heals? False; Default Node
+> Shuttle to Burenia; Heals? False; Default Node
   * Layers: default
-  * Teleporter to Lower Transport to Dairon/Tram to Dairon - Lower Transport to Burenia
+  * Shuttle to Lower Transport to Dairon/Shuttle to Dairon
   * Extra - actor_name: wagontrain_with_portal_aqua_001
   * Extra - actor_def: actordef:actors/props/wagontrain_with_portal/charclasses/wagontrain_with_portal.bmsad
   * Extra - elevator_component: CTrainWithPortalUsableComponent
   * Extra - target_spawn_point: wagontrain_baselab_001_platform
   * Extra - start_point_actor_name: wagontrain_aqua_001_platform
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_train/charclasses/weightactivatedplatform_train.bmsad
-  * Extra - keep_name_when_vanilla: True
-  * Extra - editable: True
+  * Extra - transporter_name: Dairon - Submarine
   > Door to Burenia Lower Transport Access
       Trivial
 
@@ -3030,20 +3021,19 @@ Extra - asset_id: collision_camera_046
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Tram to Burenia - Upper Transport to Dairon
+  > Shuttle to Burenia
       Trivial
 
-> Tram to Burenia - Upper Transport to Dairon; Heals? False; Default Node
+> Shuttle to Burenia; Heals? False; Default Node
   * Layers: default
-  * Teleporter to Upper Transport to Dairon/Tram to Dairon - Upper Transport to Burenia
+  * Shuttle to Upper Transport to Dairon/Shuttle to Dairon
   * Extra - actor_name: wagontrain_aqua_000
   * Extra - actor_def: actordef:actors/props/wagontrain/charclasses/wagontrain.bmsad
   * Extra - elevator_component: CTrainUsableComponent
   * Extra - target_spawn_point: wagontrain_baselab_000_platform
   * Extra - start_point_actor_name: wagontrain_aqua_000_platform
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_train/charclasses/weightactivatedplatform_train.bmsad
-  * Extra - keep_name_when_vanilla: True
-  * Extra - editable: True
+  * Extra - transporter_name: Dairon - Sea Bridge
   > Door to Burenia Upper Transport Access
       Trivial
 
@@ -3052,23 +3042,22 @@ Transport to Ghavoran
 Extra - total_boundings: {'x1': -18100.0, 'x2': -16000.0, 'y1': 5026.7099609375, 'y2': 6168.7099609375}
 Extra - polygon: [[-16000.0, 6168.7099609375], [-18100.0, 6168.7099609375], [-18100.0, 5026.7099609375], [-16000.0, 5026.7099609375]]
 Extra - asset_id: collision_camera_047
-> Elevator to Ghavoran - Transport to Dairon; Heals? False; Default Node
+> Elevator to Ghavoran; Heals? False; Default Node
   * Layers: default
-  * Teleporter to Transport to Dairon/Elevator to Dairon - Transport to Ghavoran
+  * Elevator to Transport to Dairon/Elevator to Dairon
   * Extra - actor_name: elevator_forest_000
   * Extra - actor_def: actordef:actors/props/elevator/charclasses/elevator.bmsad
   * Extra - elevator_component: CElevatorUsableComponent
   * Extra - target_spawn_point: elevator_baselab_000_platform
   * Extra - start_point_actor_name: elevator_forest_000_platform
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad
-  * Extra - keep_name_when_vanilla: True
-  * Extra - editable: True
+  * Extra - transporter_name: Dairon - Freezer
   > Dock to Energy Recharge Station West
       Trivial
 
 > Dock to Energy Recharge Station West; Heals? False
   * Layers: default
   * Open Passage to Energy Recharge Station West/Dock to Transport to Ghavoran
-  > Elevator to Ghavoran - Transport to Dairon
+  > Elevator to Ghavoran
       Trivial
 

@@ -1,28 +1,33 @@
+from __future__ import annotations
+
 import copy
 import dataclasses
 import json
 import os
-from pathlib import Path
 from textwrap import wrap
+from typing import TYPE_CHECKING
 
 import py_randomprime
-from Random_Enemy_Attributes.Random_Enemy_Attributes import PyRandom_Enemy_Attributes
 from open_prime_rando.dol_patching import all_prime_dol_patches
 from ppc_asm import assembler
+from Random_Enemy_Attributes.Random_Enemy_Attributes import PyRandom_Enemy_Attributes
 from retro_data_structures.game_check import Game as RDSGame
 
 from randovania import monitoring
 from randovania.exporter.game_exporter import GameExporter, GameExportParams
 from randovania.game_description import default_database
-from randovania.game_description.db.dock import DockType
-from randovania.game_description.db.region import Region
-from randovania.game_description.resources.pickup_entry import PickupModel
+from randovania.game_description.pickup.pickup_entry import PickupModel
 from randovania.games.game import RandovaniaGame
-from randovania.games.prime1.exporter.patch_data_factory import _MODEL_MAPPING
 from randovania.games.prime1.layout.prime_configuration import RoomRandoMode
-from randovania.lib import status_update_lib
 from randovania.lib.status_update_lib import DynamicSplitProgressUpdate
-from randovania.patching.prime import asset_conversion
+from randovania.patching.patchers.exceptions import UnableToExportError
+
+if TYPE_CHECKING:
+    from pathlib import Path
+
+    from randovania.game_description.db.dock import DockType
+    from randovania.game_description.db.region import Region
+    from randovania.lib import status_update_lib
 
 
 @dataclasses.dataclass(frozen=True)
@@ -38,27 +43,31 @@ class PrimeGameExportParams(GameExportParams):
 def adjust_model_names(patch_data: dict, assets_meta: dict, use_external_assets: bool):
     model_list = []
     if use_external_assets:
-        bad_models = {"prime2_MissileLauncher", "prime2_MissileExpansionPrime1"}
+        bad_models = {
+            "prime2_MissileLauncher",
+            "prime2_MissileExpansionPrime1",
+            "prime2_CoinChest",
+        }
         model_list = list(set(assets_meta["items"]) - bad_models)
 
     for level in patch_data["levelData"].values():
         for room in level.get("rooms", {}).values():
             for pickup in room.get("pickups", []):
                 model = PickupModel.from_json(pickup.pop("model"))
-                if model.game == RandovaniaGame.METROID_PRIME:
-                    converted_model_name = model.name
-                else:
-                    converted_model_name = f"{model.game.value}_{model.name}"
-                    if converted_model_name not in model_list:
-                        converted_model_name = _MODEL_MAPPING.get((model.game, model.name), "Nothing")
+                original_model = PickupModel.from_json(pickup.pop("original_model"))
 
-                pickup['model'] = converted_model_name
+                converted_model_name = f"{original_model.game.value}_{original_model.name}"
+                if converted_model_name not in model_list:
+                    converted_model_name = model.name
+
+                pickup["model"] = converted_model_name
 
 
 def create_map_using_matplotlib(room_connections: list[tuple[str, str]], filepath: Path):
+    import logging
+
     import networkx
     import numpy
-    import logging
 
     for name in ["matplotlib", "matplotlib.font", "matplotlib.pyplot"]:
         logger = logging.getLogger(name)
@@ -66,6 +75,7 @@ def create_map_using_matplotlib(room_connections: list[tuple[str, str]], filepat
         logger.disabled = True
 
     import matplotlib
+
     matplotlib._log.disabled = True
     from matplotlib import pyplot
 
@@ -77,8 +87,8 @@ def create_map_using_matplotlib(room_connections: list[tuple[str, str]], filepat
     pos = networkx.spring_layout(graph, k=1.2 / numpy.sqrt(len(graph.nodes())), iterations=100, seed=0)
     pyplot.figure(3, figsize=(22, 22))
     networkx.draw(graph, pos=pos, node_size=800)
-    networkx.draw_networkx_labels(graph, pos=pos, font_weight='bold', font_size=4)
-    pyplot.savefig(filepath, bbox_inches='tight', dpi=220)
+    networkx.draw_networkx_labels(graph, pos=pos, font_weight="bold", font_size=4)
+    pyplot.savefig(filepath, bbox_inches="tight", dpi=220)
 
     # reset for next graph
     pyplot.clf()
@@ -88,10 +98,10 @@ def make_one_map(filepath: Path, level_data: dict, region: Region, dock_types_to
     from randovania.game_description.db.dock_node import DockNode
 
     def wrap_text(text):
-        return '\n'.join(wrap(text, 18))
+        return "\n".join(wrap(text, 18))
 
     # make list of all edges between rooms
-    room_connections = list()
+    room_connections = []
 
     # add edges which were not shuffled
     disabled_doors = set()
@@ -156,8 +166,12 @@ class PrimeGameExporter(GameExporter):
             filepath = directory.with_name(f"{base_filename} {region_name}.png")
             make_one_map(filepath, level_data, rl.region_with_name(region_name), dock_types_to_ignore)
 
-    def _do_export_game(self, patch_data: dict, export_params: GameExportParams,
-                        progress_update: status_update_lib.ProgressUpdateCallable) -> None:
+    def _do_export_game(
+        self,
+        patch_data: dict,
+        export_params: GameExportParams,
+        progress_update: status_update_lib.ProgressUpdateCallable,
+    ) -> None:
         assert isinstance(export_params, PrimeGameExportParams)
 
         input_file = export_params.input_path
@@ -167,6 +181,8 @@ class PrimeGameExporter(GameExporter):
         cache_dir = os.fspath(export_params.cache_path)
 
         symbols = py_randomprime.symbols_for_file(input_file)
+        if symbols is None:
+            raise UnableToExportError("Unsupported Metroid Prime version.")
 
         new_config = copy.copy(patch_data)
         has_spoiler = new_config.pop("hasSpoiler")
@@ -177,12 +193,13 @@ class PrimeGameExporter(GameExporter):
             assembler.assemble_instructions(
                 symbols["UpdateHintState__13CStateManagerFf"],
                 all_prime_dol_patches.remote_execution_patch(RDSGame.PRIME),
-                symbols=symbols)
+                symbols=symbols,
+            )
         )
         new_config["preferences"]["cacheDir"] = cache_dir
 
         random_enemy_attributes = new_config.pop("randEnemyAttributes")
-        random_enemy_attributes_seed = new_config["seed"]
+        random_enemy_attributes_seed = new_config.pop("seed")
 
         split_updater = DynamicSplitProgressUpdate(progress_update)
         asset_updater = None
@@ -194,11 +211,14 @@ class PrimeGameExporter(GameExporter):
         if random_enemy_attributes is not None:
             enemy_updater = split_updater.create_split()
 
+        from randovania.patching.prime import asset_conversion
+
         assets_meta = {}
         if export_params.use_echoes_models:
             assets_path = export_params.asset_cache_path
-            assets_meta = asset_conversion.convert_prime2_pickups(export_params.echoes_input_path,
-                                                                  assets_path, asset_updater)
+            assets_meta = asset_conversion.convert_prime2_pickups(
+                export_params.echoes_input_path, assets_path, asset_updater
+            )
             new_config["externAssetsDir"] = os.fspath(assets_path)
         else:
             asset_conversion.delete_converted_assets(export_params.asset_cache_path)
@@ -206,7 +226,7 @@ class PrimeGameExporter(GameExporter):
         # Replace models
         adjust_model_names(new_config, assets_meta, export_params.use_echoes_models)
 
-        patch_as_str = json.dumps(new_config, indent=4, separators=(',', ': '))
+        patch_as_str = json.dumps(new_config, indent=4, separators=(",", ": "))
         if has_spoiler:
             output_file.with_name(f"{output_file.stem}-patcher.json").write_text(patch_as_str)
             if room_rando_mode != RoomRandoMode.NONE.value:
@@ -228,17 +248,19 @@ class PrimeGameExporter(GameExporter):
         if random_enemy_attributes is not None:
             enemy_updater("Randomizing enemy attributes", 0)
             PyRandom_Enemy_Attributes(
-                new_config["inputIso"], new_config["outputIso"], random_enemy_attributes_seed,
-                random_enemy_attributes['enemy_rando_range_scale_low'],
-                random_enemy_attributes['enemy_rando_range_scale_high'],
-                random_enemy_attributes['enemy_rando_range_health_low'],
-                random_enemy_attributes['enemy_rando_range_health_high'],
-                random_enemy_attributes['enemy_rando_range_speed_low'],
-                random_enemy_attributes['enemy_rando_range_speed_high'],
-                random_enemy_attributes['enemy_rando_range_damage_low'],
-                random_enemy_attributes['enemy_rando_range_damage_high'],
-                random_enemy_attributes['enemy_rando_range_knockback_low'],
-                random_enemy_attributes['enemy_rando_range_knockback_high'],
-                random_enemy_attributes['enemy_rando_diff_xyz'],
+                new_config["inputIso"],
+                new_config["outputIso"],
+                random_enemy_attributes_seed,
+                random_enemy_attributes["enemy_rando_range_scale_low"],
+                random_enemy_attributes["enemy_rando_range_scale_high"],
+                random_enemy_attributes["enemy_rando_range_health_low"],
+                random_enemy_attributes["enemy_rando_range_health_high"],
+                random_enemy_attributes["enemy_rando_range_speed_low"],
+                random_enemy_attributes["enemy_rando_range_speed_high"],
+                random_enemy_attributes["enemy_rando_range_damage_low"],
+                random_enemy_attributes["enemy_rando_range_damage_high"],
+                random_enemy_attributes["enemy_rando_range_knockback_low"],
+                random_enemy_attributes["enemy_rando_range_knockback_high"],
+                random_enemy_attributes["enemy_rando_diff_xyz"],
             )
             enemy_updater("Finished randomizing enemy attributes", 1)

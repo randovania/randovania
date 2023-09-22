@@ -1,21 +1,25 @@
-import dataclasses
+from __future__ import annotations
 
-from randovania.game_description.game_description import GameDescription
-from randovania.games.game import RandovaniaGame
+import dataclasses
+from typing import TYPE_CHECKING
+
 from randovania.games.am2r.layout.am2r_configuration import AM2RConfiguration
+from randovania.games.game import RandovaniaGame
 from randovania.games.prime1.layout.prime_configuration import PrimeConfiguration
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
 from randovania.games.prime3.layout.corruption_configuration import CorruptionConfiguration
 from randovania.gui.generated.preset_patcher_energy_ui import Ui_PresetPatcherEnergy
 from randovania.gui.lib import signal_handling
-from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.preset_settings.preset_tab import PresetTab
-from randovania.interface_common.preset_editor import PresetEditor
-from randovania.layout.preset import Preset
+
+if TYPE_CHECKING:
+    from randovania.game_description.game_description import GameDescription
+    from randovania.gui.lib.window_manager import WindowManager
+    from randovania.interface_common.preset_editor import PresetEditor
+    from randovania.layout.preset import Preset
 
 
 class PresetPatcherEnergy(PresetTab, Ui_PresetPatcherEnergy):
-
     def __init__(self, editor: PresetEditor, game_description: GameDescription, window_manager: WindowManager):
         super().__init__(editor, game_description, window_manager)
         self.setupUi(self)
@@ -25,10 +29,7 @@ class PresetPatcherEnergy(PresetTab, Ui_PresetPatcherEnergy):
         signal_handling.on_checked(self.dangerous_tank_check, self._persist_dangerous_tank)
 
         if self.game_enum == RandovaniaGame.METROID_PRIME_ECHOES:
-            config_fields = {
-                field.name: field
-                for field in dataclasses.fields(EchoesConfiguration)
-            }
+            config_fields = {field.name: field for field in dataclasses.fields(EchoesConfiguration)}
             self.varia_suit_spin_box.setMinimum(config_fields["varia_suit_damage"].metadata["min"])
             self.varia_suit_spin_box.setMaximum(config_fields["varia_suit_damage"].metadata["max"])
             self.dark_suit_spin_box.setMinimum(config_fields["dark_suit_damage"].metadata["min"])
@@ -44,10 +45,7 @@ class PresetPatcherEnergy(PresetTab, Ui_PresetPatcherEnergy):
             self.dangerous_tank_check.setVisible(False)
 
         if self.game_enum == RandovaniaGame.METROID_PRIME:
-            config_fields = {
-                field.name: field
-                for field in dataclasses.fields(PrimeConfiguration)
-            }
+            config_fields = {field.name: field for field in dataclasses.fields(PrimeConfiguration)}
             self.heated_damage_spin.setMinimum(config_fields["heat_damage"].metadata["min"])
             self.heated_damage_spin.setMaximum(config_fields["heat_damage"].metadata["max"])
 
@@ -68,7 +66,9 @@ class PresetPatcherEnergy(PresetTab, Ui_PresetPatcherEnergy):
 
     def on_preset_changed(self, preset: Preset):
         config = preset.configuration
-        assert isinstance(config, (PrimeConfiguration, EchoesConfiguration, CorruptionConfiguration, AM2RConfiguration))
+        assert isinstance(
+            config, PrimeConfiguration | EchoesConfiguration | CorruptionConfiguration | AM2RConfiguration
+        )
         self.energy_tank_capacity_spin_box.setValue(config.energy_per_tank)
 
         if self.game_enum == RandovaniaGame.METROID_PRIME_ECHOES:
@@ -90,20 +90,14 @@ class PresetPatcherEnergy(PresetTab, Ui_PresetPatcherEnergy):
         with self._editor as editor:
             configuration = editor.configuration
             assert isinstance(configuration, EchoesConfiguration)
-            safe_zone = dataclasses.replace(
-                configuration.safe_zone,
-                heal_per_second=self.safe_zone_regen_spin.value()
-            )
+            safe_zone = dataclasses.replace(configuration.safe_zone, heal_per_second=self.safe_zone_regen_spin.value())
             editor.set_configuration_field("safe_zone", safe_zone)
 
     def _persist_safe_zone_logic_heal(self, checked: bool):
         with self._editor as editor:
             configuration = editor.configuration
             assert isinstance(configuration, EchoesConfiguration)
-            safe_zone = dataclasses.replace(
-                configuration.safe_zone,
-                fully_heal=checked
-            )
+            safe_zone = dataclasses.replace(configuration.safe_zone, fully_heal=checked)
             editor.set_configuration_field("safe_zone", safe_zone)
 
     def _persist_progressive_damage(self, checked: bool):

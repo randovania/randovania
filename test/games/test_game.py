@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from unittest.mock import MagicMock
 
 
@@ -18,9 +20,9 @@ def test_gui(skip_qtbot, game_enum):
 
 
 def test_generator(game_enum):
-    from randovania.resolver.bootstrap import Bootstrap
     from randovania.generator.base_patches_factory import BasePatchesFactory
     from randovania.generator.hint_distributor import HintDistributor
+    from randovania.resolver.bootstrap import Bootstrap
 
     # Run
     g = game_enum.generator
@@ -33,10 +35,12 @@ def test_generator(game_enum):
 
 
 def test_patch_data_factory(game_enum):
-    from randovania.exporter.patch_data_factory import BasePatchDataFactory
-    assert issubclass(game_enum.patch_data_factory, BasePatchDataFactory)
+    from randovania.exporter.patch_data_factory import PatchDataFactory
+
+    assert issubclass(game_enum.patch_data_factory, PatchDataFactory)
 
 
 def test_exporter(game_enum):
     from randovania.exporter.game_exporter import GameExporter
+
     assert isinstance(game_enum.exporter, GameExporter)

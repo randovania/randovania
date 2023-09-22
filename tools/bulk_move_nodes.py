@@ -1,13 +1,16 @@
+from __future__ import annotations
+
 import argparse
 import logging
+from typing import TYPE_CHECKING
 
-from randovania.game_description import data_reader
-from randovania.game_description import data_writer
-from randovania.game_description import pretty_print
+from randovania.game_description import data_reader, data_writer, pretty_print
 from randovania.game_description.editor import Editor
-from randovania.game_description.requirements.base import Requirement
 from randovania.games import default_data
 from randovania.games.game import RandovaniaGame
+
+if TYPE_CHECKING:
+    from randovania.game_description.requirements.base import Requirement
 
 
 def bulk_move_node_logic(args):
@@ -27,19 +30,14 @@ def bulk_move_node_logic(args):
 
     requirements: dict[str, dict[str, Requirement]] = {
         node_name: {
-            target.name: req
-            for target, req in source_area.connections[source_area.node_with_name(node_name)].items()
+            target.name: req for target, req in source_area.connections[source_area.node_with_name(node_name)].items()
         }
         for node_name in node_names
     }
 
     for node_name in node_names:
         logging.info("Moving node %s", node_name)
-        editor.move_node_from_area_to_area(
-            source_area,
-            target_area,
-            source_area.node_with_name(node_name)
-        )
+        editor.move_node_from_area_to_area(source_area, target_area, source_area.node_with_name(node_name))
 
     for name, connections in requirements.items():
         source_node = target_area.node_with_name(name)
@@ -75,5 +73,5 @@ def main():
     bulk_move_node_logic(args)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

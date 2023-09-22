@@ -1,4 +1,6 @@
-from unittest.mock import MagicMock, AsyncMock, ANY
+from __future__ import annotations
+
+from unittest.mock import ANY, AsyncMock, MagicMock
 
 from randovania.games.game import RandovaniaGame
 from randovania.server.discord.faq_command import FaqCommandCog, GameFaqMessage

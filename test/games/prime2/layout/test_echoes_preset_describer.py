@@ -1,8 +1,11 @@
+from __future__ import annotations
+
 import dataclasses
+
+from open_prime_rando.dol_patching.echoes.beam_configuration import BeamAmmoConfiguration
 
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime2.layout import preset_describer
-from open_prime_rando.dol_patching.echoes.beam_configuration import BeamAmmoConfiguration
 from randovania.games.prime2.layout.beam_configuration import BeamConfiguration
 from randovania.games.prime2.layout.echoes_configuration import LayoutSkyTempleKeyMode
 from randovania.layout.base.available_locations import RandomizationMode
@@ -37,10 +40,10 @@ def test_create_beam_configuration_description_custom():
 
     # Assert
     assert result == [
-        {'Power Beam uses 6 missiles for combo': True},
-        {'Dark Beam uses Missile': True},
-        {'Light Beam uses 10 (Combo) Light Ammo, 6 missiles for combo': True},
-        {'Annihilator Beam uses 10 (Combo) Light and Dark Ammo': True},
+        {"Power Beam uses 6 missiles for combo": True},
+        {"Dark Beam uses Missile": True},
+        {"Light Beam uses 10 (Combo) Light Ammo, 6 missiles for combo": True},
+        {"Annihilator Beam uses 10 (Combo) Light and Dark Ammo": True},
     ]
 
 
@@ -56,25 +59,24 @@ def test_echoes_format_params(default_echoes_configuration):
 
     # Assert
     assert result == {
-        'Difficulty': [
+        "Difficulty": [],
+        "Game Changes": [
+            "Missiles needs Launcher, Power Bomb needs Main",
+            "Warp to start, Menu Mod",
         ],
-        'Game Changes': [
-            'Missiles needs Launcher, Power Bomb needs Main',
-            'Warp to start, Menu Mod',
+        "Gameplay": [
+            "Starts at Temple Grounds - Landing Site",
+            "Translator Gates: Vanilla (Colors)",
         ],
-        'Gameplay': [
-            'Starts at Temple Grounds - Landing Site',
-            'Translator Gates: Vanilla (Colors)',
+        "Logic Settings": [
+            "All tricks disabled",
         ],
-        'Logic Settings': [
-            'All tricks disabled',
+        "Item Pool": [
+            "Size: 118 of 119",
+            "Vanilla starting items",
+            "Progressive Suit, Split beam ammo",
+            "Sky Temple Keys at all bosses",
         ],
-        'Item Pool': [
-            'Size: 118 of 119',
-            'Vanilla starting items',
-            'Progressive Suit, Split beam ammo',
-            'Sky Temple Keys at all bosses',
-        ]
     }
 
 
@@ -88,9 +90,7 @@ def test_echoes_format_params2(default_echoes_configuration):
             randomization_mode=RandomizationMode.MAJOR_MINOR_SPLIT,
         ),
         standard_pickup_configuration=dataclasses.replace(
-            std_pick.replace_states({
-                std_pick.get_pickup_with_name("Scan Visor"): StandardPickupState()
-            }),
+            std_pick.replace_states({std_pick.get_pickup_with_name("Scan Visor"): StandardPickupState()}),
             minimum_random_starting_pickups=1,
             maximum_random_starting_pickups=2,
         ),
@@ -108,29 +108,29 @@ def test_echoes_format_params2(default_echoes_configuration):
 
     # Assert
     assert result == {
-        'Difficulty': [
-            'Dark Aether deals 21.20 dmg/s to Varia, 1.20 dmg/s to Dark Suit',
-            '50 energy per Energy Tank',
-            'Safe Zones restore 2.50 energy/s'
+        "Difficulty": [
+            "Dark Aether deals 21.20 dmg/s to Varia, 1.20 dmg/s to Dark Suit",
+            "50 energy per Energy Tank",
+            "Safe Zones restore 2.50 energy/s",
         ],
-        'Game Changes': [
-            'Missiles needs Launcher, Power Bomb needs Main',
-            'Warp to start, Menu Mod',
+        "Game Changes": [
+            "Missiles needs Launcher, Power Bomb needs Main",
+            "Warp to start, Menu Mod",
         ],
-        'Gameplay': [
-            'Starts at Temple Grounds - Landing Site',
-            'Translator Gates: Vanilla (Colors)',
+        "Gameplay": [
+            "Starts at Temple Grounds - Landing Site",
+            "Translator Gates: Vanilla (Colors)",
         ],
-        'Logic Settings': [
-            'All tricks disabled',
+        "Logic Settings": [
+            "All tricks disabled",
         ],
-        'Item Pool': [
-            'Major/minor split',
-            'Major: 57/58',
-            'Minor: 61/61',
-            '1 to 2 random starting items',
-            'Excludes Scan Visor',
-            'Progressive Suit, Split beam ammo',
-            'Sky Temple Keys at all bosses',
-        ]
+        "Item Pool": [
+            "Major/minor split",
+            "Major: 57/58",
+            "Minor: 61/61",
+            "1 to 2 random starting items",
+            "Excludes Scan Visor",
+            "Progressive Suit, Split beam ammo",
+            "Sky Temple Keys at all bosses",
+        ],
     }

@@ -1,5 +1,10 @@
-from randovania.layout.generator_parameters import GeneratorParameters
-from randovania.layout.layout_description import LayoutDescription
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from randovania.layout.generator_parameters import GeneratorParameters
+    from randovania.layout.layout_description import LayoutDescription
 
 
 class GenerationFailure(Exception):
@@ -40,3 +45,7 @@ class ImpossibleForSolver(GenerationFailure):
             return False
 
         return super().__eq__(other)
+
+
+class ResolverTimeoutError(Exception):
+    pass

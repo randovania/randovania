@@ -6,7 +6,6 @@ import logging.handlers
 import os
 import sys
 import typing
-from argparse import ArgumentParser
 from pathlib import Path
 
 from PySide6 import QtCore, QtWidgets
@@ -16,8 +15,12 @@ from randovania.games.game import RandovaniaGame
 from randovania.interface_common import persistence
 
 if typing.TYPE_CHECKING:
-    from randovania.interface_common.preset_manager import PresetManager
+    from argparse import ArgumentParser
+
+    from randovania.gui.lib.qt_network_client import QtNetworkClient
+    from randovania.gui.multiworld_client import MultiworldClient
     from randovania.interface_common.options import Options
+    from randovania.interface_common.preset_manager import PresetManager
 
 logger = logging.getLogger(__name__)
 
@@ -27,6 +30,7 @@ def display_exception(val: Exception):
         logging.exception("unhandled exception", exc_info=val)
 
         from randovania.gui.lib import error_message_box
+
         box = error_message_box.create_box_for_exception(val)
         box.exec_()
 
@@ -41,11 +45,11 @@ def catch_exceptions(t, val, tb):
 
 
 def catch_exceptions_async(loop, context):
-    if 'future' in context:
-        future: asyncio.Future = context['future']
+    if "future" in context:
+        future: asyncio.Future = context["future"]
         logger.exception(context["message"], exc_info=future.exception())
-    elif 'exception' in context:
-        logger.exception(context["message"], exc_info=context['exception'])
+    elif "exception" in context:
+        logger.exception(context["message"], exc_info=context["exception"])
     else:
         logger.critical(str(context))
 
@@ -58,6 +62,7 @@ def _migrate_old_base_preset_uuid(preset_manager: PresetManager, options: Option
 
 async def show_main_window(app: QtWidgets.QApplication, options: Options, is_preview: bool):
     from randovania.interface_common.preset_manager import PresetManager
+
     preset_manager = PresetManager(options.presets_path)
 
     logger.info("Loading user presets...")
@@ -65,28 +70,27 @@ async def show_main_window(app: QtWidgets.QApplication, options: Options, is_pre
     _migrate_old_base_preset_uuid(preset_manager, options)
     logger.info("Finished loading presets!")
 
-    from randovania.gui.lib.qt_network_client import QtNetworkClient
     network_client: QtNetworkClient = app.network_client
 
-    from randovania.gui.multiworld_client import MultiworldClient
     multiworld_client: MultiworldClient = app.multiworld_client
 
     async def attempt_login():
-        from randovania.network_client.network_client import UnableToConnect
         from randovania.gui.lib import async_dialog
+        from randovania.network_client.network_client import UnableToConnect
 
         try:
             if not await network_client.ensure_logged_in(None):
-                await async_dialog.warning(None, "Login required",
-                                           "Logging in is required to use dev builds.")
+                await async_dialog.warning(None, "Login required", "Logging in is required to use dev builds.")
                 return False
 
         except UnableToConnect as e:
-            s = e.reason.replace('\n', '<br />')
+            s = e.reason.replace("\n", "<br />")
             await async_dialog.warning(
-                None, "Connection Error",
+                None,
+                "Connection Error",
                 f"<b>Unable to connect to the server:</b><br /><br />{s}<br /><br />"
-                f"Logging in is required to use dev builds.")
+                f"Logging in is required to use dev builds.",
+            )
             return False
 
         return True
@@ -99,6 +103,7 @@ async def show_main_window(app: QtWidgets.QApplication, options: Options, is_pre
                 app.quit()
                 return
         finally:
+
             def reset_last_window_quit():
                 logger.info("Re-enabling quit on last window closed")
                 app.setQuitOnLastWindowClosed(True)
@@ -106,6 +111,7 @@ async def show_main_window(app: QtWidgets.QApplication, options: Options, is_pre
             QtCore.QTimer.singleShot(1000, reset_last_window_quit)
 
     from randovania.gui.main_window import MainWindow
+
     logger.info("Preparing main window...")
     main_window = MainWindow(options, preset_manager, network_client, multiworld_client, is_preview)
     app.main_window = main_window
@@ -125,6 +131,7 @@ async def show_tracker(app: QtWidgets.QApplication, options):
 
 def show_data_editor(app: QtWidgets.QApplication, options, game: RandovaniaGame):
     from randovania.gui import data_editor
+
     data_editor.SHOW_REGION_MIN_MAX_SPINNER = True
     app.data_editor = data_editor.DataEditorWindow.open_internal_data(game, True)
     app.data_editor.show()
@@ -164,21 +171,23 @@ def abs_path_for_args(path: str):
 
 def add_options_cli_args(parser: ArgumentParser):
     parser.add_argument(
-        "--local-data", type=abs_path_for_args,
+        "--local-data",
+        type=abs_path_for_args,
         default=persistence.local_data_dir(),
-        help="Selects the local data path. This is used to store preferences and temporary copies of huge files."
+        help="Selects the local data path. This is used to store preferences and temporary copies of huge files.",
     )
     parser.add_argument(
-        "--user-data", type=abs_path_for_args,
+        "--user-data",
+        type=abs_path_for_args,
         default=persistence.roaming_data_dir(),
-        help="Selects the user data path. This is used to store your presets."
+        help="Selects the user data path. This is used to store your presets.",
     )
 
 
 async def _load_options(args) -> Options | None:
     logger.info("Loading up user preferences code...")
-    from randovania.interface_common.options import Options
     from randovania.gui.lib import startup_tools, theme
+    from randovania.interface_common.options import Options
 
     logger.info("Restoring saved user preferences...")
     options = Options(args.local_data, args.user_data)
@@ -186,8 +195,9 @@ async def _load_options(args) -> Options | None:
         return None
 
     logger.info("Creating user preferences folder")
-    import dulwich.repo
     import dulwich.errors
+    import dulwich.repo
+
     try:
         dulwich.repo.Repo(os.fspath(options.user_dir))
 
@@ -203,15 +213,16 @@ async def _load_options(args) -> Options | None:
 
 def start_logger(data_dir: Path, is_preview: bool):
     # Ensure the log dir exists early on
-    log_dir = data_dir.joinpath("logs")
+    log_dir = data_dir.joinpath("logs", randovania.VERSION)
     log_dir.mkdir(parents=True, exist_ok=True)
 
-    randovania.setup_logging('DEBUG' if is_preview else 'INFO', log_dir.joinpath("logger.log"))
+    randovania.setup_logging("DEBUG" if is_preview else "INFO", log_dir.joinpath("logger.log"))
 
 
 def create_loop(app: QtWidgets.QApplication) -> asyncio.AbstractEventLoop:
-    os.environ['QT_API'] = "PySide6"
+    os.environ["QT_API"] = "PySide6"
     import qasync
+
     loop: asyncio.AbstractEventLoop = qasync.QEventLoop(app)
     asyncio.set_event_loop(loop)
 
@@ -232,13 +243,16 @@ async def qt_main(app: QtWidgets.QApplication, args):
         return
 
     import randovania
+
     if options.allow_crash_reporting or randovania.is_dev_version():
         import randovania.monitoring
+
         randovania.monitoring.client_init()
 
     app.network_client = None
     logging.info("Loading server client...")
     from randovania.gui.lib.qt_network_client import QtNetworkClient
+
     app.network_client = QtNetworkClient(options.data_dir)
     app.network_client.allow_reporting_username = options.use_user_for_crash_reporting
     logging.info("Server client ready.")
@@ -249,17 +263,19 @@ async def qt_main(app: QtWidgets.QApplication, args):
 
     logging.info("Creating the world database")
     from randovania.interface_common.world_database import WorldDatabase
+
     app.world_database = WorldDatabase(app.network_client.server_data_path.joinpath("multiworld_games"))
     await app.world_database.load_existing_data()
 
     logging.info("Creating the global game connection")
     from randovania.game_connection.game_connection import GameConnection
+
     app.game_connection = GameConnection(options, app.world_database)
-    
+
     logging.info("Creating the global multiworld client")
     from randovania.gui.multiworld_client import MultiworldClient
-    app.multiworld_client = MultiworldClient(app.network_client, app.game_connection,
-                                             app.world_database)
+
+    app.multiworld_client = MultiworldClient(app.network_client, app.game_connection, app.world_database)
     await app.multiworld_client.start()
 
     logging.info("Configuring qasync...")
@@ -277,13 +293,13 @@ async def qt_main(app: QtWidgets.QApplication, args):
     app.setQuitOnLastWindowClosed(True)
     app.lastWindowClosed.connect(_on_last_window_closed, QtCore.Qt.ConnectionType.QueuedConnection)
 
-    await asyncio.gather(app.game_connection.start(),
-                         display_window_for(app, options, args.command, args))
+    await asyncio.gather(app.game_connection.start(), display_window_for(app, options, args.command, args))
 
 
 def _on_application_state_changed(new_state: QtCore.Qt.ApplicationState):
-    logger.info("New application state: %s", new_state)
+    logger.debug("New application state: %s", new_state)
     import sentry_sdk
+
     if new_state == QtCore.Qt.ApplicationState.ApplicationActive:
         sentry_sdk.Hub.current.start_session(session_mode="application")
     elif new_state == QtCore.Qt.ApplicationState.ApplicationInactive:
@@ -312,10 +328,7 @@ def run(args):
 
 
 def create_subparsers(sub_parsers):
-    parser: ArgumentParser = sub_parsers.add_parser(
-        "gui",
-        help="Run the Graphical User Interface"
-    )
+    parser: ArgumentParser = sub_parsers.add_parser("gui", help="Run the Graphical User Interface")
     parser.add_argument("--preview", action="store_true", help="Activates preview features")
     parser.add_argument("--login-as-guest", type=str, help="Login as the given quest user")
     add_options_cli_args(parser)

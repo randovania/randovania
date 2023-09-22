@@ -10,7 +10,7 @@
     },
     "areas": {
         "Transport to Artaria": {
-            "default_node": "Elevator to Artaria - Transport to Cataris",
+            "default_node": "Elevator to Artaria",
             "extra": {
                 "total_boundings": {
                     "x1": 8400.0,
@@ -84,7 +84,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Elevator to Artaria - Transport to Cataris": {
+                        "Elevator to Artaria": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -126,7 +126,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Elevator to Artaria - Transport to Cataris": {
+                        "Elevator to Artaria": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -260,7 +260,7 @@
                         }
                     }
                 },
-                "Elevator to Artaria - Transport to Cataris": {
+                "Elevator to Artaria": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -279,17 +279,16 @@
                         "target_spawn_point": "LE_Platform_Elevator_FromMagma",
                         "start_point_actor_name": "LE_Platform_Elevator_FromCave",
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad",
-                        "keep_name_when_vanilla": true,
-                        "editable": true
+                        "transporter_name": "Cataris - Experiment Z-57"
                     },
                     "valid_starting_location": false,
-                    "dock_type": "teleporter",
+                    "dock_type": "elevator",
                     "default_connection": {
                         "region": "Artaria",
                         "area": "Transport to Cataris",
-                        "node": "Elevator to Cataris - Transport to Artaria"
+                        "node": "Elevator to Cataris"
                     },
-                    "default_dock_weakness": "Teleporter",
+                    "default_dock_weakness": "Elevator",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -869,8 +868,22 @@
                         "Event - First Thermal Device": {
                             "type": "and",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "comment": "This is here to ensure the Thermal Door is never a problem",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "s020_magma:default:breakablemag001",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Can Slide"
+                                    }
+                                ]
                             }
                         }
                     }
@@ -945,7 +958,7 @@
                         "node": "Door to Thermal Device Room South (Top)"
                     },
                     "default_dock_weakness": "Power Beam Door",
-                    "exclude_from_dock_rando": false,
+                    "exclude_from_dock_rando": true,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
@@ -1181,12 +1194,10 @@
                     "valid_starting_location": false,
                     "connections": {
                         "Dock to Total Recharge Station South": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "events",
-                                "name": "s020_magma:default:deviceheat",
-                                "amount": 1,
-                                "negate": true
+                                "comment": "The Thermal Door closes, but we ignore that logically by excluding the door above from randomization.",
+                                "items": []
                             }
                         },
                         "Start Point": {
@@ -1507,7 +1518,7 @@
                         "node": "Door to Total Recharge Station South (Top)"
                     },
                     "default_dock_weakness": "Power Beam Door",
-                    "exclude_from_dock_rando": false,
+                    "exclude_from_dock_rando": true,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
@@ -1629,6 +1640,10 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Next to Thermal Door": {
+                            "type": "template",
+                            "data": "Can Slide"
                         }
                     }
                 },
@@ -1655,12 +1670,10 @@
                             }
                         },
                         "Dock to Thermal Device Room South": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "events",
-                                "name": "s020_magma:default:deviceheat",
-                                "amount": 1,
-                                "negate": true
+                                "comment": "The Thermal Door closes, but we ignore that logically by excluding the door above from randomization.",
+                                "items": []
                             }
                         },
                         "Tunnel to Transport to Artaria": {
@@ -4755,7 +4768,7 @@
             }
         },
         "Teleport to Artaria (Blue)": {
-            "default_node": "Teleporter to Artaria - Screw Attack Room",
+            "default_node": "Teleporter to Artaria",
             "extra": {
                 "total_boundings": {
                     "x1": 13400.0,
@@ -5361,7 +5374,7 @@
                     "valid_starting_location": false,
                     "event_name": "s020_magma:default:breakablemag012",
                     "connections": {
-                        "Teleporter to Artaria - Screw Attack Room": {
+                        "Teleporter to Artaria": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5398,7 +5411,7 @@
                         }
                     }
                 },
-                "Teleporter to Artaria - Screw Attack Room": {
+                "Teleporter to Artaria": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5416,9 +5429,7 @@
                         "elevator_component": "CTeleporterUsableComponent",
                         "target_spawn_point": "teleporter_magma_000_platform",
                         "start_point_actor_name": "teleporter_cave_000_platform",
-                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad",
-                        "keep_name_when_vanilla": true,
-                        "editable": true
+                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad"
                     },
                     "valid_starting_location": false,
                     "dock_type": "teleporter",
@@ -6248,7 +6259,7 @@
                                 ]
                             }
                         },
-                        "Teleporter to Artaria - Screw Attack Room": {
+                        "Teleporter to Artaria": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6307,7 +6318,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Teleporter to Artaria - Screw Attack Room": {
+                        "Teleporter to Artaria": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6647,7 +6658,7 @@
                                                             {
                                                                 "type": "and",
                                                                 "data": {
-                                                                    "comment": null,
+                                                                    "comment": "SWJ: https://youtu.be/eS4UULex4Vk",
                                                                     "items": [
                                                                         {
                                                                             "type": "resource",
@@ -6664,6 +6675,24 @@
                                                                                 "type": "tricks",
                                                                                 "name": "SWJ",
                                                                                 "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Slide",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Slide",
+                                                                                "amount": 1,
                                                                                 "negate": false
                                                                             }
                                                                         }
@@ -8715,41 +8744,16 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "or",
+                                                    "type": "template",
+                                                    "data": "Shoot Diffusion Beam"
+                                                },
+                                                {
+                                                    "type": "resource",
                                                     "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Pseudo",
-                                                                    "amount": 3,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "and",
-                                                                "data": {
-                                                                    "comment": null,
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "template",
-                                                                            "data": "Shoot Diffusion Beam"
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "Pseudo",
-                                                                                "amount": 2,
-                                                                                "negate": false
-                                                                            }
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            }
-                                                        ]
+                                                        "type": "tricks",
+                                                        "name": "Pseudo",
+                                                        "amount": 2,
+                                                        "negate": false
                                                     }
                                                 }
                                             ]
@@ -10567,7 +10571,7 @@
                     "default_connection": {
                         "region": "Cataris",
                         "area": "Kraid Arena",
-                        "node": "Dock to Above Kraid"
+                        "node": "Dock from Above Kraid"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -11377,7 +11381,7 @@
             }
         },
         "Teleport to Artaria (Red)": {
-            "default_node": "Teleporter to Artaria - Teleport to Cataris",
+            "default_node": "Teleporter to Artaria",
             "extra": {
                 "total_boundings": {
                     "x1": -18500.0,
@@ -11467,7 +11471,7 @@
                                 "negate": false
                             }
                         },
-                        "Teleporter to Artaria - Teleport to Cataris": {
+                        "Teleporter to Artaria": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -11672,7 +11676,7 @@
                                 ]
                             }
                         },
-                        "Teleporter to Artaria - Teleport to Cataris": {
+                        "Teleporter to Artaria": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -11812,7 +11816,7 @@
                                 "negate": false
                             }
                         },
-                        "Teleporter to Artaria - Teleport to Cataris": {
+                        "Teleporter to Artaria": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -11851,7 +11855,7 @@
                         }
                     }
                 },
-                "Teleporter to Artaria - Teleport to Cataris": {
+                "Teleporter to Artaria": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -11869,16 +11873,14 @@
                         "elevator_component": "CTeleporterUsableComponent",
                         "target_spawn_point": "LE_Platform_Teleport_FromMagma",
                         "start_point_actor_name": "LE_Platform_Teleport_FromCave",
-                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad",
-                        "keep_name_when_vanilla": true,
-                        "editable": true
+                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad"
                     },
                     "valid_starting_location": false,
                     "dock_type": "teleporter",
                     "default_connection": {
                         "region": "Artaria",
                         "area": "Teleport to Cataris",
-                        "node": "Teleporter to Cataris - Teleport to Artaria (Red)"
+                        "node": "Teleporter to Cataris"
                     },
                     "default_dock_weakness": "Teleporter",
                     "exclude_from_dock_rando": false,
@@ -11955,7 +11957,7 @@
             }
         },
         "Teleport to Ghavoran": {
-            "default_node": "Teleporter to Ghavoran - Teleport to Cataris",
+            "default_node": "Teleporter to Ghavoran",
             "extra": {
                 "total_boundings": {
                     "x1": -16500.0,
@@ -12174,7 +12176,7 @@
                     "valid_starting_location": false,
                     "event_name": "s020_magma:default:grapplepulloff1x2_001",
                     "connections": {
-                        "Teleporter to Ghavoran - Teleport to Cataris": {
+                        "Teleporter to Ghavoran": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -12183,7 +12185,7 @@
                         }
                     }
                 },
-                "Teleporter to Ghavoran - Teleport to Cataris": {
+                "Teleporter to Ghavoran": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -12201,9 +12203,7 @@
                         "elevator_component": "CTeleporterUsableComponent",
                         "target_spawn_point": "teleporter_magma_000_platform",
                         "start_point_actor_name": "teleporter_forest_000_platform",
-                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad",
-                        "keep_name_when_vanilla": true,
-                        "editable": true
+                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad"
                     },
                     "valid_starting_location": false,
                     "dock_type": "teleporter",
@@ -12575,7 +12575,7 @@
                                 ]
                             }
                         },
-                        "Teleporter to Ghavoran - Teleport to Cataris": {
+                        "Teleporter to Ghavoran": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -13043,7 +13043,7 @@
                                 ]
                             }
                         },
-                        "Teleporter to Ghavoran - Teleport to Cataris": {
+                        "Teleporter to Ghavoran": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -17632,6 +17632,10 @@
                                                 }
                                             ]
                                         }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Push Wide Beam Block with Wave Beam"
                                     }
                                 ]
                             }
@@ -17727,7 +17731,7 @@
             }
         },
         "Transport to Dairon": {
-            "default_node": "Elevator to Dairon - Transport to Cataris",
+            "default_node": "Shuttle to Dairon",
             "extra": {
                 "total_boundings": {
                     "x1": -10400.0,
@@ -17789,7 +17793,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Elevator to Dairon - Transport to Cataris": {
+                        "Shuttle to Dairon": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -17798,7 +17802,7 @@
                         }
                     }
                 },
-                "Elevator to Dairon - Transport to Cataris": {
+                "Shuttle to Dairon": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -17817,17 +17821,16 @@
                         "target_spawn_point": "wagontrain_magma_000_platform",
                         "start_point_actor_name": "wagontrain_baselab_000_platform",
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_train/charclasses/weightactivatedplatform_train.bmsad",
-                        "keep_name_when_vanilla": true,
-                        "editable": true
+                        "transporter_name": "Cataris - Central Unit"
                     },
                     "valid_starting_location": false,
-                    "dock_type": "teleporter",
+                    "dock_type": "shuttle",
                     "default_connection": {
                         "region": "Dairon",
                         "area": "Transport to Cataris",
-                        "node": "Elevator to Cataris - Transport to Dairon"
+                        "node": "Shuttle to Cataris"
                     },
-                    "default_dock_weakness": "Teleporter",
+                    "default_dock_weakness": "Shuttle",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -19869,27 +19872,6 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Event - Blob": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Shoot Diffusion or Wave"
-                                    }
-                                ]
-                            }
-                        },
                         "Tunnel to Teleport to Dairon": {
                             "type": "and",
                             "data": {
@@ -19948,6 +19930,15 @@
                                         }
                                     }
                                 ]
+                            }
+                        },
+                        "Corner Tunnel": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -20099,61 +20090,22 @@
                                 ]
                             }
                         },
-                        "Tunnel to Kraid Arena (top)": {
+                        "Corner Tunnel": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
+                                        "type": "template",
+                                        "data": "Can Slide"
+                                    },
+                                    {
                                         "type": "resource",
                                         "data": {
                                             "type": "items",
-                                            "name": "Morph",
+                                            "name": "Varia",
                                             "amount": 1,
                                             "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Varia",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "damage",
-                                                                    "name": "Heat",
-                                                                    "amount": 100,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Suitless",
-                                                                    "amount": 2,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                }
-                                            ]
                                         }
                                     }
                                 ]
@@ -20214,6 +20166,53 @@
                         "Tunnel to Kraid Arena (bottom)": {
                             "type": "template",
                             "data": "Can Slide Underwater"
+                        }
+                    }
+                },
+                "Corner Tunnel": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -11036.57,
+                        "y": -5387.3,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Event - Blob": {
+                            "type": "template",
+                            "data": "Shoot Diffusion or Wave"
+                        },
+                        "Tunnel to Kraid Arena (top)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Varia",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
                         }
                     }
                 }
@@ -21576,6 +21575,10 @@
                                                 }
                                             ]
                                         }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Push Wide Beam Block with Wave Beam"
                                     }
                                 ]
                             }
@@ -21801,7 +21804,7 @@
             }
         },
         "Teleport to Dairon": {
-            "default_node": "Teleporter to Dairon - Teleport to Cataris",
+            "default_node": "Teleporter to Dairon",
             "extra": {
                 "total_boundings": {
                     "x1": -10500.0,
@@ -22113,7 +22116,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Teleporter to Dairon - Teleport to Cataris": {
+                        "Teleporter to Dairon": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -22319,7 +22322,7 @@
                         }
                     }
                 },
-                "Teleporter to Dairon - Teleport to Cataris": {
+                "Teleporter to Dairon": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -22337,16 +22340,14 @@
                         "elevator_component": "CTeleporterUsableComponent",
                         "target_spawn_point": "teleport_magma_000_platform",
                         "start_point_actor_name": "teleport_baselab_000_platform",
-                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad",
-                        "keep_name_when_vanilla": true,
-                        "editable": true
+                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad"
                     },
                     "valid_starting_location": false,
                     "dock_type": "teleporter",
                     "default_connection": {
                         "region": "Dairon",
                         "area": "Teleport to Cataris",
-                        "node": "Teleporter to Cataris - Teleport to Dairon"
+                        "node": "Teleporter to Cataris"
                     },
                     "default_dock_weakness": "Teleporter",
                     "exclude_from_dock_rando": false,
@@ -22462,7 +22463,7 @@
                         "area": "Diffusion Beam Room",
                         "node": "Tunnel to Teleport to Dairon"
                     },
-                    "default_dock_weakness": "Morph Ball Tunnel",
+                    "default_dock_weakness": "Slide Tunnel",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -23007,7 +23008,7 @@
                                 ]
                             }
                         },
-                        "Teleporter to Dairon - Teleport to Cataris": {
+                        "Teleporter to Dairon": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -26606,6 +26607,41 @@
                                                 }
                                             ]
                                         }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Gravity",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Speed",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "Kraid",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -26672,7 +26708,7 @@
                         }
                     }
                 },
-                "Dock to Above Kraid": {
+                "Dock from Above Kraid": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -26692,61 +26728,71 @@
                         "area": "Above Kraid",
                         "node": "Dock to Kraid Arena"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "Blocked Passage",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Event - Kraid": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "and",
+                                        "type": "or",
                                         "data": {
-                                            "comment": "Kraid cannon kill. Cross Bombs & Power Bombs do NOT work.",
+                                            "comment": "Phase 1 Requirements",
                                             "items": [
                                                 {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Morph",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
+                                                    "type": "template",
+                                                    "data": "Shoot Charge Beam"
                                                 },
                                                 {
-                                                    "type": "resource",
+                                                    "type": "and",
                                                     "data": {
-                                                        "type": "items",
-                                                        "name": "Bomb",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "or",
-                                                    "data": {
-                                                        "comment": "Energy Requirements",
+                                                        "comment": "Missile farming",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
                                                                 "data": {
-                                                                    "type": "damage",
-                                                                    "name": "Damage",
-                                                                    "amount": 299,
+                                                                    "type": "items",
+                                                                    "name": "MissileAmmo",
+                                                                    "amount": 1,
                                                                     "negate": false
                                                                 }
                                                             },
                                                             {
-                                                                "type": "resource",
+                                                                "type": "or",
                                                                 "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Combat",
-                                                                    "amount": 1,
-                                                                    "negate": false
+                                                                    "comment": "Wide Beam for destroying projectiles faster",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Shoot Wide Beam"
+                                                                        },
+                                                                        {
+                                                                            "type": "and",
+                                                                            "data": {
+                                                                                "comment": null,
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "Combat",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "template",
+                                                                                        "data": "Shoot Beam"
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        }
+                                                                    ]
                                                                 }
                                                             }
                                                         ]
@@ -26756,14 +26802,79 @@
                                         }
                                     },
                                     {
-                                        "type": "and",
+                                        "type": "or",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Phase 2 Requirements",
                                             "items": [
                                                 {
-                                                    "type": "or",
+                                                    "type": "and",
                                                     "data": {
-                                                        "comment": "Requirement for getting to Kraid's mouth in phase 2",
+                                                        "comment": "Kraid cannon kill, Cross Bombs & Power Bombs do NOT work",
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Lay Normal Bomb"
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Magnet",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Space",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Combat",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": "Energy Requirements",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "damage",
+                                                        "name": "Damage",
+                                                        "amount": 299,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Combat",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -26774,80 +26885,12 @@
                                                                     "negate": false
                                                                 }
                                                             },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Magnet",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Space",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "type": "or",
-                                                    "data": {
-                                                        "comment": "Damage requirements",
-                                                        "items": [
-                                                            {
-                                                                "type": "template",
-                                                                "data": "Shoot Charge Beam"
-                                                            },
-                                                            {
-                                                                "type": "and",
-                                                                "data": {
-                                                                    "comment": "Shoot Beam required to farm for Missiles",
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "template",
-                                                                            "data": "Shoot Beam"
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "items",
-                                                                                "name": "MissileAmmo",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "type": "or",
-                                                    "data": {
-                                                        "comment": "Energy Requirements",
-                                                        "items": [
                                                             {
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "damage",
                                                                     "name": "Damage",
-                                                                    "amount": 299,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Combat",
-                                                                    "amount": 1,
+                                                                    "amount": 199,
                                                                     "negate": false
                                                                 }
                                                             }
@@ -26895,15 +26938,11 @@
                                 "items": []
                             }
                         },
-                        "Event - Kraid": {
+                        "Dock from Above Kraid": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Shoot Charge Beam"
-                                    },
                                     {
                                         "type": "resource",
                                         "data": {
@@ -26921,6 +26960,10 @@
                                             "amount": 1,
                                             "negate": false
                                         }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Shoot Charge Beam"
                                     }
                                 ]
                             }

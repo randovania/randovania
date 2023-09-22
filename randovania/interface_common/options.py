@@ -1,17 +1,22 @@
+from __future__ import annotations
+
 import dataclasses
 import json
 import uuid
 from distutils.version import StrictVersion
 from enum import Enum
-from pathlib import Path
-from typing import TypeVar, Callable, Any
+from typing import TYPE_CHECKING, Any, TypeVar
 
 from randovania.game_connection.builder.connector_builder_option import ConnectorBuilderOption
 from randovania.games.game import RandovaniaGame
-from randovania.interface_common import update_checker, persisted_options
-from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
+from randovania.interface_common import persisted_options, update_checker
 from randovania.lib import migration_lib
 
+if TYPE_CHECKING:
+    from collections.abc import Callable
+    from pathlib import Path
+
+    from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
 
 T = TypeVar("T")
 
@@ -71,16 +76,13 @@ def decode_uuid_set(data: list[str]) -> set[uuid.UUID]:
 
 
 def decode_uuid_list(data: list[str]) -> list[uuid.UUID]:
-    result = list()
+    result = []
     decode_uuid_container(data, result.append)
     return result
 
 
 def serialize_uuid_dict(elements: dict[uuid.UUID, uuid.UUID]) -> dict[str, str]:
-    return {
-        str(key): str(value)
-        for key, value in elements.items()
-    }
+    return {str(key): str(value) for key, value in elements.items()}
 
 
 def decode_uuid_dict(data: dict[str, str]) -> dict[uuid.UUID, uuid.UUID]:
@@ -112,18 +114,19 @@ class PerGameOptions:
         }
 
     @classmethod
-    def default_for_game(cls, game: RandovaniaGame) -> "PerGameOptions":
+    def default_for_game(cls, game: RandovaniaGame) -> PerGameOptions:
         return cls(cosmetic_patches=game.data.layout.cosmetic_patches())
 
     @classmethod
-    def from_json(cls, value: dict) -> "PerGameOptions":
-        raise NotImplementedError()
+    def from_json(cls, value: dict) -> PerGameOptions:
+        raise NotImplementedError
 
 
 _SERIALIZER_FOR_FIELD = {
     "last_changelog_displayed": Serializer(identity, str),
     "advanced_validate_seed_after": Serializer(identity, bool),
     "advanced_timeout_during_generation": Serializer(identity, bool),
+    "advanced_generate_in_another_process": Serializer(identity, bool),
     "auto_save_spoiler": Serializer(identity, bool),
     "dark_mode": Serializer(identity, bool),
     "experimental_settings": Serializer(identity, bool),
@@ -131,11 +134,13 @@ _SERIALIZER_FOR_FIELD = {
     "use_user_for_crash_reporting": Serializer(identity, bool),
     "displayed_alerts": Serializer(serialize_alerts, decode_alerts),
     "hidden_preset_uuids": Serializer(serialize_uuid_set, decode_uuid_set),
-    "tracker_default_game": Serializer(lambda it: it.value if it is not None else None,
-                                       lambda it: RandovaniaGame(it) if it is not None else None),
+    "tracker_default_game": Serializer(
+        lambda it: it.value if it is not None else None, lambda it: RandovaniaGame(it) if it is not None else None
+    ),
     "parent_for_presets": Serializer(serialize_uuid_dict, decode_uuid_dict),
-    "connector_builders": Serializer(lambda obj: [it.as_json for it in obj],
-                                     lambda obj: [ConnectorBuilderOption.from_json(it) for it in obj]),
+    "connector_builders": Serializer(
+        lambda obj: [it.as_json for it in obj], lambda obj: [ConnectorBuilderOption.from_json(it) for it in obj]
+    ),
 }
 
 _PER_GAME_SERIALIZERS = {
@@ -189,6 +194,7 @@ class Options:
     _last_changelog_displayed: str
     _advanced_validate_seed_after: bool | None = None
     _advanced_timeout_during_generation: bool | None = None
+    _advanced_generate_in_another_process: bool | None = None
     _auto_save_spoiler: bool | None = None
     _dark_mode: bool | None = None
     _experimental_settings: bool | None = None
@@ -214,12 +220,12 @@ class Options:
         if isinstance(item, str):
             game_name = None
             if item.startswith("game_"):
-                game_name = item[len("game_"):]
+                game_name = item[len("game_") :]
             else:
                 for key in _PER_GAME_SERIALIZERS.keys():
                     field_name = f"{key}_"
                     if item.startswith(field_name):
-                        game_name = item[len(field_name):]
+                        game_name = item[len(field_name) :]
                         break
             if game_name is None:
                 raise AttributeError(item)
@@ -272,10 +278,11 @@ class Options:
         self.load_from_persisted(result, ignore_decode_errors)
         return True
 
-    def load_from_persisted(self,
-                            persisted: dict,
-                            ignore_decode_errors: bool,
-                            ):
+    def load_from_persisted(
+        self,
+        persisted: dict,
+        ignore_decode_errors: bool,
+    ):
         """
         Loads fields from the given persisted options.
         :param persisted:
@@ -291,9 +298,7 @@ class Options:
                     if ignore_decode_errors:
                         decoded = None
                     else:
-                        raise DecodeFailedException(
-                            f"Unable to decode field {field_name}: {err}"
-                        )
+                        raise DecodeFailedException(f"Unable to decode field {field_name}: {err}")
 
                 if decoded is not None:
                     self._set_field(field_name, decoded)
@@ -558,6 +563,14 @@ class Options:
     @advanced_timeout_during_generation.setter
     def advanced_timeout_during_generation(self, value: bool):
         self._edit_field("advanced_timeout_during_generation", value)
+
+    @property
+    def advanced_generate_in_another_process(self) -> bool:
+        return _return_with_default(self._advanced_generate_in_another_process, lambda: True)
+
+    @advanced_generate_in_another_process.setter
+    def advanced_generate_in_another_process(self, value: bool):
+        self._edit_field("advanced_generate_in_another_process", value)
 
     ######
 

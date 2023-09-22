@@ -1,3 +1,7 @@
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+
 from PySide6 import QtWidgets
 from PySide6.QtWidgets import QDialog
 from qasync import asyncSlot
@@ -7,11 +11,12 @@ from randovania.gui.generated.login_prompt_dialog_ui import Ui_LoginPromptDialog
 from randovania.gui.lib import common_qt_lib
 from randovania.gui.lib.qt_network_client import QtNetworkClient, handle_network_errors
 from randovania.network_client.network_client import ConnectionState
-from randovania.network_common.multiplayer_session import User
+
+if TYPE_CHECKING:
+    from randovania.network_common.multiplayer_session import User
 
 
 class LoginPromptDialog(QDialog, Ui_LoginPromptDialog):
-
     def __init__(self, network_client: QtNetworkClient):
         super().__init__()
         self.setupUi(self)
@@ -22,9 +27,7 @@ class LoginPromptDialog(QDialog, Ui_LoginPromptDialog):
         self.guest_button.setVisible("guest" in login_methods)
         self.discord_button.setEnabled("discord" in login_methods)
         self.discord_button.setToolTip(
-            ""
-            if self.discord_button.isEnabled() else
-            "This Randovania build is not configured to login with Discord."
+            "" if self.discord_button.isEnabled() else "This Randovania build is not configured to login with Discord."
         )
         self.privacy_policy_label.setText(self.privacy_policy_label.text().replace("color:#0000ff;", ""))
 

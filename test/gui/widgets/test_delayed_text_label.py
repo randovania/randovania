@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from PySide6 import QtGui
 
 from randovania.gui.widgets.delayed_text_label import DelayedTextLabel

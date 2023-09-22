@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import dataclasses
 from enum import Enum
 
@@ -19,9 +21,10 @@ class SuperMetroidCosmeticPatches(BaseCosmeticPatches):
     max_ammo_display: bool = True
     no_demo: bool = False
     aim_with_any_button: bool = True
+    enable_moonwalk_by_default: bool = True
 
     @classmethod
-    def default(cls) -> "SuperMetroidCosmeticPatches":
+    def default(cls) -> SuperMetroidCosmeticPatches:
         return cls()
 
     @classmethod

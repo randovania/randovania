@@ -2,8 +2,8 @@ from __future__ import annotations
 
 import functools
 import inspect
-from collections.abc import Mapping, Callable
-from typing import TypeVar
+import typing
+from typing import TYPE_CHECKING, TypeVar
 
 import flask
 import flask_discord
@@ -11,7 +11,6 @@ import flask_socketio
 import peewee
 import requests
 import sentry_sdk
-import socketio.exceptions
 from cryptography.fernet import Fernet
 from prometheus_flask_exporter import PrometheusMetrics
 
@@ -21,6 +20,11 @@ from randovania.server import client_check
 from randovania.server.custom_discord_oauth import CustomDiscordOAuth2Session
 from randovania.server.database import User, World
 from randovania.server.lib import logger
+
+if TYPE_CHECKING:
+    from collections.abc import Callable, Mapping
+
+    import socketio.exceptions
 
 T = TypeVar("T")
 R = TypeVar("R")
@@ -105,9 +109,9 @@ class ServerApp:
         try:
             return User.get_by_id(self.get_session()["user-id"])
         except KeyError:
-            raise error.NotLoggedInError()
+            raise error.NotLoggedInError
         except peewee.DoesNotExist:
-            raise error.InvalidSessionError()
+            raise error.InvalidSessionError
 
     def store_world_in_session(self, world: World):
         with self.session() as sio_session:
@@ -126,17 +130,22 @@ class ServerApp:
         @functools.wraps(handler)
         def _handler(*args):
             setattr(flask.request, "message", message)
+
+            if len(args) == 1 and isinstance(args, tuple) and isinstance(args[0], list):
+                args = args[0]
             logger().debug("Starting call with args %s", args)
 
             with sentry_sdk.start_transaction(op="message", name=message) as span:
                 try:
                     user = self.get_current_user()
                     flask.request.current_user = user
-                    sentry_sdk.set_user({
-                        "id": user.discord_id,
-                        "username": user.name,
-                        "server_id": user.id,
-                    })
+                    sentry_sdk.set_user(
+                        {
+                            "id": user.discord_id,
+                            "username": user.name,
+                            "server_id": user.id,
+                        }
+                    )
                 except (error.NotLoggedInError, error.InvalidSessionError):
                     flask.request.current_user = None
                     sentry_sdk.set_user(None)
@@ -168,12 +177,13 @@ class ServerApp:
         return self.sio.on(message, namespace)(metric_wrapper(_handler))
 
     def on_with_wrapper(self, message: str, handler: Callable[[ServerApp, T], R]):
+        types = typing.get_type_hints(handler)
         arg_spec = inspect.getfullargspec(handler)
 
         @functools.wraps(handler)
-        def _handler(sio: ServerApp, arg: bytes) -> bytes:
-            decoded_arg = construct_pack.decode(arg, arg_spec.annotations[arg_spec.args[1]])
-            return construct_pack.encode(handler(sio, decoded_arg))
+        def _handler(sa: ServerApp, arg: bytes) -> bytes:
+            decoded_arg = construct_pack.decode(arg, types[arg_spec.args[1]])
+            return construct_pack.encode(handler(sa, decoded_arg), types["return"])
 
         return self.on(message, _handler, with_header_check=True)
 
@@ -206,7 +216,7 @@ class ServerApp:
     def current_client_ip(self, sid=None) -> str:
         try:
             environ = self.get_server().get_environ(sid or self.request_sid)
-            forwarded_for = environ.get('HTTP_X_FORWARDED_FOR')
+            forwarded_for = environ.get("HTTP_X_FORWARDED_FOR")
             return f"{environ['REMOTE_ADDR']} ({forwarded_for})"
         except KeyError as e:
             return f"<unknown sid {e}>"
@@ -222,6 +232,12 @@ class ServerApp:
         """
         Ensures the client is connected to the given room, and returns if we had to join.
         """
-        all_rooms = flask_socketio.rooms()
-        flask_socketio.join_room(room_name)
+        sid = self.request_sid
+        all_rooms = self.get_server().rooms(sid, namespace="/")
+        self.get_server().enter_room(sid, room_name, namespace="/")
         return room_name not in all_rooms
+
+    def is_room_not_empty(self, room_name: str, namespace: str = "/") -> bool:
+        for _ in self.get_server().manager.get_participants(namespace=namespace, room=room_name):
+            return True
+        return False

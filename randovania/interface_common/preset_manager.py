@@ -1,12 +1,11 @@
+from __future__ import annotations
+
 import asyncio
 import datetime
 import logging
-import os
 import time
 import typing
-import uuid
 from pathlib import Path
-from typing import Iterator
 
 import dulwich.porcelain
 import dulwich.repo
@@ -16,6 +15,10 @@ import randovania
 from randovania.games.game import RandovaniaGame
 from randovania.layout.versioned_preset import VersionedPreset
 from randovania.lib import enum_lib
+
+if typing.TYPE_CHECKING:
+    import uuid
+    from collections.abc import Iterator
 
 
 def read_preset_list() -> list[Path]:
@@ -35,7 +38,7 @@ def _commit(message: str, file_path: Path, repository: Path, remove: bool):
         try:
             r.open_index()
         except Exception:
-            os.remove(r.index_path())
+            Path(r.index_path()).unlink()
             r.reset_index()
 
     author = "randovania <nobody@example.com>"
@@ -44,8 +47,9 @@ def _commit(message: str, file_path: Path, repository: Path, remove: bool):
     else:
         dulwich.porcelain.add(repository, [file_path])
 
-    dulwich.porcelain.commit(repository, message=f"{message} using Randovania v{randovania.VERSION}",
-                             author=author, committer=author)
+    dulwich.porcelain.commit(
+        repository, message=f"{message} using Randovania v{randovania.VERSION}", author=author, committer=author
+    )
 
 
 def _get_preset_at_version(repository: Path, commit_sha: bytes, file_path: Path) -> str:
@@ -59,15 +63,13 @@ def _get_preset_at_version(repository: Path, commit_sha: bytes, file_path: Path)
 
 
 def _history_for_file(repository: Path, file_path: Path) -> Iterator[tuple[datetime.datetime, bytes]]:
-    from dulwich.walk import WalkEntry
     from dulwich.objects import Commit
+    from dulwich.walk import WalkEntry
 
     with dulwich.porcelain.open_repo_closing(repository) as r:
         r = typing.cast(dulwich.repo.Repo, r)
 
-        paths = [
-            dulwich.porcelain.path_to_tree_path(repository, file_path)
-        ]
+        paths = [dulwich.porcelain.path_to_tree_path(repository, file_path)]
         walker = r.get_walker(paths=paths)
         for entry in walker:
             assert isinstance(entry, WalkEntry)
@@ -84,8 +86,7 @@ class PresetManager:
     def __init__(self, data_dir: Path | None):
         self.logger = logging.getLogger("PresetManager")
         self.included_presets = {
-            preset.uuid: preset
-            for preset in [VersionedPreset.from_file_sync(f) for f in read_preset_list()]
+            preset.uuid: preset for preset in [VersionedPreset.from_file_sync(f) for f in read_preset_list()]
         }
         for preset in self.included_presets.values():
             preset.is_included_preset = True
@@ -102,6 +103,10 @@ class PresetManager:
         for preset in typing.cast(list[VersionedPreset], user_presets):
             if preset.is_for_known_game():
                 self.custom_presets[preset.uuid] = preset
+
+    @property
+    def data_dir(self):
+        return self._data_dir
 
     @property
     def default_preset(self) -> VersionedPreset:
@@ -147,7 +152,7 @@ class PresetManager:
         existed_before = new_preset.uuid in self.custom_presets
         self.custom_presets[new_preset.uuid] = new_preset
 
-        path = self._file_name_for_preset(new_preset)
+        path = self._file_path_for_preset(new_preset)
         new_preset.save_to_file(path)
         self._commit(f"Update preset '{new_preset.name}'", path, False)
 
@@ -155,8 +160,8 @@ class PresetManager:
 
     def delete_preset(self, preset: VersionedPreset):
         del self.custom_presets[preset.uuid]
-        path = self._file_name_for_preset(preset)
-        os.remove(path)
+        path = self._file_path_for_preset(preset)
+        path.unlink()
         self._commit(f"Remove preset '{preset.name}'", path, True)
 
     def included_preset_with(self, game: RandovaniaGame, name: str) -> VersionedPreset | None:
@@ -176,7 +181,7 @@ class PresetManager:
     def preset_for_uuid(self, the_uid: uuid.UUID) -> VersionedPreset | None:
         return self.included_presets.get(the_uid, self.custom_presets.get(the_uid))
 
-    def _file_name_for_preset(self, preset: VersionedPreset) -> Path:
+    def _file_path_for_preset(self, preset: VersionedPreset) -> Path:
         return self._data_dir.joinpath(f"{preset.uuid}.{preset.file_extension()}")
 
     def is_included_preset_uuid(self, the_uid: uuid.UUID) -> bool:
@@ -185,12 +190,12 @@ class PresetManager:
     def get_previous_versions(self, preset: VersionedPreset) -> Iterator[tuple[datetime.datetime, bytes]]:
         yield from _history_for_file(
             self._get_repository_root(),
-            self._file_name_for_preset(preset),
+            self._file_path_for_preset(preset),
         )
 
     def get_previous_version(self, preset: VersionedPreset, version: bytes) -> str:
         return _get_preset_at_version(
             self._get_repository_root(),
             version,
-            self._file_name_for_preset(preset),
+            self._file_path_for_preset(preset),
         )

@@ -1,12 +1,16 @@
+from __future__ import annotations
+
 from randovania.gui.widgets.changelog_widget import ChangeLogWidget
 
 
 def test_create(skip_qtbot):
     # Setup
-    widget = ChangeLogWidget({
-        "1.0": "Foo",
-        "2.0": "Bar",
-    })
+    widget = ChangeLogWidget(
+        {
+            "1.0": "Foo",
+            "2.0": "Bar",
+        }
+    )
     skip_qtbot.addWidget(widget)
 
     # Assert

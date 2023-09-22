@@ -33,14 +33,14 @@ class PresetTab(QtWidgets.QMainWindow):
 
     @classmethod
     def tab_title(cls) -> str:
-        raise NotImplementedError()
+        raise NotImplementedError
 
     @classmethod
     def uses_patches_tab(cls) -> bool:
-        raise NotImplementedError()
+        raise NotImplementedError
 
     def on_preset_changed(self, preset: Preset):
-        raise NotImplementedError()
+        raise NotImplementedError
 
     # Persistence helpers
     def _persist_enum(self, combo: QtWidgets.QComboBox, attribute_name: str):
@@ -62,7 +62,8 @@ class PresetTab(QtWidgets.QMainWindow):
             with self._editor as editor:
                 kwargs = {field_name: bool(value)}
                 editor.standard_pickup_configuration = dataclasses.replace(
-                    editor.standard_pickup_configuration, **kwargs,
+                    editor.standard_pickup_configuration,
+                    **kwargs,
                 )
 
         return bound

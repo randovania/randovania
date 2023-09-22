@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import argparse
 import asyncio
 import copy
@@ -30,7 +32,8 @@ async def deploy(remote_host: str, remote_user: str, server_environment: str, ve
             "docker",
             "stack",
             "deploy",
-            "-c", stack_file,
+            "-c",
+            stack_file,
             f"randovania-{server_environment}",
         ],
         check=True,
@@ -59,7 +62,7 @@ async def main():
         if sha is None:
             sha = os.environ["GITHUB_SHA"]
 
-        version = "sha-{}".format(sha[:8])
+        version = f"sha-{sha[:8]}"
 
     await deploy(
         remote_host=args.host,
@@ -69,5 +72,5 @@ async def main():
     )
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     asyncio.run(main())

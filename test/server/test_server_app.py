@@ -1,8 +1,9 @@
-from unittest.mock import MagicMock
+from __future__ import annotations
+
+from unittest.mock import ANY, MagicMock
 
 import flask
 import pytest
-import pytest_mock
 
 from randovania.network_common import error
 from randovania.server import database
@@ -113,15 +114,11 @@ def test_store_world_in_session(server_app):
     server_app.store_world_in_session(world)
 
     # Assert
-    assert session == {
-        "worlds": [1234]
-    }
+    assert session == {"worlds": [1234]}
 
 
 def test_remove_world_from_session(server_app):
-    session = {
-        "worlds": [1234]
-    }
+    session = {"worlds": [1234]}
     server_app.session = MagicMock()
     server_app.session.return_value.__enter__.return_value = session
 
@@ -132,9 +129,7 @@ def test_remove_world_from_session(server_app):
     server_app.remove_world_from_session(world)
 
     # Assert
-    assert session == {
-        "worlds": []
-    }
+    assert session == {"worlds": []}
 
 
 @pytest.mark.parametrize("valid", [False, True])
@@ -142,23 +137,21 @@ def test_verify_user(mocker, valid):
     # Setup
     mock_session = mocker.patch("requests.Session")
     mock_session.return_value.headers = {}
-    mock_session.return_value.get.return_value.json.return_value = {
-        "roles": ["5678" if valid else "67689"]
-    }
+    mock_session.return_value.get.return_value.json.return_value = {"roles": ["5678" if valid else "67689"]}
 
     # Run
-    enforce = EnforceDiscordRole({
-        "guild_id": 1234,
-        "role_id": 5678,
-        "token": "da_token",
-    })
+    enforce = EnforceDiscordRole(
+        {
+            "guild_id": 1234,
+            "role_id": 5678,
+            "token": "da_token",
+        }
+    )
     result = enforce.verify_user(2345)
 
     # Assert
     assert result == valid
-    mock_session.return_value.get.assert_called_once_with(
-        "https://discordapp.com/api/guilds/1234/members/2345"
-    )
+    mock_session.return_value.get.assert_called_once_with("https://discordapp.com/api/guilds/1234/members/2345")
     mock_session.return_value.get.return_value.json.assert_called_once_with()
     assert mock_session.return_value.headers == {
         "Authorization": "Bot da_token",
@@ -166,8 +159,8 @@ def test_verify_user(mocker, valid):
 
 
 def test_request_sid_none(server_app):
-    with pytest.raises(KeyError):
-        with server_app.app.test_request_context():
+    with server_app.app.test_request_context():
+        with pytest.raises(KeyError):
             assert server_app.request_sid
 
 
@@ -184,14 +177,34 @@ def test_request_sid_from_request(server_app):
 
 
 @pytest.mark.parametrize("expected", [False, True])
-def test_ensure_in_room(server_app, mocker: pytest_mock.MockerFixture, expected):
-    mock_room = mocker.patch("flask_socketio.rooms", return_value=[] if expected else ["the_room"])
-    mock_join = mocker.patch("flask_socketio.join_room")
+def test_ensure_in_room(server_app, expected):
+    server_app.sio.server.rooms = MagicMock(return_value=[] if expected else ["the_room"])
+    server_app.sio.server.enter_room = MagicMock()
 
     # Run
-    result = server_app.ensure_in_room("the_room")
+    with server_app.app.test_request_context() as ctx:
+        ctx.request.sid = "THE_SID"
+        result = server_app.ensure_in_room("the_room")
 
     # Assert
-    mock_room.assert_called_once_with()
-    mock_join.assert_called_once_with("the_room")
+    server_app.sio.server.rooms.assert_called_once_with("THE_SID", namespace="/")
+    server_app.sio.server.enter_room.assert_called_once_with("THE_SID", "the_room", namespace="/")
     assert result is expected
+
+
+def test_on_with_wrapper(server_app):
+    def my_function(sa, arg: bytes) -> list[int]:
+        return list(arg)
+
+    def on(message, handler, with_header_check):
+        return handler
+
+    server_app.on = MagicMock(side_effect=on)
+
+    # Run
+    wrapped = server_app.on_with_wrapper("my_func", my_function)
+
+    # Assert
+    result = wrapped(server_app, b"\x041234")
+    assert result == b"\x04bdfh"
+    server_app.on.assert_called_once_with("my_func", ANY, with_header_check=True)

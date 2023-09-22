@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import asyncio
 import struct
 
@@ -12,8 +14,8 @@ def create_client_id():
 
 _hard_coded_reads = {
     # Is this Prime 2 NTSC? Yes.
-    b'\x00\x01\x01\x01\x80:\xc3\xb0\x806': b"\x01!#$MetroidBuildInfo!#$Build v1.028 10/18/2004 10:44:32",
-    b'\x00\x01\x01\x01\x80A\x8e\xb8\xb0\x00\x04': b"\x01\x3B\xFA\x3E\xFF",
+    b"\x00\x01\x01\x01\x80:\xc3\xb0\x806": b"\x01!#$MetroidBuildInfo!#$Build v1.028 10/18/2004 10:44:32",
+    b"\x00\x01\x01\x01\x80A\x8e\xb8\xb0\x00\x04": b"\x01\x3B\xFA\x3E\xFF",
 }
 
 
@@ -50,5 +52,5 @@ async def main():
         await server.serve_forever()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     asyncio.run(main())

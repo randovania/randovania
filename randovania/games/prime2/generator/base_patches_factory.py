@@ -1,23 +1,32 @@
+from __future__ import annotations
+
 import copy
 import dataclasses
-from collections.abc import Iterable
-from random import Random
+from typing import TYPE_CHECKING
 
-from randovania.game_description.assignment import NodeConfigurationAssociation
-from randovania.game_description.db.dock import DockWeakness
-from randovania.game_description.game_description import GameDescription
-from randovania.game_description.game_patches import GamePatches, ElevatorConnection
+from randovania.game_description.db.area_identifier import AreaIdentifier
+from randovania.game_description.db.configurable_node import ConfigurableNode
+from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources import search
 from randovania.game_description.resources.resource_type import ResourceType
-from randovania.game_description.db.area_identifier import AreaIdentifier
-from randovania.game_description.db.configurable_node import ConfigurableNode
-from randovania.game_description.db.dock_node import DockNode
+from randovania.games.prime2.generator.teleporter_distributor import get_teleporter_connections_echoes
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
 from randovania.games.prime2.layout.translator_configuration import LayoutTranslatorRequirement
-from randovania.generator.base_patches_factory import (PrimeTrilogyBasePatchesFactory, MissingRng)
-from randovania.layout.base.base_configuration import BaseConfiguration
+from randovania.generator.base_patches_factory import BasePatchesFactory, MissingRng
+from randovania.generator.teleporter_distributor import get_dock_connections_assignment_for_teleporter
+
+if TYPE_CHECKING:
+    from collections.abc import Iterable
+    from random import Random
+
+    from randovania.game_description.assignment import NodeConfigurationAssociation
+    from randovania.game_description.db.dock import DockWeakness
+    from randovania.game_description.db.node import Node
+    from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.game_patches import GamePatches
+    from randovania.layout.base.base_configuration import BaseConfiguration
 
 
 @dataclasses.dataclass(frozen=True)
@@ -63,27 +72,33 @@ WORLDS = [
 ]
 
 
-class EchoesBasePatchesFactory(PrimeTrilogyBasePatchesFactory):
-    def create_base_patches(self,
-                            configuration: BaseConfiguration,
-                            rng: Random,
-                            game: GameDescription,
-                            is_multiworld: bool,
-                            player_index: int,
-                            rng_required: bool = True) -> GamePatches:
+class EchoesBasePatchesFactory(BasePatchesFactory):
+    def create_base_patches(
+        self,
+        configuration: BaseConfiguration,
+        rng: Random,
+        game: GameDescription,
+        is_multiworld: bool,
+        player_index: int,
+        rng_required: bool = True,
+    ) -> GamePatches:
+        assert isinstance(configuration, EchoesConfiguration)
         parent = super().create_base_patches(configuration, rng, game, is_multiworld, player_index, rng_required)
         return self.assign_save_door_weaknesses(parent, configuration, game)
 
-    def add_elevator_connections_to_patches(self, configuration: EchoesConfiguration, rng: Random,
-                                            patches: GamePatches) -> GamePatches:
-        patches = super().add_elevator_connections_to_patches(configuration, rng, patches)
+    def dock_connections_assignment(
+        self, configuration: EchoesConfiguration, game: GameDescription, rng: Random
+    ) -> Iterable[tuple[DockNode, Node]]:
+        teleporter_connection = get_teleporter_connections_echoes(configuration.teleporters, game, rng)
+        dock_assignment = get_dock_connections_assignment_for_teleporter(
+            configuration.teleporters, game, teleporter_connection
+        )
 
         if not configuration.portal_rando:
-            return patches
+            yield from dock_assignment
+            return
 
-        dock_assignment = []
-
-        for world in patches.game.region_list.regions:
+        for world in game.region_list.regions:
             light_portals = []
             dark_portals = []
 
@@ -101,47 +116,11 @@ class EchoesBasePatchesFactory(PrimeTrilogyBasePatchesFactory):
             dock_assignment.extend(zip(light_portals, dark_portals))
             dock_assignment.extend(zip(dark_portals, light_portals))
 
-        return patches.assign_dock_connections(dock_assignment)
+        yield from dock_assignment
 
-    def elevator_echoes_shuffled(self, configuration: EchoesConfiguration, patches: GamePatches,
-                                 rng: Random) -> ElevatorConnection:
-        worlds = list(WORLDS)
-        rng.shuffle(worlds)
-
-        result = {}
-
-        def area_to_node(identifier: AreaIdentifier):
-            area = patches.game.region_list.area_by_area_location(identifier)
-            for node in area.actual_nodes:
-                if node.valid_starting_location:
-                    return node.identifier
-            raise KeyError(f"{identifier} has no valid starting location")
-
-        def link_to(source: AreaIdentifier, target: AreaIdentifier):
-            result[area_to_node(source)] = target
-            result[area_to_node(target)] = source
-
-        def tg_link_to(source: str, target: AreaIdentifier):
-            link_to(AreaIdentifier("Temple Grounds", source), target)
-
-        # TG -> GT
-        tg_link_to("Temple Transport A", worlds[0].front)
-        tg_link_to("Temple Transport B", worlds[0].left)
-        tg_link_to("Temple Transport C", worlds[0].right)
-
-        tg_link_to("Transport to Agon Wastes", worlds[1].front)
-        tg_link_to("Transport to Torvus Bog", worlds[2].front)
-        tg_link_to("Transport to Sanctuary Fortress", worlds[3].front)
-
-        # inter areas
-        link_to(worlds[1].right, worlds[2].left)
-        link_to(worlds[2].right, worlds[3].left)
-        link_to(worlds[3].right, worlds[1].left)
-
-        return result
-
-    def configurable_node_assignment(self, configuration: EchoesConfiguration, game: GameDescription,
-                                     rng: Random) -> Iterable[NodeConfigurationAssociation]:
+    def configurable_node_assignment(
+        self, configuration: EchoesConfiguration, game: GameDescription, rng: Random
+    ) -> Iterable[NodeConfigurationAssociation]:
         """
         :param configuration:
         :param game:
@@ -158,10 +137,7 @@ class EchoesBasePatchesFactory(PrimeTrilogyBasePatchesFactory):
 
         result = []
 
-        scan_visor = search.find_resource_info_with_long_name(
-            game.resource_database.item,
-            "Scan Visor"
-        )
+        scan_visor = search.find_resource_info_with_long_name(game.resource_database.item, "Scan Visor")
         scan_visor_req = ResourceRequirement.simple(scan_visor)
 
         for node in game.region_list.iterate_nodes():
@@ -173,21 +149,28 @@ class EchoesBasePatchesFactory(PrimeTrilogyBasePatchesFactory):
             if requirement in random_requirements:
                 if rng is None:
                     raise MissingRng("Translator")
-                requirement = rng.choice(all_choices if requirement == LayoutTranslatorRequirement.RANDOM_WITH_REMOVED
-                                         else without_removed)
+                requirement = rng.choice(
+                    all_choices if requirement == LayoutTranslatorRequirement.RANDOM_WITH_REMOVED else without_removed
+                )
 
             translator = game.resource_database.get_by_type_and_index(ResourceType.ITEM, requirement.item_name)
-            result.append((identifier, RequirementAnd([
-                scan_visor_req,
-                ResourceRequirement.simple(translator),
-            ])))
+            result.append(
+                (
+                    identifier,
+                    RequirementAnd(
+                        [
+                            scan_visor_req,
+                            ResourceRequirement.simple(translator),
+                        ]
+                    ),
+                )
+            )
 
         return result
 
-    def assign_save_door_weaknesses(self,
-                                    patches: GamePatches,
-                                    configuration: EchoesConfiguration,
-                                    game: GameDescription) -> GamePatches:
+    def assign_save_door_weaknesses(
+        self, patches: GamePatches, configuration: EchoesConfiguration, game: GameDescription
+    ) -> GamePatches:
         if not configuration.blue_save_doors:
             return patches
 

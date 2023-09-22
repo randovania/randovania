@@ -1,19 +1,25 @@
+from __future__ import annotations
+
 import dataclasses
 from collections import defaultdict
-from typing import Callable
+from typing import TYPE_CHECKING
 
 from PySide6 import QtWidgets
 
-from randovania.game_description.game_description import GameDescription
-from randovania.game_description.db.dock import DockRandoParams, DockType, DockWeakness
 from randovania.gui.generated.preset_dock_rando_ui import Ui_PresetDockRando
 from randovania.gui.lib import signal_handling
 from randovania.gui.lib.foldable import Foldable
-from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.preset_settings.preset_tab import PresetTab
-from randovania.interface_common.preset_editor import PresetEditor
 from randovania.layout.base.dock_rando_configuration import DockRandoMode
-from randovania.layout.preset import Preset
+
+if TYPE_CHECKING:
+    from collections.abc import Callable
+
+    from randovania.game_description.db.dock import DockRandoParams, DockType, DockWeakness
+    from randovania.game_description.game_description import GameDescription
+    from randovania.gui.lib.window_manager import WindowManager
+    from randovania.interface_common.preset_editor import PresetEditor
+    from randovania.layout.preset import Preset
 
 
 class PresetDockRando(PresetTab, Ui_PresetDockRando):
@@ -32,11 +38,6 @@ class PresetDockRando(PresetTab, Ui_PresetDockRando):
         # Types
         self.type_checks = {}
         for dock_type, type_params in game_description.dock_weakness_database.dock_rando_params.items():
-            if (
-                    type_params.locked is None or type_params.unlocked is None
-                    or not type_params.change_from or not type_params.change_to
-            ):
-                continue
             self._add_dock_type(dock_type, type_params)
 
     @classmethod
@@ -72,7 +73,7 @@ class PresetDockRando(PresetTab, Ui_PresetDockRando):
     def _add_dock_type(self, dock_type: DockType, type_params: DockRandoParams):
         self.type_checks[dock_type] = defaultdict(dict)
 
-        type_box = Foldable(dock_type.long_name)
+        type_box = Foldable(self.dock_types_group, dock_type.long_name)
         type_box.setObjectName(f"type_box {dock_type.short_name}")
         type_layout = QtWidgets.QHBoxLayout()
         type_layout.setObjectName(f"type_layout {dock_type.short_name}")
@@ -92,9 +93,7 @@ class PresetDockRando(PresetTab, Ui_PresetDockRando):
                 check.setObjectName(f"{name}_check {dock_type.short_name} {weakness.name}")
                 check.setText(weakness.long_name)
                 check.setEnabled(enabled)
-                signal_handling.on_checked(check, self._persist_weakness_setting(
-                    name, dock_type, weakness
-                ))
+                signal_handling.on_checked(check, self._persist_weakness_setting(name, dock_type, weakness))
                 layout.addWidget(check)
                 self.type_checks[dock_type][weakness][name] = check
 
@@ -106,13 +105,18 @@ class PresetDockRando(PresetTab, Ui_PresetDockRando):
             return len(weakness.long_name)
 
         change_from = {weakness: True for weakness in sorted(type_params.change_from, key=keyfunc)}
-        change_to = {weakness: weakness != type_params.unlocked for weakness in
-                     sorted(type_params.change_to, key=keyfunc)}
+        change_to = {
+            weakness: weakness != type_params.unlocked for weakness in sorted(type_params.change_to, key=keyfunc)
+        }
         add_group("can_change_from", "Doors to Change", change_from)
         add_group("can_change_to", "Change Doors To", change_to)
 
-    def _persist_weakness_setting(self, field: str, dock_type: DockType, dock_weakness: DockWeakness,
-                                  ) -> Callable[[bool], None]:
+    def _persist_weakness_setting(
+        self,
+        field: str,
+        dock_type: DockType,
+        dock_weakness: DockWeakness,
+    ) -> Callable[[bool], None]:
         def _persist(value: bool):
             with self._editor as editor:
                 state = editor.dock_rando_configuration.types_state[dock_type]
@@ -128,7 +132,4 @@ class PresetDockRando(PresetTab, Ui_PresetDockRando):
 
     def _on_mode_changed(self, value: DockRandoMode):
         with self._editor as editor:
-            editor.dock_rando_configuration = dataclasses.replace(
-                editor.dock_rando_configuration,
-                mode=value
-            )
+            editor.dock_rando_configuration = dataclasses.replace(editor.dock_rando_configuration, mode=value)

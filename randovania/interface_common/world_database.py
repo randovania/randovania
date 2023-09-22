@@ -4,13 +4,17 @@ import asyncio
 import dataclasses
 import logging
 import uuid
-from pathlib import Path
-from typing import Iterable, Self
-from PySide6.QtCore import Signal, QObject
+from typing import TYPE_CHECKING, Self
+
+from PySide6.QtCore import QObject, Signal
 
 from randovania.bitpacking.json_dataclass import JsonDataclass
 from randovania.interface_common.players_configuration import INVALID_UUID
-from randovania.lib import migration_lib, json_lib
+from randovania.lib import json_lib, migration_lib
+
+if TYPE_CHECKING:
+    from collections.abc import Iterable
+    from pathlib import Path
 
 _MIGRATIONS = [
     # lambda data: data,
@@ -19,8 +23,7 @@ CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 
 
 def migrate_to_current(data: dict):
-    return migration_lib.apply_migrations(data, _MIGRATIONS,
-                                          copy_before_migrating=True)
+    return migration_lib.apply_migrations(data, _MIGRATIONS, copy_before_migrating=True)
 
 
 @dataclasses.dataclass(frozen=True)
@@ -84,7 +87,7 @@ class WorldDatabase(QObject):
             {
                 "schema_version": CURRENT_VERSION,
                 "data": data.as_json,
-            }
+            },
         )
 
     async def load_existing_data(self):
@@ -120,8 +123,7 @@ class WorldDatabase(QObject):
 
     def get_locations_to_upload(self, uid: uuid.UUID) -> tuple[int, ...]:
         data = self.get_data_for(uid)
-        return tuple(i for i in sorted(data.collected_locations)
-                     if i not in data.uploaded_locations)
+        return tuple(i for i in sorted(data.collected_locations) if i not in data.uploaded_locations)
 
     def all_known_data(self) -> Iterable[uuid.UUID]:
         yield from self._all_data.keys()

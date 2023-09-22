@@ -1,4 +1,6 @@
-from PySide6.QtWidgets import QDialog, QApplication
+from __future__ import annotations
+
+from PySide6.QtWidgets import QApplication, QDialog
 
 from randovania.gui.generated.permalink_dialog_ui import Ui_PermalinkDialog
 from randovania.gui.lib import common_qt_lib
@@ -6,7 +8,6 @@ from randovania.layout.permalink import Permalink, UnsupportedPermalink
 
 
 class PermalinkDialog(QDialog, Ui_PermalinkDialog):
-
     def __init__(self):
         super().__init__()
         self.setupUi(self)

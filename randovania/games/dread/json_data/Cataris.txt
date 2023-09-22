@@ -12,7 +12,7 @@ Extra - asset_id: collision_camera_000
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Elevator to Artaria - Transport to Cataris
+  > Elevator to Artaria
       Trivial
 
 > Door to Navigation Station Southeast; Heals? False
@@ -24,7 +24,7 @@ Extra - asset_id: collision_camera_000
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Elevator to Artaria - Transport to Cataris
+  > Elevator to Artaria
       Trivial
   > Tunnel to Total Recharge Station South
       Morph Ball and After Cataris - Artaria Transport Blob
@@ -49,17 +49,16 @@ Extra - asset_id: collision_camera_000
   > Tunnel to Total Recharge Station South
       Trivial
 
-> Elevator to Artaria - Transport to Cataris; Heals? False; Default Node
+> Elevator to Artaria; Heals? False; Default Node
   * Layers: default
-  * Teleporter to Transport to Cataris/Elevator to Cataris - Transport to Artaria
+  * Elevator to Transport to Cataris/Elevator to Cataris
   * Extra - actor_name: LE_Elevator_FromCave
   * Extra - actor_def: actordef:actors/props/elevator/charclasses/elevator.bmsad
   * Extra - elevator_component: CElevatorUsableComponent
   * Extra - target_spawn_point: LE_Platform_Elevator_FromMagma
   * Extra - start_point_actor_name: LE_Platform_Elevator_FromCave
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad
-  * Extra - keep_name_when_vanilla: True
-  * Extra - editable: True
+  * Extra - transporter_name: Cataris - Experiment Z-57
   > Door to Artaria Transport Access
       Trivial
   > Door to Navigation Station Southeast
@@ -172,7 +171,8 @@ Extra - asset_id: collision_camera_004
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
   > Event - First Thermal Device
-      Trivial
+      # This is here to ensure the Thermal Door is never a problem
+      After Cataris - First Device Blob and Can Slide
 
 > Dock to Total Recharge Station South; Heals? False
   * Layers: default
@@ -188,7 +188,7 @@ Extra - asset_id: collision_camera_004
 
 > Door to Total Recharge Station South (Top); Heals? False
   * Layers: default
-  * Power Beam Door to Total Recharge Station South/Door to Thermal Device Room South (Top)
+  * Power Beam Door to Total Recharge Station South/Door to Thermal Device Room South (Top); Excluded from Dock Lock Rando
   * Extra - actor_name: doorpowerpower_019
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -238,7 +238,7 @@ Extra - asset_id: collision_camera_004
 > Front of Thermal Door; Heals? False
   * Layers: default
   > Dock to Total Recharge Station South
-      Before Cataris - First Thermal Device
+      Trivial
   > Start Point
       Trivial
 
@@ -316,7 +316,7 @@ Extra - asset_id: collision_camera_007
 
 > Door to Thermal Device Room South (Top); Heals? False
   * Layers: default
-  * Power Beam Door to Thermal Device Room South/Door to Total Recharge Station South (Top)
+  * Power Beam Door to Thermal Device Room South/Door to Total Recharge Station South (Top); Excluded from Dock Lock Rando
   * Extra - actor_name: doorpowerpower_019
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -354,13 +354,15 @@ Extra - asset_id: collision_camera_007
       Shoot Beam
   > Total Recharge
       Trivial
+  > Next to Thermal Door
+      Can Slide
 
 > Next to Thermal Door; Heals? False
   * Layers: default
   > Door to Thermal Device Room South (Thermal Device)
       Trivial
   > Dock to Thermal Device Room South
-      Before Cataris - First Thermal Device
+      Trivial
   > Tunnel to Transport to Artaria
       Can Slide
 
@@ -433,9 +435,8 @@ Extra - asset_id: collision_camera_009
               Use Spin Boost
               Any of the following:
                   Flash Shift or Slide Jump (Beginner)
-                  All of the following:
-                      # https://youtu.be/mRHB7DHbfbg
-                      Stand on Frozen Enemy (Beginner) and Shoot Ice Missile
+                  # https://youtu.be/mRHB7DHbfbg
+                  Stand on Frozen Enemy (Beginner) and Shoot Ice Missile
   > Pickup Corner
       Screw Attack
   > Between Thermal Gates
@@ -480,9 +481,8 @@ Extra - asset_id: collision_camera_009
               # Energy Requirements
               Combat (Intermediate) or Normal Damage ≥ 699
               Combat (Beginner) and Normal Damage ≥ 349
-          Any of the following:
-              # Methods to dodge laser
-              Flash Shift or Combat (Intermediate) or Use Spin Boost
+          # Methods to dodge laser
+          Flash Shift or Combat (Intermediate) or Use Spin Boost
 
 > Z-57 Room; Heals? False
   * Layers: default
@@ -497,9 +497,8 @@ Extra - asset_id: collision_camera_009
                   Use Spin Boost
                   Any of the following:
                       Wall Jump (Beginner)
-                      All of the following:
-                          # https://youtu.be/mRHB7DHbfbg
-                          Stand on Frozen Enemy (Beginner) and Shoot Ice Missile
+                      # https://youtu.be/mRHB7DHbfbg
+                      Stand on Frozen Enemy (Beginner) and Shoot Ice Missile
               Flash Shift and Wall Jump (Intermediate)
               Morph Ball and Single-wall Wall Jump (Intermediate)
 
@@ -913,7 +912,7 @@ Extra - asset_id: collision_camera_015
   * Event Cataris - Blue Teleport Blob
   * Extra - actor_name: breakablemag012
   * Extra - actor_def: actordef:actors/props/breakablemag012/charclasses/breakablemag012.bmsad
-  > Teleporter to Artaria - Screw Attack Room
+  > Teleporter to Artaria
       Trivial
 
 > Event - West Blob; Heals? False
@@ -924,7 +923,7 @@ Extra - asset_id: collision_camera_015
   > Center Room
       Trivial
 
-> Teleporter to Artaria - Screw Attack Room; Heals? False; Default Node
+> Teleporter to Artaria; Heals? False; Default Node
   * Layers: default
   * Teleporter to Screw Attack Room/Teleporter to Cataris
   * Extra - actor_name: teleporter_cave_000
@@ -933,8 +932,6 @@ Extra - asset_id: collision_camera_015
   * Extra - target_spawn_point: teleporter_magma_000_platform
   * Extra - start_point_actor_name: teleporter_cave_000_platform
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad
-  * Extra - keep_name_when_vanilla: True
-  * Extra - editable: True
   > Event - East Blob, below
       Lay Bomb or Shoot Beam
   > Lava Room
@@ -1012,14 +1009,14 @@ Extra - asset_id: collision_camera_015
   * Layers: default
   > Door to Artaria Transport Access
       Gravity Suit and Morph Ball
-  > Teleporter to Artaria - Screw Attack Room
+  > Teleporter to Artaria
       All of the following:
           Gravity Suit
           Speed Booster or Simple IBJ or Use Spin Boost
 
 > Right Room; Heals? False
   * Layers: default
-  > Teleporter to Artaria - Screw Attack Room
+  > Teleporter to Artaria
       All of the following:
           After Cataris - Blue Teleport Blob
           Any of the following:
@@ -1053,11 +1050,11 @@ Extra - asset_id: collision_camera_015
                   Heat/Cold Runs (Intermediate) and Heat Damage ≥ 200
               Any of the following:
                   Simple IBJ
-                  Morph Ball and Single-wall Wall Jump (Intermediate)
+                  # SWJ: https://youtu.be/eS4UULex4Vk
+                  Morph Ball and Slide and Single-wall Wall Jump (Intermediate) and Slide Jump (Beginner)
                   Stand on Frozen Enemy (Beginner) and Shoot Ice Missile
-                  All of the following:
-                      # https://youtu.be/q4yodUPmfQU
-                      Phantom Cloak and Speed Booster and Speed Booster Conservation (Intermediate) and Disabled Door Lock Randomizer and Can Slide
+                  # https://youtu.be/q4yodUPmfQU
+                  Phantom Cloak and Speed Booster and Speed Booster Conservation (Intermediate) and Disabled Door Lock Randomizer and Can Slide
   > Tunnel to Lava Button East Access
       All of the following:
           After Cataris - Lava Button East Blob
@@ -1367,11 +1364,7 @@ Extra - asset_id: collision_camera_020
   > Event - Blob
       Any of the following:
           Wave Beam
-          All of the following:
-              Slide
-              Any of the following:
-                  Pseudo-Wave Beam (Advanced)
-                  Pseudo-Wave Beam (Intermediate) and Shoot Diffusion Beam
+          Slide and Pseudo-Wave Beam (Intermediate) and Shoot Diffusion Beam
   > Tunnel to EMMI Zone East Tower Access (Bottom)
       Trivial
   > Center Alcove
@@ -1683,7 +1676,7 @@ Extra - asset_id: collision_camera_024
 
 > Dock to Kraid Arena; Heals? False
   * Layers: default
-  * Open Passage to Kraid Arena/Dock to Above Kraid
+  * Open Passage to Kraid Arena/Dock from Above Kraid
   > Door to Kraid Eyedoor Room
       Trivial
 
@@ -1767,9 +1760,8 @@ Extra - asset_id: collision_camera_024
               Varia Suit
               Heat/Cold Runs (Intermediate) and Heat Damage ≥ 100
   > Event - Blob above Kraid, left
-      All of the following:
-          # Knowledge of where the blob is while it is occluded
-          Wave Beam and Knowledge (Intermediate)
+      # Knowledge of where the blob is while it is occluded
+      Wave Beam and Knowledge (Intermediate)
 
 > Event - Blob above Kraid, left; Heals? False
   * Layers: default
@@ -1795,7 +1787,7 @@ Extra - asset_id: collision_camera_025
       Trivial
   > Pickup (Missile+ Tank)
       Morph Ball
-  > Teleporter to Artaria - Teleport to Cataris
+  > Teleporter to Artaria
       Morph Ball
 
 > Door to West Teleport Access; Heals? False
@@ -1819,7 +1811,7 @@ Extra - asset_id: collision_camera_025
           Speed Booster and Speed Booster Conservation (Beginner) and Disabled Door Lock Randomizer
   > Event - Blob
       Lay Bomb or Shoot Beam
-  > Teleporter to Artaria - Teleport to Cataris
+  > Teleporter to Artaria
       Lay Bomb or Lay Power Bomb
   > Tunnel to Teleport to Ghavoran
       After Cataris - Ghavoran Teleport Lower Blob
@@ -1855,7 +1847,7 @@ Extra - asset_id: collision_camera_025
   * Extra - actor_def: actordef:actors/items/item_missiletankplus/charclasses/item_missiletankplus.bmsad
   > Door to Path to Kraid Entryway
       Morph Ball
-  > Teleporter to Artaria - Teleport to Cataris
+  > Teleporter to Artaria
       Morph Ball
 
 > Event - Blob; Heals? False
@@ -1866,17 +1858,15 @@ Extra - asset_id: collision_camera_025
   > Door to West Teleport Access
       Trivial
 
-> Teleporter to Artaria - Teleport to Cataris; Heals? False; Default Node
+> Teleporter to Artaria; Heals? False; Default Node
   * Layers: default
-  * Teleporter to Teleport to Cataris/Teleporter to Cataris - Teleport to Artaria (Red)
+  * Teleporter to Teleport to Cataris/Teleporter to Cataris
   * Extra - actor_name: LE_Teleport_FromCave
   * Extra - actor_def: actordef:actors/props/teleporter/charclasses/teleporter.bmsad
   * Extra - elevator_component: CTeleporterUsableComponent
   * Extra - target_spawn_point: LE_Platform_Teleport_FromMagma
   * Extra - start_point_actor_name: LE_Platform_Teleport_FromCave
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad
-  * Extra - keep_name_when_vanilla: True
-  * Extra - editable: True
   > Door to West Teleport Access
       Lay Bomb or Lay Power Bomb
   > Door to Save Station West
@@ -1936,10 +1926,10 @@ Extra - asset_id: collision_camera_026
   * Event Cataris - Ghavoran Teleport Grapple Block
   * Extra - actor_name: grapplepulloff1x2_001
   * Extra - actor_def: actordef:actors/props/grapplepulloff1x2/charclasses/grapplepulloff1x2.bmsad
-  > Teleporter to Ghavoran - Teleport to Cataris
+  > Teleporter to Ghavoran
       Trivial
 
-> Teleporter to Ghavoran - Teleport to Cataris; Heals? False; Default Node
+> Teleporter to Ghavoran; Heals? False; Default Node
   * Layers: default
   * Teleporter to Golzuna Tower/Teleporter to Cataris
   * Extra - actor_name: teleporter_forest_000
@@ -1948,8 +1938,6 @@ Extra - asset_id: collision_camera_026
   * Extra - target_spawn_point: teleporter_magma_000_platform
   * Extra - start_point_actor_name: teleporter_forest_000_platform
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad
-  * Extra - keep_name_when_vanilla: True
-  * Extra - editable: True
   > Event - Grapple Block
       All of the following:
           Grapple Beam
@@ -1983,7 +1971,7 @@ Extra - asset_id: collision_camera_026
                       Heat/Cold Runs (Intermediate) and Heat Damage ≥ 100
   > Event - Lower Blob
       Lay Bomb or Shoot Beam
-  > Teleporter to Ghavoran - Teleport to Cataris
+  > Teleporter to Ghavoran
       All of the following:
           Morph Ball
           Any of the following:
@@ -2028,7 +2016,7 @@ Extra - asset_id: collision_camera_026
               Heat/Cold Runs (Intermediate) and Heat Damage ≥ 50
   > Event - Upper Blob
       Lay Bomb or Shoot Beam
-  > Teleporter to Ghavoran - Teleport to Cataris
+  > Teleporter to Ghavoran
       All of the following:
           After Cataris - Ghavoran Teleport Grapple Block and Can Slide
           Any of the following:
@@ -2845,7 +2833,7 @@ Extra - asset_id: collision_camera_040
       Speed Booster
   > Event - Push Wide Beam Block
       Any of the following:
-          Push Wide Beam Block
+          Push Wide Beam Block or Push Wide Beam Block with Wave Beam
           Diffusion Abuse (Intermediate) and Shoot Diffusion Beam
 
 > Pickup (Missile Tank); Heals? False
@@ -2882,20 +2870,19 @@ Extra - asset_id: collision_camera_041
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Elevator to Dairon - Transport to Cataris
+  > Shuttle to Dairon
       Trivial
 
-> Elevator to Dairon - Transport to Cataris; Heals? False; Default Node
+> Shuttle to Dairon; Heals? False; Default Node
   * Layers: default
-  * Teleporter to Transport to Cataris/Elevator to Cataris - Transport to Dairon
+  * Shuttle to Transport to Cataris/Shuttle to Cataris
   * Extra - actor_name: wagontrain_baselab_000
   * Extra - actor_def: actordef:actors/props/wagontrain/charclasses/wagontrain.bmsad
   * Extra - elevator_component: CTrainUsableComponent
   * Extra - target_spawn_point: wagontrain_magma_000_platform
   * Extra - start_point_actor_name: wagontrain_baselab_000_platform
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_train/charclasses/weightactivatedplatform_train.bmsad
-  * Extra - keep_name_when_vanilla: True
-  * Extra - editable: True
+  * Extra - transporter_name: Cataris - Central Unit
   > Door to Dairon Transport Access
       Trivial
 
@@ -3201,14 +3188,14 @@ Extra - asset_id: collision_camera_044
 > Tunnel to Kraid Arena (top); Heals? False
   * Layers: default
   * Morph Ball Tunnel to Kraid Arena/Tunnel to Diffusion Beam Room (Top)
-  > Event - Blob
-      Morph Ball and Shoot Diffusion or Wave
   > Tunnel to Teleport to Dairon
       All of the following:
           Morph Ball
           Any of the following:
               Varia Suit
               Heat/Cold Runs (Intermediate) and Heat Damage ≥ 100
+  > Corner Tunnel
+      Morph Ball
 
 > Tunnel to Kraid Arena (bottom); Heals? False
   * Layers: default
@@ -3227,12 +3214,8 @@ Extra - asset_id: collision_camera_044
           Any of the following:
               Varia Suit
               Heat/Cold Runs (Intermediate) and Heat Damage ≥ 20
-  > Tunnel to Kraid Arena (top)
-      All of the following:
-          Morph Ball
-          Any of the following:
-              Varia Suit
-              Heat/Cold Runs (Intermediate) and Heat Damage ≥ 100
+  > Corner Tunnel
+      Varia Suit and Can Slide
 
 > Alcove; Heals? False
   * Layers: default
@@ -3242,6 +3225,13 @@ Extra - asset_id: collision_camera_044
       Grapple Beam
   > Tunnel to Kraid Arena (bottom)
       Can Slide Underwater
+
+> Corner Tunnel; Heals? False
+  * Layers: default
+  > Event - Blob
+      Shoot Diffusion or Wave
+  > Tunnel to Kraid Arena (top)
+      Morph Ball and Varia Suit
 
 ----------------
 Lava Button East Access
@@ -3496,7 +3486,7 @@ Extra - asset_id: collision_camera_048
               Heat/Cold Runs (Intermediate) and Heat Damage ≥ 150
   > Event - Wide Beam Block
       Any of the following:
-          Push Wide Beam Block
+          Push Wide Beam Block or Push Wide Beam Block with Wave Beam
           Diffusion Abuse (Intermediate) and Shoot Diffusion Beam
   > Event - Blob
       Lay Bomb or Shoot Beam
@@ -3585,7 +3575,7 @@ Extra - asset_id: collision_camera_051
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Teleporter to Dairon - Teleport to Cataris
+  > Teleporter to Dairon
       Any of the following:
           Varia Suit
           Heat/Cold Runs (Intermediate) and Heat Damage ≥ 30
@@ -3614,17 +3604,15 @@ Extra - asset_id: collision_camera_051
   > Tunnel to Diffusion Beam Room
       Trivial
 
-> Teleporter to Dairon - Teleport to Cataris; Heals? False; Default Node
+> Teleporter to Dairon; Heals? False; Default Node
   * Layers: default
-  * Teleporter to Teleport to Cataris/Teleporter to Cataris - Teleport to Dairon
+  * Teleporter to Teleport to Cataris/Teleporter to Cataris
   * Extra - actor_name: teleport_baselab_000
   * Extra - actor_def: actordef:actors/props/teleporter/charclasses/teleporter.bmsad
   * Extra - elevator_component: CTeleporterUsableComponent
   * Extra - target_spawn_point: teleport_magma_000_platform
   * Extra - start_point_actor_name: teleport_baselab_000_platform
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad
-  * Extra - keep_name_when_vanilla: True
-  * Extra - editable: True
   > Door to Green EMMI Introduction Access
       Any of the following:
           Varia Suit
@@ -3636,7 +3624,7 @@ Extra - asset_id: collision_camera_051
 
 > Tunnel to Diffusion Beam Room; Heals? False
   * Layers: default
-  * Morph Ball Tunnel to Diffusion Beam Room/Tunnel to Teleport to Dairon
+  * Slide Tunnel to Diffusion Beam Room/Tunnel to Teleport to Dairon
   > Door to Diffusion Beam Room
       Any of the following:
           Varia Suit
@@ -3699,7 +3687,7 @@ Extra - asset_id: collision_camera_051
           Any of the following:
               Varia Suit
               Heat/Cold Runs (Intermediate) and Heat Damage ≥ 20
-  > Teleporter to Dairon - Teleport to Cataris
+  > Teleporter to Dairon
       Any of the following:
           Varia Suit
           Heat/Cold Runs (Intermediate) and Heat Damage ≥ 50
@@ -3892,9 +3880,8 @@ Extra - asset_id: collision_camera_053
   * Layers: default
   * Slide Tunnel to Green EMMI Introduction Access/Tunnel to Underlava Puzzle Room 2
   > Door to Green EMMI Introduction Access
-      All of the following:
-          # TODO: After proper blast shield logic is implemented, adjust this. This is a temporary connection.
-          Wave Beam and Disabled Door Lock Randomizer
+      # TODO: After proper blast shield logic is implemented, adjust this. This is a temporary connection.
+      Wave Beam and Disabled Door Lock Randomizer
   > Tunnel to Dropdown Pit
       Trivial
 
@@ -4240,6 +4227,7 @@ Extra - asset_id: collision_camera_063
           Grapple Beam and Grapple Movement (Beginner)
           Flash Shift and Wall Jump (Beginner)
           Morph Ball and Single-wall Wall Jump (Intermediate)
+          Gravity Suit and Speed Booster and After Kraid
   > Tunnel to Diffusion Beam Room (Bottom)
       All of the following:
           Morph Ball
@@ -4247,37 +4235,37 @@ Extra - asset_id: collision_camera_063
               Gravity Suit
               Heat/Cold Runs (Intermediate) and Lava Damage ≥ 1000
 
-> Dock to Above Kraid; Heals? False
+> Dock from Above Kraid; Heals? False
   * Layers: default
-  * Open Passage to Above Kraid/Dock to Kraid Arena
+  * Blocked Passage to Above Kraid/Dock to Kraid Arena
   > Event - Kraid
-      Any of the following:
-          All of the following:
-              # Kraid cannon kill. Cross Bombs & Power Bombs do NOT work.
-              Bomb and Morph Ball
-              Any of the following:
-                  # Energy Requirements
-                  Combat (Beginner) or Normal Damage ≥ 299
-          All of the following:
-              Any of the following:
-                  # Requirement for getting to Kraid's mouth in phase 2
-                  Spider Magnet or Space Jump or Combat (Beginner)
-              Any of the following:
-                  # Damage requirements
-                  Shoot Charge Beam
-                  All of the following:
-                      # Shoot Beam required to farm for Missiles
-                      Missiles and Shoot Beam
-              Any of the following:
-                  # Energy Requirements
-                  Combat (Beginner) or Normal Damage ≥ 299
+      All of the following:
+          Any of the following:
+              # Phase 1 Requirements
+              Shoot Charge Beam
+              All of the following:
+                  # Missile farming
+                  Missiles
+                  Any of the following:
+                      # Wide Beam for destroying projectiles faster
+                      Shoot Wide Beam
+                      Combat (Beginner) and Shoot Beam
+          Any of the following:
+              # Phase 2 Requirements
+              Spider Magnet or Space Jump or Combat (Intermediate)
+              # Kraid cannon kill, Cross Bombs & Power Bombs do NOT work
+              Lay Normal Bomb
+          Any of the following:
+              # Energy Requirements
+              Combat (Intermediate) or Normal Damage ≥ 299
+              Combat (Beginner) and Normal Damage ≥ 199
 
 > Tunnel to Diffusion Beam Room (Top); Heals? False
   * Layers: default
   * Morph Ball Tunnel to Diffusion Beam Room/Tunnel to Kraid Arena (top)
   > Right Ledge
       Trivial
-  > Event - Kraid
+  > Dock from Above Kraid
       Wave Beam and Combat (Beginner) and Shoot Charge Beam
 
 > Tunnel to Diffusion Beam Room (Bottom); Heals? False

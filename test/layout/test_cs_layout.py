@@ -1,7 +1,8 @@
-from randovania.games.cave_story.layout.cs_configuration import CSObjective
-from randovania.games.cave_story.layout.cs_cosmetic_patches import CSCosmeticPatches, MyChar, MusicRandoType
-from randovania.games.cave_story.layout.preset_describer import get_ingame_hash, get_ingame_hash_str
+from __future__ import annotations
 
+from randovania.games.cave_story.layout.cs_configuration import CSObjective
+from randovania.games.cave_story.layout.cs_cosmetic_patches import CSCosmeticPatches, MusicRandoType, MyChar
+from randovania.games.cave_story.layout.preset_describer import get_ingame_hash, get_ingame_hash_str
 from randovania.games.game import RandovaniaGame
 
 
@@ -26,6 +27,6 @@ def test_cs_cosmetic_patches():
 
 
 def test_cs_preset_describer():
-    hash_bytes = b'\x00\x00\x00\x00\x00'
+    hash_bytes = b"\x00\x00\x00\x00\x00"
     assert get_ingame_hash(hash_bytes) == [1, 1, 1, 1, 1]
     assert get_ingame_hash_str(hash_bytes) != ""

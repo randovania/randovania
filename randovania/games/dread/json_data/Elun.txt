@@ -31,7 +31,7 @@ Extra - asset_id: collision_camera_001
   * Extra - right_shield_def: None
   > Start Point 1
       Trivial
-  > Tram to Ghavoran - Transport to Elun
+  > Shuttle to Ghavoran
       Trivial
   > Start Point 2
       Trivial
@@ -43,17 +43,16 @@ Extra - asset_id: collision_camera_001
   > Door to Save Station
       Trivial
 
-> Tram to Ghavoran - Transport to Elun; Heals? False; Default Node
+> Shuttle to Ghavoran; Heals? False; Default Node
   * Layers: default
-  * Teleporter to Transport to Elun/Tram to Elun - Transport to Ghavoran
+  * Shuttle to Transport to Elun/Shuttle to Elun
   * Extra - actor_name: wagontrain_forest_000
   * Extra - actor_def: actordef:actors/props/wagontrain/charclasses/wagontrain.bmsad
   * Extra - elevator_component: CTrainUsableComponent
   * Extra - target_spawn_point: wagontrain_quarantine_000_platform
   * Extra - start_point_actor_name: wagontrain_forest_000_platform
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_train/charclasses/weightactivatedplatform_train.bmsad
-  * Extra - keep_name_when_vanilla: True
-  * Extra - editable: True
+  * Extra - transporter_name: Elun
   > Door to Save Station
       Trivial
 
@@ -82,6 +81,8 @@ Extra - asset_id: collision_camera_002
       After Elun - Release X Parasites
   > Tunnel to Ammo Recharge Station
       Lay Bomb
+  > Event - Release X with Ledge Warp
+      Ledge Warp (Intermediate) and Lay Bomb
 
 > Dock to Bridge Gate; Heals? False
   * Layers: default
@@ -95,6 +96,12 @@ Extra - asset_id: collision_camera_002
 
 > Start Point; Heals? False; Default Node
   * Layers: default
+  > Door to Ammo Recharge Station
+      Trivial
+
+> Event - Release X with Ledge Warp; Heals? False
+  * Layers: default
+  * Event Elun - Release X Parasites
   > Door to Ammo Recharge Station
       Trivial
 

@@ -1,8 +1,12 @@
-import dataclasses
+from __future__ import annotations
 
-from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.layout.base.available_locations import RandomizationMode
-from randovania.layout.base.logical_resource_action import LayoutLogicalResourceAction
+import dataclasses
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from randovania.game_description.resources.pickup_index import PickupIndex
+    from randovania.layout.base.available_locations import RandomizationMode
+    from randovania.layout.base.logical_resource_action import LayoutLogicalResourceAction
 
 
 @dataclasses.dataclass(frozen=True)

@@ -1,23 +1,36 @@
-from typing import Iterable
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
 
 from PySide6 import QtWidgets
 from PySide6.QtCore import Qt
 
-from randovania.game_description.pickup.standard_pickup import StandardPickupDefinition
-from randovania.interface_common.preset_editor import PresetEditor
 from randovania.layout.base.standard_pickup_state import StandardPickupState
-from randovania.layout.preset import Preset
+
+if TYPE_CHECKING:
+    from collections.abc import Iterable
+
+    from randovania.game_description.pickup.standard_pickup import StandardPickupDefinition
+    from randovania.interface_common.preset_editor import PresetEditor
+    from randovania.layout.preset import Preset
 
 
 def _state_has_item(state: StandardPickupState) -> bool:
-    return (state.num_shuffled_pickups > 0
-            or state.num_included_in_starting_pickups > 0
-            or state.include_copy_in_original_location)
+    return (
+        state.num_shuffled_pickups > 0
+        or state.num_included_in_starting_pickups > 0
+        or state.include_copy_in_original_location
+    )
 
 
 class ProgressiveItemWidget(QtWidgets.QCheckBox):
-    def __init__(self, parent: QtWidgets.QWidget, editor: PresetEditor,
-                 progressive_item: StandardPickupDefinition, non_progressive_items: Iterable[StandardPickupDefinition]):
+    def __init__(
+        self,
+        parent: QtWidgets.QWidget,
+        editor: PresetEditor,
+        progressive_item: StandardPickupDefinition,
+        non_progressive_items: Iterable[StandardPickupDefinition],
+    ):
         super().__init__(parent)
         self._editor = editor
         self.progressive_item = progressive_item
@@ -29,17 +42,18 @@ class ProgressiveItemWidget(QtWidgets.QCheckBox):
         major_configuration = preset.configuration.standard_pickup_configuration
 
         has_progressive = _state_has_item(major_configuration.pickups_state[self.progressive_item])
-        has_non_progressive = any(_state_has_item(major_configuration.pickups_state[item])
-                                  for item in self.non_progressive_items)
+        has_non_progressive = any(
+            _state_has_item(major_configuration.pickups_state[item]) for item in self.non_progressive_items
+        )
 
         if not has_progressive and not has_non_progressive:
             has_progressive = self.isChecked()
             has_non_progressive = not has_progressive
 
         if has_non_progressive:
-            new_state = Qt.PartiallyChecked if has_progressive else Qt.Unchecked
+            new_state = Qt.CheckState.PartiallyChecked if has_progressive else Qt.CheckState.Unchecked
         else:
-            new_state = Qt.Checked
+            new_state = Qt.CheckState.Checked
         self.setCheckState(new_state)
 
         for item in self.non_progressive_items:

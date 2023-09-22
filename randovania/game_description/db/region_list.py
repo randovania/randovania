@@ -1,24 +1,32 @@
+from __future__ import annotations
+
 import copy
 import dataclasses
+import operator
 import typing
-from typing import Iterator, Iterable
 
-from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.requirements.base import Requirement
-from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.game_description.resources.resource_database import ResourceDatabase
-from randovania.game_description.resources.resource_info import ResourceCollection
-from randovania.game_description.db.area import Area
-from randovania.game_description.db.area_identifier import AreaIdentifier
-from randovania.game_description.db.dock import DockWeakness, DockWeaknessDatabase
-from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.node import Node, NodeContext, NodeIndex
-from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.db.node_provider import NodeProvider
 from randovania.game_description.db.pickup_node import PickupNode
-from randovania.game_description.db.region import Region
+
+if typing.TYPE_CHECKING:
+    from collections.abc import Iterable, Iterator
+
+    from randovania.game_description.db.area import Area
+    from randovania.game_description.db.area_identifier import AreaIdentifier
+    from randovania.game_description.db.dock import DockWeakness, DockWeaknessDatabase
+    from randovania.game_description.db.dock_node import DockNode
+    from randovania.game_description.db.node_identifier import NodeIdentifier
+    from randovania.game_description.db.region import Region
+    from randovania.game_description.game_patches import GamePatches
+    from randovania.game_description.requirements.base import Requirement
+    from randovania.game_description.resources.pickup_index import PickupIndex
+    from randovania.game_description.resources.resource_collection import ResourceCollection
+    from randovania.game_description.resources.resource_database import ResourceDatabase
 
 NodeType = typing.TypeVar("NodeType", bound=Node)
+
+_NodesTuple = tuple[Node | None, ...]
 
 
 @dataclasses.dataclass(init=False, slots=True)
@@ -27,14 +35,14 @@ class RegionList(NodeProvider):
 
     _nodes_to_area: dict[NodeIndex, Area]
     _nodes_to_region: dict[NodeIndex, Region]
-    _nodes: tuple[Node | None, ...] | None
+    _nodes: _NodesTuple | None
     _pickup_index_to_node: dict[PickupIndex, PickupNode]
     _identifier_to_node: dict[NodeIdentifier, Node]
     _patched_node_connections: dict[NodeIndex, dict[NodeIndex, Requirement]] | None
     _patches_dock_open_requirements: list[Requirement] | None
     _patches_dock_lock_requirements: list[Requirement | None] | None
 
-    def __deepcopy__(self, memodict):
+    def __deepcopy__(self, memodict: dict) -> RegionList:
         return RegionList(
             regions=copy.deepcopy(self.regions, memodict),
         )
@@ -46,7 +54,7 @@ class RegionList(NodeProvider):
         self._patches_dock_lock_requirements = None
         self.invalidate_node_cache()
 
-    def _refresh_node_cache(self):
+    def _refresh_node_cache(self) -> _NodesTuple:
         nodes = tuple(self._iterate_over_nodes())
 
         max_index: NodeIndex = max(node.node_index for node in nodes)
@@ -58,17 +66,15 @@ class RegionList(NodeProvider):
         self._nodes = tuple(final_nodes)
 
         self._nodes_to_area, self._nodes_to_region = _calculate_nodes_to_area_region(self.regions)
-        self._pickup_index_to_node = {
-            node.pickup_index: node
-            for node in self._nodes
-            if isinstance(node, PickupNode)
-        }
+        self._pickup_index_to_node = {node.pickup_index: node for node in self._nodes if isinstance(node, PickupNode)}
+        return self._nodes
 
-    def ensure_has_node_cache(self):
+    def ensure_has_node_cache(self) -> _NodesTuple:
         if self._nodes is None:
-            self._refresh_node_cache()
+            return self._refresh_node_cache()
+        return self._nodes
 
-    def invalidate_node_cache(self):
+    def invalidate_node_cache(self) -> None:
         self._nodes = None
         self._identifier_to_node = {}
 
@@ -94,9 +100,8 @@ class RegionList(NodeProvider):
             yield from region.areas
 
     @property
-    def all_nodes(self) -> tuple[Node | None, ...]:
-        self.ensure_has_node_cache()
-        return self._nodes
+    def all_nodes(self) -> _NodesTuple:
+        return self.ensure_has_node_cache()
 
     def iterate_nodes(self) -> Iterator[Node]:
         for node in self.all_nodes:
@@ -114,8 +119,11 @@ class RegionList(NodeProvider):
                 for node in area.nodes:
                     yield region, area, node
 
-    def region_name_from_area(self, area: Area, distinguish_dark_aether: bool = False) -> str:
-        region = self.region_with_area(area)
+    def region_name_from_area(
+        self, area: Area, distinguish_dark_aether: bool = False, region: Region | None = None
+    ) -> str:
+        if region is None:
+            region = self.region_with_area(area)
 
         if distinguish_dark_aether:
             return region.correct_name(area.in_dark_aether)
@@ -123,15 +131,13 @@ class RegionList(NodeProvider):
             return region.name
 
     def region_name_from_node(self, node: Node, distinguish_dark_aether: bool = False) -> str:
-        return self.region_name_from_area(self.nodes_to_area(node), distinguish_dark_aether)
+        region = self.nodes_to_region(node)
+        return self.region_name_from_area(self.nodes_to_area(node), distinguish_dark_aether, region)
 
     def area_name(self, area: Area, separator: str = " - ", distinguish_dark_aether: bool = True) -> str:
-        return "{}{}{}".format(
-            self.region_name_from_area(area, distinguish_dark_aether),
-            separator,
-            area.name)
+        return f"{self.region_name_from_area(area, distinguish_dark_aether)}{separator}{area.name}"
 
-    def node_name(self, node: Node, with_region=False, distinguish_dark_aether: bool = False) -> str:
+    def node_name(self, node: Node, with_region: bool = False, distinguish_dark_aether: bool = False) -> str:
         prefix = f"{self.region_name_from_node(node, distinguish_dark_aether)}/" if with_region else ""
         return f"{prefix}{self.nodes_to_area(node).name}/{node.name}"
 
@@ -154,8 +160,11 @@ class RegionList(NodeProvider):
         """
         if self._patched_node_connections is not None:
             all_nodes = self._nodes
+            assert all_nodes is not None
             for target_index, requirements in self._patched_node_connections[node.node_index].items():
-                yield all_nodes[target_index], requirements
+                n = all_nodes[target_index]
+                assert n is not None
+                yield n, requirements
         else:
             area = self.nodes_to_area(node)
             for target_node, requirements in area.connections[node].items():
@@ -171,8 +180,13 @@ class RegionList(NodeProvider):
         yield from node.connections_from(context)
         yield from self.area_connections_from(node)
 
-    def patch_requirements(self, static_resources: ResourceCollection, damage_multiplier: float,
-                           database: ResourceDatabase, dock_weakness_database: DockWeaknessDatabase) -> None:
+    def patch_requirements(
+        self,
+        static_resources: ResourceCollection,
+        damage_multiplier: float,
+        database: ResourceDatabase,
+        dock_weakness_database: DockWeaknessDatabase,
+    ) -> None:
         """
         Patches all Node connections, assuming the given resources will never change their quantity.
         This is removes all checking for tricks and difficulties in runtime since these never change.
@@ -194,6 +208,7 @@ class RegionList(NodeProvider):
 
         # Remove connections to event nodes that have a combo node
         from randovania.game_description.db.event_pickup import EventPickupNode
+
         for node in self.iterate_nodes():
             if isinstance(node, EventPickupNode):
                 area = self.nodes_to_area(node)
@@ -204,7 +219,8 @@ class RegionList(NodeProvider):
         # Dock Weaknesses
         self._patches_dock_open_requirements = []
         self._patches_dock_lock_requirements = []
-        for weakness in sorted(dock_weakness_database.all_weaknesses, key=lambda it: it.weakness_index):
+
+        for weakness in sorted(dock_weakness_database.all_weaknesses, key=operator.attrgetter("weakness_index")):
             assert len(self._patches_dock_open_requirements) == weakness.weakness_index
             self._patches_dock_open_requirements.append(
                 weakness.requirement.patch_requirements(static_resources, damage_multiplier, database).simplify()
@@ -214,7 +230,8 @@ class RegionList(NodeProvider):
             else:
                 self._patches_dock_lock_requirements.append(
                     weakness.lock.requirement.patch_requirements(
-                        static_resources, damage_multiplier, database).simplify()
+                        static_resources, damage_multiplier, database
+                    ).simplify()
                 )
 
     def node_by_identifier(self, identifier: NodeIdentifier) -> Node:
@@ -235,7 +252,7 @@ class RegionList(NodeProvider):
         assert isinstance(result, t)
         return result
 
-    def get_pickup_node(self, identifier: NodeIdentifier):
+    def get_pickup_node(self, identifier: NodeIdentifier) -> PickupNode:
         return self.typed_node_by_identifier(identifier, PickupNode)
 
     def area_by_area_location(self, location: AreaIdentifier) -> Area:
@@ -253,49 +270,40 @@ class RegionList(NodeProvider):
         region, area = self.region_and_area_by_area_identifier(identifier)
         return f"{region.correct_name(area.in_dark_aether)} - {area.name}"
 
-    def identifier_for_area(self, area: Area) -> AreaIdentifier:
-        region = self.region_with_area(area)
-        return AreaIdentifier(region_name=region.name, area_name=area.name)
-
-    def node_to_area_location(self, node: Node) -> AreaIdentifier:
-        return AreaIdentifier(
-            region_name=self.nodes_to_region(node).name,
-            area_name=self.nodes_to_area(node).name,
-        )
-
     def node_from_pickup_index(self, index: PickupIndex) -> PickupNode:
         self.ensure_has_node_cache()
         return self._pickup_index_to_node[index]
 
-    def add_new_node(self, area: Area, node: Node):
+    def add_new_node(self, area: Area, node: Node) -> None:
         self.ensure_has_node_cache()
         self._nodes_to_area[node.node_index] = area
         self._nodes_to_region[node.node_index] = self.region_with_area(area)
 
     def open_requirement_for(self, weakness: DockWeakness) -> Requirement:
-        if (self._patches_dock_open_requirements is not None
-            and weakness.weakness_index is not None):
+        if self._patches_dock_open_requirements is not None and weakness.weakness_index is not None:
             return self._patches_dock_open_requirements[weakness.weakness_index]
         return weakness.requirement
 
     def lock_requirement_for(self, weakness: DockWeakness) -> Requirement:
-        if (self._patches_dock_lock_requirements is not None
-            and weakness.weakness_index is not None):
-            return self._patches_dock_lock_requirements[weakness.weakness_index]
+        if self._patches_dock_lock_requirements is not None and weakness.weakness_index is not None:
+            result = self._patches_dock_lock_requirements[weakness.weakness_index]
+            assert result is not None
+            return result
+        assert weakness.lock is not None
         return weakness.lock.requirement
 
 
-def _calculate_nodes_to_area_region(region: Iterable[Region]):
-    nodes_to_area = {}
-    nodes_to_region = {}
+def _calculate_nodes_to_area_region(regions: Iterable[Region]) -> tuple[dict[NodeIndex, Area], dict[NodeIndex, Region]]:
+    nodes_to_area: dict[NodeIndex, Area] = {}
+    nodes_to_region: dict[NodeIndex, Region] = {}
 
-    for region in region:
+    for region in regions:
         for area in region.areas:
             for node in area.nodes:
                 if node.node_index in nodes_to_area:
                     raise ValueError(
-                        "Trying to map {} to {}, but already mapped to {}".format(
-                            node, area, nodes_to_area[node.node_index]))
+                        f"Trying to map {node} to {area}, but already mapped to {nodes_to_area[node.node_index]}"
+                    )
                 nodes_to_area[node.node_index] = area
                 nodes_to_region[node.node_index] = region
 

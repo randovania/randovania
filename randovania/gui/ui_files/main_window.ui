@@ -500,6 +500,7 @@ For more information, check [Randovania Help](help://tab_multiworld)!</string>
     <addaction name="menu_action_previously_generated_games"/>
     <addaction name="menu_action_log_files_directory"/>
     <addaction name="separator"/>
+    <addaction name="menu_action_login_window"/>
     <addaction name="menu_action_open_auto_tracker"/>
     <addaction name="separator"/>
     <addaction name="separator"/>
@@ -522,19 +523,24 @@ For more information, check [Randovania Help](help://tab_multiworld)!</string>
     </widget>
     <addaction name="menu_database"/>
    </widget>
-   <widget class="QMenu" name="menu_advanced">
+   <widget class="QMenu" name="menu_preferences">
     <property name="title">
-     <string>Advanced</string>
+     <string>Preferences</string>
     </property>
-    <addaction name="menu_action_validate_seed_after"/>
-    <addaction name="menu_action_timeout_generation_after_a_time_limit"/>
+    <widget class="QMenu" name="menu_advanced">
+     <property name="title">
+      <string>Advanced</string>
+     </property>
+     <addaction name="menu_action_validate_seed_after"/>
+     <addaction name="menu_action_timeout_generation_after_a_time_limit"/>
+     <addaction name="menu_action_generate_in_another_process"/>
+    </widget>
     <addaction name="menu_action_dark_mode"/>
     <addaction name="menu_action_experimental_settings"/>
     <addaction name="menu_action_automatic_reporting"/>
     <addaction name="separator"/>
-    <addaction name="action_login_window"/>
     <addaction name="separator"/>
-    <addaction name="menu_action_layout_editor"/>
+    <addaction name="menu_advanced"/>
    </widget>
    <widget class="QMenu" name="menu_help">
     <property name="title">
@@ -542,13 +548,14 @@ For more information, check [Randovania Help](help://tab_multiworld)!</string>
     </property>
     <addaction name="menu_action_help"/>
     <addaction name="menu_action_changelog"/>
+    <addaction name="menu_action_verify_installation"/>
     <addaction name="separator"/>
     <addaction name="menu_action_dependencies"/>
     <addaction name="menu_action_about"/>
    </widget>
    <addaction name="menu_open"/>
    <addaction name="menu_edit"/>
-   <addaction name="menu_advanced"/>
+   <addaction name="menu_preferences"/>
    <addaction name="menu_help"/>
   </widget>
   <action name="menu_action_edit_existing_database">
@@ -564,7 +571,7 @@ For more information, check [Randovania Help](help://tab_multiworld)!</string>
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Validate if seed is possible after generation</string>
+    <string>Validate if a game is possible after generation</string>
    </property>
   </action>
   <action name="menu_action_timeout_generation_after_a_time_limit">
@@ -583,9 +590,9 @@ For more information, check [Randovania Help](help://tab_multiworld)!</string>
     <string>Automatic Item Tracker</string>
    </property>
   </action>
-  <action name="action_login_window">
+  <action name="menu_action_login_window">
    <property name="text">
-    <string>Login window</string>
+    <string>Login</string>
    </property>
   </action>
   <action name="menu_action_dark_mode">
@@ -642,6 +649,22 @@ For more information, check [Randovania Help](help://tab_multiworld)!</string>
   <action name="menu_action_automatic_reporting">
    <property name="text">
     <string>Automatic Data Collection and Reporting</string>
+   </property>
+  </action>
+  <action name="menu_action_generate_in_another_process">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Generate games in another process</string>
+   </property>
+  </action>
+  <action name="menu_action_verify_installation">
+   <property name="text">
+    <string>Verify installation</string>
    </property>
   </action>
  </widget>

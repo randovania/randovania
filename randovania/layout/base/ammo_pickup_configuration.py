@@ -1,12 +1,18 @@
+from __future__ import annotations
+
 import copy
 from dataclasses import dataclass
-from typing import Iterator
+from typing import TYPE_CHECKING
 
 from randovania.bitpacking import bitpacking
 from randovania.game_description import default_database
-from randovania.game_description.pickup.ammo_pickup import AmmoPickupDefinition
-from randovania.games.game import RandovaniaGame
 from randovania.layout.base.ammo_pickup_state import AmmoPickupState
+
+if TYPE_CHECKING:
+    from collections.abc import Iterator
+
+    from randovania.game_description.pickup.ammo_pickup import AmmoPickupDefinition
+    from randovania.games.game import RandovaniaGame
 
 
 @dataclass(frozen=True)
@@ -27,9 +33,11 @@ class AmmoPickupConfiguration(bitpacking.BitPackValue):
             is_different = this != reference
             yield from bitpacking.encode_bool(is_different)
             if is_different:
-                yield from this.bit_pack_encode({
-                    "ammo": ammo,
-                })
+                yield from this.bit_pack_encode(
+                    {
+                        "ammo": ammo,
+                    }
+                )
 
     @classmethod
     def bit_pack_unpack(cls, decoder: bitpacking.BitPackDecoder, metadata):
@@ -48,14 +56,11 @@ class AmmoPickupConfiguration(bitpacking.BitPackValue):
     @property
     def as_json(self) -> dict:
         return {
-            "pickups_state": {
-                ammo.name: state.as_json
-                for ammo, state in self.pickups_state.items()
-            },
+            "pickups_state": {ammo.name: state.as_json for ammo, state in self.pickups_state.items()},
         }
 
     @classmethod
-    def from_json(cls, value: dict, game: RandovaniaGame) -> "AmmoPickupConfiguration":
+    def from_json(cls, value: dict, game: RandovaniaGame) -> AmmoPickupConfiguration:
         pickup_database = default_database.pickup_database_for_game(game)
         return cls(
             pickups_state={
@@ -64,10 +69,10 @@ class AmmoPickupConfiguration(bitpacking.BitPackValue):
             },
         )
 
-    def replace_state_for_ammo(self, ammo: AmmoPickupDefinition, state: AmmoPickupState) -> "AmmoPickupConfiguration":
+    def replace_state_for_ammo(self, ammo: AmmoPickupDefinition, state: AmmoPickupState) -> AmmoPickupConfiguration:
         return self.replace_states({ammo: state})
 
-    def replace_states(self, new_states: dict[AmmoPickupDefinition, AmmoPickupState]) -> "AmmoPickupConfiguration":
+    def replace_states(self, new_states: dict[AmmoPickupDefinition, AmmoPickupState]) -> AmmoPickupConfiguration:
         """
         Creates a copy of this AmmoConfiguration where the state of all given pickups are replaced by the given
         states.

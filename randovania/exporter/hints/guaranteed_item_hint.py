@@ -1,14 +1,20 @@
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+
 from randovania.exporter.hints.hint_namer import HintNamer, PickupLocation
-from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.resources.item_resource_info import ItemResourceInfo
-from randovania.game_description.resources.resource_info import ResourceCollection
-from randovania.interface_common.players_configuration import PlayersConfiguration
+from randovania.game_description.resources.resource_collection import ResourceCollection
+
+if TYPE_CHECKING:
+    from randovania.game_description.game_patches import GamePatches
+    from randovania.game_description.resources.item_resource_info import ItemResourceInfo
+    from randovania.interface_common.players_configuration import PlayersConfiguration
 
 
 def find_locations_that_gives_items(
-        target_items: list[ItemResourceInfo],
-        all_patches: dict[int, GamePatches],
-        player: int,
+    target_items: list[ItemResourceInfo],
+    all_patches: dict[int, GamePatches],
+    player: int,
 ) -> dict[ItemResourceInfo, list[tuple[int, PickupLocation]]]:
     result: dict[ItemResourceInfo, list[tuple[int, PickupLocation]]] = {item: [] for item in target_items}
 
@@ -28,11 +34,11 @@ def find_locations_that_gives_items(
 
 
 def hint_text_if_items_are_starting(
-        target_items: list[ItemResourceInfo],
-        all_patches: dict[int, GamePatches],
-        player: int,
-        namer: HintNamer,
-        with_color: bool,
+    target_items: list[ItemResourceInfo],
+    all_patches: dict[int, GamePatches],
+    player: int,
+    namer: HintNamer,
+    with_color: bool,
 ) -> dict[ItemResourceInfo, str]:
     result = {}
 
@@ -43,10 +49,14 @@ def hint_text_if_items_are_starting(
     return result
 
 
-def create_guaranteed_hints_for_resources(all_patches: dict[int, GamePatches], players_config: PlayersConfiguration,
-                                          namer: HintNamer, hide_area: bool, items: list[ItemResourceInfo],
-                                          with_color: bool,
-                                          ) -> dict[ItemResourceInfo, str]:
+def create_guaranteed_hints_for_resources(
+    all_patches: dict[int, GamePatches],
+    players_config: PlayersConfiguration,
+    namer: HintNamer,
+    hide_area: bool,
+    items: list[ItemResourceInfo],
+    with_color: bool,
+) -> dict[ItemResourceInfo, str]:
     """
     Creates a hint for where each of the given resources for the given player can be found, across all players.
     If the player starts with the resource, indicate such. Errors if any resource can't be found.
@@ -60,8 +70,9 @@ def create_guaranteed_hints_for_resources(all_patches: dict[int, GamePatches], p
     :param with_color
     :return:
     """
-    resulting_hints = hint_text_if_items_are_starting(items, all_patches, players_config.player_index, namer,
-                                                      with_color)
+    resulting_hints = hint_text_if_items_are_starting(
+        items, all_patches, players_config.player_index, namer, with_color
+    )
     locations_for_items = find_locations_that_gives_items(items, all_patches, players_config.player_index)
 
     used_locations = set()
@@ -92,9 +103,7 @@ def create_guaranteed_hints_for_resources(all_patches: dict[int, GamePatches], p
 
     if len(resulting_hints) != len(items):
         raise ValueError(
-            "Expected to find {} between pickup placement and starting items, found {}".format(
-                len(items),
-                len(resulting_hints)
-            ))
+            f"Expected to find {len(items)} between pickup placement and starting items, found {len(resulting_hints)}"
+        )
 
     return resulting_hints

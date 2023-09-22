@@ -3672,7 +3672,7 @@
                         "node": "Door to White EMMI Introduction"
                     },
                     "default_dock_weakness": "Access Open",
-                    "exclude_from_dock_rando": false,
+                    "exclude_from_dock_rando": true,
                     "incompatible_dock_weaknesses": [
                         "Grapple Beam Door"
                     ],
@@ -3900,7 +3900,7 @@
             }
         },
         "Teleport to Dairon": {
-            "default_node": "Teleporter to Dairon - Teleport to Artaria",
+            "default_node": "Teleporter to Dairon",
             "extra": {
                 "total_boundings": {
                     "x1": 5800.0,
@@ -3970,12 +3970,33 @@
                             }
                         },
                         "Door to EMMI Zone Exit North (Upper)": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "items",
-                                "name": "Wave",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Wave",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Shoot Wide Beam"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "DoorLocks",
+                                            "amount": 1,
+                                            "negate": true
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -4386,7 +4407,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Teleporter to Dairon - Teleport to Artaria": {
+                        "Teleporter to Dairon": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4395,7 +4416,7 @@
                         }
                     }
                 },
-                "Teleporter to Dairon - Teleport to Artaria": {
+                "Teleporter to Dairon": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4413,16 +4434,14 @@
                         "elevator_component": "CTeleporterUsableComponent",
                         "target_spawn_point": "teleport_cave_000_platform",
                         "start_point_actor_name": "teleport_baselab_000_platform",
-                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad",
-                        "keep_name_when_vanilla": true,
-                        "editable": true
+                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad"
                     },
                     "valid_starting_location": false,
                     "dock_type": "teleporter",
                     "default_connection": {
                         "region": "Dairon",
                         "area": "Teleport to Artaria",
-                        "node": "Teleporter to Artaria - Teleport to Dairon"
+                        "node": "Teleporter to Artaria"
                     },
                     "default_dock_weakness": "Teleporter",
                     "exclude_from_dock_rando": false,
@@ -5280,6 +5299,32 @@
                                                         "name": "DoorLocks",
                                                         "amount": 1,
                                                         "negate": true
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "https://youtu.be/bDwcjN4JTYQ",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Grapple",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "GrappleMovement",
+                                                        "amount": 2,
+                                                        "negate": false
                                                     }
                                                 }
                                             ]
@@ -6396,7 +6441,7 @@
             }
         },
         "Teleport to Cataris": {
-            "default_node": "Teleporter to Cataris - Teleport to Artaria (Red)",
+            "default_node": "Teleporter to Cataris",
             "extra": {
                 "total_boundings": {
                     "x1": -12200.0,
@@ -6458,7 +6503,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Teleporter to Cataris - Teleport to Artaria (Red)": {
+                        "Teleporter to Cataris": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -6966,12 +7011,29 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Energy Recharge": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "events",
-                                "name": "s010_cave:default:PRP_CV_ThermalDevice",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "s010_cave:default:PRP_CV_ThermalDevice",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "ChainReactionEnd",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -7145,15 +7207,6 @@
                                                                             "type": "resource",
                                                                             "data": {
                                                                                 "type": "events",
-                                                                                "name": "s010_cave:default:ev_chainreaction_deviceheat",
-                                                                                "amount": 1,
-                                                                                "negate": true
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "events",
                                                                                 "name": "s010_cave:default:db_reg_cv_022",
                                                                                 "amount": 1,
                                                                                 "negate": false
@@ -7185,11 +7238,20 @@
                                                 }
                                             ]
                                         }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "ChainReactionEnd",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
                                     }
                                 ]
                             }
                         },
-                        "Teleporter to Cataris - Teleport to Artaria (Red)": {
+                        "Teleporter to Cataris": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7231,7 +7293,7 @@
                         }
                     }
                 },
-                "Teleporter to Cataris - Teleport to Artaria (Red)": {
+                "Teleporter to Cataris": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7249,16 +7311,14 @@
                         "elevator_component": "CTeleporterUsableComponent",
                         "target_spawn_point": "LE_Platform_Teleport_FromCave",
                         "start_point_actor_name": "LE_Platform_Teleport_FromMagma",
-                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad",
-                        "keep_name_when_vanilla": true,
-                        "editable": true
+                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad"
                     },
                     "valid_starting_location": false,
                     "dock_type": "teleporter",
                     "default_connection": {
                         "region": "Cataris",
                         "area": "Teleport to Artaria (Red)",
-                        "node": "Teleporter to Artaria - Teleport to Cataris"
+                        "node": "Teleporter to Artaria"
                     },
                     "default_dock_weakness": "Teleporter",
                     "exclude_from_dock_rando": false,
@@ -7783,7 +7843,7 @@
                                 ]
                             }
                         },
-                        "Teleporter to Cataris - Teleport to Artaria (Red)": {
+                        "Teleporter to Cataris": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7847,7 +7907,7 @@
                     "valid_starting_location": false,
                     "event_name": "s010_cave:default:db_reg_cv_022",
                     "connections": {
-                        "Teleporter to Cataris - Teleport to Artaria (Red)": {
+                        "Teleporter to Cataris": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -9117,12 +9177,38 @@
                                         }
                                     },
                                     {
-                                        "type": "resource",
+                                        "type": "and",
                                         "data": {
-                                            "type": "events",
-                                            "name": "ArtariaEmmiSpinnerRotated",
-                                            "amount": 1,
-                                            "negate": true
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "ArtariaEmmiSpinnerRotated",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "DoorLocks",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "HighDanger",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -11086,10 +11172,6 @@
                                                     "data": "Shoot Charge Beam"
                                                 },
                                                 {
-                                                    "type": "template",
-                                                    "data": "Lay Cross Bomb"
-                                                },
-                                                {
                                                     "type": "and",
                                                     "data": {
                                                         "comment": "Refill missile ammo by shooting beam",
@@ -11106,6 +11188,176 @@
                                                                     "amount": 1,
                                                                     "negate": false
                                                                 }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "events",
+                                                                    "name": "ElunReleaseX",
+                                                                    "amount": 1,
+                                                                    "negate": true
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "Minimum: 9 Ice Missiles. 1.5x leeway for trickless",
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Shoot Super Ice Missile"
+                                                            },
+                                                            {
+                                                                "type": "or",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "MissileAmmo",
+                                                                                "amount": 14,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "and",
+                                                                            "data": {
+                                                                                "comment": null,
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "Combat",
+                                                                                            "amount": 2,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "items",
+                                                                                            "name": "MissileAmmo",
+                                                                                            "amount": 9,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "Minimum: 12 Super Missiles. 1.5x leeway for trickless",
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Shoot Super Missile"
+                                                            },
+                                                            {
+                                                                "type": "or",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "MissileAmmo",
+                                                                                "amount": 18,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "and",
+                                                                            "data": {
+                                                                                "comment": null,
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "Combat",
+                                                                                            "amount": 2,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "items",
+                                                                                            "name": "MissileAmmo",
+                                                                                            "amount": 12,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "Minimum: 35 Normal Missiles. 1.5x leeway for trickless",
+                                                        "items": [
+                                                            {
+                                                                "type": "or",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "MissileAmmo",
+                                                                                "amount": 53,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "and",
+                                                                            "data": {
+                                                                                "comment": null,
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "Combat",
+                                                                                            "amount": 2,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "items",
+                                                                                            "name": "MissileAmmo",
+                                                                                            "amount": 35,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
                                                             }
                                                         ]
                                                     }
@@ -11116,6 +11368,31 @@
                                                         "comment": null,
                                                         "items": [
                                                             {
+                                                                "type": "template",
+                                                                "data": "Lay Cross Bomb"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Combat",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Lay Normal Bomb"
+                                                            },
+                                                            {
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "tricks",
@@ -11123,6 +11400,27 @@
                                                                     "amount": 2,
                                                                     "negate": false
                                                                 }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "Minimum: 5 volleys of Storm Missiles 1.5x leeway for trickless",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Storm",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Shoot Missile"
                                                             },
                                                             {
                                                                 "type": "or",
@@ -11130,24 +11428,25 @@
                                                                     "comment": null,
                                                                     "items": [
                                                                         {
-                                                                            "type": "template",
-                                                                            "data": "Lay Bomb"
-                                                                        },
-                                                                        {
                                                                             "type": "and",
                                                                             "data": {
-                                                                                "comment": "Minimum: 9 Ice Missiles",
+                                                                                "comment": null,
                                                                                 "items": [
                                                                                     {
-                                                                                        "type": "template",
-                                                                                        "data": "Shoot Ice Missile"
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "Combat",
+                                                                                            "amount": 2,
+                                                                                            "negate": false
+                                                                                        }
                                                                                     },
                                                                                     {
                                                                                         "type": "resource",
                                                                                         "data": {
                                                                                             "type": "items",
                                                                                             "name": "MissileAmmo",
-                                                                                            "amount": 10,
+                                                                                            "amount": 15,
                                                                                             "negate": false
                                                                                         }
                                                                                     }
@@ -11155,41 +11454,12 @@
                                                                             }
                                                                         },
                                                                         {
-                                                                            "type": "and",
+                                                                            "type": "resource",
                                                                             "data": {
-                                                                                "comment": "Minimum: 12 Super Missiles",
-                                                                                "items": [
-                                                                                    {
-                                                                                        "type": "template",
-                                                                                        "data": "Shoot Super Missile"
-                                                                                    },
-                                                                                    {
-                                                                                        "type": "resource",
-                                                                                        "data": {
-                                                                                            "type": "items",
-                                                                                            "name": "MissileAmmo",
-                                                                                            "amount": 13,
-                                                                                            "negate": false
-                                                                                        }
-                                                                                    }
-                                                                                ]
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "and",
-                                                                            "data": {
-                                                                                "comment": "Minimum: 35 Normal Missiles",
-                                                                                "items": [
-                                                                                    {
-                                                                                        "type": "resource",
-                                                                                        "data": {
-                                                                                            "type": "items",
-                                                                                            "name": "MissileAmmo",
-                                                                                            "amount": 40,
-                                                                                            "negate": false
-                                                                                        }
-                                                                                    }
-                                                                                ]
+                                                                                "type": "items",
+                                                                                "name": "MissileAmmo",
+                                                                                "amount": 24,
+                                                                                "negate": false
                                                                             }
                                                                         }
                                                                     ]
@@ -13104,7 +13374,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "events",
-                                            "name": "s010_cave:default:ev_chainreaction_deviceheat",
+                                            "name": "ChainReactionEnd",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -13130,7 +13400,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "events",
-                                            "name": "s010_cave:default:ev_chainreaction_deviceheat",
+                                            "name": "ChainReactionEnd",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -13409,7 +13679,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "events",
-                                            "name": "s010_cave:default:ev_chainreaction_deviceheat",
+                                            "name": "ChainReactionEnd",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -13435,7 +13705,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "events",
-                                            "name": "s010_cave:default:ev_chainreaction_deviceheat",
+                                            "name": "ChainReactionEnd",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -13490,7 +13760,7 @@
                             "type": "resource",
                             "data": {
                                 "type": "events",
-                                "name": "s010_cave:default:ev_chainreaction_deviceheat",
+                                "name": "ChainReactionEnd",
                                 "amount": 1,
                                 "negate": true
                             }
@@ -13541,7 +13811,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "events",
-                                            "name": "s010_cave:default:ev_chainreaction_deviceheat",
+                                            "name": "ChainReactionEnd",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -14590,6 +14860,31 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
+                        "Event - Chain Reaction End": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Chain Reaction End": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -12564.38,
+                        "y": 8426.56,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "ChainReactionEnd",
+                    "connections": {
                         "Start Point": {
                             "type": "and",
                             "data": {
@@ -15492,17 +15787,16 @@
                         "target_spawn_point": "elevator_cave_000_platform",
                         "start_point_actor_name": "elevator_baselab_000_platform",
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad",
-                        "keep_name_when_vanilla": true,
-                        "editable": true
+                        "transporter_name": "Artaria - Grapple"
                     },
                     "valid_starting_location": false,
-                    "dock_type": "teleporter",
+                    "dock_type": "elevator",
                     "default_connection": {
                         "region": "Dairon",
                         "area": "Transport to Artaria",
-                        "node": "Elevator to Artaria - Transport to Dairon"
+                        "node": "Elevator to Artaria"
                     },
-                    "default_dock_weakness": "Teleporter",
+                    "default_dock_weakness": "Elevator",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -17306,7 +17600,7 @@
                         "node": "Door to EMMI Zone Ballspark Hallway"
                     },
                     "default_dock_weakness": "Access Open",
-                    "exclude_from_dock_rando": false,
+                    "exclude_from_dock_rando": true,
                     "incompatible_dock_weaknesses": [
                         "Grapple Beam Door"
                     ],
@@ -21733,7 +22027,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "https://youtu.be/ubyYAvEgBck",
+                                            "comment": "https://youtu.be/LAOKA3XPrTY",
                                             "items": [
                                                 {
                                                     "type": "template",
@@ -21815,25 +22109,8 @@
                             }
                         },
                         "Event - EMMI Wide Beam Block": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Push Wide Beam Block"
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Wave",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
+                            "type": "template",
+                            "data": "Push Wide Beam Block with Wave Beam"
                         }
                     }
                 },
@@ -23525,6 +23802,10 @@
                                                 }
                                             ]
                                         }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Can Slide"
                                     }
                                 ]
                             }
@@ -23805,7 +24086,7 @@
             }
         },
         "Transport to Cataris": {
-            "default_node": "Elevator to Cataris - Transport to Artaria",
+            "default_node": "Elevator to Cataris",
             "extra": {
                 "total_boundings": {
                     "x1": 31700.0,
@@ -23867,7 +24148,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Elevator to Cataris - Transport to Artaria": {
+                        "Elevator to Cataris": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -23909,7 +24190,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Elevator to Cataris - Transport to Artaria": {
+                        "Elevator to Cataris": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -23918,7 +24199,7 @@
                         }
                     }
                 },
-                "Elevator to Cataris - Transport to Artaria": {
+                "Elevator to Cataris": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -23937,17 +24218,16 @@
                         "target_spawn_point": "LE_Platform_Elevator_FromCave",
                         "start_point_actor_name": "LE_Platform_Elevator_FromMagma",
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad",
-                        "keep_name_when_vanilla": true,
-                        "editable": true
+                        "transporter_name": "Artaria - Thermal Device"
                     },
                     "valid_starting_location": false,
-                    "dock_type": "teleporter",
+                    "dock_type": "elevator",
                     "default_connection": {
                         "region": "Cataris",
                         "area": "Transport to Artaria",
-                        "node": "Elevator to Artaria - Transport to Cataris"
+                        "node": "Elevator to Artaria"
                     },
-                    "default_dock_weakness": "Teleporter",
+                    "default_dock_weakness": "Elevator",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -24929,7 +25209,7 @@
             }
         },
         "Transport to Burenia": {
-            "default_node": "Elevator to Burenia - Transport to Artaria",
+            "default_node": "Elevator to Burenia",
             "extra": {
                 "total_boundings": {
                     "x1": -27800.0,
@@ -24991,7 +25271,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Elevator to Burenia - Transport to Artaria": {
+                        "Elevator to Burenia": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -25020,7 +25300,7 @@
                     "pickup_index": 32,
                     "location_category": "minor",
                     "connections": {
-                        "Elevator to Burenia - Transport to Artaria": {
+                        "Elevator to Burenia": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -25031,7 +25311,7 @@
                         }
                     }
                 },
-                "Elevator to Burenia - Transport to Artaria": {
+                "Elevator to Burenia": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -25050,17 +25330,16 @@
                         "target_spawn_point": "elevator_cave_000_platform",
                         "start_point_actor_name": "elevator_aqua_000_platform",
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad",
-                        "keep_name_when_vanilla": true,
-                        "editable": true
+                        "transporter_name": "Artaria - Screw Attack"
                     },
                     "valid_starting_location": false,
-                    "dock_type": "teleporter",
+                    "dock_type": "elevator",
                     "default_connection": {
                         "region": "Burenia",
                         "area": "Transport to Artaria",
-                        "node": "Elevator to Artaria - Transport to Burenia"
+                        "node": "Elevator to Artaria"
                     },
-                    "default_dock_weakness": "Teleporter",
+                    "default_dock_weakness": "Elevator",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -26113,16 +26392,14 @@
                         "elevator_component": "CTeleporterUsableComponent",
                         "target_spawn_point": "teleporter_cave_000_platform",
                         "start_point_actor_name": "teleporter_magma_000_platform",
-                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad",
-                        "keep_name_when_vanilla": true,
-                        "editable": true
+                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad"
                     },
                     "valid_starting_location": false,
                     "dock_type": "teleporter",
                     "default_connection": {
                         "region": "Cataris",
                         "area": "Teleport to Artaria (Blue)",
-                        "node": "Teleporter to Artaria - Screw Attack Room"
+                        "node": "Teleporter to Artaria"
                     },
                     "default_dock_weakness": "Teleporter",
                     "exclude_from_dock_rando": false,

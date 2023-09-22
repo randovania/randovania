@@ -1,9 +1,15 @@
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+
 from randovania.exporter.hints.hint_formatters import TemplatedFormatter
-from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.hint import HintLocationPrecision
 from randovania.games.common.prime_family.exporter.hint_namer import PrimeFamilyHintNamer, colorize_text
 from randovania.games.prime2.exporter.hint_formaters import GuardianFormatter
-from randovania.interface_common.players_configuration import PlayersConfiguration
+
+if TYPE_CHECKING:
+    from randovania.game_description.game_patches import GamePatches
+    from randovania.interface_common.players_configuration import PlayersConfiguration
 
 
 class EchoesHintNamer(PrimeFamilyHintNamer):
@@ -11,8 +17,7 @@ class EchoesHintNamer(PrimeFamilyHintNamer):
         super().__init__(all_patches, players_config)
 
         self.location_formatters[HintLocationPrecision.KEYBEARER] = TemplatedFormatter(
-            "The Flying Ing Cache in {node} contains {determiner}{pickup}.",
-            self
+            "The Flying Ing Cache in {node} contains {determiner}{pickup}.", self
         )
         self.location_formatters[HintLocationPrecision.GUARDIAN] = GuardianFormatter(
             lambda msg, with_color: colorize_text("#FF3333", msg, with_color),

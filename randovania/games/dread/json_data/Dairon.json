@@ -162,7 +162,7 @@
             }
         },
         "Teleport to Artaria": {
-            "default_node": "Teleporter to Artaria - Teleport to Dairon",
+            "default_node": "Teleporter to Artaria",
             "extra": {
                 "total_boundings": {
                     "x1": 16000.0,
@@ -353,25 +353,8 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Event - Push Wide Beam Block": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Push Wide Beam Block"
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Wave",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
+                            "type": "template",
+                            "data": "Push Wide Beam Block with Wave Beam"
                         },
                         "Wide Beam Block - Adjacent": {
                             "type": "resource",
@@ -532,15 +515,6 @@
                                                         "amount": 2,
                                                         "negate": false
                                                     }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "events",
-                                                        "name": "DaironTeleportToArtariaSpeedBlocksDestroyed",
-                                                        "amount": 1,
-                                                        "negate": true
-                                                    }
                                                 }
                                             ]
                                         }
@@ -570,15 +544,6 @@
                                                         "name": "SpeedBoostUpgrade",
                                                         "amount": 1,
                                                         "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "events",
-                                                        "name": "DaironTeleportToArtariaSpeedBlocksDestroyed",
-                                                        "amount": 1,
-                                                        "negate": true
                                                     }
                                                 }
                                             ]
@@ -618,7 +583,7 @@
                         }
                     }
                 },
-                "Teleporter to Artaria - Teleport to Dairon": {
+                "Teleporter to Artaria": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -636,16 +601,14 @@
                         "elevator_component": "CTeleporterUsableComponent",
                         "target_spawn_point": "teleport_baselab_000_platform",
                         "start_point_actor_name": "teleport_cave_000_platform",
-                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad",
-                        "keep_name_when_vanilla": true,
-                        "editable": true
+                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad"
                     },
                     "valid_starting_location": false,
                     "dock_type": "teleporter",
                     "default_connection": {
                         "region": "Artaria",
                         "area": "Teleport to Dairon",
-                        "node": "Teleporter to Dairon - Teleport to Artaria"
+                        "node": "Teleporter to Dairon"
                     },
                     "default_dock_weakness": "Teleporter",
                     "exclude_from_dock_rando": false,
@@ -1020,7 +983,7 @@
                                 "items": []
                             }
                         },
-                        "Teleporter to Artaria - Teleport to Dairon": {
+                        "Teleporter to Artaria": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1174,19 +1137,6 @@
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "template",
-                                        "data": "Push Wide Beam Block"
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Wave",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
                                         "type": "resource",
                                         "data": {
                                             "type": "tricks",
@@ -1194,6 +1144,10 @@
                                             "amount": 1,
                                             "negate": false
                                         }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Push Wide Beam Block with Wave Beam"
                                     }
                                 ]
                             }
@@ -1407,7 +1361,7 @@
             }
         },
         "East Transport to Ferenia": {
-            "default_node": "Elevator to Ferenia - East Transport to Darion",
+            "default_node": "Elevator to Ferenia",
             "extra": {
                 "total_boundings": {
                     "x1": 12000.0,
@@ -1465,7 +1419,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Elevator to Ferenia - East Transport to Darion": {
+                        "Elevator to Ferenia": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
@@ -1485,7 +1439,7 @@
                         }
                     }
                 },
-                "Elevator to Ferenia - East Transport to Darion": {
+                "Elevator to Ferenia": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1504,17 +1458,16 @@
                         "target_spawn_point": "elevator_baselab_000_platform",
                         "start_point_actor_name": "elevator_sanctuary_000_platform",
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad",
-                        "keep_name_when_vanilla": true,
-                        "editable": true
+                        "transporter_name": "Dairon - Grapple Block"
                     },
                     "valid_starting_location": false,
-                    "dock_type": "teleporter",
+                    "dock_type": "elevator",
                     "default_connection": {
                         "region": "Ferenia",
-                        "area": "East Transport to Darion",
-                        "node": "Elevator to Dairon - East Transport to Ferenia"
+                        "area": "East Transport to Dairon",
+                        "node": "Elevator to Dairon"
                     },
-                    "default_dock_weakness": "Teleporter",
+                    "default_dock_weakness": "Elevator",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -2774,7 +2727,7 @@
             }
         },
         "Teleport to Cataris": {
-            "default_node": "Teleporter to Cataris - Teleport to Dairon",
+            "default_node": "Teleporter to Cataris",
             "extra": {
                 "total_boundings": {
                     "x1": 1000.0,
@@ -3035,7 +2988,7 @@
                         }
                     }
                 },
-                "Teleporter to Cataris - Teleport to Dairon": {
+                "Teleporter to Cataris": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3053,16 +3006,14 @@
                         "elevator_component": "CTeleporterUsableComponent",
                         "target_spawn_point": "teleport_baselab_000_platform",
                         "start_point_actor_name": "teleport_magma_000_platform",
-                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad",
-                        "keep_name_when_vanilla": true,
-                        "editable": true
+                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad"
                     },
                     "valid_starting_location": false,
                     "dock_type": "teleporter",
                     "default_connection": {
                         "region": "Cataris",
                         "area": "Teleport to Dairon",
-                        "node": "Teleporter to Dairon - Teleport to Cataris"
+                        "node": "Teleporter to Dairon"
                     },
                     "default_dock_weakness": "Teleporter",
                     "exclude_from_dock_rando": false,
@@ -3172,7 +3123,7 @@
                             "type": "template",
                             "data": "Shoot Diffusion or Wave"
                         },
-                        "Teleporter to Cataris - Teleport to Dairon": {
+                        "Teleporter to Cataris": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4592,7 +4543,7 @@
             }
         },
         "Transport to Artaria": {
-            "default_node": "Elevator to Artaria - Transport to Dairon",
+            "default_node": "Elevator to Artaria",
             "extra": {
                 "total_boundings": {
                     "x1": 12000.0,
@@ -4719,7 +4670,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Elevator to Artaria - Transport to Dairon": {
+                        "Elevator to Artaria": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -4991,7 +4942,7 @@
                     "valid_starting_location": false,
                     "event_name": "s030_baselab:default:grapplepulloff1x2_006",
                     "connections": {
-                        "Elevator to Artaria - Transport to Dairon": {
+                        "Elevator to Artaria": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -5036,7 +4987,7 @@
                         }
                     }
                 },
-                "Elevator to Artaria - Transport to Dairon": {
+                "Elevator to Artaria": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5055,17 +5006,16 @@
                         "target_spawn_point": "elevator_baselab_000_platform",
                         "start_point_actor_name": "elevator_cave_000_platform",
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad",
-                        "keep_name_when_vanilla": true,
-                        "editable": true
+                        "transporter_name": "Dairon - Superheated"
                     },
                     "valid_starting_location": false,
-                    "dock_type": "teleporter",
+                    "dock_type": "elevator",
                     "default_connection": {
                         "region": "Artaria",
                         "area": "Transport to Dairon",
                         "node": "Elevator to Dairon"
                     },
-                    "default_dock_weakness": "Teleporter",
+                    "default_dock_weakness": "Elevator",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -5391,7 +5341,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Elevator to Artaria - Transport to Dairon": {
+                        "Elevator to Artaria": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8367,48 +8317,48 @@
                                                             {
                                                                 "type": "template",
                                                                 "data": "Use Spin Boost"
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Speed",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "events",
+                                                                    "name": "DaironYellowSpeedBlocks",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
                                                             },
                                                             {
-                                                                "type": "and",
+                                                                "type": "resource",
                                                                 "data": {
-                                                                    "comment": null,
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "items",
-                                                                                "name": "Speed",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "or",
-                                                                            "data": {
-                                                                                "comment": null,
-                                                                                "items": [
-                                                                                    {
-                                                                                        "type": "resource",
-                                                                                        "data": {
-                                                                                            "type": "events",
-                                                                                            "name": "DaironYellowSpeedBlocks",
-                                                                                            "amount": 1,
-                                                                                            "negate": false
-                                                                                        }
-                                                                                    },
-                                                                                    {
-                                                                                        "type": "resource",
-                                                                                        "data": {
-                                                                                            "type": "misc",
-                                                                                            "name": "DoorLocks",
-                                                                                            "amount": 1,
-                                                                                            "negate": true
-                                                                                        }
-                                                                                    }
-                                                                                ]
-                                                                            }
-                                                                        }
-                                                                    ]
+                                                                    "type": "misc",
+                                                                    "name": "DoorLocks",
+                                                                    "amount": 1,
+                                                                    "negate": true
                                                                 }
                                                             }
                                                         ]
@@ -8602,7 +8552,7 @@
             }
         },
         "West Transport to Ferenia": {
-            "default_node": "Elevator to Ferenia - Transport to Dairon",
+            "default_node": "Elevator to Ferenia",
             "extra": {
                 "total_boundings": {
                     "x1": 1000.0,
@@ -8820,16 +8770,20 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Elevator to Ferenia - Transport to Dairon": {
+                        "Elevator to Ferenia": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Event - Ferenia Transport Wide Beam Block  Above": {
+                            "type": "template",
+                            "data": "Push Wide Beam Block with Wave Beam"
                         }
                     }
                 },
-                "Elevator to Ferenia - Transport to Dairon": {
+                "Elevator to Ferenia": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8848,17 +8802,16 @@
                         "target_spawn_point": "elevator_baselab_001_platform",
                         "start_point_actor_name": "elevator_sanctuary_001_platform",
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad",
-                        "keep_name_when_vanilla": true,
-                        "editable": true
+                        "transporter_name": "Dairon - DNA Station"
                     },
                     "valid_starting_location": false,
-                    "dock_type": "teleporter",
+                    "dock_type": "elevator",
                     "default_connection": {
                         "region": "Ferenia",
                         "area": "Transport to Dairon",
-                        "node": "Elevator to Dairon - West Transport to Ferenia"
+                        "node": "Elevator to Dairon"
                     },
-                    "default_dock_weakness": "Teleporter",
+                    "default_dock_weakness": "Elevator",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -8890,6 +8843,31 @@
                     "event_name": "DaironWideBeamBlockFerenia",
                     "connections": {
                         "Door to Navigation Station North (Lower)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Ferenia Transport Wide Beam Block  Above": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 2522.42,
+                        "y": 6899.28,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "DaironWideBeamBlockFerenia",
+                    "connections": {
+                        "Door to Navigation Station North (Upper)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -16955,7 +16933,7 @@
             }
         },
         "Transport to Cataris": {
-            "default_node": "Elevator to Cataris - Transport to Dairon",
+            "default_node": "Shuttle to Cataris",
             "extra": {
                 "total_boundings": {
                     "x1": 20400.0,
@@ -17017,7 +16995,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Elevator to Cataris - Transport to Dairon": {
+                        "Shuttle to Cataris": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -17026,7 +17004,7 @@
                         }
                     }
                 },
-                "Elevator to Cataris - Transport to Dairon": {
+                "Shuttle to Cataris": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -17045,17 +17023,16 @@
                         "target_spawn_point": "wagontrain_baselab_000_platform",
                         "start_point_actor_name": "wagontrain_magma_000_platform",
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_train/charclasses/weightactivatedplatform_train.bmsad",
-                        "keep_name_when_vanilla": true,
-                        "editable": true
+                        "transporter_name": "Dairon - Entrance"
                     },
                     "valid_starting_location": false,
-                    "dock_type": "teleporter",
+                    "dock_type": "shuttle",
                     "default_connection": {
                         "region": "Cataris",
                         "area": "Transport to Dairon",
-                        "node": "Elevator to Dairon - Transport to Cataris"
+                        "node": "Shuttle to Dairon"
                     },
-                    "default_dock_weakness": "Teleporter",
+                    "default_dock_weakness": "Shuttle",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -17235,7 +17212,7 @@
             }
         },
         "Lower Transport to Burenia": {
-            "default_node": "Tram to Burenia - Lower Transport to Dairon",
+            "default_node": "Shuttle to Burenia",
             "extra": {
                 "total_boundings": {
                     "x1": -25100.0,
@@ -17297,7 +17274,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Tram to Burenia - Lower Transport to Dairon": {
+                        "Shuttle to Burenia": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -17306,7 +17283,7 @@
                         }
                     }
                 },
-                "Tram to Burenia - Lower Transport to Dairon": {
+                "Shuttle to Burenia": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -17325,17 +17302,16 @@
                         "target_spawn_point": "wagontrain_baselab_001_platform",
                         "start_point_actor_name": "wagontrain_aqua_001_platform",
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_train/charclasses/weightactivatedplatform_train.bmsad",
-                        "keep_name_when_vanilla": true,
-                        "editable": true
+                        "transporter_name": "Dairon - Submarine"
                     },
                     "valid_starting_location": false,
-                    "dock_type": "teleporter",
+                    "dock_type": "shuttle",
                     "default_connection": {
                         "region": "Burenia",
                         "area": "Lower Transport to Dairon",
-                        "node": "Tram to Dairon - Lower Transport to Burenia"
+                        "node": "Shuttle to Dairon"
                     },
-                    "default_dock_weakness": "Teleporter",
+                    "default_dock_weakness": "Shuttle",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -17353,7 +17329,7 @@
             }
         },
         "Upper Transport to Burenia": {
-            "default_node": "Tram to Burenia - Upper Transport to Dairon",
+            "default_node": "Shuttle to Burenia",
             "extra": {
                 "total_boundings": {
                     "x1": -27900.0,
@@ -17415,7 +17391,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Tram to Burenia - Upper Transport to Dairon": {
+                        "Shuttle to Burenia": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -17424,7 +17400,7 @@
                         }
                     }
                 },
-                "Tram to Burenia - Upper Transport to Dairon": {
+                "Shuttle to Burenia": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -17443,17 +17419,16 @@
                         "target_spawn_point": "wagontrain_baselab_000_platform",
                         "start_point_actor_name": "wagontrain_aqua_000_platform",
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_train/charclasses/weightactivatedplatform_train.bmsad",
-                        "keep_name_when_vanilla": true,
-                        "editable": true
+                        "transporter_name": "Dairon - Sea Bridge"
                     },
                     "valid_starting_location": false,
-                    "dock_type": "teleporter",
+                    "dock_type": "shuttle",
                     "default_connection": {
                         "region": "Burenia",
                         "area": "Upper Transport to Dairon",
-                        "node": "Tram to Dairon - Upper Transport to Burenia"
+                        "node": "Shuttle to Dairon"
                     },
-                    "default_dock_weakness": "Teleporter",
+                    "default_dock_weakness": "Shuttle",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -17471,7 +17446,7 @@
             }
         },
         "Transport to Ghavoran": {
-            "default_node": "Elevator to Ghavoran - Transport to Dairon",
+            "default_node": "Elevator to Ghavoran",
             "extra": {
                 "total_boundings": {
                     "x1": -18100.0,
@@ -17500,7 +17475,7 @@
                 "asset_id": "collision_camera_047"
             },
             "nodes": {
-                "Elevator to Ghavoran - Transport to Dairon": {
+                "Elevator to Ghavoran": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -17519,17 +17494,16 @@
                         "target_spawn_point": "elevator_baselab_000_platform",
                         "start_point_actor_name": "elevator_forest_000_platform",
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad",
-                        "keep_name_when_vanilla": true,
-                        "editable": true
+                        "transporter_name": "Dairon - Freezer"
                     },
                     "valid_starting_location": false,
-                    "dock_type": "teleporter",
+                    "dock_type": "elevator",
                     "default_connection": {
                         "region": "Ghavoran",
                         "area": "Transport to Dairon",
-                        "node": "Elevator to Dairon - Transport to Ghavoran"
+                        "node": "Elevator to Dairon"
                     },
-                    "default_dock_weakness": "Teleporter",
+                    "default_dock_weakness": "Elevator",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -17570,7 +17544,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Elevator to Ghavoran - Transport to Dairon": {
+                        "Elevator to Ghavoran": {
                             "type": "and",
                             "data": {
                                 "comment": null,

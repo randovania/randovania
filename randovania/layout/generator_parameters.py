@@ -1,22 +1,27 @@
+from __future__ import annotations
+
 import functools
 import json
 from dataclasses import dataclass
 from random import Random
-from typing import Iterator
+from typing import TYPE_CHECKING
 
 from randovania.bitpacking import bitpacking
-from randovania.bitpacking.bitpacking import BitPackValue, BitPackDecoder
+from randovania.bitpacking.bitpacking import BitPackDecoder, BitPackValue
 from randovania.games import default_data
 from randovania.games.game import RandovaniaGame
 from randovania.interface_common.preset_manager import PresetManager
 from randovania.layout.preset import Preset
 
-_PERMALINK_MAX_SEED = 2 ** 31
+if TYPE_CHECKING:
+    from collections.abc import Iterator
+
+_PERMALINK_MAX_SEED = 2**31
 _PERMALINK_PLAYER_COUNT_LIMITS = (2, 256)
 
 
 def raw_database_hash(data: dict) -> int:
-    return bitpacking.single_byte_hash(json.dumps(data, separators=(',', ':')).encode("UTF-8"))
+    return bitpacking.single_byte_hash(json.dumps(data, separators=(",", ":")).encode("UTF-8"))
 
 
 def game_db_hash(game: RandovaniaGame) -> int:
@@ -84,7 +89,7 @@ class GeneratorParameters(BitPackValue):
                 yield game_db_hash(game), 256
 
     @classmethod
-    def bit_pack_unpack(cls, decoder: BitPackDecoder, metadata) -> "GeneratorParameters":
+    def bit_pack_unpack(cls, decoder: BitPackDecoder, metadata) -> GeneratorParameters:
         games = decode_game_list(decoder)
         seed_number = decoder.decode_single(_PERMALINK_MAX_SEED)
         spoiler = bitpacking.decode_bool(decoder)
@@ -93,19 +98,20 @@ class GeneratorParameters(BitPackValue):
             development = bitpacking.decode_bool(decoder)
 
         manager = PresetManager(None)
-        presets = [
-            Preset.bit_pack_unpack(decoder, {"manager": manager, "game": game})
-            for game in games
-        ]
+        presets = [Preset.bit_pack_unpack(decoder, {"manager": manager, "game": game}) for game in games]
 
         if not development:
             for game in _get_unique_games(presets):
                 included_data_hash = decoder.decode_single(256)
                 expected_data_hash = game_db_hash(game)
                 if included_data_hash != expected_data_hash:
-                    raise ValueError("Expected {} database with hash {}, but found {} instead.".format(
-                        game.long_name, included_data_hash, expected_data_hash,
-                    ))
+                    raise ValueError(
+                        "Expected {} database with hash {}, but found {} instead.".format(
+                            game.long_name,
+                            included_data_hash,
+                            expected_data_hash,
+                        )
+                    )
 
         return GeneratorParameters(seed_number, spoiler, presets, development=development)
 
@@ -123,14 +129,14 @@ class GeneratorParameters(BitPackValue):
         return Random(self.seed_number if self.development else self.as_bytes)
 
     @classmethod
-    def from_bytes(cls, b: bytes) -> "GeneratorParameters":
+    def from_bytes(cls, b: bytes) -> GeneratorParameters:
         decoder = BitPackDecoder(b)
         result = GeneratorParameters.bit_pack_unpack(decoder, {})
         decoder.ensure_data_end()
         return result
 
     @property
-    def player_count(self) -> int:
+    def world_count(self) -> int:
         return len(self.presets)
 
     def get_preset(self, index: int) -> Preset:

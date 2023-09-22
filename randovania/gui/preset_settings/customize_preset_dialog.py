@@ -1,15 +1,19 @@
 from __future__ import annotations
 
-from PySide6 import QtWidgets, QtGui
+from typing import TYPE_CHECKING
+
+from PySide6 import QtGui, QtWidgets
 
 from randovania.gui import game_specific_gui
 from randovania.gui.generated.customize_preset_dialog_ui import Ui_CustomizePresetDialog
 from randovania.gui.lib import common_qt_lib
-from randovania.gui.lib.window_manager import WindowManager
-from randovania.gui.preset_settings.preset_tab import PresetTab
-from randovania.interface_common.preset_editor import PresetEditor
 from randovania.layout import filtered_database
-from randovania.layout.preset import Preset
+
+if TYPE_CHECKING:
+    from randovania.gui.lib.window_manager import WindowManager
+    from randovania.gui.preset_settings.preset_tab import PresetTab
+    from randovania.interface_common.preset_editor import PresetEditor
+    from randovania.layout.preset import Preset
 
 
 class PresetTabRoot(QtWidgets.QWidget):
@@ -76,21 +80,20 @@ class CustomizePresetDialog(QtWidgets.QDialog, Ui_CustomizePresetDialog):
             tab_widget = self.main_tab_widget.widget(i)
             if isinstance(tab_widget, QtWidgets.QTabWidget):
                 self.main_tab_widget.setTabVisible(i, tab_widget.count() > 0)
-       
 
         self.name_edit.textEdited.connect(self._edit_name)
-        self.description_edit.textChanged.connect(self._edit_description)       
+        self.description_edit.textChanged.connect(self._edit_description)
         self.button_box.accepted.connect(self.accept)
         self.button_box.rejected.connect(self.reject)
 
     def update_experimental_visibility(self):
-        for (parent, tabs) in [
+        for parent, tabs in [
             (self.patches_tab_widget, [x for x in self._tab_types if x.uses_patches_tab()]),
             (self.logic_tab_widget, [x for x in self._tab_types if not x.uses_patches_tab()]),
         ]:
-            for i in range(0, parent.count()):
+            for i in range(parent.count()):
                 tab = tabs[i]
-                visible = (self.editor._options.experimental_settings or not tab.is_experimental())
+                visible = self.editor._options.experimental_settings or not tab.is_experimental()
                 parent.setTabVisible(i, visible)
 
     def set_visible_tab(self, tab: PresetTabRoot):
@@ -108,12 +111,11 @@ class CustomizePresetDialog(QtWidgets.QDialog, Ui_CustomizePresetDialog):
 
     def _edit_name(self, value: str):
         with self._editor as editor:
-            editor.name = value  
-            
+            editor.name = value
+
     def _edit_description(self):
         with self._editor as editor:
-            editor.description = self.description_edit.toPlainText() 
-            
+            editor.description = self.description_edit.toPlainText()
 
     @property
     def editor(self):

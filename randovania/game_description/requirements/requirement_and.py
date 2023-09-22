@@ -1,8 +1,14 @@
-from randovania.game_description.requirements.array_base import RequirementArrayBase, mergeable_array, expand_items
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+
+from randovania.game_description.requirements.array_base import RequirementArrayBase, expand_items, mergeable_array
 from randovania.game_description.requirements.base import MAX_DAMAGE, Requirement
 from randovania.game_description.requirements.requirement_set import RequirementSet
-from randovania.game_description.resources.resource_database import ResourceDatabase
-from randovania.game_description.resources.resource_info import ResourceCollection
+
+if TYPE_CHECKING:
+    from randovania.game_description.resources.resource_collection import ResourceCollection
+    from randovania.game_description.resources.resource_database import ResourceDatabase
 
 
 class RequirementAnd(RequirementArrayBase):
@@ -38,9 +44,9 @@ class RequirementAnd(RequirementArrayBase):
         return result
 
     @classmethod
-    def combinator(cls):
+    def combinator(cls) -> str:
         return " and "
 
     @classmethod
-    def _str_no_items(cls):
+    def _str_no_items(cls) -> str:
         return "Trivial"

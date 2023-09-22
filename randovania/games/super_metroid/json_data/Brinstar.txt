@@ -5,31 +5,31 @@ Extra - asset_id: 67
 > Door to Green Brinstar Map Access; Heals? False
   * Layers: default
   * Missile Door to Green Brinstar Map Access/Door to Green Brinstar Main Shaft
-  > Elevator - Elevator to Green Brinstar
+  > Teleporter to Crateria
       Trivial
 
 > Door to Green Brinstar Upper Save Station; Heals? False
   * Layers: default
   * Missile Door to Green Brinstar Upper Save Station/Door to Green Brinstar Main Shaft
-  > Elevator - Elevator to Green Brinstar
+  > Teleporter to Crateria
       Trivial
 
 > Door to Early Supers Room; Heals? False
   * Layers: default
   * Missile Door to Early Supers Room/Door to Green Brinstar Main Shaft
-  > Elevator - Elevator to Green Brinstar
+  > Teleporter to Crateria
       Trivial
 
 > Door to Green Brinstar Fireflea Room; Heals? False
   * Layers: default
   * Missile Door to Green Brinstar Fireflea Room/Door to Green Brinstar Main Shaft
-  > Elevator - Elevator to Green Brinstar
+  > Teleporter to Crateria
       Trivial
 
 > Door to Dachora Room; Heals? False
   * Layers: default
   * Missile Door to Dachora Room/Door to Green Brinstar Main Shaft
-  > Elevator - Elevator to Green Brinstar
+  > Teleporter to Crateria
       Trivial
 
 > Door from Green Brinstar Main Shaft; Heals? False
@@ -43,16 +43,14 @@ Extra - asset_id: 67
   * Normal Door to Green Brinstar Beetom Room/Door to Green Brinstar Main Shaft
   > Door from Green Brinstar Main Shaft
       Trivial
-  > Elevator - Elevator to Green Brinstar
+  > Teleporter to Crateria
       Morph Ball and Power Bombs
 
-> Elevator - Elevator to Green Brinstar; Heals? False; Default Node
+> Teleporter to Crateria; Heals? False; Default Node
   * Layers: default
-  * Teleporter to Elevator to Green Brinstar/Door to Lower Mushrooms
+  * Teleporter to Elevator to Green Brinstar/Teleporter to Brinstar
   * Extra - scan_asset_id: None
   * Extra - teleporter_instance_id: None
-  * Extra - keep_name_when_vanilla: False
-  * Extra - editable: False
   > Door to Green Brinstar Map Access
       Trivial
   > Door to Green Brinstar Upper Save Station
@@ -133,9 +131,8 @@ Extra - asset_id: 70
   > Door to Green Brinstar Reserve Tank Room
       Any of the following:
           Speed Booster
-          All of the following:
-              # https://www.youtube.com/watch?v=7bHxm5TttRI
-              Morph Ball and Machball (Intermediate)
+          # https://www.youtube.com/watch?v=7bHxm5TttRI
+          Morph Ball and Machball (Intermediate)
   > Pickup (Missile Expansion)
       Trivial
 
@@ -542,7 +539,7 @@ Extra - asset_id: 85
                       Hi-Jump Boots and Gate Glitch (Advanced)
           Any of the following:
               Grapple Beam or Space Jump or Wall Jumps (Beginner)
-              Morph Ball Bombs and Morph Ball and Infinite Bomb Jump (Intermediate)
+              Morph Ball Bombs and Morph Ball and Vertical Infinite Bomb Jump (Intermediate)
 
 > Door to Pink Brinstar Energy Tank Room; Heals? False
   * Layers: default
@@ -675,7 +672,7 @@ Extra - asset_id: 92
           Morph Ball
           Any of the following:
               Hi-Jump Boots or Space Jump or Wall Jumps (Beginner)
-              Morph Ball Bombs and Morph Ball and Infinite Bomb Jump (Intermediate)
+              Morph Ball Bombs and Morph Ball and Vertical Infinite Bomb Jump (Intermediate)
 
 > Door to Retro Brinstar; Heals? False
   * Layers: default
@@ -702,8 +699,16 @@ Extra - asset_id: 93
 > Door to Green Hill Zone; Heals? False
   * Layers: default
   * Normal Door to Green Hill Zone/Door to Retro Brinstar
-  > Elevator - Elevator to Blue Brinstar
-      Morph Ball and Power Bombs
+  > Teleporter to Crateria
+      Any of the following:
+          # Use PBs for both bomb block and PB blocks
+          Power Bombs ≥ 2 and Can Lay Power Bombs
+          All of the following:
+              # Destroy bomb blocks with something else and PB blocks with PBs
+              Can Lay Power Bombs
+              Any of the following:
+                  Can Lay Bombs
+                  Speed Booster and Machball (Expert) and Short Charge (Expert)
   > Pickup (Power Bomb Expansion)
       All of the following:
           Morph Ball
@@ -712,18 +717,16 @@ Extra - asset_id: 93
 > Door to Construction Zone; Heals? False
   * Layers: default
   * Normal Door to Construction Zone/Door to Retro Brinstar
-  > Elevator - Elevator to Blue Brinstar
+  > Teleporter to Crateria
       Trivial
 
-> Elevator - Elevator to Blue Brinstar; Heals? False; Default Node
+> Teleporter to Crateria; Heals? False; Default Node
   * Layers: default
-  * Teleporter to Elevator to Blue Brinstar/Door to Old Mother Brain
+  * Teleporter to Elevator to Blue Brinstar/Teleporter to Brinstar
   * Extra - scan_asset_id: None
   * Extra - teleporter_instance_id: None
-  * Extra - keep_name_when_vanilla: False
-  * Extra - editable: False
   > Door to Green Hill Zone
-      Morph Ball and Power Bombs
+      Can Lay Power Bombs
   > Door to Construction Zone
       Trivial
   > Pickup (Morph Ball)
@@ -740,7 +743,7 @@ Extra - asset_id: 93
 > Event - Crateria Wakeup; Heals? False
   * Layers: default
   * Event Crateria Wakeup
-  > Elevator - Elevator to Blue Brinstar
+  > Teleporter to Crateria
       Morph Ball
 
 > Pickup (Power Bomb Expansion); Heals? False
@@ -750,7 +753,7 @@ Extra - asset_id: 93
       All of the following:
           Morph Ball
           Morph Ball Bombs or Power Bombs
-  > Elevator - Elevator to Blue Brinstar
+  > Teleporter to Crateria
       Morph Ball and Power Bombs
 
 ----------------
@@ -786,12 +789,24 @@ Extra - asset_id: 95
   * Normal Door to Construction Zone/Door to Blue Brinstar Energy Tank Room
   > Door to Blue Brinstar Boulder Room
       All of the following:
-          Morph Ball and Power Bombs ≥ 2
+          # Destroy Bottom PB blocks
+          Can Lay Power Bombs
           Any of the following:
+              # Destroy upper bomb blocks
+              Power Bombs ≥ 2 or Screw Attack
+              All of the following:
+                  Morph Ball Bombs
+                  # Use Mid-Air Morph or IBJ
+                  Vertical Infinite Bomb Jump (Advanced) or Movement (Intermediate)
+          Any of the following:
+              # Get up shaft
               Space Jump or Wall Jumps (Intermediate)
-              Morph Ball Bombs and Infinite Bomb Jump (Intermediate)
+              # Shinespark
+              Speed Booster and Shinespark (Beginner)
+              # VIBJ
+              Vertical Infinite Bomb Jump (Intermediate) and Can Lay Bombs
   > Pickup (Energy Tank)
-      Hi-Jump Boots or Space Jump
+      Hi-Jump Boots or Space Jump or Speed Booster or Damage Boosting (Beginner)
   > Pickup (Missile Expansion)
       Morph Ball
 
@@ -799,7 +814,9 @@ Extra - asset_id: 95
   * Layers: default
   * Normal Door to Blue Brinstar Boulder Room/Door to Blue Brinstar Energy Tank Room
   > Door to Construction Zone
-      Morph Ball and Power Bombs ≥ 2
+      All of the following:
+          Morph Ball
+          Morph Ball Bombs or Power Bombs or Screw Attack
 
 > Pickup (Energy Tank); Heals? False
   * Layers: default
@@ -821,13 +838,21 @@ Extra - asset_id: 96
   * Layers: default
   * Normal Door to Blue Brinstar Energy Tank Room/Door to Blue Brinstar Boulder Room
   > Door to Blue Brinstar Double Missile Room
-      Gravity Suit
+      All of the following:
+          # Get out of the water
+          Gravity Suit or Movement (Beginner)
+          # Get over boulder pit
+          X-Ray Scope or Knowledge (Beginner)
 
 > Door to Blue Brinstar Double Missile Room; Heals? False
   * Layers: default
   * Normal Door to Blue Brinstar Double Missile Room/Door to Blue Brinstar Boulder Room
   > Door to Blue Brinstar Energy Tank Room
-      Trivial
+      All of the following:
+          # Get out of the water
+          Gravity Suit or Movement (Beginner)
+          # Get over boulder pit
+          X-Ray Scope or Knowledge (Beginner)
 
 ----------------
 Blue Brinstar Double Missile Room
@@ -899,9 +924,8 @@ Extra - asset_id: 100
           Space Jump
           Hi-Jump Boots and Ice Beam
           Super Missile ≥ 4 and Wall Jumps (Intermediate)
-          All of the following:
-              # https://www.youtube.com/watch?v=7bHxm5TttRI
-              Wall Jumps (Expert)
+          # https://www.youtube.com/watch?v=7bHxm5TttRI
+          Wall Jumps (Expert)
   > Door to Red Brinstar Bat Room
       Any of the following:
           Screw Attack
@@ -1025,7 +1049,7 @@ Extra - asset_id: 105
   * Super Missile Door to Red Brinstar Beta PBs Room/Door to Red Brinstar Zoro Room
   > Door to Red Tower Save Station
       Trivial
-  > Elevator - Elevator to Red Brinstar
+  > Teleporter to Crateria
       Trivial
 
 > Door to Red Tower Save Station; Heals? False
@@ -1042,13 +1066,11 @@ Extra - asset_id: 105
   > Door to Red Brinstar Beta PBs Room
       Morph Ball and Super Missile
 
-> Elevator - Elevator to Red Brinstar; Heals? False; Default Node
+> Teleporter to Crateria; Heals? False; Default Node
   * Layers: default
-  * Teleporter to Elevator to Red Brinstar/Door to Crateria Kihunter Room
+  * Teleporter to Elevator to Red Brinstar/Teleporter to Brinstar
   * Extra - scan_asset_id: None
   * Extra - teleporter_instance_id: None
-  * Extra - keep_name_when_vanilla: False
-  * Extra - editable: False
   > Door to Red Brinstar Beta PBs Room
       Trivial
 
@@ -1182,11 +1204,10 @@ Extra - asset_id: 112
               Morph Ball and Super Missile
           Any of the following:
               Hi-Jump Boots or Space Jump
-              All of the following:
-                  # https://www.youtube.com/watch?v=rHMHqTHHqHs&ab_channel=VGsWalkthrough
-                  Movement (Beginner) and Wall Jumps (Beginner)
-              Morph Ball Bombs and Morph Ball and Infinite Bomb Jump (Beginner)
-  > Elevator - Business Center
+              # https://www.youtube.com/watch?v=rHMHqTHHqHs&ab_channel=VGsWalkthrough
+              Movement (Beginner) and Wall Jumps (Beginner)
+              Morph Ball Bombs and Morph Ball and Vertical Infinite Bomb Jump (Beginner)
+  > Teleporter to Norfair
       Trivial
 
 > Door to Warehouse Zeela Room; Heals? False
@@ -1197,13 +1218,11 @@ Extra - asset_id: 112
           Super Missile ≥ 3
           Morph Ball and Super Missile
 
-> Elevator - Business Center; Heals? False
+> Teleporter to Norfair; Heals? False
   * Layers: default
-  * Teleporter to Business Center/Elevator - Warehouse Entrance
+  * Teleporter to Business Center/Teleporter to Brinstar
   * Extra - scan_asset_id: None
   * Extra - teleporter_instance_id: None
-  * Extra - keep_name_when_vanilla: False
-  * Extra - editable: False
   > Door to Red Brinstar East Tunnel
       Trivial
 
@@ -1285,7 +1304,7 @@ Extra - asset_id: 115
   > Door to Warehouse Zeela Room
       Any of the following:
           Hi-Jump Boots or Space Jump or Wall Jumps (Beginner)
-          Morph Ball Bombs and Morph Ball and Infinite Bomb Jump (Beginner)
+          Morph Ball Bombs and Morph Ball and Vertical Infinite Bomb Jump (Beginner)
 
 > Pickup (Missile Expansion); Heals? False
   * Layers: default

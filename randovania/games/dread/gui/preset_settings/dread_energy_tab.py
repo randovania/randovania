@@ -1,19 +1,23 @@
+from __future__ import annotations
+
 import functools
+from typing import TYPE_CHECKING
 
-from PySide6 import QtWidgets
-
-from randovania.game_description.game_description import GameDescription
 from randovania.games.dread.layout.dread_configuration import DreadConfiguration
 from randovania.gui.generated.preset_dread_energy_ui import Ui_PresetDreadEnergy
 from randovania.gui.lib import signal_handling
-from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.preset_settings.preset_tab import PresetTab
-from randovania.interface_common.preset_editor import PresetEditor
-from randovania.layout.preset import Preset
+
+if TYPE_CHECKING:
+    from PySide6 import QtWidgets
+
+    from randovania.game_description.game_description import GameDescription
+    from randovania.gui.lib.window_manager import WindowManager
+    from randovania.interface_common.preset_editor import PresetEditor
+    from randovania.layout.preset import Preset
 
 
 class PresetDreadEnergy(PresetTab, Ui_PresetDreadEnergy):
-
     def __init__(self, editor: PresetEditor, game_description: GameDescription, window_manager: WindowManager):
         super().__init__(editor, game_description, window_manager)
         self.setupUi(self)
@@ -31,8 +35,9 @@ class PresetDreadEnergy(PresetTab, Ui_PresetDreadEnergy):
                 check,
                 functools.partial(
                     self._persist_constant_environment_damage_enabled,
-                    field_name, spin,
-                )
+                    field_name,
+                    spin,
+                ),
             )
             spin.valueChanged.connect(self._persist_argument(field_name))
 

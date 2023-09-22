@@ -1,9 +1,11 @@
+from __future__ import annotations
+
 import logging
 
 from PySide6 import QtWidgets
 
 from randovania.gui.lib import async_dialog
-from randovania.interface_common.options import Options, DecodeFailedException
+from randovania.interface_common.options import DecodeFailedException, Options
 
 
 async def load_options_from_disk(options: Options) -> bool:
@@ -16,9 +18,11 @@ async def load_options_from_disk(options: Options) -> bool:
             None,
             QtWidgets.QMessageBox.Icon.Critical,
             "Error loading previous settings",
-            ("The following error occurred while restoring your settings:\n"
-             "{}\n\n"
-             "Do you want to reset this part of your settings?").format(decode_failed),
+            (
+                "The following error occurred while restoring your settings:\n"
+                f"{decode_failed}\n\n"
+                "Do you want to reset this part of your settings?"
+            ),
             QtWidgets.QMessageBox.StandardButton.Yes | QtWidgets.QMessageBox.StandardButton.No,
             QtWidgets.QMessageBox.StandardButton.No,
         )

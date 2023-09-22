@@ -1,35 +1,39 @@
+from __future__ import annotations
+
 import collections
 import dataclasses
 import re
 import typing
-from typing import DefaultDict
 
 from randovania.game_description import data_reader, data_writer
 from randovania.game_description.assignment import PickupAssignment, PickupTarget
-from randovania.game_description.game_description import GameDescription
-from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.hint import Hint
-from randovania.game_description.resources.pickup_entry import PickupEntry
-from randovania.game_description.resources.resource_info import ResourceCollection
-from randovania.game_description.resources.search import find_resource_info_with_long_name
-from randovania.game_description.db.area import Area
 from randovania.game_description.db.area_identifier import AreaIdentifier
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.db.pickup_node import PickupNode
-from randovania.game_description.db.region_list import RegionList
-from randovania.generator.pickup_pool import pool_creator, PoolResults
+from randovania.game_description.game_patches import GamePatches
+from randovania.game_description.hint import Hint
+from randovania.game_description.resources.resource_collection import ResourceCollection
+from randovania.game_description.resources.search import find_resource_info_with_long_name
+from randovania.generator.pickup_pool import PoolResults, pool_creator
 from randovania.layout import filtered_database
-from randovania.layout.base.base_configuration import BaseConfiguration
+
+if typing.TYPE_CHECKING:
+    from randovania.game_description.db.area import Area
+    from randovania.game_description.db.region_list import RegionList
+    from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.pickup.pickup_entry import PickupEntry
+    from randovania.layout.base.base_configuration import BaseConfiguration
 
 _ETM_NAME = "Energy Transfer Module"
 
 
-def _pickup_assignment_to_item_locations(region_list: RegionList,
-                                         pickup_assignment: PickupAssignment,
-                                         num_players: int,
-                                         ) -> dict[str, dict[str, str]]:
-    items_locations: DefaultDict[str, dict[str, str]] = collections.defaultdict(dict)
+def _pickup_assignment_to_item_locations(
+    region_list: RegionList,
+    pickup_assignment: PickupAssignment,
+    num_players: int,
+) -> dict[str, dict[str, str]]:
+    items_locations: collections.defaultdict[str, dict[str, str]] = collections.defaultdict(dict)
 
     for region, area, node in region_list.all_regions_areas_nodes:
         if not node.is_resource_node or not isinstance(node, PickupNode):
@@ -46,13 +50,7 @@ def _pickup_assignment_to_item_locations(region_list: RegionList,
 
         items_locations[region.correct_name(area.in_dark_aether)][region_list.node_name(node)] = item_name
 
-    return {
-        region: {
-            area: item
-            for area, item in sorted(items_locations[region].items())
-        }
-        for region in sorted(items_locations.keys())
-    }
+    return {region: dict(sorted(items_locations[region].items())) for region in sorted(items_locations.keys())}
 
 
 def _find_area_with_teleporter(region_list: RegionList, teleporter: NodeIdentifier) -> Area:
@@ -83,10 +81,7 @@ def serialize_single(player_index: int, num_players: int, patches: GamePatches) 
         }
     else:
         equipment_name = "pickups"
-        equipment_value = [
-            pickup.name
-            for pickup in patches.starting_equipment
-        ]
+        equipment_value = [pickup.name for pickup in patches.starting_equipment]
 
     result = {
         # This field helps schema migrations, if nothing else
@@ -96,8 +91,7 @@ def serialize_single(player_index: int, num_players: int, patches: GamePatches) 
         },
         "starting_location": patches.starting_location.as_string,
         "dock_connections": {
-            dock.identifier.as_string: target.identifier.as_string
-            for dock, target in patches.all_dock_connections()
+            dock.identifier.as_string: target.identifier.as_string for dock, target in patches.all_dock_connections()
         },
         "dock_weakness": {
             dock.identifier.as_string: {
@@ -110,16 +104,10 @@ def serialize_single(player_index: int, num_players: int, patches: GamePatches) 
             identifier.as_string: data_writer.write_requirement(requirement)
             for identifier, requirement in patches.configurable_nodes.items()
         },
-        "locations": {
-            key: value
-            for key, value in _pickup_assignment_to_item_locations(region_list,
-                                                                   patches.pickup_assignment,
-                                                                   num_players).items()
-        },
-        "hints": {
-            identifier.as_string: hint.as_json
-            for identifier, hint in patches.hints.items()
-        }
+        "locations": dict(
+            _pickup_assignment_to_item_locations(region_list, patches.pickup_assignment, num_players).items()
+        ),
+        "hints": {identifier.as_string: hint.as_json for identifier, hint in patches.hints.items()},
     }
     return result
 
@@ -148,8 +136,13 @@ def _get_pickup_from_pool(pickup_list: list[PickupEntry], name: str) -> PickupEn
     return pickup
 
 
-def decode_single(player_index: int, all_pools: dict[int, PoolResults], game: GameDescription,
-                  game_modifications: dict, configuration: BaseConfiguration) -> GamePatches:
+def decode_single(
+    player_index: int,
+    all_pools: dict[int, PoolResults],
+    game: GameDescription,
+    game_modifications: dict,
+    configuration: BaseConfiguration,
+) -> GamePatches:
     """
     Decodes a dict created by `serialize` back into a GamePatches.
     :param player_index:
@@ -172,10 +165,13 @@ def decode_single(player_index: int, all_pools: dict[int, PoolResults], game: Ga
 
     # Starting Equipment
     if "items" in game_modifications["starting_equipment"]:
-        starting_equipment = ResourceCollection.from_dict(game.resource_database, {
-            find_resource_info_with_long_name(game.resource_database.item, resource_name): quantity
-            for resource_name, quantity in game_modifications["starting_equipment"]["items"].items()
-        })
+        starting_equipment = ResourceCollection.from_dict(
+            game.resource_database,
+            {
+                find_resource_info_with_long_name(game.resource_database.item, resource_name): quantity
+                for resource_name, quantity in game_modifications["starting_equipment"]["items"].items()
+            },
+        )
     else:
         player_pool = all_pools[player_index]
         starting_equipment = []
@@ -197,19 +193,23 @@ def decode_single(player_index: int, all_pools: dict[int, PoolResults], game: Ga
         return result
 
     dock_connections = [
-        (get_dock_source(NodeIdentifier.from_string(source_name)),
-         get_dock_target(NodeIdentifier.from_string(target_name)))
+        (
+            get_dock_source(NodeIdentifier.from_string(source_name)),
+            get_dock_target(NodeIdentifier.from_string(target_name)),
+        )
         for source_name, target_name in game_modifications["dock_connections"].items()
     ]
 
     # Dock Weakness
 
     dock_weakness = [
-        (get_dock_source(NodeIdentifier.from_string(source_name)),
-         weakness_db.get_by_weakness(
-             weakness_data["type"],
-             weakness_data["name"],
-         ))
+        (
+            get_dock_source(NodeIdentifier.from_string(source_name)),
+            weakness_db.get_by_weakness(
+                weakness_data["type"],
+                weakness_data["name"],
+            ),
+        )
         for source_name, weakness_data in game_modifications["dock_weakness"].items()
     ]
 
@@ -270,13 +270,18 @@ def decode_single(player_index: int, all_pools: dict[int, PoolResults], game: Ga
     )
 
 
-def decode(game_modifications: list[dict],
-           layout_configurations: dict[int, BaseConfiguration],
-           ) -> dict[int, GamePatches]:
-    all_games = {index: filtered_database.game_description_for_layout(configuration)
-                 for index, configuration in layout_configurations.items()}
-    all_pools = {index: pool_creator.calculate_pool_results(configuration, all_games[index])
-                 for index, configuration in layout_configurations.items()}
+def decode(
+    game_modifications: list[dict],
+    layout_configurations: dict[int, BaseConfiguration],
+) -> dict[int, GamePatches]:
+    all_games = {
+        index: filtered_database.game_description_for_layout(configuration)
+        for index, configuration in layout_configurations.items()
+    }
+    all_pools = {
+        index: pool_creator.calculate_pool_results(configuration, all_games[index])
+        for index, configuration in layout_configurations.items()
+    }
     return {
         index: decode_single(index, all_pools, all_games[index], modifications, layout_configurations[index])
         for index, modifications in enumerate(game_modifications)
@@ -284,7 +289,4 @@ def decode(game_modifications: list[dict],
 
 
 def serialize(all_patches: dict[int, GamePatches]) -> list[dict]:
-    return [
-        serialize_single(index, len(all_patches), patches)
-        for index, patches in all_patches.items()
-    ]
+    return [serialize_single(index, len(all_patches), patches) for index, patches in all_patches.items()]

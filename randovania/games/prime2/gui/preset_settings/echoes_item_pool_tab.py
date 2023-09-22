@@ -1,14 +1,20 @@
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+
 from PySide6 import QtWidgets
 
 from randovania.game_description import default_database
-from randovania.game_description.game_description import GameDescription
-from randovania.game_description.pickup.pickup_database import PickupDatabase
 from randovania.games.game import RandovaniaGame
-from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.preset_settings.metroid_item_pool_tab import MetroidPresetItemPool
 from randovania.gui.preset_settings.split_ammo_widget import SplitAmmoWidget
-from randovania.interface_common.preset_editor import PresetEditor
-from randovania.layout.preset import Preset
+
+if TYPE_CHECKING:
+    from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.pickup.pickup_database import PickupDatabase
+    from randovania.gui.lib.window_manager import WindowManager
+    from randovania.interface_common.preset_editor import PresetEditor
+    from randovania.layout.preset import Preset
 
 
 class EchoesPresetItemPool(MetroidPresetItemPool):
@@ -33,7 +39,8 @@ class EchoesPresetItemPool(MetroidPresetItemPool):
 
         if self.game == RandovaniaGame.METROID_PRIME_ECHOES:
             beam_ammo = SplitAmmoWidget(
-                parent, self._editor,
+                parent,
+                self._editor,
                 unified_ammo=pickup_database.ammo_pickups["Beam Ammo Expansion"],
                 split_ammo=[
                     pickup_database.ammo_pickups["Dark Ammo Expansion"],
@@ -45,8 +52,8 @@ class EchoesPresetItemPool(MetroidPresetItemPool):
 
         if self._split_ammo_widgets:
             line = QtWidgets.QFrame(parent)
-            line.setFrameShape(QtWidgets.QFrame.HLine)
-            line.setFrameShadow(QtWidgets.QFrame.Sunken)
+            line.setFrameShape(QtWidgets.QFrame.Shape.HLine)
+            line.setFrameShadow(QtWidgets.QFrame.Shadow.Sunken)
             layout.addWidget(line, layout.rowCount(), 0, 1, -1)
 
         for widget in self._split_ammo_widgets:

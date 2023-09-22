@@ -1,22 +1,28 @@
+from __future__ import annotations
+
 import re
-from typing import Callable, Iterable
+from typing import TYPE_CHECKING
 
 from PySide6.QtWidgets import QDialog, QWidget
 
-from randovania.game_description.game_description import GameDescription
-from randovania.game_description.requirements.base import Requirement
-from randovania.game_description.requirements.resource_requirement import ResourceRequirement
-from randovania.game_description.resources.resource_database import ResourceDatabase
-from randovania.game_description.resources.resource_info import ResourceInfo
-from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
-from randovania.game_description.db.area import Area
 from randovania.game_description.db.dock_node import DockNode
-from randovania.game_description.db.region import Region
 from randovania.gui.generated.trick_details_popup_ui import Ui_TrickDetailsPopup
 from randovania.gui.lib.common_qt_lib import set_default_window_icon
-from randovania.gui.lib.window_manager import WindowManager
-from randovania.layout.base.trick_level import LayoutTrickLevel
-from randovania.layout.base.trick_level_configuration import TrickLevelConfiguration
+
+if TYPE_CHECKING:
+    from collections.abc import Callable, Iterable
+
+    from randovania.game_description.db.area import Area
+    from randovania.game_description.db.region import Region
+    from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.requirements.base import Requirement
+    from randovania.game_description.requirements.resource_requirement import ResourceRequirement
+    from randovania.game_description.resources.resource_database import ResourceDatabase
+    from randovania.game_description.resources.resource_info import ResourceInfo
+    from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
+    from randovania.gui.lib.window_manager import WindowManager
+    from randovania.layout.base.trick_level import LayoutTrickLevel
+    from randovania.layout.base.trick_level_configuration import TrickLevelConfiguration
 
 
 def _requirement_at_value(resource: ResourceInfo, level: LayoutTrickLevel):
@@ -26,10 +32,11 @@ def _requirement_at_value(resource: ResourceInfo, level: LayoutTrickLevel):
     return criteria
 
 
-def _area_uses_resource(area: Area,
-                        criteria: Callable[[ResourceRequirement], bool],
-                        database: ResourceDatabase,
-                        ) -> Iterable[str]:
+def _area_uses_resource(
+    area: Area,
+    criteria: Callable[[ResourceRequirement], bool],
+    database: ResourceDatabase,
+) -> Iterable[str]:
     """
     Checks the area RequirementSet in the given Area uses the given trick at the given level.
     :param area:
@@ -62,13 +69,14 @@ def _area_uses_resource(area: Area,
 
 
 class BaseResourceDetailsPopup(QDialog, Ui_TrickDetailsPopup):
-    def __init__(self,
-                 parent: QWidget,
-                 window_manager: WindowManager,
-                 game_description: GameDescription,
-                 areas_to_show: list[tuple[Region, Area, list[str]]],
-                 trick_levels: TrickLevelConfiguration | None = None,
-                 ):
+    def __init__(
+        self,
+        parent: QWidget,
+        window_manager: WindowManager,
+        game_description: GameDescription,
+        areas_to_show: list[tuple[Region, Area, list[str]]],
+        trick_levels: TrickLevelConfiguration | None = None,
+    ):
         super().__init__(parent)
         self.setupUi(self)
         set_default_window_icon(self)
@@ -87,11 +95,12 @@ class BaseResourceDetailsPopup(QDialog, Ui_TrickDetailsPopup):
         # Update
         if areas_to_show:
             lines = [
-                (f'<a href="data-editor://{region.correct_name(area.in_dark_aether)}/{area.name}">'
-                 f'{region.correct_name(area.in_dark_aether)} - {area.name}</a>') + "".join(
-                    f"\n<br />{usage}"
-                    for usage in usages
-                ) + "<br />"
+                (
+                    f'<a href="data-editor://{region.correct_name(area.in_dark_aether)}/{area.name}">'
+                    f"{region.correct_name(area.in_dark_aether)} - {area.name}</a>"
+                )
+                + "".join(f"\n<br />{usage}" for usage in usages)
+                + "<br />"
                 for (region, area, usages) in areas_to_show
             ]
             self.area_list_label.setText("<br />".join(sorted(lines)))
@@ -106,44 +115,53 @@ class BaseResourceDetailsPopup(QDialog, Ui_TrickDetailsPopup):
         if info:
             region_name, area_name = info.group(1, 2)
             self._window_manager.open_data_visualizer_at(
-                region_name, area_name, game=self._game_description.game,
+                region_name,
+                area_name,
+                game=self._game_description.game,
                 trick_levels=self._trick_levels,
             )
 
 
 class TrickDetailsPopup(BaseResourceDetailsPopup):
-    def __init__(self,
-                 parent: QWidget,
-                 window_manager: WindowManager,
-                 game_description: GameDescription,
-                 trick: TrickResourceInfo,
-                 level: LayoutTrickLevel,
-                 trick_levels: TrickLevelConfiguration | None = None,
-                 ):
+    def __init__(
+        self,
+        parent: QWidget,
+        window_manager: WindowManager,
+        game_description: GameDescription,
+        trick: TrickResourceInfo,
+        level: LayoutTrickLevel,
+        trick_levels: TrickLevelConfiguration | None = None,
+    ):
         areas_to_show = [
             (region, area, usages)
             for region in game_description.region_list.regions
             for area in region.areas
-            if (usages := list(_area_uses_resource(area, _requirement_at_value(trick, level),
-                                                   game_description.resource_database)))
+            if (
+                usages := list(
+                    _area_uses_resource(area, _requirement_at_value(trick, level), game_description.resource_database)
+                )
+            )
         ]
         super().__init__(parent, window_manager, game_description, areas_to_show, trick_levels)
 
         # setup
         self.setWindowTitle(f"Trick Details: {trick.long_name} at {level.long_name}")
-        self.title_label.setText(self.title_label.text().format(
-            trick=trick,
-            level=level.long_name,
-        ))
+        self.title_label.setText(
+            self.title_label.text().format(
+                trick=trick,
+                level=level.long_name,
+            )
+        )
 
 
 class ResourceDetailsPopup(BaseResourceDetailsPopup):
-    def __init__(self,
-                 parent: QWidget,
-                 window_manager: WindowManager,
-                 game_description: GameDescription,
-                 resource: ResourceInfo,
-                 ):
+    def __init__(
+        self,
+        parent: QWidget,
+        window_manager: WindowManager,
+        game_description: GameDescription,
+        resource: ResourceInfo,
+    ):
         def is_resource(individual: ResourceRequirement):
             return individual.resource == resource
 
@@ -157,8 +175,10 @@ class ResourceDetailsPopup(BaseResourceDetailsPopup):
 
         # setup
         self.setWindowTitle(f"Details for {resource.long_name}")
-        self.title_label.setText(f"""<html><head/><body>
+        self.title_label.setText(
+            f"""<html><head/><body>
         <p><span style=" font-weight:600;">{resource.long_name}</span></p>
         <p>{resource.long_name} can be found in the rooms listed below.</p>
         <p>Click a room name to open it in the Data Visualizer for more details.</p>
-        </body></html>""")
+        </body></html>"""
+        )

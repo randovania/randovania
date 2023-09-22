@@ -1,7 +1,12 @@
+from __future__ import annotations
+
 import asyncio
 import json
-from argparse import ArgumentParser
 from pathlib import Path
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from argparse import ArgumentParser
 
 
 def patcher_data_command_logic(args):
@@ -15,8 +20,7 @@ async def patcher_data_command_logic_async(args):
     layout_description = LayoutDescription.from_file(args.layout_file)
     players_config = PlayersConfiguration(
         args.player_index,
-        {i: f"Player {i + 1}"
-         for i in range(layout_description.player_count)},
+        {i: f"Player {i + 1}" for i in range(layout_description.world_count)},
     )
     preset = layout_description.get_preset(players_config.player_index)
 
@@ -35,12 +39,10 @@ async def patcher_data_command_logic_async(args):
 
 
 def add_patcher_data_command(sub_parsers):
-    parser: ArgumentParser = sub_parsers.add_parser(
-        "patcher-data",
-        help="Exports the patcher data."
-    )
+    parser: ArgumentParser = sub_parsers.add_parser("patcher-data", help="Exports the patcher data.")
     parser.add_argument("--layout-file", type=Path, required=True, help="The rdvgame file to use")
-    parser.add_argument("--player-index", type=int, default=0,
-                        help="Number of the player to export, for multiworld games. 0-indexed")
+    parser.add_argument(
+        "--player-index", type=int, default=0, help="Number of the player to export, for multiworld games. 0-indexed"
+    )
     parser.add_argument("--output", type=Path, help="Where to write the output. Defaults to stdout.")
     parser.set_defaults(func=patcher_data_command_logic)

@@ -1,9 +1,14 @@
-from unittest.mock import MagicMock, AsyncMock
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+from unittest.mock import AsyncMock, MagicMock
 
 import pytest
-import pytest_mock
 
 from randovania.gui.dialog.login_prompt_dialog import LoginPromptDialog
+
+if TYPE_CHECKING:
+    import pytest_mock
 
 
 @pytest.fixture(name="prompt")
@@ -15,8 +20,7 @@ def login_prompt_fixture(skip_qtbot):
 async def test_on_login_as_guest_button(prompt, mocker: pytest_mock.MockerFixture, valid_name):
     # Setup
     prompt.network_client.login_as_guest = AsyncMock()
-    mock_prompt = mocker.patch("randovania.gui.dialog.text_prompt_dialog.TextPromptDialog.prompt",
-                               autospec=True)
+    mock_prompt = mocker.patch("randovania.gui.dialog.text_prompt_dialog.TextPromptDialog.prompt", autospec=True)
     if not valid_name:
         mock_prompt.return_value = None
 

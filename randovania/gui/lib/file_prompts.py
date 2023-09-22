@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from pathlib import Path
 
 from PySide6 import QtWidgets
@@ -6,11 +8,11 @@ from randovania.gui.lib import async_dialog
 
 
 async def _prompt_user_for_file(
-        parent: QtWidgets.QWidget,
-        caption: str,
-        file_filter: str,
-        current_dir: str | None = None,
-        new_file: bool = False,
+    parent: QtWidgets.QWidget,
+    caption: str,
+    file_filter: str,
+    current_dir: str | None = None,
+    new_file: bool = False,
 ) -> Path | None:
     """
     Helper function for all `prompt_user_for_*` functions.
@@ -42,8 +44,10 @@ async def prompt_input_layout(parent: QtWidgets.QWidget) -> Path | None:
     :return: A string if the user selected a file, None otherwise
     """
     from randovania.layout.layout_description import LayoutDescription
+
     return await _prompt_user_for_file(
-        parent, caption="Select a Randovania seed log.",
+        parent,
+        caption="Select a Randovania seed log.",
         file_filter=f"Randovania Game, *.{LayoutDescription.file_extension()}",
         new_file=False,
     )
@@ -58,10 +62,11 @@ async def prompt_preset(parent: QtWidgets.QWidget, new_file: bool, name: str | N
     :return: A string if the user selected a file, None otherwise
     """
     from randovania.layout.versioned_preset import VersionedPreset
+
     return await _prompt_user_for_file(
-        parent, caption="Select a Randovania Preset file.",
-        file_filter=f"Randovania Preset, *.{VersionedPreset.file_extension()};;"
-                    f"All Files (*.*)",
+        parent,
+        caption="Select a Randovania Preset file.",
+        file_filter=f"Randovania Preset, *.{VersionedPreset.file_extension()};;All Files (*.*)",
         new_file=new_file,
         current_dir=name,
     )

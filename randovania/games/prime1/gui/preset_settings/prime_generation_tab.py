@@ -1,13 +1,19 @@
-from typing import Iterable
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
 
 from PySide6 import QtWidgets
 
-from randovania.game_description.game_description import GameDescription
 from randovania.games.prime1.layout.prime_configuration import PrimeConfiguration
-from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.preset_settings.generation_tab import PresetGeneration
-from randovania.interface_common.preset_editor import PresetEditor
-from randovania.layout.preset import Preset
+
+if TYPE_CHECKING:
+    from collections.abc import Iterable
+
+    from randovania.game_description.game_description import GameDescription
+    from randovania.gui.lib.window_manager import WindowManager
+    from randovania.interface_common.preset_editor import PresetEditor
+    from randovania.layout.preset import Preset
 
 
 class PresetPrimeGeneration(PresetGeneration):
@@ -23,7 +29,8 @@ class PresetPrimeGeneration(PresetGeneration):
         super().setupUi(obj)
 
         self.min_progression_label = QtWidgets.QLabel(
-            "Only place artifacts after this many actions were performed by the generator.")
+            "Only place artifacts after this many actions were performed by the generator."
+        )
         self.min_progression_spin = QtWidgets.QSpinBox()
 
     @property

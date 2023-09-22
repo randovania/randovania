@@ -1,10 +1,16 @@
+from __future__ import annotations
+
 import dataclasses
-from pathlib import Path
+from typing import TYPE_CHECKING
 
 import sentry_sdk
 
 from randovania import monitoring
-from randovania.lib import status_update_lib
+
+if TYPE_CHECKING:
+    from pathlib import Path
+
+    from randovania.lib import status_update_lib
 
 
 @dataclasses.dataclass(frozen=True)
@@ -18,27 +24,35 @@ class GameExporter:
         """
         Checks if the exporter is busy right now
         """
-        raise NotImplementedError()
+        raise NotImplementedError
 
     @property
     def export_can_be_aborted(self) -> bool:
         """
         Checks if export_game can be aborted
         """
-        raise NotImplementedError()
+        raise NotImplementedError
 
     def _before_export(self):
         pass
 
-    def _do_export_game(self, patch_data: dict, export_params: GameExportParams,
-                        progress_update: status_update_lib.ProgressUpdateCallable) -> None:
-        raise NotImplementedError()
+    def _do_export_game(
+        self,
+        patch_data: dict,
+        export_params: GameExportParams,
+        progress_update: status_update_lib.ProgressUpdateCallable,
+    ) -> None:
+        raise NotImplementedError
 
     def _after_export(self):
         pass
 
-    def export_game(self, patch_data: dict, export_params: GameExportParams,
-                    progress_update: status_update_lib.ProgressUpdateCallable):
+    def export_game(
+        self,
+        patch_data: dict,
+        export_params: GameExportParams,
+        progress_update: status_update_lib.ProgressUpdateCallable,
+    ):
         self._before_export()
         try:
             with monitoring.attach_patcher_data(patch_data):

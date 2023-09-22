@@ -1,15 +1,22 @@
+from __future__ import annotations
+
 import copy
 from dataclasses import dataclass
 from enum import Enum
-from typing import Iterator, Self
+from typing import TYPE_CHECKING, Self
 
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder, BitPackEnum, BitPackValue
 from randovania.bitpacking.type_enforcement import DataclassPostInitTypeCheck
 from randovania.game_description import default_database
-from randovania.game_description.db.dock import DockType, DockWeakness, DockWeaknessDatabase
+from randovania.game_description.db.dock import DockType, DockWeakness
 from randovania.games.game import RandovaniaGame
 from randovania.lib import enum_lib
+
+if TYPE_CHECKING:
+    from collections.abc import Iterator
+
+    from randovania.game_description.db.dock import DockWeaknessDatabase
 
 
 class DockRandoMode(BitPackEnum, Enum):
@@ -21,17 +28,24 @@ class DockRandoMode(BitPackEnum, Enum):
     WEAKNESSES = "weaknesses"
 
 
-enum_lib.add_long_name(DockRandoMode, {
-    DockRandoMode.VANILLA: "Vanilla",
-    DockRandoMode.DOCKS: "Doors",
-    DockRandoMode.WEAKNESSES: "Types",
-})
+enum_lib.add_long_name(
+    DockRandoMode,
+    {
+        DockRandoMode.VANILLA: "Vanilla",
+        DockRandoMode.DOCKS: "Doors",
+        DockRandoMode.WEAKNESSES: "Types",
+    },
+)
 
-enum_lib.add_per_enum_field(DockRandoMode, "description", {
-    DockRandoMode.VANILLA: "Original door locks",
-    DockRandoMode.DOCKS: "Randomize the type of each door individually",
-    DockRandoMode.WEAKNESSES: "Randomizes all doors by type, turning all of one type into another",
-})
+enum_lib.add_per_enum_field(
+    DockRandoMode,
+    "description",
+    {
+        DockRandoMode.VANILLA: "Original door locks",
+        DockRandoMode.DOCKS: "Randomize the type of each door individually",
+        DockRandoMode.WEAKNESSES: "Randomizes all doors by type, turning all of one type into another",
+    },
+)
 
 
 @dataclass(frozen=True)
@@ -65,31 +79,31 @@ class DockTypeState(BitPackValue, DataclassPostInitTypeCheck):
         }
 
     @classmethod
-    def from_json(cls, value: dict, game: RandovaniaGame, dock_type_name: str) -> "DockTypeState":
+    def from_json(cls, value: dict, game: RandovaniaGame, dock_type_name: str) -> DockTypeState:
         weakness_database = cls._get_weakness_database(game)
         return cls(
             game=game,
             dock_type_name=dock_type_name,
             can_change_from={
-                weakness_database.get_by_weakness(dock_type_name, weakness)
-                for weakness in value["can_change_from"]
+                weakness_database.get_by_weakness(dock_type_name, weakness) for weakness in value["can_change_from"]
             },
             can_change_to={
-                weakness_database.get_by_weakness(dock_type_name, weakness)
-                for weakness in value["can_change_to"]
+                weakness_database.get_by_weakness(dock_type_name, weakness) for weakness in value["can_change_to"]
             },
         )
 
     def bit_pack_encode(self, metadata) -> Iterator[tuple[int, int]]:
         yield from bitpacking.pack_sorted_array_elements(
-            sorted(self.can_change_from), sorted(self.possible_change_from),
+            sorted(self.can_change_from),
+            sorted(self.possible_change_from),
         )
         yield from bitpacking.pack_sorted_array_elements(
-            sorted(self.can_change_to), sorted(self.possible_change_to),
+            sorted(self.can_change_to),
+            sorted(self.possible_change_to),
         )
 
     @classmethod
-    def bit_pack_unpack(cls, decoder: BitPackDecoder, metadata) -> "DockTypeState":
+    def bit_pack_unpack(cls, decoder: BitPackDecoder, metadata) -> DockTypeState:
         reference: DockTypeState = metadata["reference"]
         ref_change_from = sorted(cls._possible_change_from(reference.game, reference.dock_type_name))
         ref_change_to = sorted(cls._possible_change_to(reference.game, reference.dock_type_name))
@@ -139,9 +153,8 @@ class DockRandoConfiguration(BitPackValue, DataclassPostInitTypeCheck):
         return {
             "mode": self.mode.value,
             "types_state": {
-                dock_type.short_name: type_state.as_json
-                for dock_type, type_state in self.types_state.items()
-            }
+                dock_type.short_name: type_state.as_json for dock_type, type_state in self.types_state.items()
+            },
         }
 
     @classmethod
@@ -153,7 +166,7 @@ class DockRandoConfiguration(BitPackValue, DataclassPostInitTypeCheck):
             types_state={
                 weakness_database.find_type(dock_type): DockTypeState.from_json(type_state, game, dock_type)
                 for dock_type, type_state in value["types_state"].items()
-            }
+            },
         )
 
     def bit_pack_encode(self, metadata) -> Iterator[tuple[int, int]]:
@@ -162,7 +175,8 @@ class DockRandoConfiguration(BitPackValue, DataclassPostInitTypeCheck):
         yield from self.mode.bit_pack_encode(None)
 
         modified_types = sorted(
-            dock_type for dock_type, type_state in self.types_state.items()
+            dock_type
+            for dock_type, type_state in self.types_state.items()
             if type_state != reference.types_state[dock_type]
         )
         yield from bitpacking.pack_sorted_array_elements(modified_types, sorted(self.weakness_database.dock_types))
@@ -175,12 +189,14 @@ class DockRandoConfiguration(BitPackValue, DataclassPostInitTypeCheck):
 
         mode = DockRandoMode.bit_pack_unpack(decoder, None)
 
-        modified_types = bitpacking.decode_sorted_array_elements(decoder,
-                                                                 sorted(reference.weakness_database.dock_types))
+        modified_types = bitpacking.decode_sorted_array_elements(
+            decoder, sorted(reference.weakness_database.dock_types)
+        )
         types_state = copy.copy(reference.types_state)
         for dock_type in modified_types:
-            types_state[dock_type] = DockTypeState.bit_pack_unpack(decoder,
-                                                                   {"reference": reference.types_state[dock_type]})
+            types_state[dock_type] = DockTypeState.bit_pack_unpack(
+                decoder, {"reference": reference.types_state[dock_type]}
+            )
 
         return cls(
             game=reference.game,
@@ -190,6 +206,9 @@ class DockRandoConfiguration(BitPackValue, DataclassPostInitTypeCheck):
 
     def is_enabled(self) -> bool:
         return self.mode != DockRandoMode.VANILLA
+
+    def can_shuffle(self, dock_type: DockType) -> bool:
+        return dock_type in self.weakness_database.dock_rando_params and self.types_state[dock_type].can_shuffle
 
     def settings_incompatible_with_multiworld(self) -> list[str]:
         danger = []

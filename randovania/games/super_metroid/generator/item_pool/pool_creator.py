@@ -1,13 +1,14 @@
-from random import Random
+from __future__ import annotations
 
-from randovania.game_description.game_description import GameDescription
-from randovania.game_description.game_patches import GamePatches
+from typing import TYPE_CHECKING
+
 from randovania.games.super_metroid.layout.super_metroid_configuration import SuperMetroidConfiguration
-from randovania.generator.pickup_pool import PoolResults
-from randovania.layout.base.base_configuration import BaseConfiguration
+
+if TYPE_CHECKING:
+    from randovania.game_description.game_description import GameDescription
+    from randovania.generator.pickup_pool import PoolResults
+    from randovania.layout.base.base_configuration import BaseConfiguration
 
 
-def super_metroid_specific_pool(results: PoolResults, configuration: BaseConfiguration, game: GameDescription,
-                                base_patches: GamePatches, rng: Random):
+def super_metroid_specific_pool(results: PoolResults, configuration: BaseConfiguration, game: GameDescription):
     assert isinstance(configuration, SuperMetroidConfiguration)
-    pass

@@ -1,14 +1,18 @@
+from __future__ import annotations
+
 import dataclasses
 from enum import Enum
 
-from randovania.bitpacking.bitpacking import BitPackEnum, BitPackDataclass
+from randovania.bitpacking.bitpacking import BitPackDataclass, BitPackEnum
 from randovania.bitpacking.json_dataclass import JsonDataclass
+from randovania.games.common.prime_family.layout.lib.prime_trilogy_teleporters import (
+    PrimeTrilogyTeleporterConfiguration,
+)
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime2.layout.beam_configuration import BeamConfiguration
 from randovania.games.prime2.layout.hint_configuration import HintConfiguration
 from randovania.games.prime2.layout.translator_configuration import TranslatorConfiguration
 from randovania.layout.base.base_configuration import BaseConfiguration
-from randovania.layout.lib.teleporters import TeleporterConfiguration
 
 
 class LayoutSkyTempleKeyMode(BitPackEnum, Enum):
@@ -25,10 +29,6 @@ class LayoutSkyTempleKeyMode(BitPackEnum, Enum):
     EIGHT = 8
     NINE = 9
 
-    @classmethod
-    def default(cls) -> "LayoutSkyTempleKeyMode":
-        return cls.NINE
-
     @property
     def num_keys(self):
         if self == self.ALL_BOSSES:
@@ -43,13 +43,14 @@ class LayoutSkyTempleKeyMode(BitPackEnum, Enum):
 class LayoutSafeZone(BitPackDataclass, JsonDataclass):
     fully_heal: bool
     prevents_dark_aether: bool
-    heal_per_second: float = dataclasses.field(metadata={"min": 0.0, "max": 100.0,
-                                                         "if_different": 1.0, "precision": 1.0})
+    heal_per_second: float = dataclasses.field(
+        metadata={"min": 0.0, "max": 100.0, "if_different": 1.0, "precision": 1.0}
+    )
 
 
 @dataclasses.dataclass(frozen=True)
 class EchoesConfiguration(BaseConfiguration):
-    elevators: TeleporterConfiguration
+    teleporters: PrimeTrilogyTeleporterConfiguration
     sky_temple_keys: LayoutSkyTempleKeyMode
     translator_configuration: TranslatorConfiguration
     hints: HintConfiguration

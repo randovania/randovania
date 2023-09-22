@@ -1,27 +1,34 @@
+from __future__ import annotations
+
 import asyncio
 import itertools
-from typing import Callable, Iterable
+from typing import TYPE_CHECKING
 
 from randovania.game_description.db.dock_lock_node import DockLockNode
 from randovania.game_description.db.event_node import EventNode
 from randovania.game_description.db.event_pickup import EventPickupNode
 from randovania.game_description.db.pickup_node import PickupNode
-from randovania.game_description.db.resource_node import ResourceNode
-from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.requirements.requirement_list import RequirementList
 from randovania.game_description.requirements.requirement_set import RequirementSet
-from randovania.game_description.resources.resource_info import ResourceInfo
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.layout import filtered_database
-from randovania.layout.base.base_configuration import BaseConfiguration
-from randovania.resolver import debug
 from randovania.resolver.logic import Logic
 from randovania.resolver.resolver_reach import ResolverReach
-from randovania.resolver.state import State
+
+if TYPE_CHECKING:
+    from collections.abc import Callable, Iterable
+
+    from randovania.game_description.db.resource_node import ResourceNode
+    from randovania.game_description.game_patches import GamePatches
+    from randovania.game_description.resources.resource_info import ResourceInfo
+    from randovania.layout.base.base_configuration import BaseConfiguration
+    from randovania.resolver.state import State
 
 
-def _simplify_requirement_list(self: RequirementList, state: State,
-                               ) -> RequirementList | None:
+def _simplify_requirement_list(
+    self: RequirementList,
+    state: State,
+) -> RequirementList | None:
     items = []
     for item in self.values():
         if item.satisfied(state.resources, state.energy, state.resource_database):
@@ -37,23 +44,28 @@ def _simplify_requirement_list(self: RequirementList, state: State,
     return RequirementList(items)
 
 
-def _simplify_additional_requirement_set(alternatives: Iterable[RequirementList],
-                                         state: State,
-                                         ) -> RequirementSet:
-    new_alternatives = [
-        _simplify_requirement_list(alternative, state)
-        for alternative in alternatives
-    ]
-    return RequirementSet(alternative
-                          for alternative in new_alternatives
-
-                          # RequirementList.simplify may return None
-                          if alternative is not None)
+def _simplify_additional_requirement_set(
+    alternatives: Iterable[RequirementList],
+    state: State,
+) -> RequirementSet:
+    new_alternatives = [_simplify_requirement_list(alternative, state) for alternative in alternatives]
+    return RequirementSet(
+        alternative
+        for alternative in new_alternatives
+        # RequirementList.simplify may return None
+        if alternative is not None
+    )
 
 
 def _is_action_dangerous(state: State, action: ResourceNode, dangerous_resources: frozenset[ResourceInfo]) -> bool:
-    return any(resource in dangerous_resources
-               for resource, _ in action.resource_gain_on_collect(state.node_context()))
+    return any(resource in dangerous_resources for resource, _ in action.resource_gain_on_collect(state.node_context()))
+
+
+def _is_dangerous_event(state: State, action: ResourceNode, dangerous_resources: frozenset[ResourceInfo]) -> bool:
+    return any(
+        (resource in dangerous_resources and resource.resource_type == ResourceType.EVENT)
+        for resource, _ in action.resource_gain_on_collect(state.node_context())
+    )
 
 
 def _is_major_or_key_pickup_node(action: ResourceNode, state: State) -> bool:
@@ -64,15 +76,15 @@ def _is_major_or_key_pickup_node(action: ResourceNode, state: State) -> bool:
 
     if isinstance(pickup_node, PickupNode):
         target = state.patches.pickup_assignment.get(pickup_node.pickup_index)
-        return target is not None and (target.pickup.pickup_category.hinted_as_major or
-                                       target.pickup.pickup_category.is_key)
+        return target is not None and (
+            target.pickup.pickup_category.hinted_as_major or target.pickup.pickup_category.is_key
+        )
     return False
 
 
-def _should_check_if_action_is_safe(state: State,
-                                    action: ResourceNode,
-                                    dangerous_resources: frozenset[ResourceInfo]
-                                    ) -> bool:
+def _should_check_if_action_is_safe(
+    state: State, action: ResourceNode, dangerous_resources: frozenset[ResourceInfo]
+) -> bool:
     """
     Determines if we should _check_ if the given action is safe that state
     :param state:
@@ -80,42 +92,19 @@ def _should_check_if_action_is_safe(state: State,
     :param dangerous_resources:
     :return:
     """
-    return not _is_action_dangerous(state, action, dangerous_resources) \
-        and (isinstance(action, (EventNode, EventPickupNode))
-             or _is_major_or_key_pickup_node(action, state))
+    return not _is_action_dangerous(state, action, dangerous_resources) and (
+        isinstance(action, EventNode | EventPickupNode) or _is_major_or_key_pickup_node(action, state)
+    )
 
 
-class ResolverTimeout(Exception):
-    pass
-
-
-attempts = 0
-
-
-def set_attempts(value: int):
-    global attempts
-    attempts = value
-
-
-def get_attempts() -> int:
-    global attempts
-    return attempts
-
-
-def _check_attempts(max_attempts: int | None):
-    global attempts
-    if max_attempts is not None and attempts >= max_attempts:
-        raise ResolverTimeout(f"Timed out after {max_attempts} attempts")
-    attempts += 1
-
-
-async def _inner_advance_depth(state: State,
-                               logic: Logic,
-                               status_update: Callable[[str], None],
-                               *,
-                               reach: ResolverReach | None = None,
-                               max_attempts: int | None = None,
-                               ) -> tuple[State | None, bool]:
+async def _inner_advance_depth(
+    state: State,
+    logic: Logic,
+    status_update: Callable[[str], None],
+    *,
+    reach: ResolverReach | None = None,
+    max_attempts: int | None = None,
+) -> tuple[State | None, bool]:
     """
 
     :param state:
@@ -134,13 +123,13 @@ async def _inner_advance_depth(state: State,
     if reach is None:
         reach = ResolverReach.calculate_reach(logic, state)
 
-    _check_attempts(max_attempts)
-    debug.log_new_advance(state, reach)
+    logic.start_new_attempt(state, reach, max_attempts)
     status_update(f"Resolving... {state.resources.num_resources} total resources")
 
     major_pickup_actions = []
     lock_actions = []
     dangerous_actions = []
+    point_of_no_return_actions = []
     rest_of_actions = []
 
     for action, energy in reach.possible_actions(state):
@@ -162,35 +151,36 @@ async def _inner_advance_depth(state: State,
                     additional = logic.get_additional_requirements(action).alternatives
 
                     logic.set_additional_requirements(
-                        state.node,
-                        _simplify_additional_requirement_set(additional, state)
+                        state.node, _simplify_additional_requirement_set(additional, state)
                     )
-                    debug.log_rollback(state, True, True, logic.get_additional_requirements(state.node))
+                    logic.log_rollback(state, True, True, logic.get_additional_requirements(state.node))
 
                 # If a safe node was a dead end, we're certainly a dead end as well
                 return new_result
             else:
-                dangerous_actions.append((action, energy))
+                point_of_no_return_actions.append((action, energy))
                 continue
 
         action_tuple = (action, energy)
-        if _is_action_dangerous(state, action, logic.game.dangerous_resources) and isinstance(action, EventNode):
+        if _is_dangerous_event(state, action, logic.game.dangerous_resources):
             dangerous_actions.append(action_tuple)
         elif _is_major_or_key_pickup_node(action, state):
             major_pickup_actions.append(action_tuple)
-        elif isinstance(action, (DockLockNode, EventNode, EventPickupNode)):
+        elif isinstance(action, DockLockNode | EventNode | EventPickupNode):
             lock_actions.append(action_tuple)
         else:
             rest_of_actions.append(action_tuple)
 
-    actions = list(reach.satisfiable_actions(
-        state, logic.victory_condition,
-        itertools.chain(major_pickup_actions,
-                        lock_actions,
-                        rest_of_actions,
-                        dangerous_actions)
-    ))
-    debug.log_checking_satisfiable_actions(state, actions)
+    actions = list(
+        reach.satisfiable_actions(
+            state,
+            logic.victory_condition,
+            itertools.chain(
+                major_pickup_actions, lock_actions, rest_of_actions, point_of_no_return_actions, dangerous_actions
+            ),
+        )
+    )
+    logic.log_checking_satisfiable_actions(state, actions)
     has_action = False
     for action, energy in actions:
         new_result = await _inner_advance_depth(
@@ -215,20 +205,16 @@ async def _inner_advance_depth(state: State,
 
         additional_requirements = additional_requirements.union(additional)
 
-    logic.set_additional_requirements(
-        state.node,
-        _simplify_additional_requirement_set(
-            additional_requirements,
-            state
-        )
-    )
-    debug.log_rollback(state, has_action, False, logic.get_additional_requirements(state.node))
+    logic.set_additional_requirements(state.node, _simplify_additional_requirement_set(additional_requirements, state))
+    logic.log_rollback(state, has_action, False, logic.get_additional_requirements(state.node))
 
     return None, has_action
 
 
-async def advance_depth(state: State, logic: Logic, status_update: Callable[[str], None],
-                        max_attempts: int | None = None) -> State | None:
+async def advance_depth(
+    state: State, logic: Logic, status_update: Callable[[str], None], max_attempts: int | None = None
+) -> State | None:
+    logic.resolver_start()
     return (await _inner_advance_depth(state, logic, status_update, max_attempts=max_attempts))[0]
 
 
@@ -237,8 +223,6 @@ def _quiet_print(s):
 
 
 def setup_resolver(configuration: BaseConfiguration, patches: GamePatches) -> tuple[State, Logic]:
-    set_attempts(0)
-
     game = filtered_database.game_description_for_layout(configuration).get_mutable()
     bootstrap = game.game.generator.bootstrap
 
@@ -251,14 +235,13 @@ def setup_resolver(configuration: BaseConfiguration, patches: GamePatches) -> tu
     return starting_state, logic
 
 
-async def resolve(configuration: BaseConfiguration,
-                  patches: GamePatches,
-                  status_update: Callable[[str], None] | None = None
-                  ) -> State | None:
+async def resolve(
+    configuration: BaseConfiguration,
+    patches: GamePatches,
+    status_update: Callable[[str], None] | None = None,
+) -> State | None:
     if status_update is None:
         status_update = _quiet_print
 
     starting_state, logic = setup_resolver(configuration, patches)
-    debug.log_resolve_start()
-
     return await advance_depth(starting_state, logic, status_update)

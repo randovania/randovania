@@ -1,22 +1,28 @@
 from __future__ import annotations
 
 import dataclasses
-from typing import Iterator
+from typing import TYPE_CHECKING
 
+from randovania.game_description.db.resource_node import ResourceNode
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.resources.node_resource_info import NodeResourceInfo
-from randovania.game_description.resources.resource_info import ResourceInfo, ResourceGain
-from randovania.game_description.db.dock_node import DockNode
-from randovania.game_description.db.node import NodeContext, Node
-from randovania.game_description.db.resource_node import ResourceNode
+
+if TYPE_CHECKING:
+    from collections.abc import Iterator
+
+    from randovania.game_description.db.dock_node import DockNode
+    from randovania.game_description.db.node import Node, NodeContext
+    from randovania.game_description.resources.resource_database import ResourceDatabase
+    from randovania.game_description.resources.resource_info import ResourceGain, ResourceInfo
 
 
 @dataclasses.dataclass(frozen=True, slots=True)
 class DockLockNode(ResourceNode):
     dock: DockNode
+    _resource: NodeResourceInfo = dataclasses.field(hash=False, compare=False)
 
     @classmethod
-    def create_from_dock(cls, dock: DockNode, node_index: int) -> DockLockNode:
+    def create_from_dock(cls, dock: DockNode, node_index: int, resource_db: ResourceDatabase) -> DockLockNode:
         lock_identifier = dock.identifier.renamed(f"Lock - {dock.name}")
         result = DockLockNode(
             identifier=lock_identifier,
@@ -27,16 +33,22 @@ class DockLockNode(ResourceNode):
             layers=dock.layers,
             extra={},
             dock=dock,
-            valid_starting_location=dock.valid_starting_location
+            valid_starting_location=dock.valid_starting_location,
+            _resource=NodeResourceInfo(
+                resource_db.first_unused_resource_index() + dock.node_index,
+                dock.identifier,
+                dock.name,
+                dock.name,
+            ),
         )
         object.__setattr__(dock, "lock_node", result)
         return result
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"DockLockNode({self.name!r} -> {self.dock.name})"
 
     def resource(self, context: NodeContext) -> ResourceInfo:
-        return NodeResourceInfo.from_node(self.dock, context)
+        return self._resource
 
     def can_collect(self, context: NodeContext) -> bool:
         dock = self.dock
@@ -66,7 +78,8 @@ class DockLockNode(ResourceNode):
             yield dock_resource, 1
 
         if not context.has_resource(target_resource) and front_weak.can_unlock_from_back(
-                dock.get_back_weakness(context)):
+            dock.get_back_weakness(context)
+        ):
             yield target_resource, 1
 
     def connections_from(self, context: NodeContext) -> Iterator[tuple[Node, Requirement]]:

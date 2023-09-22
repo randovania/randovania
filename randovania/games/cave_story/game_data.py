@@ -1,13 +1,17 @@
+from __future__ import annotations
+
 from randovania.games import game
 from randovania.games.cave_story.layout.cs_configuration import CSConfiguration
 from randovania.games.cave_story.layout.cs_cosmetic_patches import CSCosmeticPatches
 from randovania.games.cave_story.layout.preset_describer import (
-    get_ingame_hash_str, CSPresetDescriber,
+    CSPresetDescriber,
+    get_ingame_hash_str,
 )
 
 
 def _options():
     from randovania.games.cave_story.exporter.options import CSPerGameOptions
+
     return CSPerGameOptions
 
 
@@ -32,7 +36,7 @@ def _generator():
     from randovania.generator.base_patches_factory import BasePatchesFactory
 
     return game.GameGenerator(
-        item_pool_creator=pool_creator,
+        pickup_pool_creator=pool_creator,
         bootstrap=CSBootstrap(),
         base_patches_factory=BasePatchesFactory(),
         hint_distributor=CSHintDistributor(),
@@ -41,11 +45,13 @@ def _generator():
 
 def _patch_data_factory():
     from randovania.games.cave_story.exporter.patch_data_factory import CSPatchDataFactory
+
     return CSPatchDataFactory
 
 
 def _exporter():
     from randovania.games.cave_story.exporter.game_exporter import CSGameExporter
+
     return CSGameExporter()
 
 
@@ -53,32 +59,17 @@ game_data: game.GameData = game.GameData(
     short_name="CS",
     long_name="Cave Story",
     development_state=game.DevelopmentState.STABLE,
-
-    presets=[
-        {
-            "path": "starter_preset.rdvpreset"
-        },
-        {
-            "path": "classic.rdvpreset"
-        }
-    ],
-
+    presets=[{"path": "starter_preset.rdvpreset"}, {"path": "classic.rdvpreset"}],
     faq=[],
-
     layout=game.GameLayout(
         configuration=CSConfiguration,
         cosmetic_patches=CSCosmeticPatches,
         preset_describer=CSPresetDescriber(),
         get_ingame_hash=get_ingame_hash_str,
     ),
-
     options=_options,
-
     gui=_gui,
-
     generator=_generator,
-
     patch_data_factory=_patch_data_factory,
-
     exporter=_exporter,
 )

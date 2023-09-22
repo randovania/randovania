@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import asyncio
 import base64
 import functools
@@ -7,7 +9,7 @@ import ssl
 import time
 import uuid
 from enum import Enum
-from pathlib import Path
+from typing import TYPE_CHECKING
 
 import aiofiles
 import aiohttp
@@ -21,14 +23,29 @@ import randovania
 from randovania.bitpacking import bitpacking, construct_pack
 from randovania.game_description import default_database
 from randovania.games.game import RandovaniaGame
-from randovania.network_common import connection_headers, error, admin_actions, pickup_serializer, signals, \
-    multiplayer_session
+from randovania.lib import container_lib
+from randovania.network_common import (
+    admin_actions,
+    connection_headers,
+    error,
+    multiplayer_session,
+    pickup_serializer,
+    remote_inventory,
+    signals,
+)
 from randovania.network_common.multiplayer_session import (
-    MultiplayerSessionListEntry, MultiplayerSessionEntry, User, MultiplayerSessionActions,
-    MultiplayerWorldPickups, MultiplayerSessionAuditLog,
-    WorldUserInventory, RemoteInventory
+    MultiplayerSessionActions,
+    MultiplayerSessionAuditLog,
+    MultiplayerSessionEntry,
+    MultiplayerSessionListEntry,
+    MultiplayerWorldPickups,
+    User,
+    WorldUserInventory,
 )
 from randovania.network_common.world_sync import ServerSyncRequest, ServerSyncResponse
+
+if TYPE_CHECKING:
+    from pathlib import Path
 
 
 class ConnectionState(Enum):
@@ -44,8 +61,9 @@ class ConnectionState(Enum):
 
 
 def _hash_address(server_address: str) -> str:
-    return base64.urlsafe_b64encode(hashlib.blake2b(server_address.encode("utf-8"),
-                                                    digest_size=12).digest()).decode("utf-8")
+    return base64.urlsafe_b64encode(hashlib.blake2b(server_address.encode("utf-8"), digest_size=12).digest()).decode(
+        "utf-8"
+    )
 
 
 def _decode_pickup(d: str, resource_database):
@@ -108,6 +126,7 @@ class NetworkClient:
     _connect_error: str | None = None
     _num_emit_failures: int = 0
     _sessions_interested_in: set[int]
+    _tracking_worlds: set[tuple[uuid.UUID, int]]
     _allow_reporting_username: bool = False
 
     def __init__(self, user_data_dir: Path, configuration: dict):
@@ -124,20 +143,21 @@ class NetworkClient:
         aiohttp.ClientSession.ws_connect = wrap_ws_connect
 
         self._connection_state = ConnectionState.Disconnected
-        self.sio = socketio.AsyncClient(ssl_verify=configuration.get("verify_ssl", True))
+        self.sio = socketio.AsyncClient(ssl_verify=configuration.get("verify_ssl", True), reconnection=False)
         self._call_lock = asyncio.Lock()
         self._current_timeout = _MINIMUM_TIMEOUT
         self._sessions_interested_in = set()
+        self._tracking_worlds = set()
 
         self.configuration = configuration
         encoded_address = _hash_address(self.configuration["server_address"])
         self.server_data_path = user_data_dir / encoded_address
         self.session_data_path = self.server_data_path / "session_persistence.bin"
 
-        self.sio.on('connect', self.on_connect)
-        self.sio.on('connect_error', self.on_connect_error)
-        self.sio.on('disconnect', self.on_disconnect)
-        self.sio.on('user_session_update', self.on_user_session_updated)
+        self.sio.on("connect", self.on_connect)
+        self.sio.on("connect_error", self.on_connect_error)
+        self.sio.on("disconnect", self.on_disconnect)
+        self.sio.on("user_session_update", self.on_user_session_updated)
         self.sio.on(signals.SESSION_META_UPDATE, self._on_multiplayer_session_meta_update_raw)
         self.sio.on(signals.SESSION_ACTIONS_UPDATE, self._on_multiplayer_session_actions_update_raw)
         self.sio.on(signals.SESSION_AUDIT_UPDATE, self._on_multiplayer_session_audit_update_raw)
@@ -169,6 +189,7 @@ class NetworkClient:
         import aiohttp.client_exceptions
 
         if self.sio.connected:
+            self.logger.debug("sio is already connected")
             return
 
         waiting_for_on_connect = asyncio.get_running_loop().create_future()
@@ -188,7 +209,7 @@ class NetworkClient:
             await self.sio.connect(
                 self.configuration["server_address"],
                 socketio_path=self.configuration["socketio_path"],
-                transports=['websocket'],
+                transports=["websocket"],
                 headers=connection_headers(),
             )
             self.logger.info("sio.connect successful")
@@ -196,7 +217,7 @@ class NetworkClient:
             self.logger.info("connected")
 
         except (socketio.exceptions.ConnectionError, aiohttp.client_exceptions.ContentTypeError) as e:
-            self.logger.info(f"failed with {e} - {type(e)}")
+            self.logger.info("failed with %s - %s", e, type(e))
             if self._connect_error is None:
                 if isinstance(e, aiohttp.client_exceptions.ContentTypeError):
                     message = e.message
@@ -206,6 +227,16 @@ class NetworkClient:
             err = self._connect_error
             await self.sio.disconnect()
             raise UnableToConnect(err)
+
+        except error.BaseNetworkError as e:
+            self._connect_error = str(e)
+
+            # During the `on_connect` event we perform extra queries that can be rejected by the
+            # server (wrong version, etc.) which calls `sio.disconnect`. However, this is all during
+            # `sio.connect` which will finish by setting `sio.connected = True`.
+            await self.sio.disconnect()
+            self.sio.connected = False
+            raise
 
     def notify_on_connect(self, error_message: Exception | None):
         if self._waiting_for_on_connect is not None:
@@ -217,15 +248,18 @@ class NetworkClient:
 
     def connect_to_server(self) -> asyncio.Task:
         if self._connect_task is None:
+            self.logger.debug("creating new _connect_task")
             self._connect_task = asyncio.create_task(self._internal_connect_to_server())
             self._connect_task.add_done_callback(lambda _: setattr(self, "_connect_task", None))
+        else:
+            self.logger.debug("_connect_task already exists")
 
         return self._connect_task
 
     async def disconnect_from_server(self):
         self.logger.debug("will disconnect")
         await self.sio.disconnect()
-        self.logger.debug("disconnected")
+        self.logger.debug("disconnected. sio connected? %s", self.sio.connected)
 
     async def _restore_session(self):
         persisted_session = await self.read_persisted_session()
@@ -233,14 +267,16 @@ class NetworkClient:
             try:
                 self.connection_state = ConnectionState.ConnectedRestoringSession
                 self.logger.debug("session restoring session")
-                await self.on_user_session_updated(await self.server_call(
-                    "restore_user_session", persisted_session, handle_invalid_session=False
-                ))
+                await self.on_user_session_updated(
+                    await self.server_call("restore_user_session", persisted_session, handle_invalid_session=False)
+                )
 
                 # re-join rooms
                 self.logger.info("calling listen to session for %s", self._sessions_interested_in)
                 for session_id in list(self._sessions_interested_in):
                     await self.server_call("multiplayer_listen_to_session", (session_id, True))
+                for world_uid, user_id in list(self._tracking_worlds):
+                    await self.server_call("multiplayer_watch_inventory", (str(world_uid), user_id, True, True))
 
                 self.logger.info("session restored successful")
 
@@ -249,11 +285,12 @@ class NetworkClient:
             except (error.InvalidSessionError, error.UserNotAuthorizedToUseServerError) as e:
                 self.logger.info(
                     "session not authorized, deleting"
-                    if isinstance(e, error.UserNotAuthorizedToUseServerError) else
-                    "invalid session, deleting"
+                    if isinstance(e, error.UserNotAuthorizedToUseServerError)
+                    else "invalid session, deleting"
                 )
                 self.connection_state = ConnectionState.ConnectedNotLogged
                 self.session_data_path.unlink()
+
         else:
             self.logger.info("no session to restore")
             self.connection_state = ConnectionState.ConnectedNotLogged
@@ -298,7 +335,7 @@ class NetworkClient:
         self._current_user = User.from_json(new_session["user"])
         self._update_reported_username()
 
-        if self.connection_state in (ConnectionState.ConnectedRestoringSession, ConnectionState.ConnectedNotLogged):
+        if self.connection_state == ConnectionState.ConnectedNotLogged:
             self.connection_state = ConnectionState.Connected
 
         self.logger.info(f"{self._current_user.name}, state: {self.connection_state}")
@@ -312,15 +349,11 @@ class NetworkClient:
 
     async def _on_multiplayer_session_meta_update_raw(self, data: dict):
         entry = MultiplayerSessionEntry.from_json(data)
-        self.logger.debug("%s: %s",
-                          entry.id,
-                          hashlib.blake2b(str(data).encode("utf-8")).hexdigest())
+        self.logger.debug("%s: %s", entry.id, hashlib.blake2b(str(data).encode("utf-8")).hexdigest())
         await self.on_multiplayer_session_meta_update(entry)
 
     async def on_multiplayer_session_meta_update(self, entry: MultiplayerSessionEntry):
-        self.logger.info("name: %s, users: %d, game: %s, %s",
-                         entry.name, len(entry.users), str(entry.game_details),
-                         entry.state.user_friendly_name)
+        self.logger.info("name: %s, users: %d, game: %s", entry.name, len(entry.users), str(entry.game_details))
 
     async def _on_multiplayer_session_actions_update_raw(self, data: bytes):
         await self.on_multiplayer_session_actions_update(
@@ -343,24 +376,27 @@ class NetworkClient:
         game = RandovaniaGame(data["game"])
         resource_database = default_database.resource_database_for(game)
 
-        await self.on_world_pickups_update(MultiplayerWorldPickups(
-            world_id=uuid.UUID(data["world"]),
-            game=game,
-            pickups=tuple(
-                (item["provider_name"], _decode_pickup(item["pickup"], resource_database))
-                for item in data["pickups"]
-            ),
-        ))
+        await self.on_world_pickups_update(
+            MultiplayerWorldPickups(
+                world_id=uuid.UUID(data["world"]),
+                game=game,
+                pickups=tuple(
+                    (item["provider_name"], _decode_pickup(item["pickup"], resource_database))
+                    for item in data["pickups"]
+                ),
+            )
+        )
 
     async def on_world_pickups_update(self, pickups: MultiplayerWorldPickups):
         self.logger.info("world %s, num pickups: %d", pickups.world_id, len(pickups.pickups))
 
     async def _on_world_user_inventory_raw(self, entry_id: str, user_id: int, raw_inventory: bytes):
-        try:
-            inventory = construct_pack.decode(raw_inventory, RemoteInventory)
-        except construct.ConstructError as e:
-            self.logger.debug("Unable to parse inventory for entry %d: %s", entry_id, str(e))
+        inventory_or_error = remote_inventory.decode_remote_inventory(raw_inventory)
+        if isinstance(inventory_or_error, construct.ConstructError):
+            self.logger.debug("Unable to parse inventory for entry %d: %s", entry_id, str(inventory_or_error))
             return
+        else:
+            inventory = inventory_or_error
 
         session_inventory = WorldUserInventory(
             world_id=uuid.UUID(entry_id),
@@ -385,16 +421,17 @@ class NetworkClient:
         self._current_timeout = min(max(self._current_timeout, _MINIMUM_TIMEOUT), _MAXIMUM_TIMEOUT)
 
     async def server_call(self, event: str, data=None, *, namespace=None, handle_invalid_session: bool = True):
-        if self.connection_state.is_disconnected:
-            self.logger.debug(f"{event}, urgent connect start")
-            await self.connect_to_server()
-            self.logger.debug(f"{event}, urgent connect finished")
+        self.logger.debug("performing call for %s", event)
 
-        self.logger.debug(f"{event}, getting lock")
+        if self.connection_state.is_disconnected:
+            self.logger.debug("%s, urgent connect start. Sio is connected? %s", event, self.sio.connected)
+            await self.connect_to_server()
+            self.logger.debug("%s, urgent connect finished", event)
+
         async with self._call_lock:
             request_start = time.time()
             timeout = self._current_timeout
-            self.logger.debug(f"{event}, will call with timeout {timeout}")
+            self.logger.debug("%s, will call with timeout %d", event, timeout)
             try:
                 result = await self.sio.call(event, data, namespace=namespace, timeout=timeout)
                 request_time = time.time() - request_start
@@ -442,37 +479,38 @@ class NetworkClient:
 
     async def listen_to_session(self, session_id: int, listen: bool):
         result = await self.server_call("multiplayer_listen_to_session", (session_id, listen))
-        sessions = self._sessions_interested_in
-        if listen:
-            sessions.add(session_id)
-        elif session_id in sessions:
-            sessions.remove(session_id)
+        container_lib.ensure_in_set(session_id, self._sessions_interested_in, listen)
         return result
 
-    async def session_admin_global(self, session: MultiplayerSessionEntry,
-                                   action: admin_actions.SessionAdminGlobalAction, arg):
-        return await self.server_call("multiplayer_admin_session",
-                                      (session.id, action.value, arg))
+    async def session_admin_global(
+        self, session: MultiplayerSessionEntry, action: admin_actions.SessionAdminGlobalAction, arg
+    ):
+        return await self.server_call("multiplayer_admin_session", (session.id, action.value, arg))
 
-    async def session_admin_player(self, session: MultiplayerSessionEntry, user_id: int,
-                                   action: admin_actions.SessionAdminUserAction, arg):
-        return await self.server_call("multiplayer_admin_player",
-                                      (session.id, user_id, action.value, arg))
+    async def session_admin_player(
+        self, session: MultiplayerSessionEntry, user_id: int, action: admin_actions.SessionAdminUserAction, arg
+    ):
+        return await self.server_call("multiplayer_admin_player", (session.id, user_id, action.value, arg))
 
     async def world_track_inventory(self, world_uid: uuid.UUID, user_id: int, enable: bool):
-        await self.server_call("multiplayer_watch_inventory",
-                               (str(world_uid), user_id, enable, True))
+        await self.server_call("multiplayer_watch_inventory", (str(world_uid), user_id, enable, True))
+        container_lib.ensure_in_set((world_uid, user_id), self._tracking_worlds, enable)
 
     async def perform_world_sync(self, request: ServerSyncRequest) -> ServerSyncResponse:
         return construct_pack.decode(
-            await self.server_call("multiplayer_world_sync",
-                                   construct_pack.encode(request)),
+            await self.server_call("multiplayer_world_sync", construct_pack.encode(request)),
             ServerSyncResponse,
         )
 
     @property
     def current_user(self) -> User | None:
         return self._current_user
+
+    @property
+    def current_user_id(self) -> int | None:
+        if self._current_user is not None:
+            return self._current_user.id
+        return None
 
     async def logout(self):
         self.logger.info("Logging out")
@@ -487,13 +525,19 @@ class NetworkClient:
 
     def _update_reported_username(self):
         if self.allow_reporting_username and self._current_user and self._current_user.discord_id:
-            sentry_sdk.set_user({
-                "id": self._current_user.discord_id,
-                "username": self._current_user.name,
-                "server_id": self._current_user.id,
-            })
+            sentry_sdk.set_user(
+                {
+                    "id": self._current_user.discord_id,
+                    "username": self._current_user.name,
+                    "server_id": self._current_user.id,
+                }
+            )
         else:
             sentry_sdk.set_user(None)
+
+    @property
+    def last_connection_error(self) -> str | None:
+        return self._connect_error
 
     @property
     def allow_reporting_username(self):

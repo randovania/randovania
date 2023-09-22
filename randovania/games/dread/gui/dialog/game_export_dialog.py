@@ -1,26 +1,37 @@
+from __future__ import annotations
+
 import json
 import logging
 import os
 import platform
 import string
 from pathlib import Path
-from typing import Iterator, Callable
+from typing import TYPE_CHECKING
 
 from PySide6 import QtGui, QtWidgets
 
-from randovania.exporter.game_exporter import GameExportParams
 from randovania.games.dread.exporter.game_exporter import DreadGameExportParams, DreadModPlatform
 from randovania.games.dread.exporter.options import DreadPerGameOptions
 from randovania.games.dread.gui.dialog.ftp_uploader import FtpUploader
 from randovania.games.game import RandovaniaGame
 from randovania.gui.dialog.game_export_dialog import (
-    GameExportDialog, prompt_for_output_directory, prompt_for_input_directory,
-    is_directory_validator, path_in_edit, spoiler_path_for_directory, update_validation,
-    output_input_intersection_validator
+    GameExportDialog,
+    is_directory_validator,
+    output_input_intersection_validator,
+    path_in_edit,
+    prompt_for_input_directory,
+    prompt_for_output_directory,
+    spoiler_path_for_directory,
+    update_validation,
 )
 from randovania.gui.generated.dread_game_export_dialog_ui import Ui_DreadGameExportDialog
 from randovania.gui.lib import common_qt_lib
-from randovania.interface_common.options import Options
+
+if TYPE_CHECKING:
+    from collections.abc import Callable, Iterator
+
+    from randovania.exporter.game_exporter import GameExportParams
+    from randovania.interface_common.options import Options
 
 
 def get_path_to_ryujinx() -> Path:
@@ -57,8 +68,13 @@ def get_windows_drives() -> Iterator[tuple[str, str, Path]]:
             return
 
     drive_types = [
-        'Not identified', 'Not Mounted', 'Removable', 'HDD', 'Network',
-        'CD-Rom', 'Ramdisk',
+        "Not identified",
+        "Not Mounted",
+        "Removable",
+        "HDD",
+        "Network",
+        "CD-Rom",
+        "Ramdisk",
     ]
 
     drives = []
@@ -90,7 +106,8 @@ def romfs_validation(line: QtWidgets.QLineEdit):
 
     path = Path(line.text())
     return not all(
-        p.is_file() for p in [
+        p.is_file()
+        for p in [
             path.joinpath("system", "files.toc"),
             path.joinpath("packs", "system", "system.pkg"),
             path.joinpath("packs", "maps", "s010_cave", "s010_cave.pkg"),
@@ -100,7 +117,6 @@ def romfs_validation(line: QtWidgets.QLineEdit):
 
 
 class DreadGameExportDialog(GameExportDialog, Ui_DreadGameExportDialog):
-
     @classmethod
     def game_enum(cls):
         return RandovaniaGame.METROID_DREAD
@@ -127,6 +143,7 @@ class DreadGameExportDialog(GameExportDialog, Ui_DreadGameExportDialog):
         self.atmosphere_radio.toggled.connect(self._on_update_target_platform)
         self.ryujinx_radio.toggled.connect(self._on_update_target_platform)
         self.ryujinx_legacy_radio.toggled.connect(self._on_update_target_platform)
+        self.ryujinx_legacy_radio.setEnabled(not patch_data.get("enable_remote_lua"))
         self._on_update_target_platform()
 
         # Output to SD
@@ -144,12 +161,16 @@ class DreadGameExportDialog(GameExportDialog, Ui_DreadGameExportDialog):
         self.tab_ftp.is_valid = self.ftp_is_valid
         self.ftp_test_button.setVisible(False)
         self.ftp_anonymous_check.clicked.connect(self.ftp_on_anonymous_check)
-        add_validation(self.ftp_username_edit,
-                       lambda: self.ftp_anonymous_check.isChecked() or self.ftp_username_edit.text(),
-                       self.update_accept_validation)
-        add_validation(self.ftp_password_edit,
-                       lambda: self.ftp_anonymous_check.isChecked() or self.ftp_password_edit.text(),
-                       self.update_accept_validation)
+        add_validation(
+            self.ftp_username_edit,
+            lambda: self.ftp_anonymous_check.isChecked() or self.ftp_username_edit.text(),
+            self.update_accept_validation,
+        )
+        add_validation(
+            self.ftp_password_edit,
+            lambda: self.ftp_anonymous_check.isChecked() or self.ftp_password_edit.text(),
+            self.update_accept_validation,
+        )
         add_validation(self.ftp_ip_edit, lambda: self.ftp_ip_edit.text(), self.update_accept_validation)
         self.ftp_port_edit.setValidator(QtGui.QIntValidator(1, 65535, self))
 
@@ -215,14 +236,16 @@ class DreadGameExportDialog(GameExportDialog, Ui_DreadGameExportDialog):
 
     def update_per_game_options(self, per_game: DreadPerGameOptions) -> DreadPerGameOptions:
         selected_tab = self.output_tab_widget.currentWidget()
-        output_preference = json.dumps({
-            "selected_tab": next(tab_name for tab_name, the_tab in self._output_tab_by_name.items()
-                                 if selected_tab == the_tab),
-            "tab_options": {
-                tab_name: the_tab.serialize_options()
-                for tab_name, the_tab in self._output_tab_by_name.items()
+        output_preference = json.dumps(
+            {
+                "selected_tab": next(
+                    tab_name for tab_name, the_tab in self._output_tab_by_name.items() if selected_tab == the_tab
+                ),
+                "tab_options": {
+                    tab_name: the_tab.serialize_options() for tab_name, the_tab in self._output_tab_by_name.items()
+                },
             }
-        })
+        )
 
         return DreadPerGameOptions(
             cosmetic_patches=per_game.cosmetic_patches,
@@ -238,22 +261,17 @@ class DreadGameExportDialog(GameExportDialog, Ui_DreadGameExportDialog):
 
         self.output_tab_widget.setTabVisible(
             self.output_tab_widget.indexOf(self.tab_sd_card),
-            target_platform == DreadModPlatform.ATMOSPHERE and platform.system() == "Windows"
+            target_platform == DreadModPlatform.ATMOSPHERE and platform.system() == "Windows",
         )
         self.output_tab_widget.setTabVisible(
-            self.output_tab_widget.indexOf(self.tab_ftp),
-            target_platform == DreadModPlatform.ATMOSPHERE
+            self.output_tab_widget.indexOf(self.tab_ftp), target_platform == DreadModPlatform.ATMOSPHERE
         )
         self.output_tab_widget.setTabVisible(
             self.output_tab_widget.indexOf(self.tab_ryujinx),
-            target_platform == DreadModPlatform.RYUJINX and supports_ryujinx()
+            target_platform == DreadModPlatform.RYUJINX and supports_ryujinx(),
         )
 
-        visible_tabs = [
-            i
-            for i in range(self.output_tab_widget.count())
-            if self.output_tab_widget.isTabVisible(i)
-        ]
+        visible_tabs = [i for i in range(self.output_tab_widget.count()) if self.output_tab_widget.isTabVisible(i)]
         if self.output_tab_widget.indexOf(self.tab_sd_card) in visible_tabs:
             self.refresh_drive_list()
 
@@ -302,7 +320,7 @@ class DreadGameExportDialog(GameExportDialog, Ui_DreadGameExportDialog):
 
         self.sd_combo.clear()
         for drive, type_name, path in get_windows_drives():
-            if type_name == 'Removable' or self.sd_non_removable.isChecked():
+            if type_name == "Removable" or self.sd_non_removable.isChecked():
                 self.sd_combo.addItem(f"{drive}: ({type_name})", path)
 
         if self.sd_combo.count() == 0:
@@ -330,9 +348,11 @@ class DreadGameExportDialog(GameExportDialog, Ui_DreadGameExportDialog):
     # Ryujinx
     def update_ryujinx_ui(self):
         if supports_ryujinx():
-            self.ryujinx_label.setText(self.ryujinx_label.text().format(
-                mod_path=get_path_to_ryujinx(),
-            ))
+            self.ryujinx_label.setText(
+                self.ryujinx_label.text().format(
+                    mod_path=get_path_to_ryujinx(),
+                )
+            )
 
     # FTP
     def ftp_on_anonymous_check(self):
@@ -351,8 +371,7 @@ class DreadGameExportDialog(GameExportDialog, Ui_DreadGameExportDialog):
         self.ftp_on_anonymous_check()
 
     def ftp_is_valid(self):
-        return not any(x.has_error for x in [self.ftp_username_edit, self.ftp_password_edit,
-                                             self.ftp_ip_edit])
+        return not any(x.has_error for x in [self.ftp_username_edit, self.ftp_password_edit, self.ftp_ip_edit])
 
     def _get_ftp_internal_path(self):
         return self._options.internal_copies_path.joinpath("dread", "contents")
@@ -375,8 +394,10 @@ class DreadGameExportDialog(GameExportDialog, Ui_DreadGameExportDialog):
     def _validate_custom_path(self):
         common_qt_lib.set_error_border_stylesheet(
             self.custom_path_edit,
-            (is_directory_validator(self.custom_path_edit) or
-             output_input_intersection_validator(self.custom_path_edit, self.input_file_edit))
+            (
+                is_directory_validator(self.custom_path_edit)
+                or output_input_intersection_validator(self.custom_path_edit, self.input_file_edit)
+            ),
         )
 
     def _on_custom_path_change(self):
@@ -396,9 +417,9 @@ class DreadGameExportDialog(GameExportDialog, Ui_DreadGameExportDialog):
 
     def update_accept_validation(self):
         tab = self.output_tab_widget.currentWidget()
-        self.accept_button.setEnabled(hasattr(tab, "is_valid")
-                                      and tab.is_valid()
-                                      and not self.input_file_edit.has_error)
+        self.accept_button.setEnabled(
+            hasattr(tab, "is_valid") and tab.is_valid() and not self.input_file_edit.has_error
+        )
 
     def get_game_export_params(self) -> GameExportParams:
         clean_output_path = False

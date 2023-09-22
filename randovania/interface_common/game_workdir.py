@@ -1,4 +1,9 @@
-from pathlib import Path
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from pathlib import Path
 
 
 def discover_game(game_files_path: Path) -> tuple[str, str] | None:
@@ -10,7 +15,7 @@ def discover_game(game_files_path: Path) -> tuple[str, str] | None:
         header_bytes = boot_bin.read_bytes()
 
         game_id = header_bytes[0:6].decode("UTF-8")
-        game_title = header_bytes[0x20:(0x20 + 40)].split(b"\x00")[0].decode("UTF-8")
+        game_title = header_bytes[0x20 : (0x20 + 40)].split(b"\x00")[0].decode("UTF-8")
         return game_id, game_title
 
     except FileNotFoundError:
@@ -22,11 +27,11 @@ def validate_game_files_path(game_files_path: Path):
         raise ValueError("Not a directory")
 
     required_files = ["default.dol", "FrontEnd.pak", "Metroid1.pak", "Metroid2.pak"]
-    missing_files = [(game_files_path / required_file).is_file()
-                     for required_file in required_files]
+    missing_files = [(game_files_path / required_file).is_file() for required_file in required_files]
 
     if not all(missing_files):
-        raise ValueError("Is not a valid game folder. Missing files: {}".format([
-            filename for filename, exists in zip(required_files, missing_files)
-            if not exists
-        ]))
+        raise ValueError(
+            "Is not a valid game folder. Missing files: {}".format(
+                [filename for filename, exists in zip(required_files, missing_files) if not exists]
+            )
+        )

@@ -1,21 +1,20 @@
 from __future__ import annotations
-import json
 
+import json
 import typing
 from dataclasses import dataclass
 from enum import Enum
 from functools import cached_property
-from pathlib import Path
-from random import Random
-from typing import Callable, Iterable
 
 import randovania
 from randovania.bitpacking.bitpacking import BitPackEnum
 
 if typing.TYPE_CHECKING:
+    from collections.abc import Callable, Iterable
+    from pathlib import Path
+
     from randovania.exporter.game_exporter import GameExporter
-    from randovania.exporter.patch_data_factory import BasePatchDataFactory
-    from randovania.game_description.game_patches import GamePatches
+    from randovania.exporter.patch_data_factory import PatchDataFactory
     from randovania.game_description.game_description import GameDescription
     from randovania.generator.base_patches_factory import BasePatchesFactory
     from randovania.generator.hint_distributor import HintDistributor
@@ -41,7 +40,8 @@ def _get_none(h):
 @dataclass(frozen=True)
 class GameLayout:
     configuration: type[BaseConfiguration]
-    """Logic and gameplay settings such as elevator shuffling."""
+    # TODO Revise this text
+    """Logic and gameplay settings such as teleporter shuffling."""
 
     cosmetic_patches: type[BaseCosmeticPatches]
     """Cosmetic settings such as item icons on maps."""
@@ -72,20 +72,21 @@ class GameGui:
     """(Optional) A list of tuples mapping a progressive item's long name to a tuple of item long
     names replaced by the progressive item."""
 
-    spoiler_visualizer: tuple[type[GameDetailsTab], ...] = tuple()
+    spoiler_visualizer: tuple[type[GameDetailsTab], ...] = ()
     """Tuple of specializations of GameDetailsTab for providing extra details when visualizing a LayoutDescription."""
 
 
 @dataclass(frozen=True)
 class GameGenerator:
-    item_pool_creator: Callable[[PoolResults, BaseConfiguration, GameDescription, GamePatches, Random], None]
-    """Extends the base item pools with any specific item pools such as Artifacts."""
+    pickup_pool_creator: Callable[[PoolResults, BaseConfiguration, GameDescription], None]
+    """Extends the base pickup pools with any specific item pools such as Artifacts."""
 
     bootstrap: Bootstrap
     """Modifies the resource database and starting resources before generation."""
 
     base_patches_factory: BasePatchesFactory
-    """Creates base patches, such as elevator or configurable node assignments."""
+    # TODO Revise this text
+    """Creates base patches, such as teleporter or configurable node assignments."""
 
     hint_distributor: HintDistributor | None = None
     """(Optional) """
@@ -139,7 +140,7 @@ class GameData:
     generator: Callable[[], GameGenerator]
     """Contains game-specific generation data."""
 
-    patch_data_factory: Callable[[], type[BasePatchDataFactory]]
+    patch_data_factory: Callable[[], type[PatchDataFactory]]
 
     exporter: Callable[[], GameExporter]
     """Capable of exporting everything needed to play the randomized game."""
@@ -231,7 +232,7 @@ class RandovaniaGame(BitPackEnum, Enum):
         return self.data.generator()
 
     @cached_property
-    def patch_data_factory(self) -> type[BasePatchDataFactory]:
+    def patch_data_factory(self) -> type[PatchDataFactory]:
         return self.data.patch_data_factory()
 
     @cached_property

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>773</width>
-    <height>418</height>
+    <height>458</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -25,14 +25,78 @@
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
-     <widget class="QTabWidget" name="tabWidget">
+     <widget class="QTabWidget" name="tab_widget">
       <property name="currentIndex">
        <number>0</number>
       </property>
-      <widget class="QWidget" name="tab_players">
+      <widget class="QWidget" name="tab_worlds">
        <attribute name="title">
-        <string>Players</string>
+        <string>Users and Worlds</string>
        </attribute>
+       <layout class="QVBoxLayout" name="worlds_layout">
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="QLabel" name="not_connected_warning_label">
+          <property name="text">
+           <string>TextLabel</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+          <property name="wordWrap">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="generate_game_label">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="text">
+           <string>&lt;Game not generated&gt;</string>
+          </property>
+          <property name="textInteractionFlags">
+           <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByMouse</set>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="generate_game_layout">
+          <item>
+           <widget class="QPushButton" name="generate_game_button">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string>Generate Game</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="export_game_button">
+            <property name="text">
+             <string>Export Game</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
       </widget>
       <widget class="QWidget" name="tab_session">
        <attribute name="title">
@@ -40,61 +104,22 @@
        </attribute>
        <layout class="QGridLayout" name="session_tab_layout">
         <item row="0" column="0" colspan="2">
-         <widget class="QGroupBox" name="session_game_group">
-          <property name="title">
-           <string>Session Game</string>
-          </property>
-          <layout class="QGridLayout" name="session_game_layout">
-           <item row="1" column="0" colspan="2">
-            <widget class="QLabel" name="generate_game_label">
-             <property name="text">
-              <string>&lt;Game not generated&gt;</string>
-             </property>
-             <property name="textInteractionFlags">
-              <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByMouse</set>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="0">
-            <widget class="QPushButton" name="generate_game_button">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="text">
-              <string>Generate Game</string>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </widget>
-        </item>
-        <item row="1" column="0" colspan="2">
          <widget class="QGroupBox" name="session_admin_group">
           <property name="title">
            <string>Session Administration</string>
           </property>
           <layout class="QGridLayout" name="session_admin_layout">
-           <item row="1" column="0">
-            <widget class="QPushButton" name="copy_permalink_button">
-             <property name="text">
-              <string>Copy Permalink</string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="1">
-            <widget class="QPushButton" name="session_status_button">
-             <property name="text">
-              <string>Start</string>
-             </property>
-            </widget>
-           </item>
            <item row="0" column="0">
             <widget class="QPushButton" name="view_game_details_button">
              <property name="text">
               <string>View Spoiler</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QPushButton" name="copy_permalink_button">
+             <property name="text">
+              <string>Copy Permalink</string>
              </property>
             </widget>
            </item>
@@ -111,10 +136,24 @@
              </property>
             </widget>
            </item>
+           <item row="0" column="1">
+            <widget class="QPushButton" name="session_visibility_button">
+             <property name="text">
+              <string>Start</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="0">
+            <widget class="QCheckBox" name="everyone_can_claim_check">
+             <property name="text">
+              <string>Everyone can claim worlds</string>
+             </property>
+            </widget>
+           </item>
           </layout>
          </widget>
         </item>
-        <item row="4" column="0" colspan="2">
+        <item row="3" column="0" colspan="2">
          <spacer name="verticalSpacer">
           <property name="orientation">
            <enum>Qt::Vertical</enum>
@@ -127,7 +166,7 @@
           </property>
          </spacer>
         </item>
-        <item row="2" column="0" colspan="2">
+        <item row="1" column="0" colspan="2">
          <widget class="QGroupBox" name="connectivity_group">
           <property name="title">
            <string>Connectivity</string>
@@ -172,43 +211,68 @@
         </item>
        </layout>
       </widget>
-      <widget class="QTableWidget" name="tab_history">
-       <property name="editTriggers">
-        <set>QAbstractItemView::NoEditTriggers</set>
-       </property>
-       <property name="sortingEnabled">
-        <bool>true</bool>
-       </property>
+      <widget class="QWidget" name="tab_history">
        <attribute name="title">
         <string>History</string>
        </attribute>
-       <column>
-        <property name="text">
-         <string>Provider</string>
+       <layout class="QVBoxLayout" name="history_layout">
+        <property name="leftMargin">
+         <number>0</number>
         </property>
-       </column>
-       <column>
-        <property name="text">
-         <string>Receiver</string>
+        <property name="rightMargin">
+         <number>0</number>
         </property>
-       </column>
-       <column>
-        <property name="text">
-         <string>Pickup</string>
+        <property name="bottomMargin">
+         <number>0</number>
         </property>
-       </column>
-       <column>
-        <property name="text">
-         <string>Location</string>
-        </property>
-       </column>
-       <column>
-        <property name="text">
-         <string>Time</string>
-        </property>
-       </column>
+        <item>
+         <layout class="QHBoxLayout" name="history_filter_layout">
+          <property name="leftMargin">
+           <number>4</number>
+          </property>
+          <property name="rightMargin">
+           <number>4</number>
+          </property>
+          <item>
+           <widget class="QComboBox" name="history_filter_provider_combo">
+            <item>
+             <property name="text">
+              <string>All Worlds</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item>
+           <widget class="QComboBox" name="history_filter_receiver_combo">
+            <item>
+             <property name="text">
+              <string>All Worlds</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="history_filter_edit">
+            <property name="placeholderText">
+             <string>Filter by pickup or location</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="QTableView" name="history_view">
+          <property name="editTriggers">
+           <set>QAbstractItemView::NoEditTriggers</set>
+          </property>
+          <property name="sortingEnabled">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </widget>
-      <widget class="QTableWidget" name="tab_audit">
+      <widget class="QTableView" name="tab_audit">
        <property name="editTriggers">
         <set>QAbstractItemView::NoEditTriggers</set>
        </property>
@@ -218,21 +282,6 @@
        <attribute name="title">
         <string>Audit Log</string>
        </attribute>
-       <column>
-        <property name="text">
-         <string>User</string>
-        </property>
-       </column>
-       <column>
-        <property name="text">
-         <string>Message</string>
-        </property>
-       </column>
-       <column>
-        <property name="text">
-         <string>Time</string>
-        </property>
-       </column>
       </widget>
      </widget>
     </item>

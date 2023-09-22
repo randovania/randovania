@@ -1,4 +1,5 @@
-import os
+from __future__ import annotations
+
 from unittest.mock import MagicMock
 
 from randovania.cli import database
@@ -14,5 +15,5 @@ def test_export_videos(tmp_path):
     database.export_videos_command_logic(args)
 
     # Check
-    magmoor_caverns_sz = os.path.getsize(os.path.join(tmp_path, "Metroid Prime", "Magmoor Caverns.html"))
+    magmoor_caverns_sz = tmp_path.joinpath("Metroid Prime", "Magmoor Caverns.html").stat().st_size
     assert magmoor_caverns_sz > 5000

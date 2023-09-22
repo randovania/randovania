@@ -1,4 +1,6 @@
-from unittest.mock import MagicMock, patch, ANY
+from __future__ import annotations
+
+from unittest.mock import ANY, MagicMock, patch
 
 import pytest
 
@@ -20,22 +22,28 @@ def test_create_subparsers(mocker):
     mock_gui_create_subparsers.assert_called_once_with(root_parser)
 
 
-@pytest.mark.parametrize("args", [
-    [],
-    ["--version"],
-])
+@pytest.mark.parametrize(
+    "args",
+    [
+        [],
+        ["--version"],
+    ],
+)
 def test_parse_args_valid(args):
     # Run
     try:
         cli._create_parser().parse_args(args)
 
-    except SystemExit as value:
-        assert value is None
+    except SystemExit:
+        pytest.fail("should not have raised SystemExit")
 
 
-@pytest.mark.parametrize("args", [
-    ["-h"],
-])
+@pytest.mark.parametrize(
+    "args",
+    [
+        ["-h"],
+    ],
+)
 def test_parse_args_invalid(args):
     # Run
     parser = cli._create_parser()
@@ -71,9 +79,10 @@ def test_run_args_without_func():
 
 @patch("randovania.cli._run_args", autospec=True)
 @patch("randovania.cli._create_parser", autospec=True)
-def test_run_cli(mock_create_parser: MagicMock,
-                 mock_run_args: MagicMock,
-                 ):
+def test_run_cli(
+    mock_create_parser: MagicMock,
+    mock_run_args: MagicMock,
+):
     # Setup
     argv = [MagicMock(), MagicMock(), MagicMock()]
     mock_run_args.return_value = 1234
@@ -84,8 +93,9 @@ def test_run_cli(mock_create_parser: MagicMock,
 
     # Assert
     mock_create_parser.return_value.parse_args.assert_called_once_with(argv[1:])
-    mock_run_args.assert_called_once_with(mock_create_parser.return_value,
-                                          mock_create_parser.return_value.parse_args.return_value)
+    mock_run_args.assert_called_once_with(
+        mock_create_parser.return_value, mock_create_parser.return_value.parse_args.return_value
+    )
     assert p.value.code == 1234
 
 

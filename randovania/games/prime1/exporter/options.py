@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import dataclasses
 from pathlib import Path
 
@@ -19,11 +21,11 @@ class PrimePerGameOptions(PerGameOptions):
             "input_path": str(self.input_path) if self.input_path is not None else None,
             "output_directory": str(self.output_directory) if self.output_directory is not None else None,
             "output_format": self.output_format,
-            "use_external_models": [game.value for game in self.use_external_models]
+            "use_external_models": [game.value for game in self.use_external_models],
         }
 
     @classmethod
-    def from_json(cls, value: dict) -> "PrimePerGameOptions":
+    def from_json(cls, value: dict) -> PrimePerGameOptions:
         game = RandovaniaGame.METROID_PRIME
         cosmetic_patches = game.data.layout.cosmetic_patches.from_json(value["cosmetic_patches"])
         return cls(

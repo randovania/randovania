@@ -1,21 +1,29 @@
+from __future__ import annotations
+
 import dataclasses
 from pathlib import Path
+from typing import TYPE_CHECKING
 
-from randovania.exporter.game_exporter import GameExportParams
 from randovania.games.game import RandovaniaGame
 from randovania.games.super_metroid.exporter.game_exporter import SuperMetroidGameExportParams
 from randovania.games.super_metroid.exporter.options import SuperMetroidPerGameOptions
 from randovania.gui.dialog.game_export_dialog import (
-    GameExportDialog, prompt_for_output_file, prompt_for_input_file, output_file_validator, add_field_validation,
-    spoiler_path_for
+    GameExportDialog,
+    add_field_validation,
+    output_file_validator,
+    prompt_for_input_file,
+    prompt_for_output_file,
+    spoiler_path_for,
 )
 from randovania.gui.generated.super_metroid_game_export_dialog_ui import Ui_SuperMetroidGameExportDialog
 from randovania.gui.lib.multi_format_output_mixin import MultiFormatOutputMixin
-from randovania.interface_common.options import Options
+
+if TYPE_CHECKING:
+    from randovania.exporter.game_exporter import GameExportParams
+    from randovania.interface_common.options import Options
 
 
 class SuperMetroidGameExportDialog(GameExportDialog, MultiFormatOutputMixin, Ui_SuperMetroidGameExportDialog):
-
     @classmethod
     def game_enum(cls):
         return RandovaniaGame.SUPER_METROID
@@ -48,7 +56,7 @@ class SuperMetroidGameExportDialog(GameExportDialog, MultiFormatOutputMixin, Ui_
             fields={
                 self.input_file_edit: lambda: not self.input_file.is_file(),
                 self.output_file_edit: lambda: output_file_validator(self.output_file),
-            }
+            },
         )
 
     @property
@@ -88,8 +96,9 @@ class SuperMetroidGameExportDialog(GameExportDialog, MultiFormatOutputMixin, Ui_
 
     # Output File
     def _on_output_file_button(self):
-        output_file = prompt_for_output_file(self, self.valid_output_file_types, self.default_output_name,
-                                             self.output_file_edit)
+        output_file = prompt_for_output_file(
+            self, self.valid_output_file_types, self.default_output_name, self.output_file_edit
+        )
         if output_file is not None:
             self.output_file_edit.setText(str(output_file))
 

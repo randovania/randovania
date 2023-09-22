@@ -1,4 +1,6 @@
-from PySide6 import QtWidgets, QtCore, QtGui
+from __future__ import annotations
+
+from PySide6 import QtCore, QtGui, QtWidgets
 
 
 class VerticalTabBar(QtWidgets.QTabBar):

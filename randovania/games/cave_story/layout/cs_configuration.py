@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import dataclasses
 from enum import Enum
 
@@ -24,21 +26,28 @@ class CSObjective(BitPackEnum, Enum):
         return self.value >= CSObjective.BEST_ENDING.value
 
 
-enum_lib.add_long_name(CSObjective, {
-    CSObjective.BAD_ENDING: "Bad Ending",
-    CSObjective.NORMAL_ENDING: "Normal Ending",
-    CSObjective.BEST_ENDING: "Best Ending",
-    CSObjective.ALL_BOSSES: "All Bosses",
-    CSObjective.HUNDRED_PERCENT: "100% Completion",
-})
+enum_lib.add_long_name(
+    CSObjective,
+    {
+        CSObjective.BAD_ENDING: "Bad Ending",
+        CSObjective.NORMAL_ENDING: "Normal Ending",
+        CSObjective.BEST_ENDING: "Best Ending",
+        CSObjective.ALL_BOSSES: "All Bosses",
+        CSObjective.HUNDRED_PERCENT: "100% Completion",
+    },
+)
 
-enum_lib.add_per_enum_field(CSObjective, "script", {
-    CSObjective.BAD_ENDING: "<FL+6003",
-    CSObjective.NORMAL_ENDING: "<FL+6000",
-    CSObjective.BEST_ENDING: "<FL+6001",
-    CSObjective.ALL_BOSSES: "<FL+6002<IT+0005",
-    CSObjective.HUNDRED_PERCENT: "<FL+6004<IT+0005",
-})
+enum_lib.add_per_enum_field(
+    CSObjective,
+    "script",
+    {
+        CSObjective.BAD_ENDING: "<FL+6003",
+        CSObjective.NORMAL_ENDING: "<FL+6000",
+        CSObjective.BEST_ENDING: "<FL+6001",
+        CSObjective.ALL_BOSSES: "<FL+6002<IT+0005",
+        CSObjective.HUNDRED_PERCENT: "<FL+6004<IT+0005",
+    },
+)
 
 
 @dataclasses.dataclass(frozen=True)

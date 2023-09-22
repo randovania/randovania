@@ -5,7 +5,7 @@
     },
     "areas": {
         "Tourian Entrance": {
-            "default_node": "Elevator - Golden Four",
+            "default_node": "Teleporter to Crateria",
             "extra": {
                 "map_name": "7DAAE",
                 "asset_id": 33
@@ -79,7 +79,7 @@
                                 "items": []
                             }
                         },
-                        "Elevator - Golden Four": {
+                        "Teleporter to Crateria": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -88,12 +88,12 @@
                         }
                     }
                 },
-                "Elevator - Golden Four": {
+                "Teleporter to Crateria": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 251.56421918995022,
-                        "y": 622.5618366904914,
+                        "x": 251.56,
+                        "y": 622.56,
                         "z": 0.0
                     },
                     "description": "",
@@ -102,16 +102,14 @@
                     ],
                     "extra": {
                         "scan_asset_id": null,
-                        "teleporter_instance_id": null,
-                        "keep_name_when_vanilla": false,
-                        "editable": false
+                        "teleporter_instance_id": null
                     },
                     "valid_starting_location": false,
                     "dock_type": "teleporter",
                     "default_connection": {
                         "region": "Crateria",
                         "area": "Gold Four",
-                        "node": "Elevator - Tourian Entrance"
+                        "node": "Teleporter to Tourian"
                     },
                     "default_dock_weakness": "Teleporter",
                     "exclude_from_dock_rando": false,
@@ -948,7 +946,7 @@
                     "default_connection": {
                         "region": "Tourian",
                         "area": "Dust Torizo Room",
-                        "node": "Door from Blue Hopper Room"
+                        "node": "Door to Blue Hopper Room"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -1003,18 +1001,18 @@
             }
         },
         "Dust Torizo Room": {
-            "default_node": "Door from Blue Hopper Room",
+            "default_node": "Door to Blue Hopper Room",
             "extra": {
                 "map_name": "7DC65",
                 "asset_id": 40
             },
             "nodes": {
-                "Door from Blue Hopper Room": {
+                "Door to Blue Hopper Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 989.5622445187662,
-                        "y": 257.9026384243775,
+                        "x": 989.56,
+                        "y": 257.9,
                         "z": 0.0
                     },
                     "description": "",
@@ -1029,7 +1027,7 @@
                         "area": "Blue Hopper Room",
                         "node": "Door to Dust Torizo Room"
                     },
-                    "default_dock_weakness": "Permanently Locked",
+                    "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -1062,7 +1060,7 @@
                     "default_connection": {
                         "region": "Tourian",
                         "area": "Big Boy Room",
-                        "node": "Door from Dust Torizo Room"
+                        "node": "Door to Dust Torizo Room"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -1070,7 +1068,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door from Blue Hopper Room": {
+                        "Door to Blue Hopper Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1082,7 +1080,7 @@
             }
         },
         "Big Boy Room": {
-            "default_node": "Door from Dust Torizo Room",
+            "default_node": "Door to Dust Torizo Room",
             "extra": {
                 "map_name": "7DCB1",
                 "asset_id": 41
@@ -1114,7 +1112,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door from Dust Torizo Room": {
+                        "Door to Dust Torizo Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1123,12 +1121,12 @@
                         }
                     }
                 },
-                "Door from Dust Torizo Room": {
+                "Door to Dust Torizo Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 2013.3719806763283,
-                        "y": 267.4158305462654,
+                        "x": 2013.37,
+                        "y": 267.42,
                         "z": 0.0
                     },
                     "description": "",
@@ -1143,7 +1141,7 @@
                         "area": "Dust Torizo Room",
                         "node": "Door to Big Boy Room"
                     },
-                    "default_dock_weakness": "Permanently Locked",
+                    "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,

@@ -1,5 +1,7 @@
+from __future__ import annotations
+
 import dataclasses
-from unittest.mock import AsyncMock, ANY
+from unittest.mock import ANY, AsyncMock
 
 import pytest
 from PySide6 import QtWidgets
@@ -20,8 +22,7 @@ async def test_on_load_preset(skip_qtbot, blank_game_description, mocker, preset
 
     preset = dataclasses.replace(
         base_preset,
-        configuration=dataclasses.replace(base_preset.configuration,
-                                          trick_level=trick_level),
+        configuration=dataclasses.replace(base_preset.configuration, trick_level=trick_level),
     )
 
     if preset_state > 1:

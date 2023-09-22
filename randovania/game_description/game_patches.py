@@ -3,16 +3,18 @@ from __future__ import annotations
 import copy
 import dataclasses
 import typing
-from collections.abc import Iterable, Iterator
 from dataclasses import dataclass
 
-from randovania.game_description.resources.pickup_entry import PickupEntry
-from randovania.game_description.resources.resource_info import ResourceCollection, ResourceGain
-from randovania.game_description.resources.resource_type import ResourceType
-from randovania.game_description.db.area_identifier import AreaIdentifier
+from randovania.game_description.assignment import (
+    PickupTarget,
+)
+from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.node_identifier import NodeIdentifier
+from randovania.game_description.pickup.pickup_entry import PickupEntry
+from randovania.game_description.resources.resource_collection import ResourceCollection
+from randovania.game_description.resources.resource_type import ResourceType
 
-ElevatorConnection = dict[NodeIdentifier, AreaIdentifier]
+TeleporterConnection = dict[NodeIdentifier, NodeIdentifier]
 StartingEquipment = list[PickupEntry] | ResourceCollection
 
 
@@ -21,23 +23,27 @@ class IncompatibleStartingEquipment(Exception):
 
 
 if typing.TYPE_CHECKING:
-    from randovania.game_description.game_description import GameDescription
-    from randovania.game_description.db.dock import DockWeakness
+    from collections.abc import Iterable, Iterator
+
     from randovania.game_description.assignment import (
-        PickupTarget, PickupTargetAssociation,
-        NodeConfigurationAssociation, DockWeaknessAssociation
+        DockWeaknessAssociation,
+        NodeConfigurationAssociation,
+        PickupTargetAssociation,
     )
+    from randovania.game_description.db.dock import DockWeakness
+    from randovania.game_description.db.node import Node
+    from randovania.game_description.game_description import GameDescription
     from randovania.game_description.hint import Hint
     from randovania.game_description.requirements.base import Requirement
     from randovania.game_description.resources.pickup_index import PickupIndex
+    from randovania.game_description.resources.resource_info import ResourceGain
     from randovania.layout.base.base_configuration import BaseConfiguration
-    from randovania.game_description.db.node import Node
-    from randovania.game_description.db.dock_node import DockNode
 
 
 @dataclass(frozen=True, slots=True)
 class GamePatches:
     """Determines patches that are made to the game's data."""
+
     game: GameDescription = dataclasses.field(compare=False)
     player_index: int
     configuration: BaseConfiguration
@@ -54,8 +60,8 @@ class GamePatches:
         hash=False, compare=False
     )
 
-    def __post_init__(self):
-        if isinstance(self.starting_equipment, (ResourceCollection, list)):
+    def __post_init__(self) -> None:
+        if isinstance(self.starting_equipment, ResourceCollection | list):
             if isinstance(self.starting_equipment, ResourceCollection):
                 for resource, _ in self.starting_equipment.as_resource_gain():
                     if resource.resource_type != ResourceType.ITEM:
@@ -64,11 +70,17 @@ class GamePatches:
             raise TypeError("starting_pickups_or_items must be a ResourceCollection or list")
 
     @classmethod
-    def create_from_game(cls, game: GameDescription, player_index: int, configuration: BaseConfiguration,
-                         ) -> GamePatches:
+    def create_from_game(
+        cls,
+        game: GameDescription,
+        player_index: int,
+        configuration: BaseConfiguration,
+    ) -> GamePatches:
         game.region_list.ensure_has_node_cache()
         return GamePatches(
-            game, player_index, configuration,
+            game,
+            player_index,
+            configuration,
             pickup_assignment={},
             dock_connection=game.get_prefilled_docks(),
             dock_weakness=[None] * len(game.region_list.all_nodes),
@@ -89,6 +101,11 @@ class GamePatches:
             new_pickup_assignment[index] = pickup
 
         return dataclasses.replace(self, pickup_assignment=new_pickup_assignment)
+
+    def assign_own_pickups(self, assignments: Iterable[tuple[PickupIndex, PickupEntry]]) -> GamePatches:
+        return self.assign_new_pickups(
+            (index, PickupTarget(pickup, self.player_index)) for index, pickup in assignments
+        )
 
     def assign_node_configuration(self, assignment: Iterable[NodeConfigurationAssociation]) -> GamePatches:
         new_configurable = copy.copy(self.configurable_nodes)
@@ -136,8 +153,9 @@ class GamePatches:
             cached_dock_connections[source.node_index] = None
             # TODO: maybe this should set the other side too?
 
-        return dataclasses.replace(self, dock_connection=connections,
-                                   cached_dock_connections_from=cached_dock_connections)
+        return dataclasses.replace(
+            self, dock_connection=connections, cached_dock_connections_from=cached_dock_connections
+        )
 
     def get_dock_connection_for(self, node: DockNode) -> Node:
         target_index = self.dock_connection[node.node_index]
@@ -147,15 +165,19 @@ class GamePatches:
                 target_index = self.game.region_list.node_by_identifier(node.default_connection).node_index
                 object.__setattr__(node, "cache_default_connection", target_index)
 
-        return self.game.region_list.all_nodes[target_index]
+        result = self.game.region_list.all_nodes[target_index]
+        assert result is not None
+        return result
 
     def all_dock_connections(self) -> Iterator[tuple[DockNode, Node]]:
         nodes = self.game.region_list.all_nodes
         for index, target in enumerate(self.dock_connection):
             if target is not None:
                 node = nodes[index]
-                assert node is not None
-                yield node, nodes[target]
+                other = nodes[target]
+                assert isinstance(node, DockNode)
+                assert other is not None
+                yield node, other
 
     # Dock Weakness
     def assign_dock_weakness(self, weaknesses: Iterable[tuple[DockNode, DockWeakness]]) -> GamePatches:
@@ -167,8 +189,9 @@ class GamePatches:
             cached_dock_connections[node.node_index] = None
             cached_dock_connections[self.get_dock_connection_for(node).node_index] = None
 
-        return dataclasses.replace(self, dock_weakness=new_weakness,
-                                   cached_dock_connections_from=cached_dock_connections)
+        return dataclasses.replace(
+            self, dock_weakness=new_weakness, cached_dock_connections_from=cached_dock_connections
+        )
 
     def assign_weaknesses_to_shuffle(self, weaknesses: Iterable[tuple[DockNode, bool]]) -> GamePatches:
         new_to_shuffle = list(self.weaknesses_to_shuffle)
@@ -195,7 +218,7 @@ class GamePatches:
         for index, weakness in enumerate(self.dock_weakness):
             if weakness is not None:
                 node = nodes[index]
-                assert node is not None
+                assert isinstance(node, DockNode)
                 yield node, weakness
 
     def all_weaknesses_to_shuffle(self) -> Iterator[DockNode]:
@@ -203,7 +226,7 @@ class GamePatches:
         for index, shuffle in enumerate(self.weaknesses_to_shuffle):
             if shuffle:
                 node = nodes[index]
-                assert node is not None
+                assert isinstance(node, DockNode)
                 yield node
 
     def starting_resources(self) -> ResourceCollection:
@@ -219,6 +242,5 @@ class GamePatches:
     def get_cached_dock_connections_from(self, node: DockNode) -> tuple[tuple[Node, Requirement], ...] | None:
         return self.cached_dock_connections_from[node.node_index]
 
-    def set_cached_dock_connections_from(self, node: DockNode, cache: tuple[tuple[Node, Requirement], ...]):
+    def set_cached_dock_connections_from(self, node: DockNode, cache: tuple[tuple[Node, Requirement], ...]) -> None:
         self.cached_dock_connections_from[node.node_index] = cache
-

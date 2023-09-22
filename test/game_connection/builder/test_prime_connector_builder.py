@@ -1,12 +1,18 @@
-import pytest
+from __future__ import annotations
+
 from unittest.mock import AsyncMock, MagicMock
+
+import pytest
+from open_prime_rando.dol_patching.echoes import dol_versions
 
 from randovania.game_connection.builder.prime_connector_builder import PrimeConnectorBuilder
 from randovania.game_connection.connector.echoes_remote_connector import EchoesRemoteConnector
 from randovania.game_connection.connector_builder_choice import ConnectorBuilderChoice
-from randovania.game_connection.executor.memory_operation import MemoryOperation, MemoryOperationException, \
-    MemoryOperationExecutor
-from open_prime_rando.dol_patching.echoes import dol_versions
+from randovania.game_connection.executor.memory_operation import (
+    MemoryOperation,
+    MemoryOperationException,
+    MemoryOperationExecutor,
+)
 
 
 class MockedPrimeConnectorBuilder(PrimeConnectorBuilder):
@@ -34,11 +40,7 @@ async def test_identify_game_ntsc(mocker):
 
     def side_effect(ops: list[MemoryOperation]):
         if len(ops) > 1:
-            return {
-                op: b"!#$M"
-                for op in ops
-                if op.address == 0x803ac3b0
-            }
+            return {op: b"!#$M" for op in ops if op.address == 0x803AC3B0}
         return {}
 
     con_builder = MockedPrimeConnectorBuilder()
@@ -63,11 +65,7 @@ async def test_identify_game_fail_second(via_exception):
     # Setup
     def side_effect(ops: list[MemoryOperation]):
         if len(ops) > 1:
-            return {
-                op: b"!#$M"
-                for op in ops
-                if op.address == 0x803ac3b0
-            }
+            return {op: b"!#$M" for op in ops if op.address == 0x803AC3B0}
         return {}
 
     con_builder = MockedPrimeConnectorBuilder()
@@ -96,11 +94,7 @@ async def test_is_this_version_throws_error():
     # Setup
     def side_effect(ops: list[MemoryOperation]):
         if len(ops) > 1:
-            return {
-                op: b"!#$M"
-                for op in ops
-                if op.address == 0x803ac3b0
-            }
+            return {op: b"!#$M" for op in ops if op.address == 0x803AC3B0}
         return {}
 
     con_builder = MockedPrimeConnectorBuilder()

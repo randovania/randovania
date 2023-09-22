@@ -1,17 +1,22 @@
-import dataclasses
+from __future__ import annotations
 
-from randovania.exporter.hints.hint_formatters import LocationFormatter, TemplatedFormatter, RelativeAreaFormatter
+import dataclasses
+from typing import TYPE_CHECKING
+
+from randovania.exporter.hints.hint_formatters import LocationFormatter, RelativeAreaFormatter, TemplatedFormatter
 from randovania.exporter.hints.hint_namer import HintNamer, PickupLocation
-from randovania.exporter.hints.pickup_hint import PickupHint
 from randovania.exporter.hints.relative_item_formatter import RelativeItemFormatter
 from randovania.game_description import default_database
-from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.hint import Hint, HintLocationPrecision
-from randovania.game_description.resources.item_resource_info import ItemResourceInfo
-from randovania.game_description.db.pickup_node import PickupNode
-from randovania.game_description.db.region_list import RegionList
-from randovania.games.game import RandovaniaGame
-from randovania.interface_common.players_configuration import PlayersConfiguration
+
+if TYPE_CHECKING:
+    from randovania.exporter.hints.pickup_hint import PickupHint
+    from randovania.game_description.db.pickup_node import PickupNode
+    from randovania.game_description.db.region_list import RegionList
+    from randovania.game_description.game_patches import GamePatches
+    from randovania.game_description.resources.item_resource_info import ItemResourceInfo
+    from randovania.games.game import RandovaniaGame
+    from randovania.interface_common.players_configuration import PlayersConfiguration
 
 
 def _area_name(region_list: RegionList, pickup_node: PickupNode, hide_region: bool) -> str:
@@ -45,10 +50,13 @@ class PrimeFamilyHintNamer(HintNamer):
                 self,
             ),
             HintLocationPrecision.RELATIVE_TO_AREA: RelativeAreaFormatter(
-                patches, lambda msg, with_color: colorize_text(self.color_location, msg, with_color),
+                patches,
+                lambda msg, with_color: colorize_text(self.color_location, msg, with_color),
             ),
             HintLocationPrecision.RELATIVE_TO_INDEX: RelativeItemFormatter(
-                patches, lambda msg, with_color: colorize_text(self.color_location, msg, with_color), players_config,
+                patches,
+                lambda msg, with_color: colorize_text(self.color_location, msg, with_color),
+                players_config,
             ),
         }
 
@@ -72,8 +80,7 @@ class PrimeFamilyHintNamer(HintNamer):
         return self.location_formatters[hint.precision.location].format(
             game,
             dataclasses.replace(
-                pick_hint,
-                pickup_name=colorize_text(self.color_item, pick_hint.pickup_name, with_color)
+                pick_hint, pickup_name=colorize_text(self.color_item, pick_hint.pickup_name, with_color)
             ),
             hint,
             with_color,
@@ -81,12 +88,16 @@ class PrimeFamilyHintNamer(HintNamer):
 
     def format_resource_is_starting(self, resource: ItemResourceInfo, with_color: bool) -> str:
         """Used when for when an item has a guaranteed hint, but is a starting item."""
-        return "{} has no need to be located.".format(
-            colorize_text(self.color_item, resource.long_name, with_color)
-        )
+        return f"{colorize_text(self.color_item, resource.long_name, with_color)} has no need to be located."
 
-    def format_guaranteed_resource(self, resource: ItemResourceInfo, player_name: str | None,
-                                   location: PickupLocation, hide_area: bool, with_color: bool) -> str:
+    def format_guaranteed_resource(
+        self,
+        resource: ItemResourceInfo,
+        player_name: str | None,
+        location: PickupLocation,
+        hide_area: bool,
+        with_color: bool,
+    ) -> str:
         determiner = ""
         if player_name is not None:
             determiner = self.format_player(player_name, with_color=with_color) + "'s "
@@ -98,20 +109,20 @@ class PrimeFamilyHintNamer(HintNamer):
         )
 
     def format_temple_name(self, temple_name: str, with_color: bool) -> str:
-        raise NotImplementedError()
+        raise NotImplementedError
 
     @property
     def color_joke(self) -> str:
-        raise NotImplementedError()
+        raise NotImplementedError
 
     @property
     def color_item(self) -> str:
-        raise NotImplementedError()
+        raise NotImplementedError
 
     @property
     def color_player(self) -> str:
-        raise NotImplementedError()
+        raise NotImplementedError
 
     @property
     def color_location(self) -> str:
-        raise NotImplementedError()
+        raise NotImplementedError

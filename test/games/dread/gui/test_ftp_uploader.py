@@ -1,14 +1,20 @@
-from pathlib import Path
+from __future__ import annotations
+
 import platform
-from unittest.mock import MagicMock, call, ANY
+from pathlib import Path
+from typing import TYPE_CHECKING
+from unittest.mock import ANY, MagicMock, call
 
 import pytest
 
 from randovania.games.dread.gui.dialog.ftp_uploader import FtpUploader
 
+if TYPE_CHECKING:
+    from pytest_localftpserver.servers import PytestLocalFTPServer
+
 
 @pytest.mark.skipif(platform.system() == "Darwin", reason="ftpserver fails on macOS")
-def test_upload(ftpserver, tmp_path):
+def test_upload(ftpserver: PytestLocalFTPServer, tmp_path):
     progress_update = MagicMock()
 
     server_home = Path(ftpserver.server_home)
@@ -43,8 +49,11 @@ def test_upload(ftpserver, tmp_path):
         server_home.joinpath("remote", "b.txt"),
         server_home.joinpath("remote", "bar"),
     ]
-    progress_update.assert_has_calls([
-        call('Uploaded /remote/a.txt', ANY),
-        call('Uploaded /remote/b.txt', ANY),
-        call('Uploaded /remote/bar', ANY),
-    ], any_order=True)
+    progress_update.assert_has_calls(
+        [
+            call("Uploaded /remote/a.txt", ANY),
+            call("Uploaded /remote/b.txt", ANY),
+            call("Uploaded /remote/bar", ANY),
+        ],
+        any_order=True,
+    )

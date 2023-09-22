@@ -1,24 +1,33 @@
-import struct
+from __future__ import annotations
 
-from ppc_asm import assembler
+import struct
+from typing import TYPE_CHECKING
 
 from open_prime_rando.dol_patching import all_prime_dol_patches
 from open_prime_rando.dol_patching.prime1 import dol_patches
-from open_prime_rando.dol_patching.prime1.dol_patches import Prime1DolVersion
+
 from randovania.game_connection.connector.prime_remote_connector import PrimeRemoteConnector
 from randovania.game_connection.executor.memory_operation import MemoryOperation, MemoryOperationExecutor
-from randovania.game_description.db.region import Region
-from randovania.game_description.resources.item_resource_info import ItemResourceInfo, Inventory
-from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.games.prime1.patcher import prime_items
+
+if TYPE_CHECKING:
+    from open_prime_rando.dol_patching.prime1.dol_patches import Prime1DolVersion
+    from ppc_asm import assembler
+
+    from randovania.game_description.db.region import Region
+    from randovania.game_description.pickup.pickup_entry import PickupEntry
+    from randovania.game_description.resources.inventory import Inventory
+    from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 
 
 def format_received_item(item_name: str, player_name: str) -> str:
     special = {
-        "Locked Power Bomb Expansion": ("Received Power Bomb Expansion from {provider_name}, "
-                                        "but the main Power Bomb is required to use it."),
-        "Locked Missile Expansion": ("Received Missile Expansion from {provider_name}, "
-                                     "but the Missile Launcher is required to use it."),
+        "Locked Power Bomb Expansion": (
+            "Received Power Bomb Expansion from {provider_name}, but the main Power Bomb is required to use it."
+        ),
+        "Locked Missile Expansion": (
+            "Received Missile Expansion from {provider_name}, but the Missile Launcher is required to use it."
+        ),
     }
 
     generic = "Received {item_name} from {provider_name}."
@@ -56,7 +65,7 @@ class Prime1RemoteConnector(PrimeRemoteConnector):
 
         asset_id_size = struct.calcsize(self._asset_id_format())
         mlvl_offset = 0x84
-        cplayer_offset = 0x84c
+        cplayer_offset = 0x84C
 
         memory_ops = [
             MemoryOperation(self.version.game_state_pointer, offset=mlvl_offset, read_byte_count=asset_id_size),
@@ -68,15 +77,21 @@ class Prime1RemoteConnector(PrimeRemoteConnector):
         pending_op_byte = results[memory_ops[1]]
 
         has_pending_op = pending_op_byte != b"\x00"
-        return has_pending_op, self._current_status_world(results.get(memory_ops[0]),
-                                                          results.get(memory_ops[2]))
+        return has_pending_op, self._current_status_world(results.get(memory_ops[0]), results.get(memory_ops[2]))
 
-    async def _memory_op_for_items(self, items: list[ItemResourceInfo],
-                                   ) -> list[MemoryOperation]:
-        player_state_pointer = int.from_bytes(await self.executor.perform_single_memory_operation(MemoryOperation(
-            address=self.version.cstate_manager_global + 0x8b8,
-            read_byte_count=4,
-        )), "big")
+    async def _memory_op_for_items(
+        self,
+        items: list[ItemResourceInfo],
+    ) -> list[MemoryOperation]:
+        player_state_pointer = int.from_bytes(
+            await self.executor.perform_single_memory_operation(
+                MemoryOperation(
+                    address=self.version.cstate_manager_global + 0x8B8,
+                    read_byte_count=4,
+                )
+            ),
+            "big",
+        )
         return [
             MemoryOperation(
                 address=player_state_pointer,
@@ -86,8 +101,9 @@ class Prime1RemoteConnector(PrimeRemoteConnector):
             for item in items
         ]
 
-    async def _patches_for_pickup(self, provider_name: str, pickup: PickupEntry, inventory: Inventory
-                                  ) -> tuple[list[list[assembler.BaseInstruction]], str]:
+    async def _patches_for_pickup(
+        self, provider_name: str, pickup: PickupEntry, inventory: Inventory
+    ) -> tuple[list[list[assembler.BaseInstruction]], str]:
         item_name, resources_to_give = self._resources_to_give_for_pickup(pickup, inventory)
 
         self.logger.debug(f"Resource changes for {pickup.name} from {provider_name}: {resources_to_give}")
@@ -99,21 +115,26 @@ class Prime1RemoteConnector(PrimeRemoteConnector):
                 continue
 
             if item.short_name not in prime_items.ARTIFACT_ITEMS:
-                patches.append(all_prime_dol_patches.adjust_item_amount_and_capacity_patch(
-                    self.version.powerup_functions, self.version.game, item.extra["item_id"], delta,
-                ))
+                patches.append(
+                    all_prime_dol_patches.adjust_item_amount_and_capacity_patch(
+                        self.version.powerup_functions,
+                        self.version.game,
+                        item.extra["item_id"],
+                        delta,
+                    )
+                )
             else:
                 if item.extra["item_id"] > 29:
                     layer_id = item.extra["item_id"] - 28
                 else:
                     layer_id = 23  # Truth layer
 
-                patches.append(all_prime_dol_patches.increment_item_capacity_patch(
-                    self.version.powerup_functions, self.version.game, item.extra["item_id"], delta
-                ))
-                patches.append(dol_patches.set_artifact_layer_active_patch(
-                    self.version, layer_id, delta > 0
-                ))
+                patches.append(
+                    all_prime_dol_patches.increment_item_capacity_patch(
+                        self.version.powerup_functions, self.version.game, item.extra["item_id"], delta
+                    )
+                )
+                patches.append(dol_patches.set_artifact_layer_active_patch(self.version, layer_id, delta > 0))
 
         return patches, format_received_item(item_name, provider_name)
 

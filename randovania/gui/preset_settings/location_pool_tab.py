@@ -1,23 +1,28 @@
+from __future__ import annotations
+
 import collections
 import dataclasses
 import re
+from typing import TYPE_CHECKING
 
 from PySide6 import QtWidgets
 from PySide6.QtWidgets import QFrame, QGraphicsOpacityEffect, QSizePolicy, QSpacerItem
 
-from randovania.game_description.game_description import GameDescription
-from randovania.game_description.resources.location_category import LocationCategory
 from randovania.game_description.db.pickup_node import PickupNode
-from randovania.games.game import RandovaniaGame
+from randovania.game_description.resources.location_category import LocationCategory
 from randovania.gui.generated.preset_location_pool_ui import Ui_PresetLocationPool
-from randovania.gui.lib.node_list_helper import NodeListHelper, dark_name_flags
 from randovania.gui.lib.foldable import Foldable
-from randovania.gui.lib.window_manager import WindowManager
+from randovania.gui.lib.node_list_helper import NodeListHelper, dark_name_flags
 from randovania.gui.preset_settings.location_pool_row_widget import LocationPoolRowWidget
 from randovania.gui.preset_settings.preset_tab import PresetTab
-from randovania.interface_common.preset_editor import PresetEditor
 from randovania.layout.base.available_locations import RandomizationMode
-from randovania.layout.preset import Preset
+
+if TYPE_CHECKING:
+    from randovania.game_description.game_description import GameDescription
+    from randovania.games.game import RandovaniaGame
+    from randovania.gui.lib.window_manager import WindowManager
+    from randovania.interface_common.preset_editor import PresetEditor
+    from randovania.layout.preset import Preset
 
 
 class PresetLocationPool(PresetTab, Ui_PresetLocationPool, NodeListHelper):
@@ -56,7 +61,7 @@ class PresetLocationPool(PresetTab, Ui_PresetLocationPool, NodeListHelper):
                             node_names[node] = f"{region_list.nodes_to_area(node).name} ({node_name})"
 
         for region_name in sorted(nodes_by_region.keys()):
-            spoiler = Foldable(region_name)
+            spoiler = Foldable(None, region_name)
             vbox_layout = QtWidgets.QVBoxLayout()
 
             first_node = True
@@ -125,6 +130,5 @@ class PresetLocationPool(PresetTab, Ui_PresetLocationPool, NodeListHelper):
             return
         with self._editor as editor:
             editor.available_locations = editor.available_locations.ensure_index(
-                node.pickup_index,
-                not self._row_widget_for_node[node].can_have_progression
+                node.pickup_index, not self._row_widget_for_node[node].can_have_progression
             )

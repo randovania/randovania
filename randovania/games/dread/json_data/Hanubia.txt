@@ -12,20 +12,19 @@ Extra - asset_id: collision_camera_000
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Elevator to Ferenia - Transport to Hanubia
+  > Elevator to Ferenia
       Trivial
 
-> Elevator to Ferenia - Transport to Hanubia; Heals? False; Default Node
+> Elevator to Ferenia; Heals? False; Default Node
   * Layers: default
-  * Teleporter to Transport to Hanubia/Elevator to Hanubia - Transport to Ferenia
+  * Elevator to Transport to Hanubia/Elevator to Hanubia
   * Extra - actor_name: elevator_sanctuary_000
   * Extra - actor_def: actordef:actors/props/elevator/charclasses/elevator.bmsad
   * Extra - elevator_component: CElevatorUsableComponent
   * Extra - target_spawn_point: elevator_shipyard_000_platform
   * Extra - start_point_actor_name: elevator_sanctuary_000_platform
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad
-  * Extra - keep_name_when_vanilla: True
-  * Extra - editable: True
+  * Extra - transporter_name: Hanubia - E.M.M.I.
   > Door to Ferenia Shortcut
       Trivial
 
@@ -52,20 +51,19 @@ Extra - asset_id: collision_camera_001
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
   > Door to Entrance Tall Room
       Trivial
-  > Tram to Ghavoran - Transport to Hanubia
+  > Shuttle to Ghavoran
       Trivial
 
-> Tram to Ghavoran - Transport to Hanubia; Heals? False; Default Node
+> Shuttle to Ghavoran; Heals? False; Default Node
   * Layers: default
-  * Teleporter to Transport to Hanubia/Tram to Hanubia - Transport to Ghavoran
+  * Shuttle to Transport to Hanubia/Shuttle to Hanubia
   * Extra - actor_name: wagontrain_forest_000
   * Extra - actor_def: actordef:actors/props/wagontrain/charclasses/wagontrain.bmsad
   * Extra - elevator_component: CTrainUsableComponent
   * Extra - target_spawn_point: wagontrain_shipyard_000_platform
   * Extra - start_point_actor_name: wagontrain_forest_000_platform
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_train/charclasses/weightactivatedplatform_train.bmsad
-  * Extra - keep_name_when_vanilla: True
-  * Extra - editable: True
+  * Extra - transporter_name: Hanubia - Bridge
   > Start Point
       Trivial
 
@@ -258,47 +256,29 @@ Extra - asset_id: collision_camera_004
   > Inside breakable tube
       Trivial
 
-> Dock to Escape Room 3; Heals? False
-  * Layers: default
-  * Open Passage to Escape Room 3/Dock to Entrance Tall Room
-  > Inside breakable tube
-      All of the following:
-          After Escape Sequence
-          Space Jump or Speed Booster or Simple IBJ
-
 > Next to Hyper Block; Heals? False
   * Layers: default
   > Door to Total Recharge Station North
-      Before Escape Sequence
+      Trivial
   > Event - Glass Tube
       All of the following:
           Lay Power Bomb
           Screw Attack or Speed Booster
-  > Dock to Ship Room
-      After Escape Sequence
 
 > Inside breakable tube; Heals? False
   * Layers: default
   > Door to Navigation Station
-      Before Escape Sequence
+      Trivial
   > Event - Glass Tube
       Lay Power Bomb
-  > Dock to Escape Room 3
-      After Escape Sequence
   > Next to Hyper Block
       All of the following:
           After Hanubia - Entrance Glass Tube
           Any of the following:
               Speed Booster
               All of the following:
-                  Screw Attack or After Escape Sequence
+                  Screw Attack
                   Space Jump or Simple IBJ
-
-> Dock to Ship Room; Heals? False
-  * Layers: default
-  * Open Passage to Ship Room/Dock to Entrance Tall Room
-  > Next to Hyper Block
-      After Escape Sequence
 
 > Ammo Recharge; Heals? False
   * Layers: default
@@ -445,20 +425,19 @@ Extra - asset_id: collision_camera_007
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Elevator to Itorash - Transport to Hanubia
+  > Elevator to Itorash
       Trivial
 
-> Elevator to Itorash - Transport to Hanubia; Heals? False; Default Node
+> Elevator to Itorash; Heals? False; Default Node
   * Layers: default
-  * Teleporter to Transport to Hanubia/Elevator to Hanubia
+  * Elevator to Transport to Hanubia/Elevator to Hanubia
   * Extra - actor_name: capsulelaunchershipyard_000
   * Extra - actor_def: actordef:actors/props/capsulelaunchershipyard/charclasses/capsulelaunchershipyard.bmsad
   * Extra - elevator_component: CCapsuleUsableComponent
   * Extra - target_spawn_point: elevator_shipyard_000_platform
   * Extra - start_point_actor_name: elevator_skybase_000_platform
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad
-  * Extra - keep_name_when_vanilla: True
-  * Extra - editable: True
+  * Extra - transporter_name: Hanubia - Elite Chozo
   > Door to Gold Chozo Warrior Arena
       Trivial
 
@@ -467,19 +446,8 @@ Ship Room
 Extra - total_boundings: {'x1': -19100.0, 'x2': -6400.0, 'y1': 1700.0, 'y2': 9000.0}
 Extra - polygon: [[-7600.0, 9000.0], [-19100.0, 9000.0], [-19100.0, 6400.0], [-12100.0, 5300.0], [-12100.0, 1700.0], [-6400.0, 1700.0], [-6400.0, 4300.0], [-7600.0, 4900.0]]
 Extra - asset_id: collision_camera_008
-> Event - Ship; Heals? False; Default Node
+> This room is here for technical reasons; Heals? False
   * Layers: default
-  * Event Ship
-  * Extra - start_point_actor_name: SP_Checkpoint_Endgame
-  * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
-  > Dock to Entrance Tall Room
-      Trivial
-
-> Dock to Entrance Tall Room; Heals? False
-  * Layers: default
-  * Open Passage to Entrance Tall Room/Dock to Ship Room
-  > Event - Ship
-      Simple IBJ or Use Spin Boost
 
 ----------------
 Speedboost Puzzle Room
@@ -609,7 +577,7 @@ Extra - asset_id: collision_camera_010
   * Extra - actor_name: dooremmy_000
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
   > Door from Speedboost Puzzle Room
-      Before Escape Sequence
+      Trivial
   > Center Platform
       Any of the following:
           Lay Bomb
@@ -625,7 +593,7 @@ Extra - asset_id: collision_camera_010
   * Extra - actor_name: dooremmy_001
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
   > Door to Speedboost Puzzle Room
-      Before Escape Sequence
+      Trivial
   > Center Platform
       Lay Power Bomb
 
@@ -658,7 +626,7 @@ Extra - asset_id: collision_camera_011
   * EMMI Door to Tank Room/Dock to EMMI Zone Exit West (Bottom)
   * Extra - actor_name: dooremmy_000
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
-  > Start Point
+  > Door to Orange EMMI Introduction
       Trivial
 
 > Dock to Tank Room (Top); Heals? False
@@ -678,7 +646,7 @@ Extra - asset_id: collision_camera_011
   * Extra - left_shield_def: actordef:actors/props/doorwavebeam/charclasses/doorwavebeam.bmsad
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Start Point
+  > Dock to Tank Room (Bottom)
       Trivial
 
 > Tunnel to Central Unit; Heals? False
@@ -686,23 +654,6 @@ Extra - asset_id: collision_camera_011
   * Morph Ball Tunnel to Central Unit/Tunnel to EMMI Zone Exit West
   > Dock to Tank Room (Top)
       Lay Bomb or Lay Power Bomb
-
-> Dock to Escape Room 3; Heals? False
-  * Layers: default
-  * Open Passage to Escape Room 3/Dock to EMMI Zone Exit West
-  > Start Point
-      After Escape Sequence
-
-> Start Point; Heals? False; Default Node
-  * Layers: default
-  * Extra - start_point_actor_name: SP_Checkpoint_PowerBomb
-  * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
-  > Dock to Tank Room (Bottom)
-      Trivial
-  > Door to Orange EMMI Introduction
-      Before Escape Sequence
-  > Dock to Escape Room 3
-      After Escape Sequence
 
 ----------------
 Central Unit
@@ -733,9 +684,8 @@ Extra - asset_id: collision_camera_012
   * Extra - start_point_actor_def: actordef:actors/props/centralunitmagmacontroller/charclasses/centralunitmagmacontroller.bmsad
   > Tunnel to EMMI Zone Exit East
       Any of the following:
-          Simple IBJ or Use Spin Boost
+          Flash Shift or Simple IBJ or Use Spin Boost
           Morph Ball and Single-wall Wall Jump (Intermediate)
-          Flash Shift and Before Escape Sequence
   > Tunnel to EMMI Zone Exit West
       Any of the following:
           Space Jump or Simple IBJ
@@ -785,7 +735,7 @@ Extra - asset_id: collision_camera_013
 
 > Tunnel to Orange EMMI Introduction; Heals? False
   * Layers: default
-  * Morph Ball Tunnel to Orange EMMI Introduction/Tunnel to EMMI Zone Exit East
+  * Hanubia EMMI Tunnel to Orange EMMI Introduction/Tunnel to EMMI Zone Exit East
   > Dock to Total Recharge Station East (Lower)
       Trivial
 
@@ -814,7 +764,7 @@ Extra - asset_id: collision_camera_014
 
 > Tunnel to EMMI Zone Exit East; Heals? False
   * Layers: default
-  * Morph Ball Tunnel to EMMI Zone Exit East/Tunnel to Orange EMMI Introduction
+  * Hanubia EMMI Tunnel to EMMI Zone Exit East/Tunnel to Orange EMMI Introduction
   > Start Point
       Trivial
 
@@ -871,14 +821,6 @@ Extra - asset_id: collision_camera_015
   > Total Recharge
       Trivial
 
-> Dock to Escape Room 2; Heals? False
-  * Layers: default
-  * Open Passage to Escape Room 2/Dock to Total Recharge Station East
-  > Dock to EMMI Zone Exit East (Lower)
-      Any of the following:
-          After Escape Sequence
-          Power Bombs ≥ 4 and Lay Power Bomb
-
 > Total Recharge; Heals? True; Default Node
   * Layers: default
   * Extra - actor_name: totalrechargestation_000
@@ -889,106 +831,36 @@ Extra - asset_id: collision_camera_015
       Trivial
 
 ----------------
+Raven Beak X Arena
+Extra - total_boundings: {'x1': 11800.0, 'x2': 18600.0, 'y1': -8700.0, 'y2': -4500.0}
+Extra - polygon: [[18600.0, -4500.0], [15400.0, -4500.0], [15400.0, -6100.0], [11800.0, -6100.0], [11800.0, -8700.0], [18600.0, -8700.0]]
+Extra - asset_id: collision_camera_020
+> This room is here for technical reasons; Heals? False
+  * Layers: default
+
+----------------
 Escape Room 3
 Extra - total_boundings: {'x1': -500.0, 'x2': 6500.0, 'y1': -8600.0, 'y2': -1900.0}
 Extra - polygon: [[6500.0, -1900.0], [4400.0, -1900.0], [4400.0, -3800.0], [-500.0, -3900.0], [-500.0, -7600.0], [900.0, -7600.0], [1500.0, -7900.0], [2700.0, -7900.0], [4100.0, -8600.0], [6500.0, -8600.0]]
 Extra - asset_id: collision_camera_016
-> Dock to EMMI Zone Exit West; Heals? False
+> This room is here for technical reasons; Heals? False
   * Layers: default
-  * Open Passage to EMMI Zone Exit West/Dock to Escape Room 3
-  > Dock to Entrance Tall Room
-      Any of the following:
-          All of the following:
-              After Escape Sequence
-              Any of the following:
-                  Space Jump or Single-wall Wall Jump (Intermediate) or Simple IBJ
-                  Wall Jump (Beginner) and Use Spin Boost
-          All of the following:
-              Power Bombs ≥ 3 and Screw Attack and Lay Power Bomb
-              Any of the following:
-                  Space Jump or Single-wall Wall Jump (Intermediate)
-                  Flash Shift and Wall Jump (Intermediate)
-                  Wall Jump (Beginner) and Use Spin Boost
-
-> Dock to Entrance Tall Room; Heals? False
-  * Layers: default
-  * Open Passage to Entrance Tall Room/Dock to Escape Room 3
 
 ----------------
 Escape Room 2
 Extra - total_boundings: {'x1': 11400.0, 'x2': 13500.0, 'y1': -5900.0, 'y2': -3300.0}
 Extra - polygon: [[13500.0, -3300.0], [11400.0, -3300.0], [11400.0, -5900.0], [13500.0, -5900.0]]
 Extra - asset_id: collision_camera_018
-> Dock to Escape Room 1; Heals? False
+> This room is here for technical reasons; Heals? False
   * Layers: default
-  * Open Passage to Escape Room 1/Dock to Escape Room 2
-  > Dock to Total Recharge Station East
-      Any of the following:
-          All of the following:
-              After Escape Sequence
-              Simple IBJ or Use Spin Boost
-          Power Bombs ≥ 3 and Screw Attack and Lay Power Bomb and Use Spin Boost
-
-> Dock to Total Recharge Station East; Heals? False
-  * Layers: default
-  * Open Passage to Total Recharge Station East/Dock to Escape Room 2
-  > Dock to Escape Room 1
-      Any of the following:
-          After Escape Sequence
-          Power Bombs ≥ 2 and Screw Attack and Lay Power Bomb
 
 ----------------
 Escape Room 1
 Extra - total_boundings: {'x1': 13400.0, 'x2': 15500.0, 'y1': -6100.0, 'y2': -4200.0}
 Extra - polygon: [[15500.0, -4200.0], [13400.0, -4200.0], [13400.0, -6100.0], [15500.0, -6100.0]]
 Extra - asset_id: collision_camera_019
-> Dock to Raven Beak X Arena; Heals? False
+> This room is here for technical reasons; Heals? False
   * Layers: default
-  * Open Passage to Raven Beak X Arena/Dock to Escape Room 1
-  > Dock to Escape Room 2
-      Any of the following:
-          After Escape Sequence
-          Power Bombs ≥ 2 and Screw Attack and Lay Power Bomb
-
-> Dock to Escape Room 2; Heals? False
-  * Layers: default
-  * Open Passage to Escape Room 2/Dock to Escape Room 1
-  > Dock to Raven Beak X Arena
-      Any of the following:
-          After Escape Sequence
-          Power Bombs ≥ 3 and Screw Attack and Lay Power Bomb
-
-----------------
-Raven Beak X Arena
-Extra - total_boundings: {'x1': 11800.0, 'x2': 18600.0, 'y1': -8700.0, 'y2': -4500.0}
-Extra - polygon: [[18600.0, -4500.0], [15400.0, -4500.0], [15400.0, -6100.0], [11800.0, -6100.0], [11800.0, -8700.0], [18600.0, -8700.0]]
-Extra - asset_id: collision_camera_020
-> Event - Escape Sequence; Heals? False
-  * Layers: default
-  * Event Escape Sequence
-  * Extra - start_point_actor_name: SP_Checkpoint_Escape
-  * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
-  > Raven Beak X Checkpoint
-      Trivial
-
-> Raven Beak X Checkpoint; Heals? False; Default Node
-  * Layers: default
-  * Extra - start_point_actor_name: SP_Checkpoint_CommanderX
-  * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
-  > Event - Escape Sequence
-      Trivial
-  > Dock to Escape Room 1
-      All of the following:
-          After Escape Sequence or Lay Power Bomb
-          Any of the following:
-              Space Jump or Simple IBJ
-              Speed Booster and Use Spin Boost
-
-> Dock to Escape Room 1; Heals? False
-  * Layers: default
-  * Open Passage to Escape Room 1/Dock to Raven Beak X Arena
-  > Raven Beak X Checkpoint
-      After Escape Sequence or Lay Power Bomb
 
 ----------------
 collision_camera_1000 (H)

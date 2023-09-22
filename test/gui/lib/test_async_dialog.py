@@ -1,4 +1,6 @@
-from unittest.mock import MagicMock, AsyncMock
+from __future__ import annotations
+
+from unittest.mock import AsyncMock, MagicMock
 
 import pytest
 from PySide6 import QtWidgets
@@ -23,12 +25,17 @@ async def test_warning(skip_qtbot, mocker):
     mock_message_box: AsyncMock = mocker.patch("randovania.gui.lib.async_dialog.message_box")
 
     # Run
-    result = await async_dialog.warning(root, "MyTitle", "TheBody",
-                                        async_dialog.StandardButton.Yes, async_dialog.StandardButton.Yes)
+    result = await async_dialog.warning(
+        root, "MyTitle", "TheBody", async_dialog.StandardButton.Yes, async_dialog.StandardButton.Yes
+    )
 
     # Assert
     mock_message_box.assert_awaited_once_with(
-        root, QtWidgets.QMessageBox.Icon.Warning, "MyTitle", "TheBody",
-        async_dialog.StandardButton.Yes, async_dialog.StandardButton.Yes
+        root,
+        QtWidgets.QMessageBox.Icon.Warning,
+        "MyTitle",
+        "TheBody",
+        async_dialog.StandardButton.Yes,
+        async_dialog.StandardButton.Yes,
     )
     assert result == mock_message_box.return_value

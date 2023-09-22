@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import dataclasses
 import uuid
 from unittest.mock import MagicMock
@@ -12,7 +14,7 @@ from randovania.interface_common.preset_editor import PresetEditor
 def test_toggle_immediate_parts(skip_qtbot, dread_game_description, preset_manager):
     game = dread_game_description.game
     base = preset_manager.default_preset_for_game(game).get_preset()
-    preset = dataclasses.replace(base, uuid=uuid.UUID('b41fde84-1f57-4b79-8cd6-3e5a78077fa6'))
+    preset = dataclasses.replace(base, uuid=uuid.UUID("b41fde84-1f57-4b79-8cd6-3e5a78077fa6"))
     base_configuration = preset.configuration
     options = MagicMock()
     assert isinstance(base_configuration, DreadConfiguration)
@@ -23,7 +25,7 @@ def test_toggle_immediate_parts(skip_qtbot, dread_game_description, preset_manag
 
     assert tab.energy_tank_capacity_spin_box.isEnabled()
 
-    skip_qtbot.mouseClick(tab.immediate_energy_parts_check, QtCore.Qt.LeftButton)
+    skip_qtbot.mouseClick(tab.immediate_energy_parts_check, QtCore.Qt.MouseButton.LeftButton)
     tab.on_preset_changed(editor.create_custom_preset_with())
 
     configuration = editor.configuration

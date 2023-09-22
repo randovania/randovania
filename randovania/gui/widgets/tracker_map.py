@@ -1,18 +1,24 @@
+from __future__ import annotations
+
 import logging
+from typing import TYPE_CHECKING
 
 import matplotlib.pyplot as plt
 import networkx
-from PySide6 import QtWidgets
-from matplotlib.axes import Axes
 from matplotlib.backends.backend_qt import NavigationToolbar2QT as NavigationToolbar
 from matplotlib.backends.backend_qtagg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.figure import Figure
+from PySide6 import QtWidgets
 
 from randovania.game_description.db.dock_node import DockNode
-from randovania.game_description.db.node import Node
-from randovania.game_description.db.region import Region
-from randovania.game_description.db.region_list import RegionList
-from randovania.resolver.state import State
+
+if TYPE_CHECKING:
+    from matplotlib.axes import Axes
+
+    from randovania.game_description.db.node import Node
+    from randovania.game_description.db.region import Region
+    from randovania.game_description.db.region_list import RegionList
+    from randovania.resolver.state import State
 
 
 class MatplotlibWidget(QtWidgets.QWidget):
@@ -89,9 +95,9 @@ class MatplotlibWidget(QtWidgets.QWidget):
 
         networkx.draw_networkx_nodes(g, pos, ax=self.ax)
         networkx.draw_networkx_edges(g, pos, arrows=True, ax=self.ax)
-        networkx.draw_networkx_labels(g, pos, ax=self.ax,
-                                      labels={area: area.name for area in region.areas},
-                                      verticalalignment='top')
+        networkx.draw_networkx_labels(
+            g, pos, ax=self.ax, labels={area: area.name for area in region.areas}, verticalalignment="top"
+        )
 
         self.ax.set_axis_off()
 

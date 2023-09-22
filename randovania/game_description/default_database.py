@@ -1,13 +1,19 @@
+from __future__ import annotations
+
 import functools
-from pathlib import Path
+from typing import TYPE_CHECKING
 
 from randovania.game_description import data_reader
-from randovania.game_description.game_description import GameDescription
 from randovania.game_description.pickup import pickup_database
-from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.games import default_data
 from randovania.games.game import RandovaniaGame
 from randovania.lib import json_lib
+
+if TYPE_CHECKING:
+    from pathlib import Path
+
+    from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.resources.resource_database import ResourceDatabase
 
 
 def resource_database_for(game: RandovaniaGame) -> ResourceDatabase:
@@ -23,29 +29,29 @@ def game_description_for(game: RandovaniaGame) -> GameDescription:
 
 
 def _read_pickup_database_in_path(path: Path, game: RandovaniaGame) -> pickup_database.PickupDatabase:
-    pickup_database_data = json_lib.read_path(path.joinpath("pickup-database.json"))
+    pickup_database_data = json_lib.read_dict(path.joinpath("pickup-database.json"))
     return pickup_database.read_database(pickup_database_data, game)
 
 
-def _write_pickup_database_in_path(pickup_db: pickup_database.PickupDatabase, path: Path):
+def _write_pickup_database_in_path(pickup_db: pickup_database.PickupDatabase, path: Path) -> None:
     data = pickup_database.write_database(pickup_db)
     path.mkdir(parents=True, exist_ok=True)
     json_lib.write_path(path.joinpath("pickup-database.json"), data)
 
 
 @functools.lru_cache
-def pickup_database_for_game(game: RandovaniaGame):
-    return _read_pickup_database_in_path(game.data_path.joinpath("pickup_database"),
-                                         game)
+def pickup_database_for_game(game: RandovaniaGame) -> pickup_database.PickupDatabase:
+    return _read_pickup_database_in_path(game.data_path.joinpath("pickup_database"), game)
 
 
-def write_pickup_database_for_game(pickup_db: pickup_database.PickupDatabase, game: RandovaniaGame):
+def write_pickup_database_for_game(pickup_db: pickup_database.PickupDatabase, game: RandovaniaGame) -> None:
     _write_pickup_database_in_path(pickup_db, game.data_path.joinpath("pickup_database"))
 
 
 @functools.lru_cache
+# TODO: this game specific function should be removed from here.
 def default_prime2_memo_data() -> dict:
-    memo_data = json_lib.read_path(
+    memo_data = json_lib.read_dict(
         RandovaniaGame.METROID_PRIME_ECHOES.data_path.joinpath("pickup_database", "memo_data.json")
     )
 

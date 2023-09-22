@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import re
 import typing
 
@@ -50,30 +52,32 @@ def _migrate_v4(json_dict: dict) -> dict:
             if hint["hint_type"] == "location" and hint["precision"]["location"] == "relative-to-area":
                 hint["precision"]["relative"]["area_location"] = migration_data.convert_area_loc_id_to_name(
                     RandovaniaGame.METROID_PRIME_ECHOES,  # only echoes has this at the moment
-                    hint["precision"]["relative"]["area_location"]
+                    hint["precision"]["relative"]["area_location"],
                 )
 
     return json_dict
 
 
 def _migrate_v5(json_dict: dict) -> dict:
-    gate_mapping = {'Hive Access Tunnel': 'Temple Grounds/Hive Access Tunnel/Translator Gate',
-                    'Meeting Grounds': 'Temple Grounds/Meeting Grounds/Translator Gate',
-                    'Hive Transport Area': 'Temple Grounds/Hive Transport Area/Translator Gate',
-                    'Industrial Site': 'Temple Grounds/Industrial Site/Translator Gate',
-                    'Path of Eyes': 'Temple Grounds/Path of Eyes/Translator Gate',
-                    'Temple Assembly Site': 'Temple Grounds/Temple Assembly Site/Translator Gate',
-                    'GFMC Compound': 'Temple Grounds/GFMC Compound/Translator Gate',
-                    'Temple Sanctuary (to Sanctuary)': 'Great Temple/Temple Sanctuary/Transport A Translator Gate',
-                    'Temple Sanctuary (to Agon)': 'Great Temple/Temple Sanctuary/Transport B Translator Gate',
-                    'Temple Sanctuary (to Torvus)': 'Great Temple/Temple Sanctuary/Transport C Translator Gate',
-                    'Mining Plaza': 'Agon Wastes/Mining Plaza/Translator Gate',
-                    'Mining Station A': 'Agon Wastes/Mining Station A/Translator Gate',
-                    'Great Bridge': 'Torvus Bog/Great Bridge/Translator Gate',
-                    'Torvus Temple Gate': 'Torvus Bog/Torvus Temple/Translator Gate',
-                    'Torvus Temple Elevator': 'Torvus Bog/Torvus Temple/Elevator Translator Scan',
-                    'Reactor Core': 'Sanctuary Fortress/Reactor Core/Translator Gate',
-                    'Sanctuary Temple': 'Sanctuary Fortress/Sanctuary Temple/Translator Gate'}
+    gate_mapping = {
+        "Hive Access Tunnel": "Temple Grounds/Hive Access Tunnel/Translator Gate",
+        "Meeting Grounds": "Temple Grounds/Meeting Grounds/Translator Gate",
+        "Hive Transport Area": "Temple Grounds/Hive Transport Area/Translator Gate",
+        "Industrial Site": "Temple Grounds/Industrial Site/Translator Gate",
+        "Path of Eyes": "Temple Grounds/Path of Eyes/Translator Gate",
+        "Temple Assembly Site": "Temple Grounds/Temple Assembly Site/Translator Gate",
+        "GFMC Compound": "Temple Grounds/GFMC Compound/Translator Gate",
+        "Temple Sanctuary (to Sanctuary)": "Great Temple/Temple Sanctuary/Transport A Translator Gate",
+        "Temple Sanctuary (to Agon)": "Great Temple/Temple Sanctuary/Transport B Translator Gate",
+        "Temple Sanctuary (to Torvus)": "Great Temple/Temple Sanctuary/Transport C Translator Gate",
+        "Mining Plaza": "Agon Wastes/Mining Plaza/Translator Gate",
+        "Mining Station A": "Agon Wastes/Mining Station A/Translator Gate",
+        "Great Bridge": "Torvus Bog/Great Bridge/Translator Gate",
+        "Torvus Temple Gate": "Torvus Bog/Torvus Temple/Translator Gate",
+        "Torvus Temple Elevator": "Torvus Bog/Torvus Temple/Elevator Translator Scan",
+        "Reactor Core": "Sanctuary Fortress/Reactor Core/Translator Gate",
+        "Sanctuary Temple": "Sanctuary Fortress/Sanctuary Temple/Translator Gate",
+    }
     item_mapping = {
         "Scan Visor": "Scan",
         "Violet Translator": "Violet",
@@ -108,26 +112,13 @@ def _migrate_v5(json_dict: dict) -> dict:
                 "data": {
                     "comment": None,
                     "items": [
+                        {"type": "resource", "data": {"type": "items", "name": "Scan", "amount": 1, "negate": False}},
                         {
                             "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Scan",
-                                "amount": 1,
-                                "negate": None
-                            }
+                            "data": {"type": "items", "name": item_mapping[item], "amount": 1, "negate": False},
                         },
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": item_mapping[item],
-                                "amount": 1,
-                                "negate": None
-                            }
-                        }
-                    ]
-                }
+                    ],
+                },
             }
             for gate, item in game.pop("translators").items()
         }
@@ -148,12 +139,13 @@ def _migrate_v6(json_dict: dict) -> dict:
         for area_name, identify_game in area_name_heuristic.items():
             if area_name in game["locations"]:
                 if identify_game == "prime1":
-                    game["locations"]["Frigate Orpheon"] = dict()
+                    game["locations"]["Frigate Orpheon"] = {}
                     game["teleporters"][
                         "Frigate Orpheon/Exterior Docking Hangar/Teleport to Landing Site"
                     ] = "Tallon Overworld/Landing Site"
                     game["teleporters"][
-                        "Impact Crater/Metroid Prime Lair/Teleporter to Credits"] = "End of Game/Credits"
+                        "Impact Crater/Metroid Prime Lair/Teleporter to Credits"
+                    ] = "End of Game/Credits"
                 game["game"] = identify_game
                 break
     return json_dict
@@ -164,7 +156,7 @@ def _migrate_v7(json_dict: dict) -> dict:
         "3HP Life Capsule": "Small Life Capsule",
         "4HP Life Capsule": "Medium Life Capsule",
         "5HP Life Capsule": "Large Life Capsule",
-        "Missile Expansion (24)": "Large Missile Expansion"
+        "Missile Expansion (24)": "Large Missile Expansion",
     }
 
     for game in json_dict["game_modifications"]:
@@ -193,61 +185,58 @@ def _migrate_v9(json_dict: dict) -> dict:
 def _migrate_v10(json_dict: dict) -> dict:
     asset_id_conversion = {
         "prime2": {
-            '1041207119': 'Sanctuary Fortress/Sanctuary Energy Controller/Lore Scan',
-            '1170414603': 'Torvus Bog/Path of Roots/Lore Scan',
-            '1238191924': 'Torvus Bog/Gathering Hall/Lore Scan',
-            '1394890590': 'Agon Wastes/Mining Station A/Lore Scan',
-            '1422425996': 'Torvus Bog/Underground Tunnel/Lore Scan',
-            '1489382579': 'Torvus Bog/Torvus Lagoon/Keybearer Corpse (S-Dly)',
-            '1657556419': 'Sanctuary Fortress/Sanctuary Entrance/Keybearer Corpse (S-Jrs)',
-            '1696621841': 'Temple Grounds/Industrial Site/Keybearer Corpse (J-Fme)',
-            '1764636206': 'Agon Wastes/Portal Terminal/Lore Scan',
-            '1948976790': 'Sanctuary Fortress/Watch Station/Lore Scan',
-            '2190580881': 'Torvus Bog/Catacombs/Lore Scan',
-            '2392838062': 'Temple Grounds/Path of Eyes/Lore Scan',
-            '2476408598': 'Torvus Bog/Catacombs/Keybearer Corpse (G-Sch)',
-            '2558035195': 'Temple Grounds/Meeting Grounds/Lore Scan',
-            '2677320745': 'Torvus Bog/Training Chamber/Lore Scan',
-            '2725438859': 'Agon Wastes/Mining Station B/Lore Scan',
-            '2844827238': 'Sanctuary Fortress/Dynamo Works/Keybearer Corpse (C-Rch)',
-            '3212301619': 'Sanctuary Fortress/Main Research/Lore Scan',
-            '3277287077': 'Great Temple/Main Energy Controller/Lore Scan',
-            '3478732186': 'Temple Grounds/Fortress Transport Access/Lore Scan',
-            '3529248034': 'Torvus Bog/Torvus Energy Controller/Lore Scan',
-            '353275320': 'Agon Wastes/Central Mining Station/Keybearer Corpse (J-Stl)',
-            '3729939997': 'Agon Wastes/Main Reactor/Keybearer Corpse (B-Stl)',
-            '3820230591': 'Temple Grounds/Landing Site/Keybearer Corpse (M-Dhe)',
-            '4021961856': 'Agon Wastes/Agon Energy Controller/Lore Scan',
-            '4072633400': 'Sanctuary Fortress/Sanctuary Entrance/Lore Scan',
-            '4115881194': 'Sanctuary Fortress/Main Gyro Chamber/Lore Scan',
-            '619091749': 'Agon Wastes/Mining Plaza/Lore Scan',
-            '67497535': 'Sanctuary Fortress/Hall of Combat Mastery/Lore Scan',
-            '686343194': 'Temple Grounds/Storage Cavern A/Keybearer Corpse (D-Isl)',
-            '971220893': 'Temple Grounds/Transport to Agon Wastes/Lore Scan'
+            "1041207119": "Sanctuary Fortress/Sanctuary Energy Controller/Lore Scan",
+            "1170414603": "Torvus Bog/Path of Roots/Lore Scan",
+            "1238191924": "Torvus Bog/Gathering Hall/Lore Scan",
+            "1394890590": "Agon Wastes/Mining Station A/Lore Scan",
+            "1422425996": "Torvus Bog/Underground Tunnel/Lore Scan",
+            "1489382579": "Torvus Bog/Torvus Lagoon/Keybearer Corpse (S-Dly)",
+            "1657556419": "Sanctuary Fortress/Sanctuary Entrance/Keybearer Corpse (S-Jrs)",
+            "1696621841": "Temple Grounds/Industrial Site/Keybearer Corpse (J-Fme)",
+            "1764636206": "Agon Wastes/Portal Terminal/Lore Scan",
+            "1948976790": "Sanctuary Fortress/Watch Station/Lore Scan",
+            "2190580881": "Torvus Bog/Catacombs/Lore Scan",
+            "2392838062": "Temple Grounds/Path of Eyes/Lore Scan",
+            "2476408598": "Torvus Bog/Catacombs/Keybearer Corpse (G-Sch)",
+            "2558035195": "Temple Grounds/Meeting Grounds/Lore Scan",
+            "2677320745": "Torvus Bog/Training Chamber/Lore Scan",
+            "2725438859": "Agon Wastes/Mining Station B/Lore Scan",
+            "2844827238": "Sanctuary Fortress/Dynamo Works/Keybearer Corpse (C-Rch)",
+            "3212301619": "Sanctuary Fortress/Main Research/Lore Scan",
+            "3277287077": "Great Temple/Main Energy Controller/Lore Scan",
+            "3478732186": "Temple Grounds/Fortress Transport Access/Lore Scan",
+            "3529248034": "Torvus Bog/Torvus Energy Controller/Lore Scan",
+            "353275320": "Agon Wastes/Central Mining Station/Keybearer Corpse (J-Stl)",
+            "3729939997": "Agon Wastes/Main Reactor/Keybearer Corpse (B-Stl)",
+            "3820230591": "Temple Grounds/Landing Site/Keybearer Corpse (M-Dhe)",
+            "4021961856": "Agon Wastes/Agon Energy Controller/Lore Scan",
+            "4072633400": "Sanctuary Fortress/Sanctuary Entrance/Lore Scan",
+            "4115881194": "Sanctuary Fortress/Main Gyro Chamber/Lore Scan",
+            "619091749": "Agon Wastes/Mining Plaza/Lore Scan",
+            "67497535": "Sanctuary Fortress/Hall of Combat Mastery/Lore Scan",
+            "686343194": "Temple Grounds/Storage Cavern A/Keybearer Corpse (D-Isl)",
+            "971220893": "Temple Grounds/Transport to Agon Wastes/Lore Scan",
         },
         "cave_story": {
-            '0': "Egg Corridor/Cthulhu's Abode/Hint - Cthulhu",
-            '1': 'Egg Corridor/Egg Corridor/Hint - Blue Robot',
-            '10': "Sand Zone/Jenka's House/Hint - Jenka 2",
-            '11': 'Ruined Egg Corridor/Little House/Hint - Mrs. Little',
-            '12': 'Plantation/Statue Chamber/Hint - Numahachi 1',
-            '13': 'Plantation/Statue Chamber/Hint - Numahachi 2',
-            '2': 'Grasstown/Grasstown/Hint - Cthulhu (West)',
-            '3': 'Grasstown/Grasstown/Hint - Cthulhu (East)',
-            '4': 'Labyrinth/Labyrinth I/Hint - Blue Robot (Left)',
-            '5': 'Labyrinth/Labyrinth I/Hint - Blue Robot (Right)',
-            '6': 'Plantation/Plantation/Hint - Cthulhu',
-            '7': 'Ruined Egg Corridor/Egg Corridor?/Hint - Blue Robot',
-            '8': 'Grasstown/Power Room/Hint - MALCO',
-            '9': "Sand Zone/Jenka's House/Hint - Jenka 1"
-        }
+            "0": "Egg Corridor/Cthulhu's Abode/Hint - Cthulhu",
+            "1": "Egg Corridor/Egg Corridor/Hint - Blue Robot",
+            "10": "Sand Zone/Jenka's House/Hint - Jenka 2",
+            "11": "Ruined Egg Corridor/Little House/Hint - Mrs. Little",
+            "12": "Plantation/Statue Chamber/Hint - Numahachi 1",
+            "13": "Plantation/Statue Chamber/Hint - Numahachi 2",
+            "2": "Grasstown/Grasstown/Hint - Cthulhu (West)",
+            "3": "Grasstown/Grasstown/Hint - Cthulhu (East)",
+            "4": "Labyrinth/Labyrinth I/Hint - Blue Robot (Left)",
+            "5": "Labyrinth/Labyrinth I/Hint - Blue Robot (Right)",
+            "6": "Plantation/Plantation/Hint - Cthulhu",
+            "7": "Ruined Egg Corridor/Egg Corridor?/Hint - Blue Robot",
+            "8": "Grasstown/Power Room/Hint - MALCO",
+            "9": "Sand Zone/Jenka's House/Hint - Jenka 1",
+        },
     }
 
     for game in json_dict["game_modifications"]:
-        game["hints"] = {
-            asset_id_conversion[game["game"]][asset_id]: hint
-            for asset_id, hint in game["hints"].items()
-        }
+        game["hints"] = {asset_id_conversion[game["game"]][asset_id]: hint for asset_id, hint in game["hints"].items()}
 
     return json_dict
 
@@ -297,15 +286,13 @@ def _migrate_v15(json_dict: dict) -> dict:
 def _migrate_v16(json_dict: dict) -> dict:
     def _fix_node(name: str):
         return name.replace(
-            "Navigation Room", "Save Station",
+            "Navigation Room",
+            "Save Station",
         )
 
     for game in json_dict["game_modifications"]:
         if game["game"] == "dread":
-            game["hints"] = {
-                _fix_node(node): hint
-                for node, hint in game["hints"].items()
-            }
+            game["hints"] = {_fix_node(node): hint for node, hint in game["hints"].items()}
 
     return json_dict
 
@@ -325,17 +312,110 @@ def _migrate_v17(json_dict: dict) -> dict:
 
     return json_dict
 
+
 def _migrate_v18(data: dict) -> dict:
     for game in data["game_modifications"]:
         game_name = game["game"]
-        if game_name not in {"blank", "cave_story", "am2r"}:
+        if game_name in {"prime1", "prime2"}:
             default_node_per_area = migration_data.get_raw_data(RandovaniaGame(game_name))["default_node_per_area"]
             # remove teleporters and add to dock_connections
             for source, target in game["teleporters"].items():
                 target_node = default_node_per_area[target]
                 game["teleporters"][source] = f"{target}/{target_node}"
-        game["dock_connections"].update(game.pop("teleporters"))
+
+            game["dock_connections"].update(game.pop("teleporters"))
+        else:
+            game.pop("teleporters")
+
     return data
+
+
+def _migrate_v19(data: dict) -> dict:
+    game_mod = data["game_modifications"]
+    for game in game_mod:
+        game_name = game["game"]
+        if game_name in {"prime1", "prime2", "prime3"}:
+            mapping = migration_data.get_raw_data(RandovaniaGame(game_name))["rename_teleporter_nodes"]
+
+            # starting location migration
+            old_location = game["starting_location"]
+            world_name, area_name, node_name = old_location.split("/", 2)
+            new_node_name = mapping.get(old_location, None)
+            if new_node_name is not None:
+                game["starting_location"] = f"{world_name}/{area_name}/{new_node_name}"
+
+            dock_connections = game["dock_connections"]
+            dock_copy = dict(dock_connections.items())
+            for id_from, id_to in dock_copy.items():
+                world_name, area_name, node_name = id_from.split("/", 2)
+                new_node_name_from = mapping.get(id_from, node_name)
+                new_identifier_from = f"{world_name}/{area_name}/{new_node_name_from}"
+                dock_connections[new_identifier_from] = dock_connections.pop(id_from)
+
+                world_name, area_name, node_name = id_to.split("/", 2)
+                new_node_name_to = mapping.get(id_to, node_name)
+                new_identifier_to = f"{world_name}/{area_name}/{new_node_name_to}"
+                dock_connections[new_identifier_from] = new_identifier_to
+
+            if game_name in {"prime1", "prime2"}:
+                mapping = migration_data.get_raw_data(RandovaniaGame(game_name))["dock_connection_fixes"]
+                dock_connections = game["dock_connections"]
+            for id_from, id_to in dock_connections.items():
+                new_target = mapping.get(id_to, id_to)
+                dock_connections[id_from] = new_target
+
+    return data
+
+
+def _migrate_v20(data: dict) -> dict:
+    game_modifications = data["game_modifications"]
+
+    for game in game_modifications:
+        game_name = game["game"]
+        if game_name != "prime1":
+            continue
+
+        dock_weakness = game.get("dock_weakness")
+        if dock_weakness is None:
+            continue
+
+        for weakness in dock_weakness.values():
+            if weakness["name"] == "Charge Beam Door":
+                weakness["name"] = "Charge Beam Blast Shield"
+            elif weakness["name"] == "Bomb Door":
+                weakness["name"] = "Bomb Blast Shield"
+
+    return data
+
+
+def _migrate_v21(data: dict) -> dict:
+    game_modifications = data["game_modifications"]
+
+    for game in game_modifications:
+        game_name = game["game"]
+        if game_name != "dread":
+            continue
+        dock_weakness = game.get("dock_weakness")
+        if dock_weakness is None:
+            continue
+
+        old_new_name = migration_data.get_raw_data(RandovaniaGame(game_name))["dairon_typo"]
+        for old_name, new_name in old_new_name.items():
+            if old_name in dock_weakness:
+                dock_weakness[new_name] = dock_weakness.pop(old_name)
+
+    return data
+
+
+def _migrate_v22(data: dict) -> dict:
+    game_modifications = data["game_modifications"]
+
+    for game in game_modifications:
+        if "elevators" in game:
+            game["teleporters"] = game.pop("elevators")
+
+    return data
+
 
 _MIGRATIONS = [
     _migrate_v1,  # v2.2.0-6-gbfd37022
@@ -356,6 +436,10 @@ _MIGRATIONS = [
     _migrate_v16,
     _migrate_v17,
     _migrate_v18,
+    _migrate_v19,
+    _migrate_v20,
+    _migrate_v21,
+    _migrate_v22,
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 
@@ -364,4 +448,5 @@ def convert_to_current_version(json_dict: dict) -> dict:
     return migration_lib.apply_migrations(
         json_dict,
         _MIGRATIONS,
+        version_name="rdvgame version",
     )

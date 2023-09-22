@@ -40,8 +40,9 @@
 #############################################################################
 
 """PySide6 port of the widgets/layouts/flowlayout example from Qt v6.x"""
+from __future__ import annotations
 
-from PySide6.QtCore import Qt, QMargins, QPoint, QRect, QSize
+from PySide6.QtCore import QMargins, QPoint, QRect, QSize, Qt
 from PySide6.QtWidgets import QLayout, QSizePolicy, QWidgetItem
 
 
@@ -89,7 +90,7 @@ class FlowLayout(QLayout):
         return height
 
     def setGeometry(self, rect):
-        super(FlowLayout, self).setGeometry(rect)
+        super().setGeometry(rect)
         self._do_layout(rect, False)
 
     def sizeHint(self):
@@ -116,12 +117,8 @@ class FlowLayout(QLayout):
         row = []
         for item in self._item_list:
             style = item.widget().style()
-            layout_spacing_x = style.layoutSpacing(
-                QSizePolicy.PushButton, QSizePolicy.PushButton, Qt.Horizontal
-            )
-            layout_spacing_y = style.layoutSpacing(
-                QSizePolicy.PushButton, QSizePolicy.PushButton, Qt.Vertical
-            )
+            layout_spacing_x = style.layoutSpacing(QSizePolicy.PushButton, QSizePolicy.PushButton, Qt.Horizontal)
+            layout_spacing_y = style.layoutSpacing(QSizePolicy.PushButton, QSizePolicy.PushButton, Qt.Vertical)
             space_x = spacing + layout_spacing_x
             space_y = spacing + layout_spacing_y
             next_x = x + item.sizeHint().width() + space_x

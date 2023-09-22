@@ -1,30 +1,34 @@
+from __future__ import annotations
+
 import os
-from pathlib import Path
+from typing import TYPE_CHECKING
 
 import nod
 
 from randovania import monitoring
 from randovania.interface_common.game_workdir import validate_game_files_path
-from randovania.lib.status_update_lib import ProgressUpdateCallable
+
+if TYPE_CHECKING:
+    from pathlib import Path
+
+    from randovania.lib.status_update_lib import ProgressUpdateCallable
 
 
 @monitoring.trace_function
-def unpack_iso(iso: Path,
-               game_files_path: Path,
-               progress_update: ProgressUpdateCallable,
-               ):
+def unpack_iso(
+    iso: Path,
+    game_files_path: Path,
+    progress_update: ProgressUpdateCallable,
+):
     try:
         game_files_path.mkdir(parents=True, exist_ok=True)
     except OSError as e:
-        raise RuntimeError("Unable to create files dir {}:\n{}".format(
-            game_files_path, e))
+        raise RuntimeError(f"Unable to create files dir {game_files_path}:\n{e}")
 
     disc, is_wii = nod.open_disc_from_image(iso)
     data_partition = disc.get_data_partition()
     if not data_partition:
-        raise RuntimeError(
-            f"Could not find a data partition in '{iso}'.\nIs it a valid Metroid Prime 2 ISO?"
-        )
+        raise RuntimeError(f"Could not find a data partition in '{iso}'.\nIs it a valid Metroid Prime 2 ISO?")
 
     context = nod.ExtractionContext()
     context.set_progress_callback(progress_update)
@@ -34,10 +38,7 @@ def unpack_iso(iso: Path,
 
 
 @monitoring.trace_function
-def pack_iso(iso: Path,
-             game_files_path: Path,
-             progress_update: ProgressUpdateCallable
-             ):
+def pack_iso(iso: Path, game_files_path: Path, progress_update: ProgressUpdateCallable):
     validate_game_files_path(game_files_path.joinpath("files"))
 
     if nod.DiscBuilderGCN.calculate_total_size_required(game_files_path) is None:

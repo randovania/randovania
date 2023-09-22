@@ -1,10 +1,13 @@
+from __future__ import annotations
+
+import typing
 from dataclasses import dataclass
 from enum import Enum
 
 from randovania.bitpacking.json_dataclass import JsonDataclass
 from randovania.bitpacking.type_enforcement import DataclassPostInitTypeCheck
-from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.db.area_identifier import AreaIdentifier
+from randovania.game_description.resources.pickup_index import PickupIndex
 
 
 class HintType(Enum):
@@ -79,21 +82,21 @@ class RelativeData:
     distance_offset: int | None
 
     @classmethod
-    def from_json(cls, param: dict) -> "RelativeData":
-        if "area_location" in param:
-            return RelativeDataArea.from_json(param)
+    def from_json(cls, json_dict: dict, **extra: typing.Any) -> RelativeData:
+        if "area_location" in json_dict:
+            return RelativeDataArea.from_json(json_dict)
         else:
-            return RelativeDataItem.from_json(param)
+            return RelativeDataItem.from_json(json_dict)
 
 
 @dataclass(frozen=True)
-class RelativeDataItem(JsonDataclass, RelativeData):
+class RelativeDataItem(JsonDataclass, RelativeData):  # type: ignore[misc]
     other_index: PickupIndex
     precision: HintItemPrecision
 
 
 @dataclass(frozen=True)
-class RelativeDataArea(JsonDataclass, RelativeData):
+class RelativeDataArea(JsonDataclass, RelativeData):  # type: ignore[misc]
     area_location: AreaIdentifier
     precision: HintRelativeAreaName
 
@@ -113,7 +116,7 @@ class Hint(JsonDataclass):
     target: PickupIndex | None = None
     dark_temple: HintDarkTemple | None = None
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.hint_type is HintType.JOKE:
             if self.target is not None or self.dark_temple is not None:
                 raise ValueError("Joke Hint, but had a target or dark_temple.")

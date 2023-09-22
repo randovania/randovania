@@ -1,7 +1,8 @@
+from __future__ import annotations
+
 import logging
 import platform
 from abc import abstractmethod
-
 
 # Reference for this module:
 # https://github.com/h3llrais3r/Deluge-PreventSuspendPlus/blob/master/preventsuspendplus/core.py
@@ -22,21 +23,23 @@ class InhibitorSource:
         """
         Cancels a previous call to `inhibit`.
         """
-        pass
 
 
 class WindowsInhibitorSource(InhibitorSource):
     """https://msdn.microsoft.com/en-us/library/windows/desktop/aa373208(v=vs.85).aspx"""
+
     ES_CONTINUOUS = 0x80000000
     ES_SYSTEM_REQUIRED = 0x00000001
 
     def __init__(self):
         import ctypes
+
         self.ctypes = ctypes
 
     def inhibit(self):
         self.ctypes.windll.kernel32.SetThreadExecutionState(
-            WindowsInhibitorSource.ES_CONTINUOUS | WindowsInhibitorSource.ES_SYSTEM_REQUIRED)
+            WindowsInhibitorSource.ES_CONTINUOUS | WindowsInhibitorSource.ES_SYSTEM_REQUIRED
+        )
 
     def uninhibit(self):
         self.ctypes.windll.kernel32.SetThreadExecutionState(WindowsInhibitorSource.ES_CONTINUOUS)

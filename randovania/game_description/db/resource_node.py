@@ -1,7 +1,12 @@
-import dataclasses
+from __future__ import annotations
 
-from randovania.game_description.resources.resource_info import ResourceInfo, ResourceGain
-from randovania.game_description.db.node import NodeContext, Node
+import dataclasses
+from typing import TYPE_CHECKING
+
+from randovania.game_description.db.node import Node, NodeContext
+
+if TYPE_CHECKING:
+    from randovania.game_description.resources.resource_info import ResourceGain, ResourceInfo
 
 
 @dataclasses.dataclass(frozen=True, slots=True)

@@ -1,13 +1,18 @@
+from __future__ import annotations
+
 import dataclasses
 import shutil
 from enum import Enum
-from pathlib import Path
-from typing import Callable
+from typing import TYPE_CHECKING
 
 import randovania
 from randovania import monitoring
 from randovania.exporter.game_exporter import GameExporter, GameExportParams
-from randovania.lib import status_update_lib, json_lib
+from randovania.lib import json_lib, status_update_lib
+
+if TYPE_CHECKING:
+    from collections.abc import Callable
+    from pathlib import Path
 
 
 class DreadModPlatform(Enum):
@@ -49,8 +54,12 @@ class DreadGameExporter(GameExporter):
     def _after_export(self):
         self._busy = False
 
-    def _do_export_game(self, patch_data: dict, export_params: GameExportParams,
-                        progress_update: status_update_lib.ProgressUpdateCallable):
+    def _do_export_game(
+        self,
+        patch_data: dict,
+        export_params: GameExportParams,
+        progress_update: status_update_lib.ProgressUpdateCallable,
+    ):
         assert isinstance(export_params, DreadGameExportParams)
         export_params.output_path.mkdir(parents=True, exist_ok=True)
 
@@ -68,6 +77,7 @@ class DreadGameExporter(GameExporter):
 
         json_lib.write_path(export_params.output_path.joinpath("patcher.json"), patch_data)
 
+        patcher_update: status_update_lib.ProgressUpdateCallable
         if export_params.post_export is not None:
             patcher_update = status_update_lib.OffsetProgressUpdate(progress_update, 0, 0.75)
         else:
@@ -80,10 +90,13 @@ class DreadGameExporter(GameExporter):
 
         with monitoring.trace_block("open_dread_rando.patch_with_status_update"):
             import open_dread_rando
+
             open_dread_rando.patch_with_status_update(
-                export_params.input_path, export_params.output_path, patch_data,
+                export_params.input_path,
+                export_params.output_path,
+                patch_data,
                 lambda progress, msg: patcher_update(msg, progress),
             )
-            
+
         if export_params.post_export is not None:
             export_params.post_export(status_update_lib.OffsetProgressUpdate(progress_update, 0.75, 0.25))

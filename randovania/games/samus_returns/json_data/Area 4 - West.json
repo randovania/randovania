@@ -196,7 +196,7 @@
                         },
                         "Tunnel to Fleech Swarm Cave": {
                             "type": "template",
-                            "data": "Destroy Bomb Block"
+                            "data": "Lay Any Bomb"
                         }
                     }
                 },
@@ -240,7 +240,7 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Destroy Bomb Block"
+                                        "data": "Lay Any Bomb"
                                     },
                                     {
                                         "type": "and",
@@ -509,7 +509,7 @@
                     "connections": {
                         "Save Station": {
                             "type": "template",
-                            "data": "Destroy Bomb Block"
+                            "data": "Lay Any Bomb"
                         },
                         "Teleporter": {
                             "type": "and",
@@ -1459,7 +1459,7 @@
             }
         },
         "Chozo Seals": {
-            "default_node": "Elevator to Area 3 Exterior - Transport to Area 4 West",
+            "default_node": "Elevator to Area 3 - Exterior",
             "extra": {
                 "total_boundings": {
                     "x1": 8100.0,
@@ -1569,7 +1569,7 @@
                         }
                     }
                 },
-                "Elevator to Area 3 Exterior - Transport to Area 4 West": {
+                "Elevator to Area 3 - Exterior": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1584,18 +1584,16 @@
                     "extra": {
                         "actor_name": "LE_Platform_Elevator_FromArea03",
                         "actor_type": "weightactivatedplatform",
-                        "start_point_actor_name": "ST_FromArea03",
-                        "keep_name_when_vanilla": false,
-                        "editable": true
+                        "start_point_actor_name": "ST_FromArea03"
                     },
                     "valid_starting_location": true,
-                    "dock_type": "teleporter",
+                    "dock_type": "elevator",
                     "default_connection": {
                         "region": "Area 3 - Exterior",
                         "area": "Transport to Area 4 West",
-                        "node": "Elevator to Area 4 West - Chozo Seals"
+                        "node": "Elevator to Area 4 - West"
                     },
-                    "default_dock_weakness": "Teleporter",
+                    "default_dock_weakness": "Elevator",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -1610,7 +1608,7 @@
                         }
                     }
                 },
-                "Elevator to Area 4 East - Transport to Area 4 West": {
+                "Elevator to Area 4 - East": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1625,18 +1623,16 @@
                     "extra": {
                         "actor_name": "LE_Platform_Elevator_FromArea05",
                         "actor_type": "weightactivatedplatform",
-                        "start_point_actor_name": "ST_FromArea05",
-                        "keep_name_when_vanilla": false,
-                        "editable": true
+                        "start_point_actor_name": "ST_FromArea05"
                     },
                     "valid_starting_location": false,
-                    "dock_type": "teleporter",
+                    "dock_type": "elevator",
                     "default_connection": {
                         "region": "Area 4 - East",
                         "area": "Transport to Area 4 West",
-                        "node": "Elevator to Area 4 West - Chozo Seals"
+                        "node": "Elevator to Area 4 - West"
                     },
-                    "default_dock_weakness": "Teleporter",
+                    "default_dock_weakness": "Elevator",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -1809,13 +1805,8 @@
                                         }
                                     },
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "SMAmmo",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
+                                        "type": "template",
+                                        "data": "Shoot Super Missile"
                                     },
                                     {
                                         "type": "resource",
@@ -2019,7 +2010,7 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Elevator to Area 4 East - Transport to Area 4 West": {
+                        "Elevator to Area 4 - East": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2128,7 +2119,7 @@
                                     },
                                     {
                                         "type": "template",
-                                        "data": "Destroy Bomb Block"
+                                        "data": "Lay Any Bomb"
                                     }
                                 ]
                             }
@@ -2253,7 +2244,7 @@
                         },
                         "Tunnel to The Big Gap": {
                             "type": "template",
-                            "data": "Destroy Bomb Block"
+                            "data": "Lay Any Bomb"
                         }
                     }
                 },
@@ -2320,7 +2311,7 @@
                     "connections": {
                         "Door to Transport to Area 5 Entrance": {
                             "type": "template",
-                            "data": "Destroy Bomb Block"
+                            "data": "Lay Any Bomb"
                         },
                         "Tunnel to Transport to Area 5 Entrance": {
                             "type": "and",
@@ -2338,7 +2329,7 @@
                                     },
                                     {
                                         "type": "template",
-                                        "data": "Destroy Bomb Block"
+                                        "data": "Lay Any Bomb"
                                     }
                                 ]
                             }
@@ -2387,7 +2378,7 @@
                                     },
                                     {
                                         "type": "template",
-                                        "data": "Destroy Bomb Block"
+                                        "data": "Lay Any Bomb"
                                     }
                                 ]
                             }
@@ -2619,7 +2610,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Elevator to Area 3 Exterior - Transport to Area 4 West": {
+                        "Elevator to Area 3 - Exterior": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2914,12 +2905,10 @@
                     "valid_starting_location": false,
                     "connections": {
                         "Door to Alpha+ Arena Access": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "events",
-                                "name": "Alpha 17",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         },
                         "Event - Alpha Metroid+": {
@@ -3096,7 +3085,7 @@
                     "connections": {
                         "Next to Pickup": {
                             "type": "template",
-                            "data": "Destroy Bomb Block"
+                            "data": "Lay Any Bomb"
                         }
                     }
                 },
@@ -3238,13 +3227,8 @@
                                         }
                                     },
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "SMAmmo",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
+                                        "type": "template",
+                                        "data": "Shoot Super Missile"
                                     },
                                     {
                                         "type": "resource",
@@ -3371,7 +3355,7 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Destroy Bomb Block"
+                                        "data": "Lay Any Bomb"
                                     },
                                     {
                                         "type": "or",
@@ -3489,32 +3473,15 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Destroy Bomb Block"
+                                        "data": "Lay Any Bomb"
                                     },
                                     {
-                                        "type": "or",
+                                        "type": "resource",
                                         "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Armor",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "events",
-                                                        "name": "Area 5 (Interior) - Gravity Suit Room Pickup",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
+                                            "type": "items",
+                                            "name": "Armor",
+                                            "amount": 1,
+                                            "negate": false
                                         }
                                     }
                                 ]
@@ -3563,29 +3530,12 @@
                                         }
                                     },
                                     {
-                                        "type": "or",
+                                        "type": "resource",
                                         "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Armor",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "events",
-                                                        "name": "Area 5 (Interior) - Gravity Suit Room Pickup",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
+                                            "type": "items",
+                                            "name": "Armor",
+                                            "amount": 1,
+                                            "negate": false
                                         }
                                     }
                                 ]
@@ -3653,7 +3603,7 @@
                     "connections": {
                         "Start Point": {
                             "type": "template",
-                            "data": "Destroy Bomb Block"
+                            "data": "Lay Any Bomb"
                         }
                     }
                 },
@@ -3676,7 +3626,7 @@
                     "connections": {
                         "Tunnel to Gamma Access Path Lower": {
                             "type": "template",
-                            "data": "Destroy Bomb Block"
+                            "data": "Lay Any Bomb"
                         }
                     }
                 }
@@ -3809,7 +3759,7 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Destroy Missile Block"
+                                        "data": "Shoot Any Missile"
                                     },
                                     {
                                         "type": "resource",
@@ -3846,7 +3796,7 @@
                         },
                         "Inside Arena": {
                             "type": "template",
-                            "data": "Destroy Bomb Block"
+                            "data": "Lay Any Bomb"
                         }
                     }
                 },
@@ -3893,17 +3843,15 @@
                     "valid_starting_location": false,
                     "connections": {
                         "Door to Gamma Access Path Upper": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "events",
-                                "name": "Gamma 9",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         },
                         "Dock to Gamma Access Path Lower": {
                             "type": "template",
-                            "data": "Destroy Bomb Block"
+                            "data": "Lay Any Bomb"
                         },
                         "Event - Gamma Metroid": {
                             "type": "template",
@@ -4038,13 +3986,8 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "PBAmmo",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
+                                                    "type": "template",
+                                                    "data": "Lay Power Bomb"
                                                 },
                                                 {
                                                     "type": "and",
@@ -4303,7 +4246,7 @@
                         },
                         "Tunnel to Gamma Arena Room 2": {
                             "type": "template",
-                            "data": "Destroy Bomb Block"
+                            "data": "Lay Any Bomb"
                         },
                         "Event - Grapple Block": {
                             "type": "resource",
@@ -4653,7 +4596,7 @@
                                     },
                                     {
                                         "type": "template",
-                                        "data": "Destroy Missile Block"
+                                        "data": "Shoot Any Missile"
                                     },
                                     {
                                         "type": "or",
@@ -5414,7 +5357,7 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Destroy Bomb Block"
+                                        "data": "Lay Any Bomb"
                                     },
                                     {
                                         "type": "or",
@@ -5492,7 +5435,7 @@
             }
         },
         "Transport to Area 5 Entrance": {
-            "default_node": "Elevator to Area 5 Entrance - Chozo Seal",
+            "default_node": "Elevator to Area 5 - Entrance",
             "extra": {
                 "total_boundings": {
                     "x1": 10100.0,
@@ -5529,7 +5472,7 @@
                 "asset_id": "collision_camera_023"
             },
             "nodes": {
-                "Elevator to Area 5 Entrance - Chozo Seal": {
+                "Elevator to Area 5 - Entrance": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5544,18 +5487,16 @@
                     "extra": {
                         "actor_name": "LE_Platform_Elevator_FromArea06",
                         "actor_type": "weightactivatedplatform",
-                        "start_point_actor_name": "ST_FromArea06",
-                        "keep_name_when_vanilla": false,
-                        "editable": true
+                        "start_point_actor_name": "ST_FromArea06"
                     },
                     "valid_starting_location": true,
-                    "dock_type": "teleporter",
+                    "dock_type": "elevator",
                     "default_connection": {
                         "region": "Area 5 - Entrance",
                         "area": "Chozo Seal",
-                        "node": "Elevator to Area 4 West - Transport to Area 5 Entrance"
+                        "node": "Elevator to Area 4 - West"
                     },
-                    "default_dock_weakness": "Teleporter",
+                    "default_dock_weakness": "Elevator",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -5626,7 +5567,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "events",
-                                            "name": "Area 4 (West) -Transport to Area 5 Entrance Grapple Block",
+                                            "name": "Area 4 (West) - Transport to Area 5 Entrance Grapple Block",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -5665,7 +5606,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Elevator to Area 5 Entrance - Chozo Seal": {
+                        "Elevator to Area 5 - Entrance": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5754,7 +5695,7 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "event_name": "Area 4 (West) -Transport to Area 5 Entrance Grapple Block",
+                    "event_name": "Area 4 (West) - Transport to Area 5 Entrance Grapple Block",
                     "connections": {
                         "Next to Grapple Block": {
                             "type": "and",
@@ -5780,7 +5721,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Elevator to Area 5 Entrance - Chozo Seal": {
+                        "Elevator to Area 5 - Entrance": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -5859,7 +5800,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "events",
-                                            "name": "Area 4 (West) -Transport to Area 5 Entrance Grapple Block",
+                                            "name": "Area 4 (West) - Transport to Area 5 Entrance Grapple Block",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -5882,19 +5823,14 @@
                                         }
                                     },
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "SMAmmo",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
+                                        "type": "template",
+                                        "data": "Shoot Super Missile"
                                     },
                                     {
                                         "type": "resource",
                                         "data": {
                                             "type": "events",
-                                            "name": "Area 4 (West) -Transport to Area 5 Entrance Grapple Block",
+                                            "name": "Area 4 (West) - Transport to Area 5 Entrance Grapple Block",
                                             "amount": 1,
                                             "negate": false
                                         }

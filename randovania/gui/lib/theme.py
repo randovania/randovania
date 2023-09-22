@@ -1,4 +1,6 @@
-from PySide6 import QtWidgets, QtGui
+from __future__ import annotations
+
+from PySide6 import QtGui, QtWidgets
 from PySide6.QtCore import Qt
 
 _current_dark_theme = None
@@ -14,6 +16,7 @@ def set_dark_theme(active: bool, compact: bool = False, *, app: QtWidgets.QAppli
     new_palette = QtGui.QPalette(app.palette())
 
     import qdarktheme
+
     style = qdarktheme.load_stylesheet(theme="dark" if active else "light")
     if compact:
         style += """

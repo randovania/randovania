@@ -1,18 +1,23 @@
+from __future__ import annotations
+
 import dataclasses
 import functools
+from typing import TYPE_CHECKING
 
 from PySide6 import QtWidgets
 
 from randovania.game_description import default_database
-from randovania.game_description.game_description import GameDescription
-from randovania.game_description.pickup.standard_pickup import StandardPickupDefinition
 from randovania.gui.lib.scroll_protected import ScrollProtectedSpinBox
-from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.preset_settings.item_pool_tab import PresetItemPool
 from randovania.gui.preset_settings.pickup_style_widget import PickupStyleWidget
-from randovania.interface_common.preset_editor import PresetEditor
 from randovania.layout.base.standard_pickup_state import DEFAULT_MAXIMUM_SHUFFLED
-from randovania.layout.preset import Preset
+
+if TYPE_CHECKING:
+    from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.pickup.standard_pickup import StandardPickupDefinition
+    from randovania.gui.lib.window_manager import WindowManager
+    from randovania.interface_common.preset_editor import PresetEditor
+    from randovania.layout.preset import Preset
 
 
 class DreadPresetItemPool(PresetItemPool):
@@ -20,7 +25,7 @@ class DreadPresetItemPool(PresetItemPool):
         super().__init__(editor, game_description, window_manager)
         pickup_database = default_database.pickup_database_for_game(self.game)
 
-        size_policy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Fixed)
+        size_policy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Fixed)
 
         self._energy_item_to_starting_spinbox = {}
         self._energy_item_to_shuffled_spinbox = {}
@@ -81,15 +86,12 @@ class DreadPresetItemPool(PresetItemPool):
             major_configuration = options.standard_pickup_configuration
             options.standard_pickup_configuration = major_configuration.replace_state_for_pickup(
                 item,
-                dataclasses.replace(major_configuration.pickups_state[item],
-                                    num_included_in_starting_pickups=value)
+                dataclasses.replace(major_configuration.pickups_state[item], num_included_in_starting_pickups=value),
             )
 
     def _on_update_shuffled(self, value: int, item: StandardPickupDefinition):
         with self._editor as options:
             major_configuration = options.standard_pickup_configuration
             options.standard_pickup_configuration = major_configuration.replace_state_for_pickup(
-                item,
-                dataclasses.replace(major_configuration.pickups_state[item],
-                                    num_shuffled_pickups=value)
+                item, dataclasses.replace(major_configuration.pickups_state[item], num_shuffled_pickups=value)
             )

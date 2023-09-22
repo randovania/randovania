@@ -1,15 +1,26 @@
+from __future__ import annotations
+
 import typing
 
 from PySide6 import QtWidgets
 
 from randovania.gui.generated.text_prompt_dialog_ui import Ui_TextPromptDialog
-from randovania.gui.lib import common_qt_lib, async_dialog
+from randovania.gui.lib import async_dialog, common_qt_lib
 
 
 class TextPromptDialog(QtWidgets.QDialog, Ui_TextPromptDialog):
-    def __init__(self, parent: QtWidgets.QWidget | None, title: str, description: str, *,
-                 is_modal: bool, initial_value: str | None,
-                 max_length: int | None, is_password: bool, check_re: typing.Pattern | None):
+    def __init__(
+        self,
+        parent: QtWidgets.QWidget | None,
+        title: str,
+        description: str,
+        *,
+        is_modal: bool,
+        initial_value: str | None,
+        max_length: int | None,
+        is_password: bool,
+        check_re: typing.Pattern | None,
+    ):
         super().__init__(parent)
         self.setupUi(self)
         common_qt_lib.set_default_window_icon(self)
@@ -20,6 +31,7 @@ class TextPromptDialog(QtWidgets.QDialog, Ui_TextPromptDialog):
         self.check_re = check_re
 
         self.accept_button.setEnabled(False)
+        self.accept_button.setDefault(True)
         self.accept_button.clicked.connect(self.accept)
         self.cancel_button.clicked.connect(self.reject)
 
@@ -53,9 +65,18 @@ class TextPromptDialog(QtWidgets.QDialog, Ui_TextPromptDialog):
         self.error_label.setText(error_message or "")
 
     @classmethod
-    async def prompt(cls, *, title: str, description: str, parent: QtWidgets.QWidget | None = None,
-                     max_length: int | None = None, is_password: bool = False, initial_value: str | None = None,
-                     is_modal: bool = False, check_re: typing.Pattern | None = None) -> str | None:
+    async def prompt(
+        cls,
+        *,
+        title: str,
+        description: str,
+        parent: QtWidgets.QWidget | None = None,
+        max_length: int | None = None,
+        is_password: bool = False,
+        initial_value: str | None = None,
+        is_modal: bool = False,
+        check_re: typing.Pattern | None = None,
+    ) -> str | None:
         inst = cls(
             parent=parent,
             title=title,

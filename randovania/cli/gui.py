@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 try:
     import PySide6  # noqa: F401
 
@@ -9,4 +11,5 @@ except ModuleNotFoundError:
 def create_subparsers(sub_parsers):
     if has_gui:
         from randovania.gui import qt
+
         return qt.create_subparsers(sub_parsers)

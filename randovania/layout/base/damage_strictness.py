@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from enum import Enum
 
 from randovania.bitpacking.bitpacking import BitPackEnum
@@ -12,8 +14,11 @@ class LayoutDamageStrictness(BitPackEnum, Enum):
     LENIENT = 2.0
 
 
-enum_lib.add_long_name(LayoutDamageStrictness, {
-    LayoutDamageStrictness.STRICT: "Strict",
-    LayoutDamageStrictness.MEDIUM: "Medium",
-    LayoutDamageStrictness.LENIENT: "Lenient",
-})
+enum_lib.add_long_name(
+    LayoutDamageStrictness,
+    {
+        LayoutDamageStrictness.STRICT: "Strict",
+        LayoutDamageStrictness.MEDIUM: "Medium",
+        LayoutDamageStrictness.LENIENT: "Lenient",
+    },
+)

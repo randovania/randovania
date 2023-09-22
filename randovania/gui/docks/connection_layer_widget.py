@@ -1,16 +1,22 @@
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+
 from PySide6 import QtWidgets
 from PySide6.QtCore import Signal
 from qasync import asyncSlot
 
-from randovania.game_description.game_description import GameDescription
-from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
-from randovania.gui.lib import file_prompts, async_dialog, signal_handling
+from randovania.gui.lib import async_dialog, file_prompts, signal_handling
 from randovania.gui.lib.common_qt_lib import set_default_window_icon
 from randovania.gui.lib.scroll_protected import ScrollProtectedComboBox
 from randovania.layout.base.trick_level import LayoutTrickLevel
-from randovania.layout.base.trick_level_configuration import TrickLevelConfiguration
 from randovania.layout.versioned_preset import VersionedPreset
 from randovania.lib import enum_lib
+
+if TYPE_CHECKING:
+    from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
+    from randovania.layout.base.trick_level_configuration import TrickLevelConfiguration
 
 
 class ConnectionLayerWidget(QtWidgets.QDockWidget):
@@ -79,8 +85,9 @@ class ConnectionLayerWidget(QtWidgets.QDockWidget):
         self.load_preset_button.clicked.connect(self._on_load_preset_slot)
         self.contents_layout.addWidget(self.load_preset_button)
 
-        self.vertical_spacer = QtWidgets.QSpacerItem(20, 30, QtWidgets.QSizePolicy.Minimum,
-                                                     QtWidgets.QSizePolicy.Expanding)
+        self.vertical_spacer = QtWidgets.QSpacerItem(
+            20, 30, QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.Expanding
+        )
         self.contents_layout.addItem(self.vertical_spacer)
 
     def set_edit_mode(self, edit_mode: bool):
@@ -107,8 +114,7 @@ class ConnectionLayerWidget(QtWidgets.QDockWidget):
 
         except Exception as e:
             return await async_dialog.warning(
-                self, "Invalid preset",
-                f"Unable to load a preset from {preset_file}: {e}"
+                self, "Invalid preset", f"Unable to load a preset from {preset_file}: {e}"
             )
 
         active_layers = preset.configuration.active_layers()
@@ -124,17 +130,11 @@ class ConnectionLayerWidget(QtWidgets.QDockWidget):
 
     def selected_tricks(self) -> dict[TrickResourceInfo, int]:
         return {
-            trick: combo.currentData()
-            for (trick, trick_check), combo in self.tricks.items()
-            if trick_check.isChecked()
+            trick: combo.currentData() for (trick, trick_check), combo in self.tricks.items() if trick_check.isChecked()
         }
 
     def selected_layers(self) -> set[str]:
-        return {
-            layer_check.text()
-            for layer_check in self.layer_checks
-            if layer_check.isChecked()
-        }
+        return {layer_check.text() for layer_check in self.layer_checks if layer_check.isChecked()}
 
     def _notify_change(self):
         self.FiltersUpdated.emit()

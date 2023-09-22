@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from enum import Enum
 from typing import Self
 
@@ -18,12 +20,15 @@ class PickupModelStyle(BitPackEnum, Enum):
         return cls.ALL_VISIBLE
 
 
-enum_lib.add_long_name(PickupModelStyle, {
-    PickupModelStyle.ALL_VISIBLE: "All visible",
-    PickupModelStyle.HIDE_MODEL: "Hide model",
-    PickupModelStyle.HIDE_SCAN: "Hide model and scan",
-    PickupModelStyle.HIDE_ALL: "Hide all",
-})
+enum_lib.add_long_name(
+    PickupModelStyle,
+    {
+        PickupModelStyle.ALL_VISIBLE: "All visible",
+        PickupModelStyle.HIDE_MODEL: "Hide model",
+        PickupModelStyle.HIDE_SCAN: "Hide model and scan",
+        PickupModelStyle.HIDE_ALL: "Hide all",
+    },
+)
 
 
 class PickupModelDataSource(BitPackEnum, Enum):
@@ -38,8 +43,11 @@ class PickupModelDataSource(BitPackEnum, Enum):
         return cls.ETM
 
 
-enum_lib.add_long_name(PickupModelDataSource, {
-    PickupModelDataSource.ETM: "ETM",
-    PickupModelDataSource.RANDOM: "Random",
-    PickupModelDataSource.LOCATION: "Vanilla",
-})
+enum_lib.add_long_name(
+    PickupModelDataSource,
+    {
+        PickupModelDataSource.ETM: "ETM",
+        PickupModelDataSource.RANDOM: "Random",
+        PickupModelDataSource.LOCATION: "Vanilla",
+    },
+)

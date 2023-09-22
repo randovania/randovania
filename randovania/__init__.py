@@ -1,14 +1,23 @@
+from __future__ import annotations
+
 import json
+import os
+import platform
 import sys
 from pathlib import Path
 
-from . import version as _version, version_hash
+from . import version as _version
+from . import version_hash
 
 CONFIGURATION_FILE_PATH: Path | None = None
 
 
 def is_frozen() -> bool:
     return getattr(sys, "frozen", False)
+
+
+def is_flatpak() -> bool:
+    return platform.system() == "Linux" and os.environ.get("container", "") != ""
 
 
 def is_dirty() -> bool:
@@ -85,73 +94,75 @@ def setup_logging(default_level: str, log_to_file: Path | None, quiet: bool = Fa
     import logging.handlers
     import time
 
-    handlers = {
-        'default': {
-            'level': default_level,
-            'formatter': 'default',
-            'class': 'logging.StreamHandler',
-            'stream': 'ext://sys.stdout',  # Default is stderr
+    handlers: dict = {
+        "default": {
+            "level": default_level,
+            "formatter": "default",
+            "class": "logging.StreamHandler",
+            "stream": "ext://sys.stdout",  # Default is stderr
         },
     }
     if log_to_file is not None:
-        handlers['local_app_data'] = {
-            'level': 'DEBUG',
-            'formatter': 'default',
-            'class': 'logging.handlers.TimedRotatingFileHandler',
-            'filename': log_to_file,
-            'encoding': 'utf-8',
-            'backupCount': 10,
+        handlers["local_app_data"] = {
+            "level": "DEBUG",
+            "formatter": "default",
+            "class": "logging.handlers.TimedRotatingFileHandler",
+            "filename": log_to_file,
+            "encoding": "utf-8",
+            "backupCount": 10,
         }
 
     logging.Formatter.converter = time.gmtime
-    logging.config.dictConfig({
-        'version': 1,
-        'formatters': {
-            'default': {
-                'format': '[%(asctime)s] [%(levelname)s] [%(name)s] %(funcName)s: %(message)s',
-            }
-        },
-        'handlers': handlers,
-        'loggers': {
-            'NetworkClient': {
-                'level': 'DEBUG',
+    logging.config.dictConfig(
+        {
+            "version": 1,
+            "formatters": {
+                "default": {
+                    "format": "[%(asctime)s] [%(levelname)s] [%(name)s] %(funcName)s: %(message)s",
+                }
             },
-            'randovania.game_connection.connection_backend': {
-                'level': 'DEBUG',
+            "handlers": handlers,
+            "loggers": {
+                "NetworkClient": {
+                    "level": "DEBUG",
+                },
+                "randovania.game_connection.connection_backend": {
+                    "level": "DEBUG",
+                },
+                "randovania.gui.multiworld_client": {
+                    "level": "DEBUG",
+                },
+                "NintendontExecutor": {
+                    "level": "DEBUG",
+                },
+                "DolphinExecutor": {
+                    "level": "DEBUG",
+                },
+                "Prime1RemoteConnector": {
+                    "level": "DEBUG",
+                },
+                "EchoesRemoteConnector": {
+                    "level": "DEBUG",
+                },
+                "CorruptionRemoteConnector": {
+                    "level": "DEBUG",
+                },
+                "randovania.gui.qt": {
+                    "level": "INFO",
+                },
+                "qasync": {
+                    "level": "INFO",
+                },
+                # 'socketio.client': {
+                #     'level': 'DEBUG',
+                # }
             },
-            'randovania.gui.multiworld_client': {
-                'level': 'DEBUG',
+            "root": {
+                "level": default_level,
+                "handlers": list(handlers.keys()),
             },
-            'NintendontExecutor': {
-                'level': 'DEBUG',
-            },
-            'DolphinExecutor': {
-                'level': 'DEBUG',
-            },
-            'Prime1RemoteConnector': {
-                'level': 'DEBUG',
-            },
-            'EchoesRemoteConnector': {
-                'level': 'DEBUG',
-            },
-            'CorruptionRemoteConnector': {
-                'level': 'DEBUG',
-            },
-            'randovania.gui.qt': {
-                'level': 'INFO',
-            },
-            'qasync': {
-                'level': 'INFO',
-            },
-            # 'socketio.client': {
-            #     'level': 'DEBUG',
-            # }
-        },
-        'root': {
-            'level': default_level,
-            'handlers': list(handlers.keys()),
-        },
-    })
+        }
+    )
     if not quiet:
         logging.info("Logging initialized with level %s for version %s.", default_level, VERSION)
 

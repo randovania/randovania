@@ -1,15 +1,19 @@
+from __future__ import annotations
+
 import typing
 
 from PySide6 import QtWidgets
 
-from randovania.game_description.game_description import GameDescription
 from randovania.games.prime1.layout.prime_configuration import RoomRandoMode
 from randovania.gui.generated.preset_prime_chaos_ui import Ui_PresetPrimeChaos
 from randovania.gui.lib import signal_handling
-from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.preset_settings.preset_tab import PresetTab
-from randovania.interface_common.preset_editor import PresetEditor
-from randovania.layout.preset import Preset
+
+if typing.TYPE_CHECKING:
+    from randovania.game_description.game_description import GameDescription
+    from randovania.gui.lib.window_manager import WindowManager
+    from randovania.interface_common.preset_editor import PresetEditor
+    from randovania.layout.preset import Preset
 
 _FIELDS = [
     "legacy_mode",
@@ -19,6 +23,7 @@ _FIELDS = [
     "items_every_room",
     "random_boss_sizes",
 ]
+
 
 class PresetPrimeChaos(PresetTab, Ui_PresetPrimeChaos):
     def __init__(self, editor: PresetEditor, game_description: GameDescription, window_manager: WindowManager):
@@ -85,14 +90,8 @@ class PresetPrimeChaos(PresetTab, Ui_PresetPrimeChaos):
 
     def _update_editor(self):
         with self._editor as editor:
-            editor.set_configuration_field(
-                "superheated_probability",
-                self.superheated_slider.value()
-            )
-            editor.set_configuration_field(
-                "submerged_probability",
-                self.submerged_slider.value()
-            )
+            editor.set_configuration_field("superheated_probability", self.superheated_slider.value())
+            editor.set_configuration_field("submerged_probability", self.submerged_slider.value())
 
     def _on_slider_changed(self):
         self.superheated_slider_label.setText(f"{self.superheated_slider.value() / 10.0:.1f}%")

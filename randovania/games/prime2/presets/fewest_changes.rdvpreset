@@ -1,5 +1,5 @@
 {
-    "schema_version": 53,
+    "schema_version": 58,
     "base_preset_uuid": null,
     "name": "Fewest Changes",
     "uuid": "bba48268-0710-4ac5-baae-dcd5fcd31d80",
@@ -203,18 +203,29 @@
             "mode": "vanilla",
             "types_state": {
                 "door": {
-                    "can_change_from": [],
-                    "can_change_to": []
+                    "can_change_from": [
+                        "Annihilator Door",
+                        "Dark Door",
+                        "Light Door",
+                        "Missile Blast Shield",
+                        "Normal Door",
+                        "Power Bomb Blast Shield",
+                        "Seeker Launcher Blast Shield",
+                        "Super Missile Blast Shield"
+                    ],
+                    "can_change_to": [
+                        "Annihilator Door",
+                        "Dark Door",
+                        "Light Door",
+                        "Missile Blast Shield",
+                        "Normal Door",
+                        "Permanently Locked",
+                        "Power Bomb Blast Shield",
+                        "Seeker Launcher Blast Shield (patched)",
+                        "Super Missile Blast Shield"
+                    ]
                 },
                 "portal": {
-                    "can_change_from": [],
-                    "can_change_to": []
-                },
-                "morph_ball": {
-                    "can_change_from": [],
-                    "can_change_to": []
-                },
-                "other": {
                     "can_change_from": [],
                     "can_change_to": []
                 }
@@ -328,6 +339,7 @@
         "use_new_patcher": false,
         "inverted_mode": false,
         "portal_rando": false,
+        "blue_save_doors": false,
         "allow_jumping_on_dark_water": false,
         "allow_vanilla_dark_beam": true,
         "allow_vanilla_light_beam": true,

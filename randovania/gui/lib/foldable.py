@@ -1,5 +1,7 @@
+from __future__ import annotations
+
 from PySide6 import QtCore, QtWidgets
-from PySide6.QtCore import Qt
+from PySide6.QtCore import Property, Qt, Signal
 
 
 class Foldable(QtWidgets.QWidget):
@@ -9,7 +11,7 @@ class Foldable(QtWidgets.QWidget):
     _content_area: QtWidgets.QFrame
     _folded: bool
 
-    def __init__(self, title: str, initially_folded: bool = True, parent: QtWidgets.QWidget = None):
+    def __init__(self, parent: QtWidgets.QWidget | None, title: str = "", initially_folded: bool = True):
         super().__init__(parent)
 
         self._folded = initially_folded
@@ -29,13 +31,13 @@ class Foldable(QtWidgets.QWidget):
         self._toggle_button.clicked.connect(self._on_click)
 
         self._header_line = QtWidgets.QFrame(self)
-        self._header_line.setFrameShape(QtWidgets.QFrame.HLine)
-        self._header_line.setSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Maximum)
+        self._header_line.setFrameShape(QtWidgets.QFrame.Shape.HLine)
+        self._header_line.setSizePolicy(QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Maximum)
 
         self._content_area = QtWidgets.QFrame(self)
         self._content_area.setObjectName("foldable_contentArea")
         self._content_area.setStyleSheet("#foldable_contentArea { border: none; }")
-        self._content_area.setSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self._content_area.setSizePolicy(QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Minimum)
 
         self._main_layout = QtWidgets.QGridLayout(self)
         self._main_layout.setVerticalSpacing(0)
@@ -49,10 +51,7 @@ class Foldable(QtWidgets.QWidget):
         return self._content_area
 
     def _on_click(self, checked: bool):
-        if self._folded:
-            self._unfold()
-        else:
-            self._fold()
+        self.setFolded(not self._folded)
 
     def _unfold(self):
         self._folded = False
@@ -70,3 +69,27 @@ class Foldable(QtWidgets.QWidget):
             self._fold()
         else:
             self._unfold()
+
+    def setTitle(self, title: str):
+        self._toggle_button.setText(title)
+
+    def setFolded(self, folded: bool):
+        if folded:
+            self._fold()
+        else:
+            self._unfold()
+
+    @Signal
+    def notify(self):
+        pass
+
+    folded = Property(
+        bool,
+        fset=setFolded,
+        notify=notify,
+    )
+    title = Property(
+        str,
+        fset=setTitle,
+        notify=notify,
+    )

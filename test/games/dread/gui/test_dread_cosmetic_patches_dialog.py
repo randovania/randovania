@@ -1,32 +1,46 @@
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+
 import pytest
 from PySide6 import QtCore
 
 from randovania.games.dread.gui.dialog.dread_cosmetic_patches_dialog import DreadCosmeticPatchesDialog
-from randovania.games.dread.layout.dread_cosmetic_patches import DreadCosmeticPatches, DreadRoomGuiType, \
-    DreadMissileCosmeticType
+from randovania.games.dread.layout.dread_cosmetic_patches import (
+    DreadCosmeticPatches,
+    DreadMissileCosmeticType,
+    DreadRoomGuiType,
+    DreadShieldType,
+)
 from randovania.gui.lib.signal_handling import set_combo_with_value
 
+if TYPE_CHECKING:
+    import pytestqt.qtbot  # type: ignore[import]
 
-@pytest.mark.parametrize(["widget_field", "field_name"], [
-    ("show_boss_life", "show_boss_lifebar"),
-    ("show_enemy_life", "show_enemy_life"),
-    ("show_enemy_damage", "show_enemy_damage"),
-    ("show_player_damage", "show_player_damage"),
-    ("show_death_counter", "show_death_counter"),
-    ("enable_auto_tracker", "enable_auto_tracker"),
-])
-def test_certain_field(skip_qtbot, widget_field, field_name):
-    cosmetic_patches = DreadCosmeticPatches(**{field_name: False})
+
+@pytest.mark.parametrize(
+    ("widget_field", "field_name"),
+    [
+        ("show_boss_life", "show_boss_lifebar"),
+        ("show_enemy_life", "show_enemy_life"),
+        ("show_enemy_damage", "show_enemy_damage"),
+        ("show_player_damage", "show_player_damage"),
+        ("show_death_counter", "show_death_counter"),
+        ("enable_auto_tracker", "enable_auto_tracker"),
+    ],
+)
+def test_certain_field(skip_qtbot: pytestqt.qtbot.QtBot, widget_field: str, field_name: str) -> None:
+    cosmetic_patches = DreadCosmeticPatches(**{field_name: False})  # type: ignore[arg-type]
 
     dialog = DreadCosmeticPatchesDialog(None, cosmetic_patches)
     skip_qtbot.addWidget(dialog)
 
     skip_qtbot.mouseClick(getattr(dialog, widget_field), QtCore.Qt.MouseButton.LeftButton)
 
-    assert dialog.cosmetic_patches == DreadCosmeticPatches(**{field_name: True})
+    assert dialog.cosmetic_patches == DreadCosmeticPatches(**{field_name: True})  # type: ignore[arg-type]
 
 
-def test_room_names_dropdown(skip_qtbot):
+def test_room_names_dropdown(skip_qtbot: pytestqt.qtbot.QtBot) -> None:
     cosmetic_patches = DreadCosmeticPatches(show_room_names=DreadRoomGuiType.NONE)
 
     dialog = DreadCosmeticPatchesDialog(None, cosmetic_patches)
@@ -36,7 +50,8 @@ def test_room_names_dropdown(skip_qtbot):
 
     assert dialog.cosmetic_patches == DreadCosmeticPatches(show_room_names=DreadRoomGuiType.WITH_FADE)
 
-def test_missile_cosmetic_dropdown(skip_qtbot):
+
+def test_missile_cosmetic_dropdown(skip_qtbot: pytestqt.qtbot.QtBot) -> None:
     cosmetic_patches = DreadCosmeticPatches(missile_cosmetic=DreadMissileCosmeticType.NONE)
 
     dialog = DreadCosmeticPatchesDialog(None, cosmetic_patches)
@@ -45,3 +60,33 @@ def test_missile_cosmetic_dropdown(skip_qtbot):
     set_combo_with_value(dialog.missile_cosmetic_dropdown, DreadMissileCosmeticType.TRANS)
 
     assert dialog.cosmetic_patches == DreadCosmeticPatches(missile_cosmetic=DreadMissileCosmeticType.TRANS)
+
+
+@pytest.mark.parametrize(
+    ("widget_field", "field_name"),
+    [
+        ("alt_ice_missile", "alt_ice_missile"),
+        ("alt_storm_missile", "alt_storm_missile"),
+        ("alt_diffusion_beam", "alt_diffusion_beam"),
+        ("alt_bomb", "alt_bomb"),
+        ("alt_cross_bomb", "alt_cross_bomb"),
+        ("alt_power_bomb", "alt_power_bomb"),
+    ],
+)
+def test_shield_type_field(skip_qtbot: pytestqt.qtbot.QtBot, widget_field: str, field_name: str) -> None:
+    cosmetic_patches = DreadCosmeticPatches(**{field_name: DreadShieldType.DEFAULT})  # type: ignore[arg-type]
+
+    dialog = DreadCosmeticPatchesDialog(None, cosmetic_patches)
+    skip_qtbot.addWidget(dialog)
+
+    # test checking box
+    skip_qtbot.mouseClick(getattr(dialog, widget_field), QtCore.Qt.MouseButton.LeftButton)
+    assert dialog.cosmetic_patches == DreadCosmeticPatches(
+        **{field_name: DreadShieldType.ALTERNATE}  # type: ignore[arg-type]
+    )
+
+    # test unchecking box
+    skip_qtbot.mouseClick(getattr(dialog, widget_field), QtCore.Qt.MouseButton.LeftButton)
+    assert dialog.cosmetic_patches == DreadCosmeticPatches(
+        **{field_name: DreadShieldType.DEFAULT}  # type: ignore[arg-type]
+    )

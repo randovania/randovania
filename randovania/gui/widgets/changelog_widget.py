@@ -1,4 +1,6 @@
-from PySide6 import QtWidgets, QtCore
+from __future__ import annotations
+
+from PySide6 import QtCore, QtWidgets
 
 from randovania.gui.widgets.delayed_text_label import DelayedTextLabel
 
@@ -24,7 +26,7 @@ class ChangeLogWidget(QtWidgets.QWidget):
             scroll_area.setWidgetResizable(True)
 
             label = DelayedTextLabel()
-            label.setAlignment(QtCore.Qt.AlignTop)
+            label.setAlignment(QtCore.Qt.AlignmentFlag.AlignTop)
             label.setObjectName(f"label {version_name}")
             label.setTextFormat(QtCore.Qt.MarkdownText)
             label.setText(version_text)

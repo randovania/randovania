@@ -5,15 +5,16 @@ import typing
 
 from frozendict import frozendict
 
-from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.requirements.base import Requirement
-from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.lib import frozen_lib
 
 if typing.TYPE_CHECKING:
-    from randovania.game_description.resources.resource_database import ResourceDatabase
-    from randovania.game_description.resources.resource_info import ResourceInfo, ResourceCollection
+    from randovania.game_description.db.node_identifier import NodeIdentifier
     from randovania.game_description.db.node_provider import NodeProvider
+    from randovania.game_description.game_patches import GamePatches
+    from randovania.game_description.resources.resource_collection import ResourceCollection
+    from randovania.game_description.resources.resource_database import ResourceDatabase
+    from randovania.game_description.resources.resource_info import ResourceInfo
 
 NodeIndex = int
 
@@ -24,7 +25,7 @@ class NodeLocation:
     y: float
     z: float
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         assert isinstance(self.x, float)
         assert isinstance(self.y, float)
         assert isinstance(self.z, float)
@@ -52,17 +53,18 @@ class Node:
     extra: dict[str, typing.Any]
     valid_starting_location: bool
 
-    def __lt__(self, other: Node):
+    def __lt__(self, other: object) -> bool:
+        assert isinstance(other, Node)
         return self.identifier < other.identifier
 
-    def __hash__(self):
+    def __hash__(self) -> int:
         return hash(self.identifier)
 
     @property
-    def name(self):
+    def name(self) -> str:
         return self.identifier.node_name
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if not self.layers:
             raise ValueError("Expected at least one layer")
 

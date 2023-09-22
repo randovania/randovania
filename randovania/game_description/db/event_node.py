@@ -1,17 +1,22 @@
-import dataclasses
+from __future__ import annotations
 
+import dataclasses
+from typing import TYPE_CHECKING
+
+from randovania.game_description.db.resource_node import ResourceNode
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
-from randovania.game_description.resources.resource_info import ResourceInfo, ResourceGain
-from randovania.game_description.db.node import NodeContext
-from randovania.game_description.db.resource_node import ResourceNode
+
+if TYPE_CHECKING:
+    from randovania.game_description.db.node import NodeContext
+    from randovania.game_description.resources.resource_info import ResourceGain, ResourceInfo
 
 
 @dataclasses.dataclass(frozen=True, slots=True)
 class EventNode(ResourceNode):
     event: ResourceInfo
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"EventNode({self.name!r} -> {self.event.long_name})"
 
     def requirement_to_leave(self, context: NodeContext) -> Requirement:

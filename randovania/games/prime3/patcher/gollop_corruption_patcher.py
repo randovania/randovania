@@ -1,9 +1,14 @@
-import hashlib
+from __future__ import annotations
 
-from randovania.game_description.game_description import GameDescription
+import hashlib
+from typing import TYPE_CHECKING
+
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
-from randovania.game_description.resources.resource_info import ResourceCollection
-from randovania.game_description.db.area_identifier import AreaIdentifier
+
+if TYPE_CHECKING:
+    from randovania.game_description.db.area_identifier import AreaIdentifier
+    from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.resources.resource_collection import ResourceCollection
 
 LAYOUT_LETTERS = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ(){}[]<>=,.!#^-+?"
 ITEM_NAME_TO_INDEX = {
@@ -11,41 +16,33 @@ ITEM_NAME_TO_INDEX = {
     "Plasma Beam": 1,
     "Nova Beam": 2,
     "Charge Beam": 3,
-
     "Missile Launcher": 1000,
     "Ice Missile": 5,
     "Seeker Missile": 6,
-
     "Grapple Lasso": 7,
     "Grapple Swing": 8,
     "Grapple Voltage": 9,
-
     "Combat Visor": 11,
     "Scan Visor": 12,
     "Command Visor": 13,
     "X-Ray Visor": 14,
-
     "Space Jump Boots": 15,
     "Screw Attack": 16,
-
     "Hazard Shield": 17,
     "Energy Tank": 20,
-
     "Morph Ball": 32,
     "Morph Ball Bombs": 10,
     "Boost Ball": 33,
     "Spider Ball": 34,
     "CannonBall": 48,
-
     "Hypermode": 35,
     "Hyper Missile": 37,
     "Hyper Ball": 38,
     "Hyper Grapple": 39,
-
     "Ship Grapple": 44,
     "Ship Missile": 1001,
     "Missile Expansion": 4,
-    "Ship Missile Expansion": 45
+    "Ship Missile Expansion": 45,
 }
 LETTER_TO_ITEM_MAPPING = {
     "0": ["Power Beam"],
@@ -128,11 +125,7 @@ LETTER_TO_ITEM_MAPPING = {
     "+": ["Energy Tank", "Ship Missile Expansion"],
     "?": ["Missile Expansion", "Ship Missile Expansion", "Missile Expansion"],
 }
-ITEM_NAME_TO_LETTER_MAPPING = {
-    items[0]: letter
-    for letter, items in LETTER_TO_ITEM_MAPPING.items()
-    if len(items) == 1
-}
+ITEM_NAME_TO_LETTER_MAPPING = {items[0]: letter for letter, items in LETTER_TO_ITEM_MAPPING.items() if len(items) == 1}
 
 STARTING_ITEMS_ORDER = [
     "EnergyAmount",
@@ -220,10 +213,8 @@ def starting_items_for(resources: ResourceCollection, hypermode_original: int) -
     capacity_by_short_name["HyperModeOriginal"] = hypermode_original
 
     result_values = [
-        capacity_by_short_name.get(STARTING_ITEMS_NAME_ALIAS.get(item, item), 0)
-        for item in STARTING_ITEMS_ORDER
+        capacity_by_short_name.get(STARTING_ITEMS_NAME_ALIAS.get(item, item), 0) for item in STARTING_ITEMS_ORDER
     ]
-    return "custom " + "".join([
-        f"{value:02x}" if index in _TWO_BYTE_VALUES else f"{value:x}"
-        for index, value in enumerate(result_values)
-    ])
+    return "custom " + "".join(
+        [f"{value:02x}" if index in _TWO_BYTE_VALUES else f"{value:x}" for index, value in enumerate(result_values)]
+    )

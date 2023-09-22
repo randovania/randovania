@@ -1,17 +1,22 @@
+from __future__ import annotations
+
 import dataclasses
+from typing import TYPE_CHECKING
 
 from PySide6 import QtWidgets
 
 from randovania.game_description import default_database
-from randovania.game_description.game_description import GameDescription
-from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.gui.lib.scroll_protected import ScrollProtectedSpinBox
-from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.preset_settings.item_pool_tab import PresetItemPool
 from randovania.gui.preset_settings.pickup_style_widget import PickupStyleWidget
-from randovania.interface_common.preset_editor import PresetEditor
 from randovania.layout.base.standard_pickup_state import DEFAULT_MAXIMUM_SHUFFLED
-from randovania.layout.preset import Preset
+
+if TYPE_CHECKING:
+    from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.resources.item_resource_info import ItemResourceInfo
+    from randovania.gui.lib.window_manager import WindowManager
+    from randovania.interface_common.preset_editor import PresetEditor
+    from randovania.layout.preset import Preset
 
 
 class MetroidPresetItemPool(PresetItemPool):
@@ -19,7 +24,7 @@ class MetroidPresetItemPool(PresetItemPool):
         super().__init__(editor, game_description, window_manager)
         pickup_database = default_database.pickup_database_for_game(self.game)
 
-        size_policy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Fixed)
+        size_policy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Fixed)
 
         self._energy_tank_item = pickup_database.standard_pickups["Energy Tank"]
         self._create_energy_tank_box(game_description.resource_database.energy_tank)
@@ -67,8 +72,9 @@ class MetroidPresetItemPool(PresetItemPool):
             major_configuration = options.standard_pickup_configuration
             options.standard_pickup_configuration = major_configuration.replace_state_for_pickup(
                 self._energy_tank_item,
-                dataclasses.replace(major_configuration.pickups_state[self._energy_tank_item],
-                                    num_included_in_starting_pickups=value)
+                dataclasses.replace(
+                    major_configuration.pickups_state[self._energy_tank_item], num_included_in_starting_pickups=value
+                ),
             )
 
     def _on_update_shuffled_energy_tank(self, value: int):
@@ -76,6 +82,7 @@ class MetroidPresetItemPool(PresetItemPool):
             major_configuration = options.standard_pickup_configuration
             options.standard_pickup_configuration = major_configuration.replace_state_for_pickup(
                 self._energy_tank_item,
-                dataclasses.replace(major_configuration.pickups_state[self._energy_tank_item],
-                                    num_shuffled_pickups=value)
+                dataclasses.replace(
+                    major_configuration.pickups_state[self._energy_tank_item], num_shuffled_pickups=value
+                ),
             )

@@ -1,32 +1,43 @@
+from __future__ import annotations
+
 import collections
 import functools
-from pathlib import Path
+from typing import TYPE_CHECKING
 
-from PySide6 import QtWidgets, QtGui
+from PySide6 import QtGui, QtWidgets
 
 from randovania import get_data_path
-from randovania.game_connection.builder.connector_builder import ConnectorBuilder
-from randovania.game_connection.connector.remote_connector import RemoteConnector
-from randovania.game_connection.game_connection import GameConnection, ConnectedGameState
+from randovania.game_description.resources.inventory import Inventory
 from randovania.games.game import RandovaniaGame
 from randovania.gui.generated.auto_tracker_window_ui import Ui_AutoTrackerWindow
 from randovania.gui.lib import common_qt_lib
-from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.widgets.item_tracker_widget import ItemTrackerWidget
-from randovania.interface_common.options import Options
 from randovania.lib import json_lib
 from randovania.network_common.game_connection_status import GameConnectionStatus
 
+if TYPE_CHECKING:
+    from pathlib import Path
 
-def load_trackers_configuration() -> dict[RandovaniaGame, dict[str, Path]]:
-    data = json_lib.read_path(
-        get_data_path().joinpath("gui_assets/tracker/trackers.json")
-    )
+    from randovania.game_connection.builder.connector_builder import ConnectorBuilder
+    from randovania.game_connection.connector.remote_connector import RemoteConnector
+    from randovania.game_connection.game_connection import ConnectedGameState, GameConnection
+    from randovania.gui.lib.window_manager import WindowManager
+    from randovania.interface_common.options import Options
+
+
+def load_trackers_configuration(for_solo: bool) -> dict[RandovaniaGame, dict[str, Path]]:
+    data = json_lib.read_path(get_data_path().joinpath("gui_assets/tracker/trackers.json"))
+
+    if for_solo:
+        exclude_trackers = {}
+    else:
+        exclude_trackers = data["solo_only"]
 
     return {
         RandovaniaGame(game): {
             name: get_data_path().joinpath("gui_assets/tracker", file_name)
             for name, file_name in trackers.items()
+            if name not in exclude_trackers.get(game, [])
         }
         for game, trackers in data["trackers"].items()
     }
@@ -51,13 +62,13 @@ class AutoTrackerWindow(QtWidgets.QMainWindow, Ui_AutoTrackerWindow):
         self.options = options
         common_qt_lib.set_default_window_icon(self)
 
-        self.trackers = load_trackers_configuration()
+        self.trackers = load_trackers_configuration(for_solo=True)
         self._tracker_actions = collections.defaultdict(list)
         self.connected_game_state_label.setText(GameConnectionStatus.Disconnected.pretty_text)
 
         self._current_tracker_game = options.tracker_default_game
         default_game_action_group = QtGui.QActionGroup(self.menu_default_game)
-        default_game_action = self.menu_default_game.addAction("None")
+        default_game_action: QtGui.QAction = self.menu_default_game.addAction("None")
         default_game_action.setCheckable(True)
         default_game_action.setChecked(options.tracker_default_game is None)
         default_game_action.triggered.connect(functools.partial(self._on_action_default_game, None))
@@ -133,7 +144,7 @@ class AutoTrackerWindow(QtWidgets.QMainWindow, Ui_AutoTrackerWindow):
         tracker_name: str | None = None
         target_game: RandovaniaGame | None = None
 
-        inventory = {}
+        inventory: Inventory = Inventory.empty()
 
         if self.item_tracker is not None:
             inventory = self.item_tracker.current_state
@@ -183,6 +194,7 @@ class AutoTrackerWindow(QtWidgets.QMainWindow, Ui_AutoTrackerWindow):
 
     def update_sources_combo(self):
         old_builder = self.selected_builder()
+        self.select_game_combo.currentIndexChanged.disconnect(self.on_select_game_combo)
         self.select_game_combo.clear()
 
         index_to_select = None
@@ -195,11 +207,11 @@ class AutoTrackerWindow(QtWidgets.QMainWindow, Ui_AutoTrackerWindow):
             )
 
         if not self.game_connection.connection_builders:
-            self.select_game_combo.addItem(
-                "No sources available"
-            )
+            self.select_game_combo.addItem("No sources available")
+
         if index_to_select is not None:
             self.select_game_combo.setCurrentIndex(index_to_select)
+        self.select_game_combo.currentIndexChanged.connect(self.on_select_game_combo)
 
         self.create_tracker()
 

@@ -1,8 +1,10 @@
+from __future__ import annotations
+
 import dataclasses
-from unittest.mock import MagicMock, AsyncMock, call, ANY
+from unittest.mock import ANY, AsyncMock, MagicMock, call
 
 import pytest
-from PySide6 import QtWidgets, QtCore, QtGui
+from PySide6 import QtCore, QtGui, QtWidgets
 
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.prime3.layout.corruption_cosmetic_patches import CorruptionCosmeticPatches
@@ -15,8 +17,11 @@ from randovania.layout.layout_description import LayoutDescription
 
 async def test_export_iso(skip_qtbot, mocker):
     # Setup
-    mock_execute_dialog = mocker.patch("randovania.gui.lib.async_dialog.execute_dialog", new_callable=AsyncMock,
-                                       return_value=QtWidgets.QDialog.Accepted)
+    mock_execute_dialog = mocker.patch(
+        "randovania.gui.lib.async_dialog.execute_dialog",
+        new_callable=AsyncMock,
+        return_value=QtWidgets.QDialog.Accepted,
+    )
 
     options = MagicMock()
     options.output_directory = None
@@ -42,16 +47,14 @@ async def test_export_iso(skip_qtbot, mocker):
 
     # Assert
     game.patch_data_factory.assert_called_once_with(
-        window.layout_description,
-        players_config,
-        options.options_for_game.return_value.cosmetic_patches
+        window.layout_description, players_config, options.options_for_game.return_value.cosmetic_patches
     )
     game.gui.export_dialog.assert_called_once_with(
         options,
         patch_data,
         window.layout_description.shareable_word_hash,
         window.layout_description.has_spoiler,
-        [game]
+        [game],
     )
     mock_execute_dialog.assert_awaited_once_with(game.gui.export_dialog.return_value)
     game.exporter.export_game.assert_called_once_with(
@@ -68,7 +71,7 @@ def test_update_layout_description_no_spoiler(skip_qtbot, mocker):
 
     options = MagicMock()
     description = MagicMock(spec=LayoutDescription)
-    description.player_count = 1
+    description.world_count = 1
     description.shareable_hash = "12345"
     description.shareable_word_hash = "Some Hash Words"
     description.randovania_version_text = "v1.2.4"
@@ -88,18 +91,22 @@ def test_update_layout_description_no_spoiler(skip_qtbot, mocker):
 
     # Assert
     mock_describer.assert_called_once_with(preset)
-    mock_merge.assert_has_calls([
-        call(["a", "c"]),
-        call(["b", "d"]),
-    ])
-    assert window.layout_title_label.text() == ("""
+    mock_merge.assert_has_calls(
+        [
+            call(["a", "c"]),
+            call(["b", "d"]),
+        ]
+    )
+    assert window.layout_title_label.text() == (
+        """
         <p>
             Generated with Randovania v1.2.4<br />
             Seed Hash: Some Hash Words (12345)<br/>
             In-game Hash: <image><br/>
             Preset Name: CustomPreset
         </p>
-        """)
+        """
+    )
 
 
 @pytest.mark.parametrize("twice", [False, True])

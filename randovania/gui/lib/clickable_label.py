@@ -1,5 +1,7 @@
-from PySide6 import QtWidgets, QtGui
-from PySide6.QtCore import Signal, QEvent
+from __future__ import annotations
+
+from PySide6 import QtGui, QtWidgets
+from PySide6.QtCore import QEvent, Signal
 
 
 class ClickableLabel(QtWidgets.QLabel):
@@ -19,7 +21,7 @@ class ClickableLabel(QtWidgets.QLabel):
         if self._is_in_rect(event):
             event.accept()
             self.entered.emit()
-    
+
     def leaveEvent(self, event: QEvent):
         event.accept()
         self.left.emit()

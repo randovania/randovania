@@ -1,15 +1,16 @@
 from __future__ import annotations
 
+import logging
 import typing
 
-from PySide6 import QtWidgets, QtGui
+from PySide6 import QtGui, QtWidgets
 
 from randovania.games.game import RandovaniaGame
-from randovania.gui.widgets.base_game_tab_widget import BaseGameTabWidget
-from randovania.interface_common.options import Options
 
 if typing.TYPE_CHECKING:
     from randovania.gui.main_window import MainWindow
+    from randovania.gui.widgets.base_game_tab_widget import BaseGameTabWidget
+    from randovania.interface_common.options import Options
 
 
 class GamesHelpWidget(QtWidgets.QTabWidget):
@@ -65,10 +66,13 @@ class GamesHelpWidget(QtWidgets.QTabWidget):
     def ensure_current_game_has_widget(self):
         game = self.current_game()
         if game is not None and game not in self._widget_for_game:
+            logging.info("Creating game tab for %s", game.value)
             new_tab = game.gui.game_tab(self._main_window, self._main_window, self._last_options)
+            logging.info("Game tab created")
             self._widget_for_game[game] = new_tab
             self._layout_for_index[self.currentIndex()].addWidget(new_tab)
             new_tab.on_options_changed(self._last_options)
+            logging.info("Game tab updated for options")
 
     def showEvent(self, arg: QtGui.QShowEvent) -> None:
         if self._first_show:

@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from unittest.mock import MagicMock, PropertyMock
 
 from randovania.game_description.db.event_node import EventNode
@@ -28,7 +30,7 @@ def test_possible_actions_no_resources():
 
     # Run
     reach = ResolverReach({0: 1, 1: 1}, {}, frozenset(), logic)
-    options = list(action for action, damage in reach.possible_actions(state))
+    options = [action for action, damage in reach.possible_actions(state)]
 
     # Assert
     assert options == []
@@ -51,7 +53,7 @@ def test_possible_actions_with_event():
 
     # Run
     reach = ResolverReach({0: 1}, {}, frozenset(), logic)
-    options = list(action for action, damage in reach.possible_actions(state))
+    options = [action for action, damage in reach.possible_actions(state)]
 
     # Assert
     assert options == [event]
@@ -59,5 +61,6 @@ def test_possible_actions_with_event():
     state.node_context.assert_called_once_with()
     event.can_collect.assert_called_once_with(state.node_context.return_value)
     logic.get_additional_requirements.assert_called_once_with(event)
-    logic.get_additional_requirements.return_value.satisfied.assert_called_once_with(state.resources, 1,
-                                                                                     state.resource_database)
+    logic.get_additional_requirements.return_value.satisfied.assert_called_once_with(
+        state.resources, 1, state.resource_database
+    )

@@ -1,4 +1,6 @@
-from typing import Callable
+from __future__ import annotations
+
+from collections.abc import Callable
 
 ProgressUpdateCallable = Callable[[str, float], None]
 
@@ -20,10 +22,7 @@ class SuccessiveCallback:
 
     def __call__(self, message: str) -> None:
         self.call_count += 1
-        self.status_update(
-            message,
-            min(self.call_count, self.max_calls) / self.max_calls
-        )
+        self.status_update(message, min(self.call_count, self.max_calls) / self.max_calls)
 
 
 class OffsetProgressUpdate:
@@ -33,23 +32,23 @@ class OffsetProgressUpdate:
         self.scale = scale
 
     def __call__(self, message: str, percentage: float) -> None:
+        percentage = min(percentage, 1.0)
         new_value = percentage if percentage < 0 else self.offset + percentage * self.scale
-        self.status_update(
-            message,
-            new_value
-        )
+        self.status_update(message, new_value)
 
 
 class DynamicSplitProgressUpdate:
+    splits: dict[OffsetProgressUpdate, float]
+
     def __init__(self, status_update: ProgressUpdateCallable):
         self.status_update = status_update
         self.splits = {}
 
-    def update_splits(self):
+    def update_splits(self) -> None:
         total = sum(self.splits.values())
         scale = 1.0 / total
 
-        offset = 0
+        offset = 0.0
         for split, weight in self.splits.items():
             this_scale = scale * weight
             split.offset = offset
@@ -64,8 +63,8 @@ class DynamicSplitProgressUpdate:
 
 
 def create_progress_update_from_successive_messages(
-        status_update: ProgressUpdateCallable,
-        max_calls: int) -> Callable[[str], None]:
+    status_update: ProgressUpdateCallable, max_calls: int
+) -> Callable[[str], None]:
     """
     Creates a callable that invokes the given ProgressUpdateCallable each it's called,
     with percentage based on call count.
@@ -85,7 +84,4 @@ def split_progress_update(status_update: ProgressUpdateCallable, parts: int) -> 
     :return:
     """
     split = DynamicSplitProgressUpdate(status_update)
-    return [
-        split.create_split()
-        for _ in range(parts)
-    ]
+    return [split.create_split() for _ in range(parts)]

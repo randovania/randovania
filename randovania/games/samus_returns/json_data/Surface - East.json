@@ -422,7 +422,17 @@
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -503,8 +513,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 9359.347970725215,
-                        "y": -3974.4677312042577,
+                        "x": 9359.35,
+                        "y": -3974.47,
                         "z": 0.0
                     },
                     "description": "",
@@ -522,7 +532,7 @@
                         "area": "Morph Ball Room",
                         "node": "Door to Melee Tutorial Pathway"
                     },
-                    "default_dock_weakness": "Power Beam Door",
+                    "default_dock_weakness": "Missile Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -706,7 +716,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "Freeze Enemy",
                                                         "items": [
                                                             {
                                                                 "type": "template",
@@ -735,51 +745,7 @@
                                                 },
                                                 {
                                                     "type": "template",
-                                                    "data": "Simple IBJ"
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Boots",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Spider",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Space",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Movement",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
+                                                    "data": "Climb Rooms Vertically (High Jump)"
                                                 }
                                             ]
                                         }
@@ -800,8 +766,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 9358.903058212303,
-                        "y": -3971.4074861258705,
+                        "x": 9358.9,
+                        "y": -3971.41,
                         "z": 0.0
                     },
                     "description": "",
@@ -819,7 +785,7 @@
                         "area": "Melee Tutorial Pathway",
                         "node": "Door to Morph Ball Room"
                     },
-                    "default_dock_weakness": "Power Beam Door",
+                    "default_dock_weakness": "Missile Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -983,8 +949,13 @@
                     "location_category": "minor",
                     "connections": {
                         "Tunnel to Transport to Area 1": {
-                            "type": "template",
-                            "data": "Destroy Bomb Block"
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
                         }
                     }
                 },
@@ -1117,7 +1088,17 @@
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -1172,7 +1153,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Climb Frozen Enemy",
                                             "items": [
                                                 {
                                                     "type": "template",
@@ -1297,7 +1278,7 @@
             }
         },
         "Transport to Area 1": {
-            "default_node": "Elevator to Area 1 - Chozo Seal",
+            "default_node": "Elevator to Area 1",
             "extra": {
                 "total_boundings": {
                     "x1": 6400.0,
@@ -1355,7 +1336,7 @@
                         }
                     }
                 },
-                "Elevator to Area 1 - Chozo Seal": {
+                "Elevator to Area 1": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1370,18 +1351,16 @@
                     "extra": {
                         "actor_name": "LE_Platform_Elevator_FromArea01",
                         "actor_type": "weightactivatedplatform",
-                        "start_point_actor_name": "ST_FromArea01",
-                        "keep_name_when_vanilla": false,
-                        "editable": true
+                        "start_point_actor_name": "ST_FromArea01"
                     },
                     "valid_starting_location": true,
-                    "dock_type": "teleporter",
+                    "dock_type": "elevator",
                     "default_connection": {
                         "region": "Area 1",
                         "area": "Chozo Seal",
-                        "node": "Elevator to Surface East - Transport to Area 1"
+                        "node": "Elevator to Surface - East"
                     },
-                    "default_dock_weakness": "Teleporter",
+                    "default_dock_weakness": "Elevator",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -1507,7 +1486,7 @@
                     "connections": {
                         "Next to Teleporter": {
                             "type": "template",
-                            "data": "Destroy Bomb Block"
+                            "data": "Lay Any Bomb"
                         }
                     }
                 },
@@ -1633,7 +1612,7 @@
                                 ]
                             }
                         },
-                        "Elevator to Area 1 - Chozo Seal": {
+                        "Elevator to Area 1": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1641,12 +1620,10 @@
                             }
                         },
                         "Teleporter": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "events",
-                                "name": "Surface East Teleporter",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         },
                         "Door to Chozo Seal": {
@@ -1658,12 +1635,12 @@
                         },
                         "Tunnel to Chozo Seal": {
                             "type": "template",
-                            "data": "Destroy Bomb Block"
+                            "data": "Lay Any Bomb"
                         },
                         "Dock to Transport Storage": {
                             "type": "or",
                             "data": {
-                                "comment": null,
+                                "comment": "TODO: doesn't need jumping requirements? Doesn't look like you can reach it with just PBs",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -2121,7 +2098,7 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Destroy Missile Block"
+                                        "data": "Shoot Any Missile"
                                     },
                                     {
                                         "type": "resource",
@@ -2343,7 +2320,7 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Destroy Missile Block"
+                                        "data": "Shoot Any Missile"
                                     },
                                     {
                                         "type": "resource",
@@ -2358,12 +2335,10 @@
                             }
                         },
                         "Door to Ammo Recharge Station": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "events",
-                                "name": "Alpha 1",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         },
                         "Event - Alpha Metroid": {
@@ -2402,7 +2377,17 @@
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -2410,7 +2395,7 @@
             }
         },
         "Scan Pulse Room": {
-            "default_node": "Right of Statue",
+            "default_node": "Start Point - Right of Statue",
             "extra": {
                 "total_boundings": {
                     "x1": -1700.0,
@@ -2546,7 +2531,7 @@
                                 "negate": false
                             }
                         },
-                        "Right of Statue": {
+                        "Start Point - Right of Statue": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2630,7 +2615,7 @@
                                 "negate": false
                             }
                         },
-                        "Left of Statue": {
+                        "Start Point - Left of Statue": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2676,7 +2661,7 @@
                         }
                     }
                 },
-                "Left of Statue": {
+                "Start Point - Left of Statue": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
@@ -2702,7 +2687,7 @@
                         }
                     }
                 },
-                "Right of Statue": {
+                "Start Point - Right of Statue": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
@@ -3003,12 +2988,41 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Tunnel to Upper Storage": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Climb Rooms Vertically (High Jump)"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Walljump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
                             }
                         },
                         "Start Point": {
@@ -3490,14 +3504,14 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Landing Site": {
+                        "Start Point": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Start Point": {
+                        "Highest Point": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3532,13 +3546,25 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Melee Tutorial Pathway": {
-                            "type": "resource",
+                        "Past First Missile Block": {
+                            "type": "or",
                             "data": {
-                                "type": "items",
-                                "name": "MissileAmmo",
-                                "amount": 3,
-                                "negate": false
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Shoot Any Missile"
+                                    }
+                                ]
                             }
                         }
                     }
@@ -3561,6 +3587,116 @@
                     "valid_starting_location": false,
                     "connections": {
                         "Door to Melee Tutorial Pathway": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Past First Missile Block": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1888.0498706186781,
+                        "y": 2453.027700972933,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Dock to Landing Site": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Highest Point": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Walljump",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "MissileAmmo",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Shoot Super Missile"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "SMAmmo",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Highest Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 4346.294989414255,
+                        "y": 4017.365503842846,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Melee Tutorial Pathway": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Past First Missile Block": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3677,7 +3813,7 @@
                                     },
                                     {
                                         "type": "template",
-                                        "data": "Destroy Missile Block"
+                                        "data": "Shoot Any Missile"
                                     },
                                     {
                                         "type": "or",
@@ -3947,7 +4083,7 @@
                                     },
                                     {
                                         "type": "template",
-                                        "data": "Destroy Missile Block"
+                                        "data": "Shoot Any Missile"
                                     },
                                     {
                                         "type": "or",
@@ -4546,7 +4682,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "TODO: test whether this can be done with just a normal Walljump",
                                             "items": [
                                                 {
                                                     "type": "template",
@@ -4656,7 +4792,17 @@
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }

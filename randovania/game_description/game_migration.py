@@ -1,11 +1,10 @@
+from __future__ import annotations
+
 from randovania.lib import migration_lib
 
+
 def _migrate_v6(data: dict) -> dict:
-    lore_types = {
-        "luminoth-lore": "requires-item",
-        "luminoth-warrior": "specific-pickup",
-        "pirate-lore": "generic"
-    }
+    lore_types = {"luminoth-lore": "requires-item", "luminoth-warrior": "specific-pickup", "pirate-lore": "generic"}
     for world in data["worlds"]:
         for area in world["areas"].values():
             for node in area["nodes"].values():
@@ -67,12 +66,7 @@ def _migrate_v9(data: dict) -> dict:
 
 def _migrate_v10(data: dict) -> dict:
     for dock_type in data["dock_weakness_database"]["types"].values():
-        dock_type["dock_rando"] = {
-            "unlocked": None,
-            "locked": None,
-            "change_from": [],
-            "change_to": []
-        }
+        dock_type["dock_rando"] = {"unlocked": None, "locked": None, "change_from": [], "change_to": []}
 
     return data
 
@@ -82,7 +76,7 @@ def _migrate_v11(data: dict) -> dict:
         "enable_one_way": False,
         "force_change_two_way": False,
         "resolver_attempts": 125,
-        "to_shuffle_proportion": 1.0
+        "to_shuffle_proportion": 1.0,
     }
     return data
 
@@ -95,24 +89,14 @@ def _migrate_v12(data: dict) -> dict:
                     node["node_type"] = "teleporter_network"
                     node["network"] = "default"
 
-                    node["requirement_to_activate"] = {
-                        "type": "and",
-                        "data": {
-                            "comment": None,
-                            "items": [
-                            ]
-                        }
-                    }
+                    node["requirement_to_activate"] = {"type": "and", "data": {"comment": None, "items": []}}
                     if data["game"] == "prime3":
-                        node["requirement_to_activate"]["data"]["items"].append({
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "CommandVisor",
-                                "amount": 1,
-                                "negate": False
+                        node["requirement_to_activate"]["data"]["items"].append(
+                            {
+                                "type": "resource",
+                                "data": {"type": "items", "name": "CommandVisor", "amount": 1, "negate": False},
                             }
-                        })
+                        )
 
                 elif node["node_type"] == "logbook":
                     node["node_type"] = "hint"
@@ -136,16 +120,11 @@ def _migrate_v12(data: dict) -> dict:
                             "items": [
                                 {
                                     "type": "resource",
-                                    "data": {
-                                        "type": "items",
-                                        "name": item,
-                                        "amount": 1,
-                                        "negate": False
-                                    }
+                                    "data": {"type": "items", "name": item, "amount": 1, "negate": False},
                                 }
                                 for item in required_items
-                            ]
-                        }
+                            ],
+                        },
                     }
 
     return data
@@ -200,7 +179,7 @@ def _migrate_v17(data: dict) -> dict:
     if "worlds" in data:
         data["regions"] = data.pop("worlds")
 
-    def _fix(target):
+    def _fix(target: dict) -> None:
         target["region"] = target.pop("world_name")
         target["area"] = target.pop("area_name")
         if "node_name" in target:
@@ -223,19 +202,21 @@ def _migrate_v18(data: dict) -> dict:
     data["resource_database"].pop("multiworld_magic_item_index")
     return data
 
+
 def _migrate_v19(data: dict) -> dict:
     game = data["game"]
     if game in {"blank", "cave_story", "am2r"}:
         return data
-    
+
     # changes TeleporterNode to DockNode
-    def change_node(node_to_change, regions_data: dict):
+    def change_node(node_to_change: dict, regions_data: dict) -> None:
         node_to_change["node_type"] = "dock"
         node_to_change["default_connection"] = node_to_change.pop("destination")
 
         # find the default node
-        target_region_data = next(region for region in regions_data if region["name"] 
-                                  == node_to_change["default_connection"]["region"])
+        target_region_data = next(
+            region for region in regions_data if region["name"] == node_to_change["default_connection"]["region"]
+        )
         area_data = target_region_data["areas"][node_to_change["default_connection"]["area"]]
         node_to_change["default_connection"]["node"] = area_data["default_node"]
 
@@ -249,35 +230,23 @@ def _migrate_v19(data: dict) -> dict:
         node_to_change["dock_type"] = "teleporter"
 
     # adds the required weaknesses
-    def add_dock_weakness(data: dict, game):
+    def add_dock_weakness(data: dict, game: str) -> None:
         teleporter_weakness = {
             "name": "Teleporter",
             "extra": {"is_teleporter": True, "ignore_for_hints": True},
             "items": {
                 "Teleporter": {
                     "extra": {},
-                    "requirement": {
-                        "type": "and",
-                        "data": {
-                            "comment": None,
-                            "items": []
-                        }
-                    },
-                    "lock": None
+                    "requirement": {"type": "and", "data": {"comment": None, "items": []}},
+                    "lock": None,
                 }
             },
-            "dock_rando": {
-                "unlocked": None,
-                "locked": None,
-                "change_from": [],
-                "change_to": []
-            }
+            "dock_rando": {"unlocked": None, "locked": None, "change_from": [], "change_to": []},
         }
 
         data["dock_weakness_database"]["types"]["teleporter"] = teleporter_weakness
         if game == "prime2":
             data["dock_weakness_database"]["types"]["portal"]["extra"]["ignore_for_hints"] = True
-
 
     regions_data = data["regions"]
 
@@ -286,7 +255,8 @@ def _migrate_v19(data: dict) -> dict:
         node
         for region in regions_data
         for area_name, area in region["areas"].items()
-        for node_name, node in area["nodes"].items() if node["node_type"] == "teleporter"
+        for node_name, node in area["nodes"].items()
+        if node["node_type"] == "teleporter"
     ]
     for node in all_nodes:
         change_node(node, regions_data)
@@ -294,6 +264,21 @@ def _migrate_v19(data: dict) -> dict:
     add_dock_weakness(data, game)
 
     return data
+
+
+def _migrate_v20(data: dict) -> dict:
+    for type_data in data["dock_weakness_database"]["types"].values():
+        if type_data["dock_rando"] is not None and type_data["dock_rando"]["locked"] is None:
+            type_data["dock_rando"] = None
+
+    return data
+
+
+def _migrate_v21(data: dict) -> dict:
+    data["used_trick_levels"] = None
+
+    return data
+
 
 _MIGRATIONS = [
     None,
@@ -315,10 +300,11 @@ _MIGRATIONS = [
     _migrate_v17,
     _migrate_v18,
     _migrate_v19,
+    _migrate_v20,
+    _migrate_v21,
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 
 
-def migrate_to_current(data: dict):
-    return migration_lib.apply_migrations(data, _MIGRATIONS,
-                                          copy_before_migrating=True)
+def migrate_to_current(data: dict) -> dict:
+    return migration_lib.apply_migrations(data, _MIGRATIONS, copy_before_migrating=True)

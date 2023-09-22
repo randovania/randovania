@@ -1,4 +1,6 @@
-from PySide6 import QtWidgets, QtGui
+from __future__ import annotations
+
+from PySide6 import QtGui, QtWidgets
 
 
 class DelayedTextLabel(QtWidgets.QLabel):
@@ -22,4 +24,5 @@ class DelayedTextLabel(QtWidgets.QLabel):
         if self._already_shown:
             return super().text()
         else:
+            assert self._delayed_text is not None
             return self._delayed_text

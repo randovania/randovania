@@ -1,7 +1,9 @@
+from __future__ import annotations
+
 import importlib.metadata
 from typing import Any
 
-from PySide6 import QtWidgets, QtCore
+from PySide6 import QtCore, QtWidgets
 from PySide6.QtCore import Qt
 
 
@@ -23,10 +25,7 @@ class DependenciesModel(QtCore.QAbstractTableModel):
 
     def __init__(self, parent):
         super().__init__(parent)
-        self._packages = [
-            (dist.name, dist.version, _get_license(dist))
-            for dist in importlib.metadata.distributions()
-        ]
+        self._packages = [(dist.name, dist.version, _get_license(dist)) for dist in importlib.metadata.distributions()]
 
     def columnCount(self, parent: QtCore.QModelIndex = ...) -> int:
         return len(self._headers)

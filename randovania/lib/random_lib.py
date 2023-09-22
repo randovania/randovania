@@ -1,7 +1,12 @@
-from random import Random
-from typing import Iterator, TypeVar, Any, Callable
+from __future__ import annotations
 
-T = TypeVar('T')
+from typing import TYPE_CHECKING, Any, TypeVar
+
+if TYPE_CHECKING:
+    from collections.abc import Callable, Iterable, Iterator
+    from random import Random
+
+T = TypeVar("T")
 
 
 def shuffle(rng: Random, x: Iterator[T]) -> list[T]:
@@ -16,10 +21,11 @@ def shuffle(rng: Random, x: Iterator[T]) -> list[T]:
     return result
 
 
-def iterate_with_weights(items: Iterator[T],
-                         item_weights: dict[T, float],
-                         rng: Random,
-                         ) -> Iterator[T]:
+def iterate_with_weights(
+    items: Iterable[T],
+    item_weights: dict[T, float],
+    rng: Random,
+) -> Iterator[T]:
     """
     Iterates over the given list randomly, with each item having the probability listed in item_weigths
     :param items:
@@ -28,34 +34,33 @@ def iterate_with_weights(items: Iterator[T],
     :return:
     """
 
-    items = list(items)
-    weights = [max(item_weights[action], 0) for action in items]
+    item_list = list(items)
+    weights = [max(item_weights[action], 0) for action in item_list]
 
-    while items and any(weight > 0 for weight in weights):
-        pickup_node = rng.choices(items, weights)[0]
+    while item_list and any(weight > 0 for weight in weights):
+        pickup_node = rng.choices(item_list, weights)[0]
 
         # Remove the pickup_node from the potential list, along with its weight
-        index = items.index(pickup_node)
-        items.pop(index)
+        index = item_list.index(pickup_node)
+        item_list.pop(index)
         weights.pop(index)
 
         yield pickup_node
 
 
 def select_element_with_weight(weighted_items: dict[T, float], rng: Random) -> T:
-    return next(iterate_with_weights(items=list(weighted_items.keys()),
-                                     item_weights=weighted_items,
-                                     rng=rng))
+    return next(iterate_with_weights(items=list(weighted_items.keys()), item_weights=weighted_items, rng=rng))
 
 
 def random_key(d: dict[T, Any], rng: Random) -> T:
     return rng.choice(list(d.keys()))
 
 
-def create_weighted_list(rng: Random,
-                         current: list[T],
-                         factory: Callable[[], list[T]],
-                         ) -> list[T]:
+def create_weighted_list(
+    rng: Random,
+    current: list[T],
+    factory: Callable[[], list[T]],
+) -> list[T]:
     """
     Ensures we always have a non-empty list.
     :param rng:

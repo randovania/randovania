@@ -1,35 +1,40 @@
+from __future__ import annotations
+
 import collections
 import itertools
 import json
 import logging
 import traceback
+from typing import TYPE_CHECKING
 
-from PySide6 import QtWidgets, QtCore
+from PySide6 import QtCore, QtWidgets
 from PySide6.QtCore import Qt
 from qasync import asyncSlot
 
 from randovania.game_description import integrity_check
-from randovania.game_description.game_description import GameDescription
+from randovania.game_description.db.configurable_node import ConfigurableNode
+from randovania.game_description.db.dock_node import DockNode
+from randovania.game_description.db.event_node import EventNode
+from randovania.game_description.db.hint_node import HintNode, HintNodeKind
+from randovania.game_description.db.node import GenericNode, Node, NodeLocation
+from randovania.game_description.db.pickup_node import PickupNode
+from randovania.game_description.db.teleporter_network_node import TeleporterNetworkNode
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.resources.location_category import LocationCategory
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.game_description.db.area import Area
-from randovania.game_description.db.configurable_node import ConfigurableNode
-from randovania.game_description.db.dock import DockWeakness, DockWeaknessDatabase, DockType
-from randovania.game_description.db.dock_node import DockNode
-from randovania.game_description.db.event_node import EventNode
-from randovania.game_description.db.hint_node import HintNodeKind, HintNode
-from randovania.game_description.db.node import Node, GenericNode, NodeLocation
-from randovania.game_description.db.pickup_node import PickupNode
-from randovania.game_description.db.teleporter_network_node import TeleporterNetworkNode
-from randovania.game_description.db.region import Region
 from randovania.gui.dialog.connections_editor import ConnectionsEditor
 from randovania.gui.generated.node_details_popup_ui import Ui_NodeDetailsPopup
-from randovania.gui.lib import common_qt_lib, async_dialog, signal_handling
+from randovania.gui.lib import async_dialog, common_qt_lib, signal_handling
 from randovania.gui.lib.connections_visualizer import ConnectionsVisualizer
 from randovania.gui.lib.signal_handling import set_combo_with_value
 from randovania.gui.widgets.combo_box_item_delegate import ComboBoxItemDelegate
 from randovania.lib import enum_lib, frozen_lib
+
+if TYPE_CHECKING:
+    from randovania.game_description.db.area import Area
+    from randovania.game_description.db.dock import DockType, DockWeakness, DockWeaknessDatabase
+    from randovania.game_description.db.region import Region
+    from randovania.game_description.game_description import GameDescription
 
 
 def refresh_if_needed(combo: QtWidgets.QComboBox, func):
@@ -51,9 +56,7 @@ class DockWeaknessListModel(QtCore.QAbstractListModel):
     def change_type(self, new_type: DockType):
         self.type = new_type
         self.items = []
-        self.delegate.items = [
-            it for it in self.db.weaknesses[self.type].keys()
-        ]
+        self.delegate.items = list(self.db.weaknesses[self.type].keys())
 
     def rowCount(self, parent: QtCore.QModelIndex = ...) -> int:
         return len(self.items) + 1
@@ -86,7 +89,7 @@ class DockWeaknessListModel(QtCore.QAbstractListModel):
 
     def removeRows(self, row: int, count: int, parent: QtCore.QModelIndex = ...) -> bool:
         self.beginRemoveRows(QtCore.QModelIndex(), row, row + count - 1)
-        del self.items[row:row + count]
+        del self.items[row : row + count]
         self.endRemoveRows()
         return True
 
@@ -121,8 +124,8 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
         tab_to_type = {tab: node_type for node_type, tab in self._type_to_tab.items()}
 
         # Dynamic Stuff
-        for i, node_type in enumerate(self._type_to_tab.keys()):
-            self.node_type_combo.setItemData(i, node_type)
+        for node_type in self._type_to_tab.keys():
+            self.node_type_combo.addItem(node_type.__name__, node_type)
 
         self.layers_combo.clear()
         for layer in game.layers:
@@ -169,7 +172,9 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
         self.dock_update_name_button.clicked.connect(self.on_dock_update_name_button)
         self.dock_incompatible_button.clicked.connect(self.on_dock_incompatible_delete_selected)
         self.pickup_index_button.clicked.connect(self.on_pickup_index_button)
-        self.teleporter_destination_region_combo.currentIndexChanged.connect(self.on_teleporter_destination_region_combo)
+        self.teleporter_destination_region_combo.currentIndexChanged.connect(
+            self.on_teleporter_destination_region_combo
+        )
         self.hint_requirement_to_collect_button.clicked.connect(self.on_hint_requirement_to_collect_button)
         self.teleporter_network_unlocked_button.clicked.connect(self.on_teleporter_network_unlocked_button)
         self.teleporter_network_activate_button.clicked.connect(self.on_teleporter_network_activated_button)
@@ -252,7 +257,6 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
         self.pickup_index_spin.setValue(node.pickup_index.index)
         signal_handling.set_combo_with_value(self.location_category_combo, node.location_category)
 
-
     def fill_for_event(self, node: EventNode):
         signal_handling.set_combo_with_value(self.event_resource_combo, node.event)
 
@@ -293,8 +297,9 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
         )
 
     # Connections Visualizer
-    def _create_connections_visualizer(self, parent: QtWidgets.QWidget, layout: QtWidgets.QGridLayout,
-                                       requirement: Requirement):
+    def _create_connections_visualizer(
+        self, parent: QtWidgets.QWidget, layout: QtWidgets.QGridLayout, requirement: Requirement
+    ):
         if parent in self._connections_visualizers:
             self._connections_visualizers.pop(parent).deleteLater()
 
@@ -355,10 +360,7 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
         self.on_name_edit(self.name_edit.text())
 
     def on_dock_incompatible_delete_selected(self):
-        indices = [
-            selection.row()
-            for selection in self.dock_incompatible_list.selectedIndexes()
-        ]
+        indices = [selection.row() for selection in self.dock_incompatible_list.selectedIndexes()]
         if indices:
             assert len(indices) == 1
             self.dock_incompatible_model.removeRow(indices[0])
@@ -425,34 +427,56 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
         valid_starting_location = self.node.valid_starting_location
         location = None
         if self.location_group.isChecked():
-            location = NodeLocation(self.location_x_spin.value(),
-                                    self.location_y_spin.value(),
-                                    self.location_z_spin.value())
+            location = NodeLocation(
+                self.location_x_spin.value(), self.location_y_spin.value(), self.location_z_spin.value()
+            )
         description = self.description_edit.toMarkdown().strip()
         extra = json.loads(self.extra_edit.toPlainText())
         layers = (self.layers_combo.currentText(),)
 
         if node_type == GenericNode:
             return GenericNode(
-                identifier, node_index, heal, location, description, layers, extra, valid_starting_location,
+                identifier,
+                node_index,
+                heal,
+                location,
+                description,
+                layers,
+                extra,
+                valid_starting_location,
             )
 
         elif node_type == DockNode:
             connection_node: Node = self.dock_connection_node_combo.currentData()
 
             return DockNode(
-                identifier, node_index, heal, location, description, layers, extra, valid_starting_location,
+                identifier,
+                node_index,
+                heal,
+                location,
+                description,
+                layers,
+                extra,
+                valid_starting_location,
                 self.dock_type_combo.currentData(),
                 self.game.region_list.identifier_for_node(connection_node),
                 self.dock_weakness_combo.currentData(),
-                None, None,
+                None,
+                None,
                 self.dock_exclude_lock_rando_check.isChecked(),
                 tuple(self.dock_incompatible_model.items),
             )
 
         elif node_type == PickupNode:
             return PickupNode(
-                identifier, node_index, heal, location, description, layers, extra, valid_starting_location,
+                identifier,
+                node_index,
+                heal,
+                location,
+                description,
+                layers,
+                extra,
+                valid_starting_location,
                 PickupIndex(self.pickup_index_spin.value()),
                 location_category=self.location_category_combo.currentData(),
             )
@@ -462,25 +486,53 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
             if event is None:
                 raise ValueError("There are no events in the database, unable to create EventNode.")
             return EventNode(
-                identifier, node_index, heal, location, description, layers, extra, valid_starting_location,
+                identifier,
+                node_index,
+                heal,
+                location,
+                description,
+                layers,
+                extra,
+                valid_starting_location,
                 event,
             )
 
         elif node_type == ConfigurableNode:
             return ConfigurableNode(
-                identifier, node_index, heal, location, description, layers, extra, valid_starting_location,
+                identifier,
+                node_index,
+                heal,
+                location,
+                description,
+                layers,
+                extra,
+                valid_starting_location,
             )
 
         elif node_type == HintNode:
             return HintNode(
-                identifier, node_index, heal, location, description, layers, extra, valid_starting_location,
+                identifier,
+                node_index,
+                heal,
+                location,
+                description,
+                layers,
+                extra,
+                valid_starting_location,
                 self.hint_kind_combo.currentData(),
-                self._hint_requirement_to_collect
+                self._hint_requirement_to_collect,
             )
 
         elif node_type == TeleporterNetworkNode:
             return TeleporterNetworkNode(
-                identifier, node_index, heal, location, description, layers, extra, valid_starting_location,
+                identifier,
+                node_index,
+                heal,
+                location,
+                description,
+                layers,
+                extra,
+                valid_starting_location,
                 self._unlocked_by_requirement,
                 self.teleporter_network_edit.text(),
                 self._activated_by_requirement,
