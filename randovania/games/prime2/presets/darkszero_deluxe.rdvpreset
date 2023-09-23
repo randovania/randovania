@@ -1,5 +1,5 @@
 {
-    "schema_version": 58,
+    "schema_version": 66,
     "base_preset_uuid": null,
     "name": "Darkszero's Deluxe",
     "uuid": "ea1eced4-53b8-4bb3-a08f-27ac1afe6aab",
@@ -235,28 +235,29 @@
         },
         "single_set_for_pickups_that_solve": false,
         "staggered_multi_pickup_placement": false,
-        "elevators": {
+        "check_if_beatable_after_base_patches": false,
+        "teleporters": {
             "mode": "vanilla",
             "excluded_teleporters": [
                 {
                     "region": "Great Temple",
                     "area": "Sky Temple Energy Controller",
-                    "node": "Teleport to Temple Grounds - Sky Temple Gateway"
+                    "node": "Elevator to Temple Grounds"
                 },
                 {
                     "region": "Sanctuary Fortress",
                     "area": "Aerie",
-                    "node": "Elevator to Sanctuary Fortress - Aerie Transport Station"
+                    "node": "Elevator to Aerie Transport Station"
                 },
                 {
                     "region": "Sanctuary Fortress",
                     "area": "Aerie Transport Station",
-                    "node": "Elevator to Sanctuary Fortress - Aerie"
+                    "node": "Elevator to Aerie"
                 },
                 {
                     "region": "Temple Grounds",
                     "area": "Sky Temple Gateway",
-                    "node": "Teleport to Great Temple - Sky Temple Energy Controller"
+                    "node": "Elevator to Great Temple"
                 }
             ],
             "excluded_targets": [],
