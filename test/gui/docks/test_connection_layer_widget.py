@@ -6,7 +6,7 @@ from unittest.mock import ANY, AsyncMock
 import pytest
 from PySide6 import QtWidgets
 
-from randovania.gui.docks.connection_layer_widget import ConnectionLayerWidget
+from randovania.gui.docks.connection_filtering_widget import ConnectionFilteringWidget
 from randovania.layout.base.trick_level import LayoutTrickLevel
 from randovania.layout.versioned_preset import VersionedPreset
 
@@ -37,7 +37,7 @@ async def test_on_load_preset(skip_qtbot, blank_game_description, mocker, preset
     root = QtWidgets.QWidget()
     skip_qtbot.addWidget(root)
 
-    widget = ConnectionLayerWidget(root, blank_game_description)
+    widget = ConnectionFilteringWidget(root, blank_game_description)
 
     # Run
     await widget._on_load_preset()
