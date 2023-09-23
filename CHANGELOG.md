@@ -18,7 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Dread
 
-- Added: Enky and Charge Beam Doors can be made immune to Power Bombs. **This setting is on by default**, and can be toggled in Preset -> Game Modifications -> Other -> Miscellaneous -> Power Bomb Limitations.
+- Added: Enky and Charge Beam Doors can be made immune to Power Bombs. This is enabled in the Starter Preset, and can be toggled in Preset -> Game Modifications -> Other -> Miscellaneous -> Power Bomb Limitations.
 - Changed: Exporting games is now significantly faster.
 
 #### Logic Database
@@ -94,7 +94,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Hive Temple Access: Slope Jump (Expert) into Screw Attack to skip Hive Temple Key Gate
 - Changed: Temple Security Access: Z-Axis Screw Attack Trick is changed into Screw Attack into Tunnels (Advanced)
 - Changed: Culling Chamber and Hazing Cliff will now require a Suit on trickless settings
-
 
 ## [6.2.1] - 2023-09-??
 
