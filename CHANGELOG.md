@@ -8,10 +8,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [6.3.0] - 2023-10-??
 
 - Added: During generation, if no alternatives have a non-zero weight, try weighting by how many additional Nodes are reachable.
+- Added: Data Visualizer now has a very visible checkbox to quickly toggle if the selected trick filters are enabled.
+- Added: When trick filters are enabled, a line is added indicating how many requirements are being filtered.
+- Changed: The generator will now consider placing Energy Tanks, if there's a damage requirement that's exactly high enough to kill the player.
 - Fixed: The menu option for viewing all Randovania dependencies and their licenses has been restored.
 
 ### Metroid Dread
 
+- Added: Enky and Charge Beam Doors can be made immune to Power Bombs. This is enabled in the Starter Preset, and can be toggled in Preset -> Game Modifications -> Other -> Miscellaneous -> Power Bomb Limitations.
 - Changed: Exporting games is now significantly faster.
 
 #### Logic Database
@@ -30,6 +34,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed: Thermal Device Room South: The connections to the thermal door that closes after using the thermal device now logically remains open when door lock rando is disabled and the "Can Slide" and "Shoot Beam" templates are satisfied. This is a handwave that makes the thermal device no longer a dangerous resource.
 - Changed: Single-wall Jump trick in Cataris Teleport to Artaria (Blue) now requires a slide jump.
+- Changed: Exclude Door above First Thermal Device from Door Randomization. Effectively making the First Thermal Device a safe action also when doors are randomized.
 
 ##### Dairon
 
@@ -42,10 +47,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ##### Ghavoran
 
 - Changed: The connection of EMMI Zone Exit Southeast and EMMI Zone Exit West is now a proper door. This enables it to now be shuffled in door lock rando.
+- Changed: Going backwards through the Eyedoor now requires having first destroyed it, Flash Shift and Intermediate Movement, or being able to tank the damage.
 
 ### Metroid Prime
 
-- Fixed: Traversing from the Spider Track Bridge to the Quarantine Access A door in Metroid Quarantine A now properly requires the barrier to be removed or `Backwards Lower Mines` to be enabled.
+- Fixed: PAL export with skippable cutscenes
+- Fixed: Flaahgra crash with skippable cutscenes (fingers crossed)
+- Fixed: Warrior shrine loading behavior
+- Changed: Update tournament winner scan in Artifact Temple
 
 #### Logic Database
 
@@ -60,6 +69,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ##### Phazon Mines
 
 - Added: Phazon Processing Center between Pickup and Maintenance Tunnel Door
+- Fixed: Traversing from the Spider Track Bridge to the Quarantine Access A door in Metroid Quarantine A now properly requires the barrier to be removed or `Backwards Lower Mines` to be enabled.
 
 ##### Phendrana Drifts
 
@@ -71,6 +81,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed: When Progressive Grapple is enabled, it will now show `2 shuffled copies` rather than `Shuffled` for better consistency.
 - Changed: A proper error message is displayed when mono is not found, when exporting a game on macOS and Linux.
+
+#### Logic Database
+
+- Added: 15 videos to the logic database. See the [Video Directory]
+(https://randovania.github.io/Metroid%20Prime%202%20Echoes/) for the full collection 
+- Added: Comments to some Beginner Bomb Jump tricks
+
+##### Sanctuary Fortress:
+
+- Added: Accessing the portal in Watch Station with a Bomb Space Jump (Advanced) to reach the Spider Track, Standable Terrain (Advanced) to reach the Bomb Slot, and an Instant Morph (Advanced)
 
 ## [6.2.1] - 2023-09-??
 
