@@ -32,12 +32,12 @@ from randovania.games import default_data
 from randovania.games.game import RandovaniaGame
 from randovania.gui.dialog.connections_editor import ConnectionsEditor
 from randovania.gui.dialog.node_details_popup import NodeDetailsPopup
-from randovania.gui.docks.connection_layer_widget import ConnectionLayerWidget
+from randovania.gui.docks.connection_filtering_widget import ConnectionFilteringWidget
 from randovania.gui.docks.resource_database_editor import ResourceDatabaseEditor
 from randovania.gui.generated.data_editor_ui import Ui_DataEditorWindow
 from randovania.gui.lib import async_dialog, signal_handling
 from randovania.gui.lib.common_qt_lib import set_default_window_icon
-from randovania.gui.lib.connections_visualizer import ConnectionsVisualizer, create_tree_items_for_requirement
+from randovania.gui.lib.connections_visualizer import create_tree_items_for_requirement
 from randovania.gui.lib.scroll_message_box import ScrollMessageBox
 from randovania.lib import json_lib
 
@@ -80,7 +80,6 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
     radio_button_to_node: dict[QRadioButton, Node]
     _area_with_displayed_connections: Area | None = None
     _previous_selected_node: Node | None = None
-    _connections_visualizer: ConnectionsVisualizer | None = None
     _edit_popup: QDialog | None = None
     _warning_dialogs_disabled = False
     _collection_for_filtering: ResourceCollection | None = None
@@ -101,6 +100,13 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         # self.node_info_dock.hide()
         self.splitDockWidget(self.points_of_interest_dock, self.area_view_dock, Qt.Horizontal)
         self.splitDockWidget(self.area_view_dock, self.node_info_dock, Qt.Horizontal)
+
+        self.use_trick_filters_check = QtWidgets.QCheckBox("Apply trick filters", self.connections_group)
+        self.use_trick_filters_check.setChecked(True)
+        self.connections_group_layout.addWidget(self.use_trick_filters_check, 0, 2, 1, 1)
+        self.use_trick_filters_check.setToolTip(
+            "Hides connections based on trick level settings defined on the `Connection Filtering` tab, on the left."
+        )
 
         if SHOW_REGION_MIN_MAX_SPINNER:
             area_border_body = QtWidgets.QWidget()
@@ -155,6 +161,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         self.zoom_slider.valueChanged.connect(self._on_slider_changed)
         self.points_of_interest_layout.setAlignment(Qt.AlignTop)
         self.nodes_scroll_layout.setAlignment(Qt.AlignTop)
+        self.use_trick_filters_check.toggled.connect(self._on_filters_changed)
 
         _, self.original_game_description = data_reader.decode_data_with_region_reader(data)
         self.resource_database = self.original_game_description.resource_database
@@ -167,16 +174,16 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         )
         self.tabifyDockWidget(self.points_of_interest_dock, self.resource_editor)
 
-        self.layers_editor = ConnectionLayerWidget(self, self.original_game_description)
-        self.layers_editor.setFeatures(
-            self.layers_editor.features() & ~QtWidgets.QDockWidget.DockWidgetFeature.DockWidgetClosable
+        self.connection_filters = ConnectionFilteringWidget(self, self.original_game_description)
+        self.connection_filters.setFeatures(
+            self.connection_filters.features() & ~QtWidgets.QDockWidget.DockWidgetFeature.DockWidgetClosable
         )
-        self.tabifyDockWidget(self.points_of_interest_dock, self.layers_editor)
+        self.tabifyDockWidget(self.points_of_interest_dock, self.connection_filters)
 
         self.points_of_interest_dock.raise_()
 
         self.resource_editor.ResourceChanged.connect(self._on_resource_changed)
-        self.layers_editor.FiltersUpdated.connect(self._on_filters_changed)
+        self.connection_filters.FiltersUpdated.connect(self._on_filters_changed)
 
         if self.game_description.game in {
             RandovaniaGame.METROID_PRIME,
@@ -408,7 +415,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         self._edit_popup = dialog
         try:
             result = await async_dialog.execute_dialog(self._edit_popup)
-            return result == QDialog.Accepted
+            return result == QDialog.DialogCode.Accepted
         finally:
             self._edit_popup = None
 
@@ -524,30 +531,29 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         current_connection_node = self.current_connection_node
 
         assert current_node != current_connection_node or current_node is None
-
-        if self._connections_visualizer is not None:
-            self._connections_visualizer.deleteLater()
-            self._connections_visualizer = None
-
         self.area_view_canvas.set_connected_node(current_connection_node)
 
         if current_connection_node is None or current_node is None:
             assert len(list(self.current_area.actual_nodes)) <= 1 or not self.edit_mode
             return
 
+        self.other_node_alternatives_contents.clear()
         requirement = self.current_area.connections[current_node].get(
             self.current_connection_node, Requirement.impossible()
         )
         if self._collection_for_filtering is not None:
+            db = self.game_description.resource_database
+            before_count = sum(1 for _ in requirement.iterate_resource_requirements(db))
             requirement = _simplify_trivial_and_impossible(
-                requirement.patch_requirements(
-                    self._collection_for_filtering,
-                    1.0,
-                    self.game_description.resource_database,
-                )
+                requirement.patch_requirements(self._collection_for_filtering, 1.0, db)
+            )
+            after_count = sum(1 for _ in requirement.iterate_resource_requirements(db))
+
+            filtered_count_item = QtWidgets.QTreeWidgetItem(self.other_node_alternatives_contents)
+            filtered_count_item.setText(
+                0, f"A total of {before_count - after_count} requirements were hidden due to filters."
             )
 
-        self.other_node_alternatives_contents.clear()
         create_tree_items_for_requirement(
             self.other_node_alternatives_contents, self.other_node_alternatives_contents, requirement
         )
@@ -593,16 +599,21 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         if self._warning_dialogs_disabled:
             return True
 
-        options = QMessageBox.Yes | QMessageBox.No
+        options = QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No
         message = "Database has the following errors:\n\n" + "\n\n".join(errors)
         message += "\n\nIgnore?"
 
         box = ScrollMessageBox.create_new(
-            self, QtWidgets.QMessageBox.Critical, "Integrity Check", message, options, QMessageBox.No
+            self,
+            QtWidgets.QMessageBox.Icon.Critical,
+            "Integrity Check",
+            message,
+            options,
+            QMessageBox.StandardButton.No,
         )
         user_response = box.exec_()
 
-        return user_response == QMessageBox.Yes
+        return user_response == QMessageBox.StandardButton.Yes
 
     def _save_database(self, path: Path) -> bool:
         errors = integrity_check.find_database_errors(self.game_description)
@@ -781,11 +792,11 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
             self,
             "Delete Node",
             f"Are you sure you want to delete the node '{current_node.name}'?",
-            QMessageBox.Yes | QMessageBox.No,
-            QMessageBox.No,
+            QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No,
+            QMessageBox.StandardButton.No,
         )
 
-        if user_response != QMessageBox.Yes:
+        if user_response != QMessageBox.StandardButton.Yes:
             return
 
         self.editor.remove_node(self.current_area, current_node)
@@ -808,16 +819,18 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         else:
             game = derived_nodes.remove_inactive_layers(
                 self.original_game_description,
-                self.layers_editor.selected_layers(),
+                self.connection_filters.selected_layers(),
             )
 
-            resources = self.layers_editor.selected_tricks()
-            if resources:
+            resources = self.connection_filters.selected_tricks()
+            if resources and self.use_trick_filters_check.isChecked():
                 self._collection_for_filtering = ResourceCollection.from_resource_gain(
                     game.resource_database, resources.items()
                 )
             else:
                 self._collection_for_filtering = None
+
+            self.use_trick_filters_check.setEnabled(bool(resources))
 
         self.update_game(game)
 
@@ -840,12 +853,13 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         self.new_node_button.setVisible(self.edit_mode)
         self.save_database_button.setVisible(self.edit_mode)
         self.other_node_connection_edit_button.setVisible(self.edit_mode)
+        self.use_trick_filters_check.setVisible(not self.edit_mode)
         self.node_heals_check.setEnabled(self.edit_mode)
         self.area_spawn_check.setEnabled(self.edit_mode)
         self.node_edit_button.setVisible(self.edit_mode)
         self.resource_editor.set_allow_edits(self.edit_mode)
         self.area_view_canvas.set_edit_mode(self.edit_mode)
-        self.layers_editor.set_edit_mode(self.edit_mode)
+        self.connection_filters.set_edit_mode(self.edit_mode)
         self.setWindowTitle("Data Editor" if self.edit_mode else "Data Visualizer")
 
     @property
