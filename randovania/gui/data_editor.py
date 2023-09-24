@@ -37,7 +37,7 @@ from randovania.gui.docks.resource_database_editor import ResourceDatabaseEditor
 from randovania.gui.generated.data_editor_ui import Ui_DataEditorWindow
 from randovania.gui.lib import async_dialog, signal_handling
 from randovania.gui.lib.common_qt_lib import set_default_window_icon
-from randovania.gui.lib.connections_visualizer import ConnectionsVisualizer, create_tree_items_for_requirement
+from randovania.gui.lib.connections_visualizer import create_tree_items_for_requirement
 from randovania.gui.lib.scroll_message_box import ScrollMessageBox
 from randovania.lib import json_lib
 
@@ -80,7 +80,6 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
     radio_button_to_node: dict[QRadioButton, Node]
     _area_with_displayed_connections: Area | None = None
     _previous_selected_node: Node | None = None
-    _connections_visualizer: ConnectionsVisualizer | None = None
     _edit_popup: QDialog | None = None
     _warning_dialogs_disabled = False
     _collection_for_filtering: ResourceCollection | None = None
@@ -532,30 +531,29 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         current_connection_node = self.current_connection_node
 
         assert current_node != current_connection_node or current_node is None
-
-        if self._connections_visualizer is not None:
-            self._connections_visualizer.deleteLater()
-            self._connections_visualizer = None
-
         self.area_view_canvas.set_connected_node(current_connection_node)
 
         if current_connection_node is None or current_node is None:
             assert len(list(self.current_area.actual_nodes)) <= 1 or not self.edit_mode
             return
 
+        self.other_node_alternatives_contents.clear()
         requirement = self.current_area.connections[current_node].get(
             self.current_connection_node, Requirement.impossible()
         )
         if self._collection_for_filtering is not None:
+            db = self.game_description.resource_database
+            before_count = sum(1 for _ in requirement.iterate_resource_requirements(db))
             requirement = _simplify_trivial_and_impossible(
-                requirement.patch_requirements(
-                    self._collection_for_filtering,
-                    1.0,
-                    self.game_description.resource_database,
-                )
+                requirement.patch_requirements(self._collection_for_filtering, 1.0, db)
+            )
+            after_count = sum(1 for _ in requirement.iterate_resource_requirements(db))
+
+            filtered_count_item = QtWidgets.QTreeWidgetItem(self.other_node_alternatives_contents)
+            filtered_count_item.setText(
+                0, f"A total of {before_count - after_count} requirements were hidden due to filters."
             )
 
-        self.other_node_alternatives_contents.clear()
         create_tree_items_for_requirement(
             self.other_node_alternatives_contents, self.other_node_alternatives_contents, requirement
         )
