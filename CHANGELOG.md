@@ -8,7 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [6.3.0] - 2023-10-??
 
 - Added: During generation, if no alternatives have a non-zero weight, try weighting by how many additional Nodes are reachable.
-- Added: Changelog now shows the date an update was published
+- Added: Changelog now shows the date an update was publishe
+- Added: Data Visualizer now has a very visible checkbox to quickly toggle if the selected trick filters are enabled.
+- Added: When trick filters are enabled, a line is added indicating how many requirements are being filtered.
 - Changed: The generator will now consider placing Energy Tanks, if there's a damage requirement that's exactly high enough to kill the player.
 - Changed: Changelog now displays update versions in a drop-down box
 - Fixed: Changelog external links now work
@@ -21,7 +23,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Dread
 
-- Added: Enky and Charge Beam Doors can be made immune to Power Bombs. **This setting is on by default**, and can be toggled in Preset -> Game Modifications -> Other -> Miscellaneous -> Power Bomb Limitations.
+- Added: Enky and Charge Beam Doors can be made immune to Power Bombs. This is enabled in the Starter Preset, and can be toggled in Preset -> Game Modifications -> Other -> Miscellaneous -> Power Bomb Limitations.
 - Changed: Exporting games is now significantly faster.
 
 #### Logic Database
@@ -53,6 +55,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ##### Ghavoran
 
 - Changed: The connection of EMMI Zone Exit Southeast and EMMI Zone Exit West is now a proper door. This enables it to now be shuffled in door lock rando.
+- Changed: Going backwards through the Eyedoor now requires having first destroyed it, Flash Shift and Intermediate Movement, or being able to tank the damage.
 
 ### Metroid Prime
 
@@ -66,6 +69,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed: When Progressive Grapple is enabled, it will now show `2 shuffled copies` rather than `Shuffled` for better consistency.
 - Changed: A proper error message is displayed when mono is not found, when exporting a game on macOS and Linux.
+
+#### Logic Database
+
+- Added: 15 videos to the logic database. See the [Video Directory]
+(https://randovania.github.io/Metroid%20Prime%202%20Echoes/) for the full collection 
+- Added: Comments to some Beginner Bomb Jump tricks
+
+##### Sanctuary Fortress:
+
+- Added: Accessing the portal in Watch Station with a Bomb Space Jump (Advanced) to reach the Spider Track, Standable Terrain (Advanced) to reach the Bomb Slot, and an Instant Morph (Advanced)
 
 ## [6.2.1] - 2023-09-??
 

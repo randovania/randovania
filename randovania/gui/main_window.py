@@ -542,7 +542,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
             data_visualizer.focus_on_area_by_name(area_name)
 
         if trick_levels is not None:
-            data_visualizer.layers_editor.set_selected_tricks(trick_levels)
+            data_visualizer.connection_filters.set_selected_tricks(trick_levels)
 
         self._data_visualizer.show()
 
