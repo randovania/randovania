@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [6.3.0] - 2023-10-??
 
 - Added: During generation, if no alternatives have a non-zero weight, try weighting by how many additional Nodes are reachable.
+- Added: Data Visualizer now has a very visible checkbox to quickly toggle if the selected trick filters are enabled.
+- Added: When trick filters are enabled, a line is added indicating how many requirements are being filtered.
 - Changed: The generator will now consider placing Energy Tanks, if there's a damage requirement that's exactly high enough to kill the player.
 - Fixed: The menu option for viewing all Randovania dependencies and their licenses has been restored.
 - Fixed: The generator should now handle cases with negative requirements a little better.
@@ -50,6 +52,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ##### Ghavoran
 
 - Changed: The connection of EMMI Zone Exit Southeast and EMMI Zone Exit West is now a proper door. This enables it to now be shuffled in door lock rando.
+- Changed: Going backwards through the Eyedoor now requires having first destroyed it, Flash Shift and Intermediate Movement, or being able to tank the damage.
 
 ### Metroid Prime
 

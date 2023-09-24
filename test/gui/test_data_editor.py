@@ -133,14 +133,14 @@ def test_on_filters_changed_view_mode(tmp_path, mocker, skip_qtbot):
 
     # Disable the layer
     found = False
-    for (trick, trick_check), trick_combo in window.layers_editor.tricks.items():
+    for (trick, trick_check), trick_combo in window.connection_filters.tricks.items():
         if trick.long_name == "Combat":
             trick_check.setChecked(True)
             trick_combo.setCurrentIndex(1)
             found = True
 
     assert found
-    window.layers_editor.layer_checks[1].setChecked(False)
+    window.connection_filters.layer_checks[1].setChecked(False)
 
     window.focus_on_region_by_name("Intro")
     window.focus_on_area_by_name("Boss Arena")
