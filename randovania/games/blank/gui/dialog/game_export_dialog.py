@@ -4,13 +4,14 @@ import dataclasses
 from typing import TYPE_CHECKING
 
 from randovania.games.blank.exporter.game_exporter import BlankGameExportParams
+from randovania.games.blank.exporter.options import BlankPerGameOptions
 from randovania.games.game import RandovaniaGame
 from randovania.gui.dialog.game_export_dialog import GameExportDialog, spoiler_path_for
 
 if TYPE_CHECKING:
     from pathlib import Path
 
-    from randovania.games.blank.exporter.options import BlankPerGameOptions
+    from randovania.interface_common.options import PerGameOptions
 
 
 class BlankGameExportDialog(GameExportDialog):
@@ -19,7 +20,7 @@ class BlankGameExportDialog(GameExportDialog):
     The provided implementation assumes you need an ISO/ROM file, and produces a new ISO/ROM file."""
 
     @classmethod
-    def game_enum(cls):
+    def game_enum(cls) -> RandovaniaGame:
         return RandovaniaGame.BLANK
 
     @property
@@ -34,7 +35,8 @@ class BlankGameExportDialog(GameExportDialog):
     def auto_save_spoiler(self) -> bool:
         raise NotImplementedError("This method hasn't been implemented yet")
 
-    def update_per_game_options(self, per_game: BlankPerGameOptions) -> BlankPerGameOptions:
+    def update_per_game_options(self, per_game: PerGameOptions) -> BlankPerGameOptions:
+        assert isinstance(per_game, BlankPerGameOptions)
         return dataclasses.replace(
             per_game,
             input_path=self.input_file,

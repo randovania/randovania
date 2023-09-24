@@ -215,7 +215,6 @@ def test_patch_game(mocker, tmp_path, use_echoes_models, use_enemy_attribute_ran
         "preferences": {
             "cacheDir": os.fspath(tmp_path.joinpath("cache_path")),
         },
-        "seed": 103817502,
         "inputIso": os.fspath(tmp_path.joinpath("input.iso")),
         "outputIso": os.fspath(tmp_path.joinpath("output.iso")),
     }

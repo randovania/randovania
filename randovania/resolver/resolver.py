@@ -61,6 +61,13 @@ def _is_action_dangerous(state: State, action: ResourceNode, dangerous_resources
     return any(resource in dangerous_resources for resource, _ in action.resource_gain_on_collect(state.node_context()))
 
 
+def _is_dangerous_event(state: State, action: ResourceNode, dangerous_resources: frozenset[ResourceInfo]) -> bool:
+    return any(
+        (resource in dangerous_resources and resource.resource_type == ResourceType.EVENT)
+        for resource, _ in action.resource_gain_on_collect(state.node_context())
+    )
+
+
 def _is_major_or_key_pickup_node(action: ResourceNode, state: State) -> bool:
     if isinstance(action, EventPickupNode):
         pickup_node = action.pickup_node
@@ -155,7 +162,7 @@ async def _inner_advance_depth(
                 continue
 
         action_tuple = (action, energy)
-        if _is_action_dangerous(state, action, logic.game.dangerous_resources) and isinstance(action, EventNode):
+        if _is_dangerous_event(state, action, logic.game.dangerous_resources):
             dangerous_actions.append(action_tuple)
         elif _is_major_or_key_pickup_node(action, state):
             major_pickup_actions.append(action_tuple)

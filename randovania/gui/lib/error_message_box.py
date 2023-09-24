@@ -39,7 +39,7 @@ def create_box_for_exception(val: Exception) -> QtWidgets.QMessageBox:
 
     box_layout: QtWidgets.QGridLayout = box.layout()
     box_layout.addItem(
-        QtWidgets.QSpacerItem(600, 0, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding),
+        QtWidgets.QSpacerItem(600, 0, QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.Expanding),
         box_layout.rowCount(),
         0,
         1,

@@ -22,7 +22,7 @@ class PresetEchoesHints(PresetTab, Ui_PresetEchoesHints):
         super().__init__(editor, game_description, window_manager)
         self.setupUi(self)
 
-        self.hint_layout.setAlignment(QtCore.Qt.AlignTop)
+        self.hint_layout.setAlignment(QtCore.Qt.AlignmentFlag.AlignTop)
 
         for i, stk_hint_mode in enumerate(SkyTempleKeyHintMode):
             self.hint_sky_temple_key_combo.setItemData(i, stk_hint_mode)

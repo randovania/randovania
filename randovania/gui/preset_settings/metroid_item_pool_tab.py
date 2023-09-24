@@ -24,7 +24,7 @@ class MetroidPresetItemPool(PresetItemPool):
         super().__init__(editor, game_description, window_manager)
         pickup_database = default_database.pickup_database_for_game(self.game)
 
-        size_policy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Fixed)
+        size_policy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Fixed)
 
         self._energy_tank_item = pickup_database.standard_pickups["Energy Tank"]
         self._create_energy_tank_box(game_description.resource_database.energy_tank)

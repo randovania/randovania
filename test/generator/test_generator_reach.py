@@ -102,17 +102,7 @@ _ignore_events_for_game = {
     RandovaniaGame.METROID_PRIME: {"Event33"},
     RandovaniaGame.METROID_PRIME_ECHOES: {"Event91", "Event92", "Event97"},
     RandovaniaGame.METROID_PRIME_CORRUPTION: {"Event1", "Event146", "Event147", "Event148", "Event154"},
-    RandovaniaGame.SUPER_METROID: {
-        "Event4",
-        "Event6",
-        "Event7",
-        "Event8",
-        "Event13",
-        "Event14",
-        "Event15",
-        "Event16",
-        "Event17",
-    },
+    RandovaniaGame.SUPER_METROID: {"Event6"},
     RandovaniaGame.METROID_DREAD: {},
     RandovaniaGame.CAVE_STORY: {
         "camp",
@@ -131,13 +121,14 @@ _ignore_pickups_for_game = {
     # These 3 indices are in Olympus and are unreachable given the default preset
     RandovaniaGame.METROID_PRIME_CORRUPTION: {0, 1, 2},
     # Unknown reason why
-    RandovaniaGame.SUPER_METROID: {0, 11, 78, 129},
     RandovaniaGame.CAVE_STORY: {30, 31, 41, 45},
 }
 
 _include_tricks_for_game = {
     # Some items require shinesparking to reach in vanilla, which due to varying difficulty has been made into a trick
-    RandovaniaGame.AM2R: {("Shinesparking", LayoutTrickLevel.ADVANCED)}
+    RandovaniaGame.AM2R: {("Shinesparking", LayoutTrickLevel.ADVANCED)},
+    # Same reasons as above
+    RandovaniaGame.SUPER_METROID: {("Shinespark", LayoutTrickLevel.BEGINNER)},
 }
 
 

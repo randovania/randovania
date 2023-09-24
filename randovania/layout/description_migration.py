@@ -112,10 +112,10 @@ def _migrate_v5(json_dict: dict) -> dict:
                 "data": {
                     "comment": None,
                     "items": [
-                        {"type": "resource", "data": {"type": "items", "name": "Scan", "amount": 1, "negate": None}},
+                        {"type": "resource", "data": {"type": "items", "name": "Scan", "amount": 1, "negate": False}},
                         {
                             "type": "resource",
-                            "data": {"type": "items", "name": item_mapping[item], "amount": 1, "negate": None},
+                            "data": {"type": "items", "name": item_mapping[item], "amount": 1, "negate": False},
                         },
                     ],
                 },

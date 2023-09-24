@@ -1,5 +1,5 @@
 {
-    "schema_version": 58,
+    "schema_version": 66,
     "base_preset_uuid": null,
     "name": "Moderate Challenge",
     "uuid": "7c57ecf6-ff1c-4ab9-bc84-802ac70e980a",
@@ -233,18 +233,19 @@
         },
         "single_set_for_pickups_that_solve": false,
         "staggered_multi_pickup_placement": false,
-        "elevators": {
+        "check_if_beatable_after_base_patches": false,
+        "teleporters": {
             "mode": "randomized",
             "excluded_teleporters": [
                 {
                     "region": "Frigate Orpheon",
                     "area": "Exterior Docking Hangar",
-                    "node": "Teleport to Landing Site"
+                    "node": "Teleporter to Tallon Overworld"
                 },
                 {
                     "region": "Impact Crater",
                     "area": "Crater Entry Point",
-                    "node": "Teleport to Artifact Temple"
+                    "node": "Teleporter to Tallon Overworld"
                 },
                 {
                     "region": "Impact Crater",
@@ -254,7 +255,7 @@
                 {
                     "region": "Tallon Overworld",
                     "area": "Artifact Temple",
-                    "node": "Teleport to Impact Crater - Crater Impact Point"
+                    "node": "Teleporter to Impact Crater"
                 }
             ],
             "excluded_targets": [],
@@ -290,7 +291,7 @@
         "backwards_lower_mines": false,
         "phazon_elite_without_dynamo": true,
         "legacy_mode": false,
-        "qol_cutscenes": "competitive",
+        "qol_cutscenes": "SkippableCompetitive",
         "enemy_attributes": null
     }
 }

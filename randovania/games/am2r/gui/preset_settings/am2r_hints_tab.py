@@ -17,7 +17,7 @@ class PresetAM2RHints(PresetTab, Ui_PresetAM2RHints):
         super().__init__(editor, game_description, window_manager)
         self.setupUi(self)
 
-        self.hint_layout.setAlignment(QtCore.Qt.AlignTop)
+        self.hint_layout.setAlignment(QtCore.Qt.AlignmentFlag.AlignTop)
 
         for i, item_hint_mode in enumerate(ItemHintMode):
             self.hint_artifact_combo.setItemData(i, item_hint_mode)

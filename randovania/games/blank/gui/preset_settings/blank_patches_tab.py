@@ -44,7 +44,7 @@ class PresetBlankPatches(PresetTab):
     def uses_patches_tab(cls) -> bool:
         return True
 
-    def on_preset_changed(self, preset: Preset):
+    def on_preset_changed(self, preset: Preset) -> None:
         config = preset.configuration
         assert isinstance(config, BlankConfiguration)
         self.include_extra_pickups_check.setChecked(config.include_extra_pickups)
