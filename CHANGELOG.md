@@ -69,6 +69,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: 22 videos to the logic database. see the [Video Directory]
 (https://randovania.github.io/Metroid%20Prime%202%20Echoes/) for the full collection 
 - Added: Comments to some Beginner Bomb Jump tricks
+- Changed: The trick setting "Suitless Ingclaw/Ingstorm" got renamed to "Suitless Dark Aether" with the intention to cover more tight Dark Aether energy requirements outside of Ingclaw or Ingstorm related checks.
 
 ##### Sky Temple Grounds:
 
@@ -76,11 +77,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ##### Agon Wastes:
 
--Added: Main Reactor: Scan Dash (Advanced) to reach the Luminoth Corpse which allows to reach the item through Slope Jumps and Standable Terrain (Advanced)
+- Added: Main Reactor: Scan Dash (Advanced) to reach the Luminoth Corpse which allows to reach the item through Slope Jumps and Standable Terrain (Advanced)
 
 ##### Dark Agon Wastes:
 
--Added: Hall of Stairs: Bomb Space Jump (Advanced) to reach Save Station 3 Door without Space Jump
+- Added: Hall of Stairs: Bomb Space Jump (Advanced) to reach Save Station 3 Door without Space Jump
+
+##### Dark Torvus Bog:
+
+- Added: Portal Chamber(Dark): It is now possible to reach the Portal with a Slope Jump (Intermediate) and Screw Attack without Space Jump.
 
 ##### Sanctuary Fortress:
 
