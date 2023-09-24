@@ -7,11 +7,21 @@ from typing import NamedTuple
 from randovania import VERSION
 
 
+class ChangeLogDetails(NamedTuple):
+    patch_notes: str
+    published_at: str
+
+    @property
+    def formatted_date(self) -> str:
+        toDate = datetime.strptime(self.published_at, "%Y-%m-%dT%H:%M:%SZ")
+
+        return toDate.strftime("%c")
+
+
 class VersionDescription(NamedTuple):
     tag_name: str
-    change_log: str
+    change_log: ChangeLogDetails
     html_url: str
-    published_at: str
 
     @property
     def as_strict_version(self) -> StrictVersion:
@@ -33,7 +43,8 @@ def strict_current_version() -> StrictVersion:
 
 
 def get_version_for_release(release: dict) -> VersionDescription:
-    return VersionDescription(release["tag_name"], release["body"], release["html_url"], release["published_at"])
+    change_log_details = ChangeLogDetails(release["body"], release["published_at"])
+    return VersionDescription(release["tag_name"], change_log_details, release["html_url"])
 
 
 MAJOR_ENTRY = "- **Major** "
@@ -70,7 +81,6 @@ def versions_to_display_for_releases(
 ) -> tuple[dict[str, str], list[str], VersionDescription | None]:
     all_change_logs = {}
     new_change_logs = []
-    all_change_log_publish_dates = {}
     displayed_new_version = False
     version_to_display = None
 
@@ -84,11 +94,8 @@ def versions_to_display_for_releases(
                 displayed_new_version = True
 
         else:
-            log = f"## {version.tag_name}\n\n{version.change_log}"
+            log = f"{version.change_log.formatted_date}\n\n## {version.tag_name}\n\n{version.change_log.patch_notes}"
             all_change_logs[version.tag_name] = log
-
-            published_time = datetime.strptime(version.published_at, "%Y-%m-%dT%H:%M:%SZ")
-            all_change_log_publish_dates[version.tag_name] = published_time.strftime("%d-%m-%Y")
 
             if strict_version > last_changelog_version:
                 if MAJOR_ENTRY in log:
@@ -98,4 +105,4 @@ def versions_to_display_for_releases(
                     )
                 new_change_logs.append(log)
 
-    return all_change_logs, new_change_logs, version_to_display, all_change_log_publish_dates
+    return all_change_logs, new_change_logs, version_to_display

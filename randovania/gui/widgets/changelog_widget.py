@@ -6,14 +6,15 @@ from randovania.gui.widgets.delayed_text_label import DelayedTextLabel
 
 
 class ChangeLogWidget(QtWidgets.QWidget):
-    def __init__(self, all_change_logs: dict[str, str], all_change_log_publish_dates: dict[str, str]):
+    def __init__(self, all_change_logs: dict[str, str]) -> None:
         super().__init__()
 
         layout = QtWidgets.QVBoxLayout()
         self.setLayout(layout)
 
         self.select_version = QtWidgets.QComboBox(self)
-        self.select_version.currentIndexChanged.connect(lambda: self.select_version_index_changed())
+        self.select_version.setMaxVisibleItems(10)
+        self.select_version.currentIndexChanged.connect(self.select_version_index_changed)
 
         layout.addWidget(self.select_version)
 
@@ -21,8 +22,6 @@ class ChangeLogWidget(QtWidgets.QWidget):
         layout.addWidget(self.changelog)
 
         for version_name, version_text in all_change_logs.items():
-            body = f"{all_change_log_publish_dates[version_name]}\n\n{version_text}"
-
             scroll_area = QtWidgets.QScrollArea()
             scroll_area.setObjectName(f"scroll_area {version_name}")
             scroll_area.setWidgetResizable(True)
@@ -32,7 +31,7 @@ class ChangeLogWidget(QtWidgets.QWidget):
             label.setObjectName(f"label {version_name}")
             label.setOpenExternalLinks(True)
             label.setTextFormat(QtCore.Qt.TextFormat.MarkdownText)
-            label.setText(body)
+            label.setText(version_text)
             label.setWordWrap(True)
 
             scroll_area.setWidget(label)
