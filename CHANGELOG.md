@@ -33,6 +33,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ##### Burenia
 
+- Added: Use Spin Boost with Wall Jump to climb from left to right at the top of Gravity Suit Tower.
 - Changed: Teleport to Ferenia: Using Speed Booster to get past the Shutter Gate now requires Speed Booster Conservation Beginner.
 
 ##### Cataris
