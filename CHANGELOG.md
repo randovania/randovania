@@ -47,6 +47,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed: Traversing from the Spider Track Bridge to the Quarantine Access A door in Metroid Quarantine A now properly requires the barrier to be removed or `Backwards Lower Mines` to be enabled.
 
+#### Logic Database
+
+##### Impact Crater
+
+- Added: The Metroid Prime Exoskeleton fight has full combat logic.
+
+##### Chozo Ruins
+
+- Added: Sun Tower Sessamoharu Complex Bomb Jump to Skip Super Missiles/Scan Visor
+
+##### Phendrana Drifts
+
+- Added: New Thardus Skip Method from Room Center
+- Added: Quarantine Monitor to North Quarantine Tunnel Thardus Skip
+- Added: Phendrana Shorelines Spider Track item without spider ball out of bounds trick
+
 ### Metroid Prime 2: Echoes
 
 - Changed: When Progressive Grapple is enabled, it will now show `2 shuffled copies` rather than `Shuffled` for better consistency.
