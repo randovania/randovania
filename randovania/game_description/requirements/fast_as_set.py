@@ -26,31 +26,10 @@ def _internal_fast_as(req: Requirement, db: ResourceDatabase) -> typing.Iterable
         yield RequirementList([req])
 
     elif isinstance(req, RequirementAnd):
-        ret = []
-        multiply = []
-
-        for it in req.items:
-            if isinstance(it, RequirementTemplate):
-                it = it.template_requirement(db)
-
-            if isinstance(it, ResourceRequirement):
-                ret.append(it)
-
-            elif isinstance(it, RequirementAnd):
-                for recursive in _internal_fast_as(it, db):
-                    ret.extend(recursive.values())
-
-            elif isinstance(it, RequirementOr):
-                multiply.append(list(_internal_fast_as(it, db)))
-
-            else:
-                raise UnableToAvoidError
-
-        if multiply:
-            for m in itertools.product(*multiply):
-                yield RequirementList(itertools.chain(ret, *[k.values() for k in m]))
-        else:
-            yield RequirementList(ret)
+        parts = [_internal_fast_as(it, db) for it in req.items]
+        product = itertools.product(*parts)
+        for branch in product:
+            yield RequirementList(itertools.chain(*[k.values() for k in branch]))
 
     elif isinstance(req, RequirementOr):
         for it in req.items:

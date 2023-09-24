@@ -33,7 +33,7 @@ class PresetStartingArea(PresetTab, Ui_PresetStartingArea, NodeListHelper):
         super().__init__(editor, game_description, window_manager)
         self.setupUi(self)
 
-        self.starting_area_layout.setAlignment(QtCore.Qt.AlignTop)
+        self.starting_area_layout.setAlignment(QtCore.Qt.AlignmentFlag.AlignTop)
 
         (
             self._starting_location_for_region,

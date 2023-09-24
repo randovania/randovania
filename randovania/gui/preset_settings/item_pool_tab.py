@@ -46,8 +46,8 @@ _EXPECTED_COUNT_TEXT_TEMPLATE_EXACT = (
 
 def _create_separator(parent: QtWidgets.QWidget) -> QtWidgets.QFrame:
     separator_line = QtWidgets.QFrame(parent)
-    separator_line.setFrameShape(QtWidgets.QFrame.HLine)
-    separator_line.setFrameShadow(QtWidgets.QFrame.Sunken)
+    separator_line.setFrameShape(QtWidgets.QFrame.Shape.HLine)
+    separator_line.setFrameShadow(QtWidgets.QFrame.Shadow.Sunken)
     transparent = QtWidgets.QGraphicsOpacityEffect(separator_line)
     transparent.setOpacity(0.33)
     separator_line.setGraphicsEffect(transparent)
@@ -70,8 +70,8 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
         super().__init__(editor, game_description, window_manager)
         self.setupUi(self)
 
-        size_policy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Fixed)
-        self.item_pool_layout.setAlignment(QtCore.Qt.AlignTop)
+        size_policy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Fixed)
+        self.item_pool_layout.setAlignment(QtCore.Qt.AlignmentFlag.AlignTop)
 
         # Relevant Items
         self.game = editor.game

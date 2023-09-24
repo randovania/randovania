@@ -427,7 +427,9 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
                         is_visible = is_visible and not (self._hide_collected_resources and is_collected)
 
                         node_item.setDisabled(not resource_node.can_collect(context))
-                        node_item.setCheckState(0, QtCore.Qt.Checked if is_collected else QtCore.Qt.Unchecked)
+                        node_item.setCheckState(
+                            0, QtCore.Qt.CheckState.Checked if is_collected else QtCore.Qt.CheckState.Unchecked
+                        )
 
                     elif self._show_only_resource_nodes:
                         is_visible = False

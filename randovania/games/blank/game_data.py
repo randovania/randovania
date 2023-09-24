@@ -1,12 +1,19 @@
 from __future__ import annotations
 
+import typing
+
 import randovania
 from randovania.games import game
 from randovania.games.blank import layout
 from randovania.layout.preset_describer import GamePresetDescriber
 
+if typing.TYPE_CHECKING:
+    from randovania.exporter.game_exporter import GameExporter
+    from randovania.exporter.patch_data_factory import PatchDataFactory
+    from randovania.interface_common.options import PerGameOptions
 
-def _options():
+
+def _options() -> type[PerGameOptions]:
     from randovania.interface_common.options import PerGameOptions
 
     return PerGameOptions
@@ -37,13 +44,13 @@ def _generator() -> game.GameGenerator:
     )
 
 
-def _patch_data_factory():
+def _patch_data_factory() -> type[PatchDataFactory]:
     from randovania.games.blank.exporter.patch_data_factory import BlankPatchDataFactory
 
     return BlankPatchDataFactory
 
 
-def _exporter():
+def _exporter() -> GameExporter:
     from randovania.games.blank.exporter.game_exporter import BlankGameExporter
 
     return BlankGameExporter()

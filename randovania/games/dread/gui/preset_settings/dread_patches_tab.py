@@ -19,6 +19,7 @@ _FIELDS = [
     "hanubia_shortcut_no_grapple",
     "hanubia_easier_path_to_itorash",
     "x_starts_released",
+    "nerf_power_bombs",
 ]
 
 

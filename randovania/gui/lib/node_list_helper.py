@@ -112,10 +112,10 @@ class NodeListHelper:
                 vertical_layout = QtWidgets.QVBoxLayout(group_box)
                 vertical_layout.setContentsMargins(8, 4, 8, 4)
                 vertical_layout.setSpacing(2)
-                vertical_layout.setAlignment(QtCore.Qt.AlignTop)
+                vertical_layout.setAlignment(QtCore.Qt.AlignmentFlag.AlignTop)
                 separator = QtWidgets.QFrame()
-                separator.setFrameShape(QtWidgets.QFrame.HLine)
-                separator.setFrameShadow(QtWidgets.QFrame.Sunken)
+                separator.setFrameShape(QtWidgets.QFrame.Shape.HLine)
+                separator.setFrameShadow(QtWidgets.QFrame.Shadow.Sunken)
                 group_box.vertical_layout = vertical_layout
                 group_box.vertical_layout.addWidget(region_check)
                 group_box.vertical_layout.addWidget(separator)
@@ -150,7 +150,7 @@ class NodeListHelper:
                         node_inner_layout = QtWidgets.QHBoxLayout()
                         node_inner_layout.setSpacing(2)
                         spacer = QtWidgets.QSpacerItem(
-                            20, 20, QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Minimum
+                            20, 20, QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Minimum
                         )
                         node_inner_layout.addItem(spacer)
                         node_inner_layout.addWidget(node_check)
@@ -205,21 +205,21 @@ class NodeListHelper:
                                 location_for_nodes[node_identifier].setChecked(is_checked)
 
                         if all_nodes:
-                            location_for_area[area_identifier].setCheckState(QtCore.Qt.Checked)
+                            location_for_area[area_identifier].setCheckState(QtCore.Qt.CheckState.Checked)
                             no_areas = False
                         elif no_nodes:
-                            location_for_area[area_identifier].setCheckState(QtCore.Qt.Unchecked)
+                            location_for_area[area_identifier].setCheckState(QtCore.Qt.CheckState.Unchecked)
                             all_areas = False
                         else:
                             no_areas = False
                             all_areas = False
-                            location_for_area[area_identifier].setCheckState(QtCore.Qt.PartiallyChecked)
+                            location_for_area[area_identifier].setCheckState(QtCore.Qt.CheckState.PartiallyChecked)
 
                 if all_areas:
-                    location_for_region[correct_name].setCheckState(QtCore.Qt.Checked)
+                    location_for_region[correct_name].setCheckState(QtCore.Qt.CheckState.Checked)
                 elif no_areas:
-                    location_for_region[correct_name].setCheckState(QtCore.Qt.Unchecked)
+                    location_for_region[correct_name].setCheckState(QtCore.Qt.CheckState.Unchecked)
                 else:
-                    location_for_region[correct_name].setCheckState(QtCore.Qt.PartiallyChecked)
+                    location_for_region[correct_name].setCheckState(QtCore.Qt.CheckState.PartiallyChecked)
 
         self.during_batch_check_update = False

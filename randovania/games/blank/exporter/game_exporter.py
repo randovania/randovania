@@ -39,6 +39,6 @@ class BlankGameExporter(GameExporter):
         patch_data: dict,
         export_params: GameExportParams,
         progress_update: status_update_lib.ProgressUpdateCallable,
-    ):
+    ) -> None:
         assert isinstance(export_params, BlankGameExportParams)
         raise RuntimeError("Needs to be implemented")

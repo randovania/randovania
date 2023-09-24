@@ -9,13 +9,15 @@ from randovania.gui.generated.corruption_cosmetic_patches_dialog_ui import Ui_Co
 from randovania.gui.lib.signal_handling import set_combo_with_value
 
 if TYPE_CHECKING:
-    from PySide6.QtWidgets import QWidget
+    from collections.abc import Callable
+
+    from PySide6 import QtWidgets
 
 
 class CorruptionCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_CorruptionCosmeticPatchesDialog):
     _cosmetic_patches: CorruptionCosmeticPatches
 
-    def __init__(self, parent: QWidget, current: CorruptionCosmeticPatches):
+    def __init__(self, parent: QtWidgets.QWidget | None, current: CorruptionCosmeticPatches):
         super().__init__(parent)
         self.setupUi(self)
         self._cosmetic_patches = current
@@ -26,25 +28,27 @@ class CorruptionCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_CorruptionCo
         self.on_new_cosmetic_patches(current)
         self.connect_signals()
 
-    def connect_signals(self):
+    def connect_signals(self) -> None:
         super().connect_signals()
 
         self.random_door_colors_check.stateChanged.connect(self._persist_option_then_notify("random_door_colors"))
         self.random_welding_colors_check.stateChanged.connect(self._persist_option_then_notify("random_welding_colors"))
         self.suit_combo.currentIndexChanged.connect(self._on_suit_update)
 
-    def on_new_cosmetic_patches(self, patches: CorruptionCosmeticPatches):
+    def on_new_cosmetic_patches(self, patches: CorruptionCosmeticPatches) -> None:
         self.random_door_colors_check.setChecked(patches.random_door_colors)
         self.random_welding_colors_check.setChecked(patches.random_welding_colors)
         set_combo_with_value(self.suit_combo, patches.player_suit)
 
-    def _persist_option_then_notify(self, attribute_name: str):
-        def persist(value: int):
-            self._cosmetic_patches = dataclasses.replace(self._cosmetic_patches, **{attribute_name: bool(value)})
+    def _persist_option_then_notify(self, attribute_name: str) -> Callable[[int], None]:
+        def persist(value: int) -> None:
+            self._cosmetic_patches = dataclasses.replace(
+                self._cosmetic_patches, **{attribute_name: bool(value)}  # type: ignore[arg-type]
+            )
 
         return persist
 
-    def _on_suit_update(self):
+    def _on_suit_update(self) -> None:
         self._cosmetic_patches = dataclasses.replace(
             self._cosmetic_patches,
             player_suit=self.suit_combo.currentData(),
@@ -54,5 +58,5 @@ class CorruptionCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_CorruptionCo
     def cosmetic_patches(self) -> CorruptionCosmeticPatches:
         return self._cosmetic_patches
 
-    def reset(self):
+    def reset(self) -> None:
         self.on_new_cosmetic_patches(CorruptionCosmeticPatches())

@@ -19,13 +19,13 @@ if TYPE_CHECKING:
     from randovania.layout.base.trick_level_configuration import TrickLevelConfiguration
 
 
-class ConnectionLayerWidget(QtWidgets.QDockWidget):
+class ConnectionFilteringWidget(QtWidgets.QDockWidget):
     FiltersUpdated = Signal()
 
     def __init__(self, parent: QtWidgets.QWidget, game: GameDescription):
         super().__init__(parent)
         set_default_window_icon(self)
-        self.setWindowTitle("Layers")
+        self.setWindowTitle("Connection Filtering")
 
         self.root_widget = QtWidgets.QScrollArea()
         self.root_layout = QtWidgets.QVBoxLayout(self.root_widget)
@@ -86,7 +86,7 @@ class ConnectionLayerWidget(QtWidgets.QDockWidget):
         self.contents_layout.addWidget(self.load_preset_button)
 
         self.vertical_spacer = QtWidgets.QSpacerItem(
-            20, 30, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding
+            20, 30, QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.Expanding
         )
         self.contents_layout.addItem(self.vertical_spacer)
 

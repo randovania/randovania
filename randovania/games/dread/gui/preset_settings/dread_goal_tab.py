@@ -24,7 +24,7 @@ class PresetDreadGoal(PresetTab, Ui_PresetDreadGoal):
         super().__init__(editor, game_description, window_manager)
         self.setupUi(self)
 
-        self.goal_layout.setAlignment(QtCore.Qt.AlignTop)
+        self.goal_layout.setAlignment(QtCore.Qt.AlignmentFlag.AlignTop)
         signal_handling.on_checked(self.prefer_emmi_check, self._on_prefer_emmi)
         signal_handling.on_checked(self.prefer_major_bosses_check, self._on_prefer_major_bosses)
         self.dna_slider.valueChanged.connect(self._on_dna_slider_changed)

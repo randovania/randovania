@@ -14,7 +14,7 @@ if TYPE_CHECKING:
     from randovania.layout.base.base_configuration import BaseConfiguration
 
 
-def create_victory_key(resource_database: ResourceDatabase):
+def create_victory_key(resource_database: ResourceDatabase) -> PickupEntry:
     return PickupEntry(
         name="Victory Key",
         progression=((resource_database.get_item("VictoryKey"), 1),),

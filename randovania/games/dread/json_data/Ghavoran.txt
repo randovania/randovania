@@ -1627,14 +1627,6 @@ Extra - asset_id: collision_camera_024
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Door to Above Golzuna
-      Any of the following:
-          Space Jump or Speed Booster or Simple IBJ
-          All of the following:
-              Use Spin Boost
-              Any of the following:
-                  After Elun - Release X Parasites and Stand on Frozen Enemy (Intermediate) and Shoot Ice Missile
-                  Flash Shift and Wall Jump (Intermediate)
   > Door to Energy Recharge Station
       Trivial
   > Pickup (Missile Tank)
@@ -1643,6 +1635,14 @@ Extra - asset_id: collision_camera_024
           Any of the following:
               Space Jump or Speed Booster or Simple IBJ
               Flash Shift and Wall Jump (Beginner) and Use Spin Boost
+  > Next to Eyedoor
+      Any of the following:
+          Space Jump or Speed Booster or Simple IBJ
+          All of the following:
+              Use Spin Boost
+              Any of the following:
+                  After Elun - Release X Parasites and Stand on Frozen Enemy (Intermediate) and Shoot Ice Missile
+                  Flash Shift and Wall Jump (Intermediate)
 
 > Door to Above Golzuna; Heals? False
   * Layers: default
@@ -1653,11 +1653,10 @@ Extra - asset_id: collision_camera_024
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Door to Save Station East
-      Trivial
-  > Pickup (Energy Part)
-      # Eye doors are exluded from door lock shuffe
-      Spin Boost and Ballspark
+  > Next to Eyedoor
+      Any of the following:
+          After Ghavoran - Destroy Golzuna Eyedoor or Normal Damage ≥ 182
+          Flash Shift and Movement (Intermediate)
 
 > Door to Energy Recharge Station; Heals? False
   * Layers: default
@@ -1757,6 +1756,26 @@ Extra - asset_id: collision_camera_024
       Any of the following:
           Lay Bomb
           Power Bombs ≥ 2 and Lay Power Bomb
+
+> Event - Golzuna Eyedoor; Heals? False
+  * Layers: default
+  * Event Ghavoran - Destroy Golzuna Eyedoor
+  > Next to Eyedoor
+      Trivial
+
+> Next to Eyedoor; Heals? False
+  * Layers: default
+  > Door to Save Station East
+      Trivial
+  > Door to Above Golzuna
+      After Ghavoran - Destroy Golzuna Eyedoor
+  > Pickup (Energy Part)
+      # Eyedoors are excluded from door lock randomizer
+      Speed Booster and Speed Booster Conservation (Beginner) and Use Spin Boost
+  > Pickup (Missile Tank)
+      Morph Ball
+  > Event - Golzuna Eyedoor
+      Trivial
 
 ----------------
 Teleport to Burenia

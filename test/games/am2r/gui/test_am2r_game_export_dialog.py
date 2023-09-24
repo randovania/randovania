@@ -37,7 +37,7 @@ def test_on_output_file_button_exists(skip_qtbot, tmp_path, mocker, has_output_d
     mock_prompt.return_value = tmp_path.joinpath("foo", "game.iso")
 
     # Run
-    skip_qtbot.mouseClick(window.output_file_button, QtCore.Qt.LeftButton)
+    skip_qtbot.mouseClick(window.output_file_button, QtCore.Qt.MouseButton.LeftButton)
 
     # Assert
     mock_prompt.assert_called_once_with(window, expected_default_name, [""])
@@ -59,7 +59,7 @@ def test_on_output_file_button_cancel(skip_qtbot, tmpdir, mocker):
     mock_prompt.return_value = None
 
     # Run
-    skip_qtbot.mouseClick(window.output_file_button, QtCore.Qt.LeftButton)
+    skip_qtbot.mouseClick(window.output_file_button, QtCore.Qt.MouseButton.LeftButton)
 
     # Assert
     mock_prompt.assert_called_once_with(window, "AM2R Randomizer", [""])

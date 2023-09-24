@@ -365,6 +365,37 @@ def test_requirement_as_set_5(database):
     assert frozenset(fast_as_set.fast_as_alternatives(req, database)) == expected.alternatives
 
 
+def test_requirement_as_set_6(database):
+    def _req(name: str):
+        id_req = ResourceRequirement.simple(database.get_item(name))
+        return id_req
+
+    expected = RequirementSet(
+        [
+            RequirementList([_req("A"), _req("B"), _req("C")]),
+            RequirementList([_req("A"), _req("B"), _req("D"), _req("E")]),
+        ]
+    )
+    req = RequirementAnd(
+        [
+            _req("A"),
+            RequirementAnd(
+                [
+                    _req("B"),
+                    RequirementOr(
+                        [
+                            _req("C"),
+                            RequirementAnd([_req("D"), _req("E")]),
+                        ],
+                    ),
+                ],
+            ),
+        ]
+    )
+    assert req.as_set(database) == expected
+    assert frozenset(fast_as_set.fast_as_alternatives(req, database)) == expected.alternatives
+
+
 def test_requirement_and_str(database):
     def _req(name: str):
         id_req = ResourceRequirement.simple(database.get_item(name))

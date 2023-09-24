@@ -21,12 +21,12 @@ class RoomRandoMode(BitPackEnum, Enum):
 
 
 class LayoutCutsceneMode(BitPackEnum, Enum):
-    ORIGINAL = "original"
-    COMPETITIVE = "competitive"
-    MINOR = "minor"
-    MAJOR = "major"
-    SKIPPABLE = "skippable"
-    SKIPPABLE_COMPETITIVE = "skippablecompetitive"
+    ORIGINAL = "Original"
+    COMPETITIVE = "Competitive"
+    MINOR = "Minor"
+    MAJOR = "Major"
+    SKIPPABLE = "Skippable"
+    SKIPPABLE_COMPETITIVE = "SkippableCompetitive"
 
 
 @dataclasses.dataclass(frozen=True)

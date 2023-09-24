@@ -454,7 +454,7 @@ def _pack_encode_results(values: list[tuple[int, int]]) -> bytes:
 
 
 def pack_results_and_bit_count(it: Iterator[tuple[int, int]]) -> tuple[bytes, int]:
-    values = [(value_argument, value_format) for value_argument, value_format in it]
+    values = list(it)
     bit_count = sum(_bits_for_number(v) for _, v in values)
     return _pack_encode_results(values), bit_count
 
