@@ -88,7 +88,7 @@ def versions_to_display_for_releases(
             all_change_logs[version.tag_name] = log
 
             published_time = datetime.strptime(version.published_at, "%Y-%m-%dT%H:%M:%SZ")
-            all_change_log_publish_dates[version.tag_name] = published_time.strftime("%b %d, %Y")
+            all_change_log_publish_dates[version.tag_name] = published_time.strftime("%d-%m-%Y")
 
             if strict_version > last_changelog_version:
                 if MAJOR_ENTRY in log:

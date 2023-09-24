@@ -20,6 +20,8 @@ _CUSTOM_EXPECTED_LOG = {
     6: "## v0.6.0\n\nChangelog v0.6.0\n- Bar\n",
 }
 
+_CUSTOM_DATE = "2023-09-16T02:39:26Z"
+
 
 @pytest.mark.parametrize(
     ("current_version", "last_changelog_version", "expected_display"),
@@ -41,12 +43,18 @@ def test_versions_to_display_for_releases(
             "tag_name": f"v0.{i}.0",
             "body": "Changelog v0.{}.0{}".format(i, _CUSTOM_CHANGE_LOGS.get(i, "")),
             "html_url": "url",
+            "published_at": _CUSTOM_DATE,
         }
         for i in reversed(range(1, 11))
     ]
 
     # Run
-    all_change_logs, change_logs, version_to_display = update_checker.versions_to_display_for_releases(
+    (
+        all_change_logs,
+        change_logs,
+        version_to_display,
+        all_change_log_published_dates,
+    ) = update_checker.versions_to_display_for_releases(
         StrictVersion(f"0.{current_version}.0"), StrictVersion(f"0.{last_changelog_version}.0"), releases
     )
 
@@ -55,7 +63,7 @@ def test_versions_to_display_for_releases(
         assert version_to_display is None
     else:
         assert version_to_display == VersionDescription(
-            f"v0.{expected_display}.0", f"Changelog v0.{expected_display}.0", "url"
+            f"v0.{expected_display}.0", f"Changelog v0.{expected_display}.0", "url", _CUSTOM_DATE
         )
 
     assert change_logs == [

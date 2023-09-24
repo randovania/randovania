@@ -8,7 +8,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [6.3.0] - 2023-10-??
 
 - Added: During generation, if no alternatives have a non-zero weight, try weighting by how many additional Nodes are reachable.
+- Added: Changelog now shows the date an update was published
 - Changed: The generator will now consider placing Energy Tanks, if there's a damage requirement that's exactly high enough to kill the player.
+- Changed: Changelog now displays update versions in a drop-down box
+- Fixed: Changelog external links now work
 - Fixed: The menu option for viewing all Randovania dependencies and their licenses has been restored.
 - Fixed: The generator should now handle cases with negative requirements a little better.
 
