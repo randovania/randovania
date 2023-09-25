@@ -111,6 +111,11 @@ game_data: game.GameData = game.GameData(
             "Reload from checkpoint immediately to fix the issue. "
             "Your checkpoint was saved after killing the E.M.M.I., so you will not lose progress.",
         ),
+        (
+            "Custom text like seed hash, item hints and items collected from bosses aren't displaying!",
+            "Currently the English language is the only officially supported one for Dread due to custom text.\n\n"
+            "If you are using another language, switch to English when playing randomized Metroid Dread.",
+        ),
     ],
     layout=game.GameLayout(
         configuration=DreadConfiguration, cosmetic_patches=DreadCosmeticPatches, preset_describer=DreadPresetDescriber()
