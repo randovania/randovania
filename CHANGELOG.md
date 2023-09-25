@@ -59,11 +59,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Prime
 
-- Fixed: Traversing from the Spider Track Bridge to the Quarantine Access A door in Metroid Quarantine A now properly requires the barrier to be removed or `Backwards Lower Mines` to be enabled.
 - Fixed: PAL export with skippable cutscenes
 - Fixed: Flaahgra crash with skippable cutscenes (fingers crossed)
 - Fixed: Warrior shrine loading behavior
 - Changed: Update tournament winner scan in Artifact Temple
+
+#### Logic Database
+
+##### Impact Crater
+
+- Added: The Metroid Prime Exoskeleton fight has full combat logic.
+
+##### Chozo Ruins
+
+- Added: Sun Tower Sessamoharu Complex Bomb Jump to Skip Super Missiles/Scan Visor
+
+##### Phazon Mines
+
+- Added: Phazon Processing Center between Pickup and Maintenance Tunnel Door
+- Fixed: Traversing from the Spider Track Bridge to the Quarantine Access A door in Metroid Quarantine A now properly requires the barrier to be removed or `Backwards Lower Mines` to be enabled.
+
+##### Phendrana Drifts
+
+- Added: New Thardus Skip Method from Room Center
+- Added: Quarantine Monitor to North Quarantine Tunnel Thardus Skip
+- Added: Phendrana Shorelines Spider Track item without spider ball out of bounds trick
 
 ### Metroid Prime 2: Echoes
 
