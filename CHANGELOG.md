@@ -37,6 +37,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ##### Cataris
 
+- Added: Ledge warp out of the Diffusion Beam Room to avoid being trapped by the one way door and the blob.
 - Changed: Thermal Device Room South: The connections to the thermal door that closes after using the thermal device now logically remains open when door lock rando is disabled and the "Can Slide" and "Shoot Beam" templates are satisfied. This is a handwave that makes the thermal device no longer a dangerous resource.
 - Changed: Single-wall Jump trick in Cataris Teleport to Artaria (Blue) now requires a slide jump.
 - Changed: Exclude Door above First Thermal Device from Door Randomization. Effectively making the First Thermal Device a safe action also when doors are randomized.
