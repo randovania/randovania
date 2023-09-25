@@ -15,7 +15,7 @@ class ChangeLogDetails(NamedTuple):
     def formatted_date(self) -> str:
         toDate = datetime.strptime(self.published_at, "%Y-%m-%dT%H:%M:%SZ")
 
-        return toDate.strftime("%c")
+        return toDate.strftime("%x")
 
 
 class VersionDescription(NamedTuple):
