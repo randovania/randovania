@@ -108,7 +108,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ##### Dark Torvus Bog:
 
-- Added: Portal Chamber(Dark): It is now possible to reach the Portal with a Slope Jump (Intermediate) and Screw Attack without Space Jump.
+- Added: Portal Chamber (Dark): It is now possible to reach the Portal with a Slope Jump (Intermediate) and Screw Attack without Space Jump.
 
 ##### Sanctuary Fortress:
 
