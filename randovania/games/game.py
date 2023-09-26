@@ -32,6 +32,9 @@ if typing.TYPE_CHECKING:
     from randovania.layout.preset_describer import GamePresetDescriber
     from randovania.resolver.bootstrap import Bootstrap
 
+# Type alias for progressive items
+Progressive_item_tuples = list[tuple[str, tuple[str, ...]]]
+
 
 def _get_none(h):
     return None
