@@ -13,7 +13,7 @@ from randovania.games.am2r.layout.am2r_cosmetic_patches import AM2RCosmeticPatch
 from randovania.games.am2r.layout.hint_configuration import ItemHintMode
 from randovania.games.game import RandovaniaGame
 from randovania.generator.pickup_pool import pickup_creator
-from randovania.lib import json_lib
+from randovania.lib import json_lib, random_lib
 
 if TYPE_CHECKING:
     from randovania.exporter.pickup_exporter import ExportedPickupDetails
@@ -87,21 +87,22 @@ def _construct_music_shuffle_dict(music_mode: MusicMode, rng: Random) -> dict[st
     # Music is now either TYPE or FULL
     assert music_mode in (MusicMode.TYPE, MusicMode.FULL)
 
-    shuffled_combat = combat_list.copy()
-    shuffled_exploration = exploration_list.copy()
-    shuffled_fanfare = fanfare_list.copy()
-    rng.shuffle(shuffled_combat)
-    rng.shuffle(shuffled_exploration)
-    rng.shuffle(shuffled_fanfare)
-
     total_orig = combat_list + exploration_list + fanfare_list
-    total_new = shuffled_combat + shuffled_exploration + shuffled_fanfare
+
     if music_mode == MusicMode.FULL:
         total_orig += excluded_list
-        total_new = total_orig.copy()
-        rng.shuffle(total_new)
+        total_new = random_lib.shuffle(rng, total_orig)
+    else:
+        # MusicMode is type
+        shuffled_combat = combat_list.copy()
+        shuffled_exploration = exploration_list.copy()
+        shuffled_fanfare = fanfare_list.copy()
+        rng.shuffle(shuffled_combat)
+        rng.shuffle(shuffled_exploration)
+        rng.shuffle(shuffled_fanfare)
+        total_new = shuffled_combat + shuffled_exploration + shuffled_fanfare
 
-    return {f"{orig}.ogg": f"{new}.ogg" for orig, new in zip(total_orig, total_new)}
+    return {f"{orig}.ogg": f"{new}.ogg" for orig, new in zip(total_orig, total_new, strict=True)}
 
 
 class AM2RPatchDataFactory(PatchDataFactory):

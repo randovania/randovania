@@ -45,7 +45,7 @@ def test_change_music_option(
     }
     radio_button = str_to_option_map[option_to_click]
 
-    skip_qtbot.mouseClick(radio_button, QtCore.Qt.LeftButton)
+    skip_qtbot.mouseClick(radio_button, QtCore.Qt.MouseButton.LeftButton)
 
     assert dialog.cosmetic_patches == AM2RCosmeticPatches(music=music_end_value)
 
