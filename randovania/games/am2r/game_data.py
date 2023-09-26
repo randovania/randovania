@@ -81,10 +81,10 @@ game_data: game.GameData = game.GameData(
             "require main items / launchers for Missiles / Super Missiles / Power Bombs?",
             "Both were chosen to provide better gameplay and more variety. Killing the same 46 Metroids over "
             "and over again is not only tedious, but also boring. The Metroids dropping items makes Metroid fights "
-            "interesting and wortwhile to do as opposed to most players otherwise just ignoring them entirely, while "
+            "interesting and worthwhile to do as opposed to most players otherwise just ignoring them entirely, while "
             "also not making it mandatory to kill all Metroids.\n"
             "Required mains / launchers causes progression to be more natural, as otherwise it's possible "
-            "to get overpowered very fast by just finding ammo early.",
+            "to break the logic chain and get overpowered by just finding ammo early.",
         ),
         (
             "I saved in a place that I can't get out of, what do I do?",
