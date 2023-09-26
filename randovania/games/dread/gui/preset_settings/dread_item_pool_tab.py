@@ -25,7 +25,7 @@ class DreadPresetItemPool(PresetItemPool):
         super().__init__(editor, game_description, window_manager)
         pickup_database = default_database.pickup_database_for_game(self.game)
 
-        size_policy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Fixed)
+        size_policy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Fixed)
 
         self._energy_item_to_starting_spinbox = {}
         self._energy_item_to_shuffled_spinbox = {}

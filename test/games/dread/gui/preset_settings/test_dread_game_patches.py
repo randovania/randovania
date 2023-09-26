@@ -26,7 +26,7 @@ def test_on_preset_changed(skip_qtbot, preset_manager):
 
     # Run
     window.on_preset_changed(editor.create_custom_preset_with())
-    skip_qtbot.mouseClick(window.raven_beak_damage_table_handling_check, QtCore.Qt.LeftButton)
+    skip_qtbot.mouseClick(window.raven_beak_damage_table_handling_check, QtCore.Qt.MouseButton.LeftButton)
 
     # Assert
     final_preset = editor.create_custom_preset_with()

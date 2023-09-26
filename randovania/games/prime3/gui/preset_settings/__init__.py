@@ -4,10 +4,11 @@ from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from randovania.gui.lib.window_manager import WindowManager
+    from randovania.gui.preset_settings.preset_tab import PresetTab
     from randovania.interface_common.preset_editor import PresetEditor
 
 
-def prime3_preset_tabs(editor: PresetEditor, window_manager: WindowManager):
+def prime3_preset_tabs(editor: PresetEditor, window_manager: WindowManager) -> list[type[PresetTab]]:
     from randovania.gui.preset_settings.generation_tab import PresetGeneration
     from randovania.gui.preset_settings.location_pool_tab import PresetLocationPool
     from randovania.gui.preset_settings.metroid_item_pool_tab import MetroidPresetItemPool

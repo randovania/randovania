@@ -21,7 +21,7 @@ class PresetCSObjective(PresetTab, Ui_PresetCSObjective):
         super().__init__(editor, game_description, window_manager)
         self.setupUi(self)
 
-        self.goal_layout.setAlignment(QtCore.Qt.AlignTop)
+        self.goal_layout.setAlignment(QtCore.Qt.AlignmentFlag.AlignTop)
         for obj in CSObjective:
             if obj == CSObjective.HUNDRED_PERCENT:
                 continue  # disabled for now

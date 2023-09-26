@@ -25,7 +25,7 @@ def test_toggle_immediate_parts(skip_qtbot, dread_game_description, preset_manag
 
     assert tab.energy_tank_capacity_spin_box.isEnabled()
 
-    skip_qtbot.mouseClick(tab.immediate_energy_parts_check, QtCore.Qt.LeftButton)
+    skip_qtbot.mouseClick(tab.immediate_energy_parts_check, QtCore.Qt.MouseButton.LeftButton)
     tab.on_preset_changed(editor.create_custom_preset_with())
 
     configuration = editor.configuration

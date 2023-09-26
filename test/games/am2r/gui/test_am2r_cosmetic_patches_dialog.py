@@ -56,7 +56,7 @@ def test_show_unexplored_map(skip_qtbot):
     dialog = AM2RCosmeticPatchesDialog(None, cosmetic_patches)
     skip_qtbot.addWidget(dialog)
 
-    skip_qtbot.mouseClick(dialog.show_unexplored_map_check, QtCore.Qt.LeftButton)
+    skip_qtbot.mouseClick(dialog.show_unexplored_map_check, QtCore.Qt.MouseButton.LeftButton)
 
     assert dialog.cosmetic_patches == AM2RCosmeticPatches(show_unexplored_map=False)
 
@@ -67,7 +67,7 @@ def test_unveiled_blocks(skip_qtbot):
     dialog = AM2RCosmeticPatchesDialog(None, cosmetic_patches)
     skip_qtbot.addWidget(dialog)
 
-    skip_qtbot.mouseClick(dialog.unveiled_blocks_check, QtCore.Qt.LeftButton)
+    skip_qtbot.mouseClick(dialog.unveiled_blocks_check, QtCore.Qt.MouseButton.LeftButton)
 
     assert dialog.cosmetic_patches == AM2RCosmeticPatches(unveiled_blocks=False)
 

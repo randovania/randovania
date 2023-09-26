@@ -7,7 +7,7 @@ from randovania.gui.widgets.base_game_tab_widget import BaseGameTabWidget
 
 
 class CorruptionGameTabWidget(BaseGameTabWidget, Ui_CorruptionGameTabWidget):
-    def setup_ui(self):
+    def setup_ui(self) -> None:
         self.setupUi(self)
         self.addTab(CorruptionLayoutEditor(), "Layout Editor")
 

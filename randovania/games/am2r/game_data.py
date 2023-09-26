@@ -56,6 +56,18 @@ game_data: game.GameData = game.GameData(
     ],
     faq=[
         (
+            "AM2R already has a built-in randomizer, what does this do differently?",
+            "The Randovania implementation provides additional robustness and more features compared to the built-"
+            "in randomizer."
+            "\n\n"
+            "Key features supported by Randovania include, but are not limited to, full item logic, toggleable tricks "
+            "and difficulties, Door Lock Rando, and Multiworld support (WIP). "
+            "\n\n"
+            "All Metroids now also drop items. This can include progression, expansions, or DNA. DNA are like keys and "
+            "are used to enter the path to the Queen. The amount of DNA is configurable and a hint system has been "
+            "implemented (no more fighting all the Metroids!). ",
+        ),
+        (
             "Which versions of AM2R are supported?",
             "Only version 1.5.5 is supported. Currently there are no plans to support other versions.",
         ),
