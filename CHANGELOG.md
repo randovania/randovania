@@ -103,7 +103,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ##### Agon Wastes:
 
-- Added: Main Reactor: Scan Dash (Advanced) to reach the Luminoth Corpse which allows to reach the item through Slope Jumps and Standable Terrain (Advanced)
+- Added: Main Reactor: Scan Dash (Advanced) to reach the Luminoth Corpse which allows to reach the item through Slope Jumps and Standable Terrain (Advanced).
+- Added: Main Reactor: It is now possible to get to the item with only Spider Ball, Morph Ball Bombs, Standable Terrain (Intermediate) and Bomb Space Jump (Expert) without Space Jump.
 
 ##### Dark Agon Wastes:
 
