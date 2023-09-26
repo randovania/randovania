@@ -12,8 +12,6 @@ from randovania.gui.generated.am2r_cosmetic_patches_dialog_ui import Ui_AM2RCosm
 from randovania.gui.lib.signal_handling import set_combo_with_value
 
 if TYPE_CHECKING:
-    from collections.abc import Callable
-
     from PySide6.QtWidgets import QWidget
 
     from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
@@ -87,12 +85,6 @@ class AM2RCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_AM2RCosmeticPatche
 
         for music_mode, radio_button in self.radio_buttons.items():
             radio_button.toggled.connect(functools.partial(self._on_music_option_changed, music_mode))
-
-    def _persist_option_then_notify(self, attribute_name: str) -> Callable[int]:
-        def persist(value: int) -> None:
-            self._cosmetic_patches = dataclasses.replace(self._cosmetic_patches, **{attribute_name: bool(value)})
-
-        return persist
 
     def _on_music_option_changed(self, option: MusicMode, value: bool) -> None:
         if value:
