@@ -42,6 +42,7 @@ class MSRPresetDescriber(GamePresetDescriber):
                 }
             ],
             "Gameplay": [],
+            "Goal": [],
             "Game Changes": [
                 message_for_required_mains(
                     configuration.ammo_pickup_configuration,
@@ -50,6 +51,12 @@ class MSRPresetDescriber(GamePresetDescriber):
                         "Power Bomb needs Main": "Power Bomb Expansion",
                     },
                 ),
+                {
+                    "Open Area 3 Interior East Shortcut": configuration.area3_interior_shortcut_no_grapple,
+                    "Remove Area Exit Path Grapple Blocks": configuration.elevator_grapple_blocks,
+                    "Nerfed Power Bombs": configuration.nerf_power_bombs,
+                    "Nerfed Super Missiles": configuration.nerf_super_missiles,
+                },
             ],
         }
         fill_template_strings_from_tree(template_strings, extra_message_tree)
