@@ -60,6 +60,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Flaahgra crash with skippable cutscenes (fingers crossed)
 - Fixed: Warrior shrine loading behavior
 - Changed: Update tournament winner scan in Artifact Temple
+- Changed: Improve loading times when leaving MQB
+- Changed: Parasite Queen no longer respawns on 2nd pass
+- Changed: The post-Parasite Queen layer in Biotech Research Area 1 now prevents backtracking through Emergency Evacuation Area (1-way door)
 
 #### Logic Database
 
