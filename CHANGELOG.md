@@ -92,13 +92,40 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Logic Database
 
-- Added: 15 videos to the logic database. See the [Video Directory]
+- Added: 22 videos to the logic database. see the [Video Directory]
 (https://randovania.github.io/Metroid%20Prime%202%20Echoes/) for the full collection 
 - Added: Comments to some Beginner Bomb Jump tricks
+- Changed: The trick setting "Suitless Ingclaw/Ingstorm" got renamed to "Suitless Dark Aether" with the intention to cover more tight Dark Aether energy requirements outside of Ingclaw or Ingstorm related checks.
+
+##### Sky Temple Grounds:
+
+- Changed: War Ritual Grounds, Shrine Access, Lake Access, Accursed Lake, Phazon Pit and Phazon Grounds will now require a Suit on trickless settings
+
+##### Agon Wastes:
+
+- Added: Main Reactor: Scan Dash (Advanced) to reach the Luminoth Corpse which allows to reach the item through Slope Jumps and Standable Terrain (Advanced).
+- Added: Main Reactor: It is now possible to get to the item with only Spider Ball, Morph Ball Bombs, Standable Terrain (Intermediate) and Bomb Space Jump (Expert) without Space Jump.
+
+##### Dark Agon Wastes:
+
+- Added: Hall of Stairs: Bomb Space Jump (Advanced) to reach Save Station 3 Door without Space Jump
+
+##### Dark Torvus Bog:
+
+- Added: Portal Chamber (Dark): It is now possible to reach the Portal with a Slope Jump (Intermediate) and Screw Attack without Space Jump.
 
 ##### Sanctuary Fortress:
 
+- Added: Main Gyro Chamber: Instant Morph (Hypermode) into boost, to destroy the glass to Checkpoint Station
+- Added: Reactor Core Item pickup now possible with just Spider Ball and Morph Ball Bombs via Standable Terrain (Intermediate) and Bomb Jump (Intermediate)
+- Added: Vault: Extended Dash (Expert) and Boost Jump (Expert) Method to reach the Spinner Side
 - Added: Accessing the portal in Watch Station with a Bomb Space Jump (Advanced) to reach the Spider Track, Standable Terrain (Advanced) to reach the Bomb Slot, and an Instant Morph (Advanced)
+
+##### Ing Hive:
+
+- Added: Hive Temple Access: Slope Jump (Expert) into Screw Attack to skip Hive Temple Key Gate
+- Changed: Temple Security Access: Z-Axis Screw Attack Trick is changed into Screw Attack into Tunnels (Advanced)
+- Changed: Culling Chamber and Hazing Cliff will now require a Suit on trickless settings
 
 ## [6.2.1] - 2023-09-??
 
