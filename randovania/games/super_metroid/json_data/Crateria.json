@@ -162,35 +162,43 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Gauntlet Access": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
-                                "comment": null,
+                                "comment": "TODO: Add spark through door https://youtu.be/t6Tmu8w9yIQ",
                                 "items": [
                                     {
-                                        "type": "resource",
+                                        "type": "and",
                                         "data": {
-                                            "type": "items",
-                                            "name": "SpeedBooster",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "tricks",
-                                            "name": "Shinespark",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "damage",
-                                            "name": "Shinespark",
-                                            "amount": 126,
-                                            "negate": false
+                                            "comment": "Beginner Shinespark: https://youtu.be/Gurz63v4Xi0",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "SpeedBooster",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Shinespark",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "damage",
+                                                        "name": "Shinespark",
+                                                        "amount": 126,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
