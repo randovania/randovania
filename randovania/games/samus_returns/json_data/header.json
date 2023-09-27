@@ -1976,11 +1976,28 @@
                                                             "items": [
                                                                 {
                                                                     "type": "template",
-                                                                    "data": "Lay Power Bomb"
+                                                                    "data": "Shoot Beam Burst"
                                                                 },
                                                                 {
-                                                                    "type": "template",
-                                                                    "data": "Shoot Beam Burst"
+                                                                    "type": "and",
+                                                                    "data": {
+                                                                        "comment": null,
+                                                                        "items": [
+                                                                            {
+                                                                                "type": "template",
+                                                                                "data": "Lay Power Bomb"
+                                                                            },
+                                                                            {
+                                                                                "type": "resource",
+                                                                                "data": {
+                                                                                    "type": "misc",
+                                                                                    "name": "NerfPBs",
+                                                                                    "amount": 1,
+                                                                                    "negate": false
+                                                                                }
+                                                                            }
+                                                                        ]
+                                                                    }
                                                                 }
                                                             ]
                                                         }
@@ -2032,6 +2049,15 @@
                                                     {
                                                         "type": "template",
                                                         "data": "Lay Power Bomb"
+                                                    },
+                                                    {
+                                                        "type": "resource",
+                                                        "data": {
+                                                            "type": "misc",
+                                                            "name": "NerfPBs",
+                                                            "amount": 1,
+                                                            "negate": true
+                                                        }
                                                     }
                                                 ]
                                             }
@@ -2080,6 +2106,15 @@
                                                     {
                                                         "type": "template",
                                                         "data": "Lay Power Bomb"
+                                                    },
+                                                    {
+                                                        "type": "resource",
+                                                        "data": {
+                                                            "type": "misc",
+                                                            "name": "NerfPBs",
+                                                            "amount": 1,
+                                                            "negate": true
+                                                        }
                                                     }
                                                 ]
                                             }
@@ -2133,6 +2168,15 @@
                                                     {
                                                         "type": "template",
                                                         "data": "Lay Power Bomb"
+                                                    },
+                                                    {
+                                                        "type": "resource",
+                                                        "data": {
+                                                            "type": "misc",
+                                                            "name": "NerfPBs",
+                                                            "amount": 1,
+                                                            "negate": true
+                                                        }
                                                     }
                                                 ]
                                             }
@@ -2156,12 +2200,41 @@
                         "lock": {
                             "lock_type": "front-blast-back-if-matching",
                             "requirement": {
-                                "type": "resource",
+                                "type": "or",
                                 "data": {
-                                    "type": "items",
-                                    "name": "MissileAmmo",
-                                    "amount": 1,
-                                    "negate": false
+                                    "comment": null,
+                                    "items": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "MissileAmmo",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "and",
+                                            "data": {
+                                                "comment": null,
+                                                "items": [
+                                                    {
+                                                        "type": "template",
+                                                        "data": "Shoot Super Missile"
+                                                    },
+                                                    {
+                                                        "type": "resource",
+                                                        "data": {
+                                                            "type": "misc",
+                                                            "name": "NerfSupers",
+                                                            "amount": 1,
+                                                            "negate": true
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    ]
                                 }
                             }
                         }
