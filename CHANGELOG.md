@@ -27,7 +27,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: 3 videos to the logic database for a diagonal bomb jump in Ghavoran, a single-wall jump in Cataris, and a diffusion abuse trick in Artaria.
 - Added: 2 videos to the logic database for cross bomb movement in Burenia.
-
+- Added: Cross Bomb Launch (CBL) is now its own trick in the database. 
 ##### Artaria
 
 - Changed: EMMI Zone Spinner: The connection to the pickup that is available before flipping the spinner now also requires door lock rando and Highly Dangerous Logic to be enabled.
