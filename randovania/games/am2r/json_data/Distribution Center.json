@@ -3216,8 +3216,37 @@
                                         "data": "Power Grip Wall"
                                     },
                                     {
-                                        "type": "template",
-                                        "data": "Can Use Any Bombs"
+                                        "type": "or",
+                                        "data": {
+                                            "comment": "Destroy Bomb Blocks",
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Use Bombs"
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "HACK: 2 PBs to circumvent some resolver issues",
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Use Power Bombs"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Power Bombs",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     },
                                     {
                                         "type": "or",
@@ -3323,8 +3352,37 @@
                                         "data": "Power Grip Wall"
                                     },
                                     {
-                                        "type": "template",
-                                        "data": "Can Use Any Bombs"
+                                        "type": "or",
+                                        "data": {
+                                            "comment": "Destroy Bomb Blocks",
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Use Bombs"
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "HACK: 2 PBs to circumvent some resolver issues",
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Use Power Bombs"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Power Bombs",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     },
                                     {
                                         "type": "or",
