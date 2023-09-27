@@ -343,7 +343,7 @@ Extra - minimap_data: [{'x': 65, 'y': 43}, {'x': 65, 'y': 44}, {'x': 65, 'y': 45
   * Extra - instance_id: 133836
   > Door to Energy Distribution Emergency Exit
       Can Use Any Bombs and Space Jump Tunnel Climb
-  > Event - EMPPuzzle
+  > Event - EMP Slot
       Can Use Any Bombs
 
 > Door to Energy Distribution Emergency Exit; Heals? False
@@ -353,7 +353,7 @@ Extra - minimap_data: [{'x': 65, 'y': 43}, {'x': 65, 'y': 44}, {'x': 65, 'y': 45
   > Door to Energy Distribution Robot Home
       Can Use Any Bombs
 
-> Event - EMPPuzzle; Heals? False
+> Event - EMP Slot; Heals? False
   * Layers: default
   * Event EMP - Area 5 EMP Ball Introduction
   > Door to Energy Distribution Robot Home
@@ -376,10 +376,10 @@ Extra - minimap_data: [{'x': 63, 'y': 45}, {'x': 64, 'y': 45}]
   * Extra - instance_id: 133904
   > Door to Energy Distribution Tower East
       Trivial
-  > Event - EMPPuzzle
+  > Event - EMP Slot
       Missiles ≥ 2 or Super Missiles or Can Use Bombs
 
-> Event - EMPPuzzle; Heals? False
+> Event - EMP Slot; Heals? False
   * Layers: default
   * Event EMP - Area 5 Robot Home
   > Door to EMP Ball Introduction
@@ -400,7 +400,7 @@ Extra - minimap_data: [{'x': 62, 'y': 45}, {'x': 62, 'y': 46}, {'x': 62, 'y': 47
   * Layers: default
   * Normal Door to Energy Distribution Robot Home/Door to Energy Distribution Tower East
   * Extra - instance_id: 133917
-  > Event - EMP Puzzle
+  > Event - EMP Slot
       Any of the following:
           Can Use Bombs
           All of the following:
@@ -416,7 +416,7 @@ Extra - minimap_data: [{'x': 62, 'y': 45}, {'x': 62, 'y': 46}, {'x': 62, 'y': 47
   > Bottom
       Trivial
 
-> Event - EMP Puzzle; Heals? False
+> Event - EMP Slot; Heals? False
   * Layers: default
   * Event EMP - Area 5 Energy Distribution Tower East
   > Bottom
@@ -472,7 +472,12 @@ Extra - minimap_data: [{'x': 63, 'y': 47}, {'x': 64, 'y': 47}, {'x': 65, 'y': 47
   * Layers: default
   > Door to Distribution Facility Tower West
       All of the following:
-          Can Use Any Bombs and Power Grip Wall
+          Power Grip Wall
+          Any of the following:
+              # Destroy Bomb Blocks
+              Can Use Bombs
+              # HACK: 2 PBs to circumvent some resolver issues
+              Power Bombs ≥ 2 and Can Use Power Bombs
           Any of the following:
               # Pass by the Zeta
               Hi-Jump Boots or Space Jump or After Metroids Area 5 - Interior Zeta or Can Use Spider Ball
@@ -482,7 +487,12 @@ Extra - minimap_data: [{'x': 63, 'y': 47}, {'x': 64, 'y': 47}, {'x': 65, 'y': 47
               Damage Boost (Beginner) and Normal Damage ≥ 51
   > Door to Energy Distribution Tower East
       All of the following:
-          Can Use Any Bombs and Power Grip Wall
+          Power Grip Wall
+          Any of the following:
+              # Destroy Bomb Blocks
+              Can Use Bombs
+              # HACK: 2 PBs to circumvent some resolver issues
+              Power Bombs ≥ 2 and Can Use Power Bombs
           Any of the following:
               # Pass by the Zeta
               Hi-Jump Boots or Space Jump or After Metroids Area 5 - Interior Zeta or Can Use Spider Ball
@@ -674,7 +684,7 @@ Extra - minimap_data: [{'x': 59, 'y': 42}, {'x': 60, 'y': 42}]
   * Extra - instance_id: 134427
   > Door to Distribution Center Exterior West
       Trivial
-  > Event - NearLeftOutsideEMP
+  > Event - EMP Slot
       Missiles ≥ 10 or Super Missiles ≥ 5 or Can Use Any Bombs
 
 > Door to Distribution Center Exterior West; Heals? False
@@ -684,7 +694,7 @@ Extra - minimap_data: [{'x': 59, 'y': 42}, {'x': 60, 'y': 42}]
   > Door to Pipe Hub
       Trivial
 
-> Event - NearLeftOutsideEMP; Heals? False
+> Event - EMP Slot; Heals? False
   * Layers: default
   * Event EMP - Area 5 Pipe Hub Access
   > Door to Pipe Hub
@@ -853,7 +863,12 @@ Extra - minimap_data: [{'x': 67, 'y': 45}, {'x': 67, 'y': 46}, {'x': 68, 'y': 45
   > Door to Distribution Facility Tower East
       Any of the following:
           Space Jump or Enabled Septogg Helpers or Can Use Spider Ball
-          Morph Glide (Advanced) and Walljump (Expert)
+          All of the following:
+              Walljump (Expert)
+              Any of the following:
+                  Morph Glide (Advanced)
+                  # CBJ
+                  Charged Bomb Jump (Advanced) and Can Use Charged Bomb Jump
           Speed Booster and Shinesparking Tricks (Beginner)
           # IBJ
           Infinite Bomb Jumping (Advanced) and Can Use Bombs
@@ -994,7 +1009,7 @@ Extra - minimap_data: [{'x': 70, 'y': 44}, {'x': 70, 'y': 45}, {'x': 70, 'y': 46
           # HJ + CBJ
           Hi-Jump Boots and Charged Bomb Jump (Advanced) and Walljump (Intermediate) and Can Use Charged Bomb Jump
 
-> Event - EMP; Heals? False
+> Event - EMP Slot; Heals? False
   * Layers: default
   * Event EMP - Area 5 Bullet Hell Room Access
   > Door to Bullet Hell Room
@@ -1010,7 +1025,7 @@ Extra - minimap_data: [{'x': 70, 'y': 44}, {'x': 70, 'y': 45}, {'x': 70, 'y': 46
 
 > EMP Ball; Heals? False
   * Layers: default
-  > Event - EMP
+  > Event - EMP Slot
       Missiles ≥ 20 or Super Missiles ≥ 10 or Can Use Bombs
 
 > Center; Heals? False
@@ -1344,7 +1359,7 @@ Extra - minimap_data: [{'x': 72, 'y': 44}, {'x': 73, 'y': 44}]
   * Extra - instance_id: 135329
   > Door to Distribution Facility Intersection
       Can Use Any Bombs
-  > Event - NearRightOutsideEMP
+  > Event - EMP Slot
       All of the following:
           Can Use Any Bombs
           Missiles ≥ 2 or Super Missiles or Can Use Bombs
@@ -1356,7 +1371,7 @@ Extra - minimap_data: [{'x': 72, 'y': 44}, {'x': 73, 'y': 44}]
   > Door to Distribution Center Exterior East
       Can Use Any Bombs
 
-> Event - NearRightOutsideEMP; Heals? False
+> Event - EMP Slot; Heals? False
   * Layers: default
   * Event EMP - Area 5 Exterior East Access
   > Door to Distribution Center Exterior East

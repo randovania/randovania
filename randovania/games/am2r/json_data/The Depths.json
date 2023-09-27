@@ -1514,14 +1514,10 @@
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "template",
-                                        "data": "Can Use Spider Ball"
-                                    },
-                                    {
                                         "type": "resource",
                                         "data": {
-                                            "type": "items",
-                                            "name": "Space Jump",
+                                            "type": "events",
+                                            "name": "Omega1",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -1529,31 +1525,60 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "IBJ over them https://www.youtube.com/watch?v=I7IayKDp2ss",
+                                            "comment": "Traverse around Omega while it is still alive",
                                             "items": [
                                                 {
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "tricks",
-                                                        "name": "IBJ",
+                                                        "name": "Movement",
                                                         "amount": 4,
                                                         "negate": false
                                                     }
                                                 },
                                                 {
-                                                    "type": "template",
-                                                    "data": "Can Use Bombs"
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Space Jump",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Use Spider Ball"
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": "IBJ over them https://www.youtube.com/watch?v=I7IayKDp2ss",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Can Use Bombs"
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "IBJ",
+                                                                                "amount": 4,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
                                                 }
                                             ]
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "Omega1",
-                                            "amount": 1,
-                                            "negate": false
                                         }
                                     }
                                 ]

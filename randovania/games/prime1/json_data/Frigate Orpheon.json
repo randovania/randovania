@@ -1856,10 +1856,20 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Deck Beta Conduit Hall": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Event33",
+                                            "amount": 1,
+                                            "negate": true
+                                        }
+                                    }
+                                ]
                             }
                         },
                         "Door to Subventilation Shaft Section A": {
@@ -2166,10 +2176,20 @@
                             }
                         },
                         "Door to Deck Beta Conduit Hall": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Event33",
+                                            "amount": 1,
+                                            "negate": true
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }

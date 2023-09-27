@@ -532,7 +532,7 @@
                                 "items": []
                             }
                         },
-                        "Horizontal Dock to Breeding Grounds Access (Bottom)": {
+                        "Horizontal Dock to Breeding Grounds Entrance (Bottom)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1048,7 +1048,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Horizontal Dock to Breeding Grounds Access (Top)": {
+                        "Horizontal Dock to Breeding Grounds Entrance (Top)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1069,7 +1069,7 @@
                         }
                     }
                 },
-                "Horizontal Dock to Breeding Grounds Access (Top)": {
+                "Horizontal Dock to Breeding Grounds Entrance (Top)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1086,7 +1086,7 @@
                     "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Hydro Station",
-                        "area": "Breeding Grounds Access",
+                        "area": "Breeding Grounds Entrance",
                         "node": "Horizontal Dock to Hydro Station Exterior (Top)"
                     },
                     "default_dock_weakness": "3-Tiles High Dock",
@@ -1095,7 +1095,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Horizontal Dock to Breeding Grounds Access (Bottom)": {
+                        "Horizontal Dock to Breeding Grounds Entrance (Bottom)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1104,7 +1104,7 @@
                         }
                     }
                 },
-                "Horizontal Dock to Breeding Grounds Access (Bottom)": {
+                "Horizontal Dock to Breeding Grounds Entrance (Bottom)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1121,7 +1121,7 @@
                     "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Hydro Station",
-                        "area": "Breeding Grounds Access",
+                        "area": "Breeding Grounds Entrance",
                         "node": "Horizontal Dock to Hydro Station Exterior (Bottom)"
                     },
                     "default_dock_weakness": "3-Tiles High Dock",
@@ -1137,7 +1137,7 @@
                                 "items": []
                             }
                         },
-                        "Horizontal Dock to Breeding Grounds Access (Top)": {
+                        "Horizontal Dock to Breeding Grounds Entrance (Top)": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -1439,7 +1439,7 @@
                                 ]
                             }
                         },
-                        "Horizontal Dock to Breeding Grounds Access (Top)": {
+                        "Horizontal Dock to Breeding Grounds Entrance (Top)": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -3737,7 +3737,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Event - A2WaterLowered": {
+                        "Event - Water Lowered": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3772,7 +3772,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Event - A2BottomWaterTurbine": {
+                        "Event - Bottom Water Turbine": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3807,7 +3807,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Event - A2BottomWaterTurbine": {
+                        "Event - Bottom Water Turbine": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -3835,12 +3835,12 @@
                         }
                     }
                 },
-                "Event - A2WaterLowered": {
+                "Event - Water Lowered": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
-                        "x": 49.56796628029507,
-                        "y": 358.8619599578504,
+                        "x": 49.57,
+                        "y": 358.86,
                         "z": 0.0
                     },
                     "description": "",
@@ -3858,7 +3858,7 @@
                                 "items": []
                             }
                         },
-                        "Event - A2TopWaterTurbine": {
+                        "Event - Top Water Turbine": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -3897,7 +3897,7 @@
                         }
                     }
                 },
-                "Event - A2TopWaterTurbine": {
+                "Event - Top Water Turbine": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -3913,7 +3913,7 @@
                     "valid_starting_location": false,
                     "event_name": "A2TopWaterTurbine",
                     "connections": {
-                        "Event - A2WaterLowered": {
+                        "Event - Water Lowered": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3925,7 +3925,7 @@
                                 ]
                             }
                         },
-                        "Event - A2MiddleWaterTurbine": {
+                        "Event - Middle Water Turbine": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -3948,12 +3948,12 @@
                         }
                     }
                 },
-                "Event - A2MiddleWaterTurbine": {
+                "Event - Middle Water Turbine": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
-                        "x": 154.66104671584125,
-                        "y": 166.0976466455919,
+                        "x": 154.66,
+                        "y": 166.1,
                         "z": 0.0
                     },
                     "description": "",
@@ -3964,7 +3964,7 @@
                     "valid_starting_location": false,
                     "event_name": "A2MiddleWaterTurbine",
                     "connections": {
-                        "Event - A2TopWaterTurbine": {
+                        "Event - Top Water Turbine": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3976,7 +3976,7 @@
                                 ]
                             }
                         },
-                        "Event - A2BottomWaterTurbine": {
+                        "Event - Bottom Water Turbine": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -3999,12 +3999,12 @@
                         }
                     }
                 },
-                "Event - A2BottomWaterTurbine": {
+                "Event - Bottom Water Turbine": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
-                        "x": 177.70284510010538,
-                        "y": 47.51668422901304,
+                        "x": 177.7,
+                        "y": 47.52,
                         "z": 0.0
                     },
                     "description": "",
@@ -4048,7 +4048,7 @@
                                 ]
                             }
                         },
-                        "Event - A2MiddleWaterTurbine": {
+                        "Event - Middle Water Turbine": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4081,7 +4081,7 @@
                     "pickup_index": 150,
                     "location_category": "minor",
                     "connections": {
-                        "Event - A2WaterLowered": {
+                        "Event - Water Lowered": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -6832,7 +6832,7 @@
                 }
             }
         },
-        "Breeding Grounds Access": {
+        "Breeding Grounds Entrance": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a2c01",
@@ -6874,7 +6874,7 @@
                     "default_connection": {
                         "region": "Hydro Station",
                         "area": "Hydro Station Exterior",
-                        "node": "Horizontal Dock to Breeding Grounds Access (Top)"
+                        "node": "Horizontal Dock to Breeding Grounds Entrance (Top)"
                     },
                     "default_dock_weakness": "3-Tiles High Dock",
                     "exclude_from_dock_rando": false,
@@ -6940,7 +6940,7 @@
                     "default_connection": {
                         "region": "Hydro Station",
                         "area": "Hydro Station Exterior",
-                        "node": "Horizontal Dock to Breeding Grounds Access (Bottom)"
+                        "node": "Horizontal Dock to Breeding Grounds Entrance (Bottom)"
                     },
                     "default_dock_weakness": "3-Tiles High Dock",
                     "exclude_from_dock_rando": false,
@@ -6991,12 +6991,33 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "Get into hole",
+                                                        "comment": "CBJ",
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Use Charged Bomb Jump"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "ChargedBombJump",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "Jump into hole via items",
                                                         "items": [
                                                             {
                                                                 "type": "or",
                                                                 "data": {
-                                                                    "comment": null,
+                                                                    "comment": "Get into tunnel",
                                                                     "items": [
                                                                         {
                                                                             "type": "resource",
@@ -7025,63 +7046,12 @@
                                                                     "comment": null,
                                                                     "items": [
                                                                         {
-                                                                            "type": "and",
+                                                                            "type": "resource",
                                                                             "data": {
-                                                                                "comment": null,
-                                                                                "items": [
-                                                                                    {
-                                                                                        "type": "and",
-                                                                                        "data": {
-                                                                                            "comment": null,
-                                                                                            "items": [
-                                                                                                {
-                                                                                                    "type": "resource",
-                                                                                                    "data": {
-                                                                                                        "type": "tricks",
-                                                                                                        "name": "DamageBoost",
-                                                                                                        "amount": 2,
-                                                                                                        "negate": false
-                                                                                                    }
-                                                                                                },
-                                                                                                {
-                                                                                                    "type": "resource",
-                                                                                                    "data": {
-                                                                                                        "type": "damage",
-                                                                                                        "name": "Damage",
-                                                                                                        "amount": 7,
-                                                                                                        "negate": false
-                                                                                                    }
-                                                                                                }
-                                                                                            ]
-                                                                                        }
-                                                                                    },
-                                                                                    {
-                                                                                        "type": "or",
-                                                                                        "data": {
-                                                                                            "comment": null,
-                                                                                            "items": [
-                                                                                                {
-                                                                                                    "type": "resource",
-                                                                                                    "data": {
-                                                                                                        "type": "tricks",
-                                                                                                        "name": "Walljump",
-                                                                                                        "amount": 4,
-                                                                                                        "negate": false
-                                                                                                    }
-                                                                                                },
-                                                                                                {
-                                                                                                    "type": "resource",
-                                                                                                    "data": {
-                                                                                                        "type": "tricks",
-                                                                                                        "name": "Knowledge",
-                                                                                                        "amount": 3,
-                                                                                                        "negate": false
-                                                                                                    }
-                                                                                                }
-                                                                                            ]
-                                                                                        }
-                                                                                    }
-                                                                                ]
+                                                                                "type": "items",
+                                                                                "name": "Hi-Jump",
+                                                                                "amount": 1,
+                                                                                "negate": false
                                                                             }
                                                                         },
                                                                         {
@@ -7092,14 +7062,117 @@
                                                                                 "amount": 1,
                                                                                 "negate": false
                                                                             }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "Get into hole via damage boost",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "DamageBoost",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "Damage",
+                                                                    "amount": 7,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "or",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "and",
+                                                                            "data": {
+                                                                                "comment": "Power grip spike damage boost",
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "items",
+                                                                                            "name": "Power Grip",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "Walljump",
+                                                                                            "amount": 4,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
                                                                         },
                                                                         {
-                                                                            "type": "resource",
+                                                                            "type": "and",
                                                                             "data": {
-                                                                                "type": "items",
-                                                                                "name": "Hi-Jump",
-                                                                                "amount": 1,
-                                                                                "negate": false
+                                                                                "comment": "Mir air morph spike damage boost",
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "MidAirMorph",
+                                                                                            "amount": 5,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "Walljump",
+                                                                                            "amount": 5,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "and",
+                                                                            "data": {
+                                                                                "comment": "Tsumuri damage boost - not that known that they crawl through spikes",
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "Knowledge",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "items",
+                                                                                            "name": "Power Grip",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
                                                                             }
                                                                         }
                                                                     ]
@@ -7481,7 +7554,7 @@
                     "default_connection": {
                         "region": "Hydro Station",
                         "area": "Breeding Grounds Save Station",
-                        "node": "Tunnel to Breeding Grounds Access"
+                        "node": "Tunnel to Breeding Grounds Entrance"
                     },
                     "default_dock_weakness": "Morph Ball Tunnel",
                     "exclude_from_dock_rando": false,
@@ -7528,7 +7601,7 @@
                     "default_connection": {
                         "region": "Hydro Station",
                         "area": "Speedboosting Challenge",
-                        "node": "Door to Breeding Grounds Access"
+                        "node": "Door to Breeding Grounds Entrance"
                     },
                     "default_dock_weakness": "Hydro Station EMP Door",
                     "exclude_from_dock_rando": false,
@@ -7545,7 +7618,7 @@
                         }
                     }
                 },
-                "Event - A2EMP": {
+                "Event - EMP Slot": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -7609,7 +7682,7 @@
                                 "items": []
                             }
                         },
-                        "Event - A2EMP": {
+                        "Event - EMP Slot": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7680,7 +7753,7 @@
                     },
                     "valid_starting_location": true,
                     "connections": {
-                        "Tunnel to Breeding Grounds Access": {
+                        "Tunnel to Breeding Grounds Entrance": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7701,7 +7774,7 @@
                         }
                     }
                 },
-                "Tunnel to Breeding Grounds Access": {
+                "Tunnel to Breeding Grounds Entrance": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7718,7 +7791,7 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Hydro Station",
-                        "area": "Breeding Grounds Access",
+                        "area": "Breeding Grounds Entrance",
                         "node": "Tunnel to Breeding Grounds Save Station"
                     },
                     "default_dock_weakness": "Morph Ball Tunnel",
@@ -10236,7 +10309,7 @@
                 ]
             },
             "nodes": {
-                "Door to Breeding Grounds Access": {
+                "Door to Breeding Grounds Entrance": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -10255,7 +10328,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Hydro Station",
-                        "area": "Breeding Grounds Access",
+                        "area": "Breeding Grounds Entrance",
                         "node": "Door to Speedboosting Challenge"
                     },
                     "default_dock_weakness": "Normal Door",
@@ -10354,7 +10427,7 @@
                     "pickup_index": 162,
                     "location_category": "minor",
                     "connections": {
-                        "Door to Breeding Grounds Access": {
+                        "Door to Breeding Grounds Entrance": {
                             "type": "and",
                             "data": {
                                 "comment": null,
