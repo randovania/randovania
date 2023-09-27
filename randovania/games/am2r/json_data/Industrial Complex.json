@@ -10779,15 +10779,6 @@
                                                         "amount": 1,
                                                         "negate": false
                                                     }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Power Beam",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
                                                 }
                                             ]
                                         }
@@ -10834,6 +10825,36 @@
                                                 }
                                             ]
                                         }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "CBJ",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Hi-Jump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Use Charged Bomb Jump"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "ChargedBombJump",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -10841,7 +10862,7 @@
                         "Horizontal Dock to Breeding Grounds Fly Stadium Access": {
                             "type": "or",
                             "data": {
-                                "comment": null,
+                                "comment": "TODO: add some hypermode WJ to here",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -10855,7 +10876,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "High jump",
+                                            "comment": "High jump when solid blocks are there",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -10932,7 +10953,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "Option to have shoot blocks appear on right",
+                                            "comment": "Option to have solid blocks be replaced by chain bombs",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -10967,6 +10988,27 @@
                                                                 }
                                                             }
                                                         ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "CBJ",
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Use Charged Bomb Jump"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "ChargedBombJump",
+                                                        "amount": 2,
+                                                        "negate": false
                                                     }
                                                 }
                                             ]
@@ -11260,6 +11302,15 @@
                                                     }
                                                 }
                                             ]
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Walljump",
+                                            "amount": 5,
+                                            "negate": false
                                         }
                                     }
                                 ]
