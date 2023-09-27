@@ -93,7 +93,8 @@ def _construct_music_shuffle_dict(music_mode: MusicMode, rng: Random) -> dict[st
         total_orig += excluded_list
         total_new = random_lib.shuffle(rng, total_orig)
     else:
-        # MusicMode is type
+        # MusicMode is TYPE
+        # TODO: copying is not necessary anymore, clean this up in the future.
         shuffled_combat = combat_list.copy()
         shuffled_exploration = exploration_list.copy()
         shuffled_fanfare = fanfare_list.copy()
