@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from random import Random
 from typing import TYPE_CHECKING
 
 from randovania.exporter import pickup_exporter
@@ -8,17 +9,101 @@ from randovania.exporter.patch_data_factory import PatchDataFactory
 from randovania.game_description.assignment import PickupTarget
 from randovania.games.am2r.exporter.hint_namer import AM2RHintNamer
 from randovania.games.am2r.exporter.joke_hints import JOKE_HINTS
+from randovania.games.am2r.layout.am2r_cosmetic_patches import AM2RCosmeticPatches, MusicMode
 from randovania.games.am2r.layout.hint_configuration import ItemHintMode
 from randovania.games.game import RandovaniaGame
 from randovania.generator.pickup_pool import pickup_creator
-from randovania.lib import json_lib
+from randovania.lib import json_lib, random_lib
 
 if TYPE_CHECKING:
-    from random import Random
-
     from randovania.exporter.pickup_exporter import ExportedPickupDetails
     from randovania.games.am2r.layout.am2r_configuration import AM2RConfiguration
-    from randovania.games.am2r.layout.am2r_cosmetic_patches import AM2RCosmeticPatches
+
+
+def _construct_music_shuffle_dict(music_mode: MusicMode, rng: Random) -> dict[str, str]:
+    combat_list = [
+        "musalphafight",
+        "musancientguardian",
+        "musarachnus",
+        "museris",
+        "musgammafight",
+        "musgenesis",
+        "musomegafight",
+        "musqueen",
+        "musqueen2",
+        "musqueen3",
+        "musreactor",
+        "mustorizoa",
+        "mustorizob",
+        "muszetafight",
+        "mustester",
+    ]
+
+    exploration_list = [
+        "musarea1a",
+        "musarea1b",
+        "musarea2a",
+        "musarea2b",
+        "musarea3a",
+        "musarea3b",
+        "musarea4a",
+        "musarea4b",
+        "musarea5a",
+        "musarea5b",
+        "musarea6a",
+        "musarea7a",
+        "musarea7c",
+        "musarea8",
+        "muscaveambience",
+        "muscaveambiencea4",
+        "mushatchling",
+        "musitemamb",
+        "musitemamb2",
+        "muslabambience",
+        "musmaincave",
+        "musmaincave2",
+        "mustitle",
+    ]
+
+    fanfare_list = [
+        "musarea7b",
+        "musfanfare",
+        "musitemget",
+        "musmetroidappear",
+        "musqueenbreak",
+        "musqueenintro",
+    ]
+
+    excluded_list = [
+        "musarea7d",
+        "muscredits",
+        "musending",
+        "musintroseq",
+    ]
+
+    if music_mode == MusicMode.VANILLA:
+        return {}
+
+    # Music is now either TYPE or FULL
+    assert music_mode in (MusicMode.TYPE, MusicMode.FULL)
+
+    total_orig = combat_list + exploration_list + fanfare_list
+
+    if music_mode == MusicMode.FULL:
+        total_orig += excluded_list
+        total_new = random_lib.shuffle(rng, total_orig)
+    else:
+        # MusicMode is TYPE
+        # TODO: copying is not necessary anymore, clean this up in the future.
+        shuffled_combat = combat_list.copy()
+        shuffled_exploration = exploration_list.copy()
+        shuffled_fanfare = fanfare_list.copy()
+        rng.shuffle(shuffled_combat)
+        rng.shuffle(shuffled_exploration)
+        rng.shuffle(shuffled_fanfare)
+        total_new = shuffled_combat + shuffled_exploration + shuffled_fanfare
+
+    return {f"{orig}.ogg": f"{new}.ogg" for orig, new in zip(total_orig, total_new, strict=True)}
 
 
 class AM2RPatchDataFactory(PatchDataFactory):
@@ -228,7 +313,7 @@ class AM2RPatchDataFactory(PatchDataFactory):
 
         return hints
 
-    def _create_cosmetics(self) -> dict:
+    def _create_cosmetics(self, seed_number: int) -> dict:
         c = self.cosmetic_patches
         return {
             "show_unexplored_map": c.show_unexplored_map,
@@ -237,6 +322,7 @@ class AM2RPatchDataFactory(PatchDataFactory):
             "etank_hud_rotation": c.etank_hud_rotation,
             "dna_hud_rotation": c.dna_hud_rotation,
             "room_names_on_hud": c.show_room_names.value,
+            "music_shuffle": _construct_music_shuffle_dict(c.music, Random(seed_number)),
         }
 
     def _get_item_data(self):
@@ -285,5 +371,5 @@ class AM2RPatchDataFactory(PatchDataFactory):
             "game_patches": self._create_game_patches(self.configuration, pickup_list, item_data, self.rng),
             "door_locks": self._create_door_locks(),
             "hints": self._create_hints(self.rng),
-            "cosmetics": self._create_cosmetics(),
+            "cosmetics": self._create_cosmetics(self.description.get_seed_for_player(self.players_config.player_index)),
         }
