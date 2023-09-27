@@ -25,7 +25,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Logic Database
 
-- Added: 3 videos to the logic the database for a diagonal bomb jump in Ghavoran, a single-wall jump in Cataris, and a diffusion abuse trick in Artaria.
+- Added: 3 videos to the logic database for a diagonal bomb jump in Ghavoran, a single-wall jump in Cataris, and a diffusion abuse trick in Artaria.
+- Added: 2 videos to the logic database for cross bomb movement in Burenia.
 
 ##### Artaria
 
@@ -33,6 +34,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ##### Burenia
 
+- Added: The missile tank in Burenia Main Hub Tower Top can be gotten with morph, cross bombs, and movement (intermediate).
 - Changed: Teleport to Ferenia: Using Speed Booster to get past the Shutter Gate now requires Speed Booster Conservation Beginner.
 
 ##### Cataris
