@@ -75,6 +75,9 @@ jobs:
         with:
           python-version: "${{ matrix.python }}"
           cache: "pip"
+          cache-dependency-path: |
+            **/setup.cfg
+            **/requirements*.txt
 
       - name: Apt
         run: sudo apt-get -q update && sudo apt-get -y install xvfb xserver-xephyr tigervnc-standalone-server x11-utils gnumeric libxcb-cursor0 libxkbcommon-x11-0
