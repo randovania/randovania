@@ -1,15 +1,43 @@
+from random import Random
 from unittest.mock import MagicMock, PropertyMock
 
 import pytest
 
 from randovania.exporter import pickup_exporter
 from randovania.game_description.assignment import PickupTarget
-from randovania.games.am2r.exporter.patch_data_factory import AM2RPatchDataFactory
-from randovania.games.am2r.layout.am2r_cosmetic_patches import AM2RCosmeticPatches
+from randovania.games.am2r.exporter.patch_data_factory import AM2RPatchDataFactory, _construct_music_shuffle_dict
+from randovania.games.am2r.layout.am2r_cosmetic_patches import AM2RCosmeticPatches, MusicMode
 from randovania.generator.pickup_pool import pickup_creator
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout.layout_description import LayoutDescription
 from randovania.lib import json_lib
+
+
+def test_construct_music_shuffle_dict_vanilla() -> None:
+    music_dict = _construct_music_shuffle_dict(MusicMode.VANILLA, Random())
+
+    assert music_dict == {}
+
+
+def test_construct_music_shuffle_dict_type() -> None:
+    excluded_list = [
+        "musarea7d",
+        "muscredits",
+        "musending",
+        "musintroseq",
+    ]
+
+    music_dict = _construct_music_shuffle_dict(MusicMode.TYPE, Random())
+
+    for song in excluded_list:
+        assert song not in music_dict
+    assert len(music_dict) == 44
+
+
+def test_construct_music_shuffle_dict_full() -> None:
+    music_dict = _construct_music_shuffle_dict(MusicMode.FULL, Random())
+
+    assert len(music_dict) == 48
 
 
 @pytest.mark.parametrize(
