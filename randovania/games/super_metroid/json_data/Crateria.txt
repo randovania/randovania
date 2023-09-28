@@ -7,11 +7,7 @@ Extra - save_index: 0
   * Layers: default
   * Normal Door to Gauntlet Access/Door to Landing Site
   > Landing Site Save Station
-      Any of the following:
-          Screw Attack
-          All of the following:
-              Morph Ball
-              Morph Ball Bombs or Power Bombs
+      Screw Attack or Can Lay Any Bombs
 
 > Door to Parlor; Heals? False
   * Layers: default
@@ -21,19 +17,20 @@ Extra - save_index: 0
 
 > Door to Crateria Power Bomb Room; Heals? False
   * Layers: default
-  * Normal Door to Crateria Power Bomb Room/Door to Landing Site
-  > Landing Site Save Station
+  * Power Bomb Door to Crateria Power Bomb Room/Door to Landing Site
+  > Door to Gauntlet Access
+      Any of the following:
+          # TODO: Add spark through door https://youtu.be/t6Tmu8w9yIQ
+          # Beginner Shinespark: https://youtu.be/Gurz63v4Xi0
+          Speed Booster and Shinespark (Beginner) and Shinespark Damage ≥ 126
+  > Top Pillar
       Trivial
 
 > Door to Crateria Tube; Heals? False
   * Layers: default
   * Super Missile Door to Crateria Tube/Door to Landing Site
-  > Landing Site Save Station
-      Any of the following:
-          Hi-Jump Boots or Screw Attack or Space Jump or Speed Booster
-          All of the following:
-              Morph Ball
-              Morph Ball Bombs or Power Bombs
+  > Top Pillar
+      Trivial
 
 > Event - Win Game; Heals? False
   * Layers: default
@@ -45,11 +42,8 @@ Extra - save_index: 0
   * Layers: default
   > Door to Gauntlet Access
       All of the following:
-          Any of the following:
-              # Destroy the blocks
-              Screw Attack or Can Lay Any Bombs
-              # Shinespark
-              Speed Booster and Shinespark (Beginner)
+          # Destroy the blocks
+          Screw Attack or Can Lay Any Bombs
           Any of the following:
               # Get up to the tunnel
               Space Jump or Wall Jumps (Advanced)
@@ -60,18 +54,28 @@ Extra - save_index: 0
   > Door to Parlor
       Trivial
   > Door to Crateria Power Bomb Room
-      Any of the following:
-          Space Jump
-          Speed Booster and Shinespark (Beginner)
-          Vertical Infinite Bomb Jump (Intermediate) and Can Lay Bombs
+      Speed Booster and Shinespark (Beginner) and Shinespark Damage ≥ 79
   > Door to Crateria Tube
-      Any of the following:
-          Hi-Jump Boots or Screw Attack or Space Jump or Speed Booster
-          All of the following:
-              Morph Ball
-              Morph Ball Bombs or Power Bombs
+      Screw Attack or Speed Booster or Can Lay Any Bombs
   > Event - Win Game
       After Defeat Mother Brain
+  > Top Pillar
+      Any of the following:
+          Hi-Jump Boots or Space Jump or Wall Jumps (Beginner)
+          Speed Booster and Shinespark (Beginner) and Shinespark Damage ≥ 50
+          # IBJ to the top
+          Vertical Infinite Bomb Jump (Beginner) and Can Lay Bombs
+
+> Top Pillar; Heals? False
+  * Layers: default
+  > Door to Crateria Power Bomb Room
+      Any of the following:
+          Space Jump
+          Vertical Infinite Bomb Jump (Intermediate) and Can Lay Bombs
+  > Door to Crateria Tube
+      Trivial
+  > Landing Site Save Station
+      Trivial
 
 ----------------
 Crateria Tube
@@ -140,12 +144,15 @@ Extra - asset_id: 3
   * Normal Door to West Ocean/Door to Moat
   > Door to Crateria Kihunter Room
       Any of the following:
-          # Via top path - TODO: check for shinespark without entrance rando?
-          Grapple Beam or Space Jump
+          Any of the following:
+              # Via top path
+              Grapple Beam or Space Jump or Movement (Intermediate)
+              # Start in West Ocean and jump over with momentum
+              Speed Booster and Disabled Door Lock Randomizer and Disabled Entrance Randomizer
           Any of the following:
               # Via bottom path
               Can Lay Bombs
-              Gravity Suit and Screw Attack
+              Morph Ball and Enabled Moat Tweaks
 
 > Pickup (Missile Expansion); Heals? False
   * Layers: default
@@ -163,11 +170,24 @@ Extra - asset_id: 4
   * Layers: default
   * Normal Door to Moat/Door to West Ocean
   > Door to Wrecked Ship Entrance
-      Grapple Beam or Movement (Beginner)
+      Any of the following:
+          # TODO: Check to see if possible with HBJ.
+          Grapple Beam or Space Jump
+          # It is possible to jump across by not using full jumps to avoid bonking on the ceiling.
+          Movement (Intermediate)
+          All of the following:
+              # From the sea floor
+              Gravity Suit
+              Any of the following:
+                  Hi-Jump Boots or Wall Jumps (Beginner)
+                  Vertical Infinite Bomb Jump (Beginner) and Can Lay Bombs
   > Pickup (Seafloor Missile Expansion)
       All of the following:
           Morph Ball
-          Gravity Suit or Knowledge (Intermediate)
+          Any of the following:
+              Can Lay Any Bombs
+              # Knowledge: The block to exit the alcove can be shot off screen to allow for exit.
+              Knowledge (Intermediate)
 
 > Door to Bowling Alley Cave; Heals? False
   * Layers: default
@@ -209,7 +229,14 @@ Extra - asset_id: 4
   > Door to Bowling Alley
       Trivial
   > Pickup (Topmost Missile Expansion)
-      Hi-Jump Boots or Space Jump
+      Any of the following:
+          # Knowledge (Intermediate): Trippers can be brought over to right platforms by keeping them on screen. (jump and aim up)
+          Hi-Jump Boots or Space Jump or Knowledge (Intermediate)
+          Speed Booster and Shinespark (Beginner) and Normal Damage ≥ 36
+          # Wall jump off of Trippers
+          Ice Beam and Wall Jumps (Intermediate)
+          # IBJ
+          Vertical Infinite Bomb Jump (Intermediate) and Can Lay Bombs
   > Pickup (Morph Ball Maze Missile Expansion)
       Morph Ball and Super Missile
 
@@ -233,7 +260,7 @@ Extra - asset_id: 4
   * Layers: default
   * Pickup 1; Category? Minor
   > Door to Moat
-      Gravity Suit and Morph Ball
+      Morph Ball
 
 ----------------
 Bowling Alley Cave
@@ -446,21 +473,33 @@ Extra - asset_id: 13
 > Door to Terminator Room; Heals? False
   * Layers: default
   * Normal Door to Terminator Room/Door to Green Pirates Shaft
-  > Door to Lower Mushrooms
-      Trivial
   > Door to Gold Four Hallway
-      Trivial
+      Any of the following:
+          # Weapons to defeat Green Pirates
+          Charge Beam or Ice Beam or Missile or Plasma Beam or Power Bombs or Spazer Beam or Super Missile or Wave Beam or Can Lay Any Bombs
+          # 3 hits for Intermediate damage boosting
+          Damage Boosting (Intermediate) and Normal Damage ≥ 61
+          # 5 hits for beginner damage boosting
+          Damage Boosting (Beginner) and Normal Damage ≥ 101
 
 > Door to Lower Mushrooms; Heals? False
   * Layers: default
   * Normal Door to Lower Mushrooms/Door to Green Pirates Shaft
-  > Door to Terminator Room
+  > Door to Gold Four Hallway
       Trivial
 
 > Door to Gold Four Hallway; Heals? False
   * Layers: default
   * Missile Door to Gold Four Hallway/Door to Green Pirates Shaft
   > Door to Terminator Room
+      Any of the following:
+          # Weapons to defeat Green Pirates
+          Charge Beam or Ice Beam or Missile or Plasma Beam or Power Bombs or Spazer Beam or Super Missile or Wave Beam or Can Lay Any Bombs
+          # 4 hits for intermediate damage boosting (going up is more difficult than down)
+          Damage Boosting (Intermediate) and Normal Damage ≥ 81
+          # 5 hits for beginner damage boosting
+          Damage Boosting (Beginner) and Normal Damage ≥ 101
+  > Door to Lower Mushrooms
       Trivial
 
 > Pickup (Left Missile Expansion); Heals? False
@@ -516,10 +555,8 @@ Extra - asset_id: 14
   * Normal Door to Terminator Room/Door to Parlor
   > Door to Landing Site
       Any of the following:
-          Screw Attack or Speed Booster
-          All of the following:
-              Morph Ball
-              Morph Ball Bombs or Power Bombs
+          Screw Attack or Can Lay Any Bombs
+          Speed Booster and Disabled Door Lock Randomizer and Disabled Entrance Randomizer
 
 > Door to Climb; Heals? False
   * Layers: default
@@ -540,10 +577,9 @@ Extra - asset_id: 14
       Morph Ball
   > Door to Terminator Room
       Any of the following:
-          Screw Attack or Speed Booster
-          All of the following:
-              Morph Ball
-              Morph Ball Bombs or Power Bombs
+          Screw Attack or Can Lay Any Bombs
+          # 2 tap short charge from Alcatraz Escape
+          Speed Booster and Shinespark (Beginner) and Short Charge (Intermediate)
   > Door to Climb
       Trivial
 
