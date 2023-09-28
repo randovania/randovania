@@ -8,24 +8,28 @@ Extra - asset_id: 51
   > Door to Gravity Suit Room
       All of the following:
           Morph Ball and After Power Wrecked Ship
-          Grapple Beam or Space Jump
+          Any of the following:
+              Grapple Beam or Space Jump
+              # HBJ
+              Horizontal Infinite Bomb Jump (Expert) and Can Lay Bombs
+              # TODO: Damage Boost numbers. Does HJ affect this?
+              Damage Boosting (Beginner) and Normal Damage ≥ 300
+              # TODO: short charge from previous room?
+              Speed Booster and Shinespark (Advanced) and Disabled Door Lock Randomizer and Disabled Entrance Randomizer
 
 > Door to Gravity Suit Room; Heals? False
   * Layers: default
   * Normal Door to Gravity Suit Room/Door to Bowling Alley
   > Pickup (Missile Expansion)
-      All of the following:
-          Morph Ball and After Power Wrecked Ship
-          Morph Ball Bombs or Power Bombs
+      After Power Wrecked Ship and Can Lay Any Bombs
 
 > Pickup (Missile Expansion); Heals? False
   * Layers: default
   * Pickup 130; Category? Minor
   > Door to Gravity Suit Room
-      All of the following:
-          Morph Ball
-          Morph Ball Bombs or Power Bombs
+      Can Lay Any Bombs
   > Pickup (Reserve Tank)
+      # TODO: shinespark health
       Morph Ball and Power Bombs and Speed Booster and After Power Wrecked Ship and Shinespark (Beginner)
 
 > Pickup (Reserve Tank); Heals? False
@@ -166,7 +170,8 @@ Extra - save_index: 0
   * Layers: default
   * Normal Door to Wrecked Ship Main Shaft/Door to Shaft Save Station
   > Save Station
-      Trivial
+      # TODO: doesnt this save station only get activated when power is on?
+      Normal Damage
 
 > Save Station; Heals? False; Spawn Point; Default Node
   * Layers: default
@@ -184,8 +189,8 @@ Extra - asset_id: 56
       Trivial
   > Door to Phantoon's Room
       All of the following:
-          Morph Ball
-          Morph Ball Bombs or Power Bombs
+          Can Lay Any Bombs
+          # Destroy Eyedoor
           Missile ≥ 3 or Super Missile
 
 > Door to Wrecked Ship Map Station; Heals? False
@@ -198,9 +203,7 @@ Extra - asset_id: 56
   * Layers: default
   * Normal Door to Phantoon's Room/Door to Basement
   > Door to Wrecked Ship Main Shaft
-      All of the following:
-          Morph Ball
-          Morph Ball Bombs or Power Bombs
+      Can Lay Any Bombs
 
 ----------------
 Phantoon's Room
@@ -210,6 +213,7 @@ Extra - asset_id: 57
   * Layers: default
   * Normal Door to Basement/Door to Phantoon's Room
   > Event - Phantoon Defeated
+      # TODO: Proper Phantoon combat logic
       Charge Beam or Missile ≥ 25 or Super Missile ≥ 5
 
 > Event - Phantoon Defeated; Heals? False
@@ -240,17 +244,13 @@ Extra - asset_id: 59
   * Layers: default
   * Normal Door to Wrecked Ship Main Shaft/Door to Wrecked Ship East Super Room
   > Pickup (Super Missile Expansion)
-      All of the following:
-          Morph Ball and After Power Wrecked Ship
-          Morph Ball Bombs or Power Bombs
+      After Power Wrecked Ship and Can Lay Any Bombs
 
 > Pickup (Super Missile Expansion); Heals? False
   * Layers: default
   * Pickup 134; Category? Minor
   > Door to Wrecked Ship Main Shaft
-      All of the following:
-          Morph Ball
-          Morph Ball Bombs or Power Bombs
+      Can Lay Any Bombs
 
 ----------------
 Wrecked Ship West Super Room
@@ -320,7 +320,11 @@ Extra - asset_id: 63
   * Layers: default
   * Normal Door to East Ocean/Door to Electric Death Room
   > Door to Spiky Death Room
-      Gravity Suit or Hi-Jump Boots or Space Jump
+      Any of the following:
+          # Jump out of water
+          Gravity Suit or Hi-Jump Boots or Space Jump
+          # HBJ
+          Horizontal Infinite Bomb Jump (Beginner) and Can Lay Any Bombs
   > Door to Wrecked Ship Energy Tank Room
       Trivial
 
