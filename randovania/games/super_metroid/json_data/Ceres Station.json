@@ -4,15 +4,15 @@
         "asset_id": 5553
     },
     "areas": {
-        "Elevator Shaft": {
-            "default_node": "Door to Hallway A",
+        "Ceres Elevator Room": {
+            "default_node": "Door to Falling Tile Room",
             "extra": {
                 "map_name": "7DF45",
                 "asset_id": 253,
                 "save_index": 0
             },
             "nodes": {
-                "Door to Hallway A": {
+                "Door to Falling Tile Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -29,8 +29,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Ceres Station",
-                        "area": "Hallway A",
-                        "node": "Door to Elevator Shaft"
+                        "area": "Falling Tile Room",
+                        "node": "Door to Ceres Elevator Room"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -79,7 +79,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Hallway A": {
+                        "Door to Falling Tile Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -90,14 +90,14 @@
                 }
             }
         },
-        "Hallway A": {
-            "default_node": "Door to Elevator Shaft",
+        "Falling Tile Room": {
+            "default_node": "Door to Ceres Elevator Room",
             "extra": {
                 "map_name": "7DF8D",
                 "asset_id": 254
             },
             "nodes": {
-                "Door to Elevator Shaft": {
+                "Door to Ceres Elevator Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -114,8 +114,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Ceres Station",
-                        "area": "Elevator Shaft",
-                        "node": "Door to Hallway A"
+                        "area": "Ceres Elevator Room",
+                        "node": "Door to Falling Tile Room"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -123,7 +123,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Hallway B": {
+                        "Door to Magnet Stairs Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -132,7 +132,7 @@
                         }
                     }
                 },
-                "Door to Hallway B": {
+                "Door to Magnet Stairs Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -149,8 +149,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Ceres Station",
-                        "area": "Hallway B",
-                        "node": "Door to Hallway A"
+                        "area": "Magnet Stairs Room",
+                        "node": "Door to Falling Tile Room"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -158,7 +158,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Elevator Shaft": {
+                        "Door to Ceres Elevator Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -169,14 +169,14 @@
                 }
             }
         },
-        "Hallway B": {
-            "default_node": "Door to Hallway A",
+        "Magnet Stairs Room": {
+            "default_node": "Door to Falling Tile Room",
             "extra": {
                 "map_name": "7DFD7",
                 "asset_id": 255
             },
             "nodes": {
-                "Door to Hallway A": {
+                "Door to Falling Tile Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -193,8 +193,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Ceres Station",
-                        "area": "Hallway A",
-                        "node": "Door to Hallway B"
+                        "area": "Falling Tile Room",
+                        "node": "Door to Magnet Stairs Room"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -202,7 +202,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Hallway C": {
+                        "Door to Dead Scientist Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -211,7 +211,7 @@
                         }
                     }
                 },
-                "Door to Hallway C": {
+                "Door to Dead Scientist Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -228,8 +228,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Ceres Station",
-                        "area": "Hallway C",
-                        "node": "Door to Hallway B"
+                        "area": "Dead Scientist Room",
+                        "node": "Door to Magnet Stairs Room"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -237,7 +237,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Hallway A": {
+                        "Door to Falling Tile Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -248,14 +248,14 @@
                 }
             }
         },
-        "Hallway C": {
-            "default_node": "Door to Hallway B",
+        "Dead Scientist Room": {
+            "default_node": "Door to Magnet Stairs Room",
             "extra": {
                 "map_name": "7E021",
                 "asset_id": 256
             },
             "nodes": {
-                "Door to Hallway B": {
+                "Door to Magnet Stairs Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -272,8 +272,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Ceres Station",
-                        "area": "Hallway B",
-                        "node": "Door to Hallway C"
+                        "area": "Magnet Stairs Room",
+                        "node": "Door to Dead Scientist Room"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -281,7 +281,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Hallway D": {
+                        "Door to 58 Escape": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -290,7 +290,7 @@
                         }
                     }
                 },
-                "Door to Hallway D": {
+                "Door to 58 Escape": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -307,8 +307,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Ceres Station",
-                        "area": "Hallway D",
-                        "node": "Door to Hallway C"
+                        "area": "58 Escape",
+                        "node": "Door to Dead Scientist Room"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -316,7 +316,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Hallway B": {
+                        "Door to Magnet Stairs Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -327,14 +327,14 @@
                 }
             }
         },
-        "Hallway D": {
-            "default_node": "Door to Hallway C",
+        "58 Escape": {
+            "default_node": "Door to Dead Scientist Room",
             "extra": {
                 "map_name": "7E06B",
                 "asset_id": 257
             },
             "nodes": {
-                "Door to Hallway C": {
+                "Door to Dead Scientist Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -351,8 +351,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Ceres Station",
-                        "area": "Hallway C",
-                        "node": "Door to Hallway D"
+                        "area": "Dead Scientist Room",
+                        "node": "Door to 58 Escape"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -360,7 +360,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Sample Storage": {
+                        "Door to Ceres Ridley Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -369,7 +369,7 @@
                         }
                     }
                 },
-                "Door to Sample Storage": {
+                "Door to Ceres Ridley Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -386,8 +386,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Ceres Station",
-                        "area": "Sample Storage",
-                        "node": "Door to Hallway D"
+                        "area": "Ceres Ridley Room",
+                        "node": "Door to 58 Escape"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -395,7 +395,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Hallway C": {
+                        "Door to Dead Scientist Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -406,14 +406,14 @@
                 }
             }
         },
-        "Sample Storage": {
-            "default_node": "Door to Hallway D",
+        "Ceres Ridley Room": {
+            "default_node": "Door to 58 Escape",
             "extra": {
                 "map_name": "7E0B5",
                 "asset_id": 258
             },
             "nodes": {
-                "Door to Hallway D": {
+                "Door to 58 Escape": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -430,8 +430,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Ceres Station",
-                        "area": "Hallway D",
-                        "node": "Door to Sample Storage"
+                        "area": "58 Escape",
+                        "node": "Door to Ceres Ridley Room"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -464,7 +464,7 @@
                     "valid_starting_location": false,
                     "event_name": "Event6",
                     "connections": {
-                        "Door to Hallway D": {
+                        "Door to 58 Escape": {
                             "type": "and",
                             "data": {
                                 "comment": null,
