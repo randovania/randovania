@@ -19,9 +19,11 @@ class MSRBootstrap(MetroidBootstrap):
         assert isinstance(configuration, MSRConfiguration)
 
         logical_patches = {
+            "allow_highly_dangerous_logic": "HighDanger",
             "nerf_power_bombs": "NerfPBs",
             "nerf_super_missiles": "NerfSupers",
-            "allow_highly_dangerous_logic": "HighDanger",
+            "remove_surface_crumbles": "SurfaceCrumbles",
+            "remove_area1_crumbles": "Area1Crumbles",
         }
         for name, index in logical_patches.items():
             if getattr(configuration, name):

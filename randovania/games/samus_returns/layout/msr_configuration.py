@@ -13,6 +13,8 @@ class MSRConfiguration(BaseConfiguration):
     area3_interior_shortcut_no_grapple: bool
     nerf_power_bombs: bool
     nerf_super_missiles: bool
+    surface_crumbles: bool
+    area1_crumbles: bool
     allow_highly_dangerous_logic: bool
 
     @classmethod
