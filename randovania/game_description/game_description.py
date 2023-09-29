@@ -18,7 +18,8 @@ if TYPE_CHECKING:
     from randovania.game_description.db.dock import DockWeaknessDatabase
     from randovania.game_description.db.node_identifier import NodeIdentifier
     from randovania.game_description.requirements.base import Requirement
-    from randovania.game_description.requirements.requirement_list import SatisfiableRequirements
+    from randovania.game_description.requirements.requirement_list import RequirementList, SatisfiableRequirements
+    from randovania.game_description.requirements.resource_requirement import DamageResourceRequirement
     from randovania.game_description.resources.resource_collection import ResourceCollection
     from randovania.game_description.resources.resource_database import ResourceDatabase
     from randovania.game_description.resources.resource_info import ResourceGainTuple, ResourceInfo
@@ -200,6 +201,13 @@ def _resources_for_damage(
             yield reduction.inventory_item
 
 
+def _damage_resource_from_list(requirements: RequirementList) -> DamageResourceRequirement | None:
+    for individual in requirements.values():
+        if individual.is_damage:
+            return individual
+    return None
+
+
 def calculate_interesting_resources(
     satisfiable_requirements: SatisfiableRequirements,
     resources: ResourceCollection,
@@ -213,14 +221,19 @@ def calculate_interesting_resources(
         for requirement_list in satisfiable_requirements:
             # If it's not satisfied, there's at least one IndividualRequirement in it that can be collected
             if not requirement_list.satisfied(resources, energy, database):
+                current_energy = energy
                 for individual in requirement_list.values():
                     # Ignore those with the `negate` flag. We can't "uncollect" a resource to satisfy these.
                     # Finally, if it's not satisfied then we're interested in collecting it
-                    if not individual.negate and not individual.satisfied(resources, energy, database):
+                    if not individual.negate and not individual.satisfied(resources, current_energy, database):
                         if individual.is_damage:
                             assert isinstance(individual.resource, SimpleResourceInfo)
                             yield from _resources_for_damage(individual.resource, database, resources)
                         else:
                             yield individual.resource
+                    elif individual.is_damage and individual.satisfied(resources, current_energy, database):
+                        current_energy -= individual.damage(resources, database)
+            elif damage_req := _damage_resource_from_list(requirement_list):
+                yield from _resources_for_damage(damage_req, database, resources)
 
     return frozenset(helper())
