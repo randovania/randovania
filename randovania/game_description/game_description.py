@@ -8,6 +8,7 @@ from typing import TYPE_CHECKING
 
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.region_list import RegionList
+from randovania.game_description.requirements.resource_requirement import DamageResourceRequirement
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
@@ -19,7 +20,6 @@ if TYPE_CHECKING:
     from randovania.game_description.db.node_identifier import NodeIdentifier
     from randovania.game_description.requirements.base import Requirement
     from randovania.game_description.requirements.requirement_list import RequirementList, SatisfiableRequirements
-    from randovania.game_description.requirements.resource_requirement import DamageResourceRequirement
     from randovania.game_description.resources.resource_collection import ResourceCollection
     from randovania.game_description.resources.resource_database import ResourceDatabase
     from randovania.game_description.resources.resource_info import ResourceGainTuple, ResourceInfo
@@ -201,10 +201,10 @@ def _resources_for_damage(
             yield reduction.inventory_item
 
 
-def _damage_resource_from_list(requirements: RequirementList) -> DamageResourceRequirement | None:
+def _damage_resource_from_list(requirements: RequirementList) -> SimpleResourceInfo | None:
     for individual in requirements.values():
-        if individual.is_damage:
-            return individual
+        if isinstance(individual, DamageResourceRequirement):
+            return individual.resource
     return None
 
 
@@ -233,7 +233,7 @@ def calculate_interesting_resources(
                             yield individual.resource
                     elif individual.is_damage and individual.satisfied(resources, current_energy, database):
                         current_energy -= individual.damage(resources, database)
-            elif damage_req := _damage_resource_from_list(requirement_list):
-                yield from _resources_for_damage(damage_req, database, resources)
+            elif damage_resource := _damage_resource_from_list(requirement_list):
+                yield from _resources_for_damage(damage_resource, database, resources)
 
     return frozenset(helper())
