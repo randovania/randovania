@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Resolver
 - Fixed: Bug where nested requirements were combined wrongly.
 - Fixed: Bug where damage constraints in chains were not understood correctly.
+- Fixed: Damage reductions from multiple suits are no longer multiplied together.
 - Improved: Order of exploring certain dangerous events.
 
 ### Metroid Dread
@@ -61,6 +62,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: PAL export with skippable cutscenes
 - Fixed: Flaahgra crash with skippable cutscenes (fingers crossed)
 - Fixed: Warrior shrine loading behavior
+- Fixed: Counting normal damage reductions from suits twice.
 - Changed: Update tournament winner scan in Artifact Temple
 - Changed: Improve loading times when leaving MQB
 - Changed: Parasite Queen no longer respawns on 2nd pass
