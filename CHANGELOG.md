@@ -22,6 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Metroid Dread
 
 - Added: Enky and Charge Beam Doors can be made immune to Power Bombs. This is enabled in the Starter Preset, and can be toggled in Preset -> Game Modifications -> Other -> Miscellaneous -> Power Bomb Limitations.
+- Added: Warning in the FAQ about custom text not displaying if the game is played in languages other than English.
 - Changed: Exporting games is now significantly faster.
 
 #### Logic Database
