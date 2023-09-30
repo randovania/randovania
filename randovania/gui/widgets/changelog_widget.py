@@ -14,6 +14,9 @@ class ChangeLogWidget(QtWidgets.QWidget):
 
         self.select_version = QtWidgets.QComboBox(self)
         self.select_version.setMaxVisibleItems(10)
+        self.select_version.setStyleSheet(
+            "QComboBox { combobox-popup: 0; }"
+        )  # HACK: Done to respect max items limit on Linux/macOS
         self.select_version.currentIndexChanged.connect(self.select_version_index_changed)
 
         layout.addWidget(self.select_version)

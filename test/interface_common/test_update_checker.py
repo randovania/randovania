@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-from datetime import datetime
 from distutils.version import StrictVersion
 
 import pytest
@@ -12,7 +11,7 @@ _MORE_DETAILS = "\n\n---\nFor more details, check the Change Log tab."
 
 _RAW_DATE = "2023-09-16T02:39:26Z"
 
-_FORMATTED_DATE = datetime.strptime(_RAW_DATE, "%Y-%m-%dT%H:%M:%SZ").strftime("%x")
+_FORMATTED_DATE = ChangeLogDetails("", _RAW_DATE).formatted_date
 
 _CUSTOM_CHANGE_LOGS = {
     4: "\n- **Major** - Foo\n",
