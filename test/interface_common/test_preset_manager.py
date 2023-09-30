@@ -25,7 +25,7 @@ async def test_add_then_delete_preset(tmp_path, default_preset):
 
 def test_get_preset_at_version(test_files_dir):
     # Setup
-    preset_path = test_files_dir.joinpath("presets/fewest_changes_v1.rdvpreset")
+    preset_path = test_files_dir.joinpath("presets/prime2/fewest_changes_v1.rdvpreset")
 
     # Run
     result = preset_manager._get_preset_at_version(
@@ -50,7 +50,7 @@ def test_history_for_file(tmp_path, test_files_dir):
     result = list(
         preset_manager._history_for_file(
             repository,
-            repository.joinpath("presets/fewest_changes_v1.rdvpreset"),
+            repository.joinpath("presets/prime2/fewest_changes_v1.rdvpreset"),
         )
     )
 

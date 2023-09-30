@@ -29,7 +29,9 @@ def test_init(tmpdir):
 @pytest.mark.parametrize("has_description", [False, True])
 def test_multiplayer_session_create_session_entry(clean_database, has_description, test_files_dir, default_game_list):
     # Setup
-    description = LayoutDescription.from_file(test_files_dir.joinpath("log_files", "prime1_and_2_multi.rdvgame"))
+    description = LayoutDescription.from_file(
+        test_files_dir.joinpath("rdvgames", "prime1", "prime1_and_2_multi.rdvgame")
+    )
     someone = database.User.create(name="Someone")
     s = database.MultiplayerSession.create(
         name="Debug", creator=someone, visibility=MultiplayerSessionVisibility.HIDDEN

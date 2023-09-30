@@ -4,7 +4,7 @@ from randovania.layout.layout_description import LayoutDescription
 
 
 def test_generation_order_widget(skip_qtbot, test_files_dir):
-    layout = LayoutDescription.from_file(test_files_dir.joinpath("log_files", "prime2_seed_b.rdvgame"))
+    layout = LayoutDescription.from_file(test_files_dir.joinpath("rdvgames", "prime2", "prime2_seed_b.rdvgame"))
 
     widget = GenerationOrderWidget(None, layout, ["Me"])
     skip_qtbot.addWidget(widget)

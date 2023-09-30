@@ -10,7 +10,7 @@ from randovania.layout.versioned_preset import VersionedPreset
 
 
 def test_elements_init(skip_qtbot, test_files_dir):
-    preset_path = test_files_dir.joinpath("presets/super_test_preset.rdvpreset")
+    preset_path = test_files_dir.joinpath("presets", "super_metroid", "super_test_preset.rdvpreset")
     preset = VersionedPreset.from_file_sync(preset_path).get_preset()
     options = MagicMock()
     assert isinstance(preset.configuration, SuperMetroidConfiguration)

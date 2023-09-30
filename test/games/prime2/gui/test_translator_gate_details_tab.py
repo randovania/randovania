@@ -8,7 +8,7 @@ from randovania.layout.layout_description import LayoutDescription
 
 def test_update_content(skip_qtbot, test_files_dir):
     # Setup
-    description = LayoutDescription.from_file(test_files_dir.joinpath("log_files", "seed_a.rdvgame"))
+    description = LayoutDescription.from_file(test_files_dir.joinpath("rdvgames", "prime2", "seed_a.rdvgame"))
     tab = TranslatorGateDetailsTab(None, RandovaniaGame.METROID_PRIME_ECHOES)
 
     # Run

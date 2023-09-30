@@ -41,7 +41,7 @@ if TYPE_CHECKING:
 )
 def test_create_patch_data(test_files_dir, rdvgame_filename, expected_results_filename, num_of_players, mocker):
     # Setup
-    rdvgame = test_files_dir.joinpath("log_files", "dread", rdvgame_filename)
+    rdvgame = test_files_dir.joinpath("rdvgames", "dread", rdvgame_filename)
     players_config = PlayersConfiguration(0, {i: f"Player {i + 1}" for i in range(num_of_players)})
     description = LayoutDescription.from_file(rdvgame)
     cosmetic_patches = DreadCosmeticPatches()
@@ -244,7 +244,7 @@ def _setup_and_teardown_for_wrong_custom_spawn():
 @pytest.mark.usefixtures("_setup_and_teardown_for_wrong_custom_spawn")
 def test_create_patch_with_wrong_custom_spawn(test_files_dir, mocker):
     # test for a not createable spawn point
-    file = test_files_dir.joinpath("log_files", "dread", "starter_preset.rdvgame")
+    file = test_files_dir.joinpath("rdvgames", "dread", "starter_preset.rdvgame")
     description = LayoutDescription.from_file(file)
     players_config = PlayersConfiguration(0, {0: "Dread"})
     cosmetic_patches = DreadCosmeticPatches()
@@ -286,7 +286,7 @@ def _setup_and_teardown_for_custom_spawn():
 @pytest.mark.usefixtures("_setup_and_teardown_for_custom_spawn")
 def test_create_patch_with_custom_spawn(test_files_dir, mocker):
     # test for custom spawn point referenced by starting location and teleporters
-    file = test_files_dir.joinpath("log_files", "dread", "custom_start.rdvgame")
+    file = test_files_dir.joinpath("rdvgames", "dread", "custom_start.rdvgame")
     description = LayoutDescription.from_file(file)
     players_config = PlayersConfiguration(0, {0: "Dread"})
     cosmetic_patches = DreadCosmeticPatches()

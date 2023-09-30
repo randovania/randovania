@@ -111,7 +111,7 @@ def test_update_layout_description_no_spoiler(skip_qtbot, mocker):
 
 @pytest.mark.parametrize("twice", [False, True])
 def test_update_layout_description_actual_seed(skip_qtbot, test_files_dir, twice: bool):
-    description = LayoutDescription.from_file(test_files_dir.joinpath("log_files", "seed_a.rdvgame"))
+    description = LayoutDescription.from_file(test_files_dir.joinpath("rdvgames", "prime2", "seed_a.rdvgame"))
 
     # Run
     window = GameDetailsWindow(None, MagicMock())
@@ -130,7 +130,9 @@ def test_update_layout_description_actual_seed(skip_qtbot, test_files_dir, twice
 
 
 def test_update_layout_description_prime1_crazy(skip_qtbot, test_files_dir):
-    description = LayoutDescription.from_file(test_files_dir.joinpath("log_files", "prime1_crazy_seed.rdvgame"))
+    description = LayoutDescription.from_file(
+        test_files_dir.joinpath("rdvgames", "prime1", "prime1_crazy_seed.rdvgame")
+    )
 
     # Run
     window = GameDetailsWindow(None, MagicMock())

@@ -49,7 +49,7 @@ def test_construct_music_shuffle_dict_full() -> None:
 )
 def test_create_patch_data(test_files_dir, rdvgame_filename, expected_results_filename, num_of_players, mocker):
     # Setup
-    rdvgame = test_files_dir.joinpath("log_files", "am2r", rdvgame_filename)
+    rdvgame = test_files_dir.joinpath("rdvgames", "am2r", rdvgame_filename)
     players_config = PlayersConfiguration(0, {i: f"Player {i + 1}" for i in range(num_of_players)})
     description = LayoutDescription.from_file(rdvgame)
     cosmetic_patches = AM2RCosmeticPatches()
@@ -86,7 +86,7 @@ def test_create_patch_data(test_files_dir, rdvgame_filename, expected_results_fi
 )
 def test_create_pickups_dict_shiny(test_files_dir, rdvgame_filename, expected_results_filename, num_of_players, mocker):
     # Setup
-    rdvgame = test_files_dir.joinpath("log_files", "am2r", rdvgame_filename)
+    rdvgame = test_files_dir.joinpath("rdvgames", "am2r", rdvgame_filename)
     players_config = PlayersConfiguration(0, {i: f"Player {i + 1}" for i in range(num_of_players)})
     description = LayoutDescription.from_file(rdvgame)
     cosmetic_patches = AM2RCosmeticPatches()

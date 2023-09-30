@@ -694,7 +694,7 @@ def test_create_string_patches(
 @pytest.mark.parametrize("use_new_patcher", [False, True])
 def test_generate_patcher_data(test_files_dir, use_new_patcher):
     # Setup
-    description = LayoutDescription.from_file(test_files_dir.joinpath("log_files", "seed_a.rdvgame"))
+    description = LayoutDescription.from_file(test_files_dir.joinpath("rdvgames", "prime2", "seed_a.rdvgame"))
     player_index = 0
     preset = description.get_preset(player_index)
     cosmetic_patches = EchoesCosmeticPatches()

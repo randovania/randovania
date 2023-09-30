@@ -67,7 +67,7 @@ def test_create_patch_data_starting_items(test_files_dir, mocker):
 
 def _create_patch_data(test_files_dir, mocker, in_file, out_file, cosmetic):
     # Setup
-    f = test_files_dir.joinpath("log_files", "cave_story", f"{in_file}.rdvgame")
+    f = test_files_dir.joinpath("rdvgames", "cave_story", f"{in_file}.rdvgame")
     description = LayoutDescription.from_file(f)
     players_config = PlayersConfiguration(0, {0: "Cave Story"})
 
@@ -87,7 +87,7 @@ def _create_patch_data(test_files_dir, mocker, in_file, out_file, cosmetic):
         mychar = Path(data["mychar"])
         data["mychar"] = mychar.name
 
-    path = test_files_dir.joinpath("caver_expected_data", f"{out_file}.json")
+    path = test_files_dir.joinpath("patcher_data", "cave_story", f"{out_file}.json")
     expected_data = json_lib.read_path(path)
 
     # # Uncomment the following lines to update:

@@ -124,6 +124,6 @@ def _test_preset(rdvgame_file: Path, expected_results_file: Path, mocker):
     ],
 )
 def test_create_patch_data(test_files_dir, rdvgame_filename, expected_results_filename, mocker):
-    rdvgame = test_files_dir.joinpath("log_files", rdvgame_filename)
-    expected_results = test_files_dir.joinpath(expected_results_filename)
+    rdvgame = test_files_dir.joinpath("rdvgames", "prime1", rdvgame_filename)
+    expected_results = test_files_dir.joinpath("patcher_data", "prime1", expected_results_filename)
     _test_preset(rdvgame, expected_results, mocker)
