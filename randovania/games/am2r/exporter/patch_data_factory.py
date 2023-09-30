@@ -69,7 +69,7 @@ def _construct_music_shuffle_dict(music_mode: MusicMode, rng: Random) -> dict[st
         "musarea7b",
         "musfanfare",
         "musitemget",
-        "musmetroidappear",
+        "musmonsterappear",
         "musqueenbreak",
         "musqueenintro",
     ]
