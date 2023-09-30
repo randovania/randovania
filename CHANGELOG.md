@@ -49,6 +49,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ##### Ferenia
 
+- Added: The missile tank in the Pitfall Puzzle Room can now be obtained with Flash Shift.
 - Changed: Purple EMMI Introduction: Using Speed Booster to get past the Shutter Gate now requires Speed Booster Conservation Intermediate instead of Flash Shift Skip Beginner.
 
 ##### Ghavoran
