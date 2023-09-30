@@ -6,13 +6,13 @@ Extra - save_index: 0
 > Door to Gauntlet Access; Heals? False
   * Layers: default
   * Normal Door to Gauntlet Access/Door to Landing Site
-  > Landing Site Save Station
+  > Ship
       Screw Attack or Can Lay Any Bombs
 
 > Door to Parlor; Heals? False
   * Layers: default
   * Normal Door to Parlor/Door to Landing Site
-  > Landing Site Save Station
+  > Ship
       Trivial
 
 > Door to Crateria Power Bomb Room; Heals? False
@@ -28,17 +28,17 @@ Extra - save_index: 0
 
 > Door to Crateria Tube; Heals? False
   * Layers: default
-  * Super Missile Door to Crateria Tube/Door to Landing Site
+  * Super Missile Door to Crateria Tube/Dock to Landing Site
   > Top Pillar
       Trivial
 
 > Event - Win Game; Heals? False
   * Layers: default
   * Event Win Game
-  > Landing Site Save Station
+  > Ship
       Trivial
 
-> Landing Site Save Station; Heals? True; Spawn Point; Default Node
+> Ship; Heals? True; Spawn Point; Default Node
   * Layers: default
   > Door to Gauntlet Access
       All of the following:
@@ -49,7 +49,7 @@ Extra - save_index: 0
               Space Jump or Wall Jumps (Advanced)
               # IBJ
               Vertical Infinite Bomb Jump (Intermediate) and Can Lay Bombs
-              # Shinespark
+              # Shinespark - TODO: health requirements
               Speed Booster and Shinespark (Beginner)
   > Door to Parlor
       Trivial
@@ -74,23 +74,23 @@ Extra - save_index: 0
           Vertical Infinite Bomb Jump (Intermediate) and Can Lay Bombs
   > Door to Crateria Tube
       Trivial
-  > Landing Site Save Station
+  > Ship
       Trivial
 
 ----------------
 Crateria Tube
 Extra - map_name: 795D4
 Extra - asset_id: 1
-> Door to Landing Site; Heals? False; Default Node
+> Dock to Landing Site; Heals? False; Default Node
   * Layers: default
-  * Normal Door to Landing Site/Door to Crateria Tube
-  > Door to Crateria Kihunter Room
+  * Open Passage to Landing Site/Door to Crateria Tube
+  > Dock to Crateria Kihunter Room
       Trivial
 
-> Door to Crateria Kihunter Room; Heals? False
+> Dock to Crateria Kihunter Room; Heals? False
   * Layers: default
-  * Normal Door to Crateria Kihunter Room/Door to Crateria Tube
-  > Door to Landing Site
+  * Open Passage to Crateria Kihunter Room/Door to Crateria Tube
+  > Dock to Landing Site
       Trivial
 
 ----------------
@@ -99,7 +99,7 @@ Extra - map_name: 7948C
 Extra - asset_id: 2
 > Door to Crateria Tube; Heals? False; Default Node
   * Layers: default
-  * Normal Door to Crateria Tube/Door to Crateria Kihunter Room
+  * Normal Door to Crateria Tube/Dock to Crateria Kihunter Room
   > Door to Moat
       Trivial
   > Door to Elevator to Red Brinstar
@@ -127,7 +127,8 @@ Extra - asset_id: 3
   > Door to West Ocean
       Any of the following:
           Grapple Beam or Space Jump
-          Speed Booster and Short Charge (Intermediate) and Disabled Entrance Randomizer
+          # Short charge shinespark
+          Speed Booster and Short Charge (Intermediate) and Disabled Door Lock Randomizer and Disabled Entrance Randomizer
           Gravity Suit and Gravity Jump (Intermediate) and Knowledge (Intermediate)
           # Using a CWJ to get across
           Knowledge (Intermediate) and Movement (Advanced) and Wall Jumps (Expert)
@@ -137,7 +138,12 @@ Extra - asset_id: 3
       Any of the following:
           Grapple Beam or Space Jump or Movement (Beginner)
           Gravity Suit and Wall Jumps (Beginner)
-          Speed Booster and Short Charge (Intermediate) and Disabled Entrance Randomizer
+          # Short charge shinespark
+          Speed Booster and Short Charge (Intermediate) and Disabled Door Lock Randomizer and Disabled Entrance Randomizer
+          # HIBJ
+          Horizontal Infinite Bomb Jump (Beginner) and Can Lay Bombs
+          # Jump and run with open door
+          Hi-Jump Boots and Disabled Door Lock Randomizer
 
 > Door to West Ocean; Heals? False
   * Layers: default
@@ -180,6 +186,7 @@ Extra - asset_id: 4
               Gravity Suit
               Any of the following:
                   Hi-Jump Boots or Wall Jumps (Beginner)
+                  # IBJ
                   Vertical Infinite Bomb Jump (Beginner) and Can Lay Bombs
   > Pickup (Seafloor Missile Expansion)
       All of the following:
@@ -192,20 +199,16 @@ Extra - asset_id: 4
 > Door to Bowling Alley Cave; Heals? False
   * Layers: default
   * Normal Door to Bowling Alley Cave/Door to West Ocean
-  > Door to Attic
-      All of the following:
-          Charge Beam
-          Morph Ball Bombs or Power Bombs or Spring Ball
+  > Door to Bowling Alley
+      Can Lay Any Bombs or Can Use Spring Ball
 
 > Door to Bowling Alley; Heals? False
   * Layers: default
   * Normal Door to Bowling Alley/Door to West Ocean
   > Door to Bowling Alley Cave
-      Trivial
+      Can Lay Any Bombs or Can Use Spring Ball
   > Door to Attic
-      All of the following:
-          Morph Ball
-          Morph Ball Bombs or Power Bombs or Spring Ball
+      Trivial
 
 > Door to Wrecked Ship Entrance; Heals? False
   * Layers: default
@@ -222,21 +225,21 @@ Extra - asset_id: 4
 > Door to Attic; Heals? False
   * Layers: default
   * Normal Door to Attic/Door to West Ocean
-  > Door to Bowling Alley Cave
-      All of the following:
-          Morph Ball
-          Morph Ball Bombs or Power Bombs or Spring Ball
   > Door to Bowling Alley
       Trivial
   > Pickup (Topmost Missile Expansion)
       Any of the following:
-          # Knowledge (Intermediate): Trippers can be brought over to right platforms by keeping them on screen. (jump and aim up)
-          Hi-Jump Boots or Space Jump or Knowledge (Intermediate)
+          Hi-Jump Boots or Space Jump
+          # Shinespark
           Speed Booster and Shinespark (Beginner) and Normal Damage ≥ 36
           # Wall jump off of Trippers
           Ice Beam and Wall Jumps (Intermediate)
           # IBJ
           Vertical Infinite Bomb Jump (Intermediate) and Can Lay Bombs
+          # Knowledge (Intermediate): Trippers can be brought over to right platforms by keeping them on screen. (jump and aim up)
+          Knowledge (Intermediate)
+          # Speedboost and jump: https://youtu.be/rkw3gUtLFqQ
+          Hi-Jump Boots and Speed Booster and Movement (Beginner)
   > Pickup (Morph Ball Maze Missile Expansion)
       Morph Ball and Super Missile
 
@@ -250,11 +253,15 @@ Extra - asset_id: 4
   * Layers: default
   * Pickup 3; Category? Minor
   > Door to Moat
-      All of the following:
-          Morph Ball
-          Morph Ball Bombs or Power Bombs
+      Can Lay Any Bombs
   > Door to Attic
-      Morph Ball and Super Missile
+      All of the following:
+          Morph Ball and Super Missile
+          Any of the following:
+              # Get into Tunnel
+              Can Lay Bombs or Can Use Spring Ball
+              # TODO: make this mid air morph
+              Movement (Beginner)
 
 > Pickup (Seafloor Missile Expansion); Heals? False
   * Layers: default
@@ -306,8 +313,9 @@ Extra - asset_id: 6
           All of the following:
               Gravity Suit
               Any of the following:
+                  Hi-Jump Boots or Space Jump
                   # With Wall Jumps: https://youtu.be/6tyDDiNLY_o
-                  Hi-Jump Boots or Space Jump or Wall Jumps (Beginner)
+                  Wall Jumps (Beginner)
                   # 2 Tap Shinespark: https://youtu.be/a8-2ZAwcMos
                   Speed Booster and Shinespark (Beginner) and Short Charge (Intermediate)
           # Spring Ball Jump: https://youtu.be/bVy_2LRx0IU
@@ -356,13 +364,14 @@ Extra - asset_id: 8
       All of the following:
           Morph Ball
           Any of the following:
+              Hi-Jump Boots or Space Jump
               # With Wall Jumps: https://youtu.be/Z_vt91bLKeA
-              Hi-Jump Boots or Space Jump or Wall Jumps (Beginner)
+              Wall Jumps (Beginner)
               All of the following:
                   Gravity Suit and Speed Booster and Shinespark (Beginner)
                   Any of the following:
                       Short Charge (Intermediate)
-                      # No short charge means you have to charge into the next room.
+                      # No short charge means you have to charge from the room before.
                       Disabled Door Lock Randomizer and Disabled Entrance Randomizer
 
 ----------------
@@ -476,11 +485,11 @@ Extra - asset_id: 13
   > Door to Gold Four Hallway
       Any of the following:
           # Weapons to defeat Green Pirates
-          Charge Beam or Ice Beam or Missile or Plasma Beam or Power Bombs or Spazer Beam or Super Missile or Wave Beam or Can Lay Any Bombs
-          # 3 hits for Intermediate damage boosting
-          Damage Boosting (Intermediate) and Normal Damage ≥ 61
+          Charge Beam or Ice Beam or Missile or Plasma Beam or Spazer Beam or Super Missile or Wave Beam or Can Lay Any Bombs
           # 5 hits for beginner damage boosting
           Damage Boosting (Beginner) and Normal Damage ≥ 101
+          # 3 hits for Intermediate damage boosting
+          Damage Boosting (Intermediate) and Normal Damage ≥ 61
 
 > Door to Lower Mushrooms; Heals? False
   * Layers: default
@@ -494,29 +503,34 @@ Extra - asset_id: 13
   > Door to Terminator Room
       Any of the following:
           # Weapons to defeat Green Pirates
-          Charge Beam or Ice Beam or Missile or Plasma Beam or Power Bombs or Spazer Beam or Super Missile or Wave Beam or Can Lay Any Bombs
-          # 4 hits for intermediate damage boosting (going up is more difficult than down)
-          Damage Boosting (Intermediate) and Normal Damage ≥ 81
+          Charge Beam or Ice Beam or Missile or Plasma Beam or Spazer Beam or Super Missile or Wave Beam or Can Lay Any Bombs
           # 5 hits for beginner damage boosting
           Damage Boosting (Beginner) and Normal Damage ≥ 101
+          # 4 hits for intermediate damage boosting (going up is more difficult than down)
+          Damage Boosting (Intermediate) and Normal Damage ≥ 81
   > Door to Lower Mushrooms
       Trivial
 
 > Pickup (Left Missile Expansion); Heals? False
   * Layers: default
   * Pickup 10; Category? Minor
-  > Door to Terminator Room
-      Morph Ball
   > Pickup (Right Missile Expansion)
+      Movement (Beginner)
+  > Gauntlet Tunnel Bottom
       Trivial
 
 > Pickup (Right Missile Expansion); Heals? False
   * Layers: default
   * Pickup 9; Category? Minor
+  > Pickup (Left Missile Expansion)
+      Movement (Beginner)
+  > Gauntlet Tunnel Bottom
+      Trivial
+
+> Gauntlet Tunnel Bottom; Heals? False
+  * Layers: default
   > Door to Terminator Room
       Morph Ball
-  > Pickup (Left Missile Expansion)
-      Trivial
 
 ----------------
 Parlor
@@ -556,6 +570,7 @@ Extra - asset_id: 14
   > Door to Landing Site
       Any of the following:
           Screw Attack or Can Lay Any Bombs
+          # Speedboost from previous room
           Speed Booster and Disabled Door Lock Randomizer and Disabled Entrance Randomizer
 
 > Door to Climb; Heals? False
@@ -629,7 +644,15 @@ Extra - asset_id: 17
   * Layers: default
   * Pickup 7; Category? Major
   > Door to Flyway
-      Trivial
+      All of the following:
+          # Items
+          Missile ≥ 5 or Super Missile or Combat (Beginner)
+          Any of the following:
+              # Energy requirements
+              Normal Damage ≥ 65
+              Combat (Beginner) and Normal Damage ≥ 30
+              # Hitless
+              Combat (Intermediate)
 
 ----------------
 Crateria Map Access
@@ -663,15 +686,18 @@ Extra - asset_id: 20
   * Layers: default
   * Normal Door to Final Missile Room/Door to Final Missile Bombway
   > Door to Parlor
-      Morph Ball
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Can Lay Any Bombs
+              # Tunnel might not be known to everyone
+              Knowledge (Beginner)
 
 > Door to Parlor; Heals? False
   * Layers: default
   * Normal Door to Parlor/Door to Final Missile Bombway
   > Door to Final Missile Room
-      All of the following:
-          Morph Ball
-          Morph Ball Bombs or Power Bombs
+      Can Lay Any Bombs
 
 ----------------
 Final Missile Room
@@ -698,19 +724,19 @@ Extra - asset_id: 22
   * Normal Door to Green Pirates Shaft/Door to Terminator Room
   > Door to Parlor
       Trivial
+  > Pickup (Energy Tank)
+      Trivial
 
 > Door to Parlor; Heals? False
   * Layers: default
   * Normal Door to Parlor/Door to Terminator Room
   > Door to Green Pirates Shaft
       Trivial
-  > Pickup (Energy Tank)
-      Trivial
 
 > Pickup (Energy Tank); Heals? False
   * Layers: default
   * Pickup 8; Category? Major
-  > Door to Parlor
+  > Door to Green Pirates Shaft
       Trivial
 
 ----------------
@@ -771,23 +797,17 @@ Extra - asset_id: 26
   * Layers: default
   * Power Bomb Door to Crateria Super Missile Room/Door to Climb (South)
   > Door to Parlor
-      All of the following:
-          Morph Ball
-          Morph Ball Bombs or Power Bombs
+      Can Lay Any Bombs
 
 > Door to Parlor; Heals? False
   * Layers: default
   * Normal Door to Parlor/Door to Climb
   > Door to Crateria Super Missile Room
-      All of the following:
-          Morph Ball
-          Morph Ball Bombs or Power Bombs
+      Can Lay Any Bombs
   > Door to Old Mother Brain
       Trivial
   > Door from Crateria Super Missile Room
-      All of the following:
-          Morph Ball
-          Morph Ball Bombs or Power Bombs
+      Can Lay Any Bombs
 
 > Door to Old Mother Brain; Heals? False
   * Layers: default
@@ -809,9 +829,7 @@ Extra - asset_id: 26
   * Layers: default
   * Permanently Locked to Crateria Super Missile Room/Door to Climb (North)
   > Door to Parlor
-      All of the following:
-          Morph Ball
-          Morph Ball Bombs or Power Bombs
+      Can Lay Any Bombs
 
 ----------------
 Crateria Super Missile Room
@@ -862,13 +880,15 @@ Extra - asset_id: 28
           After Crateria Wakeup
           Any of the following:
               Screw Attack or Can Lay Any Bombs
+              # TODO: doesnt this require no entrance rando + no door rando?
               Speed Booster and Blue Suit Glitch (Intermediate) and Short Charge (Advanced)
 
 > Door to Elevator to Blue Brinstar; Heals? False
   * Layers: default
   * Normal Door to Elevator to Blue Brinstar/Door to Old Mother Brain
   > Door to Climb
-      After Crateria Wakeup
+      # TODO: Make Left Door of "After Crateria Wakeup" type.
+      Normal Damage
 
 > Pickup (Missile Expansion); Heals? False
   * Layers: default
@@ -876,6 +896,7 @@ Extra - asset_id: 28
   > Door to Climb
       Any of the following:
           Screw Attack or Can Lay Any Bombs
+          # TODO: see todo to get here
           Speed Booster and Blue Suit Glitch (Intermediate) and Short Charge (Advanced)
 
 ----------------
@@ -920,7 +941,7 @@ Extra - map_name: 7962A
 Extra - asset_id: 31
 > Door to Crateria Kihunter Room; Heals? False; Default Node
   * Layers: default
-  * Power Bomb Door to Crateria Kihunter Room/Door to Elevator to Red Brinstar
+  * Normal Door to Crateria Kihunter Room/Door to Elevator to Red Brinstar
   > Teleporter to Brinstar
       Trivial
 
