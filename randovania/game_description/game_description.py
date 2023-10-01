@@ -234,6 +234,10 @@ def calculate_interesting_resources(
                     elif individual.is_damage and individual.satisfied(resources, current_energy, database):
                         current_energy -= individual.damage(resources, database)
             elif damage_resource := _damage_resource_from_list(requirement_list):
+                # This part is here to make sure that resources for damage are considered interesting for cases where
+                # damage constraints are combined from multiple nodes. Each requirement in isolation might be satisfied,
+                # but when combined, the energy might not be sufficient. The satisfiable requirements are assumed to be
+                # unsatisfied.
                 yield from _resources_for_damage(damage_resource, database, resources)
 
     return frozenset(helper())
