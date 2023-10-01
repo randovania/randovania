@@ -4,14 +4,14 @@
         "asset_id": 5554
     },
     "areas": {
-        "Tourian Entrance": {
+        "Tourian First Room": {
             "default_node": "Teleporter to Crateria",
             "extra": {
                 "map_name": "7DAAE",
                 "asset_id": 33
             },
             "nodes": {
-                "Door to Upper Tourian Save Station": {
+                "Door to Upper Tourian Save Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -28,8 +28,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Tourian",
-                        "area": "Upper Tourian Save Station",
-                        "node": "Door to Tourian Entrance"
+                        "area": "Upper Tourian Save Room",
+                        "node": "Door to Tourian First Room"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -64,7 +64,7 @@
                     "default_connection": {
                         "region": "Tourian",
                         "area": "Metroid Room 1",
-                        "node": "Door to Tourian Entrance"
+                        "node": "Door to Tourian First Room"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -72,7 +72,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Upper Tourian Save Station": {
+                        "Door to Upper Tourian Save Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -108,7 +108,7 @@
                     "dock_type": "teleporter",
                     "default_connection": {
                         "region": "Crateria",
-                        "area": "Gold Four",
+                        "area": "Statues Room",
                         "node": "Teleporter to Tourian"
                     },
                     "default_dock_weakness": "Teleporter",
@@ -128,7 +128,7 @@
                 }
             }
         },
-        "Upper Tourian Save Station": {
+        "Upper Tourian Save Room": {
             "default_node": "Save Station",
             "extra": {
                 "map_name": "7DF1B",
@@ -136,7 +136,7 @@
                 "save_index": 1
             },
             "nodes": {
-                "Door to Tourian Entrance": {
+                "Door to Tourian First Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -153,8 +153,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Tourian",
-                        "area": "Tourian Entrance",
-                        "node": "Door to Upper Tourian Save Station"
+                        "area": "Tourian First Room",
+                        "node": "Door to Upper Tourian Save Room"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -186,7 +186,7 @@
                     "extra": {},
                     "valid_starting_location": true,
                     "connections": {
-                        "Door to Tourian Entrance": {
+                        "Door to Tourian First Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -198,13 +198,13 @@
             }
         },
         "Metroid Room 1": {
-            "default_node": "Door to Tourian Entrance",
+            "default_node": "Door to Tourian First Room",
             "extra": {
                 "map_name": "7DAE1",
                 "asset_id": 35
             },
             "nodes": {
-                "Door to Tourian Entrance": {
+                "Door to Tourian First Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -221,7 +221,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Tourian",
-                        "area": "Tourian Entrance",
+                        "area": "Tourian First Room",
                         "node": "Door to Metroid Room 1"
                     },
                     "default_dock_weakness": "Normal Door",
@@ -342,7 +342,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Tourian Entrance": {
+                        "Door to Tourian First Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -367,7 +367,7 @@
                     "valid_starting_location": false,
                     "event_name": "Event14",
                     "connections": {
-                        "Door to Tourian Entrance": {
+                        "Door to Tourian First Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1191,7 +1191,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Tourian Gadora Room": {
+                        "Door to Tourian Eye Door Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1200,7 +1200,7 @@
                         }
                     }
                 },
-                "Door to Tourian Gadora Room": {
+                "Door to Tourian Eye Door Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1217,7 +1217,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Tourian",
-                        "area": "Tourian Gadora Room",
+                        "area": "Tourian Eye Door Room",
                         "node": "Door to Seaweed Room"
                     },
                     "default_dock_weakness": "Missile Door",
@@ -1233,7 +1233,7 @@
                                 "items": []
                             }
                         },
-                        "Door to Tourian Resupply Station": {
+                        "Door to Tourian Recharge Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1242,7 +1242,7 @@
                         }
                     }
                 },
-                "Door to Tourian Resupply Station": {
+                "Door to Tourian Recharge Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1259,7 +1259,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Tourian",
-                        "area": "Tourian Resupply Station",
+                        "area": "Tourian Recharge Room",
                         "node": "Door to Seaweed Room"
                     },
                     "default_dock_weakness": "Normal Door",
@@ -1268,7 +1268,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Tourian Gadora Room": {
+                        "Door to Tourian Eye Door Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1279,7 +1279,7 @@
                 }
             }
         },
-        "Tourian Resupply Station": {
+        "Tourian Recharge Room": {
             "default_node": "Door to Seaweed Room",
             "extra": {
                 "map_name": "7DD2E",
@@ -1304,7 +1304,7 @@
                     "default_connection": {
                         "region": "Tourian",
                         "area": "Seaweed Room",
-                        "node": "Door to Tourian Resupply Station"
+                        "node": "Door to Tourian Recharge Room"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -1315,7 +1315,7 @@
                 }
             }
         },
-        "Tourian Gadora Room": {
+        "Tourian Eye Door Room": {
             "default_node": "Door to Seaweed Room",
             "extra": {
                 "map_name": "7DDC4",
@@ -1340,7 +1340,7 @@
                     "default_connection": {
                         "region": "Tourian",
                         "area": "Seaweed Room",
-                        "node": "Door to Tourian Gadora Room"
+                        "node": "Door to Tourian Eye Door Room"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -1375,7 +1375,7 @@
                     "default_connection": {
                         "region": "Tourian",
                         "area": "Rinka Shaft",
-                        "node": "Door to Tourian Gadora Room"
+                        "node": "Door to Tourian Eye Door Room"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -1395,13 +1395,13 @@
             }
         },
         "Rinka Shaft": {
-            "default_node": "Door to Rinka Shaft Save Station",
+            "default_node": "Door to Lower Tourian Save Room",
             "extra": {
                 "map_name": "7DDF3",
                 "asset_id": 45
             },
             "nodes": {
-                "Door to Rinka Shaft Save Station": {
+                "Door to Lower Tourian Save Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1418,7 +1418,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Tourian",
-                        "area": "Rinka Shaft Save Station",
+                        "area": "Lower Tourian Save Room",
                         "node": "Door to Rinka Shaft"
                     },
                     "default_dock_weakness": "Normal Door",
@@ -1427,14 +1427,14 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Mother Brain's Room": {
+                        "Door to Mother Brain Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Door to Tourian Gadora Room": {
+                        "Door to Tourian Eye Door Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1443,7 +1443,7 @@
                         }
                     }
                 },
-                "Door to Mother Brain's Room": {
+                "Door to Mother Brain Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1460,7 +1460,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Tourian",
-                        "area": "Mother Brain's Room",
+                        "area": "Mother Brain Room",
                         "node": "Door to Rinka Shaft"
                     },
                     "default_dock_weakness": "Missile Door",
@@ -1469,7 +1469,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Rinka Shaft Save Station": {
+                        "Door to Lower Tourian Save Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1478,7 +1478,7 @@
                         }
                     }
                 },
-                "Door to Tourian Gadora Room": {
+                "Door to Tourian Eye Door Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1495,7 +1495,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Tourian",
-                        "area": "Tourian Gadora Room",
+                        "area": "Tourian Eye Door Room",
                         "node": "Door to Rinka Shaft"
                     },
                     "default_dock_weakness": "Normal Door",
@@ -1504,7 +1504,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Rinka Shaft Save Station": {
+                        "Door to Lower Tourian Save Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1515,7 +1515,7 @@
                 }
             }
         },
-        "Rinka Shaft Save Station": {
+        "Lower Tourian Save Room": {
             "default_node": "Save Station",
             "extra": {
                 "map_name": "7DE23",
@@ -1541,7 +1541,7 @@
                     "default_connection": {
                         "region": "Tourian",
                         "area": "Rinka Shaft",
-                        "node": "Door to Rinka Shaft Save Station"
+                        "node": "Door to Lower Tourian Save Room"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -1584,7 +1584,7 @@
                 }
             }
         },
-        "Mother Brain's Room": {
+        "Mother Brain Room": {
             "default_node": "Door to Rinka Shaft",
             "extra": {
                 "map_name": "7DD58",
@@ -1609,7 +1609,7 @@
                     "default_connection": {
                         "region": "Tourian",
                         "area": "Rinka Shaft",
-                        "node": "Door to Mother Brain's Room"
+                        "node": "Door to Mother Brain Room"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -1632,12 +1632,46 @@
                                         }
                                     },
                                     {
-                                        "type": "resource",
+                                        "type": "or",
                                         "data": {
-                                            "type": "items",
-                                            "name": "ETank",
-                                            "amount": 4,
-                                            "negate": false
+                                            "comment": "Damage",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "damage",
+                                                        "name": "Normal",
+                                                        "amount": 399,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "TODO: is rainbow beam any different in terms of damage? probably...",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "Normal",
+                                                                    "amount": 65,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "misc",
+                                                                    "name": "MBRainbowBeamNerf",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
                                         }
                                     },
                                     {
@@ -1689,7 +1723,7 @@
                     "default_connection": {
                         "region": "Tourian",
                         "area": "Tourian Escape Room 1",
-                        "node": "Door from Mother Brain's Room"
+                        "node": "Door from Mother Brain Room"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -1726,13 +1760,13 @@
             }
         },
         "Tourian Escape Room 1": {
-            "default_node": "Door from Mother Brain's Room",
+            "default_node": "Door from Mother Brain Room",
             "extra": {
                 "map_name": "7DE4D",
                 "asset_id": 42069
             },
             "nodes": {
-                "Door from Mother Brain's Room": {
+                "Door from Mother Brain Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1749,7 +1783,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Tourian",
-                        "area": "Mother Brain's Room",
+                        "area": "Mother Brain Room",
                         "node": "Door to Tourian Escape Room 1"
                     },
                     "default_dock_weakness": "Permanently Locked",
