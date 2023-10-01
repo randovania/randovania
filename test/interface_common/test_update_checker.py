@@ -11,7 +11,16 @@ _MORE_DETAILS = "\n\n---\nFor more details, check the Change Log tab."
 
 _RAW_DATE = "2023-09-16T02:39:26Z"
 
-_FORMATTED_DATE = ChangeLogDetails("", _RAW_DATE).formatted_date
+_CUSTOM_RELEASE = {
+    "tag_name": "0.1.0",
+    "body": "body",
+    "html_url": "url",
+    "published_at": _RAW_DATE,
+}
+
+_GET_DATE = update_checker.get_version_for_release(_CUSTOM_RELEASE)
+
+_FORMATTED_DATE = _GET_DATE.change_log.formatted_date
 
 _CUSTOM_CHANGE_LOGS = {
     4: "\n- **Major** - Foo\n",

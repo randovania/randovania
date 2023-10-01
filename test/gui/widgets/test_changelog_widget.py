@@ -1,11 +1,6 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
-
 from randovania.gui.widgets.changelog_widget import ChangeLogWidget
-
-if TYPE_CHECKING:
-    from PySide6 import QtWidgets
 
 
 def test_create(skip_qtbot):
@@ -24,11 +19,11 @@ def test_create(skip_qtbot):
     assert widget.select_version.itemText(1) == "2.0"
 
     widget.select_version.setCurrentIndex(0)
-    qScroll: QtWidgets.QScrollArea = widget.changelog.currentWidget()
-    qLabel: QtWidgets.QLabel = qScroll.widget()
-    assert qLabel.text() == "Foo"
+    qScroll0 = widget.changelog.currentWidget()
+    qLabel0 = qScroll0.widget()
+    assert qLabel0.text() == "Foo"
 
     widget.select_version.setCurrentIndex(1)
-    qScroll: QtWidgets.QScrollArea = widget.changelog.currentWidget()
-    qLabel: QtWidgets.QLabel = qScroll.widget()
-    assert qLabel.text() == "Bar"
+    qScroll1 = widget.changelog.currentWidget()
+    qLabel1 = qScroll1.widget()
+    assert qLabel1.text() == "Bar"

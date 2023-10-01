@@ -14,6 +14,8 @@ class ChangeLogWidget(QtWidgets.QWidget):
 
         self.select_version = QtWidgets.QComboBox(self)
         self.select_version.setMaxVisibleItems(10)
+
+        # TODO: QComboBox does not display scrollbar for Linux/MacOS
         self.select_version.setStyleSheet(
             "QComboBox { combobox-popup: 0; }"
         )  # HACK: Done to respect max items limit on Linux/macOS
@@ -44,7 +46,7 @@ class ChangeLogWidget(QtWidgets.QWidget):
 
         self.changelog.setCurrentIndex(0)
 
-    def select_version_index_changed(self):
+    def select_version_index_changed(self) -> None:
         selected_widget: QtWidgets.QScrollArea = self.findChild(
             QtWidgets.QScrollArea, f"scroll_area {self.select_version.currentText()}"
         )
