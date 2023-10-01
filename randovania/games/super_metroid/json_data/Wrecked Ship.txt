@@ -12,10 +12,17 @@ Extra - asset_id: 51
               Grapple Beam or Space Jump
               # HBJ
               Horizontal Infinite Bomb Jump (Expert) and Can Lay Bombs
-              # TODO: Damage Boost numbers. Does HJ affect this?
-              Damage Boosting (Beginner) and Normal Damage ≥ 300
-              # TODO: short charge from previous room?
-              Speed Booster and Shinespark (Advanced) and Disabled Door Lock Randomizer and Disabled Entrance Randomizer
+              # Damage boost over
+              Damage Boosting (Advanced) and Normal Damage ≥ 120
+              All of the following:
+                  # Shinespark across from other room
+                  Speed Booster and Shinespark (Advanced) and Shinespark Damage ≥ 91 and Disabled Door Lock Randomizer and Disabled Entrance Randomizer
+                  Any of the following:
+                      # https://youtu.be/3SEmfFHrcfY
+                      # With Gravity
+                      Gravity Suit and Short Charge (Expert)
+                      # Without Gravity
+                      Short Charge (Hypermode)
 
 > Door to Gravity Suit Room; Heals? False
   * Layers: default
@@ -29,8 +36,8 @@ Extra - asset_id: 51
   > Door to Gravity Suit Room
       Can Lay Any Bombs
   > Pickup (Reserve Tank)
-      # TODO: shinespark health
-      Morph Ball and Power Bombs and Speed Booster and After Power Wrecked Ship and Shinespark (Beginner)
+      # TODO: use proper shinespark health
+      Speed Booster and After Power Wrecked Ship and Shinespark (Beginner) and Shinespark Damage ≥ 40 and Can Lay Power Bombs
 
 > Pickup (Reserve Tank); Heals? False
   * Layers: default
@@ -122,7 +129,15 @@ Extra - asset_id: 54
   * Layers: default
   * Normal Door to Wrecked Ship East Super Room/Door to Wrecked Ship Main Shaft
   > Door to Wrecked Ship West Super Room
-      Can Lay Any Bombs
+      All of the following:
+          Morph Ball
+          Any of the following:
+              # Break blocks
+              Can Lay Any Bombs
+              All of the following:
+                  # These beams also break them
+                  Knowledge (Intermediate)
+                  Spazer Beam or Wave Beam
 
 > Door to Wrecked Ship West Super Room; Heals? False
   * Layers: default
@@ -162,8 +177,7 @@ Extra - save_index: 0
   * Layers: default
   * Normal Door to Wrecked Ship Main Shaft/Door to Shaft Save Station
   > Save Station
-      # TODO: doesnt this save station only get activated when power is on?
-      Normal Damage
+      After Power Wrecked Ship
 
 > Save Station; Heals? False; Spawn Point; Default Node
   * Layers: default
@@ -317,6 +331,10 @@ Extra - asset_id: 63
           Gravity Suit or Hi-Jump Boots or Space Jump
           # HBJ
           Horizontal Infinite Bomb Jump (Beginner) and Can Lay Any Bombs
+          # Water does not exist if ship is not powered
+          Before Power Wrecked Ship
+          # https://youtu.be/Znv9j_X02vM
+          Movement (Intermediate)
   > Door to Wrecked Ship Energy Tank Room
       Trivial
 

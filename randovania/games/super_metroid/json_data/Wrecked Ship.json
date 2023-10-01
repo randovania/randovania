@@ -98,14 +98,14 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "TODO: Damage Boost numbers. Does HJ affect this?",
+                                                        "comment": "Damage boost over",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "tricks",
                                                                     "name": "DBoost",
-                                                                    "amount": 1,
+                                                                    "amount": 3,
                                                                     "negate": false
                                                                 }
                                                             },
@@ -114,7 +114,7 @@
                                                                 "data": {
                                                                     "type": "damage",
                                                                     "name": "Normal",
-                                                                    "amount": 300,
+                                                                    "amount": 120,
                                                                     "negate": false
                                                                 }
                                                             }
@@ -124,7 +124,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "TODO: short charge from previous room?",
+                                                        "comment": "Shinespark across from other room",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -160,6 +160,66 @@
                                                                     "name": "Shinespark",
                                                                     "amount": 3,
                                                                     "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "Shinespark",
+                                                                    "amount": 91,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "or",
+                                                                "data": {
+                                                                    "comment": "https://youtu.be/3SEmfFHrcfY",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "and",
+                                                                            "data": {
+                                                                                "comment": "With Gravity",
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "Shortcharge",
+                                                                                            "amount": 4,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "items",
+                                                                                            "name": "Gravity",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "and",
+                                                                            "data": {
+                                                                                "comment": "Without Gravity",
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "Shortcharge",
+                                                                                            "amount": 5,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        }
+                                                                    ]
                                                                 }
                                                             }
                                                         ]
@@ -263,25 +323,11 @@
                         "Pickup (Reserve Tank)": {
                             "type": "and",
                             "data": {
-                                "comment": "TODO: shinespark health",
+                                "comment": "TODO: use proper shinespark health",
                                 "items": [
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "PowerBomb",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
+                                        "type": "template",
+                                        "data": "Can Lay Power Bombs"
                                     },
                                     {
                                         "type": "resource",
@@ -307,6 +353,15 @@
                                             "type": "events",
                                             "name": "Event5",
                                             "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "damage",
+                                            "name": "Shinespark",
+                                            "amount": 40,
                                             "negate": false
                                         }
                                     }
@@ -775,8 +830,68 @@
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "template",
-                                        "data": "Can Lay Any Bombs"
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": "Break blocks",
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Lay Any Bombs"
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "These beams also break them",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Knowledge",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "or",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Wave",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Spazer",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -1021,13 +1136,13 @@
                         "Save Station": {
                             "type": "and",
                             "data": {
-                                "comment": "TODO: doesnt this save station only get activated when power is on?",
+                                "comment": null,
                                 "items": [
                                     {
                                         "type": "resource",
                                         "data": {
-                                            "type": "damage",
-                                            "name": "Normal",
+                                            "type": "events",
+                                            "name": "Event5",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -1864,6 +1979,40 @@
                                                         "type": "tricks",
                                                         "name": "HBJ",
                                                         "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "Water does not exist if ship is not powered",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "Event5",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "https://youtu.be/Znv9j_X02vM",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Movement",
+                                                        "amount": 2,
                                                         "negate": false
                                                     }
                                                 }
