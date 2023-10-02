@@ -35,7 +35,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ##### Burenia
 
-- Added: The missile tank in Burenia Main Hub Tower Top can be gotten with morph, cross bombs, and movement (intermediate).
+- Added: The missile tank in Burenia Main Hub Tower Top can be gotten with morph, cross bombs, and Cross Bomb Launch.
 - Changed: Teleport to Ferenia: Using Speed Booster to get past the Shutter Gate now requires Speed Booster Conservation Beginner.
 
 ##### Cataris
