@@ -102,7 +102,7 @@ Extra - asset_id: collision_camera_007
 > Event - Alpha Metroid+; Heals? False
   * Layers: default
   * Event Area 3 (Interior West) - Alpha Metroid+ West
-  > Start Point
+  > Pickup (DNA)
       Trivial
 
 > Start Point; Heals? False; Default Node
@@ -114,6 +114,15 @@ Extra - asset_id: collision_camera_007
       Trivial
   > Event - Alpha Metroid+
       Defeat Alpha Metroid+
+
+> Pickup (DNA); Heals? False
+  * Layers: default
+  * Pickup 185; Category? Minor
+  * Extra - pickup_type: metroid
+  * Extra - item_id: ITEM_RANDO_DNA_14
+  * Extra - spawngroup: SG_Alpha_002
+  > Start Point
+      Trivial
 
 ----------------
 Gamma Arena North
@@ -139,7 +148,7 @@ Extra - asset_id: collision_camera_008
 > Event - Gamma Metroid; Heals? False
   * Layers: default
   * Event Area 3 (Interior West) - Gamma Metroid Upper
-  > Start Point (Inside Arena)
+  > Pickup (DNA)
       Trivial
 
 > Start Point (Inside Arena); Heals? False; Default Node
@@ -168,6 +177,15 @@ Extra - asset_id: collision_camera_008
               Shoot Beam Burst
               Knowledge (Beginner) and Lay Power Bomb
 
+> Pickup (DNA); Heals? False
+  * Layers: default
+  * Pickup 190; Category? Minor
+  * Extra - pickup_type: metroid
+  * Extra - item_id: ITEM_RANDO_DNA_19
+  * Extra - spawngroup: SG_Gamma_001
+  > Start Point (Inside Arena)
+      Trivial
+
 ----------------
 Gamma Arena South
 Extra - total_boundings: {'x1': -11700.0, 'x2': -3800.0, 'y1': -7800.0, 'y2': -4100.0}
@@ -194,7 +212,7 @@ Extra - asset_id: collision_camera_009
   * Power Beam Door to Transport to Area 3 Exterior (Upper)/Door to Gamma Arena South
   * Extra - actor_name: Door003
   * Extra - actor_type: doorclosedpower
-  > Door to Shaft West
+  > Outside Arena
       Morph Ball
 
 > Door to Shaft West; Heals? False
@@ -202,13 +220,7 @@ Extra - asset_id: collision_camera_009
   * Wave Beam Door to Shaft West/Door to Gamma Arena South
   * Extra - actor_name: Door007
   * Extra - actor_type: doorpowerpower
-  > Door to Transport to Area 3 Exterior (Upper)
-      Morph Ball
-  > Event - Gamma Metroid
-      Defeat Gamma Metroid and Lay Any Bomb
-  > Left of Fan
-      Lay Power Bomb
-  > Start Point (Outside Arena)
+  > Outside Arena
       Trivial
 
 > Tunnel to Transport to Area 3 Exterior (Upper); Heals? False
@@ -220,9 +232,7 @@ Extra - asset_id: collision_camera_009
 > Event - Gamma Metroid; Heals? False
   * Layers: default
   * Event Area 3 (Interior West) - Gamma Metroid Lower
-  > Door to Shaft West
-      Lay Any Bomb
-  > Start Point (Inside Arena)
+  > Pickup (DNA)
       Trivial
 
 > Below Pickup; Heals? False
@@ -261,21 +271,38 @@ Extra - asset_id: collision_camera_009
               Any of the following:
                   High Jump Boots or Space Jump or Walljump (Beginner)
                   Mid-Air Morph (Intermediate) and Simple IBJ
-  > Door to Shaft West
-      Lay Any Bomb
   > Below Pickup
       Lay Any Bomb
+  > Outside Arena
+      Lay Any Bomb
 
-> Start Point (Inside Arena); Heals? False
+> Inside Arena; Heals? False
   * Layers: default
   * Extra - start_point_actor_name: ST_Gamma_002_Checkpoint
   > Event - Gamma Metroid
       Defeat Gamma Metroid
+  > Outside Arena
+      Lay Any Bomb
 
-> Start Point (Outside Arena); Heals? False; Default Node
+> Outside Arena; Heals? False; Default Node
   * Layers: default
   * Extra - start_point_actor_name: ST_SG_Gamma_002
+  > Door to Transport to Area 3 Exterior (Upper)
+      Morph Ball
   > Door to Shaft West
+      Trivial
+  > Left of Fan
+      Lay Power Bomb
+  > Inside Arena
+      Lay Any Bomb
+
+> Pickup (DNA); Heals? False
+  * Layers: default
+  * Pickup 191; Category? Minor
+  * Extra - pickup_type: metroid
+  * Extra - item_id: ITEM_RANDO_DNA_20
+  * Extra - spawngroup: SG_Gamma_002
+  > Inside Arena
       Trivial
 
 ----------------
@@ -756,12 +783,21 @@ Extra - asset_id: collision_camera_034
 > Event - Gamma Metoid+; Heals? False
   * Layers: default
   * Event Area 3 (Interior West) - Gamma Metroid+ Lower
-  > Door to Gamma+ Arena South Access
-      Lay Any Bomb
+  > Pickup (DNA)
+      Trivial
 
 > Start Point; Heals? False; Default Node
   * Layers: default
   * Extra - start_point_actor_name: ST_Gamma_004A_Checkpoint
+  > Door to Gamma+ Arena South Access
+      Lay Any Bomb
+
+> Pickup (DNA); Heals? False
+  * Layers: default
+  * Pickup 193; Category? Minor
+  * Extra - pickup_type: metroid
+  * Extra - item_id: ITEM_RANDO_DNA_22
+  * Extra - spawngroup: SG_Gamma_004_B
   > Door to Gamma+ Arena South Access
       Lay Any Bomb
 
@@ -817,8 +853,8 @@ Extra - asset_id: collision_camera_036
 > Event - Gamma Metroid+; Heals? False
   * Layers: default
   * Event Area 3 (Interior West) - Gamma Metroid+ Heat
-  > Start Point (Right)
-      Varia Suit
+  > Pickup (DNA)
+      Trivial
 
 > Start Point (Right); Heals? False
   * Layers: default
@@ -835,6 +871,15 @@ Extra - asset_id: collision_camera_036
   * Extra - start_point_actor_name: ST_SG_Gamma_003_Out
   > Door to Alpha+ Arena East
       Varia Suit
+
+> Pickup (DNA); Heals? False
+  * Layers: default
+  * Pickup 192; Category? Minor
+  * Extra - pickup_type: metroid
+  * Extra - item_id: ITEM_RANDO_DNA_21
+  * Extra - spawngroup: SG_Gamma_003
+  > Start Point (Right)
+      Trivial
 
 ----------------
 Transport to Area 3 Exterior (Lower)
@@ -882,7 +927,7 @@ Extra - asset_id: collision_camera_038
 > Event - Alpha Metroid+; Heals? False
   * Layers: default
   * Event Area 3 (Interior West) - Alpha Metroid+ East
-  > Start Point (Inside Arena)
+  > Pickup (DNA)
       Trivial
 
 > Start Point (Inside Arena); Heals? False; Default Node
@@ -902,6 +947,15 @@ Extra - asset_id: collision_camera_038
       Morph Ball
   > Start Point (Inside Arena)
       Lay Any Bomb
+
+> Pickup (DNA); Heals? False
+  * Layers: default
+  * Pickup 186; Category? Minor
+  * Extra - pickup_type: metroid
+  * Extra - item_id: ITEM_RANDO_DNA_15
+  * Extra - spawngroup: SG_Alpha_003
+  > Start Point (Inside Arena)
+      Trivial
 
 ----------------
 Teleporter Access

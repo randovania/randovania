@@ -429,7 +429,7 @@ Extra - asset_id: collision_camera_010
 > Event - Alpha Metroid; Heals? False
   * Layers: default
   * Event Surface (East) - Alpha Metroid
-  > Inside Arena
+  > Pickup (DNA)
       Trivial
 
 > Inside Arena; Heals? False
@@ -447,6 +447,15 @@ Extra - asset_id: collision_camera_010
   * Tunnel to Alpha Arena Access/Tunnel to Alpha Arena
   > Save Station
       Morph Ball
+
+> Pickup (DNA); Heals? False
+  * Layers: default
+  * Pickup 172; Category? Minor
+  * Extra - pickup_type: metroid
+  * Extra - item_id: ITEM_RANDO_DNA_1
+  * Extra - spawngroup: SG_Alpha_001
+  > Inside Arena
+      Trivial
 
 ----------------
 Scan Pulse Room

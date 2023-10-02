@@ -2686,7 +2686,7 @@
                     "valid_starting_location": false,
                     "event_name": "Gamma 3",
                     "connections": {
-                        "Inside Arena": {
+                        "Pickup (DNA)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2889,6 +2889,36 @@
                     "valid_starting_location": false,
                     "connections": {
                         "Door to Gamma Arena South Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (DNA)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 7615.92,
+                        "y": 4806.23,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "pickup_type": "metroid",
+                        "item_id": "ITEM_RANDO_DNA_24",
+                        "spawngroup": "SG_Gamma_006"
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 195,
+                    "location_category": "minor",
+                    "connections": {
+                        "Inside Arena": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3390,13 +3420,11 @@
                     "valid_starting_location": false,
                     "event_name": "Alpha 13",
                     "connections": {
-                        "Start Point": {
-                            "type": "resource",
+                        "Pickup (DNA)": {
+                            "type": "and",
                             "data": {
-                                "type": "items",
-                                "name": "Varia",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -3513,11 +3541,41 @@
                             }
                         }
                     }
+                },
+                "Pickup (DNA)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 16976.99,
+                        "y": 5054.53,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "pickup_type": "metroid",
+                        "item_id": "ITEM_RANDO_DNA_13",
+                        "spawngroup": "SG_Alpha_001"
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 184,
+                    "location_category": "minor",
+                    "connections": {
+                        "Start Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
         "Gamma Arena South": {
-            "default_node": "Start Point",
+            "default_node": "Room Center",
             "extra": {
                 "total_boundings": {
                     "x1": -2000.0,
@@ -3575,7 +3633,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Start Point": {
+                        "Room Center": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3610,7 +3668,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Start Point": {
+                        "Room Center": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -3637,7 +3695,7 @@
                     "valid_starting_location": false,
                     "event_name": "Gamma 4",
                     "connections": {
-                        "Start Point": {
+                        "Pickup (DNA)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3646,7 +3704,7 @@
                         }
                     }
                 },
-                "Start Point": {
+                "Room Center": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
@@ -3803,6 +3861,36 @@
                         "Event - Gamma Metroid": {
                             "type": "template",
                             "data": "Defeat Gamma Metroid"
+                        }
+                    }
+                },
+                "Pickup (DNA)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -102.21,
+                        "y": 2677.19,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "pickup_type": "metroid",
+                        "item_id": "ITEM_RANDO_DNA_25",
+                        "spawngroup": "SG_Gamma_007_A"
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 196,
+                    "location_category": "minor",
+                    "connections": {
+                        "Room Center": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 }

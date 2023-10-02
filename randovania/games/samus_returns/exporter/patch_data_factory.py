@@ -129,8 +129,16 @@ class MSRPatchDataFactory(PatchDataFactory):
                 "actor": node.extra[actor_key],
             }
         except KeyError as e:
-            return {}
             raise self._key_error_for_node(node, e)
+
+    def _callback_ref_for(self, node: Node) -> dict:
+        try:
+            return {
+                "scenario": self._level_name_for(node),
+                "spawngroup": node.extra["spawngroup"],
+            }
+        except KeyError as e:
+            raise KeyError(f"{node} has no extra {e}")
 
     def _pickup_detail_for_target(self, detail: ExportedPickupDetails) -> dict | None:
         alt_model = _ALTERNATIVE_MODELS.get(detail.model, [detail.model.name])
@@ -155,6 +163,8 @@ class MSRPatchDataFactory(PatchDataFactory):
                     "model": model_names,
                 }
             )
+        else:
+            details["metroid_callback"] = self._callback_ref_for(pickup_node)
 
         return details
 

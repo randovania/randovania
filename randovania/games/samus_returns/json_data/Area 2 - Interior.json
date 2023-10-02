@@ -4174,7 +4174,7 @@
                     "valid_starting_location": false,
                     "event_name": "Gamma 1",
                     "connections": {
-                        "Room Center": {
+                        "Pickup (DNA)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4217,6 +4217,36 @@
                         "Event - Gamma Metroid": {
                             "type": "template",
                             "data": "Defeat Gamma Metroid"
+                        }
+                    }
+                },
+                "Pickup (DNA)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -3425.41,
+                        "y": -4339.89,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "pickup_type": "metroid",
+                        "item_id": "ITEM_RANDO_DNA_18",
+                        "spawngroup": "SG_Gamma_001"
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 189,
+                    "location_category": "minor",
+                    "connections": {
+                        "Room Center": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 }

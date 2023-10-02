@@ -2985,7 +2985,7 @@
                     "valid_starting_location": false,
                     "event_name": "Alpha 10",
                     "connections": {
-                        "Room Center": {
+                        "Pickup (DNA)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3236,6 +3236,36 @@
                         "Event - Alpha Metroid": {
                             "type": "template",
                             "data": "Defeat Alpha Metroid"
+                        }
+                    }
+                },
+                "Pickup (DNA)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -15052.83,
+                        "y": -5718.21,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "pickup_type": "metroid",
+                        "item_id": "ITEM_RANDO_DNA_8",
+                        "spawngroup": "SG_Alpha_003"
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 179,
+                    "location_category": "minor",
+                    "connections": {
+                        "Room Center": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 }
@@ -3496,25 +3526,13 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Event - Alpha Metroid": {
-                            "type": "and",
+                        "Room Bottom": {
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Varia",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Defeat Alpha Metroid"
-                                    }
-                                ]
+                                "type": "items",
+                                "name": "Varia",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -3535,16 +3553,14 @@
                     "valid_starting_location": false,
                     "event_name": "Alpha 11",
                     "connections": {
-                        "Door to Hot Split": {
-                            "type": "resource",
+                        "Start Point": {
+                            "type": "and",
                             "data": {
-                                "type": "items",
-                                "name": "Varia",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         },
-                        "Start Point": {
+                        "Pickup (DNA)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3570,11 +3586,80 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
+                        "Room Bottom": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Varia",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Pickup (DNA)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -24222.51,
+                        "y": -7522.14,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "pickup_type": "metroid",
+                        "item_id": "ITEM_RANDO_DNA_9",
+                        "spawngroup": "SG_Alpha_004"
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 180,
+                    "location_category": "minor",
+                    "connections": {
+                        "Room Bottom": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Room Bottom": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -23727.151488358384,
+                        "y": -7956.343943412909,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Hot Split": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Varia",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
                         "Event - Alpha Metroid": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Defeat Alpha Metroid"
+                                    },
                                     {
                                         "type": "resource",
                                         "data": {
@@ -3583,10 +3668,6 @@
                                             "amount": 1,
                                             "negate": false
                                         }
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Defeat Alpha Metroid"
                                     }
                                 ]
                             }
@@ -4485,7 +4566,7 @@
                     "valid_starting_location": false,
                     "event_name": "Alpha 8",
                     "connections": {
-                        "Room Center": {
+                        "Pickup (DNA)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4528,6 +4609,36 @@
                         "Event - Alpha Metroid+": {
                             "type": "template",
                             "data": "Defeat Alpha Metroid+"
+                        }
+                    }
+                },
+                "Pickup (DNA)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -9298.06,
+                        "y": 5969.9,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "pickup_type": "metroid",
+                        "item_id": "ITEM_RANDO_DNA_6",
+                        "spawngroup": "SG_Alpha_001"
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 177,
+                    "location_category": "minor",
+                    "connections": {
+                        "Room Center": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 }
@@ -4790,13 +4901,11 @@
                     "valid_starting_location": false,
                     "event_name": "Alpha 12",
                     "connections": {
-                        "Room Center": {
-                            "type": "resource",
+                        "Pickup (DNA)": {
+                            "type": "and",
                             "data": {
-                                "type": "items",
-                                "name": "Varia",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -4846,6 +4955,36 @@
                                         "data": "Defeat Alpha Metroid+"
                                     }
                                 ]
+                            }
+                        }
+                    }
+                },
+                "Pickup (DNA)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -5676.64,
+                        "y": -7773.21,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "pickup_type": "metroid",
+                        "item_id": "ITEM_RANDO_DNA_10",
+                        "spawngroup": "SG_Alpha_005"
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 181,
+                    "location_category": "minor",
+                    "connections": {
+                        "Room Center": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -4936,7 +5075,7 @@
                     "valid_starting_location": false,
                     "event_name": "Alpha 7",
                     "connections": {
-                        "Room Center": {
+                        "Pickup (DNA)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4972,6 +5111,36 @@
                         "Event - Alpha Metroid": {
                             "type": "template",
                             "data": "Defeat Alpha Metroid"
+                        }
+                    }
+                },
+                "Pickup (DNA)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -3240.13,
+                        "y": 3336.6,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "pickup_type": "metroid",
+                        "item_id": "ITEM_RANDO_DNA_11",
+                        "spawngroup": "SG_Alpha_006"
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 182,
+                    "location_category": "minor",
+                    "connections": {
+                        "Room Center": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 }
@@ -5381,7 +5550,7 @@
                     "valid_starting_location": false,
                     "event_name": "Alpha 9",
                     "connections": {
-                        "Room Center": {
+                        "Pickup (DNA)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5528,6 +5697,36 @@
                         "Event - Alpha Metroid": {
                             "type": "template",
                             "data": "Defeat Alpha Metroid"
+                        }
+                    }
+                },
+                "Pickup (DNA)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -5838.7,
+                        "y": -6231.55,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "pickup_type": "metroid",
+                        "item_id": "ITEM_RANDO_DNA_12",
+                        "spawngroup": "SG_Alpha_007"
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 183,
+                    "location_category": "minor",
+                    "connections": {
+                        "Room Center": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 }

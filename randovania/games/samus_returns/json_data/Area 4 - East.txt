@@ -392,7 +392,7 @@ Extra - asset_id: collision_camera_008
 > Event - Zeta Metroid; Heals? False
   * Layers: default
   * Event Area 4 (East) - Zeta Metroid
-  > Start Point
+  > Pickup (DNA)
       Trivial
 
 > Tunnel to Zeta Arena Access; Heals? False
@@ -414,6 +414,15 @@ Extra - asset_id: collision_camera_008
           Any of the following:
               Space Jump or Single-wall Wall Jump (Advanced) or Simple IBJ
               Spiderspark (Beginner) and Can Spiderspark
+
+> Pickup (DNA); Heals? False
+  * Layers: default
+  * Pickup 203; Category? Minor
+  * Extra - pickup_type: metroid
+  * Extra - item_id: ITEM_RANDO_DNA_32
+  * Extra - spawngroup: SG_Zeta_001
+  > Start Point
+      Trivial
 
 ----------------
 Gamma Arena
@@ -439,10 +448,8 @@ Extra - asset_id: collision_camera_009
 > Event - Gamma Metroid; Heals? False
   * Layers: default
   * Event Area 4 (East) - Gamma Metroid
-  > Below Pickup
-      All of the following:
-          Varia Suit and Lay Any Bomb
-          Single-wall Wall Jump (Beginner) or Climb Rooms Vertically (High Jump)
+  > Pickup (DNA)
+      Trivial
 
 > Below Pickup; Heals? False
   * Layers: default
@@ -454,8 +461,32 @@ Extra - asset_id: collision_camera_009
           Any of the following:
               Super Jump (Intermediate) or Unmorph Extend (Intermediate) or Climb Rooms Vertically (High Jump)
               Charge Beam and Ice Beam and Stand on Frozen Enemy (Advanced)
+  > Inside Arena
+      All of the following:
+          Morph Ball and Varia Suit
+          Any of the following:
+              Climb Rooms Vertically (High Jump)
+              All of the following:
+                  Super Missile
+                  Bomb or Power Bomb ≥ 3
+
+> Pickup (DNA); Heals? False
+  * Layers: default
+  * Pickup 198; Category? Minor
+  * Extra - pickup_type: metroid
+  * Extra - item_id: ITEM_RANDO_DNA_27
+  * Extra - spawngroup: SG_Gamma_002
+  > Inside Arena
+      Trivial
+
+> Inside Arena; Heals? False
+  * Layers: default
   > Event - Gamma Metroid
-      Varia Suit and Climb Rooms Vertically (High Jump) and Defeat Gamma Metroid and Lay Any Bomb
+      Varia Suit and Defeat Gamma Metroid
+  > Below Pickup
+      All of the following:
+          Varia Suit and Lay Any Bomb
+          Single-wall Wall Jump (Beginner) or Climb Rooms Vertically (High Jump)
 
 ----------------
 Diggernaut Chase Access
