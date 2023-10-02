@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Data Visualizer now has a very visible checkbox to quickly toggle if the selected trick filters are enabled.
 - Added: When trick filters are enabled, a line is added indicating how many requirements are being filtered.
 - Changed: The generator will now consider placing Energy Tanks, if there's a damage requirement that's exactly high enough to kill the player.
+- Changed: The Changelog window has recieved a slight overhaul. The date of each release is shown, hyperlinks are fixed, and patch notes are now accessed through a drop-down box (previously used vertical tabs).
 - Fixed: The menu option for viewing all Randovania dependencies and their licenses has been restored.
 - Fixed: The generator should now handle cases with negative requirements a little better.
 - Fixed: Map tracker works again for Metroid Dread and Metroid Prime.

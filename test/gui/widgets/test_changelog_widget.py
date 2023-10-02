@@ -1,5 +1,9 @@
 from __future__ import annotations
 
+from typing import cast
+
+from PySide6 import QtWidgets
+
 from randovania.gui.widgets.changelog_widget import ChangeLogWidget
 
 
@@ -14,8 +18,16 @@ def test_create(skip_qtbot):
     skip_qtbot.addWidget(widget)
 
     # Assert
-    assert widget.count() == 2
-    assert widget.tabText(0) == "1.0"
-    assert widget.tabText(1) == "2.0"
-    assert widget.widget(0).widget().text() == "Foo"
-    assert widget.widget(1).widget().text() == "Bar"
+    assert widget.select_version.count() == 2
+    assert widget.select_version.itemText(0) == "1.0"
+    assert widget.select_version.itemText(1) == "2.0"
+
+    widget.select_version.setCurrentIndex(0)
+    qScroll0 = cast(QtWidgets.QScrollArea, widget.changelog.currentWidget())
+    qLabel0 = cast(QtWidgets.QLabel, qScroll0.widget())
+    assert qLabel0.text() == "Foo"
+
+    widget.select_version.setCurrentIndex(1)
+    qScroll1 = cast(QtWidgets.QScrollArea, widget.changelog.currentWidget())
+    qLabel1 = cast(QtWidgets.QLabel, qScroll1.widget())
+    assert qLabel1.text() == "Bar"
