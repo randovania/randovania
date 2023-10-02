@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Any
+from typing import cast
 
 from PySide6 import QtCore, QtWidgets
 
@@ -49,9 +49,9 @@ class ChangeLogWidget(QtWidgets.QWidget):
         self.changelog.setCurrentIndex(0)
 
     def select_version_index_changed(self) -> None:
-        # Used "Any" type hint to bypass mypy raising "expecting QWidget"
-        selected_widget: Any = self.findChild(
-            QtWidgets.QScrollArea, f"scroll_area {self.select_version.currentText()}"
-        )  # QScrollArea
+        selected_widget = cast(
+            QtWidgets.QScrollArea,
+            self.findChild(QtWidgets.QScrollArea, f"scroll_area {self.select_version.currentText()}"),
+        )
 
         self.changelog.setCurrentWidget(selected_widget)
