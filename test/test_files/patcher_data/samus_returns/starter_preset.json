@@ -11,12 +11,12 @@
   "pickups": [
     {
       "pickup_type": "actor",
-      "caption": "Energy Tank acquired.\nEnergy capacity increased by 100.",
+      "caption": "Missile Tank acquired.\nMissile capacity increased by 3.",
       "resources": [
         [
           {
-            "item_id": "ITEM_ENERGY_TANKS",
-            "quantity": 1
+            "item_id": "ITEM_WEAPON_MISSILE_MAX",
+            "quantity": 3
           }
         ]
       ],
@@ -25,17 +25,17 @@
         "actor": "LE_Item_001"
       },
       "model": [
-        "item_energytank"
+        "item_missiletank"
       ]
     },
     {
       "pickup_type": "actor",
-      "caption": "Aeion Tank acquired.\nAeion Gauge expanded.",
+      "caption": "Super Missile Tank acquired.\nSuper Missile capacity increased by 1.",
       "resources": [
         [
           {
-            "item_id": "ITEM_MAX_SPECIAL_ENERGY",
-            "quantity": 50
+            "item_id": "ITEM_WEAPON_SUPER_MISSILE_MAX",
+            "quantity": 1
           }
         ]
       ],
@@ -44,7 +44,7 @@
         "actor": "LE_Item_002"
       },
       "model": [
-        "item_senergytank"
+        "item_supermissiletank"
       ]
     },
     {
@@ -87,17 +87,23 @@
     },
     {
       "pickup_type": "actor",
-      "caption": "Super Missile Tank acquired.\nSuper Missile capacity increased by {Super Missile}.",
+      "caption": "Progressive Beam acquired.",
       "resources": [
         [
           {
-            "item_id": "ITEM_RANDO_LOCKED_SUPERS",
+            "item_id": "ITEM_WEAPON_WAVE_BEAM",
             "quantity": 1
           }
         ],
         [
           {
-            "item_id": "ITEM_WEAPON_SUPER_MISSILE_CURRENT",
+            "item_id": "ITEM_WEAPON_SPAZER_BEAM",
+            "quantity": 1
+          }
+        ],
+        [
+          {
+            "item_id": "ITEM_WEAPON_PLASMA_BEAM",
             "quantity": 1
           }
         ]
@@ -107,7 +113,9 @@
         "actor": "LE_Item_005"
       },
       "model": [
-        "item_supermissiletank"
+        "powerup_wavebeam",
+        "powerup_spazerbeam",
+        "powerup_plasmabeam"
       ]
     },
     {
@@ -138,12 +146,12 @@
     },
     {
       "pickup_type": "actor",
-      "caption": "Bomb acquired.",
+      "caption": "Missile Tank acquired.\nMissile capacity increased by 3.",
       "resources": [
         [
           {
-            "item_id": "ITEM_WEAPON_BOMB",
-            "quantity": 1
+            "item_id": "ITEM_WEAPON_MISSILE_MAX",
+            "quantity": 3
           }
         ]
       ],
@@ -152,17 +160,17 @@
         "actor": "LE_Item_007"
       },
       "model": [
-        "powerup_bomb"
+        "item_missiletank"
       ]
     },
     {
       "pickup_type": "actor",
-      "caption": "Missile Tank acquired.\nMissile capacity increased by 3.",
+      "caption": "Nothing acquired.",
       "resources": [
         [
           {
-            "item_id": "ITEM_WEAPON_MISSILE_MAX",
-            "quantity": 3
+            "item_id": "ITEM_NONE",
+            "quantity": 1
           }
         ]
       ],
@@ -171,26 +179,7 @@
         "actor": "LE_Item_008"
       },
       "model": [
-        "item_missiletank"
-      ]
-    },
-    {
-      "pickup_type": "actor",
-      "caption": "Energy Tank acquired.\nEnergy capacity increased by 100.",
-      "resources": [
-        [
-          {
-            "item_id": "ITEM_ENERGY_TANKS",
-            "quantity": 1
-          }
-        ]
-      ],
-      "pickup_actor": {
-        "scenario": "s000_surface",
-        "actor": "LE_Item_010"
-      },
-      "model": [
-        "item_energytank"
+        "itemsphere"
       ]
     },
     {
@@ -206,7 +195,7 @@
       ],
       "pickup_actor": {
         "scenario": "s000_surface",
-        "actor": "LE_Item_011"
+        "actor": "LE_Item_010"
       },
       "model": [
         "item_missiletank"
@@ -214,17 +203,30 @@
     },
     {
       "pickup_type": "actor",
-      "caption": "Power Bomb Tank acquired.\nPower Bomb capacity increased by {Power Bomb}.",
+      "caption": "Power Bomb Tank acquired.\nPower Bomb capacity increased by 1.",
       "resources": [
         [
           {
-            "item_id": "ITEM_RANDO_LOCKED_PBS",
+            "item_id": "ITEM_WEAPON_POWER_BOMB_MAX",
             "quantity": 1
           }
-        ],
+        ]
+      ],
+      "pickup_actor": {
+        "scenario": "s000_surface",
+        "actor": "LE_Item_011"
+      },
+      "model": [
+        "item_powerbombtank"
+      ]
+    },
+    {
+      "pickup_type": "actor",
+      "caption": "Super Missile Tank acquired.\nSuper Missile capacity increased by 1.",
+      "resources": [
         [
           {
-            "item_id": "ITEM_WEAPON_POWER_BOMB_CURRENT",
+            "item_id": "ITEM_WEAPON_SUPER_MISSILE_MAX",
             "quantity": 1
           }
         ]
@@ -234,22 +236,16 @@
         "actor": "LE_Item_012"
       },
       "model": [
-        "item_powerbombtank"
+        "item_supermissiletank"
       ]
     },
     {
       "pickup_type": "actor",
-      "caption": "Super Missile Tank acquired.\nSuper Missile capacity increased by {Super Missile}.",
+      "caption": "Power Bomb Tank acquired.\nPower Bomb capacity increased by 1.",
       "resources": [
         [
           {
-            "item_id": "ITEM_RANDO_LOCKED_SUPERS",
-            "quantity": 1
-          }
-        ],
-        [
-          {
-            "item_id": "ITEM_WEAPON_SUPER_MISSILE_CURRENT",
+            "item_id": "ITEM_WEAPON_POWER_BOMB_MAX",
             "quantity": 1
           }
         ]
@@ -259,7 +255,7 @@
         "actor": "LE_PowerUP_ChargeBeam"
       },
       "model": [
-        "item_supermissiletank"
+        "item_powerbombtank"
       ]
     },
     {
@@ -283,17 +279,11 @@
     },
     {
       "pickup_type": "actor",
-      "caption": "Super Missile Tank acquired.\nSuper Missile capacity increased by {Super Missile}.",
+      "caption": "Energy Tank acquired.\nEnergy capacity increased by 100.",
       "resources": [
         [
           {
-            "item_id": "ITEM_RANDO_LOCKED_SUPERS",
-            "quantity": 1
-          }
-        ],
-        [
-          {
-            "item_id": "ITEM_WEAPON_SUPER_MISSILE_CURRENT",
+            "item_id": "ITEM_ENERGY_TANKS",
             "quantity": 1
           }
         ]
@@ -303,17 +293,17 @@
         "actor": "LE_SpecialAbility_ScanningPulse"
       },
       "model": [
-        "item_supermissiletank"
+        "item_energytank"
       ]
     },
     {
       "pickup_type": "actor",
-      "caption": "Missile Tank acquired.\nMissile capacity increased by 3.",
+      "caption": "Energy Tank acquired.\nEnergy capacity increased by 100.",
       "resources": [
         [
           {
-            "item_id": "ITEM_WEAPON_MISSILE_MAX",
-            "quantity": 3
+            "item_id": "ITEM_ENERGY_TANKS",
+            "quantity": 1
           }
         ]
       ],
@@ -322,21 +312,23 @@
         "actor": "HiddenPowerup001"
       },
       "model": [
-        "item_missiletank"
+        "item_energytank"
       ]
     },
     {
       "pickup_type": "actor",
-      "caption": "Power Bomb Launcher acquired.",
+      "caption": "Progressive Suit acquired.",
       "resources": [
         [
           {
-            "item_id": "ITEM_WEAPON_POWER_BOMB_CURRENT",
+            "item_id": "ITEM_VARIA_SUIT",
             "quantity": 1
-          },
+          }
+        ],
+        [
           {
-            "item_id": "ITEM_WEAPON_POWER_BOMB_CURRENT",
-            "quantity": 5
+            "item_id": "ITEM_GRAVITY_SUIT",
+            "quantity": 1
           }
         ]
       ],
@@ -345,7 +337,8 @@
         "actor": "LE_Item_001"
       },
       "model": [
-        "powerup_powerbomb"
+        "powerup_variasuit",
+        "powerup_gravitysuit"
       ]
     },
     {
@@ -369,12 +362,12 @@
     },
     {
       "pickup_type": "actor",
-      "caption": "Missile Tank acquired.\nMissile capacity increased by 3.",
+      "caption": "Aeion Tank acquired.\nAeion Gauge expanded.",
       "resources": [
         [
           {
-            "item_id": "ITEM_WEAPON_MISSILE_MAX",
-            "quantity": 3
+            "item_id": "ITEM_MAX_SPECIAL_ENERGY",
+            "quantity": 50
           }
         ]
       ],
@@ -383,17 +376,21 @@
         "actor": "LE_Item_004"
       },
       "model": [
-        "item_missiletank"
+        "item_senergytank"
       ]
     },
     {
       "pickup_type": "actor",
-      "caption": "Baby Metroid acquired.",
+      "caption": "Super Missile Launcher acquired.",
       "resources": [
         [
           {
-            "item_id": "ITEM_BABY_HATCHLING",
+            "item_id": "ITEM_WEAPON_SUPER_MISSILE",
             "quantity": 1
+          },
+          {
+            "item_id": "ITEM_WEAPON_SUPER_MISSILE_MAX",
+            "quantity": 5
           }
         ]
       ],
@@ -402,16 +399,16 @@
         "actor": "LE_Item_005"
       },
       "model": [
-        "babyhatchling"
+        "powerup_supermissile"
       ]
     },
     {
       "pickup_type": "actor",
-      "caption": "Energy Tank acquired.\nEnergy capacity increased by 100.",
+      "caption": "Super Missile Tank acquired.\nSuper Missile capacity increased by 1.",
       "resources": [
         [
           {
-            "item_id": "ITEM_ENERGY_TANKS",
+            "item_id": "ITEM_WEAPON_SUPER_MISSILE_MAX",
             "quantity": 1
           }
         ]
@@ -421,17 +418,17 @@
         "actor": "LE_Item_006"
       },
       "model": [
-        "item_energytank"
+        "item_supermissiletank"
       ]
     },
     {
       "pickup_type": "actor",
-      "caption": "Missile Tank acquired.\nMissile capacity increased by 3.",
+      "caption": "Aeion Tank acquired.\nAeion Gauge expanded.",
       "resources": [
         [
           {
-            "item_id": "ITEM_WEAPON_MISSILE_MAX",
-            "quantity": 3
+            "item_id": "ITEM_MAX_SPECIAL_ENERGY",
+            "quantity": 50
           }
         ]
       ],
@@ -440,26 +437,7 @@
         "actor": "LE_Item_008"
       },
       "model": [
-        "item_missiletank"
-      ]
-    },
-    {
-      "pickup_type": "actor",
-      "caption": "Energy Tank acquired.\nEnergy capacity increased by 100.",
-      "resources": [
-        [
-          {
-            "item_id": "ITEM_ENERGY_TANKS",
-            "quantity": 1
-          }
-        ]
-      ],
-      "pickup_actor": {
-        "scenario": "s010_area1",
-        "actor": "LE_Item_011"
-      },
-      "model": [
-        "item_energytank"
+        "item_senergytank"
       ]
     },
     {
@@ -475,7 +453,7 @@
       ],
       "pickup_actor": {
         "scenario": "s010_area1",
-        "actor": "LE_Item_013"
+        "actor": "LE_Item_011"
       },
       "model": [
         "item_missiletank"
@@ -483,17 +461,30 @@
     },
     {
       "pickup_type": "actor",
-      "caption": "Super Missile Tank acquired.\nSuper Missile capacity increased by {Super Missile}.",
+      "caption": "Nothing acquired.",
       "resources": [
         [
           {
-            "item_id": "ITEM_RANDO_LOCKED_SUPERS",
+            "item_id": "ITEM_NONE",
             "quantity": 1
           }
-        ],
+        ]
+      ],
+      "pickup_actor": {
+        "scenario": "s010_area1",
+        "actor": "LE_Item_013"
+      },
+      "model": [
+        "itemsphere"
+      ]
+    },
+    {
+      "pickup_type": "actor",
+      "caption": "Nothing acquired.",
+      "resources": [
         [
           {
-            "item_id": "ITEM_WEAPON_SUPER_MISSILE_CURRENT",
+            "item_id": "ITEM_NONE",
             "quantity": 1
           }
         ]
@@ -503,16 +494,16 @@
         "actor": "LE_Item_014"
       },
       "model": [
-        "item_supermissiletank"
+        "itemsphere"
       ]
     },
     {
       "pickup_type": "actor",
-      "caption": "Energy Tank acquired.\nEnergy capacity increased by 100.",
+      "caption": "Screw Attack acquired.",
       "resources": [
         [
           {
-            "item_id": "ITEM_ENERGY_TANKS",
+            "item_id": "ITEM_SCREW_ATTACK",
             "quantity": 1
           }
         ]
@@ -522,7 +513,7 @@
         "actor": "LE_Item_016"
       },
       "model": [
-        "item_energytank"
+        "powerup_screwattack"
       ]
     },
     {
@@ -546,12 +537,12 @@
     },
     {
       "pickup_type": "actor",
-      "caption": "Charge Beam acquired.",
+      "caption": "Missile Tank acquired.\nMissile capacity increased by 3.",
       "resources": [
         [
           {
-            "item_id": "ITEM_WEAPON_CHARGE_BEAM",
-            "quantity": 1
+            "item_id": "ITEM_WEAPON_MISSILE_MAX",
+            "quantity": 3
           }
         ]
       ],
@@ -560,7 +551,7 @@
         "actor": "LE_PowerUp_Bomb"
       },
       "model": [
-        "powerup_chargebeam"
+        "item_missiletank"
       ]
     },
     {
@@ -584,11 +575,11 @@
     },
     {
       "pickup_type": "actor",
-      "caption": "Energy Tank acquired.\nEnergy capacity increased by 100.",
+      "caption": "Power Bomb Tank acquired.\nPower Bomb capacity increased by 1.",
       "resources": [
         [
           {
-            "item_id": "ITEM_ENERGY_TANKS",
+            "item_id": "ITEM_WEAPON_POWER_BOMB_MAX",
             "quantity": 1
           }
         ]
@@ -598,7 +589,7 @@
         "actor": "LE_PowerUp_SpiderBall"
       },
       "model": [
-        "item_energytank"
+        "item_powerbombtank"
       ]
     },
     {
@@ -622,12 +613,12 @@
     },
     {
       "pickup_type": "actor",
-      "caption": "Missile Tank acquired.\nMissile capacity increased by 3.",
+      "caption": "Power Bomb Tank acquired.\nPower Bomb capacity increased by 1.",
       "resources": [
         [
           {
-            "item_id": "ITEM_WEAPON_MISSILE_MAX",
-            "quantity": 3
+            "item_id": "ITEM_WEAPON_POWER_BOMB_MAX",
+            "quantity": 1
           }
         ]
       ],
@@ -636,16 +627,16 @@
         "actor": "HiddenPowerup002"
       },
       "model": [
-        "item_missiletank"
+        "item_powerbombtank"
       ]
     },
     {
       "pickup_type": "actor",
-      "caption": "Nothing acquired.",
+      "caption": "Power Bomb Tank acquired.\nPower Bomb capacity increased by 1.",
       "resources": [
         [
           {
-            "item_id": "ITEM_NONE",
+            "item_id": "ITEM_WEAPON_POWER_BOMB_MAX",
             "quantity": 1
           }
         ]
@@ -655,17 +646,21 @@
         "actor": "HiddenPowerup003"
       },
       "model": [
-        "itemsphere"
+        "item_powerbombtank"
       ]
     },
     {
       "pickup_type": "actor",
-      "caption": "Nothing acquired.",
+      "caption": "Main Power Bomb acquired.",
       "resources": [
         [
           {
-            "item_id": "ITEM_NONE",
+            "item_id": "ITEM_WEAPON_POWER_BOMB",
             "quantity": 1
+          },
+          {
+            "item_id": "ITEM_WEAPON_POWER_BOMB_MAX",
+            "quantity": 5
           }
         ]
       ],
@@ -674,28 +669,16 @@
         "actor": "LE_Item_001"
       },
       "model": [
-        "itemsphere"
+        "powerup_powerbomb"
       ]
     },
     {
       "pickup_type": "actor",
-      "caption": "Progressive Beam acquired.",
+      "caption": "Super Missile Tank acquired.\nSuper Missile capacity increased by 1.",
       "resources": [
         [
           {
-            "item_id": "ITEM_WEAPON_WAVE_BEAM",
-            "quantity": 1
-          }
-        ],
-        [
-          {
-            "item_id": "ITEM_WEAPON_SPAZER_BEAM",
-            "quantity": 1
-          }
-        ],
-        [
-          {
-            "item_id": "ITEM_WEAPON_PLASMA_BEAM",
+            "item_id": "ITEM_WEAPON_SUPER_MISSILE_MAX",
             "quantity": 1
           }
         ]
@@ -705,69 +688,23 @@
         "actor": "LE_Item_003"
       },
       "model": [
-        "powerup_wavebeam",
-        "powerup_spazerbeam",
-        "powerup_plasmabeam"
+        "item_supermissiletank"
       ]
     },
     {
       "pickup_type": "actor",
-      "caption": "Missile Tank acquired.\nMissile capacity increased by 3.",
+      "caption": "Super Missile Tank acquired.\nSuper Missile capacity increased by 1.",
       "resources": [
         [
           {
-            "item_id": "ITEM_WEAPON_MISSILE_MAX",
-            "quantity": 3
+            "item_id": "ITEM_WEAPON_SUPER_MISSILE_MAX",
+            "quantity": 1
           }
         ]
       ],
       "pickup_actor": {
         "scenario": "s020_area2",
         "actor": "LE_Item_004"
-      },
-      "model": [
-        "item_missiletank"
-      ]
-    },
-    {
-      "pickup_type": "actor",
-      "caption": "Missile Tank acquired.\nMissile capacity increased by 3.",
-      "resources": [
-        [
-          {
-            "item_id": "ITEM_WEAPON_MISSILE_MAX",
-            "quantity": 3
-          }
-        ]
-      ],
-      "pickup_actor": {
-        "scenario": "s020_area2",
-        "actor": "LE_Item_005"
-      },
-      "model": [
-        "item_missiletank"
-      ]
-    },
-    {
-      "pickup_type": "actor",
-      "caption": "Super Missile Tank acquired.\nSuper Missile capacity increased by {Super Missile}.",
-      "resources": [
-        [
-          {
-            "item_id": "ITEM_RANDO_LOCKED_SUPERS",
-            "quantity": 1
-          }
-        ],
-        [
-          {
-            "item_id": "ITEM_WEAPON_SUPER_MISSILE_CURRENT",
-            "quantity": 1
-          }
-        ]
-      ],
-      "pickup_actor": {
-        "scenario": "s020_area2",
-        "actor": "LE_Item_006"
       },
       "model": [
         "item_supermissiletank"
@@ -786,7 +723,7 @@
       ],
       "pickup_actor": {
         "scenario": "s020_area2",
-        "actor": "LE_PowerUp_Springball"
+        "actor": "LE_Item_005"
       },
       "model": [
         "item_missiletank"
@@ -794,65 +731,21 @@
     },
     {
       "pickup_type": "actor",
-      "caption": "Energy Tank acquired.\nEnergy capacity increased by 100.",
+      "caption": "Aeion Tank acquired.\nAeion Gauge expanded.",
       "resources": [
         [
           {
-            "item_id": "ITEM_ENERGY_TANKS",
-            "quantity": 1
+            "item_id": "ITEM_MAX_SPECIAL_ENERGY",
+            "quantity": 50
           }
         ]
       ],
       "pickup_actor": {
         "scenario": "s020_area2",
-        "actor": "HiddenPowerup001"
+        "actor": "LE_Item_006"
       },
       "model": [
-        "item_energytank"
-      ]
-    },
-    {
-      "pickup_type": "actor",
-      "caption": "Missile Tank acquired.\nMissile capacity increased by 3.",
-      "resources": [
-        [
-          {
-            "item_id": "ITEM_WEAPON_MISSILE_MAX",
-            "quantity": 3
-          }
-        ]
-      ],
-      "pickup_actor": {
-        "scenario": "s020_area2",
-        "actor": "HiddenPowerup002"
-      },
-      "model": [
-        "item_missiletank"
-      ]
-    },
-    {
-      "pickup_type": "actor",
-      "caption": "Power Bomb Tank acquired.\nPower Bomb capacity increased by {Power Bomb}.",
-      "resources": [
-        [
-          {
-            "item_id": "ITEM_RANDO_LOCKED_PBS",
-            "quantity": 1
-          }
-        ],
-        [
-          {
-            "item_id": "ITEM_WEAPON_POWER_BOMB_CURRENT",
-            "quantity": 1
-          }
-        ]
-      ],
-      "pickup_actor": {
-        "scenario": "s025_area2b",
-        "actor": "LE_Item_001"
-      },
-      "model": [
-        "item_powerbombtank"
+        "item_senergytank"
       ]
     },
     {
@@ -867,8 +760,8 @@
         ]
       ],
       "pickup_actor": {
-        "scenario": "s025_area2b",
-        "actor": "LE_Item_002"
+        "scenario": "s020_area2",
+        "actor": "LE_PowerUp_Springball"
       },
       "model": [
         "itemsphere"
@@ -886,8 +779,46 @@
         ]
       ],
       "pickup_actor": {
+        "scenario": "s020_area2",
+        "actor": "HiddenPowerup001"
+      },
+      "model": [
+        "item_missiletank"
+      ]
+    },
+    {
+      "pickup_type": "actor",
+      "caption": "Charge Beam acquired.",
+      "resources": [
+        [
+          {
+            "item_id": "ITEM_WEAPON_CHARGE_BEAM",
+            "quantity": 1
+          }
+        ]
+      ],
+      "pickup_actor": {
+        "scenario": "s020_area2",
+        "actor": "HiddenPowerup002"
+      },
+      "model": [
+        "powerup_chargebeam"
+      ]
+    },
+    {
+      "pickup_type": "actor",
+      "caption": "Missile Tank acquired.\nMissile capacity increased by 3.",
+      "resources": [
+        [
+          {
+            "item_id": "ITEM_WEAPON_MISSILE_MAX",
+            "quantity": 3
+          }
+        ]
+      ],
+      "pickup_actor": {
         "scenario": "s025_area2b",
-        "actor": "LE_Item_005"
+        "actor": "LE_Item_001"
       },
       "model": [
         "item_missiletank"
@@ -906,10 +837,48 @@
       ],
       "pickup_actor": {
         "scenario": "s025_area2b",
-        "actor": "LE_Item_006"
+        "actor": "LE_Item_002"
       },
       "model": [
         "item_missiletank"
+      ]
+    },
+    {
+      "pickup_type": "actor",
+      "caption": "Power Bomb Tank acquired.\nPower Bomb capacity increased by 1.",
+      "resources": [
+        [
+          {
+            "item_id": "ITEM_WEAPON_POWER_BOMB_MAX",
+            "quantity": 1
+          }
+        ]
+      ],
+      "pickup_actor": {
+        "scenario": "s025_area2b",
+        "actor": "LE_Item_005"
+      },
+      "model": [
+        "item_powerbombtank"
+      ]
+    },
+    {
+      "pickup_type": "actor",
+      "caption": "Power Bomb Tank acquired.\nPower Bomb capacity increased by 1.",
+      "resources": [
+        [
+          {
+            "item_id": "ITEM_WEAPON_POWER_BOMB_MAX",
+            "quantity": 1
+          }
+        ]
+      ],
+      "pickup_actor": {
+        "scenario": "s025_area2b",
+        "actor": "LE_Item_006"
+      },
+      "model": [
+        "item_powerbombtank"
       ]
     },
     {
@@ -933,18 +902,12 @@
     },
     {
       "pickup_type": "actor",
-      "caption": "Super Missile Tank acquired.\nSuper Missile capacity increased by {Super Missile}.",
+      "caption": "Missile Tank acquired.\nMissile capacity increased by 3.",
       "resources": [
         [
           {
-            "item_id": "ITEM_RANDO_LOCKED_SUPERS",
-            "quantity": 1
-          }
-        ],
-        [
-          {
-            "item_id": "ITEM_WEAPON_SUPER_MISSILE_CURRENT",
-            "quantity": 1
+            "item_id": "ITEM_WEAPON_MISSILE_MAX",
+            "quantity": 3
           }
         ]
       ],
@@ -953,26 +916,7 @@
         "actor": "LE_PowerUp_VariaSuite"
       },
       "model": [
-        "item_supermissiletank"
-      ]
-    },
-    {
-      "pickup_type": "actor",
-      "caption": "Aeion Tank acquired.\nAeion Gauge expanded.",
-      "resources": [
-        [
-          {
-            "item_id": "ITEM_MAX_SPECIAL_ENERGY",
-            "quantity": 50
-          }
-        ]
-      ],
-      "pickup_actor": {
-        "scenario": "s025_area2b",
-        "actor": "LE_PowerUp_WaveBeam"
-      },
-      "model": [
-        "item_senergytank"
+        "item_missiletank"
       ]
     },
     {
@@ -982,6 +926,25 @@
         [
           {
             "item_id": "ITEM_NONE",
+            "quantity": 1
+          }
+        ]
+      ],
+      "pickup_actor": {
+        "scenario": "s025_area2b",
+        "actor": "LE_PowerUp_WaveBeam"
+      },
+      "model": [
+        "itemsphere"
+      ]
+    },
+    {
+      "pickup_type": "actor",
+      "caption": "Energy Tank acquired.\nEnergy capacity increased by 100.",
+      "resources": [
+        [
+          {
+            "item_id": "ITEM_ENERGY_TANKS",
             "quantity": 1
           }
         ]
@@ -991,29 +954,42 @@
         "actor": "HP_Item_001"
       },
       "model": [
-        "itemsphere"
+        "item_energytank"
       ]
     },
     {
       "pickup_type": "actor",
-      "caption": "Super Missile Tank acquired.\nSuper Missile capacity increased by {Super Missile}.",
+      "caption": "Missile Tank acquired.\nMissile capacity increased by 3.",
       "resources": [
         [
           {
-            "item_id": "ITEM_RANDO_LOCKED_SUPERS",
-            "quantity": 1
-          }
-        ],
-        [
-          {
-            "item_id": "ITEM_WEAPON_SUPER_MISSILE_CURRENT",
-            "quantity": 1
+            "item_id": "ITEM_WEAPON_MISSILE_MAX",
+            "quantity": 3
           }
         ]
       ],
       "pickup_actor": {
         "scenario": "s025_area2b",
         "actor": "HP_Item_002"
+      },
+      "model": [
+        "item_missiletank"
+      ]
+    },
+    {
+      "pickup_type": "actor",
+      "caption": "Super Missile Tank acquired.\nSuper Missile capacity increased by 1.",
+      "resources": [
+        [
+          {
+            "item_id": "ITEM_WEAPON_SUPER_MISSILE_MAX",
+            "quantity": 1
+          }
+        ]
+      ],
+      "pickup_actor": {
+        "scenario": "s028_area2c",
+        "actor": "LE_Item_001"
       },
       "model": [
         "item_supermissiletank"
@@ -1032,7 +1008,7 @@
       ],
       "pickup_actor": {
         "scenario": "s028_area2c",
-        "actor": "LE_Item_001"
+        "actor": "LE_Item_002"
       },
       "model": [
         "itemsphere"
@@ -1040,42 +1016,11 @@
     },
     {
       "pickup_type": "actor",
-      "caption": "Power Bomb Tank acquired.\nPower Bomb capacity increased by {Power Bomb}.",
+      "caption": "Baby Metroid acquired.",
       "resources": [
         [
           {
-            "item_id": "ITEM_RANDO_LOCKED_PBS",
-            "quantity": 1
-          }
-        ],
-        [
-          {
-            "item_id": "ITEM_WEAPON_POWER_BOMB_CURRENT",
-            "quantity": 1
-          }
-        ]
-      ],
-      "pickup_actor": {
-        "scenario": "s028_area2c",
-        "actor": "LE_Item_002"
-      },
-      "model": [
-        "item_powerbombtank"
-      ]
-    },
-    {
-      "pickup_type": "actor",
-      "caption": "Power Bomb Tank acquired.\nPower Bomb capacity increased by {Power Bomb}.",
-      "resources": [
-        [
-          {
-            "item_id": "ITEM_RANDO_LOCKED_PBS",
-            "quantity": 1
-          }
-        ],
-        [
-          {
-            "item_id": "ITEM_WEAPON_POWER_BOMB_CURRENT",
+            "item_id": "ITEM_BABY_HATCHLING",
             "quantity": 1
           }
         ]
@@ -1085,7 +1030,7 @@
         "actor": "LE_Item_003"
       },
       "model": [
-        "item_powerbombtank"
+        "itemsphere"
       ]
     },
     {
@@ -1109,12 +1054,12 @@
     },
     {
       "pickup_type": "actor",
-      "caption": "Missile Tank acquired.\nMissile capacity increased by 3.",
+      "caption": "Super Missile Tank acquired.\nSuper Missile capacity increased by 1.",
       "resources": [
         [
           {
-            "item_id": "ITEM_WEAPON_MISSILE_MAX",
-            "quantity": 3
+            "item_id": "ITEM_WEAPON_SUPER_MISSILE_MAX",
+            "quantity": 1
           }
         ]
       ],
@@ -1123,23 +1068,17 @@
         "actor": "LE_SpecialAbility_EnergyShield"
       },
       "model": [
-        "item_missiletank"
+        "item_supermissiletank"
       ]
     },
     {
       "pickup_type": "actor",
-      "caption": "Progressive Suit acquired.",
+      "caption": "Missile Tank acquired.\nMissile capacity increased by 3.",
       "resources": [
         [
           {
-            "item_id": "ITEM_VARIA_SUIT",
-            "quantity": 1
-          }
-        ],
-        [
-          {
-            "item_id": "ITEM_GRAVITY_SUIT",
-            "quantity": 1
+            "item_id": "ITEM_WEAPON_MISSILE_MAX",
+            "quantity": 3
           }
         ]
       ],
@@ -1148,17 +1087,16 @@
         "actor": "HiddenPowerup001"
       },
       "model": [
-        "powerup_variasuit",
-        "powerup_gravitysuit"
+        "item_missiletank"
       ]
     },
     {
       "pickup_type": "actor",
-      "caption": "Nothing acquired.",
+      "caption": "Super Missile Tank acquired.\nSuper Missile capacity increased by 1.",
       "resources": [
         [
           {
-            "item_id": "ITEM_NONE",
+            "item_id": "ITEM_WEAPON_SUPER_MISSILE_MAX",
             "quantity": 1
           }
         ]
@@ -1168,16 +1106,22 @@
         "actor": "LE_Item_001"
       },
       "model": [
-        "itemsphere"
+        "item_supermissiletank"
       ]
     },
     {
       "pickup_type": "actor",
-      "caption": "Nothing acquired.",
+      "caption": "Progressive Jump acquired.",
       "resources": [
         [
           {
-            "item_id": "ITEM_NONE",
+            "item_id": "ITEM_HIGH_JUMP_BOOTS",
+            "quantity": 1
+          }
+        ],
+        [
+          {
+            "item_id": "ITEM_SPACE_JUMP",
             "quantity": 1
           }
         ]
@@ -1187,16 +1131,17 @@
         "actor": "LE_Item_002"
       },
       "model": [
-        "itemsphere"
+        "powerup_highjumpboots",
+        "powerup_spacejump"
       ]
     },
     {
       "pickup_type": "actor",
-      "caption": "Nothing acquired.",
+      "caption": "Super Missile Tank acquired.\nSuper Missile capacity increased by 1.",
       "resources": [
         [
           {
-            "item_id": "ITEM_NONE",
+            "item_id": "ITEM_WEAPON_SUPER_MISSILE_MAX",
             "quantity": 1
           }
         ]
@@ -1206,23 +1151,17 @@
         "actor": "LE_Item_003"
       },
       "model": [
-        "itemsphere"
+        "item_supermissiletank"
       ]
     },
     {
       "pickup_type": "actor",
-      "caption": "Power Bomb Tank acquired.\nPower Bomb capacity increased by {Power Bomb}.",
+      "caption": "Missile Tank acquired.\nMissile capacity increased by 3.",
       "resources": [
         [
           {
-            "item_id": "ITEM_RANDO_LOCKED_PBS",
-            "quantity": 1
-          }
-        ],
-        [
-          {
-            "item_id": "ITEM_WEAPON_POWER_BOMB_CURRENT",
-            "quantity": 1
+            "item_id": "ITEM_WEAPON_MISSILE_MAX",
+            "quantity": 3
           }
         ]
       ],
@@ -1231,17 +1170,17 @@
         "actor": "LE_Item_004"
       },
       "model": [
-        "item_powerbombtank"
+        "item_missiletank"
       ]
     },
     {
       "pickup_type": "actor",
-      "caption": "Screw Attack acquired.",
+      "caption": "Missile Tank acquired.\nMissile capacity increased by 3.",
       "resources": [
         [
           {
-            "item_id": "ITEM_SCREW_ATTACK",
-            "quantity": 1
+            "item_id": "ITEM_WEAPON_MISSILE_MAX",
+            "quantity": 3
           }
         ]
       ],
@@ -1250,22 +1189,16 @@
         "actor": "LE_Item_005"
       },
       "model": [
-        "powerup_screwattack"
+        "item_missiletank"
       ]
     },
     {
       "pickup_type": "actor",
-      "caption": "Power Bomb Tank acquired.\nPower Bomb capacity increased by {Power Bomb}.",
+      "caption": "Power Bomb Tank acquired.\nPower Bomb capacity increased by 1.",
       "resources": [
         [
           {
-            "item_id": "ITEM_RANDO_LOCKED_PBS",
-            "quantity": 1
-          }
-        ],
-        [
-          {
-            "item_id": "ITEM_WEAPON_POWER_BOMB_CURRENT",
+            "item_id": "ITEM_WEAPON_POWER_BOMB_MAX",
             "quantity": 1
           }
         ]
@@ -1280,6 +1213,25 @@
     },
     {
       "pickup_type": "actor",
+      "caption": "Energy Tank acquired.\nEnergy capacity increased by 100.",
+      "resources": [
+        [
+          {
+            "item_id": "ITEM_ENERGY_TANKS",
+            "quantity": 1
+          }
+        ]
+      ],
+      "pickup_actor": {
+        "scenario": "s030_area3",
+        "actor": "LE_SpecialAbility_EnergyWave"
+      },
+      "model": [
+        "item_energytank"
+      ]
+    },
+    {
+      "pickup_type": "actor",
       "caption": "Missile Tank acquired.\nMissile capacity increased by 3.",
       "resources": [
         [
@@ -1291,7 +1243,7 @@
       ],
       "pickup_actor": {
         "scenario": "s030_area3",
-        "actor": "LE_SpecialAbility_EnergyWave"
+        "actor": "HP_ChozoHologram_002"
       },
       "model": [
         "item_missiletank"
@@ -1299,24 +1251,37 @@
     },
     {
       "pickup_type": "actor",
-      "caption": "Super Missile Tank acquired.\nSuper Missile capacity increased by {Super Missile}.",
+      "caption": "Nothing acquired.",
       "resources": [
         [
           {
-            "item_id": "ITEM_RANDO_LOCKED_SUPERS",
-            "quantity": 1
-          }
-        ],
-        [
-          {
-            "item_id": "ITEM_WEAPON_SUPER_MISSILE_CURRENT",
+            "item_id": "ITEM_NONE",
             "quantity": 1
           }
         ]
       ],
       "pickup_actor": {
         "scenario": "s030_area3",
-        "actor": "HP_ChozoHologram_002"
+        "actor": "HiddenPowerup001"
+      },
+      "model": [
+        "itemsphere"
+      ]
+    },
+    {
+      "pickup_type": "actor",
+      "caption": "Super Missile Tank acquired.\nSuper Missile capacity increased by 1.",
+      "resources": [
+        [
+          {
+            "item_id": "ITEM_WEAPON_SUPER_MISSILE_MAX",
+            "quantity": 1
+          }
+        ]
+      ],
+      "pickup_actor": {
+        "scenario": "s030_area3",
+        "actor": "HiddenPowerup002"
       },
       "model": [
         "item_supermissiletank"
@@ -1334,8 +1299,8 @@
         ]
       ],
       "pickup_actor": {
-        "scenario": "s030_area3",
-        "actor": "HiddenPowerup001"
+        "scenario": "s033_area3b",
+        "actor": "LE_Item_001"
       },
       "model": [
         "item_missiletank"
@@ -1343,46 +1308,21 @@
     },
     {
       "pickup_type": "actor",
-      "caption": "Power Bomb Tank acquired.\nPower Bomb capacity increased by {Power Bomb}.",
+      "caption": "Power Bomb Tank acquired.\nPower Bomb capacity increased by 1.",
       "resources": [
         [
           {
-            "item_id": "ITEM_RANDO_LOCKED_PBS",
-            "quantity": 1
-          }
-        ],
-        [
-          {
-            "item_id": "ITEM_WEAPON_POWER_BOMB_CURRENT",
-            "quantity": 1
-          }
-        ]
-      ],
-      "pickup_actor": {
-        "scenario": "s030_area3",
-        "actor": "HiddenPowerup002"
-      },
-      "model": [
-        "item_powerbombtank"
-      ]
-    },
-    {
-      "pickup_type": "actor",
-      "caption": "Nothing acquired.",
-      "resources": [
-        [
-          {
-            "item_id": "ITEM_NONE",
+            "item_id": "ITEM_WEAPON_POWER_BOMB_MAX",
             "quantity": 1
           }
         ]
       ],
       "pickup_actor": {
         "scenario": "s033_area3b",
-        "actor": "LE_Item_001"
+        "actor": "LE_Item_002"
       },
       "model": [
-        "itemsphere"
+        "item_powerbombtank"
       ]
     },
     {
@@ -1398,7 +1338,7 @@
       ],
       "pickup_actor": {
         "scenario": "s033_area3b",
-        "actor": "LE_Item_002"
+        "actor": "LE_Item_003"
       },
       "model": [
         "item_missiletank"
@@ -1406,25 +1346,21 @@
     },
     {
       "pickup_type": "actor",
-      "caption": "Lightning Armor acquired.",
+      "caption": "Missile Tank acquired.\nMissile capacity increased by 3.",
       "resources": [
         [
           {
-            "item_id": "ITEM_SPECIAL_ENERGY_ENERGY_SHIELD",
-            "quantity": 1
-          },
-          {
-            "item_id": "ITEM_MAX_SPECIAL_ENERGY",
-            "quantity": 150
+            "item_id": "ITEM_WEAPON_MISSILE_MAX",
+            "quantity": 3
           }
         ]
       ],
       "pickup_actor": {
         "scenario": "s033_area3b",
-        "actor": "LE_Item_003"
+        "actor": "LE_Item_004"
       },
       "model": [
-        "powerup_energyshield"
+        "item_missiletank"
       ]
     },
     {
@@ -1440,7 +1376,7 @@
       ],
       "pickup_actor": {
         "scenario": "s033_area3b",
-        "actor": "LE_Item_004"
+        "actor": "LE_Item_007"
       },
       "model": [
         "item_senergytank"
@@ -1448,36 +1384,11 @@
     },
     {
       "pickup_type": "actor",
-      "caption": "Missile Tank acquired.\nMissile capacity increased by 3.",
+      "caption": "Bomb acquired.",
       "resources": [
         [
           {
-            "item_id": "ITEM_WEAPON_MISSILE_MAX",
-            "quantity": 3
-          }
-        ]
-      ],
-      "pickup_actor": {
-        "scenario": "s033_area3b",
-        "actor": "LE_Item_007"
-      },
-      "model": [
-        "item_missiletank"
-      ]
-    },
-    {
-      "pickup_type": "actor",
-      "caption": "Super Missile Tank acquired.\nSuper Missile capacity increased by {Super Missile}.",
-      "resources": [
-        [
-          {
-            "item_id": "ITEM_RANDO_LOCKED_SUPERS",
-            "quantity": 1
-          }
-        ],
-        [
-          {
-            "item_id": "ITEM_WEAPON_SUPER_MISSILE_CURRENT",
+            "item_id": "ITEM_WEAPON_BOMB",
             "quantity": 1
           }
         ]
@@ -1487,23 +1398,17 @@
         "actor": "HiddenPowerup001"
       },
       "model": [
-        "item_supermissiletank"
+        "powerup_bomb"
       ]
     },
     {
       "pickup_type": "actor",
-      "caption": "Super Missile Tank acquired.\nSuper Missile capacity increased by {Super Missile}.",
+      "caption": "Aeion Tank acquired.\nAeion Gauge expanded.",
       "resources": [
         [
           {
-            "item_id": "ITEM_RANDO_LOCKED_SUPERS",
-            "quantity": 1
-          }
-        ],
-        [
-          {
-            "item_id": "ITEM_WEAPON_SUPER_MISSILE_CURRENT",
-            "quantity": 1
+            "item_id": "ITEM_MAX_SPECIAL_ENERGY",
+            "quantity": 50
           }
         ]
       ],
@@ -1512,7 +1417,7 @@
         "actor": "HiddenPowerup002"
       },
       "model": [
-        "item_supermissiletank"
+        "item_senergytank"
       ]
     },
     {
@@ -1536,81 +1441,18 @@
     },
     {
       "pickup_type": "actor",
-      "caption": "Super Missile Tank acquired.\nSuper Missile capacity increased by {Super Missile}.",
+      "caption": "Missile Tank acquired.\nMissile capacity increased by 3.",
       "resources": [
         [
           {
-            "item_id": "ITEM_RANDO_LOCKED_SUPERS",
-            "quantity": 1
-          }
-        ],
-        [
-          {
-            "item_id": "ITEM_WEAPON_SUPER_MISSILE_CURRENT",
-            "quantity": 1
+            "item_id": "ITEM_WEAPON_MISSILE_MAX",
+            "quantity": 3
           }
         ]
       ],
       "pickup_actor": {
         "scenario": "s036_area3c",
         "actor": "LE_Item_001"
-      },
-      "model": [
-        "item_supermissiletank"
-      ]
-    },
-    {
-      "pickup_type": "actor",
-      "caption": "Missile Tank acquired.\nMissile capacity increased by 3.",
-      "resources": [
-        [
-          {
-            "item_id": "ITEM_WEAPON_MISSILE_MAX",
-            "quantity": 3
-          }
-        ]
-      ],
-      "pickup_actor": {
-        "scenario": "s036_area3c",
-        "actor": "LE_Item_002"
-      },
-      "model": [
-        "item_missiletank"
-      ]
-    },
-    {
-      "pickup_type": "actor",
-      "caption": "Missile Tank acquired.\nMissile capacity increased by 3.",
-      "resources": [
-        [
-          {
-            "item_id": "ITEM_WEAPON_MISSILE_MAX",
-            "quantity": 3
-          }
-        ]
-      ],
-      "pickup_actor": {
-        "scenario": "s036_area3c",
-        "actor": "LE_Item_004"
-      },
-      "model": [
-        "item_missiletank"
-      ]
-    },
-    {
-      "pickup_type": "actor",
-      "caption": "Missile Tank acquired.\nMissile capacity increased by 3.",
-      "resources": [
-        [
-          {
-            "item_id": "ITEM_WEAPON_MISSILE_MAX",
-            "quantity": 3
-          }
-        ]
-      ],
-      "pickup_actor": {
-        "scenario": "s036_area3c",
-        "actor": "LE_Item_006"
       },
       "model": [
         "item_missiletank"
@@ -1629,10 +1471,67 @@
       ],
       "pickup_actor": {
         "scenario": "s036_area3c",
-        "actor": "HiddenPowerup001"
+        "actor": "LE_Item_002"
       },
       "model": [
         "itemsphere"
+      ]
+    },
+    {
+      "pickup_type": "actor",
+      "caption": "Nothing acquired.",
+      "resources": [
+        [
+          {
+            "item_id": "ITEM_NONE",
+            "quantity": 1
+          }
+        ]
+      ],
+      "pickup_actor": {
+        "scenario": "s036_area3c",
+        "actor": "LE_Item_004"
+      },
+      "model": [
+        "itemsphere"
+      ]
+    },
+    {
+      "pickup_type": "actor",
+      "caption": "Super Missile Tank acquired.\nSuper Missile capacity increased by 1.",
+      "resources": [
+        [
+          {
+            "item_id": "ITEM_WEAPON_SUPER_MISSILE_MAX",
+            "quantity": 1
+          }
+        ]
+      ],
+      "pickup_actor": {
+        "scenario": "s036_area3c",
+        "actor": "LE_Item_006"
+      },
+      "model": [
+        "item_supermissiletank"
+      ]
+    },
+    {
+      "pickup_type": "actor",
+      "caption": "Super Missile Tank acquired.\nSuper Missile capacity increased by 1.",
+      "resources": [
+        [
+          {
+            "item_id": "ITEM_WEAPON_SUPER_MISSILE_MAX",
+            "quantity": 1
+          }
+        ]
+      ],
+      "pickup_actor": {
+        "scenario": "s036_area3c",
+        "actor": "HiddenPowerup001"
+      },
+      "model": [
+        "item_supermissiletank"
       ]
     },
     {
@@ -1675,11 +1574,11 @@
     },
     {
       "pickup_type": "actor",
-      "caption": "Nothing acquired.",
+      "caption": "Super Missile Tank acquired.\nSuper Missile capacity increased by 1.",
       "resources": [
         [
           {
-            "item_id": "ITEM_NONE",
+            "item_id": "ITEM_WEAPON_SUPER_MISSILE_MAX",
             "quantity": 1
           }
         ]
@@ -1689,7 +1588,26 @@
         "actor": "LE_Item_005"
       },
       "model": [
-        "itemsphere"
+        "item_supermissiletank"
+      ]
+    },
+    {
+      "pickup_type": "actor",
+      "caption": "Super Missile Tank acquired.\nSuper Missile capacity increased by 1.",
+      "resources": [
+        [
+          {
+            "item_id": "ITEM_WEAPON_SUPER_MISSILE_MAX",
+            "quantity": 1
+          }
+        ]
+      ],
+      "pickup_actor": {
+        "scenario": "s040_area4",
+        "actor": "LE_Item_006"
+      },
+      "model": [
+        "item_supermissiletank"
       ]
     },
     {
@@ -1705,33 +1623,10 @@
       ],
       "pickup_actor": {
         "scenario": "s040_area4",
-        "actor": "LE_Item_006"
-      },
-      "model": [
-        "item_missiletank"
-      ]
-    },
-    {
-      "pickup_type": "actor",
-      "caption": "Beam Burst acquired.",
-      "resources": [
-        [
-          {
-            "item_id": "ITEM_SPECIAL_ENERGY_ENERGY_WAVE",
-            "quantity": 1
-          },
-          {
-            "item_id": "ITEM_MAX_SPECIAL_ENERGY",
-            "quantity": 150
-          }
-        ]
-      ],
-      "pickup_actor": {
-        "scenario": "s040_area4",
         "actor": "LE_Item_007"
       },
       "model": [
-        "powerup_energywave"
+        "item_missiletank"
       ]
     },
     {
@@ -1774,12 +1669,12 @@
     },
     {
       "pickup_type": "actor",
-      "caption": "Missile Tank acquired.\nMissile capacity increased by 3.",
+      "caption": "Power Bomb Tank acquired.\nPower Bomb capacity increased by 1.",
       "resources": [
         [
           {
-            "item_id": "ITEM_WEAPON_MISSILE_MAX",
-            "quantity": 3
+            "item_id": "ITEM_WEAPON_POWER_BOMB_MAX",
+            "quantity": 1
           }
         ]
       ],
@@ -1788,17 +1683,17 @@
         "actor": "HP_ChozoHologram_002"
       },
       "model": [
-        "item_missiletank"
+        "item_powerbombtank"
       ]
     },
     {
       "pickup_type": "actor",
-      "caption": "Missile Tank acquired.\nMissile capacity increased by 3.",
+      "caption": "Super Missile Tank acquired.\nSuper Missile capacity increased by 1.",
       "resources": [
         [
           {
-            "item_id": "ITEM_WEAPON_MISSILE_MAX",
-            "quantity": 3
+            "item_id": "ITEM_WEAPON_SUPER_MISSILE_MAX",
+            "quantity": 1
           }
         ]
       ],
@@ -1807,7 +1702,7 @@
         "actor": "HiddenPowerup001"
       },
       "model": [
-        "item_missiletank"
+        "item_supermissiletank"
       ]
     },
     {
@@ -1831,18 +1726,12 @@
     },
     {
       "pickup_type": "actor",
-      "caption": "Super Missile Tank acquired.\nSuper Missile capacity increased by {Super Missile}.",
+      "caption": "Missile Tank acquired.\nMissile capacity increased by 3.",
       "resources": [
         [
           {
-            "item_id": "ITEM_RANDO_LOCKED_SUPERS",
-            "quantity": 1
-          }
-        ],
-        [
-          {
-            "item_id": "ITEM_WEAPON_SUPER_MISSILE_CURRENT",
-            "quantity": 1
+            "item_id": "ITEM_WEAPON_MISSILE_MAX",
+            "quantity": 3
           }
         ]
       ],
@@ -1851,7 +1740,7 @@
         "actor": "HiddenPowerup004"
       },
       "model": [
-        "item_supermissiletank"
+        "item_missiletank"
       ]
     },
     {
@@ -1932,12 +1821,12 @@
     },
     {
       "pickup_type": "actor",
-      "caption": "Aeion Tank acquired.\nAeion Gauge expanded.",
+      "caption": "Super Missile Tank acquired.\nSuper Missile capacity increased by 1.",
       "resources": [
         [
           {
-            "item_id": "ITEM_MAX_SPECIAL_ENERGY",
-            "quantity": 50
+            "item_id": "ITEM_WEAPON_SUPER_MISSILE_MAX",
+            "quantity": 1
           }
         ]
       ],
@@ -1946,7 +1835,7 @@
         "actor": "LE_Item_006"
       },
       "model": [
-        "item_senergytank"
+        "item_supermissiletank"
       ]
     },
     {
@@ -1970,12 +1859,12 @@
     },
     {
       "pickup_type": "actor",
-      "caption": "Missile Tank acquired.\nMissile capacity increased by 3.",
+      "caption": "Nothing acquired.",
       "resources": [
         [
           {
-            "item_id": "ITEM_WEAPON_MISSILE_MAX",
-            "quantity": 3
+            "item_id": "ITEM_NONE",
+            "quantity": 1
           }
         ]
       ],
@@ -1984,7 +1873,7 @@
         "actor": "LE_Item_010"
       },
       "model": [
-        "item_missiletank"
+        "itemsphere"
       ]
     },
     {
@@ -2008,6 +1897,25 @@
     },
     {
       "pickup_type": "actor",
+      "caption": "Missile Tank acquired.\nMissile capacity increased by 3.",
+      "resources": [
+        [
+          {
+            "item_id": "ITEM_WEAPON_MISSILE_MAX",
+            "quantity": 3
+          }
+        ]
+      ],
+      "pickup_actor": {
+        "scenario": "s050_area5",
+        "actor": "LE_Item_013"
+      },
+      "model": [
+        "item_missiletank"
+      ]
+    },
+    {
+      "pickup_type": "actor",
       "caption": "Energy Tank acquired.\nEnergy capacity increased by 100.",
       "resources": [
         [
@@ -2019,7 +1927,7 @@
       ],
       "pickup_actor": {
         "scenario": "s050_area5",
-        "actor": "LE_Item_013"
+        "actor": "LE_PoweUp_SuperMissile"
       },
       "model": [
         "item_energytank"
@@ -2027,44 +1935,12 @@
     },
     {
       "pickup_type": "actor",
-      "caption": "Progressive Suit acquired.",
+      "caption": "Aeion Tank acquired.\nAeion Gauge expanded.",
       "resources": [
         [
           {
-            "item_id": "ITEM_VARIA_SUIT",
-            "quantity": 1
-          }
-        ],
-        [
-          {
-            "item_id": "ITEM_GRAVITY_SUIT",
-            "quantity": 1
-          }
-        ]
-      ],
-      "pickup_actor": {
-        "scenario": "s050_area5",
-        "actor": "LE_PoweUp_SuperMissile"
-      },
-      "model": [
-        "powerup_variasuit",
-        "powerup_gravitysuit"
-      ]
-    },
-    {
-      "pickup_type": "actor",
-      "caption": "Super Missile Tank acquired.\nSuper Missile capacity increased by {Super Missile}.",
-      "resources": [
-        [
-          {
-            "item_id": "ITEM_RANDO_LOCKED_SUPERS",
-            "quantity": 1
-          }
-        ],
-        [
-          {
-            "item_id": "ITEM_WEAPON_SUPER_MISSILE_CURRENT",
-            "quantity": 1
+            "item_id": "ITEM_MAX_SPECIAL_ENERGY",
+            "quantity": 50
           }
         ]
       ],
@@ -2073,7 +1949,7 @@
         "actor": "LE_PowerUp_SpaceJump"
       },
       "model": [
-        "item_supermissiletank"
+        "item_senergytank"
       ]
     },
     {
@@ -2116,12 +1992,12 @@
     },
     {
       "pickup_type": "actor",
-      "caption": "Aeion Tank acquired.\nAeion Gauge expanded.",
+      "caption": "Nothing acquired.",
       "resources": [
         [
           {
-            "item_id": "ITEM_MAX_SPECIAL_ENERGY",
-            "quantity": 50
+            "item_id": "ITEM_NONE",
+            "quantity": 1
           }
         ]
       ],
@@ -2130,7 +2006,7 @@
         "actor": "LE_Item_002"
       },
       "model": [
-        "item_senergytank"
+        "itemsphere"
       ]
     },
     {
@@ -2192,17 +2068,11 @@
     },
     {
       "pickup_type": "actor",
-      "caption": "Power Bomb Tank acquired.\nPower Bomb capacity increased by {Power Bomb}.",
+      "caption": "Super Missile Tank acquired.\nSuper Missile capacity increased by 1.",
       "resources": [
         [
           {
-            "item_id": "ITEM_RANDO_LOCKED_PBS",
-            "quantity": 1
-          }
-        ],
-        [
-          {
-            "item_id": "ITEM_WEAPON_POWER_BOMB_CURRENT",
+            "item_id": "ITEM_WEAPON_SUPER_MISSILE_MAX",
             "quantity": 1
           }
         ]
@@ -2212,7 +2082,7 @@
         "actor": "LE_Item_007"
       },
       "model": [
-        "item_powerbombtank"
+        "item_supermissiletank"
       ]
     },
     {
@@ -2236,6 +2106,25 @@
     },
     {
       "pickup_type": "actor",
+      "caption": "Missile Tank acquired.\nMissile capacity increased by 3.",
+      "resources": [
+        [
+          {
+            "item_id": "ITEM_WEAPON_MISSILE_MAX",
+            "quantity": 3
+          }
+        ]
+      ],
+      "pickup_actor": {
+        "scenario": "s060_area6",
+        "actor": "HiddenPowerup001"
+      },
+      "model": [
+        "item_missiletank"
+      ]
+    },
+    {
+      "pickup_type": "actor",
       "caption": "Nothing acquired.",
       "resources": [
         [
@@ -2247,7 +2136,7 @@
       ],
       "pickup_actor": {
         "scenario": "s060_area6",
-        "actor": "HiddenPowerup001"
+        "actor": "HiddenPowerup002"
       },
       "model": [
         "itemsphere"
@@ -2255,37 +2144,12 @@
     },
     {
       "pickup_type": "actor",
-      "caption": "Power Bomb Tank acquired.\nPower Bomb capacity increased by {Power Bomb}.",
+      "caption": "Power Bomb Tank acquired.\nPower Bomb capacity increased by 1.",
       "resources": [
         [
           {
-            "item_id": "ITEM_RANDO_LOCKED_PBS",
+            "item_id": "ITEM_WEAPON_POWER_BOMB_MAX",
             "quantity": 1
-          }
-        ],
-        [
-          {
-            "item_id": "ITEM_WEAPON_POWER_BOMB_CURRENT",
-            "quantity": 1
-          }
-        ]
-      ],
-      "pickup_actor": {
-        "scenario": "s060_area6",
-        "actor": "HiddenPowerup002"
-      },
-      "model": [
-        "item_powerbombtank"
-      ]
-    },
-    {
-      "pickup_type": "actor",
-      "caption": "Aeion Tank acquired.\nAeion Gauge expanded.",
-      "resources": [
-        [
-          {
-            "item_id": "ITEM_MAX_SPECIAL_ENERGY",
-            "quantity": 50
           }
         ]
       ],
@@ -2294,7 +2158,7 @@
         "actor": "LE_Item_001"
       },
       "model": [
-        "item_senergytank"
+        "item_powerbombtank"
       ]
     },
     {
@@ -2318,11 +2182,11 @@
     },
     {
       "pickup_type": "actor",
-      "caption": "Grapple Beam acquired.",
+      "caption": "Nothing acquired.",
       "resources": [
         [
           {
-            "item_id": "ITEM_WEAPON_GRAPPLE_BEAM",
+            "item_id": "ITEM_NONE",
             "quantity": 1
           }
         ]
@@ -2332,70 +2196,7 @@
         "actor": "LE_Item_003"
       },
       "model": [
-        "powerup_grapplebeam"
-      ]
-    },
-    {
-      "pickup_type": "actor",
-      "caption": "Power Bomb Tank acquired.\nPower Bomb capacity increased by {Power Bomb}.",
-      "resources": [
-        [
-          {
-            "item_id": "ITEM_RANDO_LOCKED_PBS",
-            "quantity": 1
-          }
-        ],
-        [
-          {
-            "item_id": "ITEM_WEAPON_POWER_BOMB_CURRENT",
-            "quantity": 1
-          }
-        ]
-      ],
-      "pickup_actor": {
-        "scenario": "s065_area6b",
-        "actor": "LE_Item_004"
-      },
-      "model": [
-        "item_powerbombtank"
-      ]
-    },
-    {
-      "pickup_type": "actor",
-      "caption": "Missile Tank acquired.\nMissile capacity increased by 3.",
-      "resources": [
-        [
-          {
-            "item_id": "ITEM_WEAPON_MISSILE_MAX",
-            "quantity": 3
-          }
-        ]
-      ],
-      "pickup_actor": {
-        "scenario": "s065_area6b",
-        "actor": "LE_Item_005"
-      },
-      "model": [
-        "item_missiletank"
-      ]
-    },
-    {
-      "pickup_type": "actor",
-      "caption": "Missile Tank acquired.\nMissile capacity increased by 3.",
-      "resources": [
-        [
-          {
-            "item_id": "ITEM_WEAPON_MISSILE_MAX",
-            "quantity": 3
-          }
-        ]
-      ],
-      "pickup_actor": {
-        "scenario": "s065_area6b",
-        "actor": "LE_Item_006"
-      },
-      "model": [
-        "item_missiletank"
+        "itemsphere"
       ]
     },
     {
@@ -2411,10 +2212,74 @@
       ],
       "pickup_actor": {
         "scenario": "s065_area6b",
-        "actor": "LE_Item_007"
+        "actor": "LE_Item_004"
       },
       "model": [
         "itemsphere"
+      ]
+    },
+    {
+      "pickup_type": "actor",
+      "caption": "Super Missile Tank acquired.\nSuper Missile capacity increased by 1.",
+      "resources": [
+        [
+          {
+            "item_id": "ITEM_WEAPON_SUPER_MISSILE_MAX",
+            "quantity": 1
+          }
+        ]
+      ],
+      "pickup_actor": {
+        "scenario": "s065_area6b",
+        "actor": "LE_Item_005"
+      },
+      "model": [
+        "item_supermissiletank"
+      ]
+    },
+    {
+      "pickup_type": "actor",
+      "caption": "Progressive Suit acquired.",
+      "resources": [
+        [
+          {
+            "item_id": "ITEM_VARIA_SUIT",
+            "quantity": 1
+          }
+        ],
+        [
+          {
+            "item_id": "ITEM_GRAVITY_SUIT",
+            "quantity": 1
+          }
+        ]
+      ],
+      "pickup_actor": {
+        "scenario": "s065_area6b",
+        "actor": "LE_Item_006"
+      },
+      "model": [
+        "powerup_variasuit",
+        "powerup_gravitysuit"
+      ]
+    },
+    {
+      "pickup_type": "actor",
+      "caption": "Missile Tank acquired.\nMissile capacity increased by 3.",
+      "resources": [
+        [
+          {
+            "item_id": "ITEM_WEAPON_MISSILE_MAX",
+            "quantity": 3
+          }
+        ]
+      ],
+      "pickup_actor": {
+        "scenario": "s065_area6b",
+        "actor": "LE_Item_007"
+      },
+      "model": [
+        "item_missiletank"
       ]
     },
     {
@@ -2457,18 +2322,12 @@
     },
     {
       "pickup_type": "actor",
-      "caption": "Super Missile Tank acquired.\nSuper Missile capacity increased by {Super Missile}.",
+      "caption": "Missile Tank acquired.\nMissile capacity increased by 3.",
       "resources": [
         [
           {
-            "item_id": "ITEM_RANDO_LOCKED_SUPERS",
-            "quantity": 1
-          }
-        ],
-        [
-          {
-            "item_id": "ITEM_WEAPON_SUPER_MISSILE_CURRENT",
-            "quantity": 1
+            "item_id": "ITEM_WEAPON_MISSILE_MAX",
+            "quantity": 3
           }
         ]
       ],
@@ -2477,23 +2336,17 @@
         "actor": "LE_Item_001"
       },
       "model": [
-        "item_supermissiletank"
+        "item_missiletank"
       ]
     },
     {
       "pickup_type": "actor",
-      "caption": "Super Missile Tank acquired.\nSuper Missile capacity increased by {Super Missile}.",
+      "caption": "Missile Tank acquired.\nMissile capacity increased by 3.",
       "resources": [
         [
           {
-            "item_id": "ITEM_RANDO_LOCKED_SUPERS",
-            "quantity": 1
-          }
-        ],
-        [
-          {
-            "item_id": "ITEM_WEAPON_SUPER_MISSILE_CURRENT",
-            "quantity": 1
+            "item_id": "ITEM_WEAPON_MISSILE_MAX",
+            "quantity": 3
           }
         ]
       ],
@@ -2502,16 +2355,16 @@
         "actor": "LE_Item_002"
       },
       "model": [
-        "item_supermissiletank"
+        "item_missiletank"
       ]
     },
     {
       "pickup_type": "actor",
-      "caption": "Nothing acquired.",
+      "caption": "Energy Tank acquired.\nEnergy capacity increased by 100.",
       "resources": [
         [
           {
-            "item_id": "ITEM_NONE",
+            "item_id": "ITEM_ENERGY_TANKS",
             "quantity": 1
           }
         ]
@@ -2521,7 +2374,7 @@
         "actor": "LE_Item_003"
       },
       "model": [
-        "itemsphere"
+        "item_energytank"
       ]
     },
     {
@@ -2545,11 +2398,11 @@
     },
     {
       "pickup_type": "actor",
-      "caption": "Nothing acquired.",
+      "caption": "Power Bomb Tank acquired.\nPower Bomb capacity increased by 1.",
       "resources": [
         [
           {
-            "item_id": "ITEM_NONE",
+            "item_id": "ITEM_WEAPON_POWER_BOMB_MAX",
             "quantity": 1
           }
         ]
@@ -2559,7 +2412,7 @@
         "actor": "LE_Item_005"
       },
       "model": [
-        "itemsphere"
+        "item_powerbombtank"
       ]
     },
     {
@@ -2583,12 +2436,12 @@
     },
     {
       "pickup_type": "actor",
-      "caption": "Aeion Tank acquired.\nAeion Gauge expanded.",
+      "caption": "Nothing acquired.",
       "resources": [
         [
           {
-            "item_id": "ITEM_MAX_SPECIAL_ENERGY",
-            "quantity": 50
+            "item_id": "ITEM_NONE",
+            "quantity": 1
           }
         ]
       ],
@@ -2597,16 +2450,16 @@
         "actor": "LE_PowerUp_PlasmaBeam"
       },
       "model": [
-        "item_senergytank"
+        "itemsphere"
       ]
     },
     {
       "pickup_type": "actor",
-      "caption": "Nothing acquired.",
+      "caption": "Super Missile Tank acquired.\nSuper Missile capacity increased by 1.",
       "resources": [
         [
           {
-            "item_id": "ITEM_NONE",
+            "item_id": "ITEM_WEAPON_SUPER_MISSILE_MAX",
             "quantity": 1
           }
         ]
@@ -2616,17 +2469,17 @@
         "actor": "HP_ChozoHologram_001"
       },
       "model": [
-        "itemsphere"
+        "item_supermissiletank"
       ]
     },
     {
       "pickup_type": "actor",
-      "caption": "Nothing acquired.",
+      "caption": "Missile Tank acquired.\nMissile capacity increased by 3.",
       "resources": [
         [
           {
-            "item_id": "ITEM_NONE",
-            "quantity": 1
+            "item_id": "ITEM_WEAPON_MISSILE_MAX",
+            "quantity": 3
           }
         ]
       ],
@@ -2635,7 +2488,7 @@
         "actor": "HiddenPowerup002"
       },
       "model": [
-        "itemsphere"
+        "item_missiletank"
       ]
     },
     {
@@ -2678,31 +2531,6 @@
     },
     {
       "pickup_type": "actor",
-      "caption": "Super Missile Tank acquired.\nSuper Missile capacity increased by {Super Missile}.",
-      "resources": [
-        [
-          {
-            "item_id": "ITEM_RANDO_LOCKED_SUPERS",
-            "quantity": 1
-          }
-        ],
-        [
-          {
-            "item_id": "ITEM_WEAPON_SUPER_MISSILE_CURRENT",
-            "quantity": 1
-          }
-        ]
-      ],
-      "pickup_actor": {
-        "scenario": "s070_area7",
-        "actor": "LE_Item_002"
-      },
-      "model": [
-        "item_supermissiletank"
-      ]
-    },
-    {
-      "pickup_type": "actor",
       "caption": "Missile Tank acquired.\nMissile capacity increased by 3.",
       "resources": [
         [
@@ -2714,7 +2542,7 @@
       ],
       "pickup_actor": {
         "scenario": "s070_area7",
-        "actor": "LE_Item_004"
+        "actor": "LE_Item_002"
       },
       "model": [
         "item_missiletank"
@@ -2722,23 +2550,30 @@
     },
     {
       "pickup_type": "actor",
-      "caption": "Progressive Beam acquired.",
+      "caption": "Nothing acquired.",
       "resources": [
         [
           {
-            "item_id": "ITEM_WEAPON_WAVE_BEAM",
+            "item_id": "ITEM_NONE",
             "quantity": 1
           }
-        ],
+        ]
+      ],
+      "pickup_actor": {
+        "scenario": "s070_area7",
+        "actor": "LE_Item_004"
+      },
+      "model": [
+        "itemsphere"
+      ]
+    },
+    {
+      "pickup_type": "actor",
+      "caption": "Nothing acquired.",
+      "resources": [
         [
           {
-            "item_id": "ITEM_WEAPON_SPAZER_BEAM",
-            "quantity": 1
-          }
-        ],
-        [
-          {
-            "item_id": "ITEM_WEAPON_PLASMA_BEAM",
+            "item_id": "ITEM_NONE",
             "quantity": 1
           }
         ]
@@ -2748,19 +2583,17 @@
         "actor": "LE_Item_007"
       },
       "model": [
-        "powerup_wavebeam",
-        "powerup_spazerbeam",
-        "powerup_plasmabeam"
+        "itemsphere"
       ]
     },
     {
       "pickup_type": "actor",
-      "caption": "Missile Tank acquired.\nMissile capacity increased by 3.",
+      "caption": "Spring Ball acquired.",
       "resources": [
         [
           {
-            "item_id": "ITEM_WEAPON_MISSILE_MAX",
-            "quantity": 3
+            "item_id": "ITEM_SPRING_BALL",
+            "quantity": 1
           }
         ]
       ],
@@ -2769,7 +2602,7 @@
         "actor": "LE_Item_008"
       },
       "model": [
-        "item_missiletank"
+        "powerup_springball"
       ]
     },
     {
@@ -2812,11 +2645,11 @@
     },
     {
       "pickup_type": "actor",
-      "caption": "Energy Tank acquired.\nEnergy capacity increased by 100.",
+      "caption": "Super Missile Tank acquired.\nSuper Missile capacity increased by 1.",
       "resources": [
         [
           {
-            "item_id": "ITEM_ENERGY_TANKS",
+            "item_id": "ITEM_WEAPON_SUPER_MISSILE_MAX",
             "quantity": 1
           }
         ]
@@ -2826,7 +2659,83 @@
         "actor": "LE_Item_012"
       },
       "model": [
-        "item_energytank"
+        "item_supermissiletank"
+      ]
+    },
+    {
+      "pickup_type": "actor",
+      "caption": "Nothing acquired.",
+      "resources": [
+        [
+          {
+            "item_id": "ITEM_NONE",
+            "quantity": 1
+          }
+        ]
+      ],
+      "pickup_actor": {
+        "scenario": "s070_area7",
+        "actor": "LE_Item_013"
+      },
+      "model": [
+        "itemsphere"
+      ]
+    },
+    {
+      "pickup_type": "actor",
+      "caption": "Power Bomb Tank acquired.\nPower Bomb capacity increased by 1.",
+      "resources": [
+        [
+          {
+            "item_id": "ITEM_WEAPON_POWER_BOMB_MAX",
+            "quantity": 1
+          }
+        ]
+      ],
+      "pickup_actor": {
+        "scenario": "s070_area7",
+        "actor": "LE_Item_014"
+      },
+      "model": [
+        "item_powerbombtank"
+      ]
+    },
+    {
+      "pickup_type": "actor",
+      "caption": "Super Missile Tank acquired.\nSuper Missile capacity increased by 1.",
+      "resources": [
+        [
+          {
+            "item_id": "ITEM_WEAPON_SUPER_MISSILE_MAX",
+            "quantity": 1
+          }
+        ]
+      ],
+      "pickup_actor": {
+        "scenario": "s070_area7",
+        "actor": "LE_PowerUp_Powerbomb"
+      },
+      "model": [
+        "item_supermissiletank"
+      ]
+    },
+    {
+      "pickup_type": "actor",
+      "caption": "Aeion Tank acquired.\nAeion Gauge expanded.",
+      "resources": [
+        [
+          {
+            "item_id": "ITEM_MAX_SPECIAL_ENERGY",
+            "quantity": 50
+          }
+        ]
+      ],
+      "pickup_actor": {
+        "scenario": "s070_area7",
+        "actor": "LE_Item_011"
+      },
+      "model": [
+        "item_senergytank"
       ]
     },
     {
@@ -2842,7 +2751,7 @@
       ],
       "pickup_actor": {
         "scenario": "s070_area7",
-        "actor": "LE_Item_013"
+        "actor": "LE_Item_015"
       },
       "model": [
         "item_missiletank"
@@ -2850,105 +2759,11 @@
     },
     {
       "pickup_type": "actor",
-      "caption": "Super Missile Tank acquired.\nSuper Missile capacity increased by {Super Missile}.",
+      "caption": "Spider Ball acquired.",
       "resources": [
         [
           {
-            "item_id": "ITEM_RANDO_LOCKED_SUPERS",
-            "quantity": 1
-          }
-        ],
-        [
-          {
-            "item_id": "ITEM_WEAPON_SUPER_MISSILE_CURRENT",
-            "quantity": 1
-          }
-        ]
-      ],
-      "pickup_actor": {
-        "scenario": "s070_area7",
-        "actor": "LE_Item_014"
-      },
-      "model": [
-        "item_supermissiletank"
-      ]
-    },
-    {
-      "pickup_type": "actor",
-      "caption": "Super Missile Tank acquired.\nSuper Missile capacity increased by {Super Missile}.",
-      "resources": [
-        [
-          {
-            "item_id": "ITEM_RANDO_LOCKED_SUPERS",
-            "quantity": 1
-          }
-        ],
-        [
-          {
-            "item_id": "ITEM_WEAPON_SUPER_MISSILE_CURRENT",
-            "quantity": 1
-          }
-        ]
-      ],
-      "pickup_actor": {
-        "scenario": "s070_area7",
-        "actor": "LE_PowerUp_Powerbomb"
-      },
-      "model": [
-        "item_supermissiletank"
-      ]
-    },
-    {
-      "pickup_type": "actor",
-      "caption": "Nothing acquired.",
-      "resources": [
-        [
-          {
-            "item_id": "ITEM_NONE",
-            "quantity": 1
-          }
-        ]
-      ],
-      "pickup_actor": {
-        "scenario": "s070_area7",
-        "actor": "LE_Item_011"
-      },
-      "model": [
-        "itemsphere"
-      ]
-    },
-    {
-      "pickup_type": "actor",
-      "caption": "Nothing acquired.",
-      "resources": [
-        [
-          {
-            "item_id": "ITEM_NONE",
-            "quantity": 1
-          }
-        ]
-      ],
-      "pickup_actor": {
-        "scenario": "s070_area7",
-        "actor": "LE_Item_015"
-      },
-      "model": [
-        "itemsphere"
-      ]
-    },
-    {
-      "pickup_type": "actor",
-      "caption": "Power Bomb Tank acquired.\nPower Bomb capacity increased by {Power Bomb}.",
-      "resources": [
-        [
-          {
-            "item_id": "ITEM_RANDO_LOCKED_PBS",
-            "quantity": 1
-          }
-        ],
-        [
-          {
-            "item_id": "ITEM_WEAPON_POWER_BOMB_CURRENT",
+            "item_id": "ITEM_SPIDER_BALL",
             "quantity": 1
           }
         ]
@@ -2956,6 +2771,25 @@
       "pickup_actor": {
         "scenario": "s090_area9",
         "actor": "LE_Item_001"
+      },
+      "model": [
+        "powerup_spiderball"
+      ]
+    },
+    {
+      "pickup_type": "actor",
+      "caption": "Power Bomb Tank acquired.\nPower Bomb capacity increased by 1.",
+      "resources": [
+        [
+          {
+            "item_id": "ITEM_WEAPON_POWER_BOMB_MAX",
+            "quantity": 1
+          }
+        ]
+      ],
+      "pickup_actor": {
+        "scenario": "s090_area9",
+        "actor": "LE_Item_002"
       },
       "model": [
         "item_powerbombtank"
@@ -2974,29 +2808,10 @@
       ],
       "pickup_actor": {
         "scenario": "s090_area9",
-        "actor": "LE_Item_002"
-      },
-      "model": [
-        "itemsphere"
-      ]
-    },
-    {
-      "pickup_type": "actor",
-      "caption": "Missile Tank acquired.\nMissile capacity increased by 3.",
-      "resources": [
-        [
-          {
-            "item_id": "ITEM_WEAPON_MISSILE_MAX",
-            "quantity": 3
-          }
-        ]
-      ],
-      "pickup_actor": {
-        "scenario": "s090_area9",
         "actor": "LE_Item_003"
       },
       "model": [
-        "item_missiletank"
+        "itemsphere"
       ]
     },
     {
@@ -3020,18 +2835,12 @@
     },
     {
       "pickup_type": "actor",
-      "caption": "Super Missile Tank acquired.\nSuper Missile capacity increased by {Super Missile}.",
+      "caption": "Aeion Tank acquired.\nAeion Gauge expanded.",
       "resources": [
         [
           {
-            "item_id": "ITEM_RANDO_LOCKED_SUPERS",
-            "quantity": 1
-          }
-        ],
-        [
-          {
-            "item_id": "ITEM_WEAPON_SUPER_MISSILE_CURRENT",
-            "quantity": 1
+            "item_id": "ITEM_MAX_SPECIAL_ENERGY",
+            "quantity": 50
           }
         ]
       ],
@@ -3040,65 +2849,23 @@
         "actor": "LE_Item_008"
       },
       "model": [
-        "item_supermissiletank"
+        "item_senergytank"
       ]
     },
     {
       "pickup_type": "actor",
-      "caption": "Phase Drift acquired.",
+      "caption": "Nothing acquired.",
       "resources": [
         [
           {
-            "item_id": "ITEM_SPECIAL_ENERGY_PHASE_DISPLACEMENT",
+            "item_id": "ITEM_NONE",
             "quantity": 1
-          },
-          {
-            "item_id": "ITEM_MAX_SPECIAL_ENERGY",
-            "quantity": 150
           }
         ]
       ],
       "pickup_actor": {
         "scenario": "s090_area9",
         "actor": "LE_Item_009"
-      },
-      "model": [
-        "powerup_phasedisplacement"
-      ]
-    },
-    {
-      "pickup_type": "actor",
-      "caption": "Nothing acquired.",
-      "resources": [
-        [
-          {
-            "item_id": "ITEM_NONE",
-            "quantity": 1
-          }
-        ]
-      ],
-      "pickup_actor": {
-        "scenario": "s090_area9",
-        "actor": "LE_Item_010"
-      },
-      "model": [
-        "itemsphere"
-      ]
-    },
-    {
-      "pickup_type": "actor",
-      "caption": "Nothing acquired.",
-      "resources": [
-        [
-          {
-            "item_id": "ITEM_NONE",
-            "quantity": 1
-          }
-        ]
-      ],
-      "pickup_actor": {
-        "scenario": "s090_area9",
-        "actor": "LE_Item_011"
       },
       "model": [
         "itemsphere"
@@ -3117,7 +2884,64 @@
       ],
       "pickup_actor": {
         "scenario": "s090_area9",
+        "actor": "LE_Item_010"
+      },
+      "model": [
+        "item_missiletank"
+      ]
+    },
+    {
+      "pickup_type": "actor",
+      "caption": "Aeion Tank acquired.\nAeion Gauge expanded.",
+      "resources": [
+        [
+          {
+            "item_id": "ITEM_MAX_SPECIAL_ENERGY",
+            "quantity": 50
+          }
+        ]
+      ],
+      "pickup_actor": {
+        "scenario": "s090_area9",
+        "actor": "LE_Item_011"
+      },
+      "model": [
+        "item_senergytank"
+      ]
+    },
+    {
+      "pickup_type": "actor",
+      "caption": "Nothing acquired.",
+      "resources": [
+        [
+          {
+            "item_id": "ITEM_NONE",
+            "quantity": 1
+          }
+        ]
+      ],
+      "pickup_actor": {
+        "scenario": "s090_area9",
         "actor": "LE_Item_012"
+      },
+      "model": [
+        "itemsphere"
+      ]
+    },
+    {
+      "pickup_type": "actor",
+      "caption": "Missile Tank acquired.\nMissile capacity increased by 3.",
+      "resources": [
+        [
+          {
+            "item_id": "ITEM_WEAPON_MISSILE_MAX",
+            "quantity": 3
+          }
+        ]
+      ],
+      "pickup_actor": {
+        "scenario": "s090_area9",
+        "actor": "LE_Item_013"
       },
       "model": [
         "item_missiletank"
@@ -3136,7 +2960,7 @@
       ],
       "pickup_actor": {
         "scenario": "s090_area9",
-        "actor": "LE_Item_013"
+        "actor": "HiddenPowerup001"
       },
       "model": [
         "itemsphere"
@@ -3144,31 +2968,12 @@
     },
     {
       "pickup_type": "actor",
-      "caption": "Spring Ball acquired.",
+      "caption": "Missile Tank acquired.\nMissile capacity increased by 3.",
       "resources": [
         [
           {
-            "item_id": "ITEM_SPRING_BALL",
-            "quantity": 1
-          }
-        ]
-      ],
-      "pickup_actor": {
-        "scenario": "s090_area9",
-        "actor": "HiddenPowerup001"
-      },
-      "model": [
-        "powerup_springball"
-      ]
-    },
-    {
-      "pickup_type": "actor",
-      "caption": "Nothing acquired.",
-      "resources": [
-        [
-          {
-            "item_id": "ITEM_NONE",
-            "quantity": 1
+            "item_id": "ITEM_WEAPON_MISSILE_MAX",
+            "quantity": 3
           }
         ]
       ],
@@ -3177,17 +2982,17 @@
         "actor": "HiddenPowerup002"
       },
       "model": [
-        "itemsphere"
+        "item_missiletank"
       ]
     },
     {
       "pickup_type": "actor",
-      "caption": "Aeion Tank acquired.\nAeion Gauge expanded.",
+      "caption": "Super Missile Tank acquired.\nSuper Missile capacity increased by 1.",
       "resources": [
         [
           {
-            "item_id": "ITEM_MAX_SPECIAL_ENERGY",
-            "quantity": 50
+            "item_id": "ITEM_WEAPON_SUPER_MISSILE_MAX",
+            "quantity": 1
           }
         ]
       ],
@@ -3196,7 +3001,7 @@
         "actor": "HiddenPowerup003"
       },
       "model": [
-        "item_senergytank"
+        "item_supermissiletank"
       ]
     },
     {
@@ -3220,18 +3025,16 @@
     },
     {
       "pickup_type": "actor",
-      "caption": "Super Missile Tank acquired.\nSuper Missile capacity increased by {Super Missile}.",
+      "caption": "Lightning Armor acquired.",
       "resources": [
         [
           {
-            "item_id": "ITEM_RANDO_LOCKED_SUPERS",
+            "item_id": "ITEM_SPECIAL_ENERGY_ENERGY_SHIELD",
             "quantity": 1
-          }
-        ],
-        [
+          },
           {
-            "item_id": "ITEM_WEAPON_SUPER_MISSILE_CURRENT",
-            "quantity": 1
+            "item_id": "ITEM_MAX_SPECIAL_ENERGY",
+            "quantity": 150
           }
         ]
       ],
@@ -3240,22 +3043,16 @@
         "actor": "LE_Item_003"
       },
       "model": [
-        "item_supermissiletank"
+        "powerup_energyshield"
       ]
     },
     {
       "pickup_type": "actor",
-      "caption": "Super Missile Tank acquired.\nSuper Missile capacity increased by {Super Missile}.",
+      "caption": "Power Bomb Tank acquired.\nPower Bomb capacity increased by 1.",
       "resources": [
         [
           {
-            "item_id": "ITEM_RANDO_LOCKED_SUPERS",
-            "quantity": 1
-          }
-        ],
-        [
-          {
-            "item_id": "ITEM_WEAPON_SUPER_MISSILE_CURRENT",
+            "item_id": "ITEM_WEAPON_POWER_BOMB_MAX",
             "quantity": 1
           }
         ]
@@ -3265,7 +3062,7 @@
         "actor": "LE_Item_004"
       },
       "model": [
-        "item_supermissiletank"
+        "item_powerbombtank"
       ]
     },
     {
@@ -3289,18 +3086,12 @@
     },
     {
       "pickup_type": "actor",
-      "caption": "Super Missile Tank acquired.\nSuper Missile capacity increased by {Super Missile}.",
+      "caption": "Missile Tank acquired.\nMissile capacity increased by 3.",
       "resources": [
         [
           {
-            "item_id": "ITEM_RANDO_LOCKED_SUPERS",
-            "quantity": 1
-          }
-        ],
-        [
-          {
-            "item_id": "ITEM_WEAPON_SUPER_MISSILE_CURRENT",
-            "quantity": 1
+            "item_id": "ITEM_WEAPON_MISSILE_MAX",
+            "quantity": 3
           }
         ]
       ],
@@ -3309,23 +3100,17 @@
         "actor": "LE_Item_007"
       },
       "model": [
-        "item_supermissiletank"
+        "item_missiletank"
       ]
     },
     {
       "pickup_type": "actor",
-      "caption": "Super Missile Tank acquired.\nSuper Missile capacity increased by {Super Missile}.",
+      "caption": "Missile Tank acquired.\nMissile capacity increased by 3.",
       "resources": [
         [
           {
-            "item_id": "ITEM_RANDO_LOCKED_SUPERS",
-            "quantity": 1
-          }
-        ],
-        [
-          {
-            "item_id": "ITEM_WEAPON_SUPER_MISSILE_CURRENT",
-            "quantity": 1
+            "item_id": "ITEM_WEAPON_MISSILE_MAX",
+            "quantity": 3
           }
         ]
       ],
@@ -3334,22 +3119,16 @@
         "actor": "LE_Item_008"
       },
       "model": [
-        "item_supermissiletank"
+        "item_missiletank"
       ]
     },
     {
       "pickup_type": "actor",
-      "caption": "Super Missile Tank acquired.\nSuper Missile capacity increased by {Super Missile}.",
+      "caption": "Super Missile Tank acquired.\nSuper Missile capacity increased by 1.",
       "resources": [
         [
           {
-            "item_id": "ITEM_RANDO_LOCKED_SUPERS",
-            "quantity": 1
-          }
-        ],
-        [
-          {
-            "item_id": "ITEM_WEAPON_SUPER_MISSILE_CURRENT",
+            "item_id": "ITEM_WEAPON_SUPER_MISSILE_MAX",
             "quantity": 1
           }
         ]
@@ -3364,12 +3143,12 @@
     },
     {
       "pickup_type": "actor",
-      "caption": "Aeion Tank acquired.\nAeion Gauge expanded.",
+      "caption": "Energy Tank acquired.\nEnergy capacity increased by 100.",
       "resources": [
         [
           {
-            "item_id": "ITEM_MAX_SPECIAL_ENERGY",
-            "quantity": 50
+            "item_id": "ITEM_ENERGY_TANKS",
+            "quantity": 1
           }
         ]
       ],
@@ -3378,17 +3157,17 @@
         "actor": "LE_Item_010"
       },
       "model": [
-        "item_senergytank"
+        "item_energytank"
       ]
     },
     {
       "pickup_type": "actor",
-      "caption": "Nothing acquired.",
+      "caption": "Missile Tank acquired.\nMissile capacity increased by 3.",
       "resources": [
         [
           {
-            "item_id": "ITEM_NONE",
-            "quantity": 1
+            "item_id": "ITEM_WEAPON_MISSILE_MAX",
+            "quantity": 3
           }
         ]
       ],
@@ -3397,7 +3176,7 @@
         "actor": "LE_Item_011"
       },
       "model": [
-        "itemsphere"
+        "item_missiletank"
       ]
     },
     {
@@ -3421,12 +3200,12 @@
     },
     {
       "pickup_type": "actor",
-      "caption": "Nothing acquired.",
+      "caption": "Missile Tank acquired.\nMissile capacity increased by 3.",
       "resources": [
         [
           {
-            "item_id": "ITEM_NONE",
-            "quantity": 1
+            "item_id": "ITEM_WEAPON_MISSILE_MAX",
+            "quantity": 3
           }
         ]
       ],
@@ -3435,7 +3214,7 @@
         "actor": "LE_Item_013"
       },
       "model": [
-        "itemsphere"
+        "item_missiletank"
       ]
     },
     {
@@ -3459,17 +3238,11 @@
     },
     {
       "pickup_type": "actor",
-      "caption": "Super Missile Tank acquired.\nSuper Missile capacity increased by {Super Missile}.",
+      "caption": "Nothing acquired.",
       "resources": [
         [
           {
-            "item_id": "ITEM_RANDO_LOCKED_SUPERS",
-            "quantity": 1
-          }
-        ],
-        [
-          {
-            "item_id": "ITEM_WEAPON_SUPER_MISSILE_CURRENT",
+            "item_id": "ITEM_NONE",
             "quantity": 1
           }
         ]
@@ -3479,17 +3252,17 @@
         "actor": "HiddenPowerup001"
       },
       "model": [
-        "item_supermissiletank"
+        "itemsphere"
       ]
     },
     {
       "pickup_type": "actor",
-      "caption": "Missile Tank acquired.\nMissile capacity increased by 3.",
+      "caption": "Aeion Tank acquired.\nAeion Gauge expanded.",
       "resources": [
         [
           {
-            "item_id": "ITEM_WEAPON_MISSILE_MAX",
-            "quantity": 3
+            "item_id": "ITEM_MAX_SPECIAL_ENERGY",
+            "quantity": 50
           }
         ]
       ],
@@ -3498,26 +3271,7 @@
         "actor": "HiddenPowerup002"
       },
       "model": [
-        "item_missiletank"
-      ]
-    },
-    {
-      "pickup_type": "actor",
-      "caption": "Missile Tank acquired.\nMissile capacity increased by 3.",
-      "resources": [
-        [
-          {
-            "item_id": "ITEM_WEAPON_MISSILE_MAX",
-            "quantity": 3
-          }
-        ]
-      ],
-      "pickup_actor": {
-        "scenario": "s110_surfaceb",
-        "actor": "LE_Item_013"
-      },
-      "model": [
-        "item_missiletank"
+        "item_senergytank"
       ]
     },
     {
@@ -3533,7 +3287,7 @@
       ],
       "pickup_actor": {
         "scenario": "s110_surfaceb",
-        "actor": "HiddenPowerup002"
+        "actor": "LE_Item_013"
       },
       "model": [
         "itemsphere"
@@ -3551,21 +3305,40 @@
         ]
       ],
       "pickup_actor": {
-        "scenario": "s100_area10",
-        "actor": "LE_Baby_Hatchling"
+        "scenario": "s110_surfaceb",
+        "actor": "HiddenPowerup002"
       },
       "model": [
         "item_missiletank"
       ]
     },
     {
-      "pickup_type": "metroid",
-      "caption": "Aeion Tank acquired.\nAeion Gauge expanded.",
+      "pickup_type": "actor",
+      "caption": "Nothing acquired.",
       "resources": [
         [
           {
-            "item_id": "ITEM_MAX_SPECIAL_ENERGY",
-            "quantity": 50
+            "item_id": "ITEM_NONE",
+            "quantity": 1
+          }
+        ]
+      ],
+      "pickup_actor": {
+        "scenario": "s100_area10",
+        "actor": "LE_Baby_Hatchling"
+      },
+      "model": [
+        "itemsphere"
+      ]
+    },
+    {
+      "pickup_type": "metroid",
+      "caption": "Energy Tank acquired.\nEnergy capacity increased by 100.",
+      "resources": [
+        [
+          {
+            "item_id": "ITEM_ENERGY_TANKS",
+            "quantity": 1
           }
         ]
       ],
@@ -3576,12 +3349,12 @@
     },
     {
       "pickup_type": "metroid",
-      "caption": "Aeion Tank acquired.\nAeion Gauge expanded.",
+      "caption": "Nothing acquired.",
       "resources": [
         [
           {
-            "item_id": "ITEM_MAX_SPECIAL_ENERGY",
-            "quantity": 50
+            "item_id": "ITEM_NONE",
+            "quantity": 1
           }
         ]
       ],
@@ -3592,17 +3365,23 @@
     },
     {
       "pickup_type": "metroid",
-      "caption": "Power Bomb Tank acquired.\nPower Bomb capacity increased by {Power Bomb}.",
+      "caption": "Progressive Beam acquired.",
       "resources": [
         [
           {
-            "item_id": "ITEM_RANDO_LOCKED_PBS",
+            "item_id": "ITEM_WEAPON_WAVE_BEAM",
             "quantity": 1
           }
         ],
         [
           {
-            "item_id": "ITEM_WEAPON_POWER_BOMB_CURRENT",
+            "item_id": "ITEM_WEAPON_SPAZER_BEAM",
+            "quantity": 1
+          }
+        ],
+        [
+          {
+            "item_id": "ITEM_WEAPON_PLASMA_BEAM",
             "quantity": 1
           }
         ]
@@ -3614,12 +3393,12 @@
     },
     {
       "pickup_type": "metroid",
-      "caption": "Missile Tank acquired.\nMissile capacity increased by 3.",
+      "caption": "Grapple Beam acquired.",
       "resources": [
         [
           {
-            "item_id": "ITEM_WEAPON_MISSILE_MAX",
-            "quantity": 3
+            "item_id": "ITEM_WEAPON_GRAPPLE_BEAM",
+            "quantity": 1
           }
         ]
       ],
@@ -3630,11 +3409,23 @@
     },
     {
       "pickup_type": "metroid",
-      "caption": "Spider Ball acquired.",
+      "caption": "Progressive Beam acquired.",
       "resources": [
         [
           {
-            "item_id": "ITEM_SPIDER_BALL",
+            "item_id": "ITEM_WEAPON_WAVE_BEAM",
+            "quantity": 1
+          }
+        ],
+        [
+          {
+            "item_id": "ITEM_WEAPON_SPAZER_BEAM",
+            "quantity": 1
+          }
+        ],
+        [
+          {
+            "item_id": "ITEM_WEAPON_PLASMA_BEAM",
             "quantity": 1
           }
         ]
@@ -3646,12 +3437,12 @@
     },
     {
       "pickup_type": "metroid",
-      "caption": "Missile Tank acquired.\nMissile capacity increased by 3.",
+      "caption": "Aeion Tank acquired.\nAeion Gauge expanded.",
       "resources": [
         [
           {
-            "item_id": "ITEM_WEAPON_MISSILE_MAX",
-            "quantity": 3
+            "item_id": "ITEM_MAX_SPECIAL_ENERGY",
+            "quantity": 50
           }
         ]
       ],
@@ -3694,17 +3485,11 @@
     },
     {
       "pickup_type": "metroid",
-      "caption": "Power Bomb Tank acquired.\nPower Bomb capacity increased by {Power Bomb}.",
+      "caption": "Super Missile Tank acquired.\nSuper Missile capacity increased by 1.",
       "resources": [
         [
           {
-            "item_id": "ITEM_RANDO_LOCKED_PBS",
-            "quantity": 1
-          }
-        ],
-        [
-          {
-            "item_id": "ITEM_WEAPON_POWER_BOMB_CURRENT",
+            "item_id": "ITEM_WEAPON_SUPER_MISSILE_MAX",
             "quantity": 1
           }
         ]
@@ -3716,17 +3501,11 @@
     },
     {
       "pickup_type": "metroid",
-      "caption": "Super Missile Tank acquired.\nSuper Missile capacity increased by {Super Missile}.",
+      "caption": "Super Missile Tank acquired.\nSuper Missile capacity increased by 1.",
       "resources": [
         [
           {
-            "item_id": "ITEM_RANDO_LOCKED_SUPERS",
-            "quantity": 1
-          }
-        ],
-        [
-          {
-            "item_id": "ITEM_WEAPON_SUPER_MISSILE_CURRENT",
+            "item_id": "ITEM_WEAPON_SUPER_MISSILE_MAX",
             "quantity": 1
           }
         ]
@@ -3754,16 +3533,12 @@
     },
     {
       "pickup_type": "metroid",
-      "caption": "Super Missile Launcher acquired.",
+      "caption": "Missile Tank acquired.\nMissile capacity increased by 3.",
       "resources": [
         [
           {
-            "item_id": "ITEM_WEAPON_SUPER_MISSILE_CURRENT",
-            "quantity": 1
-          },
-          {
-            "item_id": "ITEM_WEAPON_SUPER_MISSILE_CURRENT",
-            "quantity": 5
+            "item_id": "ITEM_WEAPON_MISSILE_MAX",
+            "quantity": 3
           }
         ]
       ],
@@ -3774,18 +3549,12 @@
     },
     {
       "pickup_type": "metroid",
-      "caption": "Progressive Jump acquired.",
+      "caption": "Missile Tank acquired.\nMissile capacity increased by 3.",
       "resources": [
         [
           {
-            "item_id": "ITEM_HIGH_JUMP_BOOTS",
-            "quantity": 1
-          }
-        ],
-        [
-          {
-            "item_id": "ITEM_SPACE_JUMP",
-            "quantity": 1
+            "item_id": "ITEM_WEAPON_MISSILE_MAX",
+            "quantity": 3
           }
         ]
       ],
@@ -3812,17 +3581,11 @@
     },
     {
       "pickup_type": "metroid",
-      "caption": "Power Bomb Tank acquired.\nPower Bomb capacity increased by {Power Bomb}.",
+      "caption": "Super Missile Tank acquired.\nSuper Missile capacity increased by 1.",
       "resources": [
         [
           {
-            "item_id": "ITEM_RANDO_LOCKED_PBS",
-            "quantity": 1
-          }
-        ],
-        [
-          {
-            "item_id": "ITEM_WEAPON_POWER_BOMB_CURRENT",
+            "item_id": "ITEM_WEAPON_SUPER_MISSILE_MAX",
             "quantity": 1
           }
         ]
@@ -3830,6 +3593,22 @@
       "metroid_callback": {
         "scenario": "s033_area3b",
         "spawngroup": "SG_Alpha_003"
+      }
+    },
+    {
+      "pickup_type": "metroid",
+      "caption": "Nothing acquired.",
+      "resources": [
+        [
+          {
+            "item_id": "ITEM_NONE",
+            "quantity": 1
+          }
+        ]
+      ],
+      "metroid_callback": {
+        "scenario": "s040_area4",
+        "spawngroup": "SG_Alpha_001"
       }
     },
     {
@@ -3844,8 +3623,60 @@
         ]
       ],
       "metroid_callback": {
-        "scenario": "s040_area4",
+        "scenario": "s060_area6",
         "spawngroup": "SG_Alpha_001"
+      }
+    },
+    {
+      "pickup_type": "metroid",
+      "caption": "Phase Drift acquired.",
+      "resources": [
+        [
+          {
+            "item_id": "ITEM_SPECIAL_ENERGY_PHASE_DISPLACEMENT",
+            "quantity": 1
+          },
+          {
+            "item_id": "ITEM_MAX_SPECIAL_ENERGY",
+            "quantity": 150
+          }
+        ]
+      ],
+      "metroid_callback": {
+        "scenario": "s025_area2b",
+        "spawngroup": "SG_Gamma_001"
+      }
+    },
+    {
+      "pickup_type": "metroid",
+      "caption": "Ice Beam acquired.",
+      "resources": [
+        [
+          {
+            "item_id": "ITEM_WEAPON_ICE_BEAM",
+            "quantity": 1
+          }
+        ]
+      ],
+      "metroid_callback": {
+        "scenario": "s033_area3b",
+        "spawngroup": "SG_Gamma_001"
+      }
+    },
+    {
+      "pickup_type": "metroid",
+      "caption": "Energy Tank acquired.\nEnergy capacity increased by 100.",
+      "resources": [
+        [
+          {
+            "item_id": "ITEM_ENERGY_TANKS",
+            "quantity": 1
+          }
+        ]
+      ],
+      "metroid_callback": {
+        "scenario": "s033_area3b",
+        "spawngroup": "SG_Gamma_002"
       }
     },
     {
@@ -3860,82 +3691,18 @@
         ]
       ],
       "metroid_callback": {
-        "scenario": "s060_area6",
-        "spawngroup": "SG_Alpha_001"
-      }
-    },
-    {
-      "pickup_type": "metroid",
-      "caption": "Missile Tank acquired.\nMissile capacity increased by 3.",
-      "resources": [
-        [
-          {
-            "item_id": "ITEM_WEAPON_MISSILE_MAX",
-            "quantity": 3
-          }
-        ]
-      ],
-      "metroid_callback": {
-        "scenario": "s025_area2b",
-        "spawngroup": "SG_Gamma_001"
-      }
-    },
-    {
-      "pickup_type": "metroid",
-      "caption": "Nothing acquired.",
-      "resources": [
-        [
-          {
-            "item_id": "ITEM_NONE",
-            "quantity": 1
-          }
-        ]
-      ],
-      "metroid_callback": {
-        "scenario": "s033_area3b",
-        "spawngroup": "SG_Gamma_001"
-      }
-    },
-    {
-      "pickup_type": "metroid",
-      "caption": "Nothing acquired.",
-      "resources": [
-        [
-          {
-            "item_id": "ITEM_NONE",
-            "quantity": 1
-          }
-        ]
-      ],
-      "metroid_callback": {
-        "scenario": "s033_area3b",
-        "spawngroup": "SG_Gamma_002"
-      }
-    },
-    {
-      "pickup_type": "metroid",
-      "caption": "Nothing acquired.",
-      "resources": [
-        [
-          {
-            "item_id": "ITEM_NONE",
-            "quantity": 1
-          }
-        ]
-      ],
-      "metroid_callback": {
         "scenario": "s033_area3b",
         "spawngroup": "SG_Gamma_003"
       }
     },
     {
       "pickup_type": "metroid",
-      "caption": "Missile Tank acquired.\nMissile capacity increased by 3.",
+      "caption": "Nothing acquired.",
       "resources": [
         [
           {
-            "item_id": "ITEM_WEAPON_MISSILE_MAX",
-            "quantity": 3
+            "item_id": "ITEM_NONE",
+            "quantity": 1
           }
         ]
       ],
@@ -3962,18 +3729,12 @@
     },
     {
       "pickup_type": "metroid",
-      "caption": "Super Missile Tank acquired.\nSuper Missile capacity increased by {Super Missile}.",
+      "caption": "Missile Tank acquired.\nMissile capacity increased by 3.",
       "resources": [
         [
           {
-            "item_id": "ITEM_RANDO_LOCKED_SUPERS",
-            "quantity": 1
-          }
-        ],
-        [
-          {
-            "item_id": "ITEM_WEAPON_SUPER_MISSILE_CURRENT",
-            "quantity": 1
+            "item_id": "ITEM_WEAPON_MISSILE_MAX",
+            "quantity": 3
           }
         ]
       ],
@@ -3984,11 +3745,11 @@
     },
     {
       "pickup_type": "metroid",
-      "caption": "Nothing acquired.",
+      "caption": "Super Missile Tank acquired.\nSuper Missile capacity increased by 1.",
       "resources": [
         [
           {
-            "item_id": "ITEM_NONE",
+            "item_id": "ITEM_WEAPON_SUPER_MISSILE_MAX",
             "quantity": 1
           }
         ]
@@ -4000,18 +3761,12 @@
     },
     {
       "pickup_type": "metroid",
-      "caption": "Super Missile Tank acquired.\nSuper Missile capacity increased by {Super Missile}.",
+      "caption": "Missile Tank acquired.\nMissile capacity increased by 3.",
       "resources": [
         [
           {
-            "item_id": "ITEM_RANDO_LOCKED_SUPERS",
-            "quantity": 1
-          }
-        ],
-        [
-          {
-            "item_id": "ITEM_WEAPON_SUPER_MISSILE_CURRENT",
-            "quantity": 1
+            "item_id": "ITEM_WEAPON_MISSILE_MAX",
+            "quantity": 3
           }
         ]
       ],
@@ -4022,23 +3777,11 @@
     },
     {
       "pickup_type": "metroid",
-      "caption": "Progressive Beam acquired.",
+      "caption": "Super Missile Tank acquired.\nSuper Missile capacity increased by 1.",
       "resources": [
         [
           {
-            "item_id": "ITEM_WEAPON_WAVE_BEAM",
-            "quantity": 1
-          }
-        ],
-        [
-          {
-            "item_id": "ITEM_WEAPON_SPAZER_BEAM",
-            "quantity": 1
-          }
-        ],
-        [
-          {
-            "item_id": "ITEM_WEAPON_PLASMA_BEAM",
+            "item_id": "ITEM_WEAPON_SUPER_MISSILE_MAX",
             "quantity": 1
           }
         ]
@@ -4050,12 +3793,12 @@
     },
     {
       "pickup_type": "metroid",
-      "caption": "Ice Beam acquired.",
+      "caption": "Missile Tank acquired.\nMissile capacity increased by 3.",
       "resources": [
         [
           {
-            "item_id": "ITEM_WEAPON_ICE_BEAM",
-            "quantity": 1
+            "item_id": "ITEM_WEAPON_MISSILE_MAX",
+            "quantity": 3
           }
         ]
       ],
@@ -4066,11 +3809,11 @@
     },
     {
       "pickup_type": "metroid",
-      "caption": "Energy Tank acquired.\nEnergy capacity increased by 100.",
+      "caption": "Nothing acquired.",
       "resources": [
         [
           {
-            "item_id": "ITEM_ENERGY_TANKS",
+            "item_id": "ITEM_NONE",
             "quantity": 1
           }
         ]
@@ -4082,18 +3825,12 @@
     },
     {
       "pickup_type": "metroid",
-      "caption": "Super Missile Tank acquired.\nSuper Missile capacity increased by {Super Missile}.",
+      "caption": "Missile Tank acquired.\nMissile capacity increased by 3.",
       "resources": [
         [
           {
-            "item_id": "ITEM_RANDO_LOCKED_SUPERS",
-            "quantity": 1
-          }
-        ],
-        [
-          {
-            "item_id": "ITEM_WEAPON_SUPER_MISSILE_CURRENT",
-            "quantity": 1
+            "item_id": "ITEM_WEAPON_MISSILE_MAX",
+            "quantity": 3
           }
         ]
       ],
@@ -4104,11 +3841,11 @@
     },
     {
       "pickup_type": "metroid",
-      "caption": "Nothing acquired.",
+      "caption": "Super Missile Tank acquired.\nSuper Missile capacity increased by 1.",
       "resources": [
         [
           {
-            "item_id": "ITEM_NONE",
+            "item_id": "ITEM_WEAPON_SUPER_MISSILE_MAX",
             "quantity": 1
           }
         ]
@@ -4136,12 +3873,12 @@
     },
     {
       "pickup_type": "metroid",
-      "caption": "Missile Tank acquired.\nMissile capacity increased by 3.",
+      "caption": "Super Missile Tank acquired.\nSuper Missile capacity increased by 1.",
       "resources": [
         [
           {
-            "item_id": "ITEM_WEAPON_MISSILE_MAX",
-            "quantity": 3
+            "item_id": "ITEM_WEAPON_SUPER_MISSILE_MAX",
+            "quantity": 1
           }
         ]
       ],
@@ -4152,12 +3889,12 @@
     },
     {
       "pickup_type": "metroid",
-      "caption": "Missile Tank acquired.\nMissile capacity increased by 3.",
+      "caption": "Nothing acquired.",
       "resources": [
         [
           {
-            "item_id": "ITEM_WEAPON_MISSILE_MAX",
-            "quantity": 3
+            "item_id": "ITEM_NONE",
+            "quantity": 1
           }
         ]
       ],
@@ -4168,12 +3905,16 @@
     },
     {
       "pickup_type": "metroid",
-      "caption": "Missile Tank acquired.\nMissile capacity increased by 3.",
+      "caption": "Beam Burst acquired.",
       "resources": [
         [
           {
-            "item_id": "ITEM_WEAPON_MISSILE_MAX",
-            "quantity": 3
+            "item_id": "ITEM_SPECIAL_ENERGY_ENERGY_WAVE",
+            "quantity": 1
+          },
+          {
+            "item_id": "ITEM_MAX_SPECIAL_ENERGY",
+            "quantity": 150
           }
         ]
       ],
@@ -4184,12 +3925,12 @@
     },
     {
       "pickup_type": "metroid",
-      "caption": "Missile Tank acquired.\nMissile capacity increased by 3.",
+      "caption": "Energy Tank acquired.\nEnergy capacity increased by 100.",
       "resources": [
         [
           {
-            "item_id": "ITEM_WEAPON_MISSILE_MAX",
-            "quantity": 3
+            "item_id": "ITEM_ENERGY_TANKS",
+            "quantity": 1
           }
         ]
       ],
@@ -4200,17 +3941,11 @@
     },
     {
       "pickup_type": "metroid",
-      "caption": "Power Bomb Tank acquired.\nPower Bomb capacity increased by {Power Bomb}.",
+      "caption": "Nothing acquired.",
       "resources": [
         [
           {
-            "item_id": "ITEM_RANDO_LOCKED_PBS",
-            "quantity": 1
-          }
-        ],
-        [
-          {
-            "item_id": "ITEM_WEAPON_POWER_BOMB_CURRENT",
+            "item_id": "ITEM_NONE",
             "quantity": 1
           }
         ]
@@ -4238,17 +3973,11 @@
     },
     {
       "pickup_type": "metroid",
-      "caption": "Super Missile Tank acquired.\nSuper Missile capacity increased by {Super Missile}.",
+      "caption": "Nothing acquired.",
       "resources": [
         [
           {
-            "item_id": "ITEM_RANDO_LOCKED_SUPERS",
-            "quantity": 1
-          }
-        ],
-        [
-          {
-            "item_id": "ITEM_WEAPON_SUPER_MISSILE_CURRENT",
+            "item_id": "ITEM_NONE",
             "quantity": 1
           }
         ]
