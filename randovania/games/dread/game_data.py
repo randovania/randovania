@@ -111,6 +111,11 @@ game_data: game.GameData = game.GameData(
             "Reload from checkpoint immediately to fix the issue. "
             "Your checkpoint was saved after killing the E.M.M.I., so you will not lose progress.",
         ),
+        (
+            "Why are items, hints, and the seed hash not displaying properly in my game?",
+            "Currently, English is the only officially supported language.\n\n"
+            "You must set your language to English to see all the text the randomizer changes.",
+        ),
     ],
     layout=game.GameLayout(
         configuration=DreadConfiguration, cosmetic_patches=DreadCosmeticPatches, preset_describer=DreadPresetDescriber()

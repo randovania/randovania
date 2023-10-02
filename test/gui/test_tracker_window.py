@@ -377,7 +377,7 @@ async def test_apply_previous_state(
             "Torvus Bog/Torvus Temple/Elevator Translator Scan": None,
             "Torvus Bog/Torvus Temple/Translator Gate": None,
         },
-        "starting_location": {"region": "Temple Grounds", "area": "Landing Site"},
+        "starting_location": {"region": "Temple Grounds", "area": "Landing Site", "node": "Save Station"},
     }
 
     if shuffle_advanced:
@@ -387,7 +387,11 @@ async def test_apply_previous_state(
                 and teleporter["teleporter"]["node"] == "Elevator to Sanctuary Fortress"
                 and teleporter["teleporter"]["area"] == "Transport to Sanctuary Fortress"
             ):
-                teleporter["data"] = {"area": "Agon Energy Controller", "region": "Agon Wastes"}
+                teleporter["data"] = {
+                    "area": "Agon Energy Controller",
+                    "region": "Agon Wastes",
+                    "node": "Door to Controller Access",
+                }
         state["configurable_nodes"]["Temple Grounds/Hive Access Tunnel/Translator Gate"] = "violet"
     VersionedPreset.with_preset(preset).save_to_file(tmp_path.joinpath("preset.rdvpreset"))
     tmp_path.joinpath("state.json").write_text(json.dumps(state), "utf-8")

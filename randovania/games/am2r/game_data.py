@@ -12,13 +12,14 @@ def _options():
 
 def _gui() -> game.GameGui:
     from randovania.games.am2r import gui
+    from randovania.games.am2r.pickup_database import progressive_items
 
     return game.GameGui(
         game_tab=gui.AM2RGameTabWidget,
         tab_provider=gui.preset_tabs,
         cosmetic_dialog=gui.AM2RCosmeticPatchesDialog,
         export_dialog=gui.AM2RGameExportDialog,
-        progressive_item_gui_tuples=(),
+        progressive_item_gui_tuples=progressive_items.tuples(),
         spoiler_visualizer=(),
     )
 
@@ -65,7 +66,7 @@ game_data: game.GameData = game.GameData(
             "\n\n"
             "All Metroids now also drop items. This can include progression, expansions, or DNA. DNA are like keys and "
             "are used to enter the path to the Queen. The amount of DNA is configurable and a hint system has been "
-            "implemented (no more fighting all the Metroids!). ",
+            "implemented, which means it's not necessary anymore to fight all the Metroids. ",
         ),
         (
             "Which versions of AM2R are supported?",
@@ -75,6 +76,16 @@ game_data: game.GameData = game.GameData(
             "Why can I not fire Missiles / Super Missiles / Power Bombs?",
             "You likely have the 'Required Mains' option enabled. This means you first "
             "need to find the Launcher for your Missiles / Super Missiles / Power Bombs before you can use them.",
+        ),
+        (
+            "Why was the DNA goal chosen, and why does the Starter Preset "
+            "require main items / launchers for Missiles / Super Missiles / Power Bombs?",
+            "Both were chosen to provide better gameplay and more variety. Killing the same 46 Metroids over "
+            "and over again is not only tedious, but also boring. The Metroids dropping items makes Metroid fights "
+            "interesting and worthwhile to do as opposed to most players otherwise just ignoring them entirely, while "
+            "also not making it mandatory to kill all Metroids.\n"
+            "Required mains / launchers causes progression to be more natural, as otherwise it's possible "
+            "to break the logic chain and get overpowered by just finding ammo early.",
         ),
         (
             "I saved in a place that I can't get out of, what do I do?",

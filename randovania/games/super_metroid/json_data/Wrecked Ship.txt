@@ -2,31 +2,42 @@
 Bowling Alley
 Extra - map_name: 7C98E
 Extra - asset_id: 51
-> Door to Bowling Alley Path; Heals? False; Default Node
+> Door to West Ocean Passageway; Heals? False; Default Node
   * Layers: default
-  * Locked after Wrecked Ship Powered to Bowling Alley Path/Door to Bowling Alley
+  * Locked after Wrecked Ship Powered to West Ocean Passageway/Door to Bowling Alley
   > Door to Gravity Suit Room
       All of the following:
           Morph Ball and After Power Wrecked Ship
-          Grapple Beam or Space Jump
+          Any of the following:
+              Grapple Beam or Space Jump
+              # HBJ
+              Horizontal Infinite Bomb Jump (Expert) and Can Lay Bombs
+              # Damage boost over
+              Damage Boosting (Advanced) and Normal Damage ≥ 120
+              All of the following:
+                  # Shinespark across from other room
+                  Speed Booster and Shinespark (Advanced) and Shinespark Damage ≥ 91 and Disabled Door Lock Randomizer and Disabled Entrance Randomizer
+                  Any of the following:
+                      # https://youtu.be/3SEmfFHrcfY
+                      # With Gravity
+                      Gravity Suit and Short Charge (Expert)
+                      # Without Gravity
+                      Short Charge (Hypermode)
 
 > Door to Gravity Suit Room; Heals? False
   * Layers: default
   * Normal Door to Gravity Suit Room/Door to Bowling Alley
   > Pickup (Missile Expansion)
-      All of the following:
-          Morph Ball and After Power Wrecked Ship
-          Morph Ball Bombs or Power Bombs
+      After Power Wrecked Ship and Can Lay Any Bombs
 
 > Pickup (Missile Expansion); Heals? False
   * Layers: default
   * Pickup 130; Category? Minor
   > Door to Gravity Suit Room
-      All of the following:
-          Morph Ball
-          Morph Ball Bombs or Power Bombs
+      Can Lay Any Bombs
   > Pickup (Reserve Tank)
-      Morph Ball and Power Bombs and Speed Booster and After Power Wrecked Ship and Shinespark (Beginner)
+      # TODO: use proper shinespark health
+      Speed Booster and After Power Wrecked Ship and Shinespark (Beginner) and Shinespark Damage ≥ 40 and Can Lay Power Bombs
 
 > Pickup (Reserve Tank); Heals? False
   * Layers: default
@@ -87,10 +98,10 @@ Extra - asset_id: 54
   * Normal Door to Wrecked Ship Entrance/Door to Wrecked Ship Main Shaft
   > Door to Attic
       Trivial
-  > Door to Shaft Save Station
+  > Door to Wrecked Ship Save Room
       Trivial
   > Door to Sponge Bath
-      After Power Wrecked Ship
+      Trivial
 
 > Door to Attic; Heals? False
   * Layers: default
@@ -98,9 +109,9 @@ Extra - asset_id: 54
   > Door to Wrecked Ship Entrance
       Trivial
 
-> Door to Shaft Save Station; Heals? False
+> Door to Wrecked Ship Save Room; Heals? False
   * Layers: default
-  * Normal Door to Shaft Save Station/Door to Wrecked Ship Main Shaft
+  * Normal Door to Wrecked Ship Save Room/Door to Wrecked Ship Main Shaft
   > Door to Wrecked Ship Entrance
       Trivial
 
@@ -112,34 +123,33 @@ Extra - asset_id: 54
   > Door to Wrecked Ship West Super Room
       Trivial
   > Pickup (Missile Expansion)
-      All of the following:
-          Morph Ball
-          Morph Ball Bombs or Power Bombs
+      Can Lay Any Bombs
 
 > Door to Wrecked Ship East Super Room; Heals? False
   * Layers: default
   * Normal Door to Wrecked Ship East Super Room/Door to Wrecked Ship Main Shaft
-  > Door to Attic
-      All of the following:
-          Charge Beam
-          Morph Ball Bombs or Power Bombs
-          Hi-Jump Boots or Space Jump
   > Door to Wrecked Ship West Super Room
       All of the following:
           Morph Ball
-          Morph Ball Bombs or Power Bombs
+          Any of the following:
+              # Break blocks
+              Can Lay Any Bombs
+              All of the following:
+                  # These beams also break them
+                  Knowledge (Intermediate)
+                  Spazer Beam or Wave Beam
 
 > Door to Wrecked Ship West Super Room; Heals? False
   * Layers: default
   * Locked until Wrecked Ship Powered to Wrecked Ship West Super Room/Door to Wrecked Ship Main Shaft
   > Door to Sponge Bath
       Any of the following:
+          # TODO: speedbooster???
           Hi-Jump Boots or Space Jump or Speed Booster or Wall Jumps (Beginner)
-          Morph Ball Bombs and Morph Ball and Vertical Infinite Bomb Jump (Beginner)
+          # IBJ
+          Vertical Infinite Bomb Jump (Beginner) and Can Lay Bombs
   > Door to Wrecked Ship East Super Room
-      All of the following:
-          Morph Ball
-          Morph Ball Bombs or Power Bombs
+      Can Lay Any Bombs
   > Door to Basement
       Morph Ball
 
@@ -148,8 +158,9 @@ Extra - asset_id: 54
   * Super Missile Door to Basement/Door to Wrecked Ship Main Shaft
   > Door to Wrecked Ship West Super Room
       All of the following:
-          Morph Ball
-          Morph Ball Bombs or Power Bombs or Spring Ball
+          Can Lay Any Bombs
+          # TODO: replace with can use spring template from other PR
+          Spring Ball
 
 > Pickup (Missile Expansion); Heals? False
   * Layers: default
@@ -158,15 +169,15 @@ Extra - asset_id: 54
       Morph Ball
 
 ----------------
-Shaft Save Station
+Wrecked Ship Save Room
 Extra - map_name: 7CE8A
 Extra - asset_id: 55
 Extra - save_index: 0
 > Door to Wrecked Ship Main Shaft; Heals? False
   * Layers: default
-  * Normal Door to Wrecked Ship Main Shaft/Door to Shaft Save Station
+  * Normal Door to Wrecked Ship Main Shaft/Door to Wrecked Ship Save Room
   > Save Station
-      Trivial
+      After Power Wrecked Ship
 
 > Save Station; Heals? False; Spawn Point; Default Node
   * Layers: default
@@ -180,17 +191,17 @@ Extra - asset_id: 56
 > Door to Wrecked Ship Main Shaft; Heals? False; Default Node
   * Layers: default
   * Normal Door to Wrecked Ship Main Shaft/Door to Basement
-  > Door to Wrecked Ship Map Station
+  > Door to Wrecked Ship Map Room
       Trivial
   > Door to Phantoon's Room
       All of the following:
-          Morph Ball
-          Morph Ball Bombs or Power Bombs
+          Can Lay Any Bombs
+          # Destroy Eyedoor
           Missile ≥ 3 or Super Missile
 
-> Door to Wrecked Ship Map Station; Heals? False
+> Door to Wrecked Ship Map Room; Heals? False
   * Layers: default
-  * Normal Door to Wrecked Ship Map Station/Door to Basement
+  * Normal Door to Wrecked Ship Map Room/Door to Basement
   > Door to Wrecked Ship Main Shaft
       Trivial
 
@@ -198,9 +209,7 @@ Extra - asset_id: 56
   * Layers: default
   * Normal Door to Phantoon's Room/Door to Basement
   > Door to Wrecked Ship Main Shaft
-      All of the following:
-          Morph Ball
-          Morph Ball Bombs or Power Bombs
+      Can Lay Any Bombs
 
 ----------------
 Phantoon's Room
@@ -210,6 +219,7 @@ Extra - asset_id: 57
   * Layers: default
   * Normal Door to Basement/Door to Phantoon's Room
   > Event - Phantoon Defeated
+      # TODO: Proper Phantoon combat logic
       Charge Beam or Missile ≥ 25 or Super Missile ≥ 5
 
 > Event - Phantoon Defeated; Heals? False
@@ -225,12 +235,12 @@ Extra - asset_id: 57
       Trivial
 
 ----------------
-Wrecked Ship Map Station
+Wrecked Ship Map Room
 Extra - map_name: 7CCCB
 Extra - asset_id: 58
 > Door to Basement; Heals? False; Default Node
   * Layers: default
-  * Normal Door to Basement/Door to Wrecked Ship Map Station
+  * Normal Door to Basement/Door to Wrecked Ship Map Room
 
 ----------------
 Wrecked Ship East Super Room
@@ -240,17 +250,13 @@ Extra - asset_id: 59
   * Layers: default
   * Normal Door to Wrecked Ship Main Shaft/Door to Wrecked Ship East Super Room
   > Pickup (Super Missile Expansion)
-      All of the following:
-          Morph Ball and After Power Wrecked Ship
-          Morph Ball Bombs or Power Bombs
+      After Power Wrecked Ship and Can Lay Any Bombs
 
 > Pickup (Super Missile Expansion); Heals? False
   * Layers: default
   * Pickup 134; Category? Minor
   > Door to Wrecked Ship Main Shaft
-      All of the following:
-          Morph Ball
-          Morph Ball Bombs or Power Bombs
+      Can Lay Any Bombs
 
 ----------------
 Wrecked Ship West Super Room
@@ -320,7 +326,15 @@ Extra - asset_id: 63
   * Layers: default
   * Normal Door to East Ocean/Door to Electric Death Room
   > Door to Spiky Death Room
-      Gravity Suit or Hi-Jump Boots or Space Jump
+      Any of the following:
+          # Jump out of water
+          Gravity Suit or Hi-Jump Boots or Space Jump
+          # HBJ
+          Horizontal Infinite Bomb Jump (Beginner) and Can Lay Any Bombs
+          # Water does not exist if ship is not powered
+          Before Power Wrecked Ship
+          # https://youtu.be/Znv9j_X02vM
+          Movement (Intermediate)
   > Door to Wrecked Ship Energy Tank Room
       Trivial
 

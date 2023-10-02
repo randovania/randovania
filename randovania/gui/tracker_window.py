@@ -10,7 +10,6 @@ from PySide6 import QtCore, QtGui, QtWidgets
 from PySide6.QtCore import Qt
 
 from randovania.game_description.assignment import PickupTarget
-from randovania.game_description.db.area_identifier import AreaIdentifier
 from randovania.game_description.db.configurable_node import ConfigurableNode
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.node_identifier import NodeIdentifier
@@ -221,11 +220,11 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
                 for identifier in previous_state["actions"]
             ]
             if needs_starting_location:
-                starting_location = AreaIdentifier.from_json(previous_state["starting_location"])
+                starting_location = NodeIdentifier.from_json(previous_state["starting_location"])
 
-            teleporters: dict[NodeIdentifier, AreaIdentifier | None] = {
+            teleporters: dict[NodeIdentifier, NodeIdentifier | None] = {
                 NodeIdentifier.from_json(item["teleporter"]): (
-                    AreaIdentifier.from_json(item["data"]) if item["data"] is not None else None
+                    NodeIdentifier.from_json(item["data"]) if item["data"] is not None else None
                 )
                 for item in previous_state["teleporters"]
             }
@@ -241,13 +240,13 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
 
         self.setup_starting_location(starting_location)
 
-        for teleporter, area_location in teleporters.items():
+        for teleporter, node_location in teleporters.items():
             combo = self._teleporter_id_to_combo[teleporter]
-            if area_location is None:
+            if node_location is None:
                 combo.setCurrentIndex(0)
                 continue
             for i in range(combo.count()):
-                if area_location == combo.itemData(i):
+                if node_location == combo.itemData(i):
                     combo.setCurrentIndex(i)
                     break
 
@@ -462,7 +461,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
                     gate.as_string: combo.currentData().value if combo.currentIndex() > 0 else None
                     for gate, combo in self._translator_gate_to_combo.items()
                 },
-                "starting_location": region_list.identifier_for_node(self._initial_state.node).area_identifier.as_json,
+                "starting_location": region_list.identifier_for_node(self._initial_state.node).as_json,
             },
         )
 
@@ -515,17 +514,20 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
                 name = region.correct_name(area.in_dark_aether)
                 nodes_by_region[name].append(node)
 
-                location = AreaIdentifier(region.name, area.name)
+                location = node.identifier
                 targets[
-                    elevators.get_short_elevator_or_area_name(self.game_configuration.game, region_list, location, True)
+                    elevators.get_short_elevator_or_area_name(
+                        self.game_configuration.game, region_list, location.area_identifier, True
+                    )
                 ] = location
 
         if teleporters_config.mode == TeleporterShuffleMode.ONE_WAY_ANYTHING:
             targets = {}
             for region in region_list.regions:
                 for area in region.areas:
-                    name = region.correct_name(area.in_dark_aether)
-                    targets[f"{name} - {area.name}"] = AreaIdentifier(region.name, area.name)
+                    if area.has_start_node():
+                        name = region.correct_name(area.in_dark_aether)
+                        targets[f"{name} - {area.name}"] = area.get_start_nodes()[0].identifier
 
         combo_targets = sorted(targets.items(), key=lambda it: it[0])
 
@@ -605,24 +607,27 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
             self._translator_gate_to_combo[gate] = combo
             self.translator_gate_scroll_layout.addWidget(combo, i, 1)
 
-    def setup_starting_location(self, area_location: AreaIdentifier | None):
+    def setup_starting_location(self, node_location: NodeIdentifier | None) -> None:
         region_list = self.game_description.region_list
 
         if len(self.game_configuration.starting_location.locations) > 1:
-            if area_location is None:
-                area_locations = sorted(
+            if node_location is None:
+                node_locations = sorted(
                     self.game_configuration.starting_location.locations,
-                    key=lambda it: region_list.area_name(region_list.area_by_area_location(it)),
+                    key=lambda it: region_list.node_name(region_list.node_by_identifier(it), with_region=True),
                 )
 
-                location_names = [region_list.area_name(region_list.area_by_area_location(it)) for it in area_locations]
+                location_names = [
+                    region_list.node_name(region_list.node_by_identifier(it), with_region=True) for it in node_locations
+                ]
                 selected_name = QtWidgets.QInputDialog.getItem(
                     self, "Starting Location", "Select starting location", location_names, 0, False
                 )
-                area_location = area_locations[location_names.index(selected_name[0])]
+                node_location = node_locations[location_names.index(selected_name[0])]
 
             # TODO If there is no `default_node` anymore, what would be the replacement?
-            self._initial_state.node = region_list.area_by_area_location(area_location).get_start_nodes()[0]
+            node = region_list.node_by_identifier(node_location)
+            self._initial_state.node = region_list.nodes_to_area(node).get_start_nodes()[0]
 
         def is_resource_node_present(node: Node, state: State):
             if node.is_resource_node:
@@ -774,7 +779,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
             (
                 region_list.typed_node_by_identifier(teleporter, DockNode),
                 # TODO If there is no `default_node` anymore, what would be the replacement?
-                region_list.area_by_area_location(combo.currentData()).get_start_nodes()[0],
+                region_list.node_by_identifier(combo.currentData()),
             )
             for teleporter, combo in self._teleporter_id_to_combo.items()
             if combo.currentData() is not None
