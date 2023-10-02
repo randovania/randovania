@@ -1,9 +1,17 @@
 from __future__ import annotations
 
+from typing import Any
+
 from randovania.gui.widgets.changelog_widget import ChangeLogWidget
 
 
 def test_create(skip_qtbot):
+    # mypy expects a QWidget (which they aren't) from these vars
+    qScroll0: Any  # QScrollArea
+    qScroll1: Any  # QScrollArea
+    qLabel0: Any  # QLabel
+    qLabel1: Any  # QLabel
+
     # Setup
     widget = ChangeLogWidget(
         {

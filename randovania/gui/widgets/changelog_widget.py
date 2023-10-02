@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from typing import Any
+
 from PySide6 import QtCore, QtWidgets
 
 from randovania.gui.widgets.delayed_text_label import DelayedTextLabel
@@ -47,8 +49,9 @@ class ChangeLogWidget(QtWidgets.QWidget):
         self.changelog.setCurrentIndex(0)
 
     def select_version_index_changed(self) -> None:
-        selected_widget: QtWidgets.QScrollArea = self.findChild(
+        # Used "Any" type hint to bypass mypy raising "expecting QWidget"
+        selected_widget: Any = self.findChild(
             QtWidgets.QScrollArea, f"scroll_area {self.select_version.currentText()}"
-        )
+        )  # QScrollArea
 
         self.changelog.setCurrentWidget(selected_widget)

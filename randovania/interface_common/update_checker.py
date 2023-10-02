@@ -14,7 +14,6 @@ class ChangeLogDetails(NamedTuple):
     @property
     def formatted_date(self) -> str:
         toDate = datetime.strptime(self.published_at, "%Y-%m-%dT%H:%M:%SZ")
-
         return toDate.strftime("%x")
 
 
