@@ -391,7 +391,7 @@ Extra - asset_id: collision_camera_017
 > Event - Alpha Metroid; Heals? False
   * Layers: default
   * Event Area 1 - Alpha Metroid North
-  > Inside Arena
+  > Pickup (DNA)
       Trivial
 
 > Above Arena; Heals? False
@@ -415,6 +415,14 @@ Extra - asset_id: collision_camera_017
       All of the following:
           Lay Any Bomb
           Super Jump (Intermediate) or Unmorph Extend (Intermediate) or Climb Rooms Vertically (High Jump)
+
+> Pickup (DNA); Heals? False
+  * Layers: default
+  * Pickup 176; Category? Minor
+  * Extra - pickup_type: metroid
+  * Extra - spawngroup: SG_Alpha_004
+  > Inside Arena
+      Trivial
 
 ----------------
 Outer Hub
@@ -663,22 +671,22 @@ Extra - asset_id: collision_camera_025
   * Power Beam Door to Alpha Shaft Left/Door to Alpha Arena South
   * Extra - actor_name: Door014
   * Extra - actor_type: doorpowerpower
-  > Room Center
-      Trivial
+  > Event - Alpha Metroid
+      Defeat Alpha Metroid
 
 > Event - Alpha Metroid; Heals? False
   * Layers: default
   * Event Area 1 - Alpha Metroid South
-  > Room Center
+  > Pickup (DNA)
       Trivial
 
-> Room Center; Heals? False; Default Node
+> Pickup (DNA); Heals? False
   * Layers: default
-  * Extra - start_point_actor_name: ST_Alpha_002_Checkpoint
+  * Pickup 174; Category? Minor
+  * Extra - pickup_type: metroid
+  * Extra - spawngroup: SG_Alpha_002
   > Door to Alpha Shaft Left
       Trivial
-  > Event - Alpha Metroid
-      Defeat Alpha Metroid
 
 ----------------
 Alpha Arena East
@@ -690,22 +698,22 @@ Extra - asset_id: collision_camera_027
   * Power Beam Door to Alpha Arena East Access/Door to Alpha Arena East
   * Extra - actor_name: Door015
   * Extra - actor_type: doorpowerpower
-  > Room Center
-      Trivial
+  > Event - Alpha Metroid
+      Defeat Alpha Metroid
 
 > Event - Alpha Metroid; Heals? False
   * Layers: default
   * Event Area 1 - Alpha Metroid East
-  > Room Center
+  > Pickup (DNA)
       Trivial
 
-> Room Center; Heals? False; Default Node
+> Pickup (DNA); Heals? False
   * Layers: default
-  * Extra - start_point_actor_name: ST_Alpha_003_Checkpoint
+  * Pickup 175; Category? Minor
+  * Extra - pickup_type: metroid
+  * Extra - spawngroup: SG_Alpha_003
   > Door to Alpha Arena East Access
       Trivial
-  > Event - Alpha Metroid
-      Defeat Alpha Metroid
 
 ----------------
 One-Way Puzzle
@@ -1337,7 +1345,7 @@ Extra - asset_id: collision_camera_054
 > Event - Alpha Metroid; Heals? False
   * Layers: default
   * Event Area 1 - Alpha Metroid West
-  > Room Center
+  > Pickup (DNA)
       Trivial
 
 > Room Center; Heals? False; Default Node
@@ -1347,6 +1355,14 @@ Extra - asset_id: collision_camera_054
       Lay Any Bomb
   > Event - Alpha Metroid
       Defeat Alpha Metroid
+
+> Pickup (DNA); Heals? False
+  * Layers: default
+  * Pickup 173; Category? Minor
+  * Extra - pickup_type: metroid
+  * Extra - spawngroup: SG_Alpha_001
+  > Room Center
+      Trivial
 
 ----------------
 Outer Hub Access

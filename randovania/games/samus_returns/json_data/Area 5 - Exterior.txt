@@ -443,7 +443,7 @@ Extra - asset_id: collision_camera_012
 > Event - Zeta Metroid; Heals? False
   * Layers: default
   * Event Area 5 (Exterior) - Zeta Metroid
-  > Room Center
+  > Pickup (DNA)
       Trivial
 
 > Room Center; Heals? False; Default Node
@@ -456,6 +456,14 @@ Extra - asset_id: collision_camera_012
           Morph Ball and Unmorph Extend (Beginner)
   > Event - Zeta Metroid
       Defeat Zeta Metroid
+
+> Pickup (DNA); Heals? False
+  * Layers: default
+  * Pickup 204; Category? Minor
+  * Extra - pickup_type: metroid
+  * Extra - spawngroup: SG_Zeta_001
+  > Room Center
+      Trivial
 
 ----------------
 Water Path Access
@@ -509,7 +517,7 @@ Extra - asset_id: collision_camera_015
 > Event - Gamma Metroid; Heals? False
   * Layers: default
   * Event Area 5 (Exterior) - Gamma Metroid
-  > Inside Arena
+  > Pickup (DNA)
       Trivial
 
 > Bottom of Climb; Heals? False
@@ -586,6 +594,14 @@ Extra - asset_id: collision_camera_015
           All of the following:
               Lay Bomb
               Spider Ball or Mid-Air Morph (Beginner)
+
+> Pickup (DNA); Heals? False
+  * Layers: default
+  * Pickup 201; Category? Minor
+  * Extra - pickup_type: metroid
+  * Extra - spawngroup: SG_Gamma_003
+  > Inside Arena
+      Trivial
 
 ----------------
 Water Path
@@ -670,12 +686,8 @@ Extra - asset_id: collision_camera_018
 > Event - Gamma Metroid+; Heals? False
   * Layers: default
   * Event Area 5 (Exterior) - Gamma Metroid+
-  > Start Point
-      All of the following:
-          Varia Suit
-          Any of the following:
-              Gravity Suit or Space Jump or Can Spiderspark
-              Diagonal Bomb Jump (Intermediate) and Lay Bomb
+  > Pickup (DNA)
+      Trivial
 
 > Start Point; Heals? False; Default Node
   * Layers: default
@@ -685,6 +697,18 @@ Extra - asset_id: collision_camera_018
   > Event - Gamma Metroid+
       All of the following:
           Varia Suit and Defeat Gamma Metroid+
+          Any of the following:
+              Gravity Suit or Space Jump or Can Spiderspark
+              Diagonal Bomb Jump (Intermediate) and Lay Bomb
+
+> Pickup (DNA); Heals? False
+  * Layers: default
+  * Pickup 200; Category? Minor
+  * Extra - pickup_type: metroid
+  * Extra - spawngroup: SG_Gamma_002
+  > Start Point
+      All of the following:
+          Varia Suit
           Any of the following:
               Gravity Suit or Space Jump or Can Spiderspark
               Diagonal Bomb Jump (Intermediate) and Lay Bomb

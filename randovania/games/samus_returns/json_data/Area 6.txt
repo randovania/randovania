@@ -205,7 +205,7 @@ Extra - asset_id: collision_camera_037
 > Event - Omega Metroid; Heals? False
   * Layers: default
   * Event Area 6 - Omega Metroid
-  > Room Center
+  > Pickup (DNA)
       Trivial
 
 > Room Center; Heals? False; Default Node
@@ -217,6 +217,14 @@ Extra - asset_id: collision_camera_037
       Trivial
   > Event - Omega Metroid
       After Area 6 - Zeta Metroid and Defeat Omega Metroid
+
+> Pickup (DNA); Heals? False
+  * Layers: default
+  * Pickup 207; Category? Major
+  * Extra - pickup_type: metroid
+  * Extra - spawngroup: SG_Alpha_003
+  > Room Center
+      Trivial
 
 ----------------
 Stolen Power Bomb Room
@@ -774,7 +782,7 @@ Extra - asset_id: collision_camera_048
 > Event - Zeta Metroid; Heals? False
   * Layers: default
   * Event Area 6 - Zeta Metroid
-  > Room Center
+  > Pickup (DNA)
       Trivial
 
 > Room Center; Heals? False; Default Node
@@ -790,6 +798,14 @@ Extra - asset_id: collision_camera_048
           Single-wall Wall Jump (Intermediate) or Climb Rooms Vertically (No High Jump)
   > Event - Zeta Metroid
       Defeat Zeta Metroid
+
+> Pickup (DNA); Heals? False
+  * Layers: default
+  * Pickup 206; Category? Minor
+  * Extra - pickup_type: metroid
+  * Extra - spawngroup: SG_Zeta_001
+  > Room Center
+      Trivial
 
 ----------------
 Transport to Area 5 Entrance

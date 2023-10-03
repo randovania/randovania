@@ -671,7 +671,7 @@ Extra - asset_id: collision_camera037
 > Event - Gamma Metroid; Heals? False
   * Layers: default
   * Event Area 2 (Interior) - Gamma Metroid
-  > Room Center
+  > Pickup (DNA)
       Trivial
 
 > Room Center; Heals? False; Default Node
@@ -683,6 +683,14 @@ Extra - asset_id: collision_camera037
       Trivial
   > Event - Gamma Metroid
       Defeat Gamma Metroid
+
+> Pickup (DNA); Heals? False
+  * Layers: default
+  * Pickup 189; Category? Minor
+  * Extra - pickup_type: metroid
+  * Extra - spawngroup: SG_Gamma_001
+  > Room Center
+      Trivial
 
 ----------------
 Fiery Balcony

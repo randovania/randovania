@@ -633,7 +633,7 @@ Extra - asset_id: collision_camera_012
 > Event - Alpha Metroid+; Heals? False
   * Layers: default
   * Event Area 5 (Entrance) - Alpha Metroid+
-  > Room Center
+  > Pickup (DNA)
       Trivial
 
 > Room Center; Heals? False; Default Node
@@ -645,6 +645,14 @@ Extra - asset_id: collision_camera_012
       Trivial
   > Event - Alpha Metroid+
       Defeat Alpha Metroid+
+
+> Pickup (DNA); Heals? False
+  * Layers: default
+  * Pickup 188; Category? Minor
+  * Extra - pickup_type: metroid
+  * Extra - spawngroup: SG_Alpha_001
+  > Room Center
+      Trivial
 
 ----------------
 Gamma+ Arena Access
@@ -817,7 +825,7 @@ Extra - asset_id: collision_camera_016
 > Event - Gamma Metroid+; Heals? False
   * Layers: default
   * Event Area 5 (Entrance) - Gamma Metroid+
-  > Start Point
+  > Pickup (DNA)
       Trivial
 
 > Start Point; Heals? False; Default Node
@@ -831,6 +839,14 @@ Extra - asset_id: collision_camera_016
               Spider Ball or Spring Ball or Mid-Air Morph (Beginner)
   > Event - Gamma Metroid+
       Defeat Gamma Metroid+
+
+> Pickup (DNA); Heals? False
+  * Layers: default
+  * Pickup 202; Category? Minor
+  * Extra - pickup_type: metroid
+  * Extra - spawngroup: SG_Gamma_004
+  > Start Point
+      Trivial
 
 ----------------
 Transport Hub Access
