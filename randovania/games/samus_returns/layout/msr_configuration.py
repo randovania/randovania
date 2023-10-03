@@ -16,7 +16,8 @@ class MSRArtifactConfig(BitPackDataclass, JsonDataclass):
 
 @dataclasses.dataclass(frozen=True)
 class MSRConfiguration(BaseConfiguration):
-    energy_per_tank: int = dataclasses.field(metadata={"min": 1, "max": 1000, "precision": 1})
+    energy_per_tank: int = dataclasses.field(metadata={"min": 100, "max": 100, "precision": 1})
+    starting_energy: int = dataclasses.field(metadata={"min": 99, "max": 99, "precision": 1})
     elevator_grapple_blocks: bool
     area3_interior_shortcut_no_grapple: bool
     nerf_power_bombs: bool
