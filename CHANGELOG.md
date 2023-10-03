@@ -36,6 +36,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ##### Ferenia
 
+- Added: Emmi Zone West Exit now has a Damage Boost trick to move from the center platform to the west door.
 - Changed: The item in Fan Room now requires the Speed Booster Conservation trick set to Beginner or Gravity Suit with door lock rando disabled.
 - Changed: The item in Speedboost Slopes Maze now requires the Speed Booster Conservation trick set to Beginner.
 - Changed: The Missile+ Tank in Space Jump Room now requires the Speed Booster Conservation trick set to Beginner.
