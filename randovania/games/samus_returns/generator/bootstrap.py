@@ -5,7 +5,7 @@ from typing import TYPE_CHECKING
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.games.samus_returns.generator.pool_creator import METROID_DNA_CATEGORY
 from randovania.games.samus_returns.layout.msr_configuration import MSRArtifactConfig, MSRConfiguration
-from randovania.resolver.bootstrap import MetroidBootstrap
+from randovania.resolver.bootstrap import EnergyConfig, MetroidBootstrap
 
 if TYPE_CHECKING:
     from random import Random
@@ -91,3 +91,7 @@ class MSRBootstrap(MetroidBootstrap):
             pool_results.assignment[location.pickup_index] = dna
 
         return super().assign_pool_results(rng, patches, pool_results)
+
+    def energy_config(self, configuration: BaseConfiguration) -> EnergyConfig:
+        assert isinstance(configuration, MSRConfiguration)
+        return EnergyConfig(configuration.starting_energy, configuration.energy_per_tank)
