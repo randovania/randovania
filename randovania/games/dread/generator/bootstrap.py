@@ -44,6 +44,7 @@ class DreadBootstrap(MetroidBootstrap):
 
         logical_patches = {
             "allow_highly_dangerous_logic": "HighDanger",
+            "nerf_power_bombs": "NerfPowerBombs",
         }
         for name, index in logical_patches.items():
             if getattr(configuration, name):

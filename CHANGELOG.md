@@ -13,6 +13,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Dread
 
+- Fixed: The "Power Bomb Limitations" setting is now accounted for by logic.
+
 #### Logic Database
 
 ##### Artaria
