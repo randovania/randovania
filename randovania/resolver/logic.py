@@ -12,12 +12,15 @@ if TYPE_CHECKING:
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.requirements.base import Requirement
     from randovania.layout.base.base_configuration import BaseConfiguration
-    from randovania.resolver.resolver_reach import ResolverReach
     from randovania.resolver.state import State
 
 
 def n(node: Node, region_list, with_region=False) -> str:
     return region_list.node_name(node, with_region) if node is not None else "None"
+
+
+def energy_string(state: State) -> str:
+    return f" [{state.energy}/{state.maximum_energy} Energy]" if debug.debug_level() >= 2 else ""
 
 
 class Logic:
@@ -56,7 +59,7 @@ class Logic:
         self._current_indent = 0
         self._last_printed_additional = {}
 
-    def start_new_attempt(self, state: State, reach: ResolverReach, max_attempts: int | None):
+    def start_new_attempt(self, state: State, max_attempts: int | None):
         if max_attempts is not None and self._attempts >= max_attempts:
             raise ResolverTimeoutError(f"Timed out after {max_attempts} attempts")
 
@@ -78,7 +81,9 @@ class Logic:
             if debug.debug_level() >= 3:
                 for node in state.path_from_previous_state[1:]:
                     debug.print_function(f"{self._indent(1)}: {n(node, region_list=region_list)}")
-            debug.print_function(f"{self._indent(1)}> {n(state.node, region_list=region_list)} for {resources}")
+            debug.print_function(
+                f"{self._indent(1)}> {n(state.node, region_list=region_list)}{energy_string(state)} for {resources}"
+            )
 
     def log_checking_satisfiable_actions(self, state: State, actions: list[tuple[ResourceNode, int]]):
         if debug.debug_level() > 1:
