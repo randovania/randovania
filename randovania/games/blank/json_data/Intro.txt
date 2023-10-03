@@ -1,6 +1,6 @@
 ----------------
 Starting Area
-> Spawn Point; Heals? False; Spawn Point; Default Node
+> Spawn Point; Heals? True; Spawn Point; Default Node
   * Layers: default
   > Pickup (Weapon)
       Trivial
@@ -17,6 +17,8 @@ Starting Area
   > Door to Blue Key Room (Entrance)
       Trivial
   > Second Spawn Point
+      Trivial
+  > Door to Heated Room
       Trivial
 
 > Pickup (Weapon); Heals? False
@@ -63,6 +65,12 @@ Starting Area
 
 > Second Spawn Point; Heals? False; Spawn Point
   * Layers: default
+  > Spawn Point
+      Trivial
+
+> Door to Heated Room; Heals? False
+  * Layers: default
+  * Normal Door to Heated Room/Door to Starting Area
   > Spawn Point
       Trivial
 
@@ -206,6 +214,22 @@ Extra - map_name: Square
   * Extra - string_asset_id: 1
   > Door to Explosive Depot
       Trivial
+
+----------------
+Heated Room
+Extra - map_name: Orange
+> Pickup (Health); Heals? False
+  * Layers: default
+  * Pickup 3; Category? Minor
+  > Door to Starting Area
+      # When damage contraints are combined with 'and', the result requires the sum of the damage values.
+      Normal Damage ≥ 10 and Normal Damage ≥ 40
+
+> Door to Starting Area; Heals? False
+  * Layers: default
+  * Normal Door to Starting Area/Door to Heated Room
+  > Pickup (Health)
+      Normal Damage ≥ 49
 
 ----------------
 Empty Area
