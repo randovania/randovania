@@ -7,7 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [6.4.0] - 2023-11-??
 
-- Nothing yet.
+### Metroid Dread
+
+- Fixed: The "Power Bomb Limitations" setting is now accounted for by logic.
 
 ## [6.3.1] - 2023-10-??
 
