@@ -332,6 +332,11 @@
                 "long_name": "Horizontal Infinite Bomb Jump",
                 "description": "",
                 "extra": {}
+            },
+            "MidAirMorph": {
+                "long_name": "Mid-Air Morph",
+                "description": "",
+                "extra": {}
             }
         },
         "damage": {
@@ -598,6 +603,32 @@
                         }
                     ]
                 }
+            },
+            "Can Use Spring Ball": {
+                "type": "and",
+                "data": {
+                    "comment": null,
+                    "items": [
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "SpringBall",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    ]
+                }
             }
         },
         "damage_reductions": [],
@@ -609,7 +640,7 @@
     "starting_location": {
         "region": "Crateria",
         "area": "Landing Site",
-        "node": "Landing Site Save Station"
+        "node": "Ship"
     },
     "initial_states": {
         "Item Loss Disabled": []
@@ -1025,7 +1056,8 @@
             1,
             2,
             3,
-            4
+            4,
+            5
         ],
         "Knowledge": [
             1,
@@ -1041,14 +1073,21 @@
         ],
         "HBJ": [
             1,
-            3
+            3,
+            4
         ],
         "SpringBallJump": [
             1,
             2
         ],
         "DBoost": [
-            1
+            1,
+            2,
+            3
+        ],
+        "Combat": [
+            1,
+            2
         ],
         "BlueSuitGlitch": [
             2
@@ -1060,9 +1099,6 @@
         "GateGlitch": [
             3,
             4
-        ],
-        "Combat": [
-            2
         ],
         "IBA": [
             2

@@ -531,11 +531,11 @@ Extra - asset_id: collision_camera_011
 
 > Door to Transport Hub Access; Heals? False
   * Layers: default
-  * Charge Beam Door to Transport Hub Access/Door to Alpha+ Arena Access
+  * Power Beam Door to Transport Hub Access/Door to Alpha+ Arena Access
   * Extra - actor_name: Door001
-  * Extra - actor_type: doorchargecharge
+  * Extra - actor_type: doorpowerpower
   > Next to Teleporter
-      Lightning Armor and Morph Ball
+      Morph Ball and Fleechswarm Protection
 
 > Door to Alpha+ Arena; Heals? False
   * Layers: default
@@ -572,7 +572,7 @@ Extra - asset_id: collision_camera_011
   > Door to Transport Hub Access
       All of the following:
           Morph Ball
-          Lightning Armor or Melee Clip (Beginner)
+          Melee Clip (Beginner) or Fleechswarm Protection
   > Door to Alpha+ Arena
       Trivial
   > Event - Teleporter Unlocked
@@ -633,7 +633,7 @@ Extra - asset_id: collision_camera_012
 > Event - Alpha Metroid+; Heals? False
   * Layers: default
   * Event Area 5 (Entrance) - Alpha Metroid+
-  > Room Center
+  > Pickup (DNA)
       Trivial
 
 > Room Center; Heals? False; Default Node
@@ -645,6 +645,14 @@ Extra - asset_id: collision_camera_012
       Trivial
   > Event - Alpha Metroid+
       Defeat Alpha Metroid+
+
+> Pickup (DNA); Heals? False
+  * Layers: default
+  * Pickup 188; Category? Minor
+  * Extra - pickup_type: metroid
+  * Extra - spawngroup: SG_Alpha_001
+  > Room Center
+      Trivial
 
 ----------------
 Gamma+ Arena Access
@@ -817,7 +825,7 @@ Extra - asset_id: collision_camera_016
 > Event - Gamma Metroid+; Heals? False
   * Layers: default
   * Event Area 5 (Entrance) - Gamma Metroid+
-  > Start Point
+  > Pickup (DNA)
       Trivial
 
 > Start Point; Heals? False; Default Node
@@ -832,6 +840,14 @@ Extra - asset_id: collision_camera_016
   > Event - Gamma Metroid+
       Defeat Gamma Metroid+
 
+> Pickup (DNA); Heals? False
+  * Layers: default
+  * Pickup 202; Category? Minor
+  * Extra - pickup_type: metroid
+  * Extra - spawngroup: SG_Gamma_004
+  > Start Point
+      Trivial
+
 ----------------
 Transport Hub Access
 Extra - total_boundings: {'x1': 8700.0, 'x2': 11400.0, 'y1': -12000.0, 'y2': -6700.0}
@@ -839,9 +855,9 @@ Extra - polygon: [[11400.0, -6700.0], [8700.0, -6700.0], [8700.0, -12000.0], [11
 Extra - asset_id: collision_camera_017
 > Door to Alpha+ Arena Access; Heals? False
   * Layers: default
-  * Charge Beam Door to Alpha+ Arena Access/Door to Transport Hub Access
+  * Power Beam Door to Alpha+ Arena Access/Door to Transport Hub Access
   * Extra - actor_name: Door001
-  * Extra - actor_type: doorchargecharge
+  * Extra - actor_type: doorpowerpower
   > Room Center
       Trivial
 

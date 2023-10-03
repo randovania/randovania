@@ -205,7 +205,7 @@ Extra - asset_id: collision_camera_037
 > Event - Omega Metroid; Heals? False
   * Layers: default
   * Event Area 6 - Omega Metroid
-  > Room Center
+  > Pickup (DNA)
       Trivial
 
 > Room Center; Heals? False; Default Node
@@ -217,6 +217,14 @@ Extra - asset_id: collision_camera_037
       Trivial
   > Event - Omega Metroid
       After Area 6 - Zeta Metroid and Defeat Omega Metroid
+
+> Pickup (DNA); Heals? False
+  * Layers: default
+  * Pickup 207; Category? Major
+  * Extra - pickup_type: metroid
+  * Extra - spawngroup: SG_Alpha_003
+  > Room Center
+      Trivial
 
 ----------------
 Stolen Power Bomb Room
@@ -435,9 +443,9 @@ Extra - polygon: [[-11600.0, 7400.0], [-11600.0, 4900.0], [-9100.0, 4900.0], [-9
 Extra - asset_id: collision_camera_041
 > Door to Teleporter Room North; Heals? False
   * Layers: default
-  * Charge Beam Door to Teleporter Room North/Door to Stolen Access
+  * Power Beam Door to Teleporter Room North/Door to Stolen Access
   * Extra - actor_name: Door010
-  * Extra - actor_type: doorchargecharge
+  * Extra - actor_type: doorpowerpower
   > Door to Stolen Power Bomb Room
       Any of the following:
           All of the following:
@@ -533,7 +541,7 @@ Extra - asset_id: collision_camera_043
 
 > Door to Diggernaut Shaft; Heals? False
   * Layers: default
-  * Power Bomb Door to Diggernaut Shaft/Door to Diggernaut Arena
+  * Power Beam Door to Diggernaut Shaft/Door to Diggernaut Arena
   * Extra - actor_name: Door024
   * Extra - actor_type: doorpowerpower
   > Door from Transport to Area 7
@@ -630,7 +638,7 @@ Extra - asset_id: collision_camera_045
 
 > Door to Diggernaut Arena; Heals? False
   * Layers: default
-  * Power Bomb Door to Diggernaut Arena/Door to Diggernaut Shaft
+  * Power Beam Door to Diggernaut Arena/Door to Diggernaut Shaft
   * Extra - actor_name: Door024
   * Extra - actor_type: doorpowerpower
   > Ammo Recharge Station
@@ -774,7 +782,7 @@ Extra - asset_id: collision_camera_048
 > Event - Zeta Metroid; Heals? False
   * Layers: default
   * Event Area 6 - Zeta Metroid
-  > Room Center
+  > Pickup (DNA)
       Trivial
 
 > Room Center; Heals? False; Default Node
@@ -790,6 +798,14 @@ Extra - asset_id: collision_camera_048
           Single-wall Wall Jump (Intermediate) or Climb Rooms Vertically (No High Jump)
   > Event - Zeta Metroid
       Defeat Zeta Metroid
+
+> Pickup (DNA); Heals? False
+  * Layers: default
+  * Pickup 206; Category? Minor
+  * Extra - pickup_type: metroid
+  * Extra - spawngroup: SG_Zeta_001
+  > Room Center
+      Trivial
 
 ----------------
 Transport to Area 5 Entrance
@@ -1161,9 +1177,9 @@ Extra - asset_id: collision_camera_Hazard_End_B
 
 > Door to Stolen Access; Heals? False
   * Layers: default
-  * Charge Beam Door to Stolen Access/Door to Teleporter Room North
+  * Power Beam Door to Stolen Access/Door to Teleporter Room North
   * Extra - actor_name: Door010
-  * Extra - actor_type: doorchargecharge
+  * Extra - actor_type: doorpowerpower
   > Save Station
       Trivial
   > Door to Connecting Shaft

@@ -19,6 +19,8 @@ _FIELDS = [
     "area3_interior_shortcut_no_grapple",
     "nerf_power_bombs",
     "nerf_super_missiles",
+    "surface_crumbles",
+    "area1_crumbles",
 ]
 
 

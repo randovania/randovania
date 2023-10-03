@@ -1,14 +1,25 @@
 from __future__ import annotations
 
+from datetime import datetime
 from distutils.version import StrictVersion
 from typing import NamedTuple
 
 from randovania import VERSION
 
 
+class ChangeLogDetails(NamedTuple):
+    patch_notes: str
+    published_at: str
+
+    @property
+    def formatted_date(self) -> str:
+        toDate = datetime.strptime(self.published_at, "%Y-%m-%dT%H:%M:%SZ")
+        return toDate.strftime("%x")
+
+
 class VersionDescription(NamedTuple):
     tag_name: str
-    change_log: str
+    change_log: ChangeLogDetails
     html_url: str
 
     @property
@@ -31,7 +42,8 @@ def strict_current_version() -> StrictVersion:
 
 
 def get_version_for_release(release: dict) -> VersionDescription:
-    return VersionDescription(release["tag_name"], release["body"], release["html_url"])
+    change_log_details = ChangeLogDetails(release["body"], release["published_at"])
+    return VersionDescription(release["tag_name"], change_log_details, release["html_url"])
 
 
 MAJOR_ENTRY = "- **Major** "
@@ -81,7 +93,7 @@ def versions_to_display_for_releases(
                 displayed_new_version = True
 
         else:
-            log = f"## {version.tag_name}\n\n{version.change_log}"
+            log = f"{version.change_log.formatted_date}\n\n## {version.tag_name}\n\n{version.change_log.patch_notes}"
             all_change_logs[version.tag_name] = log
 
             if strict_version > last_changelog_version:

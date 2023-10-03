@@ -30,7 +30,7 @@ Extra - asset_id: collision_camera_002
   * Layers: default
   * Charge Beam Door to Entrance Hub/Door to Transport to Area 2 Entrance
   * Extra - actor_name: Door002
-  * Extra - actor_type: doorchargecharge
+  * Extra - actor_type: doorpowerpower
   > Chozo Seal
       Grapple Beam or Climb Rooms Vertically (No High Jump)
 
@@ -38,7 +38,7 @@ Extra - asset_id: collision_camera_002
   * Layers: default
   * Power Beam Door to Transport to Area 4 West/Door from Transport to Area 2 Entrance
   * Extra - actor_name: Door005
-  * Extra - actor_type: doorclosedpower
+  * Extra - actor_type: doorpowerpower
   > Chozo Seal
       Trivial
   > Door from Transport to Area 4 West
@@ -48,7 +48,7 @@ Extra - asset_id: collision_camera_002
   * Layers: default
   * Access Closed to Transport to Area 4 West/Door to Transport to Area 2 Entrance (Top)
   * Extra - actor_name: Door006
-  * Extra - actor_type: doorpowerclosed
+  * Extra - actor_type: doorpowerpower
   > Door to Transport to Area 4 West (Top)
       Trivial
   > Door to Glow Fly Tunnel (Top)
@@ -68,7 +68,7 @@ Extra - asset_id: collision_camera_002
   * Layers: default
   * Charge Beam Door to Transport to Area 4 West/Door to Transport to Area 2 Entrance (Bottom)
   * Extra - actor_name: Door008
-  * Extra - actor_type: doorchargecharge
+  * Extra - actor_type: doorpowerpower
   > Door to Glow Fly Tunnel (Bottom)
       Trivial
 
@@ -395,7 +395,7 @@ Extra - asset_id: collision_camera_032
   * Layers: default
   * Access Closed to Transport to Area 2 Entrance/Door to Transport to Area 4 West (Top)
   * Extra - actor_name: Door005
-  * Extra - actor_type: doorclosedpower
+  * Extra - actor_type: doorpowerpower
   > Pickup (Missile Tank)
       Charge Beam and Ice Beam and Ice Beam Clip (Beginner) and Out of Bounds Movement (Intermediate)
   > Door to Transport to Area 2 Entrance (Top)
@@ -405,7 +405,7 @@ Extra - asset_id: collision_camera_032
   * Layers: default
   * Power Beam Door to Transport to Area 2 Entrance/Door from Transport to Area 4 West
   * Extra - actor_name: Door006
-  * Extra - actor_type: doorpowerclosed
+  * Extra - actor_type: doorpowerpower
   > Pickup (Missile Tank)
       All of the following:
           Morph Ball and After Area 3 (Exterior) - Transport to Area 4 West Grapple Block
@@ -429,7 +429,7 @@ Extra - asset_id: collision_camera_032
   * Layers: default
   * Charge Beam Door to Transport to Area 2 Entrance/Door to Transport to Area 4 West (Bottom)
   * Extra - actor_name: Door008
-  * Extra - actor_type: doorchargecharge
+  * Extra - actor_type: doorpowerpower
   > Elevator to Area 4 - West
       Trivial
 
@@ -538,9 +538,9 @@ Extra - asset_id: collision_camera_036
 
 > Door to Transport to Area 2 Entrance; Heals? False
   * Layers: default
-  * Charge Beam Door to Transport to Area 2 Entrance/Door to Entrance Hub
+  * Power Beam Door to Transport to Area 2 Entrance/Door to Entrance Hub
   * Extra - actor_name: Door002
-  * Extra - actor_type: doorchargecharge
+  * Extra - actor_type: doorpowerpower
   > Save Station
       Trivial
   > Door to Transport to Area 3 Interior West (Lower)
@@ -731,35 +731,21 @@ Extra - asset_id: collision_camera_038
   * Extra - actor_name: Door015
   * Extra - actor_type: doorpowerpower
   > Event - Gamma Metroid
-      All of the following:
-          Defeat Gamma Metroid and Lay Any Bomb
-          Walljump (Beginner) or Climb Rooms Vertically (High Jump)
+      Climb Rooms Vertically (High Jump) and Defeat Gamma Metroid and Lay Any Bomb
 
 > Event - Gamma Metroid; Heals? False
   * Layers: default
   * Event Area 3 (Exterior) - Gamma Metroid
-  > Door to Gamma Shaft
-      Any of the following:
-          Spider Ball and Lay Any Bomb
-          All of the following:
-              Lay Power Bomb
-              Space Jump or Single-wall Wall Jump (Intermediate)
-          All of the following:
-              Lay Bomb
-              Any of the following:
-                  Gravity Suit and Infinite Bomb Jump (Beginner)
-                  All of the following:
-                      Infinite Bomb Jump (Intermediate)
-                      Spring Ball or Mid-Air Morph (Intermediate)
-                  Mid-Air Morph (Intermediate) and Single-wall Wall Jump (Intermediate)
-  > Start Point
+  > Pickup (DNA)
       Trivial
 
-> Start Point; Heals? False; Default Node
+> Pickup (DNA); Heals? False
   * Layers: default
-  * Extra - start_point_actor_name: ST_Gamma_005A_Checkpoint
-  > Event - Gamma Metroid
-      Defeat Gamma Metroid
+  * Pickup 194; Category? Minor
+  * Extra - pickup_type: metroid
+  * Extra - spawngroup: SG_Gamma_005_C
+  > Door to Gamma Shaft
+      Lay Any Bomb
 
 ----------------
 Outer Hub Access

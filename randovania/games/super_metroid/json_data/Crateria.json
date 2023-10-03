@@ -5,14 +5,14 @@
     },
     "areas": {
         "Landing Site": {
-            "default_node": "Landing Site Save Station",
+            "default_node": "Ship",
             "extra": {
                 "map_name": "791F8",
                 "asset_id": 0,
                 "save_index": 0
             },
             "nodes": {
-                "Door to Gauntlet Access": {
+                "Door to Gauntlet Entrance": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -29,7 +29,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Crateria",
-                        "area": "Gauntlet Access",
+                        "area": "Gauntlet Entrance",
                         "node": "Door to Landing Site"
                     },
                     "default_dock_weakness": "Normal Door",
@@ -38,7 +38,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Landing Site Save Station": {
+                        "Ship": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -53,54 +53,15 @@
                                         }
                                     },
                                     {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Morph",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "or",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Bombs",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "PowerBomb",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                }
-                                            ]
-                                        }
+                                        "type": "template",
+                                        "data": "Can Lay Any Bombs"
                                     }
                                 ]
                             }
                         }
                     }
                 },
-                "Door to Parlor": {
+                "Door to Parlor and Alcatraz": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -117,7 +78,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Crateria",
-                        "area": "Parlor",
+                        "area": "Parlor and Alcatraz",
                         "node": "Door to Landing Site"
                     },
                     "default_dock_weakness": "Normal Door",
@@ -126,7 +87,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Landing Site Save Station": {
+                        "Ship": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -139,8 +100,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 4581.55868544601,
-                        "y": 1793.8028169014083,
+                        "x": 4581.56,
+                        "y": 1793.8,
                         "z": 0.0
                     },
                     "description": "",
@@ -155,13 +116,56 @@
                         "area": "Crateria Power Bomb Room",
                         "node": "Door to Landing Site"
                     },
-                    "default_dock_weakness": "Normal Door",
+                    "default_dock_weakness": "Power Bomb Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Landing Site Save Station": {
+                        "Door to Gauntlet Entrance": {
+                            "type": "or",
+                            "data": {
+                                "comment": "TODO: Add spark through door https://youtu.be/t6Tmu8w9yIQ",
+                                "items": [
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "Beginner Shinespark: https://youtu.be/Gurz63v4Xi0",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "SpeedBooster",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Shinespark",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "damage",
+                                                        "name": "Shinespark",
+                                                        "amount": 126,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Top Pillar": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -188,7 +192,7 @@
                     "default_connection": {
                         "region": "Crateria",
                         "area": "Crateria Tube",
-                        "node": "Door to Landing Site"
+                        "node": "Dock to Landing Site"
                     },
                     "default_dock_weakness": "Super Missile Door",
                     "exclude_from_dock_rando": false,
@@ -196,91 +200,11 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Landing Site Save Station": {
-                            "type": "or",
+                        "Top Pillar": {
+                            "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Morph",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "or",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Bombs",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "PowerBomb",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "HiJump",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "SpaceJump",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "SpeedBooster",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "ScrewAttack",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "items": []
                             }
                         }
                     }
@@ -301,7 +225,7 @@
                     "valid_starting_location": false,
                     "event_name": "Event8",
                     "connections": {
-                        "Landing Site Save Station": {
+                        "Ship": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -310,12 +234,12 @@
                         }
                     }
                 },
-                "Landing Site Save Station": {
+                "Ship": {
                     "node_type": "generic",
                     "heal": true,
                     "coordinates": {
-                        "x": 1979.492957746479,
-                        "y": 483.7558685446006,
+                        "x": 1979.49,
+                        "y": 483.76,
                         "z": 0.0
                     },
                     "description": "",
@@ -325,7 +249,7 @@
                     "extra": {},
                     "valid_starting_location": true,
                     "connections": {
-                        "Door to Gauntlet Access": {
+                        "Door to Gauntlet Entrance": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -347,32 +271,6 @@
                                                 {
                                                     "type": "template",
                                                     "data": "Can Lay Any Bombs"
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": "Shinespark",
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "SpeedBooster",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Shinespark",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
                                                 }
                                             ]
                                         }
@@ -424,7 +322,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "Shinespark",
+                                                        "comment": "Shinespark - TODO: health requirements",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -453,7 +351,7 @@
                                 ]
                             }
                         },
-                        "Door to Parlor": {
+                        "Door to Parlor and Alcatraz": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -461,10 +359,102 @@
                             }
                         },
                         "Door to Crateria Power Bomb Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "SpeedBooster",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Shinespark",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "damage",
+                                            "name": "Shinespark",
+                                            "amount": 79,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Door to Crateria Tube": {
                             "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "ScrewAttack",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "SpeedBooster",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Can Lay Any Bombs"
+                                    }
+                                ]
+                            }
+                        },
+                        "Event - Win Game": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "Event7",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Top Pillar": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "HiJump",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "WallJump",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
                                     {
                                         "type": "resource",
                                         "data": {
@@ -496,8 +486,72 @@
                                                         "amount": 1,
                                                         "negate": false
                                                     }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "damage",
+                                                        "name": "Shinespark",
+                                                        "amount": 50,
+                                                        "negate": false
+                                                    }
                                                 }
                                             ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "IBJ to the top",
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Lay Bombs"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "IBJ",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Top Pillar": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 3350.0,
+                        "y": 1350.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Crateria Power Bomb Room": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "SpaceJump",
+                                            "amount": 1,
+                                            "negate": false
                                         }
                                     },
                                     {
@@ -525,99 +579,17 @@
                             }
                         },
                         "Door to Crateria Tube": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Morph",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "or",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Bombs",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "PowerBomb",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "HiJump",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "SpaceJump",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "ScrewAttack",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "SpeedBooster",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "items": []
                             }
                         },
-                        "Event - Win Game": {
-                            "type": "resource",
+                        "Ship": {
+                            "type": "and",
                             "data": {
-                                "type": "events",
-                                "name": "Event7",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -625,18 +597,18 @@
             }
         },
         "Crateria Tube": {
-            "default_node": "Door to Landing Site",
+            "default_node": "Dock to Landing Site",
             "extra": {
                 "map_name": "795D4",
                 "asset_id": 1
             },
             "nodes": {
-                "Door to Landing Site": {
+                "Dock to Landing Site": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 10.557394273706324,
-                        "y": 257.344890990281,
+                        "x": 10.56,
+                        "y": 257.34,
                         "z": 0.0
                     },
                     "description": "",
@@ -645,19 +617,19 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "door",
+                    "dock_type": "other",
                     "default_connection": {
                         "region": "Crateria",
                         "area": "Landing Site",
                         "node": "Door to Crateria Tube"
                     },
-                    "default_dock_weakness": "Normal Door",
+                    "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Crateria Kihunter Room": {
+                        "Dock to Crateria Kihunter Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -666,12 +638,12 @@
                         }
                     }
                 },
-                "Door to Crateria Kihunter Room": {
+                "Dock to Crateria Kihunter Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 498.7528237457316,
-                        "y": 258.6897819805621,
+                        "x": 498.75,
+                        "y": 258.69,
                         "z": 0.0
                     },
                     "description": "",
@@ -680,19 +652,19 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "door",
+                    "dock_type": "other",
                     "default_connection": {
                         "region": "Crateria",
                         "area": "Crateria Kihunter Room",
                         "node": "Door to Crateria Tube"
                     },
-                    "default_dock_weakness": "Normal Door",
+                    "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Landing Site": {
+                        "Dock to Landing Site": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -728,7 +700,7 @@
                     "default_connection": {
                         "region": "Crateria",
                         "area": "Crateria Tube",
-                        "node": "Door to Crateria Kihunter Room"
+                        "node": "Dock to Crateria Kihunter Room"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -736,7 +708,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Moat": {
+                        "Door to The Moat": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -752,7 +724,7 @@
                         }
                     }
                 },
-                "Door to Moat": {
+                "Door to The Moat": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -769,7 +741,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Crateria",
-                        "area": "Moat",
+                        "area": "The Moat",
                         "node": "Door to Crateria Kihunter Room"
                     },
                     "default_dock_weakness": "Power Bomb Door",
@@ -824,7 +796,7 @@
                 }
             }
         },
-        "Moat": {
+        "The Moat": {
             "default_node": "Door to Crateria Kihunter Room",
             "extra": {
                 "map_name": "795FF",
@@ -849,7 +821,7 @@
                     "default_connection": {
                         "region": "Crateria",
                         "area": "Crateria Kihunter Room",
-                        "node": "Door to Moat"
+                        "node": "Door to The Moat"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -883,7 +855,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Short charge shinespark",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -908,6 +880,15 @@
                                                     "data": {
                                                         "type": "misc",
                                                         "name": "EntranceRando",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "DoorLockRando",
                                                         "amount": 1,
                                                         "negate": true
                                                     }
@@ -1070,7 +1051,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Short charge shinespark",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -1097,6 +1078,62 @@
                                                         "name": "EntranceRando",
                                                         "amount": 1,
                                                         "negate": true
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "DoorLockRando",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "HIBJ",
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Lay Bombs"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "HBJ",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "Jump and run with open door",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "DoorLockRando",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "HiJump",
+                                                        "amount": 1,
+                                                        "negate": false
                                                     }
                                                 }
                                             ]
@@ -1125,7 +1162,7 @@
                     "default_connection": {
                         "region": "Crateria",
                         "area": "West Ocean",
-                        "node": "Door to Moat"
+                        "node": "Door to The Moat"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -1141,7 +1178,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": "Via top path - TODO: check for shinespark without entrance rando?",
+                                            "comment": "Via top path",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -1160,6 +1197,50 @@
                                                         "amount": 1,
                                                         "negate": false
                                                     }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "Start in West Ocean and jump over with momentum",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "SpeedBooster",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "misc",
+                                                                    "name": "DoorLockRando",
+                                                                    "amount": 1,
+                                                                    "negate": true
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "misc",
+                                                                    "name": "EntranceRando",
+                                                                    "amount": 1,
+                                                                    "negate": true
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Movement",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
                                                 }
                                             ]
                                         }
@@ -1170,10 +1251,6 @@
                                             "comment": "Via bottom path",
                                             "items": [
                                                 {
-                                                    "type": "template",
-                                                    "data": "Can Lay Bombs"
-                                                },
-                                                {
                                                     "type": "and",
                                                     "data": {
                                                         "comment": null,
@@ -1182,22 +1259,34 @@
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "items",
-                                                                    "name": "ScrewAttack",
+                                                                    "name": "Morph",
                                                                     "amount": 1,
                                                                     "negate": false
                                                                 }
                                                             },
                                                             {
-                                                                "type": "resource",
+                                                                "type": "or",
                                                                 "data": {
-                                                                    "type": "items",
-                                                                    "name": "Gravity",
-                                                                    "amount": 1,
-                                                                    "negate": false
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "misc",
+                                                                                "name": "MoatTweaks",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
                                                                 }
                                                             }
                                                         ]
                                                     }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Lay Bombs"
                                                 }
                                             ]
                                         }
@@ -1257,13 +1346,13 @@
             }
         },
         "West Ocean": {
-            "default_node": "Door to Moat",
+            "default_node": "Door to The Moat",
             "extra": {
                 "map_name": "793FE",
                 "asset_id": 4
             },
             "nodes": {
-                "Door to Moat": {
+                "Door to The Moat": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1280,7 +1369,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Crateria",
-                        "area": "Moat",
+                        "area": "The Moat",
                         "node": "Door to West Ocean"
                     },
                     "default_dock_weakness": "Normal Door",
@@ -1292,7 +1381,7 @@
                         "Door to Wrecked Ship Entrance": {
                             "type": "or",
                             "data": {
-                                "comment": null,
+                                "comment": "TODO: Check to see if possible with HBJ.",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -1304,12 +1393,93 @@
                                         }
                                     },
                                     {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": "It is possible to jump across by not using full jumps to avoid bonking on the ceiling.",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Movement",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
                                         "type": "resource",
                                         "data": {
-                                            "type": "tricks",
-                                            "name": "Movement",
+                                            "type": "items",
+                                            "name": "SpaceJump",
                                             "amount": 1,
                                             "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "From the sea floor",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Gravity",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "HiJump",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "WallJump",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": "IBJ",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Can Lay Bombs"
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "IBJ",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -1335,21 +1505,24 @@
                                             "comment": null,
                                             "items": [
                                                 {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Gravity",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
+                                                    "type": "template",
+                                                    "data": "Can Lay Any Bombs"
                                                 },
                                                 {
-                                                    "type": "resource",
+                                                    "type": "or",
                                                     "data": {
-                                                        "type": "tricks",
-                                                        "name": "Knowledge",
-                                                        "amount": 2,
-                                                        "negate": false
+                                                        "comment": "Knowledge: The block to exit the alcove can be shot off screen to allow for exit.",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Knowledge",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -1360,7 +1533,7 @@
                         }
                     }
                 },
-                "Door to Bowling Alley Cave": {
+                "Door to Bowling Alley Path": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1377,7 +1550,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Crateria",
-                        "area": "Bowling Alley Cave",
+                        "area": "Bowling Alley Path",
                         "node": "Door to West Ocean"
                     },
                     "default_dock_weakness": "Normal Door",
@@ -1386,54 +1559,18 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Attic": {
-                            "type": "and",
+                        "Door to Bowling Alley": {
+                            "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Charge",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
+                                        "type": "template",
+                                        "data": "Can Lay Any Bombs"
                                     },
                                     {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Bombs",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "PowerBomb",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "SpringBall",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
+                                        "type": "template",
+                                        "data": "Can Use Spring Ball"
                                     }
                                 ]
                             }
@@ -1466,63 +1603,27 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Bowling Alley Cave": {
-                            "type": "and",
+                        "Door to Bowling Alley Path": {
+                            "type": "or",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Lay Any Bombs"
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Can Use Spring Ball"
+                                    }
+                                ]
                             }
                         },
                         "Door to Attic": {
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Bombs",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "PowerBomb",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "SpringBall",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
+                                "items": []
                             }
                         }
                     }
@@ -1553,7 +1654,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Moat": {
+                        "Door to The Moat": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1588,7 +1689,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Moat": {
+                        "Door to The Moat": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1623,58 +1724,6 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Bowling Alley Cave": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Bombs",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "SpringBall",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "PowerBomb",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
-                            }
-                        },
                         "Door to Bowling Alley": {
                             "type": "and",
                             "data": {
@@ -1703,6 +1752,140 @@
                                             "name": "SpaceJump",
                                             "amount": 1,
                                             "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "Shinespark",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "SpeedBooster",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Shinespark",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "damage",
+                                                        "name": "Normal",
+                                                        "amount": 36,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "Wall jump off of Trippers",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "WallJump",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Ice",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "IBJ",
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Lay Bombs"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "IBJ",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "Knowledge (Intermediate): Trippers can be brought over to right platforms by keeping them on screen. (jump and aim up)",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Knowledge",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "Speedboost and jump: https://youtu.be/rkw3gUtLFqQ",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "SpeedBooster",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Movement",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "HiJump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -1779,45 +1962,14 @@
                     "pickup_index": 3,
                     "location_category": "minor",
                     "connections": {
-                        "Door to Moat": {
+                        "Door to The Moat": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Bombs",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "PowerBomb",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
+                                        "type": "template",
+                                        "data": "Can Lay Any Bombs"
                                     }
                                 ]
                             }
@@ -1831,7 +1983,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "items",
-                                            "name": "Morph",
+                                            "name": "Supers",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -1840,9 +1992,42 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "items",
-                                            "name": "Supers",
+                                            "name": "Morph",
                                             "amount": 1,
                                             "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": "Get into Tunnel",
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Use Spring Ball"
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Lay Bombs"
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "TODO: make this mid air morph",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Movement",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -1867,7 +2052,7 @@
                     "pickup_index": 1,
                     "location_category": "minor",
                     "connections": {
-                        "Door to Moat": {
+                        "Door to The Moat": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1880,15 +2065,6 @@
                                             "amount": 1,
                                             "negate": false
                                         }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Gravity",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
                                     }
                                 ]
                             }
@@ -1897,7 +2073,7 @@
                 }
             }
         },
-        "Bowling Alley Cave": {
+        "Bowling Alley Path": {
             "default_node": "Door to West Ocean",
             "extra": {
                 "map_name": "79461",
@@ -1922,7 +2098,7 @@
                     "default_connection": {
                         "region": "Crateria",
                         "area": "West Ocean",
-                        "node": "Door to Bowling Alley Cave"
+                        "node": "Door to Bowling Alley Path"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -1930,7 +2106,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Bowling Alley Path": {
+                        "Door to West Ocean Passageway": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1939,7 +2115,7 @@
                         }
                     }
                 },
-                "Door to Bowling Alley Path": {
+                "Door to West Ocean Passageway": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1956,8 +2132,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Crateria",
-                        "area": "Bowling Alley Path",
-                        "node": "Door to Bowling Alley Cave"
+                        "area": "West Ocean Passageway",
+                        "node": "Door to Bowling Alley Path"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -1976,14 +2152,14 @@
                 }
             }
         },
-        "Bowling Alley Path": {
-            "default_node": "Door to Bowling Alley Cave",
+        "West Ocean Passageway": {
+            "default_node": "Door to Bowling Alley Path",
             "extra": {
                 "map_name": "7968F",
                 "asset_id": 5
             },
             "nodes": {
-                "Door to Bowling Alley Cave": {
+                "Door to Bowling Alley Path": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2000,8 +2176,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Crateria",
-                        "area": "Bowling Alley Cave",
-                        "node": "Door to Bowling Alley Path"
+                        "area": "Bowling Alley Path",
+                        "node": "Door to West Ocean Passageway"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -2036,7 +2212,7 @@
                     "default_connection": {
                         "region": "Wrecked Ship",
                         "area": "Bowling Alley",
-                        "node": "Door to Bowling Alley Path"
+                        "node": "Door to West Ocean Passageway"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -2044,7 +2220,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Bowling Alley Cave": {
+                        "Door to Bowling Alley Path": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2115,7 +2291,7 @@
                                                             {
                                                                 "type": "or",
                                                                 "data": {
-                                                                    "comment": "With Wall Jumps: https://youtu.be/6tyDDiNLY_o",
+                                                                    "comment": null,
                                                                     "items": [
                                                                         {
                                                                             "type": "resource",
@@ -2136,12 +2312,20 @@
                                                                             }
                                                                         },
                                                                         {
-                                                                            "type": "resource",
+                                                                            "type": "and",
                                                                             "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "WallJump",
-                                                                                "amount": 1,
-                                                                                "negate": false
+                                                                                "comment": "With Wall Jumps: https://youtu.be/6tyDDiNLY_o",
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "WallJump",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
                                                                             }
                                                                         },
                                                                         {
@@ -2537,7 +2721,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": "With Wall Jumps: https://youtu.be/Z_vt91bLKeA",
+                                            "comment": null,
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -2558,12 +2742,20 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "resource",
+                                                    "type": "and",
                                                     "data": {
-                                                        "type": "tricks",
-                                                        "name": "WallJump",
-                                                        "amount": 1,
-                                                        "negate": false
+                                                        "comment": "With Wall Jumps: https://youtu.be/Z_vt91bLKeA",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "WallJump",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 },
                                                 {
@@ -2615,7 +2807,7 @@
                                                                         {
                                                                             "type": "and",
                                                                             "data": {
-                                                                                "comment": "No short charge means you have to charge into the next room.",
+                                                                                "comment": "No short charge means you have to charge from the room before.",
                                                                                 "items": [
                                                                                     {
                                                                                         "type": "resource",
@@ -2803,14 +2995,14 @@
                 }
             }
         },
-        "Gauntlet": {
-            "default_node": "Door to Gauntlet Access",
+        "Gauntlet Energy Tank Room": {
+            "default_node": "Door to Gauntlet Entrance",
             "extra": {
                 "map_name": "7965B",
                 "asset_id": 11
             },
             "nodes": {
-                "Door to Gauntlet Access": {
+                "Door to Gauntlet Entrance": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2827,8 +3019,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Crateria",
-                        "area": "Gauntlet Access",
-                        "node": "Door to Gauntlet"
+                        "area": "Gauntlet Entrance",
+                        "node": "Door to Gauntlet Energy Tank Room"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -2932,7 +3124,7 @@
                     "default_connection": {
                         "region": "Crateria",
                         "area": "Green Pirates Shaft",
-                        "node": "Door to Gauntlet"
+                        "node": "Door to Gauntlet Energy Tank Room"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -2940,7 +3132,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Gauntlet Access": {
+                        "Door to Gauntlet Entrance": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3028,7 +3220,7 @@
                     "pickup_index": 5,
                     "location_category": "major",
                     "connections": {
-                        "Door to Gauntlet Access": {
+                        "Door to Gauntlet Entrance": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3039,14 +3231,14 @@
                 }
             }
         },
-        "Gauntlet Access": {
-            "default_node": "Door to Gauntlet",
+        "Gauntlet Entrance": {
+            "default_node": "Door to Gauntlet Energy Tank Room",
             "extra": {
                 "map_name": "792B3",
                 "asset_id": 12
             },
             "nodes": {
-                "Door to Gauntlet": {
+                "Door to Gauntlet Energy Tank Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3063,8 +3255,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Crateria",
-                        "area": "Gauntlet",
-                        "node": "Door to Gauntlet Access"
+                        "area": "Gauntlet Energy Tank Room",
+                        "node": "Door to Gauntlet Entrance"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -3152,7 +3344,7 @@
                     "default_connection": {
                         "region": "Crateria",
                         "area": "Landing Site",
-                        "node": "Door to Gauntlet Access"
+                        "node": "Door to Gauntlet Entrance"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -3160,7 +3352,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Gauntlet": {
+                        "Door to Gauntlet Energy Tank Room": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -3302,13 +3494,13 @@
             }
         },
         "Green Pirates Shaft": {
-            "default_node": "Door to Gauntlet",
+            "default_node": "Door to Gauntlet Energy Tank Room",
             "extra": {
                 "map_name": "799BD",
                 "asset_id": 13
             },
             "nodes": {
-                "Door to Gauntlet": {
+                "Door to Gauntlet Energy Tank Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3325,7 +3517,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Crateria",
-                        "area": "Gauntlet",
+                        "area": "Gauntlet Energy Tank Room",
                         "node": "Door to Green Pirates Shaft"
                     },
                     "default_dock_weakness": "Normal Door",
@@ -3376,18 +3568,139 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Lower Mushrooms": {
-                            "type": "and",
+                        "Door to Statues Hallway": {
+                            "type": "or",
                             "data": {
                                 "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Door to Gold Four Hallway": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": "Weapons to defeat Green Pirates",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Charge",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Missile",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Supers",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Lay Any Bombs"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Ice",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Spazer",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Plasma",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Wave",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "5 hits for beginner damage boosting",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "damage",
+                                                        "name": "Normal",
+                                                        "amount": 101,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "DBoost",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "3 hits for Intermediate damage boosting",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "DBoost",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "damage",
+                                                        "name": "Normal",
+                                                        "amount": 61,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -3418,7 +3731,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Terminator Room": {
+                        "Door to Statues Hallway": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3427,7 +3740,7 @@
                         }
                     }
                 },
-                "Door to Gold Four Hallway": {
+                "Door to Statues Hallway": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3444,7 +3757,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Crateria",
-                        "area": "Gold Four Hallway",
+                        "area": "Statues Hallway",
                         "node": "Door to Green Pirates Shaft"
                     },
                     "default_dock_weakness": "Missile Door",
@@ -3454,6 +3767,141 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Terminator Room": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": "Weapons to defeat Green Pirates",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Charge",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Missile",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Supers",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Lay Any Bombs"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Ice",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Wave",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Spazer",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Plasma",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "5 hits for beginner damage boosting",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "damage",
+                                                        "name": "Normal",
+                                                        "amount": 101,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "DBoost",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "4 hits for intermediate damage boosting (going up is more difficult than down)",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "DBoost",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "damage",
+                                                        "name": "Normal",
+                                                        "amount": 81,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Door to Lower Mushrooms": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3479,16 +3927,24 @@
                     "pickup_index": 10,
                     "location_category": "minor",
                     "connections": {
-                        "Door to Terminator Room": {
-                            "type": "resource",
+                        "Pickup (Right Missile Expansion)": {
+                            "type": "and",
                             "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Movement",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         },
-                        "Pickup (Right Missile Expansion)": {
+                        "Gauntlet Tunnel Bottom": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3514,16 +3970,24 @@
                     "pickup_index": 9,
                     "location_category": "minor",
                     "connections": {
-                        "Door to Terminator Room": {
-                            "type": "resource",
+                        "Pickup (Left Missile Expansion)": {
+                            "type": "and",
                             "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Movement",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         },
-                        "Pickup (Left Missile Expansion)": {
+                        "Gauntlet Tunnel Bottom": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3531,17 +3995,51 @@
                             }
                         }
                     }
+                },
+                "Gauntlet Tunnel Bottom": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 277.27255460588793,
+                        "y": 1641.4557674044854,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Terminator Room": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 }
             }
         },
-        "Parlor": {
-            "default_node": "Door to Parlor Save Station",
+        "Parlor and Alcatraz": {
+            "default_node": "Door to Crateria Save Room",
             "extra": {
                 "map_name": "792FD",
                 "asset_id": 14
             },
             "nodes": {
-                "Door to Parlor Save Station": {
+                "Door to Crateria Save Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3558,8 +4056,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Crateria",
-                        "area": "Parlor Save Station",
-                        "node": "Door to Parlor"
+                        "area": "Crateria Save Room",
+                        "node": "Door to Parlor and Alcatraz"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -3596,7 +4094,7 @@
                     "default_connection": {
                         "region": "Crateria",
                         "area": "Final Missile Bombway",
-                        "node": "Door to Parlor"
+                        "node": "Door to Parlor and Alcatraz"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -3613,7 +4111,7 @@
                         }
                     }
                 },
-                "Door to Crateria Map Access": {
+                "Door to Pre-Map Flyway": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3630,8 +4128,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Crateria",
-                        "area": "Crateria Map Access",
-                        "node": "Door to Parlor"
+                        "area": "Pre-Map Flyway",
+                        "node": "Door to Parlor and Alcatraz"
                     },
                     "default_dock_weakness": "Missile Door",
                     "exclude_from_dock_rando": false,
@@ -3666,7 +4164,7 @@
                     "default_connection": {
                         "region": "Crateria",
                         "area": "Flyway",
-                        "node": "Door to Parlor"
+                        "node": "Door to Parlor and Alcatraz"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -3757,7 +4255,7 @@
                     "default_connection": {
                         "region": "Crateria",
                         "area": "Terminator Room",
-                        "node": "Door to Parlor"
+                        "node": "Door to Parlor and Alcatraz"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -3771,12 +4269,38 @@
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "resource",
+                                        "type": "and",
                                         "data": {
-                                            "type": "items",
-                                            "name": "SpeedBooster",
-                                            "amount": 1,
-                                            "negate": false
+                                            "comment": "Speedboost from previous room",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "SpeedBooster",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "EntranceRando",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "DoorLockRando",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
+                                                }
+                                            ]
                                         }
                                     },
                                     {
@@ -3794,39 +4318,8 @@
                                             "comment": null,
                                             "items": [
                                                 {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Morph",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "or",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Bombs",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "PowerBomb",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
+                                                    "type": "template",
+                                                    "data": "Can Lay Any Bombs"
                                                 }
                                             ]
                                         }
@@ -3854,7 +4347,7 @@
                     "default_connection": {
                         "region": "Crateria",
                         "area": "Climb",
-                        "node": "Door to Parlor"
+                        "node": "Door to Parlor and Alcatraz"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -3889,7 +4382,7 @@
                     "default_connection": {
                         "region": "Crateria",
                         "area": "Landing Site",
-                        "node": "Door to Parlor"
+                        "node": "Door to Parlor and Alcatraz"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -3897,7 +4390,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Parlor Save Station": {
+                        "Door to Crateria Save Room": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -3913,7 +4406,7 @@
                                 "items": []
                             }
                         },
-                        "Door to Crateria Map Access": {
+                        "Door to Pre-Map Flyway": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3948,50 +4441,45 @@
                                             "comment": null,
                                             "items": [
                                                 {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Morph",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "or",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Bombs",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "PowerBomb",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
+                                                    "type": "template",
+                                                    "data": "Can Lay Any Bombs"
                                                 }
                                             ]
                                         }
                                     },
                                     {
-                                        "type": "resource",
+                                        "type": "and",
                                         "data": {
-                                            "type": "items",
-                                            "name": "SpeedBooster",
-                                            "amount": 1,
-                                            "negate": false
+                                            "comment": "2 tap short charge from Alcatraz Escape",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "SpeedBooster",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Shinespark",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Shortcharge",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     },
                                     {
@@ -4017,7 +4505,7 @@
                 }
             }
         },
-        "Parlor Save Station": {
+        "Crateria Save Room": {
             "default_node": "Save Station",
             "extra": {
                 "map_name": "793D5",
@@ -4025,7 +4513,7 @@
                 "save_index": 1
             },
             "nodes": {
-                "Door to Parlor": {
+                "Door to Parlor and Alcatraz": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4042,8 +4530,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Crateria",
-                        "area": "Parlor",
-                        "node": "Door to Parlor Save Station"
+                        "area": "Parlor and Alcatraz",
+                        "node": "Door to Crateria Save Room"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -4075,7 +4563,7 @@
                     "extra": {},
                     "valid_starting_location": true,
                     "connections": {
-                        "Door to Parlor": {
+                        "Door to Parlor and Alcatraz": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4087,13 +4575,13 @@
             }
         },
         "Flyway": {
-            "default_node": "Door to Parlor",
+            "default_node": "Door to Parlor and Alcatraz",
             "extra": {
                 "map_name": "79879",
                 "asset_id": 16
             },
             "nodes": {
-                "Door to Parlor": {
+                "Door to Parlor and Alcatraz": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4110,7 +4598,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Crateria",
-                        "area": "Parlor",
+                        "area": "Parlor and Alcatraz",
                         "node": "Door to Flyway"
                     },
                     "default_dock_weakness": "Normal Door",
@@ -4154,7 +4642,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Parlor": {
+                        "Door to Parlor and Alcatraz": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4228,21 +4716,117 @@
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": "Items",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Missile",
+                                                        "amount": 5,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Supers",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Combat",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": "Energy requirements",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "damage",
+                                                        "name": "Normal",
+                                                        "amount": 65,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "Normal",
+                                                                    "amount": 30,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Combat",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "Hitless",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Combat",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
                 }
             }
         },
-        "Crateria Map Access": {
-            "default_node": "Door to Crateria Map Station",
+        "Pre-Map Flyway": {
+            "default_node": "Door to Crateria Map Room",
             "extra": {
                 "map_name": "798E2",
                 "asset_id": 18
             },
             "nodes": {
-                "Door to Crateria Map Station": {
+                "Door to Crateria Map Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4259,8 +4843,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Crateria",
-                        "area": "Crateria Map Station",
-                        "node": "Door to Crateria Map Access"
+                        "area": "Crateria Map Room",
+                        "node": "Door to Pre-Map Flyway"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -4268,7 +4852,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Parlor": {
+                        "Door to Parlor and Alcatraz": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4277,7 +4861,7 @@
                         }
                     }
                 },
-                "Door to Parlor": {
+                "Door to Parlor and Alcatraz": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4294,8 +4878,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Crateria",
-                        "area": "Parlor",
-                        "node": "Door to Crateria Map Access"
+                        "area": "Parlor and Alcatraz",
+                        "node": "Door to Pre-Map Flyway"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -4303,7 +4887,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Crateria Map Station": {
+                        "Door to Crateria Map Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4314,14 +4898,14 @@
                 }
             }
         },
-        "Crateria Map Station": {
-            "default_node": "Door to Crateria Map Access",
+        "Crateria Map Room": {
+            "default_node": "Door to Pre-Map Flyway",
             "extra": {
                 "map_name": "79994",
                 "asset_id": 19
             },
             "nodes": {
-                "Door to Crateria Map Access": {
+                "Door to Pre-Map Flyway": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4338,8 +4922,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Crateria",
-                        "area": "Crateria Map Access",
-                        "node": "Door to Crateria Map Station"
+                        "area": "Pre-Map Flyway",
+                        "node": "Door to Crateria Map Room"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -4351,13 +4935,13 @@
             }
         },
         "Final Missile Bombway": {
-            "default_node": "Door to Final Missile Room",
+            "default_node": "Door to The Final Missile",
             "extra": {
                 "map_name": "79A44",
                 "asset_id": 20
             },
             "nodes": {
-                "Door to Final Missile Room": {
+                "Door to The Final Missile": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4374,7 +4958,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Crateria",
-                        "area": "Final Missile Room",
+                        "area": "The Final Missile",
                         "node": "Door to Final Missile Bombway"
                     },
                     "default_dock_weakness": "Normal Door",
@@ -4383,44 +4967,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Parlor": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        }
-                    }
-                },
-                "Door to Parlor": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 988.7449139280126,
-                        "y": 260.67396974439225,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "dock_type": "door",
-                    "default_connection": {
-                        "region": "Crateria",
-                        "area": "Parlor",
-                        "node": "Door to Final Missile Bombway"
-                    },
-                    "default_dock_weakness": "Normal Door",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {
-                        "Door to Final Missile Room": {
+                        "Door to Parlor and Alcatraz": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4440,21 +4987,24 @@
                                             "comment": null,
                                             "items": [
                                                 {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Bombs",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
+                                                    "type": "template",
+                                                    "data": "Can Lay Any Bombs"
                                                 },
                                                 {
-                                                    "type": "resource",
+                                                    "type": "and",
                                                     "data": {
-                                                        "type": "items",
-                                                        "name": "PowerBomb",
-                                                        "amount": 1,
-                                                        "negate": false
+                                                        "comment": "Tunnel might not be known to everyone",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Knowledge",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -4464,10 +5014,50 @@
                             }
                         }
                     }
+                },
+                "Door to Parlor and Alcatraz": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 988.7449139280126,
+                        "y": 260.67396974439225,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Crateria",
+                        "area": "Parlor and Alcatraz",
+                        "node": "Door to Final Missile Bombway"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to The Final Missile": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Lay Any Bombs"
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 }
             }
         },
-        "Final Missile Room": {
+        "The Final Missile": {
             "default_node": "Door to Final Missile Bombway",
             "extra": {
                 "map_name": "79A90",
@@ -4492,7 +5082,7 @@
                     "default_connection": {
                         "region": "Crateria",
                         "area": "Final Missile Bombway",
-                        "node": "Door to Final Missile Room"
+                        "node": "Door to The Final Missile"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -4570,7 +5160,14 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Parlor": {
+                        "Door to Parlor and Alcatraz": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (Energy Tank)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4579,7 +5176,7 @@
                         }
                     }
                 },
-                "Door to Parlor": {
+                "Door to Parlor and Alcatraz": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4596,7 +5193,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Crateria",
-                        "area": "Parlor",
+                        "area": "Parlor and Alcatraz",
                         "node": "Door to Terminator Room"
                     },
                     "default_dock_weakness": "Normal Door",
@@ -4606,13 +5203,6 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Green Pirates Shaft": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Pickup (Energy Tank)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4638,7 +5228,7 @@
                     "pickup_index": 8,
                     "location_category": "major",
                     "connections": {
-                        "Door to Parlor": {
+                        "Door to Parlor and Alcatraz": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4728,7 +5318,7 @@
                 }
             }
         },
-        "Gold Four Hallway": {
+        "Statues Hallway": {
             "default_node": "Door to Green Pirates Shaft",
             "extra": {
                 "map_name": "7A5ED",
@@ -4753,7 +5343,7 @@
                     "default_connection": {
                         "region": "Crateria",
                         "area": "Green Pirates Shaft",
-                        "node": "Door to Gold Four Hallway"
+                        "node": "Door to Statues Hallway"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -4761,7 +5351,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Gold Four": {
+                        "Door to Statues Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4770,7 +5360,7 @@
                         }
                     }
                 },
-                "Door to Gold Four": {
+                "Door to Statues Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4787,8 +5377,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Crateria",
-                        "area": "Gold Four",
-                        "node": "Door to Gold Four Hallway"
+                        "area": "Statues Room",
+                        "node": "Door to Statues Hallway"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -4807,14 +5397,14 @@
                 }
             }
         },
-        "Gold Four": {
+        "Statues Room": {
             "default_node": "Teleporter to Tourian",
             "extra": {
                 "map_name": "7A66A",
                 "asset_id": 25
             },
             "nodes": {
-                "Door to Gold Four Hallway": {
+                "Door to Statues Hallway": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4831,8 +5421,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Crateria",
-                        "area": "Gold Four Hallway",
-                        "node": "Door to Gold Four"
+                        "area": "Statues Hallway",
+                        "node": "Door to Statues Room"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -4906,7 +5496,7 @@
                     "dock_type": "teleporter",
                     "default_connection": {
                         "region": "Tourian",
-                        "area": "Tourian Entrance",
+                        "area": "Tourian First Room",
                         "node": "Teleporter to Crateria"
                     },
                     "default_dock_weakness": "Teleporter",
@@ -4915,7 +5505,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Gold Four Hallway": {
+                        "Door to Statues Hallway": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4964,13 +5554,13 @@
             }
         },
         "Climb": {
-            "default_node": "Door to Crateria Super Missile Room",
+            "default_node": "Door to Crateria Super Room",
             "extra": {
                 "map_name": "796BA",
                 "asset_id": 26
             },
             "nodes": {
-                "Door to Crateria Super Missile Room": {
+                "Door to Crateria Super Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4987,7 +5577,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Crateria",
-                        "area": "Crateria Super Missile Room",
+                        "area": "Crateria Super Room",
                         "node": "Door to Climb (South)"
                     },
                     "default_dock_weakness": "Power Bomb Door",
@@ -4996,52 +5586,21 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Parlor": {
+                        "Door to Parlor and Alcatraz": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Bombs",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "PowerBomb",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
+                                        "type": "template",
+                                        "data": "Can Lay Any Bombs"
                                     }
                                 ]
                             }
                         }
                     }
                 },
-                "Door to Parlor": {
+                "Door to Parlor and Alcatraz": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5058,7 +5617,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Crateria",
-                        "area": "Parlor",
+                        "area": "Parlor and Alcatraz",
                         "node": "Door to Climb"
                     },
                     "default_dock_weakness": "Normal Door",
@@ -5067,102 +5626,40 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Crateria Super Missile Room": {
+                        "Door to Crateria Super Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Bombs",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "PowerBomb",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
+                                        "type": "template",
+                                        "data": "Can Lay Any Bombs"
                                     }
                                 ]
                             }
                         },
-                        "Door to Old Mother Brain": {
+                        "Door to Pit Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Door from Crateria Super Missile Room": {
+                        "Door from Crateria Super Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Bombs",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "PowerBomb",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
+                                        "type": "template",
+                                        "data": "Can Lay Any Bombs"
                                     }
                                 ]
                             }
                         }
                     }
                 },
-                "Door to Old Mother Brain": {
+                "Door to Pit Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5179,7 +5676,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Crateria",
-                        "area": "Old Mother Brain",
+                        "area": "Pit Room",
                         "node": "Door to Climb"
                     },
                     "default_dock_weakness": "Normal Door",
@@ -5188,7 +5685,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Parlor": {
+                        "Door to Parlor and Alcatraz": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5244,7 +5741,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Old Mother Brain": {
+                        "Door to Pit Room": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -5293,7 +5790,7 @@
                         }
                     }
                 },
-                "Door from Crateria Super Missile Room": {
+                "Door from Crateria Super Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5310,7 +5807,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Crateria",
-                        "area": "Crateria Super Missile Room",
+                        "area": "Crateria Super Room",
                         "node": "Door to Climb (North)"
                     },
                     "default_dock_weakness": "Permanently Locked",
@@ -5319,45 +5816,14 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Parlor": {
+                        "Door to Parlor and Alcatraz": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Bombs",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "PowerBomb",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
+                                        "type": "template",
+                                        "data": "Can Lay Any Bombs"
                                     }
                                 ]
                             }
@@ -5366,7 +5832,7 @@
                 }
             }
         },
-        "Crateria Super Missile Room": {
+        "Crateria Super Room": {
             "default_node": "Door to Climb (South)",
             "extra": {
                 "map_name": "799F9",
@@ -5391,7 +5857,7 @@
                     "default_connection": {
                         "region": "Crateria",
                         "area": "Climb",
-                        "node": "Door to Crateria Super Missile Room"
+                        "node": "Door to Crateria Super Room"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -5576,7 +6042,7 @@
                     "default_connection": {
                         "region": "Crateria",
                         "area": "Climb",
-                        "node": "Door from Crateria Super Missile Room"
+                        "node": "Door from Crateria Super Room"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -5657,7 +6123,7 @@
                 }
             }
         },
-        "Old Mother Brain": {
+        "Pit Room": {
             "default_node": "Door to Climb",
             "extra": {
                 "map_name": "7975C",
@@ -5682,7 +6148,7 @@
                     "default_connection": {
                         "region": "Crateria",
                         "area": "Climb",
-                        "node": "Door to Old Mother Brain"
+                        "node": "Door to Pit Room"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -5732,7 +6198,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "TODO: doesnt this require no entrance rando + no door rando?",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -5790,7 +6256,7 @@
                     "default_connection": {
                         "region": "Crateria",
                         "area": "Elevator to Blue Brinstar",
-                        "node": "Door to Old Mother Brain"
+                        "node": "Door to Pit Room"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -5799,12 +6265,20 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Climb": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "events",
-                                "name": "Event9",
-                                "amount": 1,
-                                "negate": false
+                                "comment": "TODO: Make Left Door of \"After Crateria Wakeup\" type.",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "damage",
+                                            "name": "Normal",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -5843,7 +6317,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "TODO: see todo to get here",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -5887,13 +6361,13 @@
             }
         },
         "Elevator to Blue Brinstar": {
-            "default_node": "Door to Old Mother Brain",
+            "default_node": "Door to Pit Room",
             "extra": {
                 "map_name": "797B5",
                 "asset_id": 29
             },
             "nodes": {
-                "Door to Old Mother Brain": {
+                "Door to Pit Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5910,7 +6384,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Crateria",
-                        "area": "Old Mother Brain",
+                        "area": "Pit Room",
                         "node": "Door to Elevator to Blue Brinstar"
                     },
                     "default_dock_weakness": "Normal Door",
@@ -5948,7 +6422,7 @@
                     "dock_type": "teleporter",
                     "default_connection": {
                         "region": "Brinstar",
-                        "area": "Retro Brinstar",
+                        "area": "Morph Ball Room",
                         "node": "Teleporter to Crateria"
                     },
                     "default_dock_weakness": "Teleporter",
@@ -5957,7 +6431,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Old Mother Brain": {
+                        "Door to Pit Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6061,8 +6535,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 254.66458007303078,
-                        "y": 449.9697443922796,
+                        "x": 254.66,
+                        "y": 449.97,
                         "z": 0.0
                     },
                     "description": "",
@@ -6077,7 +6551,7 @@
                         "area": "Crateria Kihunter Room",
                         "node": "Door to Elevator to Red Brinstar"
                     },
-                    "default_dock_weakness": "Power Bomb Door",
+                    "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -6112,7 +6586,7 @@
                     "dock_type": "teleporter",
                     "default_connection": {
                         "region": "Brinstar",
-                        "area": "Red Brinstar Zoro Room",
+                        "area": "Caterpillar Room",
                         "node": "Teleporter to Crateria"
                     },
                     "default_dock_weakness": "Teleporter",
