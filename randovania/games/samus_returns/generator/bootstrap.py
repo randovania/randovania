@@ -18,8 +18,8 @@ if TYPE_CHECKING:
     from randovania.layout.base.base_configuration import BaseConfiguration
 
 
-def all_dna_locations(game: GameDescription, config: MSRArtifactConfig):
-    locations = []
+def all_dna_locations(game: GameDescription, config: MSRArtifactConfig) -> list[PickupNode]:
+    locations: list[PickupNode] = []
 
     for node in game.region_list.all_nodes:
         if isinstance(node, PickupNode):

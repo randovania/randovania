@@ -37,28 +37,28 @@ class PresetMSRGoal(PresetTab, Ui_PresetMSRGoal):
     def uses_patches_tab(cls) -> bool:
         return False
 
-    def _edit_config(self, call: Callable[[MSRArtifactConfig], MSRArtifactConfig]):
+    def _edit_config(self, call: Callable[[MSRArtifactConfig], MSRArtifactConfig]) -> None:
         config = self._editor.configuration
         assert isinstance(config, MSRConfiguration)
 
         with self._editor as editor:
             editor.set_configuration_field("artifacts", call(config.artifacts))
 
-    def _on_prefer_metroids(self, value: bool):
-        def edit(config: MSRArtifactConfig):
+    def _on_prefer_metroids(self, value: bool) -> None:
+        def edit(config: MSRArtifactConfig) -> MSRArtifactConfig:
             return dataclasses.replace(config, prefer_metroids=value)
 
         self._edit_config(edit)
 
-    def _on_dna_slider_changed(self):
+    def _on_dna_slider_changed(self) -> None:
         self.dna_slider_label.setText(f"{self.dna_slider.value()} DNA")
 
-        def edit(config: MSRArtifactConfig):
+        def edit(config: MSRArtifactConfig) -> MSRArtifactConfig:
             return dataclasses.replace(config, required_artifacts=self.dna_slider.value())
 
         self._edit_config(edit)
 
-    def on_preset_changed(self, preset: Preset):
+    def on_preset_changed(self, preset: Preset) -> None:
         assert isinstance(preset.configuration, MSRConfiguration)
         artifacts = preset.configuration.artifacts
         self.prefer_metroids_check.setChecked(artifacts.prefer_metroids)
