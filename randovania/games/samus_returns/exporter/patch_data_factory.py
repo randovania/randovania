@@ -104,6 +104,7 @@ class MSRPatchDataFactory(PatchDataFactory):
                 print(f"Skipping {resource} for starting inventory: no item id")
                 continue
         result["ITEM_MAX_LIFE"] = self.configuration.starting_energy
+        result["ITEM_MAX_SPECIAL_ENERGY"] = result.pop("ITEM_MAX_SPECIAL_ENERGY", 0) + self.configuration.starting_aeion
         return result
 
     def _start_point_ref_for(self, node: Node) -> dict:

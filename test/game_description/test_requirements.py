@@ -907,3 +907,15 @@ def test_sort_resource_requirement(blank_game_description):
 
     result = sorted(requirements)
     assert result == list(reversed(requirements))
+
+
+def test_and_damage_satisfied(echoes_resource_database):
+    db = echoes_resource_database
+    req = ResourceRequirement.create(
+        db.get_by_type_and_index(ResourceType.DAMAGE, "Damage"),
+        50,
+        False,
+    )
+    and_req = RequirementAnd([req, req])
+
+    assert not and_req.satisfied(_empty_col(), 99, db)

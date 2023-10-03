@@ -9,6 +9,7 @@ if TYPE_CHECKING:
 
 
 def msr_preset_tabs(editor: PresetEditor, window_manager: WindowManager) -> list[type[PresetTab]]:
+    from randovania.games.samus_returns.gui.preset_settings.msr_aeion_tab import PresetMSRAeion
     from randovania.games.samus_returns.gui.preset_settings.msr_goal_tab import PresetMSRGoal
     from randovania.games.samus_returns.gui.preset_settings.msr_patches_tab import PresetMSRPatches
     from randovania.gui.preset_settings.location_pool_tab import PresetLocationPool
@@ -25,5 +26,6 @@ def msr_preset_tabs(editor: PresetEditor, window_manager: WindowManager) -> list
         PresetLocationPool,
         PresetMSRGoal,
         MetroidPresetItemPool,
+        PresetMSRAeion,
         PresetMSRPatches,
     ]
