@@ -120,7 +120,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Warrior shrine loading behavior
 - Changed: Remove white screen flash effect when crates explode.
 - Changed: Skippable cutscene modes are no longer experimental. Skippable is the new default. Competitive cutscene mode has been updated appropriately.
-
 - Changed: Update tournament winner scan in Artifact Temple
 - Changed: Improve loading times when leaving MQB
 - Changed: Parasite Queen no longer respawns on 2nd pass
