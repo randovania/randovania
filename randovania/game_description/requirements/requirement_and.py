@@ -24,6 +24,8 @@ class RequirementAnd(RequirementArrayBase):
         for item in self.items:
             if not item.satisfied(current_resources, current_energy, database):
                 return False
+            else:
+                current_energy -= item.damage(current_resources, database)
 
         return True
 

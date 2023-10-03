@@ -11,8 +11,6 @@ from randovania.gui.generated.super_cosmetic_patches_dialog_ui import Ui_SuperCo
 if TYPE_CHECKING:
     from PySide6 import QtWidgets
 
-    pass
-
 
 class SuperCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_SuperCosmeticPatchesDialog):
     _cosmetic_patches: SuperMetroidCosmeticPatches

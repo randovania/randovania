@@ -28,7 +28,6 @@ class MSRCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_SamusReturnsCosmeti
     def connect_signals(self):
         super().connect_signals()
         # More signals here!
-        pass
 
     def on_new_cosmetic_patches(self, patches: MSRCosmeticPatches):
         # Update fields with the new values

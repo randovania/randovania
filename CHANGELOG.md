@@ -7,7 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [6.4.0] - 2023-11-??
 
+### Resolver
+
+- Fixed: Bug where damage constraints in chains were not understood correctly.
+- Fixed: Damage reductions from multiple suits are no longer multiplied together.
+- Improved: The output from the resolver now includes the node with the victory condition.
+- Improved: When using verbosity level High or above, the energy is displayed in the output.
+
 ### Metroid Dread
+
+- Fixed: The "Power Bomb Limitations" setting is now accounted for by logic.
 
 #### Logic Database
 
@@ -44,6 +53,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed: Going up Right Entrance with Speed Booster now requires the Speed Booster Conservation trick set to Beginner.
 - Changed: The upper item in Golzuna Tower now requires the Speed Booster Conservation trick set to Beginner when using Spin Boost from the top.
+
+### Metroid Prime
+
+- Fixed: Counting normal damage reductions from suits twice.
 
 ## [6.3.1] - 2023-10-??
 

@@ -67,8 +67,8 @@ def test_item_pool_count_label(
     window.on_preset_changed(preset)
 
     # Assert
-    message = "Items in pool: 5/6"
+    message = "Items in pool: 6/7"
     if randomization_mode is RandomizationMode.MAJOR_MINOR_SPLIT:
-        message += "<br />Major: 4/4 - Minor: 1/1 - Starting: 1"
+        message += "<br />Major: 4/4 - Minor: 2/2 - Starting: 1"
 
     assert window.item_pool_count_label.text() == message

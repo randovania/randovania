@@ -49,7 +49,6 @@ def _format_environmental_damage(configuration: DreadConfiguration):
             return "Removed"
         else:
             return f"Constant {value} dmg/s"
-        pass
 
     return [
         {f"{name}: {format_dmg(dmg)}": True}

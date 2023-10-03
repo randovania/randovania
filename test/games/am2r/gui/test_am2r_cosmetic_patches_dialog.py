@@ -14,8 +14,6 @@ from randovania.games.am2r.layout.am2r_cosmetic_patches import AM2RCosmeticPatch
 if TYPE_CHECKING:
     from pytestqt.qtbot import QtBot
 
-    pass
-
 
 @pytest.mark.parametrize(
     ("music_start_value", "option_to_click", "music_end_value"),
