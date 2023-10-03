@@ -80,7 +80,7 @@
                         "actor_type": "weightactivatedplatform",
                         "start_point_actor_name": "ST_SaveStation_004"
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "connections": {
                         "Door to Landing Site Storage": {
                             "type": "and",
@@ -298,8 +298,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -23011.890480270944,
-                        "y": 4501.568939486677,
+                        "x": -23011.89,
+                        "y": 4501.57,
                         "z": 0.0
                     },
                     "description": "",
@@ -705,40 +705,23 @@
                                 ]
                             }
                         },
-                        "Dock to Landing Site": {
-                            "type": "and",
+                        "DNA Check": {
+                            "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
                                         "type": "resource",
                                         "data": {
-                                            "type": "items",
-                                            "name": "Baby",
-                                            "amount": 1,
+                                            "type": "tricks",
+                                            "name": "Walljump",
+                                            "amount": 2,
                                             "negate": false
                                         }
                                     },
                                     {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "template",
-                                                    "data": "Climb Rooms Vertically (No High Jump)"
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "Walljump",
-                                                        "amount": 2,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
+                                        "type": "template",
+                                        "data": "Climb Rooms Vertically (No High Jump)"
                                     }
                                 ]
                             }
@@ -900,8 +883,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -22963.069055099906,
-                        "y": 4490.19645180742,
+                        "x": -22963.07,
+                        "y": 4490.2,
                         "z": 0.0
                     },
                     "description": "",
@@ -922,46 +905,11 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Energy Recharge Station": {
+                        "DNA Check": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
-                            }
-                        },
-                        "Teleporter": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Baby",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "Surface West Teleporter",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        },
-                        "Event - Teleporter Unlocked": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Baby",
-                                "amount": 1,
-                                "negate": false
                             }
                         }
                     }
@@ -1082,6 +1030,113 @@
                                         }
                                     }
                                 ]
+                            }
+                        }
+                    }
+                },
+                "Dock to Surface - East": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -22966.5,
+                        "y": 4662.59,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "other",
+                    "default_connection": {
+                        "region": "Surface - East",
+                        "area": "Landing Site",
+                        "node": "Dock to Surface - West"
+                    },
+                    "default_dock_weakness": "Open Passage",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "DNA Check": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "DNA Check": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -23906.237816764136,
+                        "y": 4518.014944769331,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Energy Recharge Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Teleporter": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Baby",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Dock to Landing Site": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Baby",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "All DNA"
+                                    }
+                                ]
+                            }
+                        },
+                        "Event - Teleporter Unlocked": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Baby",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Dock to Surface - East": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Baby",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }

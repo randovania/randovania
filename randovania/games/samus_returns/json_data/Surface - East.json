@@ -108,6 +108,15 @@
                                     }
                                 ]
                             }
+                        },
+                        "Dock to Surface - West": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Baby",
+                                "amount": 1,
+                                "negate": false
+                            }
                         }
                     }
                 },
@@ -318,6 +327,41 @@
                         "region": "Surface - East",
                         "area": "Crumble Drop Shaft",
                         "node": "Dock to Landing Site (Bottom)"
+                    },
+                    "default_dock_weakness": "Open Passage",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Save Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Dock to Surface - West": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -23042.11,
+                        "y": 4593.42,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "other",
+                    "default_connection": {
+                        "region": "Surface - West",
+                        "area": "Transport to Area 8",
+                        "node": "Dock to Surface - East"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,

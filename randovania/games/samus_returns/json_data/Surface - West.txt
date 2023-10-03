@@ -3,7 +3,7 @@ Landing Site
 Extra - total_boundings: {'x1': -23100.0, 'x2': -3300.0, 'y1': 1700.0, 'y2': 14000.0}
 Extra - polygon: [[-12600.0, 1700.0], [-3300.0, 1700.0], [-3300.0, 14000.0], [-23100.0, 14000.0], [-23100.0, 4100.0], [-18900.0, 4100.0], [-18900.0, 7900.0], [-19700.0, 9300.0], [-12600.0, 8700.0], [-12600.0, 6900.0]]
 Extra - asset_id: collision_camera_000
-> Save Station; Heals? False; Spawn Point; Default Node
+> Save Station; Heals? False; Default Node
   * Layers: default
   * Extra - actor_name: LE_Platform_SaveStation_004
   * Extra - actor_type: weightactivatedplatform
@@ -105,10 +105,8 @@ Extra - asset_id: collision_camera_017
                   Any of the following:
                       Simple IBJ
                       Space Jump and Mid-Air Morph (Beginner)
-  > Dock to Landing Site
-      All of the following:
-          Baby Metroid
-          Walljump (Intermediate) or Climb Rooms Vertically (No High Jump)
+  > DNA Check
+      Walljump (Intermediate) or Climb Rooms Vertically (No High Jump)
 
 > Save Station; Heals? False
   * Layers: default
@@ -142,12 +140,8 @@ Extra - asset_id: collision_camera_017
 > Dock to Landing Site; Heals? False
   * Layers: default
   * Open Passage to Landing Site/Dock to Transport to Area 8
-  > Energy Recharge Station
+  > DNA Check
       Trivial
-  > Teleporter
-      Baby Metroid and After Surface (West) - Teleporter Unlocked
-  > Event - Teleporter Unlocked
-      Baby Metroid
 
 > Event - Teleporter Unlocked; Heals? False
   * Layers: default
@@ -163,6 +157,25 @@ Extra - asset_id: collision_camera_017
       Baby Metroid
   > Save Station
       Single-wall Wall Jump (Beginner) or Walljump (Beginner) or Climb Rooms Vertically (No High Jump)
+
+> Dock to Surface - East; Heals? False
+  * Layers: default
+  * Open Passage to Landing Site/Dock to Surface - West
+  > DNA Check
+      Trivial
+
+> DNA Check; Heals? False
+  * Layers: default
+  > Energy Recharge Station
+      Trivial
+  > Teleporter
+      Baby Metroid
+  > Dock to Landing Site
+      Baby Metroid and All DNA
+  > Event - Teleporter Unlocked
+      Baby Metroid
+  > Dock to Surface - East
+      Baby Metroid
 
 ----------------
 Landing Site Storage
