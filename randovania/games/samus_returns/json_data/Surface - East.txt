@@ -14,6 +14,8 @@ Extra - asset_id: collision_camera_000
       Climb Rooms Vertically (No High Jump)
   > Dock to Crumble Drop Shaft (Top)
       Climb Rooms Vertically (No High Jump) and Lay Power Bomb
+  > Dock to Surface - West
+      Baby Metroid
 
 > Door to Landing Site Storage; Heals? False
   * Layers: default
@@ -55,6 +57,12 @@ Extra - asset_id: collision_camera_000
 > Dock to Crumble Drop Shaft (Bottom); Heals? False
   * Layers: default
   * Open Passage to Crumble Drop Shaft/Dock to Landing Site (Bottom)
+  > Save Station
+      Trivial
+
+> Dock to Surface - West; Heals? False
+  * Layers: default
+  * Open Passage to Transport to Area 8/Dock to Surface - East
   > Save Station
       Trivial
 
@@ -197,9 +205,9 @@ Extra - asset_id: collision_camera_004
 
 > Door to Scan Pulse Room; Heals? False
   * Layers: default
-  * Charge Beam Door to Scan Pulse Room/Door to Chozo Seal
+  * Power Beam Door to Scan Pulse Room/Door to Chozo Seal
   * Extra - actor_name: Door004
-  * Extra - actor_type: doorchargecharge
+  * Extra - actor_type: doorpowerpower
   > Chozo Seal
       Trivial
   > Tunnel to Scan Pulse Room
@@ -207,9 +215,9 @@ Extra - asset_id: collision_camera_004
 
 > Door to Transport to Area 1; Heals? False
   * Layers: default
-  * Charge Beam Door to Transport to Area 1/Door to Chozo Seal
+  * Power Beam Door to Transport to Area 1/Door to Chozo Seal
   * Extra - actor_name: Door011
-  * Extra - actor_type: doorchargecharge
+  * Extra - actor_type: doorpowerpower
   > Chozo Seal
       Any of the following:
           Single-wall Wall Jump (Intermediate) or Climb Rooms Vertically (High Jump)
@@ -267,9 +275,9 @@ Extra - asset_id: collision_camera_006
 
 > Door to Chozo Seal; Heals? False
   * Layers: default
-  * Charge Beam Door to Chozo Seal/Door to Transport to Area 1
+  * Power Beam Door to Chozo Seal/Door to Transport to Area 1
   * Extra - actor_name: Door011
-  * Extra - actor_type: doorchargecharge
+  * Extra - actor_type: doorpowerpower
   > Next to Teleporter
       Trivial
 
@@ -429,7 +437,7 @@ Extra - asset_id: collision_camera_010
 > Event - Alpha Metroid; Heals? False
   * Layers: default
   * Event Surface (East) - Alpha Metroid
-  > Inside Arena
+  > Pickup (DNA)
       Trivial
 
 > Inside Arena; Heals? False
@@ -448,6 +456,14 @@ Extra - asset_id: collision_camera_010
   > Save Station
       Morph Ball
 
+> Pickup (DNA); Heals? False
+  * Layers: default
+  * Pickup 172; Category? Minor
+  * Extra - pickup_type: metroid
+  * Extra - spawngroup: SG_Alpha_001
+  > Inside Arena
+      Trivial
+
 ----------------
 Scan Pulse Room
 Extra - total_boundings: {'x1': -1700.0, 'x2': 4650.0, 'y1': -6300.0, 'y2': -4000.0}
@@ -465,9 +481,9 @@ Extra - asset_id: collision_camera_011
 
 > Door to Chozo Seal; Heals? False
   * Layers: default
-  * Charge Beam Door to Chozo Seal/Door to Scan Pulse Room
+  * Power Beam Door to Chozo Seal/Door to Scan Pulse Room
   * Extra - actor_name: Door004
-  * Extra - actor_type: doorchargecharge
+  * Extra - actor_type: doorpowerpower
   > Pickup (Scan Pulse)
       Morph Ball
   > Door to Charge Beam Shaft

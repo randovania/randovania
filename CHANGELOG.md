@@ -5,25 +5,77 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [6.3.0] - 2023-10-??
+## [6.4.0] - 2023-11-??
+
+### Resolver
+- Fixed: Bug where damage constraints in chains were not understood correctly.
+- Fixed: Damage reductions from multiple suits are no longer multiplied together.
+
+### Metroid Dread
+
+#### Logic Database
+
+##### Artaria
+
+- Changed: Going to Transport to Dairon with Speed Booster now requires the Speed Booster Conservation trick set to Beginner.
+
+##### Burenia
+
+- Changed: The Early Gravity sequence now requires the Speed Booster Conservation trick set to Beginner.
+
+##### Cataris
+
+- Changed: The item in Dairon Transport Access now requires the Speed Booster Conservation trick set to Beginner.
+- Changed: The speed blocks leading to Underlava Puzzle Room 2 now require the Speed Booster Conservation trick set to Beginner or Power Bombs.
+
+##### Dairon
+
+- Changed: The lower item in the Freezer now requires the Speed Booster Conservation trick set to Beginner.
+- Changed: The item in Ghavoran Transport Access now requires the Speed Booster Conservation trick set to Beginner when using Space Jump.
+- Changed: The item in Storm Missile Gate Room now requires the Speed Booster Conservation trick set to Beginner when coming from above.
+
+##### Elun
+
+- Changed: The item in Fan Room now requires the Speed Booster Conservation trick set to Beginner.
+
+##### Ferenia
+
+- Changed: The item in Fan Room now requires the Speed Booster Conservation trick set to Beginner or Gravity Suit with door lock rando disabled.
+- Changed: The item in Speedboost Slopes Maze now requires the Speed Booster Conservation trick set to Beginner.
+- Changed: The Missile+ Tank in Space Jump Room now requires the Speed Booster Conservation trick set to Beginner.
+
+##### Ghavoran
+
+- Changed: Going up Right Entrance with Speed Booster now requires the Speed Booster Conservation trick set to Beginner.
+- Changed: The upper item in Golzuna Tower now requires the Speed Booster Conservation trick set to Beginner when using Spin Boost from the top.
+
+### Metroid Prime
+
+- Fixed: Counting normal damage reductions from suits twice.
+
+## [6.3.1] - 2023-10-??
+
+- To be decided if needed.
+
+## [6.3.0] - 2023-10-02
 
 - Added: During generation, if no alternatives have a non-zero weight, try weighting by how many additional Nodes are reachable.
 - Added: Data Visualizer now has a very visible checkbox to quickly toggle if the selected trick filters are enabled.
 - Added: When trick filters are enabled, a line is added indicating how many requirements are being filtered.
 - Changed: The generator will now consider placing Energy Tanks, if there's a damage requirement that's exactly high enough to kill the player.
+- Changed: The Changelog window has recieved a slight overhaul. The date of each release is shown, hyperlinks are fixed, and patch notes are now accessed through a drop-down box (previously used vertical tabs).
 - Fixed: The menu option for viewing all Randovania dependencies and their licenses has been restored.
 - Fixed: The generator should now handle cases with negative requirements a little better.
 - Fixed: Map tracker works again for Metroid Dread and Metroid Prime.
 
 ### Resolver
 - Fixed: Bug where nested requirements were combined wrongly.
-- Fixed: Bug where damage constraints in chains were not understood correctly.
-- Fixed: Damage reductions from multiple suits are no longer multiplied together.
 - Improved: Order of exploring certain dangerous events.
 
 ### Metroid Dread
 
 - Added: Enky and Charge Beam Doors can be made immune to Power Bombs. This is enabled in the Starter Preset, and can be toggled in Preset -> Game Modifications -> Other -> Miscellaneous -> Power Bomb Limitations.
+- Added: Warning in the FAQ about custom text not displaying if the game is played in languages other than English.
 - Changed: Exporting games is now significantly faster.
 
 #### Logic Database
@@ -36,10 +88,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ##### Burenia
 
+- Added: Use Spin Boost with Wall Jump to climb from left to right at the top of Gravity Suit Tower.
 - Changed: Teleport to Ferenia: Using Speed Booster to get past the Shutter Gate now requires Speed Booster Conservation Beginner.
 
 ##### Cataris
 
+- Added: Ledge warp out of the Diffusion Beam Room to avoid being trapped by the one way door and the blob.
 - Changed: Thermal Device Room South: The connections to the thermal door that closes after using the thermal device now logically remains open when door lock rando is disabled and the "Can Slide" and "Shoot Beam" templates are satisfied. This is a handwave that makes the thermal device no longer a dangerous resource.
 - Changed: Single-wall Jump trick in Cataris Teleport to Artaria (Blue) now requires a slide jump.
 - Changed: Exclude Door above First Thermal Device from Door Randomization. Effectively making the First Thermal Device a safe action also when doors are randomized.
@@ -59,14 +113,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Prime
 
+- Fixed: Door from Quarantine Access A to Central Dynamo being inoperable with Reverse Lower Mines enabled.
+- Fixed: Minor issues with new skippable cutscenes option.
 - Fixed: PAL export with skippable cutscenes
 - Fixed: Flaahgra crash with skippable cutscenes (fingers crossed)
 - Fixed: Warrior shrine loading behavior
-- Fixed: Counting normal damage reductions from suits twice.
+- Changed: Remove white screen flash effect when crates explode.
+- Changed: Skippable cutscene modes are no longer experimental. Skippable is the new default. Competitive cutscene mode has been updated appropriately.
+
 - Changed: Update tournament winner scan in Artifact Temple
 - Changed: Improve loading times when leaving MQB
 - Changed: Parasite Queen no longer respawns on 2nd pass
 - Changed: The post-Parasite Queen layer in Biotech Research Area 1 now prevents backtracking through Emergency Evacuation Area (1-way door)
+- Removed: Major/Minor Cutscene Mode (Major hidden behind experimental options)
 
 #### Logic Database
 
@@ -131,17 +190,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Temple Security Access: Z-Axis Screw Attack Trick is changed into Screw Attack into Tunnels (Advanced)
 - Changed: Culling Chamber and Hazing Cliff will now require a Suit on trickless settings
 
-## [6.2.1] - 2023-09-??
-
-### Metroid Prime
-
-- Fixed: Door from Quarantine Access A to Central Dynamo being inoperable with Reverse Lower Mines enabled.
-- Fixed: Minor issues with new skippable cutscenes option.
-- Changed: Remove white screen flash effect when crates explode.
-- Changed: Skippable cutscene modes are no longer experimental. Skippable is the new default. Competitive cutscene mode has been updated appropriately.
-- Removed: Major/Minor Cutscene Mode (Major hidden behind experimental options)
-
-## [6.2.0] - 2023-09-??
+## [6.2.0] - 2023-09-02
 
 - Added: "Help -> Verify Installation" menu option, to verify that your Randovania installation is correct. This is only present on Windows.
 - Changed: Game generation is now up to 150% faster.

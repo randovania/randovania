@@ -6,6 +6,7 @@ from randovania.exporter import pickup_exporter
 from randovania.exporter.patch_data_factory import PatchDataFactory
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.pickup.pickup_entry import PickupModel
+from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.games.game import RandovaniaGame
 from randovania.generator.pickup_pool import pickup_creator
 
@@ -16,8 +17,8 @@ if TYPE_CHECKING:
     from randovania.game_description.db.node import Node
     from randovania.game_description.db.node_identifier import NodeIdentifier
     from randovania.game_description.pickup.pickup_entry import ConditionalResources, PickupEntry
-    from randovania.game_description.resources.item_resource_info import ItemResourceInfo
     from randovania.game_description.resources.resource_collection import ResourceCollection
+    from randovania.game_description.resources.resource_info import ResourceInfo
     from randovania.games.samus_returns.layout.msr_configuration import MSRConfiguration
 
 _ALTERNATIVE_MODELS = {
@@ -35,7 +36,8 @@ _ALTERNATIVE_MODELS = {
 }
 
 
-def get_item_id_for_item(item: ItemResourceInfo) -> str:
+def get_item_id_for_item(item: ResourceInfo) -> str:
+    assert isinstance(item, ItemResourceInfo)
     if "item_capacity_id" in item.extra:
         return item.extra["item_capacity_id"]
     try:
@@ -93,7 +95,7 @@ class MSRPatchDataFactory(PatchDataFactory):
     def game_enum(self) -> RandovaniaGame:
         return RandovaniaGame.METROID_SAMUS_RETURNS
 
-    def _calculate_starting_inventory(self, resources: ResourceCollection):
+    def _calculate_starting_inventory(self, resources: ResourceCollection) -> dict[str, int]:
         result = {}
         for resource, quantity in resources.as_resource_gain():
             try:
@@ -101,6 +103,7 @@ class MSRPatchDataFactory(PatchDataFactory):
             except KeyError:
                 print(f"Skipping {resource} for starting inventory: no item id")
                 continue
+        result["ITEM_MAX_LIFE"] = self.configuration.starting_energy
         return result
 
     def _start_point_ref_for(self, node: Node) -> dict:
@@ -129,8 +132,16 @@ class MSRPatchDataFactory(PatchDataFactory):
                 "actor": node.extra[actor_key],
             }
         except KeyError as e:
-            return {}
             raise self._key_error_for_node(node, e)
+
+    def _callback_ref_for(self, node: Node) -> dict:
+        try:
+            return {
+                "scenario": self._level_name_for(node),
+                "spawngroup": node.extra["spawngroup"],
+            }
+        except KeyError as e:
+            raise KeyError(f"{node} has no extra {e}")
 
     def _pickup_detail_for_target(self, detail: ExportedPickupDetails) -> dict | None:
         alt_model = _ALTERNATIVE_MODELS.get(detail.model, [detail.model.name])
@@ -155,6 +166,8 @@ class MSRPatchDataFactory(PatchDataFactory):
                     "model": model_names,
                 }
             )
+        else:
+            details["metroid_callback"] = self._callback_ref_for(pickup_node)
 
         return details
 
@@ -201,11 +214,11 @@ class MSRPatchDataFactory(PatchDataFactory):
 
 
 class MSRAcquiredMemo(dict):
-    def __missing__(self, key):
+    def __missing__(self, key: str) -> str:
         return f"{key} acquired."
 
     @classmethod
-    def with_expansion_text(cls):
+    def with_expansion_text(cls) -> MSRAcquiredMemo:
         result = cls()
         result["Missile Tank"] = "Missile Tank acquired.\nMissile capacity increased by {Missile}."
         result[

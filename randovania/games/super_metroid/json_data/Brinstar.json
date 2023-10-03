@@ -11,7 +11,7 @@
                 "asset_id": 67
             },
             "nodes": {
-                "Door to Green Brinstar Map Access": {
+                "Door to Brinstar Pre-Map Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -28,7 +28,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Brinstar",
-                        "area": "Green Brinstar Map Access",
+                        "area": "Brinstar Pre-Map Room",
                         "node": "Door to Green Brinstar Main Shaft"
                     },
                     "default_dock_weakness": "Missile Door",
@@ -46,7 +46,7 @@
                         }
                     }
                 },
-                "Door to Green Brinstar Upper Save Station": {
+                "Door to Green Brinstar Main Shaft Save Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -63,7 +63,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Brinstar",
-                        "area": "Green Brinstar Upper Save Station",
+                        "area": "Green Brinstar Main Shaft Save Room",
                         "node": "Door to Green Brinstar Main Shaft"
                     },
                     "default_dock_weakness": "Missile Door",
@@ -311,14 +311,14 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Green Brinstar Map Access": {
+                        "Door to Brinstar Pre-Map Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Door to Green Brinstar Upper Save Station": {
+                        "Door to Green Brinstar Main Shaft Save Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -577,7 +577,7 @@
                 }
             }
         },
-        "Green Brinstar Map Access": {
+        "Brinstar Pre-Map Room": {
             "default_node": "Door to Green Brinstar Main Shaft",
             "extra": {
                 "map_name": "79B9D",
@@ -602,7 +602,7 @@
                     "default_connection": {
                         "region": "Brinstar",
                         "area": "Green Brinstar Main Shaft",
-                        "node": "Door to Green Brinstar Map Access"
+                        "node": "Door to Brinstar Pre-Map Room"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -610,7 +610,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Brinstar Map Station": {
+                        "Door to Brinstar Map Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -655,7 +655,7 @@
                         }
                     }
                 },
-                "Door to Brinstar Map Station": {
+                "Door to Brinstar Map Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -672,8 +672,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Brinstar",
-                        "area": "Brinstar Map Station",
-                        "node": "Door to Green Brinstar Map Access"
+                        "area": "Brinstar Map Room",
+                        "node": "Door to Brinstar Pre-Map Room"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -728,14 +728,14 @@
                 }
             }
         },
-        "Brinstar Map Station": {
-            "default_node": "Door to Green Brinstar Map Access",
+        "Brinstar Map Room": {
+            "default_node": "Door to Brinstar Pre-Map Room",
             "extra": {
                 "map_name": "79C35",
                 "asset_id": 69
             },
             "nodes": {
-                "Door to Green Brinstar Map Access": {
+                "Door to Brinstar Pre-Map Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -752,8 +752,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Brinstar",
-                        "area": "Green Brinstar Map Access",
-                        "node": "Door to Brinstar Map Station"
+                        "area": "Brinstar Pre-Map Room",
+                        "node": "Door to Brinstar Map Room"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -797,7 +797,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Green Brinstar Reserve Tank Room": {
+                        "Door to Brinstar Reserve Tank Room": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -849,7 +849,7 @@
                         }
                     }
                 },
-                "Door to Green Brinstar Reserve Tank Room": {
+                "Door to Brinstar Reserve Tank Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -866,7 +866,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Brinstar",
-                        "area": "Green Brinstar Reserve Tank Room",
+                        "area": "Brinstar Reserve Tank Room",
                         "node": "Door to Early Supers Room"
                     },
                     "default_dock_weakness": "Normal Door",
@@ -909,43 +909,21 @@
                     "location_category": "minor",
                     "connections": {
                         "Door to Green Brinstar Main Shaft": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
+                                        "type": "template",
+                                        "data": "Can Lay Any Bombs"
                                     },
                                     {
-                                        "type": "or",
+                                        "type": "resource",
                                         "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Bombs",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "PowerBomb",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
+                                            "type": "misc",
+                                            "name": "SupersBridgeTweaks",
+                                            "amount": 1,
+                                            "negate": false
                                         }
                                     }
                                 ]
@@ -981,7 +959,7 @@
                 }
             }
         },
-        "Green Brinstar Reserve Tank Room": {
+        "Brinstar Reserve Tank Room": {
             "default_node": "Door to Early Supers Room",
             "extra": {
                 "map_name": "79C07",
@@ -1006,7 +984,7 @@
                     "default_connection": {
                         "region": "Brinstar",
                         "area": "Early Supers Room",
-                        "node": "Door to Green Brinstar Reserve Tank Room"
+                        "node": "Door to Brinstar Reserve Tank Room"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -1176,7 +1154,7 @@
                 }
             }
         },
-        "Green Brinstar Upper Save Station": {
+        "Green Brinstar Main Shaft Save Room": {
             "default_node": "Save Station",
             "extra": {
                 "map_name": "7A201",
@@ -1202,7 +1180,7 @@
                     "default_connection": {
                         "region": "Brinstar",
                         "area": "Green Brinstar Main Shaft",
-                        "node": "Door to Green Brinstar Upper Save Station"
+                        "node": "Door to Green Brinstar Main Shaft Save Room"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -1278,7 +1256,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to West Brinstar Missile Station": {
+                        "Door to Green Brinstar Missile Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1287,7 +1265,7 @@
                         }
                     }
                 },
-                "Door to West Brinstar Missile Station": {
+                "Door to Green Brinstar Missile Station": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1304,7 +1282,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Brinstar",
-                        "area": "West Brinstar Missile Station",
+                        "area": "Green Brinstar Missile Station",
                         "node": "Door to Green Brinstar Fireflea Room"
                     },
                     "default_dock_weakness": "Normal Door",
@@ -1324,7 +1302,7 @@
                 }
             }
         },
-        "West Brinstar Missile Station": {
+        "Green Brinstar Missile Station": {
             "default_node": "Door to Green Brinstar Fireflea Room",
             "extra": {
                 "map_name": "79C89",
@@ -1349,7 +1327,7 @@
                     "default_connection": {
                         "region": "Brinstar",
                         "area": "Green Brinstar Fireflea Room",
-                        "node": "Door to West Brinstar Missile Station"
+                        "node": "Door to Green Brinstar Missile Station"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -1504,7 +1482,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Etecoon Super Missile Room": {
+                        "Door to Etecoon Super Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1513,7 +1491,7 @@
                         }
                     }
                 },
-                "Door to Etecoon Super Missile Room": {
+                "Door to Etecoon Super Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1530,7 +1508,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Brinstar",
-                        "area": "Etecoon Super Missile Room",
+                        "area": "Etecoon Super Room",
                         "node": "Door to Etecoon Energy Tank Room"
                     },
                     "default_dock_weakness": "Super Missile Door",
@@ -1546,7 +1524,7 @@
                                 "items": []
                             }
                         },
-                        "Door to Green Brinstar Lower Save Station": {
+                        "Door to Etecoon Save Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1562,7 +1540,7 @@
                         }
                     }
                 },
-                "Door to Green Brinstar Lower Save Station": {
+                "Door to Etecoon Save Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1579,7 +1557,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Brinstar",
-                        "area": "Green Brinstar Lower Save Station",
+                        "area": "Etecoon Save Room",
                         "node": "Door to Etecoon Energy Tank Room"
                     },
                     "default_dock_weakness": "Normal Door",
@@ -1625,7 +1603,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Green Brinstar Lower Save Station": {
+                        "Door to Etecoon Save Room": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -1653,7 +1631,7 @@
                     "pickup_index": 30,
                     "location_category": "major",
                     "connections": {
-                        "Door to Etecoon Super Missile Room": {
+                        "Door to Etecoon Super Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1664,7 +1642,7 @@
                 }
             }
         },
-        "Etecoon Super Missile Room": {
+        "Etecoon Super Room": {
             "default_node": "Door to Etecoon Energy Tank Room",
             "extra": {
                 "map_name": "7A051",
@@ -1689,7 +1667,7 @@
                     "default_connection": {
                         "region": "Brinstar",
                         "area": "Etecoon Energy Tank Room",
-                        "node": "Door to Etecoon Super Missile Room"
+                        "node": "Door to Etecoon Super Room"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -1734,7 +1712,7 @@
                 }
             }
         },
-        "Green Brinstar Lower Save Station": {
+        "Etecoon Save Room": {
             "default_node": "Save Station",
             "extra": {
                 "map_name": "7A22A",
@@ -1760,7 +1738,7 @@
                     "default_connection": {
                         "region": "Brinstar",
                         "area": "Etecoon Energy Tank Room",
-                        "node": "Door to Green Brinstar Lower Save Station"
+                        "node": "Door to Etecoon Save Room"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -1905,7 +1883,7 @@
                                 ]
                             }
                         },
-                        "Door to West Brinstar Energy Station": {
+                        "Door to Dachora Energy Charge Station": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -2013,7 +1991,7 @@
                         }
                     }
                 },
-                "Door to West Brinstar Energy Station": {
+                "Door to Dachora Energy Charge Station": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2030,7 +2008,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Brinstar",
-                        "area": "West Brinstar Energy Station",
+                        "area": "Dachora Energy Charge Station",
                         "node": "Door to Dachora Room"
                     },
                     "default_dock_weakness": "Normal Door",
@@ -2040,19 +2018,70 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Big Pink": {
-                            "type": "resource",
+                            "type": "or",
                             "data": {
-                                "type": "items",
-                                "name": "SpeedBooster",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "Shinespark up - TODO: double check damage",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "SpeedBooster",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "damage",
+                                                        "name": "Shinespark",
+                                                        "amount": 120,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "WJ up with patch",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "DachoraPitTweaks",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "WallJump",
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
                 }
             }
         },
-        "West Brinstar Energy Station": {
+        "Dachora Energy Charge Station": {
             "default_node": "Door to Dachora Room",
             "extra": {
                 "map_name": "7A07B",
@@ -2077,7 +2106,7 @@
                     "default_connection": {
                         "region": "Brinstar",
                         "area": "Dachora Room",
-                        "node": "Door to West Brinstar Energy Station"
+                        "node": "Door to Dachora Energy Charge Station"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -2121,13 +2150,13 @@
             }
         },
         "Big Pink": {
-            "default_node": "Door to Big Pink Save Station",
+            "default_node": "Door to Big Pink Save Room",
             "extra": {
                 "map_name": "79D19",
                 "asset_id": 82
             },
             "nodes": {
-                "Door to Big Pink Save Station": {
+                "Door to Big Pink Save Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2144,7 +2173,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Brinstar",
-                        "area": "Big Pink Save Station",
+                        "area": "Big Pink Save Room",
                         "node": "Door to Big Pink"
                     },
                     "default_dock_weakness": "Normal Door",
@@ -2224,7 +2253,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Big Pink Save Station": {
+                        "Door to Big Pink Save Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2342,7 +2371,7 @@
                                 "items": []
                             }
                         },
-                        "Door to Waterway": {
+                        "Door to Waterway Energy Tank Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2692,7 +2721,7 @@
                         }
                     }
                 },
-                "Door to Waterway": {
+                "Door to Waterway Energy Tank Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2709,7 +2738,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Brinstar",
-                        "area": "Waterway",
+                        "area": "Waterway Energy Tank Room",
                         "node": "Door to Big Pink"
                     },
                     "default_dock_weakness": "Missile Door",
@@ -2934,7 +2963,7 @@
                 }
             }
         },
-        "Big Pink Save Station": {
+        "Big Pink Save Room": {
             "default_node": "Save Station",
             "extra": {
                 "map_name": "7A184",
@@ -2960,7 +2989,7 @@
                     "default_connection": {
                         "region": "Brinstar",
                         "area": "Big Pink",
-                        "node": "Door to Big Pink Save Station"
+                        "node": "Door to Big Pink Save Room"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -3171,7 +3200,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Pink Brinstar Energy Tank Room": {
+                        "Door to Hopper Energy Tank Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3345,7 +3374,7 @@
                         }
                     }
                 },
-                "Door to Pink Brinstar Energy Tank Room": {
+                "Door to Hopper Energy Tank Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3362,7 +3391,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Brinstar",
-                        "area": "Pink Brinstar Energy Tank Room",
+                        "area": "Hopper Energy Tank Room",
                         "node": "Door to Pink Brinstar Hopper Room"
                     },
                     "default_dock_weakness": "Normal Door",
@@ -3384,7 +3413,7 @@
                 }
             }
         },
-        "Pink Brinstar Energy Tank Room": {
+        "Hopper Energy Tank Room": {
             "default_node": "Door to Pink Brinstar Hopper Room",
             "extra": {
                 "map_name": "7A15B",
@@ -3409,7 +3438,7 @@
                     "default_connection": {
                         "region": "Brinstar",
                         "area": "Pink Brinstar Hopper Room",
-                        "node": "Door to Pink Brinstar Energy Tank Room"
+                        "node": "Door to Hopper Energy Tank Room"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -3815,7 +3844,7 @@
                 }
             }
         },
-        "Waterway": {
+        "Waterway Energy Tank Room": {
             "default_node": "Door to Big Pink",
             "extra": {
                 "map_name": "7A0D2",
@@ -3840,7 +3869,7 @@
                     "default_connection": {
                         "region": "Brinstar",
                         "area": "Big Pink",
-                        "node": "Door to Waterway"
+                        "node": "Door to Waterway Energy Tank Room"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -3996,7 +4025,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Retro Brinstar": {
+                        "Door to Morph Ball Room": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -4127,7 +4156,7 @@
                         }
                     }
                 },
-                "Door to Retro Brinstar": {
+                "Door to Morph Ball Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4144,7 +4173,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Brinstar",
-                        "area": "Retro Brinstar",
+                        "area": "Morph Ball Room",
                         "node": "Door to Green Hill Zone"
                     },
                     "default_dock_weakness": "Power Bomb Door",
@@ -4229,7 +4258,7 @@
                 }
             }
         },
-        "Retro Brinstar": {
+        "Morph Ball Room": {
             "default_node": "Teleporter to Crateria",
             "extra": {
                 "map_name": "79E9F",
@@ -4254,7 +4283,7 @@
                     "default_connection": {
                         "region": "Brinstar",
                         "area": "Green Hill Zone",
-                        "node": "Door to Retro Brinstar"
+                        "node": "Door to Morph Ball Room"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -4413,7 +4442,7 @@
                     "default_connection": {
                         "region": "Brinstar",
                         "area": "Construction Zone",
-                        "node": "Door to Retro Brinstar"
+                        "node": "Door to Morph Ball Room"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -4665,13 +4694,13 @@
             }
         },
         "Construction Zone": {
-            "default_node": "Door to Retro Brinstar",
+            "default_node": "Door to Morph Ball Room",
             "extra": {
                 "map_name": "79F11",
                 "asset_id": 94
             },
             "nodes": {
-                "Door to Retro Brinstar": {
+                "Door to Morph Ball Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4688,7 +4717,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Brinstar",
-                        "area": "Retro Brinstar",
+                        "area": "Morph Ball Room",
                         "node": "Door to Construction Zone"
                     },
                     "default_dock_weakness": "Normal Door",
@@ -4704,7 +4733,7 @@
                                 "items": []
                             }
                         },
-                        "Door to First Missiles": {
+                        "Door to First Missile Room": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -4741,7 +4770,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Retro Brinstar": {
+                        "Door to Morph Ball Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4750,7 +4779,7 @@
                         }
                     }
                 },
-                "Door to First Missiles": {
+                "Door to First Missile Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4767,7 +4796,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Brinstar",
-                        "area": "First Missiles",
+                        "area": "First Missile Room",
                         "node": "Door to Construction Zone"
                     },
                     "default_dock_weakness": "Normal Door",
@@ -4776,7 +4805,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Retro Brinstar": {
+                        "Door to Morph Ball Room": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -5232,7 +5261,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Blue Brinstar Double Missile Room": {
+                        "Door to Billy Mays Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5294,7 +5323,7 @@
                         }
                     }
                 },
-                "Door to Blue Brinstar Double Missile Room": {
+                "Door to Billy Mays Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5311,7 +5340,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Brinstar",
-                        "area": "Blue Brinstar Double Missile Room",
+                        "area": "Billy Mays Room",
                         "node": "Door to Blue Brinstar Boulder Room"
                     },
                     "default_dock_weakness": "Normal Door",
@@ -5384,7 +5413,7 @@
                 }
             }
         },
-        "Blue Brinstar Double Missile Room": {
+        "Billy Mays Room": {
             "default_node": "Door to Blue Brinstar Boulder Room",
             "extra": {
                 "map_name": "7A1D8",
@@ -5409,7 +5438,7 @@
                     "default_connection": {
                         "region": "Brinstar",
                         "area": "Blue Brinstar Boulder Room",
-                        "node": "Door to Blue Brinstar Double Missile Room"
+                        "node": "Door to Billy Mays Room"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -5487,7 +5516,7 @@
                 }
             }
         },
-        "First Missiles": {
+        "First Missile Room": {
             "default_node": "Door to Construction Zone",
             "extra": {
                 "map_name": "7A107",
@@ -5512,7 +5541,7 @@
                     "default_connection": {
                         "region": "Brinstar",
                         "area": "Construction Zone",
-                        "node": "Door to First Missiles"
+                        "node": "Door to First Missile Room"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -5695,7 +5724,7 @@
                                 ]
                             }
                         },
-                        "Door to Red Brinstar Badway": {
+                        "Door to Hellway": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -5741,12 +5770,29 @@
                                             "comment": null,
                                             "items": [
                                                 {
-                                                    "type": "resource",
+                                                    "type": "or",
                                                     "data": {
-                                                        "type": "items",
-                                                        "name": "Supers",
-                                                        "amount": 4,
-                                                        "negate": false
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Supers",
+                                                                    "amount": 4,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "misc",
+                                                                    "name": "RedTowerTweaks",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 },
                                                 {
@@ -5781,7 +5827,7 @@
                                 ]
                             }
                         },
-                        "Door to Red Brinstar Bat Room": {
+                        "Door to Bat Room": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -5897,7 +5943,7 @@
                         }
                     }
                 },
-                "Door to Red Tower Energy Station": {
+                "Door to Red Tower Energy Charge Station": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5914,7 +5960,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Brinstar",
-                        "area": "Red Tower Energy Station",
+                        "area": "Red Tower Energy Charge Station",
                         "node": "Door to Red Tower"
                     },
                     "default_dock_weakness": "Super Missile Door",
@@ -5923,7 +5969,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Red Brinstar Bat Room": {
+                        "Door to Bat Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5932,7 +5978,7 @@
                         }
                     }
                 },
-                "Door to Red Brinstar Badway": {
+                "Door to Hellway": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5949,7 +5995,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Brinstar",
-                        "area": "Red Brinstar Badway",
+                        "area": "Hellway",
                         "node": "Door to Red Tower"
                     },
                     "default_dock_weakness": "Normal Door",
@@ -5967,7 +6013,7 @@
                         }
                     }
                 },
-                "Door to Red Brinstar Bat Room": {
+                "Door to Bat Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5984,7 +6030,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Brinstar",
-                        "area": "Red Brinstar Bat Room",
+                        "area": "Bat Room",
                         "node": "Door to Red Tower"
                     },
                     "default_dock_weakness": "Normal Door",
@@ -6036,7 +6082,7 @@
                                 ]
                             }
                         },
-                        "Door to Red Tower Energy Station": {
+                        "Door to Red Tower Energy Charge Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6272,7 +6318,7 @@
                 }
             }
         },
-        "Red Tower Energy Station": {
+        "Red Tower Energy Charge Station": {
             "default_node": "Door to Red Tower",
             "extra": {
                 "map_name": "7A618",
@@ -6297,7 +6343,7 @@
                     "default_connection": {
                         "region": "Brinstar",
                         "area": "Red Tower",
-                        "node": "Door to Red Tower Energy Station"
+                        "node": "Door to Red Tower Energy Charge Station"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -6340,7 +6386,7 @@
                 }
             }
         },
-        "Red Brinstar Badway": {
+        "Hellway": {
             "default_node": "Door to Red Tower",
             "extra": {
                 "map_name": "7A2F7",
@@ -6365,7 +6411,7 @@
                     "default_connection": {
                         "region": "Brinstar",
                         "area": "Red Tower",
-                        "node": "Door to Red Brinstar Badway"
+                        "node": "Door to Hellway"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -6373,7 +6419,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Red Brinstar Zoro Room": {
+                        "Door to Caterpillar Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6382,7 +6428,7 @@
                         }
                     }
                 },
-                "Door to Red Brinstar Zoro Room": {
+                "Door to Caterpillar Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6399,8 +6445,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Brinstar",
-                        "area": "Red Brinstar Zoro Room",
-                        "node": "Door to Red Brinstar Badway"
+                        "area": "Caterpillar Room",
+                        "node": "Door to Hellway"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -6419,14 +6465,14 @@
                 }
             }
         },
-        "Red Brinstar Zoro Room": {
+        "Caterpillar Room": {
             "default_node": "Teleporter to Crateria",
             "extra": {
                 "map_name": "7A322",
                 "asset_id": 105
             },
             "nodes": {
-                "Door to Red Brinstar Badway": {
+                "Door to Hellway": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6443,8 +6489,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Brinstar",
-                        "area": "Red Brinstar Badway",
-                        "node": "Door to Red Brinstar Zoro Room"
+                        "area": "Hellway",
+                        "node": "Door to Caterpillar Room"
                     },
                     "default_dock_weakness": "Power Bomb Door",
                     "exclude_from_dock_rando": false,
@@ -6452,7 +6498,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Red Brinstar Alpha PBs Room": {
+                        "Door to Alpha Power Bomb Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6487,7 +6533,7 @@
                         }
                     }
                 },
-                "Door to Red Brinstar Alpha PBs Room": {
+                "Door to Alpha Power Bomb Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6504,8 +6550,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Brinstar",
-                        "area": "Red Brinstar Alpha PBs Room",
-                        "node": "Door to Red Brinstar Zoro Room"
+                        "area": "Alpha Power Bomb Room",
+                        "node": "Door to Caterpillar Room"
                     },
                     "default_dock_weakness": "Super Missile Door",
                     "exclude_from_dock_rando": false,
@@ -6513,7 +6559,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Red Brinstar Badway": {
+                        "Door to Hellway": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6522,7 +6568,7 @@
                         }
                     }
                 },
-                "Door to Red Brinstar Beta PBs Room": {
+                "Door to Beta Power Bomb Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6539,8 +6585,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Brinstar",
-                        "area": "Red Brinstar Beta PBs Room",
-                        "node": "Door to Red Brinstar Zoro Room"
+                        "area": "Beta Power Bomb Room",
+                        "node": "Door to Caterpillar Room"
                     },
                     "default_dock_weakness": "Super Missile Door",
                     "exclude_from_dock_rando": false,
@@ -6582,7 +6628,7 @@
                     "default_connection": {
                         "region": "Brinstar",
                         "area": "Red Tower Save Station",
-                        "node": "Door to Red Brinstar Zoro Room"
+                        "node": "Door to Caterpillar Room"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -6590,14 +6636,14 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Red Brinstar Badway": {
+                        "Door to Hellway": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Door to Red Brinstar Beta PBs Room": {
+                        "Door to Beta Power Bomb Room": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -6643,7 +6689,7 @@
                     "default_connection": {
                         "region": "Maridia",
                         "area": "Red Fish Room",
-                        "node": "Door to Red Brinstar Zoro Room"
+                        "node": "Door to Caterpillar Room"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -6651,7 +6697,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Red Brinstar Beta PBs Room": {
+                        "Door to Beta Power Bomb Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6708,7 +6754,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Red Brinstar Beta PBs Room": {
+                        "Door to Beta Power Bomb Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6719,14 +6765,14 @@
                 }
             }
         },
-        "Red Brinstar Alpha PBs Room": {
-            "default_node": "Door to Red Brinstar Zoro Room",
+        "Alpha Power Bomb Room": {
+            "default_node": "Door to Caterpillar Room",
             "extra": {
                 "map_name": "7A3AE",
                 "asset_id": 106
             },
             "nodes": {
-                "Door to Red Brinstar Zoro Room": {
+                "Door to Caterpillar Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6743,8 +6789,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Brinstar",
-                        "area": "Red Brinstar Zoro Room",
-                        "node": "Door to Red Brinstar Alpha PBs Room"
+                        "area": "Caterpillar Room",
+                        "node": "Door to Alpha Power Bomb Room"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -6804,7 +6850,7 @@
                     "pickup_index": 40,
                     "location_category": "minor",
                     "connections": {
-                        "Door to Red Brinstar Zoro Room": {
+                        "Door to Caterpillar Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6830,7 +6876,7 @@
                     "pickup_index": 41,
                     "location_category": "minor",
                     "connections": {
-                        "Door to Red Brinstar Zoro Room": {
+                        "Door to Caterpillar Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6841,14 +6887,14 @@
                 }
             }
         },
-        "Red Brinstar Beta PBs Room": {
-            "default_node": "Door to Red Brinstar Zoro Room",
+        "Beta Power Bomb Room": {
+            "default_node": "Door to Caterpillar Room",
             "extra": {
                 "map_name": "7A37C",
                 "asset_id": 107
             },
             "nodes": {
-                "Door to Red Brinstar Zoro Room": {
+                "Door to Caterpillar Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6865,8 +6911,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Brinstar",
-                        "area": "Red Brinstar Zoro Room",
-                        "node": "Door to Red Brinstar Beta PBs Room"
+                        "area": "Caterpillar Room",
+                        "node": "Door to Beta Power Bomb Room"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -6919,7 +6965,7 @@
                     "pickup_index": 39,
                     "location_category": "minor",
                     "connections": {
-                        "Door to Red Brinstar Zoro Room": {
+                        "Door to Caterpillar Room": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -6957,7 +7003,7 @@
                 "save_index": 4
             },
             "nodes": {
-                "Door to Red Brinstar Zoro Room": {
+                "Door to Caterpillar Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6974,7 +7020,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Brinstar",
-                        "area": "Red Brinstar Zoro Room",
+                        "area": "Caterpillar Room",
                         "node": "Door to Red Tower Save Station"
                     },
                     "default_dock_weakness": "Normal Door",
@@ -7007,7 +7053,7 @@
                     "extra": {},
                     "valid_starting_location": true,
                     "connections": {
-                        "Door to Red Brinstar Zoro Room": {
+                        "Door to Caterpillar Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7018,7 +7064,7 @@
                 }
             }
         },
-        "Red Brinstar Bat Room": {
+        "Bat Room": {
             "default_node": "Door to Red Tower",
             "extra": {
                 "map_name": "7A3DD",
@@ -7043,7 +7089,7 @@
                     "default_connection": {
                         "region": "Brinstar",
                         "area": "Red Tower",
-                        "node": "Door to Red Brinstar Bat Room"
+                        "node": "Door to Bat Room"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -7051,7 +7097,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Red Brinstar Below Spazer": {
+                        "Door to Below Spazer": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7060,7 +7106,7 @@
                         }
                     }
                 },
-                "Door to Red Brinstar Below Spazer": {
+                "Door to Below Spazer": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7077,8 +7123,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Brinstar",
-                        "area": "Red Brinstar Below Spazer",
-                        "node": "Door to Red Brinstar Bat Room"
+                        "area": "Below Spazer",
+                        "node": "Door to Bat Room"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -7097,14 +7143,14 @@
                 }
             }
         },
-        "Red Brinstar Below Spazer": {
-            "default_node": "Door to Red Brinstar Bat Room",
+        "Below Spazer": {
+            "default_node": "Door to Bat Room",
             "extra": {
                 "map_name": "7A408",
                 "asset_id": 110
             },
             "nodes": {
-                "Door to Red Brinstar Bat Room": {
+                "Door to Bat Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7121,8 +7167,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Brinstar",
-                        "area": "Red Brinstar Bat Room",
-                        "node": "Door to Red Brinstar Below Spazer"
+                        "area": "Bat Room",
+                        "node": "Door to Below Spazer"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -7209,7 +7255,7 @@
                     "default_connection": {
                         "region": "Maridia",
                         "area": "Red Brinstar West Tunnel",
-                        "node": "Door to Red Brinstar Below Spazer"
+                        "node": "Door to Below Spazer"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -7217,7 +7263,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Red Brinstar Bat Room": {
+                        "Door to Bat Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7244,7 +7290,7 @@
                     "default_connection": {
                         "region": "Brinstar",
                         "area": "Spazer Room",
-                        "node": "Door to Red Brinstar Below Spazer"
+                        "node": "Door to Below Spazer"
                     },
                     "default_dock_weakness": "Super Missile Door",
                     "exclude_from_dock_rando": false,
@@ -7252,22 +7298,17 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Red Brinstar Bat Room": {
-                            "type": "and",
+                        "Door to Bat Room": {
+                            "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
+                                        "type": "template",
+                                        "data": "Can Lay Any Bombs"
                                     },
                                     {
-                                        "type": "or",
+                                        "type": "and",
                                         "data": {
                                             "comment": null,
                                             "items": [
@@ -7275,7 +7316,7 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "items",
-                                                        "name": "Bombs",
+                                                        "name": "Morph",
                                                         "amount": 1,
                                                         "negate": false
                                                     }
@@ -7283,8 +7324,8 @@
                                                 {
                                                     "type": "resource",
                                                     "data": {
-                                                        "type": "items",
-                                                        "name": "PowerBomb",
+                                                        "type": "misc",
+                                                        "name": "PreSpazerTweaks",
                                                         "amount": 1,
                                                         "negate": false
                                                     }
@@ -7300,13 +7341,13 @@
             }
         },
         "Spazer Room": {
-            "default_node": "Door to Red Brinstar Below Spazer",
+            "default_node": "Door to Below Spazer",
             "extra": {
                 "map_name": "7A447",
                 "asset_id": 111
             },
             "nodes": {
-                "Door to Red Brinstar Below Spazer": {
+                "Door to Below Spazer": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7323,7 +7364,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Brinstar",
-                        "area": "Red Brinstar Below Spazer",
+                        "area": "Below Spazer",
                         "node": "Door to Spazer Room"
                     },
                     "default_dock_weakness": "Normal Door",
@@ -7358,7 +7399,7 @@
                     "pickup_index": 42,
                     "location_category": "major",
                     "connections": {
-                        "Door to Red Brinstar Below Spazer": {
+                        "Door to Below Spazer": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7693,7 +7734,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Warehouse Beetom Room": {
+                        "Door to Warehouse Energy Tank Room": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
@@ -7747,7 +7788,7 @@
                         }
                     }
                 },
-                "Door to Warehouse Beetom Room": {
+                "Door to Warehouse Energy Tank Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7764,7 +7805,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Brinstar",
-                        "area": "Warehouse Beetom Room",
+                        "area": "Warehouse Energy Tank Room",
                         "node": "Door to Warehouse Zeela Room"
                     },
                     "default_dock_weakness": "Normal Door",
@@ -7855,7 +7896,7 @@
                 }
             }
         },
-        "Warehouse Beetom Room": {
+        "Warehouse Energy Tank Room": {
             "default_node": "Door to Warehouse Zeela Room",
             "extra": {
                 "map_name": "7A4B1",
@@ -7880,7 +7921,7 @@
                     "default_connection": {
                         "region": "Brinstar",
                         "area": "Warehouse Zeela Room",
-                        "node": "Door to Warehouse Beetom Room"
+                        "node": "Door to Warehouse Energy Tank Room"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -8020,7 +8061,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Warehouse Save Station": {
+                        "Door to Warehouse Save Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8063,7 +8104,7 @@
                                 ]
                             }
                         },
-                        "Door to Mini Kraid Room": {
+                        "Door to Baby Kraid Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8098,7 +8139,7 @@
                         }
                     }
                 },
-                "Door to Warehouse Save Station": {
+                "Door to Warehouse Save Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8115,7 +8156,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Brinstar",
-                        "area": "Warehouse Save Station",
+                        "area": "Warehouse Save Room",
                         "node": "Door to Warehouse Kihunter Room"
                     },
                     "default_dock_weakness": "Normal Door",
@@ -8169,7 +8210,7 @@
                         }
                     }
                 },
-                "Door to Mini Kraid Room": {
+                "Door to Baby Kraid Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8186,7 +8227,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Brinstar",
-                        "area": "Mini Kraid Room",
+                        "area": "Baby Kraid Room",
                         "node": "Door to Warehouse Kihunter Room"
                     },
                     "default_dock_weakness": "Normal Door",
@@ -8331,7 +8372,7 @@
                 }
             }
         },
-        "Warehouse Save Station": {
+        "Warehouse Save Room": {
             "default_node": "Save Station",
             "extra": {
                 "map_name": "7A70B",
@@ -8357,7 +8398,7 @@
                     "default_connection": {
                         "region": "Brinstar",
                         "area": "Warehouse Kihunter Room",
-                        "node": "Door to Warehouse Save Station"
+                        "node": "Door to Warehouse Save Room"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -8400,7 +8441,7 @@
                 }
             }
         },
-        "Mini Kraid Room": {
+        "Baby Kraid Room": {
             "default_node": "Door to Warehouse Kihunter Room",
             "extra": {
                 "map_name": "7A521",
@@ -8425,7 +8466,7 @@
                     "default_connection": {
                         "region": "Brinstar",
                         "area": "Warehouse Kihunter Room",
-                        "node": "Door to Mini Kraid Room"
+                        "node": "Door to Baby Kraid Room"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -8433,7 +8474,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Kraid Gadora Room": {
+                        "Door to Kraid Eye Door Room": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -8514,7 +8555,7 @@
                         }
                     }
                 },
-                "Door to Kraid Gadora Room": {
+                "Door to Kraid Eye Door Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8531,8 +8572,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Brinstar",
-                        "area": "Kraid Gadora Room",
-                        "node": "Door to Mini Kraid Room"
+                        "area": "Kraid Eye Door Room",
+                        "node": "Door to Baby Kraid Room"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -8623,14 +8664,14 @@
                 }
             }
         },
-        "Kraid Gadora Room": {
-            "default_node": "Door to Mini Kraid Room",
+        "Kraid Eye Door Room": {
+            "default_node": "Door to Baby Kraid Room",
             "extra": {
                 "map_name": "7A56B",
                 "asset_id": 118
             },
             "nodes": {
-                "Door to Mini Kraid Room": {
+                "Door to Baby Kraid Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8647,8 +8688,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Brinstar",
-                        "area": "Mini Kraid Room",
-                        "node": "Door to Kraid Gadora Room"
+                        "area": "Baby Kraid Room",
+                        "node": "Door to Kraid Eye Door Room"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -8656,7 +8697,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Kraid's Lair": {
+                        "Door to Kraid Room": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -8682,7 +8723,7 @@
                                 ]
                             }
                         },
-                        "Door to Warehouse Resupply Station": {
+                        "Door to Kraid Recharge Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8691,7 +8732,7 @@
                         }
                     }
                 },
-                "Door to Kraid's Lair": {
+                "Door to Kraid Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8708,8 +8749,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Brinstar",
-                        "area": "Kraid's Lair",
-                        "node": "Door to Kraid Gadora Room"
+                        "area": "Kraid Room",
+                        "node": "Door to Kraid Eye Door Room"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -8717,7 +8758,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Mini Kraid Room": {
+                        "Door to Baby Kraid Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8726,7 +8767,7 @@
                         }
                     }
                 },
-                "Door to Warehouse Resupply Station": {
+                "Door to Kraid Recharge Station": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8743,8 +8784,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Brinstar",
-                        "area": "Warehouse Resupply Station",
-                        "node": "Door to Kraid Gadora Room"
+                        "area": "Kraid Recharge Station",
+                        "node": "Door to Kraid Eye Door Room"
                     },
                     "default_dock_weakness": "Super Missile Door",
                     "exclude_from_dock_rando": false,
@@ -8752,7 +8793,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Mini Kraid Room": {
+                        "Door to Baby Kraid Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8763,14 +8804,14 @@
                 }
             }
         },
-        "Warehouse Resupply Station": {
-            "default_node": "Door to Kraid Gadora Room",
+        "Kraid Recharge Station": {
+            "default_node": "Door to Kraid Eye Door Room",
             "extra": {
                 "map_name": "7A641",
                 "asset_id": 119
             },
             "nodes": {
-                "Door to Kraid Gadora Room": {
+                "Door to Kraid Eye Door Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8787,8 +8828,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Brinstar",
-                        "area": "Kraid Gadora Room",
-                        "node": "Door to Warehouse Resupply Station"
+                        "area": "Kraid Eye Door Room",
+                        "node": "Door to Kraid Recharge Station"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -8827,7 +8868,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Kraid Gadora Room": {
+                        "Door to Kraid Eye Door Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8851,7 +8892,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Kraid Gadora Room": {
+                        "Door to Kraid Eye Door Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8862,14 +8903,14 @@
                 }
             }
         },
-        "Kraid's Lair": {
-            "default_node": "Door to Kraid Gadora Room",
+        "Kraid Room": {
+            "default_node": "Door to Kraid Eye Door Room",
             "extra": {
                 "map_name": "7A59F",
                 "asset_id": 120
             },
             "nodes": {
-                "Door to Kraid Gadora Room": {
+                "Door to Kraid Eye Door Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8886,8 +8927,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Brinstar",
-                        "area": "Kraid Gadora Room",
-                        "node": "Door to Kraid's Lair"
+                        "area": "Kraid Eye Door Room",
+                        "node": "Door to Kraid Room"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -9063,7 +9104,7 @@
                     "default_connection": {
                         "region": "Brinstar",
                         "area": "Varia Suit Room",
-                        "node": "Door to Kraid's Lair"
+                        "node": "Door to Kraid Room"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -9071,7 +9112,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Kraid Gadora Room": {
+                        "Door to Kraid Eye Door Room": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
@@ -9098,7 +9139,7 @@
                     "valid_starting_location": false,
                     "event_name": "Event1",
                     "connections": {
-                        "Door to Kraid Gadora Room": {
+                        "Door to Kraid Eye Door Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -9110,13 +9151,13 @@
             }
         },
         "Varia Suit Room": {
-            "default_node": "Door to Kraid's Lair",
+            "default_node": "Door to Kraid Room",
             "extra": {
                 "map_name": "7A6E2",
                 "asset_id": 121
             },
             "nodes": {
-                "Door to Kraid's Lair": {
+                "Door to Kraid Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -9133,7 +9174,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Brinstar",
-                        "area": "Kraid's Lair",
+                        "area": "Kraid Room",
                         "node": "Door to Varia Suit Room"
                     },
                     "default_dock_weakness": "Normal Door",
@@ -9168,7 +9209,7 @@
                     "pickup_index": 48,
                     "location_category": "major",
                     "connections": {
-                        "Door to Kraid's Lair": {
+                        "Door to Kraid Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,

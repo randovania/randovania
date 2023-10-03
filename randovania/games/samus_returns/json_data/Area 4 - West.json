@@ -108,7 +108,7 @@
                                 "negate": false
                             }
                         },
-                        "Door from Chozo Seals": {
+                        "Door to Chozo Seals (Top)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -226,7 +226,7 @@
                                 "items": []
                             }
                         },
-                        "Door to Chozo Seals": {
+                        "Door to Chozo Seals (Bottom)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -315,12 +315,12 @@
                         }
                     }
                 },
-                "Door from Chozo Seals": {
+                "Door to Chozo Seals (Top)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 8136.007793127878,
-                        "y": -990.5951115834223,
+                        "x": 8136.01,
+                        "y": -990.6,
                         "z": 0.0
                     },
                     "description": "",
@@ -329,7 +329,7 @@
                     ],
                     "extra": {
                         "actor_name": "Door001",
-                        "actor_type": "doorclosedpower"
+                        "actor_type": "doorpowerpower"
                     },
                     "valid_starting_location": false,
                     "dock_type": "door",
@@ -338,7 +338,7 @@
                         "area": "Chozo Seals",
                         "node": "Door to West Hub (Top)"
                     },
-                    "default_dock_weakness": "Access Closed",
+                    "default_dock_weakness": "Spazer Beam Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -440,12 +440,12 @@
                     "override_default_lock_requirement": null,
                     "connections": {}
                 },
-                "Door to Chozo Seals": {
+                "Door to Chozo Seals (Bottom)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 8141.144172865746,
-                        "y": -2571.31597591215,
+                        "x": 8141.14,
+                        "y": -2571.32,
                         "z": 0.0
                     },
                     "description": "",
@@ -454,7 +454,7 @@
                     ],
                     "extra": {
                         "actor_name": "Door006",
-                        "actor_type": "doorchargecharge"
+                        "actor_type": "doorpowerpower"
                     },
                     "valid_starting_location": false,
                     "dock_type": "door",
@@ -463,7 +463,7 @@
                         "area": "Chozo Seals",
                         "node": "Door to West Hub (Bottom)"
                     },
-                    "default_dock_weakness": "Charge Beam Door",
+                    "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -2130,8 +2130,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 8138.6375875067315,
-                        "y": -976.7905223478731,
+                        "x": 8138.64,
+                        "y": -976.79,
                         "z": 0.0
                     },
                     "description": "",
@@ -2140,14 +2140,14 @@
                     ],
                     "extra": {
                         "actor_name": "Door001",
-                        "actor_type": "doorclosedpower"
+                        "actor_type": "doorpowerpower"
                     },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 4 - West",
                         "area": "West Hub",
-                        "node": "Door from Chozo Seals"
+                        "node": "Door to Chozo Seals (Top)"
                     },
                     "default_dock_weakness": "Spazer Beam Door",
                     "exclude_from_dock_rando": false,
@@ -2168,8 +2168,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 8148.061389337641,
-                        "y": -2522.2940226171245,
+                        "x": 8148.06,
+                        "y": -2522.29,
                         "z": 0.0
                     },
                     "description": "",
@@ -2178,16 +2178,16 @@
                     ],
                     "extra": {
                         "actor_name": "Door006",
-                        "actor_type": "doorchargecharge"
+                        "actor_type": "doorpowerpower"
                     },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 4 - West",
                         "area": "West Hub",
-                        "node": "Door to Chozo Seals"
+                        "node": "Door to Chozo Seals (Bottom)"
                     },
-                    "default_dock_weakness": "Charge Beam Door",
+                    "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -2841,7 +2841,7 @@
                     "valid_starting_location": false,
                     "event_name": "Alpha 17",
                     "connections": {
-                        "Start Point": {
+                        "Pickup (DNA)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2914,6 +2914,35 @@
                         "Event - Alpha Metroid+": {
                             "type": "template",
                             "data": "Defeat Alpha Metroid+"
+                        }
+                    }
+                },
+                "Pickup (DNA)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 2758.8915956151036,
+                        "y": -5902.260116389227,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "pickup_type": "metroid",
+                        "spawngroup": "SG_Alpha_001"
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 187,
+                    "location_category": "minor",
+                    "connections": {
+                        "Start Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 }
@@ -3806,7 +3835,7 @@
                     "valid_starting_location": false,
                     "event_name": "Gamma 9",
                     "connections": {
-                        "Inside Arena": {
+                        "Pickup (DNA)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3846,6 +3875,35 @@
                         "Event - Gamma Metroid": {
                             "type": "template",
                             "data": "Defeat Gamma Metroid"
+                        }
+                    }
+                },
+                "Pickup (DNA)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1093.82,
+                        "y": 3580.73,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "pickup_type": "metroid",
+                        "spawngroup": "SG_Gamma_001"
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 197,
+                    "location_category": "minor",
+                    "connections": {
+                        "Inside Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 }
@@ -5162,8 +5220,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 14095.736932305055,
-                        "y": -8341.152527849186,
+                        "x": 14095.74,
+                        "y": -8341.15,
                         "z": 0.0
                     },
                     "description": "",
@@ -5172,7 +5230,7 @@
                     ],
                     "extra": {
                         "actor_name": "Door014",
-                        "actor_type": "doorchargecharge"
+                        "actor_type": "doorpowerpower"
                     },
                     "valid_starting_location": false,
                     "dock_type": "door",
@@ -5181,7 +5239,7 @@
                         "area": "Transport to Area 5 Entrance",
                         "node": "Door to The Big Gap"
                     },
-                    "default_dock_weakness": "Charge Beam Door",
+                    "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -5571,8 +5629,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 14089.534681073545,
-                        "y": -8376.411641686998,
+                        "x": 14089.53,
+                        "y": -8376.41,
                         "z": 0.0
                     },
                     "description": "",
@@ -5581,7 +5639,7 @@
                     ],
                     "extra": {
                         "actor_name": "Door014",
-                        "actor_type": "doorchargecharge"
+                        "actor_type": "doorpowerpower"
                     },
                     "valid_starting_location": false,
                     "dock_type": "door",
@@ -5590,7 +5648,7 @@
                         "area": "The Big Gap",
                         "node": "Door to Transport to Area 5 Entrance"
                     },
-                    "default_dock_weakness": "Charge Beam Door",
+                    "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,

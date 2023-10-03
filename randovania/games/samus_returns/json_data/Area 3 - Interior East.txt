@@ -425,7 +425,7 @@ Extra - asset_id: collision_camera_023
 > Event - Gamma Metroid; Heals? False
   * Layers: default
   * Event Area 3 (Interior East) - Gamma Metroid Upper
-  > Inside Arena
+  > Pickup (DNA)
       Trivial
 
 > Inside Arena; Heals? False
@@ -450,6 +450,14 @@ Extra - asset_id: collision_camera_023
   * Layers: default
   * Extra - start_point_actor_name: ST_SG_Gamma_007
   > Door to Gamma Arena South Access
+      Trivial
+
+> Pickup (DNA); Heals? False
+  * Layers: default
+  * Pickup 195; Category? Minor
+  * Extra - pickup_type: metroid
+  * Extra - spawngroup: SG_Gamma_006
+  > Inside Arena
       Trivial
 
 ----------------
@@ -534,8 +542,8 @@ Extra - asset_id: collision_camera_026
 > Event - Alpha Metroid; Heals? False
   * Layers: default
   * Event Area 3 (Interior East) - Alpha Metroid
-  > Start Point
-      Varia Suit
+  > Pickup (DNA)
+      Trivial
 
 > Start Point; Heals? False; Default Node
   * Layers: default
@@ -549,6 +557,14 @@ Extra - asset_id: collision_camera_026
   > Event - Alpha Metroid
       Varia Suit and Defeat Alpha Metroid
 
+> Pickup (DNA); Heals? False
+  * Layers: default
+  * Pickup 184; Category? Minor
+  * Extra - pickup_type: metroid
+  * Extra - spawngroup: SG_Alpha_001
+  > Start Point
+      Trivial
+
 ----------------
 Gamma Arena South
 Extra - total_boundings: {'x1': -2000.0, 'x2': 2800.0, 'y1': 2000.0, 'y2': 3800.0}
@@ -559,22 +575,22 @@ Extra - asset_id: collision_camera_027
   * Power Bomb Door to Gamma Storage/Door to Gamma Arena South
   * Extra - actor_name: Door007
   * Extra - actor_type: doorpowerpower
-  > Start Point
+  > Room Center
       Trivial
 
 > Tunnel to Gamma Arena South Access; Heals? False
   * Layers: default
   * Tunnel to Gamma Arena South Access/Tunnel to Gamma Arena South
-  > Start Point
+  > Room Center
       Morph Ball
 
 > Event - Gamma Metroid; Heals? False
   * Layers: default
   * Event Area 3 (Interior East) - Gamma Metroid Lower
-  > Start Point
+  > Pickup (DNA)
       Trivial
 
-> Start Point; Heals? False; Default Node
+> Room Center; Heals? False; Default Node
   * Layers: default
   * Extra - start_point_actor_name: ST_Gamma_007A_Checkpoint
   > Door to Gamma Storage
@@ -588,6 +604,14 @@ Extra - asset_id: collision_camera_027
           Grapple Beam or Space Jump or Can Spiderspark or Simple IBJ
   > Event - Gamma Metroid
       Defeat Gamma Metroid
+
+> Pickup (DNA); Heals? False
+  * Layers: default
+  * Pickup 196; Category? Minor
+  * Extra - pickup_type: metroid
+  * Extra - spawngroup: SG_Gamma_007_A
+  > Room Center
+      Trivial
 
 ----------------
 Mini-Shaft West

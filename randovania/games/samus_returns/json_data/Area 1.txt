@@ -60,9 +60,9 @@ Extra - asset_id: collision_camera_000
 
 > Door to Entrance Shaft; Heals? False
   * Layers: default
-  * Charge Beam Door to Entrance Shaft/Door to Chozo Seal
+  * Power Beam Door to Entrance Shaft/Door to Chozo Seal
   * Extra - actor_name: Door002
-  * Extra - actor_type: doorchargecharge
+  * Extra - actor_type: doorpowerpower
   > Chozo Seal
       Trivial
 
@@ -113,9 +113,9 @@ Extra - polygon: [[-9500.0, 1100.0], [-9500.0, 5100.0], [-10800.0, 5100.0], [-10
 Extra - asset_id: collision_camera_003
 > Door to Chozo Seal; Heals? False
   * Layers: default
-  * Charge Beam Door to Chozo Seal/Door to Entrance Shaft
+  * Power Beam Door to Chozo Seal/Door to Entrance Shaft
   * Extra - actor_name: Door002
-  * Extra - actor_type: doorchargecharge
+  * Extra - actor_type: doorpowerpower
   > Door to Lava Shortcut
       Trivial
 
@@ -201,11 +201,11 @@ Extra - asset_id: collision_camera_008
   > Room Center
       Trivial
 
-> Door from Bomb Access; Heals? False
+> Door to Bomb Access; Heals? False
   * Layers: default
-  * Access Closed to Bomb Access/Door to Bomb Room
+  * Power Beam Door to Bomb Access/Door to Bomb Room
   * Extra - actor_name: Door004
-  * Extra - actor_type: doorclosedpower
+  * Extra - actor_type: doorpowerpower
   > Room Center
       Trivial
 
@@ -222,7 +222,7 @@ Extra - asset_id: collision_camera_008
   * Extra - start_point_actor_name: ST_CheckPoint_005
   > Pickup (Bomb)
       Trivial
-  > Door from Bomb Access
+  > Door to Bomb Access
       Trivial
   > Tunnel to Bomb Access
       Lay Any Bomb
@@ -246,7 +246,7 @@ Extra - asset_id: collision_camera_012
   * Layers: default
   * Power Beam Door to Outer Hub/Door to Shaft East
   * Extra - actor_name: Door012
-  * Extra - actor_type: doorpowerclosed
+  * Extra - actor_type: doorpowerpower
   > Door to Inner Room
       Single-wall Wall Jump (Beginner) or Climb Rooms Vertically (High Jump)
   > Dock to Teleporter Room
@@ -374,11 +374,11 @@ Extra - asset_id: collision_camera_017
   > Above Arena
       Trivial
 
-> Door from Outer Hub; Heals? False
+> Door to Outer Hub; Heals? False
   * Layers: default
-  * Access Closed to Outer Hub/Door to Alpha Arena North
+  * Power Beam Door to Outer Hub/Door to Alpha Arena North
   * Extra - actor_name: Door016
-  * Extra - actor_type: doorpowerclosed
+  * Extra - actor_type: doorpowerpower
   > Inside Arena
       Trivial
 
@@ -391,7 +391,7 @@ Extra - asset_id: collision_camera_017
 > Event - Alpha Metroid; Heals? False
   * Layers: default
   * Event Area 1 - Alpha Metroid North
-  > Inside Arena
+  > Pickup (DNA)
       Trivial
 
 > Above Arena; Heals? False
@@ -407,7 +407,7 @@ Extra - asset_id: collision_camera_017
 > Inside Arena; Heals? False; Default Node
   * Layers: default
   * Extra - start_point_actor_name: ST_Alpha_004_Checkpoint
-  > Door from Outer Hub
+  > Door to Outer Hub
       Trivial
   > Event - Alpha Metroid
       Defeat Alpha Metroid
@@ -415,6 +415,14 @@ Extra - asset_id: collision_camera_017
       All of the following:
           Lay Any Bomb
           Super Jump (Intermediate) or Unmorph Extend (Intermediate) or Climb Rooms Vertically (High Jump)
+
+> Pickup (DNA); Heals? False
+  * Layers: default
+  * Pickup 176; Category? Minor
+  * Extra - pickup_type: metroid
+  * Extra - spawngroup: SG_Alpha_004
+  > Inside Arena
+      Trivial
 
 ----------------
 Outer Hub
@@ -475,17 +483,17 @@ Extra - asset_id: collision_camera_018
 
 > Door to Shaft East; Heals? False
   * Layers: default
-  * Access Locked to Shaft East/Door to Outer Hub
+  * Power Beam Door to Shaft East/Door to Outer Hub
   * Extra - actor_name: Door012
-  * Extra - actor_type: doorpowerclosed
+  * Extra - actor_type: doorpowerpower
   > Save Station
       Trivial
 
 > Door to Alpha Arena North; Heals? False
   * Layers: default
-  * Power Beam Door to Alpha Arena North/Door from Outer Hub
+  * Power Beam Door to Alpha Arena North/Door to Outer Hub
   * Extra - actor_name: Door016
-  * Extra - actor_type: doorpowerclosed
+  * Extra - actor_type: doorpowerpower
   > Save Station
       Trivial
   > Tunnel to Alpha Arena North
@@ -663,22 +671,22 @@ Extra - asset_id: collision_camera_025
   * Power Beam Door to Alpha Shaft Left/Door to Alpha Arena South
   * Extra - actor_name: Door014
   * Extra - actor_type: doorpowerpower
-  > Room Center
-      Trivial
+  > Event - Alpha Metroid
+      Defeat Alpha Metroid
 
 > Event - Alpha Metroid; Heals? False
   * Layers: default
   * Event Area 1 - Alpha Metroid South
-  > Room Center
+  > Pickup (DNA)
       Trivial
 
-> Room Center; Heals? False; Default Node
+> Pickup (DNA); Heals? False
   * Layers: default
-  * Extra - start_point_actor_name: ST_Alpha_002_Checkpoint
+  * Pickup 174; Category? Minor
+  * Extra - pickup_type: metroid
+  * Extra - spawngroup: SG_Alpha_002
   > Door to Alpha Shaft Left
       Trivial
-  > Event - Alpha Metroid
-      Defeat Alpha Metroid
 
 ----------------
 Alpha Arena East
@@ -690,22 +698,22 @@ Extra - asset_id: collision_camera_027
   * Power Beam Door to Alpha Arena East Access/Door to Alpha Arena East
   * Extra - actor_name: Door015
   * Extra - actor_type: doorpowerpower
-  > Room Center
-      Trivial
+  > Event - Alpha Metroid
+      Defeat Alpha Metroid
 
 > Event - Alpha Metroid; Heals? False
   * Layers: default
   * Event Area 1 - Alpha Metroid East
-  > Room Center
+  > Pickup (DNA)
       Trivial
 
-> Room Center; Heals? False; Default Node
+> Pickup (DNA); Heals? False
   * Layers: default
-  * Extra - start_point_actor_name: ST_Alpha_003_Checkpoint
+  * Pickup 175; Category? Minor
+  * Extra - pickup_type: metroid
+  * Extra - spawngroup: SG_Alpha_003
   > Door to Alpha Arena East Access
       Trivial
-  > Event - Alpha Metroid
-      Defeat Alpha Metroid
 
 ----------------
 One-Way Puzzle
@@ -1150,9 +1158,9 @@ Extra - polygon: [[2600.0, 4200.0], [2600.0, 5400.0], [-100.0, 5400.0], [-100.0,
 Extra - asset_id: collision_camera_046
 > Door to Bomb Room; Heals? False
   * Layers: default
-  * Missile Door to Bomb Room/Door from Bomb Access
+  * Missile Door to Bomb Room/Door to Bomb Access
   * Extra - actor_name: Door004
-  * Extra - actor_type: doorclosedpower
+  * Extra - actor_type: doorpowerpower
 
 > Dock to Central Shaft; Heals? False
   * Layers: default
@@ -1337,7 +1345,7 @@ Extra - asset_id: collision_camera_054
 > Event - Alpha Metroid; Heals? False
   * Layers: default
   * Event Area 1 - Alpha Metroid West
-  > Room Center
+  > Pickup (DNA)
       Trivial
 
 > Room Center; Heals? False; Default Node
@@ -1347,6 +1355,14 @@ Extra - asset_id: collision_camera_054
       Lay Any Bomb
   > Event - Alpha Metroid
       Defeat Alpha Metroid
+
+> Pickup (DNA); Heals? False
+  * Layers: default
+  * Pickup 173; Category? Minor
+  * Extra - pickup_type: metroid
+  * Extra - spawngroup: SG_Alpha_001
+  > Room Center
+      Trivial
 
 ----------------
 Outer Hub Access

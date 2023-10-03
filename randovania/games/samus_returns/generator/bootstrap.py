@@ -2,13 +2,36 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from randovania.games.samus_returns.layout.msr_configuration import MSRConfiguration
+from randovania.game_description.db.pickup_node import PickupNode
+from randovania.games.samus_returns.generator.pool_creator import METROID_DNA_CATEGORY
+from randovania.games.samus_returns.layout.msr_configuration import MSRArtifactConfig, MSRConfiguration
 from randovania.resolver.bootstrap import MetroidBootstrap
 
 if TYPE_CHECKING:
+    from random import Random
+
+    from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.game_patches import GamePatches
     from randovania.game_description.resources.resource_database import ResourceDatabase
     from randovania.game_description.resources.resource_info import ResourceGain
+    from randovania.generator.pickup_pool import PoolResults
     from randovania.layout.base.base_configuration import BaseConfiguration
+
+
+def all_dna_locations(game: GameDescription, config: MSRArtifactConfig) -> list[PickupNode]:
+    locations: list[PickupNode] = []
+
+    for node in game.region_list.all_nodes:
+        if isinstance(node, PickupNode):
+            # Metroid pickups
+            pickup_type = node.extra.get("pickup_type")
+            if config.prefer_metroids and pickup_type is not None and pickup_type == "metroid":
+                locations.append(node)
+            # DNA anywhere
+            elif not config.prefer_metroids:
+                locations.append(node)
+
+    return locations
 
 
 class MSRBootstrap(MetroidBootstrap):
@@ -51,3 +74,20 @@ class MSRBootstrap(MetroidBootstrap):
             yield resource_database.get_event(
                 "Area 3 (Interior East) - Transport to Area 3 Interior West Grapple Block"
             ), 1
+
+    def assign_pool_results(self, rng: Random, patches: GamePatches, pool_results: PoolResults) -> GamePatches:
+        assert isinstance(patches.configuration, MSRConfiguration)
+        config = patches.configuration.artifacts
+
+        locations = all_dna_locations(patches.game, config)
+        rng.shuffle(locations)
+
+        dna_to_assign = [
+            pickup for pickup in list(pool_results.to_place) if pickup.pickup_category is METROID_DNA_CATEGORY
+        ]
+
+        for dna, location in zip(dna_to_assign, locations, strict=False):
+            pool_results.to_place.remove(dna)
+            pool_results.assignment[location.pickup_index] = dna
+
+        return super().assign_pool_results(rng, patches, pool_results)
