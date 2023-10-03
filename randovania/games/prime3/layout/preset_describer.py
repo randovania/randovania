@@ -4,6 +4,7 @@ from typing import TYPE_CHECKING
 
 from randovania.games.prime3.layout.corruption_configuration import CorruptionConfiguration
 from randovania.layout.preset_describer import (
+    ConditionalMessageTree,
     GamePresetDescriber,
     fill_template_strings_from_tree,
     handle_progressive_expected_counts,
@@ -22,7 +23,7 @@ class CorruptionPresetDescriber(GamePresetDescriber):
         standard_pickups = configuration.standard_pickup_configuration
         template_strings = super().format_params(configuration)
 
-        extra_message_tree = {
+        extra_message_tree: ConditionalMessageTree = {
             "Item Pool": [
                 {
                     "Progressive Missile": has_shuffled_item(standard_pickups, "Progressive Missile"),

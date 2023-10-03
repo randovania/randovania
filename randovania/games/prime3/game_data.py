@@ -1,12 +1,19 @@
 from __future__ import annotations
 
+import typing
+
 from randovania.games import game
 from randovania.games.prime3.layout.corruption_configuration import CorruptionConfiguration
 from randovania.games.prime3.layout.corruption_cosmetic_patches import CorruptionCosmeticPatches
 from randovania.games.prime3.layout.preset_describer import CorruptionPresetDescriber
 
+if typing.TYPE_CHECKING:
+    from randovania.exporter.game_exporter import GameExporter
+    from randovania.exporter.patch_data_factory import PatchDataFactory
+    from randovania.interface_common.options import PerGameOptions
 
-def _options():
+
+def _options() -> type[PerGameOptions]:
     from randovania.interface_common.options import PerGameOptions
 
     return PerGameOptions
@@ -39,13 +46,13 @@ def _generator() -> game.GameGenerator:
     )
 
 
-def _patch_data_factory():
+def _patch_data_factory() -> type[PatchDataFactory]:
     from randovania.games.prime3.exporter.patch_data_factory import CorruptionPatchDataFactory
 
     return CorruptionPatchDataFactory
 
 
-def _exporter():
+def _exporter() -> GameExporter:
     from randovania.games.prime3.exporter.game_exporter import CorruptionGameExporter
 
     return CorruptionGameExporter()

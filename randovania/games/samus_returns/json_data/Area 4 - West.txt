@@ -10,7 +10,7 @@ Extra - asset_id: collision_camera_001
   * Extra - actor_type: item_missiletank
   > Save Station
       Morph Ball
-  > Door from Chozo Seals
+  > Door to Chozo Seals (Top)
       Trivial
 
 > Ammo Recharge Station; Heals? False
@@ -33,7 +33,7 @@ Extra - asset_id: collision_camera_001
   * Extra - start_point_actor_name: ST_SaveStation
   > Ammo Recharge Station
       Trivial
-  > Door to Chozo Seals
+  > Door to Chozo Seals (Bottom)
       Trivial
   > Door to Roundabout
       Any of the following:
@@ -49,11 +49,11 @@ Extra - asset_id: collision_camera_001
   > Door to Roundabout
       Morph Ball
 
-> Door from Chozo Seals; Heals? False
+> Door to Chozo Seals (Top); Heals? False
   * Layers: default
-  * Access Closed to Chozo Seals/Door to West Hub (Top)
+  * Spazer Beam Door to Chozo Seals/Door to West Hub (Top)
   * Extra - actor_name: Door001
-  * Extra - actor_type: doorclosedpower
+  * Extra - actor_type: doorpowerpower
   > Pickup (Missile Tank)
       Trivial
 
@@ -71,11 +71,11 @@ Extra - asset_id: collision_camera_001
   * Extra - actor_name: Door005
   * Extra - actor_type: doorpowerclosed
 
-> Door to Chozo Seals; Heals? False
+> Door to Chozo Seals (Bottom); Heals? False
   * Layers: default
-  * Charge Beam Door to Chozo Seals/Door to West Hub (Bottom)
+  * Power Beam Door to Chozo Seals/Door to West Hub (Bottom)
   * Extra - actor_name: Door006
-  * Extra - actor_type: doorchargecharge
+  * Extra - actor_type: doorpowerpower
   > Save Station
       Trivial
 
@@ -314,17 +314,17 @@ Extra - asset_id: collision_camera_006
 
 > Door to West Hub (Top); Heals? False
   * Layers: default
-  * Spazer Beam Door to West Hub/Door from Chozo Seals
+  * Spazer Beam Door to West Hub/Door to Chozo Seals (Top)
   * Extra - actor_name: Door001
-  * Extra - actor_type: doorclosedpower
+  * Extra - actor_type: doorpowerpower
   > Door to West Hub (Bottom)
       Trivial
 
 > Door to West Hub (Bottom); Heals? False
   * Layers: default
-  * Charge Beam Door to West Hub/Door to Chozo Seals
+  * Power Beam Door to West Hub/Door to Chozo Seals (Bottom)
   * Extra - actor_name: Door006
-  * Extra - actor_type: doorchargecharge
+  * Extra - actor_type: doorpowerpower
   > Chozo Seal Left
       Trivial
   > Door to West Hub (Top)
@@ -444,7 +444,7 @@ Extra - asset_id: collision_camera_007
 > Event - Alpha Metroid+; Heals? False
   * Layers: default
   * Event Area 4 (West) - Alpha Metroid+
-  > Start Point
+  > Pickup (DNA)
       Trivial
 
 > Tunnel to Alpha+ Arena Access; Heals? False
@@ -460,6 +460,14 @@ Extra - asset_id: collision_camera_007
       Trivial
   > Event - Alpha Metroid+
       Defeat Alpha Metroid+
+
+> Pickup (DNA); Heals? False
+  * Layers: default
+  * Pickup 187; Category? Minor
+  * Extra - pickup_type: metroid
+  * Extra - spawngroup: SG_Alpha_001
+  > Start Point
+      Trivial
 
 ----------------
 Roundabout
@@ -547,13 +555,13 @@ Extra - asset_id: collision_camera_011
   * Extra - actor_name: LE_Item_005
   * Extra - actor_type: item_senergytank
   > Tunnel to West Hub
-      Lightning Armor and Lay Any Bomb
+      Fleechswarm Protection and Lay Any Bomb
 
 > Tunnel to West Hub; Heals? False
   * Layers: default
   * Tunnel with Bomb Block to West Hub/Tunnel to Fleech Swarm Cave
   > Pickup (Aeion Tank)
-      Lightning Armor and Morph Ball
+      Morph Ball and Fleechswarm Protection
 
 ----------------
 Gamma Arena Room 2
@@ -606,7 +614,7 @@ Extra - asset_id: collision_camera_013
 > Event - Gamma Metroid; Heals? False
   * Layers: default
   * Event Area 4 (West) - Gamma Metroid
-  > Inside Arena
+  > Pickup (DNA)
       Trivial
 
 > Inside Arena; Heals? False; Default Node
@@ -618,6 +626,14 @@ Extra - asset_id: collision_camera_013
       Lay Any Bomb
   > Event - Gamma Metroid
       Defeat Gamma Metroid
+
+> Pickup (DNA); Heals? False
+  * Layers: default
+  * Pickup 197; Category? Minor
+  * Extra - pickup_type: metroid
+  * Extra - spawngroup: SG_Gamma_001
+  > Inside Arena
+      Trivial
 
 ----------------
 Gamma Access Path Lower
@@ -820,9 +836,9 @@ Extra - polygon: [[16900.0, -7700.0], [14050.0, -7700.0], [14050.0, -9000.0], [1
 Extra - asset_id: collision_camera_022
 > Door to Transport to Area 5 Entrance; Heals? False
   * Layers: default
-  * Charge Beam Door to Transport to Area 5 Entrance/Door to The Big Gap
+  * Power Beam Door to Transport to Area 5 Entrance/Door to The Big Gap
   * Extra - actor_name: Door014
-  * Extra - actor_type: doorchargecharge
+  * Extra - actor_type: doorpowerpower
   > Next to Acid Pool
       Space Jump or Can Spiderspark
 
@@ -872,9 +888,9 @@ Extra - asset_id: collision_camera_023
 
 > Door to The Big Gap; Heals? False
   * Layers: default
-  * Charge Beam Door to The Big Gap/Door to Transport to Area 5 Entrance
+  * Power Beam Door to The Big Gap/Door to Transport to Area 5 Entrance
   * Extra - actor_name: Door014
-  * Extra - actor_type: doorchargecharge
+  * Extra - actor_type: doorpowerpower
   > Elevator to Area 5 - Entrance
       Trivial
 

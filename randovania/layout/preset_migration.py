@@ -966,6 +966,27 @@ def _migrate_v63(preset: dict) -> dict:
     return preset
 
 
+def _migrate_v64(preset: dict) -> dict:
+    if preset["game"] == "prime1":
+        x: str = preset["configuration"]["qol_cutscenes"]
+        if x == "skippablecompetitive":
+            x = "SkippableCompetitive"
+        else:
+            x = x.title()
+
+        preset["configuration"]["qol_cutscenes"] = x
+    return preset
+
+
+def _migrate_v65(preset: dict) -> dict:
+    config = preset["configuration"]
+    game = preset["game"]
+
+    if game == "dread":
+        config["nerf_power_bombs"] = False
+    return preset
+
+
 _MIGRATIONS = [
     _migrate_v1,  # v1.1.1-247-gaf9e4a69
     _migrate_v2,  # v1.2.2-71-g0fbabe91
@@ -1030,6 +1051,8 @@ _MIGRATIONS = [
     _migrate_v61,
     _migrate_v62,
     _migrate_v63,
+    _migrate_v64,
+    _migrate_v65,
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 

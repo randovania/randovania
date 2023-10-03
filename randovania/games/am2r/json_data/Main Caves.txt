@@ -873,7 +873,7 @@ Extra - minimap_data: [{'x': 44, 'y': 40}, {'x': 44, 'y': 41}, {'x': 45, 'y': 40
 
 > Pickup (Missile Tank); Heals? False
   * Layers: default
-  * Pickup 55; Category? Major
+  * Pickup 55; Category? Minor
   * Extra - object_name: oItemM_55
   > Dock to Skreek Street
       Trivial
@@ -925,7 +925,7 @@ Extra - minimap_data: [{'x': 38, 'y': 41}, {'x': 39, 'y': 41}]
   * Extra - source_y: 128
   > Dock to Skreek Street
       After Surface - Rock Entrance To The Tower and Power Grip Wall
-  > Event - A4RockEntrance
+  > Event - Rocks
       Missiles or Speed Booster or Super Missiles or Can Use Any Bombs
 
 > Dock to Skreek Street; Heals? False
@@ -933,10 +933,10 @@ Extra - minimap_data: [{'x': 38, 'y': 41}, {'x': 39, 'y': 41}]
   * Open Passage to Skreek Street/Dock to Tower East Exterior Access
   > Area Transition to The Tower
       After Surface - Rock Entrance To The Tower
-  > Event - A4RockEntrance
+  > Event - Rocks
       Missiles or Speed Booster or Super Missiles or Can Use Any Bombs
 
-> Event - A4RockEntrance; Heals? False
+> Event - Rocks; Heals? False
   * Layers: default
   * Event Surface - Rock Entrance To The Tower
   > Area Transition to The Tower
@@ -1113,7 +1113,7 @@ Extra - minimap_data: [{'x': 42, 'y': 26}, {'x': 43, 'y': 26}, {'x': 44, 'y': 26
 > Dock to Bend Chasm; Heals? False
   * Layers: default
   * Open Passage to Bend Chasm/Dock to Octroll Lava Pool
-  > Area Transition to Research Site Access
+  > Area Transition to Research Site Elevator
       Any of the following:
           Space Jump or Can Use Spider Ball
           All of the following:
@@ -1125,9 +1125,9 @@ Extra - minimap_data: [{'x': 42, 'y': 26}, {'x': 43, 'y': 26}, {'x': 44, 'y': 26
           # Hang off first platform
           Power Grip and Movement (Beginner)
 
-> Area Transition to Research Site Access; Heals? False
+> Area Transition to Research Site Elevator; Heals? False
   * Layers: default
-  * Open Passage to Research Site Access/Area Transition to Octroll Lava Pool
+  * Open Passage to Research Site Elevator/Area Transition to Octroll Lava Pool
   * Extra - instance_id: 122611
   * Extra - source_x: 0
   * Extra - source_y: 112
@@ -1146,12 +1146,12 @@ Extra - minimap_data: [{'x': 42, 'y': 26}, {'x': 43, 'y': 26}, {'x': 44, 'y': 26
               Power Grip and Movement (Beginner)
 
 ----------------
-Research Site Access
+Research Site Elevator
 Extra - map_name: rm_a0h13
 Extra - minimap_data: [{'x': 41, 'y': 24}, {'x': 41, 'y': 25}, {'x': 41, 'y': 26}]
 > Area Transition to Octroll Lava Pool; Heals? False
   * Layers: default
-  * Open Passage to Octroll Lava Pool/Area Transition to Research Site Access
+  * Open Passage to Octroll Lava Pool/Area Transition to Research Site Elevator
   * Extra - instance_id: 122751
   * Extra - source_x: 320
   * Extra - source_y: 592
@@ -1160,21 +1160,21 @@ Extra - minimap_data: [{'x': 41, 'y': 24}, {'x': 41, 'y': 25}, {'x': 41, 'y': 26
 
 > Dock to Research Site; Heals? False
   * Layers: default
-  * Open Passage to Research Site/Dock to Research Site Access
+  * Open Passage to Research Site/Dock to Research Site Elevator
   > Area Transition to Octroll Lava Pool
       Trivial
   > Dock to Elevator Shaft
       After Surface - Thoth Power Bomb Blocks Entrance Destroyed
-  > Event - ThothPBEntrance
+  > Event - Power Bomb Blocks
       Can Use Power Bombs
 
 > Dock to Elevator Shaft; Heals? False
   * Layers: default
-  * Open Passage to Elevator Shaft/Dock to Research Site Access
-  > Event - ThothPBEntrance
+  * Open Passage to Elevator Shaft/Dock to Research Site Elevator
+  > Event - Power Bomb Blocks
       Trivial
 
-> Event - ThothPBEntrance; Heals? False
+> Event - Power Bomb Blocks; Heals? False
   * Layers: default
   * Event Surface - Thoth Power Bomb Blocks Entrance Destroyed
   > Dock to Research Site
@@ -1187,20 +1187,20 @@ Extra - minimap_data: [{'x': 42, 'y': 24}, {'x': 43, 'y': 24}, {'x': 44, 'y': 24
 > Dock to Research Site Storage; Heals? False
   * Layers: default
   * Open Passage to Research Site Storage/Dock to Research Site
-  > Dock to Research Site Access
+  > Dock to Research Site Elevator
       Trivial
-  > Event - LeftDualAlpha
+  > Event - Left Alpha
       After Surface - Research Site Dual Alphas Trigger Activated and Defeat Dual Alphas
-  > Event - RightDualAlpha
+  > Event - Right Alpha
       After Surface - Research Site Dual Alphas Trigger Activated and Defeat Dual Alphas
 
-> Dock to Research Site Access; Heals? False
+> Dock to Research Site Elevator; Heals? False
   * Layers: default
-  * Open Passage to Research Site Access/Dock to Research Site
+  * Open Passage to Research Site Elevator/Dock to Research Site
   > Dock to Research Site Storage
       Trivial
 
-> Event - LeftDualAlpha; Heals? False
+> Event - Left Alpha; Heals? False
   * Layers: default
   * Event Metroids Surface - Dual Alphas Left
   > Dock to Research Site Storage
@@ -1208,7 +1208,7 @@ Extra - minimap_data: [{'x': 42, 'y': 24}, {'x': 43, 'y': 24}, {'x': 44, 'y': 24
   > Pickup (Left Alpha)
       Trivial
 
-> Event - RightDualAlpha; Heals? False
+> Event - Right Alpha; Heals? False
   * Layers: default
   * Event Metroids Surface - Dual Alphas Right
   > Dock to Research Site Storage
@@ -1220,14 +1220,14 @@ Extra - minimap_data: [{'x': 42, 'y': 24}, {'x': 43, 'y': 24}, {'x': 44, 'y': 24
   * Layers: default
   * Pickup 364; Category? Minor
   * Extra - object_name: oItemDNA_364
-  > Event - LeftDualAlpha
+  > Event - Left Alpha
       Trivial
 
 > Pickup (Right Alpha); Heals? False
   * Layers: default
   * Pickup 365; Category? Minor
   * Extra - object_name: oItemDNA_365
-  > Event - RightDualAlpha
+  > Event - Right Alpha
       Trivial
 
 ----------------
@@ -1384,7 +1384,7 @@ Extra - minimap_data: [{'x': 49, 'y': 35}, {'x': 50, 'y': 35}, {'x': 51, 'y': 35
   * Open Passage to Drill Excavation Access/Dock to Drill Excavation
   > After Drill Sequence
       After Surface - Mines Drill Crystal Destroyed
-  > Event - DrillCrystal from left
+  > Event - Drill Crystal from Left
       All of the following:
           Super Missiles
           Any of the following:
@@ -1400,16 +1400,16 @@ Extra - minimap_data: [{'x': 49, 'y': 35}, {'x': 50, 'y': 35}, {'x': 51, 'y': 35
           Speed Booster and After Surface - Mines Drill Crystal Destroyed and Shinesparking Tricks (Beginner)
   > Dock to Drill Excavation Access
       After Surface - Mines Drill Crystal Destroyed
-  > Event - DrillCrystal from right
+  > Event - Drill Crystal from Right
       Super Missiles
 
-> Event - DrillCrystal from left; Heals? False
+> Event - Drill Crystal from Left; Heals? False
   * Layers: default
   * Event Surface - Mines Drill Crystal Destroyed
   > Dock to Drill Excavation Access
       Can Use Any Bombs and Tunnel Climb
 
-> Event - DrillCrystal from right; Heals? False
+> Event - Drill Crystal from Right; Heals? False
   * Layers: default
   * Event Surface - Mines Drill Crystal Destroyed
   > After Drill Sequence

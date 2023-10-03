@@ -466,8 +466,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 19051.718030464046,
-                        "y": -4412.770102727594,
+                        "x": 19051.72,
+                        "y": -4412.77,
                         "z": 0.0
                     },
                     "description": "",
@@ -476,7 +476,7 @@
                     ],
                     "extra": {
                         "actor_name": "Door007",
-                        "actor_type": "doorchargecharge"
+                        "actor_type": "doorpowerpower"
                     },
                     "valid_starting_location": false,
                     "dock_type": "door",
@@ -485,7 +485,7 @@
                         "area": "Teleporter Room",
                         "node": "Door to Chozo Seal (Bottom)"
                     },
-                    "default_dock_weakness": "Charge Beam Door",
+                    "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -717,8 +717,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 19060.827724642815,
-                        "y": -4387.200377848625,
+                        "x": 19060.83,
+                        "y": -4387.2,
                         "z": 0.0
                     },
                     "description": "",
@@ -727,7 +727,7 @@
                     ],
                     "extra": {
                         "actor_name": "Door007",
-                        "actor_type": "doorchargecharge"
+                        "actor_type": "doorpowerpower"
                     },
                     "valid_starting_location": false,
                     "dock_type": "door",
@@ -736,7 +736,7 @@
                         "area": "Chozo Seal",
                         "node": "Door to Teleporter Room (Bottom)"
                     },
-                    "default_dock_weakness": "Charge Beam Door",
+                    "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -1116,8 +1116,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 8746.327783681663,
-                        "y": -2794.8813319164015,
+                        "x": 8746.33,
+                        "y": -2794.88,
                         "z": 0.0
                     },
                     "description": "",
@@ -1126,7 +1126,7 @@
                     ],
                     "extra": {
                         "actor_name": "Door001",
-                        "actor_type": "doorchargecharge"
+                        "actor_type": "doorpowerpower"
                     },
                     "valid_starting_location": false,
                     "dock_type": "door",
@@ -1135,7 +1135,7 @@
                         "area": "Main Shaft",
                         "node": "Door to Transport to Area 2 Exterior (Bottom)"
                     },
-                    "default_dock_weakness": "Charge Beam Door",
+                    "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -1329,8 +1329,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 8750.78521667257,
-                        "y": -2787.8793245955844,
+                        "x": 8750.79,
+                        "y": -2787.88,
                         "z": 0.0
                     },
                     "description": "",
@@ -1339,7 +1339,7 @@
                     ],
                     "extra": {
                         "actor_name": "Door001",
-                        "actor_type": "doorchargecharge"
+                        "actor_type": "doorpowerpower"
                     },
                     "valid_starting_location": false,
                     "dock_type": "door",
@@ -1348,7 +1348,7 @@
                         "area": "Transport to Area 2 Exterior",
                         "node": "Door to Main Shaft (Bottom)"
                     },
-                    "default_dock_weakness": "Charge Beam Door",
+                    "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -1647,7 +1647,21 @@
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Fleechswarm Protection"
+                                    }
+                                ]
                             }
                         }
                     }
@@ -1693,13 +1707,8 @@
                                         }
                                     },
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Armor",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
+                                        "type": "template",
+                                        "data": "Fleechswarm Protection"
                                     }
                                 ]
                             }
@@ -1848,7 +1857,7 @@
                     "valid_starting_location": false,
                     "event_name": "Alpha 6",
                     "connections": {
-                        "Inside Arena": {
+                        "Pickup (DNA)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1926,6 +1935,35 @@
                     "valid_starting_location": false,
                     "connections": {
                         "Dock to Main Shaft": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (DNA)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 12624.51,
+                        "y": -795.84,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "pickup_type": "metroid",
+                        "spawngroup": "SG_Alpha_002"
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 178,
+                    "location_category": "minor",
+                    "connections": {
+                        "Inside Arena": {
                             "type": "and",
                             "data": {
                                 "comment": null,

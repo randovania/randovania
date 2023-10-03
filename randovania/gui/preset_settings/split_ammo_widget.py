@@ -58,9 +58,9 @@ class SplitAmmoWidget(QtWidgets.QCheckBox):
             self._last_check_state = has_split, has_unified
 
         if has_unified:
-            new_state = Qt.PartiallyChecked if has_split else Qt.Unchecked
+            new_state = Qt.CheckState.PartiallyChecked if has_split else Qt.CheckState.Unchecked
         else:
-            new_state = Qt.Checked
+            new_state = Qt.CheckState.Checked
         self.setCheckState(new_state)
 
         ammo_pickup_widgets[self.unified_ammo].pickup_box.setVisible(has_unified)

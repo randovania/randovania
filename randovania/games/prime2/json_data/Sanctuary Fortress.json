@@ -1815,39 +1815,12 @@
                                                                                         }
                                                                                     },
                                                                                     {
-                                                                                        "type": "and",
+                                                                                        "type": "or",
                                                                                         "data": {
                                                                                             "comment": null,
                                                                                             "items": [
                                                                                                 {
-                                                                                                    "type": "resource",
-                                                                                                    "data": {
-                                                                                                        "type": "items",
-                                                                                                        "name": "Bombs",
-                                                                                                        "amount": 1,
-                                                                                                        "negate": false
-                                                                                                    }
-                                                                                                },
-                                                                                                {
-                                                                                                    "type": "resource",
-                                                                                                    "data": {
-                                                                                                        "type": "tricks",
-                                                                                                        "name": "BombJump",
-                                                                                                        "amount": 2,
-                                                                                                        "negate": false
-                                                                                                    }
-                                                                                                },
-                                                                                                {
-                                                                                                    "type": "resource",
-                                                                                                    "data": {
-                                                                                                        "type": "tricks",
-                                                                                                        "name": "StandableTerrain",
-                                                                                                        "amount": 2,
-                                                                                                        "negate": false
-                                                                                                    }
-                                                                                                },
-                                                                                                {
-                                                                                                    "type": "or",
+                                                                                                    "type": "and",
                                                                                                     "data": {
                                                                                                         "comment": null,
                                                                                                         "items": [
@@ -1884,6 +1857,41 @@
                                                                                                                             }
                                                                                                                         }
                                                                                                                     ]
+                                                                                                                }
+                                                                                                            }
+                                                                                                        ]
+                                                                                                    }
+                                                                                                },
+                                                                                                {
+                                                                                                    "type": "and",
+                                                                                                    "data": {
+                                                                                                        "comment": "https://www.youtube.com/watch?v=vguGiUrLkUA",
+                                                                                                        "items": [
+                                                                                                            {
+                                                                                                                "type": "resource",
+                                                                                                                "data": {
+                                                                                                                    "type": "items",
+                                                                                                                    "name": "Bombs",
+                                                                                                                    "amount": 1,
+                                                                                                                    "negate": false
+                                                                                                                }
+                                                                                                            },
+                                                                                                            {
+                                                                                                                "type": "resource",
+                                                                                                                "data": {
+                                                                                                                    "type": "tricks",
+                                                                                                                    "name": "BombJump",
+                                                                                                                    "amount": 2,
+                                                                                                                    "negate": false
+                                                                                                                }
+                                                                                                            },
+                                                                                                            {
+                                                                                                                "type": "resource",
+                                                                                                                "data": {
+                                                                                                                    "type": "tricks",
+                                                                                                                    "name": "StandableTerrain",
+                                                                                                                    "amount": 2,
+                                                                                                                    "negate": false
                                                                                                                 }
                                                                                                             }
                                                                                                         ]
@@ -5244,6 +5252,35 @@
                                                         "comment": "https://www.youtube.com/watch?v=gSKWrUk5uM4",
                                                         "items": [
                                                             {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "or",
+                                                                            "data": {
+                                                                                "comment": null,
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "template",
+                                                                                        "data": "Has Suit"
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "NoSuits",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "damage",
@@ -5260,15 +5297,6 @@
                                                     "data": {
                                                         "comment": null,
                                                         "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "damage",
-                                                                    "name": "DarkWorld1",
-                                                                    "amount": 50,
-                                                                    "negate": false
-                                                                }
-                                                            },
                                                             {
                                                                 "type": "or",
                                                                 "data": {
@@ -5289,19 +5317,10 @@
                                                                                         }
                                                                                     },
                                                                                     {
-                                                                                        "type": "or",
+                                                                                        "type": "and",
                                                                                         "data": {
                                                                                             "comment": null,
                                                                                             "items": [
-                                                                                                {
-                                                                                                    "type": "resource",
-                                                                                                    "data": {
-                                                                                                        "type": "damage",
-                                                                                                        "name": "DarkWorld1",
-                                                                                                        "amount": 5,
-                                                                                                        "negate": false
-                                                                                                    }
-                                                                                                },
                                                                                                 {
                                                                                                     "type": "resource",
                                                                                                     "data": {
@@ -5344,6 +5363,15 @@
                                                                             }
                                                                         }
                                                                     ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "DarkWorld1",
+                                                                    "amount": 55,
+                                                                    "negate": false
                                                                 }
                                                             }
                                                         ]
@@ -5656,6 +5684,35 @@
                                                         "comment": null,
                                                         "items": [
                                                             {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "or",
+                                                                            "data": {
+                                                                                "comment": null,
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "template",
+                                                                                        "data": "Has Suit"
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "NoSuits",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "damage",
@@ -5686,7 +5743,7 @@
                                                                 "data": {
                                                                     "type": "damage",
                                                                     "name": "DarkWorld1",
-                                                                    "amount": 45,
+                                                                    "amount": 50,
                                                                     "negate": false
                                                                 }
                                                             },
@@ -5701,15 +5758,6 @@
                                                                                 "type": "tricks",
                                                                                 "name": "Movement",
                                                                                 "amount": 2,
-                                                                                "negate": false
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "damage",
-                                                                                "name": "DarkWorld1",
-                                                                                "amount": 5,
                                                                                 "negate": false
                                                                             }
                                                                         }
@@ -7771,15 +7819,6 @@
                                         }
                                     },
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "damage",
-                                            "name": "DarkWorld1",
-                                            "amount": 60,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
                                         "type": "or",
                                         "data": {
                                             "comment": null,
@@ -7821,6 +7860,60 @@
                                                 }
                                             ]
                                         }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "or",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Has Suit"
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "NoSuits",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "DarkWorld1",
+                                                                    "amount": 60,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -7841,12 +7934,49 @@
                     "location_category": "minor",
                     "connections": {
                         "Door to Culling Chamber": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "damage",
-                                "name": "DarkWorld1",
-                                "amount": 65,
-                                "negate": false
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Has Suit"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "NoSuits",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "damage",
+                                            "name": "DarkWorld1",
+                                            "amount": 60,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -8595,7 +8725,7 @@
                                                 {
                                                     "type": "or",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "Instant Morph -> https://www.youtube.com/watch?v=2zk_smeEbm8&t=19s",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -8609,7 +8739,7 @@
                                                             {
                                                                 "type": "and",
                                                                 "data": {
-                                                                    "comment": null,
+                                                                    "comment": "Wall Boost -> https://www.youtube.com/watch?v=2zk_smeEbm8",
                                                                     "items": [
                                                                         {
                                                                             "type": "resource",
@@ -8662,7 +8792,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Standable Terrain -> https://www.youtube.com/watch?v=2zk_smeEbm8&t=36s",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -8688,7 +8818,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Z-Axis -> https://www.youtube.com/watch?v=2zk_smeEbm8&t=50s",
                                             "items": [
                                                 {
                                                     "type": "template",
@@ -9064,79 +9194,147 @@
                                         }
                                     },
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "tricks",
-                                            "name": "SlopeJump",
-                                            "amount": 3,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
                                         "type": "or",
                                         "data": {
                                             "comment": null,
                                             "items": [
                                                 {
-                                                    "type": "and",
+                                                    "type": "or",
                                                     "data": {
                                                         "comment": null,
                                                         "items": [
                                                             {
-                                                                "type": "resource",
+                                                                "type": "and",
                                                                 "data": {
-                                                                    "type": "items",
-                                                                    "name": "MorphBall",
-                                                                    "amount": 1,
-                                                                    "negate": false
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Bombs",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "or",
+                                                                            "data": {
+                                                                                "comment": null,
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "and",
+                                                                                        "data": {
+                                                                                            "comment": "https://www.youtube.com/watch?v=09eqchpgKXQ&t=34s",
+                                                                                            "items": [
+                                                                                                {
+                                                                                                    "type": "resource",
+                                                                                                    "data": {
+                                                                                                        "type": "tricks",
+                                                                                                        "name": "BSJ",
+                                                                                                        "amount": 3,
+                                                                                                        "negate": false
+                                                                                                    }
+                                                                                                },
+                                                                                                {
+                                                                                                    "type": "resource",
+                                                                                                    "data": {
+                                                                                                        "type": "tricks",
+                                                                                                        "name": "StandableTerrain",
+                                                                                                        "amount": 3,
+                                                                                                        "negate": false
+                                                                                                    }
+                                                                                                },
+                                                                                                {
+                                                                                                    "type": "resource",
+                                                                                                    "data": {
+                                                                                                        "type": "tricks",
+                                                                                                        "name": "InstantMorph",
+                                                                                                        "amount": 3,
+                                                                                                        "negate": false
+                                                                                                    }
+                                                                                                }
+                                                                                            ]
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "and",
+                                                                                        "data": {
+                                                                                            "comment": "https://www.youtube.com/watch?v=09eqchpgKXQ",
+                                                                                            "items": [
+                                                                                                {
+                                                                                                    "type": "resource",
+                                                                                                    "data": {
+                                                                                                        "type": "tricks",
+                                                                                                        "name": "InstantMorph",
+                                                                                                        "amount": 3,
+                                                                                                        "negate": false
+                                                                                                    }
+                                                                                                },
+                                                                                                {
+                                                                                                    "type": "resource",
+                                                                                                    "data": {
+                                                                                                        "type": "tricks",
+                                                                                                        "name": "SlopeJump",
+                                                                                                        "amount": 3,
+                                                                                                        "negate": false
+                                                                                                    }
+                                                                                                },
+                                                                                                {
+                                                                                                    "type": "resource",
+                                                                                                    "data": {
+                                                                                                        "type": "tricks",
+                                                                                                        "name": "StandableTerrain",
+                                                                                                        "amount": 3,
+                                                                                                        "negate": false
+                                                                                                    }
+                                                                                                }
+                                                                                            ]
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        }
+                                                                    ]
                                                                 }
                                                             },
                                                             {
-                                                                "type": "resource",
+                                                                "type": "and",
                                                                 "data": {
-                                                                    "type": "items",
-                                                                    "name": "Bombs",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "InstantMorph",
-                                                                    "amount": 3,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": "https://www.youtube.com/watch?v=-jzu_Phf0lA&list=PLevfta9o_QKWuQNXAnmBXtzW4nmU5VLyN&index=69",
-                                                        "items": [
-                                                            {
-                                                                "type": "template",
-                                                                "data": "Activate Bomb Slot without Bombs (Instant Morph)"
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "InstantMorph",
-                                                                    "amount": 5,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "BomblessSlot",
-                                                                    "amount": 5,
-                                                                    "negate": false
+                                                                    "comment": "https://youtu.be/-jzu_Phf0lA?si=czd6_MNYjINbEBOV",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "BomblessSlot",
+                                                                                "amount": 5,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "InstantMorph",
+                                                                                "amount": 5,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Activate Bomb Slot without Bombs (Instant Morph)"
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "SlopeJump",
+                                                                                "amount": 3,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
                                                                 }
                                                             }
                                                         ]
@@ -9148,9 +9346,9 @@
                                     {
                                         "type": "resource",
                                         "data": {
-                                            "type": "tricks",
-                                            "name": "StandableTerrain",
-                                            "amount": 3,
+                                            "type": "items",
+                                            "name": "MorphBall",
+                                            "amount": 1,
                                             "negate": false
                                         }
                                     }
@@ -9216,12 +9414,12 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "https://www.youtube.com/watch?v=2zk_smeEbm8&t=19s",
                                             "items": [
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "https://www.youtube.com/watch?v=2zk_smeEbm8",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -9314,7 +9512,7 @@
                         "Pickup (Dark Ammo)": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "https://www.youtube.com/watch?v=09eqchpgKXQ&t=51s",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -9378,7 +9576,7 @@
                         "Door to Watch Station Access": {
                             "type": "or",
                             "data": {
-                                "comment": null,
+                                "comment": "No Space Jump https://www.youtube.com/watch?v=z2zCtuLRRvc",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -9420,7 +9618,7 @@
                         "Door to Grand Abyss": {
                             "type": "or",
                             "data": {
-                                "comment": null,
+                                "comment": "No Space Jump https://www.youtube.com/watch?v=z2zCtuLRRvc&t=8s",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -9796,7 +9994,7 @@
                                                 {
                                                     "type": "or",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "https://www.youtube.com/watch?v=w6OEyFUTUyw",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -9882,7 +10080,7 @@
                                                 {
                                                     "type": "or",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "https://www.youtube.com/watch?v=w6OEyFUTUyw",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -17803,19 +18001,62 @@
                                     {
                                         "type": "resource",
                                         "data": {
-                                            "type": "items",
-                                            "name": "Spider",
+                                            "type": "events",
+                                            "name": "Event58",
                                             "amount": 1,
                                             "negate": false
                                         }
                                     },
                                     {
-                                        "type": "resource",
+                                        "type": "or",
                                         "data": {
-                                            "type": "events",
-                                            "name": "Event58",
-                                            "amount": 1,
-                                            "negate": false
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Spider",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "Instant Morph -> https://youtu.be/d-yq4nqriDo?si=pCKZzyH7Q8yg6MUH",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "SpaceJump",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "StandableTerrain",
+                                                                    "amount": 3,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "InstantMorph",
+                                                                    "amount": 5,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -20588,7 +20829,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "https://www.youtube.com/watch?v=1uWwpO7IHtk",
+                                                        "comment": "Scan Dash -> https://www.youtube.com/watch?v=1uWwpO7IHtk",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -20602,19 +20843,36 @@
                                                             {
                                                                 "type": "resource",
                                                                 "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Dash",
-                                                                    "amount": 3,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
                                                                     "type": "items",
                                                                     "name": "Scan",
                                                                     "amount": 1,
                                                                     "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "or",
+                                                                "data": {
+                                                                    "comment": "Extended Dash -> https://www.youtube.com/watch?v=WU-uQkzCycA",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Dash",
+                                                                                "amount": 3,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "EDash",
+                                                                                "amount": 3,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
                                                                 }
                                                             }
                                                         ]
@@ -20645,6 +20903,32 @@
                                                                     "name": "RoomRando",
                                                                     "amount": 1,
                                                                     "negate": true
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "Boost Jump -> https://youtu.be/slAxhRMksBk",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "BoostJump",
+                                                                    "amount": 4,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "TerminalFall",
+                                                                    "amount": 5,
+                                                                    "negate": false
                                                                 }
                                                             }
                                                         ]
@@ -22141,15 +22425,6 @@
                                                                                     {
                                                                                         "type": "resource",
                                                                                         "data": {
-                                                                                            "type": "tricks",
-                                                                                            "name": "SAnoSJ",
-                                                                                            "amount": 2,
-                                                                                            "negate": false
-                                                                                        }
-                                                                                    },
-                                                                                    {
-                                                                                        "type": "resource",
-                                                                                        "data": {
                                                                                             "type": "misc",
                                                                                             "name": "RoomRando",
                                                                                             "amount": 1,
@@ -22160,8 +22435,8 @@
                                                                                         "type": "resource",
                                                                                         "data": {
                                                                                             "type": "tricks",
-                                                                                            "name": "ScrewAttackTunnels",
-                                                                                            "amount": 4,
+                                                                                            "name": "SAnoSJ",
+                                                                                            "amount": 2,
                                                                                             "negate": false
                                                                                         }
                                                                                     },
@@ -22215,6 +22490,15 @@
                                                                                                     }
                                                                                                 }
                                                                                             ]
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "ScrewAttackTunnels",
+                                                                                            "amount": 4,
+                                                                                            "negate": false
                                                                                         }
                                                                                     }
                                                                                 ]
@@ -22633,15 +22917,6 @@
                                                                                                             {
                                                                                                                 "type": "resource",
                                                                                                                 "data": {
-                                                                                                                    "type": "tricks",
-                                                                                                                    "name": "SAnoSJ",
-                                                                                                                    "amount": 2,
-                                                                                                                    "negate": false
-                                                                                                                }
-                                                                                                            },
-                                                                                                            {
-                                                                                                                "type": "resource",
-                                                                                                                "data": {
                                                                                                                     "type": "misc",
                                                                                                                     "name": "RoomRando",
                                                                                                                     "amount": 1,
@@ -22652,8 +22927,8 @@
                                                                                                                 "type": "resource",
                                                                                                                 "data": {
                                                                                                                     "type": "tricks",
-                                                                                                                    "name": "ScrewAttackTunnels",
-                                                                                                                    "amount": 4,
+                                                                                                                    "name": "SAnoSJ",
+                                                                                                                    "amount": 2,
                                                                                                                     "negate": false
                                                                                                                 }
                                                                                                             },
@@ -22707,6 +22982,15 @@
                                                                                                                             }
                                                                                                                         }
                                                                                                                     ]
+                                                                                                                }
+                                                                                                            },
+                                                                                                            {
+                                                                                                                "type": "resource",
+                                                                                                                "data": {
+                                                                                                                    "type": "tricks",
+                                                                                                                    "name": "ScrewAttackTunnels",
+                                                                                                                    "amount": 4,
+                                                                                                                    "negate": false
                                                                                                                 }
                                                                                                             }
                                                                                                         ]
@@ -22796,15 +23080,6 @@
                                                                                 "comment": null,
                                                                                 "items": [
                                                                                     {
-                                                                                        "type": "resource",
-                                                                                        "data": {
-                                                                                            "type": "tricks",
-                                                                                            "name": "NoSuits",
-                                                                                            "amount": 1,
-                                                                                            "negate": false
-                                                                                        }
-                                                                                    },
-                                                                                    {
                                                                                         "type": "or",
                                                                                         "data": {
                                                                                             "comment": null,
@@ -22871,6 +23146,15 @@
                                                                                                     }
                                                                                                 }
                                                                                             ]
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "NoSuits",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
                                                                                         }
                                                                                     }
                                                                                 ]
@@ -22946,15 +23230,6 @@
                                                                                                             {
                                                                                                                 "type": "resource",
                                                                                                                 "data": {
-                                                                                                                    "type": "tricks",
-                                                                                                                    "name": "NoSuits",
-                                                                                                                    "amount": 1,
-                                                                                                                    "negate": false
-                                                                                                                }
-                                                                                                            },
-                                                                                                            {
-                                                                                                                "type": "resource",
-                                                                                                                "data": {
                                                                                                                     "type": "damage",
                                                                                                                     "name": "DarkWorld1",
                                                                                                                     "amount": 85,
@@ -22967,6 +23242,15 @@
                                                                                                                     "type": "damage",
                                                                                                                     "name": "DarkWorld3",
                                                                                                                     "amount": 35,
+                                                                                                                    "negate": false
+                                                                                                                }
+                                                                                                            },
+                                                                                                            {
+                                                                                                                "type": "resource",
+                                                                                                                "data": {
+                                                                                                                    "type": "tricks",
+                                                                                                                    "name": "NoSuits",
+                                                                                                                    "amount": 1,
                                                                                                                     "negate": false
                                                                                                                 }
                                                                                                             }
@@ -23024,15 +23308,6 @@
                                                                                                             {
                                                                                                                 "type": "resource",
                                                                                                                 "data": {
-                                                                                                                    "type": "tricks",
-                                                                                                                    "name": "NoSuits",
-                                                                                                                    "amount": 3,
-                                                                                                                    "negate": false
-                                                                                                                }
-                                                                                                            },
-                                                                                                            {
-                                                                                                                "type": "resource",
-                                                                                                                "data": {
                                                                                                                     "type": "damage",
                                                                                                                     "name": "DarkWorld1",
                                                                                                                     "amount": 110,
@@ -23045,6 +23320,15 @@
                                                                                                                     "type": "damage",
                                                                                                                     "name": "DarkWorld3",
                                                                                                                     "amount": 65,
+                                                                                                                    "negate": false
+                                                                                                                }
+                                                                                                            },
+                                                                                                            {
+                                                                                                                "type": "resource",
+                                                                                                                "data": {
+                                                                                                                    "type": "tricks",
+                                                                                                                    "name": "NoSuits",
+                                                                                                                    "amount": 3,
                                                                                                                     "negate": false
                                                                                                                 }
                                                                                                             }
@@ -23121,15 +23405,6 @@
                                                                                                                                     {
                                                                                                                                         "type": "resource",
                                                                                                                                         "data": {
-                                                                                                                                            "type": "tricks",
-                                                                                                                                            "name": "NoSuits",
-                                                                                                                                            "amount": 2,
-                                                                                                                                            "negate": false
-                                                                                                                                        }
-                                                                                                                                    },
-                                                                                                                                    {
-                                                                                                                                        "type": "resource",
-                                                                                                                                        "data": {
                                                                                                                                             "type": "damage",
                                                                                                                                             "name": "DarkWorld1",
                                                                                                                                             "amount": 60,
@@ -23142,6 +23417,15 @@
                                                                                                                                             "type": "damage",
                                                                                                                                             "name": "DarkWorld3",
                                                                                                                                             "amount": 75,
+                                                                                                                                            "negate": false
+                                                                                                                                        }
+                                                                                                                                    },
+                                                                                                                                    {
+                                                                                                                                        "type": "resource",
+                                                                                                                                        "data": {
+                                                                                                                                            "type": "tricks",
+                                                                                                                                            "name": "NoSuits",
+                                                                                                                                            "amount": 2,
                                                                                                                                             "negate": false
                                                                                                                                         }
                                                                                                                                     }
@@ -23162,15 +23446,6 @@
                                                                                                             {
                                                                                                                 "type": "resource",
                                                                                                                 "data": {
-                                                                                                                    "type": "tricks",
-                                                                                                                    "name": "SAnoSJ",
-                                                                                                                    "amount": 2,
-                                                                                                                    "negate": false
-                                                                                                                }
-                                                                                                            },
-                                                                                                            {
-                                                                                                                "type": "resource",
-                                                                                                                "data": {
                                                                                                                     "type": "misc",
                                                                                                                     "name": "RoomRando",
                                                                                                                     "amount": 1,
@@ -23181,8 +23456,8 @@
                                                                                                                 "type": "resource",
                                                                                                                 "data": {
                                                                                                                     "type": "tricks",
-                                                                                                                    "name": "ScrewAttackTunnels",
-                                                                                                                    "amount": 4,
+                                                                                                                    "name": "SAnoSJ",
+                                                                                                                    "amount": 2,
                                                                                                                     "negate": false
                                                                                                                 }
                                                                                                             },
@@ -23208,15 +23483,6 @@
                                                                                                                                     {
                                                                                                                                         "type": "resource",
                                                                                                                                         "data": {
-                                                                                                                                            "type": "tricks",
-                                                                                                                                            "name": "NoSuits",
-                                                                                                                                            "amount": 3,
-                                                                                                                                            "negate": false
-                                                                                                                                        }
-                                                                                                                                    },
-                                                                                                                                    {
-                                                                                                                                        "type": "resource",
-                                                                                                                                        "data": {
                                                                                                                                             "type": "damage",
                                                                                                                                             "name": "DarkWorld1",
                                                                                                                                             "amount": 85,
@@ -23231,11 +23497,29 @@
                                                                                                                                             "amount": 50,
                                                                                                                                             "negate": false
                                                                                                                                         }
+                                                                                                                                    },
+                                                                                                                                    {
+                                                                                                                                        "type": "resource",
+                                                                                                                                        "data": {
+                                                                                                                                            "type": "tricks",
+                                                                                                                                            "name": "NoSuits",
+                                                                                                                                            "amount": 3,
+                                                                                                                                            "negate": false
+                                                                                                                                        }
                                                                                                                                     }
                                                                                                                                 ]
                                                                                                                             }
                                                                                                                         }
                                                                                                                     ]
+                                                                                                                }
+                                                                                                            },
+                                                                                                            {
+                                                                                                                "type": "resource",
+                                                                                                                "data": {
+                                                                                                                    "type": "tricks",
+                                                                                                                    "name": "ScrewAttackTunnels",
+                                                                                                                    "amount": 4,
+                                                                                                                    "negate": false
                                                                                                                 }
                                                                                                             }
                                                                                                         ]
@@ -29002,6 +29286,54 @@
                                                                 }
                                                             }
                                                         ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "https://www.youtube.com/watch?v=u4gctVgspEc",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "SpaceJump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "ScrewAttack",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "SlopeJump",
+                                                        "amount": 4,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Use Screw Attack (Space Jump)"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "damage",
+                                                        "name": "DarkWorld1",
+                                                        "amount": 75,
+                                                        "negate": false
                                                     }
                                                 }
                                             ]
