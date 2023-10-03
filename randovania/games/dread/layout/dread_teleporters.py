@@ -10,8 +10,6 @@ from randovania.layout.lib.teleporters import TeleporterConfiguration, Teleporte
 if TYPE_CHECKING:
     from randovania.game_description.db.node_identifier import NodeIdentifier
 
-    pass
-
 
 @dataclasses.dataclass(frozen=True)
 class DreadTeleporterConfiguration(TeleporterConfiguration):

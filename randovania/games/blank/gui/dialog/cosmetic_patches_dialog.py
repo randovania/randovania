@@ -28,7 +28,6 @@ class BlankCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_BlankCosmeticPatc
     def connect_signals(self) -> None:
         super().connect_signals()
         # More signals here!
-        pass
 
     def on_new_cosmetic_patches(self, patches: BlankCosmeticPatches) -> None:
         # Update fields with the new values

@@ -164,5 +164,3 @@ def test_encode_non_jsondataclass():
 
     assert encoded == b'\x11{"a":5,"b":"foo"}'
     assert decoded == x
-
-    pass
