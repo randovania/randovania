@@ -444,7 +444,7 @@ Extra - asset_id: collision_camera_007
 > Event - Alpha Metroid+; Heals? False
   * Layers: default
   * Event Area 4 (West) - Alpha Metroid+
-  > Start Point
+  > Pickup (DNA)
       Trivial
 
 > Tunnel to Alpha+ Arena Access; Heals? False
@@ -460,6 +460,14 @@ Extra - asset_id: collision_camera_007
       Trivial
   > Event - Alpha Metroid+
       Defeat Alpha Metroid+
+
+> Pickup (DNA); Heals? False
+  * Layers: default
+  * Pickup 187; Category? Minor
+  * Extra - pickup_type: metroid
+  * Extra - spawngroup: SG_Alpha_001
+  > Start Point
+      Trivial
 
 ----------------
 Roundabout
@@ -606,7 +614,7 @@ Extra - asset_id: collision_camera_013
 > Event - Gamma Metroid; Heals? False
   * Layers: default
   * Event Area 4 (West) - Gamma Metroid
-  > Inside Arena
+  > Pickup (DNA)
       Trivial
 
 > Inside Arena; Heals? False; Default Node
@@ -618,6 +626,14 @@ Extra - asset_id: collision_camera_013
       Lay Any Bomb
   > Event - Gamma Metroid
       Defeat Gamma Metroid
+
+> Pickup (DNA); Heals? False
+  * Layers: default
+  * Pickup 197; Category? Minor
+  * Extra - pickup_type: metroid
+  * Extra - spawngroup: SG_Gamma_001
+  > Inside Arena
+      Trivial
 
 ----------------
 Gamma Access Path Lower

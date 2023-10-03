@@ -666,7 +666,7 @@
                     "valid_starting_location": false,
                     "event_name": "Alpha 15",
                     "connections": {
-                        "Start Point": {
+                        "Pickup (DNA)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -709,6 +709,35 @@
                         "Event - Alpha Metroid+": {
                             "type": "template",
                             "data": "Defeat Alpha Metroid+"
+                        }
+                    }
+                },
+                "Pickup (DNA)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -16045.2,
+                        "y": 961.61,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "pickup_type": "metroid",
+                        "spawngroup": "SG_Alpha_002"
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 185,
+                    "location_category": "minor",
+                    "connections": {
+                        "Start Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 }
@@ -836,7 +865,7 @@
                     "valid_starting_location": false,
                     "event_name": "Gamma 5",
                     "connections": {
-                        "Start Point (Inside Arena)": {
+                        "Pickup (DNA)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1000,11 +1029,40 @@
                             }
                         }
                     }
+                },
+                "Pickup (DNA)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -9104.52,
+                        "y": -872.68,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "pickup_type": "metroid",
+                        "spawngroup": "SG_Gamma_001"
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 190,
+                    "location_category": "minor",
+                    "connections": {
+                        "Start Point (Inside Arena)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
         "Gamma Arena South": {
-            "default_node": "Start Point (Outside Arena)",
+            "default_node": "Outside Arena",
             "extra": {
                 "total_boundings": {
                     "x1": -11700.0,
@@ -1174,7 +1232,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Shaft West": {
+                        "Outside Arena": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -1214,36 +1272,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Transport to Area 3 Exterior (Upper)": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        "Event - Gamma Metroid": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Defeat Gamma Metroid"
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Lay Any Bomb"
-                                    }
-                                ]
-                            }
-                        },
-                        "Left of Fan": {
-                            "type": "template",
-                            "data": "Lay Power Bomb"
-                        },
-                        "Start Point (Outside Arena)": {
+                        "Outside Arena": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1305,11 +1334,7 @@
                     "valid_starting_location": false,
                     "event_name": "Gamma 6",
                     "connections": {
-                        "Door to Shaft West": {
-                            "type": "template",
-                            "data": "Lay Any Bomb"
-                        },
-                        "Start Point (Inside Arena)": {
+                        "Pickup (DNA)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1689,17 +1714,17 @@
                                 ]
                             }
                         },
-                        "Door to Shaft West": {
+                        "Below Pickup": {
                             "type": "template",
                             "data": "Lay Any Bomb"
                         },
-                        "Below Pickup": {
+                        "Outside Arena": {
                             "type": "template",
                             "data": "Lay Any Bomb"
                         }
                     }
                 },
-                "Start Point (Inside Arena)": {
+                "Inside Arena": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
@@ -1719,10 +1744,14 @@
                         "Event - Gamma Metroid": {
                             "type": "template",
                             "data": "Defeat Gamma Metroid"
+                        },
+                        "Outside Arena": {
+                            "type": "template",
+                            "data": "Lay Any Bomb"
                         }
                     }
                 },
-                "Start Point (Outside Arena)": {
+                "Outside Arena": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
@@ -1739,7 +1768,53 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
+                        "Door to Transport to Area 3 Exterior (Upper)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
                         "Door to Shaft West": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Left of Fan": {
+                            "type": "template",
+                            "data": "Lay Power Bomb"
+                        },
+                        "Inside Arena": {
+                            "type": "template",
+                            "data": "Lay Any Bomb"
+                        }
+                    }
+                },
+                "Pickup (DNA)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -5235.41,
+                        "y": -4873.15,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "pickup_type": "metroid",
+                        "spawngroup": "SG_Gamma_002"
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 191,
+                    "location_category": "minor",
+                    "connections": {
+                        "Inside Arena": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4830,9 +4905,12 @@
                     "valid_starting_location": false,
                     "event_name": "Gamma 8",
                     "connections": {
-                        "Door to Gamma+ Arena South Access": {
-                            "type": "template",
-                            "data": "Lay Any Bomb"
+                        "Pickup (DNA)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -4852,6 +4930,32 @@
                         "start_point_actor_name": "ST_Gamma_004A_Checkpoint"
                     },
                     "valid_starting_location": false,
+                    "connections": {
+                        "Door to Gamma+ Arena South Access": {
+                            "type": "template",
+                            "data": "Lay Any Bomb"
+                        }
+                    }
+                },
+                "Pickup (DNA)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -3944.24,
+                        "y": -18171.07,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "pickup_type": "metroid",
+                        "spawngroup": "SG_Gamma_004_B"
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 193,
+                    "location_category": "minor",
                     "connections": {
                         "Door to Gamma+ Arena South Access": {
                             "type": "template",
@@ -5176,13 +5280,11 @@
                     "valid_starting_location": false,
                     "event_name": "Gamma 7",
                     "connections": {
-                        "Start Point (Right)": {
-                            "type": "resource",
+                        "Pickup (DNA)": {
+                            "type": "and",
                             "data": {
-                                "type": "items",
-                                "name": "Varia",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -5298,6 +5400,35 @@
                                 "name": "Varia",
                                 "amount": 1,
                                 "negate": false
+                            }
+                        }
+                    }
+                },
+                "Pickup (DNA)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1687.03,
+                        "y": 5344.02,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "pickup_type": "metroid",
+                        "spawngroup": "SG_Gamma_003"
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 192,
+                    "location_category": "minor",
+                    "connections": {
+                        "Start Point (Right)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -5549,7 +5680,7 @@
                     "valid_starting_location": false,
                     "event_name": "Alpha 16",
                     "connections": {
-                        "Start Point (Inside Arena)": {
+                        "Pickup (DNA)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5621,6 +5752,35 @@
                         "Start Point (Inside Arena)": {
                             "type": "template",
                             "data": "Lay Any Bomb"
+                        }
+                    }
+                },
+                "Pickup (DNA)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -3138.98,
+                        "y": 5419.5,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "pickup_type": "metroid",
+                        "spawngroup": "SG_Alpha_003"
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 186,
+                    "location_category": "minor",
+                    "connections": {
+                        "Start Point (Inside Arena)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 }

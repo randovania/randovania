@@ -3191,7 +3191,7 @@
                     "valid_starting_location": false,
                     "event_name": "Zeta 3",
                     "connections": {
-                        "Room Center": {
+                        "Pickup (DNA)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3306,6 +3306,35 @@
                         "Event - Zeta Metroid": {
                             "type": "template",
                             "data": "Defeat Zeta Metroid"
+                        }
+                    }
+                },
+                "Pickup (DNA)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -3695.45,
+                        "y": -743.05,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "pickup_type": "metroid",
+                        "spawngroup": "SG_Zeta_001"
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 204,
+                    "location_category": "minor",
+                    "connections": {
+                        "Room Center": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 }
@@ -3592,7 +3621,7 @@
                     "valid_starting_location": false,
                     "event_name": "Gamma 14",
                     "connections": {
-                        "Inside Arena": {
+                        "Pickup (DNA)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4266,6 +4295,35 @@
                             }
                         }
                     }
+                },
+                "Pickup (DNA)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 6819.166958756864,
+                        "y": -4292.060988433228,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "pickup_type": "metroid",
+                        "spawngroup": "SG_Gamma_003"
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 201,
+                    "location_category": "minor",
+                    "connections": {
+                        "Inside Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -4796,72 +4854,11 @@
                     "valid_starting_location": false,
                     "event_name": "Gamma 13",
                     "connections": {
-                        "Start Point": {
+                        "Pickup (DNA)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Varia",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Gravity",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Space",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "template",
-                                                    "data": "Can Spiderspark"
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "template",
-                                                                "data": "Lay Bomb"
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "DBJ",
-                                                                    "amount": 2,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
+                                "items": []
                             }
                         }
                     }
@@ -4960,6 +4957,96 @@
                                     {
                                         "type": "template",
                                         "data": "Defeat Gamma Metroid+"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Pickup (DNA)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 12601.12,
+                        "y": 6455.42,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "pickup_type": "metroid",
+                        "spawngroup": "SG_Gamma_002"
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 200,
+                    "location_category": "minor",
+                    "connections": {
+                        "Start Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Varia",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Gravity",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Space",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Spiderspark"
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "DBJ",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Lay Bomb"
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }

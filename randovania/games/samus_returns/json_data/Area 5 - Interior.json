@@ -5621,13 +5621,11 @@
                     "valid_starting_location": false,
                     "event_name": "Gamma 12",
                     "connections": {
-                        "Inside Arena": {
-                            "type": "resource",
+                        "Pickup (DNA)": {
+                            "type": "and",
                             "data": {
-                                "type": "items",
-                                "name": "Varia",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -5747,6 +5745,35 @@
                                 "name": "Varia",
                                 "amount": 1,
                                 "negate": false
+                            }
+                        }
+                    }
+                },
+                "Pickup (DNA)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -25891.95,
+                        "y": 4567.92,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "pickup_type": "metroid",
+                        "spawngroup": "SG_Gamma_001"
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 199,
+                    "location_category": "minor",
+                    "connections": {
+                        "Inside Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -6180,7 +6207,7 @@
                     "valid_starting_location": false,
                     "event_name": "Zeta 2",
                     "connections": {
-                        "Room Center": {
+                        "Pickup (DNA)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6276,6 +6303,35 @@
                         "Event - Zeta Metroid+": {
                             "type": "template",
                             "data": "Defeat Zeta Metroid"
+                        }
+                    }
+                },
+                "Pickup (DNA)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 15292.03,
+                        "y": 1278.3,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "pickup_type": "metroid",
+                        "spawngroup": "SG_Zeta_002"
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 205,
+                    "location_category": "minor",
+                    "connections": {
+                        "Room Center": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 }

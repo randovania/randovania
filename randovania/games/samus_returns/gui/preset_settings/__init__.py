@@ -8,6 +8,7 @@ if TYPE_CHECKING:
 
 
 def msr_preset_tabs(editor: PresetEditor, window_manager: WindowManager):
+    from randovania.games.samus_returns.gui.preset_settings.msr_goal_tab import PresetMSRGoal
     from randovania.games.samus_returns.gui.preset_settings.msr_patches_tab import PresetMSRPatches
     from randovania.gui.preset_settings.location_pool_tab import PresetLocationPool
     from randovania.gui.preset_settings.metroid_item_pool_tab import MetroidPresetItemPool
@@ -23,6 +24,7 @@ def msr_preset_tabs(editor: PresetEditor, window_manager: WindowManager):
         PresetTrickLevel,
         PresetMetroidStartingArea,
         PresetLocationPool,
+        PresetMSRGoal,
         MetroidPresetItemPool,
         PresetMSRPatches,
     ]
