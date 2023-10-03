@@ -9,7 +9,7 @@ from randovania.games.samus_returns.layout.msr_configuration import MSRConfigura
 from randovania.interface_common.preset_editor import PresetEditor
 
 
-def test_toggle_immediate_parts(skip_qtbot, msr_game_description, preset_manager):
+def test_aeion_increase(skip_qtbot, msr_game_description, preset_manager):
     game = msr_game_description.game
     base = preset_manager.default_preset_for_game(game).get_preset()
     preset = dataclasses.replace(base, uuid=uuid.UUID("b41fde84-1f57-4b79-8cd6-3e5a78077fa6"))
