@@ -111,15 +111,17 @@ class ResourceDatabase:
         if cached_result is not None:
             return cached_result
 
-        multiplier = self.base_damage_reduction(self, current_resources)
+        base_reduction = self.base_damage_reduction(self, current_resources)
 
+        damage_multiplier = 1.0
         for reduction in self.damage_reductions.get(resource, []):
             if reduction.inventory_item is None or current_resources[reduction.inventory_item] > 0:
-                multiplier *= reduction.damage_multiplier
+                damage_multiplier = min(damage_multiplier, reduction.damage_multiplier)
 
-        current_resources.add_damage_reduction_cache(resource, multiplier)
+        damage_reduction = damage_multiplier * base_reduction
+        current_resources.add_damage_reduction_cache(resource, damage_reduction)
 
-        return multiplier
+        return damage_reduction
 
     def first_unused_resource_index(self) -> int:
         return len(self.resource_by_index)
