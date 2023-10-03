@@ -2171,8 +2171,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -5445.438692437958,
-                        "y": -3396.0026193457393,
+                        "x": -5445.44,
+                        "y": -3396.0,
                         "z": 0.0
                     },
                     "description": "",
@@ -2181,7 +2181,7 @@
                     ],
                     "extra": {
                         "actor_name": "Door006",
-                        "actor_type": "doorchargecharge"
+                        "actor_type": "doorpowerpower"
                     },
                     "valid_starting_location": false,
                     "dock_type": "door",
@@ -2190,7 +2190,7 @@
                         "area": "Diggernaut Chase Access",
                         "node": "Door to Transport to Area 4 West"
                     },
-                    "default_dock_weakness": "Charge Beam Door",
+                    "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -2887,8 +2887,8 @@
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
-                        "x": 13065.467449828684,
-                        "y": 7721.904062652962,
+                        "x": 16148.772087451332,
+                        "y": 9788.349805330938,
                         "z": 0.0
                     },
                     "description": "",
@@ -2903,14 +2903,42 @@
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Start Point": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Varia",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Lay Any Bomb"
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Climb Rooms Vertically (High Jump)"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "SWJ",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -3057,65 +3085,8 @@
                                         }
                                     },
                                     {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Space",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "template",
-                                                    "data": "Can Spiderspark"
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
-                            }
-                        }
-                    }
-                },
-                "Start Point": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 13700.0,
-                        "y": 7100.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "start_point_actor_name": "ST_Gamma_002C_Checkpoint"
-                    },
-                    "valid_starting_location": false,
-                    "connections": {
-                        "Event - Gamma Metroid": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Varia",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
                                         "type": "template",
-                                        "data": "Defeat Gamma Metroid"
+                                        "data": "Climb Rooms Vertically (High Jump)"
                                     }
                                 ]
                             }
@@ -3158,8 +3129,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -5457.251213403683,
-                        "y": -3408.024311575964,
+                        "x": -5457.25,
+                        "y": -3408.02,
                         "z": 0.0
                     },
                     "description": "",
@@ -3168,7 +3139,7 @@
                     ],
                     "extra": {
                         "actor_name": "Door006",
-                        "actor_type": "doorchargecharge"
+                        "actor_type": "doorpowerpower"
                     },
                     "valid_starting_location": false,
                     "dock_type": "door",
@@ -3177,7 +3148,7 @@
                         "area": "Transport to Area 4 West",
                         "node": "Door to Diggernaut Chase Access"
                     },
-                    "default_dock_weakness": "Charge Beam Door",
+                    "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,

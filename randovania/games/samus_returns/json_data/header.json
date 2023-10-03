@@ -905,6 +905,26 @@
             "SeparateBeams": {
                 "long_name": "Separate Beam Behaviors",
                 "extra": {}
+            },
+            "NerfPBs": {
+                "long_name": "Nerf Power Bombs",
+                "extra": {}
+            },
+            "NerfSupers": {
+                "long_name": "Nerf Super Missiles",
+                "extra": {}
+            },
+            "HighDanger": {
+                "long_name": "Highly Dangerous Logic",
+                "extra": {}
+            },
+            "SurfaceCrumbles": {
+                "long_name": "Remove Surface Crumble Blocks",
+                "extra": {}
+            },
+            "Area1Crumbles": {
+                "long_name": "Remove Area 1 Crumble Blocks",
+                "extra": {}
             }
         },
         "requirement_template": {
@@ -1733,6 +1753,49 @@
                         }
                     ]
                 }
+            },
+            "Fleechswarm Protection": {
+                "type": "or",
+                "data": {
+                    "comment": null,
+                    "items": [
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Armor",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Gravity",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Knowledge",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
             }
         },
         "damage_reductions": [
@@ -1921,11 +1984,28 @@
                                                             "items": [
                                                                 {
                                                                     "type": "template",
-                                                                    "data": "Lay Power Bomb"
+                                                                    "data": "Shoot Beam Burst"
                                                                 },
                                                                 {
-                                                                    "type": "template",
-                                                                    "data": "Shoot Beam Burst"
+                                                                    "type": "and",
+                                                                    "data": {
+                                                                        "comment": null,
+                                                                        "items": [
+                                                                            {
+                                                                                "type": "template",
+                                                                                "data": "Lay Power Bomb"
+                                                                            },
+                                                                            {
+                                                                                "type": "resource",
+                                                                                "data": {
+                                                                                    "type": "misc",
+                                                                                    "name": "NerfPBs",
+                                                                                    "amount": 1,
+                                                                                    "negate": true
+                                                                                }
+                                                                            }
+                                                                        ]
+                                                                    }
                                                                 }
                                                             ]
                                                         }
@@ -1977,6 +2057,15 @@
                                                     {
                                                         "type": "template",
                                                         "data": "Lay Power Bomb"
+                                                    },
+                                                    {
+                                                        "type": "resource",
+                                                        "data": {
+                                                            "type": "misc",
+                                                            "name": "NerfPBs",
+                                                            "amount": 1,
+                                                            "negate": true
+                                                        }
                                                     }
                                                 ]
                                             }
@@ -2025,6 +2114,15 @@
                                                     {
                                                         "type": "template",
                                                         "data": "Lay Power Bomb"
+                                                    },
+                                                    {
+                                                        "type": "resource",
+                                                        "data": {
+                                                            "type": "misc",
+                                                            "name": "NerfPBs",
+                                                            "amount": 1,
+                                                            "negate": true
+                                                        }
                                                     }
                                                 ]
                                             }
@@ -2078,6 +2176,15 @@
                                                     {
                                                         "type": "template",
                                                         "data": "Lay Power Bomb"
+                                                    },
+                                                    {
+                                                        "type": "resource",
+                                                        "data": {
+                                                            "type": "misc",
+                                                            "name": "NerfPBs",
+                                                            "amount": 1,
+                                                            "negate": true
+                                                        }
                                                     }
                                                 ]
                                             }
@@ -2101,12 +2208,41 @@
                         "lock": {
                             "lock_type": "front-blast-back-if-matching",
                             "requirement": {
-                                "type": "resource",
+                                "type": "or",
                                 "data": {
-                                    "type": "items",
-                                    "name": "MissileAmmo",
-                                    "amount": 1,
-                                    "negate": false
+                                    "comment": null,
+                                    "items": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "MissileAmmo",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "and",
+                                            "data": {
+                                                "comment": null,
+                                                "items": [
+                                                    {
+                                                        "type": "template",
+                                                        "data": "Shoot Super Missile"
+                                                    },
+                                                    {
+                                                        "type": "resource",
+                                                        "data": {
+                                                            "type": "misc",
+                                                            "name": "NerfSupers",
+                                                            "amount": 1,
+                                                            "negate": true
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    ]
                                 }
                             }
                         }

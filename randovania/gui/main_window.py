@@ -450,7 +450,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         current_version = update_checker.strict_current_version()
         last_changelog = self._options.last_changelog_displayed
 
-        all_change_logs, new_change_logs, version_to_display = update_checker.versions_to_display_for_releases(
+        (all_change_logs, new_change_logs, version_to_display) = update_checker.versions_to_display_for_releases(
             current_version, last_changelog, releases
         )
 
@@ -542,7 +542,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
             data_visualizer.focus_on_area_by_name(area_name)
 
         if trick_levels is not None:
-            data_visualizer.layers_editor.set_selected_tricks(trick_levels)
+            data_visualizer.connection_filters.set_selected_tricks(trick_levels)
 
         self._data_visualizer.show()
 
