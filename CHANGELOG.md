@@ -7,7 +7,43 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [6.4.0] - 2023-11-??
 
-- Nothing yet.
+### Metroid Dread
+
+#### Logic Database
+
+##### Artaria
+
+- Changed: Going to Transport to Dairon with Speed Booster now requires the Speed Booster Conservation trick set to Beginner.
+
+##### Burenia
+
+- Changed: The Early Gravity sequence now requires the Speed Booster Conservation trick set to Beginner.
+
+##### Cataris
+
+- Changed: The item in Dairon Transport Access now requires the Speed Booster Conservation trick set to Beginner.
+- Changed: The speed blocks leading to Underlava Puzzle Room 2 now require the Speed Booster Conservation trick set to Beginner or Power Bombs.
+
+##### Dairon
+
+- Changed: The lower item in the Freezer now requires the Speed Booster Conservation trick set to Beginner.
+- Changed: The item in Ghavoran Transport Access now requires the Speed Booster Conservation trick set to Beginner when using Space Jump.
+- Changed: The item in Storm Missile Gate Room now requires the Speed Booster Conservation trick set to Beginner when coming from above.
+
+##### Elun
+
+- Changed: The item in Fan Room now requires the Speed Booster Conservation trick set to Beginner.
+
+##### Ferenia
+
+- Changed: The item in Fan Room now requires the Speed Booster Conservation trick set to Beginner or Gravity Suit with door lock rando disabled.
+- Changed: The item in Speedboost Slopes Maze now requires the Speed Booster Conservation trick set to Beginner.
+- Changed: The Missile+ Tank in Space Jump Room now requires the Speed Booster Conservation trick set to Beginner.
+
+##### Ghavoran
+
+- Changed: Going up Right Entrance with Speed Booster now requires the Speed Booster Conservation trick set to Beginner.
+- Changed: The upper item in Golzuna Tower now requires the Speed Booster Conservation trick set to Beginner when using Spin Boost from the top.
 
 ## [6.3.1] - 2023-10-??
 
