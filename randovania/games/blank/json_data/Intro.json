@@ -8,7 +8,7 @@
             "nodes": {
                 "Spawn Point": {
                     "node_type": "generic",
-                    "heal": false,
+                    "heal": true,
                     "coordinates": {
                         "x": 305.34759358288767,
                         "y": 194.6524064171123,
@@ -90,6 +90,13 @@
                             }
                         },
                         "Second Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Heated Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -339,6 +346,41 @@
                     ],
                     "extra": {},
                     "valid_starting_location": true,
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Heated Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 500.0,
+                        "y": 300.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Intro",
+                        "area": "Heated Room",
+                        "node": "Door to Starting Area"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Spawn Point": {
                             "type": "and",
@@ -1061,6 +1103,96 @@
                             "data": {
                                 "comment": null,
                                 "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Heated Room": {
+            "default_node": null,
+            "extra": {
+                "map_name": "Orange"
+            },
+            "nodes": {
+                "Pickup (Health)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 155.99,
+                        "y": 185.84,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "pickup_index": 3,
+                    "location_category": "minor",
+                    "connections": {
+                        "Door to Starting Area": {
+                            "type": "and",
+                            "data": {
+                                "comment": "When damage contraints are combined with 'and', the result requires the sum of the damage values.",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "damage",
+                                            "name": "Damage",
+                                            "amount": 40,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "damage",
+                                            "name": "Damage",
+                                            "amount": 10,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Door to Starting Area": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 55.0,
+                        "y": 52.69,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Intro",
+                        "area": "Starting Area",
+                        "node": "Door to Heated Room"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Pickup (Health)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "damage",
+                                "name": "Damage",
+                                "amount": 49,
+                                "negate": false
                             }
                         }
                     }
