@@ -198,6 +198,11 @@ def am2r_game_description() -> GameDescription:
 
 
 @pytest.fixture(scope="session")
+def msr_game_description() -> GameDescription:
+    return default_database.game_description_for(RandovaniaGame.METROID_SAMUS_RETURNS)
+
+
+@pytest.fixture(scope="session")
 def randomizer_data() -> dict:
     return decode_randomizer_data()
 
