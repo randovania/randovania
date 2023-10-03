@@ -29,6 +29,5 @@ JOKE_HINTS = [
     "We now pledge sole allegiance to our liberator, the great one, Dark Samus.",
     "Defeat enemies with the Light Beam to earn Dark Ammo. Defeat enemies with the Dark Beam to earn Light Ammo.",
     "Your Friend Roster is currently empty.",
-    "It is said that reaching <Redacted> without taking any damage will unlock the Metroid Suit.",
-    "Raven Beak? I dont know him, but he sounds hamsome, wouldn't you agree Samus?",
+    "Raven Beak? I dont know him, but he sounds handsome, wouldn't you agree Samus?",
 ]
