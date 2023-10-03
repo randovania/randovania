@@ -12,7 +12,6 @@ if TYPE_CHECKING:
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.requirements.base import Requirement
     from randovania.layout.base.base_configuration import BaseConfiguration
-    from randovania.resolver.resolver_reach import ResolverReach
     from randovania.resolver.state import State
 
 
@@ -56,7 +55,7 @@ class Logic:
         self._current_indent = 0
         self._last_printed_additional = {}
 
-    def start_new_attempt(self, state: State, reach: ResolverReach, max_attempts: int | None):
+    def start_new_attempt(self, state: State, max_attempts: int | None):
         if max_attempts is not None and self._attempts >= max_attempts:
             raise ResolverTimeoutError(f"Timed out after {max_attempts} attempts")
 

@@ -114,6 +114,8 @@ async def _inner_advance_depth(
     :return:
     """
 
+    logic.start_new_attempt(state, max_attempts)
+
     if logic.victory_condition.satisfied(state.resources, state.energy, state.resource_database):
         return state, True
 
@@ -123,7 +125,6 @@ async def _inner_advance_depth(
     if reach is None:
         reach = ResolverReach.calculate_reach(logic, state)
 
-    logic.start_new_attempt(state, reach, max_attempts)
     status_update(f"Resolving... {state.resources.num_resources} total resources")
 
     major_pickup_actions = []
