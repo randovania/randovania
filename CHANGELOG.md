@@ -59,6 +59,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed: Counting normal damage reductions from suits twice.
 
+### Metroid Prime 2: Echoes
+
+- Added: One new Joke Hint refering to Raven Beak added to the pool
+
 ## [6.3.1] - 2023-10-??
 
 - To be decided if needed.

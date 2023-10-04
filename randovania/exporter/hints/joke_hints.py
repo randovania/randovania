@@ -29,4 +29,5 @@ JOKE_HINTS = [
     "We now pledge sole allegiance to our liberator, the great one, Dark Samus.",
     "Defeat enemies with the Light Beam to earn Dark Ammo. Defeat enemies with the Dark Beam to earn Light Ammo.",
     "Your Friend Roster is currently empty.",
+    "Raven Beak? I don't know him, but he sounds handsome, wouldn't you agree Samus?",
 ]
