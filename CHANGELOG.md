@@ -7,9 +7,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [6.4.0] - 2023-11-??
 
-### Exporter
-- Added: Additional Joke Hint referring to Raven Beak and how he uses the 'But He Sounds Handsome' trope when posing as ADAM.
-
 ### Resolver
 - Fixed: Bug where damage constraints in chains were not understood correctly.
 - Fixed: Damage reductions from multiple suits are no longer multiplied together.
@@ -55,6 +52,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Metroid Prime
 
 - Fixed: Counting normal damage reductions from suits twice.
+
+### Metroid Prime 2: Echoes
+
+- Added: One new Joke Hint refering to Raven Beak added to the pool
 
 ## [6.3.1] - 2023-10-??
 
