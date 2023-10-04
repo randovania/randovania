@@ -889,17 +889,21 @@ class PrimePatchDataFactory(PatchDataFactory):
         else:
             maze_seeds = None
 
-        if self.configuration.legacy_mode:
-            qol_cutscenes = LayoutCutsceneMode.ORIGINAL.value
-        else:
-            qol_cutscenes = self.configuration.qol_cutscenes.value
+        cutscene_mapping = {}
 
         # FIXME: properly fix this incompatibility
         if self.configuration.room_rando != RoomRandoMode.NONE:
-            qol_cutscenes = {
+            cutscene_mapping = {
                 LayoutCutsceneMode.SKIPPABLE: LayoutCutsceneMode.MINOR,
                 LayoutCutsceneMode.SKIPPABLE_COMPETITIVE: LayoutCutsceneMode.COMPETITIVE,
-            }.get(qol_cutscenes, qol_cutscenes)
+            }
+
+        if self.configuration.legacy_mode:
+            qol_cutscenes = LayoutCutsceneMode.ORIGINAL.value
+        else:
+            qol_cutscenes = cutscene_mapping.get(
+                self.configuration.qol_cutscenes, self.configuration.qol_cutscenes
+            ).value
 
         random_enemy_sizes = False
         if self.configuration.enemy_attributes is not None:
