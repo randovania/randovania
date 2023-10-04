@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [6.4.0] - 2023-11-??
+## [6.5.0] - 2023-11-??
 
 ### Resolver
 
@@ -63,9 +63,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: One new Joke Hint refering to Raven Beak added to the pool
 
-## [6.3.1] - 2023-10-??
+## [6.4.1] - 2023-10-??
 
 - To be decided if needed.
+
+## [6.4.0] - 2023-10-05
+
+### Metroid Dread
+
+- Fixed: The "Power Bomb Limitations" setting is now accounted for by logic.
+
+### Metroid Prime:
+
+- Fixed: When room rando is enabled, cutscenes are no longer skippable to avoid a bug with elevators. This will be properly fixed in the future. 
 
 ## [6.3.0] - 2023-10-02
 
@@ -79,6 +89,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Map tracker works again for Metroid Dread and Metroid Prime.
 
 ### Resolver
+
 - Fixed: Bug where nested requirements were combined wrongly.
 - Improved: Order of exploring certain dangerous events.
 
