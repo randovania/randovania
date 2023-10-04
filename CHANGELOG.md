@@ -41,6 +41,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ##### Elun
 
+- Added: Elun's Save Station is now a valid starting room.
 - Changed: The item in Fan Room now requires the Speed Booster Conservation trick set to Beginner.
 
 ##### Ferenia
