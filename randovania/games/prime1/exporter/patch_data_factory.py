@@ -894,6 +894,13 @@ class PrimePatchDataFactory(PatchDataFactory):
         else:
             qol_cutscenes = self.configuration.qol_cutscenes.value
 
+        # FIXME: properly fix this incompatibility
+        if self.configuration.room_rando != RoomRandoMode.NONE:
+            qol_cutscenes = {
+                LayoutCutsceneMode.SKIPPABLE: LayoutCutsceneMode.MINOR,
+                LayoutCutsceneMode.SKIPPABLE_COMPETITIVE: LayoutCutsceneMode.COMPETITIVE,
+            }.get(qol_cutscenes, qol_cutscenes)
+
         random_enemy_sizes = False
         if self.configuration.enemy_attributes is not None:
             random_enemy_sizes = (
