@@ -126,7 +126,10 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
         ammo_provided = major_configuration.calculate_provided_ammo()
         for ammo, state in ammo_configuration.pickups_state.items():
             for ammo_index, count in enumerate(state.ammo_count):
-                ammo_provided[ammo.items[ammo_index]] += count * state.pickup_count
+                if ammo.items[ammo_index] in ammo_provided:
+                    ammo_provided[ammo.items[ammo_index]] += count * state.pickup_count
+                else:
+                    ammo_provided[ammo.items[ammo_index]] = count * state.pickup_count
 
         resource_database = self.game_description.resource_database
 
