@@ -19,6 +19,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed: The "Power Bomb Limitations" setting is now accounted for by logic.
 
+### Metroid Prime:
+
+- Fixed: When room rando is enabled, cutscenes are no longer skippable to avoid a bug with elevators. This will be properly fixed in the future. 
+
 ## [6.3.0] - 2023-10-02
 
 - Added: During generation, if no alternatives have a non-zero weight, try weighting by how many additional Nodes are reachable.
@@ -30,6 +34,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Map tracker works again for Metroid Dread and Metroid Prime.
 
 ### Resolver
+
 - Fixed: Bug where nested requirements were combined wrongly.
 - Improved: Order of exploring certain dangerous events.
 
