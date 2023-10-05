@@ -129,6 +129,7 @@ Extra - asset_id: 3
           Grapple Beam or Space Jump
           # Short charge shinespark
           Speed Booster and Short Charge (Intermediate) and Disabled Door Lock Randomizer and Disabled Entrance Randomizer
+          # Gravity Jump
           Gravity Suit and Gravity Jump (Intermediate)
           # Using a CWJ to get across
           Continuous Wall Jump (Expert) and Movement (Advanced)
@@ -137,12 +138,13 @@ Extra - asset_id: 3
   > Pickup (Missile Expansion)
       Any of the following:
           Grapple Beam or Space Jump or Movement (Beginner)
+          # WJ from Floor
           Gravity Suit and Wall Jumps (Beginner)
           # Short charge shinespark
           Speed Booster and Short Charge (Intermediate) and Disabled Door Lock Randomizer and Disabled Entrance Randomizer
           # HIBJ
           Horizontal Infinite Bomb Jump (Beginner) and Can Lay Bombs
-          # Jump and run with open door
+          # Run and jump with open door
           Hi-Jump Boots and Disabled Door Lock Randomizer
 
 > Door to West Ocean; Heals? False
@@ -157,7 +159,7 @@ Extra - asset_id: 3
               Speed Booster and Disabled Door Lock Randomizer and Disabled Entrance Randomizer
           Any of the following:
               # Via bottom path
-              Can Lay Bombs
+              Can Lay Any Bombs
               Morph Ball and Enabled Moat Tweaks
 
 > Pickup (Missile Expansion); Heals? False
@@ -165,8 +167,6 @@ Extra - asset_id: 3
   * Pickup 4; Category? Minor
   > Door to Crateria Kihunter Room
       Trivial
-  > Door to West Ocean
-      Horizontal Infinite Bomb Jump (Beginner) and Can Lay Bombs
 
 ----------------
 West Ocean
@@ -178,6 +178,7 @@ Extra - asset_id: 4
   > Door to Wrecked Ship Entrance
       Any of the following:
           Grapple Beam or Space Jump
+          # HIBJ
           Horizontal Infinite Bomb Jump (Expert) and Can Lay Bombs
           # It is possible to jump across by not using full jumps to avoid bonking on the celing.
           Movement (Intermediate)
@@ -275,11 +276,8 @@ Extra - asset_id: 4
   > Door to Attic
       All of the following:
           Morph Ball and Super Missile
-          Any of the following:
-              # Get into Tunnel
-              Can Lay Bombs or Can Use Spring Ball
-              # TODO: make this mid air morph
-              Movement (Beginner)
+          # Get into Tunnel
+          Mid-Air Morph (Beginner) or Can Lay Bombs or Can Use Spring Ball
 
 > Pickup (Seafloor Missile Expansion); Heals? False
   * Layers: default
@@ -437,7 +435,7 @@ Extra - asset_id: 11
           Any of the following:
               Can Lay Bombs
               Power Bombs ≥ 4 and Can Lay Power Bombs
-              # Destroy the initial blocks with PB and the Rest with Screw Attack
+              # Destroy the initial blocks with PB and the rest with Screw Attack
               Screw Attack and Can Lay Power Bombs
               # Sexmaster Shinespark: https://youtu.be/27WoKKQMn7w
               Speed Booster and Shinespark (Expert) and Short Charge (Expert) and Shinespark Damage ≥ 98 and Disabled Door Lock Randomizer and Disabled Entrance Randomizer and Can Lay Power Bombs
@@ -473,12 +471,8 @@ Extra - asset_id: 12
   * Normal Door to Gauntlet Energy Tank Room/Door to Gauntlet Entrance
   > Door to Landing Site
       Any of the following:
-          Screw Attack
-          All of the following:
-              Morph Ball
-              Any of the following:
-                  Can Lay Bombs
-                  Power Bombs ≥ 3 and Can Lay Power Bombs
+          Screw Attack or Can Lay Bombs
+          Power Bombs ≥ 3 and Can Lay Power Bombs
           # Shinespark across
           Speed Booster and Shinespark (Expert) and Short Charge (Expert) and Shinespark Damage ≥ 198 and Disabled Door Lock Randomizer and Disabled Entrance Randomizer
 
@@ -487,12 +481,8 @@ Extra - asset_id: 12
   * Normal Door to Landing Site/Door to Gauntlet Entrance
   > Door to Gauntlet Energy Tank Room
       Any of the following:
-          Screw Attack
-          All of the following:
-              Morph Ball
-              Any of the following:
-                  Can Lay Bombs
-                  Power Bombs ≥ 3 and Can Lay Power Bombs
+          Screw Attack or Can Lay Bombs
+          Power Bombs ≥ 3 and Can Lay Power Bombs
           All of the following:
               Speed Booster and Disabled Door Lock Randomizer and Disabled Entrance Randomizer
               Any of the following:
@@ -595,8 +585,10 @@ Extra - asset_id: 14
       All of the following:
           Morph Ball
           Any of the following:
+              # Right Side
               Can Lay Any Bombs
-              Movement (Intermediate) and Wall Jumps (Advanced)
+              # Left Side
+              Mid-Air Morph (Intermediate) and Wall Jumps (Advanced)
 
 > Door to Terminator Room; Heals? False
   * Layers: default
@@ -682,7 +674,7 @@ Extra - asset_id: 17
 > Pickup (Morph Ball Bombs); Heals? False
   * Layers: default
   * Pickup 7; Category? Major
-  > Door to Flyway
+  > Event - Bomb Torizo
       All of the following:
           # Items
           Missile ≥ 5 or Super Missile or Combat (Beginner)
@@ -692,6 +684,12 @@ Extra - asset_id: 17
               Combat (Beginner) and Normal Damage ≥ 30
               # Hitless
               Combat (Intermediate)
+
+> Event - Bomb Torizo; Heals? False
+  * Layers: default
+  * Event Bomb Torizo Defeated
+  > Door to Flyway
+      Trivial
 
 ----------------
 Pre-Map Flyway
@@ -730,7 +728,7 @@ Extra - asset_id: 20
           Any of the following:
               Can Lay Any Bombs
               # Tunnel might not be known to everyone
-              Knowledge (Beginner)
+              Knowledge (Beginner) and Mid-Air Morph (Beginner)
 
 > Door to Parlor and Alcatraz; Heals? False
   * Layers: default
@@ -862,7 +860,7 @@ Extra - asset_id: 26
   > Door to Pit Room
       Any of the following:
           Screw Attack or Can Lay Any Bombs
-          Speed Booster and Disabled Entrance Randomizer
+          Speed Booster and Disabled Door Lock Randomizer and Disabled Entrance Randomizer
 
 > Door from Crateria Super Room; Heals? False
   * Layers: default
@@ -929,10 +927,7 @@ Extra - asset_id: 28
   * Layers: default
   * Pickup 6; Category? Minor
   > Door to Climb
-      Any of the following:
-          Screw Attack or Can Lay Any Bombs
-          # TODO: see todo to get here
-          Speed Booster and Blue Suit Glitch (Intermediate) and Short Charge (Advanced)
+      Screw Attack or Can Lay Any Bombs
 
 ----------------
 Elevator to Blue Brinstar
