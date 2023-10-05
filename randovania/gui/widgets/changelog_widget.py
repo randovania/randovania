@@ -100,8 +100,15 @@ class ChangeLogWidget(QtWidgets.QWidget):
 
                 new_version_text.append(version_text_part_label)
 
+                try:
+                    image_data = requests.get(parsed_link)
+                    image_data.raise_for_status()
+                except requests.HTTPError as e:
+                    new_version_text.append(DelayedTextLabel(text=f"{e}"))
+                    continue
+
                 image = QtGui.QImage()
-                image.loadFromData(requests.get(parsed_link).content)
+                image.loadFromData(image_data.content)
 
                 image_label = DelayedTextLabel()
                 image_label.setPixmap(QtGui.QPixmap(image))
