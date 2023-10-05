@@ -899,7 +899,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Gravity Jump",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -1007,7 +1007,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "WJ from Floor",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -1098,7 +1098,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "Jump and run with open door",
+                                            "comment": "Run and jump with open door",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -1268,7 +1268,7 @@
                                                 },
                                                 {
                                                     "type": "template",
-                                                    "data": "Can Lay Bombs"
+                                                    "data": "Can Lay Any Bombs"
                                                 }
                                             ]
                                         }
@@ -1300,27 +1300,6 @@
                             "data": {
                                 "comment": null,
                                 "items": []
-                            }
-                        },
-                        "Door to West Ocean": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Can Lay Bombs"
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "tricks",
-                                            "name": "HBJ",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
                             }
                         }
                     }
@@ -1386,7 +1365,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "HIBJ",
                                             "items": [
                                                 {
                                                     "type": "template",
@@ -2219,20 +2198,12 @@
                                                     "data": "Can Lay Bombs"
                                                 },
                                                 {
-                                                    "type": "and",
+                                                    "type": "resource",
                                                     "data": {
-                                                        "comment": "TODO: make this mid air morph",
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Movement",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
+                                                        "type": "tricks",
+                                                        "name": "MidAirMorph",
+                                                        "amount": 1,
+                                                        "negate": false
                                                     }
                                                 }
                                             ]
@@ -3283,7 +3254,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "Destroy the initial blocks with PB and the Rest with Screw Attack",
+                                                        "comment": "Destroy the initial blocks with PB and the rest with Screw Attack",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -3628,15 +3599,6 @@
                                             "comment": null,
                                             "items": [
                                                 {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Morph",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
                                                     "type": "or",
                                                     "data": {
                                                         "comment": null,
@@ -3784,15 +3746,6 @@
                                         "data": {
                                             "comment": null,
                                             "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Morph",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
                                                 {
                                                     "type": "or",
                                                     "data": {
@@ -4635,13 +4588,21 @@
                                                         "comment": null,
                                                         "items": [
                                                             {
-                                                                "type": "template",
-                                                                "data": "Can Lay Any Bombs"
+                                                                "type": "or",
+                                                                "data": {
+                                                                    "comment": "Right Side",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Can Lay Any Bombs"
+                                                                        }
+                                                                    ]
+                                                                }
                                                             },
                                                             {
                                                                 "type": "and",
                                                                 "data": {
-                                                                    "comment": null,
+                                                                    "comment": "Left Side",
                                                                     "items": [
                                                                         {
                                                                             "type": "resource",
@@ -4656,7 +4617,7 @@
                                                                             "type": "resource",
                                                                             "data": {
                                                                                 "type": "tricks",
-                                                                                "name": "Movement",
+                                                                                "name": "MidAirMorph",
                                                                                 "amount": 2,
                                                                                 "negate": false
                                                                             }
@@ -5201,7 +5162,7 @@
                     "pickup_index": 7,
                     "location_category": "major",
                     "connections": {
-                        "Door to Flyway": {
+                        "Event - Bomb Torizo": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5302,6 +5263,31 @@
                                         }
                                     }
                                 ]
+                            }
+                        }
+                    }
+                },
+                "Event - Bomb Torizo": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 315.73,
+                        "y": 298.6,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "BombTorizoDead",
+                    "connections": {
+                        "Door to Flyway": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -5489,6 +5475,15 @@
                                                                 "data": {
                                                                     "type": "tricks",
                                                                     "name": "Knowledge",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "MidAirMorph",
                                                                     "amount": 1,
                                                                     "negate": false
                                                                 }
@@ -6270,6 +6265,15 @@
                                                         "amount": 1,
                                                         "negate": true
                                                     }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "DoorLockRando",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
                                                 }
                                             ]
                                         }
@@ -6756,41 +6760,6 @@
                                             "name": "ScrewAttack",
                                             "amount": 1,
                                             "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": "TODO: see todo to get here",
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "SpeedBooster",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "Shortcharge",
-                                                        "amount": 3,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "BlueSuitGlitch",
-                                                        "amount": 2,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
                                         }
                                     },
                                     {
