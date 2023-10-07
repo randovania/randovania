@@ -59,6 +59,9 @@ class AM2RBootstrap(MetroidBootstrap):
             if getattr(configuration, name):
                 enabled_resources.add(index)
 
+        if configuration.dock_rando.is_enabled():
+            enabled_resources.add("DoorLockRando")
+
         return enabled_resources
 
     def _damage_reduction(self, db: ResourceDatabase, current_resources: ResourceCollection):
