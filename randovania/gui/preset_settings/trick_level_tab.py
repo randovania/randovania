@@ -24,6 +24,23 @@ if TYPE_CHECKING:
     from randovania.layout.preset import Preset
 
 
+class TrickSlider(QtWidgets.QSlider):
+    """
+    A custom implementation of QSlider that filters out mouse wheel events
+    """
+
+    def __init__(self, orientation: QtCore.Qt.Orientation, parent: QtWidgets.QWidget | None = None):
+        super().__init__(orientation, parent)
+
+    def eventFilter(self, watched: QtCore.QObject, event: QtCore.QEvent) -> bool:
+        # filter out "Wheel" type events
+        if event.type() == QtCore.QEvent.Type.Wheel:
+            event.ignore()
+            return True
+
+        return super().eventFilter(watched, event)
+
+
 class PresetTrickLevel(PresetTab, Ui_PresetTrickLevel):
     def __init__(self, editor: PresetEditor, game_description: GameDescription, window_manager: WindowManager):
         super().__init__(editor, game_description, window_manager)
@@ -72,7 +89,8 @@ class PresetTrickLevel(PresetTab, Ui_PresetTrickLevel):
             for i in range(12):
                 slider_layout.setColumnStretch(i, 1)
 
-            horizontal_slider = QtWidgets.QSlider(self.trick_level_scroll_contents)
+            horizontal_slider = TrickSlider(self.trick_level_scroll_contents)
+            horizontal_slider.installEventFilter(horizontal_slider)  # enables scroll wheel filter
             horizontal_slider.setMaximum(5)
             horizontal_slider.setPageStep(2)
             horizontal_slider.setOrientation(QtCore.Qt.Orientation.Horizontal)
