@@ -11,7 +11,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [6.4.1] - 2023-10-??
 
-- To be decided if needed.
+### Metroid Dread
+
+- Removed: The "Power Bomb Limitations" has been disabled due to issues. This will be re-added in the future.
 
 ## [6.4.0] - 2023-10-05
 
