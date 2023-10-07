@@ -1,12 +1,121 @@
 [build-system]
 requires = [
-    "setuptools>=58.0.0",
-    "setuptools_scm>=3.4.3",
+    "setuptools>=61.2",
+    "setuptools_scm[toml]>=6.2",
     "pyqt-distutils>=0.7.3",
     "wheel>=0.37.0",
     "dulwich",
 ]
 build-backend = "setuptools.build_meta"
+
+[project]
+name = "randovania"
+authors = [
+    {name = "Henrique Gemignani Passos Lima"},
+]
+description = "A randomizer platform for a multitude of games."
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Environment :: Console",
+    "Environment :: Win32 (MS Windows)",
+    "Environment :: X11 Applications :: Qt",
+    "Intended Audience :: End Users/Desktop",
+    "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.11",
+    "Topic :: Games/Entertainment",
+]
+requires-python = ">=3.11"
+dynamic = ["version"]
+
+dependencies = [
+    "networkx",
+    "bitstruct",
+    "cryptography",
+    "construct",
+    "tenacity>=7.0.0",
+    "python-slugify",
+    "python-socketio[asyncio_client]",
+    "aiohttp",
+    "aiofiles",
+    "attrs>=21.4.0",
+    "frozendict",
+    "dulwich>=0.20",
+    "py_randomprime>=1.19.0",
+    "mp2hudcolor>=1.0.10",
+    "retro-data-structures>=0.24.0",
+    "am2r-yams>=0.1.0",
+    "SuperDuperMetroid>=1.2.0",
+    "open-dread-rando>=2.8.3",
+    "open-prime-rando>=0.11.0",
+    "cave-story-randomizer>=2.2.2",
+    "tsc-utils>=0.2.5",
+    "random-enemy-attributes>=1.0.3",
+    "sentry-sdk",
+    "ppc-asm>=1.2.1",
+]
+
+[project.optional-dependencies]
+gui = [
+    "PySide6-Essentials>=6.5",
+    "pyqtdarktheme",
+    "markdown",
+    "qasync",
+    
+    "appdirs",
+    # Minimum version compatible with PySide 6.4. 3.6 is also needed for Python 3.11
+    "matplotlib>=3.6.2",
+
+    "nod>=1.9",
+    "async-wiiload",
+    "dolphin-memory-engine>=1.0.2",
+    "pid>=3.0.0",
+]
+
+server = [
+    "sentry-sdk[flask]",
+    "flask-discord",
+    "flask-socketio",
+    "prometheus-flask-exporter",
+    "eventlet",
+    "peewee",
+    "requests-oauthlib",
+    "cachetools",  # for TTLCache
+
+    "py-cord>=2.3.1",  # for randovania/server/discord; 2.3.1+ is needed for Python 3.11
+    "Pillow>=9.0.0",  # for randovania/server/discord/database_command
+    "graphviz",  # for randovania/server/discord/database_command
+]
+
+test = [
+    "pytest",
+    "pytest-cov",
+    "pytest-qt",
+    "pytest-asyncio",
+    "pytest-mock",
+    "pytest-localftpserver",
+    "pytest-xdist[psutil]",
+]
+
+typing = [
+    "mypy",
+    "construct-typing",
+    "types-aiofiles",
+    "types-peewee",
+]
+
+[project.readme]
+file = "README.md"
+content-type = "text/markdown"
+
+[project.urls]
+Homepage = "https://github.com/randovania/randovania"
+
+[project.entry-points.console_scripts]
+randovania = "randovania.__main__:main"
+
+[tool.setuptools.packages.find]
+include = ["randovania*"]
 
 [tool.ruff]
 line-length = 120
