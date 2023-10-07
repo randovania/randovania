@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import dataclasses
+from typing import Self
 
 from randovania.games.game import RandovaniaGame
 from randovania.layout.base.base_configuration import BaseConfiguration
@@ -10,6 +11,7 @@ from randovania.layout.base.base_configuration import BaseConfiguration
 class BlankConfiguration(BaseConfiguration):
     # These fields aren't necessary for a new game: they're here to have example/test features
     include_extra_pickups: bool
+    break_extra_pickups: bool
 
     @classmethod
     def game_enum(cls) -> RandovaniaGame:
@@ -22,3 +24,11 @@ class BlankConfiguration(BaseConfiguration):
             result.add("extra_pickups")
 
         return result
+
+    def without_broken_settings(self) -> Self | None:
+        """
+        When break_extra_pickups is set, it disables include_extra_pickups.
+        """
+        if self.break_extra_pickups:
+            return dataclasses.replace(self, include_extra_pickups=False)
+        return None

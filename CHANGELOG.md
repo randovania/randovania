@@ -11,7 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [6.4.1] - 2023-10-??
 
-- To be decided if needed.
+- Changed: When "Power Bomb Limitations" setting is enabled, the Knowledge trick is considered disabled. This will be properly fixed in the future. 
 
 ## [6.4.0] - 2023-10-05
 

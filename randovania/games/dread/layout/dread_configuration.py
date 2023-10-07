@@ -1,7 +1,9 @@
 from __future__ import annotations
 
+import copy
 import dataclasses
 from enum import Enum
+from typing import Self
 
 from randovania.bitpacking.bitpacking import BitPackDataclass, BitPackEnum
 from randovania.bitpacking.json_dataclass import JsonDataclass
@@ -78,3 +80,13 @@ class DreadConfiguration(BaseConfiguration):
                 result.append(f"Enabled {trick.long_name}")
 
         return result
+
+    def without_broken_settings(self) -> Self | None:
+        """
+        Nerf PBs currently breaks Knowledge trick.
+        """
+        if self.nerf_power_bombs and "Knowledge" in self.trick_level.specific_levels:
+            levels = copy.copy(self.trick_level.specific_levels)
+            del levels["Knowledge"]
+            return dataclasses.replace(self, trick_level=dataclasses.replace(self.trick_level, specific_levels=levels))
+        return None

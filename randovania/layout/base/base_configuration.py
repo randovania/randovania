@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import dataclasses
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Self
 
 from randovania.bitpacking.bitpacking import BitPackDataclass
 from randovania.bitpacking.json_dataclass import JsonDataclass
@@ -96,3 +96,10 @@ class BaseConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInitTypeCh
     def should_hide_generation_log(self):
         """Certain settings makes the generation log full of nonsense. It should be hidden in these cases."""
         return self.dock_rando.mode == DockRandoMode.DOCKS
+
+    def without_broken_settings(self) -> Self | None:
+        """
+        Returns a new object without any known broken setting combination. None if object is considered fine.
+        See Preset.without_broken_settings for more details.
+        """
+        return None

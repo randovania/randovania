@@ -142,7 +142,7 @@ class GenerateGameWidget(QtWidgets.QWidget, Ui_GenerateGameWidget):
                         GeneratorParameters(
                             seed_number=random.randint(0, 2**31),
                             spoiler=spoiler,
-                            presets=[preset.get_preset()] * num_players,
+                            presets=[preset.get_preset().without_broken_settings()] * num_players,
                         )
                     ),
                     retries=retries,

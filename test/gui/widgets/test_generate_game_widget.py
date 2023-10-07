@@ -85,7 +85,7 @@ async def test_generate_new_layout(
                 GeneratorParameters(
                     seed_number=12341234,
                     spoiler=spoiler,
-                    presets=[preset],
+                    presets=[preset.without_broken_settings.return_value],
                 )
             ),
             retries=retries,

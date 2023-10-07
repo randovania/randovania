@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import dataclasses
+import typing
 import uuid as uuid_module
 from typing import TYPE_CHECKING
 
@@ -80,3 +81,17 @@ class Preset(BitPackValue):
             description=f"A copy version of {self.name}.",
             uuid=uuid_module.uuid4(),
         )
+
+    def without_broken_settings(self) -> typing.Self:
+        """
+        Creates a variation of this preset, but without known incompatible settings.
+        Should be used only as a last resort: prefer to actually fix the incompatibility.
+        """
+        new_config = self.configuration.without_broken_settings()
+        if new_config is not None:
+            return dataclasses.replace(
+                self,
+                configuration=new_config,
+            )
+        else:
+            return self
