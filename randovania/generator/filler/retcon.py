@@ -162,7 +162,7 @@ def weighted_potential_actions(
     return final_weights
 
 
-def select_weighted_action(rng: Random, weighted_actions: dict[Action, float]) -> Action:
+def select_weighted_action(rng: Random, weighted_actions: Mapping[Action, float]) -> Action:
     """
     Choose a random action, respecting the weights.
     If all actions have weight 0, select one randomly.

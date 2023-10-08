@@ -351,6 +351,7 @@ class HintDistributor(ABC):
             distance_offset = max_distance - distances[area]
 
         relative: RelativeData
+
         if relative_type == HintLocationPrecision.RELATIVE_TO_AREA:
             assert isinstance(precision, HintRelativeAreaName)
             relative = RelativeDataArea(distance_offset, region_list.identifier_for_area(area), precision)

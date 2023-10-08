@@ -113,12 +113,12 @@ def test_try_randomize_teleporters(seed_number: int, expected_ids: list[int], ec
         ),
     )
 
-    connected_ids = [
-        echoes_game_description.region_list.node_by_identifier(teleporter.connected_teleporter.teleporter).extra[
-            "teleporter_instance_id"
-        ]
-        for teleporter in result
-    ]
+    def get_connected_id(teleporter: TeleporterHelper) -> str:
+        assert teleporter.connected_teleporter is not None
+        node = echoes_game_description.region_list.node_by_identifier(teleporter.connected_teleporter.teleporter)
+        return node.extra["teleporter_instance_id"]
+
+    connected_ids = [get_connected_id(teleporter) for teleporter in result]
 
     # Assert
     assert connected_ids == expected_ids
@@ -139,6 +139,9 @@ def test_two_way_teleporter_connections_between_areas(
 
     # Assert
     mock_try_randomize_teleporters.assert_called_once_with(rng, (teleporter_a, teleporter_b))
+    assert teleporter_a.connected_teleporter is not None
+    assert teleporter_b.connected_teleporter is not None
+
     assert result == {
         teleporter_a.teleporter: teleporter_a.connected_teleporter.teleporter,
         teleporter_b.teleporter: teleporter_b.connected_teleporter.teleporter,
@@ -200,9 +203,11 @@ def test_two_way_teleporter_connections_unchecked():
 def test_one_way_teleporter_connections(echoes_game_description, replacement, expected):
     # Setup
     rng = random.Random(5000)
-    target_locations = [AreaIdentifier(f"w{i}", f"a{i}") for i in range(6)]
+    target_locations = [NodeIdentifier.create(f"w{i}", f"a{i}", f"n{i}") for i in range(6)]
     teleporters = [
-        TeleporterHelper(NodeIdentifier.create(f"w{i}", f"a{i}", f"n{i}"), AreaIdentifier(f"w{i}", f"a{i}"))
+        TeleporterHelper(
+            NodeIdentifier.create(f"w{i}", f"a{i}", f"n{i}"), NodeIdentifier.create(f"w{i}", f"a{i}", f"t{i}")
+        )
         for i in range(6)
     ]
     database = tuple(teleporters)

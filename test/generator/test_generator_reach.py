@@ -4,6 +4,7 @@ import dataclasses
 import functools
 from random import Random
 from typing import TYPE_CHECKING
+from unittest.mock import MagicMock
 
 import pytest
 
@@ -39,11 +40,13 @@ if TYPE_CHECKING:
     from randovania.layout.preset import Preset
 
 
-def run_bootstrap(preset: Preset, include_tricks: set[tuple[str, LayoutTrickLevel]]):
+def run_bootstrap(
+    preset: Preset, include_tricks: set[tuple[str, LayoutTrickLevel]]
+) -> tuple[GameDescription, State, GeneratorParameters]:
     game_description = default_database.game_description_for(preset.game)
     configuration = preset.configuration
     for trick in include_tricks:
-        trick_override = game_description.resource_database.get_by_type_and_index(ResourceType.TRICK, trick[0])
+        trick_override = game_description.resource_database.get_trick(trick[0])
 
         configuration = dataclasses.replace(
             configuration,
@@ -55,7 +58,7 @@ def run_bootstrap(preset: Preset, include_tricks: set[tuple[str, LayoutTrickLeve
 
     game.resource_database = generator.bootstrap.patch_resource_database(game.resource_database, configuration)
 
-    permalink = GeneratorParameters(
+    parameters = GeneratorParameters(
         seed_number=15000,
         spoiler=True,
         presets=[preset],
@@ -65,7 +68,7 @@ def run_bootstrap(preset: Preset, include_tricks: set[tuple[str, LayoutTrickLeve
     )
     _, state = generator.bootstrap.logic_bootstrap(configuration, game, patches)
 
-    return game, state, permalink
+    return game, state, parameters
 
 
 def _create_reach_with_unsafe(game: GameDescription, state: State) -> GeneratorReach:
@@ -248,11 +251,11 @@ def test_basic_search_with_translator_gate(has_translator: bool, echoes_resource
     )
     game = GameDescription(
         RandovaniaGame.METROID_PRIME_ECHOES,
-        DockWeaknessDatabase([], {}, {}, (None, None), None),
+        DockWeaknessDatabase([], {}, {}, (MagicMock(), MagicMock()), MagicMock()),
         echoes_resource_database,
         ("default",),
         Requirement.impossible(),
-        None,
+        MagicMock(),
         {},
         None,
         region_list,

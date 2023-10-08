@@ -42,7 +42,7 @@ async def test_create_patches(
     rng = generator_parameters.create_rng.return_value
     status_update: MagicMock | Callable[[str], None] = MagicMock()
     player_pools = [MagicMock() for _ in range(num_players)]
-    presets = [MagicMock() for _ in range(num_players)]
+    presets: list = [MagicMock() for _ in range(num_players)]
 
     mock_create_player_pool.side_effect = player_pools
 

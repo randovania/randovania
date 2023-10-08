@@ -13,7 +13,7 @@ from randovania.game_description.resources.resource_type import ResourceType
 from randovania.resolver import debug
 
 if TYPE_CHECKING:
-    from collections.abc import Iterator
+    from collections.abc import Iterator, Sequence
 
     from randovania.game_description.db.resource_node import ResourceNode
     from randovania.game_description.resources.resource_info import ResourceInfo
@@ -108,7 +108,7 @@ def _requirement_lists_without_satisfied_resources(
 
 
 def pickups_to_solve_list(
-    pickup_pool: list[PickupEntry],
+    pickup_pool: Sequence[PickupEntry],
     requirement_list: RequirementList,
     state: State,
 ) -> list[PickupEntry] | None:
@@ -146,9 +146,9 @@ def pickups_to_solve_list(
 
 
 def get_pickups_that_solves_unreachable(
-    pickups_left: list[PickupEntry],
+    pickups_left: Sequence[PickupEntry],
     reach: GeneratorReach,
-    uncollected_resource_nodes: list[ResourceNode],
+    uncollected_resource_nodes: Sequence[ResourceNode],
     single_set: bool,
 ) -> PickupCombinations:
     """New logic. Given pickup list and a reach, checks the combination of pickups
