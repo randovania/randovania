@@ -34,11 +34,6 @@ def _simplify_requirement_list(
         if item.satisfied(state.resources, state.energy, state.resource_database):
             continue
 
-        # We don't want to mark collecting a pickup/event node as a requirement to collecting that node.
-        # This could be interesting for DockLock, as indicating it needs to be unlocked from the other side.
-        if item.resource.resource_type in (ResourceType.NODE_IDENTIFIER, ResourceType.EVENT):
-            continue
-
         items.append(item)
 
     return RequirementList(items)
@@ -201,7 +196,7 @@ async def _inner_advance_depth(
         else:
             has_action = True
 
-    additional_requirements = reach.satisfiable_requirements
+    additional_requirements = reach.satisfiable_requirements_for_additionals
 
     if has_action:
         additional = set()
