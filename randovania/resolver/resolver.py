@@ -184,6 +184,10 @@ async def _inner_advance_depth(
     logic.log_checking_satisfiable_actions(state, actions)
     has_action = False
     for action, energy in actions:
+        additional_requirements = logic.get_additional_requirements(action)
+        if not additional_requirements.satisfied(state.resources, energy, state.resource_database):
+            logic.log_skip_action_missing_requirement(action, logic.game)
+            continue
         new_result = await _inner_advance_depth(
             state=state.act_on_node(action, path=reach.path_to_node(action), new_energy=energy),
             logic=logic,
