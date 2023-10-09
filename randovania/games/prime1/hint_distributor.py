@@ -9,8 +9,8 @@ if TYPE_CHECKING:
     from random import Random
 
     from randovania.game_description.game_patches import GamePatches
+    from randovania.generator.filler.filler_configuration import PlayerPool
     from randovania.generator.filler.player_state import PlayerState
-    from randovania.generator.filler.runner import PlayerPool
 
 
 class PrimeHintDistributor(HintDistributor):

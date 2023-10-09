@@ -17,7 +17,7 @@ if TYPE_CHECKING:
     from randovania.generator.generator_reach import GeneratorReach
 
 
-def debug_print_collect_event(event: ResourceNode, game: GameDescription):
+def debug_print_collect_event(event: ResourceNode, game: GameDescription) -> None:
     if debug.debug_level() > 0:
         print(f"\n--> Collecting {game.region_list.node_name(event, with_region=True)}")
 
@@ -27,7 +27,7 @@ def print_retcon_loop_start(
     pickups_left: Iterable[PickupEntry],
     reach: GeneratorReach,
     player_index: int,
-):
+) -> None:
     if debug.debug_level() > 0:
         current_uncollected = UncollectedState.from_reach(reach)
         if debug.debug_level() > 1:
@@ -66,7 +66,7 @@ def print_new_resources(
     reach: GeneratorReach,
     seen_count: dict[ResourceInfo, int],
     label: str,
-):
+) -> None:
     if debug.debug_level() > 1:
         region_list = game.region_list
         for index, count in seen_count.items():
@@ -79,7 +79,7 @@ def print_new_node_identifiers(
     game: GameDescription,
     seen_count: dict[NodeIdentifier, int],
     label: str,
-):
+) -> None:
     if debug.debug_level() > 1:
         region_list = game.region_list
         for identifier, count in seen_count.items():
@@ -88,7 +88,7 @@ def print_new_node_identifiers(
                 print(f"-> New {label}: {region_list.node_name(node, with_region=True)}")
 
 
-def print_new_pickup_index(player: int, game: GameDescription, location: PickupIndex):
+def print_new_pickup_index(player: int, game: GameDescription, location: PickupIndex) -> None:
     if debug.debug_level() > 1:
         region_list = game.region_list
         node = region_list.node_from_pickup_index(location)

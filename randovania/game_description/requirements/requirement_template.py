@@ -20,6 +20,12 @@ class RequirementTemplate(Requirement):
     def __init__(self, template_name: str):
         self.template_name = template_name
 
+    def __copy__(self) -> RequirementTemplate:
+        return RequirementTemplate(self.template_name)
+
+    def __reduce__(self) -> tuple[type[RequirementTemplate], tuple[str]]:
+        return RequirementTemplate, (self.template_name,)
+
     def template_requirement(self, database: ResourceDatabase) -> Requirement:
         return database.requirement_template[self.template_name]
 

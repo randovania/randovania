@@ -15,12 +15,12 @@ class PoolResults:
     assignment: dict[PickupIndex, PickupEntry]
     starting: list[PickupEntry]
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         for key in self.assignment:
             if not isinstance(key, PickupIndex):
                 raise TypeError(f"{key} is not a PickupIndex")
 
-    def extend_with(self, extension: PoolResults):
+    def extend_with(self, extension: PoolResults) -> None:
         self.to_place.extend(extension.to_place)
         self.assignment.update(extension.assignment)
         self.starting.extend(extension.starting)

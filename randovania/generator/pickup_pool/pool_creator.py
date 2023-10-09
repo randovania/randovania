@@ -57,7 +57,7 @@ def calculate_pool_pickup_count(layout: BaseConfiguration) -> dict[LocationCateg
     """
     game_description = filtered_database.game_description_for_layout(layout)
 
-    result = {cat: [0, 0] for cat in LocationCategory}
+    result: dict[LocationCategory | str, list[int]] = {cat: [0, 0] for cat in LocationCategory}
 
     for node in game_description.region_list.iterate_nodes():
         if isinstance(node, PickupNode):

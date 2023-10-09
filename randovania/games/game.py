@@ -92,8 +92,8 @@ class GameGenerator:
     # TODO Revise this text
     """Creates base patches, such as teleporter or configurable node assignments."""
 
-    hint_distributor: HintDistributor | None = None
-    """(Optional) """
+    hint_distributor: HintDistributor
+    """Use AllJokesDistributor if not using hints."""
 
 
 class DevelopmentState(Enum):

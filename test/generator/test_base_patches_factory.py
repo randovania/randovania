@@ -391,7 +391,7 @@ def test_blue_save_doors(prime_game_description: GameDescription, default_prime_
     )
 
     # Run
-    results = patches_factory.create_base_patches(configuration, None, prime_game_description, False, 0)
+    results = patches_factory.create_base_patches(configuration, Random(1000), prime_game_description, False, 0)
 
     # Assert
     weaknesses = list(results.all_dock_weaknesses())
