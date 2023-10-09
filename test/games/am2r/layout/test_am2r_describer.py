@@ -33,7 +33,7 @@ def test_am2r_format_params(has_artifacts: bool):
     assert dict(result) == {
         "Game Changes": [
             "Missiles need Launcher, Super Missiles need Launcher, Power Bombs need Launcher",
-            "Enable Septoggs, Add new Nest Pipes, Softlock block checks, Screw blocks near Pipes",
+            "Enable Septoggs, Add new Nest Pipes, Softlock block checks, Screw blocks near Pipes, Industrial Complex Bomb Blocks",
             "Skip gameplay cutscenes, Open Missile Doors with Supers",
         ],
         "Gameplay": ["Starts at Main Caves - Landing Site"],
