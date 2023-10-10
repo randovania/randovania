@@ -10,6 +10,8 @@ from randovania.game_description.game_description import calculate_interesting_r
 from randovania.game_description.requirements import fast_as_set
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.requirement_and import RequirementAnd
+from randovania.game_description.requirements.resource_requirement import PositiveResourceRequirement
+from randovania.game_description.resources.resource_type import ResourceType
 
 if typing.TYPE_CHECKING:
     from collections.abc import Iterator
@@ -37,6 +39,13 @@ def _build_satisfiable_requirements(
         yield from (a.union(b) for a in set_param for b in additional)
 
     return frozenset(itertools.chain.from_iterable(_for_node(*it) for it in requirements_by_node.items()))
+
+
+def _is_requirement_viable_as_additional(requirement: Requirement) -> bool:
+    return not isinstance(requirement, PositiveResourceRequirement) or requirement.resource.resource_type not in (
+        ResourceType.EVENT,
+        ResourceType.NODE_IDENTIFIER,
+    )
 
 
 class ResolverReach:
@@ -125,6 +134,8 @@ class ResolverReach:
                 requirement_including_leaving = requirement
                 if requirement_to_leave != Requirement.trivial():
                     requirement_including_leaving = RequirementAnd([requirement, requirement_to_leave])
+                    if _is_requirement_viable_as_additional(requirement_to_leave):
+                        requirement = RequirementAnd([requirement, requirement_to_leave])
 
                 # Check if the normal requirements to reach that node is satisfied
                 satisfied = requirement_including_leaving.satisfied(initial_state.resources, energy, database)
