@@ -46,13 +46,20 @@ def get_item_id_for_item(item: ResourceInfo) -> str:
         raise KeyError(f"{item.long_name} has no item ID.") from e
 
 
+def get_export_item_id_for_item(item: ResourceInfo) -> str:
+    assert isinstance(item, ItemResourceInfo)
+    if "item_export_id" in item.extra:
+        return item.extra["item_export_id"]
+    return get_item_id_for_item(item)
+
+
 def convert_conditional_resource(res: ConditionalResources) -> Iterator[dict]:
     if not res.resources:
         yield {"item_id": "ITEM_NONE", "quantity": 0}
         return
 
     for resource in reversed(res.resources):
-        item_id = get_item_id_for_item(resource[0])
+        item_id = get_export_item_id_for_item(resource[0])
         quantity = resource[1]
 
         yield {"item_id": item_id, "quantity": quantity}
@@ -72,11 +79,13 @@ def get_resources_for_details(
     if pickup.resource_lock is not None and not pickup.respects_lock and not pickup.unlocks_resource:
         # Add the lock resource into the pickup in addition to the expansion's resources
         assert len(resources) == 1
-        resources[0].append(
+        # prepend the main item
+        resources[0].insert(
+            0,
             {
-                "item_id": get_item_id_for_item(pickup.resource_lock.locked_by),
+                "item_id": get_export_item_id_for_item(pickup.resource_lock.locked_by),
                 "quantity": 1,
-            }
+            },
         )
 
     return resources
