@@ -230,13 +230,26 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
 
     def _create_categories_boxes(self, pickup_database: PickupDatabase, size_policy):
         self._boxes_for_category = {}
+        all_categories = list(pickup_database.pickup_categories.values())
 
         categories = set()
         for standard_pickup in pickup_database.standard_pickups.values():
             if not standard_pickup.hide_from_gui:
                 categories.add(standard_pickup.pickup_category)
 
-        all_categories = list(pickup_database.pickup_categories.values())
+        # FIXME: this really shouldn't be done this way. This is just temporary to have ammo in their own category.
+        broad_to_category = {
+            "beam_related": "beam",
+            "morph_ball_related": "morph_ball",
+            "missile_related": "missile",
+        }
+        for ammo_pickup in pickup_database.ammo_pickups.values():
+            if ammo_pickup.broad_category.name in broad_to_category:
+                proper_name = broad_to_category[ammo_pickup.broad_category.name]
+                categories.add(next(filter(lambda p: p.name == proper_name, all_categories)))
+            else:
+                categories.add(ammo_pickup.broad_category)
+
         for standard_pickup_category in sorted(categories, key=lambda it: all_categories.index(it)):
             category_box = Foldable(None, standard_pickup_category.long_name)
             category_box.setObjectName(f"category_box {standard_pickup_category}")
