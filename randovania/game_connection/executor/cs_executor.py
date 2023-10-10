@@ -1,37 +1,81 @@
 import asyncio
 import dataclasses
+import json
 import logging
 import struct
 from asyncio import StreamReader, StreamWriter
 from enum import IntEnum
 from typing import Self
+from uuid import UUID
 
 from tsc_utils.numbers import TscInput, tsc_value_to_num
 
+from randovania.bitpacking.json_dataclass import JsonDataclass
+from randovania.lib import enum_lib
+
 
 class PacketType(IntEnum):
-    ECHO = 0
+    SERVER_INFO = 0
     EXEC_SCRIPT = 1
     GET_FLAGS = 2
     QUEUE_EVENTS = 3
+    READ_MEM = 4
+    WRITE_MEM = 5
+    GET_STATE = 6
 
     ERROR = -1  # receiving
     DISCONNECT = -1  # sending
+
+
+class GameState(IntEnum):
+    can_read_flags: bool
+
+    INTRO = 0
+    TITLE = 1
+    GAMEPLAY = 2
+    INVENTORY = 3
+    TELEPORTER = 4
+    MINIMAP = 5
+    ISLAND_FALL = 6
+    PAUSE_MENU = 7
+
+    NONE = -1
+
+
+enum_lib.add_per_enum_field(
+    GameState,
+    "can_read_flags",
+    {
+        GameState.INTRO: False,
+        GameState.TITLE: False,
+        GameState.GAMEPLAY: True,
+        GameState.INVENTORY: True,
+        GameState.TELEPORTER: True,
+        GameState.MINIMAP: True,
+        GameState.ISLAND_FALL: True,
+        GameState.PAUSE_MENU: False,
+        GameState.NONE: False,
+    },
+)
 
 
 class TSCError(Exception):
     pass
 
 
-class EchoError(Exception):
-    pass
+@dataclasses.dataclass(frozen=True)
+class CSServerInfo(JsonDataclass):
+    api_version: int
+    platform: str
+    uuid: UUID
+    offsets: dict[str, int]
 
 
 @dataclasses.dataclass()
 class CSSocketHolder:
     reader: StreamReader
     writer: StreamWriter
-    api_version: int
+    server_info: CSServerInfo | None = None
 
 
 @dataclasses.dataclass(frozen=True)
@@ -62,7 +106,7 @@ def _resolve_tsc_value(value: int | TscInput) -> int:
 
 
 def _message_for_tsc_value_list(values: list[int | TscInput]) -> bytes:
-    return struct.pack("<i" * len(values), *[_resolve_tsc_value(value) for value in values])
+    return struct.pack(f"<{len(values)}i", *[_resolve_tsc_value(value) for value in values])
 
 
 class CSExecutor:
@@ -91,12 +135,19 @@ class CSExecutor:
 
             self.logger.debug("Connecting to %s:%d.", self._ip, self._port)
             reader, writer = await asyncio.open_connection(self._ip, self._port)
-            self._socket = CSSocketHolder(reader, writer, 1)
+            self._socket = CSSocketHolder(reader, writer)
 
-            self.logger.debug("Connection open. Handshake...")
-            await self.echo("Handshake!")
+            self.logger.debug("Connection open. Requesting API details...")
+            server_info = await self.get_server_info()
+            self.logger.debug(
+                "Server replied with API level %s, platform %s, uuid %s, and offsets %s. Connection successful.",
+                server_info.api_version,
+                server_info.platform,
+                server_info.uuid,
+                server_info.offsets,
+            )
+            self._socket.server_info = server_info
 
-            self.logger.debug("Handshake successful.")
             self.logger.info("Connected")
 
             return None
@@ -110,7 +161,6 @@ class CSExecutor:
             RuntimeError,
             ValueError,
             TSCError,
-            EchoError,
         ) as e:
             # UnicodeError is for some invalid ip addresses
             self._socket = None
@@ -141,11 +191,9 @@ class CSExecutor:
             raise TSCError(f"Expected {packet.type}, got {response.type}")
         return response
 
-    async def echo(self, msg: str):
-        response = await self._send_request(Packet(PacketType.ECHO, msg.encode("cp1252")))
-        echo = response.message.decode("cp1252")
-        if echo != msg:
-            raise EchoError(f"Expected: '{msg}' Received: '{echo}'")
+    async def get_server_info(self) -> CSServerInfo:
+        response = await self._send_request(Packet(PacketType.SERVER_INFO))
+        return CSServerInfo.from_json(json.loads(response.message.decode("cp1252")))
 
     async def exec_script(self, script: str):
         await self._send_request(Packet(PacketType.EXEC_SCRIPT, script.encode("cp1252")))
@@ -161,3 +209,22 @@ class CSExecutor:
 
     async def request_disconnect(self):
         await self._send_request(Packet(PacketType.DISCONNECT))
+
+    async def read_memory(self, offset: int, size: int, *, base_offset: str | None = None) -> bytes:
+        if base_offset is not None:
+            offset += self._socket.server_info.offsets[base_offset]
+
+        msg = struct.pack("<iH", offset, size)
+        response = await self._send_request(Packet(PacketType.READ_MEM, msg))
+        return response.message
+
+    async def write_memory(self, offset: int, data: bytes, *, base_offset: str | None = None):
+        if base_offset is not None:
+            offset += self._socket.server_info.offsets[base_offset]
+
+        msg = struct.pack(f"<i{len(data)}s", offset, data)
+        await self._send_request(Packet(PacketType.WRITE_MEM, msg))
+
+    async def get_game_state(self) -> GameState:
+        response = await self._send_request(Packet(PacketType.GET_STATE))
+        return GameState(struct.unpack("b", response.message))
