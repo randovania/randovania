@@ -7,6 +7,7 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
 from randovania.games.prime2.layout.translator_configuration import LayoutTranslatorRequirement
 from randovania.gui import tracker_window
@@ -15,6 +16,7 @@ from randovania.layout.versioned_preset import VersionedPreset
 
 if TYPE_CHECKING:
     from pathlib import Path
+    from unittest.mock import MagicMock
 
 
 @pytest.fixture(params=[{}, {"teleporters": TeleporterShuffleMode.ONE_WAY_ANYTHING, "translator_configuration": True}])
@@ -410,3 +412,67 @@ async def test_apply_previous_state(
 
     persisted_data = json.loads(tmp_path.joinpath("state.json").read_text("utf-8"))
     assert persisted_data != state
+
+
+async def test_load_multi_starting_location(
+    skip_qtbot, tmp_path: Path, default_echoes_configuration, default_echoes_preset, mocker
+):
+    preset = default_echoes_preset
+    new_start_loc = (
+        NodeIdentifier.create("Temple Grounds", "Landing Site", "Save Station"),
+        NodeIdentifier.create("Temple Grounds", "Temple Transport C", "Elevator to Great Temple"),
+    )
+    layout_config = dataclasses.replace(
+        default_echoes_configuration,
+        starting_location=dataclasses.replace(default_echoes_configuration.starting_location, locations=new_start_loc),
+    )
+    preset = dataclasses.replace(default_echoes_preset.fork(), configuration=layout_config)
+    mock_return = ("Temple Grounds/Temple Transport C/Elevator to Great Temple", True)
+
+    # Run
+    mock_get_item: MagicMock = mocker.patch("PySide6.QtWidgets.QInputDialog.getItem", return_value=mock_return)
+    window = await tracker_window.TrackerWindow.create_new(tmp_path, preset)
+    skip_qtbot.add_widget(window)
+
+    # Assert
+    mock_get_item.assert_called_once()
+    state = window.state_for_current_configuration()
+    assert state is not None
+    assert state.node.identifier == new_start_loc[1]
+
+
+async def test_load_single_starting_location(
+    skip_qtbot, tmp_path: Path, default_echoes_configuration, default_echoes_preset
+):
+    preset = default_echoes_preset
+    new_start_loc = (NodeIdentifier.create("Temple Grounds", "Temple Transport C", "Elevator to Great Temple"),)
+    layout_config = dataclasses.replace(
+        default_echoes_configuration,
+        starting_location=dataclasses.replace(default_echoes_configuration.starting_location, locations=new_start_loc),
+    )
+    preset = dataclasses.replace(default_echoes_preset.fork(), configuration=layout_config)
+
+    # Run
+    window = await tracker_window.TrackerWindow.create_new(tmp_path, preset)
+    skip_qtbot.add_widget(window)
+
+    # Assert
+    state = window.state_for_current_configuration()
+    assert state is not None
+    assert state.node.identifier == new_start_loc[0]
+
+
+async def test_preset_without_starting_location(
+    skip_qtbot, tmp_path: Path, default_echoes_configuration, default_echoes_preset
+):
+    preset = default_echoes_preset
+    new_start_loc = ()
+    layout_config = dataclasses.replace(
+        default_echoes_configuration,
+        starting_location=dataclasses.replace(default_echoes_configuration.starting_location, locations=new_start_loc),
+    )
+    preset = dataclasses.replace(default_echoes_preset.fork(), configuration=layout_config)
+
+    # Run
+    with pytest.raises(ValueError, match="Preset without a starting location"):
+        await tracker_window.TrackerWindow.create_new(tmp_path, preset)
