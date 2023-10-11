@@ -18,7 +18,6 @@ class PresetMSRAeion(PresetTab, Ui_PresetMSRAeion):
         super().__init__(editor, game_description, window_manager)
         self.setupUi(self)
 
-        self.aeion_tank_capacity_spin_box.valueChanged.connect(self._persist_tank_capacity)
         self.aeion_capacity_spin_box.valueChanged.connect(self._persist_capacity)
 
     @classmethod
@@ -32,12 +31,7 @@ class PresetMSRAeion(PresetTab, Ui_PresetMSRAeion):
     def on_preset_changed(self, preset: Preset) -> None:
         config = preset.configuration
         assert isinstance(config, MSRConfiguration)
-        self.aeion_tank_capacity_spin_box.setValue(config.aeion_per_tank)
         self.aeion_capacity_spin_box.setValue(config.starting_aeion)
-
-    def _persist_tank_capacity(self) -> None:
-        with self._editor as editor:
-            editor.set_configuration_field("aeion_per_tank", int(self.aeion_tank_capacity_spin_box.value()))
 
     def _persist_capacity(self) -> None:
         with self._editor as editor:
