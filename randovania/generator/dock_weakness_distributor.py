@@ -43,9 +43,10 @@ def distribute_pre_fill_weaknesses(patches: GamePatches, rng: Random) -> GamePat
     game = default_database.game_description_for(patches.configuration.game)
     weakness_database = game.dock_weakness_database
     all_docks: dict[DockNode, DockNode] = {
-        node: game.region_list.typed_node_by_identifier(node.default_connection, DockNode)
+        node: target
         for node in game.region_list.all_nodes
         if isinstance(node, DockNode)
+        and isinstance((target := game.region_list.node_by_identifier(node.default_connection)), DockNode)
     }
 
     nodes_to_shuffle: list[DockNode] = [
@@ -81,6 +82,7 @@ def distribute_pre_fill_weaknesses(patches: GamePatches, rng: Random) -> GamePat
         weakness_priority = list(
             itertools.chain.from_iterable(weaknesses.values() for weaknesses in weakness_database.weaknesses.values())
         )
+
         # weakness_priority.sort()  - sort by priority (TODO)
 
         def priority_check(a: DockNode, b: DockNode) -> bool:
