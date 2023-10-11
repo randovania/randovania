@@ -243,6 +243,15 @@ class GameConnectionWindow(QtWidgets.QMainWindow, Ui_GameConnectionWindow):
                 return
             args["ip"] = new_ip
 
+        if choice == ConnectorBuilderChoice.CS:
+            new_ip = await self._prompt_for_text(
+                "Enter IP",
+                "Enter the IP address of your computer. You probably just want `localhost`.",
+            )
+            if new_ip is None:
+                return
+            args["ip"] = new_ip
+
         if choice == ConnectorBuilderChoice.DEBUG:
             new_game = await self._prompt_for_game("Choose Game", "Select the game to use for the debug connection.")
             if new_game is None:

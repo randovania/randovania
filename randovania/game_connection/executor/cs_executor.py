@@ -8,7 +8,7 @@ from enum import IntEnum
 from typing import Self
 from uuid import UUID
 
-from tsc_utils.flags import flag_to_address
+from tsc_utils.flags import Address, flag_to_address
 from tsc_utils.numbers import TscInput, tsc_value_to_num
 
 from randovania.bitpacking.json_dataclass import JsonDataclass
@@ -93,6 +93,8 @@ class Packet:
     @classmethod
     async def from_stream(cls, stream: StreamReader) -> Self:
         header: bytes = await asyncio.wait_for(stream.read(5), None)
+        if len(header) < 5:
+            raise TSCError("Invalid header")
         type, size = struct.unpack(Packet.HEADER_FMT, header)
         if size > 0:
             msg = await asyncio.wait_for(stream.read(size), None)
@@ -199,8 +201,27 @@ class CSExecutor:
         return self._socket is not None
 
     async def _send_request(self, packet: Packet) -> Packet:
+        try:
+            return await self._internal_send_request(packet)
+        except (
+            OSError,
+            AttributeError,
+            asyncio.TimeoutError,
+            struct.error,
+            UnicodeError,
+            RuntimeError,
+            ValueError,
+        ):
+            self.disconnect()
+            raise
+        except TSCError as e:
+            self.logger.debug(e)
+            self.disconnect()
+            raise
+
+    async def _internal_send_request(self, packet: Packet) -> Packet:
         self._socket.writer.write(packet.to_stream)
-        await asyncio.wait_for(self._socket.writer.drain(), timeout=30)
+        await asyncio.wait_for(self._socket.writer.drain(), timeout=15)
 
         if packet.type == PacketType.DISCONNECT:
             return packet  # no response from server when dc'ing
@@ -251,45 +272,50 @@ class CSExecutor:
         """
         Please only use with byte-aligned flags
         """
-        address = flag_to_address(start_flag, self.server_info.offsets["flags"])
+        address = flag_to_address(start_flag, Address(self.server_info.offsets["flags"], 0))
         return await self.read_memory(address.offset, size)
 
     async def write_memory_flags(self, start_flag: int | TscInput, data: bytes):
-        address = flag_to_address(start_flag, self.server_info.offsets["flags"])
+        address = flag_to_address(start_flag, Address(self.server_info.offsets["flags"], 0))
         await self.write_memory(address.offset, data)
 
     async def get_flag(self, flag: int | TscInput) -> bool:
-        return await self.get_flags([flag])[0]
+        return (await self.get_flags([flag]))[0]
 
     async def set_flag(self, flag: int | TscInput, value: bool):
-        address = flag_to_address(flag, self.server_info.offsets["flags"])
+        address = flag_to_address(flag, Address(self.server_info.offsets["flags"], 0))
         byte = await self.read_memory(address.offset, 1)
+        byte = struct.unpack("b", byte)[0]
         if value:
             byte |= 1 << address.bit
         else:
             byte &= ~(1 << address.bit)
-        await self.write_memory(address.offset, byte)
+        await self.write_memory(address.offset, struct.pack("b", byte))
 
     async def get_game_state(self) -> GameState:
-        response = await self._send_request(Packet(PacketType.GET_STATE))
-        return GameState(struct.unpack("b", response.message))
+        response = await self._send_request(Packet(PacketType.GET_STATE, b"\x00"))
+        return GameState(struct.unpack("b", response.message)[0])
+
+    async def get_map_name(self) -> str:
+        response = await self._send_request(Packet(PacketType.GET_STATE, b"\x01"))
+        return response.message.decode("cp1252")
 
     async def get_profile_uuid(self) -> UUID:
         response = await self.read_memory(112, 16, base_offset="map_flags")
-        return UUID(bytes=response)
+        return UUID(bytes_le=response)
 
     async def get_weapons(self) -> list[WeaponData]:
         weapons = []
 
-        arms_table = await self.read_memory(0, 160, base_offset="arms_table")
+        arms_table = await self.read_memory(0, 160, base_offset="arms_data")
         while arms_table:
-            arm, arms_table = arms_table[:8], arms_table[8:]
+            arm, arms_table = arms_table[:20], arms_table[20:]
             weapons.append(WeaponData.from_stream(arm))
 
         return weapons
 
     async def get_received_items(self) -> int:
-        return struct.unpack("b", await self.read_memory_flags(7400, 1))
+        return struct.unpack("b", await self.read_memory_flags(7400, 1))[0]
 
     async def set_received_items(self, received: int):
         await self.write_memory_flags(7400, struct.pack("b", received))
