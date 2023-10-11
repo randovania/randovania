@@ -8,6 +8,7 @@ from enum import IntEnum
 from typing import Self
 from uuid import UUID
 
+from tsc_utils.flags import flag_to_address
 from tsc_utils.numbers import TscInput, tsc_value_to_num
 
 from randovania.bitpacking.json_dataclass import JsonDataclass
@@ -28,7 +29,7 @@ class PacketType(IntEnum):
 
 
 class GameState(IntEnum):
-    can_read_flags: bool
+    can_read_profile: bool
 
     INTRO = 0
     TITLE = 1
@@ -44,7 +45,7 @@ class GameState(IntEnum):
 
 enum_lib.add_per_enum_field(
     GameState,
-    "can_read_flags",
+    "can_read_profile",
     {
         GameState.INTRO: False,
         GameState.TITLE: False,
@@ -53,7 +54,7 @@ enum_lib.add_per_enum_field(
         GameState.TELEPORTER: True,
         GameState.MINIMAP: True,
         GameState.ISLAND_FALL: True,
-        GameState.PAUSE_MENU: False,
+        GameState.PAUSE_MENU: True,
         GameState.NONE: False,
     },
 )
@@ -75,7 +76,6 @@ class CSServerInfo(JsonDataclass):
 class CSSocketHolder:
     reader: StreamReader
     writer: StreamWriter
-    server_info: CSServerInfo | None = None
 
 
 @dataclasses.dataclass(frozen=True)
@@ -101,6 +101,26 @@ class Packet:
         return Packet(PacketType(type), msg)
 
 
+@dataclasses.dataclass(frozen=True)
+class WeaponData:
+    weapon_id: int
+    level: int
+    exp: int
+    capacity: int
+    ammo: int
+
+    @classmethod
+    def from_stream(cls, data: bytes) -> Self:
+        weapon_id, level, exp, capacity, ammo = struct.unpack("<5i", data)
+        return WeaponData(
+            weapon_id,
+            level,
+            exp,
+            capacity,
+            ammo,
+        )
+
+
 def _resolve_tsc_value(value: int | TscInput) -> int:
     return tsc_value_to_num(value) if isinstance(value, TscInput) else value
 
@@ -113,6 +133,7 @@ class CSExecutor:
     _port = 5451
     _socket: CSSocketHolder | None = None
     _socket_error: Exception | None = None
+    server_info: CSServerInfo | None = None
 
     def __init__(self, ip: str) -> None:
         self.logger = logging.getLogger(type(self).__name__)
@@ -146,7 +167,7 @@ class CSExecutor:
                 server_info.uuid,
                 server_info.offsets,
             )
-            self._socket.server_info = server_info
+            self.server_info = server_info
 
             self.logger.info("Connected")
 
@@ -198,7 +219,7 @@ class CSExecutor:
     async def exec_script(self, script: str):
         await self._send_request(Packet(PacketType.EXEC_SCRIPT, script.encode("cp1252")))
 
-    async def get_flag_state(self, flags: list[int | TscInput]) -> list[bool]:
+    async def get_flags(self, flags: list[int | TscInput]) -> list[bool]:
         msg = _message_for_tsc_value_list(flags)
         response = await self._send_request(Packet(PacketType.GET_FLAGS, msg))
         return [f != 0 for f in response.message]
@@ -209,10 +230,11 @@ class CSExecutor:
 
     async def request_disconnect(self):
         await self._send_request(Packet(PacketType.DISCONNECT))
+        self.disconnect()
 
     async def read_memory(self, offset: int, size: int, *, base_offset: str | None = None) -> bytes:
         if base_offset is not None:
-            offset += self._socket.server_info.offsets[base_offset]
+            offset += self.server_info.offsets[base_offset]
 
         msg = struct.pack("<iH", offset, size)
         response = await self._send_request(Packet(PacketType.READ_MEM, msg))
@@ -220,11 +242,54 @@ class CSExecutor:
 
     async def write_memory(self, offset: int, data: bytes, *, base_offset: str | None = None):
         if base_offset is not None:
-            offset += self._socket.server_info.offsets[base_offset]
+            offset += self.server_info.offsets[base_offset]
 
         msg = struct.pack(f"<i{len(data)}s", offset, data)
         await self._send_request(Packet(PacketType.WRITE_MEM, msg))
 
+    async def read_memory_flags(self, start_flag: int | TscInput, size: int) -> bytes:
+        """
+        Please only use with byte-aligned flags
+        """
+        address = flag_to_address(start_flag, self.server_info.offsets["flags"])
+        return await self.read_memory(address.offset, size)
+
+    async def write_memory_flags(self, start_flag: int | TscInput, data: bytes):
+        address = flag_to_address(start_flag, self.server_info.offsets["flags"])
+        await self.write_memory(address.offset, data)
+
+    async def get_flag(self, flag: int | TscInput) -> bool:
+        return await self.get_flags([flag])[0]
+
+    async def set_flag(self, flag: int | TscInput, value: bool):
+        address = flag_to_address(flag, self.server_info.offsets["flags"])
+        byte = await self.read_memory(address.offset, 1)
+        if value:
+            byte |= 1 << address.bit
+        else:
+            byte &= ~(1 << address.bit)
+        await self.write_memory(address.offset, byte)
+
     async def get_game_state(self) -> GameState:
         response = await self._send_request(Packet(PacketType.GET_STATE))
         return GameState(struct.unpack("b", response.message))
+
+    async def get_profile_uuid(self) -> UUID:
+        response = await self.read_memory(112, 16, base_offset="map_flags")
+        return UUID(bytes=response)
+
+    async def get_weapons(self) -> list[WeaponData]:
+        weapons = []
+
+        arms_table = await self.read_memory(0, 160, base_offset="arms_table")
+        while arms_table:
+            arm, arms_table = arms_table[:8], arms_table[8:]
+            weapons.append(WeaponData.from_stream(arm))
+
+        return weapons
+
+    async def get_received_items(self) -> int:
+        return struct.unpack("b", await self.read_memory_flags(7400, 1))
+
+    async def set_received_items(self, received: int):
+        await self.write_memory_flags(7400, struct.pack("b", received))
