@@ -29,6 +29,7 @@ if TYPE_CHECKING:
     from randovania.game_description.pickup.pickup_entry import PickupEntry
     from randovania.game_description.resources.location_category import LocationCategory
     from randovania.game_description.resources.pickup_index import PickupIndex
+    from randovania.game_description.resources.resource_info import ResourceInfo
     from randovania.generator.filler.filler_configuration import FillerConfiguration
     from randovania.generator.filler.weighted_locations import WeightedLocations
     from randovania.resolver.state import State
@@ -42,6 +43,7 @@ class PlayerState:
     pickup_index_considered_count: collections.defaultdict[PickupIndex, int]
     hint_seen_count: collections.defaultdict[NodeIdentifier, int]
     hint_initial_pickups: dict[NodeIdentifier, frozenset[PickupIndex]]
+    event_seen_count: dict[ResourceInfo, int]
     _unfiltered_potential_actions: tuple[PickupCombinations, tuple[ResourceNode, ...]]
     num_starting_pickups_placed: int
     num_assigned_pickups: int
@@ -72,10 +74,10 @@ class PlayerState:
         self.num_actions = 0
         self.indices_groups, self.all_indices = build_available_indices(game.region_list, configuration)
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"Player {self.index + 1}"
 
-    def update_for_new_state(self):
+    def update_for_new_state(self) -> None:
         debug.debug_print(f"\n>>> Updating state of {self}")
 
         self.advance_scan_asset_seen_count()
@@ -83,7 +85,7 @@ class PlayerState:
         self._log_new_pickup_index()
         self._calculate_potential_actions()
 
-    def advance_scan_asset_seen_count(self):
+    def advance_scan_asset_seen_count(self) -> None:
         for hint_identifier in self.reach.state.collected_hints:
             self.hint_seen_count[hint_identifier] += 1
             if self.hint_seen_count[hint_identifier] == 1:
@@ -91,20 +93,20 @@ class PlayerState:
 
         filler_logging.print_new_node_identifiers(self.game, self.hint_seen_count, "Scan Asset")
 
-    def _advance_event_seen_count(self):
+    def _advance_event_seen_count(self) -> None:
         for resource, quantity in self.reach.state.resources.as_resource_gain():
             if resource.resource_type == ResourceType.EVENT and quantity > 0:
                 self.event_seen_count[resource] += 1
 
         filler_logging.print_new_resources(self.game, self.reach, self.event_seen_count, "Events")
 
-    def _log_new_pickup_index(self):
+    def _log_new_pickup_index(self) -> None:
         for index in self.reach.state.collected_pickup_indices:
             if index not in self.pickup_index_considered_count:
                 self.pickup_index_considered_count[index] = 0
                 filler_logging.print_new_pickup_index(self.index, self.game, index)
 
-    def _calculate_potential_actions(self):
+    def _calculate_potential_actions(self) -> None:
         uncollected_resource_nodes = reach_lib.get_collectable_resource_nodes_of_reach(self.reach)
 
         usable_pickups = [
@@ -135,12 +137,12 @@ class PlayerState:
 
         return result
 
-    def victory_condition_satisfied(self):
+    def victory_condition_satisfied(self) -> bool:
         return self.game.victory_condition.satisfied(
             self.reach.state.resources, self.reach.state.energy, self.reach.state.resource_database
         )
 
-    def assign_pickup(self, pickup_index: PickupIndex, target: PickupTarget):
+    def assign_pickup(self, pickup_index: PickupIndex, target: PickupTarget) -> None:
         self.num_assigned_pickups += 1
         self.reach.state.patches = self.reach.state.patches.assign_new_pickups(
             [
@@ -150,7 +152,7 @@ class PlayerState:
 
     def current_state_report(self) -> str:
         state = UncollectedState.from_reach(self.reach)
-        pickups_by_name_and_quantity = collections.defaultdict(int)
+        pickups_by_name_and_quantity: dict[str, int] = collections.defaultdict(int)
 
         _KEY_MATCH = re.compile(r"Key (\d+)")
         for pickup in self.pickups_left:

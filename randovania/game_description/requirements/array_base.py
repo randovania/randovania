@@ -24,6 +24,12 @@ class RequirementArrayBase(Requirement):
         self.comment = comment
         self._cached_hash = None
 
+    def __copy__(self) -> typing.Self:
+        return type(self)(self.items, self.comment)
+
+    def __reduce__(self) -> tuple[type[RequirementArrayBase], tuple[tuple[Requirement, ...], str | None]]:
+        return type(self), (self.items, self.comment)
+
     def damage(self, current_resources: ResourceCollection, database: ResourceDatabase) -> int:
         raise NotImplementedError
 

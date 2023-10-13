@@ -31,7 +31,7 @@ def filter_unassigned_pickup_nodes(
             yield node
 
 
-class UnableToGenerate(RuntimeError):
+class UnableToGenerate(Exception):
     pass
 
 

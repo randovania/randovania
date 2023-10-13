@@ -23,7 +23,7 @@ from randovania.lib import json_lib
 from randovania.lib.enum_lib import iterate_enum
 
 _ROOT_FOLDER = Path(__file__).parents[1]
-_NINTENDONT_RELEASES_URL = "https://api.github.com/repos/randovania/Nintendont/releases"
+_NINTENDONT_DOWNLOAD_URL = "https://github.com/randovania/Nintendont/releases/download/v5-multiworld/boot.dol"
 zip_folder = f"randovania-{VERSION}"
 
 
@@ -37,15 +37,6 @@ def open_zip(platform_name: str) -> zipfile.ZipFile:
     )
 
 
-async def get_nintendont_releases(session: aiohttp.ClientSession):
-    async with session.get(_NINTENDONT_RELEASES_URL) as response:
-        try:
-            response.raise_for_status()
-            return await response.json()
-        except aiohttp.ClientResponseError as e:
-            raise RuntimeError("Unable to get Nintendont releases") from e
-
-
 @tenacity.retry(
     stop=tenacity.stop_after_attempt(5),
     retry=tenacity.retry_if_exception_type(aiohttp.ClientConnectorError),
@@ -57,18 +48,8 @@ async def download_nintendont():
         headers = {"Authorization": f"Bearer {os.environ['GITHUB_TOKEN']}"}
 
     async with aiohttp.ClientSession(headers=headers) as session:
-        print("Fetching list of Nintendont releases.")
-        releases = await get_nintendont_releases(session)
-        latest_release = releases[0]
-
-        download_urls = [
-            asset["browser_download_url"] for asset in latest_release["assets"] if asset["name"] == "boot.dol"
-        ]
-        if not download_urls:
-            raise RuntimeError("No boot.dol found in latest release")
-
-        print(f"Downloading {download_urls[0]}")
-        async with session.get(download_urls[0]) as download_response:
+        print(f"Downloading {_NINTENDONT_DOWNLOAD_URL}")
+        async with session.get(_NINTENDONT_DOWNLOAD_URL) as download_response:
             download_response.raise_for_status()
             dol_bytes = await download_response.read()
 

@@ -6,7 +6,7 @@ from unittest.mock import AsyncMock, MagicMock, call, patch
 import pytest
 
 from randovania.generator import generator
-from randovania.generator.filler.runner import FillerPlayerResult, FillerResults
+from randovania.generator.filler.filler_configuration import FillerPlayerResult, FillerResults
 from randovania.layout.exceptions import InvalidConfiguration
 from randovania.layout.layout_description import LayoutDescription
 
@@ -42,7 +42,7 @@ async def test_create_patches(
     rng = generator_parameters.create_rng.return_value
     status_update: MagicMock | Callable[[str], None] = MagicMock()
     player_pools = [MagicMock() for _ in range(num_players)]
-    presets = [MagicMock() for _ in range(num_players)]
+    presets: list = [MagicMock() for _ in range(num_players)]
 
     mock_create_player_pool.side_effect = player_pools
 

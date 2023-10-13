@@ -39,7 +39,7 @@ def test_create_pickup_for(echoes_resource_database, generic_pickup_category):
         pickup_category=less_generic_pickup_category,
         broad_category=generic_pickup_category,
         model_name="SuperModel",
-        offworld_models=frozendict(),
+        offworld_models=frozendict({}),
         progression=("DarkVisor", "MorphBall", "Bombs"),
         default_starting_count=0,
         default_shuffled_count=1,
@@ -115,7 +115,7 @@ def test_create_missile_launcher(
         echoes_pickup_database.ammo_pickups["Missile Expansion"],
         ammo_requires_main_item=True,
     )
-    result = dataclasses.replace(result, offworld_models=frozendict())
+    result = dataclasses.replace(result, offworld_models=frozendict({}))
 
     # Assert
     assert result == PickupEntry(
@@ -168,7 +168,7 @@ def test_create_seeker_launcher(
         echoes_pickup_database.ammo_pickups["Missile Expansion"],
         ammo_requires_main_item,
     )
-    result = dataclasses.replace(result, offworld_models=frozendict())
+    result = dataclasses.replace(result, offworld_models=frozendict({}))
 
     # Assert
 
@@ -207,7 +207,7 @@ def test_create_ammo_expansion(requires_main_item: bool, echoes_pickup_database,
         unlocked_by="MissileLauncher",
         temporary="Temporary1",
         model_name="AmmoModel",
-        offworld_models=frozendict(),
+        offworld_models=frozendict({}),
         preferred_location_category=LocationCategory.MINOR,
     )
     ammo_count = (11, 150)

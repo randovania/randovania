@@ -27,6 +27,9 @@ class RequirementList:
     _extra: list[ResourceRequirement]
     _cached_hash: int | None
 
+    def __copy__(self) -> typing.Self:
+        return self
+
     def __deepcopy__(self, memodict: dict) -> RequirementList:
         return self
 
@@ -42,6 +45,9 @@ class RequirementList:
                 self._bitmask |= 1 << it.resource.resource_index
             else:
                 self._extra.append(it)
+
+    def __reduce__(self) -> tuple[type[RequirementList], tuple[ResourceRequirement, ...]]:
+        return RequirementList, tuple(self._items.values())
 
     def __eq__(self, other: object) -> bool:
         return isinstance(other, RequirementList) and self._items == other._items

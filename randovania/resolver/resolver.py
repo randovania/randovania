@@ -116,7 +116,7 @@ async def _inner_advance_depth(
 
     logic.start_new_attempt(state, max_attempts)
 
-    if logic.victory_condition.satisfied(state.resources, state.energy, state.resource_database):
+    if logic.victory_condition(state).satisfied(state.resources, state.energy, state.resource_database):
         return state, True
 
     # Yield back to the asyncio runner, so cancel can do something
@@ -175,7 +175,7 @@ async def _inner_advance_depth(
     actions = list(
         reach.satisfiable_actions(
             state,
-            logic.victory_condition,
+            logic.victory_condition(state),
             itertools.chain(
                 major_pickup_actions, lock_actions, rest_of_actions, point_of_no_return_actions, dangerous_actions
             ),
