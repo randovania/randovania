@@ -2417,7 +2417,7 @@
                                         "data": {
                                             "type": "items",
                                             "name": "Missiles",
-                                            "amount": 7,
+                                            "amount": 15,
                                             "negate": false
                                         }
                                     },
@@ -2426,7 +2426,7 @@
                                         "data": {
                                             "type": "items",
                                             "name": "Super Missiles",
-                                            "amount": 2,
+                                            "amount": 5,
                                             "negate": false
                                         }
                                     },
@@ -2503,7 +2503,7 @@
                                         "data": {
                                             "type": "items",
                                             "name": "Missiles",
-                                            "amount": 7,
+                                            "amount": 35,
                                             "negate": false
                                         }
                                     },
@@ -2512,7 +2512,7 @@
                                         "data": {
                                             "type": "items",
                                             "name": "Super Missiles",
-                                            "amount": 2,
+                                            "amount": 10,
                                             "negate": false
                                         }
                                     },
@@ -2550,35 +2550,18 @@
                                                 }
                                             ]
                                         }
-                                    }
-                                ]
-                            }
-                        },
-                        {
-                            "type": "or",
-                            "data": {
-                                "comment": "Damage requirements",
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "damage",
-                                            "name": "Damage",
-                                            "amount": 250,
-                                            "negate": false
-                                        }
                                     },
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "Fusion low% strat to escape",
+                                            "comment": "low% strat using refills",
                                             "items": [
                                                 {
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "items",
-                                                        "name": "Morph Ball",
-                                                        "amount": 1,
+                                                        "name": "Super Missiles",
+                                                        "amount": 2,
                                                         "negate": false
                                                     }
                                                 },
@@ -2604,12 +2587,38 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "items",
-                                                        "name": "Super Missiles",
-                                                        "amount": 2,
+                                                        "name": "Morph Ball",
+                                                        "amount": 1,
                                                         "negate": false
                                                     }
                                                 }
                                             ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "type": "or",
+                            "data": {
+                                "comment": "Damage requirements",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "damage",
+                                            "name": "Damage",
+                                            "amount": 250,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Combat",
+                                            "amount": 4,
+                                            "negate": false
                                         }
                                     }
                                 ]
@@ -3921,6 +3930,59 @@
                             "data": {
                                 "type": "items",
                                 "name": "Metroid DNA 46",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    ]
+                }
+            },
+            "Alpha Squad Defeated": {
+                "type": "and",
+                "data": {
+                    "comment": null,
+                    "items": [
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "Alpha20",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "Alpha21",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "Alpha22",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "Alpha18",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "Alpha19",
                                 "amount": 1,
                                 "negate": false
                             }
