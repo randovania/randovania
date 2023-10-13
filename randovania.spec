@@ -48,12 +48,7 @@ a = Analysis(
     binaries=[],
     datas=datas,
     hiddenimports=[
-        "mock",
         "unittest.mock",
-        "pkg_resources.py2_warn",
-        "randovania.server.discord.preset_lookup",
-        "randovania.server.discord.database_command",
-        "randovania.server.discord.faq_command",
     ],
     hookspath=[
         # https://github.com/pyinstaller/pyinstaller/issues/4040
