@@ -79,9 +79,9 @@ class CSPatchDataFactory(PatchDataFactory):
 
             if target.player != self.players_config.player_index:
                 message = f"Sent ={target.pickup.name}= to ={self.players_config.player_names[target.player]}=!"
-                message = wrap_msg_text(message, False)
+                message = wrap_msg_text(message, False, ending="<WAI0025<NOD")
                 git = "<GIT0000"  # TODO: add GIT info in pickup db and use it here (respecting offworld models)
-                pickup_script = f"<PRI<MSG<TUR<IT+0000\r\n{message}<WAI0025<NOD<EVE0015"
+                pickup_script = f"<PRI<MSG<TUR<IT+0000{git}{message}<EVE0015"
             elif target == nothing_item:
                 pickup_script = NOTHING_ITEM_SCRIPT
             else:
