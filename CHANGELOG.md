@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [6.5.0] - 2023-11-??
 
 - Changed: The Changelog window has recieved a slight overhaul. The date of each release is shown, hyperlinks are fixed, and patch notes are now accessed through a drop-down box (previously used vertical tabs).
-- Changed: Trick level sliders ignore mouse scroll inputs, preventing unintended preset changes. 
+- Changed: Trick level sliders ignore mouse scroll inputs, preventing unintended preset changes.
 
 ### Resolver
 
@@ -16,6 +16,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Damage reductions from multiple suits are no longer multiplied together.
 - Improved: The output from the resolver now includes the node with the victory condition.
 - Improved: When using verbosity level High or above, the energy is displayed in the output.
+
+### Cave Story
+- **Major** - Added: Multiworld support. Currently only supports the version of freeware provided by Randovania.
+- Fixed: Exporting Cave Story no longer causes a runtime error.
+- Fixed: Presets that start in Camp no longer error in generation.
+- Changed: The bookshelf in Prefab House now returns you to Prefab Building, before the boss rush.
+- Fixed: Alt-tabbing while in fullscreen no longer crashes the game.
+- Fixed: You can no longer select a negative weapon slot from the inventory.
+- Fixed: The teleporter menu no longer flickers.
 
 ### Metroid Dread
 
@@ -81,7 +90,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Prime:
 
-- Fixed: When room rando is enabled, cutscenes are no longer skippable to avoid a bug with elevators. This will be properly fixed in the future. 
+- Fixed: When room rando is enabled, cutscenes are no longer skippable to avoid a bug with elevators. This will be properly fixed in the future.
 
 ## [6.3.0] - 2023-10-02
 
@@ -179,7 +188,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 #### Logic Database
 
 - Added: 22 videos to the logic database. see the [Video Directory]
-(https://randovania.github.io/Metroid%20Prime%202%20Echoes/) for the full collection 
+(https://randovania.github.io/Metroid%20Prime%202%20Echoes/) for the full collection
 - Added: Comments to some Beginner Bomb Jump tricks
 - Changed: The trick setting "Suitless Ingclaw/Ingstorm" got renamed to "Suitless Dark Aether" with the intention to cover more tight Dark Aether energy requirements outside of Ingclaw or Ingstorm related checks.
 
@@ -220,7 +229,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: The resolver now tries otherwise safe actions behind a point of no return before it tries actions that give dangerous resources. This makes the solve faster by avoiding some cases of backtracking.
 - Changed: Comments no longer prevent And/Or requirements from being displayed as short form.
 - Fixed: Auto Tracker icons that were supposed to be always visible no longer show as disabled.
-- Fixed: Opening race rdvgame files from older Randovania versions now works properly. 
+- Fixed: Opening race rdvgame files from older Randovania versions now works properly.
 - Fixed: Exporting games with hidden Nothing models don't crash during the exporting process anymore.
 - Fixed: For macOS, exporting Metroid Prime 2: Echoes games does not require you to run Randovania from within a terminal anymore to see the Mono installation.
 
@@ -228,7 +237,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - **Major** - Added: Elevator and Shuttle randomizer. The destination is shown on the elevator/shuttle's minimap icon and in the room name, if enabled. This will show different area names to the logic database for some items.
 - **Major** - Added: Split beams and missiles. When playing with non-progressive beams or missiles, each individual upgrade provides a unique effect instead of providing the effects of all previous upgrades.
-- Added: An in-game icon will appear if the player becomes disconnected from the multiworld server. 
+- Added: An in-game icon will appear if the player becomes disconnected from the multiworld server.
 - Changed: The Starter Preset and April Fools 2023 preset now have non-progressive beams and missiles, instead of progressive.
 - Changed: Bomb Shields are no longer vulnerable to Cross Bombs.
 - Fixed: The door model for certain door types now uses the intended textures correctly.
@@ -330,7 +339,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 #### Logic Database
 
 - Added: 307 videos to the logic database. see the [Video Directory]
-(https://randovania.github.io/Metroid%20Prime%202%20Echoes/) for the full collection. 
+(https://randovania.github.io/Metroid%20Prime%202%20Echoes/) for the full collection.
 
 ##### Temple Grounds
 

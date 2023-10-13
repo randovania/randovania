@@ -99,9 +99,13 @@ class CSBootstrap(Bootstrap):
             rng.shuffle(camp_indices)
 
             if camp_indices and strong_weapons:
-                results.assignment[camp_indices.pop()] = rng.choice(strong_weapons)
+                weapon = rng.choice(strong_weapons)
+                results.assignment[camp_indices.pop()] = weapon
+                results.to_place.remove(weapon)
             if camp_indices and life_capsules:
-                results.assignment[camp_indices.pop()] = rng.choice(life_capsules)
+                life_capsule = rng.choice(life_capsules)
+                results.assignment[camp_indices.pop()] = life_capsule
+                results.to_place.remove(life_capsule)
 
         return super().assign_pool_results(rng, patches, results)
 

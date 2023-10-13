@@ -38,3 +38,13 @@ class DreadConnectorPromptDialog(TextPromptDialog):
             return "localhost"
         else:
             return self.prompt_edit.text().strip()
+
+
+class CSConnectorPromptDialog(DreadConnectorPromptDialog):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+        self.ryujinx_radio.setText("Standard")
+        self.ryujinx_label.setText("Connects to a copy of Cave Story running on this computer.")
+
+        self.ip_radio.setText("Custom IP Address")
