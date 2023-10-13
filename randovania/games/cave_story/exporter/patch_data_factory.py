@@ -111,7 +111,7 @@ class CSPatchDataFactory(PatchDataFactory):
             hints[mapname][event] = {
                 "text": hints_for_identifier[game_description.region_list.identifier_for_node(logbook_node)],
                 "facepic": logbook_node.extra.get("facepic", "0000"),
-                "ending": logbook_node.extra.get("ending", "<END"),
+                "ending": "<NOD" + logbook_node.extra.get("ending", "<END"),
             }
 
         mapnames = pickups.keys() | music.keys() | entrances.keys()
