@@ -27,6 +27,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ##### Artaria
 
 - Changed: Going to Transport to Dairon with Speed Booster now requires the Speed Booster Conservation trick set to Beginner.
+- Changed: The item above Proto EMMI now requires Speed Booster Conservation set to Beginner when reaching it with Speed from the top.
 
 ##### Burenia
 
