@@ -67,6 +67,11 @@
                 "long_name": "Locked Missiles",
                 "max_capacity": 999,
                 "extra": {}
+            },
+            "Boss Key": {
+                "long_name": "Boss Key",
+                "max_capacity": 9,
+                "extra": {}
             }
         },
         "events": {
@@ -200,10 +205,33 @@
         "Default": []
     },
     "minimal_logic": {
-        "items_to_exclude": [],
-        "custom_item_amount": [],
-        "events_to_exclude": [],
-        "description": "Nothing is checked."
+        "items_to_exclude": [
+            {
+                "name": "Morph Ball",
+                "when_shuffled": null
+            },
+            {
+                "name": "Boss Key",
+                "when_shuffled": null
+            }
+        ],
+        "custom_item_amount": [
+            {
+                "name": "Missiles",
+                "value": 80
+            },
+            {
+                "name": "Energy Tank",
+                "value": 8
+            }
+        ],
+        "events_to_exclude": [
+            {
+                "name": "Event9",
+                "reason": "victory condition"
+            }
+        ],
+        "description": "Items checked for: Morph Ball, Boss Keys."
     },
     "victory_condition": {
         "type": "and",

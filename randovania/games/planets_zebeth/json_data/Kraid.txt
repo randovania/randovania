@@ -541,6 +541,8 @@ Extra - map_name: Kraid/x120_y427
   * Event Kraid Boss Killed
   > Door to Kraid's room access
       Trivial
+  > Pickup (Boss Key)
+      Trivial
 
 > Pickup (Energy Tank); Heals? False
   * Layers: default
@@ -548,6 +550,20 @@ Extra - map_name: Kraid/x120_y427
   * Extra - object_id: 100058
   > Door to Kraid's room access
       Hi-Jump Boots
+
+> Pickup (Big Missile Tank); Heals? False
+  * Layers: default
+  * Pickup 39; Category? Major
+  * Extra - object_id: 100084
+  > Event - Kraid Killed
+      Trivial
+
+> Pickup (Boss Key); Heals? False
+  * Layers: default
+  * Pickup 38; Category? Major
+  * Extra - object_id: 100083
+  > Pickup (Big Missile Tank)
+      Trivial
 
 ----------------
 Block column shaft

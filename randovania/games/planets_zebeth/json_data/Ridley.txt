@@ -396,6 +396,8 @@ Extra - map_name: Ridley/x264_y427
   * Event Ridley Boss Killed
   > Platform
       Trivial
+  > Pickup (Boss Key)
+      Trivial
 
 > Platform; Heals? False
   * Layers: default
@@ -408,6 +410,20 @@ Extra - map_name: Ridley/x264_y427
           # TODO: combat reqs
           # Energy requirements
           Combat (Advanced) or Normal Damage ≥ 250
+
+> Pickup (Boss Key); Heals? False
+  * Layers: default
+  * Pickup 40; Category? Major
+  * Extra - object_id: 10085
+  > Pickup (Big Missile Tank)
+      Trivial
+
+> Pickup (Big Missile Tank); Heals? False
+  * Layers: default
+  * Pickup 41; Category? Major
+  * Extra - object_id: 100086
+  > Event - Ridley Killed
+      Trivial
 
 ----------------
 Ridley's reliquary

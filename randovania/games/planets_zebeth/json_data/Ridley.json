@@ -2005,6 +2005,13 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Pickup (Boss Key)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -2074,6 +2081,62 @@
                                         }
                                     }
                                 ]
+                            }
+                        }
+                    }
+                },
+                "Pickup (Boss Key)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 136.0,
+                        "y": 104.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "object_id": 10085
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 40,
+                    "location_category": "major",
+                    "connections": {
+                        "Pickup (Big Missile Tank)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Big Missile Tank)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 232.0,
+                        "y": 88.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "object_id": 100086
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 41,
+                    "location_category": "major",
+                    "connections": {
+                        "Event - Ridley Killed": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
