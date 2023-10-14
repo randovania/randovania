@@ -6,6 +6,7 @@ from PySide6 import QtWidgets
 
 from randovania.games.samus_returns.layout import MSRConfiguration
 from randovania.gui.generated.preset_msr_patches_ui import Ui_PresetMSRPatches
+from randovania.gui.lib import signal_handling
 from randovania.gui.preset_settings.preset_tab import PresetTab
 
 if typing.TYPE_CHECKING:
@@ -21,6 +22,7 @@ _FIELDS = [
     "nerf_super_missiles",
     "surface_crumbles",
     "area1_crumbles",
+    "reverse_area8",
 ]
 
 
@@ -29,7 +31,9 @@ class PresetMSRPatches(PresetTab, Ui_PresetMSRPatches):
         super().__init__(editor, game_description, window_manager)
         self.setupUi(self)
 
-        self.setCentralWidget(self.root_widget)
+        # Signals
+        for f in _FIELDS:
+            self._add_persist_option(getattr(self, f"{f}_check"), f)
 
     @classmethod
     def tab_title(cls) -> str:
@@ -38,6 +42,13 @@ class PresetMSRPatches(PresetTab, Ui_PresetMSRPatches):
     @classmethod
     def uses_patches_tab(cls) -> bool:
         return True
+
+    def _add_persist_option(self, check: QtWidgets.QCheckBox, attribute_name: str):
+        def persist(value: bool):
+            with self._editor as editor:
+                editor.set_configuration_field(attribute_name, value)
+
+        signal_handling.on_checked(check, persist)
 
     def on_preset_changed(self, preset: Preset):
         config = typing.cast(MSRConfiguration, preset.configuration)

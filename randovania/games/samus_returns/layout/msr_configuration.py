@@ -25,6 +25,7 @@ class MSRConfiguration(BaseConfiguration):
     nerf_super_missiles: bool
     surface_crumbles: bool
     area1_crumbles: bool
+    reverse_area8: bool
     allow_highly_dangerous_logic: bool
     artifacts: MSRArtifactConfig
 
