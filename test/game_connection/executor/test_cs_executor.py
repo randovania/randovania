@@ -33,7 +33,7 @@ def cs_executor():
 
 def _get_reader(data: bytes | Packet):
     if isinstance(data, Packet):
-        data = data.to_stream
+        data = data.to_bytes
 
     reader = MagicMock()
     reader.read = AsyncMock()
@@ -49,7 +49,7 @@ def _get_reader(data: bytes | Packet):
 
 
 def _get_reader_empty_response(packet_type: PacketType):
-    return _get_reader(Packet(packet_type).to_stream)
+    return _get_reader(Packet(packet_type).to_bytes)
 
 
 async def test_connect(mocker):
@@ -59,7 +59,7 @@ async def test_connect(mocker):
     writer.drain = AsyncMock()
 
     server_info = CSServerInfo(1, "Freeware", INVALID_UUID, {})
-    data = Packet(PacketType.SERVER_INFO, json.dumps(server_info.as_json).encode("cp1252")).to_stream
+    data = Packet(PacketType.SERVER_INFO, json.dumps(server_info.as_json).encode("cp1252")).to_bytes
     reader = _get_reader(data)
 
     mocker.patch("asyncio.open_connection", new_callable=AsyncMock, return_value=(reader, writer))
@@ -108,7 +108,7 @@ async def test_get_flags(executor: CSExecutor, expected: list[bool]):
         Packet(
             PacketType.GET_FLAGS,
             struct.pack("bb", *expected),
-        ).to_stream
+        ).to_bytes
     )
 
     assert await executor.get_flags([0, 0]) == expected
@@ -134,7 +134,7 @@ async def test_request_disconnect(executor: CSExecutor):
 async def test_read_memory(executor: CSExecutor, size: int):
     assert executor._socket is not None
 
-    executor._socket.reader = _get_reader(Packet(PacketType.READ_MEM, b"\0" * size).to_stream)
+    executor._socket.reader = _get_reader(Packet(PacketType.READ_MEM, b"\0" * size).to_bytes)
     assert await executor.read_memory(0, size) == b"\0" * size
 
 
@@ -149,7 +149,7 @@ async def test_etc_flags(executor: CSExecutor):
     assert executor._socket is not None
 
     # read_memory_flags
-    executor._socket.reader = _get_reader(Packet(PacketType.READ_MEM, b"\0").to_stream)
+    executor._socket.reader = _get_reader(Packet(PacketType.READ_MEM, b"\0").to_bytes)
     assert await executor.read_memory_flags(0, 1) == b"\0"
 
     # write_memory_flags
@@ -170,8 +170,8 @@ async def test_etc_flags(executor: CSExecutor):
         Packet(
             PacketType.READ_MEM,
             b"\0",
-        ).to_stream
-        + Packet(PacketType.WRITE_MEM).to_stream
+        ).to_bytes
+        + Packet(PacketType.WRITE_MEM).to_bytes
     )
     await executor.set_flag(0, False)
 
@@ -207,7 +207,7 @@ async def test_get_profile_uuid(executor: CSExecutor):
         Packet(
             PacketType.READ_MEM,
             INVALID_UUID.bytes_le,
-        ).to_stream
+        ).to_bytes
     )
     assert await executor.get_profile_uuid() == INVALID_UUID
 
@@ -226,7 +226,7 @@ async def test_received_items(executor: CSExecutor):
     assert executor._socket is not None
 
     executor._socket.reader = _get_reader(
-        Packet(PacketType.READ_MEM, b"\0").to_stream + Packet(PacketType.WRITE_MEM).to_stream
+        Packet(PacketType.READ_MEM, b"\0").to_bytes + Packet(PacketType.WRITE_MEM).to_bytes
     )
 
     assert await executor.get_received_items() == 0

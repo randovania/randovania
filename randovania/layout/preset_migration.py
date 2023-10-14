@@ -991,10 +991,14 @@ def _migrate_v66(preset: dict) -> dict:
     if preset["game"] == "cave_story":
         # Exclude the items in hell from having progression.
         # This could be very bad in multiworld
-        preset["configuration"]["available_locations"]["excluded_indices"] = [
-            30,
-            31,
-        ]
+        excluded = set(preset["configuration"]["available_locations"]["excluded_indices"])
+        excluded = excluded.union(
+            (
+                30,
+                31,
+            )
+        )
+        preset["configuration"]["available_locations"]["excluded_indices"] = sorted(excluded)
 
     return preset
 

@@ -11,10 +11,13 @@ from randovania.game_connection.connector.remote_connector import (
 from randovania.game_connection.executor.cs_executor import CSExecutor, GameState, TSCError
 from randovania.game_description import default_database
 from randovania.game_description.resources.inventory import Inventory, InventoryItem
-from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.games.cave_story.exporter.patch_data_factory import NOTHING_ITEM_SCRIPT
 from randovania.games.game import RandovaniaGame
 from randovania.lib.infinite_timer import InfiniteTimer
+
+INDICES_FLAGS_START = 7300
+PUPPIES_FLAGS = tuple(range(5001, 5006))
+MISSILE_IDS = (5, 10)
 
 ITEM_SENT_FLAG = 7410
 ITEM_RECEIVED_FLAG = 7411
@@ -112,10 +115,10 @@ class CSRemoteConnector(RemoteConnector):
     async def _update_collected_indices(self) -> None:
         self.game.region_list.ensure_has_node_cache()
         indices = sorted(self.game.region_list._pickup_index_to_node)
-        flag_nums = [7300 + pickup_index.index for pickup_index in indices]
+        flag_nums = [INDICES_FLAGS_START + pickup_index.index for pickup_index in indices]
         flags = await self.executor.get_flags(flag_nums)
 
-        for index, collected in zip(indices, flags):
+        for index, collected in zip(indices, flags, strict=True):
             if collected:
                 self.PickupIndexCollected.emit(index)
 
@@ -127,17 +130,16 @@ class CSRemoteConnector(RemoteConnector):
 
     async def get_inventory(self) -> Inventory:
         inventory = {}
-        item_db = self.game.resource_database.item
 
-        def get_item(name: str) -> ItemResourceInfo:
-            return next(item for item in item_db if item.short_name == name)
+        item_db = self.game.resource_database.item
+        get_item = self.game.resource_database.get_item
 
         # Normal items
         normal_items = [item for item in item_db if "flag" in item.extra]
         flag_nums = [item.extra["flag"] for item in normal_items]
         flags = await self.executor.get_flags(flag_nums)
 
-        for item, flag in zip(normal_items, flags):
+        for item, flag in zip(normal_items, flags, strict=True):
             if flag:
                 inv = InventoryItem(1, 1)
             else:
@@ -145,7 +147,7 @@ class CSRemoteConnector(RemoteConnector):
             inventory[item] = inv
 
         # Puppies
-        puppy_flags = await self.executor.get_flags(range(5001, 5006))
+        puppy_flags = await self.executor.get_flags(PUPPIES_FLAGS)
         puppies = get_item("puppies")
         puppy_count = sum(1 for pup in puppy_flags if pup)
         inventory[puppies] = InventoryItem(puppy_count, puppy_count)
@@ -153,7 +155,7 @@ class CSRemoteConnector(RemoteConnector):
         # Missile ammo
         weapons = await self.executor.get_weapons()
         missile_ammo = get_item("missile")
-        missiles = next((weapon for weapon in weapons if weapon.weapon_id in (5, 10)), None)
+        missiles = next((weapon for weapon in weapons if weapon.weapon_id in MISSILE_IDS), None)
         if missiles is not None:
             inventory[missile_ammo] = InventoryItem(missiles.ammo, missiles.capacity)
         else:
@@ -168,22 +170,30 @@ class CSRemoteConnector(RemoteConnector):
         return Inventory(inventory)
 
     async def _receive_items(self) -> None:
-        if not len(self.remote_pickups):
+        if not self.remote_pickups:
             return
 
         num_pickups = await self.executor.get_received_items()
+
+        # no new pickups to send
         if num_pickups >= len(self.remote_pickups):
             return
 
+        # pickup has been received by the game:
+        # increment received pickups and restart the cycle
         if await self.executor.get_flag(ITEM_RECEIVED_FLAG):
             await self.executor.set_received_items(num_pickups + 1)
             await self.executor.set_flag(ITEM_RECEIVED_FLAG, False)
             await self.executor.set_flag(ITEM_SENT_FLAG, False)
             return
 
+        # pickup has been sent to the game, but not yet received:
+        # wait until it's been fully received before continuing
         if await self.executor.get_flag(ITEM_SENT_FLAG):
             return
 
+        # no pending pickups, and pickups to send:
+        # send the next pickup!
         await self.executor.set_flag(ITEM_SENT_FLAG, True)
         provider_name, pickup = self.remote_pickups[num_pickups]
 

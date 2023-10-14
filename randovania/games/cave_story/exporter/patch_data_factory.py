@@ -42,9 +42,6 @@ class CSPatchDataFactory(PatchDataFactory):
         return RandovaniaGame.CAVE_STORY
 
     def create_data(self) -> dict:
-        # if self.players_config.is_multiworld:
-        #     raise NotImplementedError("Multiworld is not supported for Cave Story")
-
         game_description = self.game
         seed_number = self.description.get_seed_for_player(self.players_config.player_index)
         music_rng = Random(seed_number)
@@ -363,7 +360,7 @@ class CSPatchDataFactory(PatchDataFactory):
             "other_tsc": {"Head": head},
             "mychar": self.cosmetic_patches.mychar.mychar_bmp(mychar_rng),
             "hash": get_ingame_hash(self.description.shareable_hash_bytes),
-            "uuid": "{" + str(self.players_config.get_own_uuid()) + "}",
+            "uuid": f"{{{self.players_config.get_own_uuid()}}}",
         }
 
 

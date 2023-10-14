@@ -87,7 +87,7 @@ class Packet:
     HEADER_FMT = "<bi"
 
     @property
-    def to_stream(self) -> bytes:
+    def to_bytes(self) -> bytes:
         header = struct.pack(Packet.HEADER_FMT, self.type.value, len(self.message))
         return header + self.message
 
@@ -225,7 +225,7 @@ class CSExecutor:
     async def _internal_send_request(self, packet: Packet) -> Packet:
         assert self._socket is not None
 
-        self._socket.writer.write(packet.to_stream)
+        self._socket.writer.write(packet.to_bytes)
         await asyncio.wait_for(self._socket.writer.drain(), timeout=15)
 
         if packet.type == PacketType.DISCONNECT:
@@ -239,26 +239,45 @@ class CSExecutor:
         return response
 
     async def get_server_info(self) -> CSServerInfo:
+        """
+        Retrieves a JSON string from the server describing the current game, and transforms it into a CSServerInfo.
+        """
         response = await self._send_request(Packet(PacketType.SERVER_INFO))
         return CSServerInfo.from_json(json.loads(response.message.decode("cp1252")))
 
     async def exec_script(self, script: str) -> None:
+        """
+        Add a TSC script to the server's queue to execute.
+        """
         await self._send_request(Packet(PacketType.EXEC_SCRIPT, script.encode("cp1252")))
 
     async def get_flags(self, flags: Collection[int | TscInput]) -> list[bool]:
+        """
+        Query the state of the provided flags in the current profile.
+        """
         msg = _message_for_tsc_value_list(flags)
         response = await self._send_request(Packet(PacketType.GET_FLAGS, msg))
         return [f != 0 for f in response.message]
 
     async def queue_events(self, events: Collection[int | TscInput]) -> None:
+        """
+        Add a series of event numbers to the server's queue to execute.
+        """
         msg = _message_for_tsc_value_list(events)
         await self._send_request(Packet(PacketType.QUEUE_EVENTS, msg))
 
     async def request_disconnect(self) -> None:
+        """
+        Force-disconnect from the server.
+        """
         await self._send_request(Packet(PacketType.DISCONNECT))
         self.disconnect()
 
     async def read_memory(self, offset: int, size: int, *, base_offset: str | None = None) -> bytes:
+        """
+        Read `size` bytes of arbitrary memory at the given `offset`.
+        If `base_offset` is a string, it adds the offset associated with that string from the server info.
+        """
         if base_offset is not None:
             offset += self.server_info.offsets[base_offset]
 
@@ -267,6 +286,10 @@ class CSExecutor:
         return response.message
 
     async def write_memory(self, offset: int, data: bytes, *, base_offset: str | None = None) -> None:
+        """
+        Write arbitrary `data` to memory at the given `offset`.
+        If `base_offset` is a string, it adds the offset associated with that string from the server info.
+        """
         if base_offset is not None:
             offset += self.server_info.offsets[base_offset]
 
@@ -275,19 +298,30 @@ class CSExecutor:
 
     async def read_memory_flags(self, start_flag: int | TscInput, size: int) -> bytes:
         """
-        Please only use with byte-aligned flags
+        Wrapper for read_memory() that uses a flag number instead of a raw offset.
+        Please only use with byte-aligned flags.
         """
         address = flag_to_address(start_flag, Address(self.server_info.offsets["flags"], 0))
         return await self.read_memory(address.offset, size)
 
     async def write_memory_flags(self, start_flag: int | TscInput, data: bytes) -> None:
+        """
+        Wrapper for write_memory() that uses a flag number instead of a raw offset.
+        Please only use with byte-aligned flags.
+        """
         address = flag_to_address(start_flag, Address(self.server_info.offsets["flags"], 0))
         await self.write_memory(address.offset, data)
 
     async def get_flag(self, flag: int | TscInput) -> bool:
+        """
+        Query the state of a single flag.
+        """
         return (await self.get_flags([flag]))[0]
 
     async def set_flag(self, flag: int | TscInput, value: bool) -> None:
+        """
+        Immediately set the given `flag` to the provided `value`.
+        """
         address = flag_to_address(flag, Address(self.server_info.offsets["flags"], 0))
         byte = await self.read_memory(address.offset, 1)
         num: int = struct.unpack("b", byte)[0]
@@ -298,18 +332,30 @@ class CSExecutor:
         await self.write_memory(address.offset, struct.pack("b", num))
 
     async def get_game_state(self) -> GameState:
+        """
+        Query the current GameState of the running game.
+        """
         response = await self._send_request(Packet(PacketType.GET_STATE, b"\x00"))
         return GameState(struct.unpack("b", response.message)[0])
 
     async def get_map_name(self) -> str:
+        """
+        Get the current map name. Only use if the GameState supports reading from profile.
+        """
         response = await self._send_request(Packet(PacketType.GET_STATE, b"\x01"))
         return response.message.decode("cp1252")
 
     async def get_profile_uuid(self) -> UUID:
+        """
+        Get the UUID saved to the current profile. Only use if the GameState supports reading from profile.
+        """
         response = await self.read_memory(112, 16, base_offset="map_flags")
         return UUID(bytes_le=response)
 
     async def get_weapons(self) -> list[WeaponData]:
+        """
+        Reads the arms table from the inventory.
+        """
         weapons = []
 
         arms_table = await self.read_memory(0, 160, base_offset="arms_data")
@@ -320,7 +366,13 @@ class CSExecutor:
         return weapons
 
     async def get_received_items(self) -> int:
+        """
+        Query how many items have been received by the server.
+        """
         return struct.unpack("b", await self.read_memory_flags(7400, 1))[0]
 
     async def set_received_items(self, received: int) -> None:
+        """
+        Set how many items have been received by the server.
+        """
         await self.write_memory_flags(7400, struct.pack("b", received))

@@ -1,14 +1,15 @@
 from unittest.mock import AsyncMock, MagicMock
 
 import pytest
-from PySide6 import QtCore
 
 from randovania.game_connection.connector.cs_remote_connector import (
     ITEM_RECEIVED_FLAG,
     ITEM_SENT_FLAG,
     CSRemoteConnector,
 )
+from randovania.game_connection.connector.remote_connector import PlayerLocationEvent
 from randovania.game_connection.executor.cs_executor import CSExecutor, CSServerInfo, GameState, WeaponData
+from randovania.game_description.db.area_identifier import AreaIdentifier
 from randovania.game_description.resources.inventory import Inventory, InventoryItem
 from randovania.games.game import RandovaniaGame
 from randovania.interface_common.players_configuration import INVALID_UUID
@@ -30,9 +31,10 @@ async def test_general_class_content(connector: CSRemoteConnector):
     assert connector.game_enum == RandovaniaGame.CAVE_STORY
     assert connector.description() == f"{RandovaniaGame.CAVE_STORY.long_name}: Freeware"
 
-    connector.Finished = MagicMock(QtCore.SignalInstance)
+    finished = MagicMock()
+    connector.Finished.connect(finished)
     await connector._disconnect()
-    connector.Finished.emit.assert_called_once()
+    finished.assert_called_once()
     connector.executor.disconnect.assert_called_once()
 
     connector.executor.is_connected = MagicMock()
@@ -50,16 +52,19 @@ async def test_update_location(connector: CSRemoteConnector, can_read: bool):
     else:
         connector.game_state = GameState.NONE
 
-    connector.executor.get_map_name = AsyncMock()
-    connector.executor.get_map_name.return_value = "Weed"
+    connector.executor.get_map_name = AsyncMock(return_value="Weed")
 
-    connector.PlayerLocationChanged = MagicMock(QtCore.SignalInstance)
+    player_location_changed = MagicMock()
+    connector.PlayerLocationChanged.connect(player_location_changed)
 
     await connector._update_location()
     if can_read:
-        connector.PlayerLocationChanged.emit.assert_called_once()
+        region, area = connector.game.region_list.region_and_area_by_area_identifier(
+            AreaIdentifier("Grasstown", "Grasstown")
+        )
+        player_location_changed.assert_called_once_with(PlayerLocationEvent(region, area))
     else:
-        connector.PlayerLocationChanged.emit.assert_not_called()
+        player_location_changed.assert_not_called()
 
 
 @pytest.mark.parametrize(
@@ -74,13 +79,18 @@ async def test_update_location(connector: CSRemoteConnector, can_read: bool):
 async def test_update_collected_indices(connector: CSRemoteConnector, collected: list[bool]):
     assert isinstance(connector.executor, MagicMock)
 
-    connector.executor.get_flags = AsyncMock()
-    connector.executor.get_flags.return_value = collected
+    def get_flags(f: list[int]) -> list[bool]:
+        flags = [False for _ in f]
+        flags[:2] = collected
+        return flags
 
-    connector.PickupIndexCollected = MagicMock(QtCore.SignalInstance)
+    connector.executor.get_flags = AsyncMock(side_effect=get_flags)
+
+    pickup_index_collected = MagicMock()
+    connector.PickupIndexCollected.connect(pickup_index_collected)
 
     await connector._update_collected_indices()
-    assert connector.PickupIndexCollected.emit.call_count == sum(1 for c in collected if c)
+    assert pickup_index_collected.call_count == sum(1 for c in collected if c)
 
 
 @pytest.mark.parametrize("has_item", [False, True])
@@ -88,31 +98,37 @@ async def test_update_collected_indices(connector: CSRemoteConnector, collected:
 async def test_update_inventory(connector: CSRemoteConnector, has_item: bool, has_missiles: bool):
     assert isinstance(connector.executor, MagicMock)
 
-    connector.executor.get_flags = AsyncMock()
-    connector.executor.get_flags.return_value = [has_item]
+    def get_flags(f: list[int]) -> list[bool]:
+        flags = [False for _ in f]
+        flags[0] = has_item
+        return flags
 
-    connector.executor.get_weapons = AsyncMock()
-    connector.executor.get_weapons.return_value = [
-        WeaponData(
-            5 if has_missiles else 1,
-            1,
-            1,
-            1,
-            1,
-        )
-    ]
+    connector.executor.get_flags = AsyncMock(side_effect=get_flags)
 
-    connector.executor.read_memory = AsyncMock()
-    connector.executor.read_memory.return_value = b"\x03\x00"
+    connector.executor.get_weapons = AsyncMock(
+        return_value=[
+            WeaponData(
+                5 if has_missiles else 1,
+                1,
+                1,
+                1,
+                1,
+            )
+        ]
+    )
 
-    connector.InventoryUpdated = MagicMock(QtCore.SignalInstance)
+    connector.executor.read_memory = AsyncMock(return_value=b"\x03\x00")
+
+    inventory_updated = MagicMock()
+    connector.InventoryUpdated.connect(inventory_updated)
 
     await connector._update_inventory()
 
-    def get_item(name: str):
-        return next(item for item in connector.game.resource_database.item if item.short_name == name)
+    get_item = connector.game.resource_database.get_item
 
-    inventory = Inventory(
+    normal_items = [item for item in connector.game.resource_database.item if "flag" in item.extra]
+    inv = {item: InventoryItem(0, 0) for item in normal_items}
+    inv.update(
         {
             get_item("polarStar"): InventoryItem(int(has_item), int(has_item)),
             get_item("puppies"): InventoryItem(int(has_item), int(has_item)),
@@ -120,7 +136,8 @@ async def test_update_inventory(connector: CSRemoteConnector, has_item: bool, ha
             get_item("lifeCapsule"): InventoryItem(3, 3),
         }
     )
-    connector.InventoryUpdated.emit.assert_called_once_with(inventory)
+    inventory = Inventory(inv)
+    inventory_updated.assert_called_once_with(inventory)
 
 
 async def test_set_remote_pickups(connector: CSRemoteConnector, cs_panties_pickup):
@@ -140,10 +157,8 @@ async def test_receive_items(connector: CSRemoteConnector, cs_panties_pickup):
         nonlocal received_items
         received_items = x
 
-    connector.executor.get_received_items = AsyncMock()
-    connector.executor.get_received_items.side_effect = lambda: received_items
-    connector.executor.set_received_items = AsyncMock()
-    connector.executor.set_received_items.side_effect = set_received
+    connector.executor.get_received_items = AsyncMock(side_effect=lambda: received_items)
+    connector.executor.set_received_items = AsyncMock(side_effect=set_received)
 
     flags = {
         ITEM_SENT_FLAG: False,
@@ -153,10 +168,8 @@ async def test_receive_items(connector: CSRemoteConnector, cs_panties_pickup):
     def set_flag(f, v):
         flags[f] = v
 
-    connector.executor.get_flag = AsyncMock()
-    connector.executor.get_flag.side_effect = lambda f: flags.get(f, False)
-    connector.executor.set_flag = AsyncMock()
-    connector.executor.set_flag.side_effect = set_flag
+    connector.executor.get_flag = AsyncMock(side_effect=lambda f: flags.get(f, False))
+    connector.executor.set_flag = AsyncMock(side_effect=set_flag)
 
     connector.executor.exec_script = AsyncMock()
 
