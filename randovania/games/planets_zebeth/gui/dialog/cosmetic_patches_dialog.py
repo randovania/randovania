@@ -4,7 +4,7 @@ from typing import TYPE_CHECKING
 
 from randovania.games.planets_zebeth.layout.planets_zebeth_cosmetic_patches import PlanetsZebethCosmeticPatches
 from randovania.gui.dialog.base_cosmetic_patches_dialog import BaseCosmeticPatchesDialog
-from randovania.gui.generated.metroid_cosmetic_patches_dialog_ui import Ui_PlanetsZebethCosmeticPatchesDialog
+from randovania.gui.generated.planets_zebeth_cosmetic_patches_dialog_ui import Ui_PlanetsZebethCosmeticPatchesDialog
 
 if TYPE_CHECKING:
     from PySide6.QtWidgets import QWidget
