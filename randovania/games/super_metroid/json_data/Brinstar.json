@@ -2185,7 +2185,7 @@
                         "Door to Dachora Room": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "Note: VARIA has a patch to remove the requirements for bombs",
                                 "items": [
                                     {
                                         "type": "template",
@@ -2225,7 +2225,7 @@
                         "Door to Big Pink Save Room": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "Note: VARIA has a patch to remove the requirements for bombs",
                                 "items": [
                                     {
                                         "type": "template",
@@ -6866,18 +6866,6 @@
                                 "comment": null,
                                 "items": []
                             }
-                        },
-                        "Pickup (Missile Expansion)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Can Lay Power Bombs"
-                                    }
-                                ]
-                            }
                         }
                     }
                 },
@@ -6904,6 +6892,18 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Pickup (Missile Expansion)": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Lay Power Bombs"
+                                    }
+                                ]
+                            }
                         }
                     }
                 },
@@ -6924,12 +6924,9 @@
                     "pickup_index": 41,
                     "location_category": "minor",
                     "connections": {
-                        "Door to Caterpillar Room": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
+                        "Pickup (Power Bomb Expansion)": {
+                            "type": "template",
+                            "data": "Can Lay Power Bombs"
                         }
                     }
                 }
@@ -7269,6 +7266,15 @@
                                                 {
                                                     "type": "template",
                                                     "data": "Can Lay Any Bombs"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "PreSpazerTweaks",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
                                                 }
                                             ]
                                         }
@@ -8705,7 +8711,7 @@
                         "Door to Warehouse Kihunter Room": {
                             "type": "or",
                             "data": {
-                                "comment": "Defeat the Green Pirates, (Baby Kraid can be defeated with power beam)",
+                                "comment": "Defeat the Green Pirates, (Baby Kraid can be defeated with Power Beam)",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -8793,7 +8799,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "Space the PBs out to hit all 3 pirates",
+                                            "comment": "Space the PBs out to hit all 3 Pirates",
                                             "items": [
                                                 {
                                                     "type": "template",
