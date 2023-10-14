@@ -38,7 +38,7 @@ class CSRemoteConnector(RemoteConnector):
 
         self.reset()
 
-        self._timer = InfiniteTimer(self.update, self._dt)
+        self._timer = InfiniteTimer(self.update, self._dt, strict=False)
 
     def reset(self) -> None:
         self.game_state = GameState.NONE
