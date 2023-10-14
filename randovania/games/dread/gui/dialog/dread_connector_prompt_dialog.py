@@ -1,12 +1,14 @@
 from __future__ import annotations
 
+from typing import Any
+
 from PySide6 import QtWidgets
 
 from randovania.gui.dialog.text_prompt_dialog import TextPromptDialog
 
 
 class DreadConnectorPromptDialog(TextPromptDialog):
-    def __init__(self, **kwargs):
+    def __init__(self, **kwargs: dict[str, Any]):
         super().__init__(**kwargs)
 
         self.ryujinx_radio = QtWidgets.QRadioButton("Ryujinx", self)
@@ -41,7 +43,7 @@ class DreadConnectorPromptDialog(TextPromptDialog):
 
 
 class CSConnectorPromptDialog(DreadConnectorPromptDialog):
-    def __init__(self, **kwargs) -> None:
+    def __init__(self, **kwargs: dict[str, Any]) -> None:
         super().__init__(**kwargs)
 
         self.ryujinx_radio.setText("Standard")

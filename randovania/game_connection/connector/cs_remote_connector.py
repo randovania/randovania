@@ -11,6 +11,7 @@ from randovania.game_connection.connector.remote_connector import (
 from randovania.game_connection.executor.cs_executor import CSExecutor, GameState, TSCError
 from randovania.game_description import default_database
 from randovania.game_description.resources.inventory import Inventory, InventoryItem
+from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.games.cave_story.exporter.patch_data_factory import NOTHING_ITEM_SCRIPT
 from randovania.games.game import RandovaniaGame
 from randovania.lib.infinite_timer import InfiniteTimer
@@ -128,7 +129,7 @@ class CSRemoteConnector(RemoteConnector):
         inventory = {}
         item_db = self.game.resource_database.item
 
-        def get_item(name: str):
+        def get_item(name: str) -> ItemResourceInfo:
             return next(item for item in item_db if item.short_name == name)
 
         # Normal items

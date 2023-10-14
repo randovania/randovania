@@ -4,7 +4,7 @@ import json
 import logging
 import struct
 from asyncio import StreamReader, StreamWriter
-from collections.abc import Iterable
+from collections.abc import Collection
 from enum import IntEnum
 from typing import Self
 from uuid import UUID
@@ -128,7 +128,7 @@ def _resolve_tsc_value(value: int | TscInput) -> int:
     return tsc_value_to_num(value) if isinstance(value, TscInput) else value
 
 
-def _message_for_tsc_value_list(values: Iterable[int | TscInput]) -> bytes:
+def _message_for_tsc_value_list(values: Collection[int | TscInput]) -> bytes:
     return struct.pack(f"<{len(values)}i", *[_resolve_tsc_value(value) for value in values])
 
 
@@ -243,12 +243,12 @@ class CSExecutor:
     async def exec_script(self, script: str) -> None:
         await self._send_request(Packet(PacketType.EXEC_SCRIPT, script.encode("cp1252")))
 
-    async def get_flags(self, flags: Iterable[int | TscInput]) -> list[bool]:
+    async def get_flags(self, flags: Collection[int | TscInput]) -> list[bool]:
         msg = _message_for_tsc_value_list(flags)
         response = await self._send_request(Packet(PacketType.GET_FLAGS, msg))
         return [f != 0 for f in response.message]
 
-    async def queue_events(self, events: Iterable[int | TscInput]) -> None:
+    async def queue_events(self, events: Collection[int | TscInput]) -> None:
         msg = _message_for_tsc_value_list(events)
         await self._send_request(Packet(PacketType.QUEUE_EVENTS, msg))
 
