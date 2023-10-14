@@ -2863,63 +2863,12 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Room Center": {
-                            "type": "and",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "MorphBall",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Bomb",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Knowledge",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "BoostBall",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
+                                "type": "items",
+                                "name": "MorphBall",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -3538,7 +3487,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Morph Ball Door to Scrapvault (Exit)": {
+                        "Terminal Alcove": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3546,8 +3495,8 @@
                                     {
                                         "type": "resource",
                                         "data": {
-                                            "type": "items",
-                                            "name": "MorphBall",
+                                            "type": "events",
+                                            "name": "ScrapWorksEntrance",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -3555,17 +3504,8 @@
                                     {
                                         "type": "resource",
                                         "data": {
-                                            "type": "items",
-                                            "name": "Bomb",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "BoostBall",
+                                            "type": "events",
+                                            "name": "ScrapWorksTerminal",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -3603,7 +3543,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Morph Ball Door to Scrapvault (X-Ray Terminal)": {
+                        "Event - Entrance Bomb Slot": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3629,65 +3569,13 @@
                                 ]
                             }
                         },
-                        "Morph Ball Door to Scrapvault (Exit)": {
-                            "type": "and",
+                        "Interior": {
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "MorphBall",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Bomb",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "SpiderBall",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        },
-                        "Pickup (Energy Tank)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "MorphBall",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Bomb",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "type": "events",
+                                "name": "ScrapWorksEntrance",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -3720,65 +3608,119 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Morph Ball Door to Scrapvault (X-Ray Terminal)": {
-                            "type": "and",
+                        "Half-pipe": {
+                            "type": "resource",
                             "data": {
-                                "comment": null,
+                                "type": "events",
+                                "name": "ScrapWorksExit",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Pickup (Energy Tank)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "pickup_index": 84,
+                    "location_category": "major",
+                    "connections": {
+                        "Interior": {
+                            "type": "or",
+                            "data": {
+                                "comment": "Safety for solver. Cannot leave the area without being able to exit.",
                                 "items": [
                                     {
                                         "type": "resource",
                                         "data": {
                                             "type": "items",
-                                            "name": "MorphBall",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Bomb",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
                                             "name": "BoostBall",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "SpiderBall",
                                             "amount": 1,
                                             "negate": false
                                         }
                                     }
                                 ]
                             }
-                        },
-                        "Morph Ball Door to Scrapvault (Entrance)": {
+                        }
+                    }
+                },
+                "Pickup (Ship Missile Expansion)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "pickup_index": 85,
+                    "location_category": "minor",
+                    "connections": {
+                        "Half-pipe": {
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "MorphBall",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "BoostBall",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Exit Hatch": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "ScrapWorksExit",
+                    "connections": {
+                        "Half-pipe": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Half-pipe": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Morph Ball Door to Scrapvault (Exit)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "ScrapWorksExit",
+                                "amount": 1,
+                                "negate": false
                             }
                         },
                         "Pickup (Ship Missile Expansion)": {
@@ -3791,15 +3733,6 @@
                                         "data": {
                                             "type": "items",
                                             "name": "BoostBall",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "MorphBall",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -3832,11 +3765,38 @@
                                     }
                                 ]
                             }
+                        },
+                        "Event - Exit Hatch": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "BoostBall",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Interior": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "BoostBall",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Terminal Alcove": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "BoostBall",
+                                "amount": 1,
+                                "negate": false
+                            }
                         }
                     }
                 },
-                "Pickup (Energy Tank)": {
-                    "node_type": "pickup",
+                "Event - Entrance Bomb Slot": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": null,
                     "description": "",
@@ -3845,8 +3805,7 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "pickup_index": 84,
-                    "location_category": "major",
+                    "event_name": "ScrapWorksEntrance",
                     "connections": {
                         "Morph Ball Door to Scrapvault (Entrance)": {
                             "type": "and",
@@ -3857,8 +3816,8 @@
                         }
                     }
                 },
-                "Pickup (Ship Missile Expansion)": {
-                    "node_type": "pickup",
+                "Interior": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": null,
                     "description": "",
@@ -3867,14 +3826,137 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "pickup_index": 85,
-                    "location_category": "minor",
                     "connections": {
-                        "Morph Ball Door to Scrapvault (Exit)": {
+                        "Morph Ball Door to Scrapvault (Entrance)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "ScrapWorksEntrance",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Pickup (Energy Tank)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
+                            }
+                        },
+                        "Event - Exit Hatch": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "SpiderBall",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Half-pipe": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Terminal Alcove": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Terminal Bomb Slot": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "ScrapWorksTerminal",
+                    "connections": {
+                        "Terminal Alcove": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Terminal Alcove": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Morph Ball Door to Scrapvault (X-Ray Terminal)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "ScrapWorksEntrance",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "ScrapWorksTerminal",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Half-pipe": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Event - Terminal Bomb Slot": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "MorphBall",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Bomb",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
