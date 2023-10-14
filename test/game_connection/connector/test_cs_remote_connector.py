@@ -25,6 +25,8 @@ def remote_connector():
 
 
 async def test_general_class_content(connector: CSRemoteConnector):
+    assert isinstance(connector.executor, MagicMock)
+
     assert connector.game_enum == RandovaniaGame.CAVE_STORY
     assert connector.description() == f"{RandovaniaGame.CAVE_STORY.long_name}: Freeware"
 
@@ -41,6 +43,8 @@ async def test_general_class_content(connector: CSRemoteConnector):
 
 @pytest.mark.parametrize("can_read", [False, True])
 async def test_update_location(connector: CSRemoteConnector, can_read: bool):
+    assert isinstance(connector.executor, MagicMock)
+
     if can_read:
         connector.game_state = GameState.GAMEPLAY
     else:
@@ -68,6 +72,8 @@ async def test_update_location(connector: CSRemoteConnector, can_read: bool):
     ],
 )
 async def test_update_collected_indices(connector: CSRemoteConnector, collected: list[bool]):
+    assert isinstance(connector.executor, MagicMock)
+
     connector.executor.get_flags = AsyncMock()
     connector.executor.get_flags.return_value = collected
 
@@ -80,6 +86,8 @@ async def test_update_collected_indices(connector: CSRemoteConnector, collected:
 @pytest.mark.parametrize("has_item", [False, True])
 @pytest.mark.parametrize("has_missiles", [False, True])
 async def test_update_inventory(connector: CSRemoteConnector, has_item: bool, has_missiles: bool):
+    assert isinstance(connector.executor, MagicMock)
+
     connector.executor.get_flags = AsyncMock()
     connector.executor.get_flags.return_value = [has_item]
 
@@ -116,12 +124,16 @@ async def test_update_inventory(connector: CSRemoteConnector, has_item: bool, ha
 
 
 async def test_set_remote_pickups(connector: CSRemoteConnector, cs_panties_pickup):
+    assert isinstance(connector.executor, MagicMock)
+
     pickup_entry_with_owner = (("Dummy 1", cs_panties_pickup), ("Dummy 2", cs_panties_pickup))
     await connector.set_remote_pickups(pickup_entry_with_owner)
     assert connector.remote_pickups == pickup_entry_with_owner
 
 
 async def test_receive_items(connector: CSRemoteConnector, cs_panties_pickup):
+    assert isinstance(connector.executor, MagicMock)
+
     received_items = 0
 
     def set_received(x):

@@ -41,7 +41,7 @@ class DreadConnectorPromptDialog(TextPromptDialog):
 
 
 class CSConnectorPromptDialog(DreadConnectorPromptDialog):
-    def __init__(self, **kwargs):
+    def __init__(self, **kwargs) -> None:
         super().__init__(**kwargs)
 
         self.ryujinx_radio.setText("Standard")

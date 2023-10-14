@@ -3,23 +3,26 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.game_description.resources.resource_type import ResourceType
 from randovania.games.cave_story.layout.cs_configuration import CSConfiguration, CSObjective
 from randovania.resolver.bootstrap import Bootstrap, EnergyConfig
 
 if TYPE_CHECKING:
+    from collections.abc import Iterator
     from random import Random
 
     from randovania.game_description.game_patches import GamePatches
+    from randovania.game_description.pickup.pickup_entry import PickupEntry
     from randovania.game_description.resources.resource_database import ResourceDatabase
     from randovania.game_description.resources.resource_info import ResourceGain
     from randovania.generator.pickup_pool import PoolResults
+    from randovania.layout.base.base_configuration import BaseConfiguration
 
 
 class CSBootstrap(Bootstrap):
     def _get_enabled_misc_resources(
-        self, configuration: CSConfiguration, resource_database: ResourceDatabase
+        self, configuration: BaseConfiguration, resource_database: ResourceDatabase
     ) -> set[str]:
+        assert isinstance(configuration, CSConfiguration)
         enabled_resources = set()
 
         objectives = {
@@ -36,12 +39,14 @@ class CSBootstrap(Bootstrap):
         return enabled_resources
 
     def version_resources_for_game(
-        self, configuration: CSConfiguration, resource_database: ResourceDatabase
+        self, configuration: BaseConfiguration, resource_database: ResourceDatabase
     ) -> ResourceGain:
+        assert isinstance(configuration, CSConfiguration)
         for resource in resource_database.version:
             yield resource, 1 if resource.long_name == "Freeware" else 0
 
-    def energy_config(self, configuration: CSConfiguration) -> EnergyConfig:
+    def energy_config(self, configuration: BaseConfiguration) -> EnergyConfig:
+        assert isinstance(configuration, CSConfiguration)
         return EnergyConfig(configuration.starting_hp, 1)
 
     def assign_pool_results(self, rng: Random, patches: GamePatches, results: PoolResults) -> GamePatches:
@@ -50,11 +55,11 @@ class CSBootstrap(Bootstrap):
 
         db = patches.game.resource_database
 
-        def get_valid_indices(indices: list[PickupIndex]):
+        def get_valid_indices(indices: list[PickupIndex]) -> list[PickupIndex]:
             return [p for p in indices if p not in results.assignment.keys()]
 
-        def get_valid_pickups(pickups):
-            def pickup_iter(w):
+        def get_valid_pickups(pickups: list[str]) -> list[PickupEntry]:
+            def pickup_iter(w: str) -> Iterator[PickupEntry]:
                 return (p for p in results.to_place if p.name == w)
 
             return [next(pickup_iter(w)) for w in pickups if next(pickup_iter(w), None) is not None]
@@ -70,17 +75,17 @@ class CSBootstrap(Bootstrap):
 
         # weapon to break blocks in first cave (do it this way to ensure a particular distribution chance)
         if patches.starting_location.area_name in {"Start Point", "First Cave", "Hermit Gunsmith"}:
-            sn_weapons = list(SN_WEAPONS)
+            _sn_weapons = list(SN_WEAPONS)
 
-            bubble_sn = db.get_by_type_and_index(ResourceType.TRICK, "SNBubbler")
-            missile_sn = db.get_by_type_and_index(ResourceType.TRICK, "SNMissiles")
+            bubble_sn = db.get_trick("SNBubbler")
+            missile_sn = db.get_trick("SNMissiles")
 
             if configuration.trick_level.level_for_trick(bubble_sn).is_enabled:
-                sn_weapons.append("Bubbler")
+                _sn_weapons.append("Bubbler")
             if configuration.trick_level.level_for_trick(missile_sn).is_enabled:
-                sn_weapons.extend({"Missile Launcher", "Super Missile Launcher", "Progressive Missile Launcher"})
+                _sn_weapons.extend({"Missile Launcher", "Super Missile Launcher", "Progressive Missile Launcher"})
 
-            sn_weapons = get_valid_pickups(sn_weapons)
+            sn_weapons = get_valid_pickups(_sn_weapons)
 
             first_cave_indices = get_valid_indices(FIRST_CAVE_INDICES)
             if first_cave_indices and sn_weapons:

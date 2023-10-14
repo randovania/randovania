@@ -58,7 +58,7 @@ async def test_connect(mocker):
     writer = MagicMock()
     writer.drain = AsyncMock()
 
-    server_info = CSServerInfo(1, 1, INVALID_UUID, {})
+    server_info = CSServerInfo(1, "Freeware", INVALID_UUID, {})
     data = Packet(PacketType.SERVER_INFO, json.dumps(server_info.as_json).encode("cp1252")).to_stream
     reader = _get_reader(data)
 
@@ -73,6 +73,8 @@ async def test_connect(mocker):
 
 
 async def test_failed_request(executor: CSExecutor):
+    assert executor._socket is not None
+
     executor._socket.reader = _get_reader(
         Packet(
             PacketType.ERROR,
@@ -84,6 +86,8 @@ async def test_failed_request(executor: CSExecutor):
 
 
 async def test_exec_script(executor: CSExecutor):
+    assert executor._socket is not None
+
     executor._socket.reader = _get_reader_empty_response(PacketType.EXEC_SCRIPT)
     await executor.exec_script("<MSGhi<NOD<END")
 
@@ -98,6 +102,8 @@ async def test_exec_script(executor: CSExecutor):
     ],
 )
 async def test_get_flags(executor: CSExecutor, expected: list[bool]):
+    assert executor._socket is not None
+
     executor._socket.reader = _get_reader(
         Packet(
             PacketType.GET_FLAGS,
@@ -109,11 +115,15 @@ async def test_get_flags(executor: CSExecutor, expected: list[bool]):
 
 
 async def test_queue_events(executor: CSExecutor):
+    assert executor._socket is not None
+
     executor._socket.reader = _get_reader_empty_response(PacketType.QUEUE_EVENTS)
     await executor.queue_events([0])
 
 
 async def test_request_disconnect(executor: CSExecutor):
+    assert executor._socket is not None
+
     reader = executor._socket.reader
     await executor.request_disconnect()
     assert executor._socket is None
@@ -122,17 +132,22 @@ async def test_request_disconnect(executor: CSExecutor):
 
 @pytest.mark.parametrize("size", [1, 2, 4])
 async def test_read_memory(executor: CSExecutor, size: int):
-    executor._socket.reader = _get_reader(Packet(PacketType.READ_MEM, b"\0" * size).to_stream)
+    assert executor._socket is not None
 
+    executor._socket.reader = _get_reader(Packet(PacketType.READ_MEM, b"\0" * size).to_stream)
     assert await executor.read_memory(0, size) == b"\0" * size
 
 
 async def test_write_memory(executor: CSExecutor):
+    assert executor._socket is not None
+
     executor._socket.reader = _get_reader_empty_response(PacketType.WRITE_MEM)
     await executor.write_memory(0, b"\0")
 
 
 async def test_etc_flags(executor: CSExecutor):
+    assert executor._socket is not None
+
     # read_memory_flags
     executor._socket.reader = _get_reader(Packet(PacketType.READ_MEM, b"\0").to_stream)
     assert await executor.read_memory_flags(0, 1) == b"\0"
@@ -162,6 +177,8 @@ async def test_etc_flags(executor: CSExecutor):
 
 
 async def test_get_game_state(executor: CSExecutor):
+    assert executor._socket is not None
+
     executor._socket.reader = _get_reader(
         Packet(
             PacketType.GET_STATE,
@@ -172,6 +189,8 @@ async def test_get_game_state(executor: CSExecutor):
 
 
 async def test_get_map_name(executor: CSExecutor):
+    assert executor._socket is not None
+
     executor._socket.reader = _get_reader(
         Packet(
             PacketType.GET_STATE,
@@ -182,6 +201,8 @@ async def test_get_map_name(executor: CSExecutor):
 
 
 async def test_get_profile_uuid(executor: CSExecutor):
+    assert executor._socket is not None
+
     executor._socket.reader = _get_reader(
         Packet(
             PacketType.READ_MEM,
@@ -191,12 +212,25 @@ async def test_get_profile_uuid(executor: CSExecutor):
     assert await executor.get_profile_uuid() == INVALID_UUID
 
 
-async def get_weapons(execcutor: CSExecutor):
-    execcutor._socket.reader = _get_reader(
+async def test_get_weapons(executor: CSExecutor):
+    assert executor._socket is not None
+
+    executor._socket.reader = _get_reader(
         Packet(PacketType.READ_MEM, b"".join([struct.pack("<5i", i, 1, 1, 1, 1) for i in range(8)]))
     )
-    weapons = await execcutor.get_weapons()
+    weapons = await executor.get_weapons()
     assert all(weapon.weapon_id == i for i, weapon in enumerate(weapons))
+
+
+async def test_received_items(executor: CSExecutor):
+    assert executor._socket is not None
+
+    executor._socket.reader = _get_reader(
+        Packet(PacketType.READ_MEM, b"\0").to_stream + Packet(PacketType.WRITE_MEM).to_stream
+    )
+
+    assert await executor.get_received_items() == 0
+    await executor.set_received_items(1)
 
 
 def test_tsc_values():

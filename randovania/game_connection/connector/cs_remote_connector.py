@@ -39,7 +39,7 @@ class CSRemoteConnector(RemoteConnector):
 
         self._timer = InfiniteTimer(self.update, self._dt)
 
-    def reset(self):
+    def reset(self) -> None:
         self.game_state = GameState.NONE
         self.last_inventory = Inventory.empty()
         self.remote_pickups = ()
@@ -55,19 +55,19 @@ class CSRemoteConnector(RemoteConnector):
     def is_disconnected(self) -> bool:
         return not self.executor.is_connected()
 
-    async def _disconnect(self):
+    async def _disconnect(self) -> None:
         self.logger.info("Finishing connector")
         self.reset()
         self._timer.stop()
         self.executor.disconnect()
         self.Finished.emit()
 
-    async def force_finish(self):
+    async def force_finish(self) -> None:
         if self.executor.is_connected():
             await self.executor.request_disconnect()
         await self._disconnect()
 
-    async def update(self):
+    async def update(self) -> None:
         if self.is_disconnected():
             await self._disconnect()
             return
@@ -89,7 +89,7 @@ class CSRemoteConnector(RemoteConnector):
         except TSCError:
             await self._disconnect()
 
-    async def _update_location(self):
+    async def _update_location(self) -> None:
         new_map = self.current_map
 
         if not self.game_state.can_read_profile:
@@ -108,7 +108,7 @@ class CSRemoteConnector(RemoteConnector):
             self.current_map = new_map
             self.PlayerLocationChanged.emit(self.current_map)
 
-    async def _update_collected_indices(self):
+    async def _update_collected_indices(self) -> None:
         self.game.region_list.ensure_has_node_cache()
         indices = sorted(self.game.region_list._pickup_index_to_node)
         flag_nums = [7300 + pickup_index.index for pickup_index in indices]
@@ -118,7 +118,7 @@ class CSRemoteConnector(RemoteConnector):
             if collected:
                 self.PickupIndexCollected.emit(index)
 
-    async def _update_inventory(self):
+    async def _update_inventory(self) -> None:
         new_inventory = await self.get_inventory()
         if new_inventory != self.last_inventory:
             self.last_inventory = new_inventory
@@ -166,7 +166,7 @@ class CSRemoteConnector(RemoteConnector):
 
         return Inventory(inventory)
 
-    async def _receive_items(self):
+    async def _receive_items(self) -> None:
         if not len(self.remote_pickups):
             return
 
@@ -192,13 +192,13 @@ class CSRemoteConnector(RemoteConnector):
         script = f"<MSG<TUR{message}<FL+{ITEM_RECEIVED_FLAG}{pickup_script}"
         await self.executor.exec_script(script)
 
-    def start_updates(self):
+    def start_updates(self) -> None:
         self._timer.start()
 
-    async def display_arbitrary_message(self, message: str):
+    async def display_arbitrary_message(self, message: str) -> None:
         text = wrap_msg_text(message, False, max_text_boxes=None)
         script = f"<MSG{text}<WAI0500<END"
         await self.executor.exec_script(script)
 
-    async def set_remote_pickups(self, remote_pickups: tuple[PickupEntryWithOwner, ...]):
+    async def set_remote_pickups(self, remote_pickups: tuple[PickupEntryWithOwner, ...]) -> None:
         self.remote_pickups = remote_pickups

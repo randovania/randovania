@@ -4,6 +4,7 @@ import json
 import logging
 import struct
 from asyncio import StreamReader, StreamWriter
+from collections.abc import Iterable
 from enum import IntEnum
 from typing import Self
 from uuid import UUID
@@ -100,7 +101,7 @@ class Packet:
             msg = await asyncio.wait_for(stream.read(size), None)
         else:
             msg = b""
-        return Packet(PacketType(type), msg)
+        return cls(PacketType(type), msg)
 
 
 @dataclasses.dataclass(frozen=True)
@@ -114,7 +115,7 @@ class WeaponData:
     @classmethod
     def from_stream(cls, data: bytes) -> Self:
         weapon_id, level, exp, capacity, ammo = struct.unpack("<5i", data)
-        return WeaponData(
+        return cls(
             weapon_id,
             level,
             exp,
@@ -127,7 +128,7 @@ def _resolve_tsc_value(value: int | TscInput) -> int:
     return tsc_value_to_num(value) if isinstance(value, TscInput) else value
 
 
-def _message_for_tsc_value_list(values: list[int | TscInput]) -> bytes:
+def _message_for_tsc_value_list(values: Iterable[int | TscInput]) -> bytes:
     return struct.pack(f"<{len(values)}i", *[_resolve_tsc_value(value) for value in values])
 
 
@@ -135,14 +136,14 @@ class CSExecutor:
     _port = 5451
     _socket: CSSocketHolder | None = None
     _socket_error: Exception | None = None
-    server_info: CSServerInfo | None = None
+    server_info: CSServerInfo
 
     def __init__(self, ip: str) -> None:
         self.logger = logging.getLogger(type(self).__name__)
         self._ip = ip
 
     @property
-    def ip(self):
+    def ip(self) -> str:
         return self._ip
 
     @property
@@ -191,7 +192,7 @@ class CSExecutor:
             self._socket_error = e
             return message
 
-    def disconnect(self):
+    def disconnect(self) -> None:
         socket = self._socket
         self._socket = None
         if socket is not None:
@@ -220,6 +221,8 @@ class CSExecutor:
             raise
 
     async def _internal_send_request(self, packet: Packet) -> Packet:
+        assert self._socket is not None
+
         self._socket.writer.write(packet.to_stream)
         await asyncio.wait_for(self._socket.writer.drain(), timeout=15)
 
@@ -237,19 +240,19 @@ class CSExecutor:
         response = await self._send_request(Packet(PacketType.SERVER_INFO))
         return CSServerInfo.from_json(json.loads(response.message.decode("cp1252")))
 
-    async def exec_script(self, script: str):
+    async def exec_script(self, script: str) -> None:
         await self._send_request(Packet(PacketType.EXEC_SCRIPT, script.encode("cp1252")))
 
-    async def get_flags(self, flags: list[int | TscInput]) -> list[bool]:
+    async def get_flags(self, flags: Iterable[int | TscInput]) -> list[bool]:
         msg = _message_for_tsc_value_list(flags)
         response = await self._send_request(Packet(PacketType.GET_FLAGS, msg))
         return [f != 0 for f in response.message]
 
-    async def queue_events(self, events: list[int | TscInput]):
+    async def queue_events(self, events: Iterable[int | TscInput]) -> None:
         msg = _message_for_tsc_value_list(events)
         await self._send_request(Packet(PacketType.QUEUE_EVENTS, msg))
 
-    async def request_disconnect(self):
+    async def request_disconnect(self) -> None:
         await self._send_request(Packet(PacketType.DISCONNECT))
         self.disconnect()
 
@@ -261,7 +264,7 @@ class CSExecutor:
         response = await self._send_request(Packet(PacketType.READ_MEM, msg))
         return response.message
 
-    async def write_memory(self, offset: int, data: bytes, *, base_offset: str | None = None):
+    async def write_memory(self, offset: int, data: bytes, *, base_offset: str | None = None) -> None:
         if base_offset is not None:
             offset += self.server_info.offsets[base_offset]
 
@@ -275,14 +278,14 @@ class CSExecutor:
         address = flag_to_address(start_flag, Address(self.server_info.offsets["flags"], 0))
         return await self.read_memory(address.offset, size)
 
-    async def write_memory_flags(self, start_flag: int | TscInput, data: bytes):
+    async def write_memory_flags(self, start_flag: int | TscInput, data: bytes) -> None:
         address = flag_to_address(start_flag, Address(self.server_info.offsets["flags"], 0))
         await self.write_memory(address.offset, data)
 
     async def get_flag(self, flag: int | TscInput) -> bool:
         return (await self.get_flags([flag]))[0]
 
-    async def set_flag(self, flag: int | TscInput, value: bool):
+    async def set_flag(self, flag: int | TscInput, value: bool) -> None:
         address = flag_to_address(flag, Address(self.server_info.offsets["flags"], 0))
         byte = await self.read_memory(address.offset, 1)
         byte = struct.unpack("b", byte)[0]
@@ -317,5 +320,5 @@ class CSExecutor:
     async def get_received_items(self) -> int:
         return struct.unpack("b", await self.read_memory_flags(7400, 1))[0]
 
-    async def set_received_items(self, received: int):
+    async def set_received_items(self, received: int) -> None:
         await self.write_memory_flags(7400, struct.pack("b", received))

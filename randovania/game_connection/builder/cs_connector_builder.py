@@ -32,7 +32,7 @@ class CSConnectorBuilder(ConnectorBuilder):
         connect_error = await self.executor.connect()
         if connect_error is not None:
             self._status_message("Unable to connect to Cave Story", log=False)
-            return
+            return None
         self._status_message(f"Connected to {self.ip}")
         connector = CSRemoteConnector(self.executor)
         connector.start_updates()
@@ -41,7 +41,7 @@ class CSConnectorBuilder(ConnectorBuilder):
     def get_status_message(self) -> str | None:
         return self._last_status_message
 
-    def _status_message(self, msg: str, log: bool = True):
+    def _status_message(self, msg: str, log: bool = True) -> None:
         self._last_status_message = msg
         if log:
             self.logger.info(msg)
