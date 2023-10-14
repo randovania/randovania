@@ -234,7 +234,7 @@ async def test_received_items(executor: CSExecutor):
 
 
 def test_tsc_values():
-    values = [0, "0000", b"0000"]
+    values: list[int | bytes | str] = [0, "0000", b"0000"]
     for value in values:
         assert _resolve_tsc_value(value) == 0
 

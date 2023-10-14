@@ -125,7 +125,9 @@ class WeaponData:
 
 
 def _resolve_tsc_value(value: int | TscInput) -> int:
-    return tsc_value_to_num(value) if isinstance(value, TscInput) else value
+    if isinstance(value, bytes | str):
+        return tsc_value_to_num(value)
+    return value
 
 
 def _message_for_tsc_value_list(values: Collection[int | TscInput]) -> bytes:
@@ -288,12 +290,12 @@ class CSExecutor:
     async def set_flag(self, flag: int | TscInput, value: bool) -> None:
         address = flag_to_address(flag, Address(self.server_info.offsets["flags"], 0))
         byte = await self.read_memory(address.offset, 1)
-        byte = struct.unpack("b", byte)[0]
+        num: int = struct.unpack("b", byte)[0]
         if value:
-            byte |= 1 << address.bit
+            num |= 1 << address.bit
         else:
-            byte &= ~(1 << address.bit)
-        await self.write_memory(address.offset, struct.pack("b", byte))
+            num &= ~(1 << address.bit)
+        await self.write_memory(address.offset, struct.pack("b", num))
 
     async def get_game_state(self) -> GameState:
         response = await self._send_request(Packet(PacketType.GET_STATE, b"\x00"))
