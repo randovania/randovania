@@ -66,17 +66,20 @@ class MSRPresetDescriber(GamePresetDescriber):
                 message_for_required_mains(
                     configuration.ammo_pickup_configuration,
                     {
-                        "Super Missile needs Launcher": "Super Missile Expansion",
-                        "Power Bomb needs Main": "Power Bomb Expansion",
+                        "Super Missile needs Launcher": "Super Missile Tank",
+                        "Power Bomb needs Main": "Power Bomb Tank",
                     },
                 ),
                 {
                     "Nerfed Power Bombs": configuration.nerf_power_bombs,
                     "Nerfed Super Missiles": configuration.nerf_super_missiles,
+                },
+                {
                     "Open Area 3 Interior East Shortcut": configuration.area3_interior_shortcut_no_grapple,
                     "Remove Area Exit Path Grapple Blocks": configuration.elevator_grapple_blocks,
                     "Remove Surface Scan Pulse Crumble Blocks": configuration.surface_crumbles,
                     "Remove Area 1 Chozo Seal Crumble Blocks": configuration.area1_crumbles,
+                    "Enabled Reverse Area 8": configuration.reverse_area8,
                 },
             ],
         }

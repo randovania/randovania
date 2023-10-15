@@ -5783,13 +5783,30 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "After Queen": {
-                            "type": "resource",
+                        "Room Center": {
+                            "type": "or",
                             "data": {
-                                "type": "events",
-                                "name": "Queen Metroid",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Queen Metroid",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "ReverseArea8",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         },
                         "Before Queen": {
@@ -5945,13 +5962,30 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "After Queen": {
-                            "type": "resource",
+                        "Room Center": {
+                            "type": "or",
                             "data": {
-                                "type": "events",
-                                "name": "Queen Metroid",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Queen Metroid",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "ReverseArea8",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -5976,7 +6010,7 @@
                     "pickup_index": 171,
                     "location_category": "major",
                     "connections": {
-                        "After Queen": {
+                        "Room Center": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6001,7 +6035,7 @@
                     "valid_starting_location": false,
                     "event_name": "Queen Metroid",
                     "connections": {
-                        "After Queen": {
+                        "Room Center": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6010,12 +6044,12 @@
                         }
                     }
                 },
-                "After Queen": {
+                "Room Center": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": -3279.9614643545283,
-                        "y": 11340.863840719332,
+                        "x": -3279.96,
+                        "y": 11340.86,
                         "z": 0.0
                     },
                     "description": "",
@@ -6061,10 +6095,12 @@
                             }
                         },
                         "Pickup (Baby Metroid)": {
-                            "type": "and",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "type": "events",
+                                "name": "Queen Metroid",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }

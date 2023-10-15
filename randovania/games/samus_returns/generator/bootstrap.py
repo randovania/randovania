@@ -47,6 +47,7 @@ class MSRBootstrap(MetroidBootstrap):
             "nerf_super_missiles": "NerfSupers",
             "surface_crumbles": "SurfaceCrumbles",
             "area1_crumbles": "Area1Crumbles",
+            "reverse_area8": "ReverseArea8",
         }
         for name, index in logical_patches.items():
             if getattr(configuration, name):
