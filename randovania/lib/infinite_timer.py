@@ -52,7 +52,7 @@ class InfiniteTimer(QtCore.QObject):
             except asyncio.CancelledError:
                 pass
 
-        if not self.strict and self._current_task is None:
+        if not self.strict and self._current_task is not None:
             logging.debug(f"{self} timed out while task was still running")
             return
 
