@@ -19,7 +19,7 @@ def test_committed_human_readable_description(game: RandovaniaGame, tmp_path):
     pretty_print.write_human_readable_game(default_database.game_description_for(game), tmp_path)
     new_files = {f.name: f.read_text("utf-8") for f in tmp_path.glob("*.txt")}
 
-    existing_files = {f.name: f.read_text("utf-8") for f in game.data_path.joinpath("json_data").glob("*.txt")}
+    existing_files = {f.name: f.read_text("utf-8") for f in game.data_path.joinpath("logic_database").glob("*.txt")}
 
     assert new_files == existing_files
 
