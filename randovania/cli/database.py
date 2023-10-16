@@ -196,7 +196,7 @@ def write_game_descriptions(game_descriptions: dict[RandovaniaGame, GameDescript
         logging.info("Writing %s", game.long_name)
         new_data = data_writer.write_game_description(gd)
 
-        path = game.data_path.joinpath("json_data")
+        path = game.data_path.joinpath("logic_database")
         data_writer.write_as_split_files(new_data, path)
         pretty_print.write_human_readable_game(gd, path)
 

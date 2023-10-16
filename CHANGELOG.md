@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed: The Changelog window has recieved a slight overhaul. The date of each release is shown, hyperlinks are fixed, and patch notes are now accessed through a drop-down box (previously used vertical tabs).
 - Changed: Trick level sliders ignore mouse scroll inputs, preventing unintended preset changes. 
+- Changed: The Trick Details list in the menu bar no longer displays tricks that shouldn't be visible in the UI.
 - Fixed: Map tracker selects the correct start location if the preset has only one start location that is not the default. 
 
 ### Resolver
@@ -29,11 +30,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Dread
 
-- Fixed: The "Power Bomb Limitations" setting is now accounted for by logic.
 - Fixed: Custom shields now use the correct shader and texture effects and no longer a black background
 - Fixed: Issues with negative amount for ammo items. The current amount was set to a wrong value and you had to use a ammo refill station. This also caused issues with the auto tracker and multiworld.
 
 #### Logic Database
+
+- Fixed: The "Power Bomb Limitations" setting is now respected for opening Charge Beam Doors.
 
 ##### Artaria
 

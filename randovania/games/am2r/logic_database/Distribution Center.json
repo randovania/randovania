@@ -6127,17 +6127,55 @@
                                                                         }
                                                                     ]
                                                                 }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "Doesn't require Alpha Squad to be defeated and trickless option",
+                                            "items": [
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Movement",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Alpha Squad Defeated"
                                                             },
                                                             {
                                                                 "type": "resource",
                                                                 "data": {
-                                                                    "type": "items",
-                                                                    "name": "Space Jump",
-                                                                    "amount": 1,
+                                                                    "type": "damage",
+                                                                    "name": "Damage",
+                                                                    "amount": 50,
                                                                     "negate": false
                                                                 }
                                                             }
                                                         ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Space Jump",
+                                                        "amount": 1,
+                                                        "negate": false
                                                     }
                                                 }
                                             ]
