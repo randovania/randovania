@@ -24,6 +24,13 @@ _mapping = {
     "Missile": "Missile Expansion",
     "Super Missile": "Super Missile Expansion",
     "Power Bombs": "Power Bomb Expansion",
+    # TODO: have launchers as seperate items when SDM supports them
+    "Locked Missiles": "Missile Expansion",
+    "Locked Super Missiles": "Super Missile Expansion",
+    "Locked Power Bombs": "Power Bomb Expansion",
+    "Missile Launcher": "Missile Expansion",
+    "Super Missile Launcher": "Super Missile Expansion",
+    "Power Bomb Launcher": "Power Bomb Expansion",
     "Nothing": "No Item",
 }
 
@@ -32,6 +39,10 @@ _effect = {
     "Missile Expansion": "Get Missile Expansion",
     "Super Missile Expansion": "Get Super Missile Expansion",
     "Power Bomb Expansion": "Get Power Bomb Expansion",
+    # TODO: have launchers as seperate items when SDM supports them
+    "Missile Launcher": "Get Missile Expansion",
+    "Super Missile Launcher": "Get Super Missile Expansion",
+    "Power Bomb Launcher": "Get Power Bomb Expansion",
     "Grapple Beam": "Get Grapple Beam",
     "X-Ray Scope": "Get X-Ray Scope",
     "Varia Suit": "Get Varia Suit",

@@ -182,7 +182,9 @@
                 "prime2": "MissileLauncher",
                 "dread": "powerup_icemissile"
             },
-            "progression": [],
+            "progression": [
+                "MissileLauncher"
+            ],
             "default_shuffled_count": 1,
             "default_starting_count": 0,
             "preferred_location_category": "major",
@@ -201,7 +203,9 @@
                 "prime2": "SuperMissile",
                 "dread": "powerup_supermissile"
             },
-            "progression": [],
+            "progression": [
+                "SuperMissileLauncher"
+            ],
             "default_shuffled_count": 1,
             "default_starting_count": 0,
             "preferred_location_category": "major",
@@ -210,7 +214,7 @@
             ],
             "unlocks_ammo": true
         },
-        "Power Bomb": {
+        "Power Bomb Launcher": {
             "pickup_category": "morph_ball",
             "broad_category": "morph_ball_related",
             "model_name": "Power Bomb",
@@ -220,7 +224,9 @@
                 "prime2": "PowerBomb",
                 "dread": "powerup_powerbomb"
             },
-            "progression": [],
+            "progression": [
+                "PowerBombLauncher"
+            ],
             "default_shuffled_count": 1,
             "default_starting_count": 0,
             "preferred_location_category": "major",
@@ -468,7 +474,9 @@
             "items": [
                 "Missile"
             ],
-            "preferred_location_category": "minor"
+            "preferred_location_category": "minor",
+             "unlocked_by": "MissileLauncher",
+             "temporary": "LockedMissiles"
         },
         "Super Missile Expansion": {
             "broad_category": "missile_related",
@@ -482,7 +490,9 @@
             "items": [
                 "Supers"
             ],
-            "preferred_location_category": "minor"
+            "preferred_location_category": "minor",
+             "unlocked_by": "SuperMissileLauncher",
+             "temporary": "LockedSuperMissiles"
         },
         "Power Bomb Expansion": {
             "broad_category": "morph_ball_related",
@@ -496,7 +506,9 @@
             "items": [
                 "PowerBomb"
             ],
-            "preferred_location_category": "minor"
+            "preferred_location_category": "minor",
+             "unlocked_by": "PowerBombLauncher",
+             "temporary": "LockedPowerBombs"
         }
     },
     "default_pickups": {},
