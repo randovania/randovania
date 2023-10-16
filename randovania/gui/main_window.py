@@ -601,7 +601,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
 
         menu.clear()
         for trick in sorted(game.resource_database.trick, key=lambda _trick: _trick.long_name):
-            if trick not in tricks_in_use:
+            if trick not in tricks_in_use or trick.hide_from_ui:
                 continue
 
             trick_menu = QtWidgets.QMenu(self)
