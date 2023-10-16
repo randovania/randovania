@@ -1,4 +1,5 @@
 from unittest.mock import AsyncMock, MagicMock
+from uuid import UUID
 
 import pytest
 
@@ -8,7 +9,7 @@ from randovania.game_connection.connector.cs_remote_connector import (
     CSRemoteConnector,
 )
 from randovania.game_connection.connector.remote_connector import PlayerLocationEvent
-from randovania.game_connection.executor.cs_executor import CSExecutor, CSServerInfo, GameState, WeaponData
+from randovania.game_connection.executor.cs_executor import CSExecutor, CSServerInfo, GameState, TSCError, WeaponData
 from randovania.game_description.db.area_identifier import AreaIdentifier
 from randovania.game_description.resources.inventory import Inventory, InventoryItem
 from randovania.games.game import RandovaniaGame
@@ -227,3 +228,60 @@ async def test_receive_items(connector: CSRemoteConnector, cs_panties_pickup):
     await connector._receive_items()
     connector.executor.get_flag.assert_not_awaited()
     connector.executor.exec_script.assert_not_awaited()
+
+
+async def test_update_disconnected(connector: CSRemoteConnector):
+    connector.is_disconnected = MagicMock(return_value=True)
+    connector._disconnect = AsyncMock()
+    connector.executor.get_game_state = AsyncMock()
+
+    await connector.update()
+    connector._disconnect.assert_awaited_once()
+    connector.executor.get_game_state.assert_not_awaited()
+
+
+async def test_update_bad_uuid(connector: CSRemoteConnector):
+    connector.is_disconnected = MagicMock(return_value=False)
+    connector.executor.get_game_state = AsyncMock(return_value=GameState.GAMEPLAY)
+    bad_uuid = UUID("635ef037-5343-45ea-a7c4-3e90c7dd54eb")  # just a random UUID
+    connector.executor.get_profile_uuid = AsyncMock(return_value=bad_uuid)
+    connector._update_location = AsyncMock()
+
+    await connector.update()
+    connector._update_location.assert_not_called()
+
+
+async def test_update_error(connector: CSRemoteConnector):
+    connector.is_disconnected = MagicMock(return_value=False)
+    connector.executor.get_game_state = AsyncMock(return_value=GameState.GAMEPLAY)
+    connector.executor.get_profile_uuid = AsyncMock(return_value=INVALID_UUID)
+
+    def err():
+        raise TSCError("foo")
+
+    connector._update_location = AsyncMock(side_effect=err)
+    connector._update_collected_indices = AsyncMock()
+    connector._disconnect = AsyncMock()
+
+    await connector.update()
+    connector._update_location.assert_awaited_once()
+    connector._update_collected_indices.assert_not_awaited()
+    connector._disconnect.assert_awaited_once()
+
+
+async def test_update_good(connector: CSRemoteConnector):
+    connector.is_disconnected = MagicMock(return_value=False)
+    connector.executor.get_game_state = AsyncMock(return_value=GameState.GAMEPLAY)
+    connector.executor.get_profile_uuid = AsyncMock(return_value=INVALID_UUID)
+
+    connector._update_location = AsyncMock()
+    connector._update_collected_indices = AsyncMock()
+    connector._update_inventory = AsyncMock()
+    connector._receive_items = AsyncMock()
+
+    await connector.update()
+
+    connector._update_location.assert_awaited_once()
+    connector._update_collected_indices.assert_awaited_once()
+    connector._update_inventory.assert_awaited_once()
+    connector._receive_items.assert_awaited_once()
