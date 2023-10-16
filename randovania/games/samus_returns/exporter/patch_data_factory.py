@@ -219,6 +219,7 @@ class MSRPatchDataFactory(PatchDataFactory):
                 "remove_grapple_block_area3_interior_shortcut": self.configuration.area3_interior_shortcut_no_grapple,
                 "patch_surface_crumbles": self.configuration.surface_crumbles,
                 "patch_area1_crumbles": self.configuration.area1_crumbles,
+                "reverse_area8": self.configuration.reverse_area8,
             },
         }
 

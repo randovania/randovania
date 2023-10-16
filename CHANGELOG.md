@@ -30,12 +30,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Metroid Dread
 
 - Fixed: The "Power Bomb Limitations" setting is now accounted for by logic.
+- Fixed: Custom shields now use the correct shader and texture effects and no longer a black background
+- Fixed: Issues with negative amount for ammo items. The current amount was set to a wrong value and you had to use a ammo refill station. This also caused issues with the auto tracker and multiworld.
 
 #### Logic Database
 
 ##### Artaria
 
 - Changed: Going to Transport to Dairon with Speed Booster now requires the Speed Booster Conservation trick set to Beginner.
+- Changed: The item above Proto EMMI now requires Speed Booster Conservation set to Beginner when reaching it with Speed from the top.
 
 ##### Burenia
 

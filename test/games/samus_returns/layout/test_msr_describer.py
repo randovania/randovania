@@ -40,8 +40,10 @@ def test_am2r_format_params(metroids_only: bool):
         "Difficulty": [],
         "Goal": ["20 Metroid DNA", "Prefers Metroids"] if metroids_only else ["Kill Ridley"],
         "Game Changes": [
-            "Nerfed Power Bombs, Open Area 3 Interior East Shortcut, "
+            "Super Missile needs Launcher, Power Bomb needs Main",
+            "Nerfed Power Bombs",
+            "Open Area 3 Interior East Shortcut, "
             "Remove Area Exit Path Grapple Blocks, Remove Surface Scan Pulse Crumble Blocks, "
-            "Remove Area 1 Chozo Seal Crumble Blocks"
+            "Remove Area 1 Chozo Seal Crumble Blocks",
         ],
     }
