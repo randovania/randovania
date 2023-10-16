@@ -3,6 +3,7 @@ from __future__ import annotations
 from random import Random
 from typing import TYPE_CHECKING
 
+from caver.patcher import wrap_msg_text
 from tsc_utils.flags import set_flag
 from tsc_utils.numbers import num_to_tsc_value
 
@@ -30,6 +31,8 @@ if TYPE_CHECKING:
 
 # ruff: noqa: C901
 
+NOTHING_ITEM_SCRIPT = "<PRI<MSG<TUR<IT+0000\r\nGot =Nothing=!<WAI0025<NOD<EVE0015"
+
 
 class CSPatchDataFactory(PatchDataFactory):
     cosmetic_patches: CSCosmeticPatches
@@ -39,9 +42,6 @@ class CSPatchDataFactory(PatchDataFactory):
         return RandovaniaGame.CAVE_STORY
 
     def create_data(self) -> dict:
-        if self.players_config.is_multiworld:
-            raise NotImplementedError("Multiworld is not supported for Cave Story")
-
         game_description = self.game
         seed_number = self.description.get_seed_for_player(self.players_config.player_index)
         music_rng = Random(seed_number)
@@ -61,7 +61,6 @@ class CSPatchDataFactory(PatchDataFactory):
             ),
             self.players_config.player_index,
         )
-        nothing_item_script = "<PRI<MSG<TUR<IT+0000\r\nGot =Nothing=!<WAI0025<NOD<EVE0015"
 
         pickups = {area.extra["map_name"]: {} for area in game_description.region_list.all_areas}
         for index in sorted(
@@ -69,21 +68,22 @@ class CSPatchDataFactory(PatchDataFactory):
         ):
             target = self.patches.pickup_assignment.get(index, nothing_item)
 
-            if target.player != self.players_config.player_index:
-                # TODO: will need to figure out what scripts to insert for other player's items
-                pass
-
             node = game_description.region_list.node_from_pickup_index(index)
             area = game_description.region_list.nodes_to_area(node)
 
             mapname = node.extra.get("event_map", area.extra["map_name"])
             event = node.extra["event"]
 
-            if target == nothing_item:
-                pickup_script = nothing_item_script
+            if target.player != self.players_config.player_index:
+                message = f"Sent ={target.pickup.name}= to ={self.players_config.player_names[target.player]}=!"
+                message = wrap_msg_text(message, False, ending="<WAI0025<NOD")
+                git = "<GIT0000"  # TODO: add GIT info in pickup db and use it here (respecting offworld models)
+                pickup_script = f"<PRI<MSG<TUR<IT+0000{git}{message}<EVE0015"
+            elif target == nothing_item:
+                pickup_script = NOTHING_ITEM_SCRIPT
             else:
                 pickup_script = self.pickup_db.get_pickup_with_name(target.pickup.name).extra.get(
-                    "script", nothing_item_script
+                    "script", NOTHING_ITEM_SCRIPT
                 )
             pickups[mapname][event] = pickup_script
 
@@ -108,7 +108,7 @@ class CSPatchDataFactory(PatchDataFactory):
             hints[mapname][event] = {
                 "text": hints_for_identifier[game_description.region_list.identifier_for_node(logbook_node)],
                 "facepic": logbook_node.extra.get("facepic", "0000"),
-                "ending": logbook_node.extra.get("ending", "<END"),
+                "ending": "<NOD" + logbook_node.extra.get("ending", "<END"),
             }
 
         mapnames = pickups.keys() | music.keys() | entrances.keys()
@@ -360,6 +360,7 @@ class CSPatchDataFactory(PatchDataFactory):
             "other_tsc": {"Head": head},
             "mychar": self.cosmetic_patches.mychar.mychar_bmp(mychar_rng),
             "hash": get_ingame_hash(self.description.shareable_hash_bytes),
+            "uuid": f"{{{self.players_config.get_own_uuid()}}}",
         }
 
 

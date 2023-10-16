@@ -1,11 +1,13 @@
 from __future__ import annotations
 
+import copy
 import dataclasses
 from typing import TYPE_CHECKING
 
 from caver import patcher as caver_patcher
 
 from randovania.exporter.game_exporter import GameExporter, GameExportParams
+from randovania.games.game import RandovaniaGame
 from randovania.lib import json_lib, status_update_lib
 
 if TYPE_CHECKING:
@@ -48,7 +50,10 @@ class CSGameExporter(GameExporter):
         progress_update: status_update_lib.ProgressUpdateCallable,
     ):
         assert isinstance(export_params, CSGameExportParams)
+        new_patch = copy.copy(patch_data)
+        if new_patch["mychar"] is not None:
+            new_patch["mychar"] = str(RandovaniaGame.CAVE_STORY.data_path.joinpath(patch_data["mychar"]))
         try:
-            caver_patcher.patch_files(patch_data, export_params.output_path, progress_update)
+            caver_patcher.patch_files(new_patch, export_params.output_path, progress_update)
         finally:
             json_lib.write_path(export_params.output_path.joinpath("data", "patcher_data.json"), patch_data)

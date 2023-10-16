@@ -16,7 +16,10 @@ from randovania.game_connection.builder.nintendont_connector_builder import Nint
 from randovania.game_connection.connector.debug_remote_connector import DebugRemoteConnector
 from randovania.game_connection.connector.remote_connector import ImportantStatusMessage, RemoteConnector
 from randovania.game_connection.connector_builder_choice import ConnectorBuilderChoice
-from randovania.games.dread.gui.dialog.dread_connector_prompt_dialog import DreadConnectorPromptDialog
+from randovania.games.dread.gui.dialog.dread_connector_prompt_dialog import (
+    CSConnectorPromptDialog,
+    DreadConnectorPromptDialog,
+)
 from randovania.games.game import RandovaniaGame
 from randovania.gui.debug_backend_window import DebugConnectorWindow
 from randovania.gui.dialog.text_prompt_dialog import TextPromptDialog
@@ -238,6 +241,17 @@ class GameConnectionWindow(QtWidgets.QMainWindow, Ui_GameConnectionWindow):
                 is_modal=True,
                 title="Select Ryujinx or Switch to connect to",
                 description="Enter the IP address of your Switch. It can be found in the system settings.",
+            )
+            if new_ip is None:
+                return
+            args["ip"] = new_ip
+
+        if choice == ConnectorBuilderChoice.CS:
+            new_ip = await CSConnectorPromptDialog.prompt(
+                parent=self,
+                is_modal=True,
+                title="Select Cave Story to connect to",
+                description="Enter the IP address of the machine running Cave Story.",
             )
             if new_ip is None:
                 return
