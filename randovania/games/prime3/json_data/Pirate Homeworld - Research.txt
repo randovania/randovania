@@ -546,45 +546,93 @@ Extra - asset_id: 15178552083233342671
   * Layers: default
   * Morph Ball Door to Scrapvault/Morph Ball Door to Scrapworks (X-Ray Terminal)
   * Extra - dock_index: 0
-  > Morph Ball Door to Scrapvault (Exit)
-      Morph Ball Bomb and Boost Ball and Morph Ball
+  > Terminal Alcove
+      After Scrapworks Entrance Bomb Slot and After Scrapworks Terminal Bomb Slot
 
 > Morph Ball Door to Scrapvault (Entrance); Heals? False; Spawn Point; Default Node
   * Layers: default
   * Morph Ball Door to Scrapvault/Morph Ball Door to Scrapworks (Entrance)
   * Extra - dock_index: 1
-  > Morph Ball Door to Scrapvault (X-Ray Terminal)
+  > Event - Entrance Bomb Slot
       Morph Ball Bomb and Morph Ball
-  > Morph Ball Door to Scrapvault (Exit)
-      Morph Ball Bomb and Morph Ball and Spider Ball
-  > Pickup (Energy Tank)
-      Morph Ball Bomb and Morph Ball
+  > Interior
+      After Scrapworks Entrance Bomb Slot
 
 > Morph Ball Door to Scrapvault (Exit); Heals? False
   * Layers: default
   * Morph Ball Door to Scrapvault/Morph Ball Door to Scrapworks (Exit)
   * Extra - dock_index: 2
-  > Morph Ball Door to Scrapvault (X-Ray Terminal)
-      Morph Ball Bomb and Boost Ball and Morph Ball
-  > Morph Ball Door to Scrapvault (Entrance)
-      Boost Ball and Morph Ball
-  > Pickup (Ship Missile Expansion)
-      All of the following:
-          Boost Ball and Morph Ball
-          # Spiderless: https://youtu.be/Tizj6uvGeXM
-          Spider Ball or Movement (Intermediate)
+  > Half-pipe
+      After Scrapworks Exit Hatch
 
 > Pickup (Energy Tank); Heals? False
   * Layers: default
   * Pickup 84; Category? Major
-  > Morph Ball Door to Scrapvault (Entrance)
-      Trivial
+  > Interior
+      # Safety for solver. Cannot leave the area without being able to exit.
+      Boost Ball or Spider Ball
 
 > Pickup (Ship Missile Expansion); Heals? False
   * Layers: default
   * Pickup 85; Category? Minor
-  > Morph Ball Door to Scrapvault (Exit)
+  > Half-pipe
       Trivial
+
+> Event - Exit Hatch; Heals? False
+  * Layers: default
+  * Event Scrapworks Exit Hatch
+  > Half-pipe
+      Trivial
+
+> Half-pipe; Heals? False
+  * Layers: default
+  > Morph Ball Door to Scrapvault (Exit)
+      After Scrapworks Exit Hatch
+  > Pickup (Ship Missile Expansion)
+      All of the following:
+          Boost Ball
+          # Spiderless: https://youtu.be/Tizj6uvGeXM
+          Spider Ball or Movement (Intermediate)
+  > Event - Exit Hatch
+      Boost Ball
+  > Interior
+      Boost Ball
+  > Terminal Alcove
+      Boost Ball
+
+> Event - Entrance Bomb Slot; Heals? False
+  * Layers: default
+  * Event Scrapworks Entrance Bomb Slot
+  > Morph Ball Door to Scrapvault (Entrance)
+      Trivial
+
+> Interior; Heals? False
+  * Layers: default
+  > Morph Ball Door to Scrapvault (Entrance)
+      After Scrapworks Entrance Bomb Slot
+  > Pickup (Energy Tank)
+      Trivial
+  > Event - Exit Hatch
+      Spider Ball
+  > Half-pipe
+      Trivial
+  > Terminal Alcove
+      Trivial
+
+> Event - Terminal Bomb Slot; Heals? False
+  * Layers: default
+  * Event Scrapworks Terminal Bomb Slot
+  > Terminal Alcove
+      Trivial
+
+> Terminal Alcove; Heals? False
+  * Layers: default
+  > Morph Ball Door to Scrapvault (X-Ray Terminal)
+      After Scrapworks Entrance Bomb Slot and After Scrapworks Terminal Bomb Slot
+  > Half-pipe
+      Trivial
+  > Event - Terminal Bomb Slot
+      Morph Ball Bomb and Morph Ball
 
 ----------------
 Transit Station 3-A
