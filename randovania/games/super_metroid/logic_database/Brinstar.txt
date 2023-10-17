@@ -168,31 +168,31 @@ Extra - asset_id: 71
   * Normal Door to Early Supers Room/Door to Brinstar Reserve Tank Room
   > Pickup (Reserve Tank)
       Trivial
-  > Pickup (First Missile Expansion)
-      Morph Ball
-  > Pickup (Second Missile Expansion)
-      Any of the following:
-          Can Lay Any Bombs
-          # https://youtu.be/wteVt90KLyo
-          Screw Attack and Movement (Advanced)
 
 > Pickup (Reserve Tank); Heals? False
   * Layers: default
   * Pickup 17; Category? Major
   > Door to Early Supers Room
       Trivial
+  > Pickup (First Missile Expansion)
+      Morph Ball
 
 > Pickup (First Missile Expansion); Heals? False
   * Layers: default
   * Pickup 19; Category? Minor
-  > Door to Early Supers Room
+  > Pickup (Reserve Tank)
       Morph Ball
+  > Pickup (Second Missile Expansion)
+      Any of the following:
+          Can Lay Any Bombs
+          # Movement: https://youtu.be/wteVt90KLyo
+          Morph Ball or Screw Attack or Movement (Advanced)
 
 > Pickup (Second Missile Expansion); Heals? False
   * Layers: default
   * Pickup 18; Category? Minor
-  > Door to Early Supers Room
-      Morph Ball
+  > Pickup (First Missile Expansion)
+      Trivial
 
 ----------------
 Green Brinstar Main Shaft Save Room
@@ -357,12 +357,14 @@ Extra - asset_id: 80
 > Door to Dachora Energy Charge Station; Heals? False
   * Layers: default
   * Normal Door to Dachora Energy Charge Station/Door to Dachora Room
-  > Door to Big Pink
+  > Door to Green Brinstar Main Shaft
       Any of the following:
           # Shinespark
           Speed Booster and Shinespark (Beginner) and Shinespark Damage ≥ 120
-          # WJ up with patch
+          # WJ up with Patch
           Wall Jumps (Advanced) and Enabled Dachora Pit Tweaks
+          # WJ up to reduce Shinespark Damage
+          Speed Booster and Shinespark (Advanced) and Wall Jumps (Advanced) and Shinespark Damage ≥ 98
 
 ----------------
 Dachora Energy Charge Station
@@ -815,7 +817,7 @@ Extra - asset_id: 95
           # Destroy Bottom PB Blocks
           Can Lay Power Bombs
           Any of the following:
-              # Destroy Bomb Blocks (2 PBs to get up and 1 PB to get out)
+              # Destroy Bomb Blocks (2 PBs to get up and 1 PB to get out) TODO: Revisit with Entrance Rando
               Power Bombs ≥ 3 or Screw Attack
               All of the following:
                   Can Lay Bombs
@@ -830,8 +832,10 @@ Extra - asset_id: 95
               Vertical Infinite Bomb Jump (Intermediate) and Can Lay Bombs
   > Pickup (Energy Tank)
       Any of the following:
-          Hi-Jump Boots or Space Jump or Damage Boosting (Beginner)
-          Speed Booster and Shinespark (Beginner)
+          Hi-Jump Boots or Space Jump
+          # Damage Boosting: https://youtu.be/ZorjzjjuVMc
+          Damage Boosting (Beginner)
+          Speed Booster and Shinespark (Beginner) and Shinespark Damage ≥ 20
           # Taco Tank: https://www.youtube.com/watch?v=A3FyQFmsyGA
           Continuous Wall Jump (Hypermode)
   > Pickup (Missile Expansion)
@@ -1074,7 +1078,10 @@ Extra - asset_id: 105
   > Door to Red Tower Save Station
       Any of the following:
           Hi-Jump Boots or Space Jump or Wall Jumps (Beginner)
+          # IBJ
           Vertical Infinite Bomb Jump (Beginner) and Can Lay Bombs
+          # Free the Catepillar below and Ice Climb up
+          Ice Beam
 
 > Door to Alpha Power Bomb Room; Heals? False
   * Layers: default
@@ -1098,12 +1105,16 @@ Extra - asset_id: 105
   > Door to Beta Power Bomb Room
       Any of the following:
           Hi-Jump Boots or Space Jump or Wall Jumps (Beginner)
+          # IBJ
           Vertical Infinite Bomb Jump (Beginner) and Can Lay Bombs
+          # Free Catepillar below and Ice Climb up
+          Ice Beam
 
 > Door to Red Fish Room; Heals? False
   * Layers: default
   * Normal Door to Red Fish Room/Door to Caterpillar Room
   > Door to Beta Power Bomb Room
+      # TODO: Reverse connection may be possible in VARIA
       Morph Ball and Super Missile
 
 > Teleporter to Crateria; Heals? False; Default Node

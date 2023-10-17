@@ -1026,53 +1026,6 @@
                                 "comment": null,
                                 "items": []
                             }
-                        },
-                        "Pickup (First Missile Expansion)": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        "Pickup (Second Missile Expansion)": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Can Lay Any Bombs"
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": "https://youtu.be/wteVt90KLyo",
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "ScrewAttack",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "Movement",
-                                                        "amount": 3,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
-                            }
                         }
                     }
                 },
@@ -1099,6 +1052,23 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Pickup (First Missile Expansion)": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
                         }
                     }
                 },
@@ -1119,13 +1089,68 @@
                     "pickup_index": 19,
                     "location_category": "minor",
                     "connections": {
-                        "Door to Early Supers Room": {
-                            "type": "resource",
+                        "Pickup (Reserve Tank)": {
+                            "type": "or",
                             "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Pickup (Second Missile Expansion)": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Lay Any Bombs"
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": "Movement: https://youtu.be/wteVt90KLyo",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Morph",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "ScrewAttack",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Movement",
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -1147,13 +1172,11 @@
                     "pickup_index": 18,
                     "location_category": "minor",
                     "connections": {
-                        "Door to Early Supers Room": {
-                            "type": "resource",
+                        "Pickup (First Missile Expansion)": {
+                            "type": "and",
                             "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -2081,7 +2104,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Big Pink": {
+                        "Door to Green Brinstar Main Shaft": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -2103,17 +2126,43 @@
                                                 {
                                                     "type": "resource",
                                                     "data": {
-                                                        "type": "damage",
+                                                        "type": "tricks",
                                                         "name": "Shinespark",
-                                                        "amount": 120,
+                                                        "amount": 1,
                                                         "negate": false
                                                     }
                                                 },
                                                 {
                                                     "type": "resource",
                                                     "data": {
-                                                        "type": "tricks",
+                                                        "type": "damage",
                                                         "name": "Shinespark",
+                                                        "amount": 120,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "WJ up with Patch",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "WallJump",
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "DachoraPitTweaks",
                                                         "amount": 1,
                                                         "negate": false
                                                     }
@@ -2124,14 +2173,23 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "WJ up with patch",
+                                            "comment": "WJ up to reduce Shinespark Damage",
                                             "items": [
                                                 {
                                                     "type": "resource",
                                                     "data": {
-                                                        "type": "misc",
-                                                        "name": "DachoraPitTweaks",
+                                                        "type": "items",
+                                                        "name": "SpeedBooster",
                                                         "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Shinespark",
+                                                        "amount": 3,
                                                         "negate": false
                                                     }
                                                 },
@@ -2141,6 +2199,15 @@
                                                         "type": "tricks",
                                                         "name": "WallJump",
                                                         "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "damage",
+                                                        "name": "Shinespark",
+                                                        "amount": 98,
                                                         "negate": false
                                                     }
                                                 }
@@ -4931,7 +4998,7 @@
                                                 {
                                                     "type": "or",
                                                     "data": {
-                                                        "comment": "Destroy Bomb Blocks (2 PBs to get up and 1 PB to get out)",
+                                                        "comment": "Destroy Bomb Blocks (2 PBs to get up and 1 PB to get out) TODO: Revisit with Entrance Rando",
                                                         "items": [
                                                             {
                                                                 "type": "and",
@@ -5095,12 +5162,20 @@
                                         }
                                     },
                                     {
-                                        "type": "resource",
+                                        "type": "and",
                                         "data": {
-                                            "type": "tricks",
-                                            "name": "DBoost",
-                                            "amount": 1,
-                                            "negate": false
+                                            "comment": "Damage Boosting: https://youtu.be/ZorjzjjuVMc",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "DBoost",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     },
                                     {
@@ -5123,6 +5198,15 @@
                                                         "type": "tricks",
                                                         "name": "Shinespark",
                                                         "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "damage",
+                                                        "name": "Shinespark",
+                                                        "amount": 20,
                                                         "negate": false
                                                     }
                                                 }
@@ -6661,7 +6745,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "IBJ",
                                             "items": [
                                                 {
                                                     "type": "template",
@@ -6672,6 +6756,23 @@
                                                     "data": {
                                                         "type": "tricks",
                                                         "name": "IBJ",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "Free the Catepillar below and Ice Climb up",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Ice",
                                                         "amount": 1,
                                                         "negate": false
                                                     }
@@ -6829,7 +6930,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "IBJ",
                                             "items": [
                                                 {
                                                     "type": "template",
@@ -6840,6 +6941,23 @@
                                                     "data": {
                                                         "type": "tricks",
                                                         "name": "IBJ",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "Free Catepillar below and Ice Climb up",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Ice",
                                                         "amount": 1,
                                                         "negate": false
                                                     }
@@ -6881,7 +6999,7 @@
                         "Door to Beta Power Bomb Room": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "TODO: Reverse connection may be possible in VARIA",
                                 "items": [
                                     {
                                         "type": "resource",
