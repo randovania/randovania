@@ -5,36 +5,48 @@ Extra - asset_id: 67
 > Door to Brinstar Pre-Map Room; Heals? False
   * Layers: default
   * Missile Door to Brinstar Pre-Map Room/Door to Green Brinstar Main Shaft
-  > Teleporter to Crateria
+  > Door to Early Supers Room
       Trivial
 
 > Door to Green Brinstar Main Shaft Save Room; Heals? False
   * Layers: default
   * Missile Door to Green Brinstar Main Shaft Save Room/Door to Green Brinstar Main Shaft
-  > Teleporter to Crateria
+  > Door to Early Supers Room
+      Trivial
+  > Door to Dachora Room
       Trivial
 
 > Door to Early Supers Room; Heals? False
   * Layers: default
   * Missile Door to Early Supers Room/Door to Green Brinstar Main Shaft
+  > Door to Brinstar Pre-Map Room
+      Trivial
+  > Door to Green Brinstar Main Shaft Save Room
+      Trivial
   > Teleporter to Crateria
       Trivial
 
 > Door to Green Brinstar Fireflea Room; Heals? False
   * Layers: default
   * Missile Door to Green Brinstar Fireflea Room/Door to Green Brinstar Main Shaft
-  > Teleporter to Crateria
+  > Door to Dachora Room
       Trivial
 
 > Door to Dachora Room; Heals? False
   * Layers: default
   * Missile Door to Dachora Room/Door to Green Brinstar Main Shaft
-  > Teleporter to Crateria
+  > Door to Green Brinstar Main Shaft Save Room
       Trivial
+  > Door to Green Brinstar Fireflea Room
+      Trivial
+  > Door from Green Brinstar Main Shaft
+      Can Lay Power Bombs
 
 > Door from Green Brinstar Main Shaft; Heals? False
   * Layers: default
   * Permanently Locked to Green Brinstar Main Shaft/Door to Green Brinstar Main Shaft
+  > Door to Dachora Room
+      Can Lay Power Bombs
   > Door to Green Brinstar Beetom Room
       Trivial
 
@@ -43,32 +55,22 @@ Extra - asset_id: 67
   * Normal Door to Green Brinstar Beetom Room/Door to Green Brinstar Main Shaft
   > Door from Green Brinstar Main Shaft
       Trivial
-  > Teleporter to Crateria
-      Morph Ball and Power Bombs
 
 > Teleporter to Crateria; Heals? False; Default Node
   * Layers: default
   * Teleporter to Elevator to Green Brinstar/Teleporter to Brinstar
   * Extra - scan_asset_id: None
   * Extra - teleporter_instance_id: None
-  > Door to Brinstar Pre-Map Room
-      Trivial
-  > Door to Green Brinstar Main Shaft Save Room
-      Trivial
   > Door to Early Supers Room
       Trivial
-  > Door to Green Brinstar Fireflea Room
-      Trivial
-  > Door to Dachora Room
-      Trivial
-  > Door to Green Brinstar Beetom Room
-      Morph Ball and Power Bombs
 
 > Door to Green Brinstar Main Shaft; Heals? False
   * Layers: default
   * Normal Door to Green Brinstar Main Shaft/Door from Green Brinstar Main Shaft
   > Pickup (Power Bomb Expansion)
-      Morph Ball
+      All of the following:
+          Morph Ball
+          Spring Ball or Mid-Air Morph (Intermediate)
   > Part-Way up Etecoons Shaft
       Trivial
 
@@ -81,15 +83,15 @@ Extra - asset_id: 67
 > Pickup (Power Bomb Expansion); Heals? False
   * Layers: default
   * Pickup 13; Category? Minor
-  > Part-Way up Etecoons Shaft
+  > Door to Green Brinstar Main Shaft
       Morph Ball
 
 > Part-Way up Etecoons Shaft; Heals? False
   * Layers: default
   > Door to Green Brinstar Beetom Room
-      All of the following:
-          Morph Ball
-          Morph Ball Bombs or Power Bombs ≥ 2
+      Any of the following:
+          Can Lay Bombs
+          Power Bombs ≥ 2 and Can Lay Power Bombs
   > Door to Etecoon Energy Tank Room
       Trivial
 
@@ -101,17 +103,13 @@ Extra - asset_id: 68
   * Layers: default
   * Normal Door to Green Brinstar Main Shaft/Door to Brinstar Pre-Map Room
   > Door to Brinstar Map Room
-      All of the following:
-          Morph Ball
-          Morph Ball Bombs or Power Bombs
+      Can Lay Any Bombs
 
 > Door to Brinstar Map Room; Heals? False
   * Layers: default
   * Normal Door to Brinstar Map Room/Door to Brinstar Pre-Map Room
   > Door to Green Brinstar Main Shaft
-      All of the following:
-          Morph Ball
-          Morph Ball Bombs or Power Bombs
+      Can Lay Any Bombs
 
 ----------------
 Brinstar Map Room
@@ -133,6 +131,8 @@ Extra - asset_id: 70
           Speed Booster
           # https://www.youtube.com/watch?v=7bHxm5TttRI
           Morph Ball and Machball (Intermediate)
+          # https://youtu.be/stNcGyyLCB0
+          Movement (Expert)
   > Pickup (Missile Expansion)
       Trivial
 
@@ -140,9 +140,12 @@ Extra - asset_id: 70
   * Layers: default
   * Normal Door to Brinstar Reserve Tank Room/Door to Early Supers Room
   > Door to Green Brinstar Main Shaft
-      Trivial
+      # https://youtu.be/QsYcH49dKB4
+      Morph Ball and Machball (Expert) and Disabled Door Lock Randomizer and Disabled Entrance Randomizer
   > Pickup (Super Missile Expansion)
-      Trivial
+      Any of the following:
+          Hi-Jump Boots or Wall Jumps (Beginner)
+          Vertical Infinite Bomb Jump (Beginner) and Can Lay Bombs
 
 > Pickup (Missile Expansion); Heals? False
   * Layers: default
@@ -169,10 +172,9 @@ Extra - asset_id: 71
       Morph Ball
   > Pickup (Second Missile Expansion)
       Any of the following:
-          Screw Attack
-          All of the following:
-              Morph Ball
-              Morph Ball Bombs or Power Bombs
+          Can Lay Any Bombs
+          # https://youtu.be/wteVt90KLyo
+          Screw Attack and Movement (Advanced)
 
 > Pickup (Reserve Tank); Heals? False
   * Layers: default
@@ -279,13 +281,22 @@ Extra - asset_id: 76
   * Layers: default
   * Normal Door to Etecoon Save Room/Door to Etecoon Energy Tank Room
   > Door to Green Brinstar Main Shaft
-      Morph Ball
+      Any of the following:
+          Morph Ball
+          # Tunnel Crawl: https://vimeo.com/800715640
+          Damage Boosting (Expert) and Normal Damage ≥ 220
 
 > Door to Green Brinstar Main Shaft; Heals? False
   * Layers: default
   * Normal Door to Green Brinstar Main Shaft/Door to Etecoon Energy Tank Room
+  > Door to Green Brinstar Beetom Room
+      # Xray Climb: https://vimeo.com/810787441
+      Ice Beam and X-Ray Scope and X-Ray Climb (Expert)
   > Door to Etecoon Save Room
-      Morph Ball
+      Any of the following:
+          Morph Ball
+          # X-Ray Crawl: https://vimeo.com/810935501
+          X-Ray Scope and Movement (Expert) and Normal Damage ≥ 20
 
 > Pickup (Energy Tank); Heals? False
   * Layers: default
@@ -333,11 +344,7 @@ Extra - asset_id: 80
   * Layers: default
   * Normal Door to Green Brinstar Main Shaft/Door to Dachora Room
   > Door to Big Pink
-      Any of the following:
-          Screw Attack or Speed Booster
-          All of the following:
-              Morph Ball
-              Morph Ball Bombs or Power Bombs
+      Screw Attack or Speed Booster or Can Lay Any Bombs
   > Door to Dachora Energy Charge Station
       Speed Booster
 
@@ -345,19 +352,15 @@ Extra - asset_id: 80
   * Layers: default
   * Normal Door to Big Pink/Door to Dachora Room
   > Door to Green Brinstar Main Shaft
-      Any of the following:
-          Screw Attack or Speed Booster
-          All of the following:
-              Morph Ball
-              Morph Ball Bombs or Power Bombs
+      Screw Attack or Speed Booster or Can Lay Any Bombs
 
 > Door to Dachora Energy Charge Station; Heals? False
   * Layers: default
   * Normal Door to Dachora Energy Charge Station/Door to Dachora Room
   > Door to Big Pink
       Any of the following:
-          # Shinespark up - TODO: double check damage
-          Speed Booster and Shinespark Damage ≥ 120
+          # Shinespark
+          Speed Booster and Shinespark (Beginner) and Shinespark Damage ≥ 120
           # WJ up with patch
           Wall Jumps (Advanced) and Enabled Dachora Pit Tweaks
 
@@ -672,15 +675,22 @@ Extra - asset_id: 92
   * Layers: default
   * Normal Door to Big Pink/Door to Green Hill Zone
   > Door to Morph Ball Room
-      Hi-Jump Boots or Space Jump or Wall Jumps (Beginner)
+      Any of the following:
+          Hi-Jump Boots or Space Jump or Wall Jumps (Beginner)
+          # IBJ
+          Vertical Infinite Bomb Jump (Intermediate) and Can Lay Bombs
   > Door to Noob Bridge
       Trivial
   > Pickup (Missile Expansion)
       All of the following:
-          Morph Ball
+          Any of the following:
+              Morph Ball
+              # Tunnel Crawl: https://youtu.be/XfTiy5JMfRE
+              Movement (Advanced)
           Any of the following:
               Hi-Jump Boots or Space Jump or Wall Jumps (Beginner)
-              Morph Ball Bombs and Morph Ball and Vertical Infinite Bomb Jump (Intermediate)
+              # IBJ
+              Vertical Infinite Bomb Jump (Intermediate) and Can Lay Bombs
 
 > Door to Morph Ball Room; Heals? False
   * Layers: default
@@ -692,7 +702,12 @@ Extra - asset_id: 92
   * Layers: default
   * Normal Door to Noob Bridge/Door to Green Hill Zone
   > Door to Big Pink
-      Wave Beam
+      Any of the following:
+          Wave Beam
+          All of the following:
+              # Gate Glitch
+              Gate Glitch (Beginner)
+              Missile ≥ 5 or Super Missile ≥ 5
 
 > Pickup (Missile Expansion); Heals? False
   * Layers: default
@@ -797,15 +812,15 @@ Extra - asset_id: 95
   * Normal Door to Construction Zone/Door to Blue Brinstar Energy Tank Room
   > Door to Blue Brinstar Boulder Room
       All of the following:
-          # Destroy Bottom PB blocks
+          # Destroy Bottom PB Blocks
           Can Lay Power Bombs
           Any of the following:
-              # Destroy upper bomb blocks
-              Power Bombs ≥ 2 or Screw Attack
+              # Destroy Bomb Blocks (2 PBs to get up and 1 PB to get out)
+              Power Bombs ≥ 3 or Screw Attack
               All of the following:
-                  Morph Ball Bombs
+                  Can Lay Bombs
                   # Use Mid-Air Morph or IBJ
-                  Vertical Infinite Bomb Jump (Advanced) or Movement (Intermediate)
+                  Vertical Infinite Bomb Jump (Advanced) or Mid-Air Morph (Intermediate)
           Any of the following:
               # Get up shaft
               Space Jump or Wall Jumps (Intermediate)
@@ -814,7 +829,11 @@ Extra - asset_id: 95
               # VIBJ
               Vertical Infinite Bomb Jump (Intermediate) and Can Lay Bombs
   > Pickup (Energy Tank)
-      Hi-Jump Boots or Space Jump or Speed Booster or Damage Boosting (Beginner)
+      Any of the following:
+          Hi-Jump Boots or Space Jump or Damage Boosting (Beginner)
+          Speed Booster and Shinespark (Beginner)
+          # Taco Tank: https://www.youtube.com/watch?v=A3FyQFmsyGA
+          Continuous Wall Jump (Hypermode)
   > Pickup (Missile Expansion)
       Morph Ball
 
@@ -822,9 +841,10 @@ Extra - asset_id: 95
   * Layers: default
   * Normal Door to Blue Brinstar Boulder Room/Door to Blue Brinstar Energy Tank Room
   > Door to Construction Zone
-      All of the following:
-          Morph Ball
-          Morph Ball Bombs or Power Bombs or Screw Attack
+      Any of the following:
+          Can Lay Any Bombs
+          # Hidden Morph Tunnel at the Bottom
+          Morph Ball and Screw Attack
 
 > Pickup (Energy Tank); Heals? False
   * Layers: default
@@ -1052,7 +1072,9 @@ Extra - asset_id: 105
   > Door to Alpha Power Bomb Room
       Trivial
   > Door to Red Tower Save Station
-      Hi-Jump Boots or Space Jump
+      Any of the following:
+          Hi-Jump Boots or Space Jump or Wall Jumps (Beginner)
+          Vertical Infinite Bomb Jump (Beginner) and Can Lay Bombs
 
 > Door to Alpha Power Bomb Room; Heals? False
   * Layers: default
@@ -1074,7 +1096,9 @@ Extra - asset_id: 105
   > Door to Hellway
       Trivial
   > Door to Beta Power Bomb Room
-      Hi-Jump Boots or Space Jump
+      Any of the following:
+          Hi-Jump Boots or Space Jump or Wall Jumps (Beginner)
+          Vertical Infinite Bomb Jump (Beginner) and Can Lay Bombs
 
 > Door to Red Fish Room; Heals? False
   * Layers: default
