@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Damage reductions from multiple suits are no longer multiplied together.
 - Improved: The output from the resolver now includes the node with the victory condition.
 - Improved: When using verbosity level High or above, the energy is displayed in the output.
+- Improved: Speed up resolving of hard seeds by allowing skipping of more kinds of unsatisfied requirements.
 
 ### Cave Story
 - **Major** - Added: Multiworld support. Currently only supports the version of freeware provided by Randovania.

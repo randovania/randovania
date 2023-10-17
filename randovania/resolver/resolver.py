@@ -34,11 +34,6 @@ def _simplify_requirement_list(
         if item.satisfied(state.resources, state.energy, state.resource_database):
             continue
 
-        # We don't want to mark collecting a pickup/event node as a requirement to collecting that node.
-        # This could be interesting for DockLock, as indicating it needs to be unlocked from the other side.
-        if item.resource.resource_type in (ResourceType.NODE_IDENTIFIER, ResourceType.EVENT):
-            continue
-
         items.append(item)
 
     return RequirementList(items)
@@ -184,6 +179,10 @@ async def _inner_advance_depth(
     logic.log_checking_satisfiable_actions(state, actions)
     has_action = False
     for action, energy in actions:
+        action_additional_requirements = logic.get_additional_requirements(action)
+        if not action_additional_requirements.satisfied(state.resources, energy, state.resource_database):
+            logic.log_skip_action_missing_requirement(action, logic.game)
+            continue
         new_result = await _inner_advance_depth(
             state=state.act_on_node(action, path=reach.path_to_node(action), new_energy=energy),
             logic=logic,
@@ -197,7 +196,19 @@ async def _inner_advance_depth(
         else:
             has_action = True
 
-    additional_requirements = reach.satisfiable_requirements
+    additional_requirements = reach.satisfiable_requirements_for_additionals
+    old_additional_requirements = logic.get_additional_requirements(state.node)
+
+    if (
+        old_additional_requirements != RequirementSet.trivial()
+        and additional_requirements == RequirementSet.impossible().alternatives
+    ):
+        # If a negated requirement is an additional before rolling back the negated resource, then the entire branch
+        # will look trivial after rolling back that resource. However, upon exploring that branch again, the inside will
+        # still have the old additional requirements, and these will all be skipped if the additional requirements
+        # aren't met yet. To avoid marking the inside of branch as impossible on the second pass, we have to make use of
+        # the old additional requirements from a previous iteration.
+        additional_requirements = old_additional_requirements.alternatives
 
     if has_action:
         additional = set()
