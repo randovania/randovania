@@ -572,7 +572,7 @@
                                         "data": {
                                             "type": "tricks",
                                             "name": "WallJump",
-                                            "amount": 3,
+                                            "amount": 2,
                                             "negate": false
                                         }
                                     },
@@ -647,7 +647,7 @@
                         "Door to Brinstar Map Room": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "Note: Door Requires enemies defeated to open, player can softlock here because defeating all enemies requires Can Lay Anybomb.",
                                 "items": [
                                     {
                                         "type": "template",
@@ -1696,7 +1696,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "Tunnel Crawl: https://vimeo.com/800715640",
+                                            "comment": "Tunnel Crawl: https://youtu.be/w65DapK8sdo",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -1758,7 +1758,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "Xray Climb: https://vimeo.com/810787441",
+                                            "comment": "Xray Climb: https://youtu.be/K7-WwaFx5MY",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -1810,7 +1810,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "X-Ray Crawl: https://vimeo.com/810935501",
+                                            "comment": "X-Ray Crawl: https://youtu.be/XsLYfSK2nUg",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -2238,7 +2238,7 @@
                                                     "data": {
                                                         "type": "tricks",
                                                         "name": "WallJump",
-                                                        "amount": 3,
+                                                        "amount": 2,
                                                         "negate": false
                                                     }
                                                 },
@@ -6794,10 +6794,29 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Caterpillar Room": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "comment": "Damage requirement for safety.",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Movement",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "damage",
+                                            "name": "Normal",
+                                            "amount": 150,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -6829,10 +6848,29 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Red Tower": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "comment": "Damage requirement for safety.",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Movement",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "damage",
+                                            "name": "Normal",
+                                            "amount": 150,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
