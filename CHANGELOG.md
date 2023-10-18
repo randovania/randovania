@@ -14,8 +14,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Map tracker selects the correct start location if the preset has only one start location that is not the default. 
 
 ### Auto-Tracker Pixel Icons
-- Metroid Prime: Visors are now pilled, Boost Ball icon with a proper trail, improvements to Power Bomb icon
-- Metroid Prime 2: Echoes: Visors are now pilled, Boost Ball icon with a proper trail, Screw Attack icon now faces clockwise, dedicated Power Beam icon
+- Metroid Prime: Visors are now pilled, Boost Ball icon with a proper trail, improvements to Power Bomb icon.
+- Metroid Prime 2: Echoes: Visors are now pilled, Boost Ball icon with a proper trail, Screw Attack icon now faces clockwise, dedicated Power Beam icon.
 
 ### Resolver
 
