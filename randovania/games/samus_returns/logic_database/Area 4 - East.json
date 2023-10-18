@@ -5075,8 +5075,8 @@
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": 7759.917355371901,
-                        "y": -6668.31955922865,
+                        "x": 7396.283864932175,
+                        "y": -6877.7063501093535,
                         "z": 0.0
                     },
                     "description": "",
@@ -5565,8 +5565,25 @@
                     "valid_starting_location": false,
                     "connections": {
                         "Pickup (Aeion Tank)": {
-                            "type": "template",
-                            "data": "Lay Any Bomb"
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Lay Any Bomb"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Armor",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
                         },
                         "Pickup (Missile Tank Middle)": {
                             "type": "or",
@@ -5699,11 +5716,8 @@
                     "valid_starting_location": false,
                     "connections": {
                         "Pickup (Missile Tank Bottom)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
+                            "type": "template",
+                            "data": "Lay Any Bomb"
                         },
                         "Tunnel to Space Jump Room (Bottom)": {
                             "type": "and",
