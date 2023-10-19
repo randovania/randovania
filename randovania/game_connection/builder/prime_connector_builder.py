@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import importlib
+import importlib.util
 import logging
 from typing import TYPE_CHECKING
 
@@ -30,6 +32,10 @@ class PrimeConnectorBuilder(ConnectorBuilder):
         return self._last_status_message
 
     async def build_connector(self) -> RemoteConnector | None:
+        if importlib.util.find_spec("open_prime_rando") is None:
+            self._status_message("open_prime_rando not installed", log=False)
+            return None
+
         # Delay importing these to avoid too many early imports in startup
         from open_prime_rando.dol_patching.corruption import dol_versions as corruption_dol_versions
         from open_prime_rando.dol_patching.echoes import dol_versions as echoes_dol_versions
@@ -45,7 +51,7 @@ class PrimeConnectorBuilder(ConnectorBuilder):
         connect_error = await executor.connect()
         if connect_error is not None:
             self._status_message(connect_error, log=False)
-            return
+            return None
 
         self._status_message("Identifying game...", log=False)
         all_connectors: list[PrimeRemoteConnector] = [
