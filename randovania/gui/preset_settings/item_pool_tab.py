@@ -230,13 +230,21 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
 
     def _create_categories_boxes(self, pickup_database: PickupDatabase, size_policy):
         self._boxes_for_category = {}
+        all_categories = list(pickup_database.pickup_categories.values())
 
         categories = set()
+        standard_broad_categories = set()
         for standard_pickup in pickup_database.standard_pickups.values():
             if not standard_pickup.hide_from_gui:
                 categories.add(standard_pickup.pickup_category)
+                standard_broad_categories.add(standard_pickup.broad_category.name)
 
-        all_categories = list(pickup_database.pickup_categories.values())
+        for ammo_pickup in pickup_database.ammo_pickups.values():
+            # When a proper distinction between UI and hint categories exists, this needs to be changed
+            if ammo_pickup.broad_category.name in standard_broad_categories:
+                continue
+            categories.add(ammo_pickup.broad_category)
+
         for standard_pickup_category in sorted(categories, key=lambda it: all_categories.index(it)):
             category_box = Foldable(None, standard_pickup_category.long_name)
             category_box.setObjectName(f"category_box {standard_pickup_category}")
