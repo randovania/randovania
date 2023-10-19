@@ -1180,7 +1180,7 @@
                                         "data": "Can Lay Any Bombs"
                                     },
                                     {
-                                        "type": "or",
+                                        "type": "and",
                                         "data": {
                                             "comment": "Movement: https://youtu.be/wteVt90KLyo",
                                             "items": [
@@ -2084,15 +2084,6 @@
                                     }
                                 ]
                             }
-                        },
-                        "Door to Dachora Energy Charge Station": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "SpeedBooster",
-                                "amount": 1,
-                                "negate": false
-                            }
                         }
                     }
                 },
@@ -2159,6 +2150,23 @@
                                     }
                                 ]
                             }
+                        },
+                        "Door to Dachora Energy Charge Station": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "SpeedBooster",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
                         }
                     }
                 },
@@ -2188,7 +2196,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Green Brinstar Main Shaft": {
+                        "Door to Big Pink": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -2222,32 +2230,6 @@
                                                         "type": "damage",
                                                         "name": "Shinespark",
                                                         "amount": 120,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": "WJ up with Patch",
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "WallJump",
-                                                        "amount": 2,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "misc",
-                                                        "name": "DachoraPitTweaks",
-                                                        "amount": 1,
                                                         "negate": false
                                                     }
                                                 }
@@ -2292,6 +2274,32 @@
                                                         "type": "damage",
                                                         "name": "Shinespark",
                                                         "amount": 98,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "WJ up with Patch",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "WallJump",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "DachoraPitTweaks",
+                                                        "amount": 1,
                                                         "negate": false
                                                     }
                                                 }
@@ -6983,6 +6991,15 @@
                                                         "amount": 1,
                                                         "negate": false
                                                     }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "IBA",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
                                                 }
                                             ]
                                         }
@@ -7165,6 +7182,15 @@
                                                     "data": {
                                                         "type": "items",
                                                         "name": "Ice",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "IBA",
                                                         "amount": 1,
                                                         "negate": false
                                                     }
