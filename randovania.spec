@@ -24,6 +24,7 @@ datas=[
     ("randovania/data/gui_assets", "data/gui_assets"),
     ("randovania/data/icons", "data/icons"),
     ("randovania/data/nintendont", "data/nintendont"),
+    ("randovania/data/dotnet_runtime", "data/dotnet_runtime"),
     *pickup_databases,
     *presets,
     *game_assets,
