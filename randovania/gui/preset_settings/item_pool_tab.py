@@ -233,22 +233,17 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
         all_categories = list(pickup_database.pickup_categories.values())
 
         categories = set()
+        standard_broad_categories = set()
         for standard_pickup in pickup_database.standard_pickups.values():
             if not standard_pickup.hide_from_gui:
                 categories.add(standard_pickup.pickup_category)
+                standard_broad_categories.add(standard_pickup.broad_category.name)
 
-        # FIXME: this really shouldn't be done this way. This is just temporary to have ammo in their own category.
-        broad_to_category = {
-            "beam_related": "beam",
-            "morph_ball_related": "morph_ball",
-            "missile_related": "missile",
-        }
         for ammo_pickup in pickup_database.ammo_pickups.values():
-            if ammo_pickup.broad_category.name in broad_to_category:
-                proper_name = broad_to_category[ammo_pickup.broad_category.name]
-                categories.add(next(filter(lambda p: p.name == proper_name, all_categories)))
-            else:
-                categories.add(ammo_pickup.broad_category)
+            # When a proper distinction between UI and hint categories exists, this needs to be changed
+            if ammo_pickup.broad_category.name in standard_broad_categories:
+                continue
+            categories.add(ammo_pickup.broad_category)
 
         for standard_pickup_category in sorted(categories, key=lambda it: all_categories.index(it)):
             category_box = Foldable(None, standard_pickup_category.long_name)
