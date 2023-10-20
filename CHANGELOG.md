@@ -12,7 +12,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: The Trick Details list in the menu bar no longer displays tricks that shouldn't be visible in the UI.
 - Changed: For Multiworld, sending collected locations to the server can no longer fail if there's an error encoding the inventory.
 - Changed: The directory layout has now changed, moving everything that isn't the executable to an `_internal` folder.
-- Fixed: Map tracker selects the correct start location if the preset has only one start location that is not the default. 
+- Changed: When verifying the installation, missing files and modified files are listed in the console and log. 
+- Fixed: Map tracker selects the correct start location if the preset has only one start location that is not the default.
+- Fixed: When verifying the installation, the title of the popup now properly says "Verifying installation".
 
 ### Auto-Tracker Pixel Icons
 - Metroid Prime: Visors are now pilled, Boost Ball icon with a proper trail, improvements to Power Bomb icon.

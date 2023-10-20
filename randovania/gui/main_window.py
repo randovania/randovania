@@ -765,8 +765,14 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
             errors = []
             if bad_files:
                 errors.append(f"- {len(bad_files)} files are missing or are incorrect")
+
             if extra_files:
                 errors.append(f"- {len(extra_files)} files are unexpected")
+
+            for m in bad_files:
+                logging.warning("Missing file: %s", m)
+            for m in extra_files:
+                logging.warning("Unexpected file: %s", m)
 
             await async_dialog.warning(
                 self, "Bad Installation", "The following errors were found:\n" + "\n".join(errors)
