@@ -47,11 +47,11 @@ def catch_exceptions(t, val, tb):
         return old_handler(t, val, tb)
 
 
-def catch_exceptions_async(loop, context):
-    if "future" in context:
+def catch_exceptions_async(context: dict[str, typing.Any]) -> None:
+    if context.get("future") is not None:
         future: asyncio.Future = context["future"]
         logger.exception(context["message"], exc_info=future.exception())
-    elif "exception" in context:
+    elif context.get("exception") is not None:
         logger.exception(context["message"], exc_info=context["exception"])
     else:
         logger.critical(str(context))
@@ -234,26 +234,6 @@ def start_logger(data_dir: Path, is_preview: bool) -> None:
     randovania.setup_logging("DEBUG" if is_preview else "INFO", log_dir.joinpath("logger.log"))
 
 
-def create_loop(app: QtWidgets.QApplication) -> asyncio.AbstractEventLoop:
-    os.environ["QT_API"] = "PySide6"
-    import qasync
-
-    loop: asyncio.AbstractEventLoop = qasync.QEventLoop(app)
-    asyncio.set_event_loop(loop)
-
-    global old_handler
-    old_handler = sys.excepthook
-    sys.excepthook = catch_exceptions
-    loop.set_exception_handler(catch_exceptions_async)
-
-    # patch_asyncio happens when the SDK is initialized, which is before we create our custom loop
-    import sentry_sdk.integrations.asyncio
-
-    sentry_sdk.integrations.asyncio.patch_asyncio()
-
-    return loop
-
-
 async def qt_main(app: QtWidgets.QApplication, args: argparse.Namespace) -> None:
     app.setQuitOnLastWindowClosed(False)
 
@@ -345,10 +325,21 @@ def run(args: argparse.Namespace) -> None:
             display_exception(e)
             app.exit(1)
 
-    loop = create_loop(app)
-    with loop:
-        loop.create_task(qt_main(app, args)).add_done_callback(main_done)
-        loop.run_forever()
+    # Configure API used by qasync, since some things still uses it
+    os.environ["QT_API"] = "PySide6"
+
+    from PySide6.QtAsyncio import QAsyncioEventLoopPolicy
+
+    asyncio.set_event_loop_policy(QAsyncioEventLoopPolicy(app))
+
+    asyncio.ensure_future(qt_main(app, args)).add_done_callback(main_done)
+
+    global old_handler
+    old_handler = sys.excepthook
+    sys.excepthook = catch_exceptions
+
+    asyncio.get_event_loop().set_exception_handler(catch_exceptions_async)
+    asyncio.get_event_loop().run_forever()
 
 
 def create_subparsers(sub_parsers):
