@@ -14,11 +14,18 @@ if TYPE_CHECKING:
 def find_bad_installation(
     hash_list: dict[str, str],
     progress_update: ProgressUpdateCallable,
-) -> tuple[list[str], set[str]]:
+) -> tuple[list[str], list[str], set[str]]:
+    """Hashes all files in the file path and compares to a known good list when the executable was created.
+    Returns three lists:
+    - Files with different hash
+    - Files that are missing
+    - Files that were not expected
+    """
     root = randovania.get_file_path()
 
     extra_files = set()
     bad_files = []
+    missing_files = []
 
     progress_update("Checking for unexpected files", -1)
     for f in root.rglob("*"):
@@ -34,10 +41,10 @@ def find_bad_installation(
                 bad_files.append(name)
 
         except OSError:
-            bad_files.append(name)
+            missing_files.append(name)
 
         progress_update(f"{i + 1} out of {total} files checked.", (i + 1) / total)
 
     extra_files.remove(os.fspath(Path("data").joinpath("frozen_file_list.json")))
 
-    return bad_files, extra_files
+    return bad_files, missing_files, extra_files
