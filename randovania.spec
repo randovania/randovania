@@ -74,7 +74,11 @@ def calculate_hash(file_name: str):
 
 frozen_file_list = pathlib.Path("randovania").joinpath("data", "frozen_file_list.json")
 frozen_file_list.write_text(
-    json.dumps({entry[0]: calculate_hash(entry[1]) for entry in a.datas + a.binaries}, indent=4)
+    json.dumps({
+        entry[0]: calculate_hash(entry[1])
+        for entry in a.datas + a.binaries
+        if entry[2] != "SYMLINK"
+    }, indent=4)
 )
 a.datas.append(
     (
