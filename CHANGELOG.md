@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Trick level sliders ignore mouse scroll inputs, preventing unintended preset changes. 
 - Changed: The Trick Details list in the menu bar no longer displays tricks that shouldn't be visible in the UI.
 - Changed: For Multiworld, sending collected locations to the server can no longer fail if there's an error encoding the inventory.
+- Changed: The directory layout has now changed, moving everything that isn't the executable to an `_internal` folder.
 - Fixed: Map tracker selects the correct start location if the preset has only one start location that is not the default. 
 
 ### Auto-Tracker Pixel Icons
