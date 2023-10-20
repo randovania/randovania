@@ -5,7 +5,6 @@ import json
 from typing import TYPE_CHECKING, Self
 from uuid import UUID
 
-import aiofiles
 import construct
 import slugify
 
@@ -138,8 +137,10 @@ class VersionedPreset[BaseConfigurationT: BaseConfiguration]:
 
     @classmethod
     async def from_file(cls, path: Path) -> Self:
-        async with aiofiles.open(path) as f:
-            return cls.from_str(await f.read())
+        with path.open() as f:
+            return cls.from_str(f.read())
+        # async with aiofiles.open(path) as f:
+        #     return cls.from_str(await f.read())
 
     @classmethod
     def from_file_sync(cls, path: Path) -> Self:

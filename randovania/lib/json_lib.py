@@ -4,8 +4,6 @@ import json
 from collections.abc import Mapping, Sequence
 from typing import TYPE_CHECKING, cast
 
-import aiofiles
-
 if TYPE_CHECKING:
     from collections.abc import Hashable
     from pathlib import Path
@@ -53,9 +51,10 @@ def encode(data: JsonType_RO) -> str:
 
 
 async def read_path_async(path: Path, *, raise_on_duplicate_keys: bool = False) -> JsonType:
-    async with aiofiles.open(path) as f:
+    # async with aiofiles.open(path) as f:
+    with path.open() as f:
         return json.loads(
-            await f.read(), object_pairs_hook=_hook_for_raise_on_duplicate_keys if raise_on_duplicate_keys else None
+            f.read(), object_pairs_hook=_hook_for_raise_on_duplicate_keys if raise_on_duplicate_keys else None
         )
 
 
