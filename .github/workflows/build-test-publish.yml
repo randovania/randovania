@@ -189,6 +189,11 @@ jobs:
         run: |
           mv dist/randovania-* dist/randovania
 
+      - name: Remove dotnet from package
+        shell: bash
+        run: |
+          rm -r dist/randovania/data/dotnet_runtime
+
       - name: import windows certificate
         env:
           WINDOWS_CERTIFICATE: ${{ secrets.WINDOWS_SIGNING_CERTIFICATE }}

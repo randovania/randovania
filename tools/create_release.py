@@ -37,6 +37,13 @@ def open_zip(platform_name: str) -> zipfile.ZipFile:
     )
 
 
+def get_dotnet_url() -> str:
+    if platform.system() == "Windows":
+        return "https://dot.net/v1/dotnet-install.ps1"
+
+    return "https://dot.net/v1/dotnet-install.sh"
+
+
 @tenacity.retry(
     stop=tenacity.stop_after_attempt(5),
     retry=tenacity.retry_if_exception_type(aiohttp.ClientConnectorError),
@@ -56,6 +63,44 @@ async def download_nintendont():
         final_dol_path = _ROOT_FOLDER.joinpath("randovania", "data", "nintendont", "boot.dol")
         print(f"Saving to {final_dol_path}")
         final_dol_path.write_bytes(dol_bytes)
+
+
+async def download_dotnet() -> None:
+    # Windows is finnicky about the file extension. Not sure why.
+    script_path = _ROOT_FOLDER.joinpath("dotnet.ps1" if platform.system() == "Windows" else "dotnet.sh")
+    dotnet_path = _ROOT_FOLDER.joinpath("randovania", "data", "dotnet_runtime")
+    async with aiohttp.ClientSession() as session:
+        url = get_dotnet_url()
+        print(f"Downloading {url}")
+        async with session.get(url) as response:
+            response.raise_for_status()
+            script_bytes = await response.read()
+
+            print(f"Saving to {script_path}")
+            script_path.write_bytes(script_bytes)
+
+    print("Executing dotnet script")
+    # I would like to use Unix-style arguments everywhere, but sadly those aren't fully supported. PS-Style are tho.
+    args = [
+        f"{script_path}",
+        "-Version",
+        "latest",
+        "-InstallDir",
+        f"{dotnet_path}",
+        "-Runtime",
+        "dotnet",
+    ]
+    if platform.system() == "Windows":
+        args = ["powershell.exe", *args]
+    else:
+        subprocess.run(["chmod", "+x", script_path], check=True)
+        args = ["bash", *args]
+    subprocess.run(
+        args,
+        check=True,
+    )
+    print("Removing downloaded script")
+    script_path.unlink()
 
 
 def write_obfuscator_secret(path: Path, secret: bytes):
@@ -109,6 +154,8 @@ async def main():
     json_lib.write_path(_ROOT_FOLDER.joinpath("randovania", "data", "configuration.json"), configuration)
 
     await download_nintendont()
+
+    await download_dotnet()
 
     # HACK: pyintaller calls lipo/codesign on macOS and frequently timeout in github actions
     # There's also timeouts on Windows so we're expanding this to everyone
