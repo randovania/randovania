@@ -14,7 +14,6 @@ from typing import TYPE_CHECKING
 import aiofiles
 import aiohttp
 import construct
-import engineio
 import sentry_sdk
 import socketio
 import socketio.exceptions
@@ -195,9 +194,6 @@ class NetworkClient:
         waiting_for_on_connect = asyncio.get_running_loop().create_future()
         self._waiting_for_on_connect = waiting_for_on_connect
         try:
-            # sio.connect is raising a NotImplementedError, likely due to Windows and/or qasync?
-            engineio.asyncio_client.async_signal_handler_set = True
-
             self.connection_state = ConnectionState.Connecting
             # self.logger.info(f"connect_to_server: sleeping")
             # await asyncio.sleep(1)

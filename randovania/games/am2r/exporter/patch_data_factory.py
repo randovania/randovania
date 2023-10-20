@@ -4,7 +4,7 @@ from random import Random
 from typing import TYPE_CHECKING
 
 from randovania.exporter import pickup_exporter
-from randovania.exporter.hints import guaranteed_item_hint
+from randovania.exporter.hints import credits_spoiler, guaranteed_item_hint
 from randovania.exporter.patch_data_factory import PatchDataFactory
 from randovania.game_description.assignment import PickupTarget
 from randovania.games.am2r.exporter.hint_namer import AM2RHintNamer
@@ -340,6 +340,29 @@ class AM2RPatchDataFactory(PatchDataFactory):
     def game_enum(self) -> RandovaniaGame:
         return RandovaniaGame.AM2R
 
+    def _credits_spoiler(self) -> str:
+        spoiler = "*Major Item Locations;;"
+        spoiler_dict = credits_spoiler.generic_credits(
+            self.configuration.standard_pickup_configuration,
+            self.description.all_patches,
+            self.players_config,
+            AM2RHintNamer(self.description.all_patches, self.players_config),
+        )
+        # am2r credits uses the following syntax:
+        # * indicates a header
+        # ; indicates a newline
+        # / indicates centered text
+        # = splits into left/right adjusted text, but its irrelevant here.
+        for key, value in spoiler_dict.items():
+            if "\n" in value:
+                spoiler_dict[key] = value.replace("\n", ";/")
+            spoiler += f"*{key};/{value};;"
+
+        if not spoiler:
+            spoiler += ";;"
+
+        return spoiler
+
     def create_data(self) -> dict:
         db = self.game
 
@@ -372,4 +395,5 @@ class AM2RPatchDataFactory(PatchDataFactory):
             "door_locks": self._create_door_locks(),
             "hints": self._create_hints(self.rng),
             "cosmetics": self._create_cosmetics(self.description.get_seed_for_player(self.players_config.player_index)),
+            "credits_spoiler": self._credits_spoiler(),
         }

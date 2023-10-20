@@ -40,6 +40,6 @@ def test_am2r_format_params(has_artifacts: bool):
         "Gameplay": ["Starts at Main Caves - Landing Site"],
         "Goal": ["3 Metroid DNA", "Prefers Metroids"] if has_artifacts else ["Kill the Queen"],
         "Hints": ["DNA Hint: Area and room", "Ice Beam Hint: Area only"],
-        "Item Pool": ["Size: 91 of 134" if has_artifacts else "Size: 88 of 134", "Vanilla starting items"],
+        "Item Pool": ["Size: 116 of 134" if has_artifacts else "Size: 113 of 134", "Vanilla starting items"],
         "Logic Settings": ["All tricks disabled"],
     }

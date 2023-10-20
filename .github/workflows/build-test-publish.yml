@@ -1,6 +1,7 @@
 name: Python
 
 on:
+  workflow_dispatch:
   pull_request:
   merge_group:
   push:
@@ -187,6 +188,11 @@ jobs:
         shell: bash
         run: |
           mv dist/randovania-* dist/randovania
+
+      - name: Remove dotnet from package
+        shell: bash
+        run: |
+          rm -r dist/randovania/data/dotnet_runtime
 
       - name: import windows certificate
         env:
