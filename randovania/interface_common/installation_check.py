@@ -39,6 +39,5 @@ def find_bad_installation(
         progress_update(f"{i + 1} out of {total} files checked.", (i + 1) / total)
 
     extra_files.remove(os.fspath(Path("data").joinpath("frozen_file_list.json")))
-    extra_files.remove("randovania.exe")
 
     return bad_files, extra_files
