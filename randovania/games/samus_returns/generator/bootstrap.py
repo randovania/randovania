@@ -26,18 +26,17 @@ def all_dna_locations(game: GameDescription, config: MSRArtifactConfig) -> list[
     for node in game.region_list.all_nodes:
         if isinstance(node, PickupNode):
             pickup_type = node.extra.get("pickup_type")
-            boss_pickup = node.extra.get("actor_name")
-            metroid_index = node.pickup_index.index
+            pickup_index = node.pickup_index.index
             # Metroid pickups
             if pickup_type == "metroid":
                 if config.prefer_metroids and config.prefer_stronger_metroids:
                     locations.append(node)
-                elif config.prefer_metroids and metroid_index not in _stronger_metroids:
+                elif config.prefer_metroids and pickup_index not in _stronger_metroid_indices:
                     locations.append(node)
-                elif config.prefer_stronger_metroids and metroid_index in _stronger_metroids:
+                elif config.prefer_stronger_metroids and pickup_index in _stronger_metroid_indices:
                     locations.append(node)
             # Boss pickups
-            elif config.prefer_bosses and boss_pickup in _boss_items:
+            elif config.prefer_bosses and pickup_index in _boss_indices:
                 locations.append(node)
             # DNA anywhere
             elif not config.prefer_metroids and not config.prefer_stronger_metroids and not config.prefer_bosses:
@@ -110,5 +109,5 @@ class MSRBootstrap(MetroidBootstrap):
         return super().assign_pool_results(rng, patches, pool_results)
 
 
-_boss_items = ["LE_PowerUp_Springball", "LE_PowerUp_Powerbomb", "LE_Baby_Hatchling"]
-_stronger_metroids = [177, 178, 181, 185, 186, 187, 188, 192, 193, 199, 200, 202, 205, 209]
+_boss_indices = [37, 139, 171]
+_stronger_metroid_indices = [177, 178, 181, 185, 186, 187, 188, 192, 193, 199, 200, 202, 205, 209]

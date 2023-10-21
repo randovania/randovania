@@ -39,7 +39,7 @@ class PresetMSRGoal(PresetTab, Ui_PresetMSRGoal):
     def uses_patches_tab(cls) -> bool:
         return False
 
-    def _update_slider_max(self):
+    def _update_slider_max(self) -> None:
         self.dna_slider.setMaximum(self.num_preferred_locations)
         self.dna_slider.setEnabled(True)
 
