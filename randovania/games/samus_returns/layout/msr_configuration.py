@@ -11,6 +11,8 @@ from randovania.layout.base.base_configuration import BaseConfiguration
 @dataclasses.dataclass(frozen=True)
 class MSRArtifactConfig(BitPackDataclass, JsonDataclass):
     prefer_metroids: bool
+    prefer_stronger_metroids: bool
+    prefer_bosses: bool
     required_artifacts: int = dataclasses.field(metadata={"min": 0, "max": 39, "precision": 1})
 
 

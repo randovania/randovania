@@ -11,7 +11,7 @@ from randovania.generator.pickup_pool import PoolResults
 def test_msr_pool_creator(msr_game_description, dna_count):
     db = msr_game_description.resource_database
     # Run
-    results = artifact_pool(msr_game_description, MSRArtifactConfig(True, dna_count))
+    results = artifact_pool(msr_game_description, MSRArtifactConfig(True, True, False, dna_count))
 
     # Assert
     assert results == PoolResults(
