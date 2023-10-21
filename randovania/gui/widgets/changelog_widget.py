@@ -1,18 +1,23 @@
 from __future__ import annotations
 
-import asyncio
 import re
 from typing import cast
 
 import aiohttp
 from PySide6 import QtCore, QtGui, QtWidgets
+from qasync import asyncSlot
 
 from randovania.gui.widgets.delayed_text_label import DelayedTextLabel
 
 
 class ChangeLogWidget(QtWidgets.QWidget):
+    doneFetchingData = QtCore.Signal()
+    startFetchingData = QtCore.Signal()
+
     def __init__(self, all_change_logs: dict[str, str]) -> None:
         super().__init__()
+
+        self.all_change_logs = all_change_logs
 
         layout = QtWidgets.QVBoxLayout()
         self.setLayout(layout)
@@ -31,26 +36,12 @@ class ChangeLogWidget(QtWidgets.QWidget):
         self.changelog = QtWidgets.QStackedWidget(self)
         layout.addWidget(self.changelog)
 
-        for version_name, version_text in all_change_logs.items():
-            scroll_area = QtWidgets.QScrollArea()
-            scroll_area.setObjectName(f"scroll_area {version_name}")
-            scroll_area.setWidgetResizable(True)
+        self.setup_lables()
 
-            frame = QtWidgets.QFrame()
-            frame.setContentsMargins(0, 0, 0, 0)
+        self.startFetchingData.connect(self.setup_lables)
+        self.doneFetchingData.connect(lambda: self.changelog.setCurrentIndex(0))
 
-            frame_layout = QtWidgets.QVBoxLayout()
-            frame_layout.setContentsMargins(0, 0, 0, 0)
-            frame.setLayout(frame_layout)
-
-            asyncio.ensure_future(self.image_parse(version_text, frame_layout))
-
-            scroll_area.setWidget(frame)
-            self.changelog.addWidget(scroll_area)
-
-            self.select_version.addItem(version_name)
-
-        self.changelog.setCurrentIndex(0)
+        self.startFetchingData.emit()
 
     def select_version_index_changed(self) -> None:
         selected_widget = cast(
@@ -65,6 +56,29 @@ class ChangeLogWidget(QtWidgets.QWidget):
         label.setOpenExternalLinks(True)
         label.setTextFormat(QtCore.Qt.TextFormat.MarkdownText)
         label.setWordWrap(True)
+
+    @asyncSlot()
+    async def setup_lables(self) -> None:
+        for version_name, version_text in self.all_change_logs.items():
+            scroll_area = QtWidgets.QScrollArea()
+            scroll_area.setObjectName(f"scroll_area {version_name}")
+            scroll_area.setWidgetResizable(True)
+
+            frame = QtWidgets.QFrame()
+            frame.setContentsMargins(0, 0, 0, 0)
+
+            frame_layout = QtWidgets.QVBoxLayout()
+            frame_layout.setContentsMargins(0, 0, 0, 0)
+            frame.setLayout(frame_layout)
+
+            await self.image_parse(version_text, frame_layout)
+
+            scroll_area.setWidget(frame)
+            self.changelog.addWidget(scroll_area)
+
+            self.select_version.addItem(version_name)
+
+        self.doneFetchingData.emit()
 
     async def image_parse(self, version_text: str, layout: QtWidgets.QVBoxLayout) -> None:
         links: list[str] = re.findall(r"!\[image\][^)]+", version_text)
