@@ -1,9 +1,10 @@
 from __future__ import annotations
 
+import asyncio
 import re
 from typing import cast
 
-import requests
+import aiohttp
 from PySide6 import QtCore, QtGui, QtWidgets
 
 from randovania.gui.widgets.delayed_text_label import DelayedTextLabel
@@ -42,19 +43,7 @@ class ChangeLogWidget(QtWidgets.QWidget):
             frame_layout.setContentsMargins(0, 0, 0, 0)
             frame.setLayout(frame_layout)
 
-            images = self.image_parse(version_text)
-
-            if images is not None:
-                for widget in images:
-                    if widget.pixmap().isNull():
-                        self.setup_delayed_text_label(widget)
-
-                    frame_layout.addWidget(widget)
-            else:
-                label = DelayedTextLabel(text=version_text)
-                self.setup_delayed_text_label(label)
-
-                frame_layout.addWidget(label)
+            asyncio.ensure_future(self.image_parse(version_text, frame_layout))
 
             scroll_area.setWidget(frame)
             self.changelog.addWidget(scroll_area)
@@ -77,11 +66,12 @@ class ChangeLogWidget(QtWidgets.QWidget):
         label.setTextFormat(QtCore.Qt.TextFormat.MarkdownText)
         label.setWordWrap(True)
 
-    def image_parse(self, version_text: str) -> list[DelayedTextLabel] | None:
+    async def image_parse(self, version_text: str, layout: QtWidgets.QVBoxLayout) -> None:
         links: list[str] = re.findall(r"!\[image\][^)]+", version_text)
 
+        new_version_text: list[DelayedTextLabel] = []
+
         if links:
-            new_version_text: list[DelayedTextLabel] = []
             version_text_splitlines = version_text.splitlines()
 
             for link in links:
@@ -101,14 +91,17 @@ class ChangeLogWidget(QtWidgets.QWidget):
                 new_version_text.append(version_text_part_label)
 
                 try:
-                    image_data = requests.get(parsed_link)
-                    image_data.raise_for_status()
-                except requests.HTTPError as e:
+                    async with aiohttp.ClientSession() as session:
+                        async with session.get(parsed_link) as response:
+                            if response.status == 200:
+                                image = QtGui.QImage()
+                                image.loadFromData(await response.read())
+                            else:
+                                raise aiohttp.ClientError(f"Connection Error: Status {response.status}")
+
+                except (aiohttp.ClientError, aiohttp.ClientConnectionError, aiohttp.ClientResponseError) as e:
                     new_version_text.append(DelayedTextLabel(text=f"{e}"))
                     continue
-
-                image = QtGui.QImage()
-                image.loadFromData(image_data.content)
 
                 image_label = DelayedTextLabel()
                 image_label.setPixmap(QtGui.QPixmap(image))
@@ -119,4 +112,15 @@ class ChangeLogWidget(QtWidgets.QWidget):
             if version_text_splitlines:
                 new_version_text.append(DelayedTextLabel(text="\n".join(version_text_splitlines)))
 
-            return new_version_text
+        # Adding labels to changelog widget
+        if new_version_text:
+            for widget in new_version_text:
+                if widget.pixmap().isNull():
+                    self.setup_delayed_text_label(widget)
+
+                layout.addWidget(widget)
+        else:
+            label = DelayedTextLabel(text=version_text)
+            self.setup_delayed_text_label(label)
+
+            layout.addWidget(label)
