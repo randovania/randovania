@@ -80,7 +80,7 @@
                         "actor_type": "weightactivatedplatform",
                         "start_point_actor_name": "ST_SaveStation_004"
                     },
-                    "valid_starting_location": false,
+                    "valid_starting_location": true,
                     "connections": {
                         "Door to Landing Site Storage": {
                             "type": "and",
@@ -749,30 +749,60 @@
                                             "comment": null,
                                             "items": [
                                                 {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "UnmorphExtend",
-                                                        "amount": 2,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "Freeze Enemy",
+                                                        "comment": null,
                                                         "items": [
-                                                            {
-                                                                "type": "template",
-                                                                "data": "Fully Freeze Enemy"
-                                                            },
                                                             {
                                                                 "type": "resource",
                                                                 "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "FrozenEnemy",
+                                                                    "type": "items",
+                                                                    "name": "Ice",
                                                                     "amount": 1,
                                                                     "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "or",
+                                                                "data": {
+                                                                    "comment": "Short Freeze https://youtu.be/QJIMaZ8Qjpk",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "FrozenEnemy",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "and",
+                                                                            "data": {
+                                                                                "comment": null,
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "items",
+                                                                                            "name": "Charge",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "FrozenEnemy",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        }
+                                                                    ]
                                                                 }
                                                             }
                                                         ]
@@ -783,7 +813,7 @@
                                                     "data": {
                                                         "type": "tricks",
                                                         "name": "SuperJump",
-                                                        "amount": 3,
+                                                        "amount": 1,
                                                         "negate": false
                                                     }
                                                 },
@@ -1042,15 +1072,6 @@
                                 "comment": null,
                                 "items": []
                             }
-                        },
-                        "Event - Chozo Seal Unlocked": {
-                            "type": "resource",
-                            "data": {
-                                "type": "events",
-                                "name": "Alpha 1",
-                                "amount": 1,
-                                "negate": false
-                            }
                         }
                     }
                 },
@@ -1197,18 +1218,92 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "Climb Frozen Enemy",
+                                            "comment": "https://youtu.be/UJFVyaOImNQ",
                                             "items": [
                                                 {
-                                                    "type": "template",
-                                                    "data": "Fully Freeze Enemy"
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Ice",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "FrozenEnemy",
+                                                                    "amount": 3,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Charge",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "FrozenEnemy",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "SuperJump",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Morph",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
                                                 },
                                                 {
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "tricks",
-                                                        "name": "FrozenEnemy",
-                                                        "amount": 2,
+                                                        "name": "UnmorphExtend",
+                                                        "amount": 3,
                                                         "negate": false
                                                     }
                                                 }
@@ -1290,31 +1385,6 @@
                                 "name": "Morph",
                                 "amount": 1,
                                 "negate": false
-                            }
-                        }
-                    }
-                },
-                "Event - Chozo Seal Unlocked": {
-                    "node_type": "event",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 7352.85,
-                        "y": -4804.42,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "event_name": "DNASE",
-                    "connections": {
-                        "Chozo Seal": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
                             }
                         }
                     }
@@ -1646,7 +1716,7 @@
                                                     "data": {
                                                         "type": "tricks",
                                                         "name": "SuperJump",
-                                                        "amount": 2,
+                                                        "amount": 1,
                                                         "negate": false
                                                     }
                                                 }
@@ -1684,7 +1754,7 @@
                         "Dock to Transport Storage": {
                             "type": "or",
                             "data": {
-                                "comment": "TODO: doesn't need jumping requirements? Doesn't look like you can reach it with just PBs",
+                                "comment": null,
                                 "items": [
                                     {
                                         "type": "resource",
@@ -1979,6 +2049,15 @@
                                                     }
                                                 }
                                             ]
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "SuperJump",
+                                            "amount": 1,
+                                            "negate": false
                                         }
                                     }
                                 ]
@@ -2538,21 +2617,17 @@
                     "location_category": "major",
                     "connections": {
                         "Door to Chozo Seal": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         },
                         "Dock to One-Way Drop": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -2609,6 +2684,23 @@
                             "data": {
                                 "comment": null,
                                 "items": []
+                            }
+                        },
+                        "Inside Statue (OoB)": {
+                            "type": "and",
+                            "data": {
+                                "comment": "https://youtu.be/Wgw4WEGnvCQ",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "CornerClip",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -2785,6 +2877,90 @@
                             }
                         }
                     }
+                },
+                "Inside Statue (OoB)": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 384.90808326574734,
+                        "y": -4776.6220600162205,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Pickup (Scan Pulse)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "tricks",
+                                "name": "OoB",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Door to Chozo Seal": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Dock to One-Way Drop": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Dock to Charge Beam Shaft": {
+                            "type": "and",
+                            "data": {
+                                "comment": "https://youtu.be/Wgw4WEGnvCQ",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "OoB",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Dock to Charge Beam Shaft": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 453.58,
+                        "y": -5480.46,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "other",
+                    "default_connection": {
+                        "region": "Surface - East",
+                        "area": "Charge Beam Shaft",
+                        "node": "Dock to Scan Pulse Room"
+                    },
+                    "default_dock_weakness": "Open Passage",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {}
                 }
             }
         },
@@ -3081,7 +3257,7 @@
                                             "items": [
                                                 {
                                                     "type": "template",
-                                                    "data": "Climb Rooms Vertically (High Jump)"
+                                                    "data": "Climb Rooms Vertically (No High Jump)"
                                                 },
                                                 {
                                                     "type": "resource",
@@ -3099,6 +3275,44 @@
                                                         "name": "Walljump",
                                                         "amount": 1,
                                                         "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Boots",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "SuperJump",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "Freeze https://youtu.be/8ehWaf87lqM",
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Fully Freeze Enemy"
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -3128,7 +3342,7 @@
                                             "items": [
                                                 {
                                                     "type": "template",
-                                                    "data": "Climb Rooms Vertically (High Jump)"
+                                                    "data": "Climb Rooms Vertically (No High Jump)"
                                                 },
                                                 {
                                                     "type": "resource",
@@ -3137,6 +3351,41 @@
                                                         "name": "Walljump",
                                                         "amount": 1,
                                                         "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "SWJ",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Boots",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "SuperJump",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -3542,6 +3791,41 @@
                             }
                         }
                     }
+                },
+                "Dock to Scan Pulse Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 684.01,
+                        "y": -5522.39,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "other",
+                    "default_connection": {
+                        "region": "Surface - East",
+                        "area": "Scan Pulse Room",
+                        "node": "Dock to Charge Beam Shaft"
+                    },
+                    "default_dock_weakness": "Open Passage",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Scan Pulse Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -3683,6 +3967,32 @@
                                     {
                                         "type": "template",
                                         "data": "Shoot Any Missile"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "https://www.youtube.com/watch?v=GvmhC45kbAw",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "SuperJump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Walljump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -3752,20 +4062,12 @@
                                         }
                                     },
                                     {
-                                        "type": "and",
+                                        "type": "resource",
                                         "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "MissileAmmo",
-                                                        "amount": 2,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
+                                            "type": "items",
+                                            "name": "MissileAmmo",
+                                            "amount": 2,
+                                            "negate": false
                                         }
                                     },
                                     {
@@ -4802,7 +5104,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": "TODO: test whether this can be done with just a normal Walljump",
+                                            "comment": null,
                                             "items": [
                                                 {
                                                     "type": "template",
@@ -4813,6 +5115,15 @@
                                                     "data": {
                                                         "type": "tricks",
                                                         "name": "UnmorphExtend",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "SuperJump",
                                                         "amount": 1,
                                                         "negate": false
                                                     }
