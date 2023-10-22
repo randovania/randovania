@@ -22,6 +22,8 @@ if TYPE_CHECKING:
 
 def all_dna_locations(game: GameDescription, config: MSRArtifactConfig) -> list[PickupNode]:
     locations = []
+    _boss_indices = [37, 139, 171]
+    _stronger_metroid_indices = [177, 178, 181, 185, 186, 187, 188, 192, 193, 199, 200, 202, 205, 209]
 
     for node in game.region_list.all_nodes:
         if isinstance(node, PickupNode):
@@ -50,6 +52,7 @@ class MSRBootstrap(MetroidBootstrap):
         self, configuration: BaseConfiguration, resource_database: ResourceDatabase
     ) -> set[str]:
         enabled_resources = set()
+        assert isinstance(configuration, MSRConfiguration)
 
         logical_patches = {
             "allow_highly_dangerous_logic": "HighDanger",
@@ -107,7 +110,3 @@ class MSRBootstrap(MetroidBootstrap):
             pool_results.assignment[location.pickup_index] = dna
 
         return super().assign_pool_results(rng, patches, pool_results)
-
-
-_boss_indices = [37, 139, 171]
-_stronger_metroid_indices = [177, 178, 181, 185, 186, 187, 188, 192, 193, 199, 200, 202, 205, 209]
