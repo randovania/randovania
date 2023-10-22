@@ -89,6 +89,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Metroid Prime 2: Echoes
 
 - Added: One new Joke Hint refering to Raven Beak added to the pool
+- Changed: Damage Requirements for Warrior's Walk Item Pickup has been lowered from 80 to 60 dmg in total (30 energy getting the item and 30 energy going back)
 
 ## [6.4.1] - 2023-10-??
 
