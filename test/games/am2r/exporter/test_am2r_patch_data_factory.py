@@ -45,6 +45,7 @@ def test_construct_music_shuffle_dict_full() -> None:
     [
         ("starter_preset.rdvgame", "starter_preset.json", 1),  # starter preset
         ("door_lock.rdvgame", "door_lock.json", 1),  # starter preset+door lock rando
+        ("progressive_items.rdvgame", "progressive_items.json", 1),  # Starter preset+progressive items
     ],
 )
 def test_create_patch_data(test_files_dir, rdvgame_filename, expected_results_filename, num_of_players, mocker):
