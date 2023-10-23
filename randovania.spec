@@ -26,7 +26,6 @@ game_assets = [
 datas = [
     ("randovania/data/configuration.json", "data/"),
     ("randovania/data/binary_data", "data/binary_data"),
-    ("randovania/data/ClarisEchoesMenu", "data/ClarisEchoesMenu"),
     ("randovania/data/ClarisPrimeRandomizer", "data/ClarisPrimeRandomizer"),
     ("randovania/data/gui_assets", "data/gui_assets"),
     ("randovania/data/icons", "data/icons"),
@@ -41,6 +40,7 @@ datas += copy_metadata("randovania", recursive=True)
 if platform.system() == "Linux":
     linux_datas = [("randovania/data/xdg_assets", "xdg_assets")]
     datas += linux_datas
+
 
 a = Analysis(
     ["randovania/__main__.py", "randovania/cli/__init__.py"],
