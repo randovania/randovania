@@ -14,7 +14,7 @@ if TYPE_CHECKING:
     from randovania.layout.preset import Preset
 
 
-class PresetMetroidPatches(PresetTab):
+class PresetPlanetsZebethPatches(PresetTab):
     def __init__(self, editor: PresetEditor, game_description: GameDescription, window_manager: WindowManager):
         super().__init__(editor, game_description, window_manager)
 
@@ -25,11 +25,6 @@ class PresetMetroidPatches(PresetTab):
         self.include_extra_pickups_check.setEnabled(True)
         self.include_extra_pickups_check.setText("Include Extra Pickups")
         self.root_layout.addWidget(self.include_extra_pickups_check)
-
-        self.include_extra_pickups_label = QtWidgets.QLabel(self.root_widget)
-        self.include_extra_pickups_label.setWordWrap(True)
-        self.include_extra_pickups_label.setText("Include some optional pickups.")
-        self.root_layout.addWidget(self.include_extra_pickups_label)
 
         self.setCentralWidget(self.root_widget)
 
