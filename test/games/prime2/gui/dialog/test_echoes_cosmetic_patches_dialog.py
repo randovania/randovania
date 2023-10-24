@@ -2,12 +2,11 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from open_prime_rando.dol_patching.echoes.user_preferences import SoundMode
 from PySide6 import QtCore
 
 from randovania.games.prime2.gui.dialog.echoes_cosmetic_patches_dialog import EchoesCosmeticPatchesDialog
 from randovania.games.prime2.layout.echoes_cosmetic_patches import EchoesCosmeticPatches
-from randovania.games.prime2.layout.echoes_user_preferences import EchoesUserPreferences
+from randovania.games.prime2.layout.echoes_user_preferences import EchoesUserPreferences, SoundMode
 
 if TYPE_CHECKING:
     import pytestqt.qtbot  # type: ignore[import]

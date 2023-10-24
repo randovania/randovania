@@ -2,12 +2,8 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from open_prime_rando.dol_patching.echoes.beam_configuration import (
-    BeamAmmoConfiguration,
-)
-
 from randovania.game_description import default_database
-from randovania.games.prime2.layout.beam_configuration import BeamConfiguration
+from randovania.games.prime2.layout.beam_configuration import BeamAmmoConfiguration, BeamConfiguration
 from randovania.games.prime2.layout.echoes_configuration import (
     EchoesConfiguration,
     LayoutSkyTempleKeyMode,

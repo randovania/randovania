@@ -4,10 +4,10 @@ import dataclasses
 from functools import partial
 from typing import TYPE_CHECKING
 
-from open_prime_rando.dol_patching.echoes.user_preferences import SoundMode
 from PySide6 import QtCore, QtGui, QtWidgets
 
 from randovania.games.prime2.layout.echoes_cosmetic_patches import EchoesCosmeticPatches
+from randovania.games.prime2.layout.echoes_user_preferences import EchoesUserPreferences, SoundMode
 from randovania.gui.dialog.base_cosmetic_patches_dialog import BaseCosmeticPatchesDialog
 from randovania.gui.generated.echoes_cosmetic_patches_dialog_ui import Ui_EchoesCosmeticPatchesDialog
 from randovania.gui.lib import slider_updater
@@ -15,7 +15,6 @@ from randovania.gui.lib.signal_handling import set_combo_with_value
 
 if TYPE_CHECKING:
     from randovania.games.prime2.layout.echoes_cosmetic_suits import EchoesSuitPreferences, SuitColor
-    from randovania.games.prime2.layout.echoes_user_preferences import EchoesUserPreferences
 
 
 class EchoesCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_EchoesCosmeticPatchesDialog):

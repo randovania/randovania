@@ -1,12 +1,158 @@
 [build-system]
 requires = [
-    "setuptools>=58.0.0",
-    "setuptools_scm>=3.4.3",
+    "setuptools>=61.2",
+    "setuptools_scm[toml]>=6.2",
     "pyqt-distutils>=0.7.3",
     "wheel>=0.37.0",
     "dulwich",
 ]
 build-backend = "setuptools.build_meta"
+
+[project]
+name = "randovania"
+authors = [
+    {name = "Henrique Gemignani Passos Lima"},
+]
+description = "A randomizer platform for a multitude of games."
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Environment :: Console",
+    "Environment :: Win32 (MS Windows)",
+    "Environment :: X11 Applications :: Qt",
+    "Intended Audience :: End Users/Desktop",
+    "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.11",
+    "Topic :: Games/Entertainment",
+]
+requires-python = ">=3.11"
+dynamic = ["version"]
+
+dependencies = [
+    # server communication, binary version of logic db
+    "construct",
+
+    # Default name for exporting presets
+    "python-slugify",
+
+    # permalinks
+    "bitstruct",
+
+    # obfuscator, guest login, server code
+    "cryptography",
+
+    # Generator
+    "networkx",
+    "tenacity>=7.0.0",
+
+    # server communication
+    "python-socketio[asyncio_client]",
+    "aiohttp",
+
+    # nonblocking file IO
+    "aiofiles",
+
+    # Better than dataclasses for NodeIdentifier
+    "attrs>=21.4.0",
+
+    # Immutable dicts, used in many places
+    "frozendict",
+
+    # Versioning presets
+    "dulwich>=0.20",
+
+    # error reports
+    "sentry-sdk",
+]
+
+[project.optional-dependencies]
+exporters = [
+    # AM2R
+    "am2r-yams>=0.1.0",
+
+    # Cave Story
+    "cave-story-randomizer>=2.2.2",
+    "tsc-utils>=0.2.5",
+
+    # Metroid Dread
+    "open-dread-rando>=2.8.3",
+
+    # Metroid Prime 1
+    "py_randomprime>=1.19.0",
+    "random-enemy-attributes>=1.0.3",
+
+    # Metroid Prime 1/2
+    "ppc-asm>=1.2.1",
+    "open-prime-rando>=0.11.0",
+    "retro-data-structures>=0.24.0",
+
+    # Metroid Prime 2
+    "mp2hudcolor>=1.0.10",
+
+    # Super Metroid
+    "SuperDuperMetroid>=1.2.0",
+]
+
+gui = [
+    "PySide6-Essentials>=6.5",
+    "pyqtdarktheme",
+    "markdown",
+    "qasync",
+    
+    "appdirs",
+    # Minimum version compatible with PySide 6.4. 3.6 is also needed for Python 3.11
+    "matplotlib>=3.6.2",
+
+    "nod>=1.9",
+    "async-wiiload",
+    "dolphin-memory-engine>=1.0.2",
+    "pid>=3.0.0",
+]
+
+server = [
+    "sentry-sdk[flask]",
+    "flask-discord",
+    "flask-socketio",
+    "prometheus-flask-exporter",
+    "eventlet",
+    "peewee",
+    "requests-oauthlib",
+    "cachetools",  # for TTLCache
+
+    "py-cord>=2.3.1",  # for randovania/server/discord; 2.3.1+ is needed for Python 3.11
+    "Pillow>=9.0.0",  # for randovania/server/discord/database_command
+    "graphviz",  # for randovania/server/discord/database_command
+]
+
+test = [
+    "pytest",
+    "pytest-cov",
+    "pytest-qt",
+    "pytest-asyncio",
+    "pytest-mock",
+    "pytest-localftpserver",
+    "pytest-xdist[psutil]",
+]
+
+typing = [
+    "mypy",
+    "construct-typing",
+    "types-aiofiles",
+    "types-peewee",
+]
+
+[project.readme]
+file = "README.md"
+content-type = "text/markdown"
+
+[project.urls]
+Homepage = "https://github.com/randovania/randovania"
+
+[project.entry-points.console_scripts]
+randovania = "randovania.__main__:main"
+
+[tool.setuptools.packages.find]
+include = ["randovania*"]
 
 [tool.ruff]
 line-length = 120
@@ -66,17 +212,17 @@ files = [
     "randovania/games/cave_story/gui/dialog/cs_cosmetic_patches_dialog.py",
     "randovania/games/dread/gui/dialog/dread_cosmetic_patches_dialog.py",
     "randovania/games/prime1/gui/dialog/prime_cosmetic_patches_dialog.py",
-    "randovania/games/prime2/gui/dialog/echoes_cosmetic_patches_dialog.py",
     "randovania/games/prime2/exporter/patch_data_factory.py",
+    "randovania/games/prime2/gui/dialog/echoes_cosmetic_patches_dialog.py",
+    "randovania/games/prime2/layout/echoes_user_preferences.py",
     "randovania/games/prime3/",
     "randovania/games/super_metroid/gui/dialog/super_cosmetic_patches_dialog.py",
     "randovania/generator/",
-    "randovania/lib/",
     "randovania/gui/dialog/base_cosmetic_patches_dialog.py",
     "randovania/gui/preset_settings/trick_level_tab.py",
+    "randovania/lib/",
     "test/bitpacking/",
     "test/game_description/",
-    "test/lib/",
     "test/games/blank/",
     "test/games/cave_story/gui/test_cs_cosmetic_patches_dialog.py",
     "test/games/dread/gui/test_dread_cosmetic_patches_dialog.py",
@@ -84,6 +230,7 @@ files = [
     "test/games/prime2/gui/dialog/test_echoes_cosmetic_patches_dialog.py",
     "test/games/prime3/gui/dialog/test_corruption_cosmetic_patches_dialog.py",
     "test/generator/",
+    "test/lib/",
 ]
 follow_imports = "silent"
 disallow_untyped_defs = true
