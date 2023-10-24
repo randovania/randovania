@@ -85,6 +85,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Metroid Prime
 
 - Fixed: Counting normal damage reductions from suits twice.
+- Fixed: Foreign object in ruined shrine
+- Fixed: Room rando + cutscene skip compatability
+- Fixed: Crash when exporting a seed with a blast shield in phazon infusion chamber and essence death teleporter
+- Fixed: [PAL/JP] Restored Missile and Charge shot stun in one hit on Ridley
+- Fixed: [PAL/JP] Restored Wavebuster cheese on Ridley
 
 ### Metroid Prime 2: Echoes
 
