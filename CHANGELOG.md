@@ -85,6 +85,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Metroid Prime
 
 - Fixed: Counting normal damage reductions from suits twice.
+- Fixed: Item position randomizer not being random.
 
 ### Metroid Prime 2: Echoes
 
