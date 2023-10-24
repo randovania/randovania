@@ -10,9 +10,19 @@ if TYPE_CHECKING:
 
 
 def preset_tabs(editor: PresetEditor, window_manager: WindowManager):
-    from randovania.games.planets_zebeth.gui.preset_settings.metroid_patches_tab import PresetMetroidPatches
+    from randovania.games.planets_zebeth.gui.preset_settings.planets_zebeth_goal_tab import PresetPlanetsZebethGoal
+    from randovania.games.planets_zebeth.gui.preset_settings.planets_zebeth_patches_tab import (
+        PresetPlanetsZebethPatches,
+    )
     from randovania.gui.preset_settings.location_pool_tab import PresetLocationPool
     from randovania.gui.preset_settings.metroid_item_pool_tab import MetroidPresetItemPool
     from randovania.gui.preset_settings.trick_level_tab import PresetTrickLevel
 
-    return [PresetTrickLevel, PresetLocationPool, MetroidPresetItemPool, PresetMetroidPatches, PresetStartingArea]
+    return [
+        PresetTrickLevel,
+        PresetLocationPool,
+        PresetPlanetsZebethGoal,
+        MetroidPresetItemPool,
+        PresetPlanetsZebethPatches,
+        PresetStartingArea,
+    ]
