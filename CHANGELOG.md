@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: For Multiworld, sending collected locations to the server can no longer fail if there's an error encoding the inventory.
 - Changed: The directory layout has now changed, moving everything that isn't the executable to an `_internal` folder.
 - Changed: When verifying the installation, missing files and modified files are listed in the console and log. 
+- Changed: An explicit error is now displayed when a preset has minimum random starting items higher than the maximum.
 - Fixed: Map tracker selects the correct start location if the preset has only one start location that is not the default.
 - Fixed: When verifying the installation, the title of the popup now properly says "Verifying installation".
 
