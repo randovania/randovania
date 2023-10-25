@@ -192,7 +192,7 @@ jobs:
       - name: Remove dotnet from package
         shell: bash
         run: |
-          rm -r dist/randovania/data/dotnet_runtime
+          rm -r dist/randovania/_internal/data/dotnet_runtime
 
       - name: import windows certificate
         env:
