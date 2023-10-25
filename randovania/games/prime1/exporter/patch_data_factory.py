@@ -701,11 +701,14 @@ class PrimePatchDataFactory(PatchDataFactory):
                         self.rng,
                     )
 
-                    if node.extra.get("position_required"):
-                        assert self.configuration.items_every_room
+                    if self.configuration.shuffle_item_pos or node.extra.get("position_required"):
                         aabb = area.extra["aabb"]
                         pickup["position"] = _pick_random_point_in_aabb(self.rng, aabb, area.name)
-                        pickup["jumboScan"] = True  # Scan this item through walls
+
+                        if node.extra.get("position_required"):
+                            # Scan this item through walls
+                            assert self.configuration.items_every_room
+                            pickup["jumboScan"] = True
 
                     level_data[region.name]["rooms"][area.name]["pickups"].append(pickup)
 
@@ -954,8 +957,6 @@ class PrimePatchDataFactory(PatchDataFactory):
                 "resultsString": _create_results_screen_text(self.description),
                 "bossSizes": boss_sizes,
                 "noDoors": self.configuration.no_doors,
-                "shufflePickupPosition": self.configuration.shuffle_item_pos,
-                "shufflePickupPosAllRooms": False,  # functionality is handled in randovania as of v4.3
                 "startingRoom": starting_room,
                 "warpToStart": self.configuration.warp_to_start,
                 "springBall": self.configuration.spring_ball,

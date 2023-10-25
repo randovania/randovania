@@ -83,6 +83,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed: In the Auto-Tracker Pixel Theme, visors are now pilled, Boost Ball icon with a proper trail, improvements to Power Bomb icon.
 - Fixed: Counting normal damage reductions from suits twice.
+- Fixed: Item position randomizer not being random.
 - Fixed: Foreign object in ruined shrine
 - Fixed: Room rando + cutscene skip compatability
 - Fixed: Crash when exporting a seed with a blast shield in phazon infusion chamber and essence death teleporter
