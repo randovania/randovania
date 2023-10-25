@@ -519,10 +519,10 @@ def test_solo_create_pickup_data(pickup_for_create_pickup_data):
         PickupIndex(10),
         PickupTarget(pickup_for_create_pickup_data, 0),
         pickup_for_create_pickup_data,
+        model,
         PickupModelStyle.ALL_VISIBLE,
         "The Name",
         "Scan Text",
-        model,
     )
 
     # Assert
@@ -558,10 +558,10 @@ def test_multi_create_pickup_data_for_self(pickup_for_create_pickup_data):
         PickupIndex(10),
         PickupTarget(pickup_for_create_pickup_data, 0),
         pickup_for_create_pickup_data,
+        model,
         PickupModelStyle.ALL_VISIBLE,
         "The Name",
         "Scan Text",
-        model,
     )
 
     # Assert
@@ -595,10 +595,10 @@ def test_multi_create_pickup_data_for_other(pickup_for_create_pickup_data, mocke
         PickupIndex(10),
         PickupTarget(pickup_for_create_pickup_data, 1),
         pickup_for_create_pickup_data,
+        model,
         PickupModelStyle.ALL_VISIBLE,
         "The Name",
         "Scan Text",
-        model,
     )
     data = dataclasses.replace(data, model=model)
 
