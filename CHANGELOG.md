@@ -13,10 +13,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: For Multiworld, sending collected locations to the server can no longer fail if there's an error encoding the inventory.
 - Fixed: Map tracker selects the correct start location if the preset has only one start location that is not the default. 
 
-### Auto-Tracker Pixel Icons
-- Metroid Prime: Visors are now pilled, Boost Ball icon with a proper trail, improvements to Power Bomb icon.
-- Metroid Prime 2: Echoes: Visors are now pilled, Boost Ball icon with a proper trail, Screw Attack icon now faces clockwise, dedicated Power Beam icon.
-
 ### Resolver
 
 - Fixed: Bug where damage constraints in chains were not understood correctly.
@@ -26,6 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Improved: Speed up resolving of hard seeds by allowing skipping of more kinds of unsatisfied requirements.
 
 ### Cave Story
+
 - **Major** - Added: Multiworld support. Currently only supports the version of freeware provided by Randovania.
 - Fixed: Exporting Cave Story no longer causes a runtime error.
 - Fixed: Presets that start in Camp no longer error in generation.
@@ -84,16 +81,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Prime
 
+- Changed: In the Auto-Tracker Pixel Theme, visors are now pilled, Boost Ball icon with a proper trail, improvements to Power Bomb icon.
 - Fixed: Counting normal damage reductions from suits twice.
 - Fixed: Foreign object in ruined shrine
 - Fixed: Room rando + cutscene skip compatability
 - Fixed: Crash when exporting a seed with a blast shield in phazon infusion chamber and essence death teleporter
 - Fixed: [PAL/JP] Restored Missile and Charge shot stun in one hit on Ridley
 - Fixed: [PAL/JP] Restored Wavebuster cheese on Ridley
+- Fixed: When customizing cosmetic options, the labels are now properly updated. 
 
 ### Metroid Prime 2: Echoes
 
 - Added: One new Joke Hint refering to Raven Beak added to the pool
+- Changed: In the Auto-Tracker Pixel Theme, visors are now pilled, Boost Ball icon with a proper trail, Screw Attack icon now faces clockwise, dedicated Power Beam icon.
 - Changed: Damage Requirements for Warrior's Walk Item Pickup has been lowered from 80 to 60 dmg in total (30 energy getting the item and 30 energy going back)
 
 ## [6.4.1] - 2023-10-??
