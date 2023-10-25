@@ -124,7 +124,7 @@ def test_create_pickups_dict_shiny(test_files_dir, rdvgame_filename, expected_re
         data.rng,
         data.configuration.pickup_model_style,
         data.configuration.pickup_model_data_source,
-        exporter=pickup_exporter.create_pickup_exporter(memo_data, data.players_config, data.game),
+        exporter=pickup_exporter.create_pickup_exporter(memo_data, data.players_config, data.game.game),
         visual_nothing=pickup_creator.create_visual_nothing(data.game_enum(), "sItemNothing"),
     )
 
