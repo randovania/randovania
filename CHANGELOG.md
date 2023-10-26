@@ -48,6 +48,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed: Going to Transport to Dairon with Speed Booster now requires the Speed Booster Conservation trick set to Beginner.
 - Changed: The item above Proto EMMI now requires Speed Booster Conservation set to Beginner when reaching it with Speed from the top.
+- Changed: Using Speed Booster to reach the pickup in EMMI Zone First Entrance now requires either the EMMI defeated or Speed Booster Conservation set to Beginner.
 
 ##### Burenia
 
