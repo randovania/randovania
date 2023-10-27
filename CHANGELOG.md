@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: An explicit error is now displayed when a preset has minimum random starting items higher than the maximum.
 - Fixed: Map tracker selects the correct start location if the preset has only one start location that is not the default.
 - Fixed: When verifying the installation, the title of the popup now properly says "Verifying installation".
+- Fixed: Exporting with hidden item models in a multiworld now works properly.
 
 ### Resolver
 
@@ -38,7 +39,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Metroid Dread
 
 - Fixed: Custom shields now use the correct shader and texture effects and no longer a black background
-- Fixed: Issues with negative amount for ammo items. The current amount was set to a wrong value and you had to use a ammo refill station. This also caused issues with the auto tracker and multiworld.
+- Fixed: Issues with negative amount for ammo items. The current amount was set to a wrong value and you had to use a ammo refill station. This also caused issues with the auto tracker and multiworld. 
 
 #### Logic Database
 

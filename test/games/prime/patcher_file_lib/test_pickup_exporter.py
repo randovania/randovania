@@ -127,6 +127,8 @@ def test_create_pickup_list(
     model_0 = MagicMock(spec=PickupModel)
     model_1 = MagicMock(spec=PickupModel)
     model_2 = MagicMock(spec=PickupModel)
+    for m in [model_0, model_1, model_2]:
+        m.game = RandovaniaGame.METROID_PRIME_ECHOES
     useless_model = PickupModel(
         game=RandovaniaGame.METROID_PRIME_ECHOES,
         name="EnergyTransferModule",
@@ -301,8 +303,10 @@ def test_create_pickup_list_random_data_source(
     resource_b = ItemResourceInfo(0, "B", "B", 10)
 
     model_1 = MagicMock(spec=PickupModel)
+    model_1.game = RandovaniaGame.METROID_PRIME_ECHOES
     model_2 = MagicMock(spec=PickupModel)
-    useless_model = PickupModel(game=RandovaniaGame.METROID_PRIME_CORRUPTION, name="Useless")
+    model_2.game = RandovaniaGame.METROID_PRIME_ECHOES
+    useless_model = PickupModel(game=RandovaniaGame.METROID_PRIME_ECHOES, name="Useless")
 
     pickup_a = PickupEntry(
         "A",
@@ -494,7 +498,7 @@ def pickup_for_create_pickup_data(generic_pickup_category, default_generator_par
     resource_b = ItemResourceInfo(1, "B", "B", 10)
     return PickupEntry(
         "Cake",
-        1,
+        PickupModel(RandovaniaGame.METROID_PRIME_ECHOES, "theModel"),
         generic_pickup_category,
         generic_pickup_category,
         progression=(
@@ -510,7 +514,7 @@ def test_solo_create_pickup_data(pickup_for_create_pickup_data):
     creator = pickup_exporter.PickupExporterSolo(
         pickup_exporter.GenericAcquiredMemo(), RandovaniaGame.METROID_PRIME_ECHOES
     )
-    model = MagicMock()
+    pickup_model = pickup_for_create_pickup_data
     resource_a = ItemResourceInfo(0, "A", "A", 10)
     resource_b = ItemResourceInfo(1, "B", "B", 10)
 
@@ -519,10 +523,10 @@ def test_solo_create_pickup_data(pickup_for_create_pickup_data):
         PickupIndex(10),
         PickupTarget(pickup_for_create_pickup_data, 0),
         pickup_for_create_pickup_data,
+        pickup_model,
         PickupModelStyle.ALL_VISIBLE,
         "The Name",
         "Scan Text",
-        model,
     )
 
     # Assert
@@ -536,8 +540,8 @@ def test_solo_create_pickup_data(pickup_for_create_pickup_data):
             ConditionalResources("B", resource_a, ((resource_b, 1),)),
         ],
         conversion=[],
-        model=model,
-        original_model=model,
+        model=pickup_model.model,
+        original_model=pickup_model.model,
         other_player=False,
         original_pickup=pickup_for_create_pickup_data,
     )
@@ -549,7 +553,6 @@ def test_multi_create_pickup_data_for_self(pickup_for_create_pickup_data):
         pickup_exporter.GenericAcquiredMemo(), RandovaniaGame.METROID_PRIME_ECHOES
     )
     creator = pickup_exporter.PickupExporterMulti(solo, PlayersConfiguration(0, {0: "You", 1: "Someone"}))
-    model = MagicMock()
     resource_a = ItemResourceInfo(0, "A", "A", 10)
     resource_b = ItemResourceInfo(1, "B", "B", 10)
 
@@ -558,10 +561,10 @@ def test_multi_create_pickup_data_for_self(pickup_for_create_pickup_data):
         PickupIndex(10),
         PickupTarget(pickup_for_create_pickup_data, 0),
         pickup_for_create_pickup_data,
+        pickup_for_create_pickup_data,
         PickupModelStyle.ALL_VISIBLE,
         "The Name",
         "Scan Text",
-        model,
     )
 
     # Assert
@@ -575,32 +578,30 @@ def test_multi_create_pickup_data_for_self(pickup_for_create_pickup_data):
             ConditionalResources("B", resource_a, ((resource_b, 1),)),
         ],
         conversion=[],
-        model=model,
-        original_model=model,
+        model=PickupModel(game=RandovaniaGame.METROID_PRIME_ECHOES, name="theModel"),
+        original_model=PickupModel(game=RandovaniaGame.METROID_PRIME_ECHOES, name="theModel"),
         other_player=False,
         original_pickup=pickup_for_create_pickup_data,
     )
 
 
-def test_multi_create_pickup_data_for_other(pickup_for_create_pickup_data, mocker):
+def test_multi_create_pickup_data_for_other(pickup_for_create_pickup_data):
     # Setup
     solo = pickup_exporter.PickupExporterSolo(
         pickup_exporter.GenericAcquiredMemo(), RandovaniaGame.METROID_PRIME_ECHOES
     )
     creator = pickup_exporter.PickupExporterMulti(solo, PlayersConfiguration(0, {0: "You", 1: "Someone"}))
-    model = MagicMock()
 
     # Run
     data = creator.create_details(
         PickupIndex(10),
         PickupTarget(pickup_for_create_pickup_data, 1),
         pickup_for_create_pickup_data,
+        pickup_for_create_pickup_data,
         PickupModelStyle.ALL_VISIBLE,
         "The Name",
         "Scan Text",
-        model,
     )
-    data = dataclasses.replace(data, model=model)
 
     # Assert
     assert data == pickup_exporter.ExportedPickupDetails(
@@ -612,8 +613,8 @@ def test_multi_create_pickup_data_for_other(pickup_for_create_pickup_data, mocke
             ConditionalResources(None, None, ()),
         ],
         conversion=[],
-        model=model,
-        original_model=model,
+        model=PickupModel(game=RandovaniaGame.METROID_PRIME_ECHOES, name="theModel"),
+        original_model=PickupModel(game=RandovaniaGame.METROID_PRIME_ECHOES, name="theModel"),
         other_player=True,
         original_pickup=pickup_for_create_pickup_data,
     )
