@@ -19,6 +19,7 @@ from randovania import VERSION
 from randovania.cli import database
 from randovania.games import default_data
 from randovania.games.game import RandovaniaGame
+from randovania.interface_common import installation_check
 from randovania.lib import json_lib
 from randovania.lib.enum_lib import iterate_enum
 
@@ -115,6 +116,13 @@ secret = b"".join(
     )
 
 
+def write_frozen_file_list(package_folder: Path) -> None:
+    internal = package_folder.joinpath("_internal")
+    json_lib.write_path(
+        internal.joinpath("data", "frozen_file_list.json"), installation_check.hash_everything_in(internal)
+    )
+
+
 async def main():
     package_folder = Path("dist", "randovania")
     if package_folder.exists():
@@ -170,10 +178,12 @@ async def main():
 
     if platform.system() == "Windows":
         create_windows_zip(package_folder)
+        write_frozen_file_list(package_folder)
     elif platform.system() == "Darwin":
         create_macos_zip(app_folder)
     elif platform.system() == "Linux":
         create_linux_zip(package_folder)
+        write_frozen_file_list(package_folder)
     else:
         raise ValueError(f"Unknown system: {platform.system()}")
 

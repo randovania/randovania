@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from pathlib import Path
+from typing import TYPE_CHECKING
 from unittest.mock import MagicMock
 
 import pytest
@@ -8,10 +9,35 @@ from PySide6 import QtCore
 
 from randovania.games.am2r.exporter.game_exporter import AM2RGameExportParams
 from randovania.games.am2r.exporter.options import AM2RPerGameOptions
-from randovania.games.am2r.gui.dialog.game_export_dialog import AM2RGameExportDialog
+from randovania.games.am2r.gui.dialog.game_export_dialog import AM2RGameExportDialog, _is_valid_input_dir
 from randovania.games.am2r.layout.am2r_cosmetic_patches import AM2RCosmeticPatches
 from randovania.games.game import RandovaniaGame
 from randovania.interface_common.options import Options
+
+if TYPE_CHECKING:
+    import pytest_mock
+
+
+@pytest.mark.parametrize(
+    ("current_os", "required_files"),
+    [
+        ("Windows", [("AM2R.exe",), ("data.win",)]),
+        ("Linux", [("AM2R.AppImage",)]),
+        ("Linux", [("runner",), ("assets", "game.unx")]),
+        (
+            "Darwin",
+            [("AM2R.app", "Contents", "MacOS", "Mac_Runner"), ("AM2R.app", "Contents", "Resources", "game.ios")],
+        ),
+    ],
+)
+def test_is_valid_input_dir(
+    current_os: str, required_files: list[tuple[str]], tmp_path: Path, mocker: pytest_mock.MockerFixture
+) -> None:
+    mocker.patch("platform.system", return_value=current_os)
+    for file in required_files:
+        tmp_path.joinpath(*file).parent.mkdir(parents=True, exist_ok=True)
+        tmp_path.joinpath(*file).touch()
+    assert _is_valid_input_dir(tmp_path)
 
 
 @pytest.mark.parametrize("has_output_dir", [False, True])
