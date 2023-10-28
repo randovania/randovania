@@ -75,39 +75,39 @@
             }
         },
         "events": {
-            "Event1": {
+            "KraidDead": {
                 "long_name": "Kraid Boss Killed",
                 "extra": {}
             },
-            "Event2": {
+            "RidleyDead": {
                 "long_name": "Ridley Boss Killed",
                 "extra": {}
             },
-            "Event3": {
+            "MotherBrainDead": {
                 "long_name": "Mother Brain Boss Killed",
                 "extra": {}
             },
-            "Event4": {
+            "MBGate1Destroyed": {
                 "long_name": "MB Gate 1 Destroyed",
                 "extra": {}
             },
-            "Event5": {
+            "MBGate2Destroyed": {
                 "long_name": "MB Gate 2 Destroyed",
                 "extra": {}
             },
-            "Event6": {
+            "MBGate3Destroyed": {
                 "long_name": "MB Gate 3 Destroyed",
                 "extra": {}
             },
-            "Event7": {
+            "MBGate4Destroyed": {
                 "long_name": "MB Gate 4 Destroyed",
                 "extra": {}
             },
-            "Event8": {
+            "MBGate5Destroyed": {
                 "long_name": "MB Gate 5 Destroyed",
                 "extra": {}
             },
-            "Event9": {
+            "Credits": {
                 "long_name": "Credits",
                 "extra": {}
             }
@@ -121,6 +121,26 @@
             "Knowledge": {
                 "long_name": "Knowledge",
                 "description": "If this trick is enabled, the player may be expected to know certain hidden passageways or other lesser known facts.",
+                "extra": {}
+            },
+            "Movement": {
+                "long_name": "Movement",
+                "description": "",
+                "extra": {}
+            },
+            "IBJ": {
+                "long_name": "IBJ",
+                "description": "",
+                "extra": {}
+            },
+            "DIBJ": {
+                "long_name": "DIBJ",
+                "description": "",
+                "extra": {}
+            },
+            "IceAbuse": {
+                "long_name": "IceAbuse",
+                "description": "",
                 "extra": {}
             }
         },
@@ -189,7 +209,7 @@
                     ]
                 }
             },
-            "Get rid of Larva": {
+            "Get rid of Larva Metroid": {
                 "type": "or",
                 "data": {
                     "comment": null,
@@ -308,7 +328,7 @@
         ],
         "events_to_exclude": [
             {
-                "name": "Event9",
+                "name": "Credits",
                 "reason": "victory condition"
             }
         ],
@@ -323,7 +343,7 @@
                     "type": "resource",
                     "data": {
                         "type": "events",
-                        "name": "Event9",
+                        "name": "Credits",
                         "amount": 1,
                         "negate": false
                     }
