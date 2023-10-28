@@ -40,7 +40,12 @@
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Get rid of Larva"
+                                    }
+                                ]
                             }
                         }
                     }
@@ -75,7 +80,12 @@
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Get rid of Larva"
+                                    }
+                                ]
                             }
                         }
                     }
@@ -118,7 +128,12 @@
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Get rid of Larva"
+                                    }
+                                ]
                             }
                         }
                     }
@@ -153,7 +168,12 @@
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Get rid of Larva"
+                                    }
+                                ]
                             }
                         }
                     }
@@ -196,7 +216,12 @@
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Get rid of Larva"
+                                    }
+                                ]
                             }
                         }
                     }
@@ -231,7 +256,12 @@
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Get rid of Larva"
+                                    }
+                                ]
                             }
                         }
                     }
@@ -274,7 +304,12 @@
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Get rid of Larva"
+                                    }
+                                ]
                             }
                         }
                     }
@@ -309,7 +344,12 @@
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Get rid of Larva"
+                                    }
+                                ]
                             }
                         }
                     }
@@ -473,13 +513,6 @@
                     "valid_starting_location": false,
                     "event_name": "Event8",
                     "connections": {
-                        "Door to Rinka hall": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
                         "Gate 5": {
                             "type": "and",
                             "data": {
@@ -837,7 +870,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Teleporter to Credits": {
+                        "Teleporter to Escape shaft": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -846,7 +879,7 @@
                         }
                     }
                 },
-                "Teleporter to Credits": {
+                "Teleporter to Escape shaft": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -862,9 +895,9 @@
                     "valid_starting_location": false,
                     "dock_type": "teleporter",
                     "default_connection": {
-                        "region": "End of Game",
-                        "area": "Credits",
-                        "node": "Event - Credits"
+                        "region": "Tourian",
+                        "area": "Escape shaft",
+                        "node": "Event - End Game"
                     },
                     "default_dock_weakness": "Teleporter",
                     "exclude_from_dock_rando": false,
@@ -873,6 +906,31 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Zebesian Command Center": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - End Game": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 119.45299145299144,
+                        "y": 2149.5970695970695,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "Event9",
+                    "connections": {
+                        "Teleporter to Escape shaft": {
                             "type": "and",
                             "data": {
                                 "comment": null,
