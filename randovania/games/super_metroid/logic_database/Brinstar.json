@@ -8837,14 +8837,14 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": "Defeat the Beetoms",
+                                            "comment": "Survive the Beetoms",
                                             "items": [
                                                 {
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "damage",
                                                         "name": "Normal",
-                                                        "amount": 100,
+                                                        "amount": 50,
                                                         "negate": false
                                                     }
                                                 },
@@ -8856,18 +8856,88 @@
                                                             {
                                                                 "type": "resource",
                                                                 "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Combat",
-                                                                    "amount": 1,
+                                                                    "type": "damage",
+                                                                    "name": "Normal",
+                                                                    "amount": 25,
                                                                     "negate": false
                                                                 }
                                                             },
                                                             {
                                                                 "type": "resource",
                                                                 "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Combat",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Pickup (Energy Tank)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 175.4761137949544,
+                        "y": 366.75469672571126,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "pickup_index": 43,
+                    "location_category": "major",
+                    "connections": {
+                        "Door to Warehouse Zeela Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": "Survive the Beetoms",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "damage",
+                                                        "name": "Normal",
+                                                        "amount": 50,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
                                                                     "type": "damage",
                                                                     "name": "Normal",
-                                                                    "amount": 50,
+                                                                    "amount": 25,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Combat",
+                                                                    "amount": 1,
                                                                     "negate": false
                                                                 }
                                                             }
@@ -8880,7 +8950,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Defeat the Beetoms to Unlock the Door",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -8917,32 +8987,6 @@
                                         }
                                     }
                                 ]
-                            }
-                        }
-                    }
-                },
-                "Pickup (Energy Tank)": {
-                    "node_type": "pickup",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 175.4761137949544,
-                        "y": 366.75469672571126,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "pickup_index": 43,
-                    "location_category": "major",
-                    "connections": {
-                        "Door to Warehouse Zeela Room": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
                             }
                         }
                     }
