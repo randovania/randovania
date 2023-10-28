@@ -50,7 +50,7 @@ def _exporter():
 
 
 game_data: game.GameData = game.GameData(
-    short_name="P_Zebeth",
+    short_name="Planets Zebeth",
     long_name="Metroid Planets (Zebeth)",
     development_state=game.DevelopmentState.EXPERIMENTAL,
     presets=[
