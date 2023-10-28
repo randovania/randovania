@@ -12,7 +12,6 @@ from randovania.games.samus_returns.layout.msr_configuration import (
 from randovania.interface_common.preset_manager import PresetManager
 
 
-
 @pytest.mark.parametrize(
     ("has_artifacts"),
     [
