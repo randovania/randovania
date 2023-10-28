@@ -51,7 +51,7 @@ def _exporter():
 game_data: game.GameData = game.GameData(
     short_name="AM2R",
     long_name="Another Metroid 2 Remake",
-    development_state=game.DevelopmentState.EXPERIMENTAL,
+    development_state=game.DevelopmentState.STABLE,
     presets=[
         {"path": "starter_preset.rdvpreset"},
     ],
