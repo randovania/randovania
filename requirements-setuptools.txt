@@ -22,10 +22,11 @@ packaging==23.2
     # via
     #   -c tools/requirements\../../requirements.txt
     #   build
+    #   pyinstaller
     #   setuptools-scm
 pefile==2023.2.7
     # via pyinstaller
-pyinstaller==5.13.2
+pyinstaller==6.1.0
     # via -r tools/requirements/requirements-setuptools.in
 pyinstaller-hooks-contrib==2023.10
     # via
@@ -37,8 +38,10 @@ pyqt-distutils==0.7.3
     # via -r tools/requirements/requirements-setuptools.in
 pywin32-ctypes==0.2.2
     # via pyinstaller
-setuptools-scm==8.0.4
-    # via -r tools/requirements/requirements-setuptools.in
+setuptools-scm[toml]==8.0.4
+    # via
+    #   -r tools/requirements/requirements-setuptools.in
+    #   setuptools-scm
 typing-extensions==4.8.0
     # via
     #   -c tools/requirements\../../requirements.txt

@@ -73,7 +73,8 @@ class MSRPresetDescriber(GamePresetDescriber):
                     },
                 ),
                 {
-                    "Nerfed Power Bombs": configuration.nerf_power_bombs,
+                    "Charge Door Buff": configuration.charge_door_buff,
+                    "Beam Door Buff": configuration.beam_door_buff,
                     "Nerfed Super Missiles": configuration.nerf_super_missiles,
                 },
                 {

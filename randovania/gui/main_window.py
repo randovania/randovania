@@ -755,7 +755,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         from randovania.gui.dialog.background_process_dialog import BackgroundProcessDialog
 
         try:
-            bad_files, extra_files = await BackgroundProcessDialog.open_for_background_task(
+            bad_files, missing_files, extra_files = await BackgroundProcessDialog.open_for_background_task(
                 functools.partial(find_bad_installation, hash_list), "Verifying installation..."
             )
         except asyncio.exceptions.CancelledError:
@@ -764,9 +764,20 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         if bad_files or extra_files:
             errors = []
             if bad_files:
-                errors.append(f"- {len(bad_files)} files are missing or are incorrect")
+                errors.append(f"- {len(bad_files)} files are incorrect")
+
+            if missing_files:
+                errors.append(f"- {len(missing_files)} files are missing")
+
             if extra_files:
                 errors.append(f"- {len(extra_files)} files are unexpected")
+
+            for m in bad_files:
+                logging.warning("Bad file: %s", m)
+            for m in missing_files:
+                logging.warning("Missing file: %s", m)
+            for m in extra_files:
+                logging.warning("Unexpected file: %s", m)
 
             await async_dialog.warning(
                 self, "Bad Installation", "The following errors were found:\n" + "\n".join(errors)

@@ -85,11 +85,11 @@ jobs:
         run: python -m pip install --upgrade -r requirements-setuptools.txt
 
       - name: Install Python packages (source)
-        run: python -m pip install -r requirements.txt -e ".[gui,server,test,typing]"
+        run: python -m pip install -r requirements.txt -e ".[gui,exporters,server,test,typing]"
         if: ${{ !matrix.executable }}
 
       - name: Install Python packages (executable)
-        run: python -m pip install -e . -e ".[gui]" -e ".[test]" -c requirements.txt
+        run: python -m pip install -e . -e ".[gui,exporters,test]" -c requirements.txt
         if: ${{ matrix.executable }}
 
       - name: build ui files
@@ -192,7 +192,7 @@ jobs:
       - name: Remove dotnet from package
         shell: bash
         run: |
-          rm -r dist/randovania/data/dotnet_runtime
+          rm -r dist/randovania/_internal/data/dotnet_runtime
 
       - name: import windows certificate
         env:
@@ -208,7 +208,7 @@ jobs:
       - name: Deploy Advanced Installer
         uses: caphyon/advinst-github-action@v1.1
         with:
-          advinst-version: '20.8'
+          advinst-version: '21.1'
           advinst-license: ${{ secrets.ADVANCED_INSTALLER_LICENSE }}
           advinst-enable-automation: 'true'
 
@@ -334,13 +334,13 @@ jobs:
       - name: Install Python packages
         run: |
           python -m pip install --upgrade -r requirements-setuptools.txt
-          python -m pip install -r requirements.txt -e ".[gui,server,test,typing]"
+          python -m pip install -r requirements.txt -e ".[gui,exporters,server,test,typing]"
 
       - name: build ui files
         run: python setup.py build_ui
 
       - name: Mypy on modified files
-        uses: tsuyoshicho/action-mypy@v3
+        uses: tsuyoshicho/action-mypy@v4
         with:
           github_token: ${{ secrets.github_token }}
           # Change reviewdog reporter if you need [github-pr-check,github-check,github-pr-review].
@@ -349,7 +349,7 @@ jobs:
           fail_on_error: false
 
       - name: Mypy on required files
-        uses: tsuyoshicho/action-mypy@v3
+        uses: tsuyoshicho/action-mypy@v4
         with:
           github_token: ${{ secrets.github_token }}
           # Change reviewdog reporter if you need [github-pr-check,github-check,github-pr-review].

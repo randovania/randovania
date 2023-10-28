@@ -12,6 +12,7 @@ from randovania.games.samus_returns.layout.msr_configuration import (
 from randovania.interface_common.preset_manager import PresetManager
 
 
+
 @pytest.mark.parametrize(
     ("has_artifacts"),
     [
@@ -51,7 +52,7 @@ def test_msr_format_params(has_artifacts: bool):
         else ["Defeat Ridley"],
         "Game Changes": [
             "Super Missile needs Launcher, Power Bomb needs Main",
-            "Nerfed Power Bombs",
+            "Charge Door Buff, Beam Door Buff",
             "Open Area 3 Interior East Shortcut, "
             "Remove Area Exit Path Grapple Blocks, Remove Surface Scan Pulse Crumble Blocks, "
             "Remove Area 1 Chozo Seal Crumble Blocks",

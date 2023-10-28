@@ -30,11 +30,26 @@ def _simplify_requirement_list(
     state: State,
 ) -> RequirementList | None:
     items = []
+    damage_reqs = []
+    current_energy = state.energy
+    are_damage_reqs_satisfied = True
     for item in self.values():
-        if item.satisfied(state.resources, state.energy, state.resource_database):
+        item_damage = item.damage(state.resources, state.resource_database)
+
+        if item.satisfied(state.resources, current_energy, state.resource_database):
+            if item_damage:
+                damage_reqs.append(item)
+                current_energy -= item_damage
+            continue
+        if item_damage:
+            are_damage_reqs_satisfied = False
+            damage_reqs.append(item)
             continue
 
         items.append(item)
+
+    if not are_damage_reqs_satisfied:
+        items.extend(damage_reqs)
 
     return RequirementList(items)
 

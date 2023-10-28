@@ -56,7 +56,8 @@ class MSRBootstrap(MetroidBootstrap):
 
         logical_patches = {
             "allow_highly_dangerous_logic": "HighDanger",
-            "nerf_power_bombs": "NerfPBs",
+            "charge_door_buff": "ChargeDoorBuff",
+            "beam_door_buff": "BeamDoorBuff",
             "nerf_super_missiles": "NerfSupers",
             "surface_crumbles": "SurfaceCrumbles",
             "area1_crumbles": "Area1Crumbles",

@@ -75,8 +75,19 @@ class PrimeCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_PrimeCosmeticPatc
                 [self._add_preview_color_square_to_layout(suit_layout, color) for color in suit_colors]
             )
 
-        self.on_new_cosmetic_patches(current)
+        fields = {field.name: field for field in dataclasses.fields(PrimeUserPreferences)}
+        for field_name, slider in self.field_to_slider_mapping.items():
+            field = fields[field_name]
+            slider.setMinimum(field.metadata["min"])
+            slider.setMaximum(field.metadata["max"])
+
+            value_label: QtWidgets.QLabel = getattr(self, f"{field_name}_value_label")
+            updater = slider_updater.create_label_slider_updater(value_label, field.metadata["display_as_percentage"])
+            updater(slider)
+            setattr(self, f"{field_name}_label_updater", updater)
+
         self.connect_signals()
+        self.on_new_cosmetic_patches(current)
         self._update_color_squares()
 
     def connect_signals(self) -> None:
@@ -116,15 +127,7 @@ class PrimeCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_PrimeCosmeticPatc
         for field in dataclasses.fields(user_preferences):
             if field.name in self.field_to_slider_mapping:
                 slider = self.field_to_slider_mapping[field.name]
-                slider.setMinimum(field.metadata["min"])
-                slider.setMaximum(field.metadata["max"])
                 slider.setValue(getattr(user_preferences, field.name))
-
-                value_label: QtWidgets.QLabel = getattr(self, f"{field.name}_value_label")
-                updater = slider_updater.create_label_slider_updater(
-                    value_label, field.metadata["display_as_percentage"]
-                )
-                setattr(self, f"{field.name}_label_updater", updater)
 
             elif field.name in self.field_to_check_mapping:
                 check = self.field_to_check_mapping[field.name]

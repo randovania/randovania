@@ -29,7 +29,7 @@ def test_patch_game(mocker, tmp_path, use_echoes_models, use_enemy_attribute_ran
     mock_patch_iso_raw: MagicMock = mocker.patch("py_randomprime.patch_iso_raw")
     mock_asset_convert: MagicMock = mocker.patch("randovania.patching.prime.asset_conversion.convert_prime2_pickups")
     mock_enemy_data: MagicMock = mocker.patch(
-        "randovania.games.prime1.exporter.game_exporter.PyRandom_Enemy_Attributes"
+        "Random_Enemy_Attributes.Random_Enemy_Attributes.PyRandom_Enemy_Attributes"
     )
     mocker.patch("randovania.games.prime1.exporter.game_exporter.adjust_model_names")
     patch_data = {
