@@ -17,4 +17,4 @@ def test_find_bad_installation():
 
     result = installation_check.find_bad_installation(hash_list, progress_update)
 
-    assert result == ([], set())
+    assert result == ([], [], set())

@@ -37,15 +37,22 @@ if TYPE_CHECKING:
 DEFAULT_ATTEMPTS = 15
 
 
-def _validate_item_pool_size(
+def _validate_pickup_pool_size(
     item_pool: list[PickupEntry], game: GameDescription, configuration: BaseConfiguration
 ) -> None:
-    min_starting_items = configuration.standard_pickup_configuration.minimum_random_starting_pickups
-    if len(item_pool) > game.region_list.num_pickup_nodes + min_starting_items:
+    min_starting_pickups = configuration.standard_pickup_configuration.minimum_random_starting_pickups
+    if len(item_pool) > game.region_list.num_pickup_nodes + min_starting_pickups:
         raise InvalidConfiguration(
             "Item pool has {} items, which is more than {} (game) + {} (minimum starting items)".format(
-                len(item_pool), game.region_list.num_pickup_nodes, min_starting_items
+                len(item_pool), game.region_list.num_pickup_nodes, min_starting_pickups
             )
+        )
+
+    max_starting_pickups = configuration.standard_pickup_configuration.maximum_random_starting_pickups
+    if min_starting_pickups > max_starting_pickups:
+        raise InvalidConfiguration(
+            f"Preset has {min_starting_pickups} minimum starting items, "
+            f"which is more than the maximum of {max_starting_pickups}."
         )
 
 
@@ -139,7 +146,7 @@ async def _create_pools_and_fill(
         )
 
     for player_pool in player_pools:
-        _validate_item_pool_size(player_pool.pickups, player_pool.game, player_pool.configuration)
+        _validate_pickup_pool_size(player_pool.pickups, player_pool.game, player_pool.configuration)
 
     return await run_filler(rng, player_pools, status_update)
 

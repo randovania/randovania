@@ -13,7 +13,7 @@ from randovania.interface_common.preset_manager import PresetManager
 
 
 @pytest.mark.parametrize(("metroids_only"), [(False), (True)])
-def test_am2r_format_params(metroids_only: bool):
+def test_msr_format_params(metroids_only: bool):
     # Setup
     preset = PresetManager(None).default_preset_for_game(RandovaniaGame.METROID_SAMUS_RETURNS).get_preset()
     assert isinstance(preset.configuration, MSRConfiguration)
@@ -41,7 +41,7 @@ def test_am2r_format_params(metroids_only: bool):
         "Goal": ["20 Metroid DNA", "Prefers Metroids"] if metroids_only else ["Kill Ridley"],
         "Game Changes": [
             "Super Missile needs Launcher, Power Bomb needs Main",
-            "Nerfed Power Bombs",
+            "Charge Door Buff, Beam Door Buff",
             "Open Area 3 Interior East Shortcut, "
             "Remove Area Exit Path Grapple Blocks, Remove Surface Scan Pulse Crumble Blocks, "
             "Remove Area 1 Chozo Seal Crumble Blocks",

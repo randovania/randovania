@@ -4,10 +4,10 @@ import dataclasses
 from functools import partial
 from typing import TYPE_CHECKING
 
-from open_prime_rando.dol_patching.echoes.user_preferences import SoundMode
 from PySide6 import QtCore, QtGui, QtWidgets
 
 from randovania.games.prime2.layout.echoes_cosmetic_patches import EchoesCosmeticPatches
+from randovania.games.prime2.layout.echoes_user_preferences import EchoesUserPreferences, SoundMode
 from randovania.gui.dialog.base_cosmetic_patches_dialog import BaseCosmeticPatchesDialog
 from randovania.gui.generated.echoes_cosmetic_patches_dialog_ui import Ui_EchoesCosmeticPatchesDialog
 from randovania.gui.lib import slider_updater
@@ -15,7 +15,6 @@ from randovania.gui.lib.signal_handling import set_combo_with_value
 
 if TYPE_CHECKING:
     from randovania.games.prime2.layout.echoes_cosmetic_suits import EchoesSuitPreferences, SuitColor
-    from randovania.games.prime2.layout.echoes_user_preferences import EchoesUserPreferences
 
 
 class EchoesCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_EchoesCosmeticPatchesDialog):
@@ -48,8 +47,19 @@ class EchoesCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_EchoesCosmeticPa
         for sound_mode in SoundMode:
             self.sound_mode_combo.addItem(sound_mode.name, sound_mode)
 
-        self.on_new_cosmetic_patches(current)
+        fields = {field.name: field for field in dataclasses.fields(EchoesUserPreferences)}
+        for field_name, slider in self.field_to_slider_mapping.items():
+            field = fields[field_name]
+            slider.setMinimum(field.metadata["min"])
+            slider.setMaximum(field.metadata["max"])
+
+            value_label: QtWidgets.QLabel = getattr(self, f"{field_name}_value_label")
+            updater = slider_updater.create_label_slider_updater(value_label, field.metadata["display_as_percentage"])
+            updater(slider)
+            setattr(self, f"{field_name}_label_updater", updater)
+
         self.connect_signals()
+        self.on_new_cosmetic_patches(current)
         self._update_color_squares()
 
     def connect_signals(self) -> None:
@@ -159,16 +169,7 @@ class EchoesCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_EchoesCosmeticPa
         for field in dataclasses.fields(user_preferences):
             if field.name in self.field_to_slider_mapping:
                 slider = self.field_to_slider_mapping[field.name]
-                slider.setMinimum(field.metadata["min"])
-                slider.setMaximum(field.metadata["max"])
                 slider.setValue(getattr(user_preferences, field.name))
-
-                value_label: QtWidgets.QLabel = getattr(self, f"{field.name}_value_label")
-                updater = slider_updater.create_label_slider_updater(
-                    value_label, field.metadata["display_as_percentage"]
-                )
-                setattr(self, f"{field.name}_label_updater", updater)
-                updater(slider)
 
             elif field.name in self.field_to_check_mapping:
                 check = self.field_to_check_mapping[field.name]

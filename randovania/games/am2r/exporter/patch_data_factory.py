@@ -355,7 +355,7 @@ class AM2RPatchDataFactory(PatchDataFactory):
         # = splits into left/right adjusted text, but its irrelevant here.
         for key, value in spoiler_dict.items():
             if "\n" in value:
-                spoiler_dict[key] = value.replace("\n", ";/")
+                value = value.replace("\n", ";/")
             spoiler += f"*{key};/{value};;"
 
         if not spoiler:

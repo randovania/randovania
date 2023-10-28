@@ -11,11 +11,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Trick level sliders ignore mouse scroll inputs, preventing unintended preset changes. 
 - Changed: The Trick Details list in the menu bar no longer displays tricks that shouldn't be visible in the UI.
 - Changed: For Multiworld, sending collected locations to the server can no longer fail if there's an error encoding the inventory.
-- Fixed: Map tracker selects the correct start location if the preset has only one start location that is not the default. 
-
-### Auto-Tracker Pixel Icons
-- Metroid Prime: Visors are now pilled, Boost Ball icon with a proper trail, improvements to Power Bomb icon.
-- Metroid Prime 2: Echoes: Visors are now pilled, Boost Ball icon with a proper trail, Screw Attack icon now faces clockwise, dedicated Power Beam icon.
+- Changed: The directory layout has now changed, moving everything that isn't the executable to an `_internal` folder.
+- Changed: When verifying the installation, missing files and modified files are listed in the console and log. 
+- Changed: An explicit error is now displayed when a preset has minimum random starting items higher than the maximum.
+- Fixed: Map tracker selects the correct start location if the preset has only one start location that is not the default.
+- Fixed: When verifying the installation, the title of the popup now properly says "Verifying installation".
+- Fixed: Exporting with hidden item models in a multiworld now works properly.
 
 ### Resolver
 
@@ -26,6 +27,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Improved: Speed up resolving of hard seeds by allowing skipping of more kinds of unsatisfied requirements.
 
 ### Cave Story
+
 - **Major** - Added: Multiworld support. Currently only supports the version of freeware provided by Randovania.
 - Fixed: Exporting Cave Story no longer causes a runtime error.
 - Fixed: Presets that start in Camp no longer error in generation.
@@ -37,7 +39,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Metroid Dread
 
 - Fixed: Custom shields now use the correct shader and texture effects and no longer a black background
-- Fixed: Issues with negative amount for ammo items. The current amount was set to a wrong value and you had to use a ammo refill station. This also caused issues with the auto tracker and multiworld.
+- Fixed: Issues with negative amount for ammo items. The current amount was set to a wrong value and you had to use a ammo refill station. This also caused issues with the auto tracker and multiworld. 
 
 #### Logic Database
 
@@ -84,11 +86,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Prime
 
+- Changed: In the Auto-Tracker Pixel Theme, visors are now pilled, Boost Ball icon with a proper trail, improvements to Power Bomb icon.
 - Fixed: Counting normal damage reductions from suits twice.
+- Fixed: Item position randomizer not being random.
+- Fixed: Foreign object in ruined shrine
+- Fixed: Room rando + cutscene skip compatability
+- Fixed: Crash when exporting a seed with a blast shield in phazon infusion chamber and essence death teleporter
+- Fixed: [PAL/JP] Restored Missile and Charge shot stun in one hit on Ridley
+- Fixed: [PAL/JP] Restored Wavebuster cheese on Ridley
+- Fixed: When customizing cosmetic options, the labels are now properly updated. 
 
 ### Metroid Prime 2: Echoes
 
 - Added: One new Joke Hint refering to Raven Beak added to the pool
+- Changed: In the Auto-Tracker Pixel Theme, visors are now pilled, Boost Ball icon with a proper trail, Screw Attack icon now faces clockwise, dedicated Power Beam icon.
+- Changed: Damage Requirements for Warrior's Walk Item Pickup has been lowered from 80 to 60 dmg in total (30 energy getting the item and 30 energy going back)
 
 ## [6.4.1] - 2023-10-??
 

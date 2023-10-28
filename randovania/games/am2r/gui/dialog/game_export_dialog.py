@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import dataclasses
+import platform
 from pathlib import Path
 from typing import TYPE_CHECKING
 
@@ -18,6 +19,28 @@ from randovania.gui.generated.am2r_game_export_dialog_ui import Ui_AM2RGameExpor
 
 if TYPE_CHECKING:
     from randovania.interface_common.options import Options
+
+
+def _is_valid_input_dir(path: Path) -> bool:
+    # Checks whether data file and runner exist.
+    current_platform = platform.system()
+    if current_platform == "Windows":
+        return path.joinpath("data.win").exists() and path.joinpath("AM2R.exe").exists()
+    if current_platform == "Linux":
+        # AppImage
+        return (
+            path.joinpath("AM2R.AppImage").exists()
+            # Flatpak/non-packed
+            or path.joinpath("assets", "game.unx").exists()
+            and path.joinpath("runner").exists()
+        )
+    if current_platform == "Darwin":
+        return (
+            path.joinpath("AM2R.app", "Contents", "Resources", "game.ios").exists()
+            and path.joinpath("AM2R.app", "Contents", "MacOS", "Mac_Runner").exists()
+        )
+
+    return False
 
 
 class AM2RGameExportDialog(GameExportDialog, Ui_AM2RGameExportDialog):
@@ -45,7 +68,7 @@ class AM2RGameExportDialog(GameExportDialog, Ui_AM2RGameExportDialog):
         add_field_validation(
             accept_button=self.accept_button,
             fields={
-                self.input_file_edit: lambda: not self.input_file.is_dir(),
+                self.input_file_edit: lambda: not (self.input_file.is_dir() and _is_valid_input_dir(self.input_file)),
                 self.output_file_edit: lambda: not (self.output_file.is_dir() and self.output_file != self.input_file),
             },
         )

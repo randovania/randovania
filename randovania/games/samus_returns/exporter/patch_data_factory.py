@@ -213,7 +213,8 @@ class MSRPatchDataFactory(PatchDataFactory):
             ],
             "energy_per_tank": energy_per_tank,
             "game_patches": {
-                "nerf_power_bombs": self.configuration.nerf_power_bombs,
+                "charge_door_buff": self.configuration.charge_door_buff,
+                "beam_door_buff": self.configuration.beam_door_buff,
                 "nerf_super_missiles": self.configuration.nerf_super_missiles,
                 "remove_elevator_grapple_blocks": self.configuration.elevator_grapple_blocks,
                 "remove_grapple_block_area3_interior_shortcut": self.configuration.area3_interior_shortcut_no_grapple,
