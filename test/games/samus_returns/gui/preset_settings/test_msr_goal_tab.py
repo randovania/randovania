@@ -56,7 +56,6 @@ def test_preferred_dna(
     tab._update_slider_max()
 
     # Assert
-    assert isinstance(base_configuration, MSRConfiguration)
     if not prefer_metroids and not prefer_stronger_metroids and not prefer_bosses:
         assert slider_value_after_first_set == 0
     # The slider value should never increase from what it was before
@@ -67,9 +66,9 @@ def test_preferred_dna(
 
     configuration = editor.configuration
     assert isinstance(configuration, MSRConfiguration)
-    assert editor.configuration.artifacts.prefer_metroids == prefer_metroids
-    assert editor.configuration.artifacts.prefer_stronger_metroids == prefer_stronger_metroids
-    assert editor.configuration.artifacts.prefer_bosses == prefer_bosses
+    assert configuration.artifacts.prefer_metroids == prefer_metroids
+    assert configuration.artifacts.prefer_stronger_metroids == prefer_stronger_metroids
+    assert configuration.artifacts.prefer_bosses == prefer_bosses
     # If default value in configuration is smaller than the max allowed value, it shouldn't increase
     expected_artifacts = expected_max_slider
     if initial_slider_value < expected_max_slider:
@@ -78,5 +77,5 @@ def test_preferred_dna(
     if slider_value_after_first_set == 0:
         expected_artifacts = 0
 
-    assert editor.configuration.artifacts.required_artifacts == expected_artifacts
+    assert configuration.artifacts.required_artifacts == expected_artifacts
     assert tab.dna_slider.value() == expected_artifacts
