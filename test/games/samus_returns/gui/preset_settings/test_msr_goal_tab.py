@@ -56,6 +56,7 @@ def test_preferred_dna(
     tab._update_slider_max()
 
     # Assert
+    assert isinstance(base_configuration, MSRConfiguration)
     if not prefer_metroids and not prefer_stronger_metroids and not prefer_bosses:
         assert slider_value_after_first_set == 0
     # The slider value should never increase from what it was before
