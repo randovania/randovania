@@ -16,10 +16,14 @@ from randovania.generator.pickup_pool import pool_creator
 @pytest.mark.parametrize(
     ("artifacts", "expected"),
     [
-        (MSRArtifactConfig(True, 5), [203, 207, 178, 182, 187]),
-        (MSRArtifactConfig(True, 39), range(172, 211)),
-        (MSRArtifactConfig(False, 6), [34, 170, 80, 210, 178, 60]),
-        (MSRArtifactConfig(False, 0), []),
+        (MSRArtifactConfig(True, True, False, 5), [203, 207, 178, 182, 187]),
+        (MSRArtifactConfig(True, True, False, 39), range(172, 211)),
+        (MSRArtifactConfig(False, False, False, 6), [37, 41, 48, 149, 86, 93]),
+        (MSRArtifactConfig(False, False, False, 0), []),
+        (MSRArtifactConfig(False, False, True, 3), [37, 139, 171]),
+        (MSRArtifactConfig(True, False, False, 1), [183]),
+        (MSRArtifactConfig(False, True, False, 2), [178, 187]),
+        (MSRArtifactConfig(True, True, True, 1), [197]),
     ],
 )
 def test_assign_pool_results(msr_game_description, msr_configuration, artifacts, expected):

@@ -12,16 +12,24 @@ from randovania.games.samus_returns.layout.msr_configuration import (
 from randovania.interface_common.preset_manager import PresetManager
 
 
-@pytest.mark.parametrize(("metroids_only"), [(False), (True)])
-def test_msr_format_params(metroids_only: bool):
+@pytest.mark.parametrize(
+    ("has_artifacts"),
+    [
+        (False),
+        (True),
+    ],
+)
+def test_msr_format_params(has_artifacts: bool):
     # Setup
     preset = PresetManager(None).default_preset_for_game(RandovaniaGame.METROID_SAMUS_RETURNS).get_preset()
     assert isinstance(preset.configuration, MSRConfiguration)
     configuration = dataclasses.replace(
         preset.configuration,
         artifacts=MSRArtifactConfig(
-            prefer_metroids=metroids_only,
-            required_artifacts=20 if metroids_only else 0,
+            prefer_metroids=True,
+            prefer_stronger_metroids=True,
+            prefer_bosses=False,
+            required_artifacts=20 if has_artifacts else 0,
         ),
     )
 
@@ -32,13 +40,15 @@ def test_msr_format_params(metroids_only: bool):
     assert dict(result) == {
         "Logic Settings": ["All tricks disabled"],
         "Item Pool": [
-            "Size: 191 of 211" if metroids_only else "Size: 171 of 211",
+            "Size: 191 of 211" if has_artifacts else "Size: 171 of 211",
             "Starts with Scan Pulse",
             "Progressive Beam, Progressive Jump, Progressive Suit",
         ],
         "Gameplay": ["Starts at Surface - East - Landing Site"],
         "Difficulty": [],
-        "Goal": ["20 Metroid DNA", "Prefers Metroids"] if metroids_only else ["Kill Ridley"],
+        "Goal": ["20 Metroid DNA", "Prefers Standard Metroids, Prefers Stronger Metroids"]
+        if has_artifacts
+        else ["Defeat Ridley"],
         "Game Changes": [
             "Super Missile needs Launcher, Power Bomb needs Main",
             "Charge Door Buff, Beam Door Buff",

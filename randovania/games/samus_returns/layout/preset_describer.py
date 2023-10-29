@@ -26,13 +26,15 @@ def describe_artifacts(artifacts: MSRArtifactConfig) -> list[dict[str, bool]]:
                 f"{artifacts.required_artifacts} Metroid DNA": True,
             },
             {
-                "Prefers Metroids": artifacts.prefer_metroids,
+                "Prefers Standard Metroids": artifacts.prefer_metroids,
+                "Prefers Stronger Metroids": artifacts.prefer_stronger_metroids,
+                "Prefers Bosses": artifacts.prefer_bosses,
             },
         ]
     else:
         return [
             {
-                "Kill Ridley": True,
+                "Defeat Ridley": True,
             }
         ]
 

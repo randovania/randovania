@@ -36,7 +36,7 @@
     <item>
      <widget class="QLabel" name="description_label">
       <property name="text">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;In addition to just collecting the Baby, it's now necessary to collect Metroid DNA in order to reach Ridley.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;In addition to just collecting the Baby, it is now necessary to collect Metroid DNA in order to reach Ridley.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
       <property name="wordWrap">
        <bool>true</bool>
@@ -90,11 +90,11 @@
       <property name="title">
        <string>Placement</string>
       </property>
-      <layout class="QVBoxLayout" name="placement_layout">
+      <layout class="QVBoxLayout" name="verticalLayout">
        <item>
         <widget class="QLabel" name="placement_label">
          <property name="text">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;The following option limits where Metroid DNA will be placed. DNA can be placed anywhere or only on Metroids. The limit is 39 total DNA to be shuffled. The game starts with 39 minus the shuffled amount.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;The following options determine where Metroid DNA will be placed. The maximum amount of DNA that can be shuffled is 39. The game starts with 39 DNA minus the shuffled amount. Disabling all options shuffles DNA anywhere in the game.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
          </property>
          <property name="wordWrap">
           <bool>true</bool>
@@ -104,7 +104,21 @@
        <item>
         <widget class="QCheckBox" name="prefer_metroids_check">
          <property name="text">
-          <string>Prefer Metroids (17 Alphas, 14 Gammas, 4 Zetas, 4 Omegas)</string>
+          <string>Prefer Standard Metroids (10 Alphas, 9 Gammas, 3 Zetas, 3 Omegas)</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="prefer_stronger_metroids_check">
+         <property name="text">
+          <string>Prefer Stronger Metroids (7 Alphas, 5 Gammas, 1 Zeta, 1 Omega)</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="prefer_bosses_check">
+         <property name="text">
+          <string>Prefer Bosses (Arachnus, Diggernaut, Queen Metroid)</string>
          </property>
         </widget>
        </item>

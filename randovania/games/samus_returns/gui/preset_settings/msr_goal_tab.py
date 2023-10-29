@@ -26,6 +26,8 @@ class PresetMSRGoal(PresetTab, Ui_PresetMSRGoal):
 
         self.goal_layout.setAlignment(QtCore.Qt.AlignmentFlag.AlignTop)
         signal_handling.on_checked(self.prefer_metroids_check, self._on_prefer_metroids)
+        signal_handling.on_checked(self.prefer_stronger_metroids_check, self._on_prefer_stronger_metroids)
+        signal_handling.on_checked(self.prefer_bosses_check, self._on_prefer_bosses)
         self.dna_slider.valueChanged.connect(self._on_dna_slider_changed)
         self.dna_slider.setMaximum(39)
 
@@ -37,6 +39,10 @@ class PresetMSRGoal(PresetTab, Ui_PresetMSRGoal):
     def uses_patches_tab(cls) -> bool:
         return False
 
+    def _update_slider_max(self) -> None:
+        self.dna_slider.setMaximum(self.num_preferred_locations)
+        self.dna_slider.setEnabled(True)
+
     def _edit_config(self, call: Callable[[MSRArtifactConfig], MSRArtifactConfig]) -> None:
         config = self._editor.configuration
         assert isinstance(config, MSRConfiguration)
@@ -44,11 +50,40 @@ class PresetMSRGoal(PresetTab, Ui_PresetMSRGoal):
         with self._editor as editor:
             editor.set_configuration_field("artifacts", call(config.artifacts))
 
+    @property
+    def num_preferred_locations(self) -> int:
+        preferred = 0
+        if self.prefer_metroids_check.isChecked():
+            preferred += 25
+        if self.prefer_stronger_metroids_check.isChecked():
+            preferred += 14
+        if self.prefer_bosses_check.isChecked():
+            if preferred <= 36:
+                preferred += 3
+        if preferred == 0:
+            preferred = 39
+        return preferred
+
     def _on_prefer_metroids(self, value: bool) -> None:
         def edit(config: MSRArtifactConfig) -> MSRArtifactConfig:
             return dataclasses.replace(config, prefer_metroids=value)
 
         self._edit_config(edit)
+        self._update_slider_max()
+
+    def _on_prefer_stronger_metroids(self, value: bool) -> None:
+        def edit(config: MSRArtifactConfig) -> MSRArtifactConfig:
+            return dataclasses.replace(config, prefer_stronger_metroids=value)
+
+        self._edit_config(edit)
+        self._update_slider_max()
+
+    def _on_prefer_bosses(self, value: bool) -> None:
+        def edit(config: MSRArtifactConfig) -> MSRArtifactConfig:
+            return dataclasses.replace(config, prefer_bosses=value)
+
+        self._edit_config(edit)
+        self._update_slider_max()
 
     def _on_dna_slider_changed(self) -> None:
         self.dna_slider_label.setText(f"{self.dna_slider.value()} DNA")
@@ -62,4 +97,6 @@ class PresetMSRGoal(PresetTab, Ui_PresetMSRGoal):
         assert isinstance(preset.configuration, MSRConfiguration)
         artifacts = preset.configuration.artifacts
         self.prefer_metroids_check.setChecked(artifacts.prefer_metroids)
+        self.prefer_stronger_metroids_check.setChecked(artifacts.prefer_stronger_metroids)
+        self.prefer_bosses_check.setChecked(artifacts.prefer_bosses)
         self.dna_slider.setValue(artifacts.required_artifacts)
