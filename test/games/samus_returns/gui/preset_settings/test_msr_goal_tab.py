@@ -64,6 +64,9 @@ def test_preferred_dna(
     assert tab.num_preferred_locations == expected_max_slider
     assert tab.dna_slider.maximum() == expected_max_slider
     assert tab.dna_slider.isEnabled() == (expected_max_slider > 0)
+
+    configuration = editor.configuration
+    assert isinstance(configuration, MSRConfiguration)
     assert editor.configuration.artifacts.prefer_metroids == prefer_metroids
     assert editor.configuration.artifacts.prefer_stronger_metroids == prefer_stronger_metroids
     assert editor.configuration.artifacts.prefer_bosses == prefer_bosses
