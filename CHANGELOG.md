@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [6.5.0] - 2023-11-??
 
+- **Major** - Added: AM2R has been added with full single player support. Includes Door Lock Rando, some toggleable patches and more.
 - Changed: The Changelog window has recieved a slight overhaul. The date of each release is shown, hyperlinks are fixed, and patch notes are now accessed through a drop-down box (previously used vertical tabs).
 - Changed: Trick level sliders ignore mouse scroll inputs, preventing unintended preset changes. 
 - Changed: The Trick Details list in the menu bar no longer displays tricks that shouldn't be visible in the UI.
