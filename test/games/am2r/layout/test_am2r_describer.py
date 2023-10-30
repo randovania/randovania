@@ -22,6 +22,7 @@ def test_am2r_format_params(has_artifacts: bool):
         artifacts=AM2RArtifactConfig(
             prefer_metroids=True,
             prefer_bosses=False,
+            prefer_anywhere=False,
             required_artifacts=3 if has_artifacts else 0,
         ),
     )
