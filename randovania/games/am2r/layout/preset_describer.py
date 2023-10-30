@@ -27,6 +27,7 @@ def describe_artifacts(artifacts: AM2RArtifactConfig) -> list[dict[str, bool]]:
             {
                 "Prefers Metroids": artifacts.prefer_metroids,
                 "Prefers major bosses": artifacts.prefer_bosses,
+                "Place anywhere": artifacts.prefer_anywhere,
             },
         ]
     else:

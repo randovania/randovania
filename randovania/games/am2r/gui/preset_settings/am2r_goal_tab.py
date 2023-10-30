@@ -25,6 +25,8 @@ class PresetAM2RGoal(PresetTab, Ui_PresetAM2RGoal):
         self.setupUi(self)
 
         self.goal_layout.setAlignment(QtCore.Qt.AlignmentFlag.AlignTop)
+        self.restrict_placement.toggled.connect(self._on_restrict_placement)
+        self.free_placement.toggled.connect(self._on_free_placement)
         signal_handling.on_checked(self.prefer_metroids_check, self._on_prefer_metroids)
         signal_handling.on_checked(self.prefer_bosses_check, self._on_prefer_bosses)
         self.dna_slider.valueChanged.connect(self._on_dna_slider_changed)
@@ -50,11 +52,33 @@ class PresetAM2RGoal(PresetTab, Ui_PresetAM2RGoal):
 
     @property
     def num_preferred_locations(self) -> int:
+        if self.free_placement.isChecked():
+            return 46
         if self.prefer_metroids_check.isChecked():
             return 46
         if self.prefer_bosses_check.isChecked():
             return 6
         return 0
+
+    def _on_restrict_placement(self):
+        self.prefer_bosses_check.setEnabled(True)
+        self.prefer_metroids_check.setEnabled(True)
+
+        def edit(config: AM2RArtifactConfig):
+            return dataclasses.replace(config, prefer_anywhere=False)
+
+        self._edit_config(edit)
+        self._update_slider_max()
+
+    def _on_free_placement(self):
+        self.prefer_bosses_check.setEnabled(False)
+        self.prefer_metroids_check.setEnabled(False)
+
+        def edit(config: AM2RArtifactConfig):
+            return dataclasses.replace(config, prefer_anywhere=True, prefer_metroids=False, prefer_bosses=False)
+
+        self._edit_config(edit)
+        self._update_slider_max()
 
     def _on_prefer_metroids(self, value: bool):
         def edit(config: AM2RArtifactConfig):
@@ -81,6 +105,7 @@ class PresetAM2RGoal(PresetTab, Ui_PresetAM2RGoal):
     def on_preset_changed(self, preset: Preset):
         assert isinstance(preset.configuration, AM2RConfiguration)
         artifacts = preset.configuration.artifacts
+        self.free_placement.setChecked(artifacts.prefer_anywhere)
         self.prefer_metroids_check.setChecked(artifacts.prefer_metroids)
         self.prefer_bosses_check.setChecked(artifacts.prefer_bosses)
         self.dna_slider.setValue(artifacts.required_artifacts)

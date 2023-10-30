@@ -28,7 +28,9 @@ def all_dna_locations(game: GameDescription, config: AM2RArtifactConfig):
         if isinstance(node, PickupNode):
             # Metroid pickups
             name = node.extra["object_name"]
-            if config.prefer_metroids and name.startswith("oItemDNA_"):
+            if config.prefer_anywhere:
+                locations.append(node)
+            elif config.prefer_metroids and name.startswith("oItemDNA_"):
                 locations.append(node)
             # Pickups guarded by bosses
             elif config.prefer_bosses and name in _boss_items:
