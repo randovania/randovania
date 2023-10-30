@@ -60,7 +60,9 @@ class PresetAM2RGoal(PresetTab, Ui_PresetAM2RGoal):
             return 6
         return 0
 
-    def _on_restrict_placement(self):
+    def _on_restrict_placement(self, value: bool):
+        if not value:
+            return
         self.prefer_bosses_check.setEnabled(True)
         self.prefer_metroids_check.setEnabled(True)
 
@@ -70,7 +72,9 @@ class PresetAM2RGoal(PresetTab, Ui_PresetAM2RGoal):
         self._edit_config(edit)
         self._update_slider_max()
 
-    def _on_free_placement(self):
+    def _on_free_placement(self, value: bool):
+        if not value:
+            return
         self.prefer_bosses_check.setEnabled(False)
         self.prefer_metroids_check.setEnabled(False)
 
