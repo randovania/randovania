@@ -341,6 +341,15 @@
                                                                     "amount": 1,
                                                                     "negate": false
                                                                 }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "Shinespark",
+                                                                    "amount": 50,
+                                                                    "negate": false
+                                                                }
                                                             }
                                                         ]
                                                     }
@@ -855,7 +864,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "Short charge shinespark",
+                                            "comment": "Shinespark from Kihunter Room: https://youtu.be/WJ4D_FkPmTA",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -863,15 +872,6 @@
                                                         "type": "items",
                                                         "name": "SpeedBooster",
                                                         "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "Shortcharge",
-                                                        "amount": 2,
                                                         "negate": false
                                                     }
                                                 },
@@ -892,6 +892,15 @@
                                                         "amount": 1,
                                                         "negate": true
                                                     }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "damage",
+                                                        "name": "Shinespark",
+                                                        "amount": 60,
+                                                        "negate": false
+                                                    }
                                                 }
                                             ]
                                         }
@@ -899,7 +908,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "Gravity Jump",
+                                            "comment": null,
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -911,12 +920,67 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "resource",
+                                                    "type": "or",
                                                     "data": {
-                                                        "type": "tricks",
-                                                        "name": "GravityJump",
-                                                        "amount": 2,
-                                                        "negate": false
+                                                        "comment": "Gravity Jump: https://youtu.be/92NyXQFs7K8",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "GravityJump",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": "IBJ from floor",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Can Lay Bombs"
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "IBJ",
+                                                                                "amount": 3,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": "WJ from floor",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "HiJump",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "WallJump",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -925,7 +989,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "Using a CWJ to get across",
+                                            "comment": "CWJ: https://youtu.be/eKBck_F8IVk",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -1007,15 +1071,53 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "WJ from Floor",
+                                            "comment": "From Floor",
                                             "items": [
                                                 {
-                                                    "type": "resource",
+                                                    "type": "or",
                                                     "data": {
-                                                        "type": "tricks",
-                                                        "name": "WallJump",
-                                                        "amount": 1,
-                                                        "negate": false
+                                                        "comment": "Gravity or Wall Jumps",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "WallJump",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": "IBJ",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Can Lay Bombs"
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "IBJ",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "GravityJump",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 },
                                                 {
@@ -1033,7 +1135,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "Short charge shinespark",
+                                            "comment": "Shinespark from Kihunter Room: https://youtu.be/WJ4D_FkPmTA",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -1048,7 +1150,7 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "tricks",
-                                                        "name": "Shortcharge",
+                                                        "name": "Shinespark",
                                                         "amount": 2,
                                                         "negate": false
                                                     }
@@ -1070,6 +1172,15 @@
                                                         "amount": 1,
                                                         "negate": true
                                                     }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "damage",
+                                                        "name": "Shinespark",
+                                                        "amount": 50,
+                                                        "negate": false
+                                                    }
                                                 }
                                             ]
                                         }
@@ -1088,7 +1199,7 @@
                                                     "data": {
                                                         "type": "tricks",
                                                         "name": "HBJ",
-                                                        "amount": 1,
+                                                        "amount": 3,
                                                         "negate": false
                                                     }
                                                 }
@@ -1216,12 +1327,20 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "resource",
+                                                    "type": "or",
                                                     "data": {
-                                                        "type": "tricks",
-                                                        "name": "Movement",
-                                                        "amount": 2,
-                                                        "negate": false
+                                                        "comment": "Running jump to the center pillar",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Movement",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -1546,6 +1665,32 @@
                                                                                 "type": "tricks",
                                                                                 "name": "WallJump",
                                                                                 "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": "Slingshot around ripper",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Grapple",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Movement",
+                                                                                "amount": 2,
                                                                                 "negate": false
                                                                             }
                                                                         }
@@ -4226,7 +4371,7 @@
                                                     "data": {
                                                         "type": "items",
                                                         "name": "Missile",
-                                                        "amount": 1,
+                                                        "amount": 5,
                                                         "negate": false
                                                     }
                                                 },
@@ -4235,7 +4380,7 @@
                                                     "data": {
                                                         "type": "items",
                                                         "name": "Supers",
-                                                        "amount": 1,
+                                                        "amount": 5,
                                                         "negate": false
                                                     }
                                                 },
@@ -4424,7 +4569,7 @@
                                                     "data": {
                                                         "type": "items",
                                                         "name": "Missile",
-                                                        "amount": 1,
+                                                        "amount": 5,
                                                         "negate": false
                                                     }
                                                 },
@@ -4433,7 +4578,7 @@
                                                     "data": {
                                                         "type": "items",
                                                         "name": "Supers",
-                                                        "amount": 1,
+                                                        "amount": 5,
                                                         "negate": false
                                                     }
                                                 },
@@ -5104,15 +5249,6 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "Shinespark",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
                                                     "type": "or",
                                                     "data": {
                                                         "comment": null,
@@ -5120,14 +5256,14 @@
                                                             {
                                                                 "type": "and",
                                                                 "data": {
-                                                                    "comment": "2 tap short charge from Alcatraz Escape",
+                                                                    "comment": "1 tap short charge: https://youtu.be/j8Ze6uSDeXQ",
                                                                     "items": [
                                                                         {
                                                                             "type": "resource",
                                                                             "data": {
                                                                                 "type": "tricks",
                                                                                 "name": "Shortcharge",
-                                                                                "amount": 2,
+                                                                                "amount": 1,
                                                                                 "negate": false
                                                                             }
                                                                         }
@@ -5164,6 +5300,15 @@
                                                                                 "name": "DoorLockRando",
                                                                                 "amount": 1,
                                                                                 "negate": true
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Shinespark",
+                                                                                "amount": 1,
+                                                                                "negate": false
                                                                             }
                                                                         }
                                                                     ]
