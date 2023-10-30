@@ -60,26 +60,26 @@ class PresetAM2RGoal(PresetTab, Ui_PresetAM2RGoal):
             return 6
         return 0
 
-    def _on_restrict_placement(self, value: bool):
+    def _on_restrict_placement(self, value: bool) -> None:
         if not value:
             return
         self.prefer_bosses_check.setEnabled(True)
         self.prefer_metroids_check.setEnabled(True)
 
-        def edit(config: AM2RArtifactConfig):
+        def edit(config: AM2RArtifactConfig) -> AM2RArtifactConfig:
             return dataclasses.replace(config, prefer_anywhere=False)
 
         self._edit_config(edit)
         self._update_slider_max()
 
-    def _on_free_placement(self, value: bool):
+    def _on_free_placement(self, value: bool) -> None:
         if not value:
             return
         self.prefer_bosses_check.setEnabled(False)
         self.prefer_metroids_check.setEnabled(False)
 
-        def edit(config: AM2RArtifactConfig):
-            return dataclasses.replace(config, prefer_anywhere=True, prefer_metroids=False, prefer_bosses=False)
+        def edit(config: AM2RArtifactConfig) -> AM2RArtifactConfig:
+            return dataclasses.replace(config, prefer_anywhere=True)
 
         self._edit_config(edit)
         self._update_slider_max()
@@ -110,6 +110,7 @@ class PresetAM2RGoal(PresetTab, Ui_PresetAM2RGoal):
         assert isinstance(preset.configuration, AM2RConfiguration)
         artifacts = preset.configuration.artifacts
         self.free_placement_radiobutton.setChecked(artifacts.prefer_anywhere)
+        self.restrict_placement_radiobutton.setChecked(not artifacts.prefer_anywhere)
         self.prefer_metroids_check.setChecked(artifacts.prefer_metroids)
         self.prefer_bosses_check.setChecked(artifacts.prefer_bosses)
         self.dna_slider.setValue(artifacts.required_artifacts)

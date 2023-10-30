@@ -19,7 +19,16 @@ if TYPE_CHECKING:
 
 def describe_artifacts(artifacts: AM2RArtifactConfig) -> list[dict[str, bool]]:
     has_artifacts = artifacts.required_artifacts > 0
-    if has_artifacts:
+    if has_artifacts and artifacts.prefer_anywhere:
+        return [
+            {
+                f"{artifacts.required_artifacts} Metroid DNA": True,
+            },
+            {
+                "Place anywhere": artifacts.prefer_anywhere,
+            },
+        ]
+    elif has_artifacts:
         return [
             {
                 f"{artifacts.required_artifacts} Metroid DNA": True,
@@ -27,7 +36,6 @@ def describe_artifacts(artifacts: AM2RArtifactConfig) -> list[dict[str, bool]]:
             {
                 "Prefers Metroids": artifacts.prefer_metroids,
                 "Prefers major bosses": artifacts.prefer_bosses,
-                "Place anywhere": artifacts.prefer_anywhere,
             },
         ]
     else:
