@@ -18,10 +18,11 @@ _boss_indices = [111, 3, 6, 14, 11, 50]
 @pytest.mark.parametrize(
     ("artifacts", "expected"),
     [
-        (AM2RArtifactConfig(True, True, 5), [3, 50, 374, 389, 391]),
-        (AM2RArtifactConfig(True, False, 46), range(350, 396)),
-        (AM2RArtifactConfig(False, True, 6), _boss_indices),
-        (AM2RArtifactConfig(False, False, 0), []),
+        (AM2RArtifactConfig(True, True, False, 5), [3, 50, 374, 389, 391]),
+        (AM2RArtifactConfig(True, False, False, 46), range(350, 396)),
+        (AM2RArtifactConfig(False, True, False, 6), _boss_indices),
+        (AM2RArtifactConfig(False, False, True, 5), [102, 108, 374, 389, 391]),
+        (AM2RArtifactConfig(False, False, False, 0), []),
     ],
 )
 def test_assign_pool_results(am2r_game_description, am2r_configuration, artifacts, expected):
