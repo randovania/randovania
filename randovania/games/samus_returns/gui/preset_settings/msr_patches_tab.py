@@ -18,7 +18,8 @@ if typing.TYPE_CHECKING:
 _FIELDS = [
     "elevator_grapple_blocks",
     "area3_interior_shortcut_no_grapple",
-    "nerf_power_bombs",
+    "charge_door_buff",
+    "beam_door_buff",
     "nerf_super_missiles",
     "surface_crumbles",
     "area1_crumbles",

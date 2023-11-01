@@ -64,7 +64,7 @@ def _get_custom_data_path() -> Path:
 
 
 def _get_menu_mod_path() -> Path:
-    return get_data_path().joinpath("ClarisEchoesMenu", "EchoesMenu.exe")
+    return _get_randomizer_folder().joinpath("EchoesMenu.exe")
 
 
 def _run_with_args(args: list[str | Path], input_data: str, finish_string: str, status_update: Callable[[str], None]):

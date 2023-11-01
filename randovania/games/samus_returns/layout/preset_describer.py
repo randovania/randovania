@@ -26,13 +26,15 @@ def describe_artifacts(artifacts: MSRArtifactConfig) -> list[dict[str, bool]]:
                 f"{artifacts.required_artifacts} Metroid DNA": True,
             },
             {
-                "Prefers Metroids": artifacts.prefer_metroids,
+                "Prefers Standard Metroids": artifacts.prefer_metroids,
+                "Prefers Stronger Metroids": artifacts.prefer_stronger_metroids,
+                "Prefers Bosses": artifacts.prefer_bosses,
             },
         ]
     else:
         return [
             {
-                "Kill Ridley": True,
+                "Defeat Ridley": True,
             }
         ]
 
@@ -71,7 +73,8 @@ class MSRPresetDescriber(GamePresetDescriber):
                     },
                 ),
                 {
-                    "Nerfed Power Bombs": configuration.nerf_power_bombs,
+                    "Charge Door Buff": configuration.charge_door_buff,
+                    "Beam Door Buff": configuration.beam_door_buff,
                     "Nerfed Super Missiles": configuration.nerf_super_missiles,
                 },
                 {

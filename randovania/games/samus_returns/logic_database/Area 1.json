@@ -267,50 +267,6 @@
                                 ]
                             }
                         },
-                        "Event - Chozo Seal Unlocked": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "Alpha 3",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "Alpha 2",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "Alpha 4",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "Alpha 5",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        },
                         "Above Bottom Elevator": {
                             "type": "or",
                             "data": {
@@ -704,31 +660,6 @@
                                         }
                                     }
                                 ]
-                            }
-                        }
-                    }
-                },
-                "Event - Chozo Seal Unlocked": {
-                    "node_type": "event",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -12852.65,
-                        "y": 1544.85,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "event_name": "DNA1",
-                    "connections": {
-                        "Chozo Seal": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
                             }
                         }
                     }
@@ -1687,7 +1618,7 @@
                         "Door to Outer Hub": {
                             "type": "or",
                             "data": {
-                                "comment": null,
+                                "comment": "SWJ: https://youtu.be/n_gpWjN5Px0",
                                 "items": [
                                     {
                                         "type": "template",
@@ -2103,7 +2034,7 @@
                         "Pickup (Missile Tank)": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "Melee Clip + Out Of bounds movement: https://youtu.be/qAbaEaatlEU (Will re-record with inputs at later date)",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -2251,7 +2182,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Video with inputs: https://www.youtube.com/watch?v=QmXq9hl-oB4",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -5587,15 +5518,58 @@
                                                                 }
                                                             },
                                                             {
-                                                                "type": "resource",
+                                                                "type": "and",
                                                                 "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "SWJ",
-                                                                    "amount": 5,
-                                                                    "negate": false
+                                                                    "comment": "Unmorph extend: Need to test its difficulty without HJ but its trivial with it. Will record video when i do so.",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Movement",
+                                                                                "amount": 3,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "UnmorphExtend",
+                                                                                "amount": 3,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
                                                                 }
                                                             }
                                                         ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "SWJ + UE: https://youtu.be/sBO8Pew_ijQ",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "SWJ",
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "UnmorphExtend",
+                                                        "amount": 2,
+                                                        "negate": false
                                                     }
                                                 }
                                             ]

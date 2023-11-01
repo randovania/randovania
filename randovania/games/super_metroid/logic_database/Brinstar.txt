@@ -532,15 +532,16 @@ Extra - asset_id: 84
   * Layers: default
   * Normal Door to Big Pink/Dock to Pink Brinstar Power Bomb Room
   > Pickup (Power Bomb Expansion)
-      Super Missile
+      All of the following:
+          Super Missile
+          # Defeat the Hoppers
+          Missile ≥ 10 or Super Missile ≥ 5 or Combat (Advanced) or Normal Damage ≥ 300
 
 > Pickup (Power Bomb Expansion); Heals? False
   * Layers: default
   * Pickup 24; Category? Minor
   > Door to Big Pink (South)
-      All of the following:
-          Morph Ball
-          Morph Ball Bombs or Power Bombs
+      Can Lay Any Bombs
 
 > Door to Big Pink (South); Heals? False
   * Layers: default
@@ -556,21 +557,36 @@ Extra - asset_id: 85
   > Door to Hopper Energy Tank Room
       All of the following:
           Any of the following:
+              # Open the gate
               Wave Beam
-              All of the following:
-                  Missile or Super Missile
-                  Any of the following:
-                      Gate Glitch (Expert)
-                      Hi-Jump Boots and Gate Glitch (Advanced)
+              # Gate Glitch
+              Super Missile ≥ 3 and Gate Glitch (Expert)
+              # Gate Glitch
+              Hi-Jump Boots and Super Missile ≥ 3 and Gate Glitch (Advanced)
           Any of the following:
-              Grapple Beam or Space Jump or Wall Jumps (Beginner)
-              Morph Ball Bombs and Morph Ball and Vertical Infinite Bomb Jump (Intermediate)
+              # A way to get up
+              Grapple Beam or Space Jump or Wall Jumps (Intermediate)
+              # IBJ
+              Vertical Infinite Bomb Jump (Intermediate) and Can Lay Bombs
+              # Easier WJ
+              Hi-Jump Boots and Wall Jumps (Beginner)
+          # Defeat the Hoppers
+          Combat (Intermediate) or Normal Damage ≥ 90
 
 > Door to Hopper Energy Tank Room; Heals? False
   * Layers: default
   * Normal Door to Hopper Energy Tank Room/Door to Pink Brinstar Hopper Room
   > Door to Big Pink
-      Space Jump
+      All of the following:
+          Any of the following:
+              # Get up
+              Space Jump or Wall Jumps (Intermediate)
+              # IBJ
+              Vertical Infinite Bomb Jump (Beginner) and Can Lay Bombs
+              # Easier WJ
+              Hi-Jump Boots and Wall Jumps (Beginner)
+          # Defeat the Hoppers
+          Combat (Intermediate) or Normal Damage ≥ 90
 
 ----------------
 Hopper Energy Tank Room
@@ -596,13 +612,15 @@ Extra - asset_id: 87
   * Layers: default
   * Normal Door to Big Pink/Door to Spore Spawn Kihunter Room
   > Door to Spore Spawn Room
-      Trivial
+      # Defeat the Kihunters
+      Combat (Beginner) or Normal Damage ≥ 100
 
 > Door to Spore Spawn Room; Heals? False
   * Layers: default
   * Normal Door to Spore Spawn Room/Door to Spore Spawn Kihunter Room
   > Door to Big Pink
-      Trivial
+      # Defeat the Kihunters
+      Combat (Beginner) or Normal Damage ≥ 100
 
 ----------------
 Spore Spawn Room
@@ -612,11 +630,28 @@ Extra - asset_id: 88
   * Layers: default
   * Super Missile Door to Spore Spawn Kihunter Room/Door to Spore Spawn Room
   > Door to Spore Spawn Super Room
-      Charge Beam or Missile
+      After Spore Spawn Defeated
+  > Event - Defeat Spore Spawn
+      All of the following:
+          # Defeat Spore Spawn
+          Charge Beam or Missile or Super Missile
+          Any of the following:
+              # Morph to avoid attacks
+              Morph Ball and Combat (Intermediate)
+              # Tank hits and farm health
+              Combat (Beginner) and Normal Damage ≥ 150
+              # Tank hits
+              Normal Damage ≥ 300
 
 > Door to Spore Spawn Super Room; Heals? False
   * Layers: default
   * Normal Door to Spore Spawn Super Room/Door to Spore Spawn Room
+  > Door to Spore Spawn Kihunter Room
+      After Spore Spawn Defeated
+
+> Event - Defeat Spore Spawn; Heals? False
+  * Layers: default
+  * Event Spore Spawn Defeated
   > Door to Spore Spawn Kihunter Room
       Trivial
 
@@ -633,7 +668,7 @@ Extra - asset_id: 89
 > Door to Spore Spawn Room; Heals? False
   * Layers: default
   * Normal Door to Spore Spawn Room/Door to Spore Spawn Super Room
-  > Door to Spore Spawn Farming Room
+  > Pickup (Super Missile Expansion)
       Trivial
 
 > Pickup (Super Missile Expansion); Heals? False
@@ -671,9 +706,9 @@ Extra - asset_id: 91
           Any of the following:
               Gravity Suit
               Any of the following:
-                  # https://www.youtube.com/watch?v=uOAF3ixpUfE
-                  Shinespark (Intermediate)
-                  Shinespark (Beginner) and Short Charge (Beginner)
+                  # Shinespark: https://www.youtube.com/watch?v=uOAF3ixpUfE
+                  # Wall Jumps to get out of the water
+                  Shinespark (Intermediate) and Wall Jumps (Beginner)
 
 > Pickup (Energy Tank); Heals? False
   * Layers: default
@@ -746,20 +781,13 @@ Extra - asset_id: 93
 > Door to Green Hill Zone; Heals? False
   * Layers: default
   * Normal Door to Green Hill Zone/Door to Morph Ball Room
-  > Teleporter to Crateria
-      Any of the following:
-          # Use PBs for both bomb block and PB blocks
-          Power Bombs ≥ 2 and Can Lay Power Bombs
-          All of the following:
-              # Destroy bomb blocks with something else and PB blocks with PBs
-              Can Lay Power Bombs
-              Any of the following:
-                  Can Lay Bombs
-                  Speed Booster and Machball (Expert) and Short Charge (Expert)
   > Pickup (Power Bomb Expansion)
-      All of the following:
-          Morph Ball
-          Morph Ball Bombs or Power Bombs
+      Any of the following:
+          Can Lay Bombs
+          # PB>=2 to ensure the player can get all the way across.
+          Power Bombs ≥ 2 and Can Lay Power Bombs
+          # Speedball
+          Morph Ball and Speed Booster and Machball (Advanced) and Short Charge (Expert)
 
 > Door to Construction Zone; Heals? False
   * Layers: default
@@ -772,36 +800,39 @@ Extra - asset_id: 93
   * Teleporter to Elevator to Blue Brinstar/Teleporter to Brinstar
   * Extra - scan_asset_id: None
   * Extra - teleporter_instance_id: None
-  > Door to Green Hill Zone
-      Can Lay Power Bombs
   > Door to Construction Zone
       Trivial
   > Pickup (Morph Ball)
       Trivial
-  > Pickup (Power Bomb Expansion)
-      Morph Ball and Power Bombs
 
 > Pickup (Morph Ball); Heals? False
   * Layers: default
   * Pickup 26; Category? Major
+  > Teleporter to Crateria
+      Morph Ball or Wall Jumps (Intermediate)
   > Event - Crateria Wakeup
       Trivial
+  > Pickup (Power Bomb Expansion)
+      # PB>=2 to ensure the player can get all the way across.
+      Power Bombs ≥ 2 and Can Lay Power Bombs
 
 > Event - Crateria Wakeup; Heals? False
   * Layers: default
   * Event Crateria Wakeup
-  > Teleporter to Crateria
-      Morph Ball
+  > Pickup (Morph Ball)
+      Trivial
 
 > Pickup (Power Bomb Expansion); Heals? False
   * Layers: default
   * Pickup 27; Category? Minor
   > Door to Green Hill Zone
-      All of the following:
-          Morph Ball
-          Morph Ball Bombs or Power Bombs
-  > Teleporter to Crateria
-      Morph Ball and Power Bombs
+      Any of the following:
+          Can Lay Bombs
+          # PB>=2 to ensure the player can get all the way across.
+          Power Bombs ≥ 2 and Can Lay Power Bombs
+  > Pickup (Morph Ball)
+      # PB>=2 to ensure the player can get all the way across.
+      Power Bombs ≥ 2 and Can Lay Power Bombs
 
 ----------------
 Construction Zone
@@ -978,28 +1009,28 @@ Extra - asset_id: 100
   * Layers: default
   * Normal Door to Noob Bridge/Door to Red Tower
   > Door to Red Brinstar Fireflea Room
-      Morph Ball and Power Bombs
+      Can Lay Power Bombs
   > Door to Hellway
       Any of the following:
           Space Jump
+          # Freeze enemies to use as platforms
           Hi-Jump Boots and Ice Beam
           All of the following:
-              Wall Jumps (Intermediate)
-              Super Missile ≥ 4 or Enabled Red Tower Tweaks
-          # https://www.youtube.com/watch?v=7bHxm5TttRI
+              Wall Jumps (Advanced)
+              Any of the following:
+                  Super Missile ≥ 4
+                  # Defeat enemies before jumping up
+                  Mid-Air Morph (Intermediate) and Can Lay Power Bombs
+          # Wall Jumps (Expert): https://youtu.be/K2swYVok6ks
           Wall Jumps (Expert)
   > Door to Bat Room
-      Any of the following:
-          Screw Attack
-          All of the following:
-              Morph Ball
-              Morph Ball Bombs or Power Bombs
+      Trivial
 
 > Door to Red Brinstar Fireflea Room; Heals? False
   * Layers: default
   * Normal Door to Red Brinstar Fireflea Room/Door to Red Tower
   > Door to Noob Bridge
-      Morph Ball and Power Bombs
+      Can Lay Power Bombs
 
 > Door to Red Tower Energy Charge Station; Heals? False
   * Layers: default
@@ -1019,7 +1050,18 @@ Extra - asset_id: 100
   > Door to Noob Bridge
       Any of the following:
           Space Jump
+          # Freeze enemies to use as platforms
           Hi-Jump Boots and Ice Beam
+          # WJ with Red Tower Tweaks
+          Wall Jumps (Advanced) and Enabled Red Tower Tweaks
+          # Spring Ball Jump: https://youtu.be/jeU6uLgY0Rk
+          Spring Ball Jump (Advanced) and Wall Jumps (Advanced) and Can Use Spring Ball
+          All of the following:
+              # Clear the way and IBJ
+              Vertical Infinite Bomb Jump (Advanced) and Can Lay Bombs
+              Super Missile ≥ 3 or Can Lay Power Bombs
+          # HBJ + IBJ
+          Horizontal Infinite Bomb Jump (Expert) and Vertical Infinite Bomb Jump (Intermediate) and Can Lay Bombs
   > Door to Red Tower Energy Charge Station
       Trivial
 
@@ -1031,13 +1073,23 @@ Extra - asset_id: 101
   * Layers: default
   * Normal Door to Red Tower/Door to Red Brinstar Fireflea Room
   > Door to X-Ray Scope Room
-      Grapple Beam or Space Jump
+      Any of the following:
+          Grapple Beam or Space Jump
+          # Expert Dboost: https://youtu.be/8pyUeVZ-8cA
+          Damage Boosting (Expert) and Normal Damage ≥ 100
+          # Advanced Dboost + IBJ
+          Damage Boosting (Advanced) and Vertical Infinite Bomb Jump (Expert) and Normal Damage ≥ 400 and Can Lay Bombs
 
 > Door to X-Ray Scope Room; Heals? False
   * Layers: default
   * Missile Door to X-Ray Scope Room/Door to Red Brinstar Fireflea Room
   > Door to Red Tower
-      Grapple Beam or Space Jump
+      Any of the following:
+          Grapple Beam or Space Jump
+          # Expert Dboosting: https://youtu.be/JcVRlFLFLEM
+          Damage Boosting (Expert) and Normal Damage ≥ 21
+          # Intermediate Dboosting
+          Damage Boosting (Intermediate) and Normal Damage ≥ 300
 
 ----------------
 X-Ray Scope Room
@@ -1053,9 +1105,7 @@ Extra - asset_id: 102
   * Layers: default
   * Pickup 38; Category? Major
   > Door to Red Brinstar Fireflea Room
-      All of the following:
-          Morph Ball
-          Morph Ball Bombs or Power Bombs
+      Mid-Air Morph (Expert) or Can Lay Any Bombs or Can Use Spring Ball
 
 ----------------
 Red Tower Energy Charge Station
@@ -1283,13 +1333,16 @@ Extra - asset_id: 112
   > Door to Warehouse Zeela Room
       All of the following:
           Any of the following:
+              # Get through the Super Missile blocks
               Super Missile ≥ 3
               Morph Ball and Super Missile
           Any of the following:
+              # Get up to door
               Hi-Jump Boots or Space Jump
-              # https://www.youtube.com/watch?v=rHMHqTHHqHs&ab_channel=VGsWalkthrough
+              # Movement (Beginner): https://youtu.be/rHMHqTHHqHs?si=56kWaLF3RPlH5Pg9
               Movement (Beginner) and Wall Jumps (Beginner)
-              Morph Ball Bombs and Morph Ball and Vertical Infinite Bomb Jump (Beginner)
+              # IBJ
+              Vertical Infinite Bomb Jump (Beginner) and Can Lay Bombs
   > Teleporter to Norfair
       Trivial
 
@@ -1319,9 +1372,7 @@ Extra - asset_id: 113
   > Door to Warehouse Energy Tank Room
       After Kraid Defeated
   > Door to Warehouse Kihunter Room
-      All of the following:
-          Morph Ball
-          Morph Ball Bombs or Power Bombs
+      Can Lay Any Bombs
 
 > Door to Warehouse Energy Tank Room; Heals? False
   * Layers: default
@@ -1333,9 +1384,7 @@ Extra - asset_id: 113
   * Layers: default
   * Normal Door to Warehouse Kihunter Room/Door to Warehouse Zeela Room
   > Door to Warehouse Entrance
-      All of the following:
-          Morph Ball
-          Morph Ball Bombs or Power Bombs
+      Can Lay Any Bombs
 
 ----------------
 Warehouse Energy Tank Room
@@ -1346,16 +1395,21 @@ Extra - asset_id: 114
   * Normal Door to Warehouse Zeela Room/Door to Warehouse Energy Tank Room
   > Pickup (Energy Tank)
       Any of the following:
-          Missile or Super Missile
-          All of the following:
-              Morph Ball
-              Morph Ball Bombs or Power Bombs
+          # Survive the Beetoms
+          Normal Damage ≥ 50
+          Combat (Beginner) and Normal Damage ≥ 25
 
 > Pickup (Energy Tank); Heals? False
   * Layers: default
   * Pickup 43; Category? Major
   > Door to Warehouse Zeela Room
-      Trivial
+      All of the following:
+          Any of the following:
+              # Survive the Beetoms
+              Normal Damage ≥ 50
+              Combat (Beginner) and Normal Damage ≥ 25
+          # Defeat the Beetoms to Unlock the Door
+          Missile or Screw Attack or Super Missile or Can Lay Any Bombs
 
 ----------------
 Warehouse Kihunter Room
@@ -1365,21 +1419,19 @@ Extra - asset_id: 115
   * Layers: default
   * Normal Door to Warehouse Zeela Room/Door to Warehouse Kihunter Room
   > Door to Warehouse Save Room
-      All of the following:
-          Morph Ball
-          Morph Ball Bombs or Power Bombs
+      Can Lay Any Bombs
   > Door to Baby Kraid Room
       Trivial
   > Pickup (Missile Expansion)
-      Morph Ball and Power Bombs
+      All of the following:
+          Can Lay Power Bombs
+          Spring Ball or Mid-Air Morph (Intermediate)
 
 > Door to Warehouse Save Room; Heals? False
   * Layers: default
   * Normal Door to Warehouse Save Room/Door to Warehouse Kihunter Room
   > Door to Warehouse Zeela Room
-      All of the following:
-          Morph Ball
-          Morph Ball Bombs or Power Bombs
+      Can Lay Any Bombs
 
 > Door to Baby Kraid Room; Heals? False
   * Layers: default
@@ -1387,15 +1439,16 @@ Extra - asset_id: 115
   > Door to Warehouse Zeela Room
       Any of the following:
           Hi-Jump Boots or Space Jump or Wall Jumps (Beginner)
-          Morph Ball Bombs and Morph Ball and Vertical Infinite Bomb Jump (Beginner)
+          # IBJ
+          Vertical Infinite Bomb Jump (Beginner) and Can Lay Bombs
 
 > Pickup (Missile Expansion); Heals? False
   * Layers: default
   * Pickup 44; Category? Minor
   > Door to Warehouse Zeela Room
-      All of the following:
-          Morph Ball
-          Morph Ball Bombs or Power Bombs
+      Can Lay Any Bombs
+  > Door to Warehouse Save Room
+      Morph Ball
 
 ----------------
 Warehouse Save Room
@@ -1501,11 +1554,16 @@ Extra - asset_id: 120
   > Event - Kraid Defeated
       All of the following:
           Any of the following:
-              Hi-Jump Boots or Space Jump or Wall Jumps (Beginner)
+              Hi-Jump Boots or Space Jump or Wall Jumps (Intermediate)
               All of the following:
-                  # https://www.youtube.com/watch?v=qg3_yrHIAzk
-                  Super Missile ≥ 3 and Combat (Intermediate)
+                  # Kraid Quick Kill: https://www.youtube.com/watch?v=qg3_yrHIAzk
+                  Combat (Intermediate)
+                  # Open Kraid's Mouth
                   Charge Beam or Missile or Super Missile
+                  Any of the following:
+                      # Damage to defeat
+                      Super Missile ≥ 4
+                      Missile and Super Missile ≥ 3
           Charge Beam or Missile ≥ 10 or Super Missile ≥ 4
 
 > Door to Varia Suit Room; Heals? False

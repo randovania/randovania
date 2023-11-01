@@ -7,12 +7,6 @@ import os
 from textwrap import wrap
 from typing import TYPE_CHECKING
 
-import py_randomprime
-from open_prime_rando.dol_patching import all_prime_dol_patches
-from ppc_asm import assembler
-from Random_Enemy_Attributes.Random_Enemy_Attributes import PyRandom_Enemy_Attributes
-from retro_data_structures.game_check import Game as RDSGame
-
 from randovania import monitoring
 from randovania.exporter.game_exporter import GameExporter, GameExportParams
 from randovania.game_description import default_database
@@ -179,6 +173,12 @@ class PrimeGameExporter(GameExporter):
 
         export_params.cache_path.mkdir(parents=True, exist_ok=True)
         cache_dir = os.fspath(export_params.cache_path)
+
+        import py_randomprime
+        from open_prime_rando.dol_patching import all_prime_dol_patches
+        from ppc_asm import assembler
+        from Random_Enemy_Attributes.Random_Enemy_Attributes import PyRandom_Enemy_Attributes
+        from retro_data_structures.game_check import Game as RDSGame
 
         symbols = py_randomprime.symbols_for_file(input_file)
         if symbols is None:

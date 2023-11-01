@@ -14,7 +14,7 @@ if TYPE_CHECKING:
     from collections.abc import Callable
 
 
-@patch("randovania.generator.generator._validate_item_pool_size", autospec=True)
+@patch("randovania.generator.generator._validate_pickup_pool_size", autospec=True)
 @patch("randovania.generator.generator.create_player_pool", autospec=True)
 @patch("randovania.generator.generator._distribute_remaining_items", autospec=True)
 async def test_create_patches(

@@ -11,6 +11,8 @@ from randovania.layout.base.base_configuration import BaseConfiguration
 @dataclasses.dataclass(frozen=True)
 class MSRArtifactConfig(BitPackDataclass, JsonDataclass):
     prefer_metroids: bool
+    prefer_stronger_metroids: bool
+    prefer_bosses: bool
     required_artifacts: int = dataclasses.field(metadata={"min": 0, "max": 39, "precision": 1})
 
 
@@ -21,7 +23,8 @@ class MSRConfiguration(BaseConfiguration):
     starting_aeion: int = dataclasses.field(metadata={"min": 1000, "max": 2200, "precision": 1})
     elevator_grapple_blocks: bool
     area3_interior_shortcut_no_grapple: bool
-    nerf_power_bombs: bool
+    charge_door_buff: bool
+    beam_door_buff: bool
     nerf_super_missiles: bool
     surface_crumbles: bool
     area1_crumbles: bool

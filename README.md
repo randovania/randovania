@@ -9,6 +9,7 @@ New here or looking to install? Check [our website](https://randovania.github.io
 <!-- Begin SUPPORTED -->
 
 ### Supported Games
+ - Another Metroid 2 Remake
  - Cave Story
  - Metroid Dread
  - Metroid Prime
@@ -19,7 +20,6 @@ New here or looking to install? Check [our website](https://randovania.github.io
 <!-- Begin EXPERIMENTAL -->
 
 ### Experimental Games
- - Another Metroid 2 Remake
  - Metroid Prime 3: Corruption
  - Metroid: Samus Returns
  - Super Metroid
