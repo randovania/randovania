@@ -4,6 +4,7 @@ import typing
 
 from PySide6 import QtWidgets
 
+import randovania
 from randovania.games.dread.layout.dread_configuration import DreadConfiguration, DreadRavenBeakDamageMode
 from randovania.gui.generated.preset_dread_patches_ui import Ui_PresetDreadPatches
 from randovania.gui.lib import signal_handling
@@ -37,6 +38,7 @@ class PresetDreadPatches(PresetTab, Ui_PresetDreadPatches):
         signal_handling.on_checked(
             self.raven_beak_damage_table_handling_check, self._on_raven_beak_damage_table_handling_changed
         )
+        self.nerf_power_bombs_check.setEnabled(randovania.is_dev_version())
 
     @classmethod
     def tab_title(cls) -> str:
@@ -73,3 +75,5 @@ class PresetDreadPatches(PresetTab, Ui_PresetDreadPatches):
 
         self._orig_rb_damage_mode = config.raven_beak_damage_table_handling
         self.raven_beak_damage_table_handling_check.setChecked(not config.raven_beak_damage_table_handling.is_default)
+        if not self.nerf_power_bombs_check.isEnabled():
+            self.nerf_power_bombs_check.setChecked(False)
