@@ -89,6 +89,10 @@ services:
     hostname: "{{.Node.Hostname}}"
 
     deploy:
+      placement:
+        constraints:
+          - node.labels.randovania-allow-${SERVER_ENVIRONMENT} == true
+
       resources:
         reservations:
           memory: 150M
