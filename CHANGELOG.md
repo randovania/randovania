@@ -5,10 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [6.5.0] - 2023-11-??
+## [7.1.0] - 2023-12-??
+
+- To be added.
+
+## [7.0.1] - 2023-11-??
+
+- To be decided if it will be necessary.
+
+## [7.0.0] - 2023-11-03
 
 - **Major** - Added: AM2R has been added with full single player support. Includes Door Lock Rando, some toggleable patches and more.
-- Changed: The Changelog window has recieved a slight overhaul. The date of each release is shown, hyperlinks are fixed, and patch notes are now accessed through a drop-down box (previously used vertical tabs).
+- Changed: The Changelog window has received a slight overhaul. The date of each release is shown, hyperlinks are fixed, and patch notes are now accessed through a drop-down box (previously used vertical tabs).
 - Changed: Trick level sliders ignore mouse scroll inputs, preventing unintended preset changes. 
 - Changed: The Trick Details list in the menu bar no longer displays tricks that shouldn't be visible in the UI.
 - Changed: For Multiworld, sending collected locations to the server can no longer fail if there's an error encoding the inventory.
@@ -92,7 +100,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Counting normal damage reductions from suits twice.
 - Fixed: Item position randomizer not being random.
 - Fixed: Foreign object in ruined shrine
-- Fixed: Room rando + cutscene skip compatability
+- Fixed: Room rando + cutscene skip compatibility
 - Fixed: Crash when exporting a seed with a blast shield in phazon infusion chamber and essence death teleporter
 - Fixed: [PAL/JP] Restored Missile and Charge shot stun in one hit on Ridley
 - Fixed: [PAL/JP] Restored Wavebuster cheese on Ridley
@@ -100,13 +108,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Prime 2: Echoes
 
-- Added: One new Joke Hint refering to Raven Beak added to the pool
+- Added: One new Joke Hint referring to Raven Beak added to the pool
 - Changed: In the Auto-Tracker Pixel Theme, visors are now pilled, Boost Ball icon with a proper trail, Screw Attack icon now faces clockwise, dedicated Power Beam icon.
 - Changed: Damage Requirements for Warrior's Walk Item Pickup has been lowered from 80 to 60 dmg in total (30 energy getting the item and 30 energy going back)
 
-## [6.4.1] - 2023-10-??
+## [6.4.1] - 2023-10-12
 
-- To be decided if needed.
+### Metroid Dread
+
+- Removed: The "Power Bomb Limitations" has been disabled due to issues. This will be re-added in the future.
 
 ## [6.4.0] - 2023-10-05
 
