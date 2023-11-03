@@ -77,7 +77,4 @@ class DreadConfiguration(BaseConfiguration):
             if trick.hide_from_ui and self.trick_level.level_for_trick(trick) != LayoutTrickLevel.DISABLED:
                 result.append(f"Enabled {trick.long_name}")
 
-        if self.nerf_power_bombs:
-            result.append("Limited Power Bombs")
-
         return result

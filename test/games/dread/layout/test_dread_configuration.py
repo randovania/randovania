@@ -26,13 +26,11 @@ def test_has_unsupported_features(preset_manager):
             prefer_major_bosses=False,
             required_artifacts=1,
         ),
-        nerf_power_bombs=True,
     )
 
     assert configuration.unsupported_features() == [
         "Metroid DNA on non-boss/EMMI",
         "Enabled Heat/Cold Runs",
-        "Limited Power Bombs",
     ]
 
 
