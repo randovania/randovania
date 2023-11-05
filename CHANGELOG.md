@@ -16,6 +16,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: In EMMI Zone Exit Middle: Use Wave Beam and Charge Beam or Power Bombs to open the Upper Door to EMMI Zone Exit West, then traverse through that room to get to the upper door.
 - Changed: In EMMI Zone Exit Middle: Going from the Dock to Map Station to the Door to EMMI ZONE Exit West (Lower) is now trivial.
 
+##### Ghavoran
+
+- Fixed: Missing check on PB limitations to get to Orange Teleportal by opening the door from the tunnels below.
+
 ## [7.0.1] - 2023-11-??
 
 - To be decided if it will be necessary.
