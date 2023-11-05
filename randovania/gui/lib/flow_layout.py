@@ -108,7 +108,6 @@ class FlowLayout(QLayout):
     def _do_layout(self, rect, test_only):
         x = rect.x()
         y = rect.y()
-        space_x = 0
         line_height = 0
         spacing = self.spacing()
 
@@ -119,11 +118,15 @@ class FlowLayout(QLayout):
             style = item.widget().style()
             layout_spacing_x = style.layoutSpacing(QSizePolicy.PushButton, QSizePolicy.PushButton, Qt.Horizontal)
             layout_spacing_y = style.layoutSpacing(QSizePolicy.PushButton, QSizePolicy.PushButton, Qt.Vertical)
-            space_x = spacing + layout_spacing_x
+            space_x = (
+                spacing + layout_spacing_x
+            ) * item.widget().isVisible()  # If an item isn't visible, it does not have any influence on the next
             space_y = spacing + layout_spacing_y
             next_x = x + item.sizeHint().width() + space_x
             if next_x - space_x > rect.right() and line_height > 0:
-                rows.append((row, rect.right() - x, line_height))
+                rows.append(
+                    (row, rect.right() - x - space_x, line_height)
+                )  # We need to remove the unnecessary extra padding from all rows, not just the last
                 row = []
                 x = rect.x()
                 y = y + line_height + space_y
