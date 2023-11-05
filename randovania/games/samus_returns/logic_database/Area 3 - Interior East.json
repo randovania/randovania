@@ -284,8 +284,25 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "template",
-                                                    "data": "Can Spiderspark"
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Spiderspark",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Spiderspark"
+                                                            }
+                                                        ]
+                                                    }
                                                 },
                                                 {
                                                     "type": "template",
@@ -1798,7 +1815,7 @@
                                                                             "data": {
                                                                                 "type": "tricks",
                                                                                 "name": "Spiderspark",
-                                                                                "amount": 1,
+                                                                                "amount": 2,
                                                                                 "negate": false
                                                                             }
                                                                         },
@@ -2087,8 +2104,46 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "template",
-                                                    "data": "Climb Rooms Vertically (No High Jump)"
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Simple IBJ"
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Can Spiderspark"
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Spiderspark",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Space",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
                                                 },
                                                 {
                                                     "type": "and",
@@ -2766,8 +2821,8 @@
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "tricks",
-                                                                    "name": "Movement",
-                                                                    "amount": 1,
+                                                                    "name": "Spiderspark",
+                                                                    "amount": 2,
                                                                     "negate": false
                                                                 }
                                                             }
@@ -3175,8 +3230,8 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "tricks",
-                                                        "name": "Movement",
-                                                        "amount": 1,
+                                                        "name": "Spiderspark",
+                                                        "amount": 2,
                                                         "negate": false
                                                     }
                                                 }
@@ -3203,8 +3258,13 @@
                                                         "comment": null,
                                                         "items": [
                                                             {
-                                                                "type": "template",
-                                                                "data": "Climb Rooms Vertically (High Jump)"
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Space",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
                                                             },
                                                             {
                                                                 "type": "and",
@@ -3228,13 +3288,34 @@
                                                                 }
                                                             },
                                                             {
-                                                                "type": "resource",
+                                                                "type": "and",
                                                                 "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "UnmorphExtend",
-                                                                    "amount": 2,
-                                                                    "negate": false
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Boots",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "UnmorphExtend",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
                                                                 }
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Simple IBJ"
                                                             }
                                                         ]
                                                     }
@@ -3843,12 +3924,29 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "template",
-                                                    "data": "Simple IBJ"
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Spiderspark",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Spiderspark"
+                                                            }
+                                                        ]
+                                                    }
                                                 },
                                                 {
                                                     "type": "template",
-                                                    "data": "Can Spiderspark"
+                                                    "data": "Simple IBJ"
                                                 }
                                             ]
                                         }
