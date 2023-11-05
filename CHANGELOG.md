@@ -7,7 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [7.1.0] - 2023-12-??
 
-- To be added.
+### Metroid Dread
+
+#### Logic Database
+
+##### Ghavoran
+
+- Fixed: Missing check on PB limitations to get to Orange Teleportal by opening the door from the tunnels below.
 
 ## [7.0.1] - 2023-11-??
 
