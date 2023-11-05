@@ -7,7 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [7.1.0] - 2023-12-??
 
-- To be added.
+### Metroid Dread
+
+#### Logic Database
+
+##### Ferenia
+
+- Changed: In EMMI Zone Exit Middle: Going from the Dock to Map Station to the Door to EMMI ZONE Exit West (Lower) is now trivial.
 
 ## [7.0.1] - 2023-11-??
 
