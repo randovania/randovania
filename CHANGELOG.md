@@ -7,7 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [7.1.0] - 2023-12-??
 
-- To be added.
+### Metroid Dread
+
+#### Logic Database
+
+##### Ghavoran
+
+- Changed: Golzuna logic has been overhauled to include Storm Missiles, Bombs, or Cross Bombs to fight it and forcing Flash Shift, Spin Boost, or Space Jump to dodge its attacks.
 
 ## [7.0.1] - 2023-11-??
 
