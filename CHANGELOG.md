@@ -7,7 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [7.1.0] - 2023-12-??
 
-- To be added.
+### Metroid Dread
+
+#### Logic Database
+
+##### Ferenia
+
+- Added: In EMMI Zone Exit Middle: Use Wave Beam and Charge Beam or Power Bombs to open the Upper Door to EMMI Zone Exit West, then traverse through that room to get to the upper door.
+- Changed: In EMMI Zone Exit Middle: Going from the Dock to Map Station to the Door to EMMI ZONE Exit West (Lower) is now trivial.
 
 ## [7.0.1] - 2023-11-??
 
