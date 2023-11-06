@@ -116,6 +116,9 @@ class DreadPresetDescriber(GamePresetDescriber):
                 {
                     "X Starts Released": configuration.x_starts_released,
                 },
+                {
+                    "Power Bomb Limitations": configuration.nerf_power_bombs,
+                },
             ],
             "Environmental Damage": _format_environmental_damage(configuration),
         }
