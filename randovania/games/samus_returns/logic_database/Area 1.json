@@ -4405,7 +4405,7 @@
                                 "negate": false
                             }
                         },
-                        "Dock to Save Station South (Top)": {
+                        "Dock to Save Station South": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4414,7 +4414,7 @@
                         }
                     }
                 },
-                "Dock to Save Station South (Top)": {
+                "Dock to Save Station South": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4591,12 +4591,12 @@
                         }
                     }
                 },
-                "Dock to Save Station South (OoB)": {
+                "Dock from Save Station South": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -4221.097282644792,
-                        "y": 2821.9978746014876,
+                        "x": -4221.1,
+                        "y": 2822.0,
                         "z": 0.0
                     },
                     "description": "",
@@ -4611,7 +4611,7 @@
                         "area": "Save Station South",
                         "node": "Dock to One-Way Puzzle (OoB)"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "Blocked Passage",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -6013,7 +6013,7 @@
                     "default_connection": {
                         "region": "Area 1",
                         "area": "One-Way Puzzle",
-                        "node": "Dock to Save Station South (Top)"
+                        "node": "Dock to Save Station South"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -6161,7 +6161,7 @@
                     "default_connection": {
                         "region": "Area 1",
                         "area": "One-Way Puzzle",
-                        "node": "Dock to Save Station South (OoB)"
+                        "node": "Dock from Save Station South"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -6339,8 +6339,65 @@
                         "Tunnel to Teleporter Room": {
                             "type": "template",
                             "data": "Lay Any Bomb"
+                        },
+                        "Dock to Teleporter Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "MeleeClip",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Fully Freeze Enemy"
+                                    }
+                                ]
+                            }
                         }
                     }
+                },
+                "Dock to Teleporter Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 5898.14,
+                        "y": 6528.14,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "other",
+                    "default_connection": {
+                        "region": "Area 1",
+                        "area": "Teleporter Room",
+                        "node": "Dock from Teleporter Access"
+                    },
+                    "default_dock_weakness": "Open Passage",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {}
                 }
             }
         },
@@ -7558,6 +7615,41 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "event_name": "Area 1 Teleporter",
+                    "connections": {
+                        "Dock to Shaft East": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Dock from Teleporter Access": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 5996.14,
+                        "y": 6394.65,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "other",
+                    "default_connection": {
+                        "region": "Area 1",
+                        "area": "Teleporter Access",
+                        "node": "Dock to Teleporter Room"
+                    },
+                    "default_dock_weakness": "Blocked Passage",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Dock to Shaft East": {
                             "type": "and",
