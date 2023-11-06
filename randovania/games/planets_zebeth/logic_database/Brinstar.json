@@ -870,25 +870,16 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "items",
+                                            "name": "Boss Key",
+                                            "amount": 9,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
                                             "name": "Morph Ball",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "KraidDead",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "RidleyDead",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -1010,7 +1001,21 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Center of room": {
+                        "Door to Corridor 4": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Corridor 5": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Corridor 3": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1045,7 +1050,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Center of room": {
+                        "Door to Vestibule": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1080,7 +1085,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Center of room": {
+                        "Door to Vestibule": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1115,52 +1120,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Center of room": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Center of room": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 123.22088933853644,
-                        "y": 1218.4940020234137,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "connections": {
                         "Door to Vestibule": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Door to Corridor 4": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Door to Corridor 5": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Door to Corridor 3": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1202,13 +1162,6 @@
                                 "comment": null,
                                 "items": []
                             }
-                        },
-                        "Door to Transport to Norfair": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
                         }
                     }
                 },
@@ -1244,6 +1197,13 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Door to Transport to Norfair": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -1273,7 +1233,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Pickup (Missile Launcher)": {
+                        "Door to Gold-colored shaft": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1338,9 +1298,11 @@
                         "default"
                     ],
                     "extra": {
-                        "object_id": 100024
+                        "object_id": 100024,
+                        "global_x": 5504,
+                        "global_y": 2512
                     },
-                    "valid_starting_location": false,
+                    "valid_starting_location": true,
                     "dock_type": "teleporter",
                     "default_connection": {
                         "region": "Norfair",
@@ -1468,7 +1430,24 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Bridge": {
+                        "Door to Varia Suit corridor": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Hi-Jump",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Door to Corridor 7": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1503,12 +1482,9 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Bridge": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
+                        "Door to Corridor 3": {
+                            "type": "template",
+                            "data": "Can Use Bombs"
                         }
                     }
                 },
@@ -1538,47 +1514,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Bridge": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Bridge": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 128.0,
-                        "y": 136.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "connections": {
                         "Door to Corridor 3": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Door to Varia Suit corridor": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Hi-Jump",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        "Door to Corridor 7": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2370,9 +2306,11 @@
                         "default"
                     ],
                     "extra": {
-                        "object_id": 100023
+                        "object_id": 100023,
+                        "global_x": 640,
+                        "global_y": 352
                     },
-                    "valid_starting_location": false,
+                    "valid_starting_location": true,
                     "dock_type": "teleporter",
                     "default_connection": {
                         "region": "Tourian",
@@ -2428,6 +2366,13 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
+                        "Door to Bomb Block shaft (Right)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Pickup (Energy Tank)": {
                             "type": "and",
                             "data": {
@@ -2463,6 +2408,13 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
+                        "Door to End shaft": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Pickup (Energy Tank)": {
                             "type": "and",
                             "data": {
@@ -2491,13 +2443,6 @@
                     "pickup_index": 7,
                     "location_category": "minor",
                     "connections": {
-                        "Door to End shaft": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
                         "Door to Bomb Block shaft (Right)": {
                             "type": "and",
                             "data": {
@@ -2541,6 +2486,27 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
+                        "Door to End shaft": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Use Bombs"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Knowledge",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
                         "Pickup (Missile Tank)": {
                             "type": "and",
                             "data": {
@@ -2576,6 +2542,27 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
+                        "Door to Corridor-connecting room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Use Bombs"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Knowledge",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
                         "Pickup (Energy Tank)": {
                             "type": "and",
                             "data": {
@@ -2610,13 +2597,6 @@
                                 "comment": null,
                                 "items": []
                             }
-                        },
-                        "Secret Path": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
                         }
                     }
                 },
@@ -2645,51 +2625,6 @@
                                 "comment": null,
                                 "items": []
                             }
-                        },
-                        "Secret Path": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Can Use Bombs"
-                                    }
-                                ]
-                            }
-                        }
-                    }
-                },
-                "Secret Path": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 1312.0,
-                        "y": 80.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "connections": {
-                        "Pickup (Missile Tank)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Can Use Bombs"
-                                    }
-                                ]
-                            }
-                        },
-                        "Pickup (Energy Tank)": {
-                            "type": "template",
-                            "data": "Can Use Bombs"
                         }
                     }
                 }
@@ -2883,7 +2818,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Bridge": {
+                        "Door to Bomb Block shaft connecting room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2918,11 +2853,23 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Bridge": {
+                        "Door to Corridor 6": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
+                            }
+                        },
+                        "Door to Cavernous hall": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Use Bombs"
+                                    }
+                                ]
                             }
                         }
                     }
@@ -2953,7 +2900,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Bridge": {
+                        "Door to Bomb Block shaft connecting room": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -2978,41 +2925,6 @@
                                     }
                                 ]
                             }
-                        }
-                    }
-                },
-                "Bridge": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 128.0,
-                        "y": 632.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "connections": {
-                        "Door to Corridor 6": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Door to Bomb Block shaft connecting room": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Door to Cavernous hall": {
-                            "type": "template",
-                            "data": "Can Use Bombs"
                         }
                     }
                 }
