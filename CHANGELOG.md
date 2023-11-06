@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Dread
 
+- Added: Power Bomb Limitations now shows up on the Preset Summary when enabled.
+
 #### Logic Database
 
 ##### Ferenia
