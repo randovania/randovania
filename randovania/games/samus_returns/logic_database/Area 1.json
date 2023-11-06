@@ -6390,7 +6390,7 @@
                     "default_connection": {
                         "region": "Area 1",
                         "area": "Teleporter Room",
-                        "node": "Teleporter"
+                        "node": "Dock from Teleporter Access"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -7615,6 +7615,41 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "event_name": "Area 1 Teleporter",
+                    "connections": {
+                        "Dock to Shaft East": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Dock from Teleporter Access": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 5996.14,
+                        "y": 6394.65,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "other",
+                    "default_connection": {
+                        "region": "Area 1",
+                        "area": "Teleporter Access",
+                        "node": "Dock to Teleporter Room"
+                    },
+                    "default_dock_weakness": "Blocked Passage",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Dock to Shaft East": {
                             "type": "and",
