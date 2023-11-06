@@ -64,13 +64,16 @@ def _get_expected_game_changes_text(rb_damage_mode: DreadRavenBeakDamageMode):
         return [
             "Open Hanubia Shortcut, Easier Path to Itorash in Hanubia",
             "Raven Beak Damage: Unmodified",
+            "Power Bomb Limitations",
         ]
     elif rb_damage_mode == DreadRavenBeakDamageMode.CONSISTENT_HIGH:
         return [
             "Open Hanubia Shortcut, Easier Path to Itorash in Hanubia",
             "Raven Beak Damage: Consistent, without damage reduction",
+            "Power Bomb Limitations",
         ]
     else:
         return [
             "Open Hanubia Shortcut, Easier Path to Itorash in Hanubia",
+            "Power Bomb Limitations",
         ]
