@@ -160,7 +160,7 @@ Extra - map_name: Brinstar/x56_y22
   * Layers: default
   * Normal Door to Transport to Tourian/Door to Entrance to Tourian
   > Door to Corridor 2
-      Morph Ball and After Kraid Boss Killed and After Ridley Boss Killed
+      Boss Key ≥ 9 and Morph Ball
 
 ----------------
 Vestibule
@@ -183,36 +183,29 @@ Extra - map_name: Brinstar/x200_y90
 > Door to Vestibule; Heals? False
   * Layers: default
   * Normal Door to Vestibule/Door to Gold-colored shaft
-  > Center of room
-      Trivial
-
-> Door to Corridor 4; Heals? False
-  * Layers: default
-  * Normal Door to Corridor 4/Door to Gold-colored shaft
-  > Center of room
-      Trivial
-
-> Door to Corridor 5; Heals? False
-  * Layers: default
-  * Normal Door to Corridor 5/Door to Gold-colored shaft
-  > Center of room
-      Trivial
-
-> Door to Corridor 3; Heals? False
-  * Layers: default
-  * Normal Door to Corridor 3/Door to Gold-colored shaft
-  > Center of room
-      Trivial
-
-> Center of room; Heals? False
-  * Layers: default
-  > Door to Vestibule
-      Trivial
   > Door to Corridor 4
       Trivial
   > Door to Corridor 5
       Trivial
   > Door to Corridor 3
+      Trivial
+
+> Door to Corridor 4; Heals? False
+  * Layers: default
+  * Normal Door to Corridor 4/Door to Gold-colored shaft
+  > Door to Vestibule
+      Trivial
+
+> Door to Corridor 5; Heals? False
+  * Layers: default
+  * Normal Door to Corridor 5/Door to Gold-colored shaft
+  > Door to Vestibule
+      Trivial
+
+> Door to Corridor 3; Heals? False
+  * Layers: default
+  * Normal Door to Corridor 3/Door to Gold-colored shaft
+  > Door to Vestibule
       Trivial
 
 ----------------
@@ -224,19 +217,19 @@ Extra - map_name: Brinstar/x272_y157
   * Extra - object_id: 100035
   > Door to Gold-colored shaft
       Trivial
-  > Door to Transport to Norfair
-      Trivial
 
 > Door to Gold-colored shaft; Heals? False
   * Layers: default
   * Normal Door to Gold-colored shaft/Door to Corridor 5
   > Pickup (Missile Launcher)
       Trivial
+  > Door to Transport to Norfair
+      Trivial
 
 > Door to Transport to Norfair; Heals? False
   * Layers: default
   * Normal Door to Transport to Norfair/Door to Corridor 5
-  > Pickup (Missile Launcher)
+  > Door to Gold-colored shaft
       Trivial
 
 ----------------
@@ -248,10 +241,12 @@ Extra - map_name: Brinstar/x344_y155
   > Teleporter to Norfair
       Trivial
 
-> Teleporter to Norfair; Heals? True
+> Teleporter to Norfair; Heals? True; Spawn Point
   * Layers: default
   * Teleporter to Transport to Brinstar/Teleporter to Brinstar; Excluded from Dock Lock Rando
   * Extra - object_id: 100024
+  * Extra - global_x: 5504
+  * Extra - global_y: 2512
   > Door to Corridor 5
       Trivial
 
@@ -276,28 +271,21 @@ Extra - map_name: Brinstar/x312_y30
 > Door to Corridor 3; Heals? False
   * Layers: default
   * Normal Door to Corridor 3/Door to Corridor-connecting room
-  > Bridge
+  > Door to Varia Suit corridor
+      Hi-Jump Boots
+  > Door to Corridor 7
       Trivial
 
 > Door to Varia Suit corridor; Heals? False
   * Layers: default
   * Normal Door to Varia Suit corridor/Door to Corridor-connecting room
-  > Bridge
-      Trivial
+  > Door to Corridor 3
+      Can Use Bombs
 
 > Door to Corridor 7; Heals? False
   * Layers: default
   * Normal Door to Corridor 7/Door to Corridor-connecting room
-  > Bridge
-      Trivial
-
-> Bridge; Heals? False
-  * Layers: default
   > Door to Corridor 3
-      Trivial
-  > Door to Varia Suit corridor
-      Hi-Jump Boots
-  > Door to Corridor 7
       Trivial
 
 ----------------
@@ -456,10 +444,12 @@ Extra - map_name: Brinstar/x40_y22
   > Teleporter to Tourian
       Trivial
 
-> Teleporter to Tourian; Heals? True
+> Teleporter to Tourian; Heals? True; Spawn Point
   * Layers: default
   * Teleporter to Entrance shaft/Teleporter to Brinstar; Excluded from Dock Lock Rando
   * Extra - object_id: 100023
+  * Extra - global_x: 640
+  * Extra - global_y: 352
   > Door to Entrance to Tourian
       Trivial
 
@@ -469,12 +459,16 @@ Extra - map_name: Brinstar/x464_y97
 > Door to End shaft; Heals? False
   * Layers: default
   * Normal Door to End shaft/Door to Corridor 6
+  > Door to Bomb Block shaft (Right)
+      Trivial
   > Pickup (Energy Tank)
       Trivial
 
 > Door to Bomb Block shaft (Right); Heals? False
   * Layers: default
   * Normal Door to Bomb Block shaft (Right)/Door to Corridor 6
+  > Door to End shaft
+      Trivial
   > Pickup (Energy Tank)
       Trivial
 
@@ -482,8 +476,6 @@ Extra - map_name: Brinstar/x464_y97
   * Layers: default
   * Pickup 7; Category? Minor
   * Extra - object_id: 100033
-  > Door to End shaft
-      Trivial
   > Door to Bomb Block shaft (Right)
       Trivial
 
@@ -493,12 +485,16 @@ Extra - map_name: Brinstar/x392_y37
 > Door to Corridor-connecting room; Heals? False
   * Layers: default
   * Normal Door to Corridor-connecting room/Door to Corridor 7
+  > Door to End shaft
+      Knowledge (Beginner) and Can Use Bombs
   > Pickup (Missile Tank)
       Trivial
 
 > Door to End shaft; Heals? False
   * Layers: default
   * Normal Door to End shaft/Door to Corridor 7
+  > Door to Corridor-connecting room
+      Knowledge (Beginner) and Can Use Bombs
   > Pickup (Energy Tank)
       Trivial
 
@@ -508,8 +504,6 @@ Extra - map_name: Brinstar/x392_y37
   * Extra - object_id: 100030
   > Door to Corridor-connecting room
       Trivial
-  > Secret Path
-      Trivial
 
 > Pickup (Energy Tank); Heals? False
   * Layers: default
@@ -517,15 +511,6 @@ Extra - map_name: Brinstar/x392_y37
   * Extra - object_id: 100031
   > Door to End shaft
       Trivial
-  > Secret Path
-      Can Use Bombs
-
-> Secret Path; Heals? False
-  * Layers: default
-  > Pickup (Missile Tank)
-      Can Use Bombs
-  > Pickup (Energy Tank)
-      Can Use Bombs
 
 ----------------
 Bomb Block shaft (Left)
@@ -563,27 +548,20 @@ Extra - map_name: Brinstar/x344_y113
 > Door to Corridor 6; Heals? False
   * Layers: default
   * Normal Door to Corridor 6/Door to Bomb Block shaft (Right)
-  > Bridge
+  > Door to Bomb Block shaft connecting room
       Trivial
 
 > Door to Bomb Block shaft connecting room; Heals? False
   * Layers: default
   * Normal Door to Bomb Block shaft connecting room/Door to Bomb Block shaft (Right)
-  > Bridge
+  > Door to Corridor 6
       Trivial
+  > Door to Cavernous hall
+      Can Use Bombs
 
 > Door to Cavernous hall; Heals? False
   * Layers: default
   * Normal Door to Cavernous hall/Door to Bomb Block shaft (Right)
-  > Bridge
-      Hi-Jump Boots or Ice Beam
-
-> Bridge; Heals? False
-  * Layers: default
-  > Door to Corridor 6
-      Trivial
   > Door to Bomb Block shaft connecting room
-      Trivial
-  > Door to Cavernous hall
-      Can Use Bombs
+      Hi-Jump Boots or Ice Beam
 
