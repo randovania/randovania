@@ -215,21 +215,28 @@ Extra - map_name: Brinstar/x272_y157
   * Layers: default
   * Pickup 9; Category? Major
   * Extra - object_id: 100035
-  > Door to Gold-colored shaft
+  > Room Center
       Trivial
 
 > Door to Gold-colored shaft; Heals? False
   * Layers: default
   * Normal Door to Gold-colored shaft/Door to Corridor 5
-  > Pickup (Missile Launcher)
-      Trivial
-  > Door to Transport to Norfair
+  > Room Center
       Trivial
 
 > Door to Transport to Norfair; Heals? False
   * Layers: default
   * Normal Door to Transport to Norfair/Door to Corridor 5
+  > Room Center
+      Trivial
+
+> Room Center; Heals? False
+  * Layers: default
+  > Pickup (Missile Launcher)
+      Trivial
   > Door to Gold-colored shaft
+      Trivial
+  > Door to Transport to Norfair
       Trivial
 
 ----------------
@@ -272,7 +279,10 @@ Extra - map_name: Brinstar/x312_y30
   * Layers: default
   * Normal Door to Corridor 3/Door to Corridor-connecting room
   > Door to Varia Suit corridor
-      Hi-Jump Boots
+      Any of the following:
+          Hi-Jump Boots
+          # Guide the enemy up and freeze it https://youtu.be/y4qCIB5QAL8?si
+          Ice Beam and IceAbuse (Beginner)
   > Door to Corridor 7
       Trivial
 
@@ -461,24 +471,29 @@ Extra - map_name: Brinstar/x464_y97
 > Door to End shaft; Heals? False
   * Layers: default
   * Normal Door to End shaft/Door to Corridor 6
-  > Door to Bomb Block shaft (Right)
-      Trivial
-  > Pickup (Energy Tank)
+  > Room Center
       Trivial
 
 > Door to Bomb Block shaft (Right); Heals? False
   * Layers: default
   * Normal Door to Bomb Block shaft (Right)/Door to Corridor 6
-  > Door to End shaft
-      Trivial
-  > Pickup (Energy Tank)
+  > Room Center
       Trivial
 
 > Pickup (Energy Tank); Heals? False
   * Layers: default
   * Pickup 7; Category? Minor
   * Extra - object_id: 100033
+  > Room Center
+      Trivial
+
+> Room Center; Heals? False
+  * Layers: default
+  > Door to End shaft
+      Trivial
   > Door to Bomb Block shaft (Right)
+      Trivial
+  > Pickup (Energy Tank)
       Trivial
 
 ----------------
@@ -487,32 +502,48 @@ Extra - map_name: Brinstar/x392_y37
 > Door to Corridor-connecting room; Heals? False
   * Layers: default
   * Normal Door to Corridor-connecting room/Door to Corridor 7
-  > Door to End shaft
-      Knowledge (Beginner) and Can Use Bombs
-  > Pickup (Missile Tank)
+  > Left Side
       Trivial
 
 > Door to End shaft; Heals? False
   * Layers: default
   * Normal Door to End shaft/Door to Corridor 7
-  > Door to Corridor-connecting room
-      Knowledge (Beginner) and Can Use Bombs
-  > Pickup (Energy Tank)
+  > Right Side
       Trivial
 
 > Pickup (Missile Tank); Heals? False
   * Layers: default
   * Pickup 4; Category? Minor
   * Extra - object_id: 100030
-  > Door to Corridor-connecting room
+  > Left Side
       Trivial
 
 > Pickup (Energy Tank); Heals? False
   * Layers: default
   * Pickup 5; Category? Minor
   * Extra - object_id: 100031
+  > Right Side
+      Trivial
+
+> Left Side; Heals? False
+  * Layers: default
+  > Door to Corridor-connecting room
+      Trivial
+  > Pickup (Missile Tank)
+      Trivial
+  > Right Side
+      # Hidden Passage: Shoot cieling blocks then use bombs to enter morph tunnel
+      Knowledge (Beginner) and Can Use Bombs
+
+> Right Side; Heals? False
+  * Layers: default
   > Door to End shaft
       Trivial
+  > Pickup (Energy Tank)
+      Trivial
+  > Left Side
+      # Hidden Passage: Use bombs to enter morph tunnel then jump to the left and bomb the floor
+      Knowledge (Beginner) and Can Use Bombs
 
 ----------------
 Bomb Block shaft (Left)
