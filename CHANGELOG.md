@@ -13,6 +13,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Logic Database
 
+##### Cataris
+- Added: In Underlava Puzzle Room 2: Use Speed Booster with at least one upgrade to shinespark through the speed blocks from the right. 
+
 ##### Ferenia
 
 - Added: In EMMI Zone Exit Middle: Use Wave Beam and Charge Beam or Power Bombs to open the Upper Door to EMMI Zone Exit West, then traverse through that room to get to the upper door.
