@@ -26,6 +26,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Golzuna logic has been overhauled to include Storm Missiles, Bombs, or Cross Bombs to fight it and forcing Flash Shift, Spin Boost, or Space Jump to dodge its attacks if not using shinesparks to defeat it.
 - Fixed: Missing check on PB limitations to get to Orange Teleportal by opening the door from the tunnels below.
 
+### Metroid Prime
+
+- Fixed: Parasite Queen permadeath when skipping death cutscene
+- Changed: Update in-game text when refilling PBs at missile stations
+
 ## [7.0.1] - 2023-11-??
 
 - To be decided if it will be necessary.
