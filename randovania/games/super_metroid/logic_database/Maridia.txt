@@ -826,13 +826,27 @@ Extra - asset_id: 151
   * Layers: default
   * Normal Door to Aqueduct/Door to Botwoon Hallway
   > Door to Botwoon's Room
-      Gravity Suit and Speed Booster
+      Any of the following:
+          # With Speed Booster
+          Gravity Suit and Speed Booster
+          All of the following:
+              # Ice Clip
+              Ice Beam and Ice Beam Abuse (Intermediate)
+              # Damage to Survive the Mocktroids
+              Normal Damage ≥ 100
 
 > Door to Botwoon's Room; Heals? False
   * Layers: default
   * Normal Door to Botwoon's Room/Door to Botwoon Hallway
   > Door to Aqueduct
-      Gravity Suit and Speed Booster
+      Any of the following:
+          # With Speed Booster
+          Gravity Suit and Speed Booster
+          All of the following:
+              # Ice Clip
+              Ice Beam and Ice Beam Abuse (Intermediate)
+              # Damage to Survive the Mocktorids
+              Normal Damage ≥ 100
 
 ----------------
 Botwoon's Room
@@ -844,7 +858,16 @@ Extra - asset_id: 152
   > Door to Botwoon Energy Tank Room
       After Botwoon Defeated
   > Event - Botwoon Defeated
-      Charge Beam
+      Any of the following:
+          # 3000 Health, 1 Missile = 100 Damage, 1 Super Missile = 300 Damage.
+          All of the following:
+              # Vanilla
+              Normal Damage ≥ 400
+              Charge Beam or Charge Beam ≥ 20 or Missile ≥ 60
+          All of the following:
+              # Intermediate Combat
+              Combat (Intermediate) and Normal Damage ≥ 200
+              Charge Beam or Missile ≥ 45 or Super Missile ≥ 15
 
 > Door to Botwoon Energy Tank Room; Heals? False
   * Layers: default
@@ -870,7 +893,18 @@ Extra - asset_id: 153
   > Door to Halfie Climb Room
       Gravity Suit and Speed Booster
   > Pickup (Energy Tank)
-      Gravity Suit and Morph Ball
+      Any of the following:
+          All of the following:
+              # With Gravity
+              Gravity Suit and Morph Ball
+              Any of the following:
+                  Mid-Air Morph (Intermediate) or Can Use Spring Ball
+                  # HBJ
+                  Horizontal Infinite Bomb Jump (Intermediate) and Can Lay Bombs
+          All of the following:
+              # Without Gravity
+              Hi-Jump Boots and Morph Ball
+              Mid-Air Morph (Intermediate) or Can Use Spring Ball
 
 > Door to Botwoon Quicksand Room; Heals? False
   * Layers: default
@@ -881,16 +915,28 @@ Extra - asset_id: 153
   * Normal Door to Halfie Climb Room/Door to Botwoon Energy Tank Room
   > Door to Botwoon's Room
       Gravity Suit and Speed Booster
+  > Pickup (Energy Tank)
+      All of the following:
+          Morph Ball
+          # Get into the Morph Ball Tunnel
+          Gravity Suit or Hi-Jump Boots
+          Any of the following:
+              # Get through the Morph Ball Tunnel
+              Mid-Air Morph (Advanced) or Can Lay Bombs or Can Use Spring Ball
+              Power Bombs ≥ 3 and Can Lay Power Bombs
 
 > Pickup (Energy Tank); Heals? False
   * Layers: default
   * Pickup 152; Category? Major
   > Door to Botwoon's Room
-      Gravity Suit and Morph Ball
+      Morph Ball
   > Door to Halfie Climb Room
       All of the following:
-          Gravity Suit and Morph Ball
-          Morph Ball Bombs or Power Bombs ≥ 3 or Spring Ball
+          Morph Ball
+          Any of the following:
+              # Get through the Morph Ball Tunnel
+              Mid-Air Morph (Advanced) or Can Lay Bombs or Can Use Spring Ball
+              Power Bombs ≥ 3 and Can Lay Power Bombs
 
 ----------------
 Botwoon Quicksand Room
@@ -968,21 +1014,47 @@ Extra - asset_id: 158
   * Layers: default
   * Normal Door to Halfie Climb Room/Door to Colosseum
   > Door to Colosseum Save Room
-      All of the following:
-          Gravity Suit
-          Any of the following:
-              Space Jump
-              Grapple Beam and Hi-Jump Boots
+      Any of the following:
+          All of the following:
+              # With Gravity
+              Gravity Suit
+              Any of the following:
+                  Space Jump
+                  All of the following:
+                      Grapple Beam
+                      Any of the following:
+                          Wall Jumps (Expert)
+                          Hi-Jump Boots and Wall Jumps (Advanced)
+          All of the following:
+              # Without Gravity
+              Grapple Beam and Movement (Advanced)
+              Any of the following:
+                  Wall Jumps (Expert)
+                  Hi-Jump Boots and Wall Jumps (Advanced)
+          # With Nothing: https://youtu.be/sqVAdiewRgc
+          Damage Boosting (Advanced) and Movement (Expert) and Normal Damage ≥ 100 and Disabled Door Lock Randomizer and Disabled Entrance Randomizer
 
 > Door to Colosseum Save Room; Heals? False
   * Layers: default
   * Missile Door to Colosseum Save Room/Door to Colosseum
   > Door to Halfie Climb Room
-      All of the following:
-          Gravity Suit
-          Any of the following:
-              Space Jump
-              Gravity Suit and Hi-Jump Boots
+      Any of the following:
+          All of the following:
+              # With Gravity
+              Gravity Suit
+              Any of the following:
+                  Space Jump
+                  All of the following:
+                      Grapple Beam
+                      Any of the following:
+                          Wall Jumps (Expert)
+                          Hi-Jump Boots and Wall Jumps (Advanced)
+          All of the following:
+              # Without Gravity
+              Grapple Beam and Movement (Advanced)
+              Any of the following:
+                  Wall Jumps (Expert)
+                  Hi-Jump Boots and Wall Jumps (Advanced)
   > Door to The Precious Room
       Trivial
 
@@ -991,8 +1063,15 @@ Extra - asset_id: 158
   * Super Missile Door to The Precious Room/Door to Colosseum
   > Door to Colosseum Save Room
       Any of the following:
-          Grapple Beam
-          Gravity Suit and Space Jump
+          All of the following:
+              # With Gravity
+              Gravity Suit
+              Any of the following:
+                  Space Jump or Wall Jumps (Intermediate)
+                  # IBJ
+                  Vertical Infinite Bomb Jump (Advanced) and Can Lay Bombs
+          # Without Gravity
+          Grapple Beam and Wall Jumps (Intermediate)
 
 ----------------
 Colosseum Save Room
