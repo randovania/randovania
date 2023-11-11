@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ##### Artaria
 
 - Added: In Screw Attack Room: Get from Door to Freezer(Power) to Start Point 2 by sliding.
+- Added: In Screw Attack Room: Get from Start Point 2 to Early SA Platform with Space Jump.
 
 ##### Cataris
 - Added: In Underlava Puzzle Room 2: Use Speed Booster with at least one upgrade to shinespark through the speed blocks from the right. 
