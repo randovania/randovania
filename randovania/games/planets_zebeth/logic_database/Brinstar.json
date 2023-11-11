@@ -293,7 +293,7 @@
                             }
                         },
                         "Pickup (Energy Tank)": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": [
@@ -302,6 +302,15 @@
                                         "data": {
                                             "type": "items",
                                             "name": "Ice Beam",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "IceAbuse",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -1239,8 +1248,8 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 1144.0050677815786,
-                        "y": 191.35436462688457,
+                        "x": 1145.0017636684304,
+                        "y": 204.88183421516754,
                         "z": 0.0
                     },
                     "description": "",
@@ -1494,7 +1503,7 @@
                                                     "data": {
                                                         "type": "tricks",
                                                         "name": "IceAbuse",
-                                                        "amount": 1,
+                                                        "amount": 2,
                                                         "negate": false
                                                     }
                                                 }
@@ -1799,12 +1808,29 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Corridor 7": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "items",
-                                "name": "Ice Beam",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Ice Beam",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "IceAbuse",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         },
                         "Door to Corridor 6": {
@@ -2701,7 +2727,7 @@
                         "Right Side": {
                             "type": "and",
                             "data": {
-                                "comment": "Hidden Passage: Shoot cieling blocks then use bombs to enter morph tunnel",
+                                "comment": "Hidden Passage: Shoot ceiling blocks then use bombs to enter morph tunnel",
                                 "items": [
                                     {
                                         "type": "template",
@@ -3060,12 +3086,29 @@
                                         }
                                     },
                                     {
-                                        "type": "resource",
+                                        "type": "and",
                                         "data": {
-                                            "type": "items",
-                                            "name": "Ice Beam",
-                                            "amount": 1,
-                                            "negate": false
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Ice Beam",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "IceAbuse",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
