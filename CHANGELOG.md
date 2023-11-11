@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: In Screw Attack Room: Get from Door to Freezer(Power) to Start Point 2 by sliding.
 - Added: In Screw Attack Room: Get from Start Point 2 to Early SA Platform with Space Jump.
+- Added: In Screw Attack Room: Get from Door to Freezer(Power) to Screw Attack Pickup by using Shinespark. Requires Speed Booster Conservation Beginner and Disabled Door Lock Randomizer.
 
 ##### Cataris
 - Added: In Underlava Puzzle Room 2: Use Speed Booster with at least one upgrade to shinespark through the speed blocks from the right. 
