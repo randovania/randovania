@@ -30,6 +30,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed: Parasite Queen permadeath when skipping death cutscene
 - Changed: Update in-game text when refilling PBs at missile stations
+- Changed: The Missile Launcher's broad category is now "missile system" instead of "missile-related upgrade".
 
 ## [7.0.1] - 2023-11-??
 
