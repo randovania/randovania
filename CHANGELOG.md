@@ -31,6 +31,33 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Parasite Queen permadeath when skipping death cutscene
 - Changed: Update in-game text when refilling PBs at missile stations
 
+#### Logic Database
+
+##### Chozo Ruins
+
+- Added: Vault NSJ with Wallboosts
+- Changed: Decreased Difficulty of Tower of Light NSJ Slope Jump
+
+##### Magmoor Caverns
+
+- Added: Fiery Shores wallcrawl to reach Upper Item
+
+##### Phazon Mines
+
+- Added: Difficult HBJ in MQB Phazon Pit
+
+##### Phendrana Drifts
+
+- Changed: Adjusted Thardus Thermaless with Bombs and w/o adjusted
+- Added: Phendrana Canyon NSJ Scanless Damage Boost
+- Added: Phendrana's Edge NSJ Grappleless BSJ
+- Added: Ruined Courtyard NSJ Climb UBJ
+- Added: Thardus Skip NSJ from North Quarantine Tunnel
+
+##### Tallon Overworld
+
+- Added: Great Tree Hall Lower NSJ Climb BSJ
+
 ## [7.0.1] - 2023-11-??
 
 - To be decided if it will be necessary.
