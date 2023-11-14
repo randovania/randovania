@@ -45,10 +45,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ##### Phazon Mines
 
 - Added: Difficult HBJ in MQB Phazon Pit
+- Added: Elite Research Single Room OOB to Item
+- Added: Dash to Reach Item NSJ
 
 ##### Phendrana Drifts
 
-- Changed: Adjusted Thardus Thermaless with Bombs and w/o adjusted
+- Changed: Thardus Thermaless with Bombs and w/o adjusted
 - Added: Phendrana Canyon NSJ Scanless Damage Boost
 - Added: Phendrana's Edge NSJ Grappleless BSJ
 - Added: Ruined Courtyard NSJ Climb UBJ
@@ -57,6 +59,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ##### Tallon Overworld
 
 - Added: Great Tree Hall Lower NSJ Climb BSJ
+- Added: Landing Site B Hop to Reach Gully NSJ
 
 ## [7.0.1] - 2023-11-??
 
