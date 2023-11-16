@@ -46,7 +46,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: Difficult HBJ in MQB Phazon Pit
 - Added: Elite Research Single Room OOB to Item
-- Added: Dash to Reach Item NSJ
+- Added: Upper Elite Research Dash to Reach Item NSJ
 
 ##### Phendrana Drifts
 
