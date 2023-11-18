@@ -38,6 +38,36 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Update in-game text when refilling PBs at missile stations
 - Changed: The Missile Launcher's broad category is now "missile system" instead of "missile-related upgrade".
 
+#### Logic Database
+
+##### Chozo Ruins
+
+- Added: Vault NSJ with Wallboosts
+- Changed: Decreased Difficulty of Tower of Light NSJ Slope Jump
+
+##### Magmoor Caverns
+
+- Added: Fiery Shores wallcrawl to reach Upper Item
+
+##### Phazon Mines
+
+- Added: Difficult HBJ in MQB Phazon Pit
+- Added: Elite Research Single Room OOB to Item
+- Added: Upper Elite Research Dash to Reach Item NSJ
+
+##### Phendrana Drifts
+
+- Changed: Thardus Thermaless with Bombs and w/o adjusted
+- Added: Phendrana Canyon NSJ Scanless Damage Boost
+- Added: Phendrana's Edge NSJ Grappleless BSJ
+- Added: Ruined Courtyard NSJ Climb UBJ
+- Added: Thardus Skip NSJ from North Quarantine Tunnel
+
+##### Tallon Overworld
+
+- Added: Great Tree Hall Lower NSJ Climb BSJ
+- Added: Landing Site B Hop to Reach Gully NSJ
+
 ## [7.0.1] - 2023-11-??
 
 - To be decided if it will be necessary.
