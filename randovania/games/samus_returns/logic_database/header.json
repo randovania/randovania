@@ -214,7 +214,7 @@
             },
             "Aeion": {
                 "long_name": "Aeion",
-                "max_capacity": 2000,
+                "max_capacity": 2200,
                 "extra": {
                     "item_id": "ITEM_CURRENT_SPECIAL_ENERGY",
                     "item_capacity_id": "ITEM_MAX_SPECIAL_ENERGY"
@@ -1088,7 +1088,7 @@
             },
             "SuperJump": {
                 "long_name": "Super Jump",
-                "description": "By performing a neutral jump then initiating a respin a few frames after jumping, Samus can jump higher than normal.",
+                "description": "By rapidly double tapping jump within a few frames, Samus can jump higher than normal.",
                 "extra": {}
             },
             "Spiderspark": {
@@ -2465,7 +2465,55 @@
         "node": "Ship"
     },
     "initial_states": {},
-    "minimal_logic": null,
+    "minimal_logic": {
+        "items_to_exclude": [
+            {
+                "name": "Baby",
+                "when_shuffled": null
+            },
+            {
+                "name": "Bomb",
+                "when_shuffled": null
+            },
+            {
+                "name": "Space",
+                "when_shuffled": null
+            },
+            {
+                "name": "Spider",
+                "when_shuffled": null
+            }
+        ],
+        "custom_item_amount": [
+            {
+                "name": "Energy Tank",
+                "value": 10
+            },
+            {
+                "name": "Aeion",
+                "value": 2200
+            },
+            {
+                "name": "Missile",
+                "value": 264
+            },
+            {
+                "name": "Super Missile",
+                "value": 30
+            },
+            {
+                "name": "Power Bomb",
+                "value": 18
+            }
+        ],
+        "events_to_exclude": [
+            {
+                "name": "Proteus Ridley",
+                "reason": "Victory Condition"
+            }
+        ],
+        "description": "Items checked for: Baby Metroid."
+    },
     "victory_condition": {
         "type": "resource",
         "data": {

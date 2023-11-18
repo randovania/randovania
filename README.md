@@ -238,6 +238,8 @@ the `prepare_virtual_env` scripts.
 
 Suggested IDE: [PyCharm Community](https://www.jetbrains.com/pycharm/download/)
 
+_*If using Visual Studio Code, make sure to set `"qtForPython.uic.liveExecution.enabled": false` when using the QT extension._
+
 # Documentation
 
 - Unfamiliar with a term? Check the [glossary](docs/Glossary.md).

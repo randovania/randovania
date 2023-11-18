@@ -13,6 +13,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Logic Database
 
+##### Artaria
+
+- Added: In Screw Attack Room: Get from Door to Freezer(Power) to Start Point 2 by sliding.
+- Added: In Screw Attack Room: Get from Start Point 2 to Early SA Platform with Space Jump.
+- Added: In Screw Attack Room: Get from Door to Freezer(Power) to Screw Attack Pickup by using Shinespark. Requires Speed Booster Conservation Beginner and Disabled Door Lock Randomizer.
+
 ##### Cataris
 - Added: In Underlava Puzzle Room 2: Use Speed Booster with at least one upgrade to shinespark through the speed blocks from the right. 
 
@@ -30,6 +36,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed: Parasite Queen permadeath when skipping death cutscene
 - Changed: Update in-game text when refilling PBs at missile stations
+- Changed: The Missile Launcher's broad category is now "missile system" instead of "missile-related upgrade".
 
 #### Logic Database
 
