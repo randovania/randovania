@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [7.1.0] - 2023-12-??
 
+- Fixed: Bug with progressive suits in the autotracker always highlighting first suit
+
 ### Metroid Dread
 
 - Added: Power Bomb Limitations now shows up on the Preset Summary when enabled.
