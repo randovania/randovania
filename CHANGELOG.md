@@ -9,6 +9,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed: Bug with progressive suits in the autotracker always highlighting first suit
 
+### AM2R
+
+#### Logic Database
+
+- Changed: Zeta and Omegas combat rebalanced for lower difficulties.
+
 ### Metroid Dread
 
 - Added: Power Bomb Limitations now shows up on the Preset Summary when enabled.
