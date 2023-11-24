@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [7.1.0] - 2023-12-??
 
 - Fixed: Bug with progressive suits in the autotracker always highlighting first suit
+- Fixed: Bug where tooltips did not show uncollected item names in the autotracker
+- Changed: Autotracker tooltips now display text in black instead of gray
 
 ### AM2R
 
