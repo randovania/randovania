@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### AM2R
 
 - Added: Shell script to make launching randomized games easier on Flatpak.
+- Added: Plasma Beam Chamber's crumble blocks will be gone when the softlock prevention setting is turned on.
 - Fixed: Visual time of day discrepancy with Septoggs and the tileset if started at GFS Thoth.
 - Fixed: A flipped water turbine if the vanilla water turbine was set to be changed to one.
 - Fixed: Crash when starting the game and loading a save room which contains a destroyed water turbine.
