@@ -27,6 +27,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: In Screw Attack Room: Get from Start Point 2 to Early SA Platform with Space Jump.
 - Added: In Screw Attack Room: Get from Door to Freezer(Power) to Screw Attack Pickup by using Shinespark. Requires Speed Booster Conservation Beginner and Disabled Door Lock Randomizer.
 
+##### Burenia
+
+- Changed: In Gravity Suit Tower: Getting from the Lower door to Ammo Station South to the Lower door to Gravity Suit Room is now locked behind Highly Dangerous Logic
+
 ##### Cataris
 - Added: In Underlava Puzzle Room 2: Use Speed Booster with at least one upgrade to shinespark through the speed blocks from the right. 
 

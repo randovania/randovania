@@ -13173,12 +13173,29 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Gravity Suit Room (Lower)": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "events",
-                                "name": "BureniaDestroyGravitySuitFloor",
-                                "amount": 1,
-                                "negate": true
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "BureniaDestroyGravitySuitFloor",
+                                            "amount": 1,
+                                            "negate": true
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "HighDanger",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         },
                         "Dock to Ammo Recharge South (Middle)": {
