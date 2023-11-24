@@ -13172,13 +13172,51 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Gravity Suit Room (Lower)": {
-                            "type": "resource",
+                        "Door to Gravity Suit Room (Upper)": {
+                            "type": "or",
                             "data": {
-                                "type": "events",
-                                "name": "BureniaDestroyGravitySuitFloor",
-                                "amount": 1,
-                                "negate": true
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Lay Power Bomb"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "BureniaDestroyGravitySuitFloor",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Door to Gravity Suit Room (Lower)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "BureniaDestroyGravitySuitFloor",
+                                            "amount": 1,
+                                            "negate": true
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "HighDanger",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         },
                         "Dock to Ammo Recharge South (Middle)": {
