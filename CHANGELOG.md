@@ -26,6 +26,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Pseudo Wave Beam to break the bottom right blob in Burenia Hub to Dairon. Requires Slide and Gravity Suit or Diffusion Beam.
 - Fixed: When using Power Bomb to break the bottom right blob in Burenia Hub to Dairon, also require the ability to shoot a beam.
 
+##### Ferenia
+
+- Added: In Space Jump Room: Use Grapple Beam to jump out of water above Underwater Ledge Left, and use Single Wall Jump or Spin Boost to reach Dock to Transport to Ghavoran. Video included. 
+- Changed: In Space Jump Room: Can traverse from Underwater Ledge Left to Dock to Transport to Ghavoran with Spider Magnet, Morph Ball and Single Wall Jump. 
+- Changed: In Space Jump Room: Added a video for reaching the Missile Tank with only Morph Ball and Bombs
+- Changed: In Space Jump Room: Added a video traversing from Underwater Bottom to Underwater Ledge Left with only Grapple Beam.
+
 ### AM2R
 
 #### Logic Database
