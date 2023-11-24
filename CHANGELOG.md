@@ -29,6 +29,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ##### Burenia
 
+- Added: In Gravity Suit Tower: Gettinmg from the Lower door to Ammo Station South to the Upper door to Gravity Suit Room is in logic with either Power Bombs or after breaking the floor.
 - Changed: In Gravity Suit Tower: Getting from the Lower door to Ammo Station South to the Lower door to Gravity Suit Room is now locked behind Highly Dangerous Logic
 
 ##### Cataris
