@@ -8,22 +8,10 @@ Extra - asset_id: collision_camera_000
   * Extra - actor_name: LE_Platform_SaveStation_004
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: ST_SaveStation_004
-  > Door to Landing Site Storage
-      Trivial
   > Top of Mountain
       Climb Rooms Vertically (No High Jump)
-  > Dock to Crumble Drop Shaft (Top)
-      Climb Rooms Vertically (No High Jump) and Lay Power Bomb
   > Dock to Transport to Area 8
       Baby Metroid
-
-> Door to Landing Site Storage; Heals? False
-  * Layers: default
-  * Spazer Beam Door to Landing Site Storage/Door to Landing Site
-  * Extra - actor_name: Door012
-  * Extra - actor_type: doorpowerpower
-  > Save Station
-      Trivial
 
 > Top of Mountain; Heals? False
   * Layers: default
@@ -44,18 +32,6 @@ Extra - asset_id: collision_camera_000
               # Dodging Attacks
               Space Jump
               Movement (Advanced) and Use Spider Ball
-
-> Dock to Crumble Drop Shaft (Top); Heals? False
-  * Layers: default
-  * Open Passage to Crumble Drop Shaft/Dock to Landing Site (Top)
-  > Save Station
-      Trivial
-
-> Dock to Crumble Drop Shaft (Bottom); Heals? False
-  * Layers: default
-  * Not Determined to Crumble Drop Shaft/Dock to Landing Site (Bottom)
-  > Save Station
-      Trivial
 
 > Event - Proteus Ridley; Heals? False
   * Layers: default
@@ -194,80 +170,8 @@ Landing Site Storage
 Extra - total_boundings: {'x1': -19000.0, 'x2': -16300.0, 'y1': 4500.0, 'y2': 6900.0}
 Extra - polygon: [[-19000.0, 6900.0], [-19000.0, 4500.0], [-16300.0, 4500.0], [-16300.0, 6900.0]]
 Extra - asset_id: collision_camera_018
-> (Aeion Tank); Heals? False
-  * Layers: default
-  * Extra - actor_name: LE_Item_002
-  * Extra - actor_type: item_senergytank
-  > Below Right Crumble Blocks
-      Morph Ball
-
-> Door to Landing Site; Heals? False
-  * Layers: default
-  * Spazer Beam Door to Landing Site/Door to Landing Site Storage
-  * Extra - actor_name: Door012
-  * Extra - actor_type: doorpowerpower
-  > Room Center
-      All of the following:
-          Morph Ball and Shoot Any Missile
-          Any of the following:
-              Grapple Beam or Phase Drift
-              Spiderspark (Beginner) and Can Spiderspark
-              Bomb and Diagonal Bomb Jump (Intermediate)
-
-> Room Center; Heals? False
-  * Layers: default
-  > (Aeion Tank)
-      All of the following:
-          Morph Ball
-          Any of the following:
-              Grapple Beam or Simple IBJ
-              Spider Ball and Mid-Air Morph (Intermediate) and Walljump (Advanced)
-          Any of the following:
-              Phase Drift or Spider Ball
-              All of the following:
-                  Bomb
-                  Any of the following:
-                      Phase Drift Skip (Expert)
-                      Space Jump and Phase Drift Skip (Advanced)
-  > Door to Landing Site
-      All of the following:
-          Morph Ball and Shoot Any Missile
-          Any of the following:
-              Phase Drift or Can Spiderspark
-              Bomb and Spider Ball and Diagonal Bomb Jump (Intermediate)
-
-> Below Right Crumble Blocks; Heals? False
-  * Layers: default
-  > Door to Landing Site
-      All of the following:
-          Morph Ball
-          Any of the following:
-              Grapple Beam
-              Spiderspark (Beginner) and Can Spiderspark
-  > Room Center
-      Any of the following:
-          Grapple Beam and Movement (Intermediate)
-          Spider Ball and Diagonal Bomb Jump (Advanced) and Lay Bomb
-
 ----------------
 Crumble Drop Shaft
 Extra - total_boundings: {'x1': -24900.0, 'x2': -23000.0, 'y1': 7200.0, 'y2': 11100.0}
 Extra - polygon: [[-24900.0, 11100.0], [-24900.0, 7200.0], [-23000.0, 7200.0], [-23000.0, 11100.0]]
 Extra - asset_id: collision_camera_019
-> (Super Missile Tank); Heals? False
-  * Layers: default
-  * Extra - actor_name: LE_Item_003
-  * Extra - actor_type: item_supermissiletank
-  > Dock to Landing Site (Bottom)
-      Trivial
-
-> Dock to Landing Site (Top); Heals? False
-  * Layers: default
-  * Open Passage to Landing Site/Dock to Crumble Drop Shaft (Top)
-  > (Super Missile Tank)
-      Trivial
-
-> Dock to Landing Site (Bottom); Heals? False
-  * Layers: default
-  * Open Passage to Landing Site/Dock to Crumble Drop Shaft (Bottom)
-
