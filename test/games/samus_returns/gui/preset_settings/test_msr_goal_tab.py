@@ -16,10 +16,10 @@ from randovania.interface_common.preset_editor import PresetEditor
     [
         (True, False, False, 25),
         (False, True, False, 14),
-        (False, False, True, 3),
+        (False, False, True, 4),
         (True, True, False, 39),
-        (True, False, True, 28),
-        (False, True, True, 17),
+        (True, False, True, 29),
+        (False, True, True, 18),
         (True, True, True, 39),
     ],
 )
