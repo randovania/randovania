@@ -57,7 +57,13 @@ game_data: game.GameData = game.GameData(
     presets=[
         {"path": "starter_preset.rdvpreset"},
     ],
-    faq=[],
+    faq=[
+        (
+            "Why is this pickup not animating?",
+            "While progressive pickups update to have the correct model, "
+            "due to limitations these models are not animated.",
+        ),
+    ],
     layout=game.GameLayout(
         configuration=layout.MSRConfiguration,
         cosmetic_patches=layout.MSRCosmeticPatches,
