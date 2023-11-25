@@ -33,6 +33,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: In Screw Attack Room: Get from Door to Freezer(Power) to Start Point 2 by sliding.
 - Added: In Screw Attack Room: Get from Start Point 2 to Early SA Platform with Space Jump.
 - Added: In Screw Attack Room: Get from Door to Freezer(Power) to Screw Attack Pickup by using Shinespark. Requires Speed Booster Conservation Beginner and Disabled Door Lock Randomizer.
+- Added: In EMMI Zone Hub: Get to the item pickup and the top left door from Door to Ballspark Hallway, using Shinespark, Speed Booster Conservation Beginner.
+- Added: In EMMI Zone Hub: Get to the item pickup from Door to Ballspark Hallway using Speed Booster and Spider Magnet.
+- Fixed: In EMMI Zone Hub: Getting to the item pickup from Door to Ballspark Hallway using Flash Shift and Single Wall Jump is now separated from the Grapple Movement alternative.
+- Fixed: In EMMI Zone Hub: Getting to the item pickup from Door to Ballspark Hallway using Flash Shift and Single Wall Jump now requires a Flash Shift Upgrade.
+- Fixed: In EMMI Zone Hub: Getting to the item pickup from the lower door to Wide Beam Block Room using a Shinespark now requires Door Lock Rando to be disabled.
+- Removed: In EMMI Zone Hub: Redundant option: getting from the lower to the upper Door to EMMI Zone Exit Southwest using Speed Booster when Door Lock Rando is disabled.
 
 ##### Burenia
 
