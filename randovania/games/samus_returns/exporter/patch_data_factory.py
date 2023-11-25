@@ -184,6 +184,20 @@ class MSRPatchDataFactory(PatchDataFactory):
     def _node_for(self, identifier: NodeIdentifier) -> Node:
         return self.game.region_list.node_by_identifier(identifier)
 
+    def _static_text_changes(self) -> dict[str, str]:
+        full_hash = f"{self.description.shareable_word_hash} ({self.description.shareable_hash})"
+        text = {}
+        difficulty_labels = {
+            "GUI_MSG_NEW_FILE_CREATION",
+            "GUI_MSG_NEW_GAME_CONFIRMATION_NORMAL",
+            "GUI_MSG_NEW_GAME_CONFIRMATION_HARD",
+            "GUI_MSG_NEW_GAME_CONFIRMATION_FUSION",
+        }
+        for difficulty in difficulty_labels:
+            text[difficulty] = full_hash
+
+        return text
+
     def create_data(self) -> dict:
         starting_location = self._start_point_ref_for(self._node_for(self.patches.starting_location))
         starting_items = self._calculate_starting_inventory(self.patches.starting_resources())
@@ -222,6 +236,7 @@ class MSRPatchDataFactory(PatchDataFactory):
                 "patch_area1_crumbles": self.configuration.area1_crumbles,
                 "reverse_area8": self.configuration.reverse_area8,
             },
+            "text_patches": self._static_text_changes(),
         }
 
 
