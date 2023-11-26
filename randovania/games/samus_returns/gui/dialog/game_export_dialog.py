@@ -31,7 +31,7 @@ if TYPE_CHECKING:
     from collections.abc import Callable, Iterator
 
     from randovania.exporter.game_exporter import GameExportParams
-    from randovania.interface_common.options import Options
+    from randovania.interface_common.options import Options, PerGameOptions
 
 
 def get_title_id(version: MSRGameVersion) -> str:
@@ -101,12 +101,11 @@ def get_windows_drives() -> Iterator[tuple[str, str, Path]]:
 def add_validation(
     edit: QtWidgets.QLineEdit, validation: Callable[[], bool], post_validation: Callable[[], None]
 ) -> None:
-    def field_validation():
+    def field_validation() -> None:
         common_qt_lib.set_error_border_stylesheet(edit, not validation())
         post_validation()
 
     common_qt_lib.set_error_border_stylesheet(edit, False)
-    edit.field_validation = field_validation
     edit.textChanged.connect(field_validation)
 
 
@@ -250,7 +249,8 @@ class MSRGameExportDialog(GameExportDialog, Ui_MSRGameExportDialog):
 
         self.update_accept_validation()
 
-    def update_per_game_options(self, per_game: MSRPerGameOptions) -> MSRPerGameOptions:
+    def update_per_game_options(self, per_game: PerGameOptions) -> MSRPerGameOptions:
+        assert isinstance(per_game, MSRPerGameOptions)
         selected_tab = self.output_tab_widget.currentWidget()
         output_preference = json.dumps(
             {
@@ -296,7 +296,7 @@ class MSRGameExportDialog(GameExportDialog, Ui_MSRGameExportDialog):
 
     # Getters
     @property
-    def input_file(self) -> Path:
+    def input_file(self) -> Path | None:
         return path_in_edit(self.input_file_edit)
 
     @property
@@ -464,6 +464,9 @@ class MSRGameExportDialog(GameExportDialog, Ui_MSRGameExportDialog):
 
         else:
             raise RuntimeError(f"Unknown output_tab: {output_tab}")
+
+        assert output_path is not None
+        assert self.input_file is not None
 
         return MSRGameExportParams(
             spoiler_output=spoiler_path_for_directory(self.auto_save_spoiler, output_path),
