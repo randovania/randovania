@@ -5,14 +5,16 @@ from pathlib import Path
 
 
 def get_windows_drives() -> Iterator[tuple[str, str, Path]]:
+    is_windows = platform.system() == "Windows"
     try:
-        from ctypes import windll
-    except ImportError:
-        if platform.system() == "Windows":
-            raise
+        if is_windows:
+            from ctypes import windll
         else:
             yield from []
             return
+    except ImportError:
+        if is_windows:
+            raise
 
     drive_types = [
         "Not identified",
