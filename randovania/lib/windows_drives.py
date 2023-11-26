@@ -1,18 +1,18 @@
-import platform
 import string
+import sys
 from collections.abc import Iterator
 from pathlib import Path
 
 
 def get_windows_drives() -> Iterator[tuple[str, str, Path]]:
     try:
-        if platform.system() == "Windows":
+        if sys.platform == "win32":
             from ctypes import windll
         else:
             yield from []
             return
     except ImportError:
-        if platform.system() == "Windows":
+        if sys.platform == "win32":
             raise
 
     drive_types = [
