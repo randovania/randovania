@@ -237,6 +237,7 @@ class MSRPatchDataFactory(PatchDataFactory):
                 "reverse_area8": self.configuration.reverse_area8,
             },
             "text_patches": self._static_text_changes(),
+            "hints": [],
         }
 
 
