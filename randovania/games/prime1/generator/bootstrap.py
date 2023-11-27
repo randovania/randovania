@@ -4,15 +4,34 @@ import copy
 import dataclasses
 from typing import TYPE_CHECKING
 
+from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.damage_reduction import DamageReduction
 from randovania.game_description.resources.resource_type import ResourceType
+from randovania.games.prime1.generator.pickup_pool.artifacts import ARTIFACT_CATEGORY
+from randovania.games.prime1.layout.prime_configuration import PrimeConfiguration
+from randovania.layout.exceptions import InvalidConfiguration
 from randovania.resolver.bootstrap import MetroidBootstrap
 
 if TYPE_CHECKING:
+    from random import Random
+
+    from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.game_patches import GamePatches
     from randovania.game_description.resources.resource_collection import ResourceCollection
     from randovania.game_description.resources.resource_database import ResourceDatabase
+    from randovania.generator.pickup_pool import PoolResults
     from randovania.layout.base.base_configuration import BaseConfiguration
+
+
+def all_artifact_locations(game: GameDescription):
+    locations = []
+
+    for node in game.region_list.all_nodes:
+        if isinstance(node, PickupNode):
+            locations.append(node)
+
+    return locations
 
 
 class PrimeBootstrap(MetroidBootstrap):
@@ -96,3 +115,24 @@ class PrimeBootstrap(MetroidBootstrap):
             base_damage_reduction=base_damage_reduction,
             requirement_template=requirement_template,
         )
+
+    def assign_pool_results(self, rng: Random, patches: GamePatches, pool_results: PoolResults) -> GamePatches:
+        assert isinstance(patches.configuration, PrimeConfiguration)
+
+        locations = all_artifact_locations(patches.game)
+        rng.shuffle(locations)
+
+        artifacts_to_assign = [
+            pickup for pickup in list(pool_results.to_place) if pickup.pickup_category is ARTIFACT_CATEGORY
+        ]
+
+        if len(artifacts_to_assign) > len(locations):
+            raise InvalidConfiguration(
+                f"Has {len(artifacts_to_assign)} artifacts in the pool, but only {len(locations)} valid locations."
+            )
+
+        for artifact, location in zip(artifacts_to_assign, locations, strict=False):
+            pool_results.to_place.remove(artifact)
+            pool_results.assignment[location.pickup_index] = artifact
+
+        return super().assign_pool_results(rng, patches, pool_results)
