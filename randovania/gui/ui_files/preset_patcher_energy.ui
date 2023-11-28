@@ -42,9 +42,9 @@
        <property name="geometry">
         <rect>
          <x>0</x>
-         <y>0</y>
-         <width>451</width>
-         <height>778</height>
+         <y>-248</y>
+         <width>460</width>
+         <height>920</height>
         </rect>
        </property>
        <property name="sizePolicy">
@@ -327,6 +327,44 @@
              <property name="wordWrap">
               <bool>true</bool>
              </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="ingame_difficulty_box">
+          <property name="title">
+           <string>In-Game Difficulty</string>
+          </property>
+          <layout class="QGridLayout" name="gridLayout_5">
+           <item row="0" column="0">
+            <widget class="QLabel" name="ingame_difficulty_label">
+             <property name="text">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Control how the in-game difficulty options are presented to the player when starting a new Save Slot in the Main Menu:&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Normal: &lt;/span&gt;The player is forced to select &amp;quot;Normal&amp;quot; difficulty&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Hard: &lt;/span&gt;The player is forced to select &amp;quot;Hard&amp;quot; difficulty and the seed will be generated using adjusted damage/energy requirements&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Either (Not Recommended): &lt;/span&gt;The player may select either the difficulty. If the player chooses to play on &amp;quot;Hard&amp;quot;, the seed may not be completable because of logic differences&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QComboBox" name="ingame_difficulty_combo">
+             <item>
+              <property name="text">
+               <string>Normal</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Hard</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Either</string>
+              </property>
+             </item>
             </widget>
            </item>
           </layout>
