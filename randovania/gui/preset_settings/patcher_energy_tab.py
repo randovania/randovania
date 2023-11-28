@@ -20,7 +20,7 @@ if TYPE_CHECKING:
 
 
 class PresetPatcherEnergy(PresetTab, Ui_PresetPatcherEnergy):
-    def __init__(self, editor: PresetEditor, game_description: GameDescription, window_manager: WindowManager):
+    def __init__(self, editor: PresetEditor, game_description: GameDescription, window_manager: WindowManager) -> None:
         super().__init__(editor, game_description, window_manager)
         self.setupUi(self)
         self.game_enum = game_description.game
@@ -78,7 +78,7 @@ class PresetPatcherEnergy(PresetTab, Ui_PresetPatcherEnergy):
     def uses_patches_tab(cls) -> bool:
         return True
 
-    def on_preset_changed(self, preset: Preset):
+    def on_preset_changed(self, preset: Preset) -> None:
         config = preset.configuration
         assert isinstance(
             config, PrimeConfiguration | EchoesConfiguration | CorruptionConfiguration | AM2RConfiguration
@@ -99,32 +99,32 @@ class PresetPatcherEnergy(PresetTab, Ui_PresetPatcherEnergy):
             self.heated_damage_spin.setValue(config.heat_damage)
             signal_handling.set_combo_with_value(self.ingame_difficulty_combo, config.ingame_difficulty)
 
-    def _persist_tank_capacity(self):
+    def _persist_tank_capacity(self) -> None:
         with self._editor as editor:
             editor.set_configuration_field("energy_per_tank", int(self.energy_tank_capacity_spin_box.value()))
 
-    def _persist_safe_zone_regen(self):
+    def _persist_safe_zone_regen(self) -> None:
         with self._editor as editor:
             configuration = editor.configuration
             assert isinstance(configuration, EchoesConfiguration)
             safe_zone = dataclasses.replace(configuration.safe_zone, heal_per_second=self.safe_zone_regen_spin.value())
             editor.set_configuration_field("safe_zone", safe_zone)
 
-    def _persist_safe_zone_logic_heal(self, checked: bool):
+    def _persist_safe_zone_logic_heal(self, checked: bool) -> None:
         with self._editor as editor:
             configuration = editor.configuration
             assert isinstance(configuration, EchoesConfiguration)
             safe_zone = dataclasses.replace(configuration.safe_zone, fully_heal=checked)
             editor.set_configuration_field("safe_zone", safe_zone)
 
-    def _persist_progressive_damage(self, checked: bool):
+    def _persist_progressive_damage(self, checked: bool) -> None:
         with self._editor as editor:
             editor.set_configuration_field("progressive_damage_reduction", checked)
 
-    def _persist_dangerous_tank(self, checked: bool):
+    def _persist_dangerous_tank(self, checked: bool) -> None:
         with self._editor as editor:
             editor.set_configuration_field("dangerous_energy_tank", checked)
 
-    def _persist_ingame_difficulty(self, value: IngameDifficulty):
+    def _persist_ingame_difficulty(self, value: IngameDifficulty) -> None:
         with self._editor as editor:
             editor.set_configuration_field("ingame_difficulty", value)

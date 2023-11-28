@@ -63,18 +63,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Metroid Prime
 
 - Fixed: Parasite Queen permadeath when skipping death cutscene
-- Fixed: Minor issues regarding PAL Skippable Cutscenes
-- Fixed: Base QoL not removing *all* flashbang effects
+- Fixed: Black bar in Control Tower cutscene
+- Fixed: Minor PAL issues regarding Skippable Cutscenes in Exterior Docking Hangar and Sunchamber
 - Added: Preset option to force Normal or Hard difficulty in the Main Menu
 - Added: More Base QoL
   - All rooms now automatically play music appropriate to the area, even if the original music trigger has not been touched
-  - Tweaked the size of some door open and loading triggers
-  - Fixed bottom Arboretum rune scan not always appearing when vines are retracted
-  - Fixed music timing of Elite Pirate breakout
   - The bomb blocks in Lava Lake and Chapel Tunnel are gone forever once destroyed
-  - Fix Chapel of the Elder's platform not always rising up 100%
-  - Fixed Ghost in Sun Tower Access can now be seen after performing Early Wild
-  - Fixed broken load trigger in Aether Lab Entryway
+  - Fix Arboretum rune scan not always appearing when vines are retracted
+  - Fix broken load trigger in Aether Lab Entryway
+  - Tweaked the size of some door open and loading triggers
+  - Sun Tower Access Ghost can now be seen after performing Early Wild
+  - Better music timing of Elite Pirate breakout
+  - Fix Chapel of the Elder's item platform not rising up all the way
+  - Removed more "flashbang" effects
+- Changed: Research Core item acquisition cutscene removed in Competitive Skippable Cutscenes
 - Changed: Update in-game text when refilling PBs at missile stations
 - Changed: The Missile Launcher's broad category is now "missile system" instead of "missile-related upgrade".
 
