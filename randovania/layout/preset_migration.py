@@ -1003,6 +1003,13 @@ def _migrate_v66(preset: dict) -> dict:
     return preset
 
 
+def _migrate_v67(preset: dict) -> dict:
+    if preset["game"] == "prime1":
+        preset["configuration"]["ingame_difficulty"] = "Normal"
+
+    return preset
+
+
 _MIGRATIONS = [
     _migrate_v1,  # v1.1.1-247-gaf9e4a69
     _migrate_v2,  # v1.2.2-71-g0fbabe91
@@ -1070,6 +1077,7 @@ _MIGRATIONS = [
     _migrate_v64,
     _migrate_v65,
     _migrate_v66,
+    _migrate_v67,
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 

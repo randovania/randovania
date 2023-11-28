@@ -5,7 +5,7 @@ from typing import TYPE_CHECKING
 
 from randovania.games.am2r.layout.am2r_configuration import AM2RConfiguration
 from randovania.games.game import RandovaniaGame
-from randovania.games.prime1.layout.prime_configuration import PrimeConfiguration
+from randovania.games.prime1.layout.prime_configuration import IngameDifficulty, PrimeConfiguration
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
 from randovania.games.prime3.layout.corruption_configuration import CorruptionConfiguration
 from randovania.gui.generated.preset_patcher_energy_ui import Ui_PresetPatcherEnergy
@@ -28,6 +28,8 @@ class PresetPatcherEnergy(PresetTab, Ui_PresetPatcherEnergy):
         self.energy_tank_capacity_spin_box.valueChanged.connect(self._persist_tank_capacity)
         signal_handling.on_checked(self.dangerous_tank_check, self._persist_dangerous_tank)
 
+        # Aether Damage
+
         if self.game_enum == RandovaniaGame.METROID_PRIME_ECHOES:
             config_fields = {field.name: field for field in dataclasses.fields(EchoesConfiguration)}
             self.varia_suit_spin_box.setMinimum(config_fields["varia_suit_damage"].metadata["min"])
@@ -44,6 +46,8 @@ class PresetPatcherEnergy(PresetTab, Ui_PresetPatcherEnergy):
             self.safe_zone_box.setVisible(False)
             self.dangerous_tank_check.setVisible(False)
 
+        # Heat Damage
+
         if self.game_enum == RandovaniaGame.METROID_PRIME:
             config_fields = {field.name: field for field in dataclasses.fields(PrimeConfiguration)}
             self.heated_damage_spin.setMinimum(config_fields["heat_damage"].metadata["min"])
@@ -55,6 +59,17 @@ class PresetPatcherEnergy(PresetTab, Ui_PresetPatcherEnergy):
         else:
             self.progressive_damage_reduction_check.setVisible(False)
             self.heated_damage_box.setVisible(False)
+
+        # In-Game Difficulty
+
+        if self.game_enum == RandovaniaGame.METROID_PRIME:
+            self.ingame_difficulty_combo.setItemData(0, IngameDifficulty.NORMAL)
+            self.ingame_difficulty_combo.setItemData(1, IngameDifficulty.HARD)
+            self.ingame_difficulty_combo.setItemData(2, IngameDifficulty.EITHER)
+            signal_handling.on_combo(self.ingame_difficulty_combo, self._persist_ingame_difficulty)
+
+        else:
+            self.ingame_difficulty_box.setVisible(False)
 
     @classmethod
     def tab_title(cls) -> str:
@@ -81,6 +96,7 @@ class PresetPatcherEnergy(PresetTab, Ui_PresetPatcherEnergy):
         elif self.game_enum == RandovaniaGame.METROID_PRIME:
             self.progressive_damage_reduction_check.setChecked(config.progressive_damage_reduction)
             self.heated_damage_spin.setValue(config.heat_damage)
+            signal_handling.set_combo_with_value(self.ingame_difficulty_combo, config.ingame_difficulty)
 
     def _persist_tank_capacity(self):
         with self._editor as editor:
@@ -107,3 +123,7 @@ class PresetPatcherEnergy(PresetTab, Ui_PresetPatcherEnergy):
     def _persist_dangerous_tank(self, checked: bool):
         with self._editor as editor:
             editor.set_configuration_field("dangerous_energy_tank", checked)
+
+    def _persist_ingame_difficulty(self, value: IngameDifficulty):
+        with self._editor as editor:
+            editor.set_configuration_field("ingame_difficulty", value)

@@ -13,7 +13,12 @@ from randovania.games.game import RandovaniaGame
 from randovania.games.prime1.exporter.hint_namer import PrimeHintNamer
 from randovania.games.prime1.exporter.vanilla_maze_seeds import VANILLA_MAZE_SEEDS
 from randovania.games.prime1.layout.hint_configuration import ArtifactHintMode, PhazonSuitHintMode
-from randovania.games.prime1.layout.prime_configuration import LayoutCutsceneMode, PrimeConfiguration, RoomRandoMode
+from randovania.games.prime1.layout.prime_configuration import (
+    IngameDifficulty,
+    LayoutCutsceneMode,
+    PrimeConfiguration,
+    RoomRandoMode,
+)
 from randovania.games.prime1.patcher import prime1_elevators, prime_items
 from randovania.generator.pickup_pool import pickup_creator
 
@@ -897,6 +902,13 @@ class PrimePatchDataFactory(PatchDataFactory):
         else:
             qol_cutscenes = self.configuration.qol_cutscenes.value
 
+        INGAME_DIFFICULTY_MAPPING = {
+            IngameDifficulty.NORMAL: "NormalOnly",
+            IngameDifficulty.HARD: "HardOnly",
+            IngameDifficulty.EITHER: "Either",
+        }
+        ingame_difficulty = INGAME_DIFFICULTY_MAPPING[self.configuration.ingame_difficulty]
+
         random_enemy_sizes = False
         if self.configuration.enemy_attributes is not None:
             random_enemy_sizes = (
@@ -969,6 +981,7 @@ class PrimePatchDataFactory(PatchDataFactory):
                 "autoEnabledElevators": not starting_resources.has_resource(scan_visor),
                 "multiworldDolPatches": True,
                 "doorOpenMode": "PrimaryBlastShield",
+                "difficultyBehavior": ingame_difficulty,
                 "disableItemLoss": True,  # Item Loss in Frigate
                 "startingItems": starting_items,
                 "etankCapacity": self.configuration.energy_per_tank,

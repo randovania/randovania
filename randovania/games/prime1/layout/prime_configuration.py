@@ -29,6 +29,12 @@ class LayoutCutsceneMode(BitPackEnum, Enum):
     SKIPPABLE_COMPETITIVE = "SkippableCompetitive"
 
 
+class IngameDifficulty(BitPackEnum, Enum):
+    NORMAL = "Normal"
+    HARD = "Hard"
+    EITHER = "Either"
+
+
 @dataclasses.dataclass(frozen=True)
 class EnemyAttributeRandomizer(BitPackDataclass, JsonDataclass):
     enemy_rando_range_scale_low: float = dataclasses.field(metadata={"min": 0.01, "max": 25.0, "precision": 1.0})
@@ -80,6 +86,7 @@ class PrimeConfiguration(BaseConfiguration):
 
     legacy_mode: bool
     qol_cutscenes: LayoutCutsceneMode
+    ingame_difficulty: IngameDifficulty
 
     enemy_attributes: EnemyAttributeRandomizer | None
 
