@@ -13,12 +13,14 @@ from randovania.resolver.bootstrap import MetroidBootstrap
 if TYPE_CHECKING:
     from randovania.game_description.resources.resource_collection import ResourceCollection
     from randovania.game_description.resources.resource_database import ResourceDatabase
+    from randovania.layout.base.base_configuration import BaseConfiguration
 
 
 class PrimeBootstrap(MetroidBootstrap):
     def _get_enabled_misc_resources(
-        self, configuration: PrimeConfiguration, resource_database: ResourceDatabase
+        self, configuration: BaseConfiguration, resource_database: ResourceDatabase
     ) -> set[str]:
+        assert isinstance(configuration, PrimeConfiguration)
         enabled_resources = set()
 
         logical_patches = {
@@ -85,7 +87,9 @@ class PrimeBootstrap(MetroidBootstrap):
 
         return dr
 
-    def patch_resource_database(self, db: ResourceDatabase, configuration: PrimeConfiguration) -> ResourceDatabase:
+    def patch_resource_database(self, db: ResourceDatabase, configuration: BaseConfiguration) -> ResourceDatabase:
+        assert isinstance(configuration, PrimeConfiguration)
+
         base_damage_reduction = db.base_damage_reduction
         damage_reductions = copy.copy(db.damage_reductions)
         requirement_template = copy.copy(db.requirement_template)

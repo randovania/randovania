@@ -86,6 +86,7 @@ class PresetPatcherEnergy(PresetTab, Ui_PresetPatcherEnergy):
         self.energy_tank_capacity_spin_box.setValue(config.energy_per_tank)
 
         if self.game_enum == RandovaniaGame.METROID_PRIME_ECHOES:
+            assert isinstance(config, EchoesConfiguration)
             self.dangerous_tank_check.setChecked(config.dangerous_energy_tank)
             self.safe_zone_logic_heal_check.setChecked(config.safe_zone.fully_heal)
             self.safe_zone_regen_spin.setValue(config.safe_zone.heal_per_second)
@@ -93,6 +94,7 @@ class PresetPatcherEnergy(PresetTab, Ui_PresetPatcherEnergy):
             self.dark_suit_spin_box.setValue(config.dark_suit_damage)
 
         elif self.game_enum == RandovaniaGame.METROID_PRIME:
+            assert isinstance(config, PrimeConfiguration)
             self.progressive_damage_reduction_check.setChecked(config.progressive_damage_reduction)
             self.heated_damage_spin.setValue(config.heat_damage)
             signal_handling.set_combo_with_value(self.ingame_difficulty_combo, config.ingame_difficulty)
