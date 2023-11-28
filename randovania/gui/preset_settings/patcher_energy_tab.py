@@ -63,9 +63,8 @@ class PresetPatcherEnergy(PresetTab, Ui_PresetPatcherEnergy):
         # In-Game Difficulty
 
         if self.game_enum == RandovaniaGame.METROID_PRIME:
-            self.ingame_difficulty_combo.setItemData(0, IngameDifficulty.NORMAL)
-            self.ingame_difficulty_combo.setItemData(1, IngameDifficulty.HARD)
-            self.ingame_difficulty_combo.setItemData(2, IngameDifficulty.EITHER)
+            for i, difficulty in enumerate(IngameDifficulty):
+                self.ingame_difficulty_combo.setItemData(i, difficulty)
             signal_handling.on_combo(self.ingame_difficulty_combo, self._persist_ingame_difficulty)
 
         else:
