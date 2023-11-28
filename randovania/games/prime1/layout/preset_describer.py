@@ -4,7 +4,6 @@ from typing import TYPE_CHECKING
 
 from randovania.games.prime1.layout.hint_configuration import PhazonSuitHintMode
 from randovania.games.prime1.layout.prime_configuration import (
-    IngameDifficulty,
     LayoutCutsceneMode,
     PrimeConfiguration,
     RoomRandoMode,
@@ -40,19 +39,12 @@ _PRIME1_ROOM_RANDO_MODE_DESCRIPTION = {
 }
 
 
-_PRIME1_INGAME_DIFFICULTY_DESCRIPTION = {
-    IngameDifficulty.NORMAL: None,
-    IngameDifficulty.HARD: "Hard Mode",
-    IngameDifficulty.EITHER: None,
-}
-
-
 class PrimePresetDescriber(GamePresetDescriber):
     def format_params(self, configuration: BaseConfiguration) -> dict[str, list[str]]:
         assert isinstance(configuration, PrimeConfiguration)
         template_strings = super().format_params(configuration)
         cutscene_removal = _PRIME1_CUTSCENE_MODE_DESCRIPTION[configuration.qol_cutscenes]
-        ingame_difficulty = _PRIME1_INGAME_DIFFICULTY_DESCRIPTION[configuration.ingame_difficulty]
+        ingame_difficulty = configuration.ingame_difficulty.description
 
         phazon_hint = _PRIME1_PHAZON_SUIT_HINT[configuration.hints.phazon_suit]
 
