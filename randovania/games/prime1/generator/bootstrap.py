@@ -55,23 +55,35 @@ class PrimeBootstrap(MetroidBootstrap):
             current_resources[db.get_item_by_name(suit)] for suit in ["Varia Suit", "Gravity Suit", "Phazon Suit"]
         )
         if num_suits >= 3:
-            return 0.5
+            dr = 0.5
         elif num_suits == 2:
-            return 0.8
+            dr = 0.8
         elif num_suits == 1:
-            return 0.9
+            dr = 0.9
         else:
-            return 1
+            dr = 1
+
+        hard_mode = db.get_by_type_and_index(ResourceType.MISC, "hard_mode")
+        if current_resources.has_resource(hard_mode):
+            dr *= 1.53
+
+        return dr
 
     def prime1_absolute_damage_reduction(self, db: ResourceDatabase, current_resources: ResourceCollection):
         if current_resources[db.get_item_by_name("Phazon Suit")] > 0:
-            return 0.5
+            dr = 0.5
         elif current_resources[db.get_item_by_name("Gravity Suit")] > 0:
-            return 0.8
+            dr = 0.8
         elif current_resources[db.get_item_by_name("Varia Suit")] > 0:
-            return 0.9
+            dr = 0.9
         else:
-            return 1
+            dr = 1
+
+        hard_mode = db.get_by_type_and_index(ResourceType.MISC, "hard_mode")
+        if current_resources.has_resource(hard_mode):
+            dr *= 1.53
+
+        return dr
 
     def patch_resource_database(self, db: ResourceDatabase, configuration: PrimeConfiguration) -> ResourceDatabase:
         base_damage_reduction = db.base_damage_reduction
@@ -92,9 +104,6 @@ class PrimeBootstrap(MetroidBootstrap):
             base_damage_reduction = self.prime1_progressive_damage_reduction
         else:
             base_damage_reduction = self.prime1_absolute_damage_reduction
-
-        if configuration.ingame_difficulty == IngameDifficulty.HARD:
-            base_damage_reduction *= 1.53
 
         return dataclasses.replace(
             db,
