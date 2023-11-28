@@ -7,17 +7,17 @@ from typing import TYPE_CHECKING
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.damage_reduction import DamageReduction
 from randovania.game_description.resources.resource_type import ResourceType
+from randovania.games.prime1.layout.prime_configuration import IngameDifficulty, PrimeConfiguration
 from randovania.resolver.bootstrap import MetroidBootstrap
 
 if TYPE_CHECKING:
     from randovania.game_description.resources.resource_collection import ResourceCollection
     from randovania.game_description.resources.resource_database import ResourceDatabase
-    from randovania.layout.base.base_configuration import BaseConfiguration
 
 
 class PrimeBootstrap(MetroidBootstrap):
     def _get_enabled_misc_resources(
-        self, configuration: BaseConfiguration, resource_database: ResourceDatabase
+        self, configuration: PrimeConfiguration, resource_database: ResourceDatabase
     ) -> set[str]:
         enabled_resources = set()
 
@@ -45,6 +45,9 @@ class PrimeBootstrap(MetroidBootstrap):
         if configuration.dock_rando.is_enabled():
             enabled_resources.add("dock_rando")
 
+        if configuration.ingame_difficulty == IngameDifficulty.HARD:
+            enabled_resources.add("hard_mode")
+
         return enabled_resources
 
     def prime1_progressive_damage_reduction(self, db: ResourceDatabase, current_resources: ResourceCollection):
@@ -70,7 +73,7 @@ class PrimeBootstrap(MetroidBootstrap):
         else:
             return 1
 
-    def patch_resource_database(self, db: ResourceDatabase, configuration: BaseConfiguration) -> ResourceDatabase:
+    def patch_resource_database(self, db: ResourceDatabase, configuration: PrimeConfiguration) -> ResourceDatabase:
         base_damage_reduction = db.base_damage_reduction
         damage_reductions = copy.copy(db.damage_reductions)
         requirement_template = copy.copy(db.requirement_template)
@@ -89,6 +92,9 @@ class PrimeBootstrap(MetroidBootstrap):
             base_damage_reduction = self.prime1_progressive_damage_reduction
         else:
             base_damage_reduction = self.prime1_absolute_damage_reduction
+
+        if configuration.ingame_difficulty == IngameDifficulty.HARD:
+            base_damage_reduction *= 1.53
 
         return dataclasses.replace(
             db,
