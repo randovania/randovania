@@ -77,6 +77,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Fix Chapel of the Elder's item platform not rising up all the way
   - Removed more "flashbang" effects
 - Changed: Research Core item acquisition cutscene removed in Competitive Skippable Cutscenes
+- Changed: Reintroduce and improve loading trigger optimization in Warrior Shrine
 - Changed: Update in-game text when refilling PBs at missile stations
 - Changed: The Missile Launcher's broad category is now "missile system" instead of "missile-related upgrade".
 
