@@ -108,7 +108,7 @@ class MSRPatchDataFactory(PatchDataFactory):
         result = {}
         for resource, quantity in resources.as_resource_gain():
             try:
-                result[get_item_id_for_item(resource)] = quantity
+                result[get_export_item_id_for_item(resource)] = quantity
             except KeyError:
                 print(f"Skipping {resource} for starting inventory: no item id")
                 continue
