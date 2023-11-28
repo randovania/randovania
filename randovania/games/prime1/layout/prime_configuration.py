@@ -32,7 +32,7 @@ class LayoutCutsceneMode(BitPackEnum, Enum):
 
 class IngameDifficulty(BitPackEnum, Enum):
     randomprime_value: str
-    description: str
+    description: str | None
 
     NORMAL = "Normal"
     HARD = "Hard"
