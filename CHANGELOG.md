@@ -63,10 +63,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Metroid Prime
 
 - Fixed: Parasite Queen permadeath when skipping death cutscene
+- Fixed: Black bar in Control Tower cutscene
+- Fixed: Minor PAL issues regarding Skippable Cutscenes in Exterior Docking Hangar and Sunchamber
+- Added: Preset option to force Normal or Hard difficulty in the Main Menu
+- Added: More Base QoL
+  - All rooms now automatically play music appropriate to the area, even if the original music trigger has not been touched
+  - The bomb blocks in Lava Lake and Chapel Tunnel are gone forever once destroyed
+  - Fix Arboretum rune scan not always appearing when vines are retracted
+  - Fix broken load trigger in Aether Lab Entryway
+  - Tweaked the size of some door open and loading triggers
+  - Sun Tower Access Ghost can now be seen after performing Early Wild
+  - Better music timing of Elite Pirate breakout
+  - Fix Chapel of the Elder's item platform not rising up all the way
+  - Removed more "flashbang" effects
+- Changed: Research Core item acquisition cutscene removed in Competitive Skippable Cutscenes
+- Changed: Reintroduce and improve loading trigger optimization in Warrior Shrine
 - Changed: Update in-game text when refilling PBs at missile stations
 - Changed: The Missile Launcher's broad category is now "missile system" instead of "missile-related upgrade".
 
 #### Logic Database
+
+- Added: Database logic for Hard Mode
 
 ##### Chozo Ruins
 

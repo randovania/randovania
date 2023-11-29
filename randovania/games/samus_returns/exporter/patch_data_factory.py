@@ -108,7 +108,7 @@ class MSRPatchDataFactory(PatchDataFactory):
         result = {}
         for resource, quantity in resources.as_resource_gain():
             try:
-                result[get_item_id_for_item(resource)] = quantity
+                result[get_export_item_id_for_item(resource)] = quantity
             except KeyError:
                 print(f"Skipping {resource} for starting inventory: no item id")
                 continue
@@ -189,6 +189,7 @@ class MSRPatchDataFactory(PatchDataFactory):
         text = {}
         difficulty_labels = {
             "GUI_MSG_NEW_FILE_CREATION",
+            "GUI_MSG_NEW_GAME_CONFIRMATION",
             "GUI_MSG_NEW_GAME_CONFIRMATION_NORMAL",
             "GUI_MSG_NEW_GAME_CONFIRMATION_HARD",
             "GUI_MSG_NEW_GAME_CONFIRMATION_FUSION",

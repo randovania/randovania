@@ -13,7 +13,11 @@ from randovania.games.game import RandovaniaGame
 from randovania.games.prime1.exporter.hint_namer import PrimeHintNamer
 from randovania.games.prime1.exporter.vanilla_maze_seeds import VANILLA_MAZE_SEEDS
 from randovania.games.prime1.layout.hint_configuration import ArtifactHintMode, PhazonSuitHintMode
-from randovania.games.prime1.layout.prime_configuration import LayoutCutsceneMode, PrimeConfiguration, RoomRandoMode
+from randovania.games.prime1.layout.prime_configuration import (
+    LayoutCutsceneMode,
+    PrimeConfiguration,
+    RoomRandoMode,
+)
 from randovania.games.prime1.patcher import prime1_elevators, prime_items
 from randovania.generator.pickup_pool import pickup_creator
 
@@ -969,6 +973,7 @@ class PrimePatchDataFactory(PatchDataFactory):
                 "autoEnabledElevators": not starting_resources.has_resource(scan_visor),
                 "multiworldDolPatches": True,
                 "doorOpenMode": "PrimaryBlastShield",
+                "difficultyBehavior": self.configuration.ingame_difficulty.randomprime_value,
                 "disableItemLoss": True,  # Item Loss in Frigate
                 "startingItems": starting_items,
                 "etankCapacity": self.configuration.energy_per_tank,
