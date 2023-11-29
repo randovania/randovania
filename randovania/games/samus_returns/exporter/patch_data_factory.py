@@ -189,6 +189,7 @@ class MSRPatchDataFactory(PatchDataFactory):
         text = {}
         difficulty_labels = {
             "GUI_MSG_NEW_FILE_CREATION",
+            "GUI_MSG_NEW_GAME_CONFIRMATION",
             "GUI_MSG_NEW_GAME_CONFIRMATION_NORMAL",
             "GUI_MSG_NEW_GAME_CONFIRMATION_HARD",
             "GUI_MSG_NEW_GAME_CONFIRMATION_FUSION",
