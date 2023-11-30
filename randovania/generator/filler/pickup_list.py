@@ -78,7 +78,7 @@ def _unsatisfied_item_requirements_in_list(
 
 def _requirement_lists_without_satisfied_resources(
     state: State,
-    possible_set: RequirementSet,
+    possible_sets: list[RequirementSet],
     uncollected_resources: set[ResourceInfo],
 ) -> set[RequirementList]:
     seen_lists = set()
@@ -89,13 +89,15 @@ def _requirement_lists_without_satisfied_resources(
         if items_tuple not in result:
             result.add(items_tuple)
 
-    for alternative in possible_set.alternatives:
-        if alternative in seen_lists:
-            continue
-        seen_lists.add(alternative)
+    for requirements in possible_sets:
+        # Maybe should first recreate `requirements` by removing the satisfied items or the ones that can't be
+        for alternative in requirements.alternatives:
+            if alternative in seen_lists:
+                continue
+            seen_lists.add(alternative)
 
-        for items in _unsatisfied_item_requirements_in_list(alternative, state, uncollected_resources):
-            _add_items(items)
+            for items in _unsatisfied_item_requirements_in_list(alternative, state, uncollected_resources):
+                _add_items(items)
 
     if debug.debug_level() > 2:
         print(">> All requirement lists:")
@@ -165,10 +167,9 @@ def get_pickups_that_solves_unreachable(
     desired_lists: list[RequirementList] = []
     for req_set in possible_sets:
         desired_lists.extend(req_set.alternatives)
-    possible_set = RequirementSet(desired_lists)
+    possible_sets = [RequirementSet(desired_lists)]
 
-    print(f"{possible_sets}")
-    all_lists = _requirement_lists_without_satisfied_resources(state, possible_set, uncollected_resources)
+    all_lists = _requirement_lists_without_satisfied_resources(state, possible_sets, uncollected_resources)
 
     result = []
     for requirement_list in sorted(all_lists, key=lambda it: it.as_stable_sort_tuple):
