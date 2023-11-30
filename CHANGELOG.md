@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [7.1.0] - 2023-12-??
 
 - Fixed: Bug with progressive suits in the autotracker always highlighting first suit
+- Changed: "Remove redundant pickup alternatives" and "Stagger placement of pickups" are no longer experimental options and will be included in all presets moving forwards.
 
 ### AM2R
 
