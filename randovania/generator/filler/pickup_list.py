@@ -167,6 +167,7 @@ def get_pickups_that_solves_unreachable(
         desired_lists.extend(req_set.alternatives)
     possible_set = RequirementSet(desired_lists)
 
+    print(f"{possible_sets}")
     all_lists = _requirement_lists_without_satisfied_resources(state, possible_set, uncollected_resources)
 
     result = []
