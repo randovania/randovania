@@ -149,9 +149,11 @@ def get_pickups_that_solves_unreachable(
     pickups_left: Sequence[PickupEntry],
     reach: GeneratorReach,
     uncollected_resource_nodes: Sequence[ResourceNode],
+    single_set: bool,
 ) -> PickupCombinations:
     """New logic. Given pickup list and a reach, checks the combination of pickups
     that satisfies on unreachable nodes.
+    If single_set is set, all possible_sets are combined into a single one.
     """
     state = reach.state
     possible_sets = [v for v in reach.unreachable_nodes_with_requirements().values() if v.alternatives]
@@ -163,11 +165,11 @@ def get_pickups_that_solves_unreachable(
         for resource, _ in node.resource_gain_on_collect(context):
             uncollected_resources.add(resource)
 
-    # Previously single_set_for_pickups_that_solve
-    desired_lists: list[RequirementList] = []
-    for req_set in possible_sets:
-        desired_lists.extend(req_set.alternatives)
-    possible_sets = [RequirementSet(desired_lists)]
+    if single_set:
+        desired_lists: list[RequirementList] = []
+        for req_set in possible_sets:
+            desired_lists.extend(req_set.alternatives)
+        possible_sets = [RequirementSet(desired_lists)]
 
     all_lists = _requirement_lists_without_satisfied_resources(state, possible_sets, uncollected_resources)
 

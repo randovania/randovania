@@ -58,6 +58,8 @@ class BaseConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInitTypeCh
         }
     )
     dock_rando: DockRandoConfiguration
+    single_set_for_pickups_that_solve: bool
+    staggered_multi_pickup_placement: bool
     check_if_beatable_after_base_patches: bool
 
     @classmethod
