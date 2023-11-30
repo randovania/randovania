@@ -60,8 +60,6 @@ async def run_filler(
                     first_progression_must_be_local=config.first_progression_must_be_local,
                     minimum_available_locations_for_hint_placement=config.minimum_available_locations_for_hint_placement,
                     minimum_location_weight_for_hint_placement=config.minimum_location_weight_for_hint_placement,
-                    single_set_for_pickups_that_solve=config.single_set_for_pickups_that_solve,
-                    staggered_multi_pickup_placement=config.staggered_multi_pickup_placement,
                 ),
             )
         )

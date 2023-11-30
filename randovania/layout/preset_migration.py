@@ -1011,8 +1011,8 @@ def _migrate_v67(preset: dict) -> dict:
 
 
 def _migrate_v68(preset: dict) -> dict:
-    preset["configuration"]["single_set_for_pickups_that_solve"] = True
-    preset["configuration"]["staggered_multi_pickup_placement"] = True
+    preset["configuration"].pop("single_set_for_pickups_that_solve")
+    preset["configuration"].pop("staggered_multi_pickup_placement")
     return preset
 
 

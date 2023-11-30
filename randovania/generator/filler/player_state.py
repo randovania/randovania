@@ -112,9 +112,7 @@ class PlayerState:
         usable_pickups = [
             pickup for pickup in self.pickups_left if self.num_actions >= pickup.generator_params.required_progression
         ]
-        pickups = get_pickups_that_solves_unreachable(
-            usable_pickups, self.reach, uncollected_resource_nodes, self.configuration.single_set_for_pickups_that_solve
-        )
+        pickups = get_pickups_that_solves_unreachable(usable_pickups, self.reach, uncollected_resource_nodes)
         filler_logging.print_retcon_loop_start(self.game, usable_pickups, self.reach, self.index)
 
         self._unfiltered_potential_actions = pickups, tuple(uncollected_resource_nodes)
