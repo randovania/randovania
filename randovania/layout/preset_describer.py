@@ -104,12 +104,6 @@ class GamePresetDescriber:
                 f"{configuration.logical_resource_action.long_name} dangerous actions"
             )
 
-        if configuration.single_set_for_pickups_that_solve:
-            template_strings["Logic Settings"].append("Experimental potential actions")
-
-        if configuration.staggered_multi_pickup_placement:
-            template_strings["Logic Settings"].append("Experimental staggered pickups")
-
         if randomization_mode != RandomizationMode.default():
             template_strings["Item Pool"].append(randomization_mode.description)
 
