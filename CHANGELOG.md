@@ -63,6 +63,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Prime
 
+- Fixed: Some rooms not appearing on map when "Open map from start" export option is selected
 - Fixed: Parasite Queen permadeath when skipping death cutscene
 - Fixed: Black bar in Control Tower cutscene
 - Fixed: Minor PAL issues regarding Skippable Cutscenes in Exterior Docking Hangar and Sunchamber

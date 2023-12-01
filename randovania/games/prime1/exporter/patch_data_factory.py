@@ -814,9 +814,9 @@ class PrimePatchDataFactory(PatchDataFactory):
             starting_memo = None
 
         if self.cosmetic_patches.open_map and self.configuration.teleporters.is_vanilla:
-            map_default_state = "Visible"
+            map_default_state = "Always"
         else:
-            map_default_state = "Default"
+            map_default_state = "MapStationOrVisit"
 
         credits_string = credits_spoiler.prime_trilogy_credits(
             self.configuration.standard_pickup_configuration,
