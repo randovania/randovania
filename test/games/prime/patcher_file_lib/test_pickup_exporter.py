@@ -7,7 +7,6 @@ from unittest.mock import MagicMock
 import pytest
 
 from randovania.exporter import pickup_exporter
-from randovania.game_description import default_database
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.db.pickup_node import PickupNode
@@ -30,7 +29,9 @@ from randovania.layout.base.standard_pickup_state import StandardPickupState
 
 
 def test_get_single_hud_text_all_standard_pickups(echoes_pickup_database, echoes_resource_database):
-    memo_data = default_database.default_prime2_memo_data()
+    from randovania.games.prime2.exporter import patch_data_factory
+
+    memo_data = patch_data_factory.default_prime2_memo_data()
 
     # Run
     for item in echoes_pickup_database.standard_pickups.values():
@@ -59,10 +60,11 @@ def test_calculate_hud_text(order: tuple[str, str], generic_pickup_category, def
     # Setup
     resource_a = ItemResourceInfo(0, "A", "A", 10)
     resource_b = ItemResourceInfo(1, "B", "B", 10)
+    game = RandovaniaGame.BLANK
 
     pickup_x = PickupEntry(
         "A",
-        1,
+        PickupModel(game, "1"),
         generic_pickup_category,
         generic_pickup_category,
         progression=(((resource_a, 1),)),
@@ -70,7 +72,7 @@ def test_calculate_hud_text(order: tuple[str, str], generic_pickup_category, def
     )
     pickup_y = PickupEntry(
         "Y",
-        2,
+        PickupModel(game, "2"),
         generic_pickup_category,
         generic_pickup_category,
         progression=(
@@ -81,7 +83,7 @@ def test_calculate_hud_text(order: tuple[str, str], generic_pickup_category, def
     )
     pickup_z = PickupEntry(
         "Z",
-        2,
+        PickupModel(game, "2"),
         generic_pickup_category,
         generic_pickup_category,
         progression=(
