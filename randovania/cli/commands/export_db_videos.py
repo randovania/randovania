@@ -59,7 +59,6 @@ HTML_HEADER_FORMAT = """
             p {
                 margin-top: 10px;
                 margin-bottom: 4px;
-                padding 0;
             }
             #toc_container {
                 background: #f9f9f9 none repeat scroll 0 0;
@@ -92,7 +91,7 @@ HTML_HEADER_FORMAT = """
 """
 
 HTML_AREA_FORMAT = """
-        <strong><h2 id="%s">%s</h2></strong>\n
+        <h2 id="%s">%s</h2>\n
 """
 
 HTML_CONNECTION_FORMAT = """
@@ -234,14 +233,22 @@ def generate_region_html(name: str, areas: dict[str, dict[str, dict[str, list[tu
             connections = nodes[node]
             for connection in sorted(connections):
                 connection_name = f"{node} -> {connection}"
-                area_body += HTML_CONNECTION_FORMAT % (connection_name, connection_name)
+
+                connection_body = HTML_CONNECTION_FORMAT % (connection_name, connection_name)
                 yt_ids = connections[connection]
+
+                any = False
+
                 for id, start_time, highest_diff in sorted(yt_ids, key=lambda x: x[2]):
-                    if "https://www.youtube.com/embed/%s?start=%d" % (id, start_time) in area_body:
+                    if "%s?start=%d" % (id, start_time) in area_body:
+                        # video already used for another connection in this room
                         continue
+
+                    any = True
+
                     difficulty = LayoutTrickLevel.from_number(highest_diff).long_name
 
-                    area_body += HTML_VIDEO_FORMAT.format(
+                    connection_body += HTML_VIDEO_FORMAT.format(
                         difficulty,
                         id,
                         start_time,
@@ -249,6 +256,13 @@ def generate_region_html(name: str, areas: dict[str, dict[str, dict[str, list[tu
                         start_time,
                         id,
                     )
+
+                if not any:
+                    # no videos for this connection after filtering out duplicates
+                    continue
+
+                area_body += connection_body
+
                 toc_connections += TOC_CONNECTION_FORMAT % (connection_name, connection_name)
         toc += TOC_AREA_FORMAT % (area, toc_connections)
         body += area_body
