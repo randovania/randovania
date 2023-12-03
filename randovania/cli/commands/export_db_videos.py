@@ -29,10 +29,38 @@ HTML_HEADER_FORMAT = """
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>%s</title>
         <style type="text/css">
-            body{
-                margin:30px auto;max-width:1000px;line-height:1.6;font-size:19px;padding:0 10px
+            body {
+                font-family: 'Helvetica Neue', sans-serif;
+                background-color: #f5f5f5;
+                color: #333;
+                margin: 30px auto;
+                max-width: 1000px;
+                line-height: 1.6;
+                font-size: 19px;
+                padding: 0 10px;
             }
-            h1,h2,h3{line-height:1.2}
+            h2 {
+                font-size: 46px;
+                margin-top: 100px;
+                margin-bottom: 0px;
+            }
+            h3 {
+                margin-top: 46px;
+                margin-bottom: 0;
+            }
+            .header {
+                background-color: #3498db;
+                color: #fff;
+            }
+            a {
+                text-decoration: none;
+                color: #3498db;
+            }
+            p {
+                margin-top: 10px;
+                margin-bottom: 4px;
+                padding 0;
+            }
             #toc_container {
                 background: #f9f9f9 none repeat scroll 0 0;
                 border: 1px solid #aaa;
@@ -42,12 +70,19 @@ HTML_HEADER_FORMAT = """
                 padding: 20px;
                 width: auto;
             }
-            .toc_title {
-                font-weight: 700;
-                text-align: center;
-            }
-            #toc_container li, #toc_container ul, #toc_container ul li{
+            #toc_container li, #toc_container ul, #toc_container ul li {
                 list-style: outside none none !important;
+            }
+            #toc_container ul {
+                margin-bottom: 40px;
+            }
+            ul, ol {
+                list-style-type: none;
+                padding: 0;
+                margin: 0;
+            }
+            ul {
+                font-size: 16px;
             }
         </style>
     </head>
@@ -61,7 +96,7 @@ HTML_AREA_FORMAT = """
 """
 
 HTML_CONNECTION_FORMAT = """
-        <h4 id="%s">%s</h4>\n
+        <h3 id="%s">%s</h3>\n
 """
 
 HTML_VIDEO_FORMAT = """
@@ -180,7 +215,7 @@ def generate_region_html(name: str, areas: dict[str, dict[str, dict[str, list[tu
     """
 
     TOC_AREA_FORMAT = """
-            <li><strong><a>%s</a></strong>
+            <li><strong>%s</strong>
                 <ul>
                     %s
                 </ul>
