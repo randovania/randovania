@@ -67,10 +67,26 @@ HTML_CONNECTION_FORMAT = """
 """
 
 HTML_VIDEO_FORMAT = """
-        <p><i>%s</i></p>
-        <iframe width="560" height="420" src="https://www.youtube.com/embed/%s?start=%d" title="YouTube video player"
-            frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope;
-            picture-in-picture" allowfullscreen></iframe>\n
+        <p><i> {} </i></p>
+        <iframe
+        width="560"
+        height="315"
+        src="https://www.youtube.com/embed/{}?start={}&autoplay=1"
+        srcdoc="<style>
+            *{{padding:0;margin:0;overflow:hidden}}
+            html,body{{height:100%}}
+            img,span{{position:absolute;width:100%;top:0;bottom:0;margin:auto}}
+            span{{height:1.5em;text-align:center;font:48px/1.5 sans-serif;color:white;text-shadow:0 0 0.5em black}}
+            </style>
+            <a href=https://www.youtube.com/embed/{}?start={}&autoplay=1>
+                <img src=https://img.youtube.com/vi/{}/hqdefault.jpg alt='YouTube video player'>
+                <span>▶️</span>
+            </a>"
+        frameborder="0"
+        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+        title="YouTube video player"
+        ></iframe>
 """
 
 HTML_FOOTER = """
@@ -195,10 +211,15 @@ def generate_region_html(name: str, areas: dict[str, dict[str, dict[str, list[tu
                 for id, start_time, highest_diff in sorted(yt_ids, key=lambda x: x[2]):
                     if "https://www.youtube.com/embed/%s?start=%d" % (id, start_time) in area_body:
                         continue
-                    area_body += HTML_VIDEO_FORMAT % (
-                        LayoutTrickLevel.from_number(highest_diff).long_name,
+                    difficulty = LayoutTrickLevel.from_number(highest_diff).long_name
+
+                    area_body += HTML_VIDEO_FORMAT.format(
+                        difficulty,
                         id,
                         start_time,
+                        id,
+                        start_time,
+                        id,
                     )
                 toc_connections += TOC_CONNECTION_FORMAT % (connection_name, connection_name)
         toc += TOC_AREA_FORMAT % (area, toc_connections)
@@ -228,7 +249,7 @@ def export_videos(game: RandovaniaGame, out_dir: Path):
 
     for region_name, area in regions.items():
         html = generate_region_html(region_name, area)
-        out_dir_game.joinpath(region_name + ".html").write_text(html)
+        out_dir_game.joinpath(region_name + ".html").write_text(html, encoding="utf-8")
 
     full_name = game.long_name
     html = HTML_HEADER_FORMAT % ("Index - " + full_name, full_name, get_date())
