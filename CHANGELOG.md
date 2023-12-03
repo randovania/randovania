@@ -5,13 +5,25 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [7.1.0] - 2023-12-??
+## [7.2.0] - 2024-01-??
 
-- Fixed: Bug with progressive suits in the autotracker always highlighting first suit
 - Fixed: Bug where tooltips did not show uncollected item names in the autotracker
 - Changed: Autotracker tooltips now display text in black instead of gray
 
+## [7.1.0] - 2023-12-01
+
+- Fixed: Bug with progressive suits in the autotracker always highlighting first suit
+- Changed: "Remove redundant pickup alternatives" and "Stagger placement of pickups" are no longer experimental options and will be included in all presets moving forwards.
+
+
 ### AM2R
+
+- Added: Shell script to make launching randomized games easier on Flatpak.
+- Added: Plasma Beam Chamber's crumble blocks will be gone when the softlock prevention setting is turned on.
+- Fixed: Visual time of day discrepancy with Septoggs and the tileset if started at GFS Thoth.
+- Fixed: A flipped water turbine if the vanilla water turbine was set to be changed to one.
+- Fixed: Crash when starting the game and loading a save room which contains a destroyed water turbine.
+- Fixed: "Cancel" button not working properly on "Toggle" Missile-Mode.
 
 #### Logic Database
 
@@ -28,6 +40,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: In Screw Attack Room: Get from Door to Freezer(Power) to Start Point 2 by sliding.
 - Added: In Screw Attack Room: Get from Start Point 2 to Early SA Platform with Space Jump.
 - Added: In Screw Attack Room: Get from Door to Freezer(Power) to Screw Attack Pickup by using Shinespark. Requires Speed Booster Conservation Beginner and Disabled Door Lock Randomizer.
+- Added: In EMMI Zone Hub: Get to the item pickup and the top left door from Door to Ballspark Hallway, using Shinespark, Speed Booster Conservation Beginner.
+- Added: In EMMI Zone Hub: Get to the item pickup from Door to Ballspark Hallway using Speed Booster and Spider Magnet.
+- Fixed: In EMMI Zone Hub: Getting to the item pickup from Door to Ballspark Hallway using Flash Shift and Single Wall Jump is now separated from the Grapple Movement alternative.
+- Fixed: In EMMI Zone Hub: Getting to the item pickup from Door to Ballspark Hallway using Flash Shift and Single Wall Jump now requires a Flash Shift Upgrade.
+- Fixed: In EMMI Zone Hub: Getting to the item pickup from the lower door to Wide Beam Block Room using a Shinespark now requires Door Lock Rando to be disabled.
+- Removed: In EMMI Zone Hub: Redundant option: getting from the lower to the upper Door to EMMI Zone Exit Southwest using Speed Booster when Door Lock Rando is disabled.
+
+##### Burenia
+
+- Added: In Gravity Suit Tower: Getting from the Lower door to Ammo Station South to the Upper door to Gravity Suit Room is in logic with either Power Bombs or after breaking the floor.
+- Changed: In Gravity Suit Tower: Getting from the Lower door to Ammo Station South to the Lower door to Gravity Suit Room is now locked behind Highly Dangerous Logic
 
 ##### Cataris
 - Added: In Underlava Puzzle Room 2: Use Speed Booster with at least one upgrade to shinespark through the speed blocks from the right. 
@@ -35,7 +58,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ##### Ferenia
 
 - Added: In EMMI Zone Exit Middle: Use Wave Beam and Charge Beam or Power Bombs to open the Upper Door to EMMI Zone Exit West, then traverse through that room to get to the upper door.
+- Added: In Purple EMMI Arena: Use Water Space Jump (Intermediate) to jump out of the water to reach the door.
 - Changed: In EMMI Zone Exit Middle: Going from the Dock to Map Station to the Door to EMMI ZONE Exit West (Lower) is now trivial.
+- Changed: In Purple EMMI Arena: Jumping out of the Water to reach the door using Cross Bombs now requires Water Bomb Jump Beginner. Using Normal Bombs no longer requires Spin Boost.
 
 ##### Ghavoran
 
@@ -44,11 +69,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Prime
 
+- Fixed: Some rooms not appearing on map when "Open map from start" export option is selected
 - Fixed: Parasite Queen permadeath when skipping death cutscene
+- Fixed: Black bar in Control Tower cutscene
+- Fixed: Minor PAL issues regarding Skippable Cutscenes in Exterior Docking Hangar and Sunchamber
+- Added: Preset option to force Normal or Hard difficulty in the Main Menu
+- Added: More Base QoL
+  - All rooms now automatically play music appropriate to the area, even if the original music trigger has not been touched
+  - The bomb blocks in Lava Lake and Chapel Tunnel are gone forever once destroyed
+  - Fix Arboretum rune scan not always appearing when vines are retracted
+  - Fix broken load trigger in Aether Lab Entryway
+  - Tweaked the size of some door open and loading triggers
+  - Sun Tower Access Ghost can now be seen after performing Early Wild
+  - Better music timing of Elite Pirate breakout
+  - Fix Chapel of the Elder's item platform not rising up all the way
+  - Removed more "flashbang" effects
+- Changed: Research Core item acquisition cutscene removed in Competitive Skippable Cutscenes
+- Changed: Reintroduce and improve loading trigger optimization in Warrior Shrine
 - Changed: Update in-game text when refilling PBs at missile stations
 - Changed: The Missile Launcher's broad category is now "missile system" instead of "missile-related upgrade".
 
 #### Logic Database
+
+- Added: Database logic for Hard Mode
 
 ##### Chozo Ruins
 
@@ -77,6 +120,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: Great Tree Hall Lower NSJ Climb BSJ
 - Added: Landing Site B Hop to Reach Gully NSJ
+
+### Metroid Prime 2: Echoes
+
+#### Logic Database
+
+- Changed: Climbing Transport A Access using slope jump + NSJ SA no longer incorrectly requires SJ as well
 
 ## [7.0.1] - 2023-11-??
 

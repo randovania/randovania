@@ -7,14 +7,14 @@ from ftplib import FTP
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from collections.abc import Callable
+    from collections.abc import Callable, Iterator
     from pathlib import Path
 
     from randovania.lib import status_update_lib
 
 
 @contextmanager
-def ftp_cd(ftp: FTP, pathname: str | None = None):
+def ftp_cd(ftp: FTP, pathname: str | None = None) -> Iterator[None]:
     """ftp server change folder with statement"""
     original_path = ftp.pwd()
     try:
@@ -34,7 +34,7 @@ def ftp_is_dir(ftp: FTP, path_name: str) -> bool:
         return False
 
 
-def delete_path(ftp: FTP, path: str, progress_update: Callable[[str], None]):
+def delete_path(ftp: FTP, path: str, progress_update: Callable[[str], None]) -> None:
     try:
         file_list = list(ftp.mlsd(path))
     except ftplib.error_perm as e:
@@ -66,11 +66,11 @@ class FtpUploader:
     local_path: Path
     remote_path: str
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if not self.remote_path.startswith("/"):
             raise ValueError("remote_path must start with /")
 
-    def __call__(self, progress_update: status_update_lib.ProgressUpdateCallable):
+    def __call__(self, progress_update: status_update_lib.ProgressUpdateCallable) -> None:
         all_files = list(self.local_path.rglob("*"))
 
         with FTP() as ftp:
