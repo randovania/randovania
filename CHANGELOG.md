@@ -115,6 +115,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Great Tree Hall Lower NSJ Climb BSJ
 - Added: Landing Site B Hop to Reach Gully NSJ
 
+### Metroid Prime 2: Echoes
+
+#### Logic Database
+
+- Changed: Climbing Transport A Access using slope jump + NSJ SA no longer incorrectly requires SJ as well
+
 ## [7.0.1] - 2023-11-??
 
 - To be decided if it will be necessary.
