@@ -3,6 +3,8 @@ from __future__ import annotations
 import datetime
 from typing import TYPE_CHECKING
 
+from htmlmin import minify
+
 from randovania.game_description import default_database
 from randovania.game_description.requirements.array_base import RequirementArrayBase
 from randovania.game_description.requirements.requirement_and import RequirementAnd
@@ -27,12 +29,10 @@ HTML_HEADER_FORMAT = """
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>%s</title>
         <style type="text/css">
-
             body{
                 margin:30px auto;max-width:1000px;line-height:1.6;font-size:19px;padding:0 10px
             }
             h1,h2,h3{line-height:1.2}
-
             #toc_container {
                 background: #f9f9f9 none repeat scroll 0 0;
                 border: 1px solid #aaa;
@@ -42,12 +42,10 @@ HTML_HEADER_FORMAT = """
                 padding: 20px;
                 width: auto;
             }
-
             .toc_title {
                 font-weight: 700;
                 text-align: center;
             }
-
             #toc_container li, #toc_container ul, #toc_container ul li{
                 list-style: outside none none !important;
             }
@@ -67,26 +65,21 @@ HTML_CONNECTION_FORMAT = """
 """
 
 HTML_VIDEO_FORMAT = """
-        <p><i> {} </i></p>
-        <iframe
-        width="560"
-        height="315"
-        src="https://www.youtube.com/embed/{}?start={}&autoplay=1"
-        srcdoc="<style>
-            *{{padding:0;margin:0;overflow:hidden}}
-            html,body{{height:100%}}
-            img,span{{position:absolute;width:100%;top:0;bottom:0;margin:auto}}
-            span{{height:1.5em;text-align:center;font:48px/1.5 sans-serif;color:white;text-shadow:0 0 0.5em black}}
-            </style>
-            <a href=https://www.youtube.com/embed/{}?start={}&autoplay=1>
-                <img src=https://img.youtube.com/vi/{}/hqdefault.jpg alt='YouTube video player'>
-                <span>▶️</span>
-            </a>"
-        frameborder="0"
-        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-        allowfullscreen
-        title="YouTube video player"
-        ></iframe>
+<p><i> {} </i></p>
+<iframe
+width="560"
+height="315"
+src="https://www.youtube.com/embed/{}?start={}&autoplay=1"
+srcdoc="<style>*{{padding:0;margin:0;overflow:hidden}}html,body{{height:100%}}
+img,span{{position:absolute;width:100%;top:0;bottom:0;margin:auto}}
+span{{height:1.5em;text-align:center;font:48px/1.5 sans-serif;color:white;text-shadow:0 0 0.5em black}}
+</style><a href=https://www.youtube.com/embed/{}?start={}&autoplay=1>
+<img src=https://img.youtube.com/vi/{}/hqdefault.jpg alt='vid'><span>▶️</span></a>"
+frameborder="0"
+allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+allowfullscreen
+title="vid"
+></iframe>
 """
 
 HTML_FOOTER = """
@@ -232,7 +225,9 @@ def generate_region_html(name: str, areas: dict[str, dict[str, dict[str, list[tu
 
     header = HTML_HEADER_FORMAT % (name, name, get_date())
 
-    return header + toc + body + HTML_FOOTER
+    html = header + toc + body + HTML_FOOTER
+
+    return minify(html, remove_comments=True, remove_all_empty_space=True)
 
 
 def filename_friendly_game_name(game: RandovaniaGame):
