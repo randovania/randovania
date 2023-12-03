@@ -17,6 +17,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: The Advanced Pseudo Wave Beam to break the Blob in Screw Attack Room from the right now handles it not working with Gravity Suit.
 - Fixed: Add Slide as a requirement for the Pseudo Wave Beam usages in Melee Tutorial Room and Early Cloak Room.
 
+##### Burenia
+
+- Added: Pseudo Wave Beam to break the bottom right blob in Burenia Hub to Dairon. Requires Slide and Gravity Suit or Diffusion Beam.
+
 ## [7.1.0] - 2023-12-01
 
 - Fixed: Bug with progressive suits in the autotracker always highlighting first suit
