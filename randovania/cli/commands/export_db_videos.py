@@ -66,8 +66,8 @@ HTML_HEADER_FORMAT = """
                 display: table;
                 font-size: 95%%;
                 margin-bottom: 1em;
-                padding: 20px;
-                width: auto;
+                padding: 36px;
+                width: 600px;
             }
             #toc_container li, #toc_container ul, #toc_container ul li {
                 list-style: outside none none !important;
@@ -101,8 +101,8 @@ HTML_CONNECTION_FORMAT = """
 HTML_VIDEO_FORMAT = """
 <p><i> {} </i></p>
 <iframe
-width="560"
-height="315"
+width="728"
+height="410"
 src="https://www.youtube.com/embed/{}?start={}&autoplay=1"
 srcdoc="<style>*{{padding:0;margin:0;overflow:hidden}}html,body{{height:100%}}
 img,span{{position:absolute;width:100%;top:0;bottom:0;margin:auto}}
