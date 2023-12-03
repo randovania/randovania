@@ -13,6 +13,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ##### Artaria
 
+- Added: In Screw Attack Room: Break the blob with Slide Turnaround Pseudo Wave Beam, requires Gravity Suit. Beginner from the left and Intermediate from the right.
+- Fixed: The Advanced Pseudo Wave Beam to break the Blob in Screw Attack Room from the right now handles it not working with Gravity Suit.
 - Fixed: Add Slide as a requirement for the Pseudo Wave Beam usages in Melee Tutorial Room and Early Cloak Room.
 
 ## [7.1.0] - 2023-12-01
