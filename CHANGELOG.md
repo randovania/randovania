@@ -9,6 +9,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed: Update to the Database Video Directory site to eliminate lag and add modern styling.
 
+### AM2R
+
+#### Logic Database
+
+##### Industrial Complex
+
+- Added: In Lower Factory Intersection: Can now climb the room by shinesparking after a short charge.
+- Fixed: In Lower Factory Intersection: Climbing the room now correctly needs a damage boost for wall jumps.
+
 ## [7.1.0] - 2023-12-??
 
 - Fixed: Bug with progressive suits in the autotracker always highlighting first suit
