@@ -7,9 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [7.2.0] - 2024-01-??
 
+- Fixed: Bug where tooltips did not show uncollected item names in the autotracker.
 - Changed: Update to the Database Video Directory site to eliminate lag and add modern styling.
+- Changed: Autotracker tooltips now display text in black instead of gray.
 
-## [7.1.0] - 2023-12-??
+## [7.1.0] - 2023-12-01
 
 - Fixed: Bug with progressive suits in the autotracker always highlighting first suit
 - Changed: "Remove redundant pickup alternatives" and "Stagger placement of pickups" are no longer experimental options and will be included in all presets moving forwards.
