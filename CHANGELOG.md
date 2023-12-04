@@ -5,7 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [7.2.0] - 2024-01-XX
+## [7.2.0] - 2024-01-??
+
+- Fixed: Bug where tooltips did not show uncollected item names in the autotracker.
+- Changed: Update to the Database Video Directory site to eliminate lag and add modern styling.
+- Changed: Autotracker tooltips now display text in black instead of gray.
 
 ### Metroid Dread
 
@@ -20,6 +24,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ##### Burenia
 
 - Added: Pseudo Wave Beam to break the bottom right blob in Burenia Hub to Dairon. Requires Slide and Gravity Suit or Diffusion Beam.
+
 
 ## [7.1.0] - 2023-12-01
 
