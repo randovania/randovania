@@ -7,6 +7,7 @@ from typing import TYPE_CHECKING
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.damage_reduction import DamageReduction
 from randovania.game_description.resources.resource_type import ResourceType
+from randovania.games.prime1.layout.prime_configuration import IngameDifficulty, PrimeConfiguration
 from randovania.resolver.bootstrap import MetroidBootstrap
 
 if TYPE_CHECKING:
@@ -19,6 +20,7 @@ class PrimeBootstrap(MetroidBootstrap):
     def _get_enabled_misc_resources(
         self, configuration: BaseConfiguration, resource_database: ResourceDatabase
     ) -> set[str]:
+        assert isinstance(configuration, PrimeConfiguration)
         enabled_resources = set()
 
         logical_patches = {
@@ -45,6 +47,9 @@ class PrimeBootstrap(MetroidBootstrap):
         if configuration.dock_rando.is_enabled():
             enabled_resources.add("dock_rando")
 
+        if configuration.ingame_difficulty == IngameDifficulty.HARD:
+            enabled_resources.add("hard_mode")
+
         return enabled_resources
 
     def prime1_progressive_damage_reduction(self, db: ResourceDatabase, current_resources: ResourceCollection):
@@ -52,25 +57,39 @@ class PrimeBootstrap(MetroidBootstrap):
             current_resources[db.get_item_by_name(suit)] for suit in ["Varia Suit", "Gravity Suit", "Phazon Suit"]
         )
         if num_suits >= 3:
-            return 0.5
+            dr = 0.5
         elif num_suits == 2:
-            return 0.8
+            dr = 0.8
         elif num_suits == 1:
-            return 0.9
+            dr = 0.9
         else:
-            return 1
+            dr = 1
+
+        hard_mode = db.get_by_type_and_index(ResourceType.MISC, "hard_mode")
+        if current_resources.has_resource(hard_mode):
+            dr *= 1.53
+
+        return dr
 
     def prime1_absolute_damage_reduction(self, db: ResourceDatabase, current_resources: ResourceCollection):
         if current_resources[db.get_item_by_name("Phazon Suit")] > 0:
-            return 0.5
+            dr = 0.5
         elif current_resources[db.get_item_by_name("Gravity Suit")] > 0:
-            return 0.8
+            dr = 0.8
         elif current_resources[db.get_item_by_name("Varia Suit")] > 0:
-            return 0.9
+            dr = 0.9
         else:
-            return 1
+            dr = 1
+
+        hard_mode = db.get_by_type_and_index(ResourceType.MISC, "hard_mode")
+        if current_resources.has_resource(hard_mode):
+            dr *= 1.53
+
+        return dr
 
     def patch_resource_database(self, db: ResourceDatabase, configuration: BaseConfiguration) -> ResourceDatabase:
+        assert isinstance(configuration, PrimeConfiguration)
+
         base_damage_reduction = db.base_damage_reduction
         damage_reductions = copy.copy(db.damage_reductions)
         requirement_template = copy.copy(db.requirement_template)

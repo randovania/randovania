@@ -12,6 +12,7 @@ from randovania.games.game import RandovaniaGame
 from randovania.games.prime1.layout.artifact_mode import LayoutArtifactMode
 from randovania.games.prime1.layout.hint_configuration import HintConfiguration
 from randovania.layout.base.base_configuration import BaseConfiguration
+from randovania.lib import enum_lib
 
 
 class RoomRandoMode(BitPackEnum, Enum):
@@ -27,6 +28,37 @@ class LayoutCutsceneMode(BitPackEnum, Enum):
     MAJOR = "Major"
     SKIPPABLE = "Skippable"
     SKIPPABLE_COMPETITIVE = "SkippableCompetitive"
+
+
+class IngameDifficulty(BitPackEnum, Enum):
+    randomprime_value: str
+    description: str | None
+
+    NORMAL = "Normal"
+    HARD = "Hard"
+    EITHER = "Either"
+
+
+enum_lib.add_per_enum_field(
+    IngameDifficulty,
+    "randomprime_value",
+    {
+        IngameDifficulty.NORMAL: "NormalOnly",
+        IngameDifficulty.HARD: "HardOnly",
+        IngameDifficulty.EITHER: "Either",
+    },
+)
+
+
+enum_lib.add_per_enum_field(
+    IngameDifficulty,
+    "description",
+    {
+        IngameDifficulty.NORMAL: None,
+        IngameDifficulty.HARD: "Hard Mode",
+        IngameDifficulty.EITHER: None,
+    },
+)
 
 
 @dataclasses.dataclass(frozen=True)
@@ -80,6 +112,7 @@ class PrimeConfiguration(BaseConfiguration):
 
     legacy_mode: bool
     qol_cutscenes: LayoutCutsceneMode
+    ingame_difficulty: IngameDifficulty
 
     enemy_attributes: EnemyAttributeRandomizer | None
 

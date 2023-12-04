@@ -5,9 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [7.2.0] - 2024-01-??
+
+- Changed: Update to the Database Video Directory site to eliminate lag and add modern styling.
+
 ## [7.1.0] - 2023-12-??
 
 - Fixed: Bug with progressive suits in the autotracker always highlighting first suit
+- Changed: "Remove redundant pickup alternatives" and "Stagger placement of pickups" are no longer experimental options and will be included in all presets moving forwards.
 
 ### AM2R
 
@@ -33,6 +38,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: In Screw Attack Room: Get from Door to Freezer(Power) to Start Point 2 by sliding.
 - Added: In Screw Attack Room: Get from Start Point 2 to Early SA Platform with Space Jump.
 - Added: In Screw Attack Room: Get from Door to Freezer(Power) to Screw Attack Pickup by using Shinespark. Requires Speed Booster Conservation Beginner and Disabled Door Lock Randomizer.
+- Added: In EMMI Zone Hub: Get to the item pickup and the top left door from Door to Ballspark Hallway, using Shinespark, Speed Booster Conservation Beginner.
+- Added: In EMMI Zone Hub: Get to the item pickup from Door to Ballspark Hallway using Speed Booster and Spider Magnet.
+- Fixed: In EMMI Zone Hub: Getting to the item pickup from Door to Ballspark Hallway using Flash Shift and Single Wall Jump is now separated from the Grapple Movement alternative.
+- Fixed: In EMMI Zone Hub: Getting to the item pickup from Door to Ballspark Hallway using Flash Shift and Single Wall Jump now requires a Flash Shift Upgrade.
+- Fixed: In EMMI Zone Hub: Getting to the item pickup from the lower door to Wide Beam Block Room using a Shinespark now requires Door Lock Rando to be disabled.
+- Removed: In EMMI Zone Hub: Redundant option: getting from the lower to the upper Door to EMMI Zone Exit Southwest using Speed Booster when Door Lock Rando is disabled.
 
 ##### Burenia
 
@@ -56,11 +67,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Prime
 
+- Fixed: Some rooms not appearing on map when "Open map from start" export option is selected
 - Fixed: Parasite Queen permadeath when skipping death cutscene
+- Fixed: Black bar in Control Tower cutscene
+- Fixed: Minor PAL issues regarding Skippable Cutscenes in Exterior Docking Hangar and Sunchamber
+- Added: Preset option to force Normal or Hard difficulty in the Main Menu
+- Added: More Base QoL
+  - All rooms now automatically play music appropriate to the area, even if the original music trigger has not been touched
+  - The bomb blocks in Lava Lake and Chapel Tunnel are gone forever once destroyed
+  - Fix Arboretum rune scan not always appearing when vines are retracted
+  - Fix broken load trigger in Aether Lab Entryway
+  - Tweaked the size of some door open and loading triggers
+  - Sun Tower Access Ghost can now be seen after performing Early Wild
+  - Better music timing of Elite Pirate breakout
+  - Fix Chapel of the Elder's item platform not rising up all the way
+  - Removed more "flashbang" effects
+- Changed: Research Core item acquisition cutscene removed in Competitive Skippable Cutscenes
+- Changed: Reintroduce and improve loading trigger optimization in Warrior Shrine
 - Changed: Update in-game text when refilling PBs at missile stations
 - Changed: The Missile Launcher's broad category is now "missile system" instead of "missile-related upgrade".
 
 #### Logic Database
+
+- Added: Database logic for Hard Mode
 
 ##### Chozo Ruins
 
@@ -89,6 +118,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: Great Tree Hall Lower NSJ Climb BSJ
 - Added: Landing Site B Hop to Reach Gully NSJ
+
+### Metroid Prime 2: Echoes
+
+#### Logic Database
+
+- Changed: Climbing Transport A Access using slope jump + NSJ SA no longer incorrectly requires SJ as well
 
 ## [7.0.1] - 2023-11-??
 
