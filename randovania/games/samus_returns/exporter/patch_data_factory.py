@@ -227,6 +227,12 @@ class MSRPatchDataFactory(PatchDataFactory):
                 data for pickup_item in pickup_list if (data := self._pickup_detail_for_target(pickup_item)) is not None
             ],
             "energy_per_tank": energy_per_tank,
+            "reserves_per_tank": {
+                "life_tank_size": self.configuration.life_tank_size,
+                "aeion_tank_size": self.configuration.aeion_tank_size,
+                "missile_tank_size": self.configuration.missile_tank_size,
+                "super_missile_tank_size": self.configuration.super_missile_tank_size,
+            },
             "game_patches": {
                 "charge_door_buff": self.configuration.charge_door_buff,
                 "beam_door_buff": self.configuration.beam_door_buff,

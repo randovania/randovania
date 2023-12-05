@@ -46,6 +46,30 @@ class MSRPresetDescriber(GamePresetDescriber):
         standard_pickups = configuration.standard_pickup_configuration
         template_strings = super().format_params(configuration)
 
+        if configuration.life_tank_size != 299:
+            template_strings["Game Changes"].append(
+                f"Energy Reserve Tank restores {configuration.life_tank_size} Energy"
+            )
+
+        if configuration.aeion_tank_size != 500:
+            template_strings["Game Changes"].append(
+                f"Aeion Reserve Tank restores {configuration.aeion_tank_size} Aeion"
+            )
+
+        if configuration.missile_tank_size != 30 and configuration.super_missile_tank_size != 10:
+            template_strings["Game Changes"].append(
+                f"Missile Reserve Tank restores {configuration.missile_tank_size} Missiles, \
+                    {configuration.super_missile_tank_size} Super Missiles"
+            )
+        elif configuration.missile_tank_size != 30:
+            template_strings["Game Changes"].append(
+                f"Missile Reserve Tank restores {configuration.missile_tank_size} Missiles"
+            )
+        elif configuration.super_missile_tank_size != 10:
+            template_strings["Game Changes"].append(
+                f"Missile Reserve Tank restores {configuration.super_missile_tank_size} Super Missiles"
+            )
+
         extra_message_tree = {
             "Logic Settings": [
                 {
@@ -60,7 +84,12 @@ class MSRPresetDescriber(GamePresetDescriber):
                     "Progressive Beam": has_shuffled_item(standard_pickups, "Progressive Beam"),
                     "Progressive Jump": has_shuffled_item(standard_pickups, "Progressive Jump"),
                     "Progressive Suit": has_shuffled_item(standard_pickups, "Progressive Suit"),
-                }
+                },
+                {
+                    "Energy Reserve Tank": has_shuffled_item(standard_pickups, "Energy Reserve Tank"),
+                    "Aeion Reserve Tank": has_shuffled_item(standard_pickups, "Aeion Reserve Tank"),
+                    "Missile Reserve Tank": has_shuffled_item(standard_pickups, "Missile Reserve Tank"),
+                },
             ],
             "Gameplay": [],
             "Goal": describe_artifacts(configuration.artifacts),
