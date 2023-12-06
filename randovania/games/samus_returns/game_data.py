@@ -7,9 +7,9 @@ from randovania.games.samus_returns.pickup_database import progressive_items
 
 
 def _options():
-    from randovania.interface_common.options import PerGameOptions
+    from randovania.games.samus_returns.exporter.options import MSRPerGameOptions
 
-    return PerGameOptions
+    return MSRPerGameOptions
 
 
 def _gui() -> game.GameGui:
