@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from randovania.exporter import pickup_exporter
+from randovania.exporter import item_names, pickup_exporter
 from randovania.exporter.patch_data_factory import PatchDataFactory
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.pickup.pickup_entry import PickupModel
@@ -116,6 +116,14 @@ class MSRPatchDataFactory(PatchDataFactory):
         result["ITEM_MAX_SPECIAL_ENERGY"] = result.pop("ITEM_MAX_SPECIAL_ENERGY", 0) + self.configuration.starting_aeion
         return result
 
+    def _starting_inventory_text(self) -> list[str]:
+        result = ["Random starting items:"]
+        items = item_names.additional_starting_equipment(self.configuration, self.game, self.patches)
+        if not items:
+            return []
+        result.extend(items)
+        return result
+
     def _start_point_ref_for(self, node: Node) -> dict:
         region = self.game.region_list.nodes_to_region(node)
         level_name: str = region.extra["scenario_id"]
@@ -202,6 +210,7 @@ class MSRPatchDataFactory(PatchDataFactory):
     def create_data(self) -> dict:
         starting_location = self._start_point_ref_for(self._node_for(self.patches.starting_location))
         starting_items = self._calculate_starting_inventory(self.patches.starting_resources())
+        starting_text = self._starting_inventory_text()
 
         useless_target = PickupTarget(
             pickup_creator.create_nothing_pickup(self.game.resource_database), self.players_config.player_index
@@ -223,6 +232,7 @@ class MSRPatchDataFactory(PatchDataFactory):
         return {
             "starting_location": starting_location,
             "starting_items": starting_items,
+            "starting_text": starting_text,
             "pickups": [
                 data for pickup_item in pickup_list if (data := self._pickup_detail_for_target(pickup_item)) is not None
             ],
