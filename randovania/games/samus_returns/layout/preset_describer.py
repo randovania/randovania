@@ -46,30 +46,6 @@ class MSRPresetDescriber(GamePresetDescriber):
         standard_pickups = configuration.standard_pickup_configuration
         template_strings = super().format_params(configuration)
 
-        if configuration.life_tank_size != 299:
-            template_strings["Game Changes"].append(
-                f"Energy Reserve Tank restores {configuration.life_tank_size} Energy"
-            )
-
-        if configuration.aeion_tank_size != 500:
-            template_strings["Game Changes"].append(
-                f"Aeion Reserve Tank restores {configuration.aeion_tank_size} Aeion"
-            )
-
-        if configuration.missile_tank_size != 30 and configuration.super_missile_tank_size != 10:
-            template_strings["Game Changes"].append(
-                f"Missile Reserve Tank restores {configuration.missile_tank_size} Missiles, \
-                    {configuration.super_missile_tank_size} Super Missiles"
-            )
-        elif configuration.missile_tank_size != 30:
-            template_strings["Game Changes"].append(
-                f"Missile Reserve Tank restores {configuration.missile_tank_size} Missiles"
-            )
-        elif configuration.super_missile_tank_size != 10:
-            template_strings["Game Changes"].append(
-                f"Missile Reserve Tank restores {configuration.super_missile_tank_size} Super Missiles"
-            )
-
         extra_message_tree = {
             "Logic Settings": [
                 {
@@ -78,6 +54,20 @@ class MSRPresetDescriber(GamePresetDescriber):
             ],
             "Difficulty": [
                 {f"{configuration.energy_per_tank} energy per Energy Tank": configuration.energy_per_tank != 100},
+                {
+                    f"Energy Reserve Tank restores {configuration.life_tank_size} Energy": configuration.life_tank_size
+                    != 299
+                },
+                {
+                    f"Aeion Reserve Tank restores {configuration.aeion_tank_size} Aeion": configuration.aeion_tank_size
+                    != 500
+                },
+                {
+                    f"Missile Reserve Tank restores {configuration.missile_tank_size} Missiles, \
+                            {configuration.super_missile_tank_size} Super Missiles": configuration.missile_tank_size
+                    != 30
+                    or configuration.super_missile_tank_size != 10
+                },
             ],
             "Item Pool": [
                 {
