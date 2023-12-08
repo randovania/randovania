@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [7.2.0] - 2024-01-??
+
+### Metroid Prime 2: Echoes
+
+#### Logic Database
+
+- Changed: Revised Amorbis requirements (trivial requires a good weapon + 1 E, beginner requires either a weapon or 1 E, intermediate neither)
+
 ## [7.1.0] - 2023-12-??
 
 - Fixed: Bug with progressive suits in the autotracker always highlighting first suit
