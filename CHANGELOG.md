@@ -11,6 +11,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Update to the Database Video Directory site to eliminate lag and add modern styling.
 - Changed: Autotracker tooltips now display text in black instead of gray.
 
+### Metroid Prime 2: Echoes
+
+#### Logic Database
+
+- Added: Requirements to trigger the Amorbis fight from below: Spacejump, NSJ Z-Axis Screw Attack or BSJ, and bomb jumps or standable terrain with the energy taken.
+- Changed: Revised Amorbis combat requirements (trivial requires a good weapon + 1 E, beginner requires either a weapon or 1 E, intermediate neither)
+- Changed: Skipping the Amorbis trigger, or touching it to trigger the fight from below, requires Knowledge set to Intermediate.
+
 ## [7.1.0] - 2023-12-01
 
 - Fixed: Bug with progressive suits in the autotracker always highlighting first suit
