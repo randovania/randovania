@@ -16,7 +16,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 #### Logic Database
 
 - Added: Requirements to trigger the Amorbis fight from below: Spacejump, NSJ Z-Axis Screw Attack or BSJ, and bomb jumps or standable terrain with the energy taken.
-- Changed: Revised Amorbis combat requirements (trivial requires a good weapon + 1 E, beginner requires either a weapon or 1 E, intermediate neither)
+- Added: Advanced combat to fight Amorbis after the energy has been taken.
+- Changed: Revised Amorbis combat requirements (trickless requires a good weapon + 2 E, beginner requires a weapon and 1 E, intermediate neither)
 - Changed: Skipping the Amorbis trigger, or touching it to trigger the fight from below, requires Knowledge set to Intermediate.
 
 ## [7.1.0] - 2023-12-01
