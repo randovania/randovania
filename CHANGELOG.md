@@ -25,6 +25,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: Pseudo Wave Beam to break the bottom right blob in Burenia Hub to Dairon. Requires Slide and Gravity Suit or Diffusion Beam.
 
+### AM2R
+
+#### Logic Database
+
+##### Industrial Complex
+
+- Added: In Lower Factory Intersection: Can now climb the room by shinesparking after a short charge.
+- Fixed: In Lower Factory Intersection: Climbing the room now correctly needs a damage boost for wall jumps.
 
 ## [7.1.0] - 2023-12-01
 
