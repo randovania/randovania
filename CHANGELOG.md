@@ -24,6 +24,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ##### Burenia
 
 - Added: Pseudo Wave Beam to break the bottom right blob in Burenia Hub to Dairon. Requires Slide and Gravity Suit or Diffusion Beam.
+- Fixed: When using Power Bomb to break the bottom right blob in Burenia Hub to Dairon, also require the ability to shoot a beam.
 
 ### AM2R
 
