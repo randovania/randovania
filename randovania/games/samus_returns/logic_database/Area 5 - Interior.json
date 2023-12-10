@@ -987,7 +987,7 @@
                     "extra": {
                         "actor_name": "LE_Platform_Elevator_FromArea06B_01",
                         "actor_type": "weightactivatedplatform",
-                        "start_point_actor_name": "ST_FromArea062B_01"
+                        "start_point_actor_name": "ST_FromArea06B_01"
                     },
                     "valid_starting_location": true,
                     "dock_type": "elevator",
@@ -1055,10 +1055,24 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Elevator to Area 5 - Exterior": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Walljump",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Climb Rooms Vertically (No High Jump)"
+                                    }
+                                ]
                             }
                         }
                     }
@@ -4502,8 +4516,25 @@
                                             "comment": null,
                                             "items": [
                                                 {
-                                                    "type": "template",
-                                                    "data": "Can Spiderspark"
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Spiderspark",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Spiderspark"
+                                                            }
+                                                        ]
+                                                    }
                                                 },
                                                 {
                                                     "type": "resource",
@@ -5697,8 +5728,25 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "template",
-                                                    "data": "Can Spiderspark"
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Spiderspark"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Spiderspark",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
                                                 },
                                                 {
                                                     "type": "template",
@@ -6515,7 +6563,7 @@
                                                     "data": {
                                                         "type": "tricks",
                                                         "name": "Spiderspark",
-                                                        "amount": 1,
+                                                        "amount": 2,
                                                         "negate": false
                                                     }
                                                 }

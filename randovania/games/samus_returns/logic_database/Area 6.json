@@ -3134,7 +3134,7 @@
                         "area": "Teleporter Room North",
                         "node": "Door to Stolen Access"
                     },
-                    "default_dock_weakness": "Power Beam Door",
+                    "default_dock_weakness": "Charge Beam Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -6166,7 +6166,7 @@
                     }
                 },
                 "Chozo Seal": {
-                    "node_type": "generic",
+                    "node_type": "hint",
                     "heal": false,
                     "coordinates": {
                         "x": 5798.28,
@@ -6183,6 +6183,14 @@
                         "start_point_actor_name": "ST_ChozoUnlockAreaDNA_Checkpoint_002"
                     },
                     "valid_starting_location": false,
+                    "kind": "generic",
+                    "requirement_to_collect": {
+                        "type": "and",
+                        "data": {
+                            "comment": null,
+                            "items": []
+                        }
+                    },
                     "connections": {
                         "Tunnel to Chozo Seal West": {
                             "type": "and",
@@ -7263,7 +7271,7 @@
                     }
                 },
                 "Chozo Seal": {
-                    "node_type": "generic",
+                    "node_type": "hint",
                     "heal": false,
                     "coordinates": {
                         "x": -231.55,
@@ -7280,6 +7288,14 @@
                         "start_point_actor_name": "ST_ChozoUnlockAreaDNA_Checkpoint_001"
                     },
                     "valid_starting_location": false,
+                    "kind": "generic",
+                    "requirement_to_collect": {
+                        "type": "and",
+                        "data": {
+                            "comment": null,
+                            "items": []
+                        }
+                    },
                     "connections": {
                         "Door to Teleporter Room North": {
                             "type": "and",
@@ -8323,7 +8339,7 @@
                         "area": "Stolen Access",
                         "node": "Door to Teleporter Room North"
                     },
-                    "default_dock_weakness": "Power Beam Door",
+                    "default_dock_weakness": "Charge Beam Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,

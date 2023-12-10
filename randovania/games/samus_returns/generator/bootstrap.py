@@ -22,7 +22,7 @@ if TYPE_CHECKING:
 
 def all_dna_locations(game: GameDescription, config: MSRArtifactConfig) -> list[PickupNode]:
     locations = []
-    _boss_indices = [37, 139, 171]
+    _boss_indices = [37, 99, 139, 171]
     _stronger_metroid_indices = [177, 178, 181, 185, 186, 187, 188, 192, 193, 199, 200, 202, 205, 209]
 
     for node in game.region_list.all_nodes:

@@ -134,6 +134,8 @@ _include_tricks_for_game = {
     RandovaniaGame.METROID_DREAD: {("Speedbooster", LayoutTrickLevel.BEGINNER)},
     # Same reasons as above
     RandovaniaGame.SUPER_METROID: {("Shinespark", LayoutTrickLevel.BEGINNER)},
+    # Same reasons as above
+    RandovaniaGame.METROID_SAMUS_RETURNS: {("Spiderspark", LayoutTrickLevel.BEGINNER)},
 }
 
 
