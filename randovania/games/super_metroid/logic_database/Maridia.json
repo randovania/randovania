@@ -3981,8 +3981,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 27.6615698267075,
-                        "y": 261.7410805300715,
+                        "x": 27.66,
+                        "y": 261.74,
                         "z": 0.0
                     },
                     "description": "",
@@ -4425,7 +4425,7 @@
                                 ]
                             }
                         },
-                        "Door to East Aqueduct Quicksand Room": {
+                        "Dock to East Aqueduct Quicksand Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4602,7 +4602,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "Downgrab",
+                                            "comment": "Downgrab: https://youtu.be/7YMGoiOSaGY",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -4630,12 +4630,12 @@
                         }
                     }
                 },
-                "Door to East Aqueduct Quicksand Room": {
+                "Dock to East Aqueduct Quicksand Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 1784.5436893203885,
-                        "y": 61.03128371089542,
+                        "x": 1784.54,
+                        "y": 61.03,
                         "z": 0.0
                     },
                     "description": "",
@@ -4657,13 +4657,58 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Aqueduct Save Room": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Gravity",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "SnailClimb",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "HiJump",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "Knowledge: https://youtu.be/nATKY91KBQ4",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Knowledge",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
                             }
                         },
-                        "Door to West Aqueduct Quicksand Room": {
+                        "Dock to West Aqueduct Quicksand Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4672,12 +4717,12 @@
                         }
                     }
                 },
-                "Door to West Aqueduct Quicksand Room": {
+                "Dock to West Aqueduct Quicksand Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 741.0380021715526,
-                        "y": 23.07057546145529,
+                        "x": 741.04,
+                        "y": 23.07,
                         "z": 0.0
                     },
                     "description": "",
@@ -4698,7 +4743,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to East Aqueduct Quicksand Room": {
+                        "Dock to East Aqueduct Quicksand Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4855,7 +4900,7 @@
                     "default_connection": {
                         "region": "Maridia",
                         "area": "Aqueduct",
-                        "node": "Door to West Aqueduct Quicksand Room"
+                        "node": "Dock to West Aqueduct Quicksand Room"
                     },
                     "default_dock_weakness": "Permanently Locked",
                     "exclude_from_dock_rando": false,
@@ -4926,7 +4971,7 @@
                     "default_connection": {
                         "region": "Maridia",
                         "area": "Aqueduct",
-                        "node": "Door to East Aqueduct Quicksand Room"
+                        "node": "Dock to East Aqueduct Quicksand Room"
                     },
                     "default_dock_weakness": "Permanently Locked",
                     "exclude_from_dock_rando": false,
@@ -5682,7 +5727,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "Damage to Survive the Mocktorids",
+                                                        "comment": "Damage to Survive the Mocktroids",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -5756,7 +5801,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "Vanilla",
+                                            "comment": "Vanilla: TODO: Better Health requirements",
                                             "items": [
                                                 {
                                                     "type": "or",
@@ -5786,7 +5831,7 @@
                                                                 "data": {
                                                                     "type": "items",
                                                                     "name": "Charge",
-                                                                    "amount": 20,
+                                                                    "amount": 1,
                                                                     "negate": false
                                                                 }
                                                             }
