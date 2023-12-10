@@ -21,6 +21,10 @@ class MSRConfiguration(BaseConfiguration):
     energy_per_tank: int = dataclasses.field(metadata={"min": 100, "max": 100, "precision": 1})
     starting_energy: int = dataclasses.field(metadata={"min": 99, "max": 99, "precision": 1})
     starting_aeion: int = dataclasses.field(metadata={"min": 1000, "max": 2200, "precision": 1})
+    life_tank_size: int = dataclasses.field(metadata={"min": 1, "max": 1099, "precision": 1})
+    aeion_tank_size: int = dataclasses.field(metadata={"min": 1, "max": 2200, "precision": 1})
+    missile_tank_size: int = dataclasses.field(metadata={"min": 1, "max": 999, "precision": 1})
+    super_missile_tank_size: int = dataclasses.field(metadata={"min": 1, "max": 99, "precision": 1})
     elevator_grapple_blocks: bool
     area3_interior_shortcut_no_grapple: bool
     charge_door_buff: bool

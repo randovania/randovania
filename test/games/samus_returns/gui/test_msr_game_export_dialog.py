@@ -6,11 +6,11 @@ from unittest.mock import MagicMock, call
 import pytest
 from PySide6 import QtCore
 
-from randovania.games.dread.exporter.game_exporter import DreadGameExportParams, DreadModPlatform
-from randovania.games.dread.exporter.options import DreadPerGameOptions
-from randovania.games.dread.gui.dialog.game_export_dialog import DreadGameExportDialog, serialize_path
-from randovania.games.dread.layout.dread_cosmetic_patches import DreadCosmeticPatches
 from randovania.games.game import RandovaniaGame
+from randovania.games.samus_returns.exporter.game_exporter import MSRGameExportParams, MSRGameVersion, MSRModPlatform
+from randovania.games.samus_returns.exporter.options import MSRPerGameOptions
+from randovania.games.samus_returns.gui.dialog.game_export_dialog import MSRGameExportDialog, serialize_path
+from randovania.games.samus_returns.layout.msr_cosmetic_patches import MSRCosmeticPatches
 from randovania.interface_common.options import Options
 from randovania.lib.ftp_uploader import FtpUploader
 
@@ -26,11 +26,11 @@ def test_on_custom_path_button_exists(skip_qtbot, tmp_path, mocker, has_custom_p
         output_directory.mkdir()
     else:
         output_directory = None
-        expected_default_name = "DreadRandovania"
+        expected_default_name = "MSRRandovania"
 
     options = MagicMock()
-    options.options_for_game.return_value = DreadPerGameOptions(
-        cosmetic_patches=DreadCosmeticPatches.default(),
+    options.options_for_game.return_value = MSRPerGameOptions(
+        cosmetic_patches=MSRCosmeticPatches.default(),
         output_preference=json.dumps(
             {
                 "selected_tab": "custom",
@@ -43,7 +43,7 @@ def test_on_custom_path_button_exists(skip_qtbot, tmp_path, mocker, has_custom_p
         ),
     )
 
-    window = DreadGameExportDialog(options, {}, "MyHash", True, [])
+    window = MSRGameExportDialog(options, {}, "MyHash", True, [])
     mock_prompt.return_value = tmp_path.joinpath("foo", "game.iso")
 
     # Run
@@ -60,8 +60,8 @@ def test_on_output_file_button_cancel(skip_qtbot, tmpdir, mocker):
     mock_prompt = mocker.patch("randovania.gui.lib.common_qt_lib.prompt_user_for_output_file", autospec=True)
 
     options = MagicMock()
-    options.options_for_game.return_value = DreadPerGameOptions(
-        cosmetic_patches=DreadCosmeticPatches.default(),
+    options.options_for_game.return_value = MSRPerGameOptions(
+        cosmetic_patches=MSRCosmeticPatches.default(),
         output_preference=json.dumps(
             {
                 "selected_tab": "custom",
@@ -74,30 +74,30 @@ def test_on_output_file_button_cancel(skip_qtbot, tmpdir, mocker):
         ),
     )
 
-    window = DreadGameExportDialog(options, {}, "MyHash", True, [])
+    window = MSRGameExportDialog(options, {}, "MyHash", True, [])
     mock_prompt.return_value = None
 
     # Run
     skip_qtbot.mouseClick(window.custom_path_button, QtCore.Qt.MouseButton.LeftButton)
 
     # Assert
-    mock_prompt.assert_called_once_with(window, "DreadRandovania", [""])
+    mock_prompt.assert_called_once_with(window, "MSRRandovania", [""])
     assert window.custom_path_edit.text() == ""
 
 
 def test_save_options(skip_qtbot, tmp_path):
     options = Options(tmp_path)
 
-    window = DreadGameExportDialog(options, {}, "MyHash", True, [])
-    window.atmosphere_radio.setChecked(True)
+    window = MSRGameExportDialog(options, {}, "MyHash", True, [])
+    window.luma_radio.setChecked(True)
 
     # Run
     window.save_options()
 
     # Assert
-    game_options = options.options_for_game(RandovaniaGame.METROID_DREAD)
-    assert isinstance(game_options, DreadPerGameOptions)
-    assert game_options.target_platform == DreadModPlatform.ATMOSPHERE
+    game_options = options.options_for_game(RandovaniaGame.METROID_SAMUS_RETURNS)
+    assert isinstance(game_options, MSRPerGameOptions)
+    assert game_options.target_platform == MSRModPlatform.LUMA
 
 
 def test_on_input_file_button(skip_qtbot, tmp_path, mocker):
@@ -107,9 +107,9 @@ def test_on_input_file_button(skip_qtbot, tmp_path, mocker):
 
     for p in [
         ("system", "files.toc"),
-        ("packs", "system", "system.pkg"),
-        ("packs", "maps", "s010_cave", "s010_cave.pkg"),
-        ("packs", "maps", "s020_magma", "s020_magma.pkg"),
+        ("packs", "system", "system_discardables.pkg"),
+        ("packs", "maps", "s000_surface", "s000_surface.pkg"),
+        ("packs", "maps", "s010_area1", "s010_area1.pkg"),
     ]:
         tmp_path.joinpath("existing-folder", *p).parent.mkdir(parents=True, exist_ok=True)
         tmp_path.joinpath("existing-folder", *p).touch()
@@ -127,12 +127,12 @@ def test_on_input_file_button(skip_qtbot, tmp_path, mocker):
     )
 
     options = MagicMock()
-    options.options_for_game.return_value = DreadPerGameOptions(
-        cosmetic_patches=DreadCosmeticPatches.default(),
+    options.options_for_game.return_value = MSRPerGameOptions(
+        cosmetic_patches=MSRCosmeticPatches.default(),
         input_directory=None,
     )
 
-    window = DreadGameExportDialog(options, {}, "MyHash", True, [])
+    window = MSRGameExportDialog(options, {}, "MyHash", True, [])
     # Empty text field is an error
     assert window.input_file_edit.text() == ""
     assert window.input_file_edit.has_error
@@ -173,23 +173,23 @@ def test_on_input_file_button(skip_qtbot, tmp_path, mocker):
     )
 
 
-@pytest.mark.parametrize("mod_manager", [False, True])
-def test_get_game_export_params_sd_card(skip_qtbot, tmp_path, mocker, mod_manager):
+def test_get_game_export_params_sd_card(skip_qtbot, tmp_path, mocker):
     # Setup
-    mocker.patch("randovania.games.dread.gui.dialog.game_export_dialog.get_path_to_ryujinx")
+    mocker.patch("randovania.games.samus_returns.gui.dialog.game_export_dialog.get_path_to_citra")
     mocker.patch("platform.system", return_value="Windows")
 
     mocker.patch(
-        "randovania.games.dread.gui.dialog.game_export_dialog.get_windows_drives",
+        "randovania.games.samus_returns.gui.dialog.game_export_dialog.get_windows_drives",
         return_value=[("D", "Removable", tmp_path.joinpath("drive"))],
     )
     drive = tmp_path.joinpath("drive")
 
     options = MagicMock()
-    options.options_for_game.return_value = DreadPerGameOptions(
-        cosmetic_patches=DreadCosmeticPatches.default(),
+    options.options_for_game.return_value = MSRPerGameOptions(
+        cosmetic_patches=MSRCosmeticPatches.default(),
         input_directory=tmp_path.joinpath("input"),
-        target_platform=DreadModPlatform.ATMOSPHERE,
+        target_platform=MSRModPlatform.LUMA,
+        target_version=MSRGameVersion.NTSC,
         output_preference=json.dumps(
             {
                 "selected_tab": "sd",
@@ -197,59 +197,57 @@ def test_get_game_export_params_sd_card(skip_qtbot, tmp_path, mocker, mod_manage
                     "sd": {
                         "drive": str(drive),
                         "non_removable": False,
-                        "mod_manager": mod_manager,
                     }
                 },
             }
         ),
     )
-    window = DreadGameExportDialog(options, {}, "MyHash", True, [])
+    window = MSRGameExportDialog(options, {}, "MyHash", True, [])
 
     # Run
     result = window.get_game_export_params()
 
     # Assert
-    if mod_manager:
-        output_path = drive.joinpath("mods/Metroid Dread/Randovania MyHash")
-    else:
-        output_path = drive.joinpath("atmosphere")
+    output_path = drive.joinpath("luma", "titles", "00040000001BB200")
 
-    assert result == DreadGameExportParams(
+    assert result == MSRGameExportParams(
         spoiler_output=output_path.joinpath("spoiler.rdvgame"),
         input_path=tmp_path.joinpath("input"),
         output_path=output_path,
-        target_platform=DreadModPlatform.ATMOSPHERE,
-        use_exlaunch=True,
+        target_platform=MSRModPlatform.LUMA,
+        target_version=MSRGameVersion.NTSC,
         clean_output_path=False,
         post_export=None,
     )
 
 
-def test_get_game_export_params_ryujinx(skip_qtbot, tmp_path, mocker):
+def test_get_game_export_params_citra(skip_qtbot, tmp_path, mocker):
     # Setup
     mocker.patch("platform.system", return_value="Windows")
-    ryujinx_path = tmp_path.joinpath("ryujinx_mod")
-    mocker.patch("randovania.games.dread.gui.dialog.game_export_dialog.get_path_to_ryujinx", return_value=ryujinx_path)
+    citra_path = tmp_path.joinpath("citra_mod")
+    mocker.patch(
+        "randovania.games.samus_returns.gui.dialog.game_export_dialog.get_path_to_citra", return_value=citra_path
+    )
 
     options = MagicMock()
-    options.options_for_game.return_value = DreadPerGameOptions(
-        cosmetic_patches=DreadCosmeticPatches.default(),
+    options.options_for_game.return_value = MSRPerGameOptions(
+        cosmetic_patches=MSRCosmeticPatches.default(),
         input_directory=tmp_path.joinpath("input"),
-        target_platform=DreadModPlatform.RYUJINX,
-        output_preference=json.dumps({"selected_tab": "ryujinx", "tab_options": {}}),
+        target_platform=MSRModPlatform.CITRA,
+        output_preference=json.dumps({"selected_tab": "citra", "tab_options": {}}),
     )
-    window = DreadGameExportDialog(options, {}, "MyHash", True, [])
+    window = MSRGameExportDialog(options, {}, "MyHash", True, [])
 
     # Run
     result = window.get_game_export_params()
 
     # Assert
-    assert result == DreadGameExportParams(
-        spoiler_output=ryujinx_path.joinpath("spoiler.rdvgame"),
+    assert result == MSRGameExportParams(
+        spoiler_output=citra_path.joinpath("spoiler.rdvgame"),
         input_path=tmp_path.joinpath("input"),
-        output_path=ryujinx_path,
-        target_platform=DreadModPlatform.RYUJINX,
-        use_exlaunch=True,
+        output_path=citra_path,
+        target_platform=MSRModPlatform.CITRA,
+        target_version=MSRGameVersion.NTSC,
         clean_output_path=False,
         post_export=None,
     )
@@ -260,10 +258,11 @@ def test_get_game_export_params_ftp(skip_qtbot, tmp_path):
     options = MagicMock()
     options.internal_copies_path = tmp_path.joinpath("internal")
 
-    options.options_for_game.return_value = DreadPerGameOptions(
-        cosmetic_patches=DreadCosmeticPatches.default(),
+    options.options_for_game.return_value = MSRPerGameOptions(
+        cosmetic_patches=MSRCosmeticPatches.default(),
         input_directory=tmp_path.joinpath("input"),
-        target_platform=DreadModPlatform.ATMOSPHERE,
+        target_platform=MSRModPlatform.LUMA,
+        target_version=MSRGameVersion.PAL,
         output_preference=json.dumps(
             {
                 "selected_tab": "ftp",
@@ -279,25 +278,25 @@ def test_get_game_export_params_ftp(skip_qtbot, tmp_path):
             }
         ),
     )
-    window = DreadGameExportDialog(options, {}, "MyHash", True, [])
+    window = MSRGameExportDialog(options, {}, "MyHash", True, [])
 
     # Run
     result = window.get_game_export_params()
 
     # Assert
-    assert result == DreadGameExportParams(
-        spoiler_output=tmp_path.joinpath("internal", "dread", "contents", "spoiler.rdvgame"),
+    assert result == MSRGameExportParams(
+        spoiler_output=tmp_path.joinpath("internal", "msr", "contents", "spoiler.rdvgame"),
         input_path=tmp_path.joinpath("input"),
-        output_path=tmp_path.joinpath("internal", "dread", "contents"),
-        target_platform=DreadModPlatform.ATMOSPHERE,
-        use_exlaunch=True,
+        output_path=tmp_path.joinpath("internal", "msr", "contents"),
+        target_platform=MSRModPlatform.LUMA,
+        target_version=MSRGameVersion.PAL,
         clean_output_path=True,
         post_export=FtpUploader(
             auth=("admin", "1234"),
             ip="192.168.1.2",
             port=5000,
-            local_path=tmp_path.joinpath("internal", "dread", "contents"),
-            remote_path="/mods/Metroid Dread/Randovania MyHash",
+            local_path=tmp_path.joinpath("internal", "msr", "contents"),
+            remote_path="/luma/titles/00040000001BFB00",
         ),
     )
 
@@ -305,8 +304,8 @@ def test_get_game_export_params_ftp(skip_qtbot, tmp_path):
 def test_get_game_export_params_custom(skip_qtbot, tmp_path):
     # Setup
     options = MagicMock()
-    options.options_for_game.return_value = DreadPerGameOptions(
-        cosmetic_patches=DreadCosmeticPatches.default(),
+    options.options_for_game.return_value = MSRPerGameOptions(
+        cosmetic_patches=MSRCosmeticPatches.default(),
         input_directory=tmp_path.joinpath("input"),
         output_preference=json.dumps(
             {
@@ -319,18 +318,18 @@ def test_get_game_export_params_custom(skip_qtbot, tmp_path):
             }
         ),
     )
-    window = DreadGameExportDialog(options, {}, "MyHash", True, [])
+    window = MSRGameExportDialog(options, {}, "MyHash", True, [])
 
     # Run
     result = window.get_game_export_params()
 
     # Assert
-    assert result == DreadGameExportParams(
+    assert result == MSRGameExportParams(
         spoiler_output=tmp_path.joinpath("output", "spoiler.rdvgame"),
         input_path=tmp_path.joinpath("input"),
         output_path=tmp_path.joinpath("output"),
-        target_platform=DreadModPlatform.RYUJINX,
-        use_exlaunch=True,
+        target_platform=MSRModPlatform.CITRA,
+        target_version=MSRGameVersion.NTSC,
         clean_output_path=False,
         post_export=None,
     )

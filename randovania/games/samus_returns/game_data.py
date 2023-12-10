@@ -7,9 +7,9 @@ from randovania.games.samus_returns.pickup_database import progressive_items
 
 
 def _options():
-    from randovania.interface_common.options import PerGameOptions
+    from randovania.games.samus_returns.exporter.options import MSRPerGameOptions
 
-    return PerGameOptions
+    return MSRPerGameOptions
 
 
 def _gui() -> game.GameGui:
@@ -57,7 +57,13 @@ game_data: game.GameData = game.GameData(
     presets=[
         {"path": "starter_preset.rdvpreset"},
     ],
-    faq=[],
+    faq=[
+        (
+            "Why is this pickup not animating?",
+            "While progressive pickups update to have the correct model, "
+            "due to limitations these models are not animated.",
+        ),
+    ],
     layout=game.GameLayout(
         configuration=layout.MSRConfiguration,
         cosmetic_patches=layout.MSRCosmeticPatches,
