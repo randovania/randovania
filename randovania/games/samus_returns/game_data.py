@@ -40,13 +40,13 @@ def _exporter():
 def _generator() -> game.GameGenerator:
     from randovania.games.samus_returns import generator
     from randovania.games.samus_returns.generator.bootstrap import MSRBootstrap
-    from randovania.generator.hint_distributor import AllJokesHintDistributor
+    from randovania.games.samus_returns.generator.hint_distributor import MSRHintDistributor
 
     return game.GameGenerator(
         pickup_pool_creator=generator.pool_creator,
         bootstrap=MSRBootstrap(),
         base_patches_factory=generator.MSRBasePatchesFactory(),
-        hint_distributor=AllJokesHintDistributor(),
+        hint_distributor=MSRHintDistributor(),
     )
 
 

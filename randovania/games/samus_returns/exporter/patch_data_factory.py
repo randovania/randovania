@@ -3,11 +3,14 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 from randovania.exporter import item_names, pickup_exporter
+from randovania.exporter.hints.hint_exporter import HintExporter
 from randovania.exporter.patch_data_factory import PatchDataFactory
 from randovania.game_description.assignment import PickupTarget
+from randovania.game_description.db.hint_node import HintNode
 from randovania.game_description.pickup.pickup_entry import PickupModel
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.games.game import RandovaniaGame
+from randovania.games.samus_returns.exporter.hint_namer import MSRHintNamer
 from randovania.generator.pickup_pool import pickup_creator
 
 if TYPE_CHECKING:
@@ -189,6 +192,24 @@ class MSRPatchDataFactory(PatchDataFactory):
 
         return details
 
+    def _encode_hints(self) -> list[dict]:
+        namer = MSRHintNamer(self.description.all_patches, self.players_config)
+        exporter = HintExporter(namer, self.rng, ["A joke hint."])
+
+        return [
+            {
+                "accesspoint_actor": self._teleporter_ref_for(logbook_node),
+                "text": exporter.create_message_for_hint(
+                    self.patches.hints[self.game.region_list.identifier_for_node(logbook_node)],
+                    self.description.all_patches,
+                    self.players_config,
+                    True,
+                ),
+            }
+            for logbook_node in self.game.region_list.iterate_nodes()
+            if isinstance(logbook_node, HintNode)
+        ]
+
     def _node_for(self, identifier: NodeIdentifier) -> Node:
         return self.game.region_list.node_by_identifier(identifier)
 
@@ -254,7 +275,7 @@ class MSRPatchDataFactory(PatchDataFactory):
                 "reverse_area8": self.configuration.reverse_area8,
             },
             "text_patches": self._static_text_changes(),
-            "hints": [],
+            "hints": self._encode_hints(),
         }
 
 
