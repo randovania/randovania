@@ -4,13 +4,13 @@ Extra - map_name: rm_a2h01
 Extra - minimap_data: [{'x': 41, 'y': 21}, {'x': 42, 'y': 21}, {'x': 43, 'y': 21}, {'x': 44, 'y': 21}]
 > Horizontal Dock to Hydro Station Exterior; Heals? False
   * Layers: default
-  * 3-Tiles High Dock to Hydro Station Exterior/Horizontal Dock to Hydro Station Entrance
-  > Area Transition to Main Caves
+  * 2-Tiles High Dock to Hydro Station Exterior/Horizontal Dock to Hydro Station Entrance
+  > Horizontal Dock to Main Caves
       Tunnel Climb
 
-> Area Transition to Main Caves; Heals? False
+> Horizontal Dock to Main Caves; Heals? False
   * Layers: default
-  * Open Passage to Grave Grotto/Area Transition to Hydro Station
+  * 4-Tiles High Dock to Grave Grotto/Horizontal Dock to Hydro Station
   * Extra - instance_id: 109738
   * Extra - source_x: 1280
   * Extra - source_y: 160
@@ -22,7 +22,7 @@ Extra - minimap_data: [{'x': 41, 'y': 21}, {'x': 42, 'y': 21}, {'x': 43, 'y': 21
 > Event - Alpha; Heals? False
   * Layers: default
   * Event Metroids Area 2 - Entrance Alpha
-  > Area Transition to Main Caves
+  > Horizontal Dock to Main Caves
       Trivial
   > Pickup (Alpha)
       Trivial
@@ -40,7 +40,7 @@ Extra - map_name: rm_a2h02
 Extra - minimap_data: [{'x': 29, 'y': 18}, {'x': 29, 'y': 19}, {'x': 29, 'y': 20}, {'x': 29, 'y': 21}, {'x': 29, 'y': 22}, {'x': 30, 'y': 18}, {'x': 30, 'y': 19}, {'x': 30, 'y': 20}, {'x': 30, 'y': 21}, {'x': 30, 'y': 22}, {'x': 31, 'y': 18}, {'x': 31, 'y': 19}, {'x': 31, 'y': 20}, {'x': 31, 'y': 21}, {'x': 31, 'y': 22}, {'x': 32, 'y': 16}, {'x': 32, 'y': 17}, {'x': 32, 'y': 18}, {'x': 32, 'y': 19}, {'x': 33, 'y': 16}, {'x': 33, 'y': 17}, {'x': 33, 'y': 18}, {'x': 33, 'y': 19}, {'x': 34, 'y': 16}, {'x': 34, 'y': 17}, {'x': 35, 'y': 16}, {'x': 35, 'y': 17}, {'x': 36, 'y': 16}, {'x': 36, 'y': 17}, {'x': 37, 'y': 16}, {'x': 37, 'y': 17}, {'x': 37, 'y': 18}, {'x': 37, 'y': 19}, {'x': 37, 'y': 20}, {'x': 38, 'y': 16}, {'x': 38, 'y': 17}, {'x': 38, 'y': 18}, {'x': 38, 'y': 19}, {'x': 38, 'y': 20}, {'x': 39, 'y': 19}, {'x': 39, 'y': 20}, {'x': 39, 'y': 21}, {'x': 40, 'y': 19}, {'x': 40, 'y': 20}, {'x': 40, 'y': 21}]
 > Horizontal Dock to Hydro Station Entrance; Heals? False
   * Layers: default
-  * 3-Tiles High Dock to Hydro Station Entrance/Horizontal Dock to Hydro Station Exterior
+  * 2-Tiles High Dock to Hydro Station Entrance/Horizontal Dock to Hydro Station Exterior
   > Horizontal Dock to Broken Save Station
       Trivial
   > Dock to Arachnus Save Station
@@ -523,6 +523,8 @@ Extra - minimap_data: [{'x': 32, 'y': 22}, {'x': 32, 'y': 23}]
 > Door to Hydro Station Exterior; Heals? False
   * Layers: default
   * Normal Door to Hydro Station Exterior/Door to Water Turbine Station
+  * This door has been changed in rando. It is indeed now a normal blue door, not
+an open transition!
   * Extra - instance_id: 400002
   > Event - Water Lowered
       Trivial
