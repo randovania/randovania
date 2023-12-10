@@ -11,9 +11,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Update to the Database Video Directory site to eliminate lag and add modern styling.
 - Changed: Autotracker tooltips now display text in black instead of gray.
 
+### AM2R
+
+#### Logic Database
+
+##### Industrial Complex
+
+- Added: In Lower Factory Intersection: Can now climb the room by shinesparking after a short charge.
+- Fixed: In Lower Factory Intersection: Climbing the room now correctly needs a damage boost for wall jumps.
+
 ### Metroid Prime 2: Echoes
 
 #### Logic Database
+
+##### Dark Agon Wastes
 
 - Added: Requirements to trigger the Amorbis fight from below: Spacejump, NSJ Z-Axis Screw Attack or BSJ, and bomb jumps or standable terrain with the energy taken.
 - Added: Advanced combat to fight Amorbis after the energy has been taken.
