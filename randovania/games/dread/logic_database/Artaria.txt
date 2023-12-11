@@ -4953,11 +4953,16 @@ Extra - asset_id: collision_camera_081
       Any of the following:
           Wave Beam or Shoot Diffusion Beam
           All of the following:
-              Pseudo-Wave Beam (Advanced) and Shoot Charge Beam
+              Shoot Beam
               Any of the following:
-                  Slide
-                  No Gravity Suit and Enabled Highly Dangerous Logic
-          Gravity Suit and Slide and Pseudo-Wave Beam (Intermediate) and Shoot Beam
+                  All of the following:
+                      Pseudo-Wave Beam (Advanced)
+                      Any of the following:
+                          # Having a Slide requirement means Gravity Suit is not a dangerous <br>resource because we can fall back on the Intermediate branch.
+                          Slide
+                          # This is only locked by Highly Dangerous Logic when Slide is not
+                          No Gravity Suit and Enabled Highly Dangerous Logic
+                  Gravity Suit and Slide and Pseudo-Wave Beam (Intermediate)
   > Blob - Left
       After Artaria - Screw Attack Water Blob
 

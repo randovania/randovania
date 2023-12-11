@@ -26732,7 +26732,7 @@
                                                 },
                                                 {
                                                     "type": "template",
-                                                    "data": "Shoot Charge Beam"
+                                                    "data": "Shoot Beam"
                                                 },
                                                 {
                                                     "type": "or",
@@ -26740,18 +26740,26 @@
                                                         "comment": null,
                                                         "items": [
                                                             {
-                                                                "type": "resource",
+                                                                "type": "and",
                                                                 "data": {
-                                                                    "type": "items",
-                                                                    "name": "Slide",
-                                                                    "amount": 1,
-                                                                    "negate": false
+                                                                    "comment": "Having a Slide requirement means Gravity Suit is not a dangerous <br>resource because we can fall back on the Intermediate branch.",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Slide",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
                                                                 }
                                                             },
                                                             {
                                                                 "type": "and",
                                                                 "data": {
-                                                                    "comment": null,
+                                                                    "comment": "This is only locked by Highly Dangerous Logic when Slide is not",
                                                                     "items": [
                                                                         {
                                                                             "type": "resource",
