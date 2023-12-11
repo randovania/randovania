@@ -3,6 +3,7 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 from randovania.exporter import item_names, pickup_exporter
+from randovania.exporter.hints import credits_spoiler
 from randovania.exporter.hints.hint_exporter import HintExporter
 from randovania.exporter.patch_data_factory import PatchDataFactory
 from randovania.game_description.assignment import PickupTarget
@@ -228,6 +229,14 @@ class MSRPatchDataFactory(PatchDataFactory):
 
         return text
 
+    def _credits_spoiler(self) -> dict[str, str]:
+        return credits_spoiler.generic_credits(
+            self.configuration.standard_pickup_configuration,
+            self.description.all_patches,
+            self.players_config,
+            MSRHintNamer(self.description.all_patches, self.players_config),
+        )
+
     def create_data(self) -> dict:
         starting_location = self._start_point_ref_for(self._node_for(self.patches.starting_location))
         starting_items = self._calculate_starting_inventory(self.patches.starting_resources())
@@ -275,6 +284,7 @@ class MSRPatchDataFactory(PatchDataFactory):
                 "reverse_area8": self.configuration.reverse_area8,
             },
             "text_patches": self._static_text_changes(),
+            "spoiler_log": self._credits_spoiler(),
             "hints": self._encode_hints(),
         }
 
