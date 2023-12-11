@@ -59,9 +59,42 @@ game_data: game.GameData = game.GameData(
     ],
     faq=[
         (
+            "Do I still need to beat Metroids and collect DNA to progress areas?",
+            "No you do not. All the hazardous liquid has already been drained. "
+            "Metroids can now drop any item in the game as well as DNA.",
+        ),
+        (
+            "Do I have to beat the Queen Metroid to beat the game?",
+            "In order to beat the game, you must collect the required Metroid DNA, "
+            "find the Baby, and defeat Proteus Ridley.",
+        ),
+        (
+            "How much Metroid DNA is required to beat the game?",
+            "The amount of required DNA is configurable from 0 to 39 DNA. "
+            "The HUD shows how much DNA is located in each area, just like in the vanilla game.",
+        ),
+        (
+            "How do I access Proteus Ridley?",
+            "In the vanilla game, the Surface area where Proteus Ridley resides "
+            "is a separate map from the starting Surface. These are normally not connected. "
+            "This has been changed to warp the player to the other Surface map by passing the "
+            "Baby blocks in the Landing Site. Once enough DNA is collected to access Ridley, "
+            "you can no longer warp from Surface West to Surface East.",
+        ),
+        (
+            "Are there any hints?",
+            "All Chozo Seals have been repurposed to provide a hint to "
+            "an item somewhere in the world. The region the item is located "
+            "will be specified.",
+        ),
+        (
             "Why is this pickup not animating?",
             "While progressive pickups update to have the correct model, "
             "due to limitations these models are not animated.",
+        ),
+        (
+            "I collected Beam Burst, but I cannot use it.",
+            "Beam Burst requires at least the Wave Beam to function.",
         ),
     ],
     layout=game.GameLayout(
