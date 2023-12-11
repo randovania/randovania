@@ -550,7 +550,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Right Side Middle Ledge": {
+                        "Ammo Recharge Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -779,7 +779,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Right Side Middle Ledge": {
+                        "Ammo Recharge Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2073,8 +2073,8 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 3886.029226505416,
-                        "y": -363.21491559586866,
+                        "x": 3153.2310553231073,
+                        "y": 860.8670385867026,
                         "z": 0.0
                     },
                     "description": "",
@@ -2084,20 +2084,43 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Ammo Recharge Station": {
-                            "type": "and",
+                        "Door to Zeta Arena Access": {
+                            "type": "or",
                             "data": {
                                 "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Door to Zeta Arena Access": {
-                            "type": "resource",
-                            "data": {
-                                "type": "tricks",
-                                "name": "SWJ",
-                                "amount": 2,
-                                "negate": false
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Use Spider Ball"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Space",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Boots",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "SWJ",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         },
                         "Door to Poison Plants Hallway": {
