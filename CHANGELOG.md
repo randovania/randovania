@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [7.2.0] - 2024-01-??
 
+- Added: Ability to turn off changing "to" Normal Doors in Door Type dock rando.
 - Fixed: Bug where tooltips did not show uncollected item names in the autotracker.
 - Changed: Update to the Database Video Directory site to eliminate lag and add modern styling.
 - Changed: Autotracker tooltips now display text in black instead of gray.
@@ -30,6 +31,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Advanced combat to fight Amorbis after the energy has been taken.
 - Changed: Revised Amorbis combat requirements (trickless requires a good weapon + 2 E, beginner requires a weapon and 1 E, intermediate neither)
 - Changed: Skipping the Amorbis trigger, or touching it to trigger the fight from below, requires Knowledge set to Intermediate.
+
+##### Dark Torvus Bog
+
+- Changed: All of Venomous Pond's doors now exclude any blast shield from their opposite sides to be consistent with its own sides of the doors.
+
+##### Sanctuary Fortress
+
+- Changed: Watch Station's door to Central Area Transport West is now excluded from dock rando to be consistent with the other side of the door.
+- Changed: Transit Station's door to Main Research now excludes Seekers from dock rando to be consistent with the other side of the door.
+- Changed: Torvus Transport Access's door to Main Research now excludes Seekers from dock rando to be consistent with the other side of the door.
 
 ## [7.1.0] - 2023-12-01
 
