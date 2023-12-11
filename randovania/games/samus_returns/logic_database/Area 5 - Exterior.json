@@ -291,7 +291,7 @@
                                 "items": []
                             }
                         },
-                        "Right Side Middle Ledge": {
+                        "Door to Zeta Arena Access": {
                             "type": "template",
                             "data": "Climb Rooms Vertically (No High Jump)"
                         }
@@ -550,7 +550,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Ammo Recharge Station": {
+                        "Door to Poison Plants Hallway": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -682,75 +682,6 @@
                                     }
                                 ]
                             }
-                        },
-                        "Right Side Middle Ledge": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Boots",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Space",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "tricks",
-                                            "name": "DBoost",
-                                            "amount": 2,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Destroy Blob Throwers/Steel Orbs"
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Phase",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "Movement",
-                                                        "amount": 2,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Simple IBJ"
-                                    }
-                                ]
-                            }
                         }
                     }
                 },
@@ -789,6 +720,49 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Door to Zeta Arena Access": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Boots",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Space",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "SWJ",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Use Spider Ball"
+                                    }
+                                ]
+                            }
+                        },
+                        "Top of Tower Right Side": {
+                            "type": "template",
+                            "data": "Climb Rooms Vertically (No High Jump)"
                         }
                     }
                 },
@@ -1431,6 +1405,13 @@
                                 ]
                             }
                         },
+                        "Door to Poison Plants Hallway": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Door to Gamma+ Arena Access": {
                             "type": "and",
                             "data": {
@@ -1565,13 +1546,6 @@
                                         }
                                     }
                                 ]
-                            }
-                        },
-                        "Right Side Middle Ledge": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
                             }
                         }
                     }
@@ -2074,73 +2048,6 @@
                                     }
                                 ]
                             }
-                        }
-                    }
-                },
-                "Right Side Middle Ledge": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 3153.2310553231073,
-                        "y": 860.8670385867026,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "connections": {
-                        "Door to Zeta Arena Access": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Use Spider Ball"
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Space",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Boots",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "tricks",
-                                            "name": "SWJ",
-                                            "amount": 2,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        },
-                        "Door to Poison Plants Hallway": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Top of Tower Right Side": {
-                            "type": "template",
-                            "data": "Climb Rooms Vertically (No High Jump)"
                         }
                     }
                 }
