@@ -203,12 +203,10 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Teleporter": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "events",
-                                "name": "Area 2 Exterior Teleporter Upper",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         },
                         "Door to Outer Hub Shaft (Bottom)": {
@@ -4343,29 +4341,12 @@
                     "valid_starting_location": false,
                     "connections": {
                         "Teleporter": {
-                            "type": "and",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "Area 2 Exterior Teleporter Heat",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Varia",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "type": "items",
+                                "name": "Varia",
+                                "amount": 1,
+                                "negate": false
                             }
                         },
                         "Door to Hot Split": {
