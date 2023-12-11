@@ -22,10 +22,6 @@ def _area_name(region_list: RegionList, pickup_node: PickupNode, hide_region: bo
     return region_list.area_name(area)
 
 
-def colorize_text(text: str, with_color: bool) -> str:
-    return text
-
-
 class MSRHintNamer(HintNamer):
     location_formatters: dict[HintLocationPrecision, LocationFormatter]
 
@@ -47,7 +43,7 @@ class MSRHintNamer(HintNamer):
     def format_area(self, location: PickupLocation, with_region: bool, with_color: bool) -> str:
         region_list = default_database.game_description_for(location.game).region_list
         result = _area_name(region_list, region_list.node_from_pickup_index(location.location), not with_region)
-        return colorize_text(result, with_color)
+        return result
 
     def format_location_hint(self, game: RandovaniaGame, pick_hint: PickupHint, hint: Hint, with_color: bool) -> str:
         assert hint.precision is not None
