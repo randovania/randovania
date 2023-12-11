@@ -64,14 +64,22 @@ game_data: game.GameData = game.GameData(
             "Metroids can now drop any item in the game as well as DNA.",
         ),
         (
+            "Do I have to beat the Queen Metroid to beat the game?",
+            "In order to beat the game, you must collect the required Metroid DNA, "
+            "find the Baby, and defeat Proteus Ridley.",
+        ),
+        (
             "How much Metroid DNA is required to beat the game?",
             "The amount of required DNA is configurable from 0 to 39 DNA. "
             "The HUD shows how much DNA is located in each area, just like in the vanilla game.",
         ),
         (
-            "Do I have to beat the Queen Metroid to beat the game?",
-            "In order to beat the game, you must collect the required Metroid DNA, "
-            "find the Baby, and defeat Proteus Ridley.",
+            "How do I access Proteus Ridley?",
+            "In the vanilla game, the Surface area where Proteus Ridley resides "
+            "is a separate map from the starting Surface. These are normally not connected. "
+            "This has been changed to warp the player to the other Surface map by passing the "
+            "Baby blocks in the Landing Site. Once enough DNA is collected to access Ridley, "
+            "you can no longer warp from Surface West to Surface East.",
         ),
         (
             "Are there any hints?",
