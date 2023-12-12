@@ -23,6 +23,6 @@ def preset_tabs(editor: PresetEditor, window_manager: WindowManager):
         PresetLocationPool,
         PresetPlanetsZebethGoal,
         MetroidPresetItemPool,
-        PresetPlanetsZebethPatches,
         PresetStartingArea,
+        PresetPlanetsZebethPatches,
     ]
