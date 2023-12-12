@@ -2435,6 +2435,40 @@
                         }
                     ]
                 }
+            },
+            "Defeat Gold Robots": {
+                "type": "or",
+                "data": {
+                    "comment": null,
+                    "items": [
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Plasma",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Screw",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        {
+                            "type": "template",
+                            "data": "Lay Power Bomb"
+                        },
+                        {
+                            "type": "template",
+                            "data": "Shoot Beam Burst"
+                        }
+                    ]
+                }
             }
         },
         "damage_reductions": [
