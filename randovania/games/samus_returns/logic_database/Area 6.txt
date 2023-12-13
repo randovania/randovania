@@ -612,7 +612,7 @@ Extra - asset_id: collision_camera_043
 
 > Before Diggernaut; Heals? False; Default Node
   * Layers: default
-  * Extra - start_point_actor_name: ST_Checkpoin_009
+  * Extra - start_point_actor_name: ST_Checkpoint_009
   > Door from Transport to Area 7
       Trivial
   > Event - Diggernaut
@@ -671,11 +671,11 @@ Extra - asset_id: collision_camera_045
           Single-wall Wall Jump (Expert)
           All of the following:
               Space Jump
-              Screw Attack or Movement (Intermediate)
+              Screw Attack or Movement (Beginner)
           All of the following:
               Morph Ball
               Any of the following:
-                  Spider Ball
+                  Spider Ball and Movement (Beginner)
                   Bomb and Infinite Bomb Jump (Expert)
 
 > Door to Diggernaut Hallway; Heals? False
@@ -963,15 +963,19 @@ Extra - asset_id: collision_camera_060
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: ST_ChozoUnlockAreaDNA_Checkpoint_002
   > Tunnel to Chozo Seal West
-      After Area 6 - Chozo Seal East Grapple Block and Climb Rooms Vertically (No High Jump)
+      All of the following:
+          After Area 6 - Chozo Seal East Grapple Block
+          Walljump (Beginner) or Climb Rooms Vertically (No High Jump)
   > Next to Pickup Puzzle
       All of the following:
           Morph Ball
           Any of the following:
               Space Jump or Spider Ball
               All of the following:
+                  # Reach the tunnel
                   High Jump Boots or Super Jump (Intermediate) or Unmorph Extend (Beginner) or Simple IBJ
                   Any of the following:
+                      # Cross the poison plants gap
                       Lightning Armor
                       Charge Beam and Ice Beam and Stand on Frozen Enemy (Intermediate)
           Any of the following:
@@ -984,7 +988,8 @@ Extra - asset_id: collision_camera_060
   > Chozo Seal
       All of the following:
           Morph Ball and After Area 6 - Chozo Seal East Grapple Block
-          Lightning Armor or Wave Beam or Combat (Beginner)
+          # Dealing with the Gullugg
+          Lightning Armor or Wave Beam or Movement (Intermediate) or Lay Power Bomb
   > Event - Grapple Block
       All of the following:
           Grapple Beam and Morph Ball and Shoot Any Missile
@@ -1011,9 +1016,13 @@ Extra - asset_id: collision_camera_060
               Baby Metroid or Phase Drift or Spider Ball or Movement (Beginner)
   > Door to Crumble Bridge
       Any of the following:
-          Single-wall Wall Jump (Intermediate) or Climb Rooms Vertically (High Jump)
+          Single-wall Wall Jump (Intermediate) or Climb Rooms Vertically (No High Jump)
           Ice Beam and Stand on Frozen Enemy (Beginner)
-          Morph Ball and Unmorph Extend (Intermediate) and Walljump (Beginner)
+          All of the following:
+              Walljump (Beginner)
+              Any of the following:
+                  High Jump Boots or Super Jump (Intermediate)
+                  Morph Ball and Unmorph Extend (Intermediate)
   > Chozo Seal
       All of the following:
           Morph Ball
@@ -1095,7 +1104,9 @@ Extra - asset_id: collision_camera_Hazard_End_A
                   Phase Drift or Movement (Intermediate)
               All of the following:
                   Screw Attack
-                  Space Jump or Walljump (Beginner)
+                  Any of the following:
+                      High Jump Boots or Space Jump or Walljump (Beginner)
+                      Super Jump (Intermediate) and Unmorph Extend (Beginner)
 
 > Chozo Seal; Heals? False
   * Layers: default
@@ -1219,8 +1230,6 @@ Extra - asset_id: collision_camera_Hazard_End_A
       All of the following:
           # Completing the puzzle
           Grapple Beam and Morph Ball and Screw Attack and Shoot Any Missile
-          # Reaching the tunnel
-          Super Jump (Advanced) or Unmorph Extend (Beginner) or Climb Rooms Vertically (High Jump)
           # Traversing the crumble blocks
           Phase Drift or Spider Ball or Movement (Beginner)
           All of the following:
@@ -1228,7 +1237,7 @@ Extra - asset_id: collision_camera_Hazard_End_A
               Lay Power Bomb
               Bomb or Power Bomb ≥ 3
           # Traversing the Screw Attack blocks
-          Space Jump or Walljump (Beginner)
+          High Jump Boots or Space Jump or Super Jump (Advanced) or Unmorph Extend (Intermediate) or Walljump (Beginner)
   > Ammo Recharge Station
       Trivial
   > Save Station
@@ -1241,7 +1250,7 @@ Extra - asset_id: collision_camera_Hazard_End_A
               Movement (Beginner) and Use Spider Ball
   > Door to Teleporter Room South
       Any of the following:
-          Super Jump (Advanced) or Climb Rooms Vertically (High Jump)
+          Movement (Intermediate) or Super Jump (Advanced) or Climb Rooms Vertically (High Jump)
           Morph Ball and Unmorph Extend (Beginner)
 
 ----------------
