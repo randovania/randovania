@@ -11,6 +11,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Update to the Database Video Directory site to eliminate lag and add modern styling.
 - Changed: Autotracker tooltips now display text in black instead of gray.
 
+### Metroid Dread
+
+#### Logic Database
+
+##### Artaria
+
+- Added: In Screw Attack Room: Break the blob with Slide Turnaround Pseudo Wave Beam, requires Gravity Suit. Beginner from the left and Intermediate from the right.
+- Fixed: The Advanced Pseudo Wave Beam to break the Blob in Screw Attack Room from the right now handles it not working with Gravity Suit.
+- Fixed: Add Slide as a requirement for the Pseudo Wave Beam usages in Melee Tutorial Room and Early Cloak Room.
+
+##### Burenia
+
+- Added: Pseudo Wave Beam to break the bottom right blob in Burenia Hub to Dairon. Requires Slide and Gravity Suit or Diffusion Beam.
+- Fixed: When using Power Bomb to break the bottom right blob in Burenia Hub to Dairon, also require the ability to shoot a beam.
+
 ### AM2R
 
 #### Logic Database
