@@ -30,6 +30,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Logic Database
 
+- Added: 15 Videos to the Logic Database
+
+##### Main Caves
+
+- Added: In Surface Hi-Jump Challenge: Shinespark conservation method to reach item
+
+##### Hydro Station
+
+- Added: In Inner Alpha Nest South: IBJ method to reach item
+
 ##### Industrial Complex
 
 - Added: In Lower Factory Intersection: Can now climb the room by shinesparking after a short charge.
