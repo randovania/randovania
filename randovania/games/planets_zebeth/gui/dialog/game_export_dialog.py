@@ -10,7 +10,7 @@ from randovania.gui.dialog.game_export_dialog import GameExportDialog, spoiler_p
 if TYPE_CHECKING:
     from pathlib import Path
 
-    from randovania.games.metroid.exporter.options import PlanetsZebethPerGameOptions
+    from randovania.games.planets_zebeth.exporter.options import PlanetsZebethPerGameOptions
 
 
 class PlanetsZebethGameExportDialog(GameExportDialog):
@@ -20,7 +20,7 @@ class PlanetsZebethGameExportDialog(GameExportDialog):
 
     @classmethod
     def game_enum(cls):
-        return RandovaniaGame.METROID
+        return RandovaniaGame.METROID_PLANETS_ZEBETH
 
     @property
     def input_file(self) -> Path:
