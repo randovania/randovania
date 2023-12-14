@@ -19,11 +19,11 @@ Make sure you have followed the Developer setup and activated the virtual enviro
 ## Development Process
 
 This is a rough outline on how the development process is for new games.
-1. Make a thread in #randovania-dev in the [Randovania Discord server](https://discord.gg/M23gCxj6fw) to discuss your work. Please communicate there with the core dev team as much as possible. A Discord account is required, as said server is necessary to test the development builds, as well as receiving feedback and bugs for your game.
+1. Make a thread in #randovania-dev in the [Randovania Discord server](https://discord.gg/M23gCxj6fw) to discuss your work. Please communicate with the core dev team there as much as possible. A Discord account is required, as said server is necessary to test the development builds, as well as receiving feedback and bugs for your game.
 
-2. Open a Pull Request whenever you think you've got the bare minimum. "Bare minimum" means, you're confident that you will be able to take your game from that initial PR to stable in a reasonable amount of time. For some, this will be relatively early, for others rather late. But the time ultimately doesn't matter much, as long as the dev team is kept informed of your progress.
+2. Open a Pull Request whenever you think you've got the bare minimum. "Bare minimum" means that you're confident that you will be able to take your game from that initial PR to stable in a reasonable amount of time. For some, this will be relatively early, for others rather late. But the time ultimately doesn't matter much, as long as the dev team is kept informed of your progress.
 
-3. Ask the core team for a review, address their reviews, and repeat until the PR is merged.
+3. Ask the core dev team for a review, address their reviews, and repeat until the PR is merged.
 
 4. Send Pull Requests for individual features/changes of your game implementation.
 
