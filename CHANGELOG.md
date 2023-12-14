@@ -26,6 +26,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Pseudo Wave Beam to break the bottom right blob in Burenia Hub to Dairon. Requires Slide and Gravity Suit or Diffusion Beam.
 - Fixed: When using Power Bomb to break the bottom right blob in Burenia Hub to Dairon, also require the ability to shoot a beam.
 - Fixed: Burenia Hub to Dairon: Getting the item in the fan with only Flash Shift now requires at least one Flash Shift Upgrade as well, and also only requires Intermediate movement (instead of Advanced).
+- Changed: Main Hub Tower Middle: Climbing out of the water from Left of Central Grapple Block without any items now requires Advanced Movement, up from Intermediate.
 
 ##### Ferenia
 
