@@ -19,7 +19,7 @@ if TYPE_CHECKING:
     from randovania.layout.base.base_configuration import BaseConfiguration
 
 BOSS_KEY_CATEGORY = pickup_category.PickupCategory(
-    name="key", long_name="Boss Key", hint_details=("some ", "keys"), hinted_as_major=False, is_key=True
+    name="key", long_name="Boss Key", hint_details=("some ", "key"), hinted_as_major=False, is_key=True
 )
 
 
