@@ -37,10 +37,6 @@ Extra - asset_id: collision_camera_002
       Trivial
   > Door to Zeta Arena Access
       Climb Rooms Vertically (No High Jump)
-  > Door to Poison Plants Hallway
-      Climb Rooms Vertically (No High Jump)
-  > Top of Tower Right Side
-      Climb Rooms Vertically (No High Jump)
 
 > Elevator to Area 5 - Interior; Heals? False; Spawn Point; Default Node
   * Layers: default
@@ -49,7 +45,9 @@ Extra - asset_id: collision_camera_002
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: ST_FromArea06C_01
   > Ammo Recharge Station
-      Single-wall Wall Jump (Advanced) or Climb Rooms Vertically (No High Jump)
+      Any of the following:
+          Space Jump or Single-wall Wall Jump (Advanced) or Use Spider Ball
+          Infinite Bomb Jump (Intermediate) and Lay Bomb
   > Save Station Right
       Trivial
   > Door to Gamma Arena
@@ -87,8 +85,6 @@ Extra - asset_id: collision_camera_002
   * Plasma Beam Door to Zeta Arena Access/Door to Tower
   * Extra - actor_name: Door003
   * Extra - actor_type: doorpowerpower
-  > Ammo Recharge Station
-      Trivial
   > Door to Poison Plants Hallway
       Trivial
 
@@ -99,17 +95,9 @@ Extra - asset_id: collision_camera_002
   * Extra - actor_type: doorpowerpower
   > Pickup (Super Missile Tank Top)
       Screw Attack and Space Jump
-  > Top of Tower Right Side
-      Any of the following:
-          High Jump Boots or Space Jump or Damage Boost (Intermediate) or Shoot Beam Burst or Simple IBJ
-          Spiderspark (Beginner) and Can Spiderspark
-          Knowledge (Beginner) and Lay Power Bomb
-          Phase Drift and Movement (Intermediate)
   > Next to Teleporter
       Any of the following:
-          High Jump Boots or Space Jump or Damage Boost (Intermediate) or Shoot Beam Burst or Simple IBJ
-          Spiderspark (Beginner) and Can Spiderspark
-          Knowledge (Beginner) and Lay Power Bomb
+          High Jump Boots or Space Jump or Damage Boost (Intermediate) or Destroy Blob Throwers/Steel Orbs or Simple IBJ
           Phase Drift and Movement (Intermediate)
 
 > Door to Poison Plants Hallway; Heals? False
@@ -120,7 +108,9 @@ Extra - asset_id: collision_camera_002
   > Ammo Recharge Station
       Trivial
   > Door to Zeta Arena Access
-      Single-wall Wall Jump (Intermediate)
+      High Jump Boots or Space Jump or Single-wall Wall Jump (Intermediate) or Use Spider Ball
+  > Top of Tower Right Side
+      Climb Rooms Vertically (No High Jump)
 
 > Door to Transport to Area 5 Interior; Heals? False
   * Layers: default
@@ -140,9 +130,16 @@ Extra - asset_id: collision_camera_002
   * Extra - actor_name: Door009
   * Extra - actor_type: doorpowerpower
   > Top of Tower Right Side
-      Any of the following:
-          Lightning Armor or Space Jump
-          Spiderspark (Beginner) and Can Spiderspark
+      All of the following:
+          Any of the following:
+              # Reach the ledge
+              Space Jump
+              All of the following:
+                  Lightning Armor
+                  Simple IBJ or Use Spider Ball
+              Spiderspark (Intermediate) and Can Spiderspark
+          # Bypass the enemies
+          Lightning Armor or Plasma Beam or Screw Attack or Combat (Intermediate) or Normal Damage ≥ 150 or Shoot Beam Burst
 
 > Door to Gamma Arena; Heals? False
   * Layers: default
@@ -159,8 +156,7 @@ Extra - asset_id: collision_camera_002
   * Extra - actor_type: item_missiletank
   > Door to Dangerous Hallway
       Any of the following:
-          High Jump Boots or Damage Boost (Intermediate) or Shoot Beam Burst or Use Spider Ball
-          Knowledge (Beginner) and Lay Power Bomb
+          High Jump Boots or Damage Boost (Intermediate) or Destroy Blob Throwers/Steel Orbs or Simple IBJ or Use Spider Ball
           Phase Drift and Movement (Intermediate)
   > Next to Teleporter
       Trivial
@@ -171,47 +167,58 @@ Extra - asset_id: collision_camera_002
   > Next to Teleporter
       All of the following:
           Morph Ball
-          Movement (Intermediate) or Walljump (Intermediate)
+          Space Jump or Spider Ball or Movement (Intermediate) or Walljump (Intermediate)
 
 > Top of Tower Right Side; Heals? False
   * Layers: default
   > Door to Dangerous Hallway
       Any of the following:
-          High Jump Boots or Space Jump or Damage Boost (Intermediate) or Shoot Beam Burst or Simple IBJ
-          Knowledge (Beginner) and Lay Power Bomb
+          High Jump Boots or Space Jump or Damage Boost (Intermediate) or Destroy Blob Throwers/Steel Orbs or Simple IBJ
           All of the following:
               Use Spider Ball
               Bomb or Spring Ball or Mid-Air Morph (Beginner)
-          Spiderspark (Beginner) and Can Spiderspark
           Phase Drift and Movement (Intermediate)
   > Door to Poison Plants Hallway
       Trivial
   > Door to Gamma+ Arena Access
-      Any of the following:
-          Space Jump
-          All of the following:
-              Lightning Armor
-              Simple IBJ or Use Spider Ball
-          Spiderspark (Beginner) and Can Spiderspark
+      All of the following:
+          Any of the following:
+              # Reach the door
+              Space Jump
+              All of the following:
+                  Lightning Armor
+                  Simple IBJ or Use Spider Ball
+              Spiderspark (Intermediate) and Can Spiderspark
+          # Energy Requirements
+          Lightning Armor or Plasma Beam or Screw Attack or Combat (Intermediate) or Normal Damage ≥ 150 or Shoot Beam Burst
 
 > Underwater; Heals? False
   * Layers: default
   > Door to Transport to Area 5 Interior
       Single-wall Wall Jump (Intermediate) or Climb Rooms Vertically (No High Jump)
   > Above Grapple Block
-      High Jump Boots or Gravity Suit or Use Spider Ball
+      Any of the following:
+          Space Jump or Use Spider Ball
+          All of the following:
+              High Jump Boots
+              Gravity Suit or Walljump (Intermediate)
+          All of the following:
+              Gravity Suit
+              Walljump (Beginner) or Simple IBJ
 
 > Next to Teleporter; Heals? False
   * Layers: default
   > Teleporter
-      After Area 5 (Exterior) - Teleporter Unlocked
+      Trivial
   > Door to Dangerous Hallway
-      Space Jump or Simple IBJ
+      Any of the following:
+          Space Jump
+          Infinite Bomb Jump (Intermediate) and Lay Bomb
   > Door to Transport to Area 5 Interior
       Trivial
   > Pickup (Missile Tank Hidden)
       Any of the following:
-          Bomb and Simple IBJ
+          Infinite Bomb Jump (Intermediate) and Lay Bomb
           All of the following:
               Lay Any Bomb
               Space Jump or Spider Ball
@@ -228,7 +235,7 @@ Extra - asset_id: collision_camera_002
   * Layers: default
   > Pickup (Super Missile Tank Bottom)
       Any of the following:
-          Ice Beam and Ice Beam Clip (Beginner)
+          Charge Beam and Ice Beam and Ice Beam Clip (Beginner)
           All of the following:
               Morph Ball
               Any of the following:
@@ -251,10 +258,10 @@ Extra - asset_id: collision_camera_004
   * Extra - actor_name: LE_Item_001
   * Extra - actor_type: item_energytank
   > Pickup (Power Bomb Tank)
-      Can Spiderspark
+      Spiderspark (Beginner) and Can Spiderspark
   > Door to Tower
       Any of the following:
-          Can Spiderspark
+          Spiderspark (Beginner) and Can Spiderspark
           All of the following:
               Morph Ball
               Any of the following:
@@ -267,7 +274,7 @@ Extra - asset_id: collision_camera_004
   * Extra - actor_name: LE_Item_007
   * Extra - actor_type: item_powerbombtank
   > Pickup (Energy Tank)
-      Can Spiderspark
+      Spiderspark (Beginner) and Can Spiderspark
   > Tunnel to Tower
       Morph Ball
 
@@ -278,7 +285,7 @@ Extra - asset_id: collision_camera_004
   * Extra - actor_type: doorpowerpower
   > Pickup (Energy Tank)
       Any of the following:
-          Can Spiderspark
+          Spiderspark (Beginner) and Can Spiderspark
           Morph Ball and Damage Boost (Advanced)
   > Bottom Path
       Morph Ball
@@ -292,9 +299,11 @@ Extra - asset_id: collision_camera_004
 > Bottom Path; Heals? False
   * Layers: default
   > Pickup (Energy Tank)
-      Any of the following:
-          Grapple Beam or Damage Boost (Intermediate)
-          Bomb and Spider Ball and Diagonal Bomb Jump (Beginner)
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Grapple Beam or Damage Boost (Intermediate)
+              Bomb and Spider Ball and Diagonal Bomb Jump (Beginner)
 
 ----------------
 Screw Attack Room
@@ -348,7 +357,7 @@ Extra - asset_id: collision_camera_006
   > Tunnel to Water Path Access
       All of the following:
           Lay Any Bomb
-          Gravity Suit or Spider Ball
+          Gravity Suit or Walljump (Intermediate) or Climb Rooms Vertically (No High Jump)
 
 > Door to Zeta Arena; Heals? False
   * Layers: default
@@ -391,9 +400,10 @@ Extra - asset_id: collision_camera_008
   > Door to Tower
       Any of the following:
           Lay Bomb
+          Lightning Armor and Morph Ball
           All of the following:
               Lay Power Bomb
-              Lightning Armor or Baby Metroid or Power Bomb ≥ 2
+              Baby Metroid or Power Bomb ≥ 2
 
 > Door to Tower; Heals? False
   * Layers: default
@@ -452,7 +462,7 @@ Extra - asset_id: collision_camera_012
   > Door to Zeta Arena Access
       Any of the following:
           High Jump Boots or Space Jump or Super Jump (Intermediate) or Simple IBJ
-          Spiderspark (Beginner) and Can Spiderspark
+          Spiderspark (Intermediate) and Can Spiderspark
           Morph Ball and Unmorph Extend (Beginner)
   > Event - Zeta Metroid
       Defeat Zeta Metroid
@@ -476,14 +486,16 @@ Extra - asset_id: collision_camera_013
   * Extra - actor_name: Door008
   * Extra - actor_type: doorpowerpower
   > Tunnel to Zeta Arena Access
-      Lay Any Bomb
+      All of the following:
+          Lay Any Bomb
+          Combat (Beginner) or Normal Damage ≥ 100
 
 > Tunnel to Zeta Arena Access; Heals? False
   * Layers: default
   * Tunnel with Bomb Block to Zeta Arena Access/Tunnel to Water Path Access
   > Door to Water Path
       All of the following:
-          Morph Ball
+          Combat (Beginner) or Normal Damage ≥ 100
           Walljump (Beginner) or Climb Rooms Vertically (No High Jump)
 
 ----------------
@@ -496,6 +508,8 @@ Extra - asset_id: collision_camera_015
   * Pickup 113; Category? Minor
   * Extra - actor_name: LE_Item_004
   * Extra - actor_type: item_missiletank
+  > Bottom of Climb
+      Lay Any Bomb
   > Room Bottom
       Trivial
 
@@ -532,7 +546,9 @@ Extra - asset_id: collision_camera_015
                   Out of Bounds Movement (Advanced)
                   Out of Bounds Movement (Intermediate) and Shoot Beam Burst
   > Top of Climb
-      Climb Rooms Vertically (High Jump)
+      Any of the following:
+          Climb Rooms Vertically (No High Jump)
+          High Jump Boots and Walljump (Beginner)
   > Room Bottom
       Trivial
 
@@ -549,7 +565,9 @@ Extra - asset_id: collision_camera_015
       Trivial
   > Inside Arena
       Any of the following:
-          Lay Power Bomb
+          All of the following:
+              Lay Power Bomb
+              High Jump Boots or Space Jump or Spider Ball
           All of the following:
               Lay Bomb
               Any of the following:
@@ -593,7 +611,7 @@ Extra - asset_id: collision_camera_015
           Lay Power Bomb
           All of the following:
               Lay Bomb
-              Spider Ball or Mid-Air Morph (Beginner)
+              Spider Ball or Mid-Air Morph (Beginner) or Infinite Bomb Jump (Beginner)
 
 > Pickup (DNA); Heals? False
   * Layers: default
@@ -625,7 +643,7 @@ Extra - asset_id: collision_camera_016
   * Extra - actor_type: doorpowerpower
   > Door to Screw Attack Room
       Any of the following:
-          Can Spiderspark
+          Spiderspark (Intermediate) and Can Spiderspark
           All of the following:
               Gravity Suit
               Space Jump or Simple IBJ
@@ -635,7 +653,13 @@ Extra - asset_id: collision_camera_016
   * Layers: default
   * Open Passage to Screw Attack Room/Dock to Water Path
   > Door to Screw Attack Room
-      Screw Attack
+      All of the following:
+          Screw Attack
+          Any of the following:
+              Space Jump or Walljump (Beginner)
+              All of the following:
+                  Movement (Intermediate)
+                  Simple IBJ or Use Spider Ball
 
 ----------------
 Gamma+ Arena Access
@@ -650,7 +674,9 @@ Extra - asset_id: collision_camera_017
   > Door to Gamma+ Arena
       All of the following:
           Varia Suit
-          Lightning Armor or Space Jump or Can Spiderspark
+          Any of the following:
+              Lightning Armor or Space Jump
+              Spiderspark (Intermediate) and Can Spiderspark
 
 > Door to Gamma+ Arena; Heals? False
   * Layers: default
@@ -660,7 +686,9 @@ Extra - asset_id: collision_camera_017
   > Door to Tower
       All of the following:
           Varia Suit
-          Lightning Armor or Space Jump or Can Spiderspark
+          Any of the following:
+              Lightning Armor or Space Jump
+              Spiderspark (Intermediate) and Can Spiderspark
   > Start Point
       Trivial
 
@@ -680,6 +708,13 @@ Extra - asset_id: collision_camera_018
   * Power Beam Door to Gamma+ Arena Access/Door to Gamma+ Arena
   * Extra - actor_name: Door011
   * Extra - actor_type: doorpowerpower
+  > Event - Gamma Metroid+
+      All of the following:
+          Varia Suit and Defeat Gamma Metroid+
+          Any of the following:
+              Gravity Suit or Space Jump
+              Spiderspark (Intermediate) and Can Spiderspark
+              Diagonal Bomb Jump (Intermediate) and Lay Bomb
   > Start Point
       Varia Suit
 
@@ -694,22 +729,17 @@ Extra - asset_id: collision_camera_018
   * Extra - start_point_actor_name: ST_Gamma_002_Checkpoint
   > Door to Gamma+ Arena Access
       Varia Suit
-  > Event - Gamma Metroid+
-      All of the following:
-          Varia Suit and Defeat Gamma Metroid+
-          Any of the following:
-              Gravity Suit or Space Jump or Can Spiderspark
-              Diagonal Bomb Jump (Intermediate) and Lay Bomb
 
 > Pickup (DNA); Heals? False
   * Layers: default
   * Pickup 200; Category? Major
   * Extra - pickup_type: metroid
   * Extra - spawngroup: SG_Gamma_002
-  > Start Point
+  > Door to Gamma+ Arena Access
       All of the following:
           Varia Suit
           Any of the following:
-              Gravity Suit or Space Jump or Can Spiderspark
+              Gravity Suit or Space Jump
+              Spiderspark (Intermediate) and Can Spiderspark
               Diagonal Bomb Jump (Intermediate) and Lay Bomb
 
