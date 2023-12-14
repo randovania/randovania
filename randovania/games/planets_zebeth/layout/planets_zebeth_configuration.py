@@ -10,7 +10,7 @@ from randovania.layout.base.base_configuration import BaseConfiguration
 
 @dataclasses.dataclass(frozen=True)
 class PlanetsZebethArtifactConfig(BitPackDataclass, JsonDataclass):
-    vanilla_boss_keys: bool
+    vanilla_tourian_keys: bool
     required_artifacts: int = dataclasses.field(metadata={"min": 0, "max": 9, "precision": 1})
 
 

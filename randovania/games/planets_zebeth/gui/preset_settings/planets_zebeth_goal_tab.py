@@ -28,7 +28,7 @@ class PresetPlanetsZebethGoal(PresetTab, Ui_PresetPlanetsZebethGoal):
         self.setupUi(self)
 
         self.goal_layout.setAlignment(QtCore.Qt.AlignmentFlag.AlignTop)
-        signal_handling.on_checked(self.vanilla_boss_keys_check, self._on_vanilla_boss_keys)
+        signal_handling.on_checked(self.vanilla_tourian_keys_check, self._on_vanilla_tourian_keys)
         self.keys_slider.valueChanged.connect(self._on_keys_slider_changed)
 
     @classmethod
@@ -40,7 +40,7 @@ class PresetPlanetsZebethGoal(PresetTab, Ui_PresetPlanetsZebethGoal):
         return False
 
     def _update_slider(self):
-        if self.vanilla_boss_keys_check.isChecked():
+        if self.vanilla_tourian_keys_check.isChecked():
             self.keys_slider.setValue(2)
             self.keys_slider.setEnabled(False)
         else:
@@ -53,9 +53,9 @@ class PresetPlanetsZebethGoal(PresetTab, Ui_PresetPlanetsZebethGoal):
         with self._editor as editor:
             editor.set_configuration_field("artifacts", call(config.artifacts))
 
-    def _on_vanilla_boss_keys(self, value: bool):
+    def _on_vanilla_tourian_keys(self, value: bool):
         def edit(config: PlanetsZebethArtifactConfig):
-            return dataclasses.replace(config, vanilla_boss_keys=value)
+            return dataclasses.replace(config, vanilla_tourian_keys=value)
 
         self._edit_config(edit)
         self._update_slider()
@@ -72,6 +72,6 @@ class PresetPlanetsZebethGoal(PresetTab, Ui_PresetPlanetsZebethGoal):
     def on_preset_changed(self, preset: Preset):
         assert isinstance(preset.configuration, PlanetsZebethConfiguration)
         artifacts = preset.configuration.artifacts
-        self.vanilla_boss_keys_check.setChecked(artifacts.vanilla_boss_keys)
+        self.vanilla_tourian_keys_check.setChecked(artifacts.vanilla_tourian_keys)
         self.keys_slider.setValue(artifacts.required_artifacts)
         self._update_slider()
