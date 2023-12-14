@@ -60,7 +60,7 @@ game_data: game.GameData = game.GameData(
         (
             "Which versions of Metroid Planets are supported?",
             "Only version 1.27g is supported. "
-            "Later versions are embedding code in the executable"
+            "Later versions are embedding code in the executable "
             "which prevents from modifying the code.",
         )
     ],
