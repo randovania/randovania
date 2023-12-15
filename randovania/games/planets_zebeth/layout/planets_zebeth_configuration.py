@@ -16,9 +16,9 @@ class PlanetsZebethArtifactConfig(BitPackDataclass, JsonDataclass):
 
 @dataclasses.dataclass(frozen=True)
 class PlanetsZebethConfiguration(BaseConfiguration):
-    # These fields aren't necessary for a new game: they're here to have example/test features
-    include_extra_pickups: bool
     artifacts: PlanetsZebethArtifactConfig
+    energy_per_tank: int = dataclasses.field(metadata={"min": 1, "max": 1000, "precision": 1})
+    include_extra_pickups: bool
 
     @classmethod
     def game_enum(cls) -> RandovaniaGame:
