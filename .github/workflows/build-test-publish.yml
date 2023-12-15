@@ -140,7 +140,7 @@ jobs:
 
       - name: Upload artifacts
         if: ${{ matrix.executable && (startsWith(github.ref, 'refs/heads/') || startsWith(github.ref, 'refs/tags/v')) && github.event_name != 'merge_group' }}
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: Randovania ${{ matrix.name }}
           if-no-files-found: error
@@ -151,7 +151,7 @@ jobs:
 
       - name: Upload wheel
         if: ${{ matrix.name == 'Linux' }}
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: Python Package
           if-no-files-found: error
@@ -249,7 +249,7 @@ jobs:
           $project.Build();
 
       - name: Upload installer
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: Randovania Windows Installer
           if-no-files-found: error
