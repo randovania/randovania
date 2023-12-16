@@ -32,7 +32,7 @@ class MSRHintDetailsTab(GameDetailsTab):
 
     def update_content(
         self, configuration: BaseConfiguration, all_patches: dict[int, GamePatches], players: PlayersConfiguration
-    ):
+    ) -> None:
         self.tree_widget.clear()
         self.tree_widget.setColumnCount(3)
         self.tree_widget.setHeaderLabels(["Hint", "Pickup", "In-Game Text"])
@@ -50,7 +50,7 @@ class MSRHintDetailsTab(GameDetailsTab):
             source_region = region_list.nodes_to_region(node)
             source_name = region_list.node_name(node)
 
-            hint_text = exporter.create_message_for_hint(hint, all_patches, players, False)
+            hint_text = exporter.create_message_for_hint(hint, all_patches, players, False).strip()
 
             # FIXME: tell the room name instead of the pickup name
             if hint.target is None:
