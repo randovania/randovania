@@ -227,6 +227,8 @@ class MSRPatchDataFactory(PatchDataFactory):
         for difficulty in difficulty_labels:
             text[difficulty] = full_hash
 
+        text["GUI_SAMUS_DATA_TITLE"] = "<version>"
+
         return text
 
     def _credits_spoiler(self) -> dict[str, str]:
