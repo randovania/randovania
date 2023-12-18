@@ -54,6 +54,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: In Lower Factory Intersection: Can now climb the room by shinesparking after a short charge.
 - Fixed: In Lower Factory Intersection: Climbing the room now correctly needs a damage boost for wall jumps.
 
+### Metroid Prime
+
+#### Logic Database
+
+##### Tallon Overworld
+
+- Added: In Landing Site: Can now reach missile behind the ship with Single Room OoB
+
+##### Phendrana Drifts
+
+- Added : In Ruined Courtyard: Can now traverse between Top Platfrom and Specimen Storage with Scan Dash (beginner)
+
 ### Metroid Prime 2: Echoes
 
 #### Logic Database
