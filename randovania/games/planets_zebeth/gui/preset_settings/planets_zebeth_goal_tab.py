@@ -39,21 +39,21 @@ class PresetPlanetsZebethGoal(PresetTab, Ui_PresetPlanetsZebethGoal):
     def uses_patches_tab(cls) -> bool:
         return False
 
-    def _update_slider(self):
+    def _update_slider(self) -> None:
         if self.vanilla_tourian_keys_check.isChecked():
             self.keys_slider.setValue(2)
             self.keys_slider.setEnabled(False)
         else:
             self.keys_slider.setEnabled(True)
 
-    def _edit_config(self, call: Callable[[PlanetsZebethArtifactConfig], PlanetsZebethArtifactConfig]):
+    def _edit_config(self, call: Callable[[PlanetsZebethArtifactConfig], PlanetsZebethArtifactConfig]) -> None:
         config = self._editor.configuration
         assert isinstance(config, PlanetsZebethConfiguration)
 
         with self._editor as editor:
             editor.set_configuration_field("artifacts", call(config.artifacts))
 
-    def _on_vanilla_tourian_keys(self, value: bool):
+    def _on_vanilla_tourian_keys(self, value: bool) -> None:
         def edit(config: PlanetsZebethArtifactConfig):
             return dataclasses.replace(config, vanilla_tourian_keys=value)
 

@@ -39,6 +39,6 @@ class PlanetsZebethGameExporter(GameExporter):
         patch_data: dict,
         export_params: GameExportParams,
         progress_update: status_update_lib.ProgressUpdateCallable,
-    ):
+    ) -> None:
         assert isinstance(export_params, PlanetsZebethGameExportParams)
         raise RuntimeError("Needs to be implemented")
