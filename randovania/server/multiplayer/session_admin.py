@@ -222,7 +222,7 @@ def _update_layout_generation(sa: ServerApp, session: MultiplayerSession, world_
 
 def _check_preset_consistency(presets: list[VersionedPreset], session: MultiplayerSession) -> None:
     unsupported_games = {preset.game.data.long_name for preset in presets if preset.game not in session.allowed_games}
-    if len(unsupported_games) != 0:
+    if unsupported_games:
         unsupported_games_str = ", ".join(unsupported_games)
         raise error.InvalidActionError(f"Invalid layout. Unsupported games: {unsupported_games_str}")
 

@@ -790,9 +790,10 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
                 if not preset.game.data.defaults_available_in_game_sessions
             }
         )
-        if len(unsupported_games) != 0:
+        if unsupported_games:
             unsupported_games_str = ", ".join(unsupported_games)
             return async_dialog.warning(self, "Invalid layout", f"Unsupported games: {unsupported_games_str}")
+        return None
 
     @asyncSlot()
     @handle_network_errors
