@@ -60,7 +60,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ##### Tallon Overworld
 
-- Added: In Landing Site: Single room OoB to reach the item behind the ship without morph ball
+- Added: In Landing Site: Single Room OoB to reach the item behind the ship without Morph Ball
 
 ### Metroid Prime 2: Echoes
 
