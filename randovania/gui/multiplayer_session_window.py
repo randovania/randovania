@@ -5,7 +5,7 @@ import collections
 import itertools
 import logging
 import random
-from typing import TYPE_CHECKING, Self
+from typing import TYPE_CHECKING, Any, Self
 
 from PySide6 import QtCore, QtGui, QtWidgets
 from qasync import asyncClose, asyncSlot
@@ -45,11 +45,13 @@ from randovania.network_common.session_visibility import MultiplayerSessionVisib
 
 if TYPE_CHECKING:
     import uuid
+    from collections.abc import Coroutine
 
     from randovania.games.game import RandovaniaGame
     from randovania.gui.lib.window_manager import WindowManager
     from randovania.gui.preset_settings.customize_preset_dialog import CustomizePresetDialog
     from randovania.interface_common.options import Options
+    from randovania.layout.preset import Preset
     from randovania.lib.status_update_lib import ProgressUpdateCallable
 
 logger = logging.getLogger(__name__)
@@ -778,6 +780,20 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
 
         return True
 
+    def _check_for_unsupported_games(
+        self, presets: list[Preset]
+    ) -> None | Coroutine[Any, Any, QtWidgets.QMessageBox.StandardButton]:
+        unsupported_games = sorted(
+            {
+                preset.game.data.long_name
+                for preset in presets
+                if not preset.game.data.defaults_available_in_game_sessions
+            }
+        )
+        if len(unsupported_games) != 0:
+            unsupported_games_str = ", ".join(unsupported_games)
+            return async_dialog.warning(self, "Invalid layout", f"Unsupported games: {unsupported_games_str}")
+
     @asyncSlot()
     @handle_network_errors
     async def import_permalink(self):
@@ -787,6 +803,10 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
             return
 
         permalink = dialog.get_permalink_from_field()
+        has_unsupported_games = self._check_for_unsupported_games(permalink.parameters.presets)
+        if has_unsupported_games is not None:
+            return await has_unsupported_games
+
         if await self._should_overwrite_presets(permalink.parameters, permalink_source=True):
             await self.generate_game_with_permalink(permalink, retries=None)
 
@@ -796,6 +816,10 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         layout = await layout_loader.prompt_and_load_layout_description(self)
         if layout is None:
             return
+
+        has_unsupported_games = self._check_for_unsupported_games(list(layout.all_presets))
+        if has_unsupported_games is not None:
+            return await has_unsupported_games
 
         if await self._should_overwrite_presets(layout.generator_parameters, permalink_source=False):
             async with self.game_session_api.prepare_to_upload_layout(self._get_world_order()) as uploader:

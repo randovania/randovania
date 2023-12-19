@@ -108,6 +108,9 @@ def _create_world(
     _verify_not_in_generation(session)
     preset = _get_preset(preset_bytes)
 
+    if preset.game not in session.allowed_games:
+        raise error.InvalidActionError(f"{preset.game.long_name} not allowed.")
+
     if WORLD_NAME_RE.match(name) is None:
         raise error.InvalidActionError("Invalid world name")
 
@@ -217,6 +220,13 @@ def _update_layout_generation(sa: ServerApp, session: MultiplayerSession, world_
         session.save()
 
 
+def _check_preset_consistency(presets: list[VersionedPreset], session: MultiplayerSession) -> None:
+    unsupported_games = {preset.game.data.long_name for preset in presets if preset.game not in session.allowed_games}
+    if len(unsupported_games) != 0:
+        unsupported_games_str = ", ".join(unsupported_games)
+        raise error.InvalidActionError(f"Invalid layout. Unsupported games: {unsupported_games_str}")
+
+
 def _change_layout_description(sa: ServerApp, session: MultiplayerSession, description_bytes: bytes | None):
     verify_has_admin(sa, session.id, None)
     worlds_to_update = []
@@ -243,11 +253,13 @@ def _change_layout_description(sa: ServerApp, session: MultiplayerSession, descr
             raise error.InvalidActionError("One of the worlds has undefined order field.")
 
         try:
-            description = LayoutDescription.from_bytes(
-                description_bytes, presets=[VersionedPreset.from_str(world.preset) for world in worlds]
-            )
+            presets = [VersionedPreset.from_str(world.preset) for world in worlds]
+            _check_preset_consistency(presets, session)
+            description = LayoutDescription.from_bytes(description_bytes, presets=presets)
         except InvalidLayoutDescription as e:
             raise error.InvalidActionError(f"Invalid layout: {e}") from e
+        except ValueError as e:
+            raise error.InvalidActionError("Presets do not match layout") from e
 
     with database.db.atomic():
         if worlds_to_update:
