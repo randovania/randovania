@@ -25,11 +25,11 @@ class PlanetsZebethCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_PlanetsZe
         self.on_new_cosmetic_patches(current)
         self.connect_signals()
 
-    def connect_signals(self):
+    def connect_signals(self) -> None:
         super().connect_signals()
         # More signals here!
 
-    def on_new_cosmetic_patches(self, patches: PlanetsZebethCosmeticPatches):
+    def on_new_cosmetic_patches(self, patches: PlanetsZebethCosmeticPatches) -> None:
         # Update fields with the new values
         pass
 
@@ -37,5 +37,5 @@ class PlanetsZebethCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_PlanetsZe
     def cosmetic_patches(self) -> PlanetsZebethCosmeticPatches:
         return self._cosmetic_patches
 
-    def reset(self):
+    def reset(self) -> None:
         self.on_new_cosmetic_patches(PlanetsZebethCosmeticPatches())

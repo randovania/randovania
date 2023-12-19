@@ -34,5 +34,5 @@ class PlanetsZebethCosmeticPatches(BaseCosmeticPatches):
     show_room_names: PlanetsZebethRoomGuiType = PlanetsZebethRoomGuiType.WITH_FADE
 
     @classmethod
-    def game(cls):
+    def game(cls) -> RandovaniaGame:
         return RandovaniaGame.METROID_PLANETS_ZEBETH
