@@ -7,6 +7,8 @@ from randovania.games.game import RandovaniaGame
 from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
 from randovania.lib import enum_lib
 
+# TODO: add disable low health beeping sounds, use SM boss themes and alternative escape music theme
+
 
 class PlanetsZebethRoomGuiType(Enum):
     """Types of Room Name GUI to display."""

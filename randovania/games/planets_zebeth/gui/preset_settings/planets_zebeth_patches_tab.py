@@ -13,6 +13,8 @@ if TYPE_CHECKING:
     from randovania.interface_common.preset_editor import PresetEditor
     from randovania.layout.preset import Preset
 
+# TODO: add walljump, downward shooting and open missile doors with 1 missile patches
+
 
 class PresetPlanetsZebethPatches(PresetTab):
     def __init__(self, editor: PresetEditor, game_description: GameDescription, window_manager: WindowManager):

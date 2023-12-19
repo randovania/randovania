@@ -7,6 +7,8 @@ from randovania.bitpacking.json_dataclass import JsonDataclass
 from randovania.games.game import RandovaniaGame
 from randovania.layout.base.base_configuration import BaseConfiguration
 
+# TODO: add door rando and elevator rando
+
 
 @dataclasses.dataclass(frozen=True)
 class PlanetsZebethArtifactConfig(BitPackDataclass, JsonDataclass):
