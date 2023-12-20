@@ -5,7 +5,25 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [7.1.0] - 2023-12-??
+## [7.1.1] - 2023-12-??
+
+### Metroid Prime
+
+- Fixed: Reverted Warrior Shrine -> Monitor Station loading improvement which could sometimes cause crashes
+- Fixed: Export compatibility with legacy cutscene skip options
+- Fixed: Music issues in Frigate Orpheon, Artifact Temple, Arboretum, Sunchamber Lobby, Burn Dome and Lava Lake
+- Fixed: [PAL] Issue with the Artifact Temple teleporter arrival cutscene
+- Fixed: Non-NTSC text issues
+  - Seed hash not showing on main menu
+  - Credits not showing seed spoiler
+  - [JP] Font size
+- Added: `qolGeneral` improvements
+  - Ice wall in Phendrana Shorelines now shatters instead of melting when shot
+  - Better Save Station load trigger in Phendrana Shorelines
+  - Better door open triggers in Arboretum
+- Changed: Back-to-back cutscenes in Artifact Temple now skip as one
+
+## [7.1.0] - 2023-12-01
 
 - Fixed: Bug with progressive suits in the autotracker always highlighting first suit
 - Changed: "Remove redundant pickup alternatives" and "Stagger placement of pickups" are no longer experimental options and will be included in all presets moving forwards.
