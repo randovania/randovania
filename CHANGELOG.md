@@ -54,14 +54,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: In Lower Factory Intersection: Can now climb the room by shinesparking after a short charge.
 - Fixed: In Lower Factory Intersection: Climbing the room now correctly needs a damage boost for wall jumps.
 
-### Metroid Prime
-
-#### Logic Database
-
-##### Tallon Overworld
-
-- Added: In Landing Site: Single Room OoB to reach the item behind the ship without Morph Ball
-
 ### Metroid Prime 2: Echoes
 
 #### Logic Database
@@ -88,6 +80,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Better Save Station load trigger in Phendrana Shorelines
   - Better door open triggers in Arboretum
 - Changed: Back-to-back cutscenes in Artifact Temple now skip as one
+
+#### Logic Database
+
+##### Tallon Overworld
+
+- Added: Advanced Single Room OoB to reach Landing Site item without Morph Ball
 
 ## [7.1.0] - 2023-12-01
 
