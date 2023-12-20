@@ -35,6 +35,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: In Space Jump Room: Added a video for reaching the Missile Tank with only Morph Ball and Bombs
 - Changed: In Space Jump Room: Added a video traversing from Underwater Bottom to Underwater Ledge Left with only Grapple Beam.
 
+##### Ghavoran
+
+- Fixed: Getting the Energy Part Pickup in Golzuna Tower using Spin Boost and Shinespark Conservation Beginner now correctly requires Morph Ball.
+
 ### AM2R
 
 #### Logic Database
