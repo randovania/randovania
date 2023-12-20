@@ -73,6 +73,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Revised Amorbis combat requirements (trickless requires a good weapon + 2 E, beginner requires a weapon and 1 E, intermediate neither)
 - Changed: Skipping the Amorbis trigger, or touching it to trigger the fight from below, requires Knowledge set to Intermediate.
 
+### Metroid Prime
+
+- Fixed: Reverted Warrior Shrine -> Monitor Station loading improvement which could sometimes cause crashes
+- Fixed: Export compatibility with legacy cutscene skip options
+- Fixed: Music issues in Frigate Orpheon, Artifact Temple, Arboretum, Sunchamber Lobby, Burn Dome and Lava Lake
+- Fixed: [PAL] Issue with the Artifact Temple teleporter arrival cutscene
+- Fixed: Non-NTSC text issues
+  - Seed hash not showing on main menu
+  - Credits not showing seed spoiler
+  - [JP] Font size
+- Added: `qolGeneral` improvements
+  - Ice wall in Phendrana Shorelines now shatters instead of melting when shot
+  - Better Save Station load trigger in Phendrana Shorelines
+  - Better door open triggers in Arboretum
+- Changed: Back-to-back cutscenes in Artifact Temple now skip as one
+
 ## [7.1.0] - 2023-12-01
 
 - Fixed: Bug with progressive suits in the autotracker always highlighting first suit
