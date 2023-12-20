@@ -65,3 +65,39 @@ def test_preferred_dna(
 
     assert editor.configuration.artifacts.required_artifacts == expected_artifacts
     assert tab.dna_slider.value() == expected_artifacts
+
+
+@pytest.mark.parametrize(
+    ("prefer_metroids", "prefer_bosses", "prefer_anywhere", "expected_artifacts"),
+    [(True, False, False, 10)],
+)
+def test_restricted_placement(
+    skip_qtbot,
+    am2r_game_description,
+    preset_manager,
+    prefer_metroids: bool,
+    prefer_bosses: bool,
+    prefer_anywhere: bool,
+    expected_artifacts: int,
+):
+    # Setup
+    game = am2r_game_description.game
+    base = preset_manager.default_preset_for_game(game).get_preset()
+    preset = dataclasses.replace(base, uuid=uuid.UUID("b41fde84-1f57-4b79-8cd6-3e5a78077fa6"))
+    base_configuration = preset.configuration
+    options = MagicMock()
+    assert isinstance(base_configuration, AM2RConfiguration)
+
+    tab = PresetAM2RGoal(editor := PresetEditor(preset, options), am2r_game_description, MagicMock())
+    skip_qtbot.addWidget(tab)
+    tab.on_preset_changed(preset)
+
+    tab.free_placement_radiobutton.setChecked(True)
+
+    # Run
+    tab.restrict_placement_radiobutton.setChecked(True)
+
+    # Assert
+    assert tab.prefer_metroids_check.isEnabled()
+    assert tab.prefer_bosses_check.isEnabled()
+    assert editor.configuration.artifacts.required_artifacts == expected_artifacts
