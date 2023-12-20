@@ -19,8 +19,6 @@ def msr_preset_tabs(editor: PresetEditor, window_manager: WindowManager) -> list
     from randovania.gui.preset_settings.starting_area_tab import PresetMetroidStartingArea
     from randovania.gui.preset_settings.trick_level_tab import PresetTrickLevel
 
-    # from randovania.games.samus_returns.gui.preset_settings.msr_item_pool_tab import MSRPresetItemPool
-
     return [
         PresetTrickLevel,
         PresetGeneration,

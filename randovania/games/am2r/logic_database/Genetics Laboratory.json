@@ -58,7 +58,7 @@
                     "default_connection": {
                         "region": "The Depths",
                         "area": "Waterfalls Entryway",
-                        "node": "Area Transition to Genetics Laboratory"
+                        "node": "Horizontal Dock to Genetics Laboratory"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -1157,7 +1157,7 @@
                     "override_default_lock_requirement": null,
                     "connections": {}
                 },
-                "Dock to Laboratory Save Station Access": {
+                "Vertical Dock to Laboratory Save Station Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1171,13 +1171,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "vertical_dock",
                     "default_connection": {
                         "region": "Genetics Laboratory",
                         "area": "Laboratory Save Station Access",
-                        "node": "Dock to Waterfalls Exterior"
+                        "node": "Vertical Dock to Waterfalls Exterior"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "2-Tiles Wide Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -1225,7 +1225,7 @@
                                 "items": []
                             }
                         },
-                        "Dock to Laboratory Save Station Access": {
+                        "Vertical Dock to Laboratory Save Station Access": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -1361,7 +1361,7 @@
                 ]
             },
             "nodes": {
-                "Dock to Waterfalls Exterior": {
+                "Vertical Dock to Waterfalls Exterior": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1375,13 +1375,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "vertical_dock",
                     "default_connection": {
                         "region": "Genetics Laboratory",
                         "area": "Waterfalls Exterior",
-                        "node": "Dock to Laboratory Save Station Access"
+                        "node": "Vertical Dock to Laboratory Save Station Access"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "2-Tiles Wide Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -1424,7 +1424,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Waterfalls Exterior": {
+                        "Vertical Dock to Waterfalls Exterior": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5184,7 +5184,7 @@
                         }
                     }
                 },
-                "Area Transition to Crystal Climb West": {
+                "Horizontal Dock to Crystal Climb West": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5202,13 +5202,13 @@
                         "source_y": 192
                     },
                     "valid_starting_location": false,
-                    "dock_type": "area_transition",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Genetics Laboratory",
                         "area": "Crystal Climb West",
-                        "node": "Area Transition to Hatchling Room"
+                        "node": "Horizontal Dock to Hatchling Room"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "4-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -5246,7 +5246,7 @@
                                 "items": []
                             }
                         },
-                        "Area Transition to Crystal Climb West": {
+                        "Horizontal Dock to Crystal Climb West": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5293,7 +5293,7 @@
                 ]
             },
             "nodes": {
-                "Area Transition to Hatchling Room": {
+                "Horizontal Dock to Hatchling Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5311,13 +5311,13 @@
                         "source_y": 1632
                     },
                     "valid_starting_location": false,
-                    "dock_type": "area_transition",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Genetics Laboratory",
                         "area": "Hatchling Room",
-                        "node": "Area Transition to Crystal Climb West"
+                        "node": "Horizontal Dock to Crystal Climb West"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "4-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -5487,7 +5487,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Area Transition to Hatchling Room": {
+                        "Horizontal Dock to Hatchling Room": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -5830,7 +5830,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Landing Site": {
+                        "Vertical Dock to Main Caves": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5853,7 +5853,7 @@
                         }
                     }
                 },
-                "Dock to Landing Site": {
+                "Vertical Dock to Main Caves": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5867,13 +5867,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "vertical_dock",
                     "default_connection": {
                         "region": "Main Caves",
                         "area": "Landing Site",
-                        "node": "Dock to Crystal Climb East"
+                        "node": "Vertical Dock to Genetics Laboratory"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "2-Tiles Wide Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,

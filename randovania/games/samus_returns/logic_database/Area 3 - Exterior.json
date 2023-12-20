@@ -88,7 +88,7 @@
                         "default"
                     ],
                     "extra": {
-                        "actor_name": "LE_Platform_ChozoUnlockAreaDNA",
+                        "actor_name": "LE_ChozoUnlockAreaDNA",
                         "actor_type": "weightactivatedplatform",
                         "start_point_actor_name": "ST_ChozoUnlockAreaDNA_Checkpoint"
                     },
@@ -1103,12 +1103,10 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Teleporter": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "events",
-                                "name": "Area 3 Exterior Teleporter West",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         },
                         "Event - Teleporter Unlocked": {
@@ -1638,12 +1636,10 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Teleporter": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "events",
-                                "name": "Area 3 Exterior Teleporter East",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         },
                         "Event - Teleporter Unlocked": {

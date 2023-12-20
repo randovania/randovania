@@ -5,14 +5,13 @@ import shutil
 from enum import Enum
 from typing import TYPE_CHECKING
 
+from randovania import monitoring
 from randovania.exporter.game_exporter import GameExporter, GameExportParams
 from randovania.lib import json_lib, status_update_lib
 
 if TYPE_CHECKING:
     from collections.abc import Callable
     from pathlib import Path
-
-    from randovania import monitoring
 
 
 class MSRModPlatform(Enum):
@@ -68,6 +67,14 @@ class MSRGameExporter(GameExporter):
         assert isinstance(export_params, MSRGameExportParams)
         export_params.output_path.mkdir(parents=True, exist_ok=True)
 
+        from open_samus_returns_rando.version import version as open_samus_returns_rando_version
+
+        text_patches = patch_data["text_patches"]
+        text_patches["GUI_SAMUS_DATA_TITLE"] = text_patches["GUI_SAMUS_DATA_TITLE"].replace(
+            "<version>",
+            f"OSRR v{open_samus_returns_rando_version}",
+        )
+
         json_lib.write_path(export_params.output_path.joinpath("patcher.json"), patch_data)
 
         patcher_update: status_update_lib.ProgressUpdateCallable
@@ -81,19 +88,15 @@ class MSRGameExporter(GameExporter):
             shutil.rmtree(export_params.output_path, ignore_errors=True)
             progress_update(f"Finished deleting {export_params.output_path}", -1)
 
-        # TODO: Activate when patcher is in RDV
-        if False:
-            with monitoring.trace_block("open_samus_returns_rando.patch_with_status_update"):
-                import open_samus_returns_rando
+        with monitoring.trace_block("open_samus_returns_rando.patch_with_status_update"):
+            import open_samus_returns_rando
 
-                open_samus_returns_rando.patch_with_status_update(
-                    export_params.input_path,
-                    export_params.output_path,
-                    patch_data,
-                    lambda progress, msg: patcher_update(msg, progress),
-                )
-        else:
-            progress_update("Finished", 1.0)
+            open_samus_returns_rando.patch_with_status_update(
+                export_params.input_path,
+                export_params.output_path,
+                patch_data,
+                lambda progress, msg: patcher_update(msg, progress),
+            )
 
         if export_params.post_export is not None:
             export_params.post_export(status_update_lib.OffsetProgressUpdate(progress_update, 0.75, 0.25))
