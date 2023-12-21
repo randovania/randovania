@@ -37,6 +37,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### AM2R
 
+- Added: New option to place DNA anywhere
+
 #### Logic Database
 
 - Added: 15 Videos to the Logic Database
