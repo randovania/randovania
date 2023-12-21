@@ -19,6 +19,9 @@ from randovania.interface_common.preset_manager import PresetManager
         AM2RArtifactConfig(True, False, False, 46),
         AM2RArtifactConfig(False, True, False, 6),
         AM2RArtifactConfig(False, False, False, 0),
+        AM2RArtifactConfig(False, False, True, 2),
+        AM2RArtifactConfig(False, True, True, 10),
+        AM2RArtifactConfig(True, False, True, 30),
     ],
 )
 def test_am2r_format_params(artifacts):
@@ -33,14 +36,14 @@ def test_am2r_format_params(artifacts):
     # Run
     result = RandovaniaGame.AM2R.data.layout.preset_describer.format_params(configuration)
 
-    if artifacts.prefer_metroids and artifacts.prefer_bosses:
+    if artifacts.prefer_anywhere:
+        dna_where = "Place anywhere"
+    elif artifacts.prefer_metroids and artifacts.prefer_bosses:
         dna_where = "Prefers Metroids, Prefers major bosses"
     elif artifacts.prefer_metroids:
         dna_where = "Prefers Metroids"
     elif artifacts.prefer_bosses:
         dna_where = "Prefers major bosses"
-    elif artifacts.prefer_anywhere:
-        dna_where = "Place anywhere"
     else:
         dna_where = "Kill the Queen"
 
@@ -55,7 +58,7 @@ def test_am2r_format_params(artifacts):
         "Gameplay": ["Starts at Main Caves - Landing Site"],
         "Goal": [f"{artifacts.required_artifacts} Metroid DNA", dna_where]
         if artifacts.required_artifacts
-        else ["Kill the Queen"],
+        else [dna_where],
         "Hints": ["DNA Hint: Area and room", "Ice Beam Hint: Area only"],
         "Item Pool": [f"Size: {118+artifacts.required_artifacts} of 134", "Vanilla starting items"],
         "Logic Settings": ["All tricks disabled"],

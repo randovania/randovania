@@ -47,12 +47,15 @@ def test_assign_pool_results_predetermined(am2r_game_description, am2r_configura
 
 
 @pytest.mark.parametrize(
-    ("artifacts", "expected"),
+    ("artifacts"),
     [
-        (AM2RArtifactConfig(False, False, True, 5), [102, 108, 374, 389, 391]),
+        (AM2RArtifactConfig(False, False, True, 5)),
+        (AM2RArtifactConfig(True, False, True, 10)),
+        (AM2RArtifactConfig(False, True, True, 15)),
+        (AM2RArtifactConfig(True, True, True, 6)),
     ],
 )
-def test_assign_pool_results_prefer_anywhere(am2r_game_description, am2r_configuration, artifacts, expected):
+def test_assign_pool_results_prefer_anywhere(am2r_game_description, am2r_configuration, artifacts):
     patches = GamePatches.create_from_game(
         am2r_game_description, 0, dataclasses.replace(am2r_configuration, artifacts=artifacts)
     )
