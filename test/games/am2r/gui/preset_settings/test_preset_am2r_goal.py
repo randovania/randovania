@@ -81,6 +81,7 @@ def test_restricted_placement(
     assert isinstance(base_configuration, AM2RConfiguration)
 
     tab = PresetAM2RGoal(editor := PresetEditor(preset, options), am2r_game_description, MagicMock())
+    assert isinstance(editor.configuration, AM2RConfiguration)
     skip_qtbot.addWidget(tab)
     tab.on_preset_changed(preset)
     artifact_count = editor.configuration.artifacts.required_artifacts
@@ -90,7 +91,6 @@ def test_restricted_placement(
     tab.restrict_placement_radiobutton.setChecked(True)
 
     # Assert
-    assert isinstance(editor.configuration, AM2RConfiguration)
     assert tab.prefer_metroids_check.isEnabled()
     assert tab.prefer_bosses_check.isEnabled()
     assert tab.restrict_placement_radiobutton.isChecked()
@@ -111,6 +111,7 @@ def test_free_placement(
     assert isinstance(base_configuration, AM2RConfiguration)
 
     tab = PresetAM2RGoal(editor := PresetEditor(preset, options), am2r_game_description, MagicMock())
+    assert isinstance(editor.configuration, AM2RConfiguration)
     skip_qtbot.addWidget(tab)
     tab.on_preset_changed(preset)
     artifact_count = editor.configuration.artifacts.required_artifacts
@@ -120,7 +121,6 @@ def test_free_placement(
     tab.free_placement_radiobutton.setChecked(True)
 
     # Assert
-    assert isinstance(editor.configuration, AM2RConfiguration)
     assert not tab.prefer_metroids_check.isEnabled()
     assert not tab.prefer_bosses_check.isEnabled()
     assert tab.free_placement_radiobutton.isChecked()
