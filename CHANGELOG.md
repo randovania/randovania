@@ -38,6 +38,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ##### Ghavoran
 
 - Fixed: Getting the Energy Part Pickup in Golzuna Tower using Spin Boost and Shinespark Conservation Beginner now correctly requires Morph Ball.
+- Changed: Opening the door to Orange Teleportal directly from below, in Golzuna Tower, requires Diffusion Beam.
+- Added: The door to Orange Teleportal can be opened from inside the tunnel left after breaking the Speed Booster Blocks, in Golzuna Tower. This requires Charge Beam and either Wave Beam or Pseudo Wave Beam Beginner.
 
 ### AM2R
 
