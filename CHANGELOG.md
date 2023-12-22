@@ -54,11 +54,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ##### Hydro Station
 
 - Added: In Inner Alpha Nest South: IBJ method to reach item
+- Changed: In Arachnus Arena: New health requirements
 
 ##### Industrial Complex
 
 - Added: In Lower Factory Intersection: Can now climb the room by shinesparking after a short charge.
 - Fixed: In Lower Factory Intersection: Climbing the room now correctly needs a damage boost for wall jumps.
+- Changed: In Tester Arena: New weapon, health, and dodging requirements
 
 ##### Genetics Labratory
 
