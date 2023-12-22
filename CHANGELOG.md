@@ -60,6 +60,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: In Lower Factory Intersection: Can now climb the room by shinesparking after a short charge.
 - Fixed: In Lower Factory Intersection: Climbing the room now correctly needs a damage boost for wall jumps.
 
+##### Genetics Labratory
+
+- Changed: In Queen Arena: Additional Beam requirements and dodging requirements for trickless
+
 ### Metroid Prime 2: Echoes
 
 #### Logic Database
