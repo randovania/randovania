@@ -41,30 +41,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### AM2R
 
-- Added: New option to place DNA anywhere
+- Added: New option to place DNA anywhere.
 
 #### Logic Database
 
-- Added: 15 Videos to the Logic Database
+- Added: 15 Videos to the Logic Database.
 
 ##### Main Caves
 
-- Added: In Surface Hi-Jump Challenge: Shinespark conservation method to reach item
+- Added: In Surface Hi-Jump Challenge: Shinespark conservation method to reach item.
 
 ##### Hydro Station
 
-- Added: In Inner Alpha Nest South: IBJ method to reach item
-- Changed: In Arachnus Arena: New health requirements
+- Added: In Inner Alpha Nest South: IBJ method to reach item.
+- Changed: In Arachnus Arena: New health and dodging requirements for fighting Arachnus.
 
 ##### Industrial Complex
 
 - Added: In Lower Factory Intersection: Can now climb the room by shinesparking after a short charge.
 - Fixed: In Lower Factory Intersection: Climbing the room now correctly needs a damage boost for wall jumps.
-- Changed: In Torizo Arena: New weapon, health, and dodging requirements
+- Changed: In Torizo Arena: New weapon, health, and dodging requirements for fighting Torizo.
 
 ##### Genetics Labratory
 
-- Changed: In Queen Arena: Additional Beam requirements and dodging requirements for trickless
+- Changed: In Queen Arena: Additional Beam requirements and dodging requirements for fighting Queen trickless.
 
 ### Metroid Prime 2: Echoes
 
