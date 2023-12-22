@@ -3,7 +3,10 @@
         "word_hash": "Words Hash",
         "hash": "$$$$$",
         "session_uuid": "00000000-0000-1111-0000-000000000000",
-        "starting_memo": null
+        "starting_memo": {
+            "header": "Extra starting items:",
+            "description": "Energy Tank"
+        }
     },
     "starting_items": {
         "Power Beam": 1,
@@ -47,7 +50,8 @@
         "Metroid DNA 43": 1,
         "Metroid DNA 44": 1,
         "Metroid DNA 45": 1,
-        "Metroid DNA 46": 1
+        "Metroid DNA 46": 1,
+        "Energy Tank": 1
     },
     "starting_location": {
         "save_room": 0
@@ -55,66 +59,42 @@
     "pickups": {
         "oItemBomb": {
             "sprite_details": {
-                "name": "sItemNothing",
-                "speed": 0.3333
+                "name": "sItemSuperMissile",
+                "speed": 0.2
             },
-            "item_effect": "Nothing",
-            "quantity": 1,
+            "item_effect": "Super Missile Expansion",
+            "quantity": 2,
             "text": {
-                "header": "Nothing acquired",
-                "description": "A useless item"
+                "header": "Got Super Missile Tank",
+                "description": "Super Missile capacity increased by 2"
             }
         },
         "oItemSpiderBall": {
             "sprite_details": {
-                "name": "sItemMissile",
+                "name": "sItemSpaceJump",
                 "speed": 0.2
             },
-            "item_effect": "Missile Expansion",
-            "quantity": 5,
+            "item_effect": "Space Jump",
+            "quantity": 1,
             "text": {
-                "header": "Got Missile Tank",
-                "description": "Missile capacity increased by 5"
+                "header": "Space Jump acquired",
+                "description": "Jump continuously in the air"
             }
         },
         "oItemJumpBall": {
             "sprite_details": {
-                "name": "sItemNothing",
-                "speed": 0.3333
+                "name": "sItemMissile",
+                "speed": 0.2
             },
-            "item_effect": "Nothing",
-            "quantity": 1,
+            "item_effect": "Missile Expansion",
+            "quantity": 5,
             "text": {
-                "header": "Nothing acquired",
-                "description": "A useless item"
+                "header": "Got Missile Tank",
+                "description": "Missile capacity increased by 5"
             }
         },
         "oItemHijump": {
             "sprite_details": {
-                "name": "sItemPlasmaBeam",
-                "speed": 0.2
-            },
-            "item_effect": "Plasma Beam",
-            "quantity": 1,
-            "text": {
-                "header": "Plasma Beam acquired",
-                "description": "Beams can pierce enemies"
-            }
-        },
-        "oItemVaria": {
-            "sprite_details": {
-                "name": "sItemMissile",
-                "speed": 0.2
-            },
-            "item_effect": "Missile Expansion",
-            "quantity": 5,
-            "text": {
-                "header": "Got Missile Tank",
-                "description": "Missile capacity increased by 5"
-            }
-        },
-        "oItemSpaceJump": {
-            "sprite_details": {
                 "name": "sItemNothing",
                 "speed": 0.3333
             },
@@ -125,7 +105,19 @@
                 "description": "A useless item"
             }
         },
-        "oItemSpeedBooster": {
+        "oItemVaria": {
+            "sprite_details": {
+                "name": "sItemSuperMissile",
+                "speed": 0.2
+            },
+            "item_effect": "Super Missile Expansion",
+            "quantity": 2,
+            "text": {
+                "header": "Got Super Missile Tank",
+                "description": "Super Missile capacity increased by 2"
+            }
+        },
+        "oItemSpaceJump": {
             "sprite_details": {
                 "name": "sItemMissile",
                 "speed": 0.2
@@ -135,6 +127,18 @@
             "text": {
                 "header": "Got Missile Tank",
                 "description": "Missile capacity increased by 5"
+            }
+        },
+        "oItemSpeedBooster": {
+            "sprite_details": {
+                "name": "sItemEnergyTank",
+                "speed": 0.2
+            },
+            "item_effect": "Energy Tank",
+            "quantity": 1,
+            "text": {
+                "header": "Got Energy Tank",
+                "description": "Suit Energy increased by 100 units"
             }
         },
         "oItemScrewAttack": {
@@ -175,66 +179,54 @@
         },
         "oItemIBeam": {
             "sprite_details": {
-                "name": "sItemNothing",
-                "speed": 0.3333
+                "name": "sItemMissileDrop",
+                "speed": 0.2
             },
-            "item_effect": "Nothing",
-            "quantity": 1,
+            "item_effect": "Missile Drop",
+            "quantity": 2,
             "text": {
-                "header": "Nothing acquired",
-                "description": "A useless item"
+                "header": "Got Missile Drop",
+                "description": "Current Missiles increased by 2"
             }
         },
         "oItemWBeam": {
             "sprite_details": {
-                "name": "sItemHijump",
+                "name": "sItemPBombDrop",
                 "speed": 0.2
             },
-            "item_effect": "Hi-Jump Boots",
+            "item_effect": "Power Bomb Drop",
             "quantity": 1,
             "text": {
-                "header": "Hi-Jump Boots acquired",
-                "description": "Maximum Jump height increased"
+                "header": "Got Power Bomb Drop",
+                "description": "Current Power Bombs increased by 1"
             }
         },
         "oItemSBeam": {
             "sprite_details": {
-                "name": "sItemEnergyTank",
+                "name": "sItemMissile",
                 "speed": 0.2
             },
-            "item_effect": "Energy Tank",
-            "quantity": 1,
+            "item_effect": "Missile Expansion",
+            "quantity": 5,
             "text": {
-                "header": "Got Energy Tank",
-                "description": "Suit Energy increased by 100 units"
+                "header": "Got Missile Tank",
+                "description": "Missile capacity increased by 5"
             }
         },
         "oItemPBeam": {
             "sprite_details": {
-                "name": "sItemMissile",
+                "name": "sItemVariaSuit",
                 "speed": 0.2
             },
-            "item_effect": "Missile Expansion",
-            "quantity": 5,
+            "item_effect": "Varia Suit",
+            "quantity": 1,
             "text": {
-                "header": "Got Missile Tank",
-                "description": "Missile capacity increased by 5"
+                "header": "Varia Suit acquired",
+                "description": "Reduces Damage taken by 50%"
             }
         },
         "oItemETank_50": {
             "sprite_details": {
-                "name": "sItemGravitySuit",
-                "speed": 0.2
-            },
-            "item_effect": "Gravity Suit",
-            "quantity": 1,
-            "text": {
-                "header": "Gravity Suit acquired",
-                "description": "Liquid friction eliminated - Improved Defense"
-            }
-        },
-        "oItemSM_51": {
-            "sprite_details": {
                 "name": "sItemPowerBomb",
                 "speed": 0.2
             },
@@ -245,7 +237,31 @@
                 "description": "Power Bomb capacity increased by 2"
             }
         },
+        "oItemSM_51": {
+            "sprite_details": {
+                "name": "sItemSpazerBeam",
+                "speed": 0.2
+            },
+            "item_effect": "Spazer Beam",
+            "quantity": 1,
+            "text": {
+                "header": "Spazer Beam acquired",
+                "description": "Beams now have a wider range"
+            }
+        },
         "oItemM_52": {
+            "sprite_details": {
+                "name": "sItemNothing",
+                "speed": 0.3333
+            },
+            "item_effect": "Nothing",
+            "quantity": 1,
+            "text": {
+                "header": "Nothing acquired",
+                "description": "A useless item"
+            }
+        },
+        "oItemM_53": {
             "sprite_details": {
                 "name": "sItemMissile",
                 "speed": 0.2
@@ -257,52 +273,40 @@
                 "description": "Missile capacity increased by 5"
             }
         },
-        "oItemM_53": {
-            "sprite_details": {
-                "name": "sItemPowerBomb",
-                "speed": 0.2
-            },
-            "item_effect": "Power Bomb Expansion",
-            "quantity": 2,
-            "text": {
-                "header": "Got Power Bomb Tank",
-                "description": "Power Bomb capacity increased by 2"
-            }
-        },
         "oItemM_54": {
             "sprite_details": {
-                "name": "sItemNothing",
-                "speed": 0.3333
+                "name": "sItemBigHealthDrop",
+                "speed": 0.2
             },
-            "item_effect": "Nothing",
-            "quantity": 1,
+            "item_effect": "Big Health Drop",
+            "quantity": 20,
             "text": {
-                "header": "Nothing acquired",
-                "description": "A useless item"
+                "header": "Got Big Health Drop",
+                "description": "Current health increased by 20"
             }
         },
         "oItemM_55": {
             "sprite_details": {
-                "name": "sItemNothing",
-                "speed": 0.3333
+                "name": "sItemMissile",
+                "speed": 0.2
             },
-            "item_effect": "Nothing",
-            "quantity": 1,
+            "item_effect": "Missile Expansion",
+            "quantity": 5,
             "text": {
-                "header": "Nothing acquired",
-                "description": "A useless item"
+                "header": "Got Missile Tank",
+                "description": "Missile capacity increased by 5"
             }
         },
         "oItemM_56": {
             "sprite_details": {
-                "name": "sItemNothing",
-                "speed": 0.3333
+                "name": "sItemMissile",
+                "speed": 0.2
             },
-            "item_effect": "Nothing",
-            "quantity": 1,
+            "item_effect": "Missile Expansion",
+            "quantity": 5,
             "text": {
-                "header": "Nothing acquired",
-                "description": "A useless item"
+                "header": "Got Missile Tank",
+                "description": "Missile capacity increased by 5"
             }
         },
         "oItemM_57": {
@@ -319,14 +323,14 @@
         },
         "oItemPB_58": {
             "sprite_details": {
-                "name": "sItemNothing",
-                "speed": 0.3333
+                "name": "sItemMissile",
+                "speed": 0.2
             },
-            "item_effect": "Nothing",
-            "quantity": 1,
+            "item_effect": "Missile Expansion",
+            "quantity": 5,
             "text": {
-                "header": "Nothing acquired",
-                "description": "A useless item"
+                "header": "Got Missile Tank",
+                "description": "Missile capacity increased by 5"
             }
         },
         "oItemPB_59": {
@@ -343,14 +347,14 @@
         },
         "oItemM_60": {
             "sprite_details": {
-                "name": "sItemPowerBomb",
+                "name": "sItemPBombLauncher",
                 "speed": 0.2
             },
-            "item_effect": "Power Bomb Expansion",
+            "item_effect": "Power Bomb Launcher",
             "quantity": 2,
             "text": {
-                "header": "Got Power Bomb Tank",
-                "description": "Power Bomb capacity increased by 2"
+                "header": "Got Power Bomb Launcher",
+                "description": "Power Bombs can now be used. Power Bomb capacity increased by 2"
             }
         },
         "oItemM_100": {
@@ -367,89 +371,77 @@
         },
         "oItemM_101": {
             "sprite_details": {
-                "name": "sItemEnergyTank",
+                "name": "sItemSMissileDrop",
                 "speed": 0.2
             },
-            "item_effect": "Energy Tank",
+            "item_effect": "Super Missile Drop",
             "quantity": 1,
             "text": {
-                "header": "Got Energy Tank",
-                "description": "Suit Energy increased by 100 units"
+                "header": "Got Super Missile Drop",
+                "description": "Current Super Missiles increased by 1"
             }
         },
         "oItemM_102": {
             "sprite_details": {
-                "name": "sItemEnergyTank",
+                "name": "sItemMissile",
                 "speed": 0.2
             },
-            "item_effect": "Energy Tank",
-            "quantity": 1,
+            "item_effect": "Missile Expansion",
+            "quantity": 5,
             "text": {
-                "header": "Got Energy Tank",
-                "description": "Suit Energy increased by 100 units"
+                "header": "Got Missile Tank",
+                "description": "Missile capacity increased by 5"
             }
         },
         "oItemETank_103": {
             "sprite_details": {
-                "name": "sItemMissile",
+                "name": "sItemEnergyTank",
                 "speed": 0.2
             },
-            "item_effect": "Missile Expansion",
-            "quantity": 5,
+            "item_effect": "Energy Tank",
+            "quantity": 1,
             "text": {
-                "header": "Got Missile Tank",
-                "description": "Missile capacity increased by 5"
+                "header": "Got Energy Tank",
+                "description": "Suit Energy increased by 100 units"
             }
         },
         "oItemM_104": {
             "sprite_details": {
-                "name": "sItemNothing",
-                "speed": 0.3333
+                "name": "sItemMissile",
+                "speed": 0.2
             },
-            "item_effect": "Nothing",
-            "quantity": 1,
+            "item_effect": "Missile Expansion",
+            "quantity": 5,
             "text": {
-                "header": "Nothing acquired",
-                "description": "A useless item"
+                "header": "Got Missile Tank",
+                "description": "Missile capacity increased by 5"
             }
         },
         "oItemM_105": {
             "sprite_details": {
-                "name": "sItemMissile",
+                "name": "sItemSmallHealthDrop",
                 "speed": 0.2
             },
-            "item_effect": "Missile Expansion",
+            "item_effect": "Small Health Drop",
             "quantity": 5,
             "text": {
-                "header": "Got Missile Tank",
-                "description": "Missile capacity increased by 5"
+                "header": "Got Small Health Drop",
+                "description": "Current health increased by 5"
             }
         },
         "oItemM_106": {
             "sprite_details": {
-                "name": "sItemNothing",
-                "speed": 0.3333
+                "name": "sItemBigHealthDrop",
+                "speed": 0.2
             },
-            "item_effect": "Nothing",
-            "quantity": 1,
+            "item_effect": "Big Health Drop",
+            "quantity": 20,
             "text": {
-                "header": "Nothing acquired",
-                "description": "A useless item"
+                "header": "Got Big Health Drop",
+                "description": "Current health increased by 20"
             }
         },
         "oItemM_107": {
-            "sprite_details": {
-                "name": "sItemMissile",
-                "speed": 0.2
-            },
-            "item_effect": "Missile Expansion",
-            "quantity": 5,
-            "text": {
-                "header": "Got Missile Tank",
-                "description": "Missile capacity increased by 5"
-            }
-        },
-        "oItemETank_108": {
             "sprite_details": {
                 "name": "sItemEnergyTank",
                 "speed": 0.2
@@ -459,6 +451,18 @@
             "text": {
                 "header": "Got Energy Tank",
                 "description": "Suit Energy increased by 100 units"
+            }
+        },
+        "oItemETank_108": {
+            "sprite_details": {
+                "name": "sItemBigHealthDrop",
+                "speed": 0.2
+            },
+            "item_effect": "Big Health Drop",
+            "quantity": 20,
+            "text": {
+                "header": "Got Big Health Drop",
+                "description": "Current health increased by 20"
             }
         },
         "oItemM_109": {
@@ -475,14 +479,14 @@
         },
         "oItemSM_110": {
             "sprite_details": {
-                "name": "sItemMissile",
+                "name": "sItemMissileDrop",
                 "speed": 0.2
             },
-            "item_effect": "Missile Expansion",
-            "quantity": 5,
+            "item_effect": "Missile Drop",
+            "quantity": 2,
             "text": {
-                "header": "Got Missile Tank",
-                "description": "Missile capacity increased by 5"
+                "header": "Got Missile Drop",
+                "description": "Current Missiles increased by 2"
             }
         },
         "oItemM_111": {
@@ -511,14 +515,14 @@
         },
         "oItemM_150": {
             "sprite_details": {
-                "name": "sItemNothing",
-                "speed": 0.3333
+                "name": "sItemMissile",
+                "speed": 0.2
             },
-            "item_effect": "Nothing",
-            "quantity": 1,
+            "item_effect": "Missile Expansion",
+            "quantity": 5,
             "text": {
-                "header": "Nothing acquired",
-                "description": "A useless item"
+                "header": "Got Missile Tank",
+                "description": "Missile capacity increased by 5"
             }
         },
         "oItemM_151": {
@@ -535,29 +539,17 @@
         },
         "oItemM_152": {
             "sprite_details": {
-                "name": "sItemEnergyTank",
+                "name": "sItemMissile",
                 "speed": 0.2
             },
-            "item_effect": "Energy Tank",
-            "quantity": 1,
+            "item_effect": "Missile Expansion",
+            "quantity": 5,
             "text": {
-                "header": "Got Energy Tank",
-                "description": "Suit Energy increased by 100 units"
+                "header": "Got Missile Tank",
+                "description": "Missile capacity increased by 5"
             }
         },
         "oItemM_153": {
-            "sprite_details": {
-                "name": "sItemNothing",
-                "speed": 0.3333
-            },
-            "item_effect": "Nothing",
-            "quantity": 1,
-            "text": {
-                "header": "Nothing acquired",
-                "description": "A useless item"
-            }
-        },
-        "oItemM_154": {
             "sprite_details": {
                 "name": "sItemMissile",
                 "speed": 0.2
@@ -567,6 +559,18 @@
             "text": {
                 "header": "Got Missile Tank",
                 "description": "Missile capacity increased by 5"
+            }
+        },
+        "oItemM_154": {
+            "sprite_details": {
+                "name": "sItemSuperMissile",
+                "speed": 0.2
+            },
+            "item_effect": "Super Missile Expansion",
+            "quantity": 2,
+            "text": {
+                "header": "Got Super Missile Tank",
+                "description": "Super Missile capacity increased by 2"
             }
         },
         "oItemM_155": {
@@ -583,14 +587,14 @@
         },
         "oItemM_156": {
             "sprite_details": {
-                "name": "sItemMissile",
-                "speed": 0.2
+                "name": "sItemNothing",
+                "speed": 0.3333
             },
-            "item_effect": "Missile Expansion",
-            "quantity": 5,
+            "item_effect": "Nothing",
+            "quantity": 1,
             "text": {
-                "header": "Got Missile Tank",
-                "description": "Missile capacity increased by 5"
+                "header": "Nothing acquired",
+                "description": "A useless item"
             }
         },
         "oItemETank_157": {
@@ -607,14 +611,14 @@
         },
         "oItemETank_158": {
             "sprite_details": {
-                "name": "sItemNothing",
-                "speed": 0.3333
+                "name": "sItemEnergyTank",
+                "speed": 0.2
             },
-            "item_effect": "Nothing",
+            "item_effect": "Energy Tank",
             "quantity": 1,
             "text": {
-                "header": "Nothing acquired",
-                "description": "A useless item"
+                "header": "Got Energy Tank",
+                "description": "Suit Energy increased by 100 units"
             }
         },
         "oItemM_159": {
@@ -631,53 +635,17 @@
         },
         "oItemPB_160": {
             "sprite_details": {
-                "name": "sItemNothing",
-                "speed": 0.3333
+                "name": "sItemPowerBomb",
+                "speed": 0.2
             },
-            "item_effect": "Nothing",
-            "quantity": 1,
+            "item_effect": "Power Bomb Expansion",
+            "quantity": 2,
             "text": {
-                "header": "Nothing acquired",
-                "description": "A useless item"
+                "header": "Got Power Bomb Tank",
+                "description": "Power Bomb capacity increased by 2"
             }
         },
         "oItemM_161": {
-            "sprite_details": {
-                "name": "sItemNothing",
-                "speed": 0.3333
-            },
-            "item_effect": "Nothing",
-            "quantity": 1,
-            "text": {
-                "header": "Nothing acquired",
-                "description": "A useless item"
-            }
-        },
-        "oItemSM_162": {
-            "sprite_details": {
-                "name": "sItemNothing",
-                "speed": 0.3333
-            },
-            "item_effect": "Nothing",
-            "quantity": 1,
-            "text": {
-                "header": "Nothing acquired",
-                "description": "A useless item"
-            }
-        },
-        "oItemM_163": {
-            "sprite_details": {
-                "name": "sItemSuperMissile",
-                "speed": 0.2
-            },
-            "item_effect": "Super Missile Expansion",
-            "quantity": 2,
-            "text": {
-                "header": "Got Super Missile Tank",
-                "description": "Super Missile capacity increased by 2"
-            }
-        },
-        "oItemETank_200": {
             "sprite_details": {
                 "name": "sItemMissile",
                 "speed": 0.2
@@ -689,16 +657,52 @@
                 "description": "Missile capacity increased by 5"
             }
         },
-        "oItemETank_201": {
+        "oItemSM_162": {
             "sprite_details": {
-                "name": "sItemNothing",
-                "speed": 0.3333
+                "name": "sItemBigHealthDrop",
+                "speed": 0.2
             },
-            "item_effect": "Nothing",
+            "item_effect": "Big Health Drop",
+            "quantity": 20,
+            "text": {
+                "header": "Got Big Health Drop",
+                "description": "Current health increased by 20"
+            }
+        },
+        "oItemM_163": {
+            "sprite_details": {
+                "name": "sItemHijump",
+                "speed": 0.2
+            },
+            "item_effect": "Hi-Jump Boots",
             "quantity": 1,
             "text": {
-                "header": "Nothing acquired",
-                "description": "A useless item"
+                "header": "Hi-Jump Boots acquired",
+                "description": "Maximum Jump height increased"
+            }
+        },
+        "oItemETank_200": {
+            "sprite_details": {
+                "name": "sItemEnergyTank",
+                "speed": 0.2
+            },
+            "item_effect": "Energy Tank",
+            "quantity": 1,
+            "text": {
+                "header": "Got Energy Tank",
+                "description": "Suit Energy increased by 100 units"
+            }
+        },
+        "oItemETank_201": {
+            "sprite_details": {
+                "name": "sItemPBombDrop",
+                "speed": 0.2
+            },
+            "item_effect": "Power Bomb Drop",
+            "quantity": 1,
+            "text": {
+                "header": "Got Power Bomb Drop",
+                "description": "Current Power Bombs increased by 1"
             }
         },
         "oItemM_202": {
@@ -715,14 +719,14 @@
         },
         "oItemM_203": {
             "sprite_details": {
-                "name": "sItemNothing",
-                "speed": 0.3333
+                "name": "sItemBigHealthDrop",
+                "speed": 0.2
             },
-            "item_effect": "Nothing",
-            "quantity": 1,
+            "item_effect": "Big Health Drop",
+            "quantity": 20,
             "text": {
-                "header": "Nothing acquired",
-                "description": "A useless item"
+                "header": "Got Big Health Drop",
+                "description": "Current health increased by 20"
             }
         },
         "oItemM_204": {
@@ -751,65 +755,29 @@
         },
         "oItemSM_206": {
             "sprite_details": {
-                "name": "sItemNothing",
-                "speed": 0.3333
+                "name": "sItemIceBeam",
+                "speed": 0.2
             },
-            "item_effect": "Nothing",
+            "item_effect": "Ice Beam",
             "quantity": 1,
             "text": {
-                "header": "Nothing acquired",
-                "description": "A useless item"
+                "header": "Ice Beam acquired",
+                "description": "Instantly freeze enemies. Extra damage"
             }
         },
         "oItemSM_207": {
             "sprite_details": {
-                "name": "sItemMissile",
+                "name": "sItemPBombDrop",
                 "speed": 0.2
             },
-            "item_effect": "Missile Expansion",
-            "quantity": 5,
+            "item_effect": "Power Bomb Drop",
+            "quantity": 1,
             "text": {
-                "header": "Got Missile Tank",
-                "description": "Missile capacity increased by 5"
+                "header": "Got Power Bomb Drop",
+                "description": "Current Power Bombs increased by 1"
             }
         },
         "oItemM_208": {
-            "sprite_details": {
-                "name": "sItemNothing",
-                "speed": 0.3333
-            },
-            "item_effect": "Nothing",
-            "quantity": 1,
-            "text": {
-                "header": "Nothing acquired",
-                "description": "A useless item"
-            }
-        },
-        "oItemSM_209": {
-            "sprite_details": {
-                "name": "sItemNothing",
-                "speed": 0.3333
-            },
-            "item_effect": "Nothing",
-            "quantity": 1,
-            "text": {
-                "header": "Nothing acquired",
-                "description": "A useless item"
-            }
-        },
-        "oItemM_210": {
-            "sprite_details": {
-                "name": "sItemNothing",
-                "speed": 0.3333
-            },
-            "item_effect": "Nothing",
-            "quantity": 1,
-            "text": {
-                "header": "Nothing acquired",
-                "description": "A useless item"
-            }
-        },
-        "oItemM_211": {
             "sprite_details": {
                 "name": "sItemEnergyTank",
                 "speed": 0.2
@@ -821,187 +789,103 @@
                 "description": "Suit Energy increased by 100 units"
             }
         },
-        "oItemPB_212": {
+        "oItemSM_209": {
             "sprite_details": {
-                "name": "sItemJumpBall",
+                "name": "sItemBigHealthDrop",
                 "speed": 0.2
             },
-            "item_effect": "Spring Ball",
+            "item_effect": "Big Health Drop",
+            "quantity": 20,
+            "text": {
+                "header": "Got Big Health Drop",
+                "description": "Current health increased by 20"
+            }
+        },
+        "oItemM_210": {
+            "sprite_details": {
+                "name": "sItemMissile",
+                "speed": 0.2
+            },
+            "item_effect": "Missile Expansion",
+            "quantity": 5,
+            "text": {
+                "header": "Got Missile Tank",
+                "description": "Missile capacity increased by 5"
+            }
+        },
+        "oItemM_211": {
+            "sprite_details": {
+                "name": "sItemPBombDrop",
+                "speed": 0.2
+            },
+            "item_effect": "Power Bomb Drop",
             "quantity": 1,
             "text": {
-                "header": "Spring Ball acquired",
-                "description": "Press | in Morph Ball mode"
+                "header": "Got Power Bomb Drop",
+                "description": "Current Power Bombs increased by 1"
+            }
+        },
+        "oItemPB_212": {
+            "sprite_details": {
+                "name": "sItemMissile",
+                "speed": 0.2
+            },
+            "item_effect": "Missile Expansion",
+            "quantity": 5,
+            "text": {
+                "header": "Got Missile Tank",
+                "description": "Missile capacity increased by 5"
             }
         },
         "oItemPB_213": {
             "sprite_details": {
-                "name": "sItemPowerBomb",
+                "name": "sItemMissile",
                 "speed": 0.2
             },
-            "item_effect": "Power Bomb Expansion",
-            "quantity": 2,
+            "item_effect": "Missile Expansion",
+            "quantity": 5,
             "text": {
-                "header": "Got Power Bomb Tank",
-                "description": "Power Bomb capacity increased by 2"
+                "header": "Got Missile Tank",
+                "description": "Missile capacity increased by 5"
             }
         },
         "oItemM_214": {
             "sprite_details": {
-                "name": "sItemMissile",
+                "name": "sItemSmallHealthDrop",
                 "speed": 0.2
             },
-            "item_effect": "Missile Expansion",
+            "item_effect": "Small Health Drop",
             "quantity": 5,
             "text": {
-                "header": "Got Missile Tank",
-                "description": "Missile capacity increased by 5"
+                "header": "Got Small Health Drop",
+                "description": "Current health increased by 5"
             }
         },
         "oItemSM_215": {
             "sprite_details": {
-                "name": "sItemNothing",
-                "speed": 0.3333
+                "name": "sItemEnergyTank",
+                "speed": 0.2
             },
-            "item_effect": "Nothing",
+            "item_effect": "Energy Tank",
             "quantity": 1,
             "text": {
-                "header": "Nothing acquired",
-                "description": "A useless item"
+                "header": "Got Energy Tank",
+                "description": "Suit Energy increased by 100 units"
             }
         },
         "oItemM_250": {
             "sprite_details": {
-                "name": "sItemPBombLauncher",
+                "name": "sItemChargeBeam",
                 "speed": 0.2
             },
-            "item_effect": "Power Bomb Launcher",
-            "quantity": 2,
+            "item_effect": "Charge Beam",
+            "quantity": 1,
             "text": {
-                "header": "Got Power Bomb Launcher",
-                "description": "Power Bombs can now be used. Power Bomb capacity increased by 2"
+                "header": "Charge Beam acquired",
+                "description": "Hold | to charge your beam"
             }
         },
         "oItemETank_251": {
-            "sprite_details": {
-                "name": "sItemMissile",
-                "speed": 0.2
-            },
-            "item_effect": "Missile Expansion",
-            "quantity": 5,
-            "text": {
-                "header": "Got Missile Tank",
-                "description": "Missile capacity increased by 5"
-            }
-        },
-        "oItemM_252": {
-            "sprite_details": {
-                "name": "sItemSuperMissile",
-                "speed": 0.2
-            },
-            "item_effect": "Super Missile Expansion",
-            "quantity": 2,
-            "text": {
-                "header": "Got Super Missile Tank",
-                "description": "Super Missile capacity increased by 2"
-            }
-        },
-        "oItemPB_253": {
-            "sprite_details": {
-                "name": "sItemMissile",
-                "speed": 0.2
-            },
-            "item_effect": "Missile Expansion",
-            "quantity": 5,
-            "text": {
-                "header": "Got Missile Tank",
-                "description": "Missile capacity increased by 5"
-            }
-        },
-        "oItemETank_254": {
-            "sprite_details": {
-                "name": "sItemWaveBeam",
-                "speed": 0.2
-            },
-            "item_effect": "Wave Beam",
-            "quantity": 1,
-            "text": {
-                "header": "Wave Beam acquired",
-                "description": "Beams can now go through solid objects"
-            }
-        },
-        "oItemM_255": {
-            "sprite_details": {
-                "name": "sItemNothing",
-                "speed": 0.3333
-            },
-            "item_effect": "Nothing",
-            "quantity": 1,
-            "text": {
-                "header": "Nothing acquired",
-                "description": "A useless item"
-            }
-        },
-        "oItemSM_256": {
-            "sprite_details": {
-                "name": "sItemSMissileLauncher",
-                "speed": 0.2
-            },
-            "item_effect": "Super Missile Launcher",
-            "quantity": 5,
-            "text": {
-                "header": "Got SuperMissile Launcher",
-                "description": "Super Missiles can now be fired. Super Missile capacity increased by 5"
-            }
-        },
-        "oItemM_257": {
-            "sprite_details": {
-                "name": "sItemNothing",
-                "speed": 0.3333
-            },
-            "item_effect": "Nothing",
-            "quantity": 1,
-            "text": {
-                "header": "Nothing acquired",
-                "description": "A useless item"
-            }
-        },
-        "oItemPB_258": {
-            "sprite_details": {
-                "name": "sItemMissile",
-                "speed": 0.2
-            },
-            "item_effect": "Missile Expansion",
-            "quantity": 5,
-            "text": {
-                "header": "Got Missile Tank",
-                "description": "Missile capacity increased by 5"
-            }
-        },
-        "oItemM_259": {
-            "sprite_details": {
-                "name": "sItemSuperMissile",
-                "speed": 0.2
-            },
-            "item_effect": "Super Missile Expansion",
-            "quantity": 2,
-            "text": {
-                "header": "Got Super Missile Tank",
-                "description": "Super Missile capacity increased by 2"
-            }
-        },
-        "oItemSM_300": {
-            "sprite_details": {
-                "name": "sItemNothing",
-                "speed": 0.3333
-            },
-            "item_effect": "Nothing",
-            "quantity": 1,
-            "text": {
-                "header": "Nothing acquired",
-                "description": "A useless item"
-            }
-        },
-        "oItemPB_301": {
             "sprite_details": {
                 "name": "sItemPowerBomb",
                 "speed": 0.2
@@ -1011,6 +895,126 @@
             "text": {
                 "header": "Got Power Bomb Tank",
                 "description": "Power Bomb capacity increased by 2"
+            }
+        },
+        "oItemM_252": {
+            "sprite_details": {
+                "name": "sItemSMissileDrop",
+                "speed": 0.2
+            },
+            "item_effect": "Super Missile Drop",
+            "quantity": 1,
+            "text": {
+                "header": "Got Super Missile Drop",
+                "description": "Current Super Missiles increased by 1"
+            }
+        },
+        "oItemPB_253": {
+            "sprite_details": {
+                "name": "sItemSmallHealthDrop",
+                "speed": 0.2
+            },
+            "item_effect": "Small Health Drop",
+            "quantity": 5,
+            "text": {
+                "header": "Got Small Health Drop",
+                "description": "Current health increased by 5"
+            }
+        },
+        "oItemETank_254": {
+            "sprite_details": {
+                "name": "sItemSmallHealthDrop",
+                "speed": 0.2
+            },
+            "item_effect": "Small Health Drop",
+            "quantity": 5,
+            "text": {
+                "header": "Got Small Health Drop",
+                "description": "Current health increased by 5"
+            }
+        },
+        "oItemM_255": {
+            "sprite_details": {
+                "name": "sItemSMissileDrop",
+                "speed": 0.2
+            },
+            "item_effect": "Super Missile Drop",
+            "quantity": 1,
+            "text": {
+                "header": "Got Super Missile Drop",
+                "description": "Current Super Missiles increased by 1"
+            }
+        },
+        "oItemSM_256": {
+            "sprite_details": {
+                "name": "sItemSMissileDrop",
+                "speed": 0.2
+            },
+            "item_effect": "Super Missile Drop",
+            "quantity": 1,
+            "text": {
+                "header": "Got Super Missile Drop",
+                "description": "Current Super Missiles increased by 1"
+            }
+        },
+        "oItemM_257": {
+            "sprite_details": {
+                "name": "sItemMissile",
+                "speed": 0.2
+            },
+            "item_effect": "Missile Expansion",
+            "quantity": 5,
+            "text": {
+                "header": "Got Missile Tank",
+                "description": "Missile capacity increased by 5"
+            }
+        },
+        "oItemPB_258": {
+            "sprite_details": {
+                "name": "sItemMissileDrop",
+                "speed": 0.2
+            },
+            "item_effect": "Missile Drop",
+            "quantity": 2,
+            "text": {
+                "header": "Got Missile Drop",
+                "description": "Current Missiles increased by 2"
+            }
+        },
+        "oItemM_259": {
+            "sprite_details": {
+                "name": "sItemMissile",
+                "speed": 0.2
+            },
+            "item_effect": "Missile Expansion",
+            "quantity": 5,
+            "text": {
+                "header": "Got Missile Tank",
+                "description": "Missile capacity increased by 5"
+            }
+        },
+        "oItemSM_300": {
+            "sprite_details": {
+                "name": "sItemMissile",
+                "speed": 0.2
+            },
+            "item_effect": "Missile Expansion",
+            "quantity": 5,
+            "text": {
+                "header": "Got Missile Tank",
+                "description": "Missile capacity increased by 5"
+            }
+        },
+        "oItemPB_301": {
+            "sprite_details": {
+                "name": "sItemSMissileDrop",
+                "speed": 0.2
+            },
+            "item_effect": "Super Missile Drop",
+            "quantity": 1,
+            "text": {
+                "header": "Got Super Missile Drop",
+                "description": "Current Super Missiles increased by 1"
             }
         },
         "oItemPB_302": {
@@ -1027,18 +1031,6 @@
         },
         "oItemM_303": {
             "sprite_details": {
-                "name": "sItemMissile",
-                "speed": 0.2
-            },
-            "item_effect": "Missile Expansion",
-            "quantity": 5,
-            "text": {
-                "header": "Got Missile Tank",
-                "description": "Missile capacity increased by 5"
-            }
-        },
-        "oItemM_304": {
-            "sprite_details": {
                 "name": "sItemSuperMissile",
                 "speed": 0.2
             },
@@ -1049,7 +1041,7 @@
                 "description": "Super Missile capacity increased by 2"
             }
         },
-        "oItemSM_305": {
+        "oItemM_304": {
             "sprite_details": {
                 "name": "sItemPowerBomb",
                 "speed": 0.2
@@ -1061,19 +1053,7 @@
                 "description": "Power Bomb capacity increased by 2"
             }
         },
-        "oItemETank_306": {
-            "sprite_details": {
-                "name": "sItemNothing",
-                "speed": 0.3333
-            },
-            "item_effect": "Nothing",
-            "quantity": 1,
-            "text": {
-                "header": "Nothing acquired",
-                "description": "A useless item"
-            }
-        },
-        "oItemM_307": {
+        "oItemSM_305": {
             "sprite_details": {
                 "name": "sItemMissile",
                 "speed": 0.2
@@ -1085,31 +1065,91 @@
                 "description": "Missile capacity increased by 5"
             }
         },
-        "oItemM_308": {
+        "oItemETank_306": {
             "sprite_details": {
-                "name": "sItemScrewAttack",
+                "name": "sItemMissileDrop",
                 "speed": 0.2
             },
-            "item_effect": "Screw Attack",
+            "item_effect": "Missile Drop",
+            "quantity": 2,
+            "text": {
+                "header": "Got Missile Drop",
+                "description": "Current Missiles increased by 2"
+            }
+        },
+        "oItemM_307": {
+            "sprite_details": {
+                "name": "sItemPBombDrop",
+                "speed": 0.2
+            },
+            "item_effect": "Power Bomb Drop",
             "quantity": 1,
             "text": {
-                "header": "Screw Attack acquired",
-                "description": "Jump into enemies to inflict massive damage"
+                "header": "Got Power Bomb Drop",
+                "description": "Current Power Bombs increased by 1"
+            }
+        },
+        "oItemM_308": {
+            "sprite_details": {
+                "name": "sItemJumpBall",
+                "speed": 0.2
+            },
+            "item_effect": "Spring Ball",
+            "quantity": 1,
+            "text": {
+                "header": "Spring Ball acquired",
+                "description": "Press | in Morph Ball mode"
             }
         },
         "oItemM_309": {
             "sprite_details": {
-                "name": "sItemSpazerBeam",
+                "name": "sItemPowerBomb",
                 "speed": 0.2
             },
-            "item_effect": "Spazer Beam",
-            "quantity": 1,
+            "item_effect": "Power Bomb Expansion",
+            "quantity": 2,
             "text": {
-                "header": "Spazer Beam acquired",
-                "description": "Beams now have a wider range"
+                "header": "Got Power Bomb Tank",
+                "description": "Power Bomb capacity increased by 2"
             }
         },
         "oItemDNA_350": {
+            "sprite_details": {
+                "name": "sItemPowerBomb",
+                "speed": 0.2
+            },
+            "item_effect": "Power Bomb Expansion",
+            "quantity": 2,
+            "text": {
+                "header": "Got Power Bomb Tank",
+                "description": "Power Bomb capacity increased by 2"
+            }
+        },
+        "oItemDNA_351": {
+            "sprite_details": {
+                "name": "sItemMissile",
+                "speed": 0.2
+            },
+            "item_effect": "Missile Expansion",
+            "quantity": 5,
+            "text": {
+                "header": "Got Missile Tank",
+                "description": "Missile capacity increased by 5"
+            }
+        },
+        "oItemDNA_352": {
+            "sprite_details": {
+                "name": "sItemMissile",
+                "speed": 0.2
+            },
+            "item_effect": "Missile Expansion",
+            "quantity": 5,
+            "text": {
+                "header": "Got Missile Tank",
+                "description": "Missile capacity increased by 5"
+            }
+        },
+        "oItemDNA_353": {
             "sprite_details": {
                 "name": "sItemDNA",
                 "speed": 0.28
@@ -1121,127 +1161,43 @@
                 "description": "Collect all DNA in order to reach the Queen"
             }
         },
-        "oItemDNA_351": {
-            "sprite_details": {
-                "name": "sItemSuperMissile",
-                "speed": 0.2
-            },
-            "item_effect": "Super Missile Expansion",
-            "quantity": 2,
-            "text": {
-                "header": "Got Super Missile Tank",
-                "description": "Super Missile capacity increased by 2"
-            }
-        },
-        "oItemDNA_352": {
-            "sprite_details": {
-                "name": "sItemEnergyTank",
-                "speed": 0.2
-            },
-            "item_effect": "Energy Tank",
-            "quantity": 1,
-            "text": {
-                "header": "Got Energy Tank",
-                "description": "Suit Energy increased by 100 units"
-            }
-        },
-        "oItemDNA_353": {
-            "sprite_details": {
-                "name": "sItemDNA",
-                "speed": 0.28
-            },
-            "item_effect": "Metroid DNA 9",
-            "quantity": 1,
-            "text": {
-                "header": "Metroid DNA acquired",
-                "description": "Collect all DNA in order to reach the Queen"
-            }
-        },
         "oItemDNA_354": {
             "sprite_details": {
-                "name": "sItemSuperMissile",
+                "name": "sItemMissile",
                 "speed": 0.2
             },
-            "item_effect": "Super Missile Expansion",
-            "quantity": 2,
+            "item_effect": "Missile Expansion",
+            "quantity": 5,
             "text": {
-                "header": "Got Super Missile Tank",
-                "description": "Super Missile capacity increased by 2"
+                "header": "Got Missile Tank",
+                "description": "Missile capacity increased by 5"
             }
         },
         "oItemDNA_355": {
             "sprite_details": {
-                "name": "sItemMissile",
+                "name": "sItemPowerBomb",
                 "speed": 0.2
             },
-            "item_effect": "Missile Expansion",
-            "quantity": 5,
+            "item_effect": "Power Bomb Expansion",
+            "quantity": 2,
             "text": {
-                "header": "Got Missile Tank",
-                "description": "Missile capacity increased by 5"
+                "header": "Got Power Bomb Tank",
+                "description": "Power Bomb capacity increased by 2"
             }
         },
         "oItemDNA_356": {
             "sprite_details": {
-                "name": "sItemMissile",
+                "name": "sItemWaveBeam",
                 "speed": 0.2
             },
-            "item_effect": "Missile Expansion",
-            "quantity": 5,
+            "item_effect": "Wave Beam",
+            "quantity": 1,
             "text": {
-                "header": "Got Missile Tank",
-                "description": "Missile capacity increased by 5"
+                "header": "Wave Beam acquired",
+                "description": "Beams can now go through solid objects"
             }
         },
         "oItemDNA_357": {
-            "sprite_details": {
-                "name": "sItemNothing",
-                "speed": 0.3333
-            },
-            "item_effect": "Nothing",
-            "quantity": 1,
-            "text": {
-                "header": "Nothing acquired",
-                "description": "A useless item"
-            }
-        },
-        "oItemDNA_358": {
-            "sprite_details": {
-                "name": "sItemDNA",
-                "speed": 0.28
-            },
-            "item_effect": "Metroid DNA 7",
-            "quantity": 1,
-            "text": {
-                "header": "Metroid DNA acquired",
-                "description": "Collect all DNA in order to reach the Queen"
-            }
-        },
-        "oItemDNA_359": {
-            "sprite_details": {
-                "name": "sItemEnergyTank",
-                "speed": 0.2
-            },
-            "item_effect": "Energy Tank",
-            "quantity": 1,
-            "text": {
-                "header": "Got Energy Tank",
-                "description": "Suit Energy increased by 100 units"
-            }
-        },
-        "oItemDNA_360": {
-            "sprite_details": {
-                "name": "sItemNothing",
-                "speed": 0.3333
-            },
-            "item_effect": "Nothing",
-            "quantity": 1,
-            "text": {
-                "header": "Nothing acquired",
-                "description": "A useless item"
-            }
-        },
-        "oItemDNA_361": {
             "sprite_details": {
                 "name": "sItemSpiderBall",
                 "speed": 0.2
@@ -1253,7 +1209,7 @@
                 "description": "Press or hold | in Morph Ball mode to climb walls"
             }
         },
-        "oItemDNA_362": {
+        "oItemDNA_358": {
             "sprite_details": {
                 "name": "sItemNothing",
                 "speed": 0.3333
@@ -1265,7 +1221,67 @@
                 "description": "A useless item"
             }
         },
+        "oItemDNA_359": {
+            "sprite_details": {
+                "name": "sItemSuperMissile",
+                "speed": 0.2
+            },
+            "item_effect": "Super Missile Expansion",
+            "quantity": 2,
+            "text": {
+                "header": "Got Super Missile Tank",
+                "description": "Super Missile capacity increased by 2"
+            }
+        },
+        "oItemDNA_360": {
+            "sprite_details": {
+                "name": "sItemPowerBomb",
+                "speed": 0.2
+            },
+            "item_effect": "Power Bomb Expansion",
+            "quantity": 2,
+            "text": {
+                "header": "Got Power Bomb Tank",
+                "description": "Power Bomb capacity increased by 2"
+            }
+        },
+        "oItemDNA_361": {
+            "sprite_details": {
+                "name": "sItemSMissileLauncher",
+                "speed": 0.2
+            },
+            "item_effect": "Super Missile Launcher",
+            "quantity": 2,
+            "text": {
+                "header": "Got SuperMissile Launcher",
+                "description": "Super Missiles can now be fired. Super Missile capacity increased by 2"
+            }
+        },
+        "oItemDNA_362": {
+            "sprite_details": {
+                "name": "sItemSmallHealthDrop",
+                "speed": 0.2
+            },
+            "item_effect": "Small Health Drop",
+            "quantity": 5,
+            "text": {
+                "header": "Got Small Health Drop",
+                "description": "Current health increased by 5"
+            }
+        },
         "oItemDNA_363": {
+            "sprite_details": {
+                "name": "sItemNothing",
+                "speed": 0.3333
+            },
+            "item_effect": "Nothing",
+            "quantity": 1,
+            "text": {
+                "header": "Nothing acquired",
+                "description": "A useless item"
+            }
+        },
+        "oItemDNA_364": {
             "sprite_details": {
                 "name": "sItemDNA",
                 "speed": 0.28
@@ -1277,67 +1293,7 @@
                 "description": "Collect all DNA in order to reach the Queen"
             }
         },
-        "oItemDNA_364": {
-            "sprite_details": {
-                "name": "sItemDNA",
-                "speed": 0.28
-            },
-            "item_effect": "Metroid DNA 10",
-            "quantity": 1,
-            "text": {
-                "header": "Metroid DNA acquired",
-                "description": "Collect all DNA in order to reach the Queen"
-            }
-        },
         "oItemDNA_365": {
-            "sprite_details": {
-                "name": "sItemMissile",
-                "speed": 0.2
-            },
-            "item_effect": "Missile Expansion",
-            "quantity": 5,
-            "text": {
-                "header": "Got Missile Tank",
-                "description": "Missile capacity increased by 5"
-            }
-        },
-        "oItemDNA_366": {
-            "sprite_details": {
-                "name": "sItemIceBeam",
-                "speed": 0.2
-            },
-            "item_effect": "Ice Beam",
-            "quantity": 1,
-            "text": {
-                "header": "Ice Beam acquired",
-                "description": "Instantly freeze enemies. Extra damage"
-            }
-        },
-        "oItemDNA_367": {
-            "sprite_details": {
-                "name": "sItemSpaceJump",
-                "speed": 0.2
-            },
-            "item_effect": "Space Jump",
-            "quantity": 1,
-            "text": {
-                "header": "Space Jump acquired",
-                "description": "Jump continuously in the air"
-            }
-        },
-        "oItemDNA_368": {
-            "sprite_details": {
-                "name": "sItemMissile",
-                "speed": 0.2
-            },
-            "item_effect": "Missile Expansion",
-            "quantity": 5,
-            "text": {
-                "header": "Got Missile Tank",
-                "description": "Missile capacity increased by 5"
-            }
-        },
-        "oItemDNA_369": {
             "sprite_details": {
                 "name": "sItemBomb",
                 "speed": 0.2
@@ -1349,43 +1305,19 @@
                 "description": "Press | in Morph Ball to deploy"
             }
         },
-        "oItemDNA_370": {
+        "oItemDNA_366": {
             "sprite_details": {
-                "name": "sItemVariaSuit",
+                "name": "sItemBigHealthDrop",
                 "speed": 0.2
             },
-            "item_effect": "Varia Suit",
-            "quantity": 1,
+            "item_effect": "Big Health Drop",
+            "quantity": 20,
             "text": {
-                "header": "Varia Suit acquired",
-                "description": "Reduces Damage taken by 50%"
+                "header": "Got Big Health Drop",
+                "description": "Current health increased by 20"
             }
         },
-        "oItemDNA_371": {
-            "sprite_details": {
-                "name": "sItemNothing",
-                "speed": 0.3333
-            },
-            "item_effect": "Nothing",
-            "quantity": 1,
-            "text": {
-                "header": "Nothing acquired",
-                "description": "A useless item"
-            }
-        },
-        "oItemDNA_372": {
-            "sprite_details": {
-                "name": "sItemDNA",
-                "speed": 0.28
-            },
-            "item_effect": "Metroid DNA 4",
-            "quantity": 1,
-            "text": {
-                "header": "Metroid DNA acquired",
-                "description": "Collect all DNA in order to reach the Queen"
-            }
-        },
-        "oItemDNA_373": {
+        "oItemDNA_367": {
             "sprite_details": {
                 "name": "sItemMissile",
                 "speed": 0.2
@@ -1397,31 +1329,7 @@
                 "description": "Missile capacity increased by 5"
             }
         },
-        "oItemDNA_374": {
-            "sprite_details": {
-                "name": "sItemDNA",
-                "speed": 0.28
-            },
-            "item_effect": "Metroid DNA 1",
-            "quantity": 1,
-            "text": {
-                "header": "Metroid DNA acquired",
-                "description": "Collect all DNA in order to reach the Queen"
-            }
-        },
-        "oItemDNA_375": {
-            "sprite_details": {
-                "name": "sItemNothing",
-                "speed": 0.3333
-            },
-            "item_effect": "Nothing",
-            "quantity": 1,
-            "text": {
-                "header": "Nothing acquired",
-                "description": "A useless item"
-            }
-        },
-        "oItemDNA_376": {
+        "oItemDNA_368": {
             "sprite_details": {
                 "name": "sItemDNA",
                 "speed": 0.28
@@ -1433,43 +1341,7 @@
                 "description": "Collect all DNA in order to reach the Queen"
             }
         },
-        "oItemDNA_377": {
-            "sprite_details": {
-                "name": "sItemPowerBomb",
-                "speed": 0.2
-            },
-            "item_effect": "Power Bomb Expansion",
-            "quantity": 2,
-            "text": {
-                "header": "Got Power Bomb Tank",
-                "description": "Power Bomb capacity increased by 2"
-            }
-        },
-        "oItemDNA_378": {
-            "sprite_details": {
-                "name": "sItemPowerBomb",
-                "speed": 0.2
-            },
-            "item_effect": "Power Bomb Expansion",
-            "quantity": 2,
-            "text": {
-                "header": "Got Power Bomb Tank",
-                "description": "Power Bomb capacity increased by 2"
-            }
-        },
-        "oItemDNA_379": {
-            "sprite_details": {
-                "name": "sItemEnergyTank",
-                "speed": 0.2
-            },
-            "item_effect": "Energy Tank",
-            "quantity": 1,
-            "text": {
-                "header": "Got Energy Tank",
-                "description": "Suit Energy increased by 100 units"
-            }
-        },
-        "oItemDNA_380": {
+        "oItemDNA_369": {
             "sprite_details": {
                 "name": "sItemMissile",
                 "speed": 0.2
@@ -1481,7 +1353,127 @@
                 "description": "Missile capacity increased by 5"
             }
         },
-        "oItemDNA_381": {
+        "oItemDNA_370": {
+            "sprite_details": {
+                "name": "sItemGravitySuit",
+                "speed": 0.2
+            },
+            "item_effect": "Gravity Suit",
+            "quantity": 1,
+            "text": {
+                "header": "Gravity Suit acquired",
+                "description": "Liquid friction eliminated - Improved Defense"
+            }
+        },
+        "oItemDNA_371": {
+            "sprite_details": {
+                "name": "sItemMissile",
+                "speed": 0.2
+            },
+            "item_effect": "Missile Expansion",
+            "quantity": 5,
+            "text": {
+                "header": "Got Missile Tank",
+                "description": "Missile capacity increased by 5"
+            }
+        },
+        "oItemDNA_372": {
+            "sprite_details": {
+                "name": "sItemPowerBomb",
+                "speed": 0.2
+            },
+            "item_effect": "Power Bomb Expansion",
+            "quantity": 2,
+            "text": {
+                "header": "Got Power Bomb Tank",
+                "description": "Power Bomb capacity increased by 2"
+            }
+        },
+        "oItemDNA_373": {
+            "sprite_details": {
+                "name": "sItemMissileDrop",
+                "speed": 0.2
+            },
+            "item_effect": "Missile Drop",
+            "quantity": 2,
+            "text": {
+                "header": "Got Missile Drop",
+                "description": "Current Missiles increased by 2"
+            }
+        },
+        "oItemDNA_374": {
+            "sprite_details": {
+                "name": "sItemMissile",
+                "speed": 0.2
+            },
+            "item_effect": "Missile Expansion",
+            "quantity": 5,
+            "text": {
+                "header": "Got Missile Tank",
+                "description": "Missile capacity increased by 5"
+            }
+        },
+        "oItemDNA_375": {
+            "sprite_details": {
+                "name": "sItemDNA",
+                "speed": 0.28
+            },
+            "item_effect": "Metroid DNA 10",
+            "quantity": 1,
+            "text": {
+                "header": "Metroid DNA acquired",
+                "description": "Collect all DNA in order to reach the Queen"
+            }
+        },
+        "oItemDNA_376": {
+            "sprite_details": {
+                "name": "sItemScrewAttack",
+                "speed": 0.2
+            },
+            "item_effect": "Screw Attack",
+            "quantity": 1,
+            "text": {
+                "header": "Screw Attack acquired",
+                "description": "Jump into enemies to inflict massive damage"
+            }
+        },
+        "oItemDNA_377": {
+            "sprite_details": {
+                "name": "sItemMissile",
+                "speed": 0.2
+            },
+            "item_effect": "Missile Expansion",
+            "quantity": 5,
+            "text": {
+                "header": "Got Missile Tank",
+                "description": "Missile capacity increased by 5"
+            }
+        },
+        "oItemDNA_378": {
+            "sprite_details": {
+                "name": "sItemDNA",
+                "speed": 0.28
+            },
+            "item_effect": "Metroid DNA 9",
+            "quantity": 1,
+            "text": {
+                "header": "Metroid DNA acquired",
+                "description": "Collect all DNA in order to reach the Queen"
+            }
+        },
+        "oItemDNA_379": {
+            "sprite_details": {
+                "name": "sItemBigHealthDrop",
+                "speed": 0.2
+            },
+            "item_effect": "Big Health Drop",
+            "quantity": 20,
+            "text": {
+                "header": "Got Big Health Drop",
+                "description": "Current health increased by 20"
+            }
+        },
+        "oItemDNA_380": {
             "sprite_details": {
                 "name": "sItemNothing",
                 "speed": 0.3333
@@ -1493,43 +1485,7 @@
                 "description": "A useless item"
             }
         },
-        "oItemDNA_382": {
-            "sprite_details": {
-                "name": "sItemDNA",
-                "speed": 0.28
-            },
-            "item_effect": "Metroid DNA 3",
-            "quantity": 1,
-            "text": {
-                "header": "Metroid DNA acquired",
-                "description": "Collect all DNA in order to reach the Queen"
-            }
-        },
-        "oItemDNA_383": {
-            "sprite_details": {
-                "name": "sItemDNA",
-                "speed": 0.28
-            },
-            "item_effect": "Metroid DNA 2",
-            "quantity": 1,
-            "text": {
-                "header": "Metroid DNA acquired",
-                "description": "Collect all DNA in order to reach the Queen"
-            }
-        },
-        "oItemDNA_384": {
-            "sprite_details": {
-                "name": "sItemChargeBeam",
-                "speed": 0.2
-            },
-            "item_effect": "Charge Beam",
-            "quantity": 1,
-            "text": {
-                "header": "Charge Beam acquired",
-                "description": "Hold | to charge your beam"
-            }
-        },
-        "oItemDNA_385": {
+        "oItemDNA_381": {
             "sprite_details": {
                 "name": "sItemMissile",
                 "speed": 0.2
@@ -1541,7 +1497,19 @@
                 "description": "Missile capacity increased by 5"
             }
         },
-        "oItemDNA_386": {
+        "oItemDNA_382": {
+            "sprite_details": {
+                "name": "sItemDNA",
+                "speed": 0.28
+            },
+            "item_effect": "Metroid DNA 2",
+            "quantity": 1,
+            "text": {
+                "header": "Metroid DNA acquired",
+                "description": "Collect all DNA in order to reach the Queen"
+            }
+        },
+        "oItemDNA_383": {
             "sprite_details": {
                 "name": "sItemSpeedBooster",
                 "speed": 0.5
@@ -1551,6 +1519,42 @@
             "text": {
                 "header": "Speed Booster acquired",
                 "description": "Run continuously to begin Speed Boosting"
+            }
+        },
+        "oItemDNA_384": {
+            "sprite_details": {
+                "name": "sItemDNA",
+                "speed": 0.28
+            },
+            "item_effect": "Metroid DNA 4",
+            "quantity": 1,
+            "text": {
+                "header": "Metroid DNA acquired",
+                "description": "Collect all DNA in order to reach the Queen"
+            }
+        },
+        "oItemDNA_385": {
+            "sprite_details": {
+                "name": "sItemBigHealthDrop",
+                "speed": 0.2
+            },
+            "item_effect": "Big Health Drop",
+            "quantity": 20,
+            "text": {
+                "header": "Got Big Health Drop",
+                "description": "Current health increased by 20"
+            }
+        },
+        "oItemDNA_386": {
+            "sprite_details": {
+                "name": "sItemDNA",
+                "speed": 0.28
+            },
+            "item_effect": "Metroid DNA 3",
+            "quantity": 1,
+            "text": {
+                "header": "Metroid DNA acquired",
+                "description": "Collect all DNA in order to reach the Queen"
             }
         },
         "oItemDNA_387": {
@@ -1567,77 +1571,53 @@
         },
         "oItemDNA_388": {
             "sprite_details": {
-                "name": "sItemNothing",
-                "speed": 0.3333
+                "name": "sItemSuperMissile",
+                "speed": 0.2
             },
-            "item_effect": "Nothing",
-            "quantity": 1,
+            "item_effect": "Super Missile Expansion",
+            "quantity": 2,
             "text": {
-                "header": "Nothing acquired",
-                "description": "A useless item"
+                "header": "Got Super Missile Tank",
+                "description": "Super Missile capacity increased by 2"
             }
         },
         "oItemDNA_389": {
             "sprite_details": {
-                "name": "sItemMissile",
+                "name": "sItemPlasmaBeam",
                 "speed": 0.2
             },
-            "item_effect": "Missile Expansion",
-            "quantity": 5,
+            "item_effect": "Plasma Beam",
+            "quantity": 1,
             "text": {
-                "header": "Got Missile Tank",
-                "description": "Missile capacity increased by 5"
+                "header": "Plasma Beam acquired",
+                "description": "Beams can pierce enemies"
             }
         },
         "oItemDNA_390": {
             "sprite_details": {
-                "name": "sItemMissile",
+                "name": "sItemEnergyTank",
                 "speed": 0.2
             },
-            "item_effect": "Missile Expansion",
-            "quantity": 5,
+            "item_effect": "Energy Tank",
+            "quantity": 1,
             "text": {
-                "header": "Got Missile Tank",
-                "description": "Missile capacity increased by 5"
+                "header": "Got Energy Tank",
+                "description": "Suit Energy increased by 100 units"
             }
         },
         "oItemDNA_391": {
             "sprite_details": {
-                "name": "sItemMissile",
-                "speed": 0.2
+                "name": "sItemDNA",
+                "speed": 0.28
             },
-            "item_effect": "Missile Expansion",
-            "quantity": 5,
+            "item_effect": "Metroid DNA 1",
+            "quantity": 1,
             "text": {
-                "header": "Got Missile Tank",
-                "description": "Missile capacity increased by 5"
+                "header": "Metroid DNA acquired",
+                "description": "Collect all DNA in order to reach the Queen"
             }
         },
         "oItemDNA_392": {
-            "sprite_details": {
-                "name": "sItemPowerBomb",
-                "speed": 0.2
-            },
-            "item_effect": "Power Bomb Expansion",
-            "quantity": 2,
-            "text": {
-                "header": "Got Power Bomb Tank",
-                "description": "Power Bomb capacity increased by 2"
-            }
-        },
-        "oItemDNA_393": {
-            "sprite_details": {
-                "name": "sItemMissile",
-                "speed": 0.2
-            },
-            "item_effect": "Missile Expansion",
-            "quantity": 5,
-            "text": {
-                "header": "Got Missile Tank",
-                "description": "Missile capacity increased by 5"
-            }
-        },
-        "oItemDNA_394": {
             "sprite_details": {
                 "name": "sItemSuperMissile",
                 "speed": 0.2
@@ -1649,16 +1629,40 @@
                 "description": "Super Missile capacity increased by 2"
             }
         },
+        "oItemDNA_393": {
+            "sprite_details": {
+                "name": "sItemBigHealthDrop",
+                "speed": 0.2
+            },
+            "item_effect": "Big Health Drop",
+            "quantity": 20,
+            "text": {
+                "header": "Got Big Health Drop",
+                "description": "Current health increased by 20"
+            }
+        },
+        "oItemDNA_394": {
+            "sprite_details": {
+                "name": "sItemMissile",
+                "speed": 0.2
+            },
+            "item_effect": "Missile Expansion",
+            "quantity": 5,
+            "text": {
+                "header": "Got Missile Tank",
+                "description": "Missile capacity increased by 5"
+            }
+        },
         "oItemDNA_395": {
             "sprite_details": {
-                "name": "sItemNothing",
-                "speed": 0.3333
+                "name": "sItemDNA",
+                "speed": 0.28
             },
-            "item_effect": "Nothing",
+            "item_effect": "Metroid DNA 7",
             "quantity": 1,
             "text": {
-                "header": "Nothing acquired",
-                "description": "A useless item"
+                "header": "Metroid DNA acquired",
+                "description": "Collect all DNA in order to reach the Queen"
             }
         }
     },
@@ -10096,8 +10100,8 @@
         "supers_on_missile_doors": true,
         "nest_pipes": true,
         "softlock_prevention_blocks": true,
-        "a3_entrance_blocks": false,
-        "screw_blocks": false,
+        "a3_entrance_blocks": true,
+        "screw_blocks": true,
         "sabre_designed_skippy": false,
         "locked_missile_text": {
             "header": "Got Locked Missile Tank",
@@ -10117,14 +10121,14 @@
     },
     "door_locks": {},
     "hints": {
-        "septogg_a0": "Metroid DNA is located in Hydro Station - Inner Alpha Nest South.",
-        "septogg_a1": "*S P E E N*",
-        "septogg_a2": "Metroid DNA is located in Main Caves - Research Site.#-#Metroid DNA is located in Industrial Complex - Breeding Grounds Alpha Nest.",
-        "septogg_a3": "Metroid DNA is located in The Depths - Hideout Alpha Nest.#-#Metroid DNA is located in Industrial Complex - Lower Factory Gamma Nest.",
-        "septogg_a4": "Metroid DNA is located in Main Caves - Mining Facility Gamma Nest.",
-        "septogg_a5": "Metroid DNA is located in Main Caves - Surface Alpha Nest.#-#Metroid DNA is located in Golden Temple - Breeding Grounds Alpha Nest South West.#-#Metroid DNA is located in Industrial Complex - Exterior Gamma Nest.",
-        "septogg_a6": "Metroid DNA is located in The Tower - Gamma Nest South East.",
-        "chozo_labs": "Ice Beam is located in Main Caves."
+        "septogg_a0": "Metroid DNA is located in The Tower - Gamma Nest North East.#-#Metroid DNA is located in Industrial Complex - Breeding Grounds Gamma Nest Center.#-#Metroid DNA is located in Golden Temple - Breeding Grounds Alpha Nest South West.",
+        "septogg_a1": "Metroid DNA is located in Distribution Center - Dual Gamma Nest.",
+        "septogg_a2": "Metroid DNA is located in Distribution Center - Alpha Squad Nest.",
+        "septogg_a3": "Metroid DNA is located in Main Caves - Mining Facility Gamma Nest.",
+        "septogg_a4": "Metroid DNA is located in The Depths - Bubble Lair Omega Nest South West.#-#Metroid DNA is located in Distribution Center - Energy Distribution Zeta Nest.#-#Metroid DNA is located in Industrial Complex - Upper Factory Gamma Nest.",
+        "septogg_a5": "Metroid DNA is located in Main Caves - Research Site.",
+        "septogg_a6": "*Ancient tongue, non-decipherable. The contents in full:#\uff2e\uff21\uff27\uff27\uff29\uff2e\uff27\uff33\u3000\uff26\uff32\uff2f\uff2d\u3000\uff30\uff21\uff33\uff34 \uff33\uff2f#\uff2e\uff2f\uff37\u3000\uff29\uff2d\u3000\uff28\uff25\uff2c\uff30\uff29\uff2e\uff27\u3000\uff36\uff29\uff21\u3000\uff24\uff25\uff36#\uff21\uff2c\uff21\uff33\u3000\uff27\uff2c\uff21\uff24\u3000\uff26\uff2f\uff32\u3000\uff39\uff25*",
+        "chozo_labs": "Ice Beam is located in Industrial Complex."
     },
     "cosmetics": {
         "show_unexplored_map": true,
@@ -10135,5 +10139,5 @@
         "room_names_on_hud": "WITH_FADE",
         "music_shuffle": {}
     },
-    "credits_spoiler": "*Major Item Locations;;*Bombs;/Distribution Center - Alpha Squad Nest;;*Spider Ball;/Hydro Station - Breeding Grounds Alpha Nest West;;*Spring Ball;/Industrial Complex - Exterior Puzzle Cavern;;*Screw Attack;/Distribution Center - Gravity Area Corridor;;*Varia Suit;/Distribution Center - Alpha Squad Nest;;*Space Jump;/Distribution Center - Alpha Squad Nest;;*Speed Booster;/Distribution Center - Dual Gamma Nest;;*Hi-Jump Boots;/Hydro Station - Wave Beam Chamber;;*Gravity Suit;/GFS Thoth - Genesis Arena;;*Charge Beam;/The Tower - Gamma Nest North East;;*Ice Beam;/Main Caves - Mining Facility Alpha Nest;;*Wave Beam;/The Tower - Power Plant Hidden Storage;;*Spazer Beam;/Distribution Center - Distribution Center Exterior West;;*Plasma Beam;/Hydro Station - Hi-Jump Chamber;;*Super Missile Launcher;/The Tower - Tester Arena Access North;;*Power Bomb Launcher;/The Tower - Tower Exterior South East;;*Metroid DNA 1;/Industrial Complex - Exterior Gamma Nest;;*Metroid DNA 10;/Main Caves - Research Site;;*Metroid DNA 2;/The Tower - Gamma Nest South East;;*Metroid DNA 3;/Main Caves - Mining Facility Gamma Nest;;*Metroid DNA 4;/The Depths - Hideout Alpha Nest;;*Metroid DNA 5;/Main Caves - Surface Alpha Nest;;*Metroid DNA 6;/Industrial Complex - Lower Factory Gamma Nest;;*Metroid DNA 7;/Hydro Station - Inner Alpha Nest South;;*Metroid DNA 8;/Industrial Complex - Breeding Grounds Alpha Nest;;*Metroid DNA 9;/Golden Temple - Breeding Grounds Alpha Nest South West;;"
+    "credits_spoiler": "*Major Item Locations;;*Bombs;/Main Caves - Research Site;;*Spider Ball;/Hydro Station - Inner Alpha Nest North;;*Spring Ball;/Distribution Center - Gravity Area Corridor;;*Screw Attack;/Industrial Complex - Lower Factory Gamma Nest;;*Varia Suit;/The Tower - Plasma Beam Chamber;;*Space Jump;/Golden Temple - Spider Ball Chamber;;*Speed Booster;/The Tower - Gamma Nest South East;;*Hi-Jump Boots;/Hydro Station - Hydro Station Exterior;;*Gravity Suit;/Distribution Center - Alpha Squad Nest;;*Charge Beam;/The Tower - Tower Exterior South East;;*Ice Beam;/Industrial Complex - Super Missile Chamber;;*Wave Beam;/Hydro Station - Exterior Alpha Nest;;*Spazer Beam;/The Depths - Hideout Storage;;*Plasma Beam;/The Tower - Exterior Zeta Nest East;;*Super Missile Launcher;/Hydro Station - Breeding Grounds Alpha Nest West;;*Power Bomb Launcher;/The Depths - Skreek and Ramulken Pool;;*Metroid DNA 1;/Distribution Center - Energy Distribution Zeta Nest;;*Metroid DNA 10;/Industrial Complex - Upper Factory Gamma Nest;;*Metroid DNA 2;/Main Caves - Mining Facility Gamma Nest;;*Metroid DNA 3;/Distribution Center - Dual Gamma Nest;;*Metroid DNA 4;/The Tower - Gamma Nest North East;;*Metroid DNA 5;/Golden Temple - Breeding Grounds Alpha Nest South West;;*Metroid DNA 6;/Distribution Center - Alpha Squad Nest;;*Metroid DNA 7;/The Depths - Bubble Lair Omega Nest South West;;*Metroid DNA 8;/Main Caves - Research Site;;*Metroid DNA 9;/Industrial Complex - Breeding Grounds Gamma Nest Center;;"
 }
