@@ -288,6 +288,7 @@ class MSRPatchDataFactory(PatchDataFactory):
             "text_patches": self._static_text_changes(),
             "spoiler_log": self._credits_spoiler() if self.description.has_spoiler else {},
             "hints": self._encode_hints(),
+            "configuration_identifier": self.description.shareable_hash,
         }
 
 
