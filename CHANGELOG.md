@@ -42,6 +42,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### AM2R
 
 - Added: New option to place DNA anywhere.
+- Added: New option to force Save Station doors to be blue.
 
 #### Logic Database
 

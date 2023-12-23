@@ -34,6 +34,7 @@ class AM2RConfiguration(BaseConfiguration):
     grave_grotto_blocks: bool
     nest_pipes: bool
     a3_entrance_blocks: bool
+    blue_save_doors: bool
 
     @classmethod
     def game_enum(cls) -> RandovaniaGame:

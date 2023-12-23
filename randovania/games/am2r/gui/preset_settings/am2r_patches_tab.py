@@ -28,6 +28,7 @@ _FIELDS = [
     "softlock_prevention_blocks",
     "a3_entrance_blocks",
     "screw_blocks",
+    "blue_save_doors",
 ]
 
 
