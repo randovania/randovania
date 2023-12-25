@@ -59,7 +59,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ##### Industrial Complex
 
 - Added: In Lower Factory Intersection: Can now climb the room by shinesparking after a short charge.
+- Added: In Treadmill Room: Going from right to left is now possible via a beginner Shinespark or an intermediate Morph Glide.
 - Fixed: In Lower Factory Intersection: Climbing the room now correctly needs a damage boost for wall jumps.
+- Fixed: In Shirk Prisons: Going from right to left, now requires Morph Ball, or 4 (Super) Missiles.
+- Fixed: In Treadmill Room: Going from right to left via Movement is now impossible.
 - Changed: In Torizo Arena: New weapon, health, and dodging requirements for fighting Torizo.
 
 ##### Genetics Labratory
