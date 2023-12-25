@@ -31,6 +31,7 @@ class AM2RConfiguration(BaseConfiguration):
     hints: HintConfiguration
     fusion_mode: bool
     supers_on_missile_doors: bool
+    extra_doors: bool
     grave_grotto_blocks: bool
     nest_pipes: bool
     a3_entrance_blocks: bool
