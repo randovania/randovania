@@ -11,7 +11,6 @@ from randovania.game_description.requirements.requirement_and import Requirement
 from randovania.game_description.requirements.requirement_or import RequirementOr
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.resource_type import ResourceType
-from randovania.layout.base.trick_level import LayoutTrickLevel
 
 if TYPE_CHECKING:
     from collections.abc import Iterable
