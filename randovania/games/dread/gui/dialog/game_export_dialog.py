@@ -4,7 +4,6 @@ import json
 import logging
 import os
 import platform
-import string
 from pathlib import Path
 from typing import TYPE_CHECKING
 
@@ -26,9 +25,10 @@ from randovania.gui.dialog.game_export_dialog import (
 from randovania.gui.generated.dread_game_export_dialog_ui import Ui_DreadGameExportDialog
 from randovania.gui.lib import common_qt_lib
 from randovania.lib.ftp_uploader import FtpUploader
+from randovania.lib.windows_drives import get_windows_drives
 
 if TYPE_CHECKING:
-    from collections.abc import Callable, Iterator
+    from collections.abc import Callable
 
     from randovania.exporter.game_exporter import GameExportParams
     from randovania.interface_common.options import Options
@@ -55,39 +55,6 @@ def decode_path(s: str | None) -> Path | None:
     if s is None:
         return None
     return Path(s)
-
-
-def get_windows_drives() -> Iterator[tuple[str, str, Path]]:
-    try:
-        from ctypes import windll
-    except ImportError:
-        if platform.system() == "Windows":
-            raise
-        else:
-            yield from []
-            return
-
-    drive_types = [
-        "Not identified",
-        "Not Mounted",
-        "Removable",
-        "HDD",
-        "Network",
-        "CD-Rom",
-        "Ramdisk",
-    ]
-
-    drives = []
-    bitmask = windll.kernel32.GetLogicalDrives()
-    for letter in string.ascii_uppercase:
-        if bitmask & 1:
-            drives.append(letter)
-        bitmask >>= 1
-
-    for drive in drives:
-        path = Path(f"{drive}:/")
-        type_index = windll.kernel32.GetDriveTypeW(str(path))
-        yield drive, drive_types[type_index], path
 
 
 def add_validation(edit: QtWidgets.QLineEdit, validation: Callable[[], bool], post_validation: Callable[[], None]):

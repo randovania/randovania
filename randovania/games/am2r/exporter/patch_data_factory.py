@@ -3,7 +3,7 @@ from __future__ import annotations
 from random import Random
 from typing import TYPE_CHECKING
 
-from randovania.exporter import pickup_exporter
+from randovania.exporter import item_names, pickup_exporter
 from randovania.exporter.hints import credits_spoiler, guaranteed_item_hint
 from randovania.exporter.patch_data_factory import PatchDataFactory
 from randovania.game_description.assignment import PickupTarget
@@ -17,6 +17,7 @@ from randovania.lib import json_lib, random_lib
 
 if TYPE_CHECKING:
     from randovania.exporter.pickup_exporter import ExportedPickupDetails
+    from randovania.game_description.game_patches import GamePatches
     from randovania.games.am2r.layout.am2r_configuration import AM2RConfiguration
 
 
@@ -178,6 +179,16 @@ class AM2RPatchDataFactory(PatchDataFactory):
             for area in region.areas
         }
 
+    def _create_starting_popup(self, patches: GamePatches) -> dict | None:
+        extra_items = item_names.additional_starting_equipment(patches.configuration, patches.game, patches)
+        if extra_items:
+            return {
+                "header": "Extra starting items:",
+                "description": ", ".join(extra_items),
+            }
+        else:
+            return None
+
     def _create_starting_items_dict(self) -> dict:
         starting_resources = self.patches.starting_resources()
         return {resource.long_name: quantity for resource, quantity in starting_resources.as_resource_gain()}
@@ -188,11 +199,13 @@ class AM2RPatchDataFactory(PatchDataFactory):
         }
 
     def _create_hash_dict(self) -> dict:
-        return {
+        return_dict: dict = {
             "word_hash": self.description.shareable_word_hash,
             "hash": self.description.shareable_hash,
             "session_uuid": str(self.players_config.get_own_uuid()),
+            "starting_memo": self._create_starting_popup(self.patches),
         }
+        return return_dict
 
     def _create_game_patches(
         self, config: AM2RConfiguration, pickup_list: list[ExportedPickupDetails], item_info: dict, rng: Random

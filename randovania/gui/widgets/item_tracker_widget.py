@@ -107,6 +107,8 @@ class ItemTrackerWidget(QtWidgets.QGroupBox):
             elif "label" in element:
                 label = QtWidgets.QLabel(self)
                 label.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
+                if "style" in element:
+                    label.setStyleSheet(element["style"])
                 text_template = element["label"]
                 labels.append(label)
 
@@ -136,6 +138,9 @@ class ItemTrackerWidget(QtWidgets.QGroupBox):
                 )
             )
             if disabled_image is not None:
+                # this is lazy for progressives, but would require editing all json & adding a field I think
+                if resources:
+                    disabled_image.setToolTip(resources[0].long_name)
                 labels.append(disabled_image)
 
             for label in labels:

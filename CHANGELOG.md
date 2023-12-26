@@ -5,10 +5,95 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [7.2.0] - 2024-01-??
+
+- Fixed: Bug where tooltips did not show uncollected item names in the autotracker.
+- Changed: Update to the Database Video Directory site to eliminate lag and add modern styling.
+- Changed: Autotracker tooltips now display text in black instead of gray.
+
+### Metroid Dread
+
+#### Logic Database
+
+##### Artaria
+
+- Added: In Screw Attack Room: Break the blob with Slide Turnaround Pseudo Wave Beam, requires Gravity Suit. Beginner from the left and Intermediate from the right.
+- Fixed: The Advanced Pseudo Wave Beam to break the Blob in Screw Attack Room from the right now handles it not working with Gravity Suit.
+- Fixed: Add Slide as a requirement for the Pseudo Wave Beam usages in Melee Tutorial Room and Early Cloak Room.
+
+##### Burenia
+
+- Added: Pseudo Wave Beam to break the bottom right blob in Burenia Hub to Dairon. Requires Slide and Gravity Suit or Diffusion Beam.
+- Fixed: When using Power Bomb to break the bottom right blob in Burenia Hub to Dairon, also require the ability to shoot a beam.
+- Fixed: Burenia Hub to Dairon: Getting the item in the fan with only Flash Shift now requires at least one Flash Shift Upgrade as well, and also only requires Intermediate movement (instead of Advanced).
+- Changed: Main Hub Tower Middle: Climbing out of the water from Left of Central Grapple Block without any items now requires Advanced Movement, up from Intermediate.
+
+##### Ferenia
+
+- Added: In Space Jump Room: Use Grapple Beam to jump out of water above Underwater Ledge Left, and use Single Wall Jump, Spin Boost or Flash Shift to reach Dock to Transport to Ghavoran. Video included. 
+- Changed: In Space Jump Room: Can traverse from Underwater Ledge Left to Dock to Transport to Ghavoran using Spider Magnet, with either Flash Shift and Wall Jump or Morph Ball and Single Wall Jump. 
+- Changed: In Space Jump Room: Added a video for reaching the Missile Tank with only Morph Ball and Bombs
+- Changed: In Space Jump Room: Added a video traversing from Underwater Bottom to Underwater Ledge Left with only Grapple Beam.
+
+##### Ghavoran
+
+- Fixed: Getting the Energy Part Pickup in Golzuna Tower using Spin Boost and Shinespark Conservation Beginner now correctly requires Morph Ball.
+
+### AM2R
+
+- Added: Research Site Open Hatches as available doors for Door Lock Rando.
+- Added: New option to place DNA anywhere.
+
+#### Logic Database
+
+- Added: 15 Videos to the Logic Database.
+
+##### Main Caves
+
+- Added: In Surface Hi-Jump Challenge: Shinespark conservation method to reach item.
+
+##### Hydro Station
+
+- Added: In Inner Alpha Nest South: IBJ method to reach item.
+- Changed: In Arachnus Arena: New health and dodging requirements for fighting Arachnus.
+
+##### Industrial Complex
+
+- Added: In Lower Factory Intersection: Can now climb the room by shinesparking after a short charge.
+- Added: In Treadmill Room: Going from right to left is now possible via a beginner Shinespark or an intermediate Morph Glide.
+- Fixed: In Lower Factory Intersection: Climbing the room now correctly needs a damage boost for wall jumps.
+- Fixed: In Shirk Prisons: Going from right to left, now requires Morph Ball, or 4 (Super) Missiles.
+- Fixed: In Treadmill Room: Going from right to left via Movement is now impossible.
+- Changed: In Torizo Arena: New weapon, health, and dodging requirements for fighting Torizo.
+
+##### Genetics Labratory
+
+- Changed: In Queen Arena: Additional Beam requirements and dodging requirements for fighting Queen trickless.
+
+### Metroid Prime 2: Echoes
+
+#### Logic Database
+
+##### Dark Agon Wastes
+
+- Added: Requirements to trigger the Amorbis fight from below: Spacejump, NSJ Z-Axis Screw Attack or BSJ, and bomb jumps or standable terrain with the energy taken.
+- Added: Advanced combat to fight Amorbis after the energy has been taken.
+- Changed: Revised Amorbis combat requirements (trickless requires a good weapon + 2 E, beginner requires a weapon and 1 E, intermediate neither)
+- Changed: Skipping the Amorbis trigger, or touching it to trigger the fight from below, requires Knowledge set to Intermediate.
+
+### Metroid Prime
+
+#### Logic Database
+
+##### Tallon Overworld
+
+- Added: Advanced Single Room OoB to reach Landing Site item without Morph Ball
+
 ## [7.1.1] - 2023-12-??
 
 ### Metroid Prime
 
+- Added: A more stream-friendly autotracker layout
 - Fixed: Reverted Warrior Shrine -> Monitor Station loading improvement which could sometimes cause crashes
 - Fixed: Export compatibility with legacy cutscene skip options
 - Fixed: Music issues in Frigate Orpheon, Artifact Temple, Arboretum, Sunchamber Lobby, Burn Dome and Lava Lake
@@ -22,6 +107,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Better Save Station load trigger in Phendrana Shorelines
   - Better door open triggers in Arboretum
 - Changed: Back-to-back cutscenes in Artifact Temple now skip as one
+
+### Metroid Prime 2: Echoes
+
+- Added: A more stream-friendly autotracker layout
 
 ## [7.1.0] - 2023-12-01
 
@@ -132,6 +221,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: Great Tree Hall Lower NSJ Climb BSJ
 - Added: Landing Site B Hop to Reach Gully NSJ
+
+### Metroid Prime 2: Echoes
+
+#### Logic Database
+
+- Changed: Climbing Transport A Access using slope jump + NSJ SA no longer incorrectly requires SJ as well
 
 ## [7.0.1] - 2023-11-??
 

@@ -24,7 +24,7 @@
                 ]
             },
             "nodes": {
-                "Area Transition to Main Caves": {
+                "Horizontal Dock to Main Caves": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -38,17 +38,18 @@
                     ],
                     "extra": {
                         "instance_id": 131683,
-                        "source_x": 0,
-                        "source_y": 128
+                        "facing": "right",
+                        "x": 0,
+                        "y": 128
                     },
                     "valid_starting_location": false,
-                    "dock_type": "area_transition",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Main Caves",
                         "area": "The Descent",
-                        "node": "Area Transition to Distribution Center"
+                        "node": "Horizontal Dock to Distribution Center"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "4-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -81,7 +82,7 @@
                     "default_connection": {
                         "region": "Distribution Center",
                         "area": "Meboid Blockade Exterior ",
-                        "node": "Dock to Distribution Entranceway"
+                        "node": "Horizontal Dock to Distribution Entranceway"
                     },
                     "default_dock_weakness": "3-Tiles High Dock",
                     "exclude_from_dock_rando": false,
@@ -89,7 +90,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Area Transition to Main Caves": {
+                        "Horizontal Dock to Main Caves": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -136,7 +137,7 @@
                 ]
             },
             "nodes": {
-                "Dock to Distribution Entranceway": {
+                "Horizontal Dock to Distribution Entranceway": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -150,19 +151,19 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Distribution Center",
                         "area": "Distribution Entranceway",
                         "node": "Horizontal Dock to Meboid Blockade Exterior "
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "3-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Distribution Center Exterior West Access": {
+                        "Horizontal Dock to Distribution Center Exterior West Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -171,7 +172,7 @@
                         }
                     }
                 },
-                "Dock to Distribution Center Exterior West Access": {
+                "Horizontal Dock to Distribution Center Exterior West Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -185,19 +186,19 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Distribution Center",
                         "area": "Distribution Center Exterior West Access",
                         "node": "Horizontal Dock to Meboid Blockade Exterior "
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "3-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Distribution Entranceway": {
+                        "Horizontal Dock to Distribution Entranceway": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -267,7 +268,7 @@
                     "default_connection": {
                         "region": "Distribution Center",
                         "area": "Meboid Blockade Exterior ",
-                        "node": "Dock to Distribution Center Exterior West Access"
+                        "node": "Horizontal Dock to Distribution Center Exterior West Access"
                     },
                     "default_dock_weakness": "3-Tiles High Dock",
                     "exclude_from_dock_rando": false,
@@ -2199,32 +2200,6 @@
                                             "amount": 1,
                                             "negate": false
                                         }
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "misc",
-                                                        "name": "SoftlockPrevention",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Morph Ball",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
                                     }
                                 ]
                             }
@@ -2275,7 +2250,16 @@
                                     },
                                     {
                                         "type": "template",
-                                        "data": "Hijump Tunnel Climb"
+                                        "data": "Hijump Wall"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Speed Booster",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
                                     }
                                 ]
                             }
@@ -9596,7 +9580,8 @@
                     "incompatible_dock_weaknesses": [
                         "Spider Ball Door",
                         "Screw Attack Door",
-                        "Hydro Station Water Turbine"
+                        "Hydro Station Water Turbine",
+                        "Research Site Open Hatch"
                     ],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
@@ -9745,7 +9730,8 @@
                     "incompatible_dock_weaknesses": [
                         "Spider Ball Door",
                         "Screw Attack Door",
-                        "Hydro Station Water Turbine"
+                        "Hydro Station Water Turbine",
+                        "Research Site Open Hatch"
                     ],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
@@ -9791,7 +9777,8 @@
                     "incompatible_dock_weaknesses": [
                         "Spider Ball Door",
                         "Screw Attack Door",
-                        "Hydro Station Water Turbine"
+                        "Hydro Station Water Turbine",
+                        "Research Site Open Hatch"
                     ],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
@@ -10222,7 +10209,8 @@
                     "incompatible_dock_weaknesses": [
                         "Spider Ball Door",
                         "Screw Attack Door",
-                        "Hydro Station Water Turbine"
+                        "Hydro Station Water Turbine",
+                        "Research Site Open Hatch"
                     ],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
@@ -10437,18 +10425,26 @@
                                                         "comment": "Get past crumble blocks",
                                                         "items": [
                                                             {
-                                                                "type": "resource",
+                                                                "type": "and",
                                                                 "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "MidAirMorph",
-                                                                    "amount": 3,
-                                                                    "negate": false
+                                                                    "comment": "https://www.youtube.com/watch?v=s6e1hOW8UTI",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "MidAirMorph",
+                                                                                "amount": 3,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
                                                                 }
                                                             },
                                                             {
                                                                 "type": "and",
                                                                 "data": {
-                                                                    "comment": null,
+                                                                    "comment": "https://www.youtube.com/watch?v=JlwkUM2KHCE",
                                                                     "items": [
                                                                         {
                                                                             "type": "resource",
@@ -10622,7 +10618,7 @@
                                                             {
                                                                 "type": "and",
                                                                 "data": {
-                                                                    "comment": "Get past crumble blocks",
+                                                                    "comment": "Get past crumble blocks https://www.youtube.com/watch?v=QH3I73ZMQ3c",
                                                                     "items": [
                                                                         {
                                                                             "type": "resource",
@@ -11960,7 +11956,12 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "facing": "left",
+                        "instance_id": 136064,
+                        "x": 1280,
+                        "y": 304
+                    },
                     "valid_starting_location": false,
                     "dock_type": "horizontal_dock",
                     "default_connection": {
@@ -12424,7 +12425,12 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "facing": "right",
+                        "instance_id": 136099,
+                        "x": 0,
+                        "y": 144
+                    },
                     "valid_starting_location": false,
                     "dock_type": "horizontal_dock",
                     "default_connection": {

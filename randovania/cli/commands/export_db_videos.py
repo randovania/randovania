@@ -3,6 +3,8 @@ from __future__ import annotations
 import datetime
 from typing import TYPE_CHECKING
 
+from htmlmin import minify
+
 from randovania.game_description import default_database
 from randovania.game_description.requirements.array_base import RequirementArrayBase
 from randovania.game_description.requirements.requirement_and import RequirementAnd
@@ -27,29 +29,59 @@ HTML_HEADER_FORMAT = """
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>%s</title>
         <style type="text/css">
-
-            body{
-                margin:30px auto;max-width:1000px;line-height:1.6;font-size:19px;padding:0 10px
+            body {
+                font-family: 'Helvetica Neue', sans-serif;
+                background-color: #f5f5f5;
+                color: #333;
+                margin: 30px auto;
+                max-width: 1000px;
+                line-height: 1.6;
+                font-size: 19px;
+                padding: 0 10px;
             }
-            h1,h2,h3{line-height:1.2}
-
+            h2 {
+                font-size: 46px;
+                margin-top: 100px;
+                margin-bottom: 0px;
+            }
+            h3 {
+                margin-top: 46px;
+                margin-bottom: 0;
+            }
+            .header {
+                background-color: #3498db;
+                color: #fff;
+            }
+            a {
+                text-decoration: none;
+                color: #3498db;
+            }
+            p {
+                margin-top: 10px;
+                margin-bottom: 4px;
+            }
             #toc_container {
                 background: #f9f9f9 none repeat scroll 0 0;
                 border: 1px solid #aaa;
                 display: table;
                 font-size: 95%%;
                 margin-bottom: 1em;
-                padding: 20px;
-                width: auto;
+                padding: 36px;
+                width: 600px;
             }
-
-            .toc_title {
-                font-weight: 700;
-                text-align: center;
-            }
-
-            #toc_container li, #toc_container ul, #toc_container ul li{
+            #toc_container li, #toc_container ul, #toc_container ul li {
                 list-style: outside none none !important;
+            }
+            #toc_container ul {
+                margin-bottom: 40px;
+            }
+            ul, ol {
+                list-style-type: none;
+                padding: 0;
+                margin: 0;
+            }
+            ul {
+                font-size: 16px;
             }
         </style>
     </head>
@@ -59,11 +91,11 @@ HTML_HEADER_FORMAT = """
 """
 
 HTML_AREA_FORMAT = """
-        <strong><h2 id="%s">%s</h2></strong>\n
+        <h2 id="%s">%s</h2>\n
 """
 
 HTML_CONNECTION_FORMAT = """
-        <h4 id="%s">%s</h4>\n
+        <h3 id="%s">%s</h3>\n
 """
 
 HTML_VIDEO_FORMAT = """
@@ -187,7 +219,7 @@ def generate_region_html(name: str, areas: dict[str, dict[str, dict[str, list[tu
     """
 
     TOC_AREA_FORMAT = """
-            <li><strong><a>%s</a></strong>
+            <li><strong>%s</strong>
                 <ul>
                     %s
                 </ul>
@@ -206,12 +238,16 @@ def generate_region_html(name: str, areas: dict[str, dict[str, dict[str, list[tu
             connections = nodes[node]
             for connection in sorted(connections):
                 connection_name = f"{node} -> {connection}"
-                area_body += HTML_CONNECTION_FORMAT % (connection_name, connection_name)
+
+                connection_body = HTML_CONNECTION_FORMAT % (connection_name, connection_name)
                 yt_ids = connections[connection]
+
+                any = False
+
                 for id, start_time, highest_diff in sorted(yt_ids, key=lambda x: x[2]):
-                    if "https://www.youtube.com/embed/%s?start=%d" % (id, start_time) in area_body:
+                    if "%s?start=%d" % (id, start_time) in area_body:
+                        # video already used for another connection in this room
                         continue
-                    difficulty = LayoutTrickLevel.from_number(highest_diff).long_name
 
                     area_body += HTML_VIDEO_FORMAT.format(
                         difficulty,
@@ -221,6 +257,13 @@ def generate_region_html(name: str, areas: dict[str, dict[str, dict[str, list[tu
                         start_time,
                         id,
                     )
+
+                if not any:
+                    # no videos for this connection after filtering out duplicates
+                    continue
+
+                area_body += connection_body
+
                 toc_connections += TOC_CONNECTION_FORMAT % (connection_name, connection_name)
         toc += TOC_AREA_FORMAT % (area, toc_connections)
         body += area_body
@@ -232,7 +275,9 @@ def generate_region_html(name: str, areas: dict[str, dict[str, dict[str, list[tu
 
     header = HTML_HEADER_FORMAT % (name, name, get_date())
 
-    return header + toc + body + HTML_FOOTER
+    html = header + toc + body + HTML_FOOTER
+
+    return minify(html, remove_comments=True, remove_all_empty_space=True)
 
 
 def filename_friendly_game_name(game: RandovaniaGame):

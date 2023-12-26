@@ -92,7 +92,7 @@
                         "default"
                     ],
                     "extra": {
-                        "actor_name": "LE_Platform_ChozoUnlockAreaDNA",
+                        "actor_name": "LE_ChozoUnlockAreaDNA",
                         "actor_type": "weightactivatedplatform",
                         "start_point_actor_name": "ST_ChozoUnlockAreaDNA_Checkpoint"
                     },
@@ -5438,8 +5438,25 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "template",
-                                                    "data": "Can Spiderspark"
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Spiderspark"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Spiderspark",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
                                                 }
                                             ]
                                         }
@@ -5628,6 +5645,41 @@
                                                                         }
                                                                     ]
                                                                 }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Boots",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": "Wall Jumps: https://youtu.be/365gGTEEtYg",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Walljump",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Movement",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
                                                             }
                                                         ]
                                                     }
@@ -5654,6 +5706,32 @@
                                                     "data": {
                                                         "type": "tricks",
                                                         "name": "UnmorphExtend",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "High Wall Jump: https://www.youtube.com/watch?v=U2rVU-4bxUA",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Boots",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Walljump",
                                                         "amount": 2,
                                                         "negate": false
                                                     }
@@ -7665,12 +7743,10 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Teleporter": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "events",
-                                "name": "Area 1 Teleporter",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         },
                         "Tunnel to Teleporter Access": {
@@ -7844,8 +7920,25 @@
                                         "data": "Simple IBJ"
                                     },
                                     {
-                                        "type": "template",
-                                        "data": "Can Spiderspark"
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Spiderspark"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Spiderspark",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     },
                                     {
                                         "type": "and",

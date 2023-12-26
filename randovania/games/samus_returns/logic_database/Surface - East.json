@@ -1046,7 +1046,7 @@
                         "default"
                     ],
                     "extra": {
-                        "actor_name": "LE_Platform_ChozoUnlockAreaDNA",
+                        "actor_name": "LE_ChozoUnlockAreaDNA",
                         "actor_type": "weightactivatedplatform",
                         "start_point_actor_name": "ST_ChozoUnlockAreaDNA_Checkpoint"
                     },
@@ -4282,7 +4282,7 @@
                                                                 "data": {
                                                                     "type": "tricks",
                                                                     "name": "Spiderspark",
-                                                                    "amount": 1,
+                                                                    "amount": 2,
                                                                     "negate": false
                                                                 }
                                                             }
@@ -4530,8 +4530,25 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "template",
-                                                    "data": "Can Spiderspark"
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Spiderspark"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Spiderspark",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
                                                 },
                                                 {
                                                     "type": "and",

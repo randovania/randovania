@@ -5,14 +5,14 @@ Extra - minimap_data: [{'x': 52, 'y': 24}]
 > Save Station; Heals? True; Spawn Point; Default Node
   * Layers: default
   * Extra - save_room: 9
-  > Area Transition to Main Caves
+  > Horizontal Dock to Main Caves
       Trivial
   > Horizontal Dock to Pincherfly Parlor
       Trivial
 
-> Area Transition to Main Caves; Heals? False
+> Horizontal Dock to Main Caves; Heals? False
   * Layers: default
-  * Open Passage to Eastern Cave Intersection/Area Transition to Industrial Complex
+  * 3-Tiles High Dock to Eastern Cave Intersection/Horizontal Dock to Industrial Complex
   * Extra - instance_id: 113701
   * Extra - source_x: 0
   * Extra - source_y: 176
@@ -22,12 +22,17 @@ Extra - minimap_data: [{'x': 52, 'y': 24}]
 > Horizontal Dock to Pincherfly Parlor; Heals? False
   * Layers: default
   * 4-Tiles High Dock to Pincherfly Parlor/Horizontal Dock to Eastern Cave Save Station
+  * Extra - instance_id: 113702
+  * Extra - facing: left
+  * Extra - x: 320
+  * Extra - y: 176
   > Save Station
       Trivial
 
 > Dock from EMP Sentry Cavern; Heals? False
   * Layers: default
   * Back Only to EMP Sentry Cavern/Dock to Eastern Cave Save Station
+  * TODO: Vertical Dock info
   > Save Station
       Trivial
 
@@ -38,6 +43,10 @@ Extra - minimap_data: [{'x': 53, 'y': 22}, {'x': 53, 'y': 23}, {'x': 53, 'y': 24
 > Horizontal Dock to Eastern Cave Save Station; Heals? False
   * Layers: default
   * 4-Tiles High Dock to Eastern Cave Save Station/Horizontal Dock to Pincherfly Parlor
+  * Extra - instance_id: 113755
+  * Extra - facing: right
+  * Extra - x: 0
+  * Extra - y: 656
   > Horizontal Dock to Breeding Grounds Access East
       Trivial
   > Top
@@ -48,24 +57,36 @@ Extra - minimap_data: [{'x': 53, 'y': 22}, {'x': 53, 'y': 23}, {'x': 53, 'y': 24
 > Horizontal Dock to Industrial Complex Exterior Access; Heals? False
   * Layers: default
   * 4-Tiles High Dock to Industrial Complex Exterior Access/Horizontal Dock to Pincherfly Parlor
+  * Extra - instance_id: 113756
+  * Extra - facing: left
+  * Extra - x: 320
+  * Extra - y: 176
   > Top
       Trivial
 
 > Horizontal Dock to Breeding Grounds Access East; Heals? False
   * Layers: default
   * 4-Tiles High Dock to Breeding Grounds Access East/Horizontal Dock to Pincherfly Parlor
+  * Extra - instance_id: 113757
+  * Extra - facing: left
+  * Extra - x: 320
+  * Extra - y: 656
   > Horizontal Dock to Eastern Cave Save Station
       Trivial
 
-> Dock to Breeding Grounds Gamma Nest West; Heals? False
+> Vertical Dock to Breeding Grounds Gamma Nest West; Heals? False
   * Layers: default
-  * Open Passage to Breeding Grounds Gamma Nest West/Dock to Pincherfly Parlor
+  * 2-Tiles Wide Dock to Breeding Grounds Gamma Nest West/Vertical Dock to Pincherfly Parlor
   > Bottom Pit
       High Mid-Air Morph Tunnel Climb and Low Mid-Air Morph Tunnel Climb
 
 > Horizontal Dock to EMP Sentry Cavern (Top); Heals? False
   * Layers: default
   * 4-Tiles High Dock to EMP Sentry Cavern/Horizontal Dock to Pincherfly Parlor (Top)
+  * Extra - instance_id: 113765
+  * Extra - facing: right
+  * Extra - x: 0
+  * Extra - y: 176
   > Top
       Super Missiles
 
@@ -90,7 +111,7 @@ Extra - minimap_data: [{'x': 53, 'y': 22}, {'x': 53, 'y': 23}, {'x': 53, 'y': 24
   * Layers: default
   > Horizontal Dock to Eastern Cave Save Station
       Super Missiles and Hijump With Power Grip Wall
-  > Dock to Breeding Grounds Gamma Nest West
+  > Vertical Dock to Breeding Grounds Gamma Nest West
       Morph Ball
 
 ----------------
@@ -100,6 +121,10 @@ Extra - minimap_data: [{'x': 54, 'y': 22}, {'x': 55, 'y': 22}, {'x': 56, 'y': 22
 > Horizontal Dock to Pincherfly Parlor; Heals? False
   * Layers: default
   * 4-Tiles High Dock to Pincherfly Parlor/Horizontal Dock to Industrial Complex Exterior Access
+  * Extra - instance_id: 113985
+  * Extra - facing: right
+  * Extra - x: 0
+  * Extra - y: 176
   > Horizontal Dock to Industrial Complex Exterior
       Any of the following:
           Can Use Any Bombs
@@ -108,6 +133,10 @@ Extra - minimap_data: [{'x': 54, 'y': 22}, {'x': 55, 'y': 22}, {'x': 56, 'y': 22
 > Horizontal Dock to Industrial Complex Exterior; Heals? False
   * Layers: default
   * 4-Tiles High Dock to Industrial Complex Exterior/Horizontal Dock to Industrial Complex Exterior Access
+  * Extra - instance_id: 113986
+  * Extra - facing: left
+  * Extra - x: 1280
+  * Extra - y: 160
   > Horizontal Dock to Pincherfly Parlor
       Any of the following:
           All of the following:
@@ -126,7 +155,11 @@ Extra - minimap_data: [{'x': 58, 'y': 20}, {'x': 58, 'y': 21}, {'x': 58, 'y': 22
 > Horizontal Dock to Senjoo Settlement; Heals? False
   * Layers: default
   * 4-Tiles High Dock to Senjoo Settlement/Horizontal Dock to Industrial Complex Exterior
-  > Dock to Upper Factory Save Station
+  * Extra - instance_id: 114099
+  * Extra - facing: left
+  * Extra - x: 2880
+  * Extra - y: 1616
+  > Vertical Dock to Upper Factory Save Station
       Any of the following:
           Space Jump or Can Use Spider Ball
           All of the following:
@@ -141,7 +174,11 @@ Extra - minimap_data: [{'x': 58, 'y': 20}, {'x': 58, 'y': 21}, {'x': 58, 'y': 22
 > Horizontal Dock to Industrial Complex Exterior Access; Heals? False
   * Layers: default
   * 4-Tiles High Dock to Industrial Complex Exterior Access/Horizontal Dock to Industrial Complex Exterior
-  > Dock to Upper Factory Save Station
+  * Extra - instance_id: 114100
+  * Extra - facing: right
+  * Extra - x: 0
+  * Extra - y: 1120
+  > Vertical Dock to Upper Factory Save Station
       All of the following:
           Can Use Spider Ball
           # Reach the ceiling
@@ -163,9 +200,9 @@ Extra - minimap_data: [{'x': 58, 'y': 20}, {'x': 58, 'y': 21}, {'x': 58, 'y': 22
   > Horizontal Dock to Senjoo Settlement
       Morph Ball
 
-> Dock to Upper Factory Save Station; Heals? False
+> Vertical Dock to Upper Factory Save Station; Heals? False
   * Layers: default
-  * Open Passage to Upper Factory Save Station/Dock to Industrial Complex Exterior
+  * 2-Tiles Wide Dock to Upper Factory Save Station/Vertical Dock to Industrial Complex Exterior
   > Horizontal Dock to Senjoo Settlement
       Trivial
   > Tunnel to Exterior Maze (Top)
@@ -184,9 +221,9 @@ Extra - minimap_data: [{'x': 58, 'y': 20}, {'x': 58, 'y': 21}, {'x': 58, 'y': 22
 
 > Door to Torizo Arena; Heals? False
   * Layers: default
-  * Missile Door to Torizo Arena/Door to Industrial Complex Exterior; Dock Lock Rando incompatible with: Hydro Station Water Turbine
+  * Missile Door to Torizo Arena/Door to Industrial Complex Exterior; Dock Lock Rando incompatible with: Hydro Station Water Turbine, Research Site Open Hatch
   * Extra - instance_id: 114250
-  > Dock to Upper Factory Save Station
+  > Vertical Dock to Upper Factory Save Station
       Any of the following:
           Space Jump or Enabled Septogg Helpers
           # IBJ
@@ -200,7 +237,7 @@ Extra - minimap_data: [{'x': 58, 'y': 20}, {'x': 58, 'y': 21}, {'x': 58, 'y': 22
   * Layers: default
   * Super Missile Door to Exterior Puzzle Cavern/Door to Industrial Complex Exterior
   * Extra - instance_id: 114721
-  > Dock to Upper Factory Save Station
+  > Vertical Dock to Upper Factory Save Station
       Trivial
 
 > Left Septogg; Heals? False
@@ -242,6 +279,10 @@ Extra - minimap_data: [{'x': 67, 'y': 24}, {'x': 68, 'y': 24}, {'x': 69, 'y': 23
 > Horizontal Dock to Exterior Gamma Nest; Heals? False
   * Layers: default
   * 4-Tiles High Dock to Exterior Gamma Nest/Horizontal Dock to Senjoo Settlement
+  * Extra - instance_id: 114831
+  * Extra - facing: left
+  * Extra - x: 1600
+  * Extra - y: 416
   > Horizontal Dock to Industrial Complex Exterior
       Any of the following:
           Hi-Jump Boots or Space Jump or Speed Booster or Can Use Spider Ball
@@ -253,6 +294,10 @@ Extra - minimap_data: [{'x': 67, 'y': 24}, {'x': 68, 'y': 24}, {'x': 69, 'y': 23
 > Horizontal Dock to Industrial Complex Exterior; Heals? False
   * Layers: default
   * 4-Tiles High Dock to Industrial Complex Exterior/Horizontal Dock to Senjoo Settlement
+  * Extra - instance_id: 114953
+  * Extra - facing: right
+  * Extra - x: 0
+  * Extra - y: 416
   > Horizontal Dock to Exterior Gamma Nest
       Any of the following:
           Hi-Jump Boots or Space Jump or Speed Booster or Walljump (Hypermode) or Can Use Spider Ball
@@ -266,6 +311,10 @@ Extra - minimap_data: [{'x': 72, 'y': 24}, {'x': 73, 'y': 24}]
 > Horizontal Dock to Senjoo Settlement; Heals? False
   * Layers: default
   * 4-Tiles High Dock to Senjoo Settlement/Horizontal Dock to Exterior Gamma Nest
+  * Extra - instance_id: 115067
+  * Extra - facing: right
+  * Extra - x: 0
+  * Extra - y: 176
   > Top
       High Mid-Air Morph Tunnel Climb
 
@@ -316,6 +365,10 @@ Extra - minimap_data: [{'x': 51, 'y': 23}, {'x': 52, 'y': 22}, {'x': 52, 'y': 23
 > Horizontal Dock to Pincherfly Parlor (Top); Heals? False
   * Layers: default
   * 4-Tiles High Dock to Pincherfly Parlor/Horizontal Dock to EMP Sentry Cavern (Top)
+  * Extra - instance_id: 115210
+  * Extra - facing: left
+  * Extra - x: 640
+  * Extra - y: 176
   > Bottom
       Trivial
 
@@ -335,6 +388,7 @@ Extra - minimap_data: [{'x': 51, 'y': 23}, {'x': 52, 'y': 22}, {'x': 52, 'y': 23
 > Dock to Eastern Cave Save Station; Heals? False
   * Layers: default
   * Open Passage to Eastern Cave Save Station/Dock from EMP Sentry Cavern
+  * TODO: Vertical Dock info
 
 > Pickup (Missile Tank); Heals? False
   * Layers: default
@@ -386,7 +440,7 @@ Extra - map_name: rm_a3a01
 Extra - minimap_data: [{'x': 60, 'y': 22}, {'x': 60, 'y': 23}, {'x': 61, 'y': 22}, {'x': 61, 'y': 23}]
 > Door to Industrial Complex Exterior; Heals? False
   * Layers: default
-  * Normal Door to Industrial Complex Exterior/Door to Torizo Arena; Dock Lock Rando incompatible with: Hydro Station Water Turbine
+  * Normal Door to Industrial Complex Exterior/Door to Torizo Arena; Dock Lock Rando incompatible with: Hydro Station Water Turbine, Research Site Open Hatch
   * Extra - instance_id: 115254
   > Pickup (Space Jump)
       Trivial
@@ -398,15 +452,27 @@ Extra - minimap_data: [{'x': 60, 'y': 22}, {'x': 60, 'y': 23}, {'x': 61, 'y': 22
   > Event - Torizo
       All of the following:
           Any of the following:
-              # Energy requirements
+              # Weapon Requirements
+              Missiles ≥ 50 or Spazer Beam or Super Missiles ≥ 6 or Wave Beam or Combat (Intermediate)
+              Power Bombs ≥ 4 and Can Use Power Bombs
+          # Dodge Ground Phase
+          Hi-Jump Boots or Morph Ball or Space Jump
+          Any of the following:
               All of the following:
-                  # With space jump
+                  # Air Phase with SJ
                   Space Jump
-                  Combat (Advanced) or Normal Damage ≥ 260
+                  Any of the following:
+                      Combat (Expert) or Normal Damage ≥ 300
+                      Combat (Beginner) and Normal Damage ≥ 200
+                      Combat (Intermediate) and Normal Damage ≥ 150
+                      Combat (Advanced) and Normal Damage ≥ 100
               All of the following:
-                  # Without space jump
-                  Combat (Hypermode) or Normal Damage ≥ 399
-          # Fusion Mode requirements
+                  # Air Phase NSJ
+                  Combat (Advanced) and Walljump (Advanced)
+                  Any of the following:
+                      Combat (Hypermode) or Normal Damage ≥ 150
+                      Combat (Expert) and Normal Damage ≥ 100
+          # Fusion Mode Requirements
           Missiles or Super Missiles or Disabled Fusion Mode
 
 > Event - Torizo; Heals? False
@@ -421,7 +487,7 @@ Extra - map_name: rm_a3a02
 Extra - minimap_data: [{'x': 64, 'y': 21}, {'x': 65, 'y': 21}]
 > In Sand; Heals? False
   * Layers: default
-  > Dock to Industrial Complex Exterior
+  > Vertical Dock to Industrial Complex Exterior
       Any of the following:
           Space Jump or Can Use Spider Ball
           # With sand
@@ -435,15 +501,15 @@ Extra - minimap_data: [{'x': 64, 'y': 21}, {'x': 65, 'y': 21}]
   > Pickup (Missile Tank)
       Trivial
 
-> Dock to Industrial Complex Exterior; Heals? False
+> Vertical Dock to Industrial Complex Exterior; Heals? False
   * Layers: default
-  * Open Passage to Industrial Complex Exterior/Dock to Upper Factory Save Station
+  * 2-Tiles Wide Dock to Industrial Complex Exterior/Vertical Dock to Upper Factory Save Station
   > In Sand
       Trivial
 
-> Dock to Upper Factory Intersection; Heals? False
+> Vertical Dock to Upper Factory Intersection; Heals? False
   * Layers: default
-  * Open Passage to Upper Factory Intersection/Dock to Upper Factory Save Station
+  * 2-Tiles Wide Dock to Upper Factory Intersection/Vertical Dock to Upper Factory Save Station
   > Save Station
       Trivial
 
@@ -458,7 +524,7 @@ Extra - minimap_data: [{'x': 64, 'y': 21}, {'x': 65, 'y': 21}]
               Morph Ball and Mid-Air Morph (Beginner)
           # Destroy Sand
           Missiles or Super Missiles or Wave Beam or Can Use Any Bombs
-  > Dock to Upper Factory Intersection
+  > Vertical Dock to Upper Factory Intersection
       Trivial
 
 > Pickup (Missile Tank); Heals? False
@@ -472,16 +538,20 @@ Extra - minimap_data: [{'x': 64, 'y': 21}, {'x': 65, 'y': 21}]
 Upper Factory Intersection
 Extra - map_name: rm_a3a03
 Extra - minimap_data: [{'x': 64, 'y': 22}, {'x': 64, 'y': 23}, {'x': 64, 'y': 24}]
-> Dock to Upper Factory Save Station; Heals? False
+> Vertical Dock to Upper Factory Save Station; Heals? False
   * Layers: default
-  * Open Passage to Upper Factory Save Station/Dock to Upper Factory Intersection
+  * 2-Tiles Wide Dock to Upper Factory Save Station/Vertical Dock to Upper Factory Intersection
   > Horizontal Dock to Upper Factory Gamma Nest
       Trivial
 
 > Horizontal Dock to Upper Factory Gamma Nest; Heals? False
   * Layers: default
   * 4-Tiles High Dock to Upper Factory Gamma Nest/Horizontal Dock to Upper Factory Intersection
-  > Dock to Upper Factory Save Station
+  * Extra - instance_id: 115736
+  * Extra - facing: left
+  * Extra - x: 320
+  * Extra - y: 400
+  > Vertical Dock to Upper Factory Save Station
       Any of the following:
           Space Jump or Can Use Spider Ball
           All of the following:
@@ -495,7 +565,11 @@ Extra - minimap_data: [{'x': 64, 'y': 22}, {'x': 64, 'y': 23}, {'x': 64, 'y': 24
 > Horizontal Dock to Spazer Beam Chamber Access; Heals? False
   * Layers: default
   * 4-Tiles High Dock to Spazer Beam Chamber Access/Horizontal Dock to Upper Factory Intersection
-  > Dock to Upper Factory Save Station
+  * Extra - instance_id: 115737
+  * Extra - facing: right
+  * Extra - x: 0
+  * Extra - y: 640
+  > Vertical Dock to Upper Factory Save Station
       All of the following:
           Speed Booster and Shinesparking Tricks (Beginner) and Disabled Entrance Rando
           Hi-Jump Boots or Power Grip or Walljump (Beginner)
@@ -514,6 +588,10 @@ Extra - minimap_data: [{'x': 60, 'y': 24}, {'x': 61, 'y': 24}, {'x': 61, 'y': 25
 > Horizontal Dock to Upper Factory Intersection; Heals? False
   * Layers: default
   * 4-Tiles High Dock to Upper Factory Intersection/Horizontal Dock to Spazer Beam Chamber Access
+  * Extra - instance_id: 116032
+  * Extra - facing: left
+  * Extra - x: 1280
+  * Extra - y: 160
   > Door to Spazer Beam
       # Speedboost
       Speed Booster and Shinesparking Tricks (Beginner)
@@ -604,7 +682,11 @@ Extra - minimap_data: [{'x': 65, 'y': 23}, {'x': 65, 'y': 24}, {'x': 65, 'y': 25
 > Horizontal Dock to Upper Factory Intersection; Heals? False
   * Layers: default
   * 4-Tiles High Dock to Upper Factory Intersection/Horizontal Dock to Upper Factory Gamma Nest
-  > Dock to Upper Factory Autoad Fork
+  * Extra - instance_id: 116374
+  * Extra - facing: right
+  * Extra - x: 0
+  * Extra - y: 160
+  > Vertical Dock to Upper Factory Autoad Fork
       Trivial
   > Pickup (Missile Tank)
       All of the following:
@@ -627,9 +709,9 @@ Extra - minimap_data: [{'x': 65, 'y': 23}, {'x': 65, 'y': 24}, {'x': 65, 'y': 25
                       # HJ+SJ Method
                       Hi-Jump Boots and Space Jump and Shinesparking Tricks (Intermediate)
 
-> Dock to Upper Factory Autoad Fork; Heals? False
+> Vertical Dock to Upper Factory Autoad Fork; Heals? False
   * Layers: default
-  * Open Passage to Upper Factory Autoad Fork/Dock to Upper Factory Gamma Nest
+  * 2-Tiles Wide Dock to Upper Factory Autoad Fork/Vertical Dock to Upper Factory Gamma Nest
   > Horizontal Dock to Upper Factory Intersection
       Any of the following:
           Space Jump Wall
@@ -651,7 +733,7 @@ Extra - minimap_data: [{'x': 65, 'y': 23}, {'x': 65, 'y': 24}, {'x': 65, 'y': 25
 > Event - Gamma; Heals? False
   * Layers: default
   * Event Metroids Area 3 - Interior Shaft Gamma
-  > Dock to Upper Factory Autoad Fork
+  > Vertical Dock to Upper Factory Autoad Fork
       Trivial
   > Pickup (Gamma)
       Trivial
@@ -660,7 +742,7 @@ Extra - minimap_data: [{'x': 65, 'y': 23}, {'x': 65, 'y': 24}, {'x': 65, 'y': 25
   * Layers: default
   * Pickup 204; Category? Minor
   * Extra - object_name: oItemM_204
-  > Dock to Upper Factory Autoad Fork
+  > Vertical Dock to Upper Factory Autoad Fork
       Trivial
 
 > Pickup (Gamma); Heals? False
@@ -674,16 +756,20 @@ Extra - minimap_data: [{'x': 65, 'y': 23}, {'x': 65, 'y': 24}, {'x': 65, 'y': 25
 Upper Factory Autoad Fork
 Extra - map_name: rm_a3a08
 Extra - minimap_data: [{'x': 65, 'y': 26}]
-> Dock to Upper Factory Gamma Nest; Heals? False
+> Vertical Dock to Upper Factory Gamma Nest; Heals? False
   * Layers: default
-  * Open Passage to Upper Factory Gamma Nest/Dock to Upper Factory Autoad Fork
+  * 2-Tiles Wide Dock to Upper Factory Gamma Nest/Vertical Dock to Upper Factory Autoad Fork
   > Horizontal Dock to Speed Booster Chamber Access
       Trivial
 
 > Horizontal Dock to Speed Booster Chamber Access; Heals? False
   * Layers: default
   * 4-Tiles High Dock to Speed Booster Chamber Access/Horizontal Dock to Upper Factory Autoad Fork
-  > Dock to Upper Factory Gamma Nest
+  * Extra - instance_id: 116448
+  * Extra - facing: right
+  * Extra - x: 0
+  * Extra - y: 208
+  > Vertical Dock to Upper Factory Gamma Nest
       Power Grip Wall
   > Horizontal Dock to Shirk Prisons
       Trivial
@@ -691,6 +777,10 @@ Extra - minimap_data: [{'x': 65, 'y': 26}]
 > Horizontal Dock to Shirk Prisons; Heals? False
   * Layers: default
   * 4-Tiles High Dock to Shirk Prisons/Horizontal Dock to Upper Factory Autoad Fork
+  * Extra - instance_id: 116449
+  * Extra - facing: left
+  * Extra - x: 320
+  * Extra - y: 208
   > Horizontal Dock to Speed Booster Chamber Access
       Trivial
 
@@ -713,6 +803,10 @@ Extra - minimap_data: [{'x': 61, 'y': 26}, {'x': 62, 'y': 26}, {'x': 63, 'y': 26
 > Horizontal Dock to Upper Factory Autoad Fork; Heals? False
   * Layers: default
   * 4-Tiles High Dock to Upper Factory Autoad Fork/Horizontal Dock to Speed Booster Chamber Access
+  * Extra - instance_id: 116699
+  * Extra - facing: left
+  * Extra - x: 1280
+  * Extra - y: 208
   > Door to Speed Booster Chamber
       Any of the following:
           Speed Booster
@@ -746,12 +840,22 @@ Extra - minimap_data: [{'x': 66, 'y': 26}, {'x': 67, 'y': 26}, {'x': 68, 'y': 26
 > Horizontal Dock to Treadmill Room; Heals? False
   * Layers: default
   * 4-Tiles High Dock to Treadmill Room/Horizontal Dock to Shirk Prisons
+  * Extra - instance_id: 116994
+  * Extra - facing: left
+  * Extra - x: 1280
+  * Extra - y: 208
   > Horizontal Dock to Upper Factory Autoad Fork
-      Speed Booster and Disabled Entrance Rando
+      All of the following:
+          Speed Booster and Disabled Entrance Rando
+          Missiles ≥ 4 or Morph Ball or Super Missiles ≥ 4
 
 > Horizontal Dock to Upper Factory Autoad Fork; Heals? False
   * Layers: default
   * 4-Tiles High Dock to Upper Factory Autoad Fork/Horizontal Dock to Shirk Prisons
+  * Extra - instance_id: 116995
+  * Extra - facing: right
+  * Extra - x: 0
+  * Extra - y: 208
   > Horizontal Dock to Treadmill Room
       All of the following:
           Speed Booster
@@ -783,17 +887,27 @@ Extra - minimap_data: [{'x': 70, 'y': 26}, {'x': 71, 'y': 26}, {'x': 72, 'y': 26
 > Horizontal Dock to Shirk Prisons; Heals? False
   * Layers: default
   * 4-Tiles High Dock to Shirk Prisons/Horizontal Dock to Treadmill Room
+  * Extra - instance_id: 117205
+  * Extra - facing: right
+  * Extra - x: 0
+  * Extra - y: 208
   > Horizontal Dock to Spiky Shaft
       Speed Booster
 
 > Horizontal Dock to Spiky Shaft; Heals? False
   * Layers: default
   * 4-Tiles High Dock to Spiky Shaft/Horizontal Dock to Treadmill Room
+  * Extra - instance_id: 117206
+  * Extra - facing: left
+  * Extra - x: 960
+  * Extra - y: 208
   > Horizontal Dock to Shirk Prisons
       All of the following:
           Speed Booster
-          # A way to climb the left
-          Movement (Beginner) or Power Grip Wall
+          Any of the following:
+              # A way to climb the left
+              Shinesparking Tricks (Beginner) or Power Grip Wall
+              Morph Ball and Morph Glide (Intermediate)
   > Pickup (Missile Tank)
       All of the following:
           Morph Ball and Speed Booster and Shinesparking Tricks (Beginner)
@@ -816,6 +930,10 @@ Extra - minimap_data: [{'x': 73, 'y': 25}, {'x': 73, 'y': 26}]
 > Horizontal Dock to Treadmill Room; Heals? False
   * Layers: default
   * 4-Tiles High Dock to Treadmill Room/Horizontal Dock to Spiky Shaft
+  * Extra - instance_id: 117293
+  * Extra - facing: right
+  * Extra - x: 0
+  * Extra - y: 448
   > Top
       Any of the following:
           Space Jump
@@ -831,6 +949,10 @@ Extra - minimap_data: [{'x': 73, 'y': 25}, {'x': 73, 'y': 26}]
 > Horizontal Dock to Autom Alleyway; Heals? False
   * Layers: default
   * 4-Tiles High Dock to Autom Alleyway/Horizontal Dock to Spiky Shaft
+  * Extra - instance_id: 117294
+  * Extra - facing: right
+  * Extra - x: 0
+  * Extra - y: 96
   > Horizontal Dock to Lower Factory Entrance
       All of the following:
           Can Use Spider Ball
@@ -842,6 +964,10 @@ Extra - minimap_data: [{'x': 73, 'y': 25}, {'x': 73, 'y': 26}]
 > Horizontal Dock to Lower Factory Entrance; Heals? False
   * Layers: default
   * 4-Tiles High Dock to Lower Factory Entrance/Horizontal Dock to Spiky Shaft
+  * Extra - instance_id: 117294
+  * Extra - facing: left
+  * Extra - x: 0
+  * Extra - y: 96
   > Horizontal Dock to Autom Alleyway
       All of the following:
           Can Use Spider Ball
@@ -866,6 +992,10 @@ Extra - minimap_data: [{'x': 69, 'y': 25}, {'x': 70, 'y': 25}, {'x': 71, 'y': 25
 > Horizontal Dock to Spiky Shaft; Heals? False
   * Layers: default
   * 4-Tiles High Dock to Spiky Shaft/Horizontal Dock to Autom Alleyway
+  * Extra - instance_id: 117499
+  * Extra - facing: left
+  * Extra - x: 1280
+  * Extra - y: 96
   > Tunnel to Upper Factory Alpha Nest
       Can Use Any Bombs and Power Grip Climb
 
@@ -923,6 +1053,10 @@ Extra - minimap_data: [{'x': 74, 'y': 25}, {'x': 74, 'y': 26}, {'x': 74, 'y': 27
 > Horizontal Dock to Spiky Shaft; Heals? False
   * Layers: default
   * 4-Tiles High Dock to Spiky Shaft/Horizontal Dock to Lower Factory Entrance
+  * Extra - instance_id: 117956
+  * Extra - facing: right
+  * Extra - x: 0
+  * Extra - y: 96
   > Middle
       Can Use Any Bombs
 
@@ -935,6 +1069,10 @@ Extra - minimap_data: [{'x': 74, 'y': 25}, {'x': 74, 'y': 26}, {'x': 74, 'y': 27
 > Horizontal Dock to Lower Factory Save Station; Heals? False
   * Layers: default
   * 4-Tiles High Dock to Lower Factory Save Station/Horizontal Dock to Lower Factory Entrance
+  * Extra - instance_id: 117958
+  * Extra - facing: right
+  * Extra - x: 0
+  * Extra - y: 928
 
 > Middle; Heals? False
   * Layers: default
@@ -960,12 +1098,20 @@ Extra - minimap_data: [{'x': 73, 'y': 28}]
 > Horizontal Dock to Lower Factory Entrance; Heals? False
   * Layers: default
   * 4-Tiles High Dock to Lower Factory Entrance/Horizontal Dock to Lower Factory Save Station
+  * Extra - instance_id: 118053
+  * Extra - facing: left
+  * Extra - x: 320
+  * Extra - y: 208
   > Save Station
       Trivial
 
 > Horizontal Dock to Lower Factory Hub; Heals? False
   * Layers: default
   * 4-Tiles High Dock to Lower Factory Hub/Horizontal Dock to Lower Factory Save Station
+  * Extra - instance_id: 118054
+  * Extra - facing: right
+  * Extra - x: 0
+  * Extra - y: 208
   > Save Station
       Trivial
 
@@ -992,6 +1138,10 @@ Extra - minimap_data: [{'x': 69, 'y': 27}, {'x': 69, 'y': 28}, {'x': 70, 'y': 27
 > Horizontal Dock to Lower Factory Intersection; Heals? False
   * Layers: default
   * 4-Tiles High Dock to Lower Factory Intersection/Horizontal Dock to Lower Factory Hub
+  * Extra - instance_id: 118488
+  * Extra - facing: right
+  * Extra - x: 0
+  * Extra - y: 432
   > Top left
       Trivial
 
@@ -1004,6 +1154,10 @@ Extra - minimap_data: [{'x': 69, 'y': 27}, {'x': 69, 'y': 28}, {'x': 70, 'y': 27
 > Horizontal Dock to Lower Factory Save Station; Heals? False
   * Layers: default
   * 4-Tiles High Dock to Lower Factory Save Station/Horizontal Dock to Lower Factory Hub
+  * Extra - instance_id: 118490
+  * Extra - facing: left
+  * Extra - x: 1280
+  * Extra - y: 448
   > Pickup (Missile Tank)
       Speed Booster and Shinesparking Tricks (Intermediate) and Walljump (Advanced) and Disabled Entrance Rando
   > Top right
@@ -1095,20 +1249,49 @@ Extra - minimap_data: [{'x': 67, 'y': 29}, {'x': 67, 'y': 30}, {'x': 68, 'y': 28
 > Horizontal Dock to Lower Factory Hub; Heals? False
   * Layers: default
   * 4-Tiles High Dock to Lower Factory Hub/Horizontal Dock to Lower Factory Intersection
+  * Extra - instance_id: 118690
+  * Extra - facing: left
+  * Extra - x: 640
+  * Extra - y: 192
   > Horizontal Dock to Lower Factory Lava Lake Access
       Trivial
 
 > Horizontal Dock to Assembly Line; Heals? False
   * Layers: default
   * 4-Tiles High Dock to Assembly Line/Horizontal Dock to Lower Factory Intersection
+  * Extra - instance_id: 118691
+  * Extra - facing: left
+  * Extra - x: 320
+  * Extra - y: 672
   > Horizontal Dock to Lower Factory Lava Lake Access
       Trivial
 
 > Horizontal Dock to Lower Factory Lava Lake Access; Heals? False
   * Layers: default
   * 4-Tiles High Dock to Lower Factory Lava Lake Access/Horizontal Dock to Lower Factory Intersection
+  * Extra - instance_id: 118692
+  * Extra - facing: right
+  * Extra - x: 0
+  * Extra - y: 672
   > Horizontal Dock to Lower Factory Hub
-      Hijump With Power Grip Wall
+      Any of the following:
+          Space Jump
+          All of the following:
+              Hi-Jump Boots
+              Power Grip or Walljump (Beginner)
+          # IBJ
+          Infinite Bomb Jumping (Intermediate) and Can Use Bombs
+          # CBJ
+          Charged Bomb Jump (Intermediate) and Can Use Charged Bomb Jump
+          All of the following:
+              Can Use Spider Ball
+              Any of the following:
+                  Bombs or Spring Ball or Mid-Air Morph (Beginner)
+                  Power Bombs and Disabled Entrance Rando
+          # Damage Boost off of Shirk
+          Damage Boost (Expert) and Walljump (Advanced) and Normal Damage ≥ 50
+          # Shinespark
+          Speed Booster and Shinesparking Tricks (Beginner) and Short Charge (Expert)
   > Horizontal Dock to Assembly Line
       Trivial
 
@@ -1119,12 +1302,20 @@ Extra - minimap_data: [{'x': 68, 'y': 30}, {'x': 69, 'y': 30}, {'x': 70, 'y': 30
 > Horizontal Dock to Lower Factory Intersection; Heals? False
   * Layers: default
   * 4-Tiles High Dock to Lower Factory Intersection/Horizontal Dock to Assembly Line
+  * Extra - instance_id: 118877
+  * Extra - facing: right
+  * Extra - x: 0
+  * Extra - y: 192
   > Horizontal Dock to Skippy Room
       Trivial
 
 > Horizontal Dock to Skippy Room; Heals? False
   * Layers: default
   * 4-Tiles High Dock to Skippy Room/Horizontal Dock to Assembly Line
+  * Extra - instance_id: 118878
+  * Extra - facing: left
+  * Extra - x: 1280
+  * Extra - y: 192
   > Horizontal Dock to Lower Factory Intersection
       Trivial
 
@@ -1135,6 +1326,10 @@ Extra - minimap_data: [{'x': 72, 'y': 29}, {'x': 72, 'y': 30}, {'x': 73, 'y': 29
 > Horizontal Dock to Assembly Line; Heals? False
   * Layers: default
   * 4-Tiles High Dock to Assembly Line/Horizontal Dock to Skippy Room
+  * Extra - instance_id: 119239
+  * Extra - facing: right
+  * Extra - x: 0
+  * Extra - y: 432
   > Event - Skippy
       Morph Ball
   > Event - Past Super Blocks
@@ -1143,9 +1338,9 @@ Extra - minimap_data: [{'x': 72, 'y': 29}, {'x': 72, 'y': 30}, {'x': 73, 'y': 29
           # Get past super blocks
           Super Missiles ≥ 3 or After Area 3 - Industrial Complex Skippy Minigame Cleared
 
-> Dock to Super Missile Chamber Access; Heals? False
+> Vertical Dock to Super Missile Chamber Access; Heals? False
   * Layers: default
-  * Open Passage to Super Missile Chamber Access/Dock to Skippy Room
+  * 4-Tiles Wide Dock to Super Missile Chamber Access/Vertical Dock to Skippy Room
   > Event - Past Super Blocks
       Trivial
 
@@ -1160,23 +1355,27 @@ Extra - minimap_data: [{'x': 72, 'y': 29}, {'x': 72, 'y': 30}, {'x': 73, 'y': 29
   * Event Area 3 - Industrial Complex Skippy Minigame Cleared
   > Horizontal Dock to Assembly Line
       Space Jump Wall
-  > Dock to Super Missile Chamber Access
+  > Vertical Dock to Super Missile Chamber Access
       Trivial
 
 ----------------
 Super Missile Chamber Access
 Extra - map_name: rm_a3a23
 Extra - minimap_data: [{'x': 74, 'y': 31}, {'x': 74, 'y': 32}]
-> Dock to Skippy Room; Heals? False
+> Vertical Dock to Skippy Room; Heals? False
   * Layers: default
-  * Open Passage to Skippy Room/Dock to Super Missile Chamber Access
+  * 4-Tiles Wide Dock to Skippy Room/Vertical Dock to Super Missile Chamber Access
   > Horizontal Dock to Super Missile Chamber
       Trivial
 
 > Horizontal Dock to Super Missile Chamber; Heals? False
   * Layers: default
   * 4-Tiles High Dock to Super Missile Chamber/Horizontal Dock to Super Missile Chamber Access
-  > Dock to Skippy Room
+  * Extra - instance_id: 119329
+  * Extra - facing: right
+  * Extra - x: 0
+  * Extra - y: 432
+  > Vertical Dock to Skippy Room
       Any of the following:
           Space Jump or Walljump (Intermediate) or Can Use Spider Ball
           Hi-Jump Boots and Power Grip
@@ -1196,6 +1395,10 @@ Extra - minimap_data: [{'x': 72, 'y': 32}, {'x': 73, 'y': 32}]
 > Horizontal Dock to Super Missile Chamber Access; Heals? False
   * Layers: default
   * 4-Tiles High Dock to Super Missile Chamber Access/Horizontal Dock to Super Missile Chamber
+  * Extra - instance_id: 119469
+  * Extra - facing: left
+  * Extra - x: 640
+  * Extra - y: 192
   > In Front Of Super
       After Area 3 - Super Missile Crystal Destroyed or Power Grip Wall
   > Event - Crystal
@@ -1232,12 +1435,20 @@ Extra - minimap_data: [{'x': 66, 'y': 30}, {'x': 66, 'y': 31}]
 > Horizontal Dock to Lower Factory Intersection; Heals? False
   * Layers: default
   * 4-Tiles High Dock to Lower Factory Intersection/Horizontal Dock to Lower Factory Lava Lake Access
+  * Extra - instance_id: 119540
+  * Extra - facing: left
+  * Extra - x: 320
+  * Extra - y: 192
   > Horizontal Dock to Lower Factory Lava Lake
       Trivial
 
 > Horizontal Dock to Lower Factory Lava Lake; Heals? False
   * Layers: default
   * 4-Tiles High Dock to Lower Factory Lava Lake/Horizontal Dock to Lower Factory Lava Lake Access
+  * Extra - instance_id: 119541
+  * Extra - facing: left
+  * Extra - x: 3200
+  * Extra - y: 416
   > Horizontal Dock to Lower Factory Intersection
       Space Jump Wall
 
@@ -1248,6 +1459,10 @@ Extra - minimap_data: [{'x': 67, 'y': 31}, {'x': 67, 'y': 32}, {'x': 68, 'y': 31
 > Horizontal Dock to Lower Factory Gamma Nest; Heals? False
   * Layers: default
   * 4-Tiles High Dock to Lower Factory Gamma Nest/Horizontal Dock to Lower Factory Lava Lake
+  * Extra - instance_id: 119846
+  * Extra - facing: left
+  * Extra - x: 1600
+  * Extra - y: 176
   > Horizontal Dock to Lower Factory Lava Lake Access
       Any of the following:
           Space Jump
@@ -1259,6 +1474,10 @@ Extra - minimap_data: [{'x': 67, 'y': 31}, {'x': 67, 'y': 32}, {'x': 68, 'y': 31
 > Horizontal Dock to Lower Factory Lava Lake Access; Heals? False
   * Layers: default
   * 4-Tiles High Dock to Lower Factory Lava Lake Access/Horizontal Dock to Lower Factory Lava Lake
+  * Extra - instance_id: 119847
+  * Extra - facing: right
+  * Extra - x: 0
+  * Extra - y: 176
   > Horizontal Dock to Lower Factory Gamma Nest
       Any of the following:
           Space Jump
@@ -1276,6 +1495,10 @@ Extra - minimap_data: [{'x': 72, 'y': 31}, {'x': 73, 'y': 31}]
 > Horizontal Dock to Lower Factory Lava Lake; Heals? False
   * Layers: default
   * 4-Tiles High Dock to Lower Factory Lava Lake/Horizontal Dock to Lower Factory Gamma Nest
+  * Extra - instance_id: 119956
+  * Extra - facing: right
+  * Extra - x: 0
+  * Extra - y: 176
   > Event - Gamma
       Defeat dodging Gamma
 
@@ -1320,12 +1543,16 @@ Extra - minimap_data: [{'x': 54, 'y': 24}, {'x': 55, 'y': 24}, {'x': 56, 'y': 24
 > Horizontal Dock to Pincherfly Parlor; Heals? False
   * Layers: default
   * 4-Tiles High Dock to Pincherfly Parlor/Horizontal Dock to Breeding Grounds Access East
-  > Dock to Breeding Grounds Crossroads
+  * Extra - instance_id: 120221
+  * Extra - facing: right
+  * Extra - x: 0
+  * Extra - y: 176
+  > Vertical Dock to Breeding Grounds Crossroads
       Speed Booster and Can Use Bombs
 
-> Dock to Breeding Grounds Crossroads; Heals? False
+> Vertical Dock to Breeding Grounds Crossroads; Heals? False
   * Layers: default
-  * Open Passage to Breeding Grounds Crossroads/Dock to Breeding Grounds Access East
+  * 3-Tiles Wide Dock to Breeding Grounds Crossroads/Vertical Dock to Breeding Grounds Access East
   > Horizontal Dock to Pincherfly Parlor
       Morph Ball and Power Grip Wall
 
@@ -1333,9 +1560,9 @@ Extra - minimap_data: [{'x': 54, 'y': 24}, {'x': 55, 'y': 24}, {'x': 56, 'y': 24
 Breeding Grounds Crossroads
 Extra - map_name: rm_a3b02
 Extra - minimap_data: [{'x': 56, 'y': 25}, {'x': 56, 'y': 26}, {'x': 56, 'y': 27}, {'x': 56, 'y': 28}, {'x': 56, 'y': 29}, {'x': 56, 'y': 30}]
-> Dock to Breeding Grounds Access East; Heals? False
+> Vertical Dock to Breeding Grounds Access East; Heals? False
   * Layers: default
-  * Open Passage to Breeding Grounds Access East/Dock to Breeding Grounds Crossroads
+  * 3-Tiles Wide Dock to Breeding Grounds Access East/Vertical Dock to Breeding Grounds Crossroads
   > Horizontal Dock to Breeding Grounds Gamma Nest West
       Trivial
 
@@ -1348,7 +1575,7 @@ Extra - minimap_data: [{'x': 56, 'y': 25}, {'x': 56, 'y': 26}, {'x': 56, 'y': 27
 > Horizontal Dock to Breeding Grounds Gamma Nest Center; Heals? False
   * Layers: default
   * 3-Tiles High Dock to Breeding Grounds Gamma Nest Center/Horizontal Dock to Breeding Grounds Crossroads
-  > Dock to Breeding Grounds Access East
+  > Vertical Dock to Breeding Grounds Access East
       Any of the following:
           Space Jump or Walljump (Expert) or Can Use Spider Ball
           All of the following:
@@ -1375,6 +1602,10 @@ Extra - minimap_data: [{'x': 56, 'y': 25}, {'x': 56, 'y': 26}, {'x': 56, 'y': 27
 > Horizontal Dock to Breeding Grounds Gamma Nest South; Heals? False
   * Layers: default
   * 4-Tiles High Dock to Breeding Grounds Gamma Nest South/Horizontal Dock to Breeding Grounds Crossroads
+  * Extra - instance_id: 120486
+  * Extra - facing: left
+  * Extra - x: 320
+  * Extra - y: 1392
   > Horizontal Dock to Breeding Grounds Gamma Nest Center
       Can Use Any Bombs and Low Mid-Air Morph Tunnel Climb and Power Grip Wall
 
@@ -1382,16 +1613,16 @@ Extra - minimap_data: [{'x': 56, 'y': 25}, {'x': 56, 'y': 26}, {'x': 56, 'y': 27
 Breeding Grounds Gamma Nest West
 Extra - map_name: rm_a3b03
 Extra - minimap_data: [{'x': 53, 'y': 27}, {'x': 54, 'y': 27}, {'x': 55, 'y': 27}]
-> Dock to Pincherfly Parlor; Heals? False
+> Vertical Dock to Pincherfly Parlor; Heals? False
   * Layers: default
-  * Open Passage to Pincherfly Parlor/Dock to Breeding Grounds Gamma Nest West
+  * 2-Tiles Wide Dock to Pincherfly Parlor/Vertical Dock to Breeding Grounds Gamma Nest West
   > Horizontal Dock to Breeding Grounds Crossroads
       Trivial
 
 > Horizontal Dock to Breeding Grounds Crossroads; Heals? False
   * Layers: default
   * 3-Tiles High Dock to Breeding Grounds Crossroads/Horizontal Dock to Breeding Grounds Gamma Nest West
-  > Dock to Pincherfly Parlor
+  > Vertical Dock to Pincherfly Parlor
       Any of the following:
           Space Jump
           Hi-Jump Boots and Walljump (Advanced)
@@ -1451,16 +1682,16 @@ Extra - minimap_data: [{'x': 57, 'y': 28}, {'x': 58, 'y': 28}]
 Breeding Grounds Alpha Nest Access
 Extra - map_name: rm_a3b05
 Extra - minimap_data: [{'x': 59, 'y': 26}, {'x': 59, 'y': 27}, {'x': 59, 'y': 28}, {'x': 59, 'y': 29}]
-> Dock to Breeding Grounds Alpha Nest; Heals? False
+> Vertical Dock to Breeding Grounds Alpha Nest; Heals? False
   * Layers: default
-  * Open Passage to Breeding Grounds Alpha Nest/Dock to Breeding Grounds Alpha Nest Access
+  * 3-Tiles Wide Dock to Breeding Grounds Alpha Nest/Vertical Dock to Breeding Grounds Alpha Nest Access
   > Horizontal Dock to Breeding Grounds Gamma Nest Center
       Trivial
 
 > Horizontal Dock to Breeding Grounds Gamma Nest Center; Heals? False
   * Layers: default
   * 3-Tiles High Dock to Breeding Grounds Gamma Nest Center/Horizontal Dock to Breeding Grounds Alpha Nest Access
-  > Dock to Breeding Grounds Alpha Nest
+  > Vertical Dock to Breeding Grounds Alpha Nest
       Any of the following:
           Space Jump or Walljump (Advanced) or Can Use Spider Ball
           Hi-Jump Boots and Walljump (Beginner)
@@ -1469,9 +1700,9 @@ Extra - minimap_data: [{'x': 59, 'y': 26}, {'x': 59, 'y': 27}, {'x': 59, 'y': 28
 Breeding Grounds Alpha Nest
 Extra - map_name: rm_a3b06
 Extra - minimap_data: [{'x': 58, 'y': 25}, {'x': 59, 'y': 25}]
-> Dock to Breeding Grounds Alpha Nest Access; Heals? False
+> Vertical Dock to Breeding Grounds Alpha Nest Access; Heals? False
   * Layers: default
-  * Open Passage to Breeding Grounds Alpha Nest Access/Dock to Breeding Grounds Alpha Nest
+  * 3-Tiles Wide Dock to Breeding Grounds Alpha Nest Access/Vertical Dock to Breeding Grounds Alpha Nest
   > Tunnel to Breeding Grounds Gamma Nest North
       Hijump Tunnel Climb
   > Event - Alpha
@@ -1480,13 +1711,13 @@ Extra - minimap_data: [{'x': 58, 'y': 25}, {'x': 59, 'y': 25}]
 > Tunnel to Breeding Grounds Gamma Nest North; Heals? False
   * Layers: default
   * Morph Ball Tunnel to Breeding Grounds Gamma Nest North/Tunnel to Breeding Grounds Alpha Nest
-  > Dock to Breeding Grounds Alpha Nest Access
+  > Vertical Dock to Breeding Grounds Alpha Nest Access
       Morph Ball
 
 > Event - Alpha; Heals? False
   * Layers: default
   * Event Metroids Area 3 - Breeding Grounds Alpha
-  > Dock to Breeding Grounds Alpha Nest Access
+  > Vertical Dock to Breeding Grounds Alpha Nest Access
       Trivial
   > Pickup (Alpha)
       Trivial
@@ -1530,12 +1761,20 @@ Extra - minimap_data: [{'x': 57, 'y': 30}, {'x': 57, 'y': 31}, {'x': 58, 'y': 30
 > Horizontal Dock to Breeding Grounds Crossroads; Heals? False
   * Layers: default
   * 4-Tiles High Dock to Breeding Grounds Crossroads/Horizontal Dock to Breeding Grounds Gamma Nest South
+  * Extra - instance_id: 121230
+  * Extra - facing: right
+  * Extra - x: 0
+  * Extra - y: 192
   > Bottom
       Can Use Any Bombs
 
 > Horizontal Dock to Breeding Grounds Fly Stadium Access; Heals? False
   * Layers: default
   * 4-Tiles High Dock to Breeding Grounds Fly Stadium Access/Horizontal Dock to Breeding Grounds Gamma Nest South
+  * Extra - instance_id: 121232
+  * Extra - facing: left
+  * Extra - x: 960
+  * Extra - y: 160
   > Bottom
       Can Use Any Bombs
 
@@ -1598,6 +1837,10 @@ Extra - minimap_data: [{'x': 60, 'y': 28}, {'x': 60, 'y': 29}, {'x': 60, 'y': 30
 > Horizontal Dock to Breeding Grounds Gamma Nest South; Heals? False
   * Layers: default
   * 4-Tiles High Dock to Breeding Grounds Gamma Nest South/Horizontal Dock to Breeding Grounds Fly Stadium Access
+  * Extra - instance_id: 121404
+  * Extra - facing: right
+  * Extra - x: 0
+  * Extra - y: 640
   > Horizontal Dock to Breeding Grounds Fly Stadium
       Hijump With Power Grip Wall
 

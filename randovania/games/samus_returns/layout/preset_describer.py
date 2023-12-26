@@ -54,13 +54,32 @@ class MSRPresetDescriber(GamePresetDescriber):
             ],
             "Difficulty": [
                 {f"{configuration.energy_per_tank} energy per Energy Tank": configuration.energy_per_tank != 100},
+                {
+                    f"Energy Reserve Tank restores {configuration.life_tank_size} Energy": configuration.life_tank_size
+                    != 299
+                },
+                {
+                    f"Aeion Reserve Tank restores {configuration.aeion_tank_size} Aeion": configuration.aeion_tank_size
+                    != 500
+                },
+                {
+                    f"Missile Reserve Tank restores {configuration.missile_tank_size} Missiles, \
+                            {configuration.super_missile_tank_size} Super Missiles": configuration.missile_tank_size
+                    != 30
+                    or configuration.super_missile_tank_size != 10
+                },
             ],
             "Item Pool": [
                 {
                     "Progressive Beam": has_shuffled_item(standard_pickups, "Progressive Beam"),
                     "Progressive Jump": has_shuffled_item(standard_pickups, "Progressive Jump"),
                     "Progressive Suit": has_shuffled_item(standard_pickups, "Progressive Suit"),
-                }
+                },
+                {
+                    "Energy Reserve Tank": has_shuffled_item(standard_pickups, "Energy Reserve Tank"),
+                    "Aeion Reserve Tank": has_shuffled_item(standard_pickups, "Aeion Reserve Tank"),
+                    "Missile Reserve Tank": has_shuffled_item(standard_pickups, "Missile Reserve Tank"),
+                },
             ],
             "Gameplay": [],
             "Goal": describe_artifacts(configuration.artifacts),

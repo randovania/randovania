@@ -2,35 +2,36 @@
 Distribution Entranceway
 Extra - map_name: rm_a5h01
 Extra - minimap_data: [{'x': 44, 'y': 44}, {'x': 45, 'y': 44}, {'x': 46, 'y': 44}]
-> Area Transition to Main Caves; Heals? False
+> Horizontal Dock to Main Caves; Heals? False
   * Layers: default
-  * Open Passage to The Descent/Area Transition to Distribution Center
+  * 4-Tiles High Dock to The Descent/Horizontal Dock to Distribution Center
   * Extra - instance_id: 131683
-  * Extra - source_x: 0
-  * Extra - source_y: 128
+  * Extra - facing: right
+  * Extra - x: 0
+  * Extra - y: 128
   > Horizontal Dock to Meboid Blockade Exterior 
       Trivial
 
 > Horizontal Dock to Meboid Blockade Exterior ; Heals? False
   * Layers: default
-  * 3-Tiles High Dock to Meboid Blockade Exterior /Dock to Distribution Entranceway
-  > Area Transition to Main Caves
+  * 3-Tiles High Dock to Meboid Blockade Exterior /Horizontal Dock to Distribution Entranceway
+  > Horizontal Dock to Main Caves
       Trivial
 
 ----------------
 Meboid Blockade Exterior 
 Extra - map_name: rm_a5h02
 Extra - minimap_data: [{'x': 47, 'y': 44}, {'x': 47, 'y': 45}, {'x': 47, 'y': 46}, {'x': 48, 'y': 44}, {'x': 48, 'y': 45}, {'x': 48, 'y': 46}, {'x': 49, 'y': 45}]
-> Dock to Distribution Entranceway; Heals? False
+> Horizontal Dock to Distribution Entranceway; Heals? False
   * Layers: default
-  * Open Passage to Distribution Entranceway/Horizontal Dock to Meboid Blockade Exterior 
-  > Dock to Distribution Center Exterior West Access
+  * 3-Tiles High Dock to Distribution Entranceway/Horizontal Dock to Meboid Blockade Exterior 
+  > Horizontal Dock to Distribution Center Exterior West Access
       Trivial
 
-> Dock to Distribution Center Exterior West Access; Heals? False
+> Horizontal Dock to Distribution Center Exterior West Access; Heals? False
   * Layers: default
-  * Open Passage to Distribution Center Exterior West Access/Horizontal Dock to Meboid Blockade Exterior 
-  > Dock to Distribution Entranceway
+  * 3-Tiles High Dock to Distribution Center Exterior West Access/Horizontal Dock to Meboid Blockade Exterior 
+  > Horizontal Dock to Distribution Entranceway
       Destroy Ice Barrier and Hijump Wall
 
 ----------------
@@ -39,7 +40,7 @@ Extra - map_name: rm_a5h03
 Extra - minimap_data: [{'x': 50, 'y': 45}, {'x': 50, 'y': 46}, {'x': 50, 'y': 47}, {'x': 51, 'y': 47}, {'x': 51, 'y': 48}, {'x': 51, 'y': 49}]
 > Horizontal Dock to Meboid Blockade Exterior ; Heals? False
   * Layers: default
-  * 3-Tiles High Dock to Meboid Blockade Exterior /Dock to Distribution Center Exterior West Access
+  * 3-Tiles High Dock to Meboid Blockade Exterior /Horizontal Dock to Distribution Center Exterior West Access
   > Horizontal Dock to Distribution Center Exterior West
       Trivial
 
@@ -311,16 +312,14 @@ Extra - minimap_data: [{'x': 60, 'y': 43}, {'x': 61, 'y': 43}, {'x': 62, 'y': 43
   * Normal Door to Energy Distribution Activation/Door to Energy Distribution Emergency Exit
   * Extra - instance_id: 133805
   > Door to EMP Ball Introduction
-      Any of the following:
-          Speed Booster
-          Morph Ball and Enabled Softlock Prevention
+      Speed Booster
 
 > Door to EMP Ball Introduction; Heals? False
   * Layers: default
   * Normal Door to EMP Ball Introduction/Door to Energy Distribution Emergency Exit
   * Extra - instance_id: 133806
   > Door to Energy Distribution Activation
-      Enabled Softlock Prevention and Hijump Tunnel Climb
+      Speed Booster and Enabled Softlock Prevention and Hijump Wall
   > Pickup (Super Missile Tank)
       Screw Attack
 
@@ -1423,7 +1422,7 @@ Extra - minimap_data: [{'x': 66, 'y': 49}, {'x': 66, 'y': 50}, {'x': 66, 'y': 51
 
 > Door to Serris Arena; Heals? False
   * Layers: default
-  * Missile Door to Serris Arena/Door to Serris Arena Access; Dock Lock Rando incompatible with: Spider Ball Door, Screw Attack Door, Hydro Station Water Turbine
+  * Missile Door to Serris Arena/Door to Serris Arena Access; Dock Lock Rando incompatible with: Spider Ball Door, Screw Attack Door, Hydro Station Water Turbine, Research Site Open Hatch
   * Extra - instance_id: 135404
   > Horizontal Dock to Spiky Spider Trial
       Trivial
@@ -1448,14 +1447,14 @@ Extra - map_name: rm_a5b03a
 Extra - minimap_data: [{'x': 64, 'y': 49}, {'x': 64, 'y': 50}, {'x': 65, 'y': 49}, {'x': 65, 'y': 50}]
 > Door to Serris Arena Access; Heals? False
   * Layers: default
-  * Normal Door to Serris Arena Access/Door to Serris Arena; Dock Lock Rando incompatible with: Spider Ball Door, Screw Attack Door, Hydro Station Water Turbine
+  * Normal Door to Serris Arena Access/Door to Serris Arena; Dock Lock Rando incompatible with: Spider Ball Door, Screw Attack Door, Hydro Station Water Turbine, Research Site Open Hatch
   * Extra - instance_id: 135449
   > Left Platform
       Power Grip Wall
 
 > Door to Serris Arena Pipe; Heals? False
   * Layers: default
-  * Normal Door to Serris Arena Pipe/Door to Serris Arena; Dock Lock Rando incompatible with: Spider Ball Door, Screw Attack Door, Hydro Station Water Turbine
+  * Normal Door to Serris Arena Pipe/Door to Serris Arena; Dock Lock Rando incompatible with: Spider Ball Door, Screw Attack Door, Hydro Station Water Turbine, Research Site Open Hatch
   * Extra - instance_id: 135448
   > Left Platform
       Before Area 5 - Distribution Center Item at Ice location Collected or After Boss - Serris Defeated
@@ -1510,7 +1509,7 @@ Extra - map_name: rm_a5b03
 Extra - minimap_data: [{'x': 63, 'y': 50}]
 > Door to Serris Arena; Heals? False; Default Node
   * Layers: default
-  * Normal Door to Serris Arena/Door to Serris Arena Pipe; Dock Lock Rando incompatible with: Spider Ball Door, Screw Attack Door, Hydro Station Water Turbine
+  * Normal Door to Serris Arena/Door to Serris Arena Pipe; Dock Lock Rando incompatible with: Spider Ball Door, Screw Attack Door, Hydro Station Water Turbine, Research Site Open Hatch
   * Extra - instance_id: 135598
   > Pipe to Ice Beam Chamber Access
       Morph Ball
@@ -1554,7 +1553,9 @@ Extra - minimap_data: [{'x': 67, 'y': 50}, {'x': 67, 'y': 51}]
               Morph Ball
               Any of the following:
                   # Get past crumble blocks
+                  # https://www.youtube.com/watch?v=s6e1hOW8UTI
                   Mid-Air Morph (Advanced)
+                  # https://www.youtube.com/watch?v=JlwkUM2KHCE
                   Power Grip and Movement (Intermediate)
               Any of the following:
                   # To climb the room
@@ -1572,7 +1573,7 @@ Extra - minimap_data: [{'x': 67, 'y': 50}, {'x': 67, 'y': 51}]
                       Can Use Spider Ball
                       Spring Ball or Mid-Air Morph (Beginner) or Can Use Bombs
                   All of the following:
-                      # Get past crumble blocks
+                      # Get past crumble blocks https://www.youtube.com/watch?v=QH3I73ZMQ3c
                       Hi-Jump Boots and Spring Ball and Movement (Intermediate)
                       Any of the following:
                           # To climb the room
@@ -1738,6 +1739,10 @@ Extra - minimap_data: [{'x': 67, 'y': 52}, {'x': 67, 'y': 53}, {'x': 68, 'y': 51
 > Horizontal Dock to Spiky Space Jump Trial Reward Room; Heals? False
   * Layers: default
   * 4-Tiles High Dock to Spiky Space Jump Trial Reward Room/Horizontal Dock to Spiky Space Jump Trial
+  * Extra - facing: left
+  * Extra - instance_id: 136064
+  * Extra - x: 1280
+  * Extra - y: 304
   > Horizontal Dock to Spiky Space Jump Trial Entrance
       Any of the following:
           All of the following:
@@ -1791,6 +1796,10 @@ Extra - minimap_data: [{'x': 71, 'y': 52}, {'x': 71, 'y': 53}]
 > Horizontal Dock to Spiky Space Jump Trial; Heals? False
   * Layers: default
   * 4-Tiles High Dock to Spiky Space Jump Trial/Horizontal Dock to Spiky Space Jump Trial Reward Room
+  * Extra - facing: right
+  * Extra - instance_id: 136099
+  * Extra - x: 0
+  * Extra - y: 144
   > Pickup (Energy Tank)
       Can Use Power Bombs
 
