@@ -72,6 +72,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Prime 2: Echoes
 
+- Added: A more stream-friendly autotracker layout
+
 #### Logic Database
 
 ##### Dark Agon Wastes
@@ -83,6 +85,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Prime
 
+- Added: A more stream-friendly autotracker layout
 - Fixed: Reverted Warrior Shrine -> Monitor Station loading improvement which could sometimes cause crashes
 - Fixed: Export compatibility with legacy cutscene skip options
 - Fixed: Music issues in Frigate Orpheon, Artifact Temple, Arboretum, Sunchamber Lobby, Burn Dome and Lava Lake
