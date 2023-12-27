@@ -1022,10 +1022,15 @@ def _migrate_v69(preset: dict) -> dict:
 
     return preset
 
-
 def _migrate_v70(preset: dict) -> dict:
     if preset["game"] == "am2r":
         preset["configuration"]["blue_save_doors"] = False
+
+    return preset
+
+def _migrate_v71(preset: dict) -> dict:
+    if preset["game"] == "am2r":
+        preset["configuration"]["extra_doors"] = False
 
     return preset
 
@@ -1101,6 +1106,7 @@ _MIGRATIONS = [
     _migrate_v68,
     _migrate_v69,
     _migrate_v70,
+    _migrate_v71,
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 
