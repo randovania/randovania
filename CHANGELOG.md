@@ -46,6 +46,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Research Site Open Hatches as available doors for Door Lock Rando.
 - Added: New option to place DNA anywhere.
 - Added: New option to force Save Station doors to be normal doors.
+- Added: New option to force doors in Genetics Laboratory to be normal doors.
 
 #### Logic Database
 

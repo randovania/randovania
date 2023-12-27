@@ -29,6 +29,7 @@ _FIELDS = [
     "a3_entrance_blocks",
     "screw_blocks",
     "blue_save_doors",
+    "force_blue_labs",
 ]
 
 
