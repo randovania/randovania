@@ -99,26 +99,21 @@ HTML_CONNECTION_FORMAT = """
 """
 
 HTML_VIDEO_FORMAT = """
-        <p><i> {} </i></p>
-        <iframe
-        width="560"
-        height="315"
-        src="https://www.youtube.com/embed/{}?start={}&autoplay=1"
-        srcdoc="<style>
-            *{{padding:0;margin:0;overflow:hidden}}
-            html,body{{height:100%}}
-            img,span{{position:absolute;width:100%;top:0;bottom:0;margin:auto}}
-            span{{height:1.5em;text-align:center;font:48px/1.5 sans-serif;color:white;text-shadow:0 0 0.5em black}}
-            </style>
-            <a href=https://www.youtube.com/embed/{}?start={}&autoplay=1>
-                <img src=https://img.youtube.com/vi/{}/hqdefault.jpg alt='YouTube video player'>
-                <span>▶️</span>
-            </a>"
-        frameborder="0"
-        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-        allowfullscreen
-        title="YouTube video player"
-        ></iframe>
+<p><i> {} </i></p>
+<iframe
+width="728"
+height="410"
+src="https://www.youtube.com/embed/{}?start={}&autoplay=1"
+srcdoc="<style>*{{padding:0;margin:0;overflow:hidden}}html,body{{height:100%}}
+img,span{{position:absolute;width:100%;top:0;bottom:0;margin:auto}}
+span{{height:1.5em;text-align:center;font:48px/1.5 sans-serif;color:white;text-shadow:0 0 0.5em black}}
+</style><a href=https://www.youtube.com/embed/{}?start={}&autoplay=1>
+<img src=https://img.youtube.com/vi/{}/hqdefault.jpg alt='vid'><span>▶️</span></a>"
+frameborder="0"
+allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+allowfullscreen
+title="vid"
+></iframe>
 """
 
 HTML_FOOTER = """
@@ -248,11 +243,12 @@ def generate_region_html(name: str, areas: dict[str, dict[str, dict[str, list[tu
                     if "%s?start=%d" % (id, start_time) in area_body:
                         # video already used for another connection in this room
                         continue
+
                     any = True
 
                     difficulty = LayoutTrickLevel.from_number(highest_diff).long_name
 
-                    area_body += HTML_VIDEO_FORMAT.format(
+                    connection_body += HTML_VIDEO_FORMAT.format(
                         difficulty,
                         id,
                         start_time,
