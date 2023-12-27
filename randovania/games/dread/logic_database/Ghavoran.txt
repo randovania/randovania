@@ -1669,10 +1669,8 @@ Extra - asset_id: collision_camera_024
   * Extra - right_shield_def: None
   > Door to Save Station East
       Trivial
-  > Pickup (Energy Part)
-      All of the following:
-          Ballspark
-          Space Jump or Simple IBJ
+  > Inside Speed Booster Tunnel
+      Ballspark
 
 > Door to Above Pulse Radar; Heals? False
   * Layers: default
@@ -1703,7 +1701,7 @@ Extra - asset_id: collision_camera_024
   * Pickup 112; Category? Minor
   * Extra - actor_name: item_energyfragment
   * Extra - actor_def: actordef:actors/items/item_energyfragment/charclasses/item_energyfragment.bmsad
-  > Door to Energy Recharge Station
+  > Inside Speed Booster Tunnel
       Trivial
 
 > Pickup (Missile Tank); Heals? False
@@ -1726,10 +1724,8 @@ Extra - asset_id: collision_camera_024
           Morph Ball and Knowledge (Intermediate) and Disabled Door Lock Randomizer
           Any of the following:
               Disabled Power Bomb Limitations and Lay Power Bomb
-              All of the following:
-                  Shoot Charge Beam
-                  # The pseudo for this is a melee pseudo next to the tunnel
-                  Wave Beam or Pseudo-Wave Beam (Beginner)
+              # The pseudo for this is a melee pseudo next to the tunnel
+              Pseudo-Wave Beam (Beginner) and Shoot Diffusion Beam
   > Dock to Energy Recharge Station
       Any of the following:
           Lay Bomb
@@ -1769,13 +1765,29 @@ Extra - asset_id: collision_camera_024
       Trivial
   > Door to Above Golzuna
       After Ghavoran - Destroy Golzuna Eyedoor
-  > Pickup (Energy Part)
-      # Eyedoors are excluded from door lock randomizer
-      Morph Ball and Speed Booster and Speed Booster Conservation (Beginner) and Use Spin Boost
   > Pickup (Missile Tank)
       Morph Ball
   > Event - Golzuna Eyedoor
       Trivial
+
+> Inside Speed Booster Tunnel; Heals? False
+  * Layers: default
+  > Door to Energy Recharge Station
+      Trivial
+  > Door to Above Pulse Radar
+      All of the following:
+          Knowledge (Intermediate) and Disabled Door Lock Randomizer and Shoot Charge Beam
+          Wave Beam or Pseudo-Wave Beam (Beginner)
+          Any of the following:
+              Lay Bomb
+              Power Bombs ≥ 2 and Lay Power Bomb
+  > Pickup (Energy Part)
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Space Jump or Simple IBJ
+              # Charge Speed from the other side of the Eyedoor and spark up the shaft after jumping in here with Spin Boost.
+              Speed Booster and Speed Booster Conservation (Beginner) and Use Spin Boost
 
 ----------------
 Teleport to Burenia
