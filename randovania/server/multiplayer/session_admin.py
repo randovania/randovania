@@ -220,13 +220,6 @@ def _update_layout_generation(sa: ServerApp, session: MultiplayerSession, world_
         session.save()
 
 
-def _check_preset_consistency(presets: list[VersionedPreset], session: MultiplayerSession) -> None:
-    unsupported_games = {preset.game.data.long_name for preset in presets if preset.game not in session.allowed_games}
-    if unsupported_games:
-        unsupported_games_str = ", ".join(unsupported_games)
-        raise error.InvalidActionError(f"Invalid layout. Unsupported games: {unsupported_games_str}")
-
-
 def _change_layout_description(sa: ServerApp, session: MultiplayerSession, description_bytes: bytes | None):
     verify_has_admin(sa, session.id, None)
     worlds_to_update = []
@@ -253,9 +246,9 @@ def _change_layout_description(sa: ServerApp, session: MultiplayerSession, descr
             raise error.InvalidActionError("One of the worlds has undefined order field.")
 
         try:
-            presets = [VersionedPreset.from_str(world.preset) for world in worlds]
-            _check_preset_consistency(presets, session)
-            description = LayoutDescription.from_bytes(description_bytes, presets=presets)
+            description = LayoutDescription.from_bytes(
+                description_bytes, presets=[VersionedPreset.from_str(world.preset) for world in worlds]
+            )
         except InvalidLayoutDescription as e:
             raise error.InvalidActionError(f"Invalid layout: {e}") from e
         except ValueError as e:
