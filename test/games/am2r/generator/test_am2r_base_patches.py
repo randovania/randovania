@@ -6,6 +6,7 @@ from random import Random
 
 import pytest
 
+from randovania.game_description.db.dock import DockWeakness
 from randovania.games.am2r.generator.base_patches_factory import AM2RBasePatchesFactory
 from randovania.games.am2r.layout.am2r_configuration import AM2RConfiguration
 from randovania.layout import filtered_database
@@ -85,10 +86,10 @@ def test_base_patches(am2r_game_description, preset_manager, force_blue_saves, f
     # Assert
     if force_blue_saves:
         for num, value in _save_door_mapping.items():
-            assert result.dock_weakness[num] is not None
+            assert isinstance(result.dock_weakness[num], DockWeakness)
             assert result.dock_weakness[num].name == value
 
     if force_blue_labs:
         for num, value in _lab_door_mapping.items():
-            assert result.dock_weakness[num] is not None
+            assert isinstance(result.dock_weakness[num], DockWeakness)
             assert result.dock_weakness[num].name == value
