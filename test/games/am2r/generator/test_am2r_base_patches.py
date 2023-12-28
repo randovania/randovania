@@ -55,7 +55,7 @@ _save_door_mapping = {
     1894: "Normal Door",
 }
 
-_lab_door_mapping = {}
+_lab_door_mapping: dict = {}
 
 
 @pytest.mark.parametrize(
@@ -85,8 +85,10 @@ def test_base_patches(am2r_game_description, preset_manager, force_blue_saves, f
     # Assert
     if force_blue_saves:
         for num, value in _save_door_mapping.items():
+            assert result.dock_weakness[num] is not None
             assert result.dock_weakness[num].name == value
 
     if force_blue_labs:
         for num, value in _lab_door_mapping.items():
+            assert result.dock_weakness[num] is not None
             assert result.dock_weakness[num].name == value
