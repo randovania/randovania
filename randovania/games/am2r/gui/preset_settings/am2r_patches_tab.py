@@ -25,6 +25,7 @@ _FIELDS = [
     "fusion_mode",
     "supers_on_missile_doors",
     "nest_pipes",
+    "extra_doors",
     "softlock_prevention_blocks",
     "a3_entrance_blocks",
     "screw_blocks",

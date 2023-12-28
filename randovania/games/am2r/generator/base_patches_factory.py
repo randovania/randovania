@@ -33,6 +33,9 @@ class AM2RBasePatchesFactory(BasePatchesFactory):
         dock_weakness: list[tuple[DockNode, DockWeakness]] = []
         blue_door = game.dock_weakness_database.get_by_weakness("door", "Normal Door")
 
+        # Extra doors: TODO: make all "future doors" actual doors.
+        # then exclude them from door lock rando and patch data factory unless setting is on
+
         if configuration.blue_save_doors:
             for area in game.region_list.all_areas:
                 if area.extra.get("unlocked_save_station"):
