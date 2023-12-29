@@ -11,52 +11,53 @@ from randovania.games.am2r.generator.base_patches_factory import AM2RBasePatches
 from randovania.games.am2r.layout.am2r_configuration import AM2RConfiguration
 from randovania.layout import filtered_database
 
-_save_door_mapping = {
-    37: "Normal Door",
-    41: "Normal Door",
-    305: "Normal Door",
-    342: "Normal Door",
-    495: "Normal Door",
-    498: "Normal Door",
-    1051: "Normal Door",
-    1057: "Normal Door",
-    1058: "Normal Door",
-    1062: "Normal Door",
-    1185: "Normal Door",
-    1190: "Normal Door",
-    1191: "Normal Door",
-    1194: "Normal Door",
-    1277: "Normal Door",
-    1302: "Normal Door",
-    1303: "Normal Door",
-    1306: "Normal Door",
-    1339: "Normal Door",
-    1343: "Normal Door",
-    1345: "Normal Door",
-    1348: "Normal Door",
-    1736: "Normal Door",
-    1740: "Normal Door",
-    1741: "Normal Door",
-    1745: "Normal Door",
-    1764: "Normal Door",
-    1769: "Normal Door",
-    1770: "Normal Door",
-    1775: "Normal Door",
-    1776: "Normal Door",
-    1779: "Normal Door",
-    1780: "Normal Door",
-    1787: "Normal Door",
-    1788: "Normal Door",
-    1796: "Normal Door",
-    1797: "Normal Door",
-    1804: "Normal Door",
-    1805: "Normal Door",
-    1808: "Normal Door",
-    1889: "Normal Door",
-    1894: "Normal Door",
-}
+_save_door_list = [
+    37,
+    41,
+    305,
+    342,
+    495,
+    498,
+    1051,
+    1057,
+    1058,
+    1062,
+    1185,
+    1190,
+    1191,
+    1194,
+    1277,
+    1302,
+    1303,
+    1306,
+    1339,
+    1343,
+    1345,
+    1348,
+    1736,
+    1740,
+    1741,
+    1745,
+    1889,
+    1894,
+]
 
-_lab_door_mapping: dict = {}
+_lab_door_list = [
+    1764,
+    1769,
+    1770,
+    1775,
+    1776,
+    1779,
+    1780,
+    1787,
+    1788,
+    1796,
+    1797,
+    1804,
+    1805,
+    1808,
+]
 
 
 @pytest.mark.parametrize(
@@ -76,7 +77,7 @@ def test_base_patches(am2r_game_description, preset_manager, force_blue_saves, f
     base_configuration = preset.configuration
     assert isinstance(base_configuration, AM2RConfiguration)
     base_configuration = dataclasses.replace(
-        base_configuration, blue_save_doors=force_blue_saves, force_blue_labs=force_blue_saves
+        base_configuration, blue_save_doors=force_blue_saves, force_blue_labs=force_blue_labs
     )
     game_description = filtered_database.game_description_for_layout(base_configuration)
 
@@ -84,14 +85,20 @@ def test_base_patches(am2r_game_description, preset_manager, force_blue_saves, f
     result = AM2RBasePatchesFactory().create_base_patches(base_configuration, Random(0), game_description, False, 0)
 
     # Assert
+    door_count = 0
     if force_blue_saves:
-        for num, value in _save_door_mapping.items():
+        for num in _save_door_list:
             weakness = result.dock_weakness[num]
             assert isinstance(weakness, DockWeakness)
-            assert weakness.name == value
+            assert weakness.name == "Normal Door"
+            door_count += 1
 
     if force_blue_labs:
-        for num, value in _lab_door_mapping.items():
+        for num in _lab_door_list:
             weakness = result.dock_weakness[num]
             assert isinstance(weakness, DockWeakness)
-            assert weakness.name == value
+            assert weakness.name == "Normal Door"
+            door_count += 1
+
+    get_amount_of_nones = len([door for door in result.dock_weakness if door is None])
+    assert (len(result.dock_weakness) - get_amount_of_nones) == door_count
