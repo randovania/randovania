@@ -97,7 +97,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: Advanced Single Room OoB to reach Landing Site item without Morph Ball
 
-## [7.1.1] - 2023-12-??
+## [7.1.1] - 2023-12-26
 
 ### Metroid Prime
 
