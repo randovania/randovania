@@ -35,6 +35,7 @@ class AM2RConfiguration(BaseConfiguration):
     nest_pipes: bool
     a3_entrance_blocks: bool
     blue_save_doors: bool
+    force_blue_labs: bool
 
     @classmethod
     def game_enum(cls) -> RandovaniaGame:

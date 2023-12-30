@@ -33,9 +33,12 @@ class AM2RBasePatchesFactory(BasePatchesFactory):
         dock_weakness: list[tuple[DockNode, DockWeakness]] = []
         blue_door = game.dock_weakness_database.get_by_weakness("door", "Normal Door")
 
-        if configuration.blue_save_doors:
+        # TODO: separate these two into functions, so that they can be tested more easily?
+        if configuration.blue_save_doors or configuration.force_blue_labs:
             for area in game.region_list.all_areas:
-                if area.extra.get("unlocked_save_station"):
+                if (configuration.blue_save_doors and area.extra.get("unlocked_save_station")) or (
+                    configuration.force_blue_labs and area.extra.get("force_blue_labs")
+                ):
                     for node in area.nodes:
                         if isinstance(node, DockNode) and node.dock_type.short_name == "door":
                             dock_weakness.append((node, blue_door))

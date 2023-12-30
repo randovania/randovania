@@ -46,6 +46,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Research Site Open Hatches as available doors for Door Lock Rando.
 - Added: New option to place DNA anywhere.
 - Added: New option to force Save Station doors to be normal doors.
+- Added: New option to force doors in Genetics Laboratory to be normal doors.
 - Added: If the user starts with random items, then an item collection screen will now be shown, telling the player which items they start with.
 - Added: Clearer GUI symbols, when expansions have been collected, but not their corresponding launcher.
 - Added: When softlock prevention is active, then the first two crumble blocks in Super Missile Chamber will be shoot blocks instead.
@@ -79,8 +80,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Prime 2: Echoes
 
-- Added: A more stream-friendly autotracker layout
-
 #### Logic Database
 
 ##### Dark Agon Wastes
@@ -89,6 +88,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Advanced combat to fight Amorbis after the energy has been taken.
 - Changed: Revised Amorbis combat requirements (trickless requires a good weapon + 2 E, beginner requires a weapon and 1 E, intermediate neither)
 - Changed: Skipping the Amorbis trigger, or touching it to trigger the fight from below, requires Knowledge set to Intermediate.
+
+### Metroid Prime
+
+#### Logic Database
+
+##### Tallon Overworld
+
+- Added: Advanced Single Room OoB to reach Landing Site item without Morph Ball
+
+## [7.1.1] - 2023-12-??
 
 ### Metroid Prime
 
@@ -107,11 +116,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Better door open triggers in Arboretum
 - Changed: Back-to-back cutscenes in Artifact Temple now skip as one
 
-#### Logic Database
+### Metroid Prime 2: Echoes
 
-##### Tallon Overworld
-
-- Added: Advanced Single Room OoB to reach Landing Site item without Morph Ball
+- Added: A more stream-friendly autotracker layout
 
 ## [7.1.0] - 2023-12-01
 
