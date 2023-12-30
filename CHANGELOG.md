@@ -47,6 +47,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: New option to place DNA anywhere.
 - Added: New option to force Save Station doors to be normal doors.
 - Added: New option to force doors in Genetics Laboratory to be normal doors.
+- Added: If the user starts with random items, then an item collection screen will now be shown, telling the player which items they start with.
+- Added: Clearer GUI symbols, when expansions have been collected, but not their corresponding launcher.
+- Added: When softlock prevention is active, then the first two crumble blocks in Super Missile Chamber will be shoot blocks instead.
+- Changed: "Distribution Center - Energy Distribution Emergency Exit" has updated behavior when 'Softlock Prevention' is enabled. Before, only the bottom row of Speed Booster blocks were removed. Now, all of them have been removed, except for the leftmost pillar. 
 
 #### Logic Database
 
