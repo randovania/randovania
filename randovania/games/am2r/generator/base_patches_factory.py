@@ -31,7 +31,7 @@ class AM2RBasePatchesFactory(BasePatchesFactory):
         get_node = game.region_list.typed_node_by_identifier
 
         dock_weakness: list[tuple[DockNode, DockWeakness]] = []
-        blue_door = game.dock_weakness_database.get_by_weakness("door", "Normal Door")
+        blue_door = game.dock_weakness_database.get_by_weakness("door", "Normal Door (Forced)")
 
         # TODO: separate these two into functions, so that they can be tested more easily?
         if configuration.blue_save_doors or configuration.force_blue_labs:
