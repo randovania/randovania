@@ -90,14 +90,14 @@ def test_base_patches(am2r_game_description, preset_manager, force_blue_saves, f
         for num in _save_door_list:
             weakness = result.dock_weakness[num]
             assert isinstance(weakness, DockWeakness)
-            assert weakness.name == "Normal Door"
+            assert weakness.name == "Normal Door (Forced)"
             door_count += 1
 
     if force_blue_labs:
         for num in _lab_door_list:
             weakness = result.dock_weakness[num]
             assert isinstance(weakness, DockWeakness)
-            assert weakness.name == "Normal Door"
+            assert weakness.name == "Normal Door (Forced)"
             door_count += 1
 
     get_amount_of_nones = len([door for door in result.dock_weakness if door is None])
