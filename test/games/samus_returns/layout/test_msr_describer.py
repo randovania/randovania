@@ -42,6 +42,7 @@ def test_msr_format_params(has_artifacts: bool):
         "Item Pool": [
             "Size: 194 of 211" if has_artifacts else "Size: 174 of 211",
             "Starts with Scan Pulse",
+            "Shuffles Missile Launcher",
             "Progressive Beam, Progressive Jump, Progressive Suit",
             "Energy Reserve Tank, Aeion Reserve Tank, Missile Reserve Tank",
         ],
@@ -51,8 +52,8 @@ def test_msr_format_params(has_artifacts: bool):
         if has_artifacts
         else ["Defeat Ridley"],
         "Game Changes": [
-            "Super Missile needs Launcher, Power Bomb needs Main",
-            "Charge Door Buff, Beam Door Buff",
+            "Missile needs Launcher, Super Missile needs Launcher, Power Bomb needs Main",
+            "Charge Door Buff, Beam Door Buff, Nerfed Super Missiles",
             "Open Area 3 Interior East Shortcut, "
             "Remove Area Exit Path Grapple Blocks, Remove Surface Scan Pulse Crumble Blocks, "
             "Remove Area 1 Chozo Seal Crumble Blocks",
