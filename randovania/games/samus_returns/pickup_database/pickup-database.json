@@ -201,10 +201,10 @@
             "preferred_location_category": "major",
             "original_location": 60
         },
-        "Missile": {
+        "Missile Launcher": {
             "pickup_category": "missile",
             "broad_category": "missile_related",
-            "model_name": "itemsphere",
+            "model_name": "powerup_missilelauncher",
             "offworld_models": {},
             "progression": [
                 "MissileLauncher"
@@ -215,8 +215,7 @@
             "ammo": [
                 "MissileAmmo"
             ],
-            "unlocks_ammo": true,
-            "must_be_starting": true
+            "unlocks_ammo": true
         },
         "Super Missile": {
             "pickup_category": "missile",
@@ -534,7 +533,9 @@
             "items": [
                 "MissileAmmo"
             ],
-            "preferred_location_category": "minor"
+            "preferred_location_category": "minor",
+            "unlocked_by": "MissileLauncher",
+            "temporary": "MissileAmmo"
         },
         "Super Missile Tank": {
             "broad_category": "missile_related",

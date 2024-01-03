@@ -87,6 +87,7 @@ class MSRPresetDescriber(GamePresetDescriber):
                 message_for_required_mains(
                     configuration.ammo_pickup_configuration,
                     {
+                        "Missile needs Launcher": "Missile Tank",
                         "Super Missile needs Launcher": "Super Missile Tank",
                         "Power Bomb needs Main": "Power Bomb Tank",
                     },
