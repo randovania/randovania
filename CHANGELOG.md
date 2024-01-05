@@ -52,6 +52,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: When softlock prevention is active, then the first two crumble blocks in Super Missile Chamber will be shoot blocks instead.
 - Changed: "Distribution Center - Energy Distribution Emergency Exit" has updated behavior when 'Softlock Prevention' is enabled. Before, only the bottom row of Speed Booster blocks were removed. Now, all of them have been removed, except for the leftmost pillar. 
 - Fixed: When spinjumping into a progressive Space Jump, the spinjump SFX is not being infinitely looped anymore.
+- Fixed: Entering "Hatchling Room Underside" will now show the Metroid scan notification only once.
 
 #### Logic Database
 
