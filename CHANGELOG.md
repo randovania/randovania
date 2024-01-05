@@ -39,10 +39,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Burenia Hub to Dairon: Getting the item in the fan with only Flash Shift now requires at least one Flash Shift Upgrade as well, and also only requires Intermediate movement (instead of Advanced).
 - Changed: Main Hub Tower Middle: Climbing out of the water from Left of Central Grapple Block without any items now requires Advanced Movement, up from Intermediate.
 
-##### Cataris
-
-- Added: The Wide Beam Block in Dairon Transport Access can now be traversed with a Diffusion Abuse trick from below.
-
 ##### Ferenia
 
 - Added: In Space Jump Room: Use Grapple Beam to jump out of water above Underwater Ledge Left, and use Single Wall Jump, Spin Boost or Flash Shift to reach Dock to Transport to Ghavoran. Video included. 
