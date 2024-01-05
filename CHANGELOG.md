@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [7.2.0] - 2024-01-??
 
+- **Major** - Added: Rebranded Randovania icons.
 - Fixed: Bug where tooltips did not show uncollected item names in the autotracker.
 - Changed: Update to the Database Video Directory site to eliminate lag and add modern styling.
 - Changed: Autotracker tooltips now display text in black instead of gray.
