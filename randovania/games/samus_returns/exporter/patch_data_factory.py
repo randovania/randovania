@@ -2,12 +2,16 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from randovania.exporter import pickup_exporter
+from randovania.exporter import item_names, pickup_exporter
+from randovania.exporter.hints import credits_spoiler
+from randovania.exporter.hints.hint_exporter import HintExporter
 from randovania.exporter.patch_data_factory import PatchDataFactory
 from randovania.game_description.assignment import PickupTarget
+from randovania.game_description.db.hint_node import HintNode
 from randovania.game_description.pickup.pickup_entry import PickupModel
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.games.game import RandovaniaGame
+from randovania.games.samus_returns.exporter.hint_namer import MSRHintNamer
 from randovania.generator.pickup_pool import pickup_creator
 
 if TYPE_CHECKING:
@@ -116,6 +120,14 @@ class MSRPatchDataFactory(PatchDataFactory):
         result["ITEM_MAX_SPECIAL_ENERGY"] = result.pop("ITEM_MAX_SPECIAL_ENERGY", 0) + self.configuration.starting_aeion
         return result
 
+    def _starting_inventory_text(self) -> list[str]:
+        result = ["Random starting items:"]
+        items = item_names.additional_starting_equipment(self.configuration, self.game, self.patches)
+        if not items:
+            return []
+        result.extend(items)
+        return result
+
     def _start_point_ref_for(self, node: Node) -> dict:
         region = self.game.region_list.nodes_to_region(node)
         level_name: str = region.extra["scenario_id"]
@@ -181,6 +193,24 @@ class MSRPatchDataFactory(PatchDataFactory):
 
         return details
 
+    def _encode_hints(self) -> list[dict]:
+        namer = MSRHintNamer(self.description.all_patches, self.players_config)
+        exporter = HintExporter(namer, self.rng, ["A joke hint."])
+
+        return [
+            {
+                "accesspoint_actor": self._teleporter_ref_for(logbook_node),
+                "text": exporter.create_message_for_hint(
+                    self.patches.hints[self.game.region_list.identifier_for_node(logbook_node)],
+                    self.description.all_patches,
+                    self.players_config,
+                    True,
+                ),
+            }
+            for logbook_node in self.game.region_list.iterate_nodes()
+            if isinstance(logbook_node, HintNode)
+        ]
+
     def _node_for(self, identifier: NodeIdentifier) -> Node:
         return self.game.region_list.node_by_identifier(identifier)
 
@@ -197,11 +227,22 @@ class MSRPatchDataFactory(PatchDataFactory):
         for difficulty in difficulty_labels:
             text[difficulty] = full_hash
 
+        text["GUI_SAMUS_DATA_TITLE"] = "<version>"
+
         return text
+
+    def _credits_spoiler(self) -> dict[str, str]:
+        return credits_spoiler.generic_credits(
+            self.configuration.standard_pickup_configuration,
+            self.description.all_patches,
+            self.players_config,
+            MSRHintNamer(self.description.all_patches, self.players_config),
+        )
 
     def create_data(self) -> dict:
         starting_location = self._start_point_ref_for(self._node_for(self.patches.starting_location))
         starting_items = self._calculate_starting_inventory(self.patches.starting_resources())
+        starting_text = self._starting_inventory_text()
 
         useless_target = PickupTarget(
             pickup_creator.create_nothing_pickup(self.game.resource_database), self.players_config.player_index
@@ -223,10 +264,17 @@ class MSRPatchDataFactory(PatchDataFactory):
         return {
             "starting_location": starting_location,
             "starting_items": starting_items,
+            "starting_text": starting_text,
             "pickups": [
                 data for pickup_item in pickup_list if (data := self._pickup_detail_for_target(pickup_item)) is not None
             ],
             "energy_per_tank": energy_per_tank,
+            "reserves_per_tank": {
+                "life_tank_size": self.configuration.life_tank_size,
+                "aeion_tank_size": self.configuration.aeion_tank_size,
+                "missile_tank_size": self.configuration.missile_tank_size,
+                "super_missile_tank_size": self.configuration.super_missile_tank_size,
+            },
             "game_patches": {
                 "charge_door_buff": self.configuration.charge_door_buff,
                 "beam_door_buff": self.configuration.beam_door_buff,
@@ -238,6 +286,9 @@ class MSRPatchDataFactory(PatchDataFactory):
                 "reverse_area8": self.configuration.reverse_area8,
             },
             "text_patches": self._static_text_changes(),
+            "spoiler_log": self._credits_spoiler() if self.description.has_spoiler else {},
+            "hints": self._encode_hints(),
+            "configuration_identifier": self.description.shareable_hash,
         }
 
 

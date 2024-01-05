@@ -40,9 +40,10 @@ def test_msr_format_params(has_artifacts: bool):
     assert dict(result) == {
         "Logic Settings": ["All tricks disabled"],
         "Item Pool": [
-            "Size: 191 of 211" if has_artifacts else "Size: 171 of 211",
+            "Size: 194 of 211" if has_artifacts else "Size: 174 of 211",
             "Starts with Scan Pulse",
             "Progressive Beam, Progressive Jump, Progressive Suit",
+            "Energy Reserve Tank, Aeion Reserve Tank, Missile Reserve Tank",
         ],
         "Gameplay": ["Starts at Surface - East - Landing Site"],
         "Difficulty": [],

@@ -16,7 +16,7 @@
                 ]
             },
             "nodes": {
-                "Area Transition to Main Caves": {
+                "Horizontal Dock to Main Caves": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -34,13 +34,13 @@
                         "source_y": 160
                     },
                     "valid_starting_location": false,
-                    "dock_type": "area_transition",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Main Caves",
                         "area": "Mumbo Manor",
-                        "node": "Area Transition to Golden Temple"
+                        "node": "Horizontal Dock to Golden Temple"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "5-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -81,7 +81,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Area Transition to Main Caves": {
+                        "Horizontal Dock to Main Caves": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -107,7 +107,7 @@
                                 ]
                             }
                         },
-                        "Dock to Guardian Storage": {
+                        "Vertical Dock to Guardian Storage": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -452,7 +452,7 @@
                         }
                     }
                 },
-                "Dock to Guardian Storage": {
+                "Vertical Dock to Guardian Storage": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -466,13 +466,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "vertical_dock",
                     "default_connection": {
                         "region": "Golden Temple",
                         "area": "Guardian Storage",
-                        "node": "Dock to Guardian Arena"
+                        "node": "Vertical Dock to Guardian Arena"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "4-Tiles Wide Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -523,7 +523,8 @@
                         "x": 53,
                         "y": 14
                     }
-                ]
+                ],
+                "unlocked_save_station": true
             },
             "nodes": {
                 "Save Station": {
@@ -2647,7 +2648,8 @@
                         "x": 69,
                         "y": 11
                     }
-                ]
+                ],
+                "unlocked_save_station": true
             },
             "nodes": {
                 "Save Station": {
@@ -2674,7 +2676,7 @@
                                 "items": []
                             }
                         },
-                        "Dock to Spider Ball Chamber": {
+                        "Vertical Dock to Spider Ball Chamber": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2728,7 +2730,7 @@
                         }
                     }
                 },
-                "Dock to Spider Ball Chamber": {
+                "Vertical Dock to Spider Ball Chamber": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2742,13 +2744,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "vertical_dock",
                     "default_connection": {
                         "region": "Golden Temple",
                         "area": "Spider Ball Chamber",
-                        "node": "Dock to Outer Temple Save Station"
+                        "node": "Vertical Dock to Outer Temple Save Station"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "2-Tiles Wide Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -2791,7 +2793,7 @@
                 ]
             },
             "nodes": {
-                "Dock to Outer Temple Save Station": {
+                "Vertical Dock to Outer Temple Save Station": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2805,13 +2807,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "vertical_dock",
                     "default_connection": {
                         "region": "Golden Temple",
                         "area": "Outer Temple Save Station",
-                        "node": "Dock to Spider Ball Chamber"
+                        "node": "Vertical Dock to Spider Ball Chamber"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "2-Tiles Wide Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -2882,7 +2884,7 @@
                     "pickup_index": 2,
                     "location_category": "major",
                     "connections": {
-                        "Dock to Outer Temple Save Station": {
+                        "Vertical Dock to Outer Temple Save Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2980,7 +2982,7 @@
                 ]
             },
             "nodes": {
-                "Dock to Guardian Arena": {
+                "Vertical Dock to Guardian Arena": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2994,13 +2996,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "vertical_dock",
                     "default_connection": {
                         "region": "Golden Temple",
                         "area": "Guardian Arena",
-                        "node": "Dock to Guardian Storage"
+                        "node": "Vertical Dock to Guardian Storage"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "4-Tiles Wide Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -3557,7 +3559,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Guardian Arena": {
+                        "Vertical Dock to Guardian Arena": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -3696,7 +3698,8 @@
                         "x": 60,
                         "y": 11
                     }
-                ]
+                ],
+                "unlocked_save_station": true
             },
             "nodes": {
                 "Save Station": {
@@ -3781,7 +3784,12 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 108285,
+                        "facing": "left",
+                        "x": 320,
+                        "y": 160
+                    },
                     "valid_starting_location": false,
                     "dock_type": "horizontal_dock",
                     "default_connection": {
@@ -3838,7 +3846,12 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 108314,
+                        "facing": "right",
+                        "x": 0,
+                        "y": 160
+                    },
                     "valid_starting_location": false,
                     "dock_type": "horizontal_dock",
                     "default_connection": {
@@ -3873,7 +3886,12 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 108318,
+                        "facing": "right",
+                        "x": 0,
+                        "y": 640
+                    },
                     "valid_starting_location": false,
                     "dock_type": "horizontal_dock",
                     "default_connection": {
@@ -3978,7 +3996,12 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 108319,
+                        "facing": "left",
+                        "x": 320,
+                        "y": 400
+                    },
                     "valid_starting_location": false,
                     "dock_type": "horizontal_dock",
                     "default_connection": {
@@ -4090,7 +4113,12 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 108379,
+                        "facing": "left",
+                        "x": 640,
+                        "y": 160
+                    },
                     "valid_starting_location": false,
                     "dock_type": "horizontal_dock",
                     "default_connection": {
@@ -4312,7 +4340,12 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 108445,
+                        "facing": "left",
+                        "x": 960,
+                        "y": 160
+                    },
                     "valid_starting_location": false,
                     "dock_type": "horizontal_dock",
                     "default_connection": {
@@ -4650,7 +4683,12 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 108492,
+                        "facing": "right",
+                        "x": 0,
+                        "y": 1120
+                    },
                     "valid_starting_location": false,
                     "dock_type": "horizontal_dock",
                     "default_connection": {
@@ -4685,7 +4723,12 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 108497,
+                        "facing": "left",
+                        "x": 320,
+                        "y": 880
+                    },
                     "valid_starting_location": false,
                     "dock_type": "horizontal_dock",
                     "default_connection": {
@@ -4720,7 +4763,12 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 108507,
+                        "facing": "right",
+                        "x": 0,
+                        "y": 160
+                    },
                     "valid_starting_location": false,
                     "dock_type": "horizontal_dock",
                     "default_connection": {
@@ -4755,7 +4803,12 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 108510,
+                        "facing": "right",
+                        "x": 0,
+                        "y": 640
+                    },
                     "valid_starting_location": false,
                     "dock_type": "horizontal_dock",
                     "default_connection": {
@@ -5061,7 +5114,12 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 108577,
+                        "facing": "right",
+                        "x": 0,
+                        "y": 160
+                    },
                     "valid_starting_location": false,
                     "dock_type": "horizontal_dock",
                     "default_connection": {
@@ -5101,7 +5159,12 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 108578,
+                        "facing": "left",
+                        "x": 320,
+                        "y": 160
+                    },
                     "valid_starting_location": false,
                     "dock_type": "horizontal_dock",
                     "default_connection": {
@@ -5364,7 +5427,12 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 108618,
+                        "facing": "right",
+                        "x": 0,
+                        "y": 160
+                    },
                     "valid_starting_location": false,
                     "dock_type": "horizontal_dock",
                     "default_connection": {
@@ -5452,7 +5520,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "Spring+Bomb",
+                                                        "comment": "Spring+Bomb https://www.youtube.com/watch?v=zjSIvxyjc00",
                                                         "items": [
                                                             {
                                                                 "type": "template",
@@ -5473,7 +5541,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "IBJ",
+                                                        "comment": "IBJ https://www.youtube.com/watch?v=Z5j1qOOBOSk",
                                                         "items": [
                                                             {
                                                                 "type": "template",
@@ -5597,7 +5665,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "Expert midair morph",
+                                                        "comment": "Expert midair morph https://www.youtube.com/watch?v=Ttq2UmsIBJE",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -5623,7 +5691,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "CBJ",
+                                                        "comment": "CBJ https://www.youtube.com/watch?v=pQZt-9CaVSs",
                                                         "items": [
                                                             {
                                                                 "type": "template",
@@ -6024,7 +6092,12 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 108656,
+                        "facing": "left",
+                        "x": 640,
+                        "y": 160
+                    },
                     "valid_starting_location": false,
                     "dock_type": "horizontal_dock",
                     "default_connection": {
@@ -6770,7 +6843,12 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 109304,
+                        "facing": "right",
+                        "x": 0,
+                        "y": 640
+                    },
                     "valid_starting_location": false,
                     "dock_type": "horizontal_dock",
                     "default_connection": {
@@ -6847,7 +6925,12 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 109308,
+                        "facing": "left",
+                        "x": 320,
+                        "y": 400
+                    },
                     "valid_starting_location": false,
                     "dock_type": "horizontal_dock",
                     "default_connection": {
@@ -6889,7 +6972,12 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 109311,
+                        "facing": "left",
+                        "x": 320,
+                        "y": 640
+                    },
                     "valid_starting_location": false,
                     "dock_type": "horizontal_dock",
                     "default_connection": {
@@ -6954,7 +7042,12 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 109468,
+                        "facing": "right",
+                        "x": 0,
+                        "y": 160
+                    },
                     "valid_starting_location": false,
                     "dock_type": "horizontal_dock",
                     "default_connection": {
@@ -7080,7 +7173,12 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 109598,
+                        "facing": "left",
+                        "x": 0,
+                        "y": 160
+                    },
                     "valid_starting_location": false,
                     "dock_type": "horizontal_dock",
                     "default_connection": {
@@ -7198,7 +7296,12 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 109656,
+                        "facing": "right",
+                        "x": 0,
+                        "y": 160
+                    },
                     "valid_starting_location": false,
                     "dock_type": "horizontal_dock",
                     "default_connection": {
@@ -7238,7 +7341,10 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "x": 0,
+                        "y": 160
+                    },
                     "valid_starting_location": false,
                     "event_name": "Alpha4",
                     "connections": {

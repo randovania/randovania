@@ -2,18 +2,18 @@
 Elevator Shaft
 Extra - map_name: rm_a8h00
 Extra - minimap_data: [{'x': 41, 'y': 8}, {'x': 41, 'y': 9}, {'x': 41, 'y': 10}, {'x': 41, 'y': 11}, {'x': 41, 'y': 12}, {'x': 41, 'y': 16}, {'x': 41, 'y': 17}, {'x': 41, 'y': 18}, {'x': 41, 'y': 19}, {'x': 41, 'y': 20}, {'x': 41, 'y': 22}, {'x': 41, 'y': 23}]
-> Dock to Research Site Elevator; Heals? False
+> Vertical Dock to Main Caves; Heals? False
   * Layers: default
-  * Open Passage to Research Site Elevator/Dock to Elevator Shaft
-  > Dock to GFS Thoth Exterior
+  * 2-Tiles Wide Dock to Research Site Elevator/Vertical Dock to GFS Thoth
+  > Vertical Dock to GFS Thoth Exterior
       Any of the following:
           Space Jump or Walljump (Expert) or Disabled Entrance Rando
           Mid-Air Morph (Beginner) and Can Use Spider Ball
 
-> Dock to GFS Thoth Exterior; Heals? False
+> Vertical Dock to GFS Thoth Exterior; Heals? False
   * Layers: default
-  * Open Passage to GFS Thoth Exterior/Dock to Elevator Shaft
-  > Dock to Research Site Elevator
+  * 2-Tiles Wide Dock to GFS Thoth Exterior/Vertical Dock to Elevator Shaft
+  > Vertical Dock to Main Caves
       Trivial
 
 ----------------
@@ -39,12 +39,12 @@ Extra - minimap_data: [{'x': 34, 'y': 3}, {'x': 34, 'y': 4}, {'x': 34, 'y': 5}, 
   * Layers: default
   * Normal Door to Thoth West Entrance/Door to GFS Thoth Exterior
   * Extra - instance_id: 149406
-  > Dock to Elevator Shaft
+  > Vertical Dock to Elevator Shaft
       Trivial
 
-> Dock to Elevator Shaft; Heals? False
+> Vertical Dock to Elevator Shaft; Heals? False
   * Layers: default
-  * Open Passage to Elevator Shaft/Dock to GFS Thoth Exterior
+  * 2-Tiles Wide Dock to Elevator Shaft/Vertical Dock to GFS Thoth Exterior
   > Door to Thoth West Entrance
       Trivial
   > Horizontal Dock to Hornoad Dorm
@@ -61,7 +61,7 @@ Extra - minimap_data: [{'x': 34, 'y': 3}, {'x': 34, 'y': 4}, {'x': 34, 'y': 5}, 
 > Horizontal Dock to Hornoad Dorm; Heals? False
   * Layers: default
   * 3-Tiles High Dock to Hornoad Dorm/Horizontal Dock to GFS Thoth Exterior
-  > Dock to Elevator Shaft
+  > Vertical Dock to Elevator Shaft
       Trivial
 
 > Pickup (Power Bomb Tank); Heals? False
@@ -156,6 +156,7 @@ Extra - minimap_data: [{'x': 47, 'y': 7}, {'x': 48, 'y': 7}]
 > Door to Thoth East Lift; Heals? False
   * Layers: default
   * Normal Door to Thoth East Lift/Door to Thoth Bridge
+  * Rando modifies these to be doors!
   * Extra - instance_id: 400001
   > Door to Thoth Storage
       Trivial
@@ -163,6 +164,7 @@ Extra - minimap_data: [{'x': 47, 'y': 7}, {'x': 48, 'y': 7}]
 > Door to Thoth Storage; Heals? False
   * Layers: default
   * Normal Door to Thoth Storage/Door to Thoth Bridge
+  * Rando modifies these to be doors!
   * Extra - instance_id: 400000
   > Door to Thoth East Lift
       Trivial
@@ -237,7 +239,7 @@ Extra - map_name: rm_a8a11
 Extra - minimap_data: [{'x': 47, 'y': 5}, {'x': 48, 'y': 5}, {'x': 49, 'y': 5}]
 > Door to Thoth West Lift; Heals? False
   * Layers: default
-  * Normal Door to Thoth West Lift/Door to Genesis Arena; Dock Lock Rando incompatible with: Hydro Station Water Turbine
+  * Normal Door to Thoth West Lift/Door to Genesis Arena; Dock Lock Rando incompatible with: Hydro Station Water Turbine, Research Site Open Hatch
   * Extra - instance_id: 149828
   > Pickup (Energy Tank)
       Trivial
@@ -269,6 +271,7 @@ Extra - minimap_data: [{'x': 47, 'y': 5}, {'x': 48, 'y': 5}, {'x': 49, 'y': 5}]
 Thoth Save Station Access
 Extra - map_name: rm_a8a12
 Extra - minimap_data: [{'x': 44, 'y': 6}, {'x': 45, 'y': 6}]
+Extra - unlocked_save_station: True
 > Door to Thoth West Lift; Heals? False
   * Layers: default
   * Normal Door to Thoth West Lift/Door to Thoth Save Station Access
@@ -288,7 +291,7 @@ Extra - map_name: rm_a8a13
 Extra - minimap_data: [{'x': 46, 'y': 5}, {'x': 46, 'y': 6}]
 > Door to Genesis Arena; Heals? False
   * Layers: default
-  * Normal Door to Genesis Arena/Door to Thoth West Lift; Dock Lock Rando incompatible with: Hydro Station Water Turbine
+  * Normal Door to Genesis Arena/Door to Thoth West Lift; Dock Lock Rando incompatible with: Hydro Station Water Turbine, Research Site Open Hatch
   * Extra - instance_id: 149890
   > Door to Thoth Save Station Access
       Trivial
