@@ -5,8 +5,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [7.2.0] - 2024-01-??
+## [7.2.0] - 2024-01-05
 
+- **Major** - Added: Rebranded Randovania icons.
 - Fixed: Bug where tooltips did not show uncollected item names in the autotracker.
 - Changed: Update to the Database Video Directory site to eliminate lag and add modern styling.
 - Changed: Autotracker tooltips now display text in black instead of gray.
@@ -55,6 +56,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Clearer GUI symbols, when expansions have been collected, but not their corresponding launcher.
 - Added: When softlock prevention is active, then the first two crumble blocks in Super Missile Chamber will be shoot blocks instead.
 - Changed: "Distribution Center - Energy Distribution Emergency Exit" has updated behavior when 'Softlock Prevention' is enabled. Before, only the bottom row of Speed Booster blocks were removed. Now, all of them have been removed, except for the leftmost pillar. 
+- Fixed: When spinjumping into a progressive Space Jump, the spinjump SFX is not being infinitely looped anymore.
+- Fixed: Entering "Hatchling Room Underside" will now show the Metroid scan notification only once.
 
 #### Logic Database
 
