@@ -182,9 +182,21 @@ class AM2RPatchDataFactory(PatchDataFactory):
     def _create_starting_popup(self, patches: GamePatches) -> dict | None:
         extra_items = item_names.additional_starting_equipment(patches.configuration, patches.game, patches)
         if extra_items:
+            i = 0
+            items_with_length = [""]
+            # Go through the items, so that we can wrap them
+            for item in extra_items:
+                if len(items_with_length[i] + item) < 60:
+                    if items_with_length[i] != "":
+                        items_with_length[i] = items_with_length[i] + ", " + item
+                    else:
+                        items_with_length[i] = item
+                else:
+                    i += 1
+                    items_with_length.append(item)
             return {
                 "header": "Extra starting items:",
-                "description": ", ".join(extra_items),
+                "description": "#".join(items_with_length),  # A '#' is a newline character in GameMaker
             }
         else:
             return None
