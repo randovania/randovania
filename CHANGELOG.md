@@ -23,6 +23,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: The Wide Beam Block in Dairon Transport Access can now be traversed with a Diffusion Abuse trick from below.
 
+### Metroid Prime 2: Echoes
+
+#### Logic Database
+
+- Added: 12 videos to the database
+##### Torvus Bog
+
+- Added: In Great Bridge: Rolljump method to reach Abandon Base from Temple Access (Top)
+
 ## [7.2.0] - 2024-01-05
 
 - **Major** - Added: Rebranded Randovania icons.
@@ -103,18 +112,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Logic Database
 
-- Added: 12 videos to the database
-
 ##### Dark Agon Wastes
 
 - Added: Requirements to trigger the Amorbis fight from below: Spacejump, NSJ Z-Axis Screw Attack or BSJ, and bomb jumps or standable terrain with the energy taken.
 - Added: Advanced combat to fight Amorbis after the energy has been taken.
 - Changed: Revised Amorbis combat requirements (trickless requires a good weapon + 2 E, beginner requires a weapon and 1 E, intermediate neither)
 - Changed: Skipping the Amorbis trigger, or touching it to trigger the fight from below, requires Knowledge set to Intermediate.
-
-##### Torvus Bog
-
-- Added: In Great Bridge: Rolljump method to reach Abandon Base from Temple Access (Top)
 
 ### Metroid Prime
 
