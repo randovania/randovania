@@ -42,14 +42,19 @@ _ALTERNATIVE_MODELS = {
 
 def get_item_id_for_item(item: ResourceInfo) -> str:
     assert isinstance(item, ItemResourceInfo)
-    if "item_export_id" in item.extra:
-        return item.extra["item_export_id"]
-    elif "item_capacity_id" in item.extra:
+    if "item_capacity_id" in item.extra:
         return item.extra["item_capacity_id"]
     try:
         return item.extra["item_id"]
     except KeyError as e:
         raise KeyError(f"{item.long_name} has no item ID.") from e
+
+
+def get_export_item_id_for_item(item: ResourceInfo) -> str:
+    assert isinstance(item, ItemResourceInfo)
+    if "item_export_id" in item.extra:
+        return item.extra["item_export_id"]
+    return get_item_id_for_item(item)
 
 
 def convert_conditional_resource(res: ConditionalResources) -> Iterator[dict]:
@@ -58,7 +63,7 @@ def convert_conditional_resource(res: ConditionalResources) -> Iterator[dict]:
         return
 
     for resource in reversed(res.resources):
-        item_id = get_item_id_for_item(resource[0])
+        item_id = get_export_item_id_for_item(resource[0])
         quantity = resource[1]
 
         yield {"item_id": item_id, "quantity": quantity}
@@ -81,9 +86,10 @@ def get_resources_for_details(
         # Add the lock resource into the pickup in addition to the expansion's resources
         assert len(resources) == 1
         # prepend the main item
-        resources[0].append(
+        resources[0].insert(
+            0,
             {
-                "item_id": get_item_id_for_item(pickup.resource_lock.locked_by),
+                "item_id": get_export_item_id_for_item(pickup.resource_lock.locked_by),
                 "quantity": 1,
             },
         )
@@ -113,7 +119,7 @@ class MSRPatchDataFactory(PatchDataFactory):
         ]
         for resource, quantity in resource_gain:
             try:
-                result[get_item_id_for_item(resource)] = quantity
+                result[get_export_item_id_for_item(resource)] = quantity
             except KeyError:
                 print(f"Skipping {resource} for starting inventory: no item id")
                 continue
