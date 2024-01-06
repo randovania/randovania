@@ -51,7 +51,7 @@ def test_msr_format_params(has_artifacts: bool):
         if has_artifacts
         else ["Defeat Ridley"],
         "Game Changes": [
-            "Missile needs Launcher, Super Missile needs Launcher, Power Bomb needs Main",
+            "Missile needs Launcher, Super Missile needs Launcher, Power Bomb needs Launcher",
             "Charge Door Buff, Beam Door Buff",
             "Open Area 3 Interior East Shortcut, "
             "Remove Area Exit Path Grapple Blocks, Remove Surface Scan Pulse Crumble Blocks, "

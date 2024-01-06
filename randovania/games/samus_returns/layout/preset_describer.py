@@ -89,7 +89,7 @@ class MSRPresetDescriber(GamePresetDescriber):
                     {
                         "Missile needs Launcher": "Missile Tank",
                         "Super Missile needs Launcher": "Super Missile Tank",
-                        "Power Bomb needs Main": "Power Bomb Tank",
+                        "Power Bomb needs Launcher": "Power Bomb Tank",
                     },
                 ),
                 {
