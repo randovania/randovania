@@ -60,7 +60,9 @@
             "MissileLauncher": {
                 "long_name": "Missile Launcher",
                 "max_capacity": 1,
-                "extra": {}
+                "extra": {
+                    "item_id": "ITEM_WEAPON_MISSILE_LAUNCHER"
+                }
             },
             "Supers": {
                 "long_name": "Super Missile Launcher",
@@ -145,7 +147,7 @@
                 }
             },
             "MainPB": {
-                "long_name": "Main Power Bomb",
+                "long_name": "Power Bomb Launcher",
                 "max_capacity": 1,
                 "extra": {
                     "item_id": "ITEM_WEAPON_POWER_BOMB"
@@ -191,7 +193,8 @@
                 "max_capacity": 999,
                 "extra": {
                     "item_id": "ITEM_WEAPON_MISSILE_CURRENT",
-                    "item_capacity_id": "ITEM_WEAPON_MISSILE_MAX"
+                    "item_capacity_id": "ITEM_WEAPON_MISSILE_MAX",
+                    "item_export_id": "ITEM_MISSILE_TANKS"
                 }
             },
             "SMAmmo": {
@@ -210,6 +213,27 @@
                     "item_id": "ITEM_WEAPON_POWER_BOMB_CURRENT",
                     "item_capacity_id": "ITEM_WEAPON_POWER_BOMB_MAX",
                     "item_export_id": "ITEM_POWER_BOMB_TANKS"
+                }
+            },
+            "MissileLocked": {
+                "long_name": "Locked Missile",
+                "max_capacity": 999,
+                "extra": {
+                    "item_id": "ITEM_MISSILE_TANKS"
+                }
+            },
+            "SMLocked": {
+                "long_name": "Locked Super Missile",
+                "max_capacity": 99,
+                "extra": {
+                    "item_id": "ITEM_SUPER_MISSILE_TANKS"
+                }
+            },
+            "PBLocked": {
+                "long_name": "Locked Power Bomb",
+                "max_capacity": 99,
+                "extra": {
+                    "item_id": "ITEM_POWER_BOMB_TANKS"
                 }
             },
             "Aeion": {
@@ -1304,15 +1328,6 @@
                                 "amount": 1,
                                 "negate": false
                             }
-                        },
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "MainPB",
-                                "amount": 1,
-                                "negate": false
-                            }
                         }
                     ]
                 }
@@ -1421,17 +1436,44 @@
                 }
             },
             "Lay Any Bomb": {
-                "type": "or",
+                "type": "and",
                 "data": {
                     "comment": null,
                     "items": [
                         {
-                            "type": "template",
-                            "data": "Lay Bomb"
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
                         },
                         {
-                            "type": "template",
-                            "data": "Lay Power Bomb"
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Bomb",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "PBAmmo",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
                         }
                     ]
                 }
@@ -1498,8 +1540,13 @@
                             }
                         },
                         {
-                            "type": "template",
-                            "data": "Shoot Super Missile"
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "SMAmmo",
+                                "amount": 1,
+                                "negate": false
+                            }
                         },
                         {
                             "type": "and",
@@ -1631,24 +1678,12 @@
                                         }
                                     },
                                     {
-                                        "type": "and",
+                                        "type": "resource",
                                         "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "template",
-                                                    "data": "Shoot Super Missile"
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "SMAmmo",
-                                                        "amount": 7,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
+                                            "type": "items",
+                                            "name": "SMAmmo",
+                                            "amount": 7,
+                                            "negate": false
                                         }
                                     },
                                     {
@@ -1881,8 +1916,13 @@
                                         }
                                     },
                                     {
-                                        "type": "template",
-                                        "data": "Shoot Super Missile"
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "SMAmmo",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
                                     },
                                     {
                                         "type": "and",
@@ -2114,24 +2154,12 @@
                                         }
                                     },
                                     {
-                                        "type": "and",
+                                        "type": "resource",
                                         "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "template",
-                                                    "data": "Shoot Super Missile"
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "SMAmmo",
-                                                        "amount": 9,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
+                                            "type": "items",
+                                            "name": "SMAmmo",
+                                            "amount": 9,
+                                            "negate": false
                                         }
                                     },
                                     {
@@ -2418,8 +2446,13 @@
                                                                 }
                                                             },
                                                             {
-                                                                "type": "template",
-                                                                "data": "Shoot Super Missile"
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "SMAmmo",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
                                                             }
                                                         ]
                                                     }
@@ -2456,24 +2489,12 @@
                                                                 }
                                                             },
                                                             {
-                                                                "type": "and",
+                                                                "type": "resource",
                                                                 "data": {
-                                                                    "comment": null,
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "template",
-                                                                            "data": "Shoot Super Missile"
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "items",
-                                                                                "name": "SMAmmo",
-                                                                                "amount": 11,
-                                                                                "negate": false
-                                                                            }
-                                                                        }
-                                                                    ]
+                                                                    "type": "items",
+                                                                    "name": "SMAmmo",
+                                                                    "amount": 11,
+                                                                    "negate": false
                                                                 }
                                                             }
                                                         ]
@@ -2502,12 +2523,29 @@
                                                         "comment": null,
                                                         "items": [
                                                             {
-                                                                "type": "resource",
+                                                                "type": "and",
                                                                 "data": {
-                                                                    "type": "items",
-                                                                    "name": "Ice",
-                                                                    "amount": 1,
-                                                                    "negate": false
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Ice",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Combat",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
                                                                 }
                                                             },
                                                             {
@@ -2525,349 +2563,25 @@
                                                                             }
                                                                         },
                                                                         {
-                                                                            "type": "or",
+                                                                            "type": "template",
+                                                                            "data": "Shoot Spazer Beam"
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
                                                                             "data": {
-                                                                                "comment": null,
-                                                                                "items": [
-                                                                                    {
-                                                                                        "type": "and",
-                                                                                        "data": {
-                                                                                            "comment": null,
-                                                                                            "items": [
-                                                                                                {
-                                                                                                    "type": "template",
-                                                                                                    "data": "Shoot Spazer Beam"
-                                                                                                },
-                                                                                                {
-                                                                                                    "type": "or",
-                                                                                                    "data": {
-                                                                                                        "comment": null,
-                                                                                                        "items": [
-                                                                                                            {
-                                                                                                                "type": "resource",
-                                                                                                                "data": {
-                                                                                                                    "type": "items",
-                                                                                                                    "name": "Aeion",
-                                                                                                                    "amount": 2200,
-                                                                                                                    "negate": false
-                                                                                                                }
-                                                                                                            },
-                                                                                                            {
-                                                                                                                "type": "and",
-                                                                                                                "data": {
-                                                                                                                    "comment": null,
-                                                                                                                    "items": [
-                                                                                                                        {
-                                                                                                                            "type": "resource",
-                                                                                                                            "data": {
-                                                                                                                                "type": "items",
-                                                                                                                                "name": "Aeion",
-                                                                                                                                "amount": 1500,
-                                                                                                                                "negate": false
-                                                                                                                            }
-                                                                                                                        },
-                                                                                                                        {
-                                                                                                                            "type": "or",
-                                                                                                                            "data": {
-                                                                                                                                "comment": null,
-                                                                                                                                "items": [
-                                                                                                                                    {
-                                                                                                                                        "type": "resource",
-                                                                                                                                        "data": {
-                                                                                                                                            "type": "items",
-                                                                                                                                            "name": "MissileAmmo",
-                                                                                                                                            "amount": 10,
-                                                                                                                                            "negate": false
-                                                                                                                                        }
-                                                                                                                                    },
-                                                                                                                                    {
-                                                                                                                                        "type": "and",
-                                                                                                                                        "data": {
-                                                                                                                                            "comment": null,
-                                                                                                                                            "items": [
-                                                                                                                                                {
-                                                                                                                                                    "type": "template",
-                                                                                                                                                    "data": "Shoot Super Missile"
-                                                                                                                                                },
-                                                                                                                                                {
-                                                                                                                                                    "type": "resource",
-                                                                                                                                                    "data": {
-                                                                                                                                                        "type": "items",
-                                                                                                                                                        "name": "SMAmmo",
-                                                                                                                                                        "amount": 3,
-                                                                                                                                                        "negate": false
-                                                                                                                                                    }
-                                                                                                                                                }
-                                                                                                                                            ]
-                                                                                                                                        }
-                                                                                                                                    }
-                                                                                                                                ]
-                                                                                                                            }
-                                                                                                                        }
-                                                                                                                    ]
-                                                                                                                }
-                                                                                                            },
-                                                                                                            {
-                                                                                                                "type": "and",
-                                                                                                                "data": {
-                                                                                                                    "comment": null,
-                                                                                                                    "items": [
-                                                                                                                        {
-                                                                                                                            "type": "resource",
-                                                                                                                            "data": {
-                                                                                                                                "type": "items",
-                                                                                                                                "name": "Aeion",
-                                                                                                                                "amount": 1000,
-                                                                                                                                "negate": false
-                                                                                                                            }
-                                                                                                                        },
-                                                                                                                        {
-                                                                                                                            "type": "or",
-                                                                                                                            "data": {
-                                                                                                                                "comment": null,
-                                                                                                                                "items": [
-                                                                                                                                    {
-                                                                                                                                        "type": "resource",
-                                                                                                                                        "data": {
-                                                                                                                                            "type": "items",
-                                                                                                                                            "name": "MissileAmmo",
-                                                                                                                                            "amount": 21,
-                                                                                                                                            "negate": false
-                                                                                                                                        }
-                                                                                                                                    },
-                                                                                                                                    {
-                                                                                                                                        "type": "and",
-                                                                                                                                        "data": {
-                                                                                                                                            "comment": null,
-                                                                                                                                            "items": [
-                                                                                                                                                {
-                                                                                                                                                    "type": "template",
-                                                                                                                                                    "data": "Shoot Super Missile"
-                                                                                                                                                },
-                                                                                                                                                {
-                                                                                                                                                    "type": "resource",
-                                                                                                                                                    "data": {
-                                                                                                                                                        "type": "items",
-                                                                                                                                                        "name": "SMAmmo",
-                                                                                                                                                        "amount": 6,
-                                                                                                                                                        "negate": false
-                                                                                                                                                    }
-                                                                                                                                                }
-                                                                                                                                            ]
-                                                                                                                                        }
-                                                                                                                                    }
-                                                                                                                                ]
-                                                                                                                            }
-                                                                                                                        }
-                                                                                                                    ]
-                                                                                                                }
-                                                                                                            }
-                                                                                                        ]
-                                                                                                    }
-                                                                                                }
-                                                                                            ]
-                                                                                        }
-                                                                                    },
-                                                                                    {
-                                                                                        "type": "and",
-                                                                                        "data": {
-                                                                                            "comment": null,
-                                                                                            "items": [
-                                                                                                {
-                                                                                                    "type": "resource",
-                                                                                                    "data": {
-                                                                                                        "type": "items",
-                                                                                                        "name": "Plasma",
-                                                                                                        "amount": 1,
-                                                                                                        "negate": false
-                                                                                                    }
-                                                                                                },
-                                                                                                {
-                                                                                                    "type": "resource",
-                                                                                                    "data": {
-                                                                                                        "type": "misc",
-                                                                                                        "name": "HighDanger",
-                                                                                                        "amount": 1,
-                                                                                                        "negate": false
-                                                                                                    }
-                                                                                                },
-                                                                                                {
-                                                                                                    "type": "or",
-                                                                                                    "data": {
-                                                                                                        "comment": null,
-                                                                                                        "items": [
-                                                                                                            {
-                                                                                                                "type": "and",
-                                                                                                                "data": {
-                                                                                                                    "comment": null,
-                                                                                                                    "items": [
-                                                                                                                        {
-                                                                                                                            "type": "resource",
-                                                                                                                            "data": {
-                                                                                                                                "type": "items",
-                                                                                                                                "name": "Aeion",
-                                                                                                                                "amount": 2200,
-                                                                                                                                "negate": false
-                                                                                                                            }
-                                                                                                                        },
-                                                                                                                        {
-                                                                                                                            "type": "or",
-                                                                                                                            "data": {
-                                                                                                                                "comment": null,
-                                                                                                                                "items": [
-                                                                                                                                    {
-                                                                                                                                        "type": "resource",
-                                                                                                                                        "data": {
-                                                                                                                                            "type": "items",
-                                                                                                                                            "name": "MissileAmmo",
-                                                                                                                                            "amount": 8,
-                                                                                                                                            "negate": false
-                                                                                                                                        }
-                                                                                                                                    },
-                                                                                                                                    {
-                                                                                                                                        "type": "and",
-                                                                                                                                        "data": {
-                                                                                                                                            "comment": null,
-                                                                                                                                            "items": [
-                                                                                                                                                {
-                                                                                                                                                    "type": "template",
-                                                                                                                                                    "data": "Shoot Super Missile"
-                                                                                                                                                },
-                                                                                                                                                {
-                                                                                                                                                    "type": "resource",
-                                                                                                                                                    "data": {
-                                                                                                                                                        "type": "items",
-                                                                                                                                                        "name": "SMAmmo",
-                                                                                                                                                        "amount": 2,
-                                                                                                                                                        "negate": false
-                                                                                                                                                    }
-                                                                                                                                                }
-                                                                                                                                            ]
-                                                                                                                                        }
-                                                                                                                                    }
-                                                                                                                                ]
-                                                                                                                            }
-                                                                                                                        }
-                                                                                                                    ]
-                                                                                                                }
-                                                                                                            },
-                                                                                                            {
-                                                                                                                "type": "and",
-                                                                                                                "data": {
-                                                                                                                    "comment": null,
-                                                                                                                    "items": [
-                                                                                                                        {
-                                                                                                                            "type": "resource",
-                                                                                                                            "data": {
-                                                                                                                                "type": "items",
-                                                                                                                                "name": "Aeion",
-                                                                                                                                "amount": 1500,
-                                                                                                                                "negate": false
-                                                                                                                            }
-                                                                                                                        },
-                                                                                                                        {
-                                                                                                                            "type": "or",
-                                                                                                                            "data": {
-                                                                                                                                "comment": null,
-                                                                                                                                "items": [
-                                                                                                                                    {
-                                                                                                                                        "type": "resource",
-                                                                                                                                        "data": {
-                                                                                                                                            "type": "items",
-                                                                                                                                            "name": "MissileAmmo",
-                                                                                                                                            "amount": 12,
-                                                                                                                                            "negate": false
-                                                                                                                                        }
-                                                                                                                                    },
-                                                                                                                                    {
-                                                                                                                                        "type": "and",
-                                                                                                                                        "data": {
-                                                                                                                                            "comment": null,
-                                                                                                                                            "items": [
-                                                                                                                                                {
-                                                                                                                                                    "type": "template",
-                                                                                                                                                    "data": "Shoot Super Missile"
-                                                                                                                                                },
-                                                                                                                                                {
-                                                                                                                                                    "type": "resource",
-                                                                                                                                                    "data": {
-                                                                                                                                                        "type": "items",
-                                                                                                                                                        "name": "SMAmmo",
-                                                                                                                                                        "amount": 5,
-                                                                                                                                                        "negate": false
-                                                                                                                                                    }
-                                                                                                                                                }
-                                                                                                                                            ]
-                                                                                                                                        }
-                                                                                                                                    }
-                                                                                                                                ]
-                                                                                                                            }
-                                                                                                                        }
-                                                                                                                    ]
-                                                                                                                }
-                                                                                                            },
-                                                                                                            {
-                                                                                                                "type": "and",
-                                                                                                                "data": {
-                                                                                                                    "comment": null,
-                                                                                                                    "items": [
-                                                                                                                        {
-                                                                                                                            "type": "resource",
-                                                                                                                            "data": {
-                                                                                                                                "type": "items",
-                                                                                                                                "name": "Aeion",
-                                                                                                                                "amount": 1000,
-                                                                                                                                "negate": false
-                                                                                                                            }
-                                                                                                                        },
-                                                                                                                        {
-                                                                                                                            "type": "or",
-                                                                                                                            "data": {
-                                                                                                                                "comment": null,
-                                                                                                                                "items": [
-                                                                                                                                    {
-                                                                                                                                        "type": "resource",
-                                                                                                                                        "data": {
-                                                                                                                                            "type": "items",
-                                                                                                                                            "name": "MissileAmmo",
-                                                                                                                                            "amount": 25,
-                                                                                                                                            "negate": false
-                                                                                                                                        }
-                                                                                                                                    },
-                                                                                                                                    {
-                                                                                                                                        "type": "and",
-                                                                                                                                        "data": {
-                                                                                                                                            "comment": null,
-                                                                                                                                            "items": [
-                                                                                                                                                {
-                                                                                                                                                    "type": "template",
-                                                                                                                                                    "data": "Shoot Super Missile"
-                                                                                                                                                },
-                                                                                                                                                {
-                                                                                                                                                    "type": "resource",
-                                                                                                                                                    "data": {
-                                                                                                                                                        "type": "items",
-                                                                                                                                                        "name": "SMAmmo",
-                                                                                                                                                        "amount": 7,
-                                                                                                                                                        "negate": false
-                                                                                                                                                    }
-                                                                                                                                                }
-                                                                                                                                            ]
-                                                                                                                                        }
-                                                                                                                                    }
-                                                                                                                                ]
-                                                                                                                            }
-                                                                                                                        }
-                                                                                                                    ]
-                                                                                                                }
-                                                                                                            }
-                                                                                                        ]
-                                                                                                    }
-                                                                                                }
-                                                                                            ]
-                                                                                        }
-                                                                                    }
-                                                                                ]
+                                                                                "type": "items",
+                                                                                "name": "Aeion",
+                                                                                "amount": 2200,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Combat",
+                                                                                "amount": 2,
+                                                                                "negate": false
                                                                             }
                                                                         }
                                                                     ]
@@ -3002,8 +2716,13 @@
                                                                 }
                                                             },
                                                             {
-                                                                "type": "template",
-                                                                "data": "Shoot Super Missile"
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "SMAmmo",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
                                                             }
                                                         ]
                                                     }
@@ -3040,24 +2759,12 @@
                                                                 }
                                                             },
                                                             {
-                                                                "type": "and",
+                                                                "type": "resource",
                                                                 "data": {
-                                                                    "comment": null,
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "template",
-                                                                            "data": "Shoot Super Missile"
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "items",
-                                                                                "name": "SMAmmo",
-                                                                                "amount": 14,
-                                                                                "negate": false
-                                                                            }
-                                                                        }
-                                                                    ]
+                                                                    "type": "items",
+                                                                    "name": "SMAmmo",
+                                                                    "amount": 14,
+                                                                    "negate": false
                                                                 }
                                                             }
                                                         ]
@@ -3081,429 +2788,21 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "or",
+                                                    "type": "resource",
                                                     "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Ice",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "and",
-                                                                "data": {
-                                                                    "comment": null,
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "items",
-                                                                                "name": "Burst",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "or",
-                                                                            "data": {
-                                                                                "comment": null,
-                                                                                "items": [
-                                                                                    {
-                                                                                        "type": "and",
-                                                                                        "data": {
-                                                                                            "comment": null,
-                                                                                            "items": [
-                                                                                                {
-                                                                                                    "type": "template",
-                                                                                                    "data": "Shoot Spazer Beam"
-                                                                                                },
-                                                                                                {
-                                                                                                    "type": "or",
-                                                                                                    "data": {
-                                                                                                        "comment": null,
-                                                                                                        "items": [
-                                                                                                            {
-                                                                                                                "type": "and",
-                                                                                                                "data": {
-                                                                                                                    "comment": null,
-                                                                                                                    "items": [
-                                                                                                                        {
-                                                                                                                            "type": "resource",
-                                                                                                                            "data": {
-                                                                                                                                "type": "items",
-                                                                                                                                "name": "Aeion",
-                                                                                                                                "amount": 2200,
-                                                                                                                                "negate": false
-                                                                                                                            }
-                                                                                                                        },
-                                                                                                                        {
-                                                                                                                            "type": "or",
-                                                                                                                            "data": {
-                                                                                                                                "comment": null,
-                                                                                                                                "items": [
-                                                                                                                                    {
-                                                                                                                                        "type": "resource",
-                                                                                                                                        "data": {
-                                                                                                                                            "type": "items",
-                                                                                                                                            "name": "MissileAmmo",
-                                                                                                                                            "amount": 8,
-                                                                                                                                            "negate": false
-                                                                                                                                        }
-                                                                                                                                    },
-                                                                                                                                    {
-                                                                                                                                        "type": "and",
-                                                                                                                                        "data": {
-                                                                                                                                            "comment": null,
-                                                                                                                                            "items": [
-                                                                                                                                                {
-                                                                                                                                                    "type": "template",
-                                                                                                                                                    "data": "Shoot Super Missile"
-                                                                                                                                                },
-                                                                                                                                                {
-                                                                                                                                                    "type": "resource",
-                                                                                                                                                    "data": {
-                                                                                                                                                        "type": "items",
-                                                                                                                                                        "name": "SMAmmo",
-                                                                                                                                                        "amount": 2,
-                                                                                                                                                        "negate": false
-                                                                                                                                                    }
-                                                                                                                                                }
-                                                                                                                                            ]
-                                                                                                                                        }
-                                                                                                                                    }
-                                                                                                                                ]
-                                                                                                                            }
-                                                                                                                        }
-                                                                                                                    ]
-                                                                                                                }
-                                                                                                            },
-                                                                                                            {
-                                                                                                                "type": "and",
-                                                                                                                "data": {
-                                                                                                                    "comment": null,
-                                                                                                                    "items": [
-                                                                                                                        {
-                                                                                                                            "type": "resource",
-                                                                                                                            "data": {
-                                                                                                                                "type": "items",
-                                                                                                                                "name": "Aeion",
-                                                                                                                                "amount": 1500,
-                                                                                                                                "negate": false
-                                                                                                                            }
-                                                                                                                        },
-                                                                                                                        {
-                                                                                                                            "type": "or",
-                                                                                                                            "data": {
-                                                                                                                                "comment": null,
-                                                                                                                                "items": [
-                                                                                                                                    {
-                                                                                                                                        "type": "resource",
-                                                                                                                                        "data": {
-                                                                                                                                            "type": "items",
-                                                                                                                                            "name": "MissileAmmo",
-                                                                                                                                            "amount": 12,
-                                                                                                                                            "negate": false
-                                                                                                                                        }
-                                                                                                                                    },
-                                                                                                                                    {
-                                                                                                                                        "type": "and",
-                                                                                                                                        "data": {
-                                                                                                                                            "comment": null,
-                                                                                                                                            "items": [
-                                                                                                                                                {
-                                                                                                                                                    "type": "template",
-                                                                                                                                                    "data": "Shoot Super Missile"
-                                                                                                                                                },
-                                                                                                                                                {
-                                                                                                                                                    "type": "resource",
-                                                                                                                                                    "data": {
-                                                                                                                                                        "type": "items",
-                                                                                                                                                        "name": "SMAmmo",
-                                                                                                                                                        "amount": 5,
-                                                                                                                                                        "negate": false
-                                                                                                                                                    }
-                                                                                                                                                }
-                                                                                                                                            ]
-                                                                                                                                        }
-                                                                                                                                    }
-                                                                                                                                ]
-                                                                                                                            }
-                                                                                                                        }
-                                                                                                                    ]
-                                                                                                                }
-                                                                                                            },
-                                                                                                            {
-                                                                                                                "type": "and",
-                                                                                                                "data": {
-                                                                                                                    "comment": null,
-                                                                                                                    "items": [
-                                                                                                                        {
-                                                                                                                            "type": "resource",
-                                                                                                                            "data": {
-                                                                                                                                "type": "items",
-                                                                                                                                "name": "Aeion",
-                                                                                                                                "amount": 1000,
-                                                                                                                                "negate": false
-                                                                                                                            }
-                                                                                                                        },
-                                                                                                                        {
-                                                                                                                            "type": "or",
-                                                                                                                            "data": {
-                                                                                                                                "comment": null,
-                                                                                                                                "items": [
-                                                                                                                                    {
-                                                                                                                                        "type": "resource",
-                                                                                                                                        "data": {
-                                                                                                                                            "type": "items",
-                                                                                                                                            "name": "MissileAmmo",
-                                                                                                                                            "amount": 25,
-                                                                                                                                            "negate": false
-                                                                                                                                        }
-                                                                                                                                    },
-                                                                                                                                    {
-                                                                                                                                        "type": "and",
-                                                                                                                                        "data": {
-                                                                                                                                            "comment": null,
-                                                                                                                                            "items": [
-                                                                                                                                                {
-                                                                                                                                                    "type": "template",
-                                                                                                                                                    "data": "Shoot Super Missile"
-                                                                                                                                                },
-                                                                                                                                                {
-                                                                                                                                                    "type": "resource",
-                                                                                                                                                    "data": {
-                                                                                                                                                        "type": "items",
-                                                                                                                                                        "name": "SMAmmo",
-                                                                                                                                                        "amount": 7,
-                                                                                                                                                        "negate": false
-                                                                                                                                                    }
-                                                                                                                                                }
-                                                                                                                                            ]
-                                                                                                                                        }
-                                                                                                                                    }
-                                                                                                                                ]
-                                                                                                                            }
-                                                                                                                        }
-                                                                                                                    ]
-                                                                                                                }
-                                                                                                            }
-                                                                                                        ]
-                                                                                                    }
-                                                                                                }
-                                                                                            ]
-                                                                                        }
-                                                                                    },
-                                                                                    {
-                                                                                        "type": "and",
-                                                                                        "data": {
-                                                                                            "comment": null,
-                                                                                            "items": [
-                                                                                                {
-                                                                                                    "type": "resource",
-                                                                                                    "data": {
-                                                                                                        "type": "items",
-                                                                                                        "name": "Plasma",
-                                                                                                        "amount": 1,
-                                                                                                        "negate": false
-                                                                                                    }
-                                                                                                },
-                                                                                                {
-                                                                                                    "type": "resource",
-                                                                                                    "data": {
-                                                                                                        "type": "misc",
-                                                                                                        "name": "HighDanger",
-                                                                                                        "amount": 1,
-                                                                                                        "negate": false
-                                                                                                    }
-                                                                                                },
-                                                                                                {
-                                                                                                    "type": "or",
-                                                                                                    "data": {
-                                                                                                        "comment": null,
-                                                                                                        "items": [
-                                                                                                            {
-                                                                                                                "type": "and",
-                                                                                                                "data": {
-                                                                                                                    "comment": null,
-                                                                                                                    "items": [
-                                                                                                                        {
-                                                                                                                            "type": "resource",
-                                                                                                                            "data": {
-                                                                                                                                "type": "items",
-                                                                                                                                "name": "Aeion",
-                                                                                                                                "amount": 2200,
-                                                                                                                                "negate": false
-                                                                                                                            }
-                                                                                                                        },
-                                                                                                                        {
-                                                                                                                            "type": "or",
-                                                                                                                            "data": {
-                                                                                                                                "comment": null,
-                                                                                                                                "items": [
-                                                                                                                                    {
-                                                                                                                                        "type": "resource",
-                                                                                                                                        "data": {
-                                                                                                                                            "type": "items",
-                                                                                                                                            "name": "MissileAmmo",
-                                                                                                                                            "amount": 16,
-                                                                                                                                            "negate": false
-                                                                                                                                        }
-                                                                                                                                    },
-                                                                                                                                    {
-                                                                                                                                        "type": "and",
-                                                                                                                                        "data": {
-                                                                                                                                            "comment": null,
-                                                                                                                                            "items": [
-                                                                                                                                                {
-                                                                                                                                                    "type": "template",
-                                                                                                                                                    "data": "Shoot Super Missile"
-                                                                                                                                                },
-                                                                                                                                                {
-                                                                                                                                                    "type": "resource",
-                                                                                                                                                    "data": {
-                                                                                                                                                        "type": "items",
-                                                                                                                                                        "name": "SMAmmo",
-                                                                                                                                                        "amount": 4,
-                                                                                                                                                        "negate": false
-                                                                                                                                                    }
-                                                                                                                                                }
-                                                                                                                                            ]
-                                                                                                                                        }
-                                                                                                                                    }
-                                                                                                                                ]
-                                                                                                                            }
-                                                                                                                        }
-                                                                                                                    ]
-                                                                                                                }
-                                                                                                            },
-                                                                                                            {
-                                                                                                                "type": "and",
-                                                                                                                "data": {
-                                                                                                                    "comment": null,
-                                                                                                                    "items": [
-                                                                                                                        {
-                                                                                                                            "type": "resource",
-                                                                                                                            "data": {
-                                                                                                                                "type": "items",
-                                                                                                                                "name": "Aeion",
-                                                                                                                                "amount": 1500,
-                                                                                                                                "negate": false
-                                                                                                                            }
-                                                                                                                        },
-                                                                                                                        {
-                                                                                                                            "type": "or",
-                                                                                                                            "data": {
-                                                                                                                                "comment": null,
-                                                                                                                                "items": [
-                                                                                                                                    {
-                                                                                                                                        "type": "resource",
-                                                                                                                                        "data": {
-                                                                                                                                            "type": "items",
-                                                                                                                                            "name": "MissileAmmo",
-                                                                                                                                            "amount": 24,
-                                                                                                                                            "negate": false
-                                                                                                                                        }
-                                                                                                                                    },
-                                                                                                                                    {
-                                                                                                                                        "type": "and",
-                                                                                                                                        "data": {
-                                                                                                                                            "comment": null,
-                                                                                                                                            "items": [
-                                                                                                                                                {
-                                                                                                                                                    "type": "template",
-                                                                                                                                                    "data": "Shoot Super Missile"
-                                                                                                                                                },
-                                                                                                                                                {
-                                                                                                                                                    "type": "resource",
-                                                                                                                                                    "data": {
-                                                                                                                                                        "type": "items",
-                                                                                                                                                        "name": "SMAmmo",
-                                                                                                                                                        "amount": 7,
-                                                                                                                                                        "negate": false
-                                                                                                                                                    }
-                                                                                                                                                }
-                                                                                                                                            ]
-                                                                                                                                        }
-                                                                                                                                    }
-                                                                                                                                ]
-                                                                                                                            }
-                                                                                                                        }
-                                                                                                                    ]
-                                                                                                                }
-                                                                                                            },
-                                                                                                            {
-                                                                                                                "type": "and",
-                                                                                                                "data": {
-                                                                                                                    "comment": null,
-                                                                                                                    "items": [
-                                                                                                                        {
-                                                                                                                            "type": "resource",
-                                                                                                                            "data": {
-                                                                                                                                "type": "items",
-                                                                                                                                "name": "Aeion",
-                                                                                                                                "amount": 1000,
-                                                                                                                                "negate": false
-                                                                                                                            }
-                                                                                                                        },
-                                                                                                                        {
-                                                                                                                            "type": "or",
-                                                                                                                            "data": {
-                                                                                                                                "comment": null,
-                                                                                                                                "items": [
-                                                                                                                                    {
-                                                                                                                                        "type": "resource",
-                                                                                                                                        "data": {
-                                                                                                                                            "type": "items",
-                                                                                                                                            "name": "MissileAmmo",
-                                                                                                                                            "amount": 32,
-                                                                                                                                            "negate": false
-                                                                                                                                        }
-                                                                                                                                    },
-                                                                                                                                    {
-                                                                                                                                        "type": "and",
-                                                                                                                                        "data": {
-                                                                                                                                            "comment": null,
-                                                                                                                                            "items": [
-                                                                                                                                                {
-                                                                                                                                                    "type": "template",
-                                                                                                                                                    "data": "Shoot Super Missile"
-                                                                                                                                                },
-                                                                                                                                                {
-                                                                                                                                                    "type": "resource",
-                                                                                                                                                    "data": {
-                                                                                                                                                        "type": "items",
-                                                                                                                                                        "name": "SMAmmo",
-                                                                                                                                                        "amount": 9,
-                                                                                                                                                        "negate": false
-                                                                                                                                                    }
-                                                                                                                                                }
-                                                                                                                                            ]
-                                                                                                                                        }
-                                                                                                                                    }
-                                                                                                                                ]
-                                                                                                                            }
-                                                                                                                        }
-                                                                                                                    ]
-                                                                                                                }
-                                                                                                            }
-                                                                                                        ]
-                                                                                                    }
-                                                                                                }
-                                                                                            ]
-                                                                                        }
-                                                                                    }
-                                                                                ]
-                                                                            }
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            }
-                                                        ]
+                                                        "type": "items",
+                                                        "name": "Ice",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Combat",
+                                                        "amount": 1,
+                                                        "negate": false
                                                     }
                                                 }
                                             ]
@@ -3696,24 +2995,12 @@
                                                                 }
                                                             },
                                                             {
-                                                                "type": "and",
+                                                                "type": "resource",
                                                                 "data": {
-                                                                    "comment": null,
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "template",
-                                                                            "data": "Shoot Super Missile"
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "items",
-                                                                                "name": "SMAmmo",
-                                                                                "amount": 6,
-                                                                                "negate": false
-                                                                            }
-                                                                        }
-                                                                    ]
+                                                                    "type": "items",
+                                                                    "name": "SMAmmo",
+                                                                    "amount": 6,
+                                                                    "negate": false
                                                                 }
                                                             },
                                                             {
@@ -3731,8 +3018,13 @@
                                                                             }
                                                                         },
                                                                         {
-                                                                            "type": "template",
-                                                                            "data": "Lay Power Bomb"
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Morph",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
                                                                         },
                                                                         {
                                                                             "type": "resource",
@@ -3824,24 +3116,12 @@
                                                                 }
                                                             },
                                                             {
-                                                                "type": "and",
+                                                                "type": "resource",
                                                                 "data": {
-                                                                    "comment": null,
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "template",
-                                                                            "data": "Shoot Super Missile"
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "items",
-                                                                                "name": "SMAmmo",
-                                                                                "amount": 32,
-                                                                                "negate": false
-                                                                            }
-                                                                        }
-                                                                    ]
+                                                                    "type": "items",
+                                                                    "name": "SMAmmo",
+                                                                    "amount": 32,
+                                                                    "negate": false
                                                                 }
                                                             }
                                                         ]
@@ -4072,24 +3352,12 @@
                                                                 }
                                                             },
                                                             {
-                                                                "type": "and",
+                                                                "type": "resource",
                                                                 "data": {
-                                                                    "comment": null,
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "template",
-                                                                            "data": "Shoot Super Missile"
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "items",
-                                                                                "name": "SMAmmo",
-                                                                                "amount": 8,
-                                                                                "negate": false
-                                                                            }
-                                                                        }
-                                                                    ]
+                                                                    "type": "items",
+                                                                    "name": "SMAmmo",
+                                                                    "amount": 8,
+                                                                    "negate": false
                                                                 }
                                                             },
                                                             {
@@ -4107,8 +3375,13 @@
                                                                             }
                                                                         },
                                                                         {
-                                                                            "type": "template",
-                                                                            "data": "Lay Power Bomb"
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Morph",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
                                                                         },
                                                                         {
                                                                             "type": "resource",
@@ -4200,24 +3473,12 @@
                                                                 }
                                                             },
                                                             {
-                                                                "type": "and",
+                                                                "type": "resource",
                                                                 "data": {
-                                                                    "comment": null,
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "template",
-                                                                            "data": "Shoot Super Missile"
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "items",
-                                                                                "name": "SMAmmo",
-                                                                                "amount": 40,
-                                                                                "negate": false
-                                                                            }
-                                                                        }
-                                                                    ]
+                                                                    "type": "items",
+                                                                    "name": "SMAmmo",
+                                                                    "amount": 40,
+                                                                    "negate": false
                                                                 }
                                                             }
                                                         ]
@@ -4315,8 +3576,13 @@
                                                                 }
                                                             },
                                                             {
-                                                                "type": "template",
-                                                                "data": "Shoot Super Missile"
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "SMAmmo",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
                                                             }
                                                         ]
                                                     }
@@ -4330,8 +3596,13 @@
                                             "comment": null,
                                             "items": [
                                                 {
-                                                    "type": "template",
-                                                    "data": "Shoot Super Missile"
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "SMAmmo",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
                                                 },
                                                 {
                                                     "type": "resource",
@@ -4392,8 +3663,13 @@
                             }
                         },
                         {
-                            "type": "template",
-                            "data": "Shoot Super Missile"
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "SMAmmo",
+                                "amount": 1,
+                                "negate": false
+                            }
                         }
                     ]
                 }
@@ -4513,32 +3789,6 @@
                                         }
                                     }
                                 ]
-                            }
-                        }
-                    ]
-                }
-            },
-            "Shoot Super Missile": {
-                "type": "and",
-                "data": {
-                    "comment": null,
-                    "items": [
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "SMAmmo",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Supers",
-                                "amount": 1,
-                                "negate": false
                             }
                         }
                     ]
@@ -5533,8 +4783,13 @@
                                                 "comment": null,
                                                 "items": [
                                                     {
-                                                        "type": "template",
-                                                        "data": "Shoot Super Missile"
+                                                        "type": "resource",
+                                                        "data": {
+                                                            "type": "items",
+                                                            "name": "SMAmmo",
+                                                            "amount": 1,
+                                                            "negate": false
+                                                        }
                                                     },
                                                     {
                                                         "type": "resource",
@@ -5567,8 +4822,13 @@
                         "lock": {
                             "lock_type": "front-blast-back-if-matching",
                             "requirement": {
-                                "type": "template",
-                                "data": "Shoot Super Missile"
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "SMAmmo",
+                                    "amount": 1,
+                                    "negate": false
+                                }
                             }
                         }
                     },
