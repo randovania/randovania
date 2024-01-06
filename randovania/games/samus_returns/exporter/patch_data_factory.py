@@ -42,19 +42,14 @@ _ALTERNATIVE_MODELS = {
 
 def get_item_id_for_item(item: ResourceInfo) -> str:
     assert isinstance(item, ItemResourceInfo)
-    if "item_capacity_id" in item.extra:
+    if "item_export_id" in item.extra:
+        return item.extra["item_export_id"]
+    elif "item_capacity_id" in item.extra:
         return item.extra["item_capacity_id"]
     try:
         return item.extra["item_id"]
     except KeyError as e:
         raise KeyError(f"{item.long_name} has no item ID.") from e
-
-
-def get_export_item_id_for_item(item: ResourceInfo) -> str:
-    assert isinstance(item, ItemResourceInfo)
-    if "item_export_id" in item.extra:
-        return item.extra["item_export_id"]
-    return get_item_id_for_item(item)
 
 
 def convert_conditional_resource(res: ConditionalResources) -> Iterator[dict]:
@@ -63,7 +58,7 @@ def convert_conditional_resource(res: ConditionalResources) -> Iterator[dict]:
         return
 
     for resource in reversed(res.resources):
-        item_id = get_export_item_id_for_item(resource[0])
+        item_id = get_item_id_for_item(resource[0])
         quantity = resource[1]
 
         yield {"item_id": item_id, "quantity": quantity}
@@ -73,7 +68,9 @@ def get_resources_for_details(
     pickup: PickupEntry, conditional_resources: list[ConditionalResources], other_player: bool
 ) -> list[list[dict]]:
     resources = [
-        list(convert_conditional_resource(conditional_resource)) for conditional_resource in conditional_resources
+        list(convert_conditional_resource(conditional_resource))
+        for conditional_resource in conditional_resources
+        if conditional_resource.item is None or not pickup.respects_lock  # skip over temporary items
     ]
 
     # don't add more resources for multiworld items
@@ -84,10 +81,9 @@ def get_resources_for_details(
         # Add the lock resource into the pickup in addition to the expansion's resources
         assert len(resources) == 1
         # prepend the main item
-        resources[0].insert(
-            0,
+        resources[0].append(
             {
-                "item_id": get_export_item_id_for_item(pickup.resource_lock.locked_by),
+                "item_id": get_item_id_for_item(pickup.resource_lock.locked_by),
                 "quantity": 1,
             },
         )
@@ -110,9 +106,14 @@ class MSRPatchDataFactory(PatchDataFactory):
 
     def _calculate_starting_inventory(self, resources: ResourceCollection) -> dict[str, int]:
         result = {}
-        for resource, quantity in resources.as_resource_gain():
+        resource_gain = [
+            (resource, quantity)
+            for resource, quantity in resources.as_resource_gain()
+            if not resource.long_name.startswith("Locked")
+        ]
+        for resource, quantity in resource_gain:
             try:
-                result[get_export_item_id_for_item(resource)] = quantity
+                result[get_item_id_for_item(resource)] = quantity
             except KeyError:
                 print(f"Skipping {resource} for starting inventory: no item id")
                 continue
@@ -174,8 +175,12 @@ class MSRPatchDataFactory(PatchDataFactory):
         pickup_node = self.game.region_list.node_from_pickup_index(detail.index)
         pickup_type = pickup_node.extra.get("pickup_type", "actor")
 
+        # FIXME: Wild hack. This actually requires a patcher change to be able to export the locked text
+        # and the unlocked text
         hud_text = detail.collection_text[0]
-        if len(set(detail.collection_text)) > 1:
+        if hud_text.startswith("Locked"):
+            hud_text = detail.collection_text[1]
+        elif len(set(detail.collection_text)) > 1:
             hud_text = self.memo_data[detail.original_pickup.name]
 
         details = {"pickup_type": pickup_type, "caption": hud_text, "resources": resources}
