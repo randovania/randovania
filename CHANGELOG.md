@@ -15,6 +15,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed: In Breeding Grounds Entrance: Activating the EMP Slot now properly accounts for Missiles.
 
+### Metroid Dread
+
+#### Logic Database
+
+##### Cataris
+
+- Added: The Wide Beam Block in Dairon Transport Access can now be traversed with a Diffusion Abuse trick from below.
+
 ## [7.2.0] - 2024-01-05
 
 - **Major** - Added: Rebranded Randovania icons.
