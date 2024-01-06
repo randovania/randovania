@@ -21,9 +21,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ##### Artaria
 
-- Added: Single Wall Jump (Beginner) to cross the pillar left to right in EMMI Zone Introduction.
-- Added: Using Speed Booster in EMMI Zone Introduction to get over the pillar left to right, from the BallSpark Hallway Room, also available in Door Lock Rando.
-- Fixed: Using Speed Booster in EMMI Zone Introduction to get over the pillar left to right, from the Teleport to Dairon Room now requires Door Lock Rando to be disabled.
+- Added: Single Wall Jump (Beginner) to cross the pillar left to right in White EMMI Introduction.
+- Added: Using Speed Booster in White EMMI Introduction to get over the pillar left to right, from the BallSpark Hallway Room, also available in Door Lock Rando.
+- Fixed: Using Speed Booster in White EMMI Introduction to get over the pillar left to right, from the Teleport to Dairon Room now requires Door Lock Rando to be disabled.
 
 ##### Cataris
 
