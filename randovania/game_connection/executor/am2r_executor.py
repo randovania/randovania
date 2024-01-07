@@ -27,7 +27,6 @@ class PacketType(IntEnum):
     PACKET_HANDSHAKE = b"1"
     PACKET_VERSION_AND_UUID = b"2"
     PACKET_LOG_MESSAGE = b"3"
-    PACKET_KEEP_ALIVE = b"4"
     PACKET_NEW_INVENTORY = b"5"
     PACKET_COLLECTED_INDICES = b"6"
     PACKET_RECEIVED_PICKUPS = b"7"
@@ -37,7 +36,6 @@ class PacketType(IntEnum):
 
 
 class ClientInterests(IntEnum):
-    LOGGING = b"1"
     MULTIWORLD = b"2"
 
 
@@ -55,6 +53,7 @@ class AM2RExecutor:
     _port = 2016
     _socket: AM2RSocketHolder | None = None
     _socket_error: Exception | None = None
+    _current_version = 1
 
     def __init__(self, ip: str):
         self.logger = logging.getLogger(type(self).__name__)
@@ -82,7 +81,7 @@ class AM2RExecutor:
 
             # Send interests
             self.logger.debug("Connection open, set interests.")
-            interests = ClientInterests.MULTIWORLD  # | ClientInterests.LOGGING
+            interests = ClientInterests.MULTIWORLD
             writer.write(self._build_packet(PacketType.PACKET_HANDSHAKE, interests.to_bytes(1, "little")))
             await asyncio.wait_for(writer.drain(), timeout=30)
             await self._read_response()
@@ -95,7 +94,8 @@ class AM2RExecutor:
             self.logger.debug("Waiting for API details response.")
             response = await self._read_response()
             api_version, self.layout_uuid_str, _ = response.decode("ascii").split(",")
-            # TODO: check against API version
+            if int(api_version) != self._current_version:
+                raise AM2RConnectionException("API versions mismatch!")
 
             self.logger.debug(
                 "Remote replied with API level %s layout_uuid %s, connection successful.",
@@ -106,7 +106,6 @@ class AM2RExecutor:
             self._socket.buffer_size = 1024
 
             loop = asyncio.get_event_loop()
-            loop.create_task(self._send_keep_alive())
             loop.create_task(self.read_loop())
             self.logger.info("Connected")
 
@@ -139,20 +138,14 @@ class AM2RExecutor:
         return self._socket is not None
 
     def _build_packet(self, type: PacketType, msg: bytes | None) -> bytes:
-        retBytes: bytearray = bytearray()
-        retBytes.append(type.value)
-        # if type == PacketType.PACKET_REMOTE_LUA_EXEC:
-        #    retBytes.extend(len(msg).to_bytes(length=4, byteorder='little'))
-        # if type in [PacketType.PACKET_REMOTE_LUA_EXEC, PacketType.PACKET_HANDSHAKE]:
+        ret_bytes: bytearray = bytearray()
+        ret_bytes.append(type.value)
         if msg is not None:
-            retBytes.extend(msg)
-        print(retBytes)
-        return retBytes
+            ret_bytes.extend(msg)
+        return ret_bytes
 
     async def _read_response(self) -> bytes | None:
-        print("reading response!")
         packet_type: bytes = await asyncio.wait_for(self._socket.reader.read(1), None)
-        print(packet_type)
         if packet_type == b"\x00":
             return
         if len(packet_type) == 0:
@@ -161,21 +154,10 @@ class AM2RExecutor:
 
     async def _parse_packet(self, packet_type: int) -> bytes | None:
         response = None
-        print("Packet type is: " + str(packet_type))
         match packet_type:
             case PacketType.PACKET_MALFORMED:
-                # ouch! Whatever happened, just disconnect!
-                # TODO: redo this?
-                response = await asyncio.wait_for(self._socket.reader.read(9), timeout=15)
-                recv_packet_type = response[0]
-                am2r_received_bytes = struct.unpack("<l", response[1:4] + b"\x00")[0]
-                am2r_should_bytes = struct.unpack("<l", response[5:8] + b"\x00")[0]
-                self.logger.warning(
-                    "AM2R received a malformed packet. Type %d, received bytes %d, should receive bytes %d",
-                    recv_packet_type,
-                    am2r_received_bytes,
-                    am2r_should_bytes,
-                )
+                # Whatever happened, just disconnect!
+                self.logger.warning("AM2R received a malformed packet. Disconnecting.")
                 raise AM2RConnectionException
             case PacketType.PACKET_HANDSHAKE:
                 await self._check_header()
@@ -186,16 +168,13 @@ class AM2RExecutor:
                 response = await asyncio.wait_for(self._socket.reader.read(2), timeout=15)
                 length_data = response[0:2] + b"\x00\x00"
                 length = struct.unpack("<l", length_data)[0]
-
                 data: bytes = await asyncio.wait_for(self._socket.reader.read(length), timeout=15)
                 response = data
             case _:
                 response = await asyncio.wait_for(self._socket.reader.read(2), timeout=15)
                 length_data = response[0:2] + b"\x00\x00"
                 length = struct.unpack("<l", length_data)[0]
-                print("length of message: " + str(length))
                 response = await asyncio.wait_for(self._socket.reader.read(length), timeout=15)
-                print(response)
                 if packet_type == PacketType.PACKET_NEW_INVENTORY:
                     self.signals.new_inventory.emit(response.decode("utf-8"))
                 elif packet_type == PacketType.PACKET_COLLECTED_INDICES:
@@ -229,6 +208,5 @@ class AM2RExecutor:
 
     async def send_pickup_info(self, provider: str, item_name: str, model_name: str, quantity: int):
         message = f"{provider}|{item_name}|{model_name}|{quantity}"
-        print("sedning m: " + message)
         self._socket.writer.write(self._build_packet(PacketType.PACKET_RECEIVED_PICKUPS, message.encode("utf-8")))
         await asyncio.wait_for(self._socket.writer.drain(), timeout=30)
