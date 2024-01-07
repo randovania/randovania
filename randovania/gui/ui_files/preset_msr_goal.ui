@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1196</width>
-    <height>274</height>
+    <height>313</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -36,7 +36,7 @@
     <item>
      <widget class="QLabel" name="description_label">
       <property name="text">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;In addition to just collecting the Baby, it is now necessary to collect Metroid DNA in order to reach Ridley.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;In addition to just collecting the Baby, it is now necessary to collect Metroid DNA in order to reach Ridley. The minimum and maximum are limited to 0 and 39 DNA. The game starts with 39 DNA minus the shuffled amount.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
       <property name="wordWrap">
        <bool>true</bool>
@@ -92,35 +92,70 @@
       </property>
       <layout class="QVBoxLayout" name="verticalLayout">
        <item>
-        <widget class="QLabel" name="placement_label">
+        <widget class="QRadioButton" name="restrict_placement_radiobutton">
          <property name="text">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;The following options determine where Metroid DNA will be placed. The maximum amount of DNA that can be shuffled is 39. The game starts with 39 DNA minus the shuffled amount. Disabling all options shuffles DNA anywhere in the game.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-         </property>
-         <property name="wordWrap">
-          <bool>true</bool>
+          <string>Restricted Placement</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QCheckBox" name="prefer_metroids_check">
+        <layout class="QVBoxLayout" name="verticalLayout_2">
+         <property name="leftMargin">
+          <number>20</number>
+         </property>
+         <item>
+          <widget class="QLabel" name="restrict_placement_label">
+           <property name="text">
+            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;The following options limit where Metroid DNA will be placed. There can only be as many DNA shuffled as there are preferred locations enabled. The first option adds 25 preferred locations, the second adds 14, and the third adds 4. In Multiworlds, DNA is guaranteed to be in your World.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           </property>
+           <property name="wordWrap">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="prefer_metroids_check">
+           <property name="text">
+            <string>Prefer Standard Metroids (10 Alphas, 9 Gammas, 3 Zetas, 3 Omegas)</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="prefer_stronger_metroids_check">
+           <property name="text">
+            <string>Prefer Stronger Metroids (7 Alphas, 5 Gammas, 1 Zeta, 1 Omega)</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="prefer_bosses_check">
+           <property name="text">
+            <string>Prefer Bosses (Arachnus, Diggernaut Chase Reward, Diggernaut, Queen Metroid)</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="QRadioButton" name="free_placement_radiobutton">
          <property name="text">
-          <string>Prefer Standard Metroids (10 Alphas, 9 Gammas, 3 Zetas, 3 Omegas)</string>
+          <string>Free Placement</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QCheckBox" name="prefer_stronger_metroids_check">
-         <property name="text">
-          <string>Prefer Stronger Metroids (7 Alphas, 5 Gammas, 1 Zeta, 1 Omega)</string>
+        <layout class="QVBoxLayout" name="verticalLayout_3">
+         <property name="leftMargin">
+          <number>20</number>
          </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QCheckBox" name="prefer_bosses_check">
-         <property name="text">
-          <string>Prefer Bosses (Arachnus, Diggernaut Chase Reward, Diggernaut, Queen Metroid)</string>
-         </property>
-        </widget>
+         <item>
+          <widget class="QLabel" name="free_placement_label">
+           <property name="text">
+            <string>Enables DNA to be placed anywhere. For Multiworlds, this means even other Worlds.</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </item>
       </layout>
      </widget>
