@@ -35,7 +35,8 @@ def _area_name(region_list: RegionList, pickup_node: PickupNode, hide_region: bo
 
 
 def colorize_text(color: AM2RColor, text: str, with_color: bool) -> str:
-    if with_color:
+    # FIXME: This is bad. We should instead change generic_credits, to allow coloring item+player
+    if with_color and False:
         return f"{color.value}{text}{AM2RColor.WHITE.value}"
     else:
         return text
