@@ -7,7 +7,7 @@ from randovania.game_connection.builder.connector_builder import ConnectorBuilde
 from randovania.game_connection.connector_builder_choice import ConnectorBuilderChoice
 
 if TYPE_CHECKING:
-    from randovania.game_connection.executor.memory_operation import MemoryOperationExecutor
+    from randovania.game_connection.connector.remote_connector import RemoteConnector
 
 
 class AM2RConnectorBuilder(ConnectorBuilder):
@@ -29,7 +29,6 @@ class AM2RConnectorBuilder(ConnectorBuilder):
 
     async def build_connector(self) -> RemoteConnector | None:
         # Delay importing these to avoid too many early imports in startup
-        # TODO: is this needed for am2r at all?
         from randovania.game_connection.connector.am2r_remote_connector import AM2RRemoteConnector
         from randovania.game_connection.executor.am2r_executor import AM2RExecutor
 
@@ -50,9 +49,6 @@ class AM2RConnectorBuilder(ConnectorBuilder):
         if log:
             self.logger.info(msg)
         self.StatusUpdate.emit(msg)
-
-    def create_executor(self) -> MemoryOperationExecutor:
-        return AM2RExecutor(self.ip)
 
     def configuration_params(self) -> dict:
         return {

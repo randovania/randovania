@@ -3,7 +3,6 @@ import uuid
 
 from qasync import asyncSlot
 
-from randovania.exporter.pickup_exporter import _conditional_resources_for_pickup
 from randovania.game_connection.connector.remote_connector import (
     PickupEntryWithOwner,
     PlayerLocationEvent,
@@ -12,39 +11,9 @@ from randovania.game_connection.connector.remote_connector import (
 from randovania.game_connection.executor.am2r_executor import AM2RExecutor
 from randovania.game_description import default_database
 from randovania.game_description.db.region import Region
-from randovania.game_description.pickup.pickup_entry import PickupEntry
 from randovania.game_description.resources.inventory import Inventory, InventoryItem
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.game_description.resources.resource_collection import ResourceCollection
-from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.games.game import RandovaniaGame
-
-
-def format_received_item(item_name: str, player_name: str) -> str:
-    special = {}
-    generic = "Received {item_name} from {provider_name}."
-    return special.get(item_name, generic).format(item_name=item_name, provider_name=player_name)
-
-
-def resources_to_give_for_pickup(
-    db: ResourceDatabase,
-    pickup: PickupEntry,
-    inventory: Inventory,
-) -> tuple[str, list[list[dict]]]:
-    inventory_resources = ResourceCollection.with_database(db)
-    inventory_resources.add_resource_gain([(item, inv_item.capacity) for item, inv_item in inventory.items()])
-    conditional = pickup.conditional_for_resources(inventory_resources)
-    if conditional.name is not None:
-        item_name = conditional.name
-    else:
-        item_name = pickup.name
-
-    conditional_resources = _conditional_resources_for_pickup(pickup)
-    # Commented out, because get_resources_for_details is dread specific
-    # resources = get_resources_for_details(pickup, conditional_resources, False)
-    resources = conditional_resources
-
-    return item_name, resources
 
 
 class AM2RRemoteConnector(RemoteConnector):
@@ -86,7 +55,7 @@ class AM2RRemoteConnector(RemoteConnector):
     def is_disconnected(self) -> bool:
         return not self.executor.is_connected()
 
-    # reset all values on init, disconnect or after switching back to main menu
+    # Reset all values on init, disconnect or after switching back to main menu
     def reset_values(self):
         self.remote_pickups = ()
         self.last_inventory = Inventory.empty()
@@ -95,25 +64,46 @@ class AM2RRemoteConnector(RemoteConnector):
         self.current_region = None
 
     def new_player_location_received(self, state_or_region: str):
-        # Skip title screen and pause screen
+        """
+        __Location implementation detail:__
+        All rooms in am2r have a sort of rule they follow to, with `rm_aXYZZ`, where X is a number denoting the area,
+        Y is an identifier for a subarea, and ZZ is a number. I.e `rm_a3b03` is the third room in breeding grounds
+        for A3. All regions in RDV also have data on which internal number they map to
+        Thus, the client just sends their internal room name if a room is changed, and on the RDV side, we check the
+        region number and update it.
+        :param state_or_region: Internal room name of the game.
+        """
+
+        # Dont update on pause screens/transitions
         if state_or_region == "rm_transition" or state_or_region == "rm_subscreen":
             return
-        elif not state_or_region.startswith("rm_a") or len(state_or_region) < 5:
+
+        # Reset if we're on title screen or other unknown screens
+        if not state_or_region.startswith("rm_a") or len(state_or_region) < 5:
             self.reset_values()
             self.current_region = None
-        else:
-            area_number = state_or_region[4]
-            self.current_region = next(
-                (
-                    region
-                    for region in self.game.region_list.regions
-                    if str(region.extra["internal_number"]) == area_number
-                ),
-                None,
-            )
+            self.PlayerLocationChanged.emit(PlayerLocationEvent(self.current_region, None))
+            return
+
+        # Normal rooms with our rm_aXYZZ format
+        area_number = state_or_region[4]
+        self.current_region = next(
+            (region for region in self.game.region_list.regions if str(region.extra["internal_number"]) == area_number),
+            None,
+        )
         self.PlayerLocationChanged.emit(PlayerLocationEvent(self.current_region, None))
 
     def new_collected_locations_received(self, new_indices: str):
+        """
+        __Collected locations implementation detail:__
+        The game keeps track of which locations it collected, in a big string, with the format `locations:XX,YY,ZZ...`,
+        where XX/YY/ZZ are the pickup indices. The pickup indices match between game and DB.
+        Also, this string is saved to the save file.
+        The game sends that string to RDV, where we then loop through it, and mark every index as collected.
+
+        :param new_indices: A string from the game with the format `locations:XX,YY,ZZ...`.
+        """
+
         locations = set()
         start_of_indices = "locations:"
 
@@ -123,14 +113,30 @@ class AM2RRemoteConnector(RemoteConnector):
 
         for index in new_indices[len(start_of_indices) :].split(","):
             if not index.isdigit():
+                self.logger.warning("Response should contain a digit, but instead contains '%s'", index)
                 continue
             locations.add(PickupIndex(int(index)))
 
         for location in locations:
-            print("Collected: " + str(location))
             self.PickupIndexCollected.emit(location)
 
     def new_inventory_received(self, new_inventory: str):
+        """
+        __New inventory implementation detail:__
+        The game keeps track of which items it collected in a big string with the format
+        `items:XA|XB,YA|YB,ZA|ZB...`, where XA/YA/ZA are the item names and XB/YB/ZB is the quantity of that item.
+        This string is also saved to the save file. The item names *mostly* match up with the RDV item names,
+        except for ammo and progressives.
+        The game sends that string to RDV, where we then loop through it. We adjust the item name for ammo and
+        progressives accordingly, and stuff it into an item|quantity dict.
+        If the item exists in that dict, we increase its quantity, if not, we add it. Then, based on that dict, we
+        update the inventory.
+
+        Regarding ammo and progressives: for some reason, we need here the name of the ammo, and not the name of the
+        expansions. I.e. for `Missile Expansions`, we need `Missiles`. So there's a lookup dict here to adjust for them.
+
+        :param new_inventory: A string from the game with the format `items:XA|XB,YA|YB,ZA|ZB...`.
+        """
         locations = {}
         start_of_inventory = "items:"
 
@@ -141,11 +147,14 @@ class AM2RRemoteConnector(RemoteConnector):
         for position in new_inventory[len(start_of_inventory) :].split(","):
             print(bytes(position, "utf-8"))
             if "|" not in position:
+                self.logger.warning("Response should contain a '|', but it doesn't")
                 continue
             (item_name, quantity) = position.split("|")
             if not quantity.isdigit():
+                self.logger.warning("Response should contain a digit, but instead contains '%s'", position)
                 continue
 
+            # Ammo and progressive stuff is special, and this is my best idea on how to circumvent them :(
             item_name_replacement = {
                 "Missile Expansion": "Missiles",
                 "Super Missile Expansion": "Super Missiles",
@@ -170,7 +179,6 @@ class AM2RRemoteConnector(RemoteConnector):
 
             item_list = [i for i in self.game.resource_database.item if i.long_name == item_name]
             item = item_list[0]
-            print(item)
             if item in locations:
                 locations[item] += int(quantity)
             else:
@@ -182,10 +190,15 @@ class AM2RRemoteConnector(RemoteConnector):
 
     @asyncSlot()
     async def new_received_pickups_received(self, new_received_pickups: str):
+        """
+        The game periodically sends a packet, to tell RDV how many pickups it has received. If the game is in a valid
+        region, and the game has fewer pickups than what the server has, then we resend the game the missing items.
+        :param new_received_pickups: A number as a string on how many pickups the game has received.
+        :return:
+        """
         new_recv_as_int = int(new_received_pickups)
         self.logger.debug("Received Pickups: %s", new_received_pickups)
         if self.current_region is not None:
-            print(self.current_region)
             self.in_cooldown = False
         self.received_pickups = new_recv_as_int
         await self.receive_remote_pickups()
@@ -194,42 +207,29 @@ class AM2RRemoteConnector(RemoteConnector):
         self.remote_pickups = remote_pickups
         await self.receive_remote_pickups()
 
-    # TODO: these functions have to be implemented still!
     async def receive_remote_pickups(self) -> None:
+        """
+        If game is missing pickups, send them to it.
+        """
         remote_pickups = self.remote_pickups
 
-        # in that case we never received the numbers (at least 0) from the game
+        # In this case, the game never communicated with us properly with how many items it had.
         if self.received_pickups is None:
             return
 
+        # Early exit, if we can't send anything to the game, or if we don't need to send it items.
         num_pickups = self.received_pickups
-
         if num_pickups >= len(remote_pickups) or self.in_cooldown:
             return
 
+        # Mark as cooldown, and send provider, item name, model name and quantity to game
         self.in_cooldown = True
-
         provider_name, pickup = remote_pickups[num_pickups]
-        name, model = pickup.name, pickup.model.name  # TODO: what about progessive items??? Also drops are broken
+        name, model = pickup.name, pickup.model.name
         quantity = next(pickup.conditional_resources).resources[0][1]
-
-        # item_name, items_list = resources_to_give_for_pickup(self.game.resource_database, pickup, inventory)
 
         self.logger.debug("Resource changes for %s from %s", pickup.name, provider_name)
         await self.executor.send_pickup_info(provider_name, name, model, quantity)
-
-        # from open_dread_rando.lua_util import lua_convert
-        # progression_as_lua = lua_convert(items_list, True)
-        # message = format_received_item(item_name, provider_name)
-
-        # self.logger.info("%d permanent pickups, magic %d. Next pickup: %s",
-        #                  len(remote_pickups), num_pickups, message)
-
-        # main_item_id = items_list[0][0]["item_id"]
-        # from open_dread_rando.lua_editor import LuaEditor
-        # parent = LuaEditor.get_parent_for(None, main_item_id)
-
-        # f"RL.ReceivePickup({repr(message)},{parent},{repr(progression_as_lua)},{num_pickups},{self.inventory_index})"
 
     async def display_arbitrary_message(self, message: str):
         escaped_message = message.replace("#", "\\#")  # In GameMaker, '#' is a newline.

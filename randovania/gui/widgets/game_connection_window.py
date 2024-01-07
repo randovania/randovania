@@ -258,6 +258,7 @@ class GameConnectionWindow(QtWidgets.QMainWindow, Ui_GameConnectionWindow):
             args["ip"] = new_ip
 
         if choice == ConnectorBuilderChoice.AM2R:
+            # TODO: in the future, for maybe Android, add a nice GUI that allows one to have a user provided ip.
             args["ip"] = "localhost"
 
         if choice == ConnectorBuilderChoice.DEBUG:
