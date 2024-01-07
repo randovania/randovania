@@ -44,6 +44,15 @@ def test_assign_pool_results_predetermined(msr_game_description, msr_configurati
     assert shuffled_dna == []
 
 
+@pytest.mark.parametrize(
+    ("artifacts"),
+    [
+        (MSRArtifactConfig(False, False, False, True, 5)),
+        (MSRArtifactConfig(True, False, False, True, 10)),
+        (MSRArtifactConfig(False, True, True, True, 15)),
+        (MSRArtifactConfig(True, True, True, True, 6)),
+    ],
+)
 def test_assign_pool_results_prefer_anywhere(msr_game_description, msr_configuration, artifacts):
     patches = GamePatches.create_from_game(
         msr_game_description, 0, dataclasses.replace(msr_configuration, artifacts=artifacts)
