@@ -213,19 +213,6 @@ class AM2RExecutor:
         if received_number[0] != self._socket.request_number:
             raise AM2RConnectionException(f"Expected response {self._socket.request_number}, got {received_number}")
 
-    # TODO: keep alive is probably not needed. it was only added to dread, because ryujinx has some shenanigans
-    async def _send_keep_alive(self) -> bytes:
-        while self.is_connected():
-            try:
-                await asyncio.sleep(2)
-                self._socket.writer.write(self._build_packet(PacketType.PACKET_KEEP_ALIVE, None))
-                await asyncio.wait_for(self._socket.writer.drain(), timeout=30)
-            except (OSError, asyncio.TimeoutError, AttributeError) as e:
-                self.logger.warning(
-                    "Unable to send keep-alive packet to %s:%d: %s (%s)", self._ip, self._port, e, type(e)
-                )
-                self.disconnect()
-
     async def read_loop(self):
         while self.is_connected():
             try:
