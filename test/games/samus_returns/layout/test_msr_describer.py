@@ -24,7 +24,7 @@ from randovania.interface_common.preset_manager import PresetManager
         MSRArtifactConfig(True, True, False, True, 30),
     ],
 )
-def test_msr_format_params(artifacts: bool):
+def test_msr_format_params(artifacts):
     # Setup
     preset = PresetManager(None).default_preset_for_game(RandovaniaGame.METROID_SAMUS_RETURNS).get_preset()
     assert isinstance(preset.configuration, MSRConfiguration)
