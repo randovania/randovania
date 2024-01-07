@@ -161,9 +161,9 @@ class AM2RRemoteConnector(RemoteConnector):
                 item_name = item_name_replacement[item_name]
 
             if item_name in progressives:
-                if progressives[item_name][0] in locations:
+                if len([i for i, q in locations.items() if i.long_name == progressives[item_name][0]]) > 0:
                     item_name = progressives[item_name][1]
-                elif progressives[item_name][1] in locations:
+                elif len([i for i, q in locations.items() if i.long_name == progressives[item_name][1]]) > 0:
                     item_name = progressives[item_name][1]
                 else:
                     item_name = progressives[item_name][0]
