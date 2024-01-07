@@ -68,7 +68,7 @@ def test_msr_format_params(artifacts):
         "Game Changes": [
             "Missile needs Launcher, Super Missile needs Launcher, Power Bomb needs Launcher",
             "Charge Door Buff, Beam Door Buff",
-            "Open Area 3 Interior East Shortcut, Remove Area Exit Path Grapple Blocks",
+            "Open Area 3 Interior East Shortcut, Remove Area Exit Grapple Blocks",
             "Change Surface Scan Pulse Crumble Blocks, Change Area 1 Chozo Seal Crumble Blocks",
         ],
     }
