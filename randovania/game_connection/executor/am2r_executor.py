@@ -4,6 +4,7 @@ import asyncio
 import dataclasses
 import logging
 import struct
+import typing
 from asyncio import StreamReader, StreamWriter
 from enum import IntEnum
 
@@ -61,7 +62,7 @@ class AM2RExecutor:
         self._ip = ip
 
     @property
-    def ip(self):
+    def ip(self) -> str:
         return self._ip
 
     @property
@@ -92,7 +93,7 @@ class AM2RExecutor:
             await asyncio.wait_for(writer.drain(), timeout=30)
 
             self.logger.debug("Waiting for API details response.")
-            response = await self._read_response()
+            response = typing.cast(bytes, await self._read_response())
             api_version, self.layout_uuid_str, _ = response.decode("ascii").split(",")
             if int(api_version) != self._current_version:
                 raise AM2RConnectionException("API versions mismatch!")
@@ -127,7 +128,7 @@ class AM2RExecutor:
             self._socket_error = e
             return message
 
-    def disconnect(self):
+    def disconnect(self) -> None:
         socket = self._socket
         self._socket = None
         if socket is not None:
@@ -138,21 +139,24 @@ class AM2RExecutor:
         return self._socket is not None
 
     def _build_packet(self, type: PacketType, msg: bytes | None) -> bytes:
-        ret_bytes: bytearray = bytearray()
-        ret_bytes.append(type.value)
+        ret_bytes: bytearray = bytearray(type.value)
         if msg is not None:
             ret_bytes.extend(msg)
         return ret_bytes
 
     async def _read_response(self) -> bytes | None:
+        if self._socket is None:
+            return None
         packet_type: bytes = await asyncio.wait_for(self._socket.reader.read(1), None)
         if packet_type == b"\x00":
-            return
+            return None
         if len(packet_type) == 0:
             raise OSError("missing packet type")
         return await self._parse_packet(packet_type[0])
 
     async def _parse_packet(self, packet_type: int) -> bytes | None:
+        if self._socket is None:
+            return None
         response = None
         match packet_type:
             case PacketType.PACKET_MALFORMED:
@@ -187,12 +191,15 @@ class AM2RExecutor:
                     self.logger.debug(response.decode("utf-8"))
         return response
 
-    async def _check_header(self):
+    async def _check_header(self) -> None:
+        if self._socket is None:
+            return None
         received_number: bytes = await asyncio.wait_for(self._socket.reader.read(1), None)
         if received_number[0] != self._socket.request_number:
-            raise AM2RConnectionException(f"Expected response {self._socket.request_number}, got {received_number}")
+            num_as_string = received_number.decode("ascii")
+            raise AM2RConnectionException(f"Expected response {self._socket.request_number}, got {num_as_string}")
 
-    async def read_loop(self):
+    async def read_loop(self) -> None:
         while self.is_connected():
             try:
                 await self._read_response()
@@ -202,11 +209,15 @@ class AM2RExecutor:
                 )
                 self.disconnect()
 
-    async def display_message(self, message: str):
+    async def display_message(self, message: str) -> None:
+        if self._socket is None:
+            return None
         self._socket.writer.write(self._build_packet(PacketType.PACKET_DISPLAY_MESSAGE, message.encode("utf-8")))
         await asyncio.wait_for(self._socket.writer.drain(), timeout=30)
 
-    async def send_pickup_info(self, provider: str, item_name: str, model_name: str, quantity: int):
+    async def send_pickup_info(self, provider: str, item_name: str, model_name: str, quantity: int) -> None:
+        if self._socket is None:
+            return None
         message = f"{provider}|{item_name}|{model_name}|{quantity}"
         self._socket.writer.write(self._build_packet(PacketType.PACKET_RECEIVED_PICKUPS, message.encode("utf-8")))
         await asyncio.wait_for(self._socket.writer.drain(), timeout=30)

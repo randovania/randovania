@@ -1,5 +1,6 @@
 import logging
 import uuid
+from typing import TYPE_CHECKING
 
 from qasync import asyncSlot
 
@@ -14,6 +15,10 @@ from randovania.game_description.db.region import Region
 from randovania.game_description.resources.inventory import Inventory, InventoryItem
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.game import RandovaniaGame
+
+if TYPE_CHECKING:
+    from randovania.game_description.pickup.pickup_entry import PickupEntry
+    from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 
 
 class AM2RRemoteConnector(RemoteConnector):
@@ -38,32 +43,32 @@ class AM2RRemoteConnector(RemoteConnector):
     def game_enum(self) -> RandovaniaGame:
         return self._game_enum
 
-    def description(self):
+    def description(self) -> str:
         return f"{self.game_enum.long_name}"
 
     async def current_game_status(self) -> tuple[bool, Region | None]:
         return (self.in_cooldown, self.current_region)
 
-    def connection_lost(self):
+    def connection_lost(self) -> None:
         self.logger.info("Finishing connector")
         # TODO: Finished signal is never used. Remove it everywhere?
         self.Finished.emit()
 
-    async def force_finish(self):
+    async def force_finish(self) -> None:
         self.executor.disconnect()
 
     def is_disconnected(self) -> bool:
         return not self.executor.is_connected()
 
     # Reset all values on init, disconnect or after switching back to main menu
-    def reset_values(self):
-        self.remote_pickups = ()
+    def reset_values(self) -> None:
+        self.remote_pickups: tuple[tuple[str, PickupEntry], ...] = ()
         self.last_inventory = Inventory.empty()
         self.in_cooldown = True
-        self.received_pickups = None
-        self.current_region = None
+        self.received_pickups: int | None = None
+        self.current_region: Region | None = None
 
-    def new_player_location_received(self, state_or_region: str):
+    def new_player_location_received(self, state_or_region: str) -> None:
         """
         __Location implementation detail:__
         All rooms in am2r have a sort of rule they follow to, with `rm_aXYZZ`, where X is a number denoting the area,
@@ -93,7 +98,7 @@ class AM2RRemoteConnector(RemoteConnector):
         )
         self.PlayerLocationChanged.emit(PlayerLocationEvent(self.current_region, None))
 
-    def new_collected_locations_received(self, new_indices: str):
+    def new_collected_locations_received(self, new_indices: str) -> None:
         """
         __Collected locations implementation detail:__
         The game keeps track of which locations it collected, in a big string, with the format `locations:XX,YY,ZZ...`,
@@ -120,7 +125,7 @@ class AM2RRemoteConnector(RemoteConnector):
         for location in locations:
             self.PickupIndexCollected.emit(location)
 
-    def new_inventory_received(self, new_inventory: str):
+    def new_inventory_received(self, new_inventory: str) -> None:
         """
         __New inventory implementation detail:__
         The game keeps track of which items it collected in a big string with the format
@@ -137,7 +142,7 @@ class AM2RRemoteConnector(RemoteConnector):
 
         :param new_inventory: A string from the game with the format `items:XA|XB,YA|YB,ZA|ZB...`.
         """
-        locations = {}
+        locations: dict[ItemResourceInfo, int] = {}
         start_of_inventory = "items:"
 
         if not new_inventory.startswith(start_of_inventory):
@@ -189,7 +194,7 @@ class AM2RRemoteConnector(RemoteConnector):
         self.InventoryUpdated.emit(inventory)
 
     @asyncSlot()
-    async def new_received_pickups_received(self, new_received_pickups: str):
+    async def new_received_pickups_received(self, new_received_pickups: str) -> None:
         """
         The game periodically sends a packet, to tell RDV how many pickups it has received. If the game is in a valid
         region, and the game has fewer pickups than what the server has, then we resend the game the missing items.
@@ -203,7 +208,7 @@ class AM2RRemoteConnector(RemoteConnector):
         self.received_pickups = new_recv_as_int
         await self.receive_remote_pickups()
 
-    async def set_remote_pickups(self, remote_pickups: tuple[PickupEntryWithOwner, ...]):
+    async def set_remote_pickups(self, remote_pickups: tuple[PickupEntryWithOwner, ...]) -> None:
         self.remote_pickups = remote_pickups
         await self.receive_remote_pickups()
 
@@ -231,6 +236,6 @@ class AM2RRemoteConnector(RemoteConnector):
         self.logger.debug("Resource changes for %s from %s", pickup.name, provider_name)
         await self.executor.send_pickup_info(provider_name, name, model, quantity)
 
-    async def display_arbitrary_message(self, message: str):
+    async def display_arbitrary_message(self, message: str) -> None:
         escaped_message = message.replace("#", "\\#")  # In GameMaker, '#' is a newline.
         await self.executor.display_message(escaped_message)
