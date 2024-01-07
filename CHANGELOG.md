@@ -28,9 +28,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 #### Logic Database
 
 - Added: 12 videos to the database
+- 
 ##### Torvus Bog
 
-- Added: In Great Bridge: Rolljump method to reach Abandon Base from Temple Access (Top)
+- Added: In Great Bridge: Rolljump method to reach Abandon Worksite from Temple Access (Top)
 
 ## [7.2.0] - 2024-01-05
 
