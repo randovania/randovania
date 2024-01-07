@@ -374,6 +374,8 @@ class AM2RPatchDataFactory(PatchDataFactory):
             self.description.all_patches,
             self.players_config,
             AM2RHintNamer(self.description.all_patches, self.players_config),
+            "{}",
+            False,
         )
         # am2r credits uses the following syntax:
         # * indicates a header

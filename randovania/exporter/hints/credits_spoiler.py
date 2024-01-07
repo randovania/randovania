@@ -17,10 +17,10 @@ class OwnedPickupLocation(NamedTuple):
     player_name: str | None
     location: PickupLocation
 
-    def export(self, namer: HintNamer) -> str:
+    def export(self, namer: HintNamer, use_player_color: bool = True) -> str:
         hint = namer.format_location(self.location, with_region=True, with_area=True, with_color=False)
         if self.player_name is not None:
-            hint = f"{namer.format_player(self.player_name, with_color=True)}'s {hint}"
+            hint = f"{namer.format_player(self.player_name, with_color=use_player_color)}'s {hint}"
         return hint
 
 
@@ -54,6 +54,7 @@ def generic_credits(
     players_config: PlayersConfiguration,
     namer: HintNamer,
     pickup_name_format: str = "{}",
+    use_player_color: bool = True,
 ) -> dict[str, str]:
     major_pickup_name_order = {
         pickup.name: index for index, pickup in enumerate(standard_pickup_configuration.pickups_state.keys())
@@ -63,7 +64,9 @@ def generic_credits(
         return major_pickup_name_order.get(p.name, math.inf), p.name
 
     details = get_locations_for_major_pickups_and_keys(all_patches, players_config)
-    major_pickups_spoiler = {pickup: [entry.export(namer) for entry in entries] for pickup, entries in details.items()}
+    major_pickups_spoiler = {
+        pickup: [entry.export(namer, use_player_color) for entry in entries] for pickup, entries in details.items()
+    }
 
     return {
         pickup_name_format.format(pickup.name): "\n".join(major_pickups_spoiler[pickup]) or "Nowhere"
