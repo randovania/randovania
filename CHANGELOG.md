@@ -23,6 +23,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: The Wide Beam Block in Dairon Transport Access can now be traversed with a Diffusion Abuse trick from below.
 
+### Metroid Prime 2: Echoes
+
+#### Logic Database
+
+- Added: 12 videos to the database
+
+##### Torvus Bog
+
+- Added: In Great Bridge: Rolljump method to reach Abandoned Worksite from Temple Access (Top)
+
 ## [7.2.0] - 2024-01-05
 
 - **Major** - Added: Rebranded Randovania icons.
