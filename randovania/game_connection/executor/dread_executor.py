@@ -26,6 +26,7 @@ class DreadLuaException(Exception):
 
 
 @dataclasses.dataclass()
+# TODO: AM2R, Dread and future MSR have here very similar attribute. Refactor this to a common SocketHolder
 class DreadSocketHolder:
     reader: StreamReader
     writer: StreamWriter

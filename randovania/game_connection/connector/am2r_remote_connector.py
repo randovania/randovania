@@ -150,7 +150,6 @@ class AM2RRemoteConnector(RemoteConnector):
             return
 
         for position in new_inventory[len(start_of_inventory) :].split(","):
-            print(bytes(position, "utf-8"))
             if "|" not in position:
                 self.logger.warning("Response should contain a '|', but it doesn't")
                 continue
@@ -171,13 +170,15 @@ class AM2RRemoteConnector(RemoteConnector):
                 "Progressive Suit": ("Varia Suit", "Gravity Suit"),
             }
 
-            if item_name in item_name_replacement:
-                item_name = item_name_replacement[item_name]
+            # If our item name is in the lookup dict, we replace it. If it isn't, we keep it as is
+            item_name = item_name_replacement.get(item_name, item_name)
 
             if item_name in progressives:
-                if len([i for i, q in locations.items() if i.long_name == progressives[item_name][0]]) > 0:
+                # If the last progressive item is collected, we add it again. if the first item is collected, we
+                # add the last item. If no item was collected, we add the first item
+                if len([i for i, q in locations.items() if i.long_name == progressives[item_name][1]]) > 0:
                     item_name = progressives[item_name][1]
-                elif len([i for i, q in locations.items() if i.long_name == progressives[item_name][1]]) > 0:
+                elif len([i for i, q in locations.items() if i.long_name == progressives[item_name][0]]) > 0:
                     item_name = progressives[item_name][1]
                 else:
                     item_name = progressives[item_name][0]

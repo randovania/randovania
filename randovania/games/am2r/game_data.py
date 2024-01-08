@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import randovania
 from randovania.games import game
 from randovania.games.am2r import layout
 
@@ -134,5 +133,5 @@ game_data: game.GameData = game.GameData(
     patch_data_factory=_patch_data_factory,
     exporter=_exporter,
     multiple_start_nodes_per_area=False,
-    defaults_available_in_game_sessions=randovania.is_dev_version(),
+    defaults_available_in_game_sessions=True,
 )
