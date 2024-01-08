@@ -139,7 +139,8 @@ class AM2RExecutor:
         return self._socket is not None
 
     def _build_packet(self, type: PacketType, msg: bytes | None) -> bytes:
-        ret_bytes: bytearray = bytearray(type.value)
+        ret_bytes: bytearray = bytearray()
+        ret_bytes.append(type.value)
         if msg is not None:
             ret_bytes.extend(msg)
         return ret_bytes
