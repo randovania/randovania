@@ -9,13 +9,15 @@ from randovania.interface_common.options import PerGameOptions, decode_if_not_no
 
 @dataclasses.dataclass(frozen=True)
 class CSPerGameOptions(PerGameOptions):
-    output_directory: Path | None = None
+    output_directory: Path | None = (None,)
+    platform: str | None = None
 
     @property
     def as_json(self):
         return {
             **super().as_json,
             "output_directory": str(self.output_directory) if self.output_directory is not None else None,
+            "platform": str(self.platform) if self.platform is not None else None,
         }
 
     @classmethod
@@ -25,4 +27,5 @@ class CSPerGameOptions(PerGameOptions):
         return cls(
             cosmetic_patches=cosmetic_patches,
             output_directory=decode_if_not_none(value["output_directory"], Path),
+            platform=value["platform"],
         )
