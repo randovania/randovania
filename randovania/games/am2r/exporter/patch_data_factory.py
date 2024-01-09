@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import typing
 from random import Random
 from typing import TYPE_CHECKING
 
@@ -127,7 +128,9 @@ class AM2RPatchDataFactory(PatchDataFactory):
         ("Nothing", "sItemNothing", "Nothing acquired"): ("sItemShinyNothing", "Shiny Nothing acquired"),
     }
 
-    def _create_pickups_dict(self, pickup_list: list[ExportedPickupDetails], item_info: dict, rng: Random) -> dict:
+    def _create_pickups_dict(
+        self, pickup_list: list[ExportedPickupDetails], text_data: dict, model_data: dict[str, int], rng: Random
+    ) -> dict:
         pickup_map_dict = {}
         for pickup in pickup_list:
             quantity = pickup.conditional_resources[0].resources[0][1] if not pickup.other_player else 0
@@ -146,12 +149,12 @@ class AM2RPatchDataFactory(PatchDataFactory):
             pickup_map_dict[object_name] = {
                 "sprite_details": {
                     "name": pickup.model.name,
-                    "speed": item_info[pickup.original_pickup.name]["sprite_speed"],
+                    "speed": model_data.get(pickup.model.name, 0.2),
                 },
                 "item_effect": pickup.original_pickup.name if not pickup.other_player else "Nothing",
                 "quantity": quantity,
                 "text": {
-                    "header": item_info[pickup.name]["text_header"]
+                    "header": text_data[pickup.name]["text_header"]
                     if not self.players_config.is_multiworld
                     else pickup.name,
                     "description": pickup.collection_text[text_index],
@@ -220,7 +223,7 @@ class AM2RPatchDataFactory(PatchDataFactory):
         return return_dict
 
     def _create_game_patches(
-        self, config: AM2RConfiguration, pickup_list: list[ExportedPickupDetails], item_info: dict, rng: Random
+        self, config: AM2RConfiguration, pickup_list: list[ExportedPickupDetails], text_data: dict, rng: Random
     ) -> dict:
         def get_locked_ammo_text(ammo_item: str) -> str:
             text = "MISSING TEXT, PLEASE REPORT THIS!"
@@ -251,15 +254,15 @@ class AM2RPatchDataFactory(PatchDataFactory):
             "screw_blocks": config.screw_blocks,
             "sabre_designed_skippy": rng.randint(0, self._EASTER_EGG_SHINY) == 0,
             "locked_missile_text": {
-                "header": item_info["Locked Missile Expansion"]["text_header"],
+                "header": text_data["Locked Missile Expansion"]["text_header"],
                 "description": missile_text,
             },
             "locked_super_text": {
-                "header": item_info["Locked Super Missile Expansion"]["text_header"],
+                "header": text_data["Locked Super Missile Expansion"]["text_header"],
                 "description": super_text,
             },
             "locked_pb_text": {
-                "header": item_info["Locked Power Bomb Expansion"]["text_header"],
+                "header": text_data["Locked Power Bomb Expansion"]["text_header"],
                 "description": pb_text,
             },
         }
@@ -352,17 +355,25 @@ class AM2RPatchDataFactory(PatchDataFactory):
             "music_shuffle": _construct_music_shuffle_dict(c.music, Random(seed_number)),
         }
 
-    def _get_item_data(self):
-        item_data = json_lib.read_path(RandovaniaGame.AM2R.data_path.joinpath("pickup_database", "item_data.json"))
+    def _get_text_data(self) -> dict:
+        text_data: dict = typing.cast(
+            dict, json_lib.read_path(RandovaniaGame.AM2R.data_path.joinpath("pickup_database", "text_data.json"))
+        )
 
         for i in range(1, 47):
-            item_data[f"Metroid DNA {i}"] = item_data["Metroid DNA"]
+            text_data[f"Metroid DNA {i}"] = text_data["Metroid DNA"]
 
-        item_data["Missiles"] = item_data["Missile Expansion"]
-        item_data["Super Missiles"] = item_data["Super Missile Expansion"]
-        item_data["Power Bombs"] = item_data["Power Bomb Expansion"]
-        item_data["EnergyTransferModule"] = item_data["Nothing"]
-        return item_data
+        text_data["Missiles"] = text_data["Missile Expansion"]
+        text_data["Super Missiles"] = text_data["Super Missile Expansion"]
+        text_data["Power Bombs"] = text_data["Power Bomb Expansion"]
+        text_data["EnergyTransferModule"] = text_data["Nothing"]
+        return text_data
+
+    def _get_model_data(self) -> dict[str, int]:
+        return typing.cast(
+            dict[str, int],
+            json_lib.read_path(RandovaniaGame.AM2R.data_path.joinpath("pickup_database", "model_data.json")),
+        )
 
     def game_enum(self) -> RandovaniaGame:
         return RandovaniaGame.AM2R
@@ -374,6 +385,8 @@ class AM2RPatchDataFactory(PatchDataFactory):
             self.description.all_patches,
             self.players_config,
             AM2RHintNamer(self.description.all_patches, self.players_config),
+            "{}",
+            False,
         )
         # am2r credits uses the following syntax:
         # * indicates a header
@@ -397,8 +410,9 @@ class AM2RPatchDataFactory(PatchDataFactory):
             pickup_creator.create_nothing_pickup(db.resource_database, "sItemNothing"), self.players_config.player_index
         )
 
-        item_data = self._get_item_data()
-        memo_data = {key: value["text_desc"] for key, value in item_data.items()}
+        text_data = self._get_text_data()
+        model_data = self._get_model_data()
+        memo_data = {key: value["text_desc"] for key, value in text_data.items()}
         memo_data["Energy Tank"] = memo_data["Energy Tank"].format(Energy=self.configuration.energy_per_tank)
 
         pickup_list = pickup_exporter.export_all_indices(
@@ -416,9 +430,9 @@ class AM2RPatchDataFactory(PatchDataFactory):
             "configuration_identifier": self._create_hash_dict(),
             "starting_items": self._create_starting_items_dict(),
             "starting_location": self._create_starting_location(),
-            "pickups": self._create_pickups_dict(pickup_list, item_data, self.rng),
+            "pickups": self._create_pickups_dict(pickup_list, text_data, model_data, self.rng),
             "rooms": self._create_room_dict(),
-            "game_patches": self._create_game_patches(self.configuration, pickup_list, item_data, self.rng),
+            "game_patches": self._create_game_patches(self.configuration, pickup_list, text_data, self.rng),
             "door_locks": self._create_door_locks(),
             "hints": self._create_hints(self.rng),
             "cosmetics": self._create_cosmetics(self.description.get_seed_for_player(self.players_config.player_index)),

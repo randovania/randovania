@@ -698,10 +698,38 @@
                             }
                         },
                         "Door to Phase Drift Tutorial": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Movement",
+                                            "amount": 3,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Armor",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Phase",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -750,10 +778,6 @@
                                         }
                                     },
                                     {
-                                        "type": "template",
-                                        "data": "Shoot Beam Burst"
-                                    },
-                                    {
                                         "type": "resource",
                                         "data": {
                                             "type": "items",
@@ -764,7 +788,7 @@
                                     },
                                     {
                                         "type": "template",
-                                        "data": "Lay Power Bomb"
+                                        "data": "Defeat Non-Counterable Enemies"
                                     },
                                     {
                                         "type": "template",
@@ -1874,8 +1898,13 @@
                                         }
                                     },
                                     {
-                                        "type": "template",
-                                        "data": "Shoot Super Missile"
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "SMAmmo",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
                                     },
                                     {
                                         "type": "template",
@@ -1990,8 +2019,13 @@
                                         }
                                     },
                                     {
-                                        "type": "template",
-                                        "data": "Shoot Super Missile"
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "SMAmmo",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
                                     },
                                     {
                                         "type": "template",
