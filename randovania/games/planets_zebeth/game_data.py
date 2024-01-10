@@ -1,12 +1,19 @@
 from __future__ import annotations
 
+from typing import TYPE_CHECKING
+
 import randovania
 from randovania.games import game
 from randovania.games.planets_zebeth import layout
 from randovania.layout.preset_describer import GamePresetDescriber
 
+if TYPE_CHECKING:
+    from randovania.games.planets_zebeth.exporter.game_exporter import PlanetsZebethGameExporter
+    from randovania.games.planets_zebeth.exporter.options import PlanetsZebethPerGameOptions
+    from randovania.games.planets_zebeth.exporter.patch_data_factory import PlanetsZebethPatchDataFactory
 
-def _options():
+
+def _options() -> type[PlanetsZebethPerGameOptions]:
     from randovania.games.planets_zebeth.exporter.options import PlanetsZebethPerGameOptions
 
     return PlanetsZebethPerGameOptions
@@ -37,13 +44,13 @@ def _generator() -> game.GameGenerator:
     )
 
 
-def _patch_data_factory():
+def _patch_data_factory() -> type[PlanetsZebethPatchDataFactory]:
     from randovania.games.planets_zebeth.exporter.patch_data_factory import PlanetsZebethPatchDataFactory
 
     return PlanetsZebethPatchDataFactory
 
 
-def _exporter():
+def _exporter() -> PlanetsZebethGameExporter:
     from randovania.games.planets_zebeth.exporter.game_exporter import PlanetsZebethGameExporter
 
     return PlanetsZebethGameExporter()

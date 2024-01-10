@@ -5,12 +5,13 @@ from typing import TYPE_CHECKING
 
 from randovania.games.game import RandovaniaGame
 from randovania.games.planets_zebeth.exporter.game_exporter import PlanetsZebethGameExportParams
+from randovania.games.planets_zebeth.exporter.options import PlanetsZebethPerGameOptions
 from randovania.gui.dialog.game_export_dialog import GameExportDialog, spoiler_path_for
 
 if TYPE_CHECKING:
     from pathlib import Path
 
-    from randovania.games.planets_zebeth.exporter.options import PlanetsZebethPerGameOptions
+    from randovania.interface_common.options import PerGameOptions
 
 
 class PlanetsZebethGameExportDialog(GameExportDialog):
@@ -19,7 +20,7 @@ class PlanetsZebethGameExportDialog(GameExportDialog):
     The provided implementation assumes you need an ISO/ROM file, and produces a new ISO/ROM file."""
 
     @classmethod
-    def game_enum(cls):
+    def game_enum(cls) -> RandovaniaGame:
         return RandovaniaGame.METROID_PLANETS_ZEBETH
 
     @property
@@ -34,7 +35,8 @@ class PlanetsZebethGameExportDialog(GameExportDialog):
     def auto_save_spoiler(self) -> bool:
         raise NotImplementedError("This method hasn't been implemented yet")
 
-    def update_per_game_options(self, per_game: PlanetsZebethPerGameOptions) -> PlanetsZebethPerGameOptions:
+    def update_per_game_options(self, per_game: PerGameOptions) -> PerGameOptions:
+        assert isinstance(per_game, PlanetsZebethPerGameOptions)
         return dataclasses.replace(
             per_game,
             input_path=self.input_file,
