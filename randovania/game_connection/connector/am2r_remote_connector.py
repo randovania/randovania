@@ -108,6 +108,8 @@ class AM2RRemoteConnector(RemoteConnector):
 
         :param new_indices: A string from the game with the format `locations:XX,YY,ZZ...`.
         """
+        if self.current_region is None:
+            return
 
         locations = set()
         start_of_indices = "locations:"
@@ -142,6 +144,9 @@ class AM2RRemoteConnector(RemoteConnector):
 
         :param new_inventory: A string from the game with the format `items:XA|XB,YA|YB,ZA|ZB...`.
         """
+        if self.current_region is None:
+            return
+
         locations: dict[ItemResourceInfo, int] = {}
         start_of_inventory = "items:"
 
