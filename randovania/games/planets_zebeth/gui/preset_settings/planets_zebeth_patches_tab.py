@@ -1,10 +1,12 @@
 from __future__ import annotations
 
+import typing
 from typing import TYPE_CHECKING
 
 from PySide6 import QtWidgets
 
 from randovania.games.planets_zebeth.layout import PlanetsZebethConfiguration
+from randovania.gui.lib import signal_handling
 from randovania.gui.preset_settings.preset_tab import PresetTab
 
 if TYPE_CHECKING:
@@ -14,6 +16,7 @@ if TYPE_CHECKING:
     from randovania.layout.preset import Preset
 
 # TODO: add walljump, downward shooting and open missile doors with 1 missile patches
+_FIELDS = ["include_extra_pickups"]
 
 
 class PresetPlanetsZebethPatches(PresetTab):
@@ -31,7 +34,8 @@ class PresetPlanetsZebethPatches(PresetTab):
         self.setCentralWidget(self.root_widget)
 
         # Signals
-        self.include_extra_pickups_check.stateChanged.connect(self._persist_option_then_notify("include_extra_pickups"))
+        for f in _FIELDS:
+            self._add_persist_option(getattr(self, f"{f}_check"), f)
 
     @classmethod
     def tab_title(cls) -> str:
@@ -41,7 +45,15 @@ class PresetPlanetsZebethPatches(PresetTab):
     def uses_patches_tab(cls) -> bool:
         return True
 
-    def on_preset_changed(self, preset: Preset):
+    def _add_persist_option(self, check: QtWidgets.QCheckBox, attribute_name: str) -> None:
+        def persist(value: bool) -> None:
+            with self._editor as editor:
+                editor.set_configuration_field(attribute_name, value)
+
+        signal_handling.on_checked(check, persist)
+
+    def on_preset_changed(self, preset: Preset) -> None:
         config = preset.configuration
         assert isinstance(config, PlanetsZebethConfiguration)
-        self.include_extra_pickups_check.setChecked(config.include_extra_pickups)
+        for f in _FIELDS:
+            typing.cast(QtWidgets.QCheckBox, getattr(self, f"{f}_check")).setChecked(getattr(config, f))

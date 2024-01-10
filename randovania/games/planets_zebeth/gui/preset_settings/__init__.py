@@ -9,7 +9,7 @@ if TYPE_CHECKING:
     from randovania.interface_common.preset_editor import PresetEditor
 
 
-def preset_tabs(editor: PresetEditor, window_manager: WindowManager):
+def preset_tabs(editor: PresetEditor, window_manager: WindowManager) -> [type]:
     from randovania.games.planets_zebeth.gui.preset_settings.planets_zebeth_goal_tab import PresetPlanetsZebethGoal
     from randovania.games.planets_zebeth.gui.preset_settings.planets_zebeth_patches_tab import (
         PresetPlanetsZebethPatches,
