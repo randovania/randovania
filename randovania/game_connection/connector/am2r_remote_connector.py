@@ -164,12 +164,15 @@ class AM2RRemoteConnector(RemoteConnector):
                 continue
 
             # Ammo and progressive stuff is special, and this is my best idea on how to circumvent them :(
+            # Ammo is sent twice by the game: once as actual ammo, once as expansion. Let's ignore the expansions.
             item_name_replacement = {
-                "Missile Expansion": "Missiles",
-                "Super Missile Expansion": "Super Missiles",
-                "Power Bomb Expansion": "Power Bombs",
+                "Missile Expansion": "Nothing",
+                "Super Missile Expansion": "Nothing",
+                "Power Bomb Expansion": "Nothing",
             }
 
+            # Progressives are not resources in the DB. So lets check what resource they actually have based on
+            # their current inventory.
             progressives = {
                 "Progressive Jump": ("Hi-Jump Boots", "Space Jump"),
                 "Progressive Suit": ("Varia Suit", "Gravity Suit"),
@@ -237,7 +240,9 @@ class AM2RRemoteConnector(RemoteConnector):
         self.in_cooldown = True
         provider_name, pickup = remote_pickups[num_pickups]
         name, model = pickup.name, pickup.model.name
-        quantity = next(pickup.conditional_resources).resources[0][1]
+        # For some reason, the resources here are sorted differently to the patch data factory.
+        # There we want the first entry, here we want the last.
+        quantity = next(pickup.conditional_resources).resources[-1][1]
 
         self.logger.debug("Resource changes for %s from %s", pickup.name, provider_name)
         await self.executor.send_pickup_info(provider_name, name, model, quantity)
