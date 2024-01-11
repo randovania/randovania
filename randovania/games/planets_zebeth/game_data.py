@@ -5,7 +5,6 @@ from typing import TYPE_CHECKING
 import randovania
 from randovania.games import game
 from randovania.games.planets_zebeth import layout
-from randovania.layout.preset_describer import GamePresetDescriber
 
 if TYPE_CHECKING:
     from randovania.games.planets_zebeth.exporter.game_exporter import PlanetsZebethGameExporter
@@ -74,7 +73,7 @@ game_data: game.GameData = game.GameData(
     layout=game.GameLayout(
         configuration=layout.PlanetsZebethConfiguration,
         cosmetic_patches=layout.PlanetsZebethCosmeticPatches,
-        preset_describer=GamePresetDescriber(),
+        preset_describer=layout.PlanetsZebethPresetDescriber(),
     ),
     options=_options,
     gui=_gui,
