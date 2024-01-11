@@ -20,7 +20,16 @@ if TYPE_CHECKING:
 
 def describe_artifacts(artifacts: MSRArtifactConfig) -> list[dict[str, bool]]:
     has_artifacts = artifacts.required_artifacts > 0
-    if has_artifacts:
+    if has_artifacts and artifacts.prefer_anywhere:
+        return [
+            {
+                f"{artifacts.required_artifacts} Metroid DNA": True,
+            },
+            {
+                "Place anywhere": artifacts.prefer_anywhere,
+            },
+        ]
+    elif has_artifacts:
         return [
             {
                 f"{artifacts.required_artifacts} Metroid DNA": True,
@@ -34,7 +43,7 @@ def describe_artifacts(artifacts: MSRArtifactConfig) -> list[dict[str, bool]]:
     else:
         return [
             {
-                "Defeat Ridley": True,
+                "Defeat Proteus Ridley": True,
             }
         ]
 
@@ -87,21 +96,26 @@ class MSRPresetDescriber(GamePresetDescriber):
                 message_for_required_mains(
                     configuration.ammo_pickup_configuration,
                     {
+                        "Missile needs Launcher": "Missile Tank",
                         "Super Missile needs Launcher": "Super Missile Tank",
-                        "Power Bomb needs Main": "Power Bomb Tank",
+                        "Power Bomb needs Launcher": "Power Bomb Tank",
                     },
                 ),
                 {
                     "Charge Door Buff": configuration.charge_door_buff,
                     "Beam Door Buff": configuration.beam_door_buff,
-                    "Nerfed Super Missiles": configuration.nerf_super_missiles,
+                    "Missile Door Buff": configuration.nerf_super_missiles,
                 },
                 {
                     "Open Area 3 Interior East Shortcut": configuration.area3_interior_shortcut_no_grapple,
-                    "Remove Area Exit Path Grapple Blocks": configuration.elevator_grapple_blocks,
-                    "Remove Surface Scan Pulse Crumble Blocks": configuration.surface_crumbles,
-                    "Remove Area 1 Chozo Seal Crumble Blocks": configuration.area1_crumbles,
-                    "Enabled Reverse Area 8": configuration.reverse_area8,
+                    "Remove Area Exit Grapple Blocks": configuration.elevator_grapple_blocks,
+                },
+                {
+                    "Change Surface Scan Pulse Crumble Blocks": configuration.surface_crumbles,
+                    "Change Area 1 Chozo Seal Crumble Blocks": configuration.area1_crumbles,
+                },
+                {
+                    "Enable Reverse Area 8": configuration.reverse_area8,
                 },
             ],
         }

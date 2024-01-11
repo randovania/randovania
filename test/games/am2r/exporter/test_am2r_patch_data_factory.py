@@ -112,9 +112,10 @@ def test_create_pickups_dict_shiny(test_files_dir, rdvgame_filename, expected_re
         pickup_creator.create_nothing_pickup(db.resource_database, "sItemNothing"), data.players_config.player_index
     )
 
-    item_data = data._get_item_data()
+    text_data = data._get_text_data()
+    model_data = data._get_model_data()
     memo_data = {}
-    for key, value in item_data.items():
+    for key, value in text_data.items():
         memo_data[key] = value["text_desc"]
     memo_data["Energy Tank"] = memo_data["Energy Tank"].format(Energy=data.patches.configuration.energy_per_tank)
 
@@ -130,7 +131,7 @@ def test_create_pickups_dict_shiny(test_files_dir, rdvgame_filename, expected_re
     )
 
     # Run
-    pickups_dict = data._create_pickups_dict(pickup_list, item_data, data.rng)
+    pickups_dict = data._create_pickups_dict(pickup_list, text_data, model_data, data.rng)
 
     # Expected Result
     expected_results_path = test_files_dir.joinpath("patcher_data", "am2r", expected_results_filename)

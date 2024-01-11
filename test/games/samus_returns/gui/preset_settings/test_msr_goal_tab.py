@@ -14,6 +14,7 @@ from randovania.interface_common.preset_editor import PresetEditor
 @pytest.mark.parametrize(
     ("prefer_metroids", "prefer_stronger_metroids", "prefer_bosses", "expected_max_slider"),
     [
+        (False, False, False, 0),
         (True, False, False, 25),
         (False, True, False, 14),
         (False, False, True, 4),
@@ -50,13 +51,13 @@ def test_preferred_dna(
 
     # Run
     tab.prefer_metroids_check.setChecked(prefer_metroids)
-    slider_value_after_first_set = tab.dna_slider.value()
     tab.prefer_stronger_metroids_check.setChecked(prefer_stronger_metroids)
+    slider_value_after_first_set = tab.dna_slider.value()
     tab.prefer_bosses_check.setChecked(prefer_bosses)
     tab._update_slider_max()
 
     # Assert
-    if not prefer_metroids and not prefer_stronger_metroids and not prefer_bosses:
+    if not prefer_metroids and not prefer_stronger_metroids:
         assert slider_value_after_first_set == 0
     # The slider value should never increase from what it was before
     assert slider_value_after_first_set >= tab.dna_slider.value()
@@ -79,3 +80,66 @@ def test_preferred_dna(
 
     assert configuration.artifacts.required_artifacts == expected_artifacts
     assert tab.dna_slider.value() == expected_artifacts
+
+
+def test_restricted_placement(
+    skip_qtbot,
+    msr_game_description,
+    preset_manager,
+):
+    # Setup
+    game = msr_game_description.game
+    base = preset_manager.default_preset_for_game(game).get_preset()
+    preset = dataclasses.replace(base, uuid=uuid.UUID("b41fde84-1f57-4b79-8cd6-3e5a78077fa6"))
+    base_configuration = preset.configuration
+    options = MagicMock()
+    assert isinstance(base_configuration, MSRConfiguration)
+
+    tab = PresetMSRGoal(editor := PresetEditor(preset, options), msr_game_description, MagicMock())
+    assert isinstance(editor.configuration, MSRConfiguration)
+    skip_qtbot.addWidget(tab)
+    tab.on_preset_changed(preset)
+    artifact_count = editor.configuration.artifacts.required_artifacts
+
+    tab.free_placement_radiobutton.setChecked(True)
+
+    # Run
+    tab.restrict_placement_radiobutton.setChecked(True)
+
+    # Assert
+    assert tab.prefer_metroids_check.isEnabled()
+    assert tab.prefer_stronger_metroids_check.isEnabled()
+    assert tab.prefer_bosses_check.isEnabled()
+    assert tab.restrict_placement_radiobutton.isChecked()
+    assert editor.configuration.artifacts.required_artifacts == artifact_count
+
+
+def test_free_placement(
+    skip_qtbot,
+    msr_game_description,
+    preset_manager,
+):
+    # Setup
+    game = msr_game_description.game
+    base = preset_manager.default_preset_for_game(game).get_preset()
+    preset = dataclasses.replace(base, uuid=uuid.UUID("b41fde84-1f57-4b79-8cd6-3e5a78077fa6"))
+    base_configuration = preset.configuration
+    options = MagicMock()
+    assert isinstance(base_configuration, MSRConfiguration)
+
+    tab = PresetMSRGoal(editor := PresetEditor(preset, options), msr_game_description, MagicMock())
+    assert isinstance(editor.configuration, MSRConfiguration)
+    skip_qtbot.addWidget(tab)
+    tab.on_preset_changed(preset)
+    artifact_count = editor.configuration.artifacts.required_artifacts
+    tab.restrict_placement_radiobutton.setChecked(True)
+
+    # Run
+    tab.free_placement_radiobutton.setChecked(True)
+
+    # Assert
+    assert not tab.prefer_metroids_check.isEnabled()
+    assert not tab.prefer_stronger_metroids_check.isEnabled()
+    assert not tab.prefer_bosses_check.isEnabled()
+    assert tab.free_placement_radiobutton.isChecked()
+    assert editor.configuration.artifacts.required_artifacts == artifact_count

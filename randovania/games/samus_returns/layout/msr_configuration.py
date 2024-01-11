@@ -13,6 +13,7 @@ class MSRArtifactConfig(BitPackDataclass, JsonDataclass):
     prefer_metroids: bool
     prefer_stronger_metroids: bool
     prefer_bosses: bool
+    prefer_anywhere: bool
     required_artifacts: int = dataclasses.field(metadata={"min": 0, "max": 39, "precision": 1})
 
 

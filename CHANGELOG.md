@@ -5,6 +5,45 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [7.3.0] - 2024-02-??
+
+### AM2R
+
+#### Logic Database
+
+##### Hydro Station
+
+- Fixed: In Breeding Grounds Entrance: Activating the EMP Slot now properly accounts for Missiles.
+
+### Metroid Dread
+
+#### Logic Database
+
+##### Artaria
+
+- Added: Single Wall Jump (Beginner) to cross the pillar left to right in White EMMI Introduction.
+- Added: Using Speed Booster in White EMMI Introduction to get over the pillar left to right, from the BallSpark Hallway Room, also available in Door Lock Rando.
+- Fixed: Using Speed Booster in White EMMI Introduction to get over the pillar left to right, from the Teleport to Dairon Room now requires Door Lock Rando to be disabled.
+
+##### Cataris
+
+- Added: The Wide Beam Block in Dairon Transport Access can now be traversed with a Diffusion Abuse trick from below.
+
+##### Ghavoran
+
+- Added: Bomb Jump in Right Entrance, out of the water to the Grapple Block Alcove. Requires Diagonal Bomb Jump and either Out of Water Bomb Jump or Gravity Suit.
+- Added: Video showing the Grapple Movement trick in Right Entrance.
+
+### Metroid Prime 2: Echoes
+
+#### Logic Database
+
+- Added: 12 videos to the database
+
+##### Torvus Bog
+
+- Added: In Great Bridge: Rolljump method to reach Abandoned Worksite from Temple Access (Top)
+
 ## [7.2.0] - 2024-01-05
 
 - **Major** - Added: Rebranded Randovania icons.
