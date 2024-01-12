@@ -11,7 +11,7 @@ from randovania.interface_common.options import PerGameOptions, decode_if_not_no
 @dataclasses.dataclass(frozen=True)
 class CSPerGameOptions(PerGameOptions):
     output_directory: Path | None = (None,)
-    platform: CSPlatform | None = None
+    platform: CSPlatform = CSPlatform.FREEWARE
 
     @property
     def as_json(self):

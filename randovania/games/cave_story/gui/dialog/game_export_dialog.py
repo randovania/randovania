@@ -36,7 +36,7 @@ class CSGameExportDialog(GameExportDialog, Ui_CSGameExportDialog):
         self.output_file_button.clicked.connect(self._on_output_file_button)
 
         # Target Platform
-        if per_game.platform == CSPlatform.FREEWARE:
+        if per_game.platform is CSPlatform.FREEWARE:
             self.freeware_radio.setChecked(True)
         else:
             self.tweaked_radio.setChecked(True)
