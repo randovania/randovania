@@ -246,7 +246,7 @@ class AM2RRemoteConnector(RemoteConnector):
         quantity = next(pickup.conditional_resources).resources[-1][1]
 
         self.logger.debug("Resource changes for %s from %s", pickup.name, provider_name)
-        await self.executor.send_pickup_info(provider_name, name, model, quantity)
+        await self.executor.send_pickup_info(provider_name, name, model, quantity, num_pickups + 1)
 
     async def display_arbitrary_message(self, message: str) -> None:
         escaped_message = message.replace("#", "\\#")  # In GameMaker, '#' is a newline.

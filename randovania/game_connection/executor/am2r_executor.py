@@ -217,9 +217,11 @@ class AM2RExecutor:
         self._socket.writer.write(self._build_packet(PacketType.PACKET_DISPLAY_MESSAGE, message.encode("utf-8")))
         await asyncio.wait_for(self._socket.writer.drain(), timeout=30)
 
-    async def send_pickup_info(self, provider: str, item_name: str, model_name: str, quantity: int) -> None:
+    async def send_pickup_info(
+        self, provider: str, item_name: str, model_name: str, quantity: int, remote_item_number: int
+    ) -> None:
         if self._socket is None:
             return None
-        message = f"{provider}|{item_name}|{model_name}|{quantity}"
+        message = f"{provider}|{item_name}|{model_name}|{quantity}|{remote_item_number}"
         self._socket.writer.write(self._build_packet(PacketType.PACKET_RECEIVED_PICKUPS, message.encode("utf-8")))
         await asyncio.wait_for(self._socket.writer.drain(), timeout=30)
