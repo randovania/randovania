@@ -18,37 +18,37 @@ jobs:
       matrix:
         include:
           - os: 'ubuntu-latest'
-            python: '3.11'
+            python: '3.12'
             executable: false
             name: 'Linux'
 
           - os: 'ubuntu-latest'
-            python: '3.11'
+            python: '3.12'
             executable: true
             name: 'Linux Executable'
 
           - os: 'macos-latest'
-            python: '3.11'
+            python: '3.12'
             executable: false
             name: 'macOS'
 
           - os: 'macos-latest'
-            python: '3.11'
+            python: '3.12'
             executable: true
             name: 'macOS Executable'
 
           - os: 'windows-latest'
-            python: '3.11'
+            python: '3.12'
             executable: false
             name: 'Windows'
 
           - os: 'windows-latest'
-            python: '3.11'
+            python: '3.12'
             executable: true
             name: 'Windows Executable'
 
           - os: 'ubuntu-latest'
-            python: '3.11'
+            python: '3.12'
             executable: false
             name: 'Resolver'
 
@@ -269,7 +269,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.11"
+          python-version: "3.12"
           cache: 'pip'
 
       - name: Download the executable
@@ -302,7 +302,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.11"
+          python-version: "3.12"
 
       - name: Install Python packages
         run: |
@@ -328,7 +328,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.11"
+          python-version: "3.12"
           cache: "pip"
 
       - name: Install Python packages
@@ -463,7 +463,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.11"
+          python-version: "3.12"
 
       - name: Download the executables
         uses: actions/download-artifact@v4
