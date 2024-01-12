@@ -80,7 +80,8 @@ class AM2RRemoteConnector(RemoteConnector):
         """
 
         # Dont update on pause screens/transitions
-        if state_or_region == "rm_transition" or state_or_region == "rm_subscreen":
+        ignore_rooms = ("rm_transition", "rm_subscreen", "rm_loading")
+        if state_or_region in ignore_rooms:
             return
 
         # Reset if we're on title screen or other unknown screens
