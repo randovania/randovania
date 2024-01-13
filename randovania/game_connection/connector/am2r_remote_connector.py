@@ -1,5 +1,6 @@
 import logging
 import uuid
+from collections import defaultdict
 from typing import TYPE_CHECKING
 
 from qasync import asyncSlot
@@ -14,11 +15,11 @@ from randovania.game_description import default_database
 from randovania.game_description.db.region import Region
 from randovania.game_description.resources.inventory import Inventory, InventoryItem
 from randovania.game_description.resources.pickup_index import PickupIndex
+from randovania.games.am2r.pickup_database import progressive_items
 from randovania.games.game import RandovaniaGame
 
 if TYPE_CHECKING:
     from randovania.game_description.pickup.pickup_entry import PickupEntry
-    from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 
 
 class AM2RRemoteConnector(RemoteConnector):
@@ -148,7 +149,7 @@ class AM2RRemoteConnector(RemoteConnector):
         if self.current_region is None:
             return
 
-        locations: dict[ItemResourceInfo, int] = {}
+        inventory_dict = defaultdict(int)
         start_of_inventory = "items:"
 
         if not new_inventory.startswith(start_of_inventory):
@@ -159,12 +160,11 @@ class AM2RRemoteConnector(RemoteConnector):
             if "|" not in position:
                 self.logger.warning("Response should contain a '|', but it doesn't")
                 continue
-            (item_name, quantity) = position.split("|")
+            (item_name, quantity) = position.split("|", 1)
             if not quantity.isdigit():
                 self.logger.warning("Response should contain a digit, but instead contains '%s'", position)
                 continue
 
-            # Ammo and progressive stuff is special, and this is my best idea on how to circumvent them :(
             # Ammo is sent twice by the game: once as actual ammo, once as expansion. Let's ignore the expansions.
             item_name_replacement = {
                 "Missile Expansion": "Nothing",
@@ -172,34 +172,27 @@ class AM2RRemoteConnector(RemoteConnector):
                 "Power Bomb Expansion": "Nothing",
             }
 
-            # Progressives are not resources in the DB. So lets check what resource they actually have based on
-            # their current inventory.
-            progressives = {
-                "Progressive Jump": ("Hi-Jump Boots", "Space Jump"),
-                "Progressive Suit": ("Varia Suit", "Gravity Suit"),
-            }
-
             # If our item name is in the lookup dict, we replace it. If it isn't, we keep it as is
             item_name = item_name_replacement.get(item_name, item_name)
+            inventory_dict[item_name] += int(quantity)
 
-            if item_name in progressives:
-                # If the last progressive item is collected, we add it again. if the first item is collected, we
-                # add the last item. If no item was collected, we add the first item
-                if len([i for i, q in locations.items() if i.long_name == progressives[item_name][1]]) > 0:
-                    item_name = progressives[item_name][1]
-                elif len([i for i, q in locations.items() if i.long_name == progressives[item_name][0]]) > 0:
-                    item_name = progressives[item_name][1]
-                else:
-                    item_name = progressives[item_name][0]
+        # The game sends the name of the progressive items, not the underlying items.
+        # Since progressives are not resources in the DB, we need to handle them correctly and give the actual items.
+        progressives = progressive_items.tuples()
 
-            item_list = [i for i in self.game.resource_database.item if i.long_name == item_name]
-            item = item_list[0]
-            if item in locations:
-                locations[item] += int(quantity)
-            else:
-                locations[item] = int(quantity)
+        for progressive_name, actual_items in progressives.items():
+            quantity = inventory_dict.pop(progressive_name, 0)
+            for index in range(quantity):
+                if index >= len(actual_items):
+                    break
+                inventory_dict[actual_items[index]] += 1
 
-        inventory = Inventory({item: InventoryItem(quantity, quantity) for item, quantity in locations.items()})
+        inventory = Inventory(
+            {
+                self.game.resource_database.get_item_by_name(name): InventoryItem(quantity, quantity)
+                for name, quantity in inventory_dict.items()
+            }
+        )
         self.last_inventory = inventory
         self.InventoryUpdated.emit(inventory)
 
