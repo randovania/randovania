@@ -157,6 +157,8 @@ class AM2RRemoteConnector(RemoteConnector):
             return
 
         for position in new_inventory[len(start_of_inventory) :].split(","):
+            if not position:
+                continue
             if "|" not in position:
                 self.logger.warning("Response should contain a '|', but it doesn't")
                 continue
@@ -180,7 +182,7 @@ class AM2RRemoteConnector(RemoteConnector):
         # Since progressives are not resources in the DB, we need to handle them correctly and give the actual items.
         progressives = progressive_items.tuples()
 
-        for progressive_name, actual_items in progressives.items():
+        for progressive_name, actual_items in progressives:
             quantity = inventory_dict.pop(progressive_name, 0)
             for index in range(quantity):
                 if index >= len(actual_items):
