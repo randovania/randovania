@@ -3,7 +3,8 @@ from __future__ import annotations
 import dataclasses
 from pathlib import Path
 
-from randovania.games.cave_story.exporter.game_exporter import CSPlatform
+from caver.patcher import CSPlatform
+
 from randovania.games.game import RandovaniaGame
 from randovania.interface_common.options import PerGameOptions, decode_if_not_none
 

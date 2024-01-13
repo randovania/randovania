@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import copy
 import dataclasses
-from enum import Enum
 from typing import TYPE_CHECKING
 
 from caver import patcher as caver_patcher
@@ -14,10 +13,7 @@ from randovania.lib import json_lib, status_update_lib
 if TYPE_CHECKING:
     from pathlib import Path
 
-
-class CSPlatform(Enum):
-    FREEWARE = "freeware"
-    TWEAKED = "tweaked"
+    from caver_patcher import CSPlatform
 
 
 @dataclasses.dataclass(frozen=True)
@@ -63,8 +59,6 @@ class CSGameExporter(GameExporter):
 
         new_patch["platform"] = export_params.platform.value
         try:
-            caver_patcher.patch_files(
-                new_patch, export_params.output_path, export_params.platform.value, progress_update
-            )
+            caver_patcher.patch_files(new_patch, export_params.output_path, export_params.platform, progress_update)
         finally:
             json_lib.write_path(export_params.output_path.joinpath("data", "patcher_data.json"), patch_data)

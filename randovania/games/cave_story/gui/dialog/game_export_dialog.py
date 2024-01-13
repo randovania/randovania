@@ -4,7 +4,9 @@ import dataclasses
 from pathlib import Path
 from typing import TYPE_CHECKING
 
-from randovania.games.cave_story.exporter.game_exporter import CSGameExportParams, CSPlatform
+from caver.patcher import CSPlatform
+
+from randovania.games.cave_story.exporter.game_exporter import CSGameExportParams
 from randovania.games.cave_story.exporter.options import CSPerGameOptions
 from randovania.games.game import RandovaniaGame
 from randovania.gui.dialog.game_export_dialog import (
