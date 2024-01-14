@@ -4,11 +4,10 @@ import asyncio
 import datetime
 import functools
 import json
-import webbrowser
 from typing import TYPE_CHECKING
 
 import PySide6
-from PySide6 import QtCore, QtWidgets
+from PySide6 import QtCore, QtGui, QtWidgets
 from PySide6.QtCore import Signal
 
 import randovania
@@ -157,7 +156,9 @@ class QtNetworkClient(QtCore.QObject, NetworkClient):
 
         sid = await self.server_call("start_discord_login_flow")
         url = self.configuration["server_address"] + f"/login?sid={sid}"
-        webbrowser.open(url)
+        result = QtGui.QDesktopServices.openUrl(QtCore.QUrl(url))
+        if not result:
+            raise RuntimeError("Unable to open a web-browser to login into Discord")
 
     async def login_as_guest(self, name: str = "Unknown"):
         if "guest_secret" not in self.configuration:
