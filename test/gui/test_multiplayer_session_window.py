@@ -585,9 +585,14 @@ async def test_import_permalink(window: MultiplayerSessionWindow, end_state, moc
     permalink.parameters.world_count = 2 - (end_state == "wrong_count")
     permalink.parameters.presets = [MagicMock(), MagicMock()]
     permalink.parameters.presets[0].is_same_configuration.return_value = False
+    game_mock = MagicMock()
+    game_mock.data.long_name = "Foo"
+    permalink.parameters.presets[0].game = game_mock
+    permalink.parameters.presets[1].game = game_mock
 
     session = MagicMock()
     session.worlds = [MagicMock(), MagicMock()]
+    session.allowed_games = [game_mock]
 
     window._session = session
     window.generate_game_with_permalink = AsyncMock()
@@ -644,6 +649,11 @@ async def test_import_permalink_unsupported_games(window: MultiplayerSessionWind
     supported_preset.game.data = MagicMock()
     supported_preset.game.data.defaults_available_in_game_sessions = True
     supported_preset.game.data.long_name = "Return of FooBar"
+
+    session = MagicMock()
+    session.worlds = [MagicMock(), MagicMock()]
+    session.allowed_games = [supported_preset.game]
+    window._session = session
 
     permalink = mock_permalink_dialog.return_value.get_permalink_from_field.return_value
     permalink.parameters.presets = [supported_preset, unsupported_preset, unsupported_preset_2]
@@ -735,6 +745,11 @@ async def test_import_layout_unsupported_games(window: MultiplayerSessionWindow,
     supported_preset = MagicMock()
     supported_preset.game.data.defaults_available_in_game_sessions = True
     supported_preset.game.data.long_name = "Return of FooBar"
+
+    session = MagicMock()
+    session.worlds = [MagicMock(), MagicMock()]
+    session.allowed_games = [supported_preset.game]
+    window._session = session
 
     layout = MagicMock()
     layout.all_presets = [supported_preset, unsupported_preset, unsupported_preset_2]

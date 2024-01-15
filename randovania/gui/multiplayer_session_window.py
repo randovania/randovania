@@ -781,11 +781,7 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
 
     def _check_for_unsupported_games(self, presets: list[Preset]) -> list[str]:
         unsupported_games = sorted(
-            {
-                preset.game.data.long_name
-                for preset in presets
-                if not preset.game.data.defaults_available_in_game_sessions
-            }
+            {preset.game.data.long_name for preset in presets if preset.game not in self._session.allowed_games}
         )
         return unsupported_games
 
