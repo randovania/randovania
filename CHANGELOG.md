@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [7.3.0] - 2024-02-??
 
 - Fixed: Searching for your own pickup in Multiworld sessions will now show only pickups which match *exactly* the name, instead of showing pickups which start with that name.
+- Fixed: The import in a multiworld session is blocked if it contains an unsupported game.
 
 ### AM2R
 
