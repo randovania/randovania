@@ -718,16 +718,21 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Pickup (Super Missile Tank)": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "template",
-                                        "data": "Lay Power Bomb"
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
                                     },
                                     {
-                                        "type": "and",
+                                        "type": "or",
                                         "data": {
                                             "comment": null,
                                             "items": [
@@ -735,7 +740,7 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "items",
-                                                        "name": "Morph",
+                                                        "name": "PBAmmo",
                                                         "amount": 1,
                                                         "negate": false
                                                     }
@@ -3574,8 +3579,13 @@
                                         }
                                     },
                                     {
-                                        "type": "template",
-                                        "data": "Shoot Super Missile"
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "SMAmmo",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
                                     },
                                     {
                                         "type": "or",

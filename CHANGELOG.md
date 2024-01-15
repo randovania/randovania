@@ -5,8 +5,50 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [7.2.0] - 2024-01-??
+## [7.3.0] - 2024-02-??
 
+- Fixed: Searching for your own pickup in Multiworld sessions will now show only pickups which match *exactly* the name, instead of showing pickups which start with that name.
+
+### AM2R
+
+#### Logic Database
+
+##### Hydro Station
+
+- Fixed: In Breeding Grounds Entrance: Activating the EMP Slot now properly accounts for Missiles.
+
+### Metroid Dread
+
+#### Logic Database
+
+##### Artaria
+
+- Added: Single Wall Jump (Beginner) to cross the pillar left to right in White EMMI Introduction.
+- Added: Using Speed Booster in White EMMI Introduction to get over the pillar left to right, from the BallSpark Hallway Room, also available in Door Lock Rando.
+- Fixed: Using Speed Booster in White EMMI Introduction to get over the pillar left to right, from the Teleport to Dairon Room now requires Door Lock Rando to be disabled.
+
+##### Cataris
+
+- Added: The Wide Beam Block in Dairon Transport Access can now be traversed with a Diffusion Abuse trick from below.
+
+##### Ghavoran
+
+- Added: Bomb Jump in Right Entrance, out of the water to the Grapple Block Alcove. Requires Diagonal Bomb Jump and either Out of Water Bomb Jump or Gravity Suit.
+- Added: Video showing the Grapple Movement trick in Right Entrance.
+
+### Metroid Prime 2: Echoes
+
+#### Logic Database
+
+- Added: 12 videos to the database
+
+##### Torvus Bog
+
+- Added: In Great Bridge: Rolljump method to reach Abandoned Worksite from Temple Access (Top)
+
+## [7.2.0] - 2024-01-05
+
+- **Major** - Added: Rebranded Randovania icons.
 - Fixed: Bug where tooltips did not show uncollected item names in the autotracker.
 - Fixed: The import in a multiworld session is blocked if it contains an unsupported game.
 - Changed: Update to the Database Video Directory site to eliminate lag and add modern styling.
@@ -36,24 +78,50 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: In Space Jump Room: Added a video for reaching the Missile Tank with only Morph Ball and Bombs
 - Changed: In Space Jump Room: Added a video traversing from Underwater Bottom to Underwater Ledge Left with only Grapple Beam.
 
+##### Ghavoran
+
+- Fixed: Getting the Energy Part Pickup in Golzuna Tower using Spin Boost and Shinespark Conservation Beginner now correctly requires Morph Ball.
+- Changed: Opening the door to Orange Teleportal directly from below, in Golzuna Tower, requires Diffusion Beam.
+- Added: The door to Orange Teleportal can be opened from inside the tunnel left after breaking the Speed Booster Blocks, in Golzuna Tower. This requires Charge Beam and either Wave Beam or Pseudo Wave Beam Beginner.
+
 ### AM2R
+
+- Added: Research Site Open Hatches as available doors for Door Lock Rando.
+- Added: New option to place DNA anywhere.
+- Added: New option to force Save Station doors to be normal doors.
+- Added: New option to force doors in Genetics Laboratory to be normal doors.
+- Added: If the user starts with random items, then an item collection screen will now be shown, telling the player which items they start with.
+- Added: Clearer GUI symbols, when expansions have been collected, but not their corresponding launcher.
+- Added: When softlock prevention is active, then the first two crumble blocks in Super Missile Chamber will be shoot blocks instead.
+- Changed: "Distribution Center - Energy Distribution Emergency Exit" has updated behavior when 'Softlock Prevention' is enabled. Before, only the bottom row of Speed Booster blocks were removed. Now, all of them have been removed, except for the leftmost pillar. 
+- Fixed: When spinjumping into a progressive Space Jump, the spinjump SFX is not being infinitely looped anymore.
+- Fixed: Entering "Hatchling Room Underside" will now show the Metroid scan notification only once.
 
 #### Logic Database
 
-- Added: 15 Videos to the Logic Database
+- Added: 15 Videos to the Logic Database.
 
 ##### Main Caves
 
-- Added: In Surface Hi-Jump Challenge: Shinespark conservation method to reach item
+- Added: In Surface Hi-Jump Challenge: Shinespark conservation method to reach item.
 
 ##### Hydro Station
 
-- Added: In Inner Alpha Nest South: IBJ method to reach item
+- Added: In Inner Alpha Nest South: IBJ method to reach item.
+- Changed: In Arachnus Arena: New health and dodging requirements for fighting Arachnus.
 
 ##### Industrial Complex
 
 - Added: In Lower Factory Intersection: Can now climb the room by shinesparking after a short charge.
+- Added: In Treadmill Room: Going from right to left is now possible via a beginner Shinespark or an intermediate Morph Glide.
 - Fixed: In Lower Factory Intersection: Climbing the room now correctly needs a damage boost for wall jumps.
+- Fixed: In Shirk Prisons: Going from right to left, now requires Morph Ball, or 4 (Super) Missiles.
+- Fixed: In Treadmill Room: Going from right to left via Movement is now impossible.
+- Changed: In Torizo Arena: New weapon, health, and dodging requirements for fighting Torizo.
+
+##### Genetics Labratory
+
+- Changed: In Queen Arena: Additional Beam requirements and dodging requirements for fighting Queen trickless.
 
 ### Metroid Prime 2: Echoes
 
@@ -65,6 +133,37 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Advanced combat to fight Amorbis after the energy has been taken.
 - Changed: Revised Amorbis combat requirements (trickless requires a good weapon + 2 E, beginner requires a weapon and 1 E, intermediate neither)
 - Changed: Skipping the Amorbis trigger, or touching it to trigger the fight from below, requires Knowledge set to Intermediate.
+
+### Metroid Prime
+
+#### Logic Database
+
+##### Tallon Overworld
+
+- Added: Advanced Single Room OoB to reach Landing Site item without Morph Ball
+
+## [7.1.1] - 2023-12-26
+
+### Metroid Prime
+
+- Added: A more stream-friendly autotracker layout
+- Fixed: Reverted Warrior Shrine -> Monitor Station loading improvement which could sometimes cause crashes
+- Fixed: Export compatibility with legacy cutscene skip options
+- Fixed: Music issues in Frigate Orpheon, Artifact Temple, Arboretum, Sunchamber Lobby, Burn Dome and Lava Lake
+- Fixed: [PAL] Issue with the Artifact Temple teleporter arrival cutscene
+- Fixed: Non-NTSC text issues
+  - Seed hash not showing on main menu
+  - Credits not showing seed spoiler
+  - [JP] Font size
+- Added: `qolGeneral` improvements
+  - Ice wall in Phendrana Shorelines now shatters instead of melting when shot
+  - Better Save Station load trigger in Phendrana Shorelines
+  - Better door open triggers in Arboretum
+- Changed: Back-to-back cutscenes in Artifact Temple now skip as one
+
+### Metroid Prime 2: Echoes
+
+- Added: A more stream-friendly autotracker layout
 
 ## [7.1.0] - 2023-12-01
 

@@ -14,7 +14,7 @@ def create_box_for_exception(val: Exception) -> QtWidgets.QMessageBox:
         (
             f"An unhandled Exception occurred:\n{val}\n\n"
             "When reporting, make sure to paste the entire contents of the following box."
-            "\nIt has already be copied to your clipboard."
+            "\nIt has already been copied to your clipboard."
         ),
         QtWidgets.QMessageBox.Ok,
     )

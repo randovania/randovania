@@ -2,9 +2,12 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
+from frozendict import frozendict
+
 from randovania.game_description.pickup import pickup_category
 from randovania.game_description.pickup.pickup_entry import PickupEntry, PickupGeneratorParams, PickupModel
 from randovania.game_description.resources.location_category import LocationCategory
+from randovania.games.game import RandovaniaGame
 from randovania.games.prime1.patcher import prime_items
 from randovania.generator.pickup_pool import PoolResults
 
@@ -59,6 +62,7 @@ def create_artifact(
         ),
         pickup_category=ARTIFACT_CATEGORY,
         broad_category=pickup_category.GENERIC_KEY_CATEGORY,
+        offworld_models=frozendict({RandovaniaGame.AM2R: "sItemArtifact"}),
         generator_params=PickupGeneratorParams(
             preferred_location_category=LocationCategory.MAJOR,
             probability_offset=0.25,

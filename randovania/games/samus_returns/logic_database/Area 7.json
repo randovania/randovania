@@ -189,24 +189,12 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "and",
+                                                    "type": "resource",
                                                     "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "template",
-                                                                "data": "Shoot Super Missile"
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "SMAmmo",
-                                                                    "amount": 2,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
+                                                        "type": "items",
+                                                        "name": "SMAmmo",
+                                                        "amount": 2,
+                                                        "negate": false
                                                     }
                                                 }
                                             ]
@@ -943,24 +931,12 @@
                                                                                                     }
                                                                                                 },
                                                                                                 {
-                                                                                                    "type": "and",
+                                                                                                    "type": "resource",
                                                                                                     "data": {
-                                                                                                        "comment": null,
-                                                                                                        "items": [
-                                                                                                            {
-                                                                                                                "type": "template",
-                                                                                                                "data": "Shoot Super Missile"
-                                                                                                            },
-                                                                                                            {
-                                                                                                                "type": "resource",
-                                                                                                                "data": {
-                                                                                                                    "type": "items",
-                                                                                                                    "name": "SMAmmo",
-                                                                                                                    "amount": 6,
-                                                                                                                    "negate": false
-                                                                                                                }
-                                                                                                            }
-                                                                                                        ]
+                                                                                                        "type": "items",
+                                                                                                        "name": "SMAmmo",
+                                                                                                        "amount": 6,
+                                                                                                        "negate": false
                                                                                                     }
                                                                                                 }
                                                                                             ]
@@ -1208,41 +1184,12 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "and",
+                                                    "type": "resource",
                                                     "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "template",
-                                                                "data": "Lay Power Bomb"
-                                                            },
-                                                            {
-                                                                "type": "or",
-                                                                "data": {
-                                                                    "comment": null,
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "items",
-                                                                                "name": "Bomb",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "items",
-                                                                                "name": "PBAmmo",
-                                                                                "amount": 2,
-                                                                                "negate": false
-                                                                            }
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            }
-                                                        ]
+                                                        "type": "items",
+                                                        "name": "PBAmmo",
+                                                        "amount": 2,
+                                                        "negate": false
                                                     }
                                                 }
                                             ]
@@ -1319,6 +1266,15 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
                                             "name": "Grapple",
                                             "amount": 1,
                                             "negate": false
@@ -1330,24 +1286,12 @@
                                             "comment": null,
                                             "items": [
                                                 {
-                                                    "type": "and",
+                                                    "type": "resource",
                                                     "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "template",
-                                                                "data": "Lay Power Bomb"
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "PBAmmo",
-                                                                    "amount": 2,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
+                                                        "type": "items",
+                                                        "name": "PBAmmo",
+                                                        "amount": 2,
+                                                        "negate": false
                                                     }
                                                 },
                                                 {
@@ -1356,8 +1300,13 @@
                                                         "comment": null,
                                                         "items": [
                                                             {
-                                                                "type": "template",
-                                                                "data": "Lay Bomb"
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Bomb",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
                                                             },
                                                             {
                                                                 "type": "or",
@@ -1651,13 +1600,8 @@
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "MissileAmmo",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
+                                        "type": "template",
+                                        "data": "Shoot Any Missile"
                                     },
                                     {
                                         "type": "resource",
@@ -1986,12 +1930,10 @@
                     "valid_starting_location": true,
                     "connections": {
                         "Above Save Station": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "items",
-                                "name": "Screw",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -3740,24 +3682,12 @@
                                         }
                                     },
                                     {
-                                        "type": "and",
+                                        "type": "resource",
                                         "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "template",
-                                                    "data": "Shoot Super Missile"
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "SMAmmo",
-                                                        "amount": 2,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
+                                            "type": "items",
+                                            "name": "SMAmmo",
+                                            "amount": 2,
+                                            "negate": false
                                         }
                                     }
                                 ]
@@ -3912,24 +3842,12 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "and",
+                                                    "type": "resource",
                                                     "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "template",
-                                                                "data": "Shoot Super Missile"
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "SMAmmo",
-                                                                    "amount": 2,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
+                                                        "type": "items",
+                                                        "name": "SMAmmo",
+                                                        "amount": 2,
+                                                        "negate": false
                                                     }
                                                 }
                                             ]
@@ -5654,8 +5572,13 @@
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "template",
-                                        "data": "Shoot Super Missile"
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "SMAmmo",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
                                     },
                                     {
                                         "type": "template",
@@ -6537,33 +6460,21 @@
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "template",
-                                        "data": "Lay Power Bomb"
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
                                     },
                                     {
-                                        "type": "or",
+                                        "type": "resource",
                                         "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Bomb",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "PBAmmo",
-                                                        "amount": 2,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
+                                            "type": "items",
+                                            "name": "PBAmmo",
+                                            "amount": 2,
+                                            "negate": false
                                         }
                                     }
                                 ]

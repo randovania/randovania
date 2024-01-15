@@ -13,6 +13,7 @@ from randovania.layout.base.base_configuration import BaseConfiguration
 class AM2RArtifactConfig(BitPackDataclass, JsonDataclass):
     prefer_metroids: bool
     prefer_bosses: bool
+    prefer_anywhere: bool
     required_artifacts: int = dataclasses.field(metadata={"min": 0, "max": 46, "precision": 1})
 
 
@@ -33,6 +34,8 @@ class AM2RConfiguration(BaseConfiguration):
     grave_grotto_blocks: bool
     nest_pipes: bool
     a3_entrance_blocks: bool
+    blue_save_doors: bool
+    force_blue_labs: bool
 
     @classmethod
     def game_enum(cls) -> RandovaniaGame:
