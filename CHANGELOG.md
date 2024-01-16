@@ -15,7 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ##### Main Caves
 
-- Fixed: In Surface Hi-Jump Challenge: Now correctly uses normal damage vs lava damage for damage boost.
+- Fixed: In Surface Hi-Jump Challenge: Now correctly uses normal damage instead of lava damage for damage boost.
 - Fixed: In Drivel Drive: Intended Ballspark now requires Gravity.
 - Changed: In Drivel Drive: Bumped mockball method to Expert.
 
