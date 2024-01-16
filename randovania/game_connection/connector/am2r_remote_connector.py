@@ -1,3 +1,4 @@
+import itertools
 import logging
 import uuid
 from collections import defaultdict
@@ -186,11 +187,14 @@ class AM2RRemoteConnector(RemoteConnector):
             quantity = inventory_dict.pop(progressive_name, 0)
             if quantity == 0:
                 continue
-            index = 0
-            while True:
+            for index in itertools.count():
                 if index >= len(actual_items):
                     break
                 actual_item = actual_items[index]
+                # This is for dealing with mixed progressives (i.e. one hijump+one progressive jump)
+                # In that case the progressive jump is always supposed to give the later item. So if the actual item
+                # already exists in the inventory, we don't assign it again, but instead assign the next item in the
+                # progressive chain
                 if actual_item not in inventory_dict:
                     inventory_dict[actual_item] += 1
                 index += 1
