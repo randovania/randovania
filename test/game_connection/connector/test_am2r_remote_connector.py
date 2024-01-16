@@ -97,6 +97,14 @@ async def test_new_inventory_received(connector: AM2RRemoteConnector):
     missile_launcher = connector.game.resource_database.get_item_by_name("Missile Launcher")
     assert connector.last_inventory[missile_launcher].capacity == 1
 
+    connector.new_inventory_received("items:Hi-Jump Boots|1,Progressive Jump|1,")
+
+    # Check HJ and SJ
+    hijump = connector.game.resource_database.get_item_by_name("Hi-Jump Boots")
+    assert connector.last_inventory[hijump].capacity == 1
+    spacejump = connector.game.resource_database.get_item_by_name("Space Jump")
+    assert connector.last_inventory[spacejump].capacity == 1
+
 
 async def test_new_received_pickups_received(connector: AM2RRemoteConnector):
     connector.receive_remote_pickups = AsyncMock()

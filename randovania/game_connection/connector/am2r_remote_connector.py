@@ -184,10 +184,16 @@ class AM2RRemoteConnector(RemoteConnector):
 
         for progressive_name, actual_items in progressives:
             quantity = inventory_dict.pop(progressive_name, 0)
-            for index in range(quantity):
+            if quantity == 0:
+                continue
+            index = 0
+            while True:
                 if index >= len(actual_items):
                     break
-                inventory_dict[actual_items[index]] += 1
+                actual_item = actual_items[index]
+                if actual_item not in inventory_dict:
+                    inventory_dict[actual_item] += 1
+                index += 1
 
         inventory = Inventory(
             {
