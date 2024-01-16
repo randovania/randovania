@@ -24,6 +24,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed: In Breeding Grounds Entrance: Activating the EMP Slot now properly accounts for Missiles.
 
+##### Distribution Center
+
+- Changed: In Dual Gamma Nest, the fight now requires Gravity suit on Trickless and Beginner Combat. Health requirements adjusted around this change.
+
 ### Metroid Dread
 
 #### Logic Database
