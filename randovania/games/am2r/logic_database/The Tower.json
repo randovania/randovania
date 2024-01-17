@@ -6827,7 +6827,7 @@
                                                     "data": {
                                                         "type": "items",
                                                         "name": "Missiles",
-                                                        "amount": 1,
+                                                        "amount": 50,
                                                         "negate": false
                                                     }
                                                 },
@@ -6836,7 +6836,7 @@
                                                     "data": {
                                                         "type": "items",
                                                         "name": "Super Missiles",
-                                                        "amount": 1,
+                                                        "amount": 10,
                                                         "negate": false
                                                     }
                                                 },
@@ -6845,7 +6845,7 @@
                                                     "data": {
                                                         "type": "items",
                                                         "name": "Power Bombs",
-                                                        "amount": 1,
+                                                        "amount": 4,
                                                         "negate": false
                                                     }
                                                 },
@@ -6861,7 +6861,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "Use Bombs to crack shell",
                                                         "items": [
                                                             {
                                                                 "type": "template",
@@ -6903,7 +6903,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "Damage boost through shell to damage core directly",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -7056,6 +7056,41 @@
                                                                                         }
                                                                                     }
                                                                                 ]
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "and",
+                                                                            "data": {
+                                                                                "comment": null,
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "damage",
+                                                                                            "name": "Damage",
+                                                                                            "amount": 65,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "Combat",
+                                                                                            "amount": 4,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Combat",
+                                                                                "amount": 5,
+                                                                                "negate": false
                                                                             }
                                                                         }
                                                                     ]
