@@ -26,7 +26,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ##### Distribution Center
 
-- Changed: In Dual Gamma Nest, the fight now requires Gravity suit on Trickless and Beginner Combat. Health requirements adjusted around this change.
+- Changed: In Dual Gamma Nest, the fight now requires Gravity suit on Trickless Combat. Health requirements adjusted around this change.
 
 ### Metroid Dread
 
