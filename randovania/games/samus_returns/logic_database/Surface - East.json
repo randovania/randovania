@@ -746,8 +746,21 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Reaching the tunnel",
                                             "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "SuperJump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Climb Rooms Vertically (High Jump)"
+                                                },
                                                 {
                                                     "type": "and",
                                                     "data": {
@@ -807,19 +820,101 @@
                                                             }
                                                         ]
                                                     }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": "Defeating the Gravitt",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Bomb",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
                                                 },
                                                 {
                                                     "type": "resource",
                                                     "data": {
-                                                        "type": "tricks",
-                                                        "name": "SuperJump",
+                                                        "type": "items",
+                                                        "name": "PBAmmo",
                                                         "amount": 1,
                                                         "negate": false
                                                     }
                                                 },
                                                 {
                                                     "type": "template",
-                                                    "data": "Climb Rooms Vertically (High Jump)"
+                                                    "data": "Shoot Any Missile"
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Shoot Wave Beam"
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Armor",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Combat",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "https://www.youtube.com/watch?v=lwQG4kqXaoM",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Combat",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Plasma",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Screw",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
                                                 }
                                             ]
                                         }
