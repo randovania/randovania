@@ -28,6 +28,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed: In Breeding Grounds Entrance: Activating the EMP Slot now properly accounts for Missiles.
 
+##### Industrial Complex
+
+- Fixed: Renamed the room `Spazer Beam` to `Spazer Beam Chamber`.
+
 ##### The Tower
 
 - Changed: In Tester Arena, the fight requirements have been restructured with more thorough combat and health requirements.
