@@ -62,7 +62,7 @@ def create_artifact(
         ),
         pickup_category=ARTIFACT_CATEGORY,
         broad_category=pickup_category.GENERIC_KEY_CATEGORY,
-        offworld_models=frozendict({RandovaniaGame.AM2R: "sItemArtifact"}),
+        offworld_models=frozendict({RandovaniaGame.AM2R: "sItemArtifactPrime"}),
         generator_params=PickupGeneratorParams(
             preferred_location_category=LocationCategory.MAJOR,
             probability_offset=0.25,

@@ -9,8 +9,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed: Searching for your own pickup in Multiworld sessions will now show only pickups which match *exactly* the name, instead of showing pickups which start with that name.
 - Fixed: The import in a multiworld session is blocked if it contains an unsupported game.
+- Fixed: Opening the webbrowser for Discord Login doesn't fail on Linux anymore.
 
 ### AM2R
+
+- **Major** - Added: Multiworld support for AM2R. 
+- Changed: The Baby now checks for all DNA being collected and will display a message if not.
 
 #### Logic Database
 
@@ -27,6 +31,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ##### Industrial Complex
 
 - Fixed: Renamed the room `Spazer Beam` to `Spazer Beam Chamber`.
+
+##### The Tower
+
+- Changed: In Tester Arena, the fight requirements have been restructured with more thorough combat and health requirements.
+
+##### Distribution Center
+
+- Changed: In Dual Gamma Nest, the fight now requires Gravity suit on Trickless Combat. Health requirements adjusted around this change.
 
 ### Metroid Dread
 

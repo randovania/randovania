@@ -529,8 +529,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -3363.827867763901,
-                        "y": 250.06136458347646,
+                        "x": -3363.83,
+                        "y": 250.06,
                         "z": 0.0
                     },
                     "description": "",
@@ -539,7 +539,7 @@
                     ],
                     "extra": {
                         "actor_name": "Door008",
-                        "actor_type": "doorclosedpower"
+                        "actor_type": "doorpowerpower"
                     },
                     "valid_starting_location": false,
                     "dock_type": "door",
@@ -548,7 +548,7 @@
                         "area": "Varia Suit Room",
                         "node": "Door to Main Hub (Bottom)"
                     },
-                    "default_dock_weakness": "Access Locked",
+                    "default_dock_weakness": "Wave Beam Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -873,7 +873,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Breaking the block",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -899,6 +899,80 @@
                                                         "type": "tricks",
                                                         "name": "Movement",
                                                         "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": "Dealing with the Gravitt",
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Shoot Any Missile"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Bomb",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "PBAmmo",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Armor",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "DBoost",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "Damage",
+                                                                    "amount": 30,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Combat",
+                                                        "amount": 1,
                                                         "negate": false
                                                     }
                                                 }
@@ -1987,6 +2061,54 @@
                                                                                     }
                                                                                 ]
                                                                             }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "or",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "MissileAmmo",
+                                                                                "amount": 6,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "SMAmmo",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Screw",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Plasma",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Shoot Beam Burst"
                                                                         }
                                                                     ]
                                                                 }
@@ -3442,8 +3564,25 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "template",
-                                                    "data": "Can Spiderspark"
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Spiderspark",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Spiderspark"
+                                                            }
+                                                        ]
+                                                    }
                                                 }
                                             ]
                                         }
