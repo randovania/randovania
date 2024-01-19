@@ -2170,10 +2170,12 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Outer Hub": {
-                            "type": "and",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "type": "misc",
+                                "name": "DoorLocks",
+                                "amount": 1,
+                                "negate": true
                             }
                         }
                     }
@@ -4470,12 +4472,29 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Shaft West": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "items",
-                                "name": "Plasma",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Plasma",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "DoorLocks",
+                                            "amount": 1,
+                                            "negate": true
+                                        }
+                                    }
+                                ]
                             }
                         },
                         "Dock to Save Station South": {

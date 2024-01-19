@@ -64,6 +64,9 @@ class MSRBootstrap(MetroidBootstrap):
             if getattr(configuration, name):
                 enabled_resources.add(index)
 
+        if configuration.dock_rando.is_enabled():
+            enabled_resources.add("DoorLocks")
+
         return enabled_resources
 
     def event_resources_for_configuration(
