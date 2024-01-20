@@ -417,6 +417,31 @@ def _migrate_v22(data: dict) -> dict:
     return data
 
 
+def _migrate_v23(data: dict) -> dict:
+    game_modifications = data["game_modifications"]
+
+    for game in game_modifications:
+        game_name = game["game"]
+        if game_name != "am2r":
+            continue
+
+        migration = migration_data.get_raw_data(RandovaniaGame(game_name))["spazer_beam_typo"]
+
+        dock_weakness = game.get("dock_weakness")
+        if dock_weakness is not None:
+            for old_node, new_node in migration["nodes"].items():
+                if old_node in dock_weakness:
+                    dock_weakness[new_node] = dock_weakness.pop(old_node)
+
+        for region, area_data in migration["area"].items():
+            for old_area_name, new_area_name in area_data.items():
+                region_location = game["locations"][region]
+                if old_area_name in region_location:
+                    region_location[new_area_name] = region_location.pop(old_area_name)
+
+    return data
+
+
 _MIGRATIONS = [
     _migrate_v1,  # v2.2.0-6-gbfd37022
     _migrate_v2,  # v2.4.2-16-g735569fd
@@ -440,6 +465,7 @@ _MIGRATIONS = [
     _migrate_v20,
     _migrate_v21,
     _migrate_v22,
+    _migrate_v23,
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 

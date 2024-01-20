@@ -1547,7 +1547,7 @@
                             "data": {
                                 "type": "items",
                                 "name": "MissileAmmo",
-                                "amount": 1,
+                                "amount": 16,
                                 "negate": false
                             }
                         },
@@ -1556,14 +1556,57 @@
                             "data": {
                                 "type": "items",
                                 "name": "SMAmmo",
-                                "amount": 1,
+                                "amount": 6,
                                 "negate": false
                             }
                         },
                         {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "Farming drops",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Combat",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "MissileAmmo",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "SMAmmo",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "type": "and",
+                            "data": {
+                                "comment": "No Missiles",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -1923,7 +1966,7 @@
                                         "data": {
                                             "type": "items",
                                             "name": "MissileAmmo",
-                                            "amount": 1,
+                                            "amount": 21,
                                             "negate": false
                                         }
                                     },
@@ -1932,14 +1975,57 @@
                                         "data": {
                                             "type": "items",
                                             "name": "SMAmmo",
-                                            "amount": 1,
+                                            "amount": 9,
                                             "negate": false
                                         }
                                     },
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Farming drops",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Combat",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "MissileAmmo",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "SMAmmo",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "No Missiles",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -4985,16 +5071,23 @@
             4,
             5
         ],
-        "FrozenEnemy": [
-            1,
-            2,
-            3
-        ],
         "SuperJump": [
             1,
             2,
             3,
             4
+        ],
+        "FrozenEnemy": [
+            1,
+            2,
+            3
+        ],
+        "Combat": [
+            1,
+            2,
+            3,
+            4,
+            5
         ],
         "UnmorphExtend": [
             1,
@@ -5080,13 +5173,6 @@
             2,
             3,
             4
-        ],
-        "Combat": [
-            1,
-            2,
-            3,
-            4,
-            5
         ],
         "PhaseClip": [
             2
