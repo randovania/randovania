@@ -16,7 +16,7 @@ class TrackerItemImage(QLabel):
         self.transparent_pixmap = transparent_pixmap
         self.opaque_pixmap = opaque_pixmap
         self._ignoring_mouse_events = False
-        self.setStyleSheet("QToolTip { color: black; }")
+        self.setStyleSheet("QToolTip { color: black; background-color: white; }")
 
     def set_checked(self, is_opaque: bool):
         self.setPixmap(self.opaque_pixmap if is_opaque else self.transparent_pixmap)
