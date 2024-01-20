@@ -86,19 +86,25 @@ def _pickup_description(pickup: PickupEntry) -> str:
         for resource, quantity in pickup.extra_resources
     ]
     if ammo_desc:
-
-        def provides_text(negative):
-            return "Provides" if not negative else "Removes"
-
-        text = f"{provides_text(ammo_desc[0][1])} {ammo_desc[0][0]}"
-        for desc, is_negative in ammo_desc[1:-1]:
-            text += f", {provides_text(is_negative).lower()} {desc}"
-        if len(ammo_desc) > 1:
-            text += f" and {provides_text(ammo_desc[-1][1]).lower()} {ammo_desc[-1][0]}"
-        text += "."
+        positive_items = [x[0] for x in ammo_desc if x[1]]
+        negative_items = [x[0] for x in ammo_desc if not x[1]]
+        text = ""
+        if len(positive_items) > 0:
+            text += provides_text(False, positive_items)
+        if len(negative_items) > 0:
+            text += provides_text(True, negative_items)
         return text
     else:
         return ""
+
+
+def _text_for_ammo_description(negative, ammo_desc: list[tuple[Any, bool]]) -> str:
+    return "{} {}{}{}.".format(
+        "Provides" if not negative else "Removes",
+        ", ".join([x[0] for x in ammo_desc[:-1]]),
+        " and " if len(ammo_desc) > 1 else "",
+        ammo_desc[-1][0],
+    )
 
 
 def _get_single_hud_text(
