@@ -432,8 +432,8 @@ class ConnectionsEditor(QDialog, Ui_ConnectionEditor):
         return self._root_editor.current_requirement
 
     @property
-    def final_requirement(self) -> Requirement | None:
+    def final_requirement(self) -> Requirement:
         result = self.build_requirement()
         if result == Requirement.impossible():
-            return None
+            return Requirement.trivial()
         return result
