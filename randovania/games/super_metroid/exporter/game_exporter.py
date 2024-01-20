@@ -4,8 +4,6 @@ import dataclasses
 from io import BytesIO
 from typing import TYPE_CHECKING
 
-import SuperDuperMetroid.ROM_Patcher
-
 from randovania.exporter.game_exporter import GameExporter, GameExportParams
 
 if TYPE_CHECKING:
@@ -41,6 +39,8 @@ class SuperMetroidGameExporter(GameExporter):
         export_params: GameExportParams,
         progress_update: status_update_lib.ProgressUpdateCallable,
     ):
+        import SuperDuperMetroid.ROM_Patcher
+
         assert isinstance(export_params, SuperMetroidGameExportParams)
 
         vanilla_bytes = export_params.input_path.read_bytes()
