@@ -5,6 +5,7 @@ from typing import TYPE_CHECKING
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.games.samus_returns.generator.pool_creator import METROID_DNA_CATEGORY
 from randovania.games.samus_returns.layout import MSRConfiguration
+from randovania.layout.base.dock_rando_configuration import DockRandoMode
 from randovania.layout.exceptions import InvalidConfiguration
 from randovania.resolver.bootstrap import MetroidBootstrap
 
@@ -63,6 +64,12 @@ class MSRBootstrap(MetroidBootstrap):
         for name, index in logical_patches.items():
             if getattr(configuration, name):
                 enabled_resources.add(index)
+
+        if configuration.dock_rando.is_enabled():
+            enabled_resources.add("DoorLocks")
+
+        if configuration.dock_rando.mode == DockRandoMode.WEAKNESSES:
+            enabled_resources.add("DoorLockRandoTypes")
 
         return enabled_resources
 
