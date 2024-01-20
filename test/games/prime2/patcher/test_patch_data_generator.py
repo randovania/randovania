@@ -528,7 +528,7 @@ def test_pickup_data_for_pb_expansion_locked(
     # Assert
     assert result == {
         "pickup_index": 0,
-        "scan": "Power Bomb Expansion. Provides 2 Power Bombs and provides 1 Item Percentage.",
+        "scan": "Power Bomb Expansion. Provides 2 Power Bombs and 1 Item Percentage.",
         "model": {"game": "prime2", "name": "PowerBombExpansion"},
         "original_model": {"game": "prime2", "name": "PowerBombExpansion"},
         "hud_text": hud_text,
@@ -562,7 +562,7 @@ def test_pickup_data_for_pb_expansion_unlocked(echoes_pickup_database, multiworl
     # Assert
     assert result == {
         "pickup_index": 0,
-        "scan": "Power Bomb Expansion. Provides 2 Power Bombs and provides 1 Item Percentage.",
+        "scan": "Power Bomb Expansion. Provides 2 Power Bombs and 1 Item Percentage.",
         "model": {"game": "prime2", "name": "PowerBombExpansion"},
         "original_model": {"game": "prime2", "name": "PowerBombExpansion"},
         "hud_text": ["Power Bomb Expansion acquired!"],

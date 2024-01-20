@@ -86,24 +86,28 @@ def _pickup_description(pickup: PickupEntry) -> str:
         for resource, quantity in pickup.extra_resources
     ]
     if ammo_desc:
-        positive_items = [x[0] for x in ammo_desc if x[1]]
-        negative_items = [x[0] for x in ammo_desc if not x[1]]
+        positive_items = [x[0] for x in ammo_desc if not x[1]]
+        negative_items = [x[0] for x in ammo_desc if x[1]]
         text = ""
+        # First all the positive items, then we add all the negative items. For the negative items, if we added
+        # positive items before, we include a space character so that the sentence looks nice.
         if len(positive_items) > 0:
-            text += provides_text(False, positive_items)
+            text += _text_for_ammo_description(False, positive_items)
         if len(negative_items) > 0:
-            text += provides_text(True, negative_items)
+            if len(text) > 0:
+                text += " "
+            text += _text_for_ammo_description(True, negative_items)
         return text
     else:
         return ""
 
 
-def _text_for_ammo_description(negative, ammo_desc: list[tuple[Any, bool]]) -> str:
+def _text_for_ammo_description(negative, ammo_desc: list) -> str:
     return "{} {}{}{}.".format(
         "Provides" if not negative else "Removes",
-        ", ".join([x[0] for x in ammo_desc[:-1]]),
+        ", ".join(ammo_desc[:-1]),
         " and " if len(ammo_desc) > 1 else "",
-        ammo_desc[-1][0],
+        ammo_desc[-1],
     )
 
 
