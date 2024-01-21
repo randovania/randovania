@@ -112,7 +112,7 @@ Linux Flatpak build contributed by [Ethan Lee](https://flibitijibibo.com/).
 ## Games
 
 ### Metroid Prime 1
-* Game patching via [randomprime](https://github.com/aprilwade/randomprime) from April Wade, with contributions from [UltiNaruto](https://github.com/UltiNaruto), BashPrime and toasterparty.
+* Game patching via [randomprime](https://github.com/randovania/randomprime). Originally authored by [April Wade](https://github.com/aprilwade), it is now maintained and developed by [toasterparty](https://github.com/toasterparty) with contributions from [others](https://github.com/randovania/randomprime/graphs/contributors)
 * Room data collected by UltiNaruto, [EthanArmbrust](https://github.com/EthanArmbrust) and [SolventMercury](https://github.com/SolventMercury).
 * Converting Metroid Prime 2 models by [Migs](https://www.twitch.tv/migslive).
 
