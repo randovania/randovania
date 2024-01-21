@@ -1000,6 +1000,8 @@ class PrimePatchDataFactory(PatchDataFactory):
                 "artifactTempleLayerOverrides": {
                     artifact.long_name: not starting_resources.has_resource(artifact) for artifact in artifacts
                 },
+                "requiredArtifactCount": (12 - self.configuration.artifact_target.value)
+                + self.configuration.artifact_required.value,
             },
             "tweaks": ctwk_config,
             "levelData": level_data,

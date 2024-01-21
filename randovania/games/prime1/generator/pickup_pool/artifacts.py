@@ -22,18 +22,18 @@ ARTIFACT_CATEGORY = pickup_category.PickupCategory(
 
 def add_artifacts(
     resource_database: ResourceDatabase,
-    mode: LayoutArtifactMode,
+    total: LayoutArtifactMode,
     artifact_minimum_progression: int,
 ) -> PoolResults:
     """
     :param resource_database:
-    :param mode
+    :param total
     :param artifact_minimum_progression
     :return:
     """
     item_pool: list[PickupEntry] = []
 
-    artifacts_to_place = mode.value
+    artifacts_to_place = total.value
 
     for i in range(artifacts_to_place):
         item_pool.append(create_artifact(i, artifact_minimum_progression, resource_database))
