@@ -939,7 +939,7 @@ class PrimePatchDataFactory(PatchDataFactory):
             boss_sizes = {}
 
         data: dict = {
-            "$schema": "https://toasterparty.github.io/randomprime/randomprime.schema.json",
+            "$schema": "https://randovania.github.io/randomprime/randomprime.schema.json",
             "seed": self.description.get_seed_for_player(self.players_config.player_index),
             "preferences": {
                 "defaultGameOptions": self.get_default_game_options(),

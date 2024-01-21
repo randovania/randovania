@@ -63,6 +63,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Metroid Prime
 
 - Added: It is now possible to have a seperate total amount and required amount of Artifacts.
+- Fixed: Rare softlock/glitches regarding Central Dynamo maze
 
 ### Metroid Prime 2: Echoes
 
