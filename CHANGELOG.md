@@ -12,6 +12,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: The import in a multiworld session is blocked if it contains an unsupported game.
 - Fixed: Opening the webbrowser for Discord Login doesn't fail on Linux anymore.
 
+### Resolver
+
+- Fixed: Some cases of resolver timout.
+
 ### AM2R
 
 - **Major** - Added: Multiworld support for AM2R. 
