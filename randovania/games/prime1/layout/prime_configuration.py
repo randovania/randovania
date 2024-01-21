@@ -155,3 +155,13 @@ class PrimeConfiguration(BaseConfiguration):
         if self.items_every_room:
             layers.add("items_every_room")
         return layers
+
+    def unsupported_features(self) -> list[str]:
+        result = super().unsupported_features()
+
+        if self.artifact_required.value > self.artifact_target.value:
+            result.append(
+                "The amount of required artifacts cannot be higher than the total amount of shuffled artifacts."
+            )
+
+        return result
