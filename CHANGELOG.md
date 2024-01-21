@@ -19,7 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Logic Database
 
-- Added: 17 Videos to the Logic Database.
+- Added: 20 Videos to the Logic Database.
 
 ##### Main Caves
 
@@ -29,7 +29,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ##### Golden Temple
 
-- Added: In Guardian Arena: Now accounts for Speed Booster quick kill with Intermediate Combat.
+- Added: In Guardian Arena: Now accounts for Speed Booster quick kill with Intermediate Knowledge.
 
 ##### Hydro Station
 
