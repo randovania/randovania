@@ -238,8 +238,11 @@ async def _inner_advance_depth(
 
         additional_requirements = additional_requirements.union(additional)
 
-    assert isinstance(state.node, ResourceNode)
-    resources = [x for x, _ in state.node.resource_gain_on_collect(state.node_context())]
+    resources = (
+        [x for x, _ in state.node.resource_gain_on_collect(state.node_context())]
+        if isinstance(state.node, ResourceNode)
+        else []
+    )
     logic.set_additional_requirements(
         state.node, _simplify_additional_requirement_set(additional_requirements, state, resources)
     )
