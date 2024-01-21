@@ -19,11 +19,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Logic Database
 
+- Added: 20 Videos to the Logic Database.
+
 ##### Main Caves
 
 - Fixed: In Surface Hi-Jump Challenge: Now correctly uses normal damage instead of lava damage for damage boost.
 - Fixed: In Drivel Drive: Intended Ballspark now requires Gravity.
 - Changed: In Drivel Drive: Bumped mockball method to Expert.
+
+##### Golden Temple
+
+- Added: In Guardian Arena: Now accounts for Speed Booster quick kill with Intermediate Knowledge.
 
 ##### Hydro Station
 
