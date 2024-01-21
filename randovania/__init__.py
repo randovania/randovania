@@ -30,9 +30,9 @@ def is_dev_version():
 
 def get_icon_path():
     if is_dev_version():
-        icon_name = "dark_temple_key.ico"
+        icon_name = "rdv_logo_red.ico"
     else:
-        icon_name = "sky_temple_key_NqN_icon.ico"
+        icon_name = "rdv_logo_blue.ico"
 
     return get_data_path().joinpath("icons", icon_name)
 
