@@ -411,7 +411,7 @@ class Options:
         return _return_with_default(self._show_multiworld_banner, lambda: False)
 
     @show_multiworld_banner.setter
-    def show_multiworld_banner(self, value: bool):
+    def show_multiworld_banner(self, value: bool) -> None:
         self._edit_field("show_multiworld_banner", value)
 
     @property
