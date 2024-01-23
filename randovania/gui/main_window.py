@@ -67,6 +67,13 @@ class LayoutWithPlayers(typing.NamedTuple):
     players: list[str] | None
 
 
+class GameQtElements(typing.NamedTuple):
+    logo: QtWidgets.QLabel
+    multibanner: QtWidgets.QLabel | None
+    multiicon: QtWidgets.QLabel | None
+    tile: QtWidgets.QLabel
+
+
 class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
     options_changed_signal = Signal()
     _is_preview_mode: bool = False
@@ -78,10 +85,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
     _map_tracker: QtWidgets.QWidget
     _preset_manager: PresetManager
     _multiworld_client: MultiworldClient
-    _play_game_logos: dict[RandovaniaGame, QtWidgets.QLabel]
-    _play_game_multibanners: dict[RandovaniaGame, QtWidgets.QLabel]
-    _play_game_multiicons: dict[RandovaniaGame, QtWidgets.QLabel]
-    _play_game_packs: dict[RandovaniaGame, QtWidgets.QHBoxLayout]
+    _play_game_elements: dict[RandovaniaGame, GameQtElements]
     about_window: QtWidgets.QMainWindow | None = None
     dependencies_window: QtWidgets.QMainWindow | None = None
     reporting_widget: QtWidgets.QWidget | None = None
@@ -137,10 +141,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         self._preset_manager = preset_manager
         self.network_client = network_client
         self._multiworld_client = multiworld_client
-        self._play_game_logos = {}
-        self._play_game_multibanners = {}
-        self._play_game_multiicons = {}
-        self._play_game_packs = {}
+        self._play_game_elements = {}
         self.opened_session_windows = {}
 
         if preview:
@@ -183,17 +184,17 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         self.play_flow_layout.setSpacing(15)
         self.play_flow_layout.setAlignment(Qt.AlignHCenter)
 
-        bannerImgPath = randovania.get_data_path().joinpath("gui_assets", "common", "banner.png")
-        multiworldImgPath = randovania.get_data_path().joinpath("gui_assets", "common", "multiworld.png")
+        banner_img_path = randovania.get_data_path().joinpath("gui_assets", "common", "banner.png")
+        multiworld_img_path = randovania.get_data_path().joinpath("gui_assets", "common", "multiworld.png")
         bannerSize = 40
 
         for game in RandovaniaGame.sorted_all_games():
             # Play game buttons
-            packLayout = QtWidgets.QStackedWidget(self.game_list_contents)
-            packLayout.setFixedSize(150, 200)
+            pack_tile = QtWidgets.QStackedWidget(self.game_list_contents)
+            pack_tile.setFixedSize(150, 200)
 
             image_path = game.data_path.joinpath("assets", "cover.png")
-            logo = ClickableLabel(packLayout)
+            logo = ClickableLabel(pack_tile)
             logo.setPixmap(QtGui.QPixmap(os.fspath(image_path)))
             logo.setFrameStyle(QtWidgets.QFrame.Panel | QtWidgets.QFrame.Plain)
             logo.setScaledContents(True)
@@ -208,32 +209,27 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
             logo.setGraphicsEffect(logo.on_hover_effect)
             logo.on_hover_effect.setEnabled(False)
 
-            multiworldBanner = QtWidgets.QLabel(packLayout)
-            multiworldBanner.setPixmap(QtGui.QPixmap(os.fspath(bannerImgPath)))
-            multiworldBanner.setScaledContents(True)
-            multiworldBanner.setFixedSize(bannerSize, bannerSize)
-            multiworldBanner.setVisible(game.data.defaults_available_in_game_sessions)
+            multibanner = QtWidgets.QLabel(pack_tile)
+            multibanner.setPixmap(QtGui.QPixmap(os.fspath(banner_img_path)))
+            multibanner.setScaledContents(True)
+            multibanner.setFixedSize(bannerSize, bannerSize)
+            multibanner.setVisible(game.data.defaults_available_in_game_sessions)
 
-            multiworldBanner.color_effect = QtWidgets.QGraphicsColorizeEffect()
-            multiworldBanner.color_effect.setStrength(0.5)
-            multiworldBanner.color_effect.setColor(QtGui.QColor(70, 200, 80))
-            multiworldBanner.setGraphicsEffect(multiworldBanner.color_effect)
-            packLayout.setCurrentWidget(multiworldBanner)
-            multiworldBanner.move(0, 2)
+            multibanner.color_effect = QtWidgets.QGraphicsColorizeEffect()
+            multibanner.color_effect.setStrength(0.5)
+            multibanner.color_effect.setColor(QtGui.QColor(70, 200, 80))
+            multibanner.setGraphicsEffect(multibanner.color_effect)
+            multibanner.move(0, 2)
 
-            multiworldIcon = QtWidgets.QLabel(packLayout)
-            multiworldIcon.setPixmap(QtGui.QPixmap(os.fspath(multiworldImgPath)))
-            multiworldIcon.setScaledContents(True)
-            multiworldIcon.setFixedSize(bannerSize / 2, bannerSize / 2)
-            multiworldIcon.setVisible(game.data.defaults_available_in_game_sessions)
-            packLayout.setCurrentWidget(multiworldIcon)
-            multiworldIcon.move(bannerSize / 4, 2 + bannerSize / 4)
-            if multiworldIcon.isVisible:
-                multiworldIcon.setToolTip(game.short_name + " is multiworld compatible.")
-                multiworldIcon.setAccessibleName(game.long_name + " multiworld compatibility indicator")
-            else:
-                multiworldIcon.setToolTip(game.short_name + " is not multiworld compatible.")
-                multiworldIcon.setAccessibleName(game.long_name + " multiworld compatibility indicator, inactive")
+            multiicon = QtWidgets.QLabel(pack_tile)
+            multiicon.setPixmap(QtGui.QPixmap(os.fspath(multiworld_img_path)))
+            multiicon.setScaledContents(True)
+            multiicon.setFixedSize(bannerSize / 2, bannerSize / 2)
+            multiicon.setVisible(game.data.defaults_available_in_game_sessions)
+            multiicon.move(bannerSize / 4, 2 + bannerSize / 4)
+            if multiicon.isVisible:
+                multiicon.setToolTip(game.short_name + " is multiworld compatible.")
+                multiicon.setAccessibleName(game.long_name + " multiworld compatibility indicator")
 
             def highlight_logo(label: QtWidgets.QWidget, multiB: QtWidgets.QWidget, active: bool):
                 label.on_hover_effect.setEnabled(active)
@@ -242,13 +238,10 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
                 else:
                     multiB.color_effect.setColor(QtGui.QColor(70, 200, 80))
 
-            logo.entered.connect(partial(highlight_logo, logo, multiworldBanner, True))
-            logo.left.connect(partial(highlight_logo, logo, multiworldBanner, False))
-            self.play_flow_layout.addWidget(packLayout)
-            self._play_game_logos[game] = logo
-            self._play_game_multibanners[game] = multiworldBanner
-            self._play_game_multiicons[game] = multiworldIcon
-            self._play_game_packs[game] = packLayout
+            logo.entered.connect(partial(highlight_logo, logo, multibanner, True))
+            logo.left.connect(partial(highlight_logo, logo, multibanner, False))
+            self.play_flow_layout.addWidget(pack_tile)
+            self._play_game_elements[game] = GameQtElements(logo, multibanner, multiicon, pack_tile)
 
             # Sub-Menu in Open Menu
             game_menu = QtWidgets.QMenu(self.menu_open)
@@ -341,13 +334,13 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
 
     # Per-Game elements
     def refresh_game_list(self):
-        for game, packLayout in self._play_game_packs.items():
-            packLayout.setVisible(game.data.development_state.can_view())
-            if packLayout.isVisible:
-                self._play_game_multiicons[game].setVisible(
+        for game, game_elements in self._play_game_elements.items():
+            game_elements.tile.setVisible(game.data.development_state.can_view())
+            if game_elements.tile.isVisible:
+                game_elements.multibanner.setVisible(
                     game.data.defaults_available_in_game_sessions and self._options.show_multiworld_banner
                 )
-                self._play_game_multibanners[game].setVisible(
+                game_elements.multiicon.setVisible(
                     game.data.defaults_available_in_game_sessions and self._options.show_multiworld_banner
                 )
 
