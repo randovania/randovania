@@ -79,6 +79,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Prime 2: Echoes
 
+- Added: Having Double Damage no longer causes the morph ball to glow.
+
 #### Logic Database
 
 - Added: 12 videos to the database
