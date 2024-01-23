@@ -355,7 +355,7 @@ Extra - asset_id: collision_camera_003
   > Event - Proto EMMI Blob (West Side)
       Any of the following:
           Shoot Diffusion or Wave
-          Pseudo-Wave Beam (Beginner) and Shoot Beam
+          Slide and Pseudo-Wave Beam (Beginner) and Shoot Beam
 
 > Near Missile Tank 1; Heals? False
   * Layers: default
@@ -401,7 +401,7 @@ Extra - asset_id: collision_camera_004
   > Event - Early Cloak Blob
       Any of the following:
           Wave Beam or Shoot Diffusion Beam
-          Pseudo-Wave Beam (Intermediate) and Shoot Beam
+          Slide and Pseudo-Wave Beam (Intermediate) and Shoot Beam
   > Above Early Cloak Blob
       After Artaria - Early Cloak Blob
 
@@ -628,7 +628,10 @@ Extra - asset_id: collision_camera_006
           After Artaria - Central Unit and Stand on Frozen Enemy (Beginner) and Shoot Ice Missile
           Morph Ball and Single-wall Wall Jump (Intermediate)
   > Door to EMMI Zone First Entrance
-      Flash Shift or Speed Booster or Wall Jump (Advanced) or Simple IBJ or Use Spin Boost
+      Any of the following:
+          Flash Shift or Wall Jump (Advanced) or Simple IBJ or Use Spin Boost
+          Speed Booster and Disabled Door Lock Randomizer
+          Morph Ball and Single-wall Wall Jump (Beginner)
   > Event - First Chase Blob
       Pseudo-Wave Beam (Intermediate) or Shoot Diffusion or Wave
   > Start Point
@@ -657,6 +660,8 @@ Extra - asset_id: collision_camera_006
   * Extra - right_shield_def: None
   > Door to Teleport to Dairon (Lower)
       Trivial
+  > Door to EMMI Zone First Entrance
+      Speed Booster
 
 > Door to EMMI Zone First Entrance; Heals? False
   * Layers: default
@@ -4952,7 +4957,17 @@ Extra - asset_id: collision_camera_081
   > Event - Screw Attack Water Blob
       Any of the following:
           Wave Beam or Shoot Diffusion Beam
-          Pseudo-Wave Beam (Advanced) and Shoot Beam
+          All of the following:
+              Shoot Beam
+              Any of the following:
+                  All of the following:
+                      Pseudo-Wave Beam (Advanced)
+                      Any of the following:
+                          # Having a Slide requirement means Gravity Suit is not a dangerous <br>resource because we can fall back on the Intermediate branch.
+                          Slide
+                          # This is only locked by Highly Dangerous Logic when Slide is not
+                          No Gravity Suit and Enabled Highly Dangerous Logic
+                  Gravity Suit and Slide and Pseudo-Wave Beam (Intermediate)
   > Blob - Left
       After Artaria - Screw Attack Water Blob
 
@@ -4961,7 +4976,11 @@ Extra - asset_id: collision_camera_081
   > Event - Screw Attack Water Blob
       Any of the following:
           Wave Beam
-          Pseudo-Wave Beam (Intermediate) and Shoot Beam
+          All of the following:
+              Shoot Beam
+              Any of the following:
+                  Pseudo-Wave Beam (Intermediate)
+                  Gravity Suit and Slide and Pseudo-Wave Beam (Beginner)
   > Start Point 2
       Any of the following:
           All of the following:

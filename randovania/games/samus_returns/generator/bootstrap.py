@@ -4,7 +4,8 @@ from typing import TYPE_CHECKING
 
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.games.samus_returns.generator.pool_creator import METROID_DNA_CATEGORY
-from randovania.games.samus_returns.layout.msr_configuration import MSRConfiguration
+from randovania.games.samus_returns.layout import MSRConfiguration
+from randovania.layout.base.dock_rando_configuration import DockRandoMode
 from randovania.layout.exceptions import InvalidConfiguration
 from randovania.resolver.bootstrap import MetroidBootstrap
 
@@ -37,11 +38,8 @@ def all_dna_locations(game: GameDescription, config: MSRArtifactConfig) -> list[
                     locations.append(node)
                 elif config.prefer_stronger_metroids and pickup_index in _stronger_metroid_indices:
                     locations.append(node)
-            # Boss pickups
+            # Boss pickups/locations
             elif config.prefer_bosses and pickup_index in _boss_indices:
-                locations.append(node)
-            # DNA anywhere
-            elif not config.prefer_metroids and not config.prefer_stronger_metroids and not config.prefer_bosses:
                 locations.append(node)
 
     return locations
@@ -66,6 +64,12 @@ class MSRBootstrap(MetroidBootstrap):
         for name, index in logical_patches.items():
             if getattr(configuration, name):
                 enabled_resources.add(index)
+
+        if configuration.dock_rando.is_enabled():
+            enabled_resources.add("DoorLocks")
+
+        if configuration.dock_rando.mode == DockRandoMode.WEAKNESSES:
+            enabled_resources.add("DoorLockRandoTypes")
 
         return enabled_resources
 
@@ -93,6 +97,9 @@ class MSRBootstrap(MetroidBootstrap):
     def assign_pool_results(self, rng: Random, patches: GamePatches, pool_results: PoolResults) -> GamePatches:
         assert isinstance(patches.configuration, MSRConfiguration)
         config = patches.configuration.artifacts
+
+        if config.prefer_anywhere:
+            return super().assign_pool_results(rng, patches, pool_results)
 
         locations = all_dna_locations(patches.game, config)
         rng.shuffle(locations)

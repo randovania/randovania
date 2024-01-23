@@ -60,7 +60,7 @@
                 ]
             },
             "nodes": {
-                "Dock to Research Site Elevator": {
+                "Vertical Dock to Main Caves": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -74,19 +74,19 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "vertical_dock",
                     "default_connection": {
                         "region": "Main Caves",
                         "area": "Research Site Elevator",
-                        "node": "Dock to Elevator Shaft"
+                        "node": "Vertical Dock to GFS Thoth"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "2-Tiles Wide Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to GFS Thoth Exterior": {
+                        "Vertical Dock to GFS Thoth Exterior": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -144,7 +144,7 @@
                         }
                     }
                 },
-                "Dock to GFS Thoth Exterior": {
+                "Vertical Dock to GFS Thoth Exterior": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -158,19 +158,19 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "vertical_dock",
                     "default_connection": {
                         "region": "GFS Thoth",
                         "area": "GFS Thoth Exterior",
-                        "node": "Dock to Elevator Shaft"
+                        "node": "Vertical Dock to Elevator Shaft"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "2-Tiles Wide Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Research Site Elevator": {
+                        "Vertical Dock to Main Caves": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -683,7 +683,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Elevator Shaft": {
+                        "Vertical Dock to Elevator Shaft": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -692,7 +692,7 @@
                         }
                     }
                 },
-                "Dock to Elevator Shaft": {
+                "Vertical Dock to Elevator Shaft": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -706,13 +706,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "vertical_dock",
                     "default_connection": {
                         "region": "GFS Thoth",
                         "area": "Elevator Shaft",
-                        "node": "Dock to GFS Thoth Exterior"
+                        "node": "Vertical Dock to GFS Thoth Exterior"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "2-Tiles Wide Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -829,7 +829,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Elevator Shaft": {
+                        "Vertical Dock to Elevator Shaft": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1737,7 +1737,8 @@
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [
-                        "Hydro Station Water Turbine"
+                        "Hydro Station Water Turbine",
+                        "Research Site Open Hatch"
                     ],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
@@ -1950,7 +1951,8 @@
                         "x": 45,
                         "y": 6
                     }
-                ]
+                ],
+                "unlocked_save_station": true
             },
             "nodes": {
                 "Door to Thoth West Lift": {
@@ -2078,7 +2080,8 @@
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [
-                        "Hydro Station Water Turbine"
+                        "Hydro Station Water Turbine",
+                        "Research Site Open Hatch"
                     ],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,

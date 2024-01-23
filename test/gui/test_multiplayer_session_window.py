@@ -585,9 +585,14 @@ async def test_import_permalink(window: MultiplayerSessionWindow, end_state, moc
     permalink.parameters.world_count = 2 - (end_state == "wrong_count")
     permalink.parameters.presets = [MagicMock(), MagicMock()]
     permalink.parameters.presets[0].is_same_configuration.return_value = False
+    game_mock = MagicMock()
+    game_mock.data.long_name = "Foo"
+    permalink.parameters.presets[0].game = game_mock
+    permalink.parameters.presets[1].game = game_mock
 
     session = MagicMock()
     session.worlds = [MagicMock(), MagicMock()]
+    session.allowed_games = [game_mock]
 
     window._session = session
     window.generate_game_with_permalink = AsyncMock()
@@ -622,6 +627,45 @@ async def test_import_permalink(window: MultiplayerSessionWindow, end_state, moc
     else:
         window.generate_game_with_permalink.assert_not_awaited()
         window.game_session_api.replace_preset_for.assert_not_awaited()
+
+
+async def test_import_permalink_unsupported_games(window: MultiplayerSessionWindow, mocker: MockerFixture):
+    mock_permalink_dialog = mocker.patch("randovania.gui.multiplayer_session_window.PermalinkDialog")
+    execute_dialog = mocker.patch("randovania.gui.lib.async_dialog.execute_dialog", new_callable=AsyncMock)
+    execute_dialog.return_value = QtWidgets.QDialog.DialogCode.Accepted
+    mock_warning = mocker.patch("randovania.gui.lib.async_dialog.warning", new_callable=AsyncMock)
+    mocker.patch.object(window, "_on_close_event", AsyncMock())
+
+    unsupported_preset = MagicMock()
+    unsupported_preset.game.data.defaults_available_in_game_sessions = False
+    unsupported_preset.game.data.long_name = "FooBar's Adventure"
+
+    unsupported_preset_2 = MagicMock()
+    unsupported_preset_2.game.data.defaults_available_in_game_sessions = False
+    unsupported_preset_2.game.data.long_name = "FooBar's Revenge"
+
+    supported_preset = MagicMock()
+    supported_preset.game = MagicMock()
+    supported_preset.game.data = MagicMock()
+    supported_preset.game.data.defaults_available_in_game_sessions = True
+    supported_preset.game.data.long_name = "Return of FooBar"
+
+    session = MagicMock()
+    session.worlds = [MagicMock(), MagicMock()]
+    session.allowed_games = [supported_preset.game]
+    window._session = session
+
+    permalink = mock_permalink_dialog.return_value.get_permalink_from_field.return_value
+    permalink.parameters.presets = [supported_preset, unsupported_preset, unsupported_preset_2]
+
+    # Run
+    await window.import_permalink()
+
+    # Assert
+    execute_dialog.assert_awaited_once_with(mock_permalink_dialog.return_value)
+    mock_warning.assert_awaited_once_with(
+        window, "Invalid layout", "Unsupported games: FooBar's Adventure, FooBar's Revenge"
+    )
 
 
 @pytest.mark.parametrize("end_state", ["reject", "wrong_count", "import"])
@@ -681,6 +725,45 @@ async def test_import_layout(
         uploader.assert_awaited_once_with(layout)
     else:
         window.game_session_api.prepare_to_upload_layout.assert_not_called()
+
+
+async def test_import_layout_unsupported_games(window: MultiplayerSessionWindow, mocker: MockerFixture):
+    mock_warning = mocker.patch("randovania.gui.lib.async_dialog.warning", new_callable=AsyncMock)
+    mock_load_layout = mocker.patch(
+        "randovania.gui.lib.layout_loader.prompt_and_load_layout_description", new_callable=AsyncMock
+    )
+    mocker.patch.object(window, "_on_close_event", AsyncMock())
+
+    unsupported_preset = MagicMock()
+    unsupported_preset.game.data.defaults_available_in_game_sessions = False
+    unsupported_preset.game.data.long_name = "FooBar's Adventure"
+
+    unsupported_preset_2 = MagicMock()
+    unsupported_preset_2.game.data.defaults_available_in_game_sessions = False
+    unsupported_preset_2.game.data.long_name = "FooBar's Revenge"
+
+    supported_preset = MagicMock()
+    supported_preset.game.data.defaults_available_in_game_sessions = True
+    supported_preset.game.data.long_name = "Return of FooBar"
+
+    session = MagicMock()
+    session.worlds = [MagicMock(), MagicMock()]
+    session.allowed_games = [supported_preset.game]
+    window._session = session
+
+    layout = MagicMock()
+    layout.all_presets = [supported_preset, unsupported_preset, unsupported_preset_2]
+    mock_load_layout.return_value = layout
+
+    # Run
+    await window.import_layout()
+
+    # Assert
+    mock_load_layout.assert_awaited_once_with(window)
+    # Assert
+    mock_warning.assert_awaited_once_with(
+        window, "Invalid layout", "Unsupported games: FooBar's Adventure, FooBar's Revenge"
+    )
 
 
 @pytest.mark.parametrize("already_kicked", [True, False])

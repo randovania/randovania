@@ -1655,7 +1655,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Chozo Seal Right": {
+                        "Chozo Seal Bottom": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1717,7 +1717,7 @@
                         }
                     }
                 },
-                "Chozo Seal Left": {
+                "Chozo Seal Top": {
                     "node_type": "hint",
                     "heal": false,
                     "coordinates": {
@@ -1744,7 +1744,7 @@
                         }
                     },
                     "connections": {
-                        "Chozo Seal Right": {
+                        "Chozo Seal Bottom": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -1830,29 +1830,12 @@
                                         }
                                     },
                                     {
-                                        "type": "and",
+                                        "type": "resource",
                                         "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Space",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "Movement",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
+                                            "type": "items",
+                                            "name": "Space",
+                                            "amount": 1,
+                                            "negate": false
                                         }
                                     },
                                     {
@@ -1898,8 +1881,13 @@
                                         }
                                     },
                                     {
-                                        "type": "template",
-                                        "data": "Shoot Super Missile"
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "SMAmmo",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
                                     },
                                     {
                                         "type": "resource",
@@ -2109,7 +2097,7 @@
                         }
                     }
                 },
-                "Chozo Seal Right": {
+                "Chozo Seal Bottom": {
                     "node_type": "hint",
                     "heal": false,
                     "coordinates": {
@@ -2162,7 +2150,7 @@
                                 ]
                             }
                         },
-                        "Chozo Seal Left": {
+                        "Chozo Seal Top": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -2209,6 +2197,70 @@
                                                         "name": "Spiderspark",
                                                         "amount": 2,
                                                         "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Use Spider Ball"
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Bomb",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "AirMorph",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Boots",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Spring",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -2314,7 +2366,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Chozo Seal Left": {
+                        "Chozo Seal Top": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2322,8 +2374,46 @@
                             }
                         },
                         "Door to West Hub (Top)": {
-                            "type": "template",
-                            "data": "Climb Rooms Vertically (No High Jump)"
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Space",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Simple IBJ"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Spiderspark"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Spiderspark",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
                         }
                     }
                 },
@@ -2356,7 +2446,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Chozo Seal Right": {
+                        "Chozo Seal Bottom": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2395,7 +2485,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Chozo Seal Left": {
+                        "Chozo Seal Top": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2522,7 +2612,7 @@
                     "valid_starting_location": false,
                     "event_name": "Area 4 (West) - Transport Area Grapple Block Pull Left",
                     "connections": {
-                        "Chozo Seal Left": {
+                        "Chozo Seal Top": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2612,7 +2702,7 @@
                                 "negate": false
                             }
                         },
-                        "Chozo Seal Left": {
+                        "Chozo Seal Top": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2688,7 +2778,7 @@
                                 "items": []
                             }
                         },
-                        "Chozo Seal Left": {
+                        "Chozo Seal Top": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -2809,7 +2899,7 @@
                     "valid_starting_location": false,
                     "event_name": "Area 4 (West) - Transport Area Grapple Block Left",
                     "connections": {
-                        "Chozo Seal Left": {
+                        "Chozo Seal Top": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3344,8 +3434,13 @@
                                         }
                                     },
                                     {
-                                        "type": "template",
-                                        "data": "Shoot Super Missile"
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "SMAmmo",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
                                     },
                                     {
                                         "type": "resource",
@@ -4122,8 +4217,13 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "template",
-                                                    "data": "Lay Power Bomb"
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "PBAmmo",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
                                                 },
                                                 {
                                                     "type": "and",
@@ -4366,8 +4466,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -802.6790522347874,
-                        "y": 2414.364566505116,
+                        "x": -802.68,
+                        "y": 2414.36,
                         "z": 0.0
                     },
                     "description": "",
@@ -4382,7 +4482,7 @@
                         "area": "Gamma Arena Room 1",
                         "node": "Dock to Gamma Access Path Lower"
                     },
-                    "default_dock_weakness": "Not Determined",
+                    "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -4394,13 +4494,8 @@
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "MissileLauncher",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
+                                        "type": "template",
+                                        "data": "Lay Any Bomb"
                                     },
                                     {
                                         "type": "resource",
@@ -4841,8 +4936,25 @@
                                                                             "data": "Simple IBJ"
                                                                         },
                                                                         {
-                                                                            "type": "template",
-                                                                            "data": "Can Spiderspark"
+                                                                            "type": "and",
+                                                                            "data": {
+                                                                                "comment": null,
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "template",
+                                                                                        "data": "Can Spiderspark"
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "Spiderspark",
+                                                                                            "amount": 2,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
                                                                         }
                                                                     ]
                                                                 }
@@ -5607,8 +5719,25 @@
                                                     "data": "Climb Rooms Vertically (No High Jump)"
                                                 },
                                                 {
-                                                    "type": "template",
-                                                    "data": "Can Spiderspark"
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Spiderspark"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Spiderspark",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
                                                 },
                                                 {
                                                     "type": "and",
@@ -6061,8 +6190,13 @@
                                         }
                                     },
                                     {
-                                        "type": "template",
-                                        "data": "Shoot Super Missile"
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "SMAmmo",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
                                     },
                                     {
                                         "type": "resource",

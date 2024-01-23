@@ -237,4 +237,4 @@ class PickupDetailsTab(GameDetailsTab, Ui_PickupDetailsTab):
         if target is None:
             self.search_pickup_proxy.setFilterFixedString("<@NOT PRESENT@>")
         else:
-            self.search_pickup_proxy.setFilterFixedString(target)
+            self.search_pickup_proxy.setFilterRegularExpression(f"^{target}$")

@@ -32,10 +32,6 @@ class PresetMSRPatches(PresetTab, Ui_PresetMSRPatches):
         super().__init__(editor, game_description, window_manager)
         self.setupUi(self)
 
-        # Hides this option until shuffled Missile Launcher is possible
-        for widget in [self.nerf_super_missiles_check, self.nerf_super_missiles_label]:
-            widget.setVisible(False)
-
         # Signals
         for f in _FIELDS:
             self._add_persist_option(getattr(self, f"{f}_check"), f)

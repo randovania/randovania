@@ -77,6 +77,9 @@ class AM2RBootstrap(MetroidBootstrap):
         assert isinstance(patches.configuration, AM2RConfiguration)
         config = patches.configuration.artifacts
 
+        if config.prefer_anywhere:
+            return super().assign_pool_results(rng, patches, pool_results)
+
         locations = all_dna_locations(patches.game, config)
         rng.shuffle(locations)
 

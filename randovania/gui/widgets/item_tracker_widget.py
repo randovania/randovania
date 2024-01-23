@@ -107,6 +107,8 @@ class ItemTrackerWidget(QtWidgets.QGroupBox):
             elif "label" in element:
                 label = QtWidgets.QLabel(self)
                 label.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
+                if "style" in element:
+                    label.setStyleSheet(element["style"])
                 text_template = element["label"]
                 labels.append(label)
 

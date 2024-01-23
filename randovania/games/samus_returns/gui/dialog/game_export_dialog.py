@@ -402,11 +402,9 @@ class MSRGameExportDialog(GameExportDialog, Ui_MSRGameExportDialog):
     # Export
 
     def update_accept_validation(self) -> None:
-        # TODO: Activate for beta release
-        # tab = self.output_tab_widget.currentWidget()
+        tab = self.output_tab_widget.currentWidget()
         self.accept_button.setEnabled(
-            False
-            # hasattr(tab, "is_valid") and tab.is_valid() and not self.input_file_edit.has_error
+            hasattr(tab, "is_valid") and tab.is_valid() and not self.input_file_edit.has_error
         )
 
     def get_game_export_params(self) -> GameExportParams:

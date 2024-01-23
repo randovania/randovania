@@ -213,8 +213,6 @@ Extra - asset_id: collision_camera_004
   * Extra - actor_type: doorpowerclosed
   > Elevator to Area 2 - Exterior
       Trivial
-  > Left of Statue
-      Trivial
 
 > Left of Statue; Heals? False
   * Layers: default
@@ -223,7 +221,7 @@ Extra - asset_id: collision_camera_004
       Lightning Armor and Morph Ball
   > Door to Main Shaft (Bottom)
       Morph Ball
-  > Door to Main Shaft (Top)
+  > Event - Unlock Door
       Morph Ball
 
 > Right of Statue; Heals? False
@@ -231,6 +229,12 @@ Extra - asset_id: collision_camera_004
   * Extra - start_point_actor_name: ST_DEBUG_Bestowal
   > Door to Main Shaft (Bottom)
       Trivial
+
+> Event - Unlock Door; Heals? False
+  * Layers: default
+  * Event Area 2 (Entrance) - Transport to Area 2 Exterior Unlock Door
+  > Left of Statue
+      Morph Ball
 
 ----------------
 Main Shaft
@@ -257,7 +261,7 @@ Extra - asset_id: collision_camera_005
 
 > Door to Transport to Area 2 Exterior (Top); Heals? False
   * Layers: default
-  * Access Locked to Transport to Area 2 Exterior/Door to Main Shaft (Top)
+  * Power Beam Door to Transport to Area 2 Exterior/Door to Main Shaft (Top)
   * Extra - actor_name: Door003
   * Extra - actor_type: doorpowerclosed
   > Dock to Alpha+ Arena
@@ -271,7 +275,9 @@ Extra - asset_id: collision_camera_005
           Lightning Armor or Use Spider Ball
           Movement (Intermediate) and Normal Damage ≥ 99
   > Door to Transport to Area 2 Exterior (Top)
-      Trivial
+      Any of the following:
+          After Area 2 (Entrance) - Transport to Area 2 Exterior Unlock Door
+          Disabled Door Type Randomizer and Enabled Door Lock Randomizer
 
 > Dock to Water Storage; Heals? False
   * Layers: default

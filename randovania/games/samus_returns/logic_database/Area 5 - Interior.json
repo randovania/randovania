@@ -779,7 +779,7 @@
                                                                 "data": {
                                                                     "type": "tricks",
                                                                     "name": "Spiderspark",
-                                                                    "amount": 1,
+                                                                    "amount": 2,
                                                                     "negate": false
                                                                 }
                                                             }
@@ -1982,7 +1982,7 @@
                                                                 "data": {
                                                                     "type": "tricks",
                                                                     "name": "Spiderspark",
-                                                                    "amount": 1,
+                                                                    "amount": 2,
                                                                     "negate": false
                                                                 }
                                                             }
@@ -6120,12 +6120,10 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Teleporter": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "events",
-                                "name": "Area 5 Interior Teleporter",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         },
                         "Door to Grapple Shuffler (Bottom)": {
@@ -6312,8 +6310,25 @@
                                         }
                                     },
                                     {
-                                        "type": "template",
-                                        "data": "Can Spiderspark"
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Spiderspark"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Spiderspark",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     },
                                     {
                                         "type": "template",
@@ -6350,7 +6365,7 @@
                         },
                         "Event - Zeta Metroid+": {
                             "type": "template",
-                            "data": "Defeat Zeta Metroid"
+                            "data": "Defeat Zeta Metroid+"
                         }
                     }
                 },
