@@ -64,7 +64,7 @@ class PresetDockRando(PresetTab, Ui_PresetDockRando):
             unlocked_check_to.setEnabled(dock_rando.mode == DockRandoMode.WEAKNESSES)
             if dock_rando.mode == DockRandoMode.WEAKNESSES:
                 unlocked_check.setChecked(False)
-            if dock_rando.mode != DockRandoMode.WEAKNESSES:
+            else:
                 unlocked_check_to.setChecked(True)
 
             state = dock_rando.types_state[dock_type]
