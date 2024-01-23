@@ -69,8 +69,8 @@ class LayoutWithPlayers(typing.NamedTuple):
 
 class GameQtElements(typing.NamedTuple):
     logo: QtWidgets.QLabel
-    multibanner: QtWidgets.QLabel | None
-    multiicon: QtWidgets.QLabel | None
+    multi_banner: QtWidgets.QLabel | None
+    multi_icon: QtWidgets.QLabel | None
     tile: QtWidgets.QLabel
 
 
@@ -209,27 +209,27 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
             logo.setGraphicsEffect(logo.on_hover_effect)
             logo.on_hover_effect.setEnabled(False)
 
-            multibanner = QtWidgets.QLabel(pack_tile)
-            multibanner.setPixmap(QtGui.QPixmap(os.fspath(banner_img_path)))
-            multibanner.setScaledContents(True)
-            multibanner.setFixedSize(bannerSize, bannerSize)
-            multibanner.setVisible(game.data.defaults_available_in_game_sessions)
+            multi_banner = QtWidgets.QLabel(pack_tile)
+            multi_banner.setPixmap(QtGui.QPixmap(os.fspath(banner_img_path)))
+            multi_banner.setScaledContents(True)
+            multi_banner.setFixedSize(bannerSize, bannerSize)
+            multi_banner.setVisible(game.data.defaults_available_in_game_sessions)
 
-            multibanner.color_effect = QtWidgets.QGraphicsColorizeEffect()
-            multibanner.color_effect.setStrength(0.5)
-            multibanner.color_effect.setColor(QtGui.QColor(70, 200, 80))
-            multibanner.setGraphicsEffect(multibanner.color_effect)
-            multibanner.move(0, 2)
+            multi_banner.color_effect = QtWidgets.QGraphicsColorizeEffect()
+            multi_banner.color_effect.setStrength(0.5)
+            multi_banner.color_effect.setColor(QtGui.QColor(70, 200, 80))
+            multi_banner.setGraphicsEffect(multi_banner.color_effect)
+            multi_banner.move(0, 2)
 
-            multiicon = QtWidgets.QLabel(pack_tile)
-            multiicon.setPixmap(QtGui.QPixmap(os.fspath(multiworld_img_path)))
-            multiicon.setScaledContents(True)
-            multiicon.setFixedSize(bannerSize / 2, bannerSize / 2)
-            multiicon.setVisible(game.data.defaults_available_in_game_sessions)
-            multiicon.move(bannerSize / 4, 2 + bannerSize / 4)
-            if multiicon.isVisible:
-                multiicon.setToolTip(game.short_name + " is multiworld compatible.")
-                multiicon.setAccessibleName(game.long_name + " multiworld compatibility indicator")
+            multi_icon = QtWidgets.QLabel(pack_tile)
+            multi_icon.setPixmap(QtGui.QPixmap(os.fspath(multiworld_img_path)))
+            multi_icon.setScaledContents(True)
+            multi_icon.setFixedSize(bannerSize / 2, bannerSize / 2)
+            multi_icon.setVisible(game.data.defaults_available_in_game_sessions)
+            multi_icon.move(bannerSize / 4, 2 + bannerSize / 4)
+            if multi_icon.isVisible:
+                multi_icon.setToolTip(game.short_name + " is multiworld compatible.")
+                multi_icon.setAccessibleName(game.long_name + " multiworld compatibility indicator")
 
             def highlight_logo(label: QtWidgets.QWidget, multiB: QtWidgets.QWidget, active: bool):
                 label.on_hover_effect.setEnabled(active)
@@ -238,10 +238,10 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
                 else:
                     multiB.color_effect.setColor(QtGui.QColor(70, 200, 80))
 
-            logo.entered.connect(partial(highlight_logo, logo, multibanner, True))
-            logo.left.connect(partial(highlight_logo, logo, multibanner, False))
+            logo.entered.connect(partial(highlight_logo, logo, multi_banner, True))
+            logo.left.connect(partial(highlight_logo, logo, multi_banner, False))
             self.play_flow_layout.addWidget(pack_tile)
-            self._play_game_elements[game] = GameQtElements(logo, multibanner, multiicon, pack_tile)
+            self._play_game_elements[game] = GameQtElements(logo, multi_banner, multi_icon, pack_tile)
 
             # Sub-Menu in Open Menu
             game_menu = QtWidgets.QMenu(self.menu_open)
@@ -337,10 +337,10 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         for game, game_elements in self._play_game_elements.items():
             game_elements.tile.setVisible(game.data.development_state.can_view())
             if game_elements.tile.isVisible:
-                game_elements.multibanner.setVisible(
+                game_elements.multi_banner.setVisible(
                     game.data.defaults_available_in_game_sessions and self._options.show_multiworld_banner
                 )
-                game_elements.multiicon.setVisible(
+                game_elements.multi_icon.setVisible(
                     game.data.defaults_available_in_game_sessions and self._options.show_multiworld_banner
                 )
 
