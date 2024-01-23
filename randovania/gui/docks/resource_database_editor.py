@@ -117,6 +117,9 @@ class ResourceDatabaseGenericModel(QtCore.QAbstractTableModel):
                     return True
             else:
                 if value:
+                    all_items = self._get_items()
+                    if any(item.short_name == value for item in all_items):
+                        return False
                     return self.append_item(self._create_item(value))
         return False
 
