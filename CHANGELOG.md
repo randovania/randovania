@@ -11,6 +11,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Searching for your own pickup in Multiworld sessions will now show only pickups which match *exactly* the name, instead of showing pickups which start with that name.
 - Fixed: The import in a multiworld session is blocked if it contains an unsupported game.
 - Fixed: Opening the webbrowser for Discord Login doesn't fail on Linux anymore.
+- Fixed: For Windows, the game select tooltip will not render as grey text on grey background in darkmode.
+- Added: Games display a banner if they are multiworld compatible.
+- Added: Option to show or hide multiworld compatibility banner.
+- Changed: Game selection on-hover behavior modified.
+- Changed: Internal references to icons renamed to reflect branding change.
 
 ### Resolver
 
