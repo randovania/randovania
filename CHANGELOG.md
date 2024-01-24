@@ -30,6 +30,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: In Surface Hi-Jump Challenge: Now correctly uses normal damage instead of lava damage for damage boost.
 - Fixed: In Drivel Drive: Intended Ballspark now requires Gravity.
 - Changed: In Drivel Drive: Bumped mockball method to Expert.
+- Changed: In Western Cave Shaft: Bumped health requirement for the descent to require an Energy Tank in trickless.
 
 ##### Golden Temple
 
