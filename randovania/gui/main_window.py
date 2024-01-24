@@ -69,7 +69,9 @@ class LayoutWithPlayers(typing.NamedTuple):
 
 class GameQtElements(typing.NamedTuple):
     logo: QtWidgets.QLabel
+    on_hover_effect: QtWidgets.QGraphicsEffect | None
     multi_banner: QtWidgets.QLabel | None
+    color_effect: QtWidgets.QGraphicsEffect | None
     multi_icon: QtWidgets.QLabel | None
     tile: QtWidgets.QLabel
 
@@ -204,44 +206,56 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
             logo.clicked.connect(partial(self._select_game, game))
             logo.setVisible(game.data.development_state.can_view())
 
-            logo.on_hover_effect = QtWidgets.QGraphicsColorizeEffect()
-            logo.on_hover_effect.setStrength(0.5)
-            logo.setGraphicsEffect(logo.on_hover_effect)
-            logo.on_hover_effect.setEnabled(False)
+            on_hover_effect = QtWidgets.QGraphicsColorizeEffect()
+            on_hover_effect.setStrength(0.5)
+            logo.setGraphicsEffect(on_hover_effect)
+            on_hover_effect.setEnabled(False)
 
-            multi_banner = QtWidgets.QLabel(pack_tile)
-            multi_banner.setPixmap(QtGui.QPixmap(os.fspath(banner_img_path)))
-            multi_banner.setScaledContents(True)
-            multi_banner.setFixedSize(bannerSize, bannerSize)
-            multi_banner.setVisible(game.data.defaults_available_in_game_sessions)
+            if game.data.defaults_available_in_game_sessions:
+                multi_banner = QtWidgets.QLabel(pack_tile)
+                multi_banner.setPixmap(QtGui.QPixmap(os.fspath(banner_img_path)))
+                multi_banner.setScaledContents(True)
+                multi_banner.setFixedSize(bannerSize, bannerSize)
+                multi_banner.setVisible(game.data.defaults_available_in_game_sessions)
 
-            multi_banner.color_effect = QtWidgets.QGraphicsColorizeEffect()
-            multi_banner.color_effect.setStrength(0.5)
-            multi_banner.color_effect.setColor(QtGui.QColor(70, 200, 80))
-            multi_banner.setGraphicsEffect(multi_banner.color_effect)
-            multi_banner.move(0, 2)
+                color_effect = QtWidgets.QGraphicsColorizeEffect()
+                color_effect.setStrength(0.5)
+                color_effect.setColor(QtGui.QColor(70, 200, 80))
+                multi_banner.setGraphicsEffect(color_effect)
+                multi_banner.move(0, 2)
 
-            multi_icon = QtWidgets.QLabel(pack_tile)
-            multi_icon.setPixmap(QtGui.QPixmap(os.fspath(multiworld_img_path)))
-            multi_icon.setScaledContents(True)
-            multi_icon.setFixedSize(bannerSize / 2, bannerSize / 2)
-            multi_icon.setVisible(game.data.defaults_available_in_game_sessions)
-            multi_icon.move(bannerSize / 4, 2 + bannerSize / 4)
-            if multi_icon.isVisible:
-                multi_icon.setToolTip(game.short_name + " is multiworld compatible.")
-                multi_icon.setAccessibleName(game.long_name + " multiworld compatibility indicator")
+                multi_icon = QtWidgets.QLabel(pack_tile)
+                multi_icon.setPixmap(QtGui.QPixmap(os.fspath(multiworld_img_path)))
+                multi_icon.setScaledContents(True)
+                multi_icon.setFixedSize(int(bannerSize / 2), int(bannerSize / 2))
+                multi_icon.setVisible(game.data.defaults_available_in_game_sessions)
+                multi_icon.move(int(bannerSize / 4), int(2 + bannerSize / 4))
+                if multi_icon.isVisible:
+                    multi_icon.setToolTip(game.short_name + " is multiworld compatible.")
+                    multi_icon.setAccessibleName(game.long_name + " multiworld compatibility indicator")
+            else:
+                multi_banner = None
+                color_effect = None
+                multi_icon = None
 
-            def highlight_logo(label: QtWidgets.QWidget, multiB: QtWidgets.QWidget, active: bool):
-                label.on_hover_effect.setEnabled(active)
-                if active:
-                    multiB.color_effect.setColor(QtGui.QColor(50, 250, 52))
-                else:
-                    multiB.color_effect.setColor(QtGui.QColor(70, 200, 80))
+            def highlight_logo(
+                label_effect: QtWidgets.QGraphicsEffect,
+                multi_banner_effect: QtWidgets.QGraphicsEffect | None,
+                active: bool,
+            ) -> None:
+                label_effect.setEnabled(active)
+                if isinstance(multi_banner_effect, QtWidgets.QGraphicsEffect):
+                    if active:
+                        multi_banner_effect.setColor(QtGui.QColor(50, 250, 52))
+                    else:
+                        multi_banner_effect.setColor(QtGui.QColor(70, 200, 80))
 
-            logo.entered.connect(partial(highlight_logo, logo, multi_banner, True))
-            logo.left.connect(partial(highlight_logo, logo, multi_banner, False))
+            logo.entered.connect(partial(highlight_logo, on_hover_effect, color_effect, True))
+            logo.left.connect(partial(highlight_logo, on_hover_effect, color_effect, False))
             self.play_flow_layout.addWidget(pack_tile)
-            self._play_game_elements[game] = GameQtElements(logo, multi_banner, multi_icon, pack_tile)
+            self._play_game_elements[game] = GameQtElements(
+                logo, on_hover_effect, multi_banner, color_effect, multi_icon, pack_tile
+            )
 
             # Sub-Menu in Open Menu
             game_menu = QtWidgets.QMenu(self.menu_open)
@@ -333,10 +347,10 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         self.InitPostShowSignal.emit()
 
     # Per-Game elements
-    def refresh_game_list(self):
+    def refresh_game_list(self) -> None:
         for game, game_elements in self._play_game_elements.items():
             game_elements.tile.setVisible(game.data.development_state.can_view())
-            if game_elements.tile.isVisible:
+            if game_elements.tile.isVisible() and isinstance(game_elements.multi_banner, QtWidgets.QLabel):
                 game_elements.multi_banner.setVisible(
                     game.data.defaults_available_in_game_sessions and self._options.show_multiworld_banner
                 )
