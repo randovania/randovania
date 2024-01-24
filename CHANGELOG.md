@@ -42,6 +42,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ##### Industrial Complex
 
 - Fixed: Renamed the room `Spazer Beam` to `Spazer Beam Chamber`.
+- Changed: Upper Factory Gamma Nest: Shinesparking from the room below to get the top item is now an intermediate shinesparking trick.
 
 ##### The Tower
 
@@ -50,6 +51,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ##### Distribution Center
 
 - Changed: In Dual Gamma Nest, the fight now requires Gravity suit on Trickless Combat. Health requirements adjusted around this change.
+- Changed: Distribution Center Exterior West: Shinesparking to get the top Missile Tank is now an intermediate shinesparking trick.
+- Changed: Bullet Hell Room Access: Shinesparking to get from `Door to Bullet Hell Room` to `Door to Distribution Facility Intersection` now requires an intermediate shinesparking trick.
 
 ### Metroid Dread
 
