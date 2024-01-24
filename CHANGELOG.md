@@ -53,6 +53,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Dread
 
+- Added: Changing the volume of the music, SFX and background ambience is now possible via cosmetic options.
 - Changed: Speed Booster Upgrades and Flash Shift Upgrades are now considered minor items instead of major.
 
 #### Logic Database
