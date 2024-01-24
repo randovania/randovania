@@ -69,11 +69,11 @@ class LayoutWithPlayers(typing.NamedTuple):
 
 class GameQtElements(typing.NamedTuple):
     logo: QtWidgets.QLabel
-    on_hover_effect: QtWidgets.QGraphicsEffect | None
+    on_hover_effect: QtWidgets.QGraphicsColorizeEffect | None
     multi_banner: QtWidgets.QLabel | None
-    color_effect: QtWidgets.QGraphicsEffect | None
+    color_effect: QtWidgets.QGraphicsColorizeEffect | None
     multi_icon: QtWidgets.QLabel | None
-    tile: QtWidgets.QLabel
+    tile: QtWidgets.QStackedWidget
 
 
 class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
@@ -239,8 +239,8 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
                 multi_icon = None
 
             def highlight_logo(
-                label_effect: QtWidgets.QGraphicsEffect,
-                multi_banner_effect: QtWidgets.QGraphicsEffect | None,
+                label_effect: QtWidgets.QGraphicsColorizeEffect,
+                multi_banner_effect: QtWidgets.QGraphicsColorizeEffect | None,
                 active: bool,
             ) -> None:
                 label_effect.setEnabled(active)
@@ -744,7 +744,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         with self._options as options:
             options.dark_mode = self.menu_action_dark_mode.isChecked()
 
-    def _on_menu_action_show_multiworld_banner(self):
+    def _on_menu_action_show_multiworld_banner(self) -> None:
         with self._options as options:
             options.show_multiworld_banner = self.menu_action_show_multiworld_banner.isChecked()
 
