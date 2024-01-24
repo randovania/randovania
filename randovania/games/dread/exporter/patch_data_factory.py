@@ -383,7 +383,12 @@ class DreadPatchDataFactory(PatchDataFactory):
                     "bShowEnemyLife": c.show_enemy_life,
                     "bShowEnemyDamage": c.show_enemy_damage,
                     "bShowPlayerDamage": c.show_player_damage,
-                }
+                },
+                "SoundSystemATK": {
+                    "fMusicVolume": c.music_volume / 100,
+                    "fSfxVolume": c.sfx_volume / 100,
+                    "fEnvironmentStreamsVolume": c.ambience_volume / 100,
+                },
             },
             "lua": {
                 "custom_init": {
