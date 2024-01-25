@@ -209,7 +209,6 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
             on_hover_effect = QtWidgets.QGraphicsColorizeEffect()
             on_hover_effect.setStrength(0.5)
             logo.setGraphicsEffect(on_hover_effect)
-            on_hover_effect.setEnabled(False)
 
             multi_banner = QtWidgets.QLabel(pack_tile)
             color_effect = QtWidgets.QGraphicsColorizeEffect(multi_banner)
