@@ -70,9 +70,9 @@ class LayoutWithPlayers(typing.NamedTuple):
 class GameQtElements(typing.NamedTuple):
     logo: QtWidgets.QLabel
     on_hover_effect: QtWidgets.QGraphicsColorizeEffect | None
-    multi_banner: QtWidgets.QLabel | None
+    multi_banner: QtWidgets.QLabel
     color_effect: QtWidgets.QGraphicsColorizeEffect
-    multi_icon: QtWidgets.QLabel | None
+    multi_icon: QtWidgets.QLabel
     tile: QtWidgets.QStackedWidget
 
 
@@ -211,29 +211,25 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
             logo.setGraphicsEffect(on_hover_effect)
             on_hover_effect.setEnabled(False)
 
+            multi_banner = QtWidgets.QLabel(pack_tile)
+            color_effect = QtWidgets.QGraphicsColorizeEffect(multi_banner)
+            multi_icon = QtWidgets.QLabel(pack_tile)
+
             if game.data.defaults_available_in_game_sessions:
-                multi_banner = QtWidgets.QLabel(pack_tile)
                 multi_banner.setPixmap(QtGui.QPixmap(os.fspath(banner_img_path)))
                 multi_banner.setScaledContents(True)
                 multi_banner.setFixedSize(bannerSize, bannerSize)
-
-                color_effect = QtWidgets.QGraphicsColorizeEffect()
-                color_effect.setStrength(0.5)
-                color_effect.setColor(QtGui.QColor(70, 200, 80))
                 multi_banner.setGraphicsEffect(color_effect)
                 multi_banner.move(0, 2)
 
-                multi_icon = QtWidgets.QLabel(pack_tile)
+                color_effect.setStrength(0.5)
+
                 multi_icon.setPixmap(QtGui.QPixmap(os.fspath(multiworld_img_path)))
                 multi_icon.setScaledContents(True)
                 multi_icon.setFixedSize(int(bannerSize / 2), int(bannerSize / 2))
                 multi_icon.move(int(bannerSize / 4), int(2 + bannerSize / 4))
                 multi_icon.setToolTip(game.short_name + " is multiworld compatible.")
                 multi_icon.setAccessibleName(game.long_name + " multiworld compatibility indicator")
-            else:
-                multi_banner = None
-                color_effect = QtWidgets.QGraphicsColorizeEffect()
-                multi_icon = None
 
             def highlight_logo(
                 label_effect: QtWidgets.QGraphicsColorizeEffect,
@@ -241,11 +237,12 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
                 active: bool,
             ) -> None:
                 label_effect.setEnabled(active)
-                if isinstance(multi_banner_effect, QtWidgets.QGraphicsEffect):
-                    if active:
-                        multi_banner_effect.setColor(QtGui.QColor(50, 250, 52))
-                    else:
-                        multi_banner_effect.setColor(QtGui.QColor(70, 200, 80))
+                if active:
+                    multi_banner_effect.setColor(QtGui.QColor(50, 250, 52))
+                else:
+                    multi_banner_effect.setColor(QtGui.QColor(70, 200, 80))
+
+            highlight_logo(on_hover_effect, color_effect, False)
 
             logo.entered.connect(partial(highlight_logo, on_hover_effect, color_effect, True))
             logo.left.connect(partial(highlight_logo, on_hover_effect, color_effect, False))
@@ -347,9 +344,8 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
     def refresh_game_list(self) -> None:
         for game, game_elements in self._play_game_elements.items():
             game_elements.tile.setVisible(game.data.development_state.can_view())
-            if isinstance(game_elements.multi_banner, QtWidgets.QLabel):
-                game_elements.multi_banner.setVisible(self._options.show_multiworld_banner)
-                game_elements.multi_icon.setVisible(self._options.show_multiworld_banner)
+            game_elements.multi_banner.setVisible(self._options.show_multiworld_banner)
+            game_elements.multi_icon.setVisible(self._options.show_multiworld_banner)
 
         for game_menu in self.game_menus:
             self.menu_open.removeAction(game_menu.menuAction())
