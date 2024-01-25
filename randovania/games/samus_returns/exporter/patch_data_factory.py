@@ -24,6 +24,7 @@ if TYPE_CHECKING:
     from randovania.game_description.resources.resource_collection import ResourceCollection
     from randovania.game_description.resources.resource_info import ResourceInfo
     from randovania.games.samus_returns.layout.msr_configuration import MSRConfiguration
+    from randovania.games.samus_returns.layout.msr_cosmetic_patches import MSRCosmeticPatches
 
 _ALTERNATIVE_MODELS = {
     PickupModel(RandovaniaGame.METROID_SAMUS_RETURNS, "Nothing"): ["itemsphere"],
@@ -98,6 +99,7 @@ def get_resources_for_details(
 
 
 class MSRPatchDataFactory(PatchDataFactory):
+    cosmetic_patches: MSRCosmeticPatches
     configuration: MSRConfiguration
 
     def __init__(self, *args, **kwargs):
@@ -302,6 +304,29 @@ class MSRPatchDataFactory(PatchDataFactory):
             MSRHintNamer(self.description.all_patches, self.players_config),
         )
 
+    def _create_cosmetics(self) -> dict:
+        c = self.cosmetic_patches
+        cosmetic_patches = {}
+        # Game needs each color component in [0-1] range
+        if self.cosmetic_patches.use_laser_color:
+            cosmetic_patches["laser_locked_color"] = [x / 255 for x in c.laser_locked_color]
+            cosmetic_patches["laser_unlocked_color"] = [x / 255 for x in c.laser_unlocked_color]
+
+        if self.cosmetic_patches.use_grapple_laser_color:
+            cosmetic_patches["grapple_laser_locked_color"] = [x / 255 for x in c.grapple_laser_locked_color]
+            cosmetic_patches["grapple_laser_unlocked_color"] = [x / 255 for x in c.grapple_laser_unlocked_color]
+
+        if self.cosmetic_patches.use_energy_tank_color:
+            cosmetic_patches["energy_tank_color"] = [x / 255 for x in c.energy_tank_color]
+
+        if self.cosmetic_patches.use_aeion_bar_color:
+            cosmetic_patches["aeion_bar_color"] = [x / 255 for x in c.aeion_bar_color]
+
+        if self.cosmetic_patches.use_ammo_hud_color:
+            cosmetic_patches["ammo_hud_color"] = [x / 255 for x in c.ammo_hud_color]
+
+        return cosmetic_patches
+
     def create_data(self) -> dict:
         starting_location = self._start_point_ref_for(self._node_for(self.patches.starting_location))
         starting_items = self._calculate_starting_inventory(self.patches.starting_resources())
@@ -351,6 +376,7 @@ class MSRPatchDataFactory(PatchDataFactory):
             "text_patches": self._static_text_changes(),
             "spoiler_log": self._credits_spoiler() if self.description.has_spoiler else {},
             "hints": self._encode_hints(),
+            "cosmetics_patches": self._create_cosmetics(),
             "configuration_identifier": self.description.shareable_hash,
         }
 
