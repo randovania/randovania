@@ -205,7 +205,7 @@
                                 "negate": false
                             }
                         },
-                        "Door to Teleporter Room (Top)": {
+                        "Door to Entrance Teleporter (Top)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -280,7 +280,7 @@
                                 "negate": false
                             }
                         },
-                        "Door to Teleporter Room (Bottom)": {
+                        "Door to Entrance Teleporter (Bottom)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -339,7 +339,7 @@
                         }
                     }
                 },
-                "Door to Teleporter Room (Top)": {
+                "Door to Entrance Teleporter (Top)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -359,7 +359,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 2 - Entrance",
-                        "area": "Teleporter Room",
+                        "area": "Entrance Teleporter",
                         "node": "Door to Chozo Seal (Top)"
                     },
                     "default_dock_weakness": "Access Locked",
@@ -377,7 +377,7 @@
                         }
                     }
                 },
-                "Door to Teleporter Room (Bottom)": {
+                "Door to Entrance Teleporter (Bottom)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -397,7 +397,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 2 - Entrance",
-                        "area": "Teleporter Room",
+                        "area": "Entrance Teleporter",
                         "node": "Door to Chozo Seal (Bottom)"
                     },
                     "default_dock_weakness": "Power Beam Door",
@@ -443,7 +443,7 @@
                 }
             }
         },
-        "Teleporter Room": {
+        "Entrance Teleporter": {
             "default_node": "Start Point",
             "extra": {
                 "total_boundings": {
@@ -584,7 +584,7 @@
                     "default_connection": {
                         "region": "Area 2 - Entrance",
                         "area": "Chozo Seal",
-                        "node": "Door to Teleporter Room (Top)"
+                        "node": "Door to Entrance Teleporter (Top)"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -624,7 +624,7 @@
                     "default_connection": {
                         "region": "Area 2 - Entrance",
                         "area": "Chozo Seal",
-                        "node": "Door to Teleporter Room (Bottom)"
+                        "node": "Door to Entrance Teleporter (Bottom)"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -723,7 +723,7 @@
                     "default_connection": {
                         "region": "Area 2 - Entrance",
                         "area": "Alpha+ Arena",
-                        "node": "Door to Teleporter Room"
+                        "node": "Door to Entrance Teleporter"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -941,7 +941,7 @@
                     "pickup_index": 53,
                     "location_category": "major",
                     "connections": {
-                        "Door to Main Shaft (Bottom)": {
+                        "Door to Entrance Hub (Bottom)": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -982,7 +982,7 @@
                     "dock_type": "elevator",
                     "default_connection": {
                         "region": "Area 2 - Exterior",
-                        "area": "Outer Hub",
+                        "area": "Hydro Station Exterior",
                         "node": "Elevator to Area 2 - Entrance"
                     },
                     "default_dock_weakness": "Elevator",
@@ -991,7 +991,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Main Shaft (Top)": {
+                        "Door to Entrance Hub (Top)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1000,7 +1000,7 @@
                         }
                     }
                 },
-                "Door to Main Shaft (Bottom)": {
+                "Door to Entrance Hub (Bottom)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1020,7 +1020,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 2 - Entrance",
-                        "area": "Main Shaft",
+                        "area": "Entrance Hub",
                         "node": "Door to Transport to Area 2 Exterior (Bottom)"
                     },
                     "default_dock_weakness": "Power Beam Door",
@@ -1047,7 +1047,7 @@
                         }
                     }
                 },
-                "Door to Main Shaft (Top)": {
+                "Door to Entrance Hub (Top)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1067,7 +1067,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 2 - Entrance",
-                        "area": "Main Shaft",
+                        "area": "Entrance Hub",
                         "node": "Door to Transport to Area 2 Exterior (Top)"
                     },
                     "default_dock_weakness": "Power Beam Door",
@@ -1128,7 +1128,7 @@
                                 ]
                             }
                         },
-                        "Door to Main Shaft (Bottom)": {
+                        "Door to Entrance Hub (Bottom)": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -1165,7 +1165,7 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Main Shaft (Bottom)": {
+                        "Door to Entrance Hub (Bottom)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1203,7 +1203,7 @@
                 }
             }
         },
-        "Main Shaft": {
+        "Entrance Hub": {
             "default_node": null,
             "extra": {
                 "total_boundings": {
@@ -1254,7 +1254,7 @@
                     "default_connection": {
                         "region": "Area 2 - Entrance",
                         "area": "Transport to Area 2 Exterior",
-                        "node": "Door to Main Shaft (Bottom)"
+                        "node": "Door to Entrance Hub (Bottom)"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -1369,7 +1369,7 @@
                                 ]
                             }
                         },
-                        "Dock to Water Storage": {
+                        "Dock to Fleechswarm Waterway": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -1439,7 +1439,7 @@
                     "default_connection": {
                         "region": "Area 2 - Entrance",
                         "area": "Transport to Area 2 Exterior",
-                        "node": "Door to Main Shaft (Top)"
+                        "node": "Door to Entrance Hub (Top)"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -1474,7 +1474,7 @@
                     "default_connection": {
                         "region": "Area 2 - Entrance",
                         "area": "Alpha+ Arena",
-                        "node": "Dock to Main Shaft"
+                        "node": "Dock to Entrance Hub"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -1574,7 +1574,7 @@
                         }
                     }
                 },
-                "Dock to Water Storage": {
+                "Dock to Fleechswarm Waterway": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1591,8 +1591,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Area 2 - Entrance",
-                        "area": "Water Storage",
-                        "node": "Dock to Main Shaft"
+                        "area": "Fleechswarm Waterway",
+                        "node": "Dock to Entrance Hub"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -1611,7 +1611,7 @@
                 }
             }
         },
-        "Water Storage": {
+        "Fleechswarm Waterway": {
             "default_node": null,
             "extra": {
                 "total_boundings": {
@@ -1661,7 +1661,7 @@
                     "pickup_index": 49,
                     "location_category": "minor",
                     "connections": {
-                        "Dock to Main Shaft": {
+                        "Dock to Entrance Hub": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1684,7 +1684,7 @@
                         }
                     }
                 },
-                "Dock to Main Shaft": {
+                "Dock to Entrance Hub": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1701,8 +1701,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Area 2 - Entrance",
-                        "area": "Main Shaft",
-                        "node": "Dock to Water Storage"
+                        "area": "Entrance Hub",
+                        "node": "Dock to Fleechswarm Waterway"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -1765,7 +1765,7 @@
                 "asset_id": "collision_camera_007"
             },
             "nodes": {
-                "Door to Teleporter Room": {
+                "Door to Entrance Teleporter": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1785,7 +1785,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 2 - Entrance",
-                        "area": "Teleporter Room",
+                        "area": "Entrance Teleporter",
                         "node": "Door to Alpha+ Arena"
                     },
                     "default_dock_weakness": "Power Beam Door",
@@ -1803,7 +1803,7 @@
                         }
                     }
                 },
-                "Dock to Main Shaft": {
+                "Dock to Entrance Hub": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1820,7 +1820,7 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Area 2 - Entrance",
-                        "area": "Main Shaft",
+                        "area": "Entrance Hub",
                         "node": "Dock to Alpha+ Arena"
                     },
                     "default_dock_weakness": "Open Passage",
@@ -1901,14 +1901,14 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Teleporter Room": {
+                        "Door to Entrance Teleporter": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Dock to Main Shaft": {
+                        "Dock to Entrance Hub": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1952,7 +1952,7 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Dock to Main Shaft": {
+                        "Dock to Entrance Hub": {
                             "type": "and",
                             "data": {
                                 "comment": null,
