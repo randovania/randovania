@@ -30,6 +30,7 @@ class MSRConfiguration(BaseConfiguration):
     area3_interior_shortcut_no_grapple: bool
     charge_door_buff: bool
     beam_door_buff: bool
+    beam_burst_buff: bool
     nerf_super_missiles: bool
     surface_crumbles: bool
     area1_crumbles: bool

@@ -104,6 +104,7 @@ class MSRPresetDescriber(GamePresetDescriber):
                 {
                     "Charge Door Buff": configuration.charge_door_buff,
                     "Beam Door Buff": configuration.beam_door_buff,
+                    "Beam Burst Buff": configuration.beam_burst_buff,
                     "Missile Door Buff": configuration.nerf_super_missiles,
                 },
                 {
@@ -111,7 +112,7 @@ class MSRPresetDescriber(GamePresetDescriber):
                     "Remove Area Exit Grapple Blocks": configuration.elevator_grapple_blocks,
                 },
                 {
-                    "Change Surface Scan Pulse Crumble Blocks": configuration.surface_crumbles,
+                    "Change Surface Cavern Cavern Crumble Blocks": configuration.surface_crumbles,
                     "Change Area 1 Chozo Seal Crumble Blocks": configuration.area1_crumbles,
                 },
                 {
