@@ -22,6 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - **Major** - Added: Multiworld support for AM2R. 
 - Changed: The Baby now checks for all DNA being collected and will display a message if not.
+- Changed: Progressive Suits and Progressive Jumps now display custom sprites instead of Space Jump / Gravity Suit sprites in order to make them more distinct.
 
 #### Logic Database
 
