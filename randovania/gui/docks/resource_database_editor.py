@@ -276,7 +276,10 @@ class ResourceDatabaseEditor(QtWidgets.QDockWidget, Ui_ResourceDatabaseEditor):
         editor = ConnectionsEditor(self, self.db, requirement)
         result = editor.exec_()
         if result == QtWidgets.QDialog.DialogCode.Accepted:
-            self.db.requirement_template[name] = editor.final_requirement
+            final_req = editor.final_requirement
+            if final_req is None:
+                return
+            self.db.requirement_template[name] = final_req
             self.editor_for_template[name].create_connections(
                 self.tab_template,
                 self.db.requirement_template[name],
