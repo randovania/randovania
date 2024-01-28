@@ -1220,7 +1220,7 @@
                 }
             }
         },
-        "Bomb Room": {
+        "Bomb Chamber": {
             "default_node": "Room Center",
             "extra": {
                 "total_boundings": {
@@ -1270,7 +1270,7 @@
                     "pickup_index": 18,
                     "location_category": "minor",
                     "connections": {
-                        "Tunnel to Bomb Access": {
+                        "Tunnel to Bomb Chamber Access": {
                             "type": "template",
                             "data": "Lay Any Bomb"
                         }
@@ -1305,7 +1305,7 @@
                         }
                     }
                 },
-                "Door to Bomb Access": {
+                "Door to Bomb Chamber Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1325,8 +1325,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 1",
-                        "area": "Bomb Access",
-                        "node": "Door to Bomb Room"
+                        "area": "Bomb Chamber Access",
+                        "node": "Door to Bomb Chamber"
                     },
                     "default_dock_weakness": "Missile Door",
                     "exclude_from_dock_rando": false,
@@ -1343,7 +1343,7 @@
                         }
                     }
                 },
-                "Tunnel to Bomb Access": {
+                "Tunnel to Bomb Chamber Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1360,8 +1360,8 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Area 1",
-                        "area": "Bomb Access",
-                        "node": "Tunnel to Bomb Room"
+                        "area": "Bomb Chamber Access",
+                        "node": "Tunnel to Bomb Chamber"
                     },
                     "default_dock_weakness": "Tunnel with Bomb Block",
                     "exclude_from_dock_rando": false,
@@ -1403,14 +1403,14 @@
                                 "items": []
                             }
                         },
-                        "Door to Bomb Access": {
+                        "Door to Bomb Chamber Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Tunnel to Bomb Access": {
+                        "Tunnel to Bomb Chamber Access": {
                             "type": "template",
                             "data": "Lay Any Bomb"
                         }
@@ -1418,7 +1418,7 @@
                 }
             }
         },
-        "Shaft East": {
+        "Inner Temple East Hall": {
             "default_node": null,
             "extra": {
                 "total_boundings": {
@@ -1448,7 +1448,7 @@
                 "asset_id": "collision_camera_012"
             },
             "nodes": {
-                "Door to Spider Ball Balcony": {
+                "Door to Destroyed Armory": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1468,8 +1468,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 1",
-                        "area": "Spider Ball Balcony",
-                        "node": "Door to Shaft East"
+                        "area": "Destroyed Armory",
+                        "node": "Door to Inner Temple East Hall"
                     },
                     "default_dock_weakness": "Charge Beam Door",
                     "exclude_from_dock_rando": false,
@@ -1477,14 +1477,14 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Teleporter Room": {
+                        "Dock to Inner Temple Teleporter": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Dock to Ice Beam Tutorial": {
+                        "Dock to Ice Beam Chamber Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1493,7 +1493,7 @@
                         }
                     }
                 },
-                "Door to Outer Hub": {
+                "Door to Temple Exterior": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1513,8 +1513,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 1",
-                        "area": "Outer Hub",
-                        "node": "Door to Shaft East"
+                        "area": "Temple Exterior",
+                        "node": "Door to Inner Temple East Hall"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -1522,7 +1522,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Inner Room": {
+                        "Door to Inner Temple Upper Hallway": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -1543,7 +1543,7 @@
                                 ]
                             }
                         },
-                        "Dock to Teleporter Room": {
+                        "Dock to Inner Temple Teleporter": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1552,7 +1552,7 @@
                         }
                     }
                 },
-                "Door to Inner Room": {
+                "Door to Inner Temple Upper Hallway": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1572,8 +1572,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 1",
-                        "area": "Inner Room",
-                        "node": "Door to Shaft East"
+                        "area": "Inner Temple Upper Hallway",
+                        "node": "Door to Inner Temple East Hall"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -1581,7 +1581,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Outer Hub": {
+                        "Door to Temple Exterior": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1590,7 +1590,7 @@
                         }
                     }
                 },
-                "Dock to Teleporter Room": {
+                "Dock to Inner Temple Teleporter": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1607,8 +1607,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Area 1",
-                        "area": "Teleporter Room",
-                        "node": "Dock to Shaft East"
+                        "area": "Inner Temple Teleporter",
+                        "node": "Dock to Inner Temple East Hall"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -1616,14 +1616,14 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Spider Ball Balcony": {
+                        "Door to Destroyed Armory": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Door to Outer Hub": {
+                        "Door to Temple Exterior": {
                             "type": "or",
                             "data": {
                                 "comment": "SWJ: https://youtu.be/n_gpWjN5Px0",
@@ -1681,7 +1681,7 @@
                         }
                     }
                 },
-                "Dock to Ice Beam Tutorial": {
+                "Dock to Ice Beam Chamber Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1698,8 +1698,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Area 1",
-                        "area": "Ice Beam Tutorial",
-                        "node": "Dock to Shaft East"
+                        "area": "Ice Beam Chamber Access",
+                        "node": "Dock to Inner Temple East Hall"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -1707,7 +1707,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Spider Ball Balcony": {
+                        "Door to Destroyed Armory": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1718,7 +1718,7 @@
                 }
             }
         },
-        "Spider Ball Balcony": {
+        "Destroyed Armory": {
             "default_node": null,
             "extra": {
                 "total_boundings": {
@@ -1768,7 +1768,7 @@
                     "pickup_index": 21,
                     "location_category": "minor",
                     "connections": {
-                        "Door to Shaft East": {
+                        "Door to Inner Temple East Hall": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1777,7 +1777,7 @@
                         }
                     }
                 },
-                "Door to Shaft East": {
+                "Door to Inner Temple East Hall": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1797,8 +1797,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 1",
-                        "area": "Shaft East",
-                        "node": "Door to Spider Ball Balcony"
+                        "area": "Inner Temple East Hall",
+                        "node": "Door to Destroyed Armory"
                     },
                     "default_dock_weakness": "Charge Beam Door",
                     "exclude_from_dock_rando": false,
@@ -1900,13 +1900,13 @@
                                 ]
                             }
                         },
-                        "Tunnel to Spider Ball Room": {
+                        "Tunnel to Spider Ball Chamber": {
                             "type": "template",
                             "data": "Lay Any Bomb"
                         }
                     }
                 },
-                "Tunnel to Spider Ball Room": {
+                "Tunnel to Spider Ball Chamber": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1923,8 +1923,8 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Area 1",
-                        "area": "Spider Ball Room",
-                        "node": "Tunnel to Spider Ball Balcony"
+                        "area": "Spider Ball Chamber",
+                        "node": "Tunnel to Destroyed Armory"
                     },
                     "default_dock_weakness": "Tunnel with Bomb Block",
                     "exclude_from_dock_rando": false,
@@ -1932,7 +1932,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Shaft East": {
+                        "Door to Inner Temple East Hall": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1943,7 +1943,7 @@
                 }
             }
         },
-        "Spider Ball Room": {
+        "Spider Ball Chamber": {
             "default_node": "Room Bottom",
             "extra": {
                 "total_boundings": {
@@ -2001,7 +2001,7 @@
                     "pickup_index": 22,
                     "location_category": "minor",
                     "connections": {
-                        "Tunnel to Spider Ball Balcony": {
+                        "Tunnel to Destroyed Armory": {
                             "type": "template",
                             "data": "Lay Any Bomb"
                         }
@@ -2036,7 +2036,7 @@
                         }
                     }
                 },
-                "Door to Outer Hub": {
+                "Door to Temple Exterior": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2056,8 +2056,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 1",
-                        "area": "Outer Hub",
-                        "node": "Door to Spider Ball Room"
+                        "area": "Temple Exterior",
+                        "node": "Door to Spider Ball Chamber"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -2111,7 +2111,7 @@
                         }
                     }
                 },
-                "Tunnel to Spider Ball Balcony": {
+                "Tunnel to Destroyed Armory": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2128,8 +2128,8 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Area 1",
-                        "area": "Spider Ball Balcony",
-                        "node": "Tunnel to Spider Ball Room"
+                        "area": "Destroyed Armory",
+                        "node": "Tunnel to Spider Ball Chamber"
                     },
                     "default_dock_weakness": "Tunnel with Bomb Block",
                     "exclude_from_dock_rando": false,
@@ -2143,7 +2143,7 @@
                         }
                     }
                 },
-                "Tunnel to Outer Hub": {
+                "Tunnel to Temple Exterior": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2160,8 +2160,8 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Area 1",
-                        "area": "Outer Hub",
-                        "node": "Tunnel to Spider Ball Room"
+                        "area": "Temple Exterior",
+                        "node": "Tunnel to Spider Ball Chamber"
                     },
                     "default_dock_weakness": "Tunnel",
                     "exclude_from_dock_rando": false,
@@ -2169,11 +2169,30 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Outer Hub": {
-                            "type": "and",
+                        "Door to Temple Exterior": {
+                            "type": "or",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "DoorLocks",
+                                            "amount": 1,
+                                            "negate": true
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "DoorLockRandoTypes",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -2204,7 +2223,7 @@
                                 "negate": false
                             }
                         },
-                        "Door to Outer Hub": {
+                        "Door to Temple Exterior": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -2255,7 +2274,7 @@
                 }
             }
         },
-        "Alpha Arena North": {
+        "Exterior Alpha Arena": {
             "default_node": "Inside Arena",
             "extra": {
                 "total_boundings": {
@@ -2314,7 +2333,7 @@
                         }
                     }
                 },
-                "Door to Outer Hub": {
+                "Door to Temple Exterior": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2334,8 +2353,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 1",
-                        "area": "Outer Hub",
-                        "node": "Door to Alpha Arena North"
+                        "area": "Temple Exterior",
+                        "node": "Door to Exterior Alpha Arena"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -2352,7 +2371,7 @@
                         }
                     }
                 },
-                "Tunnel to Outer Hub": {
+                "Tunnel to Temple Exterior": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2369,8 +2388,8 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Area 1",
-                        "area": "Outer Hub",
-                        "node": "Tunnel to Alpha Arena North"
+                        "area": "Temple Exterior",
+                        "node": "Tunnel to Exterior Alpha Arena"
                     },
                     "default_dock_weakness": "Tunnel",
                     "exclude_from_dock_rando": false,
@@ -2438,7 +2457,7 @@
                                 "items": []
                             }
                         },
-                        "Tunnel to Outer Hub": {
+                        "Tunnel to Temple Exterior": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -2470,7 +2489,7 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Outer Hub": {
+                        "Door to Temple Exterior": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2556,7 +2575,7 @@
                 }
             }
         },
-        "Outer Hub": {
+        "Temple Exterior": {
             "default_node": "Save Station",
             "extra": {
                 "total_boundings": {
@@ -2812,14 +2831,14 @@
                                 ]
                             }
                         },
-                        "Door to Shaft East": {
+                        "Door to Inner Temple East Hall": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Door to Alpha Arena North": {
+                        "Door to Exterior Alpha Arena": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -2875,14 +2894,14 @@
                                 ]
                             }
                         },
-                        "Door to Spider Ball Room": {
+                        "Door to Spider Ball Chamber": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Tunnel to Spider Ball Room": {
+                        "Tunnel to Spider Ball Chamber": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -2897,7 +2916,7 @@
                         }
                     }
                 },
-                "Door to Shaft East": {
+                "Door to Inner Temple East Hall": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2917,8 +2936,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 1",
-                        "area": "Shaft East",
-                        "node": "Door to Outer Hub"
+                        "area": "Inner Temple East Hall",
+                        "node": "Door to Temple Exterior"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -2935,7 +2954,7 @@
                         }
                     }
                 },
-                "Door to Alpha Arena North": {
+                "Door to Exterior Alpha Arena": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2955,8 +2974,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 1",
-                        "area": "Alpha Arena North",
-                        "node": "Door to Outer Hub"
+                        "area": "Exterior Alpha Arena",
+                        "node": "Door to Temple Exterior"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -2971,7 +2990,7 @@
                                 "items": []
                             }
                         },
-                        "Tunnel to Alpha Arena North": {
+                        "Tunnel to Exterior Alpha Arena": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3010,7 +3029,7 @@
                         }
                     }
                 },
-                "Door to Spider Ball Room": {
+                "Door to Spider Ball Chamber": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3030,8 +3049,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 1",
-                        "area": "Spider Ball Room",
-                        "node": "Door to Outer Hub"
+                        "area": "Spider Ball Chamber",
+                        "node": "Door to Temple Exterior"
                     },
                     "default_dock_weakness": "Access Locked",
                     "exclude_from_dock_rando": false,
@@ -3095,7 +3114,7 @@
                     "default_connection": {
                         "region": "Area 1",
                         "area": "Outer Hub Access",
-                        "node": "Dock to Outer Hub"
+                        "node": "Dock to Temple Exterior"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -3103,7 +3122,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Save Station North": {
+                        "Dock to Inner Temple Save Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3112,7 +3131,7 @@
                         }
                     }
                 },
-                "Tunnel to Spider Ball Room": {
+                "Tunnel to Spider Ball Chamber": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3129,8 +3148,8 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Area 1",
-                        "area": "Spider Ball Room",
-                        "node": "Tunnel to Outer Hub"
+                        "area": "Spider Ball Chamber",
+                        "node": "Tunnel to Temple Exterior"
                     },
                     "default_dock_weakness": "Tunnel",
                     "exclude_from_dock_rando": false,
@@ -3149,7 +3168,7 @@
                         }
                     }
                 },
-                "Tunnel to Alpha Arena North": {
+                "Tunnel to Exterior Alpha Arena": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3166,8 +3185,8 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Area 1",
-                        "area": "Alpha Arena North",
-                        "node": "Tunnel to Outer Hub"
+                        "area": "Exterior Alpha Arena",
+                        "node": "Tunnel to Temple Exterior"
                     },
                     "default_dock_weakness": "Tunnel",
                     "exclude_from_dock_rando": false,
@@ -3175,7 +3194,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Alpha Arena North": {
+                        "Door to Exterior Alpha Arena": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -3186,7 +3205,7 @@
                         }
                     }
                 },
-                "Tunnel to Inner Shaft": {
+                "Tunnel to Inner Temple Ventilation Shaft": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3203,8 +3222,8 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Area 1",
-                        "area": "Inner Shaft",
-                        "node": "Tunnel to Outer Hub"
+                        "area": "Inner Temple Ventilation Shaft",
+                        "node": "Tunnel to Temple Exterior"
                     },
                     "default_dock_weakness": "Tunnel with Bomb Block",
                     "exclude_from_dock_rando": false,
@@ -3221,7 +3240,7 @@
                         }
                     }
                 },
-                "Dock to Save Station North": {
+                "Dock to Inner Temple Save Station": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3238,8 +3257,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Area 1",
-                        "area": "Save Station North",
-                        "node": "Dock to Outer Hub"
+                        "area": "Inner Temple Save Station",
+                        "node": "Dock to Temple Exterior"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -3348,11 +3367,11 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Tunnel to Inner Shaft": {
+                        "Tunnel to Inner Temple Ventilation Shaft": {
                             "type": "template",
                             "data": "Lay Any Bomb"
                         },
-                        "Dock to Save Station North": {
+                        "Dock to Inner Temple Save Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3382,7 +3401,7 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Alpha Arena North": {
+                        "Door to Exterior Alpha Arena": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4470,12 +4489,46 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Shaft West": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "items",
-                                "name": "Plasma",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Plasma",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "DoorLocks",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "DoorLockRandoTypes",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
                             }
                         },
                         "Dock to Save Station South": {
@@ -4701,7 +4754,7 @@
                 }
             }
         },
-        "Ice Beam Room": {
+        "Ice Beam Chamber": {
             "default_node": "Room Center",
             "extra": {
                 "total_boundings": {
@@ -4760,7 +4813,7 @@
                         }
                     }
                 },
-                "Door to Ice Beam Tutorial": {
+                "Door to Ice Beam Chamber Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4780,8 +4833,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 1",
-                        "area": "Ice Beam Tutorial",
-                        "node": "Door to Ice Beam Room"
+                        "area": "Ice Beam Chamber Access",
+                        "node": "Door to Ice Beam Chamber"
                     },
                     "default_dock_weakness": "Missile Door",
                     "exclude_from_dock_rando": false,
@@ -4851,7 +4904,7 @@
                                 "items": []
                             }
                         },
-                        "Door to Ice Beam Tutorial": {
+                        "Door to Ice Beam Chamber Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5489,7 +5542,7 @@
                 }
             }
         },
-        "Central Shaft": {
+        "Inner Temple West Hall": {
             "default_node": null,
             "extra": {
                 "total_boundings": {
@@ -5527,7 +5580,7 @@
                 "asset_id": "collision_camera_035"
             },
             "nodes": {
-                "Door to Teleporter Access": {
+                "Door to Inner Temple Teleporter Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5547,8 +5600,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 1",
-                        "area": "Teleporter Access",
-                        "node": "Door to Central Shaft"
+                        "area": "Inner Temple Teleporter Access",
+                        "node": "Door to Inner Temple West Hall"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -5556,14 +5609,14 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Bomb Access": {
+                        "Dock to Bomb Chamber Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Dock to Save Station North": {
+                        "Dock to Inner Temple Save Station": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -5754,7 +5807,7 @@
                     "default_connection": {
                         "region": "Area 1",
                         "area": "Alpha Shaft Right",
-                        "node": "Tunnel to Central Shaft"
+                        "node": "Tunnel to Inner Temple West Hall"
                     },
                     "default_dock_weakness": "Tunnel",
                     "exclude_from_dock_rando": false,
@@ -5762,7 +5815,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Bomb Access": {
+                        "Dock to Bomb Chamber Access": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -5773,7 +5826,7 @@
                         }
                     }
                 },
-                "Dock to Bomb Access": {
+                "Dock to Bomb Chamber Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5790,8 +5843,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Area 1",
-                        "area": "Bomb Access",
-                        "node": "Dock to Central Shaft"
+                        "area": "Bomb Chamber Access",
+                        "node": "Dock to Inner Temple West Hall"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -5799,7 +5852,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Teleporter Access": {
+                        "Door to Inner Temple Teleporter Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5855,7 +5908,7 @@
                         }
                     }
                 },
-                "Dock to Save Station North": {
+                "Dock to Inner Temple Save Station": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5872,8 +5925,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Area 1",
-                        "area": "Save Station North",
-                        "node": "Dock to Central Shaft"
+                        "area": "Inner Temple Save Station",
+                        "node": "Dock to Inner Temple West Hall"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -5881,7 +5934,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Teleporter Access": {
+                        "Door to Inner Temple Teleporter Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6328,7 +6381,7 @@
                 }
             }
         },
-        "Teleporter Access": {
+        "Inner Temple Teleporter Access": {
             "default_node": "Room Center",
             "extra": {
                 "total_boundings": {
@@ -6358,7 +6411,7 @@
                 "asset_id": "collision_camera_042"
             },
             "nodes": {
-                "Door to Central Shaft": {
+                "Door to Inner Temple West Hall": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6378,8 +6431,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 1",
-                        "area": "Central Shaft",
-                        "node": "Door to Teleporter Access"
+                        "area": "Inner Temple West Hall",
+                        "node": "Door to Inner Temple Teleporter Access"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -6396,7 +6449,7 @@
                         }
                     }
                 },
-                "Dock to Inner Shaft": {
+                "Dock to Inner Temple Ventilation Shaft": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6413,8 +6466,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Area 1",
-                        "area": "Inner Shaft",
-                        "node": "Dock to Teleporter Access"
+                        "area": "Inner Temple Ventilation Shaft",
+                        "node": "Dock to Inner Temple Teleporter Access"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -6431,7 +6484,7 @@
                         }
                     }
                 },
-                "Tunnel to Teleporter Room": {
+                "Tunnel to Inner Temple Teleporter": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6448,8 +6501,8 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Area 1",
-                        "area": "Teleporter Room",
-                        "node": "Tunnel to Teleporter Access"
+                        "area": "Inner Temple Teleporter",
+                        "node": "Tunnel to Inner Temple Teleporter Access"
                     },
                     "default_dock_weakness": "Tunnel with Bomb Block",
                     "exclude_from_dock_rando": false,
@@ -6485,18 +6538,18 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Central Shaft": {
+                        "Door to Inner Temple West Hall": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Tunnel to Teleporter Room": {
+                        "Tunnel to Inner Temple Teleporter": {
                             "type": "template",
                             "data": "Lay Any Bomb"
                         },
-                        "Dock to Teleporter Room": {
+                        "Dock to Inner Temple Teleporter": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6528,7 +6581,7 @@
                         }
                     }
                 },
-                "Dock to Teleporter Room": {
+                "Dock to Inner Temple Teleporter": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6545,8 +6598,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Area 1",
-                        "area": "Teleporter Room",
-                        "node": "Dock from Teleporter Access"
+                        "area": "Inner Temple Teleporter",
+                        "node": "Dock from Inner Temple Teleporter Access"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -6557,7 +6610,7 @@
                 }
             }
         },
-        "Inner Shaft": {
+        "Inner Temple Ventilation Shaft": {
             "default_node": null,
             "extra": {
                 "total_boundings": {
@@ -6615,7 +6668,7 @@
                     "pickup_index": 24,
                     "location_category": "minor",
                     "connections": {
-                        "Door to Inner Room": {
+                        "Door to Inner Temple Upper Hallway": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -6636,7 +6689,7 @@
                                 ]
                             }
                         },
-                        "Dock to Teleporter Access": {
+                        "Dock to Inner Temple Teleporter Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6645,7 +6698,7 @@
                         }
                     }
                 },
-                "Door to Inner Room": {
+                "Door to Inner Temple Upper Hallway": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6665,8 +6718,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 1",
-                        "area": "Inner Room",
-                        "node": "Door to Inner Shaft"
+                        "area": "Inner Temple Upper Hallway",
+                        "node": "Door to Inner Temple Ventilation Shaft"
                     },
                     "default_dock_weakness": "Spazer Beam Door",
                     "exclude_from_dock_rando": false,
@@ -6704,7 +6757,7 @@
                                 ]
                             }
                         },
-                        "Dock to Teleporter Access": {
+                        "Dock to Inner Temple Teleporter Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6713,7 +6766,7 @@
                         }
                     }
                 },
-                "Dock to Teleporter Access": {
+                "Dock to Inner Temple Teleporter Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6730,8 +6783,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Area 1",
-                        "area": "Teleporter Access",
-                        "node": "Dock to Inner Shaft"
+                        "area": "Inner Temple Teleporter Access",
+                        "node": "Dock to Inner Temple Ventilation Shaft"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -6740,7 +6793,7 @@
                     "override_default_lock_requirement": null,
                     "connections": {}
                 },
-                "Tunnel to Outer Hub": {
+                "Tunnel to Temple Exterior": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6757,8 +6810,8 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Area 1",
-                        "area": "Outer Hub",
-                        "node": "Tunnel to Inner Shaft"
+                        "area": "Temple Exterior",
+                        "node": "Tunnel to Inner Temple Ventilation Shaft"
                     },
                     "default_dock_weakness": "Tunnel with Bomb Block",
                     "exclude_from_dock_rando": false,
@@ -6766,7 +6819,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Tunnel to Inner Room": {
+                        "Tunnel to Inner Temple Upper Hallway": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -6777,7 +6830,7 @@
                         }
                     }
                 },
-                "Tunnel to Inner Room": {
+                "Tunnel to Inner Temple Upper Hallway": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6794,8 +6847,8 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Area 1",
-                        "area": "Inner Room",
-                        "node": "Tunnel to Inner Shaft"
+                        "area": "Inner Temple Upper Hallway",
+                        "node": "Tunnel to Inner Temple Ventilation Shaft"
                     },
                     "default_dock_weakness": "Tunnel",
                     "exclude_from_dock_rando": false,
@@ -6803,7 +6856,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Tunnel to Outer Hub": {
+                        "Tunnel to Temple Exterior": {
                             "type": "template",
                             "data": "Lay Any Bomb"
                         }
@@ -6871,7 +6924,7 @@
                             "type": "template",
                             "data": "Lay Any Bomb"
                         },
-                        "Tunnel to Central Shaft": {
+                        "Tunnel to Inner Temple West Hall": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -6921,7 +6974,7 @@
                         }
                     }
                 },
-                "Tunnel to Central Shaft": {
+                "Tunnel to Inner Temple West Hall": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6938,7 +6991,7 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Area 1",
-                        "area": "Central Shaft",
+                        "area": "Inner Temple West Hall",
                         "node": "Tunnel to Alpha Shaft Right"
                     },
                     "default_dock_weakness": "Tunnel",
@@ -7172,7 +7225,7 @@
                 }
             }
         },
-        "Bomb Access": {
+        "Bomb Chamber Access": {
             "default_node": null,
             "extra": {
                 "total_boundings": {
@@ -7202,7 +7255,7 @@
                 "asset_id": "collision_camera_046"
             },
             "nodes": {
-                "Door to Bomb Room": {
+                "Door to Bomb Chamber": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7222,8 +7275,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 1",
-                        "area": "Bomb Room",
-                        "node": "Door to Bomb Access"
+                        "area": "Bomb Chamber",
+                        "node": "Door to Bomb Chamber Access"
                     },
                     "default_dock_weakness": "Missile Door",
                     "exclude_from_dock_rando": false,
@@ -7232,7 +7285,7 @@
                     "override_default_lock_requirement": null,
                     "connections": {}
                 },
-                "Dock to Central Shaft": {
+                "Dock to Inner Temple West Hall": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7249,8 +7302,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Area 1",
-                        "area": "Central Shaft",
-                        "node": "Dock to Bomb Access"
+                        "area": "Inner Temple West Hall",
+                        "node": "Dock to Bomb Chamber Access"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -7258,20 +7311,20 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Bomb Room": {
+                        "Door to Bomb Chamber": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Tunnel to Bomb Room": {
+                        "Tunnel to Bomb Chamber": {
                             "type": "template",
                             "data": "Lay Any Bomb"
                         }
                     }
                 },
-                "Tunnel to Bomb Room": {
+                "Tunnel to Bomb Chamber": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7288,8 +7341,8 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Area 1",
-                        "area": "Bomb Room",
-                        "node": "Tunnel to Bomb Access"
+                        "area": "Bomb Chamber",
+                        "node": "Tunnel to Bomb Chamber Access"
                     },
                     "default_dock_weakness": "Tunnel with Bomb Block",
                     "exclude_from_dock_rando": false,
@@ -7297,7 +7350,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Central Shaft": {
+                        "Dock to Inner Temple West Hall": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -7310,7 +7363,7 @@
                 }
             }
         },
-        "Save Station North": {
+        "Inner Temple Save Station": {
             "default_node": "Save Station",
             "extra": {
                 "total_boundings": {
@@ -7359,14 +7412,14 @@
                     },
                     "valid_starting_location": true,
                     "connections": {
-                        "Dock to Central Shaft": {
+                        "Dock to Inner Temple West Hall": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Dock to Outer Hub": {
+                        "Dock to Temple Exterior": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7375,7 +7428,7 @@
                         }
                     }
                 },
-                "Dock to Central Shaft": {
+                "Dock to Inner Temple West Hall": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7392,8 +7445,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Area 1",
-                        "area": "Central Shaft",
-                        "node": "Dock to Save Station North"
+                        "area": "Inner Temple West Hall",
+                        "node": "Dock to Inner Temple Save Station"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -7410,7 +7463,7 @@
                         }
                     }
                 },
-                "Dock to Outer Hub": {
+                "Dock to Temple Exterior": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7427,8 +7480,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Area 1",
-                        "area": "Outer Hub",
-                        "node": "Dock to Save Station North"
+                        "area": "Temple Exterior",
+                        "node": "Dock to Inner Temple Save Station"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -7447,7 +7500,7 @@
                 }
             }
         },
-        "Inner Room": {
+        "Inner Temple Upper Hallway": {
             "default_node": null,
             "extra": {
                 "total_boundings": {
@@ -7477,7 +7530,7 @@
                 "asset_id": "collision_camera_048"
             },
             "nodes": {
-                "Door to Inner Shaft": {
+                "Door to Inner Temple Ventilation Shaft": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7497,8 +7550,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 1",
-                        "area": "Inner Shaft",
-                        "node": "Door to Inner Room"
+                        "area": "Inner Temple Ventilation Shaft",
+                        "node": "Door to Inner Temple Upper Hallway"
                     },
                     "default_dock_weakness": "Spazer Beam Door",
                     "exclude_from_dock_rando": false,
@@ -7506,14 +7559,14 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Shaft East": {
+                        "Door to Inner Temple East Hall": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Tunnel to Inner Shaft": {
+                        "Tunnel to Inner Temple Ventilation Shaft": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -7524,7 +7577,7 @@
                         }
                     }
                 },
-                "Door to Shaft East": {
+                "Door to Inner Temple East Hall": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7544,8 +7597,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 1",
-                        "area": "Shaft East",
-                        "node": "Door to Inner Room"
+                        "area": "Inner Temple East Hall",
+                        "node": "Door to Inner Temple Upper Hallway"
                     },
                     "default_dock_weakness": "Access Locked",
                     "exclude_from_dock_rando": false,
@@ -7553,7 +7606,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Inner Shaft": {
+                        "Door to Inner Temple Ventilation Shaft": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7562,7 +7615,7 @@
                         }
                     }
                 },
-                "Tunnel to Inner Shaft": {
+                "Tunnel to Inner Temple Ventilation Shaft": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7579,8 +7632,8 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Area 1",
-                        "area": "Inner Shaft",
-                        "node": "Tunnel to Inner Room"
+                        "area": "Inner Temple Ventilation Shaft",
+                        "node": "Tunnel to Inner Temple Upper Hallway"
                     },
                     "default_dock_weakness": "Tunnel",
                     "exclude_from_dock_rando": false,
@@ -7588,7 +7641,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Inner Shaft": {
+                        "Door to Inner Temple Ventilation Shaft": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -7601,7 +7654,7 @@
                 }
             }
         },
-        "Teleporter Room": {
+        "Inner Temple Teleporter": {
             "default_node": "Teleporter",
             "extra": {
                 "total_boundings": {
@@ -7667,7 +7720,7 @@
                         }
                     },
                     "connections": {
-                        "Dock to Shaft East": {
+                        "Dock to Inner Temple East Hall": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7676,7 +7729,7 @@
                         }
                     }
                 },
-                "Tunnel to Teleporter Access": {
+                "Tunnel to Inner Temple Teleporter Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7693,8 +7746,8 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Area 1",
-                        "area": "Teleporter Access",
-                        "node": "Tunnel to Teleporter Room"
+                        "area": "Inner Temple Teleporter Access",
+                        "node": "Tunnel to Inner Temple Teleporter"
                     },
                     "default_dock_weakness": "Tunnel with Bomb Block",
                     "exclude_from_dock_rando": false,
@@ -7702,13 +7755,13 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Shaft East": {
+                        "Dock to Inner Temple East Hall": {
                             "type": "template",
                             "data": "Lay Any Bomb"
                         }
                     }
                 },
-                "Dock to Shaft East": {
+                "Dock to Inner Temple East Hall": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7725,8 +7778,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Area 1",
-                        "area": "Shaft East",
-                        "node": "Dock to Teleporter Room"
+                        "area": "Inner Temple East Hall",
+                        "node": "Dock to Inner Temple Teleporter"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -7741,7 +7794,7 @@
                                 "items": []
                             }
                         },
-                        "Tunnel to Teleporter Access": {
+                        "Tunnel to Inner Temple Teleporter Access": {
                             "type": "template",
                             "data": "Lay Any Bomb"
                         },
@@ -7770,7 +7823,7 @@
                     "valid_starting_location": false,
                     "event_name": "Area 1 Teleporter",
                     "connections": {
-                        "Dock to Shaft East": {
+                        "Dock to Inner Temple East Hall": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7779,7 +7832,7 @@
                         }
                     }
                 },
-                "Dock from Teleporter Access": {
+                "Dock from Inner Temple Teleporter Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7796,8 +7849,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Area 1",
-                        "area": "Teleporter Access",
-                        "node": "Dock to Teleporter Room"
+                        "area": "Inner Temple Teleporter Access",
+                        "node": "Dock to Inner Temple Teleporter"
                     },
                     "default_dock_weakness": "Blocked Passage",
                     "exclude_from_dock_rando": false,
@@ -7805,7 +7858,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Shaft East": {
+                        "Dock to Inner Temple East Hall": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7816,7 +7869,7 @@
                 }
             }
         },
-        "Ice Beam Tutorial": {
+        "Ice Beam Chamber Access": {
             "default_node": null,
             "extra": {
                 "total_boundings": {
@@ -7846,7 +7899,7 @@
                 "asset_id": "collision_camera_050"
             },
             "nodes": {
-                "Door to Ice Beam Room": {
+                "Door to Ice Beam Chamber": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7866,8 +7919,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 1",
-                        "area": "Ice Beam Room",
-                        "node": "Door to Ice Beam Tutorial"
+                        "area": "Ice Beam Chamber",
+                        "node": "Door to Ice Beam Chamber Access"
                     },
                     "default_dock_weakness": "Missile Door",
                     "exclude_from_dock_rando": false,
@@ -7875,7 +7928,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Shaft East": {
+                        "Dock to Inner Temple East Hall": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -7972,7 +8025,7 @@
                         }
                     }
                 },
-                "Dock to Shaft East": {
+                "Dock to Inner Temple East Hall": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7989,8 +8042,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Area 1",
-                        "area": "Shaft East",
-                        "node": "Dock to Ice Beam Tutorial"
+                        "area": "Inner Temple East Hall",
+                        "node": "Dock to Ice Beam Chamber Access"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -7998,7 +8051,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Ice Beam Room": {
+                        "Door to Ice Beam Chamber": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8442,7 +8495,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Outer Hub": {
+                        "Dock to Temple Exterior": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8451,7 +8504,7 @@
                         }
                     }
                 },
-                "Dock to Outer Hub": {
+                "Dock to Temple Exterior": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8468,7 +8521,7 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Area 1",
-                        "area": "Outer Hub",
+                        "area": "Temple Exterior",
                         "node": "Dock to Outer Hub Access"
                     },
                     "default_dock_weakness": "Open Passage",
