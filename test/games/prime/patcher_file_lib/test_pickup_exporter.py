@@ -249,8 +249,8 @@ def test_create_pickup_list(
         collection_text=["A acquired!"] if model_style != PickupModelStyle.HIDE_ALL else ["Unknown item acquired!"],
         conditional_resources=[ConditionalResources("A", None, ((resource_a, 1),))],
         conversion=[],
-        model=model_1 if model_style == PickupModelStyle.ALL_VISIBLE else useless_model,
-        original_model=model_1 if model_style == PickupModelStyle.ALL_VISIBLE else useless_model,
+        model=model_1 if model_style == PickupModelStyle.ALL_VISIBLE else useless_model,  # type: ignore [arg-type]
+        original_model=model_1 if model_style == PickupModelStyle.ALL_VISIBLE else useless_model,  # type: ignore [arg-type]
         other_player=False,
         original_pickup=pickup_a,
     )
@@ -263,8 +263,8 @@ def test_create_pickup_list(
         else ["Unknown item acquired!"],
         conditional_resources=[ConditionalResources("Useless", None, ((useless_resource, 1),))],
         conversion=[],
-        model=model_0 if model_style == PickupModelStyle.ALL_VISIBLE else useless_model,
-        original_model=model_0 if model_style == PickupModelStyle.ALL_VISIBLE else useless_model,
+        model=model_0 if model_style == PickupModelStyle.ALL_VISIBLE else useless_model,  # type: ignore [arg-type]
+        original_model=model_0 if model_style == PickupModelStyle.ALL_VISIBLE else useless_model,  # type: ignore [arg-type]
         other_player=False,
         original_pickup=useless_pickup,
     )
@@ -280,8 +280,8 @@ def test_create_pickup_list(
             ConditionalResources("A", resource_b, ((resource_a, 5),)),
         ],
         conversion=[],
-        model=model_2 if model_style == PickupModelStyle.ALL_VISIBLE else useless_model,
-        original_model=model_2 if model_style == PickupModelStyle.ALL_VISIBLE else useless_model,
+        model=model_2 if model_style == PickupModelStyle.ALL_VISIBLE else useless_model,  # type: ignore [arg-type]
+        original_model=model_2 if model_style == PickupModelStyle.ALL_VISIBLE else useless_model,  # type: ignore [arg-type]
         other_player=False,
         original_pickup=pickup_b,
     )
@@ -292,8 +292,8 @@ def test_create_pickup_list(
         collection_text=["A acquired!"] if model_style != PickupModelStyle.HIDE_ALL else ["Unknown item acquired!"],
         conditional_resources=[ConditionalResources("A", None, ((resource_a, 1),))],
         conversion=[],
-        model=model_1 if model_style == PickupModelStyle.ALL_VISIBLE else useless_model,
-        original_model=model_1 if model_style == PickupModelStyle.ALL_VISIBLE else useless_model,
+        model=model_1 if model_style == PickupModelStyle.ALL_VISIBLE else useless_model,  # type: ignore [arg-type]
+        original_model=model_1 if model_style == PickupModelStyle.ALL_VISIBLE else useless_model,  # type: ignore [arg-type]
         other_player=False,
         original_pickup=pickup_a,
     )
@@ -313,8 +313,8 @@ def test_create_pickup_list(
             )
         ],
         conversion=[ResourceConversion(source=useless_resource, target=resource_a)],
-        model=model_2 if model_style == PickupModelStyle.ALL_VISIBLE else useless_model,
-        original_model=model_2 if model_style == PickupModelStyle.ALL_VISIBLE else useless_model,
+        model=model_2 if model_style == PickupModelStyle.ALL_VISIBLE else useless_model,  # type: ignore [arg-type]
+        original_model=model_2 if model_style == PickupModelStyle.ALL_VISIBLE else useless_model,  # type: ignore [arg-type]
         other_player=False,
         original_pickup=pickup_c,
     )
@@ -334,8 +334,8 @@ def test_create_pickup_list(
             )
         ],
         conversion=[ResourceConversion(source=useless_resource, target=resource_a)],
-        model=model_2 if model_style == PickupModelStyle.ALL_VISIBLE else useless_model,
-        original_model=model_2 if model_style == PickupModelStyle.ALL_VISIBLE else useless_model,
+        model=model_2 if model_style == PickupModelStyle.ALL_VISIBLE else useless_model,  # type: ignore [arg-type]
+        original_model=model_2 if model_style == PickupModelStyle.ALL_VISIBLE else useless_model,  # type: ignore [arg-type]
         other_player=False,
         original_pickup=pickup_d,
     )
@@ -352,8 +352,8 @@ def test_create_pickup_list(
             )
         ],
         conversion=[ResourceConversion(source=useless_resource, target=resource_c)],
-        model=model_3 if model_style == PickupModelStyle.ALL_VISIBLE else useless_model,
-        original_model=model_3 if model_style == PickupModelStyle.ALL_VISIBLE else useless_model,
+        model=model_3 if model_style == PickupModelStyle.ALL_VISIBLE else useless_model,  # type: ignore [arg-type]
+        original_model=model_3 if model_style == PickupModelStyle.ALL_VISIBLE else useless_model,  # type: ignore [arg-type]
         other_player=False,
         original_pickup=pickup_e,
     )
