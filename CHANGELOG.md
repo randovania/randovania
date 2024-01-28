@@ -7,17 +7,66 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [7.3.0] - 2024-02-??
 
+- Added: Ability to turn off changing "to" Normal Doors in Door Type dock rando.
+- Fixed: For Linux and macOS, the auto tracker tooltip will not show black text on black background anymore.
+- Fixed: Searching for your own pickup in Multiworld sessions will now show only pickups which match *exactly* the name, instead of showing pickups which start with that name.
+- Fixed: The import in a multiworld session is blocked if it contains an unsupported game.
+- Fixed: Opening the webbrowser for Discord Login doesn't fail on Linux anymore.
+- Fixed: For Windows, the game select tooltip will not render as grey text on grey background in darkmode.
+- Added: Games display a banner if they are multiworld compatible.
+
+### Resolver
+
+- Fixed: Some cases of resolver timout.
+
 ### AM2R
 
+- **Major** - Added: Multiworld support for AM2R. 
+- Changed: Minimal Logic has been adjusted. It now also checks for Morph Ball, Missile Launcher, the DNA and the Baby collection.
+- Changed: The Baby now checks for all DNA being collected and will display a message if not.
+
 #### Logic Database
+
+- Added: 20 Videos to the Logic Database.
+
+##### Main Caves
+
+- Fixed: In Surface Hi-Jump Challenge: Now correctly uses normal damage instead of lava damage for damage boost.
+- Fixed: In Drivel Drive: Intended Ballspark now requires Gravity.
+- Changed: In Drivel Drive: Bumped mockball method to Expert.
+- Changed: In Western Cave Shaft: Bumped health requirement for the descent to require an Energy Tank in trickless.
+
+##### Golden Temple
+
+- Added: In Guardian Arena: Now accounts for Speed Booster quick kill with Intermediate Knowledge.
 
 ##### Hydro Station
 
 - Fixed: In Breeding Grounds Entrance: Activating the EMP Slot now properly accounts for Missiles.
 
+##### Industrial Complex
+
+- Fixed: Renamed the room `Spazer Beam` to `Spazer Beam Chamber`.
+- Changed: Upper Factory Gamma Nest: Shinesparking from the room below to get the top item is now an intermediate shinesparking trick.
+
+##### The Tower
+
+- Changed: In Tester Arena, the fight requirements have been restructured with more thorough combat and health requirements.
+
+##### Distribution Center
+
+- Changed: In Dual Gamma Nest, the fight now requires Gravity suit on Trickless Combat. Health requirements adjusted around this change.
+- Changed: Distribution Center Exterior West: Shinesparking to get the top Missile Tank is now an intermediate shinesparking trick.
+- Changed: Bullet Hell Room Access: Shinesparking to get from `Door to Bullet Hell Room` to `Door to Distribution Facility Intersection` now requires an intermediate shinesparking trick.
+
 ### Metroid Dread
 
+- Added: Changing the volume of the music, SFX and background ambience is now possible via cosmetic options.
+- Changed: Speed Booster Upgrades and Flash Shift Upgrades are now considered minor items instead of major.
+
 #### Logic Database
+
+- Removed: It's no longer logical to push Wide Beam Blocks with Wave Beam without Wide Beam.
 
 ##### Artaria
 
@@ -29,12 +78,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: The Wide Beam Block in Dairon Transport Access can now be traversed with a Diffusion Abuse trick from below.
 
+##### Ferenia
+
+- Changed: Using Speed Booster to reach the item at the top of Purple EMMI Introduction now requires Speed Booster Conservation (Intermediate).
+
 ##### Ghavoran
 
 - Added: Bomb Jump in Right Entrance, out of the water to the Grapple Block Alcove. Requires Diagonal Bomb Jump and either Out of Water Bomb Jump or Gravity Suit.
 - Added: Video showing the Grapple Movement trick in Right Entrance.
 
+### Metroid Prime
+
+- Added: It is now possible to have a seperate total amount and required amount of Artifacts.
+- Changed: Minimal Logic now also checks for the Ridley event.
+- Fixed: Rare softlock/glitches regarding Central Dynamo maze
+
 ### Metroid Prime 2: Echoes
+
+- Added: Having Double Damage no longer causes the morph ball to glow.
+- Changed: Minimal Logic now also checks for the Emperor Ing event.
 
 #### Logic Database
 

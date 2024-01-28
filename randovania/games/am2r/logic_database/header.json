@@ -2879,30 +2879,12 @@
                             }
                         },
                         {
-                            "type": "or",
+                            "type": "and",
                             "data": {
                                 "comment": "Energy Requirements",
                                 "items": [
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "damage",
-                                            "name": "Damage",
-                                            "amount": 320,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "tricks",
-                                            "name": "Combat",
-                                            "amount": 4,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "and",
+                                        "type": "or",
                                         "data": {
                                             "comment": null,
                                             "items": [
@@ -2916,19 +2898,62 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "or",
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Combat",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "damage",
+                                                        "name": "Damage",
+                                                        "amount": 320,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
                                                     "data": {
                                                         "comment": null,
                                                         "items": [
                                                             {
                                                                 "type": "resource",
                                                                 "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Combat",
-                                                                    "amount": 3,
+                                                                    "type": "damage",
+                                                                    "name": "Damage",
+                                                                    "amount": 250,
                                                                     "negate": false
                                                                 }
                                                             },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Combat",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
                                                             {
                                                                 "type": "resource",
                                                                 "data": {
@@ -2937,8 +2962,52 @@
                                                                     "amount": 170,
                                                                     "negate": false
                                                                 }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Combat",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
                                                             }
                                                         ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "Damage",
+                                                                    "amount": 100,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Combat",
+                                                                    "amount": 3,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Combat",
+                                                        "amount": 4,
+                                                        "negate": false
                                                     }
                                                 }
                                             ]
@@ -4221,6 +4290,14 @@
     "minimal_logic": {
         "items_to_exclude": [
             {
+                "name": "Morph Ball",
+                "when_shuffled": null
+            },
+            {
+                "name": "Missile Launcher",
+                "when_shuffled": null
+            },
+            {
                 "name": "Bombs",
                 "when_shuffled": null
             },
@@ -4230,6 +4307,190 @@
             },
             {
                 "name": "Screw Attack",
+                "when_shuffled": null
+            },
+            {
+                "name": "Metroid DNA 1",
+                "when_shuffled": null
+            },
+            {
+                "name": "Metroid DNA 2",
+                "when_shuffled": null
+            },
+            {
+                "name": "Metroid DNA 3",
+                "when_shuffled": null
+            },
+            {
+                "name": "Metroid DNA 4",
+                "when_shuffled": null
+            },
+            {
+                "name": "Metroid DNA 5",
+                "when_shuffled": null
+            },
+            {
+                "name": "Metroid DNA 6",
+                "when_shuffled": null
+            },
+            {
+                "name": "Metroid DNA 7",
+                "when_shuffled": null
+            },
+            {
+                "name": "Metroid DNA 8",
+                "when_shuffled": null
+            },
+            {
+                "name": "Metroid DNA 9",
+                "when_shuffled": null
+            },
+            {
+                "name": "Metroid DNA 10",
+                "when_shuffled": null
+            },
+            {
+                "name": "Metroid DNA 11",
+                "when_shuffled": null
+            },
+            {
+                "name": "Metroid DNA 12",
+                "when_shuffled": null
+            },
+            {
+                "name": "Metroid DNA 13",
+                "when_shuffled": null
+            },
+            {
+                "name": "Metroid DNA 14",
+                "when_shuffled": null
+            },
+            {
+                "name": "Metroid DNA 15",
+                "when_shuffled": null
+            },
+            {
+                "name": "Metroid DNA 16",
+                "when_shuffled": null
+            },
+            {
+                "name": "Metroid DNA 17",
+                "when_shuffled": null
+            },
+            {
+                "name": "Metroid DNA 18",
+                "when_shuffled": null
+            },
+            {
+                "name": "Metroid DNA 19",
+                "when_shuffled": null
+            },
+            {
+                "name": "Metroid DNA 20",
+                "when_shuffled": null
+            },
+            {
+                "name": "Metroid DNA 21",
+                "when_shuffled": null
+            },
+            {
+                "name": "Metroid DNA 22",
+                "when_shuffled": null
+            },
+            {
+                "name": "Metroid DNA 23",
+                "when_shuffled": null
+            },
+            {
+                "name": "Metroid DNA 24",
+                "when_shuffled": null
+            },
+            {
+                "name": "Metroid DNA 25",
+                "when_shuffled": null
+            },
+            {
+                "name": "Metroid DNA 26",
+                "when_shuffled": null
+            },
+            {
+                "name": "Metroid DNA 27",
+                "when_shuffled": null
+            },
+            {
+                "name": "Metroid DNA 28",
+                "when_shuffled": null
+            },
+            {
+                "name": "Metroid DNA 29",
+                "when_shuffled": null
+            },
+            {
+                "name": "Metroid DNA 30",
+                "when_shuffled": null
+            },
+            {
+                "name": "Metroid DNA 31",
+                "when_shuffled": null
+            },
+            {
+                "name": "Metroid DNA 32",
+                "when_shuffled": null
+            },
+            {
+                "name": "Metroid DNA 33",
+                "when_shuffled": null
+            },
+            {
+                "name": "Metroid DNA 34",
+                "when_shuffled": null
+            },
+            {
+                "name": "Metroid DNA 35",
+                "when_shuffled": null
+            },
+            {
+                "name": "Metroid DNA 36",
+                "when_shuffled": null
+            },
+            {
+                "name": "Metroid DNA 37",
+                "when_shuffled": null
+            },
+            {
+                "name": "Metroid DNA 38",
+                "when_shuffled": null
+            },
+            {
+                "name": "Metroid DNA 39",
+                "when_shuffled": null
+            },
+            {
+                "name": "Metroid DNA 40",
+                "when_shuffled": null
+            },
+            {
+                "name": "Metroid DNA 41",
+                "when_shuffled": null
+            },
+            {
+                "name": "Metroid DNA 42",
+                "when_shuffled": null
+            },
+            {
+                "name": "Metroid DNA 43",
+                "when_shuffled": null
+            },
+            {
+                "name": "Metroid DNA 44",
+                "when_shuffled": null
+            },
+            {
+                "name": "Metroid DNA 45",
+                "when_shuffled": null
+            },
+            {
+                "name": "Metroid DNA 46",
                 "when_shuffled": null
             }
         ],
@@ -4253,11 +4514,15 @@
         ],
         "events_to_exclude": [
             {
+                "name": "BabyCollected",
+                "reason": "Required to reach victory condition."
+            },
+            {
                 "name": "VictoryEvent",
                 "reason": "Victory Condition"
             }
         ],
-        "description": "Items checked for: Bombs, Ice Beam and Screw Attack."
+        "description": "Items checked for: Morph Ball, Bombs, Missile Launcher, Ice Beam, Screw Attack and Metroid DNA."
     },
     "victory_condition": {
         "type": "and",
