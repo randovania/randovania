@@ -174,7 +174,7 @@ Extra - asset_id: collision_camera_005
       Trivial
 
 ----------------
-Bomb Room
+Bomb Chamber
 Extra - total_boundings: {'x1': -2500.0, 'x2': 0.0, 'y1': 4100.0, 'y2': 5700.0}
 Extra - polygon: [[0.0, 4100.0], [0.0, 5700.0], [-2500.0, 5700.0], [-2500.0, 4100.0]]
 Extra - asset_id: collision_camera_008
@@ -183,7 +183,7 @@ Extra - asset_id: collision_camera_008
   * Pickup 18; Category? Minor
   * Extra - actor_name: LE_Item_005
   * Extra - actor_type: item_missiletank
-  > Tunnel to Bomb Access
+  > Tunnel to Bomb Chamber Access
       Lay Any Bomb
 
 > Pickup (Bomb); Heals? False
@@ -194,17 +194,17 @@ Extra - asset_id: collision_camera_008
   > Room Center
       Trivial
 
-> Door to Bomb Access; Heals? False
+> Door to Bomb Chamber Access; Heals? False
   * Layers: default
-  * Missile Door to Bomb Access/Door to Bomb Room
+  * Missile Door to Bomb Chamber Access/Door to Bomb Chamber
   * Extra - actor_name: Door004
   * Extra - actor_type: doorpowerpower
   > Room Center
       Trivial
 
-> Tunnel to Bomb Access; Heals? False
+> Tunnel to Bomb Chamber Access; Heals? False
   * Layers: default
-  * Tunnel with Bomb Block to Bomb Access/Tunnel to Bomb Room
+  * Tunnel with Bomb Block to Bomb Chamber Access/Tunnel to Bomb Chamber
   > Pickup (Missile Tank)
       Lay Any Bomb
   > Room Center
@@ -215,63 +215,63 @@ Extra - asset_id: collision_camera_008
   * Extra - start_point_actor_name: ST_CheckPoint_005
   > Pickup (Bomb)
       Trivial
-  > Door to Bomb Access
+  > Door to Bomb Chamber Access
       Trivial
-  > Tunnel to Bomb Access
+  > Tunnel to Bomb Chamber Access
       Lay Any Bomb
 
 ----------------
-Shaft East
+Inner Temple East Hall
 Extra - total_boundings: {'x1': 7800.0, 'x2': 9300.0, 'y1': 2800.0, 'y2': 10300.0}
 Extra - polygon: [[9300.0, 2800.0], [9300.0, 10300.0], [7800.0, 10300.0], [7800.0, 2800.0]]
 Extra - asset_id: collision_camera_012
-> Door to Spider Ball Balcony; Heals? False
+> Door to Destroyed Armory; Heals? False
   * Layers: default
-  * Charge Beam Door to Spider Ball Balcony/Door to Shaft East
+  * Charge Beam Door to Destroyed Armory/Door to Inner Temple East Hall
   * Extra - actor_name: Door005
   * Extra - actor_type: doorchargecharge
-  > Dock to Teleporter Room
+  > Dock to Inner Temple Teleporter
       Trivial
-  > Dock to Ice Beam Tutorial
+  > Dock to Ice Beam Chamber Access
       Trivial
 
-> Door to Outer Hub; Heals? False
+> Door to Temple Exterior; Heals? False
   * Layers: default
-  * Power Beam Door to Outer Hub/Door to Shaft East
+  * Power Beam Door to Temple Exterior/Door to Inner Temple East Hall
   * Extra - actor_name: Door012
   * Extra - actor_type: doorpowerpower
-  > Door to Inner Room
+  > Door to Inner Temple Upper Hallway
       Single-wall Wall Jump (Beginner) or Climb Rooms Vertically (High Jump)
-  > Dock to Teleporter Room
+  > Dock to Inner Temple Teleporter
       Trivial
 
-> Door to Inner Room; Heals? False
+> Door to Inner Temple Upper Hallway; Heals? False
   * Layers: default
-  * Power Beam Door to Inner Room/Door to Shaft East
+  * Power Beam Door to Inner Temple Upper Hallway/Door to Inner Temple East Hall
   * Extra - actor_name: Door013
   * Extra - actor_type: doorclosedpower
-  > Door to Outer Hub
+  > Door to Temple Exterior
       Trivial
 
-> Dock to Teleporter Room; Heals? False
+> Dock to Inner Temple Teleporter; Heals? False
   * Layers: default
-  * Open Passage to Teleporter Room/Dock to Shaft East
-  > Door to Spider Ball Balcony
+  * Open Passage to Inner Temple Teleporter/Dock to Inner Temple East Hall
+  > Door to Destroyed Armory
       Trivial
-  > Door to Outer Hub
+  > Door to Temple Exterior
       Any of the following:
           # SWJ: https://youtu.be/n_gpWjN5Px0
           Ice Beam or Single-wall Wall Jump (Intermediate) or Climb Rooms Vertically (No High Jump)
           High Jump Boots and Movement (Beginner)
 
-> Dock to Ice Beam Tutorial; Heals? False
+> Dock to Ice Beam Chamber Access; Heals? False
   * Layers: default
-  * Open Passage to Ice Beam Tutorial/Dock to Shaft East
-  > Door to Spider Ball Balcony
+  * Open Passage to Ice Beam Chamber Access/Dock to Inner Temple East Hall
+  > Door to Destroyed Armory
       Trivial
 
 ----------------
-Spider Ball Balcony
+Destroyed Armory
 Extra - total_boundings: {'x1': 9200.0, 'x2': 13400.0, 'y1': 3902.47998046875, 'y2': 5400.0}
 Extra - polygon: [[13400.0, 3902.47998046875], [13400.0, 5400.0], [9200.0, 5400.0], [9200.0, 3902.47998046875]]
 Extra - asset_id: collision_camera_014
@@ -280,12 +280,12 @@ Extra - asset_id: collision_camera_014
   * Pickup 21; Category? Minor
   * Extra - actor_name: LE_Item_011
   * Extra - actor_type: item_senergytank
-  > Door to Shaft East
+  > Door to Inner Temple East Hall
       Trivial
 
-> Door to Shaft East; Heals? False
+> Door to Inner Temple East Hall; Heals? False
   * Layers: default
-  * Charge Beam Door to Shaft East/Door to Spider Ball Balcony
+  * Charge Beam Door to Inner Temple East Hall/Door to Destroyed Armory
   * Extra - actor_name: Door005
   * Extra - actor_type: doorchargecharge
   > Pickup (Aeion Tank)
@@ -295,17 +295,17 @@ Extra - asset_id: collision_camera_014
               Ice Beam or Space Jump or Simple IBJ
               Spider Ball and Lay Any Bomb
               High Jump Boots and Gravity Suit
-  > Tunnel to Spider Ball Room
+  > Tunnel to Spider Ball Chamber
       Lay Any Bomb
 
-> Tunnel to Spider Ball Room; Heals? False
+> Tunnel to Spider Ball Chamber; Heals? False
   * Layers: default
-  * Tunnel with Bomb Block to Spider Ball Room/Tunnel to Spider Ball Balcony
-  > Door to Shaft East
+  * Tunnel with Bomb Block to Spider Ball Chamber/Tunnel to Destroyed Armory
+  > Door to Inner Temple East Hall
       Trivial
 
 ----------------
-Spider Ball Room
+Spider Ball Chamber
 Extra - total_boundings: {'x1': 11850.0, 'x2': 14900.0, 'y1': 4100.0, 'y2': 8500.0}
 Extra - polygon: [[14900.0, 8500.0], [11850.0, 8500.0], [11850.0, 6200.0], [13300.0, 5400.0], [13300.0, 4100.0], [14900.0, 4100.0]]
 Extra - asset_id: collision_camera_016
@@ -314,7 +314,7 @@ Extra - asset_id: collision_camera_016
   * Pickup 22; Category? Minor
   * Extra - actor_name: LE_Item_013
   * Extra - actor_type: item_missiletank
-  > Tunnel to Spider Ball Balcony
+  > Tunnel to Destroyed Armory
       Lay Any Bomb
 
 > Pickup (Spider Ball); Heals? False
@@ -325,9 +325,9 @@ Extra - asset_id: collision_camera_016
   > Room Bottom
       Trivial
 
-> Door to Outer Hub; Heals? False
+> Door to Temple Exterior; Heals? False
   * Layers: default
-  * Power Beam Door to Outer Hub/Door to Spider Ball Room
+  * Power Beam Door to Temple Exterior/Door to Spider Ball Chamber
   * Extra - actor_name: Door017
   * Extra - actor_type: doorclosedpower
   > Pickup (Missile Tank)
@@ -336,31 +336,31 @@ Extra - asset_id: collision_camera_016
   > Room Bottom
       Morph Ball
 
-> Tunnel to Spider Ball Balcony; Heals? False
+> Tunnel to Destroyed Armory; Heals? False
   * Layers: default
-  * Tunnel with Bomb Block to Spider Ball Balcony/Tunnel to Spider Ball Room
+  * Tunnel with Bomb Block to Destroyed Armory/Tunnel to Spider Ball Chamber
   > Pickup (Missile Tank)
       Lay Any Bomb
 
-> Tunnel to Outer Hub; Heals? False
+> Tunnel to Temple Exterior; Heals? False
   * Layers: default
-  * Tunnel to Outer Hub/Tunnel to Spider Ball Room
-  > Door to Outer Hub
-      Trivial
+  * Tunnel to Temple Exterior/Tunnel to Spider Ball Chamber
+  > Door to Temple Exterior
+      Enabled Door Type Randomizer or Disabled Door Lock Randomizer
 
 > Room Bottom; Heals? False; Default Node
   * Layers: default
   * Extra - start_point_actor_name: ST_Checkpoint_007
   > Pickup (Spider Ball)
       Morph Ball
-  > Door to Outer Hub
+  > Door to Temple Exterior
       Any of the following:
           Climb Rooms Vertically (No High Jump)
           # Video with inputs: https://www.youtube.com/watch?v=QmXq9hl-oB4
           Morph Ball and Melee Clip (Advanced) and Single-wall Wall Jump (Advanced)
 
 ----------------
-Alpha Arena North
+Exterior Alpha Arena
 Extra - total_boundings: {'x1': 11870.0, 'x2': 15700.0, 'y1': 8800.0, 'y2': 10900.0}
 Extra - polygon: [[15700.0, 8800.0], [15700.0, 10900.0], [11870.0, 10900.0], [11870.0, 8800.0]]
 Extra - asset_id: collision_camera_017
@@ -372,17 +372,17 @@ Extra - asset_id: collision_camera_017
   > Above Arena
       Trivial
 
-> Door to Outer Hub; Heals? False
+> Door to Temple Exterior; Heals? False
   * Layers: default
-  * Power Beam Door to Outer Hub/Door to Alpha Arena North
+  * Power Beam Door to Temple Exterior/Door to Exterior Alpha Arena
   * Extra - actor_name: Door016
   * Extra - actor_type: doorpowerpower
   > Inside Arena
       Trivial
 
-> Tunnel to Outer Hub; Heals? False
+> Tunnel to Temple Exterior; Heals? False
   * Layers: default
-  * Tunnel to Outer Hub/Tunnel to Alpha Arena North
+  * Tunnel to Temple Exterior/Tunnel to Exterior Alpha Arena
   > Above Arena
       Morph Ball
 
@@ -397,7 +397,7 @@ Extra - asset_id: collision_camera_017
   * Extra - start_point_actor_name: ST_SG_Alpha_004B
   > Pickup (Energy Tank)
       Trivial
-  > Tunnel to Outer Hub
+  > Tunnel to Temple Exterior
       Morph Ball
   > Inside Arena
       Lay Any Bomb
@@ -405,7 +405,7 @@ Extra - asset_id: collision_camera_017
 > Inside Arena; Heals? False; Default Node
   * Layers: default
   * Extra - start_point_actor_name: ST_Alpha_004_Checkpoint
-  > Door to Outer Hub
+  > Door to Temple Exterior
       Trivial
   > Event - Alpha Metroid
       Defeat Alpha Metroid
@@ -423,7 +423,7 @@ Extra - asset_id: collision_camera_017
       Trivial
 
 ----------------
-Outer Hub
+Temple Exterior
 Extra - total_boundings: {'x1': -2600.0, 'x2': 11950.0, 'y1': 7600.0, 'y2': 14000.0}
 Extra - polygon: [[11950.0, 7600.0], [11950.0, 13100.0], [9400.0, 13100.0], [8000.0, 14000.0], [3100.0, 14000.0], [1900.0, 13100.0], [-2600.0, 13100.0], [-2600.0, 7600.0], [1400.0, 7600.0], [1400.0, 8700.0], [2800.0, 9300.0], [3400.0, 9300.0], [3400.0, 10400.0], [3800.0, 10600.0], [9100.0, 10600.0], [9200.0, 10500.0], [9200.0, 7600.0]]
 Extra - asset_id: collision_camera_018
@@ -468,43 +468,43 @@ Extra - asset_id: collision_camera_018
   * Extra - start_point_actor_name: ST_SaveStation004
   > Pickup (Missile Tank Crevice)
       Morph Ball and Climb Rooms Vertically (High Jump)
-  > Door to Shaft East
+  > Door to Inner Temple East Hall
       Trivial
-  > Door to Alpha Arena North
+  > Door to Exterior Alpha Arena
       Any of the following:
           Climb Rooms Vertically (No High Jump)
           # TODO: Record video
           High Jump Boots and Morph Ball and Super Jump (Advanced) and Unmorph Extend (Advanced)
-  > Door to Spider Ball Room
+  > Door to Spider Ball Chamber
       Trivial
-  > Tunnel to Spider Ball Room
+  > Tunnel to Spider Ball Chamber
       Morph Ball
   > Above Wall
       Climb Rooms Vertically (No High Jump)
 
-> Door to Shaft East; Heals? False
+> Door to Inner Temple East Hall; Heals? False
   * Layers: default
-  * Power Beam Door to Shaft East/Door to Outer Hub
+  * Power Beam Door to Inner Temple East Hall/Door to Temple Exterior
   * Extra - actor_name: Door012
   * Extra - actor_type: doorpowerpower
   > Save Station
       Trivial
 
-> Door to Alpha Arena North; Heals? False
+> Door to Exterior Alpha Arena; Heals? False
   * Layers: default
-  * Power Beam Door to Alpha Arena North/Door to Outer Hub
+  * Power Beam Door to Exterior Alpha Arena/Door to Temple Exterior
   * Extra - actor_name: Door016
   * Extra - actor_type: doorpowerpower
   > Save Station
       Trivial
-  > Tunnel to Alpha Arena North
+  > Tunnel to Exterior Alpha Arena
       Morph Ball and Melee Clip (Beginner) and Climb Rooms Vertically (No High Jump)
   > Start Point
       Trivial
 
-> Door to Spider Ball Room; Heals? False
+> Door to Spider Ball Chamber; Heals? False
   * Layers: default
-  * Access Locked to Spider Ball Room/Door to Outer Hub
+  * Access Locked to Spider Ball Chamber/Door to Temple Exterior
   * Extra - actor_name: Door017
   * Extra - actor_type: doorclosedpower
   > Save Station
@@ -520,31 +520,31 @@ Extra - asset_id: collision_camera_018
 
 > Dock to Outer Hub Access; Heals? False
   * Layers: default
-  * Open Passage to Outer Hub Access/Dock to Outer Hub
-  > Dock to Save Station North
+  * Open Passage to Outer Hub Access/Dock to Temple Exterior
+  > Dock to Inner Temple Save Station
       Trivial
 
-> Tunnel to Spider Ball Room; Heals? False
+> Tunnel to Spider Ball Chamber; Heals? False
   * Layers: default
-  * Tunnel to Spider Ball Room/Tunnel to Outer Hub
+  * Tunnel to Spider Ball Chamber/Tunnel to Temple Exterior
   > Save Station
       Morph Ball
 
-> Tunnel to Alpha Arena North; Heals? False
+> Tunnel to Exterior Alpha Arena; Heals? False
   * Layers: default
-  * Tunnel to Alpha Arena North/Tunnel to Outer Hub
-  > Door to Alpha Arena North
+  * Tunnel to Exterior Alpha Arena/Tunnel to Temple Exterior
+  > Door to Exterior Alpha Arena
       Morph Ball
 
-> Tunnel to Inner Shaft; Heals? False
+> Tunnel to Inner Temple Ventilation Shaft; Heals? False
   * Layers: default
-  * Tunnel with Bomb Block to Inner Shaft/Tunnel to Outer Hub
+  * Tunnel with Bomb Block to Inner Temple Ventilation Shaft/Tunnel to Temple Exterior
   > 2nd Level
       Trivial
 
-> Dock to Save Station North; Heals? False
+> Dock to Inner Temple Save Station; Heals? False
   * Layers: default
-  * Open Passage to Save Station North/Dock to Outer Hub
+  * Open Passage to Inner Temple Save Station/Dock to Temple Exterior
   > Dock to Outer Hub Access
       Trivial
   > 2nd Level
@@ -563,9 +563,9 @@ Extra - asset_id: collision_camera_018
 
 > 2nd Level; Heals? False
   * Layers: default
-  > Tunnel to Inner Shaft
+  > Tunnel to Inner Temple Ventilation Shaft
       Lay Any Bomb
-  > Dock to Save Station North
+  > Dock to Inner Temple Save Station
       Trivial
   > Above Wall
       Climb Rooms Vertically (No High Jump)
@@ -573,7 +573,7 @@ Extra - asset_id: collision_camera_018
 > Start Point; Heals? False
   * Layers: default
   * Extra - start_point_actor_name: ST_SG_Alpha_004
-  > Door to Alpha Arena North
+  > Door to Exterior Alpha Arena
       Trivial
 
 ----------------
@@ -743,7 +743,9 @@ Extra - asset_id: collision_camera_028
   * Layers: default
   * Open Passage to Shaft West/Dock to One-Way Puzzle
   > Door to Shaft West
-      Plasma Beam
+      All of the following:
+          Plasma Beam
+          Enabled Door Type Randomizer or Disabled Door Lock Randomizer
   > Dock to Save Station South
       Trivial
 
@@ -783,7 +785,7 @@ Extra - asset_id: collision_camera_028
       Trivial
 
 ----------------
-Ice Beam Room
+Ice Beam Chamber
 Extra - total_boundings: {'x1': 3800.0, 'x2': 6000.0, 'y1': 2400.0, 'y2': 4100.0}
 Extra - polygon: [[6000.0, 2400.0], [6000.0, 4100.0], [3800.0, 4100.0], [3800.0, 2400.0]]
 Extra - asset_id: collision_camera_030
@@ -795,9 +797,9 @@ Extra - asset_id: collision_camera_030
   > Room Center
       Trivial
 
-> Door to Ice Beam Tutorial; Heals? False
+> Door to Ice Beam Chamber Access; Heals? False
   * Layers: default
-  * Missile Door to Ice Beam Tutorial/Door to Ice Beam Room
+  * Missile Door to Ice Beam Chamber Access/Door to Ice Beam Chamber
   * Extra - actor_name: Door003
   * Extra - actor_type: doorpowerpower
   > Room Center
@@ -816,7 +818,7 @@ Extra - asset_id: collision_camera_030
   * Extra - start_point_actor_name: ST_CheckPoint_006
   > Pickup (Ice Beam)
       Trivial
-  > Door to Ice Beam Tutorial
+  > Door to Ice Beam Chamber Access
       Trivial
   > Pickup (Super Missile Tank)
       Baby Metroid and Morph Ball and Shoot Any Missile
@@ -899,18 +901,18 @@ Extra - asset_id: collision_camera_033
       Trivial
 
 ----------------
-Central Shaft
+Inner Temple West Hall
 Extra - total_boundings: {'x1': 2400.0, 'x2': 3900.0, 'y1': 2000.0, 'y2': 8600.0}
 Extra - polygon: [[2500.0, 8600.0], [2500.0, 3700.0], [2400.0, 3000.0], [2400.0, 2000.0], [3900.0, 2000.0], [3900.0, 8600.0]]
 Extra - asset_id: collision_camera_035
-> Door to Teleporter Access; Heals? False
+> Door to Inner Temple Teleporter Access; Heals? False
   * Layers: default
-  * Power Beam Door to Teleporter Access/Door to Central Shaft
+  * Power Beam Door to Inner Temple Teleporter Access/Door to Inner Temple West Hall
   * Extra - actor_name: Door006
   * Extra - actor_type: doorpowerpower
-  > Dock to Bomb Access
+  > Dock to Bomb Chamber Access
       Trivial
-  > Dock to Save Station North
+  > Dock to Inner Temple Save Station
       Any of the following:
           Climb Rooms Vertically (No High Jump)
           All of the following:
@@ -929,24 +931,24 @@ Extra - asset_id: collision_camera_035
 
 > Tunnel to Alpha Shaft Right; Heals? False
   * Layers: default
-  * Tunnel to Alpha Shaft Right/Tunnel to Central Shaft
-  > Dock to Bomb Access
+  * Tunnel to Alpha Shaft Right/Tunnel to Inner Temple West Hall
+  > Dock to Bomb Chamber Access
       Morph Ball
 
-> Dock to Bomb Access; Heals? False
+> Dock to Bomb Chamber Access; Heals? False
   * Layers: default
-  * Open Passage to Bomb Access/Dock to Central Shaft
-  > Door to Teleporter Access
+  * Open Passage to Bomb Chamber Access/Dock to Inner Temple West Hall
+  > Door to Inner Temple Teleporter Access
       Trivial
   > Tunnel to Alpha Shaft Right
       All of the following:
           Morph Ball
           Melee Clip (Beginner) or Single-wall Wall Jump (Intermediate) or Climb Rooms Vertically (High Jump)
 
-> Dock to Save Station North; Heals? False
+> Dock to Inner Temple Save Station; Heals? False
   * Layers: default
-  * Open Passage to Save Station North/Dock to Central Shaft
-  > Door to Teleporter Access
+  * Open Passage to Inner Temple Save Station/Dock to Inner Temple West Hall
+  > Door to Inner Temple Teleporter Access
       Trivial
 
 ----------------
@@ -1020,46 +1022,46 @@ Extra - asset_id: collision_camera_041
   * Open Passage to One-Way Puzzle/Dock from Save Station South
 
 ----------------
-Teleporter Access
+Inner Temple Teleporter Access
 Extra - total_boundings: {'x1': 3800.0, 'x2': 6000.0, 'y1': 5700.0, 'y2': 7000.0}
 Extra - polygon: [[6000.0, 5700.0], [6000.0, 7000.0], [3800.0, 7000.0], [3800.0, 5700.0]]
 Extra - asset_id: collision_camera_042
-> Door to Central Shaft; Heals? False
+> Door to Inner Temple West Hall; Heals? False
   * Layers: default
-  * Power Beam Door to Central Shaft/Door to Teleporter Access
+  * Power Beam Door to Inner Temple West Hall/Door to Inner Temple Teleporter Access
   * Extra - actor_name: Door006
   * Extra - actor_type: doorpowerpower
   > Room Center
       Trivial
 
-> Dock to Inner Shaft; Heals? False
+> Dock to Inner Temple Ventilation Shaft; Heals? False
   * Layers: default
-  * Open Passage to Inner Shaft/Dock to Teleporter Access
+  * Open Passage to Inner Temple Ventilation Shaft/Dock to Inner Temple Teleporter Access
   > Room Center
       Trivial
 
-> Tunnel to Teleporter Room; Heals? False
+> Tunnel to Inner Temple Teleporter; Heals? False
   * Layers: default
-  * Tunnel with Bomb Block to Teleporter Room/Tunnel to Teleporter Access
+  * Tunnel with Bomb Block to Inner Temple Teleporter/Tunnel to Inner Temple Teleporter Access
   > Room Center
       Morph Ball
 
 > Room Center; Heals? False; Default Node
   * Layers: default
   * Extra - start_point_actor_name: ST_DEBUG_CutsceneTeleport
-  > Door to Central Shaft
+  > Door to Inner Temple West Hall
       Trivial
-  > Tunnel to Teleporter Room
+  > Tunnel to Inner Temple Teleporter
       Lay Any Bomb
-  > Dock to Teleporter Room
+  > Dock to Inner Temple Teleporter
       Morph Ball and Melee Clip (Intermediate) and Fully Freeze Enemy
 
-> Dock to Teleporter Room; Heals? False
+> Dock to Inner Temple Teleporter; Heals? False
   * Layers: default
-  * Open Passage to Teleporter Room/Dock from Teleporter Access
+  * Open Passage to Inner Temple Teleporter/Dock from Inner Temple Teleporter Access
 
 ----------------
-Inner Shaft
+Inner Temple Ventilation Shaft
 Extra - total_boundings: {'x1': 3300.0, 'x2': 5100.0, 'y1': 6900.0, 'y2': 9500.0}
 Extra - polygon: [[5100.0, 6900.0], [5100.0, 9500.0], [3300.0, 9500.0], [3300.0, 8800.0], [3800.0, 8600.0], [3800.0, 6900.0]]
 Extra - asset_id: collision_camera_043
@@ -1068,35 +1070,35 @@ Extra - asset_id: collision_camera_043
   * Pickup 24; Category? Minor
   * Extra - actor_name: LE_Item_016
   * Extra - actor_type: item_missiletank
-  > Door to Inner Room
+  > Door to Inner Temple Upper Hallway
       Walljump (Intermediate) or Climb Rooms Vertically (No High Jump)
-  > Dock to Teleporter Access
+  > Dock to Inner Temple Teleporter Access
       Trivial
 
-> Door to Inner Room; Heals? False
+> Door to Inner Temple Upper Hallway; Heals? False
   * Layers: default
-  * Spazer Beam Door to Inner Room/Door to Inner Shaft
+  * Spazer Beam Door to Inner Temple Upper Hallway/Door to Inner Temple Ventilation Shaft
   * Extra - actor_name: Door007
   * Extra - actor_type: doorpowerpower
   > Pickup (Missile Tank)
       Space Jump or Walljump (Advanced) or Use Spider Ball
-  > Dock to Teleporter Access
+  > Dock to Inner Temple Teleporter Access
       Trivial
 
-> Dock to Teleporter Access; Heals? False
+> Dock to Inner Temple Teleporter Access; Heals? False
   * Layers: default
-  * Open Passage to Teleporter Access/Dock to Inner Shaft
+  * Open Passage to Inner Temple Teleporter Access/Dock to Inner Temple Ventilation Shaft
 
-> Tunnel to Outer Hub; Heals? False
+> Tunnel to Temple Exterior; Heals? False
   * Layers: default
-  * Tunnel with Bomb Block to Outer Hub/Tunnel to Inner Shaft
-  > Tunnel to Inner Room
+  * Tunnel with Bomb Block to Temple Exterior/Tunnel to Inner Temple Ventilation Shaft
+  > Tunnel to Inner Temple Upper Hallway
       Morph Ball
 
-> Tunnel to Inner Room; Heals? False
+> Tunnel to Inner Temple Upper Hallway; Heals? False
   * Layers: default
-  * Tunnel to Inner Room/Tunnel to Inner Shaft
-  > Tunnel to Outer Hub
+  * Tunnel to Inner Temple Upper Hallway/Tunnel to Inner Temple Ventilation Shaft
+  > Tunnel to Temple Exterior
       Lay Any Bomb
 
 ----------------
@@ -1109,7 +1111,7 @@ Extra - asset_id: collision_camera_044
   * Open Passage to Save Station South/Dock to Alpha Shaft Right
   > Tunnel to Save Station South
       Lay Any Bomb
-  > Tunnel to Central Shaft
+  > Tunnel to Inner Temple West Hall
       Morph Ball
   > Dock to Alpha Arena East Access
       Trivial
@@ -1120,9 +1122,9 @@ Extra - asset_id: collision_camera_044
   > Dock to Save Station South
       Lay Power Bomb
 
-> Tunnel to Central Shaft; Heals? False
+> Tunnel to Inner Temple West Hall; Heals? False
   * Layers: default
-  * Tunnel to Central Shaft/Tunnel to Alpha Shaft Right
+  * Tunnel to Inner Temple West Hall/Tunnel to Alpha Shaft Right
   > Dock to Save Station South
       Morph Ball
 
@@ -1168,32 +1170,32 @@ Extra - asset_id: collision_camera_045
       Trivial
 
 ----------------
-Bomb Access
+Bomb Chamber Access
 Extra - total_boundings: {'x1': -100.0, 'x2': 2600.0, 'y1': 4200.0, 'y2': 5400.0}
 Extra - polygon: [[2600.0, 4200.0], [2600.0, 5400.0], [-100.0, 5400.0], [-100.0, 4200.0]]
 Extra - asset_id: collision_camera_046
-> Door to Bomb Room; Heals? False
+> Door to Bomb Chamber; Heals? False
   * Layers: default
-  * Missile Door to Bomb Room/Door to Bomb Access
+  * Missile Door to Bomb Chamber/Door to Bomb Chamber Access
   * Extra - actor_name: Door004
   * Extra - actor_type: doorpowerpower
 
-> Dock to Central Shaft; Heals? False
+> Dock to Inner Temple West Hall; Heals? False
   * Layers: default
-  * Open Passage to Central Shaft/Dock to Bomb Access
-  > Door to Bomb Room
+  * Open Passage to Inner Temple West Hall/Dock to Bomb Chamber Access
+  > Door to Bomb Chamber
       Trivial
-  > Tunnel to Bomb Room
+  > Tunnel to Bomb Chamber
       Lay Any Bomb
 
-> Tunnel to Bomb Room; Heals? False
+> Tunnel to Bomb Chamber; Heals? False
   * Layers: default
-  * Tunnel with Bomb Block to Bomb Room/Tunnel to Bomb Access
-  > Dock to Central Shaft
+  * Tunnel with Bomb Block to Bomb Chamber/Tunnel to Bomb Chamber Access
+  > Dock to Inner Temple West Hall
       Morph Ball
 
 ----------------
-Save Station North
+Inner Temple Save Station
 Extra - total_boundings: {'x1': 1300.0, 'x2': 2600.0, 'y1': 7500.0, 'y2': 8500.0}
 Extra - polygon: [[2600.0, 7500.0], [2600.0, 8500.0], [1300.0, 8500.0], [1300.0, 7500.0]]
 Extra - asset_id: collision_camera_047
@@ -1202,54 +1204,54 @@ Extra - asset_id: collision_camera_047
   * Extra - actor_name: LE_Platform_SaveStation
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: ST_SaveStation
-  > Dock to Central Shaft
+  > Dock to Inner Temple West Hall
       Trivial
-  > Dock to Outer Hub
+  > Dock to Temple Exterior
       Trivial
 
-> Dock to Central Shaft; Heals? False
+> Dock to Inner Temple West Hall; Heals? False
   * Layers: default
-  * Open Passage to Central Shaft/Dock to Save Station North
+  * Open Passage to Inner Temple West Hall/Dock to Inner Temple Save Station
   > Save Station
       Trivial
 
-> Dock to Outer Hub; Heals? False
+> Dock to Temple Exterior; Heals? False
   * Layers: default
-  * Open Passage to Outer Hub/Dock to Save Station North
+  * Open Passage to Temple Exterior/Dock to Inner Temple Save Station
   > Save Station
       Trivial
 
 ----------------
-Inner Room
+Inner Temple Upper Hallway
 Extra - total_boundings: {'x1': 5000.0, 'x2': 7900.0, 'y1': 8700.0, 'y2': 10100.0}
 Extra - polygon: [[7900.0, 10100.0], [5000.0, 10100.0], [5000.0, 8700.0], [7900.0, 8700.0]]
 Extra - asset_id: collision_camera_048
-> Door to Inner Shaft; Heals? False
+> Door to Inner Temple Ventilation Shaft; Heals? False
   * Layers: default
-  * Spazer Beam Door to Inner Shaft/Door to Inner Room
+  * Spazer Beam Door to Inner Temple Ventilation Shaft/Door to Inner Temple Upper Hallway
   * Extra - actor_name: Door007
   * Extra - actor_type: doorpowerpower
-  > Door to Shaft East
+  > Door to Inner Temple East Hall
       Trivial
-  > Tunnel to Inner Shaft
+  > Tunnel to Inner Temple Ventilation Shaft
       Morph Ball
 
-> Door to Shaft East; Heals? False
+> Door to Inner Temple East Hall; Heals? False
   * Layers: default
-  * Access Locked to Shaft East/Door to Inner Room
+  * Access Locked to Inner Temple East Hall/Door to Inner Temple Upper Hallway
   * Extra - actor_name: Door013
   * Extra - actor_type: doorclosedpower
-  > Door to Inner Shaft
+  > Door to Inner Temple Ventilation Shaft
       Trivial
 
-> Tunnel to Inner Shaft; Heals? False
+> Tunnel to Inner Temple Ventilation Shaft; Heals? False
   * Layers: default
-  * Tunnel to Inner Shaft/Tunnel to Inner Room
-  > Door to Inner Shaft
+  * Tunnel to Inner Temple Ventilation Shaft/Tunnel to Inner Temple Upper Hallway
+  > Door to Inner Temple Ventilation Shaft
       Morph Ball
 
 ----------------
-Teleporter Room
+Inner Temple Teleporter
 Extra - total_boundings: {'x1': 5900.0, 'x2': 7900.0, 'y1': 5700.0, 'y2': 7100.0}
 Extra - polygon: [[7900.0, 7100.0], [5900.0, 7100.0], [5900.0, 5700.0], [7900.0, 5700.0]]
 Extra - asset_id: collision_camera_049
@@ -1259,21 +1261,21 @@ Extra - asset_id: collision_camera_049
   * Extra - actor_name: LE_Platform_Teleporter_01_01
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: ST_Teleporter_01_01
-  > Dock to Shaft East
+  > Dock to Inner Temple East Hall
       Trivial
 
-> Tunnel to Teleporter Access; Heals? False
+> Tunnel to Inner Temple Teleporter Access; Heals? False
   * Layers: default
-  * Tunnel with Bomb Block to Teleporter Access/Tunnel to Teleporter Room
-  > Dock to Shaft East
+  * Tunnel with Bomb Block to Inner Temple Teleporter Access/Tunnel to Inner Temple Teleporter
+  > Dock to Inner Temple East Hall
       Lay Any Bomb
 
-> Dock to Shaft East; Heals? False
+> Dock to Inner Temple East Hall; Heals? False
   * Layers: default
-  * Open Passage to Shaft East/Dock to Teleporter Room
+  * Open Passage to Inner Temple East Hall/Dock to Inner Temple Teleporter
   > Teleporter
       Trivial
-  > Tunnel to Teleporter Access
+  > Tunnel to Inner Temple Teleporter Access
       Lay Any Bomb
   > Event - Teleporter Unlocked
       Trivial
@@ -1281,35 +1283,35 @@ Extra - asset_id: collision_camera_049
 > Event - Teleporter Unlocked; Heals? False
   * Layers: default
   * Event Area 1 - Teleporter Unlocked
-  > Dock to Shaft East
+  > Dock to Inner Temple East Hall
       Trivial
 
-> Dock from Teleporter Access; Heals? False
+> Dock from Inner Temple Teleporter Access; Heals? False
   * Layers: default
-  * Blocked Passage to Teleporter Access/Dock to Teleporter Room
-  > Dock to Shaft East
+  * Blocked Passage to Inner Temple Teleporter Access/Dock to Inner Temple Teleporter
+  > Dock to Inner Temple East Hall
       Trivial
 
 ----------------
-Ice Beam Tutorial
+Ice Beam Chamber Access
 Extra - total_boundings: {'x1': 5900.0, 'x2': 8000.0, 'y1': 2300.0, 'y2': 3800.0}
 Extra - polygon: [[8000.0, 3800.0], [5900.0, 3800.0], [5900.0, 2300.0], [8000.0, 2300.0]]
 Extra - asset_id: collision_camera_050
-> Door to Ice Beam Room; Heals? False
+> Door to Ice Beam Chamber; Heals? False
   * Layers: default
-  * Missile Door to Ice Beam Room/Door to Ice Beam Tutorial
+  * Missile Door to Ice Beam Chamber/Door to Ice Beam Chamber Access
   * Extra - actor_name: Door003
   * Extra - actor_type: doorpowerpower
-  > Dock to Shaft East
+  > Dock to Inner Temple East Hall
       Any of the following:
           High Jump Boots or Ice Beam or Space Jump or Damage Boost (Intermediate) or Simple IBJ
           Spiderspark (Intermediate) and Can Spiderspark
           Morph Ball and Unmorph Extend (Beginner)
 
-> Dock to Shaft East; Heals? False
+> Dock to Inner Temple East Hall; Heals? False
   * Layers: default
-  * Open Passage to Shaft East/Dock to Ice Beam Tutorial
-  > Door to Ice Beam Room
+  * Open Passage to Inner Temple East Hall/Dock to Ice Beam Chamber Access
+  > Door to Ice Beam Chamber
       Trivial
 
 ----------------
@@ -1395,12 +1397,12 @@ Extra - asset_id: collision_camera_055
 > Dock to Shaft West; Heals? False
   * Layers: default
   * Open Passage to Shaft West/Dock to Outer Hub Access
-  > Dock to Outer Hub
+  > Dock to Temple Exterior
       Trivial
 
-> Dock to Outer Hub; Heals? False
+> Dock to Temple Exterior; Heals? False
   * Layers: default
-  * Open Passage to Outer Hub/Dock to Outer Hub Access
+  * Open Passage to Temple Exterior/Dock to Outer Hub Access
   > Dock to Shaft West
       Trivial
 

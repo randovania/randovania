@@ -1031,6 +1031,10 @@
             "Arachnus": {
                 "long_name": "Area 2 (Exterior) - Arachnus",
                 "extra": {}
+            },
+            "Area 2 (Entrance) - Transport to Area 2 Exterior Unlock Door": {
+                "long_name": "Area 2 (Entrance) - Transport to Area 2 Exterior Unlock Door",
+                "extra": {}
             }
         },
         "tricks": {
@@ -1217,6 +1221,14 @@
             },
             "ReverseArea8": {
                 "long_name": "Remove Queen Wall",
+                "extra": {}
+            },
+            "DoorLocks": {
+                "long_name": "Door Lock Randomizer",
+                "extra": {}
+            },
+            "DoorLockRandoTypes": {
+                "long_name": "Door Type Randomizer",
                 "extra": {}
             }
         },
@@ -1535,7 +1547,7 @@
                             "data": {
                                 "type": "items",
                                 "name": "MissileAmmo",
-                                "amount": 1,
+                                "amount": 16,
                                 "negate": false
                             }
                         },
@@ -1544,14 +1556,57 @@
                             "data": {
                                 "type": "items",
                                 "name": "SMAmmo",
-                                "amount": 1,
+                                "amount": 6,
                                 "negate": false
                             }
                         },
                         {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "Farming drops",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Combat",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "MissileAmmo",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "SMAmmo",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "type": "and",
+                            "data": {
+                                "comment": "No Missiles",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -1911,7 +1966,7 @@
                                         "data": {
                                             "type": "items",
                                             "name": "MissileAmmo",
-                                            "amount": 1,
+                                            "amount": 21,
                                             "negate": false
                                         }
                                     },
@@ -1920,14 +1975,57 @@
                                         "data": {
                                             "type": "items",
                                             "name": "SMAmmo",
-                                            "amount": 1,
+                                            "amount": 9,
                                             "negate": false
                                         }
                                     },
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Farming drops",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Combat",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "MissileAmmo",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "SMAmmo",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "No Missiles",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -4949,7 +5047,7 @@
             "name": "Not Determined"
         },
         "dock_rando": {
-            "force_change_two_way": false,
+            "force_change_two_way": true,
             "resolver_attempts": 125,
             "to_shuffle_proportion": 1.0
         }
@@ -4973,16 +5071,23 @@
             4,
             5
         ],
-        "FrozenEnemy": [
-            1,
-            2,
-            3
-        ],
         "SuperJump": [
             1,
             2,
             3,
             4
+        ],
+        "FrozenEnemy": [
+            1,
+            2,
+            3
+        ],
+        "Combat": [
+            1,
+            2,
+            3,
+            4,
+            5
         ],
         "UnmorphExtend": [
             1,
@@ -5068,13 +5173,6 @@
             2,
             3,
             4
-        ],
-        "Combat": [
-            1,
-            2,
-            3,
-            4,
-            5
         ],
         "PhaseClip": [
             2

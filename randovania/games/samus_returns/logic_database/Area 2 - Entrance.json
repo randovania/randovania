@@ -1082,13 +1082,6 @@
                                 "comment": null,
                                 "items": []
                             }
-                        },
-                        "Left of Statue": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
                         }
                     }
                 },
@@ -1144,7 +1137,7 @@
                                 "negate": false
                             }
                         },
-                        "Door to Main Shaft (Top)": {
+                        "Event - Unlock Door": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -1177,6 +1170,33 @@
                             "data": {
                                 "comment": null,
                                 "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Unlock Door": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 8093.15,
+                        "y": -357.81,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "Area 2 (Entrance) - Transport to Area 2 Exterior Unlock Door",
+                    "connections": {
+                        "Left of Statue": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -1402,8 +1422,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 8748.955012398157,
-                        "y": -339.06600543157396,
+                        "x": 8748.96,
+                        "y": -339.07,
                         "z": 0.0
                     },
                     "description": "",
@@ -1421,7 +1441,7 @@
                         "area": "Transport to Area 2 Exterior",
                         "node": "Door to Main Shaft (Top)"
                     },
-                    "default_dock_weakness": "Access Locked",
+                    "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -1510,10 +1530,46 @@
                             }
                         },
                         "Door to Transport to Area 2 Exterior (Top)": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Area 2 (Entrance) - Transport to Area 2 Exterior Unlock Door",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "DoorLocks",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "DoorLockRandoTypes",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }

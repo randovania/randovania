@@ -83,7 +83,7 @@ coll = COLLECT(exe, a.binaries, a.zipfiles, a.datas, strip=False, upx=False, nam
 app = BUNDLE(
     coll,
     name="Randovania.app",
-    icon="tools/sky_temple_key.icns",
+    icon="tools/rdv_logo.icns",
     bundle_identifier="run.metroidprime.randovania",
     info_plist={
         "LSBackgroundOnly": False,

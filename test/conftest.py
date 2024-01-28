@@ -292,6 +292,34 @@ def dread_spider_pickup(default_generator_params) -> PickupEntry:
 
 
 @pytest.fixture()
+def am2r_varia_pickup(default_generator_params) -> PickupEntry:
+    am2r_pickup_database = default_database.pickup_database_for_game(RandovaniaGame.AM2R)
+    return PickupEntry(
+        name="Varia Suit",
+        model=PickupModel(
+            game=RandovaniaGame.AM2R,
+            name="sItemVariaSuit",
+        ),
+        pickup_category=am2r_pickup_database.pickup_categories["suit"],
+        broad_category=am2r_pickup_database.pickup_categories["life_support"],
+        progression=(
+            (
+                ItemResourceInfo(
+                    resource_index=6,
+                    long_name="Varia Suit",
+                    short_name="Varia Suit",
+                    max_capacity=1,
+                ),
+                1,
+            ),
+        ),
+        generator_params=default_generator_params,
+        resource_lock=None,
+        unlocks_resource=False,
+    )
+
+
+@pytest.fixture()
 def cs_panties_pickup(default_generator_params) -> PickupEntry:
     cs_pickup_database = default_database.pickup_database_for_game(RandovaniaGame.CAVE_STORY)
     return PickupEntry(
