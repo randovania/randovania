@@ -79,7 +79,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ##### Ferenia
 
-- Changed: Using Speed Booster to reach the item at the top of Purple EMMI Introduction now requires Speeed Booster Conservation(Intermediate).
+- Changed: Using Speed Booster to reach the item at the top of Purple EMMI Introduction now requires Speed Booster Conservation (Intermediate).
 
 ##### Ghavoran
 
