@@ -352,7 +352,9 @@ class AM2RPatchDataFactory(PatchDataFactory):
             "etank_hud_rotation": c.etank_hud_rotation,
             "dna_hud_rotation": c.dna_hud_rotation,
             "room_names_on_hud": c.show_room_names.value,
-            "music_shuffle": _construct_music_shuffle_dict(c.music, Random(seed_number)),
+            "music_shuffle": _construct_music_shuffle_dict(
+                c.music if self.description.has_spoiler else MusicMode.VANILLA, Random(seed_number)
+            ),
         }
 
     def _get_text_data(self) -> dict:
