@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [7.3.0] - 2024-02-??
 
+- Added: Ability to turn off changing "to" Normal Doors in Door Type dock rando.
 - Fixed: For Linux and macOS, the auto tracker tooltip will not show black text on black background anymore.
 - Fixed: Searching for your own pickup in Multiworld sessions will now show only pickups which match *exactly* the name, instead of showing pickups which start with that name.
 - Fixed: The import in a multiworld session is blocked if it contains an unsupported game.
