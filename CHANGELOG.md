@@ -68,6 +68,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 #### Logic Database
 
 - Removed: It's no longer logical to push Wide Beam Blocks with Wave Beam without Wide Beam.
+- Fixed: All usages of Missiles now require the Missile Launcher.
 
 ##### Artaria
 
