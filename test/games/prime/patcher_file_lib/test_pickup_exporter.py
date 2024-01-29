@@ -258,9 +258,9 @@ def test_create_pickup_list(
         index=PickupIndex(1),
         name="P-Useless" if has_scan_text else "Unknown item",
         description="",
-        collection_text=["Useless acquired!"]
-        if model_style != PickupModelStyle.HIDE_ALL
-        else ["Unknown item acquired!"],
+        collection_text=(
+            ["Useless acquired!"] if model_style != PickupModelStyle.HIDE_ALL else ["Unknown item acquired!"]
+        ),
         conditional_resources=[ConditionalResources("Useless", None, ((useless_resource, 1),))],
         conversion=[],
         model=model_0 if model_style == PickupModelStyle.ALL_VISIBLE else useless_model,  # type: ignore [arg-type]
@@ -272,9 +272,11 @@ def test_create_pickup_list(
         index=PickupIndex(2),
         name="P-B" if has_scan_text else "Unknown item",
         description="Provides the following in order: B, A." if has_scan_text else "",
-        collection_text=["B acquired!", "A acquired!"]
-        if model_style != PickupModelStyle.HIDE_ALL
-        else ["Unknown item acquired!", "Unknown item acquired!"],
+        collection_text=(
+            ["B acquired!", "A acquired!"]
+            if model_style != PickupModelStyle.HIDE_ALL
+            else ["Unknown item acquired!", "Unknown item acquired!"]
+        ),
         conditional_resources=[
             ConditionalResources("B", None, ((resource_b, 1),)),
             ConditionalResources("A", resource_b, ((resource_a, 5),)),

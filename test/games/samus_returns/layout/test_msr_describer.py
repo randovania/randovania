@@ -62,9 +62,9 @@ def test_msr_format_params(artifacts):
         ],
         "Gameplay": ["Starts at Surface - East - Landing Site"],
         "Difficulty": [],
-        "Goal": [f"{artifacts.required_artifacts} Metroid DNA", dna_where]
-        if artifacts.required_artifacts
-        else [dna_where],
+        "Goal": (
+            [f"{artifacts.required_artifacts} Metroid DNA", dna_where] if artifacts.required_artifacts else [dna_where]
+        ),
         "Game Changes": [
             "Missile needs Launcher, Super Missile needs Launcher, Power Bomb needs Launcher",
             "Charge Door Buff, Beam Door Buff",
