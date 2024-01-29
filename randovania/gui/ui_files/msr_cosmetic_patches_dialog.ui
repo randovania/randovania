@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>524</width>
-    <height>346</height>
+    <height>415</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -46,17 +46,24 @@
         <x>0</x>
         <y>0</y>
         <width>504</width>
-        <height>299</height>
+        <height>368</height>
        </rect>
       </property>
-      <layout class="QVBoxLayout" name="verticalLayout">
-       <item>
-        <widget class="QGroupBox" name="game_changes_box">
+      <layout class="QGridLayout" name="gridLayout_2">
+       <item row="1" column="0">
+        <widget class="QGroupBox" name="groupBox">
          <property name="title">
-          <string>Game Changes</string>
+          <string> HUD Changes</string>
          </property>
-         <layout class="QGridLayout" name="gridLayout_2">
-          <item row="2" column="0" colspan="2">
+         <layout class="QVBoxLayout" name="verticalLayout">
+          <item alignment="Qt::AlignHCenter">
+           <widget class="QLabel" name="label">
+            <property name="text">
+             <string>Color choices may appear differently in-game than what is selected.</string>
+            </property>
+           </widget>
+          </item>
+          <item>
            <layout class="QHBoxLayout" name="energy_tank_color_layout">
             <property name="spacing">
              <number>6</number>
@@ -111,100 +118,7 @@
             </item>
            </layout>
           </item>
-          <item row="1" column="0" colspan="2">
-           <layout class="QGridLayout" name="grapple_color_layout">
-            <item row="1" column="1">
-             <widget class="QPushButton" name="custom_grapple_laser_unlocked_color_button">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="text">
-               <string>Set Unlocked Color...</string>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="2">
-             <widget class="QFrame" name="custom_grapple_laser_locked_color_square">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>22</width>
-                <height>22</height>
-               </size>
-              </property>
-              <property name="autoFillBackground">
-               <bool>false</bool>
-              </property>
-              <property name="frameShape">
-               <enum>QFrame::StyledPanel</enum>
-              </property>
-              <property name="frameShadow">
-               <enum>QFrame::Raised</enum>
-              </property>
-              <property name="lineWidth">
-               <number>1</number>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="1">
-             <widget class="QPushButton" name="custom_grapple_laser_locked_color_button">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="text">
-               <string>Set Locked Color...</string>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="2">
-             <widget class="QFrame" name="custom_grapple_laser_unlocked_color_square">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>22</width>
-                <height>22</height>
-               </size>
-              </property>
-              <property name="autoFillBackground">
-               <bool>false</bool>
-              </property>
-              <property name="frameShape">
-               <enum>QFrame::StyledPanel</enum>
-              </property>
-              <property name="frameShadow">
-               <enum>QFrame::Raised</enum>
-              </property>
-              <property name="lineWidth">
-               <number>1</number>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="0" rowspan="2">
-             <widget class="QCheckBox" name="custom_grapple_laser_color_check">
-              <property name="text">
-               <string>Use a custom Grapple Free-Aim Laser color</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-          <item row="3" column="0" colspan="2">
+          <item>
            <layout class="QHBoxLayout" name="aeion_bar_color_layout">
             <property name="spacing">
              <number>6</number>
@@ -259,7 +173,7 @@
             </item>
            </layout>
           </item>
-          <item row="4" column="0" rowspan="3" colspan="2">
+          <item>
            <layout class="QHBoxLayout" name="ammo_hud_color_layout">
             <property name="spacing">
              <number>6</number>
@@ -314,7 +228,16 @@
             </item>
            </layout>
           </item>
-          <item row="0" column="0" colspan="2">
+         </layout>
+        </widget>
+       </item>
+       <item row="0" column="0">
+        <widget class="QGroupBox" name="game_changes_box">
+         <property name="title">
+          <string>Samus Changes</string>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_2">
+          <item>
            <layout class="QGridLayout" name="laser_color_layout">
             <item row="0" column="1">
              <widget class="QPushButton" name="custom_laser_locked_color_button">
@@ -407,21 +330,101 @@
             </item>
            </layout>
           </item>
+          <item>
+           <layout class="QGridLayout" name="grapple_color_layout">
+            <item row="1" column="1">
+             <widget class="QPushButton" name="custom_grapple_laser_unlocked_color_button">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="text">
+               <string>Set Unlocked Color...</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="2">
+             <widget class="QFrame" name="custom_grapple_laser_locked_color_square">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>22</width>
+                <height>22</height>
+               </size>
+              </property>
+              <property name="autoFillBackground">
+               <bool>false</bool>
+              </property>
+              <property name="frameShape">
+               <enum>QFrame::StyledPanel</enum>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Raised</enum>
+              </property>
+              <property name="lineWidth">
+               <number>1</number>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <widget class="QPushButton" name="custom_grapple_laser_locked_color_button">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="text">
+               <string>Set Locked Color...</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="2">
+             <widget class="QFrame" name="custom_grapple_laser_unlocked_color_square">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>22</width>
+                <height>22</height>
+               </size>
+              </property>
+              <property name="autoFillBackground">
+               <bool>false</bool>
+              </property>
+              <property name="frameShape">
+               <enum>QFrame::StyledPanel</enum>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Raised</enum>
+              </property>
+              <property name="lineWidth">
+               <number>1</number>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="0" rowspan="2">
+             <widget class="QCheckBox" name="custom_grapple_laser_color_check">
+              <property name="text">
+               <string>Use a custom Grapple Free-Aim Laser color</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
          </layout>
         </widget>
-       </item>
-       <item>
-        <spacer name="verticalSpacer">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>131</height>
-          </size>
-         </property>
-        </spacer>
        </item>
       </layout>
      </widget>
