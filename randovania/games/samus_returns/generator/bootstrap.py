@@ -82,8 +82,8 @@ class MSRBootstrap(MetroidBootstrap):
 
         if configuration.elevator_grapple_blocks:
             for name in [
-                "Area 4 (West) - Transport Area Grapple Block Pull Right",
-                "Area 5 (Entrance) - Chozo Seal Grapple Block Bottom",
+                "Area 4 (Central Caverns) - Transport Area Grapple Block Pull Right",
+                "Area 5 (Marshy Lowlands) - Chozo Seal Grapple Block Bottom",
                 "Area 6 - Transport to Area 7 Grapple Block Pull",
                 "Area 7 - Transport to Area 8 Grapple Block",
             ]:
@@ -91,7 +91,7 @@ class MSRBootstrap(MetroidBootstrap):
 
         if configuration.area3_interior_shortcut_no_grapple:
             yield resource_database.get_event(
-                "Area 3 (Interior East) - Transport to Area 3 Interior West Grapple Block"
+                "Area 3 (Factory Interior) - Transport to Area 3 Metroid Caverns Grapple Block"
             ), 1
 
     def assign_pool_results(self, rng: Random, patches: GamePatches, pool_results: PoolResults) -> GamePatches:
