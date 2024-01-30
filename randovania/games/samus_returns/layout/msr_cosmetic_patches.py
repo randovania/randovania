@@ -6,7 +6,7 @@ from randovania.games.game import RandovaniaGame
 from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
 
 DEFAULT_LASER_LOCKED_COLOR = (255, 0, 0)
-DEFAULT_LASER_UNLOCKED_COLOR = (255, 127.5, 0)
+DEFAULT_LASER_UNLOCKED_COLOR = (255, 127, 0)
 DEFAULT_GRAPPLE_LASER_LOCKED_COLOR = (255, 255, 0)
 DEFAULT_GRAPPLE_LASER_UNLOCKED_COLOR = (0, 0, 255)
 DEFAULT_ENERGY_TANK_COLOR = (255, 255, 255)

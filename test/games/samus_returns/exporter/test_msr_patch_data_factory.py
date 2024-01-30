@@ -31,7 +31,9 @@ def test_create_patch_data(test_files_dir, rdvgame_filename, expected_results_fi
         grapple_laser_locked_color=(255, 0, 0),
         grapple_laser_unlocked_color=(255, 0, 0),
         use_energy_tank_color=False,
+        energy_tank_color=(255, 255, 255),
         use_aeion_bar_color=False,
+        aeion_bar_color=(255, 255, 255),
         use_ammo_hud_color=True,
         ammo_hud_color=(255, 0, 0),
     )
