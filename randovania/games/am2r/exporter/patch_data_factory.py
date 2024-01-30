@@ -154,9 +154,9 @@ class AM2RPatchDataFactory(PatchDataFactory):
                 "item_effect": pickup.original_pickup.name if not pickup.other_player else "Nothing",
                 "quantity": quantity,
                 "text": {
-                    "header": text_data[pickup.name]["text_header"]
-                    if not self.players_config.is_multiworld
-                    else pickup.name,
+                    "header": (
+                        text_data[pickup.name]["text_header"] if not self.players_config.is_multiworld else pickup.name
+                    ),
                     "description": pickup.collection_text[text_index],
                 },
             }

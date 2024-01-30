@@ -899,9 +899,10 @@ def test_verify_no_layout_description(clean_database, flask_app):
     user1 = database.User.create(id=1234, name="The Name")
     session = database.MultiplayerSession.create(id=1, name="Debug", creator=user1, layout_description_json="{}")
 
-    with pytest.raises(
-        error.InvalidActionError, match="Session has a generated game"
-    ), flask_app.test_request_context():
+    with (
+        pytest.raises(error.InvalidActionError, match="Session has a generated game"),
+        flask_app.test_request_context(),
+    ):
         session_admin._verify_no_layout_description(session)
 
 

@@ -128,9 +128,11 @@ def distribute_pre_fill_weaknesses(patches: GamePatches, rng: Random) -> GamePat
         patches = patches.assign_dock_weakness(
             (
                 node,
-                weakness
-                if compatible_weakness(node, weakness)
-                else weakness_database.dock_rando_params[node.dock_type].unlocked,
+                (
+                    weakness
+                    if compatible_weakness(node, weakness)
+                    else weakness_database.dock_rando_params[node.dock_type].unlocked
+                ),
             )
             for node in nodes_to_shuffle
             if (weakness := all_mapping.get(node.default_dock_weakness)) is not None
