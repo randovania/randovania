@@ -60,7 +60,7 @@ class MSRCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_MSRCosmeticPatchesD
         self.custom_aeion_bar_color_check.setChecked(patches.use_aeion_bar_color)
         self.custom_ammo_hud_color_check.setChecked(patches.use_ammo_hud_color)
 
-    def _open_color_picker(self, color, propertyName) -> None:
+    def _open_color_picker(self, color: tuple, propertyName: str) -> None:
         picker_result = QtWidgets.QColorDialog.getColor(QtGui.QColor(*color))
         if picker_result.isValid():
             color_tuple = (picker_result.red(), picker_result.green(), picker_result.blue())
