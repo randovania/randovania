@@ -1,5 +1,5 @@
 {
-    "name": "Area 2 - Entrance",
+    "name": "Area 2 - Subterranean Lake",
     "extra": {
         "asset_id": "maps/levels/c10_samus/s028_area2c/s028_area2c.bmsld",
         "map_min_x": 16,
@@ -112,7 +112,7 @@
                     "default_connection": {
                         "region": "Area 1",
                         "area": "Chozo Seal",
-                        "node": "Elevator to Area 2 - Entrance"
+                        "node": "Elevator to Area 2 - Subterranean Lake"
                     },
                     "default_dock_weakness": "Elevator",
                     "exclude_from_dock_rando": false,
@@ -129,7 +129,7 @@
                         }
                     }
                 },
-                "Elevator to Area 3 - Exterior": {
+                "Elevator to Area 3 - Factory Exterior": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -149,9 +149,9 @@
                     "valid_starting_location": false,
                     "dock_type": "elevator",
                     "default_connection": {
-                        "region": "Area 3 - Exterior",
-                        "area": "Transport to Area 2 Entrance",
-                        "node": "Elevator to Area 2 - Entrance"
+                        "region": "Area 3 - Factory Exterior",
+                        "area": "Transport to Area 2 Subterranean Lake",
+                        "node": "Elevator to Area 2 - Subterranean Lake"
                     },
                     "default_dock_weakness": "Elevator",
                     "exclude_from_dock_rando": false,
@@ -262,7 +262,7 @@
                                 ]
                             }
                         },
-                        "Elevator to Area 3 - Exterior": {
+                        "Elevator to Area 3 - Factory Exterior": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -358,7 +358,7 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 2 - Entrance",
+                        "region": "Area 2 - Subterranean Lake",
                         "area": "Teleporter Room",
                         "node": "Door to Chozo Seal (Top)"
                     },
@@ -396,7 +396,7 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 2 - Entrance",
+                        "region": "Area 2 - Subterranean Lake",
                         "area": "Teleporter Room",
                         "node": "Door to Chozo Seal (Bottom)"
                     },
@@ -540,7 +540,7 @@
                         "type": "resource",
                         "data": {
                             "type": "events",
-                            "name": "Area 2 Interior Teleporter",
+                            "name": "Area 2 Dam Interior Teleporter",
                             "amount": 1,
                             "negate": false
                         }
@@ -582,7 +582,7 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 2 - Entrance",
+                        "region": "Area 2 - Subterranean Lake",
                         "area": "Chozo Seal",
                         "node": "Door to Teleporter Room (Top)"
                     },
@@ -622,7 +622,7 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 2 - Entrance",
+                        "region": "Area 2 - Subterranean Lake",
                         "area": "Chozo Seal",
                         "node": "Door to Teleporter Room (Bottom)"
                     },
@@ -721,7 +721,7 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 2 - Entrance",
+                        "region": "Area 2 - Subterranean Lake",
                         "area": "Alpha+ Arena",
                         "node": "Door to Teleporter Room"
                     },
@@ -761,7 +761,7 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "event_name": "Area 2 Entrance Teleporter",
+                    "event_name": "Area 2 Subterranean Lake Teleporter",
                     "connections": {
                         "Below Teleporter": {
                             "type": "and",
@@ -854,8 +854,8 @@
                 }
             }
         },
-        "Transport to Area 2 Exterior": {
-            "default_node": "Elevator to Area 2 - Exterior",
+        "Transport to Area 2 Dam Exterior": {
+            "default_node": "Elevator to Area 2 - Dam Exterior",
             "extra": {
                 "total_boundings": {
                     "x1": 3900.0,
@@ -961,7 +961,7 @@
                         }
                     }
                 },
-                "Elevator to Area 2 - Exterior": {
+                "Elevator to Area 2 - Dam Exterior": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -981,9 +981,9 @@
                     "valid_starting_location": true,
                     "dock_type": "elevator",
                     "default_connection": {
-                        "region": "Area 2 - Exterior",
+                        "region": "Area 2 - Dam Exterior",
                         "area": "Outer Hub",
-                        "node": "Elevator to Area 2 - Entrance"
+                        "node": "Elevator to Area 2 - Subterranean Lake"
                     },
                     "default_dock_weakness": "Elevator",
                     "exclude_from_dock_rando": false,
@@ -1019,9 +1019,9 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 2 - Entrance",
+                        "region": "Area 2 - Subterranean Lake",
                         "area": "Main Shaft",
-                        "node": "Door to Transport to Area 2 Exterior (Bottom)"
+                        "node": "Door to Transport to Area 2 Dam Exterior (Bottom)"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -1066,9 +1066,9 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 2 - Entrance",
+                        "region": "Area 2 - Subterranean Lake",
                         "area": "Main Shaft",
-                        "node": "Door to Transport to Area 2 Exterior (Top)"
+                        "node": "Door to Transport to Area 2 Dam Exterior (Top)"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -1076,7 +1076,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Elevator to Area 2 - Exterior": {
+                        "Elevator to Area 2 - Dam Exterior": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1188,7 +1188,7 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "event_name": "Area 2 (Entrance) - Transport to Area 2 Exterior Unlock Door",
+                    "event_name": "Area 2 (Subterranean Lake) - Transport to Area 2 Dam Exterior Unlock Door",
                     "connections": {
                         "Left of Statue": {
                             "type": "resource",
@@ -1233,7 +1233,7 @@
                 "asset_id": "collision_camera_005"
             },
             "nodes": {
-                "Door to Transport to Area 2 Exterior (Bottom)": {
+                "Door to Transport to Area 2 Dam Exterior (Bottom)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1252,8 +1252,8 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 2 - Entrance",
-                        "area": "Transport to Area 2 Exterior",
+                        "region": "Area 2 - Subterranean Lake",
+                        "area": "Transport to Area 2 Dam Exterior",
                         "node": "Door to Main Shaft (Bottom)"
                     },
                     "default_dock_weakness": "Power Beam Door",
@@ -1418,7 +1418,7 @@
                         }
                     }
                 },
-                "Door to Transport to Area 2 Exterior (Top)": {
+                "Door to Transport to Area 2 Dam Exterior (Top)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1437,8 +1437,8 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 2 - Entrance",
-                        "area": "Transport to Area 2 Exterior",
+                        "region": "Area 2 - Subterranean Lake",
+                        "area": "Transport to Area 2 Dam Exterior",
                         "node": "Door to Main Shaft (Top)"
                     },
                     "default_dock_weakness": "Power Beam Door",
@@ -1472,7 +1472,7 @@
                     "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
-                        "region": "Area 2 - Entrance",
+                        "region": "Area 2 - Subterranean Lake",
                         "area": "Alpha+ Arena",
                         "node": "Dock to Main Shaft"
                     },
@@ -1482,7 +1482,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Transport to Area 2 Exterior (Bottom)": {
+                        "Door to Transport to Area 2 Dam Exterior (Bottom)": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -1529,7 +1529,7 @@
                                 ]
                             }
                         },
-                        "Door to Transport to Area 2 Exterior (Top)": {
+                        "Door to Transport to Area 2 Dam Exterior (Top)": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -1538,7 +1538,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "events",
-                                            "name": "Area 2 (Entrance) - Transport to Area 2 Exterior Unlock Door",
+                                            "name": "Area 2 (Subterranean Lake) - Transport to Area 2 Dam Exterior Unlock Door",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -1590,7 +1590,7 @@
                     "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
-                        "region": "Area 2 - Entrance",
+                        "region": "Area 2 - Subterranean Lake",
                         "area": "Water Storage",
                         "node": "Dock to Main Shaft"
                     },
@@ -1600,7 +1600,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Transport to Area 2 Exterior (Bottom)": {
+                        "Door to Transport to Area 2 Dam Exterior (Bottom)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1700,7 +1700,7 @@
                     "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
-                        "region": "Area 2 - Entrance",
+                        "region": "Area 2 - Subterranean Lake",
                         "area": "Main Shaft",
                         "node": "Dock to Water Storage"
                     },
@@ -1784,7 +1784,7 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 2 - Entrance",
+                        "region": "Area 2 - Subterranean Lake",
                         "area": "Teleporter Room",
                         "node": "Door to Alpha+ Arena"
                     },
@@ -1819,7 +1819,7 @@
                     "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
-                        "region": "Area 2 - Entrance",
+                        "region": "Area 2 - Subterranean Lake",
                         "area": "Main Shaft",
                         "node": "Dock to Alpha+ Arena"
                     },

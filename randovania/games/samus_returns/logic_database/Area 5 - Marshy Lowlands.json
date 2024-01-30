@@ -1,5 +1,5 @@
 {
-    "name": "Area 5 - Entrance",
+    "name": "Area 5 - Marshy Lowlands",
     "extra": {
         "asset_id": "maps/levels/c10_samus/s060_area6/s060_area6.bmsld",
         "map_min_x": 20,
@@ -70,7 +70,7 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Transport to Area 5 Interior (East)": {
+                        "Door to Transport to Area 5 Tower Interior (East)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -109,7 +109,7 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "events",
-                                                        "name": "Area 5 (Entrance) - Phase Drift Tutorial Grapple Block",
+                                                        "name": "Area 5 (Marshy Lowlands) - Phase Drift Tutorial Grapple Block",
                                                         "amount": 1,
                                                         "negate": false
                                                     }
@@ -204,7 +204,7 @@
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "events",
-                                                                    "name": "Area 5 (Entrance) - Phase Drift Tutorial Grapple Block",
+                                                                    "name": "Area 5 (Marshy Lowlands) - Phase Drift Tutorial Grapple Block",
                                                                     "amount": 1,
                                                                     "negate": true
                                                                 }
@@ -251,7 +251,7 @@
                         }
                     }
                 },
-                "Door to Transport to Area 5 Interior (East)": {
+                "Door to Transport to Area 5 Tower Interior (East)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -270,8 +270,8 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 5 - Entrance",
-                        "area": "Transport to Area 5 Interior (East)",
+                        "region": "Area 5 - Marshy Lowlands",
+                        "area": "Transport to Area 5 Tower Interior (East)",
                         "node": "Door to Phase Drift Tutorial"
                     },
                     "default_dock_weakness": "Power Beam Door",
@@ -308,7 +308,7 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 5 - Entrance",
+                        "region": "Area 5 - Marshy Lowlands",
                         "area": "Pool East",
                         "node": "Door to Phase Drift Tutorial"
                     },
@@ -350,7 +350,7 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "events",
-                                                        "name": "Area 5 (Entrance) - Phase Drift Tutorial Grapple Block",
+                                                        "name": "Area 5 (Marshy Lowlands) - Phase Drift Tutorial Grapple Block",
                                                         "amount": 1,
                                                         "negate": false
                                                     }
@@ -499,7 +499,7 @@
                     "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
-                        "region": "Area 5 - Entrance",
+                        "region": "Area 5 - Marshy Lowlands",
                         "area": "Connecting Tunnel",
                         "node": "Tunnel to Phase Drift Tutorial"
                     },
@@ -536,7 +536,7 @@
                     "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
-                        "region": "Area 5 - Entrance",
+                        "region": "Area 5 - Marshy Lowlands",
                         "area": "Phase Drift Room",
                         "node": "Dock to Phase Drift Tutorial"
                     },
@@ -561,7 +561,7 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "event_name": "Area 5 (Entrance) - Phase Drift Tutorial Grapple Block",
+                    "event_name": "Area 5 (Marshy Lowlands) - Phase Drift Tutorial Grapple Block",
                     "connections": {
                         "Save Station": {
                             "type": "and",
@@ -574,8 +574,8 @@
                 }
             }
         },
-        "Transport to Area 5 Interior (East)": {
-            "default_node": "Elevator to Area 5 - Interior",
+        "Transport to Area 5 Tower Interior (East)": {
+            "default_node": "Elevator to Area 5 - Tower Interior",
             "extra": {
                 "total_boundings": {
                     "x1": -5200.0,
@@ -604,7 +604,7 @@
                 "asset_id": "collision_camera_002"
             },
             "nodes": {
-                "Elevator to Area 5 - Interior": {
+                "Elevator to Area 5 - Tower Interior": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -624,9 +624,9 @@
                     "valid_starting_location": true,
                     "dock_type": "elevator",
                     "default_connection": {
-                        "region": "Area 5 - Interior",
-                        "area": "Transport to Area 5 Entrance (East)",
-                        "node": "Elevator to Area 5 - Entrance"
+                        "region": "Area 5 - Tower Interior",
+                        "area": "Transport to Area 5 Marshy Lowlands (East)",
+                        "node": "Elevator to Area 5 - Marshy Lowlands"
                     },
                     "default_dock_weakness": "Elevator",
                     "exclude_from_dock_rando": false,
@@ -753,9 +753,9 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 5 - Entrance",
+                        "region": "Area 5 - Marshy Lowlands",
                         "area": "Pool West",
-                        "node": "Door to Transport to Area 5 Interior (East)"
+                        "node": "Door to Transport to Area 5 Tower Interior (East)"
                     },
                     "default_dock_weakness": "Access Locked",
                     "exclude_from_dock_rando": false,
@@ -763,7 +763,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Elevator to Area 5 - Interior": {
+                        "Elevator to Area 5 - Tower Interior": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -825,9 +825,9 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 5 - Entrance",
+                        "region": "Area 5 - Marshy Lowlands",
                         "area": "Phase Drift Tutorial",
-                        "node": "Door to Transport to Area 5 Interior (East)"
+                        "node": "Door to Transport to Area 5 Tower Interior (East)"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -835,7 +835,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Elevator to Area 5 - Interior": {
+                        "Elevator to Area 5 - Tower Interior": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -998,7 +998,7 @@
             }
         },
         "Chozo Seal": {
-            "default_node": "Elevator to Area 4 - West",
+            "default_node": "Elevator to Area 4 - Central Caverns",
             "extra": {
                 "total_boundings": {
                     "x1": 11300.0,
@@ -1215,7 +1215,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "events",
-                                            "name": "Area 5 (Entrance) - Chozo Seal Grapple Block Middle",
+                                            "name": "Area 5 (Marshy Lowlands) - Chozo Seal Grapple Block Middle",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -1294,7 +1294,7 @@
                         }
                     },
                     "connections": {
-                        "Elevator to Area 4 - West": {
+                        "Elevator to Area 4 - Central Caverns": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -1357,7 +1357,7 @@
                         }
                     }
                 },
-                "Elevator to Area 4 - West": {
+                "Elevator to Area 4 - Central Caverns": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1377,9 +1377,9 @@
                     "valid_starting_location": true,
                     "dock_type": "elevator",
                     "default_connection": {
-                        "region": "Area 4 - West",
-                        "area": "Transport to Area 5 Entrance",
-                        "node": "Elevator to Area 5 - Entrance"
+                        "region": "Area 4 - Central Caverns",
+                        "area": "Transport to Area 5 Marshy Lowlands",
+                        "node": "Elevator to Area 5 - Marshy Lowlands"
                     },
                     "default_dock_weakness": "Elevator",
                     "exclude_from_dock_rando": false,
@@ -1417,8 +1417,8 @@
                     "dock_type": "elevator",
                     "default_connection": {
                         "region": "Area 6",
-                        "area": "Transport to Area 5 Entrance",
-                        "node": "Elevator to Area 5 - Entrance"
+                        "area": "Transport to Area 5 Marshy Lowlands",
+                        "node": "Elevator to Area 5 - Marshy Lowlands"
                     },
                     "default_dock_weakness": "Elevator",
                     "exclude_from_dock_rando": false,
@@ -1444,7 +1444,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "events",
-                                            "name": "Area 5 (Entrance) - Chozo Seal Grapple Block Bottom",
+                                            "name": "Area 5 (Marshy Lowlands) - Chozo Seal Grapple Block Bottom",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -1545,7 +1545,7 @@
                     "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
-                        "region": "Area 5 - Entrance",
+                        "region": "Area 5 - Marshy Lowlands",
                         "area": "Transport Hub Access",
                         "node": "Dock to Chozo Seal"
                     },
@@ -1580,7 +1580,7 @@
                     "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
-                        "region": "Area 5 - Entrance",
+                        "region": "Area 5 - Marshy Lowlands",
                         "area": "Transport Hub Access",
                         "node": "Tunnel to Chozo Seal"
                     },
@@ -1781,7 +1781,7 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "event_name": "Area 5 (Entrance) - Chozo Seal Grapple Block Middle",
+                    "event_name": "Area 5 (Marshy Lowlands) - Chozo Seal Grapple Block Middle",
                     "connections": {
                         "Below Center Tunnel": {
                             "type": "and",
@@ -1806,7 +1806,7 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "event_name": "Area 5 (Entrance) - Chozo Seal Grapple Block Top",
+                    "event_name": "Area 5 (Marshy Lowlands) - Chozo Seal Grapple Block Top",
                     "connections": {
                         "Next to Top Grapple Block": {
                             "type": "and",
@@ -1831,7 +1831,7 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "event_name": "Area 5 (Entrance) - Chozo Seal Grapple Block Bottom",
+                    "event_name": "Area 5 (Marshy Lowlands) - Chozo Seal Grapple Block Bottom",
                     "connections": {
                         "Elevator to Area 6": {
                             "type": "and",
@@ -1875,7 +1875,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "events",
-                                            "name": "Area 5 (Entrance) - Chozo Seal Grapple Block Middle",
+                                            "name": "Area 5 (Marshy Lowlands) - Chozo Seal Grapple Block Middle",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -1901,7 +1901,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "events",
-                                            "name": "Area 5 (Entrance) - Chozo Seal Grapple Block Bottom",
+                                            "name": "Area 5 (Marshy Lowlands) - Chozo Seal Grapple Block Bottom",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -2051,7 +2051,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "events",
-                                            "name": "Area 5 (Entrance) - Chozo Seal Grapple Block Top",
+                                            "name": "Area 5 (Marshy Lowlands) - Chozo Seal Grapple Block Top",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -2157,7 +2157,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "events",
-                                            "name": "Area 5 (Entrance) - Chozo Seal Grapple Block Top",
+                                            "name": "Area 5 (Marshy Lowlands) - Chozo Seal Grapple Block Top",
                                             "amount": 1,
                                             "negate": true
                                         }
@@ -2222,7 +2222,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "events",
-                                            "name": "Area 5 (Entrance) - Chozo Seal Grapple Block Top",
+                                            "name": "Area 5 (Marshy Lowlands) - Chozo Seal Grapple Block Top",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -2435,7 +2435,7 @@
                     "pickup_index": 106,
                     "location_category": "minor",
                     "connections": {
-                        "Door to Transport to Area 5 Interior (East)": {
+                        "Door to Transport to Area 5 Tower Interior (East)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2504,7 +2504,7 @@
                         "type": "resource",
                         "data": {
                             "type": "events",
-                            "name": "Area 5 Entrance Teleporter West",
+                            "name": "Area 5 Marshy Lowlands Teleporter West",
                             "amount": 1,
                             "negate": false
                         }
@@ -2527,7 +2527,7 @@
                         }
                     }
                 },
-                "Door to Transport to Area 5 Interior (East)": {
+                "Door to Transport to Area 5 Tower Interior (East)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2546,8 +2546,8 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 5 - Entrance",
-                        "area": "Transport to Area 5 Interior (East)",
+                        "region": "Area 5 - Marshy Lowlands",
+                        "area": "Transport to Area 5 Tower Interior (East)",
                         "node": "Door to Pool West"
                     },
                     "default_dock_weakness": "Power Beam Door",
@@ -2565,7 +2565,7 @@
                         }
                     }
                 },
-                "Door to Transport to Area 5 Interior (West)": {
+                "Door to Transport to Area 5 Tower Interior (West)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2584,8 +2584,8 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 5 - Entrance",
-                        "area": "Transport to Area 5 Interior (West)",
+                        "region": "Area 5 - Marshy Lowlands",
+                        "area": "Transport to Area 5 Tower Interior (West)",
                         "node": "Door to Pool West"
                     },
                     "default_dock_weakness": "Access Locked",
@@ -2622,7 +2622,7 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 5 - Entrance",
+                        "region": "Area 5 - Marshy Lowlands",
                         "area": "Gamma+ Arena Access",
                         "node": "Door to Pool West"
                     },
@@ -2657,7 +2657,7 @@
                     "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
-                        "region": "Area 5 - Entrance",
+                        "region": "Area 5 - Marshy Lowlands",
                         "area": "Connecting Tunnel",
                         "node": "Tunnel to Pool West (Top)"
                     },
@@ -2694,7 +2694,7 @@
                     "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
-                        "region": "Area 5 - Entrance",
+                        "region": "Area 5 - Marshy Lowlands",
                         "area": "Connecting Tunnel",
                         "node": "Tunnel to Pool West (Bottom)"
                     },
@@ -2755,7 +2755,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "events",
-                                            "name": "Area 5 (Entrance) - Pool Grapple Block",
+                                            "name": "Area 5 (Marshy Lowlands) - Pool Grapple Block",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -2859,7 +2859,7 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "event_name": "Area 5 (Entrance) - Pool Grapple Block",
+                    "event_name": "Area 5 (Marshy Lowlands) - Pool Grapple Block",
                     "connections": {
                         "Next to Grapple Block": {
                             "type": "and",
@@ -2998,7 +2998,7 @@
                                 "items": []
                             }
                         },
-                        "Door to Transport to Area 5 Interior (West)": {
+                        "Door to Transport to Area 5 Tower Interior (West)": {
                             "type": "template",
                             "data": "Climb Rooms Vertically (No High Jump)"
                         },
@@ -3034,7 +3034,7 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "event_name": "Area 5 Entrance Teleporter West",
+                    "event_name": "Area 5 Marshy Lowlands Teleporter West",
                     "connections": {
                         "Next to Teleporter": {
                             "type": "and",
@@ -3284,7 +3284,7 @@
                     "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
-                        "region": "Area 5 - Entrance",
+                        "region": "Area 5 - Marshy Lowlands",
                         "area": "Phase Drift Tutorial",
                         "node": "Tunnel to Connecting Tunnel"
                     },
@@ -3321,7 +3321,7 @@
                     "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
-                        "region": "Area 5 - Entrance",
+                        "region": "Area 5 - Marshy Lowlands",
                         "area": "Pool West",
                         "node": "Tunnel to Connecting Tunnel (Top)"
                     },
@@ -3358,7 +3358,7 @@
                     "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
-                        "region": "Area 5 - Entrance",
+                        "region": "Area 5 - Marshy Lowlands",
                         "area": "Pool West",
                         "node": "Tunnel to Connecting Tunnel (Bottom)"
                     },
@@ -3447,7 +3447,7 @@
                             "type": "resource",
                             "data": {
                                 "type": "events",
-                                "name": "Area 5 (Entrance) - Pool Grapple Block",
+                                "name": "Area 5 (Marshy Lowlands) - Pool Grapple Block",
                                 "amount": 1,
                                 "negate": false
                             }
@@ -3456,7 +3456,7 @@
                 }
             }
         },
-        "Transport to Area 5 Interior (West)": {
+        "Transport to Area 5 Tower Interior (West)": {
             "default_node": "Door to Pool West",
             "extra": {
                 "total_boundings": {
@@ -3486,7 +3486,7 @@
                 "asset_id": "collision_camera_010"
             },
             "nodes": {
-                "Elevator to Area 5 - Interior": {
+                "Elevator to Area 5 - Tower Interior": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3506,9 +3506,9 @@
                     "valid_starting_location": false,
                     "dock_type": "elevator",
                     "default_connection": {
-                        "region": "Area 5 - Interior",
-                        "area": "Transport to Area 5 Entrance (West)",
-                        "node": "Elevator to Area 5 - Entrance"
+                        "region": "Area 5 - Tower Interior",
+                        "area": "Transport to Area 5 Marshy Lowlands (West)",
+                        "node": "Elevator to Area 5 - Marshy Lowlands"
                     },
                     "default_dock_weakness": "Elevator",
                     "exclude_from_dock_rando": false,
@@ -3544,9 +3544,9 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 5 - Entrance",
+                        "region": "Area 5 - Marshy Lowlands",
                         "area": "Pool West",
-                        "node": "Door to Transport to Area 5 Interior (West)"
+                        "node": "Door to Transport to Area 5 Tower Interior (West)"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -3554,7 +3554,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Elevator to Area 5 - Interior": {
+                        "Elevator to Area 5 - Tower Interior": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3662,7 +3662,7 @@
                         "type": "resource",
                         "data": {
                             "type": "events",
-                            "name": "Area 5 Entrance Teleporter East",
+                            "name": "Area 5 Marshy Lowlands Teleporter East",
                             "amount": 1,
                             "negate": false
                         }
@@ -3704,7 +3704,7 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 5 - Entrance",
+                        "region": "Area 5 - Marshy Lowlands",
                         "area": "Transport Hub Access",
                         "node": "Door to Alpha+ Arena Access"
                     },
@@ -3756,7 +3756,7 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 5 - Entrance",
+                        "region": "Area 5 - Marshy Lowlands",
                         "area": "Alpha+ Arena",
                         "node": "Door to Alpha+ Arena Access"
                     },
@@ -3798,7 +3798,7 @@
                     "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
-                        "region": "Area 5 - Entrance",
+                        "region": "Area 5 - Marshy Lowlands",
                         "area": "Transport Hub Access",
                         "node": "Tunnel to Alpha+ Arena Access"
                     },
@@ -3833,7 +3833,7 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "event_name": "Area 5 (Entrance) - Alpha+ Arena Access Grapple Block",
+                    "event_name": "Area 5 (Marshy Lowlands) - Alpha+ Arena Access Grapple Block",
                     "connections": {
                         "Next to Pickup": {
                             "type": "and",
@@ -3858,7 +3858,7 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "event_name": "Area 5 Entrance Teleporter East",
+                    "event_name": "Area 5 Marshy Lowlands Teleporter East",
                     "connections": {
                         "Next to Teleporter": {
                             "type": "and",
@@ -4065,7 +4065,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "events",
-                                            "name": "Area 5 (Entrance) - Alpha+ Arena Access Grapple Block",
+                                            "name": "Area 5 (Marshy Lowlands) - Alpha+ Arena Access Grapple Block",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -4255,7 +4255,7 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 5 - Entrance",
+                        "region": "Area 5 - Marshy Lowlands",
                         "area": "Pool East",
                         "node": "Door to Alpha+ Arena"
                     },
@@ -4293,7 +4293,7 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 5 - Entrance",
+                        "region": "Area 5 - Marshy Lowlands",
                         "area": "Alpha+ Arena Access",
                         "node": "Door to Alpha+ Arena"
                     },
@@ -4454,7 +4454,7 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 5 - Entrance",
+                        "region": "Area 5 - Marshy Lowlands",
                         "area": "Pool West",
                         "node": "Door to Gamma+ Arena Access"
                     },
@@ -4493,7 +4493,7 @@
                     "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
-                        "region": "Area 5 - Entrance",
+                        "region": "Area 5 - Marshy Lowlands",
                         "area": "Gamma+ Arena",
                         "node": "Tunnel to Gamma+ Arena Access"
                     },
@@ -4727,7 +4727,7 @@
                     "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
-                        "region": "Area 5 - Entrance",
+                        "region": "Area 5 - Marshy Lowlands",
                         "area": "Phase Drift Tutorial",
                         "node": "Dock to Phase Drift Room"
                     },
@@ -4762,7 +4762,7 @@
                     "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
-                        "region": "Area 5 - Entrance",
+                        "region": "Area 5 - Marshy Lowlands",
                         "area": "Pool East",
                         "node": "Tunnel to Phase Drift Room (Top)"
                     },
@@ -4799,7 +4799,7 @@
                     "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
-                        "region": "Area 5 - Entrance",
+                        "region": "Area 5 - Marshy Lowlands",
                         "area": "Pool East",
                         "node": "Tunnel to Phase Drift Room (Bottom)"
                     },
@@ -5023,7 +5023,7 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 5 - Entrance",
+                        "region": "Area 5 - Marshy Lowlands",
                         "area": "Phase Drift Tutorial",
                         "node": "Door to Pool East"
                     },
@@ -5065,7 +5065,7 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 5 - Entrance",
+                        "region": "Area 5 - Marshy Lowlands",
                         "area": "Alpha+ Arena",
                         "node": "Door to Pool East"
                     },
@@ -5100,7 +5100,7 @@
                     "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
-                        "region": "Area 5 - Entrance",
+                        "region": "Area 5 - Marshy Lowlands",
                         "area": "Phase Drift Room",
                         "node": "Tunnel to Pool East (Top)"
                     },
@@ -5132,7 +5132,7 @@
                     "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
-                        "region": "Area 5 - Entrance",
+                        "region": "Area 5 - Marshy Lowlands",
                         "area": "Phase Drift Room",
                         "node": "Tunnel to Pool East (Bottom)"
                     },
@@ -5450,7 +5450,7 @@
                     "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
-                        "region": "Area 5 - Entrance",
+                        "region": "Area 5 - Marshy Lowlands",
                         "area": "Gamma+ Arena Access",
                         "node": "Tunnel to Gamma+ Arena"
                     },
@@ -5658,7 +5658,7 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 5 - Entrance",
+                        "region": "Area 5 - Marshy Lowlands",
                         "area": "Alpha+ Arena Access",
                         "node": "Door to Transport Hub Access"
                     },
@@ -5693,7 +5693,7 @@
                     "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
-                        "region": "Area 5 - Entrance",
+                        "region": "Area 5 - Marshy Lowlands",
                         "area": "Alpha+ Arena Access",
                         "node": "Tunnel to Transport Hub Access"
                     },
@@ -5730,7 +5730,7 @@
                     "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
-                        "region": "Area 5 - Entrance",
+                        "region": "Area 5 - Marshy Lowlands",
                         "area": "Chozo Seal",
                         "node": "Dock to Transport Hub Access"
                     },
@@ -5765,7 +5765,7 @@
                     "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
-                        "region": "Area 5 - Entrance",
+                        "region": "Area 5 - Marshy Lowlands",
                         "area": "Chozo Seal",
                         "node": "Tunnel to Transport Hub Access"
                     },
@@ -5826,7 +5826,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "events",
-                                            "name": "Area 5 (Entrance) - Alpha+ Arena Access Grapple Block",
+                                            "name": "Area 5 (Marshy Lowlands) - Alpha+ Arena Access Grapple Block",
                                             "amount": 1,
                                             "negate": false
                                         }

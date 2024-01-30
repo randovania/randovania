@@ -13,16 +13,16 @@ Extra - asset_id: collision_camera
 
 > Elevator to Area 1; Heals? False; Spawn Point; Default Node
   * Layers: default
-  * Elevator to Chozo Seal/Elevator to Area 2 - Entrance
+  * Elevator to Chozo Seal/Elevator to Area 2 - Subterranean Lake
   * Extra - actor_name: LE_Platform_Elevator_FromArea01
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: ST_FromArea01
   > Save Station
       Trivial
 
-> Elevator to Area 3 - Exterior; Heals? False
+> Elevator to Area 3 - Factory Exterior; Heals? False
   * Layers: default
-  * Elevator to Transport to Area 2 Entrance/Elevator to Area 2 - Entrance
+  * Elevator to Transport to Area 2 Subterranean Lake/Elevator to Area 2 - Subterranean Lake
   * Extra - actor_name: LE_Platform_Elevator_FromArea03
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: ST_FromArea03
@@ -49,7 +49,7 @@ Extra - asset_id: collision_camera
   * Extra - start_point_actor_name: ST_ChozoUnlockAreaDNA_Checkpoint
   > Pickup (Missile Tank)
       Lightning Armor and Lay Any Bomb
-  > Elevator to Area 3 - Exterior
+  > Elevator to Area 3 - Factory Exterior
       Morph Ball
   > Save Station
       Morph Ball
@@ -101,7 +101,7 @@ Extra - asset_id: collision_camera_003
 
 > Teleporter; Heals? False
   * Layers: default
-  * Teleporter Network (Unlocked by After Area 2 (Interior) - Teleporter Unlocked)
+  * Teleporter Network (Unlocked by After Area 2 (Dam Interior) - Teleporter Unlocked)
   * Extra - actor_name: LE_Platform_Teleporter_02_01
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: ST_Teleporter_02_01
@@ -141,7 +141,7 @@ Extra - asset_id: collision_camera_003
 
 > Event - Teleporter Unlocked; Heals? False
   * Layers: default
-  * Event Area 2 (Entrance) - Teleporter Unlocked
+  * Event Area 2 (Subterranean Lake) - Teleporter Unlocked
   > Below Teleporter
       Trivial
 
@@ -165,7 +165,7 @@ Extra - asset_id: collision_camera_003
       Trivial
 
 ----------------
-Transport to Area 2 Exterior
+Transport to Area 2 Dam Exterior
 Extra - total_boundings: {'x1': 3900.0, 'x2': 8800.0, 'y1': -3000.0, 'y2': 700.0}
 Extra - polygon: [[3900.0, 700.0], [3900.0, -2500.0], [5600.0, -2500.0], [7200.0, -3000.0], [8800.0, -3000.0], [8800.0, 700.0]]
 Extra - asset_id: collision_camera_004
@@ -187,9 +187,9 @@ Extra - asset_id: collision_camera_004
   > Left of Statue
       Morph Ball
 
-> Elevator to Area 2 - Exterior; Heals? False; Spawn Point; Default Node
+> Elevator to Area 2 - Dam Exterior; Heals? False; Spawn Point; Default Node
   * Layers: default
-  * Elevator to Outer Hub/Elevator to Area 2 - Entrance
+  * Elevator to Outer Hub/Elevator to Area 2 - Subterranean Lake
   * Extra - actor_name: LE_Platform_Elevator_FromArea02A
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: ST_FromArea02A
@@ -198,7 +198,7 @@ Extra - asset_id: collision_camera_004
 
 > Door to Main Shaft (Bottom); Heals? False
   * Layers: default
-  * Power Beam Door to Main Shaft/Door to Transport to Area 2 Exterior (Bottom)
+  * Power Beam Door to Main Shaft/Door to Transport to Area 2 Dam Exterior (Bottom)
   * Extra - actor_name: Door001
   * Extra - actor_type: doorpowerpower
   > Pickup (Lightning Armor)
@@ -208,10 +208,10 @@ Extra - asset_id: collision_camera_004
 
 > Door to Main Shaft (Top); Heals? False
   * Layers: default
-  * Power Beam Door to Main Shaft/Door to Transport to Area 2 Exterior (Top)
+  * Power Beam Door to Main Shaft/Door to Transport to Area 2 Dam Exterior (Top)
   * Extra - actor_name: Door003
   * Extra - actor_type: doorpowerclosed
-  > Elevator to Area 2 - Exterior
+  > Elevator to Area 2 - Dam Exterior
       Trivial
 
 > Left of Statue; Heals? False
@@ -232,7 +232,7 @@ Extra - asset_id: collision_camera_004
 
 > Event - Unlock Door; Heals? False
   * Layers: default
-  * Event Area 2 (Entrance) - Transport to Area 2 Exterior Unlock Door
+  * Event Area 2 (Subterranean Lake) - Transport to Area 2 Dam Exterior Unlock Door
   > Left of Statue
       Morph Ball
 
@@ -241,9 +241,9 @@ Main Shaft
 Extra - total_boundings: {'x1': 8700.0, 'x2': 10500.0, 'y1': -3000.0, 'y2': 100.0}
 Extra - polygon: [[8700.0, 100.0], [8700.0, -3000.0], [10500.0, -3000.0], [10500.0, 100.0]]
 Extra - asset_id: collision_camera_005
-> Door to Transport to Area 2 Exterior (Bottom); Heals? False
+> Door to Transport to Area 2 Dam Exterior (Bottom); Heals? False
   * Layers: default
-  * Power Beam Door to Transport to Area 2 Exterior/Door to Main Shaft (Bottom)
+  * Power Beam Door to Transport to Area 2 Dam Exterior/Door to Main Shaft (Bottom)
   * Extra - actor_name: Door001
   * Extra - actor_type: doorpowerpower
   > Dock to Alpha+ Arena
@@ -259,9 +259,9 @@ Extra - asset_id: collision_camera_005
           Single-wall Wall Jump (Intermediate) or Climb Rooms Vertically (High Jump)
           Lightning Armor and Walljump (Beginner)
 
-> Door to Transport to Area 2 Exterior (Top); Heals? False
+> Door to Transport to Area 2 Dam Exterior (Top); Heals? False
   * Layers: default
-  * Power Beam Door to Transport to Area 2 Exterior/Door to Main Shaft (Top)
+  * Power Beam Door to Transport to Area 2 Dam Exterior/Door to Main Shaft (Top)
   * Extra - actor_name: Door003
   * Extra - actor_type: doorpowerclosed
   > Dock to Alpha+ Arena
@@ -270,19 +270,19 @@ Extra - asset_id: collision_camera_005
 > Dock to Alpha+ Arena; Heals? False
   * Layers: default
   * Open Passage to Alpha+ Arena/Dock to Main Shaft
-  > Door to Transport to Area 2 Exterior (Bottom)
+  > Door to Transport to Area 2 Dam Exterior (Bottom)
       Any of the following:
           Lightning Armor or Use Spider Ball
           Movement (Intermediate) and Normal Damage ≥ 99
-  > Door to Transport to Area 2 Exterior (Top)
+  > Door to Transport to Area 2 Dam Exterior (Top)
       Any of the following:
-          After Area 2 (Entrance) - Transport to Area 2 Exterior Unlock Door
+          After Area 2 (Subterranean Lake) - Transport to Area 2 Dam Exterior Unlock Door
           Disabled Door Type Randomizer and Enabled Door Lock Randomizer
 
 > Dock to Water Storage; Heals? False
   * Layers: default
   * Open Passage to Water Storage/Dock to Main Shaft
-  > Door to Transport to Area 2 Exterior (Bottom)
+  > Door to Transport to Area 2 Dam Exterior (Bottom)
       Trivial
 
 ----------------
@@ -327,7 +327,7 @@ Extra - asset_id: collision_camera_007
 
 > Event - Alpha Metroid+; Heals? False
   * Layers: default
-  * Event Area 2 (Entrance) - Alpha Metroid
+  * Event Area 2 (Subterranean Lake) - Alpha Metroid
   > Pickup (DNA)
       Trivial
 
