@@ -27,10 +27,6 @@ def _area_name(region_list: RegionList, pickup_node: PickupNode, hide_region: bo
         return region_list.area_name(area)
 
 
-def colorize_text(text: str, with_color: bool) -> str:
-    return text
-
-
 class MSRHintNamer(HintNamer):
     location_formatters: dict[HintLocationPrecision, LocationFormatter]
 
@@ -49,17 +45,17 @@ class MSRHintNamer(HintNamer):
             ),
             HintLocationPrecision.RELATIVE_TO_AREA: RelativeAreaFormatter(
                 patches,
-                lambda msg, with_color: colorize_text(msg, with_color),
+                lambda msg, with_color: msg,
             ),
             HintLocationPrecision.RELATIVE_TO_INDEX: RelativeItemFormatter(
                 patches,
-                lambda msg, with_color: colorize_text(msg, with_color),
+                lambda msg, with_color: msg,
                 players_config,
             ),
         }
 
     def format_resource_is_starting(self, resource: ItemResourceInfo, with_color: bool) -> str:
-        """Used when for when an item has a guaranteed hint, but is a starting item."""
+        """Used for when an item has a guaranteed hint, but is a starting item."""
         if resource.short_name.startswith("Metroid DNA "):
             return f"The Hunter already started with {resource.long_name}"
 

@@ -32,12 +32,12 @@ class PresetMSRHints(PresetTab, Ui_PresetMSRHints):
     def uses_patches_tab(cls) -> bool:
         return False
 
-    def _on_art_combo_changed(self, new_index: int):
+    def _on_art_combo_changed(self, new_index: int) -> None:
         with self._editor as editor:
             editor.set_configuration_field(
                 "hints",
                 dataclasses.replace(editor.configuration.hints, artifacts=self.hint_artifact_combo.currentData()),
             )
 
-    def on_preset_changed(self, preset: Preset):
+    def on_preset_changed(self, preset: Preset) -> None:
         set_combo_with_value(self.hint_artifact_combo, preset.configuration.hints.artifacts)
