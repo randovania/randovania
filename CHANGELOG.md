@@ -61,6 +61,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Distribution Center Exterior West: Shinesparking to get the top Missile Tank is now an intermediate shinesparking trick.
 - Changed: Bullet Hell Room Access: Shinesparking to get from `Door to Bullet Hell Room` to `Door to Distribution Facility Intersection` now requires an intermediate shinesparking trick.
 
+### Cave Story
+
+- Fixed: The name for Puppy locations and Labyrinth Shop locations will now be shown correctly on the Location Pool tab.
+
 ### Metroid Dread
 
 - Added: Changing the volume of the music, SFX and background ambience is now possible via cosmetic options.
