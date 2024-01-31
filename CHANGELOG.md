@@ -22,7 +22,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### AM2R
 
-- **Major** - Added: Multiworld support for AM2R. 
+- **Major** - Added: Multiworld support for AM2R.
+- Added: Auto-Tracker functionality.
 - Changed: Minimal Logic has been adjusted. It now also checks for Morph Ball, Missile Launcher, the DNA and the Baby collection.
 - Changed: The Baby now checks for all DNA being collected and will display a message if not.
 
