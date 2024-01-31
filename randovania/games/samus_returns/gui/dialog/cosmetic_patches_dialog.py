@@ -102,10 +102,5 @@ class MSRCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_MSRCosmeticPatchesD
     def cosmetic_patches(self) -> MSRCosmeticPatches:
         return self._cosmetic_patches
 
-    def _on_check_update(self, check: QtWidgets.QCheckBox, field_name: str, _: None) -> None:
-        self.preferences = dataclasses.replace(
-            self.preferences, **{field_name: check.isChecked()}  # type: ignore[arg-type]
-        )
-
     def reset(self) -> None:
         self.on_new_cosmetic_patches(MSRCosmeticPatches())
