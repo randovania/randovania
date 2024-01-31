@@ -232,6 +232,11 @@ def fusion_game_patches(default_fusion_configuration, fusion_game_description) -
 
 
 @pytest.fixture(scope="session")
+def planets_zebeth_game_description() -> GameDescription:
+    return default_database.game_description_for(RandovaniaGame.METROID_PLANETS_ZEBETH)
+
+
+@pytest.fixture(scope="session")
 def randomizer_data() -> dict:
     return decode_randomizer_data()
 
