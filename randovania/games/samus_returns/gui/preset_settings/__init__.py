@@ -23,12 +23,12 @@ def msr_preset_tabs(editor: PresetEditor, window_manager: WindowManager) -> list
     return [
         PresetTrickLevel,
         PresetGeneration,
+        PresetMSRGoal,
+        PresetMSRHints,
         PresetMetroidStartingArea,
         PresetLocationPool,
-        PresetMSRGoal,
         MetroidPresetItemPool,
         PresetMSRAeion,
-        PresetMSRHints,
         PresetMSRReserves,
         PresetMSRPatches,
     ]
