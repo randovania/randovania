@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
+from randovania.games.samus_returns.layout.hint_configuration import ItemHintMode
 from randovania.games.samus_returns.layout.msr_configuration import MSRArtifactConfig, MSRConfiguration
 from randovania.layout.preset_describer import (
     GamePresetDescriber,
@@ -48,12 +49,21 @@ def describe_artifacts(artifacts: MSRArtifactConfig) -> list[dict[str, bool]]:
         ]
 
 
+_MSR_HINT_TEXT = {
+    ItemHintMode.DISABLED: None,
+    ItemHintMode.HIDE_AREA: "Area only",
+    ItemHintMode.PRECISE: "Area and room",
+}
+
+
 class MSRPresetDescriber(GamePresetDescriber):
     def format_params(self, configuration: BaseConfiguration) -> dict[str, list[str]]:
         assert isinstance(configuration, MSRConfiguration)
 
         standard_pickups = configuration.standard_pickup_configuration
         template_strings = super().format_params(configuration)
+
+        dna_hint = _MSR_HINT_TEXT[configuration.hints.artifacts]
 
         extra_message_tree = {
             "Logic Settings": [
@@ -118,6 +128,9 @@ class MSRPresetDescriber(GamePresetDescriber):
                 {
                     "Enable Reverse Area 8": configuration.reverse_area8,
                 },
+            ],
+            "Hints": [
+                {f"DNA Hints: {dna_hint}": dna_hint is not None},
             ],
         }
         fill_template_strings_from_tree(template_strings, extra_message_tree)
