@@ -207,11 +207,13 @@ class PlayerState:
                         elevators.get_elevator_or_area_name(
                             self.game.game, wl, wl.identifier_for_node(node).area_location, True
                         ),
-                        elevators.get_elevator_or_area_name(
-                            self.game.game, wl, wl.identifier_for_node(other).area_location, True
-                        )
-                        if other is not None
-                        else "<Not connected>",
+                        (
+                            elevators.get_elevator_or_area_name(
+                                self.game.game, wl, wl.identifier_for_node(other).area_location, True
+                            )
+                            if other is not None
+                            else "<Not connected>"
+                        ),
                     )
                 )
 

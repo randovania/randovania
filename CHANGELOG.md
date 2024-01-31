@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Searching for your own pickup in Multiworld sessions will now show only pickups which match *exactly* the name, instead of showing pickups which start with that name.
 - Fixed: The import in a multiworld session is blocked if it contains an unsupported game.
 - Fixed: Opening the webbrowser for Discord Login doesn't fail on Linux anymore.
+- Changed: Scanning ammo in the Prime games will now show nicer text for items that provide negative ammo or multiple positive ammo.
 - Fixed: For Windows, the game select tooltip will not render as grey text on grey background in darkmode.
 - Added: Games display a banner if they are multiworld compatible.
 
@@ -67,6 +68,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 #### Logic Database
 
 - Removed: It's no longer logical to push Wide Beam Blocks with Wave Beam without Wide Beam.
+- Fixed: All usages of Missiles now require the Missile Launcher.
+  - Affects:
+    - Fighting Corpius with Normal Missiles.
+    - The part of the Z57 fight where you use Storm Missiles to stop the healing.
+    - Breaking the Missile Blocks in Dairon - Transport to Artaria.
+    - Fighting Escue with Normal Missiles.
+    - Fighting Golzuna with Storm Missiles and Normal Missiles.
+    - Fighting Central Units.
 
 ##### Artaria
 
@@ -81,6 +90,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ##### Ferenia
 
 - Changed: Using Speed Booster to reach the item at the top of Purple EMMI Introduction now requires Speed Booster Conservation (Intermediate).
+- Fixed: Energy Recharge Station (Gate): Clearing the Grapple Block from the Upper Bomb Ledge now additionally requires the Main Power Bomb instead of only Power Bomb Ammo.
+  - All the other usages of Power Bombs in this area also now require the Main Power Bomb.
 
 ##### Ghavoran
 
