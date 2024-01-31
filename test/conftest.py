@@ -203,6 +203,11 @@ def msr_game_description() -> GameDescription:
 
 
 @pytest.fixture(scope="session")
+def planets_zebeth_game_description() -> GameDescription:
+    return default_database.game_description_for(RandovaniaGame.METROID_PLANETS_ZEBETH)
+
+
+@pytest.fixture(scope="session")
 def randomizer_data() -> dict:
     return decode_randomizer_data()
 
