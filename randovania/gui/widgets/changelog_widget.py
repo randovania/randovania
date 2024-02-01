@@ -36,8 +36,6 @@ class ChangeLogWidget(QtWidgets.QWidget):
         self.changelog = QtWidgets.QStackedWidget(self)
         layout.addWidget(self.changelog)
 
-        self.setup_lables()
-
         self.startFetchingData.connect(self.setup_lables)
         self.doneFetchingData.connect(lambda: self.changelog.setCurrentIndex(0))
 
