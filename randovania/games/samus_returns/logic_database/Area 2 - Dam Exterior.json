@@ -1,5 +1,5 @@
 {
-    "name": "Area 2 - Exterior",
+    "name": "Area 2 - Dam Exterior",
     "extra": {
         "asset_id": "maps/levels/c10_samus/s020_area2/s020_area2.bmsld",
         "map_min_x": 16,
@@ -10,7 +10,7 @@
     },
     "areas": {
         "Outer Hub": {
-            "default_node": "Elevator to Area 2 - Entrance",
+            "default_node": "Elevator to Area 2 - Dam Entryway",
             "extra": {
                 "total_boundings": {
                     "x1": -13000.0,
@@ -163,7 +163,7 @@
                     "pickup_index": 34,
                     "location_category": "minor",
                     "connections": {
-                        "Elevator to Area 2 - Entrance": {
+                        "Elevator to Area 2 - Dam Entryway": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -172,7 +172,7 @@
                         }
                     }
                 },
-                "Elevator to Area 2 - Interior": {
+                "Elevator to Area 2 - Dam Interior": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -192,9 +192,9 @@
                     "valid_starting_location": false,
                     "dock_type": "elevator",
                     "default_connection": {
-                        "region": "Area 2 - Interior",
+                        "region": "Area 2 - Dam Interior",
                         "area": "Main Hub",
-                        "node": "Elevator to Area 2 - Exterior"
+                        "node": "Elevator to Area 2 - Dam Exterior"
                     },
                     "default_dock_weakness": "Elevator",
                     "exclude_from_dock_rando": false,
@@ -253,7 +253,7 @@
                         }
                     }
                 },
-                "Elevator to Area 2 - Entrance": {
+                "Elevator to Area 2 - Dam Entryway": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -273,9 +273,9 @@
                     "valid_starting_location": true,
                     "dock_type": "elevator",
                     "default_connection": {
-                        "region": "Area 2 - Entrance",
-                        "area": "Transport to Area 2 Exterior",
-                        "node": "Elevator to Area 2 - Exterior"
+                        "region": "Area 2 - Dam Entryway",
+                        "area": "Transport to Area 2 Dam Exterior",
+                        "node": "Elevator to Area 2 - Dam Exterior"
                     },
                     "default_dock_weakness": "Elevator",
                     "exclude_from_dock_rando": false,
@@ -481,7 +481,7 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Elevator to Area 2 - Entrance": {
+                        "Elevator to Area 2 - Dam Entryway": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -512,7 +512,7 @@
                         "type": "resource",
                         "data": {
                             "type": "events",
-                            "name": "Area 2 Exterior Teleporter Upper",
+                            "name": "Area 2 Dam Exterior Teleporter Upper",
                             "amount": 1,
                             "negate": false
                         }
@@ -526,7 +526,7 @@
                         }
                     },
                     "connections": {
-                        "Elevator to Area 2 - Interior": {
+                        "Elevator to Area 2 - Dam Interior": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -554,7 +554,7 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 2 - Exterior",
+                        "region": "Area 2 - Dam Exterior",
                         "area": "Arachnus Arena",
                         "node": "Door from Outer Hub"
                     },
@@ -613,7 +613,7 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 2 - Exterior",
+                        "region": "Area 2 - Dam Exterior",
                         "area": "Outer Hub Shaft",
                         "node": "Door to Outer Hub (Bottom)"
                     },
@@ -623,7 +623,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Elevator to Area 2 - Interior": {
+                        "Elevator to Area 2 - Dam Interior": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -665,7 +665,7 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 2 - Exterior",
+                        "region": "Area 2 - Dam Exterior",
                         "area": "Outer Hub Shaft",
                         "node": "Door to Outer Hub (Top)"
                     },
@@ -675,7 +675,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Elevator to Area 2 - Interior": {
+                        "Elevator to Area 2 - Dam Interior": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -703,7 +703,7 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 2 - Exterior",
+                        "region": "Area 2 - Dam Exterior",
                         "area": "Rock Icicle Path",
                         "node": "Door to Outer Hub"
                     },
@@ -713,7 +713,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Elevator to Area 2 - Interior": {
+                        "Elevator to Area 2 - Dam Interior": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -815,7 +815,7 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 2 - Exterior",
+                        "region": "Area 2 - Dam Exterior",
                         "area": "Arachnus Exit",
                         "node": "Door to Outer Hub"
                     },
@@ -853,7 +853,7 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 2 - Exterior",
+                        "region": "Area 2 - Dam Exterior",
                         "area": "Split Pathways",
                         "node": "Door to Outer Hub"
                     },
@@ -863,7 +863,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Elevator to Area 2 - Entrance": {
+                        "Elevator to Area 2 - Dam Entryway": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -891,7 +891,7 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 2 - Exterior",
+                        "region": "Area 2 - Dam Exterior",
                         "area": "Alpha+ Arena North",
                         "node": "Door to Outer Hub"
                     },
@@ -931,9 +931,9 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "event_name": "Area 2 Exterior Teleporter Upper",
+                    "event_name": "Area 2 Dam Exterior Teleporter Upper",
                     "connections": {
-                        "Elevator to Area 2 - Interior": {
+                        "Elevator to Area 2 - Dam Interior": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -958,7 +958,7 @@
                     "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
-                        "region": "Area 2 - Exterior",
+                        "region": "Area 2 - Dam Exterior",
                         "area": "Split Pathways",
                         "node": "Tunnel to Outer Hub"
                     },
@@ -968,7 +968,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Elevator to Area 2 - Entrance": {
+                        "Elevator to Area 2 - Dam Entryway": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -994,7 +994,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Elevator to Area 2 - Entrance": {
+                        "Elevator to Area 2 - Dam Entryway": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1149,7 +1149,7 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 2 - Exterior",
+                        "region": "Area 2 - Dam Exterior",
                         "area": "Outer Hub",
                         "node": "Door to Arachnus Arena"
                     },
@@ -1184,7 +1184,7 @@
                     "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
-                        "region": "Area 2 - Exterior",
+                        "region": "Area 2 - Dam Exterior",
                         "area": "Spring Ball Tutorial",
                         "node": "Tunnel to Arachnus Arena"
                     },
@@ -1442,7 +1442,7 @@
                     "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
-                        "region": "Area 2 - Exterior",
+                        "region": "Area 2 - Dam Exterior",
                         "area": "Arachnus Arena",
                         "node": "Tunnel to Spring Ball Tutorial"
                     },
@@ -1503,7 +1503,7 @@
                     "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
-                        "region": "Area 2 - Exterior",
+                        "region": "Area 2 - Dam Exterior",
                         "area": "Arachnus Exit",
                         "node": "Tunnel to Spring Ball Tutorial"
                     },
@@ -1618,7 +1618,7 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 2 - Exterior",
+                        "region": "Area 2 - Dam Exterior",
                         "area": "Outer Hub",
                         "node": "Door to Split Pathways"
                     },
@@ -1658,7 +1658,7 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 2 - Exterior",
+                        "region": "Area 2 - Dam Exterior",
                         "area": "Alpha Arena North",
                         "node": "Door to Split Pathways"
                     },
@@ -1703,7 +1703,7 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 2 - Exterior",
+                        "region": "Area 2 - Dam Exterior",
                         "area": "Rock Icicle Path",
                         "node": "Door to Split Pathways"
                     },
@@ -1771,7 +1771,7 @@
                     "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
-                        "region": "Area 2 - Exterior",
+                        "region": "Area 2 - Dam Exterior",
                         "area": "Outer Hub",
                         "node": "Tunnel to Split Pathways"
                     },
@@ -2036,7 +2036,7 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 2 - Exterior",
+                        "region": "Area 2 - Dam Exterior",
                         "area": "Outer Hub",
                         "node": "Door to Outer Hub Shaft (Bottom)"
                     },
@@ -2074,7 +2074,7 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 2 - Exterior",
+                        "region": "Area 2 - Dam Exterior",
                         "area": "Outer Hub",
                         "node": "Door to Outer Hub Shaft (Top)"
                     },
@@ -2112,7 +2112,7 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 2 - Exterior",
+                        "region": "Area 2 - Dam Exterior",
                         "area": "Alpha Shaft",
                         "node": "Door to Outer Hub Shaft"
                     },
@@ -2241,7 +2241,7 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 2 - Exterior",
+                        "region": "Area 2 - Dam Exterior",
                         "area": "Ammo Station Access",
                         "node": "Door to Outer Hub Shaft"
                     },
@@ -2305,7 +2305,7 @@
                     "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
-                        "region": "Area 2 - Exterior",
+                        "region": "Area 2 - Dam Exterior",
                         "area": "Grapple Gap",
                         "node": "Tunnel to Outer Hub Shaft (Bottom)"
                     },
@@ -2342,7 +2342,7 @@
                     "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
-                        "region": "Area 2 - Exterior",
+                        "region": "Area 2 - Dam Exterior",
                         "area": "Grapple Gap",
                         "node": "Tunnel to Outer Hub Shaft (Top)"
                     },
@@ -2440,7 +2440,7 @@
                     "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
-                        "region": "Area 2 - Exterior",
+                        "region": "Area 2 - Dam Exterior",
                         "area": "Outer Hub Shaft",
                         "node": "Tunnel to Grapple Gap (Bottom)"
                     },
@@ -2557,7 +2557,7 @@
                     "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
-                        "region": "Area 2 - Exterior",
+                        "region": "Area 2 - Dam Exterior",
                         "area": "Outer Hub Shaft",
                         "node": "Tunnel to Grapple Gap (Top)"
                     },
@@ -2733,7 +2733,7 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 2 - Exterior",
+                        "region": "Area 2 - Dam Exterior",
                         "area": "Outer Hub Shaft",
                         "node": "Door to Ammo Station Access"
                     },
@@ -2773,7 +2773,7 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 2 - Exterior",
+                        "region": "Area 2 - Dam Exterior",
                         "area": "Ammo Recharge Station",
                         "node": "Door to Ammo Station Access"
                     },
@@ -2868,7 +2868,7 @@
                     "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
-                        "region": "Area 2 - Exterior",
+                        "region": "Area 2 - Dam Exterior",
                         "area": "Alpha Shaft",
                         "node": "Tunnel to Glow Fly Tunnel"
                     },
@@ -2990,7 +2990,7 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 2 - Exterior",
+                        "region": "Area 2 - Dam Exterior",
                         "area": "Outer Hub Shaft",
                         "node": "Door to Alpha Shaft"
                     },
@@ -3028,7 +3028,7 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 2 - Exterior",
+                        "region": "Area 2 - Dam Exterior",
                         "area": "Alpha Arena West",
                         "node": "Door to Alpha Shaft"
                     },
@@ -3088,7 +3088,7 @@
                     "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
-                        "region": "Area 2 - Exterior",
+                        "region": "Area 2 - Dam Exterior",
                         "area": "Alpha Arena South Access",
                         "node": "Dock to Alpha Shaft"
                     },
@@ -3123,7 +3123,7 @@
                     "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
-                        "region": "Area 2 - Exterior",
+                        "region": "Area 2 - Dam Exterior",
                         "area": "Glow Fly Tunnel",
                         "node": "Tunnel to Alpha Shaft"
                     },
@@ -3193,7 +3193,7 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 2 - Exterior",
+                        "region": "Area 2 - Dam Exterior",
                         "area": "Hot Split",
                         "node": "Door to Alpha Arena West"
                     },
@@ -3231,7 +3231,7 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 2 - Exterior",
+                        "region": "Area 2 - Dam Exterior",
                         "area": "Alpha Shaft",
                         "node": "Door to Alpha Arena West"
                     },
@@ -3600,7 +3600,7 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 2 - Exterior",
+                        "region": "Area 2 - Dam Exterior",
                         "area": "Alpha Arena West",
                         "node": "Door to Hot Split"
                     },
@@ -3649,7 +3649,7 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 2 - Exterior",
+                        "region": "Area 2 - Dam Exterior",
                         "area": "Alpha Arena Heated",
                         "node": "Door to Hot Split"
                     },
@@ -3696,7 +3696,7 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 2 - Exterior",
+                        "region": "Area 2 - Dam Exterior",
                         "area": "Fiery Crossing",
                         "node": "Door to Hot Split"
                     },
@@ -3796,7 +3796,7 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 2 - Exterior",
+                        "region": "Area 2 - Dam Exterior",
                         "area": "Hot Split",
                         "node": "Door to Alpha Arena Heated"
                     },
@@ -4001,7 +4001,7 @@
                     "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
-                        "region": "Area 2 - Exterior",
+                        "region": "Area 2 - Dam Exterior",
                         "area": "Alpha Arena South",
                         "node": "Tunnel to Alpha Arena South Access"
                     },
@@ -4042,7 +4042,7 @@
                     "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
-                        "region": "Area 2 - Exterior",
+                        "region": "Area 2 - Dam Exterior",
                         "area": "Alpha Shaft",
                         "node": "Dock to Alpha Arena South Access"
                     },
@@ -4197,7 +4197,7 @@
                         "type": "resource",
                         "data": {
                             "type": "events",
-                            "name": "Area 2 Exterior Teleporter Heat",
+                            "name": "Area 2 Dam Exterior Teleporter Heat",
                             "amount": 1,
                             "negate": false
                         }
@@ -4241,7 +4241,7 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 2 - Exterior",
+                        "region": "Area 2 - Dam Exterior",
                         "area": "Hot Split",
                         "node": "Door to Fiery Crossing"
                     },
@@ -4281,7 +4281,7 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 2 - Exterior",
+                        "region": "Area 2 - Dam Exterior",
                         "area": "Alpha+ Arena Heated",
                         "node": "Door to Fiery Crossing"
                     },
@@ -4404,7 +4404,7 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "event_name": "Area 2 Exterior Teleporter Heat",
+                    "event_name": "Area 2 Dam Exterior Teleporter Heat",
                     "connections": {
                         "Below Pickup": {
                             "type": "and",
@@ -4755,7 +4755,7 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 2 - Exterior",
+                        "region": "Area 2 - Dam Exterior",
                         "area": "Alpha+ Storage",
                         "node": "Door to Alpha+ Arena North"
                     },
@@ -4793,7 +4793,7 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 2 - Exterior",
+                        "region": "Area 2 - Dam Exterior",
                         "area": "Outer Hub",
                         "node": "Door to Alpha+ Arena North"
                     },
@@ -4983,7 +4983,7 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 2 - Exterior",
+                        "region": "Area 2 - Dam Exterior",
                         "area": "Alpha+ Arena North",
                         "node": "Door to Alpha+ Storage"
                     },
@@ -5125,7 +5125,7 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 2 - Exterior",
+                        "region": "Area 2 - Dam Exterior",
                         "area": "Fiery Crossing",
                         "node": "Door to Alpha+ Arena Heated"
                     },
@@ -5300,7 +5300,7 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 2 - Exterior",
+                        "region": "Area 2 - Dam Exterior",
                         "area": "Split Pathways",
                         "node": "Door to Alpha Arena North"
                     },
@@ -5454,7 +5454,7 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 2 - Exterior",
+                        "region": "Area 2 - Dam Exterior",
                         "area": "Outer Hub",
                         "node": "Door to Rock Icicle Path"
                     },
@@ -5492,7 +5492,7 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 2 - Exterior",
+                        "region": "Area 2 - Dam Exterior",
                         "area": "Split Pathways",
                         "node": "Door to Rock Icicle Path"
                     },
@@ -5562,7 +5562,7 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 2 - Exterior",
+                        "region": "Area 2 - Dam Exterior",
                         "area": "Outer Hub",
                         "node": "Door from Arachnus Exit"
                     },
@@ -5594,7 +5594,7 @@
                     "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
-                        "region": "Area 2 - Exterior",
+                        "region": "Area 2 - Dam Exterior",
                         "area": "Spring Ball Tutorial",
                         "node": "Tunnel to Arachnus Exit"
                     },
@@ -5693,7 +5693,7 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 2 - Exterior",
+                        "region": "Area 2 - Dam Exterior",
                         "area": "Ammo Station Access",
                         "node": "Door to Ammo Recharge Station"
                     },
@@ -5760,7 +5760,7 @@
                     "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
-                        "region": "Area 2 - Exterior",
+                        "region": "Area 2 - Dam Exterior",
                         "area": "Alpha Arena South Access",
                         "node": "Tunnel to Alpha Arena South"
                     },
