@@ -44,8 +44,7 @@ class Logic:
     def set_additional_requirements(self, node: Node, req: RequirementSet):
         self.additional_requirements[node.node_index] = req
 
-    @property
-    def victory_condition(self) -> Requirement:
+    def victory_condition(self, state: State) -> Requirement:
         return self.game.victory_condition
 
     def _indent(self, offset=0):

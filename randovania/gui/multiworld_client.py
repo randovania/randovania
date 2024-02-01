@@ -5,6 +5,7 @@ import dataclasses
 import logging
 from typing import TYPE_CHECKING
 
+import construct
 from frozendict import frozendict
 from PySide6 import QtCore
 from qasync import asyncSlot
@@ -85,14 +86,18 @@ class MultiworldClient(QtCore.QObject):
             if state.id == INVALID_UUID:
                 continue
 
+            inventory = None
+            if state.status == GameConnectionStatus.InGame:
+                try:
+                    inventory = remote_inventory.inventory_to_encoded_remote(state.current_inventory)
+                except construct.ConstructError:
+                    # TODO: display this somehow in the UI?
+                    self.logger.exception("Unable to encode inventory for sync request")
+
             sync_requests[state.id] = ServerWorldSync(
                 status=state.status,
                 collected_locations=self.database.get_locations_to_upload(state.id),
-                inventory=(
-                    remote_inventory.inventory_to_encoded_remote(state.current_inventory)
-                    if state.status == GameConnectionStatus.InGame
-                    else None
-                ),
+                inventory=inventory,
                 request_details=state.id not in self._worlds_with_details,
             )
 

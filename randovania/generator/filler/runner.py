@@ -1,9 +1,13 @@
 from __future__ import annotations
 
-import dataclasses
 from typing import TYPE_CHECKING
 
-from randovania.generator.filler.filler_configuration import FillerConfiguration
+from randovania.generator.filler.filler_configuration import (
+    FillerConfiguration,
+    FillerPlayerResult,
+    FillerResults,
+    PlayerPool,
+)
 from randovania.generator.filler.filler_library import UnableToGenerate
 from randovania.generator.filler.player_state import PlayerState
 from randovania.generator.filler.retcon import retcon_playthrough_filler
@@ -12,34 +16,6 @@ from randovania.resolver import debug
 if TYPE_CHECKING:
     from collections.abc import Callable
     from random import Random
-
-    from randovania.game_description.game_description import GameDescription
-    from randovania.game_description.game_patches import GamePatches
-    from randovania.game_description.pickup.pickup_entry import PickupEntry
-    from randovania.games.game import GameGenerator
-    from randovania.layout.base.base_configuration import BaseConfiguration
-
-
-@dataclasses.dataclass(frozen=True)
-class PlayerPool:
-    game: GameDescription
-    game_generator: GameGenerator
-    configuration: BaseConfiguration
-    patches: GamePatches
-    pickups: list[PickupEntry]
-
-
-@dataclasses.dataclass(frozen=True)
-class FillerPlayerResult:
-    game: GameDescription
-    patches: GamePatches
-    unassigned_pickups: list[PickupEntry]
-
-
-@dataclasses.dataclass(frozen=True)
-class FillerResults:
-    player_results: dict[int, FillerPlayerResult]
-    action_log: tuple[str, ...]
 
 
 async def run_filler(

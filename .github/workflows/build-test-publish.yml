@@ -1,6 +1,7 @@
 name: Python
 
 on:
+  workflow_dispatch:
   pull_request:
   merge_group:
   push:
@@ -71,7 +72,7 @@ jobs:
           fetch-depth: 0
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: "${{ matrix.python }}"
           cache: "pip"
@@ -84,11 +85,11 @@ jobs:
         run: python -m pip install --upgrade -r requirements-setuptools.txt
 
       - name: Install Python packages (source)
-        run: python -m pip install -r requirements.txt -e ".[gui,server,test,typing]"
+        run: python -m pip install -r requirements.txt -e ".[gui,exporters,server,test,typing]"
         if: ${{ !matrix.executable }}
 
       - name: Install Python packages (executable)
-        run: python -m pip install -e . -e ".[gui]" -e ".[test]" -c requirements.txt
+        run: python -m pip install -e . -e ".[gui,exporters,test]" -c requirements.txt
         if: ${{ matrix.executable }}
 
       - name: build ui files
@@ -139,7 +140,7 @@ jobs:
 
       - name: Upload artifacts
         if: ${{ matrix.executable && (startsWith(github.ref, 'refs/heads/') || startsWith(github.ref, 'refs/tags/v')) && github.event_name != 'merge_group' }}
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: Randovania ${{ matrix.name }}
           if-no-files-found: error
@@ -150,7 +151,7 @@ jobs:
 
       - name: Upload wheel
         if: ${{ matrix.name == 'Linux' }}
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: Python Package
           if-no-files-found: error
@@ -168,7 +169,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Download the executable
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: Randovania Windows Executable
           path: packages/
@@ -188,6 +189,11 @@ jobs:
         run: |
           mv dist/randovania-* dist/randovania
 
+      - name: Remove dotnet from package
+        shell: bash
+        run: |
+          rm -r dist/randovania/_internal/data/dotnet_runtime
+
       - name: import windows certificate
         env:
           WINDOWS_CERTIFICATE: ${{ secrets.WINDOWS_SIGNING_CERTIFICATE }}
@@ -202,7 +208,7 @@ jobs:
       - name: Deploy Advanced Installer
         uses: caphyon/advinst-github-action@v1.1
         with:
-          advinst-version: '20.8'
+          advinst-version: '21.1'
           advinst-license: ${{ secrets.ADVANCED_INSTALLER_LICENSE }}
           advinst-enable-automation: 'true'
 
@@ -243,7 +249,7 @@ jobs:
           $project.Build();
 
       - name: Upload installer
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: Randovania Windows Installer
           if-no-files-found: error
@@ -261,13 +267,13 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: "3.11"
           cache: 'pip'
 
       - name: Download the executable
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: Randovania Linux Executable
           path: packages/
@@ -294,7 +300,7 @@ jobs:
           fetch-depth: 0
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
@@ -320,7 +326,7 @@ jobs:
           fetch-depth: 0
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: "3.11"
           cache: "pip"
@@ -328,13 +334,13 @@ jobs:
       - name: Install Python packages
         run: |
           python -m pip install --upgrade -r requirements-setuptools.txt
-          python -m pip install -r requirements.txt -e ".[gui,server,test,typing]"
+          python -m pip install -r requirements.txt -e ".[gui,exporters,server,test,typing]"
 
       - name: build ui files
         run: python setup.py build_ui
 
       - name: Mypy on modified files
-        uses: tsuyoshicho/action-mypy@v3
+        uses: tsuyoshicho/action-mypy@v4
         with:
           github_token: ${{ secrets.github_token }}
           # Change reviewdog reporter if you need [github-pr-check,github-check,github-pr-review].
@@ -343,7 +349,7 @@ jobs:
           fail_on_error: false
 
       - name: Mypy on required files
-        uses: tsuyoshicho/action-mypy@v3
+        uses: tsuyoshicho/action-mypy@v4
         with:
           github_token: ${{ secrets.github_token }}
           # Change reviewdog reporter if you need [github-pr-check,github-check,github-pr-review].
@@ -419,7 +425,7 @@ jobs:
       -
         name: Build and push
         id: docker_build
-        uses: docker/build-push-action@v5.0.0
+        uses: docker/build-push-action@v5.1.0
         with:
           context: .
           file: ./Dockerfile.server
@@ -455,12 +461,12 @@ jobs:
           fetch-depth: 0
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
       - name: Download the executables
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           path: packages/
 

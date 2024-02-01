@@ -13,7 +13,11 @@ from randovania.games.game import RandovaniaGame
 from randovania.games.prime1.exporter.hint_namer import PrimeHintNamer
 from randovania.games.prime1.exporter.vanilla_maze_seeds import VANILLA_MAZE_SEEDS
 from randovania.games.prime1.layout.hint_configuration import ArtifactHintMode, PhazonSuitHintMode
-from randovania.games.prime1.layout.prime_configuration import LayoutCutsceneMode, PrimeConfiguration, RoomRandoMode
+from randovania.games.prime1.layout.prime_configuration import (
+    LayoutCutsceneMode,
+    PrimeConfiguration,
+    RoomRandoMode,
+)
 from randovania.games.prime1.patcher import prime1_elevators, prime_items
 from randovania.generator.pickup_pool import pickup_creator
 
@@ -701,11 +705,14 @@ class PrimePatchDataFactory(PatchDataFactory):
                         self.rng,
                     )
 
-                    if node.extra.get("position_required"):
-                        assert self.configuration.items_every_room
+                    if self.configuration.shuffle_item_pos or node.extra.get("position_required"):
                         aabb = area.extra["aabb"]
                         pickup["position"] = _pick_random_point_in_aabb(self.rng, aabb, area.name)
-                        pickup["jumboScan"] = True  # Scan this item through walls
+
+                        if node.extra.get("position_required"):
+                            # Scan this item through walls
+                            assert self.configuration.items_every_room
+                            pickup["jumboScan"] = True
 
                     level_data[region.name]["rooms"][area.name]["pickups"].append(pickup)
 
@@ -807,9 +814,9 @@ class PrimePatchDataFactory(PatchDataFactory):
             starting_memo = None
 
         if self.cosmetic_patches.open_map and self.configuration.teleporters.is_vanilla:
-            map_default_state = "Visible"
+            map_default_state = "Always"
         else:
-            map_default_state = "Default"
+            map_default_state = "MapStationOrVisit"
 
         credits_string = credits_spoiler.prime_trilogy_credits(
             self.configuration.standard_pickup_configuration,
@@ -889,21 +896,10 @@ class PrimePatchDataFactory(PatchDataFactory):
         else:
             maze_seeds = None
 
-        cutscene_mapping = {}
-
-        # FIXME: properly fix this incompatibility
-        if self.configuration.room_rando != RoomRandoMode.NONE:
-            cutscene_mapping = {
-                LayoutCutsceneMode.SKIPPABLE: LayoutCutsceneMode.MINOR,
-                LayoutCutsceneMode.SKIPPABLE_COMPETITIVE: LayoutCutsceneMode.COMPETITIVE,
-            }
-
         if self.configuration.legacy_mode:
             qol_cutscenes = LayoutCutsceneMode.ORIGINAL.value
         else:
-            qol_cutscenes = cutscene_mapping.get(
-                self.configuration.qol_cutscenes, self.configuration.qol_cutscenes
-            ).value
+            qol_cutscenes = self.configuration.qol_cutscenes.value
 
         random_enemy_sizes = False
         if self.configuration.enemy_attributes is not None:
@@ -943,7 +939,7 @@ class PrimePatchDataFactory(PatchDataFactory):
             boss_sizes = {}
 
         data: dict = {
-            "$schema": "https://toasterparty.github.io/randomprime/randomprime.schema.json",
+            "$schema": "https://randovania.github.io/randomprime/randomprime.schema.json",
             "seed": self.description.get_seed_for_player(self.players_config.player_index),
             "preferences": {
                 "defaultGameOptions": self.get_default_game_options(),
@@ -965,8 +961,6 @@ class PrimePatchDataFactory(PatchDataFactory):
                 "resultsString": _create_results_screen_text(self.description),
                 "bossSizes": boss_sizes,
                 "noDoors": self.configuration.no_doors,
-                "shufflePickupPosition": self.configuration.shuffle_item_pos,
-                "shufflePickupPosAllRooms": False,  # functionality is handled in randovania as of v4.3
                 "startingRoom": starting_room,
                 "warpToStart": self.configuration.warp_to_start,
                 "springBall": self.configuration.spring_ball,
@@ -979,6 +973,7 @@ class PrimePatchDataFactory(PatchDataFactory):
                 "autoEnabledElevators": not starting_resources.has_resource(scan_visor),
                 "multiworldDolPatches": True,
                 "doorOpenMode": "PrimaryBlastShield",
+                "difficultyBehavior": self.configuration.ingame_difficulty.randomprime_value,
                 "disableItemLoss": True,  # Item Loss in Frigate
                 "startingItems": starting_items,
                 "etankCapacity": self.configuration.energy_per_tank,
@@ -1005,6 +1000,8 @@ class PrimePatchDataFactory(PatchDataFactory):
                 "artifactTempleLayerOverrides": {
                     artifact.long_name: not starting_resources.has_resource(artifact) for artifact in artifacts
                 },
+                "requiredArtifactCount": (12 - self.configuration.artifact_target.value)
+                + self.configuration.artifact_required.value,
             },
             "tweaks": ctwk_config,
             "levelData": level_data,

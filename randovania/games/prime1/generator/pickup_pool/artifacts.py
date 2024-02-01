@@ -2,9 +2,12 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
+from frozendict import frozendict
+
 from randovania.game_description.pickup import pickup_category
 from randovania.game_description.pickup.pickup_entry import PickupEntry, PickupGeneratorParams, PickupModel
 from randovania.game_description.resources.location_category import LocationCategory
+from randovania.games.game import RandovaniaGame
 from randovania.games.prime1.patcher import prime_items
 from randovania.generator.pickup_pool import PoolResults
 
@@ -19,18 +22,18 @@ ARTIFACT_CATEGORY = pickup_category.PickupCategory(
 
 def add_artifacts(
     resource_database: ResourceDatabase,
-    mode: LayoutArtifactMode,
+    total: LayoutArtifactMode,
     artifact_minimum_progression: int,
 ) -> PoolResults:
     """
     :param resource_database:
-    :param mode
+    :param total
     :param artifact_minimum_progression
     :return:
     """
     item_pool: list[PickupEntry] = []
 
-    artifacts_to_place = mode.value
+    artifacts_to_place = total.value
 
     for i in range(artifacts_to_place):
         item_pool.append(create_artifact(i, artifact_minimum_progression, resource_database))
@@ -59,6 +62,9 @@ def create_artifact(
         ),
         pickup_category=ARTIFACT_CATEGORY,
         broad_category=pickup_category.GENERIC_KEY_CATEGORY,
+        offworld_models=frozendict(
+            {RandovaniaGame.AM2R: f"sItemArtifact{prime_items.ARTIFACT_ITEMS[artifact_index]}Prime"}
+        ),
         generator_params=PickupGeneratorParams(
             preferred_location_category=LocationCategory.MAJOR,
             probability_offset=0.25,

@@ -20,19 +20,30 @@ if TYPE_CHECKING:
 
 def describe_artifacts(artifacts: MSRArtifactConfig) -> list[dict[str, bool]]:
     has_artifacts = artifacts.required_artifacts > 0
-    if has_artifacts:
+    if has_artifacts and artifacts.prefer_anywhere:
         return [
             {
                 f"{artifacts.required_artifacts} Metroid DNA": True,
             },
             {
-                "Prefers Metroids": artifacts.prefer_metroids,
+                "Place anywhere": artifacts.prefer_anywhere,
+            },
+        ]
+    elif has_artifacts:
+        return [
+            {
+                f"{artifacts.required_artifacts} Metroid DNA": True,
+            },
+            {
+                "Prefers Standard Metroids": artifacts.prefer_metroids,
+                "Prefers Stronger Metroids": artifacts.prefer_stronger_metroids,
+                "Prefers Bosses": artifacts.prefer_bosses,
             },
         ]
     else:
         return [
             {
-                "Kill Ridley": True,
+                "Defeat Proteus Ridley": True,
             }
         ]
 
@@ -52,13 +63,32 @@ class MSRPresetDescriber(GamePresetDescriber):
             ],
             "Difficulty": [
                 {f"{configuration.energy_per_tank} energy per Energy Tank": configuration.energy_per_tank != 100},
+                {
+                    f"Energy Reserve Tank restores {configuration.life_tank_size} Energy": configuration.life_tank_size
+                    != 299
+                },
+                {
+                    f"Aeion Reserve Tank restores {configuration.aeion_tank_size} Aeion": configuration.aeion_tank_size
+                    != 500
+                },
+                {
+                    f"Missile Reserve Tank restores {configuration.missile_tank_size} Missiles, \
+                            {configuration.super_missile_tank_size} Super Missiles": configuration.missile_tank_size
+                    != 30
+                    or configuration.super_missile_tank_size != 10
+                },
             ],
             "Item Pool": [
                 {
                     "Progressive Beam": has_shuffled_item(standard_pickups, "Progressive Beam"),
                     "Progressive Jump": has_shuffled_item(standard_pickups, "Progressive Jump"),
                     "Progressive Suit": has_shuffled_item(standard_pickups, "Progressive Suit"),
-                }
+                },
+                {
+                    "Energy Reserve Tank": has_shuffled_item(standard_pickups, "Energy Reserve Tank"),
+                    "Aeion Reserve Tank": has_shuffled_item(standard_pickups, "Aeion Reserve Tank"),
+                    "Missile Reserve Tank": has_shuffled_item(standard_pickups, "Missile Reserve Tank"),
+                },
             ],
             "Gameplay": [],
             "Goal": describe_artifacts(configuration.artifacts),
@@ -66,17 +96,26 @@ class MSRPresetDescriber(GamePresetDescriber):
                 message_for_required_mains(
                     configuration.ammo_pickup_configuration,
                     {
-                        "Super Missile needs Launcher": "Super Missile Expansion",
-                        "Power Bomb needs Main": "Power Bomb Expansion",
+                        "Missile needs Launcher": "Missile Tank",
+                        "Super Missile needs Launcher": "Super Missile Tank",
+                        "Power Bomb needs Launcher": "Power Bomb Tank",
                     },
                 ),
                 {
-                    "Nerfed Power Bombs": configuration.nerf_power_bombs,
-                    "Nerfed Super Missiles": configuration.nerf_super_missiles,
+                    "Charge Door Buff": configuration.charge_door_buff,
+                    "Beam Door Buff": configuration.beam_door_buff,
+                    "Missile Door Buff": configuration.nerf_super_missiles,
+                },
+                {
                     "Open Area 3 Interior East Shortcut": configuration.area3_interior_shortcut_no_grapple,
-                    "Remove Area Exit Path Grapple Blocks": configuration.elevator_grapple_blocks,
-                    "Remove Surface Scan Pulse Crumble Blocks": configuration.surface_crumbles,
-                    "Remove Area 1 Chozo Seal Crumble Blocks": configuration.area1_crumbles,
+                    "Remove Area Exit Grapple Blocks": configuration.elevator_grapple_blocks,
+                },
+                {
+                    "Change Surface Scan Pulse Crumble Blocks": configuration.surface_crumbles,
+                    "Change Area 1 Chozo Seal Crumble Blocks": configuration.area1_crumbles,
+                },
+                {
+                    "Enable Reverse Area 8": configuration.reverse_area8,
                 },
             ],
         }

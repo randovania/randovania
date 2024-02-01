@@ -15,7 +15,7 @@ if TYPE_CHECKING:
 
 @functools.lru_cache
 def read_json_then_binary(game: RandovaniaGame) -> tuple[Path, dict]:
-    dir_path = game.data_path.joinpath("json_data")
+    dir_path = game.data_path.joinpath("logic_database")
     if dir_path.exists():
         return dir_path, data_reader.read_split_file(dir_path)
 

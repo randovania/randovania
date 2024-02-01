@@ -38,13 +38,13 @@
                 "Grapple Beam": {
                     "num_shuffled_pickups": 1
                 },
-                "Missile": {
+                "Missile Launcher": {
                     "num_included_in_starting_pickups": 1,
                     "included_ammo": [
                         24
                     ]
                 },
-                "Super Missile": {
+                "Super Missile Launcher": {
                     "num_shuffled_pickups": 1,
                     "included_ammo": [
                         5
@@ -91,7 +91,7 @@
                 "Spring Ball": {
                     "num_shuffled_pickups": 1
                 },
-                "Power Bomb": {
+                "Power Bomb Launcher": {
                     "num_shuffled_pickups": 1,
                     "included_ammo": [
                         5
@@ -110,6 +110,15 @@
                 },
                 "Energy Tank": {
                     "num_shuffled_pickups": 10
+                },
+                "Energy Reserve Tank": {
+                    "num_shuffled_pickups": 1
+                },
+                "Aeion Reserve Tank": {
+                    "num_shuffled_pickups": 1
+                },
+                "Missile Reserve Tank": {
+                    "num_shuffled_pickups": 1
                 }
             },
             "default_pickups": {},
@@ -164,17 +173,25 @@
         "check_if_beatable_after_base_patches": false,
         "energy_per_tank": 100,
         "starting_energy": 99,
-        "aeion_per_tank": 50,
         "starting_aeion": 1000,
-        "nerf_power_bombs": true,
+        "life_tank_size": 299,
+        "aeion_tank_size": 500,
+        "missile_tank_size": 30,
+        "super_missile_tank_size": 10,
+        "charge_door_buff": true,
+        "beam_door_buff": true,
         "nerf_super_missiles": false,
         "elevator_grapple_blocks": true,
         "area3_interior_shortcut_no_grapple": true,
         "allow_highly_dangerous_logic": false,
         "surface_crumbles": true,
         "area1_crumbles": true,
+        "reverse_area8": false,
         "artifacts": {
             "prefer_metroids": true,
+            "prefer_stronger_metroids": true,
+            "prefer_bosses": false,
+            "prefer_anywhere": false,
             "required_artifacts": 10
         }
     }

@@ -1,0 +1,1222 @@
+----------------
+Larva Access
+Extra - total_boundings: {'x1': -2800.0, 'x2': -270.0, 'y1': 8900.0, 'y2': 11000.0}
+Extra - polygon: [[-2800.0, 8900.0], [-270.0, 8900.0], [-270.0, 11200.0], [-2800.0, 11200.0]]
+Extra - asset_id: collision_camera_007
+> Door to Larva Hallway 1; Heals? False
+  * Layers: default
+  * Access Locked to Larva Hallway 1/Door to Larva Access
+  * Extra - actor_name: Door010
+  * Extra - actor_type: doorclosedpower
+  > Tunnel to Teleporter Shaft North
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Super Jump (Intermediate) or Unmorph Extend (Beginner) or Climb Rooms Vertically (High Jump)
+              Unmorph Extend (Intermediate) and Walljump (Intermediate)
+  > Start Point
+      Screw Attack
+
+> Tunnel to Teleporter Shaft North; Heals? False
+  * Layers: default
+  * Tunnel to Teleporter Shaft North/Tunnel to Larva Access
+  > Door to Larva Hallway 1
+      Morph Ball
+
+> Tunnel to Larva Hallway 1; Heals? False
+  * Layers: default
+  * Tunnel to Larva Hallway 1/Tunnel to Larva Access
+
+> Start Point; Heals? False; Default Node
+  * Layers: default
+  * Extra - start_point_actor_name: ST_SG_Larva_001
+  > Door to Larva Hallway 1
+      Screw Attack
+  > Tunnel to Larva Hallway 1
+      Morph Ball
+
+----------------
+Transport to Surface West
+Extra - total_boundings: {'x1': -12400.0, 'x2': 7150.0, 'y1': 11000.0, 'y2': 27400.0}
+Extra - polygon: [[-12400.0, 27400.0], [-12400.0, 11000.0], [-6900.0, 11000.0], [-6900.0, 19500.0], [-3100.0, 20900.0], [-1000.0, 20900.0], [100.0, 21600.0], [7150.0, 21600.0], [7150.0, 27400.0]]
+Extra - asset_id: collision_camera_008_A
+> Pickup (Missile Tank); Heals? False
+  * Layers: default
+  * Pickup 165; Category? Minor
+  * Extra - actor_name: LE_Item_013
+  * Extra - actor_type: item_missiletank
+  > Above Left Pickup
+      Lightning Armor and Morph Ball
+
+> Pickup (Super Missile Tank); Heals? False
+  * Layers: default
+  * Pickup 166; Category? Minor
+  * Extra - actor_name: LE_Item_014
+  * Extra - actor_type: item_supermissiletank
+  > Ammo Recharge Station
+      Trivial
+
+> Ammo Recharge Station; Heals? False
+  * Layers: default
+  * Extra - actor_name: LE_Platform_AmmoCharge_003
+  * Extra - actor_type: weightactivatedplatform
+  > Pickup (Super Missile Tank)
+      Any of the following:
+          Spiderspark (Beginner) and Can Spiderspark
+          Morph Ball and Phase Drift
+  > Elevator to Surface - West
+      Baby Metroid
+  > Above Left Pickup
+      Baby Metroid
+
+> Elevator to Surface - West; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Elevator to Transport to Area 8/Elevator to Area 8
+  * Extra - actor_name: LE_Platform_Elevator_FromAreaSurfaceB
+  * Extra - actor_type: weightactivatedplatform
+  * Extra - start_point_actor_name: ST_FromAreaSurfaceB
+  > Ammo Recharge Station
+      Baby Metroid
+
+> Save Station; Heals? False; Spawn Point
+  * Layers: default
+  * Extra - actor_name: LE_Platform_SaveStation_005
+  * Extra - actor_type: weightactivatedplatform
+  * Extra - start_point_actor_name: ST_SaveStation_005
+  > Dock to Queen Arena
+      All of the following:
+          Baby Metroid
+          Any of the following:
+              Normal Damage ≥ 199 and Defeat Gold Robots
+              Lightning Armor and Movement (Intermediate)
+  > Above Left Pickup
+      All of the following:
+          Baby Metroid
+          Any of the following:
+              All of the following:
+                  Space Jump
+                  Any of the following:
+                      Screw Attack or Movement (Intermediate)
+                      Lightning Armor and Movement (Beginner)
+              All of the following:
+                  Lightning Armor
+                  Any of the following:
+                      Spiderspark (Intermediate) and Can Spiderspark
+                      Infinite Bomb Jump (Advanced) and Lay Any Bomb
+
+> Dock to Queen Arena; Heals? False
+  * Layers: default
+  * Open Passage to Queen Arena/Dock to Transport to Surface West
+  > Save Station
+      Any of the following:
+          Normal Damage ≥ 199 and Defeat Gold Robots
+          Lightning Armor and Movement (Intermediate)
+
+> Above Left Pickup; Heals? False
+  * Layers: default
+  > Pickup (Missile Tank)
+      Lightning Armor and Morph Ball
+  > Ammo Recharge Station
+      All of the following:
+          Baby Metroid
+          Walljump (Beginner) or Climb Rooms Vertically (High Jump)
+          Any of the following:
+              Screw Attack
+              Spider Ball Clip (Intermediate) and Use Spider Ball
+  > Save Station
+      All of the following:
+          Baby Metroid
+          Any of the following:
+              Defeat Gold Robots
+              Lightning Armor and Movement (Intermediate)
+
+----------------
+Larva Hallway 1
+Extra - total_boundings: {'x1': -370.0, 'x2': 4160.0, 'y1': 8900.0, 'y2': 10500.0}
+Extra - polygon: [[-370.0, 8900.0], [4160.0, 8900.0], [4160.0, 10500.0], [-370.0, 10500.0]]
+Extra - asset_id: collision_camera_008_B
+> Door to Larva Access; Heals? False
+  * Layers: default
+  * Power Beam Door to Larva Access/Door to Larva Hallway 1
+  * Extra - actor_name: Door010
+  * Extra - actor_type: doorclosedpower
+  > Room Center
+      Trivial
+
+> Door to Larva Shaft 1; Heals? False
+  * Layers: default
+  * Power Beam Door to Larva Shaft 1/Door to Larva Hallway 1
+  * Extra - actor_name: Door011
+  * Extra - actor_type: doorpowerpower
+  > Room Center
+      Trivial
+
+> Tunnel to Larva Access; Heals? False
+  * Layers: default
+  * Tunnel to Larva Access/Tunnel to Larva Hallway 1
+  > Room Center
+      Morph Ball
+
+> Room Center; Heals? False; Default Node
+  * Layers: default
+  * Extra - start_point_actor_name: ST_Larva_001_Checkpoint
+  > Door to Larva Access
+      After Area 8 - Larva Metroid 1
+  > Door to Larva Shaft 1
+      After Area 8 - Larva Metroid 1
+  > Event - Larva Metroid
+      Defeat Larva Metroid
+
+> Event - Larva Metroid; Heals? False
+  * Layers: default
+  * Event Area 8 - Larva Metroid 1
+  > Room Center
+      Trivial
+
+----------------
+Central Chamber
+Extra - total_boundings: {'x1': -3900.0, 'x2': 2100.0, 'y1': -2800.0, 'y2': 8800.0}
+Extra - polygon: [[-3700.0, 8800.0], [-3700.0, 5500.0], [-3900.0, 4800.0], [-3900.0, -300.0], [-3700.0, -600.0009765625], [-3700.0, -2800.0], [-1500.0, -2800.0], [200.0, -2500.0], [450.0, -2500.0], [450.0, -1300.0], [2100.0, -1200.0], [2100.0, 8800.0]]
+Extra - asset_id: collision_camera_009
+> Pickup (Missile Tank Top); Heals? False
+  * Layers: default
+  * Pickup 156; Category? Minor
+  * Extra - actor_name: LE_Item_003
+  * Extra - actor_type: item_missiletank
+  > Above Tunnels
+      Trivial
+
+> Pickup (Missile Tank Left); Heals? False
+  * Layers: default
+  * Pickup 157; Category? Minor
+  * Extra - actor_name: LE_Item_004
+  * Extra - actor_type: item_missiletank
+  > Ammo Recharge Station
+      Use Spider Ball
+  > Above Save Station
+      Trivial
+
+> Pickup (Super Missile Tank); Heals? False
+  * Layers: default
+  * Pickup 158; Category? Minor
+  * Extra - actor_name: LE_Item_005
+  * Extra - actor_type: item_supermissiletank
+  > Above Tunnels
+      All of the following:
+          Morph Ball and Screw Attack
+          Walljump (Beginner) or Climb Rooms Vertically (High Jump)
+
+> Pickup (Power Bomb Tank); Heals? False
+  * Layers: default
+  * Pickup 164; Category? Minor
+  * Extra - actor_name: LE_Item_012
+  * Extra - actor_type: item_powerbombtank
+  > Energy Recharge Station
+      Use Spider Ball
+  > Above Save Station
+      Any of the following:
+          Lay Any Bomb
+          Lightning Armor and Morph Ball
+
+> Ammo Recharge Station; Heals? False
+  * Layers: default
+  * Extra - actor_name: LE_Platform_AmmoCharge_001
+  * Extra - actor_type: weightactivatedplatform
+  > Pickup (Missile Tank Hidden)
+      Any of the following:
+          Spider Ball and Infinite Bomb Jump (Intermediate) and Lay Bomb
+          Power Bomb ≥ 2 and Spiderspark (Intermediate) and Can Spiderspark
+          All of the following:
+              Space Jump
+              Any of the following:
+                  Lay Power Bomb
+                  All of the following:
+                      Mid-Air Morph (Intermediate) and Lay Bomb
+                      Spider Ball or Movement (Intermediate)
+  > Lower Platforms
+      Trivial
+  > Above Tunnels
+      All of the following:
+          Lay Any Bomb
+          Any of the following:
+              Space Jump or Simple IBJ
+              Spiderspark (Intermediate) and Can Spiderspark
+
+> Energy Recharge Station; Heals? True
+  * Layers: default
+  * Extra - actor_name: LE_Platform_EnergyCharge_001
+  * Extra - actor_type: weightactivatedplatform
+  > Lower Platforms
+      Trivial
+
+> Save Station; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Extra - actor_name: LE_Platform_SaveStation_001
+  * Extra - actor_type: weightactivatedplatform
+  * Extra - start_point_actor_name: ST_SaveStation_001
+  > Door to Central Chamber Access
+      Trivial
+  > Above Save Station
+      Any of the following:
+          Climb Rooms Vertically (No High Jump)
+          Stand on Frozen Enemy (Intermediate) and Fully Freeze Enemy
+          All of the following:
+              Walljump (Intermediate)
+              Any of the following:
+                  High Jump Boots or Super Jump (Advanced)
+                  Morph Ball and Unmorph Extend (Intermediate)
+
+> Door to Central Chamber Access; Heals? False
+  * Layers: default
+  * Power Beam Door to Central Chamber Access/Door to Central Chamber
+  * Extra - actor_name: Door007
+  * Extra - actor_type: doorpowerpower
+  > Save Station
+      Trivial
+
+> Door to Teleporter Shaft North; Heals? False
+  * Layers: default
+  * Power Beam Door to Teleporter Shaft North/Door to Central Chamber
+  * Extra - actor_name: Door009
+  * Extra - actor_type: doorpowerpower
+  > Above Top Pickup
+      Any of the following:
+          Normal Damage ≥ 100 and Defeat Non-Counterable Enemies
+          Lightning Armor and Movement (Intermediate)
+
+> Pickup (Missile Tank Hidden); Heals? False
+  * Layers: default
+  * Pickup 167; Category? Minor
+  * Extra - actor_name: HiddenPowerup001
+  * Extra - actor_type: item_missiletank
+  > Ammo Recharge Station
+      Trivial
+
+> Event - Grapple Block Top; Heals? False
+  * Layers: default
+  * Event Area 8 - Central Chamber Grapple Block Top
+  > Above Top Pickup
+      Trivial
+
+> Event - Grapple Block Bottom; Heals? False
+  * Layers: default
+  * Event Area 8 - Central Chamber Grapple Block Bottom
+  > Next to Bottom Grapple Block
+      Trivial
+
+> Lower Platforms; Heals? False
+  * Layers: default
+  > Ammo Recharge Station
+      Trivial
+  > Energy Recharge Station
+      Lightning Armor or Missile ≥ 10 or Super Missile ≥ 2 or Defeat Gold Robots
+  > Next to Bottom Grapple Block
+      All of the following:
+          Morph Ball and After Area 8 - Central Chamber Grapple Block Bottom
+          Any of the following:
+              Super Jump (Intermediate) or Climb Rooms Vertically (High Jump)
+              Morph Ball and Unmorph Extend (Intermediate)
+  > Above Save Station
+      Lightning Armor or Missile ≥ 10 or Super Missile ≥ 2 or Movement (Intermediate) or Defeat Gold Robots
+
+> Above Tunnels; Heals? False
+  * Layers: default
+  > Pickup (Super Missile Tank)
+      All of the following:
+          Morph Ball and Screw Attack
+          Phase Drift or Spider Ball or Movement (Intermediate)
+          Bomb or Power Bomb ≥ 2
+  > Ammo Recharge Station
+      Any of the following:
+          Spider Ball and Lay Any Bomb
+          Space Jump and Lay Power Bomb
+  > Next to Bottom Grapple Block
+      Morph Ball
+  > Above Top Pickup
+      All of the following:
+          Any of the following:
+              # Climbing
+              Super Jump (Intermediate) or Climb Rooms Vertically (High Jump)
+              Morph Ball and Unmorph Extend (Beginner)
+          Any of the following:
+              # Energy
+              Normal Damage ≥ 299 and Defeat Non-Counterable Enemies
+              Movement (Beginner) and Normal Damage ≥ 199
+              Lightning Armor and Movement (Intermediate)
+
+> Next to Bottom Grapple Block; Heals? False
+  * Layers: default
+  > Event - Grapple Block Bottom
+      Grapple Beam
+  > Lower Platforms
+      Morph Ball and After Area 8 - Central Chamber Grapple Block Bottom
+  > Above Tunnels
+      All of the following:
+          Morph Ball
+          Walljump (Beginner) or Climb Rooms Vertically (No High Jump)
+
+> Above Top Pickup; Heals? False
+  * Layers: default
+  > Pickup (Missile Tank Top)
+      Morph Ball and After Area 8 - Central Chamber Grapple Block Top
+  > Door to Teleporter Shaft North
+      All of the following:
+          Any of the following:
+              Missile ≥ 10 or Super Missile ≥ 2 or Defeat Gold Robots
+              Lightning Armor and Movement (Intermediate)
+          Any of the following:
+              All of the following:
+                  Space Jump
+                  Screw Attack or Movement (Beginner)
+              Movement (Beginner) and Use Spider Ball
+              Infinite Bomb Jump (Intermediate) and Lay Bomb
+              Spiderspark (Intermediate) and Can Spiderspark
+  > Event - Grapple Block Top
+      Grapple Beam
+  > Above Tunnels
+      Any of the following:
+          Normal Damage ≥ 299 and Defeat Non-Counterable Enemies
+          Movement (Beginner) and Normal Damage ≥ 199
+          Lightning Armor and Movement (Intermediate)
+
+> Above Save Station; Heals? False
+  * Layers: default
+  > Pickup (Missile Tank Left)
+      All of the following:
+          Any of the following:
+              Single-wall Wall Jump (Intermediate) and Walljump (Intermediate)
+              All of the following:
+                  Space Jump
+                  Lightning Armor or Screw Attack
+              Spiderspark (Advanced) and Can Spiderspark
+              Infinite Bomb Jump (Intermediate) and Lay Bomb
+          Any of the following:
+              Missile ≥ 20 or Plasma Beam or Super Missile ≥ 4 or Shoot Beam Burst
+              Morph Ball and Power Bomb ≥ 2
+  > Pickup (Power Bomb Tank)
+      All of the following:
+          # Traversing the tunnel
+          Lightning Armor and Lay Power Bomb
+          # Avoiding the crumble block
+          Phase Drift or Spider Ball or Melee Clip (Intermediate) or Movement (Beginner)
+          Any of the following:
+              # Climbing the right side
+              Single-wall Wall Jump (Intermediate) and Walljump (Intermediate)
+              Spiderspark (Advanced) and Can Spiderspark
+              Infinite Bomb Jump (Intermediate) and Lay Bomb
+              All of the following:
+                  Space Jump
+                  Lightning Armor or Screw Attack
+          # Dealing with enemies
+          Missile ≥ 20 or Plasma Beam or Super Missile ≥ 4 or Shoot Beam Burst
+  > Save Station
+      Trivial
+  > Lower Platforms
+      All of the following:
+          Climb Rooms Vertically (No High Jump)
+          Lightning Armor or Missile ≥ 10 or Super Missile ≥ 2 or Movement (Intermediate) or Defeat Gold Robots
+
+----------------
+Central Chamber Access
+Extra - total_boundings: {'x1': -5300.0, 'x2': 1100.0, 'y1': -7300.0, 'y2': -1100.0}
+Extra - polygon: [[-5300.0, -1100.0], [-5300.0, -7300.0], [1100.0, -7300.0], [1100.0, -3600.0], [-2200.0, -3600.0], [-3600.0, -2600.0], [-3600.0, -1100.0]]
+Extra - asset_id: collision_camera_010
+> Pickup (Missile Tank Hallway); Heals? False
+  * Layers: default
+  * Pickup 160; Category? Minor
+  * Extra - actor_name: LE_Item_008
+  * Extra - actor_type: item_missiletank
+  > Door to Shaft East (Bottom)
+      Trivial
+  > Above Grapple Block
+      Any of the following:
+          Lightning Armor
+          Spiderspark (Beginner) and Can Spiderspark
+
+> Pickup (Missile Tank Baby Locked); Heals? False
+  * Layers: default
+  * Pickup 163; Category? Minor
+  * Extra - actor_name: LE_Item_011
+  * Extra - actor_type: item_missiletank
+  > Door to Central Chamber
+      Baby Metroid
+
+> Door to Teleporter Shaft South; Heals? False
+  * Layers: default
+  * Power Beam Door to Teleporter Shaft South/Door to Central Chamber Access
+  * Extra - actor_name: Door003
+  * Extra - actor_type: doorpowerpower
+  > Door to Shaft East (Bottom)
+      Lightning Armor or Movement (Intermediate) or Normal Damage ≥ 199 or Defeat Non-Counterable Enemies
+
+> Door to Shaft East (Bottom); Heals? False
+  * Layers: default
+  * Power Beam Door to Shaft East/Door to Central Chamber Access (Bottom)
+  * Extra - actor_name: Door004
+  * Extra - actor_type: doorpowerpower
+  > Door to Teleporter Shaft South
+      Lightning Armor or Movement (Intermediate) or Normal Damage ≥ 199 or Defeat Non-Counterable Enemies
+
+> Door to Shaft East (Top); Heals? False
+  * Layers: default
+  * Power Beam Door to Shaft East/Door to Central Chamber Access (Top)
+  * Extra - actor_name: Door005
+  * Extra - actor_type: doorpowerpower
+  > Door to Shaft East (Bottom)
+      Trivial
+  > Dock to Shaft East
+      Screw Attack
+  > Above Screw Attack Blocks
+      All of the following:
+          Lightning Armor or Movement (Beginner) or Normal Damage ≥ 100
+          Ice Beam or Super Missile ≥ 2 or Defeat Gold Robots
+
+> Door to Central Chamber; Heals? False
+  * Layers: default
+  * Power Beam Door to Central Chamber/Door to Central Chamber Access
+  * Extra - actor_name: Door007
+  * Extra - actor_type: doorpowerpower
+  > Pickup (Missile Tank Baby Locked)
+      All of the following:
+          Defeat Non-Counterable Enemies
+          Any of the following:
+              Baby Metroid
+              Morph Ball and Melee Clip (Beginner)
+  > Above Screw Attack Blocks
+      Screw Attack
+
+> Dock to Shaft East; Heals? False
+  * Layers: default
+  * Open Passage to Shaft East/Dock to Central Chamber Access
+  > Door to Shaft East (Bottom)
+      Trivial
+
+> Tunnel to Teleporter Shaft South; Heals? False
+  * Layers: default
+  * Tunnel to Teleporter Shaft South/Tunnel to Central Chamber Access
+  > Above Grapple Block
+      Morph Ball
+
+> Event - Grapple Block; Heals? False
+  * Layers: default
+  * Event Area 8 - Central Chamber Access Grapple Block
+  > Above Grapple Block
+      Trivial
+
+> Above Grapple Block; Heals? False
+  * Layers: default
+  > Pickup (Missile Tank Hallway)
+      Any of the following:
+          Lightning Armor
+          Spiderspark (Beginner) and Can Spiderspark
+  > Door to Teleporter Shaft South
+      Lightning Armor
+  > Tunnel to Teleporter Shaft South
+      Morph Ball and After Area 8 - Central Chamber Access Grapple Block
+  > Event - Grapple Block
+      Grapple Beam and Morph Ball
+  > Above Screw Attack Blocks
+      All of the following:
+          Screw Attack
+          Walljump (Beginner) or Climb Rooms Vertically (High Jump)
+
+> Above Screw Attack Blocks; Heals? False
+  * Layers: default
+  > Door to Shaft East (Top)
+      All of the following:
+          Lightning Armor or Movement (Beginner) or Normal Damage ≥ 100
+          Ice Beam or Super Missile ≥ 2 or Defeat Gold Robots
+  > Door to Central Chamber
+      Any of the following:
+          Space Jump or Single-wall Wall Jump (Intermediate) or Use Spider Ball
+          Charge Beam and Ice Beam and Stand on Frozen Enemy (Intermediate)
+          High Jump Boots and Walljump (Beginner)
+          All of the following:
+              Lay Bomb
+              Any of the following:
+                  Diagonal Bomb Jump (Intermediate)
+                  All of the following:
+                      Infinite Bomb Jump (Beginner)
+                      Gravity Suit or Spring Ball or Mid-Air Morph (Beginner)
+  > Above Grapple Block
+      Screw Attack
+
+----------------
+Teleporter Shaft South
+Extra - total_boundings: {'x1': -7100.0, 'x2': -5200.0, 'y1': -10900.0, 'y2': -5500.0}
+Extra - polygon: [[-7100.0, -5500.0], [-7100.0, -10900.0], [-5200.0, -10900.0], [-5200.0, -5500.0]]
+Extra - asset_id: collision_camera_011
+> Pickup (Missile Tank); Heals? False
+  * Layers: default
+  * Pickup 161; Category? Minor
+  * Extra - actor_name: LE_Item_009
+  * Extra - actor_type: item_missiletank
+  > Door to Entrance Hallway
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Defeat Non-Counterable Enemies
+              Lightning Armor and Movement (Intermediate)
+          Baby Metroid or Spider Ball or Movement (Beginner)
+
+> Teleporter; Heals? False; Default Node
+  * Layers: default
+  * Teleporter Network (Unlocked by After Area 8 - Teleporter Unlocked (Lower))
+  * Extra - actor_name: LE_Platform_Teleporter_10_02
+  * Extra - actor_type: weightactivatedplatform
+  * Extra - start_point_actor_name: ST_Teleporter_10_02
+  > Door to Entrance Hallway
+      Trivial
+
+> Door to Entrance Hallway; Heals? False
+  * Layers: default
+  * Power Beam Door to Entrance Hallway/Door to Teleporter Shaft South
+  * Extra - actor_name: Door002
+  * Extra - actor_type: doorpowerpower
+  > Pickup (Missile Tank)
+      All of the following:
+          Morph Ball
+          Missile ≥ 2 or Super Missile ≥ 2
+          Lightning Armor or Baby Metroid or Combat (Intermediate)
+  > Teleporter
+      Trivial
+  > Door to Central Chamber Access
+      All of the following:
+          Screw Attack
+          Any of the following:
+              High Jump Boots or Space Jump or Super Jump (Intermediate)
+              Infinite Bomb Jump (Intermediate) and Lay Bomb
+              Charge Beam and Ice Beam and Stand on Frozen Enemy (Beginner)
+  > Event - Teleporter Unlocked
+      Trivial
+
+> Door to Central Chamber Access; Heals? False
+  * Layers: default
+  * Power Beam Door to Central Chamber Access/Door to Teleporter Shaft South
+  * Extra - actor_name: Door003
+  * Extra - actor_type: doorpowerpower
+  > Door to Entrance Hallway
+      Screw Attack
+  > Tunnel to Central Chamber Access
+      All of the following:
+          Morph Ball and After Area 8 - Central Chamber Access Grapple Block
+          Walljump (Beginner) or Climb Rooms Vertically (High Jump)
+          Any of the following:
+              Ice Beam or Super Missile ≥ 2 or Defeat Gold Robots
+              Lightning Armor and Movement (Intermediate)
+
+> Tunnel to Central Chamber Access; Heals? False
+  * Layers: default
+  * Tunnel to Central Chamber Access/Tunnel to Teleporter Shaft South
+  > Door to Central Chamber Access
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Ice Beam or Super Missile ≥ 2 or Defeat Gold Robots
+              Lightning Armor and Movement (Intermediate)
+
+> Event - Teleporter Unlocked; Heals? False
+  * Layers: default
+  * Event Area 8 - Teleporter Unlocked (Lower)
+  > Door to Entrance Hallway
+      Trivial
+
+----------------
+Shaft East
+Extra - total_boundings: {'x1': 1000.0, 'x2': 2900.0, 'y1': -7100.0, 'y2': -3600.0}
+Extra - polygon: [[1000.0, -3600.0], [1000.0, -7100.0], [2900.0, -7100.0], [2900.0, -3600.0]]
+Extra - asset_id: collision_camera_012
+> Pickup (Super Missile Tank); Heals? False
+  * Layers: default
+  * Pickup 155; Category? Minor
+  * Extra - actor_name: LE_Item_001
+  * Extra - actor_type: item_supermissiletank
+  > Door to Central Chamber Access (Top)
+      Trivial
+
+> Pickup (Missile Tank); Heals? False
+  * Layers: default
+  * Pickup 162; Category? Minor
+  * Extra - actor_name: LE_Item_010
+  * Extra - actor_type: item_missiletank
+  > Dock to Central Chamber Access
+      Trivial
+
+> Door to Central Chamber Access (Bottom); Heals? False
+  * Layers: default
+  * Power Beam Door to Central Chamber Access/Door to Shaft East (Bottom)
+  * Extra - actor_name: Door004
+  * Extra - actor_type: doorpowerpower
+  > Door to Central Chamber Access (Top)
+      All of the following:
+          Ice Beam or Super Missile ≥ 2 or Defeat Gold Robots
+          Walljump (Beginner) or Climb Rooms Vertically (High Jump)
+
+> Door to Central Chamber Access (Top); Heals? False
+  * Layers: default
+  * Power Beam Door to Central Chamber Access/Door to Shaft East (Top)
+  * Extra - actor_name: Door005
+  * Extra - actor_type: doorpowerpower
+  > Pickup (Super Missile Tank)
+      All of the following:
+          Morph Ball
+          Any of the following:
+              All of the following:
+                  Baby Metroid
+                  Lightning Armor or Spider Ball
+              All of the following:
+                  Lightning Armor and Power Bomb
+                  Phase Drift or Spider Ball
+  > Door to Central Chamber Access (Bottom)
+      Ice Beam or Super Missile ≥ 2 or Defeat Gold Robots
+
+> Dock to Central Chamber Access; Heals? False
+  * Layers: default
+  * Open Passage to Central Chamber Access/Dock to Shaft East
+  > Pickup (Missile Tank)
+      Morph Ball
+  > Door to Central Chamber Access (Bottom)
+      Lay Any Bomb
+
+----------------
+Larva Shaft 1
+Extra - total_boundings: {'x1': 4050.0, 'x2': 5950.0, 'y1': 9300.0, 'y2': 12000.0}
+Extra - polygon: [[4050.0, 12000.0], [4050.0, 9300.0], [5950.0, 9300.0], [5950.0, 12000.0]]
+Extra - asset_id: collision_camera_013
+> Door to Larva Hallway 1; Heals? False
+  * Layers: default
+  * Power Beam Door to Larva Hallway 1/Door to Larva Shaft 1
+  * Extra - actor_name: Door011
+  * Extra - actor_type: doorpowerpower
+  > Room Center
+      Trivial
+
+> Door to Larva Shaft 2; Heals? False
+  * Layers: default
+  * Power Beam Door to Larva Shaft 2/Door to Larva Shaft 1
+  * Extra - actor_name: Door012
+  * Extra - actor_type: doorpowerpower
+  > Room Center
+      Trivial
+
+> Event - Larva Metroid; Heals? False
+  * Layers: default
+  * Event Area 8 - Larva Metroid 2
+  > Room Center
+      Trivial
+
+> Room Center; Heals? False; Default Node
+  * Layers: default
+  * Extra - start_point_actor_name: ST_Larva_002_Checkpoint
+  > Door to Larva Hallway 1
+      After Area 8 - Larva Metroid 2
+  > Door to Larva Shaft 2
+      After Area 8 - Larva Metroid 2
+  > Event - Larva Metroid
+      Defeat Larva Metroid
+
+----------------
+Larva Shaft 2
+Extra - total_boundings: {'x1': 5850.0, 'x2': 7500.0, 'y1': 11200.0, 'y2': 16500.0}
+Extra - polygon: [[5850.0, 16500.0], [5850.0, 11200.0], [7500.0, 11200.0], [7500.0, 16500.0]]
+Extra - asset_id: collision_camera_014
+> Door to Larva Shaft 1; Heals? False
+  * Layers: default
+  * Power Beam Door to Larva Shaft 1/Door to Larva Shaft 2
+  * Extra - actor_name: Door012
+  * Extra - actor_type: doorpowerpower
+  > Room Bottom
+      Trivial
+
+> Door to Larva Hallway 2; Heals? False
+  * Layers: default
+  * Power Beam Door to Larva Hallway 2/Door to Larva Shaft 2
+  * Extra - actor_name: Door013
+  * Extra - actor_type: doorpowerpower
+  > Room Top
+      Trivial
+
+> Room Top; Heals? False; Default Node
+  * Layers: default
+  * Extra - start_point_actor_name: ST_Larva_003_Checkpoint
+  > Door to Larva Hallway 2
+      After Area 8 - Larva Metroid 3 and After Area 8 - Larva Metroid 4
+  > Event - Larva Metroid Top
+      Defeat Larva Metroid
+  > Room Bottom
+      Morph Ball
+
+> Event - Larva Metroid Bottom; Heals? False
+  * Layers: default
+  * Event Area 8 - Larva Metroid 3
+  > Room Bottom
+      Trivial
+
+> Event - Larva Metroid Top; Heals? False
+  * Layers: default
+  * Event Area 8 - Larva Metroid 4
+  > Room Top
+      Trivial
+
+> Room Bottom; Heals? False
+  * Layers: default
+  > Door to Larva Shaft 1
+      After Area 8 - Larva Metroid 3 and After Area 8 - Larva Metroid 4
+  > Room Top
+      Morph Ball
+  > Event - Larva Metroid Bottom
+      Defeat Larva Metroid
+
+----------------
+Larva Hallway 2
+Extra - total_boundings: {'x1': 50.0, 'x2': 5950.0, 'y1': 15100.0, 'y2': 16400.0}
+Extra - polygon: [[50.0, 16400.0], [50.0, 15100.0], [5950.0, 15100.0], [5950.0, 16400.0]]
+Extra - asset_id: collision_camera_015
+> Door to Larva Shaft 2; Heals? False
+  * Layers: default
+  * Power Beam Door to Larva Shaft 2/Door to Larva Hallway 2
+  * Extra - actor_name: Door013
+  * Extra - actor_type: doorpowerpower
+  > Room Center
+      Trivial
+
+> Door to Larva Recharge Stations; Heals? False
+  * Layers: default
+  * Power Beam Door to Larva Recharge Stations/Door to Larva Hallway 2
+  * Extra - actor_name: Door014
+  * Extra - actor_type: doorpowerpower
+  > Room Center
+      Trivial
+
+> Room Center; Heals? False; Default Node
+  * Layers: default
+  * Extra - start_point_actor_name: ST_Larva_004_Checkpoint
+  > Door to Larva Shaft 2
+      After Area 8 - Larva Metroid 5 and After Area 8 - Larva Metroid 6
+  > Door to Larva Recharge Stations
+      After Area 8 - Larva Metroid 5 and After Area 8 - Larva Metroid 6
+  > Event - Larva Metroid Left
+      Defeat Larva Metroid
+  > Event - Larva Metroid Right
+      Defeat Larva Metroid
+
+> Event - Larva Metroid Left; Heals? False
+  * Layers: default
+  * Event Area 8 - Larva Metroid 6
+  > Room Center
+      Trivial
+
+> Event - Larva Metroid Right; Heals? False
+  * Layers: default
+  * Event Area 8 - Larva Metroid 5
+  > Room Center
+      Trivial
+
+----------------
+Larva Hallway 3
+Extra - total_boundings: {'x1': -5350.0, 'x2': -1050.0, 'y1': 15100.0, 'y2': 16400.0}
+Extra - polygon: [[-5350.0, 16400.0], [-5350.0, 15100.0], [-1050.0, 15100.0], [-1050.0, 16400.0]]
+Extra - asset_id: collision_camera_016
+> Door to Larva Recharge Stations; Heals? False
+  * Layers: default
+  * Power Beam Door to Larva Recharge Stations/Door to Larva Hallway 3
+  * Extra - actor_name: Door015
+  * Extra - actor_type: doorpowerpower
+  > Room Center
+      Trivial
+
+> Door to Larva Shaft 3; Heals? False
+  * Layers: default
+  * Power Beam Door to Larva Shaft 3/Door to Larva Hallway 3
+  * Extra - actor_name: Door016
+  * Extra - actor_type: doorpowerpower
+  > Room Center
+      Trivial
+
+> Event - Larva Metroid; Heals? False
+  * Layers: default
+  * Event Area 8 - Larva Metroid 7
+  > Room Center
+      Trivial
+
+> Room Center; Heals? False; Default Node
+  * Layers: default
+  * Extra - start_point_actor_name: ST_Larva_005_Checkpoint
+  > Door to Larva Recharge Stations
+      After Area 8 - Larva Metroid 7
+  > Door to Larva Shaft 3
+      After Area 8 - Larva Metroid 7
+  > Event - Larva Metroid
+      Defeat Larva Metroid
+
+----------------
+Larva Recharge Stations
+Extra - total_boundings: {'x1': -1150.0, 'x2': 150.0, 'y1': 15241.5, 'y2': 16000.0}
+Extra - polygon: [[-1150.0, 16000.0], [-1150.0, 15241.5], [150.0, 15241.5], [150.0, 16000.0]]
+Extra - asset_id: collision_camera_017
+> Ammo Recharge Station; Heals? False
+  * Layers: default
+  * Extra - actor_name: LE_Platform_AmmoCharge_002
+  * Extra - actor_type: weightactivatedplatform
+  > Energy Recharge Station
+      Trivial
+  > Door to Larva Hallway 3
+      Trivial
+
+> Energy Recharge Station; Heals? True
+  * Layers: default
+  * Extra - actor_name: LE_Platform_EnergyCharge_002
+  * Extra - actor_type: weightactivatedplatform
+  > Ammo Recharge Station
+      Trivial
+  > Door to Larva Hallway 2
+      Trivial
+
+> Door to Larva Hallway 2; Heals? False
+  * Layers: default
+  * Power Beam Door to Larva Hallway 2/Door to Larva Recharge Stations
+  * Extra - actor_name: Door014
+  * Extra - actor_type: doorpowerpower
+  > Energy Recharge Station
+      Trivial
+
+> Door to Larva Hallway 3; Heals? False
+  * Layers: default
+  * Power Beam Door to Larva Hallway 3/Door to Larva Recharge Stations
+  * Extra - actor_name: Door015
+  * Extra - actor_type: doorpowerpower
+  > Ammo Recharge Station
+      Trivial
+
+----------------
+Larva Shaft 3
+Extra - total_boundings: {'x1': -7100.0, 'x2': -5250.0, 'y1': 12500.0, 'y2': 18500.0}
+Extra - polygon: [[-7100.0, 18500.0], [-7100.0, 12500.0], [-5250.0, 12500.0], [-5250.0, 18500.0]]
+Extra - asset_id: collision_camera_018
+> Door to Larva Hallway 3; Heals? False
+  * Layers: default
+  * Power Beam Door to Larva Hallway 3/Door to Larva Shaft 3
+  * Extra - actor_name: Door016
+  * Extra - actor_type: doorpowerpower
+  > Room Top
+      Trivial
+
+> Door to Queen Access Path; Heals? False
+  * Layers: default
+  * Power Beam Door to Queen Access Path/Door to Larva Shaft 3
+  * Extra - actor_name: Door017
+  * Extra - actor_type: doorpowerpower
+  > Room Bottom
+      Trivial
+
+> Pickup (Missile Tank); Heals? False
+  * Layers: default
+  * Pickup 168; Category? Minor
+  * Extra - actor_name: HiddenPowerup002
+  * Extra - actor_type: item_missiletank
+  > Room Bottom
+      Trivial
+
+> Event - Larva Metroid Top; Heals? False
+  * Layers: default
+  * Event Area 8 - Larva Metroid 8
+  > Room Top
+      Trivial
+
+> Event - Larva Metroid Middle; Heals? False
+  * Layers: default
+  * Event Area 8 - Larva Metroid 9
+  > Room Top
+      Trivial
+
+> Event - Larva Metroid Bottom; Heals? False
+  * Layers: default
+  * Event Area 8 - Larva Metroid 10
+  > Room Bottom
+      Trivial
+
+> Room Top; Heals? False
+  * Layers: default
+  > Door to Larva Hallway 3
+      After Area 8 - Larva Metroid 10 and After Area 8 - Larva Metroid 8 and After Area 8 - Larva Metroid 9
+  > Event - Larva Metroid Top
+      All of the following:
+          Defeat Larva Metroid
+          Walljump (Beginner) or Climb Rooms Vertically (High Jump)
+  > Event - Larva Metroid Middle
+      Defeat Larva Metroid
+  > Room Bottom
+      Morph Ball
+
+> Room Bottom; Heals? False
+  * Layers: default
+  * Extra - start_point_actor_name: ST_Larva_006_Checkpoint
+  > Door to Queen Access Path
+      After Area 8 - Larva Metroid 10 and After Area 8 - Larva Metroid 8 and After Area 8 - Larva Metroid 9
+  > Pickup (Missile Tank)
+      Morph Ball and Shoot Any Missile
+  > Event - Larva Metroid Bottom
+      Defeat Larva Metroid
+  > Room Top
+      Morph Ball
+
+----------------
+Queen Access Path
+Extra - total_boundings: {'x1': -5350.0, 'x2': 1200.0, 'y1': 12100.0, 'y2': 13600.0}
+Extra - polygon: [[-5350.0, 13600.0], [-5350.0, 12100.0], [1200.0, 12100.0], [1200.0, 13600.0]]
+Extra - asset_id: collision_camera_019
+> Save Station; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Extra - actor_name: LE_Platform_SaveStation_004
+  * Extra - actor_type: weightactivatedplatform
+  * Extra - start_point_actor_name: ST_SaveStation_004
+  > Door to Larva Shaft 3
+      Any of the following:
+          Lightning Armor or High Jump Boots or Space Jump
+          Spiderspark (Intermediate) and Can Spiderspark
+          Diagonal Bomb Jump (Intermediate) and Lay Bomb
+          Morph Ball and Unmorph Extend (Intermediate)
+  > Dock to Queen Arena
+      Trivial
+
+> Door to Larva Shaft 3; Heals? False
+  * Layers: default
+  * Power Beam Door to Larva Shaft 3/Door to Queen Access Path
+  * Extra - actor_name: Door017
+  * Extra - actor_type: doorpowerpower
+  > Save Station
+      Any of the following:
+          Lightning Armor or High Jump Boots or Space Jump or Use Spider Ball
+          Diagonal Bomb Jump (Beginner) and Lay Bomb
+
+> Dock to Queen Arena; Heals? False
+  * Layers: default
+  * Open Passage to Queen Arena/Dock to Queen Access Path
+
+> Tunnel to Queen Arena; Heals? False
+  * Layers: default
+  * Tunnel to Queen Arena/Tunnel to Queen Access Path
+  > Save Station
+      Lay Any Bomb
+
+----------------
+Transport to Area 7
+Extra - total_boundings: {'x1': -2100.0, 'x2': 6000.0, 'y1': -18400.0, 'y2': -7600.0}
+Extra - polygon: [[-2100.0, -16700.0], [-2100.0, -18400.0], [2000.0, -18400.0], [2200.0, -17900.0], [5200.0, -17600.0], [6000.0, -17600.0], [6000.0, -7600.0], [2600.0, -7600.0], [2600.0, -9500.0], [2700.0, -9500.0], [3700.0, -9800.0], [3700.0, -16200.0], [3100.0, -16700.0]]
+Extra - asset_id: collision_camera_021
+> Elevator to Area 7; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Elevator to Transport to Area 8/Elevator to Area 8
+  * Extra - actor_name: LE_Platform_Elevator_FromArea09
+  * Extra - actor_type: weightactivatedplatform
+  * Extra - start_point_actor_name: ST_FromArea09
+  > Save Station
+      All of the following:
+          Screw Attack
+          Any of the following:
+              Space Jump
+              Spiderspark (Advanced) and Walljump (Intermediate) and Can Spiderspark
+
+> Save Station; Heals? False
+  * Layers: default
+  * Extra - actor_name: LE_Platform_SaveStation_002
+  * Extra - actor_type: weightactivatedplatform
+  * Extra - start_point_actor_name: ST_SaveStation_002
+  > Elevator to Area 7
+      Any of the following:
+          Screw Attack
+          All of the following:
+              Morph Ball
+              Any of the following:
+                  Movement (Advanced)
+                  Normal Damage ≥ 199 and Defeat Non-Counterable Enemies
+                  Lightning Armor and Movement (Intermediate)
+  > Door to Entrance Hallway
+      Trivial
+
+> Door to Entrance Hallway; Heals? False
+  * Layers: default
+  * Power Beam Door to Entrance Hallway/Door to Transport to Area 7
+  * Extra - actor_name: Door001
+  * Extra - actor_type: doorpowerpower
+  > Save Station
+      Trivial
+
+----------------
+Queen Arena
+Extra - total_boundings: {'x1': -7000.0, 'x2': 1600.0, 'y1': 11100.0, 'y2': 12500.0}
+Extra - polygon: [[-7000.0, 11100.0], [1600.0, 11100.0], [1600.0, 12500.0], [-7000.0, 12500.0]]
+Extra - asset_id: collision_camera_022
+> Dock to Queen Access Path; Heals? False
+  * Layers: default
+  * Open Passage to Queen Access Path/Dock to Queen Arena
+  > Room Center
+      After Area 8 - Queen Metroid or Enabled Remove Queen Wall
+  > Before Queen
+      After Area 8 - Larva Metroid 1 and After Area 8 - Larva Metroid 10 and After Area 8 - Larva Metroid 2 and After Area 8 - Larva Metroid 3 and After Area 8 - Larva Metroid 4 and After Area 8 - Larva Metroid 5 and After Area 8 - Larva Metroid 6 and After Area 8 - Larva Metroid 7 and After Area 8 - Larva Metroid 8 and After Area 8 - Larva Metroid 9
+
+> Tunnel to Queen Access Path; Heals? False
+  * Layers: default
+  * Tunnel with Bomb Block to Queen Access Path/Tunnel to Queen Arena
+
+> Dock to Transport to Surface West; Heals? False
+  * Layers: default
+  * Open Passage to Transport to Surface West/Dock to Queen Arena
+  > Room Center
+      After Area 8 - Queen Metroid or Enabled Remove Queen Wall
+
+> Pickup (Baby Metroid); Heals? False
+  * Layers: default
+  * Pickup 171; Category? Major
+  * Extra - actor_name: LE_Baby_Hatchling
+  * Extra - actor_type: ITEM_BABY_HATCHLING
+  > Room Center
+      Trivial
+
+> Event - Queen Metroid; Heals? False
+  * Layers: default
+  * Event Area 8 - Queen Metroid
+  > Room Center
+      Trivial
+
+> Room Center; Heals? False
+  * Layers: default
+  > Tunnel to Queen Access Path
+      Screw Attack and Space Jump
+  > Dock to Transport to Surface West
+      Baby Metroid
+  > Pickup (Baby Metroid)
+      After Area 8 - Queen Metroid
+
+> Before Queen; Heals? False
+  * Layers: default
+  * Extra - start_point_actor_name: ST_Queen_001_Checkpoint
+  > Event - Queen Metroid
+      All of the following:
+          Any of the following:
+              # Energy Requirements
+              Combat (Advanced) or Normal Damage ≥ 599
+              Combat (Beginner) and Normal Damage ≥ 399
+              Combat (Intermediate) and Normal Damage ≥ 199
+          Any of the following:
+              # Dodging Head Slam
+              Space Jump
+              Movement (Intermediate) and Use Spider Ball
+          Any of the following:
+              # Dealing Damage
+              Missile ≥ 80 or Super Missile ≥ 20
+              Plasma Beam and Shoot Beam Burst
+              Ice Beam and Combat (Intermediate)
+          Any of the following:
+              # Enter Body Phase
+              Lightning Armor
+              Combat (Intermediate) and Normal Damage ≥ 100
+              All of the following:
+                  Grapple Beam
+                  Any of the following:
+                      Combat (Advanced)
+                      Morph Ball and Power Bomb ≥ 4
+          Any of the following:
+              # Dodging Plasma Balls/Fire
+              Use Spider Ball
+              # Launch into head to end attack early
+              Combat (Intermediate) and Spiderspark (Intermediate) and Can Spiderspark
+
+----------------
+Entrance Hallway
+Extra - total_boundings: {'x1': -5300.0, 'x2': 2700.0, 'y1': -9700.0, 'y2': -7700.0}
+Extra - polygon: [[-5300.0, -7700.0], [-5300.0, -9700.0], [2700.0, -9700.0], [2700.0, -7700.0]]
+Extra - asset_id: collision_camera_023
+> Pickup (Energy Tank); Heals? False
+  * Layers: default
+  * Pickup 159; Category? Major
+  * Extra - actor_name: LE_Item_007
+  * Extra - actor_type: item_energytank
+  > Below Pickup
+      Trivial
+
+> Door to Transport to Area 7; Heals? False
+  * Layers: default
+  * Power Beam Door to Transport to Area 7/Door to Entrance Hallway
+  * Extra - actor_name: Door001
+  * Extra - actor_type: doorpowerpower
+  > Below Pickup
+      Ice Beam or Super Missile ≥ 2 or Movement (Beginner) or Defeat Gold Robots
+
+> Door to Teleporter Shaft South; Heals? False
+  * Layers: default
+  * Power Beam Door to Teleporter Shaft South/Door to Entrance Hallway
+  * Extra - actor_name: Door002
+  * Extra - actor_type: doorpowerpower
+  > Below Pickup
+      Any of the following:
+          Defeat Non-Counterable Enemies
+          All of the following:
+              Space Jump and Movement (Beginner)
+              Lightning Armor or Screw Attack
+
+> Below Pickup; Heals? False
+  * Layers: default
+  > Pickup (Energy Tank)
+      All of the following:
+          Morph Ball and Screw Attack and Space Jump
+          Phase Drift or Spider Ball or Movement (Beginner)
+  > Door to Transport to Area 7
+      Ice Beam or Super Missile ≥ 2 or Movement (Beginner) or Defeat Gold Robots
+  > Door to Teleporter Shaft South
+      Any of the following:
+          Defeat Non-Counterable Enemies
+          All of the following:
+              Space Jump and Movement (Beginner)
+              Lightning Armor or Screw Attack
+
+----------------
+Teleporter Shaft North
+Extra - total_boundings: {'x1': -5400.0, 'x2': -2500.0, 'y1': 7500.0, 'y2': 11200.0}
+Extra - polygon: [[-5400.0, 11200.0], [-5400.0, 7500.0], [-3600.0, 7500.0], [-3600.0, 10200.0], [-3600.0, 10900.0], [-2500.0, 10900.0], [-2500.0, 11200.0]]
+Extra - asset_id: collision_camera_024
+> Save Station; Heals? False; Default Node
+  * Layers: default
+  * Extra - actor_name: LE_Platform_SaveStation_003
+  * Extra - actor_type: weightactivatedplatform
+  * Extra - start_point_actor_name: ST_SaveStation_003
+  > Door to Central Chamber
+      Trivial
+  > Tunnel to Larva Access
+      All of the following:
+          Morph Ball
+          Super Jump (Intermediate) or Unmorph Extend (Beginner) or Climb Rooms Vertically (High Jump)
+
+> Teleporter; Heals? False
+  * Layers: default
+  * Teleporter Network (Unlocked by After Area 8 - Teleporter Unlocked (Upper))
+  * Extra - actor_name: LE_Platform_Teleporter_10_01
+  * Extra - actor_type: weightactivatedplatform
+  * Extra - start_point_actor_name: ST_Teleporter_10_01
+  > Door to Central Chamber
+      Screw Attack
+
+> Door to Central Chamber; Heals? False
+  * Layers: default
+  * Power Beam Door to Central Chamber/Door to Teleporter Shaft North
+  * Extra - actor_name: Door009
+  * Extra - actor_type: doorpowerpower
+  > Save Station
+      Trivial
+  > Teleporter
+      Screw Attack
+  > Event - Teleporter Unlocked
+      Trivial
+
+> Tunnel to Larva Access; Heals? False
+  * Layers: default
+  * Tunnel to Larva Access/Tunnel to Teleporter Shaft North
+  > Save Station
+      Morph Ball
+
+> Event - Teleporter Unlocked; Heals? False
+  * Layers: default
+  * Event Area 8 - Teleporter Unlocked (Upper)
+  > Door to Central Chamber
+      Trivial
+

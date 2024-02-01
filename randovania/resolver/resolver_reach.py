@@ -10,6 +10,8 @@ from randovania.game_description.game_description import calculate_interesting_r
 from randovania.game_description.requirements import fast_as_set
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.requirement_and import RequirementAnd
+from randovania.game_description.requirements.resource_requirement import PositiveResourceRequirement
+from randovania.game_description.resources.resource_type import ResourceType
 
 if typing.TYPE_CHECKING:
     from collections.abc import Iterator
@@ -39,11 +41,19 @@ def _build_satisfiable_requirements(
     return frozenset(itertools.chain.from_iterable(_for_node(*it) for it in requirements_by_node.items()))
 
 
+def _is_requirement_viable_as_additional(requirement: Requirement) -> bool:
+    return not isinstance(requirement, PositiveResourceRequirement) or requirement.resource.resource_type not in (
+        ResourceType.EVENT,
+        ResourceType.NODE_IDENTIFIER,
+    )
+
+
 class ResolverReach:
     _node_indices: tuple[int, ...]
     _energy_at_node: dict[int, int]
     _path_to_node: dict[int, list[int]]
     _satisfiable_requirements: SatisfiableRequirements
+    _satisfiable_requirements_for_additionals: SatisfiableRequirements
     _logic: Logic
 
     @property
@@ -56,6 +66,10 @@ class ResolverReach:
     def satisfiable_requirements(self) -> SatisfiableRequirements:
         return self._satisfiable_requirements
 
+    @property
+    def satisfiable_requirements_for_additionals(self) -> SatisfiableRequirements:
+        return self._satisfiable_requirements_for_additionals
+
     def path_to_node(self, node: Node) -> tuple[Node, ...]:
         all_nodes = self._logic.game.region_list.all_nodes
         return tuple(all_nodes[part] for part in self._path_to_node[node.node_index])
@@ -65,6 +79,7 @@ class ResolverReach:
         nodes: dict[int, int],
         path_to_node: dict[int, list[int]],
         requirements: SatisfiableRequirements,
+        requirements_for_additionals: SatisfiableRequirements,
         logic: Logic,
     ):
         self._node_indices = tuple(nodes.keys())
@@ -72,6 +87,7 @@ class ResolverReach:
         self._logic = logic
         self._path_to_node = path_to_node
         self._satisfiable_requirements = requirements
+        self._satisfiable_requirements_for_additionals = requirements_for_additionals
 
     @classmethod
     def calculate_reach(cls, logic: Logic, initial_state: State) -> ResolverReach:
@@ -86,6 +102,7 @@ class ResolverReach:
 
         reach_nodes: dict[int, int] = {}
         requirements_by_node: dict[int, list[Requirement]] = defaultdict(list)
+        requirements_excluding_leaving_by_node: dict[int, list[Requirement]] = defaultdict(list)
 
         path_to_node: dict[int, list[int]] = {
             initial_state.node.node_index: [],
@@ -114,11 +131,14 @@ class ResolverReach:
                 ):
                     continue
 
+                requirement_including_leaving = requirement
                 if requirement_to_leave != Requirement.trivial():
-                    requirement = RequirementAnd([requirement, requirement_to_leave])
+                    requirement_including_leaving = RequirementAnd([requirement, requirement_to_leave])
+                    if _is_requirement_viable_as_additional(requirement_to_leave):
+                        requirement = RequirementAnd([requirement, requirement_to_leave])
 
                 # Check if the normal requirements to reach that node is satisfied
-                satisfied = requirement.satisfied(initial_state.resources, energy, database)
+                satisfied = requirement_including_leaving.satisfied(initial_state.resources, energy, database)
                 if satisfied:
                     # If it is, check if we additional requirements figured out by backtracking is satisfied
                     satisfied = logic.get_additional_requirements(node).satisfied(
@@ -126,27 +146,39 @@ class ResolverReach:
                     )
 
                 if satisfied:
-                    nodes_to_check[target_node_index] = energy - requirement.damage(initial_state.resources, database)
+                    nodes_to_check[target_node_index] = energy - requirement_including_leaving.damage(
+                        initial_state.resources, database
+                    )
                     path_to_node[target_node_index] = list(path_to_node[node_index])
                     path_to_node[target_node_index].append(node_index)
 
                 elif target_node:
                     # If we can't go to this node, store the reason in order to build the satisfiable requirements.
                     # Note we ignore the 'additional requirements' here because it'll be added on the end.
-                    requirements_by_node[target_node_index].append(requirement)
+                    requirements_by_node[target_node_index].append(requirement_including_leaving)
+                    if not requirement.satisfied(initial_state.resources, energy, database):
+                        requirements_excluding_leaving_by_node[target_node_index].append(requirement)
 
         # Discard satisfiable requirements of nodes reachable by other means
         for node_index in set(reach_nodes.keys()).intersection(requirements_by_node.keys()):
             requirements_by_node.pop(node_index)
+        for node_index in set(reach_nodes.keys()).intersection(requirements_excluding_leaving_by_node.keys()):
+            requirements_excluding_leaving_by_node.pop(node_index)
 
         if requirements_by_node:
             satisfiable_requirements = _build_satisfiable_requirements(
                 logic, all_nodes, initial_state.resource_database, requirements_by_node
             )
+            satisfiable_requirements_for_additionals = _build_satisfiable_requirements(
+                logic, all_nodes, initial_state.resource_database, requirements_excluding_leaving_by_node
+            )
         else:
             satisfiable_requirements = frozenset()
+            satisfiable_requirements_for_additionals = frozenset()
 
-        return ResolverReach(reach_nodes, path_to_node, satisfiable_requirements, logic)
+        return ResolverReach(
+            reach_nodes, path_to_node, satisfiable_requirements, satisfiable_requirements_for_additionals, logic
+        )
 
     def possible_actions(self, state: State) -> Iterator[tuple[ResourceNode, int]]:
         for node in self.collectable_resource_nodes(state):
@@ -155,6 +187,9 @@ class ResolverReach:
             if additional_requirements.satisfied(state.resources, energy, state.resource_database):
                 yield node, energy
             else:
+                self._satisfiable_requirements_for_additionals = self._satisfiable_requirements_for_additionals.union(
+                    additional_requirements.alternatives
+                )
                 self._logic.log_skip_action_missing_requirement(node, self._logic.game)
 
     def satisfiable_actions(

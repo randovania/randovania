@@ -1,0 +1,3918 @@
+{
+    "name": "Frigate Orpheon",
+    "extra": {
+        "asset_id": 361692695
+    },
+    "areas": {
+        "Exterior Docking Hangar": {
+            "default_node": "Ship Save",
+            "extra": {
+                "asset_id": 3508802073,
+                "size_index": 0.8,
+                "aabb": [
+                    -104.01521,
+                    58.089508,
+                    -62.7767,
+                    157.58212,
+                    264.77844,
+                    85.15653
+                ]
+            },
+            "nodes": {
+                "Door to Air Lock": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 20.240724563598633,
+                        "y": -90.07203674316406,
+                        "z": 7.513258457183838
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "dock_index": 0,
+                        "nonstandard": true
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Frigate Orpheon",
+                        "area": "Air Lock",
+                        "node": "Door to Exterior Docking Hangar"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Ship Save": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Event33",
+                                            "amount": 1,
+                                            "negate": true
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Teleporter to Tallon Overworld": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Event33",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Ship Save": {
+                    "node_type": "generic",
+                    "heal": true,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "different_strongly_connected_component": true
+                    },
+                    "valid_starting_location": true,
+                    "connections": {
+                        "Door to Air Lock": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Scan",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Shoot Any Beam"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Teleporter to Tallon Overworld": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "scan_asset_id": null,
+                        "teleporter_instance_id": 134218592
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "teleporter",
+                    "default_connection": {
+                        "region": "Tallon Overworld",
+                        "area": "Landing Site",
+                        "node": "Ship"
+                    },
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Ship Save": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Items Every Room)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "items_every_room"
+                    ],
+                    "extra": {
+                        "position_required": true
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 140,
+                    "location_category": "minor",
+                    "connections": {}
+                }
+            }
+        },
+        "Air Lock": {
+            "default_node": "Door to Exterior Docking Hangar",
+            "extra": {
+                "asset_id": 123995650,
+                "size_index": 0.1,
+                "aabb": [
+                    17.005129,
+                    41.283752,
+                    4.934543,
+                    27.486038,
+                    74.98412,
+                    11.304357
+                ]
+            },
+            "nodes": {
+                "Door to Deck Alpha Access Hall": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 20.769554138183594,
+                        "y": -122.3433837890625,
+                        "z": 7.563265800476074
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "dock_index": 0,
+                        "nonstandard": false
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Frigate Orpheon",
+                        "area": "Deck Alpha Access Hall",
+                        "node": "Door to Air Lock"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Exterior Docking Hangar": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Exterior Docking Hangar": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 20.28269386291504,
+                        "y": -88.64302825927734,
+                        "z": 7.5132598876953125
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "dock_index": 1,
+                        "nonstandard": true
+                    },
+                    "valid_starting_location": true,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Frigate Orpheon",
+                        "area": "Exterior Docking Hangar",
+                        "node": "Door to Air Lock"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Deck Alpha Access Hall": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Scan",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Dock from Deck Alpha Mech Shaft": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 17.31,
+                        "y": -112.51,
+                        "z": 7.56
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "dock_index": 2,
+                        "nonstandard": true
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "other",
+                    "default_connection": {
+                        "region": "Frigate Orpheon",
+                        "area": "Deck Alpha Mech Shaft",
+                        "node": "Dock to Air Lock"
+                    },
+                    "default_dock_weakness": "Closed Passage",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Exterior Docking Hangar": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Items Every Room)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "items_every_room"
+                    ],
+                    "extra": {
+                        "position_required": true
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 141,
+                    "location_category": "minor",
+                    "connections": {}
+                }
+            }
+        },
+        "Deck Alpha Access Hall": {
+            "default_node": "Door to Air Lock",
+            "extra": {
+                "asset_id": 1649363258,
+                "size_index": 0.1,
+                "aabb": [
+                    17.859547,
+                    -6.225506,
+                    -1.0422211,
+                    27.115404,
+                    41.564087,
+                    11.74294
+                ]
+            },
+            "nodes": {
+                "Door to Air Lock": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 7.8948118686676025,
+                        "y": -31.1055965423584,
+                        "z": 2.499995115814272
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "dock_index": 0,
+                        "nonstandard": false
+                    },
+                    "valid_starting_location": true,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Frigate Orpheon",
+                        "area": "Air Lock",
+                        "node": "Door to Deck Alpha Access Hall"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Emergency Evacuation Area": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Emergency Evacuation Area": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 7.897886037826538,
+                        "y": 16.403669357299805,
+                        "z": 2.5000029305115277
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "dock_index": 1,
+                        "nonstandard": false
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Frigate Orpheon",
+                        "area": "Emergency Evacuation Area",
+                        "node": "Door to Deck Alpha Access Hall"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Air Lock": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Items Every Room)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "items_every_room"
+                    ],
+                    "extra": {
+                        "position_required": true
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 142,
+                    "location_category": "minor",
+                    "connections": {}
+                }
+            }
+        },
+        "Deck Alpha Mech Shaft": {
+            "default_node": "Dock from Connection Elevator to Deck Alpha",
+            "extra": {
+                "asset_id": 3365346969,
+                "size_index": 0.1,
+                "aabb": [
+                    -9.7115135,
+                    42.53347,
+                    4.7486186,
+                    19.53093,
+                    61.254944,
+                    12.1577
+                ]
+            },
+            "nodes": {
+                "Dock from Connection Elevator to Deck Alpha": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -9.34,
+                        "y": -102.42,
+                        "z": 7.56
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "dock_index": 0,
+                        "nonstandard": true
+                    },
+                    "valid_starting_location": true,
+                    "dock_type": "other",
+                    "default_connection": {
+                        "region": "Frigate Orpheon",
+                        "area": "Connection Elevator to Deck Alpha",
+                        "node": "Dock to Deck Alpha Mech Shaft"
+                    },
+                    "default_dock_weakness": "Closed Passage",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Dock to Air Lock": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Dock to Air Lock": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 17.31,
+                        "y": -112.51,
+                        "z": 7.56
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "dock_index": 1,
+                        "nonstandard": true
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "other",
+                    "default_connection": {
+                        "region": "Frigate Orpheon",
+                        "area": "Air Lock",
+                        "node": "Dock from Deck Alpha Mech Shaft"
+                    },
+                    "default_dock_weakness": "Open Passage",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {}
+                },
+                "Pickup (Items Every Room)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "items_every_room"
+                    ],
+                    "extra": {
+                        "position_required": true
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 143,
+                    "location_category": "minor",
+                    "connections": {}
+                }
+            }
+        },
+        "Emergency Evacuation Area": {
+            "default_node": "Door to Deck Alpha Access Hall",
+            "extra": {
+                "asset_id": 551846422,
+                "size_index": 0.6,
+                "aabb": [
+                    -22.09307,
+                    -62.662148,
+                    -3.072985,
+                    25.749662,
+                    -4.016583,
+                    23.618816
+                ]
+            },
+            "nodes": {
+                "Door to Deck Alpha Umbilical Hall": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 7.485584735870361,
+                        "y": -62.66214370727539,
+                        "z": 2.495425112079829
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "dock_index": 0,
+                        "nonstandard": false
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Frigate Orpheon",
+                        "area": "Deck Alpha Umbilical Hall",
+                        "node": "Door to Emergency Evacuation Area"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Deck Alpha Access Hall": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Deck Alpha Access Hall": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 22.4855899810791,
+                        "y": -6.233133316040039,
+                        "z": 7.495434999465942
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "dock_index": 1,
+                        "nonstandard": false
+                    },
+                    "valid_starting_location": true,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Frigate Orpheon",
+                        "area": "Deck Alpha Access Hall",
+                        "node": "Door to Emergency Evacuation Area"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Deck Alpha Umbilical Hall": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Items Every Room)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "items_every_room"
+                    ],
+                    "extra": {
+                        "position_required": true
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 144,
+                    "location_category": "minor",
+                    "connections": {}
+                }
+            }
+        },
+        "Connection Elevator to Deck Alpha": {
+            "default_node": "Door from Biotech Research Area 2",
+            "extra": {
+                "asset_id": 2921253053,
+                "size_index": 0.3,
+                "aabb": [
+                    -13.167816,
+                    43.15779,
+                    -54.167496,
+                    59.605236,
+                    72.76269,
+                    12.799316
+                ]
+            },
+            "nodes": {
+                "Door from Biotech Research Area 2": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 36.42,
+                        "y": -12.3,
+                        "z": -2.5
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "dock_index": 0,
+                        "nonstandard": false
+                    },
+                    "valid_starting_location": true,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Frigate Orpheon",
+                        "area": "Biotech Research Area 2",
+                        "node": "Door to Connection Elevator to Deck Alpha"
+                    },
+                    "default_dock_weakness": "Permanently Locked",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Dock to Deck Alpha Mech Shaft": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Scan",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Dock to Deck Alpha Mech Shaft": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -30.8,
+                        "y": 0.28,
+                        "z": 50.83
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "dock_index": 1,
+                        "nonstandard": true
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "other",
+                    "default_connection": {
+                        "region": "Frigate Orpheon",
+                        "area": "Deck Alpha Mech Shaft",
+                        "node": "Dock from Connection Elevator to Deck Alpha"
+                    },
+                    "default_dock_weakness": "Open Passage",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {}
+                },
+                "Pickup (Items Every Room)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "items_every_room"
+                    ],
+                    "extra": {
+                        "position_required": true
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 145,
+                    "location_category": "minor",
+                    "connections": {}
+                }
+            }
+        },
+        "Deck Alpha Umbilical Hall": {
+            "default_node": "Door to Emergency Evacuation Area",
+            "extra": {
+                "asset_id": 3995189286,
+                "size_index": 0.1,
+                "aabb": [
+                    2.0016985,
+                    -105.39661,
+                    -1.0495336,
+                    20.292425,
+                    -62.66213,
+                    6.626735
+                ]
+            },
+            "nodes": {
+                "Door to Emergency Evacuation Area": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 20.28269386291504,
+                        "y": -88.64302825927734,
+                        "z": 7.5132598876953125
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "dock_index": 0,
+                        "nonstandard": false
+                    },
+                    "valid_starting_location": true,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Frigate Orpheon",
+                        "area": "Emergency Evacuation Area",
+                        "node": "Door to Deck Alpha Umbilical Hall"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Map Facility": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Charge",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Shoot Power Beam"
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Shoot Ice Beam"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Door to Map Facility": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 20.282691955566406,
+                        "y": -131.3774871826172,
+                        "z": 7.513254165649414
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "dock_index": 1,
+                        "nonstandard": false
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Frigate Orpheon",
+                        "area": "Map Facility",
+                        "node": "Door to Deck Alpha Umbilical Hall"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Emergency Evacuation Area": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Charge",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Shoot Power Beam"
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Shoot Ice Beam"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Pickup (Items Every Room)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "items_every_room"
+                    ],
+                    "extra": {
+                        "position_required": true
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 146,
+                    "location_category": "minor",
+                    "connections": {}
+                }
+            }
+        },
+        "Biotech Research Area 2": {
+            "default_node": "Door from Main Ventilation Shaft Section F",
+            "extra": {
+                "asset_id": 3319675910,
+                "size_index": 0.6,
+                "aabb": [
+                    55.20597,
+                    -9.071922,
+                    -53.394554,
+                    171.21388,
+                    106.936295,
+                    133.1554
+                ]
+            },
+            "nodes": {
+                "Door from Main Ventilation Shaft Section F": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 36.58,
+                        "y": -29.83,
+                        "z": 9.14
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "dock_index": 0,
+                        "nonstandard": false
+                    },
+                    "valid_starting_location": true,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Frigate Orpheon",
+                        "area": "Main Ventilation Shaft Section F",
+                        "node": "Door to Biotech Research Area 2"
+                    },
+                    "default_dock_weakness": "Permanently Locked",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Connection Elevator to Deck Alpha": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Use Grapple Beam"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "SpaceJump",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "MorphBall",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Bombs",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "BJ",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Door to Connection Elevator to Deck Alpha": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -71.68571472167969,
+                        "y": -29.706077098846436,
+                        "z": 7.98286509513855
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "dock_index": 1,
+                        "nonstandard": false
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Frigate Orpheon",
+                        "area": "Connection Elevator to Deck Alpha",
+                        "node": "Door from Biotech Research Area 2"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {}
+                },
+                "Pickup (Items Every Room)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "items_every_room"
+                    ],
+                    "extra": {
+                        "position_required": true
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 147,
+                    "location_category": "minor",
+                    "connections": {}
+                }
+            }
+        },
+        "Map Facility": {
+            "default_node": "Door to Deck Alpha Umbilical Hall",
+            "extra": {
+                "asset_id": 3454403824,
+                "size_index": 0.3,
+                "aabb": [
+                    -39.477062,
+                    -135.51378,
+                    -1.1146281,
+                    12.107888,
+                    -105.39661,
+                    11.8321
+                ]
+            },
+            "nodes": {
+                "Door to Deck Alpha Umbilical Hall": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 9.294754981994629,
+                        "y": 29.402666091918945,
+                        "z": 3.215004950761795
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "dock_index": 0,
+                        "nonstandard": false
+                    },
+                    "valid_starting_location": true,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Frigate Orpheon",
+                        "area": "Deck Alpha Umbilical Hall",
+                        "node": "Door to Map Facility"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Connection Elevator to Deck Beta": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Map Station": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "MorphBall",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Door to Connection Elevator to Deck Beta": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 9.501745223999023,
+                        "y": -0.7145045101642609,
+                        "z": 2.625
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "dock_index": 1,
+                        "nonstandard": false
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Frigate Orpheon",
+                        "area": "Connection Elevator to Deck Beta",
+                        "node": "Door to Map Facility"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Deck Alpha Umbilical Hall": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Map Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "MorphBall",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Map Station": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Deck Alpha Umbilical Hall": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "MorphBall",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Door to Connection Elevator to Deck Beta": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "MorphBall",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Pickup (Items Every Room)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "items_every_room"
+                    ],
+                    "extra": {
+                        "position_required": true
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 148,
+                    "location_category": "minor",
+                    "connections": {}
+                }
+            }
+        },
+        "Main Ventilation Shaft Section F": {
+            "default_node": "Door from Main Ventilation Shaft Section E",
+            "extra": {
+                "asset_id": 274035036,
+                "size_index": 0.1,
+                "aabb": [
+                    167.86838,
+                    -13.107231,
+                    -60.691372,
+                    197.11232,
+                    53.009132,
+                    -37.95221
+                ]
+            },
+            "nodes": {
+                "Door to Biotech Research Area 2": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -20.57,
+                        "y": -23.54,
+                        "z": 4.8
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "dock_index": 0,
+                        "nonstandard": false
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Frigate Orpheon",
+                        "area": "Biotech Research Area 2",
+                        "node": "Door from Main Ventilation Shaft Section F"
+                    },
+                    "default_dock_weakness": "Circular Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {}
+                },
+                "Door from Main Ventilation Shaft Section E": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 4.58,
+                        "y": -85.15,
+                        "z": -8.02
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "dock_index": 1,
+                        "nonstandard": false
+                    },
+                    "valid_starting_location": true,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Frigate Orpheon",
+                        "area": "Main Ventilation Shaft Section E",
+                        "node": "Door to Main Ventilation Shaft Section F"
+                    },
+                    "default_dock_weakness": "Permanently Locked",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Biotech Research Area 2": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Items Every Room)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "items_every_room"
+                    ],
+                    "extra": {
+                        "position_required": true
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 149,
+                    "location_category": "minor",
+                    "connections": {}
+                }
+            }
+        },
+        "Connection Elevator to Deck Beta": {
+            "default_node": "Door to Map Facility",
+            "extra": {
+                "asset_id": 834947875,
+                "size_index": 0.3,
+                "aabb": [
+                    -0.57421875,
+                    -157.02304,
+                    -42.68944,
+                    19.109993,
+                    -135.51378,
+                    8.6173115
+                ]
+            },
+            "nodes": {
+                "Door to Map Facility": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -2.5000080531158346,
+                        "y": 10.714504718780518,
+                        "z": 8.500001907348633
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "dock_index": 0,
+                        "nonstandard": false
+                    },
+                    "valid_starting_location": true,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Frigate Orpheon",
+                        "area": "Map Facility",
+                        "node": "Door to Connection Elevator to Deck Beta"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Deck Beta Conduit Hall": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Scan",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Door to Deck Beta Conduit Hall": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 2.57,
+                        "y": -10.71,
+                        "z": -27.5
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "dock_index": 1,
+                        "nonstandard": false
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Frigate Orpheon",
+                        "area": "Deck Beta Conduit Hall",
+                        "node": "Door to Connection Elevator to Deck Beta"
+                    },
+                    "default_dock_weakness": "Circular Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Map Facility": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Items Every Room)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "items_every_room"
+                    ],
+                    "extra": {
+                        "position_required": true
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 150,
+                    "location_category": "minor",
+                    "connections": {}
+                }
+            }
+        },
+        "Main Ventilation Shaft Section E": {
+            "default_node": "Door from Main Ventilation Shaft Section D",
+            "extra": {
+                "asset_id": 690871324,
+                "size_index": 0.1,
+                "aabb": [
+                    178.48003,
+                    -37.63453,
+                    -61.629242,
+                    250.6361,
+                    -13.107206,
+                    -51.47195
+                ]
+            },
+            "nodes": {
+                "Door to Main Ventilation Shaft Section F": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -26.84,
+                        "y": 15.73,
+                        "z": -1.09
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "dock_index": 0,
+                        "nonstandard": false
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Frigate Orpheon",
+                        "area": "Main Ventilation Shaft Section F",
+                        "node": "Door from Main Ventilation Shaft Section E"
+                    },
+                    "default_dock_weakness": "Circular Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {}
+                },
+                "Door from Main Ventilation Shaft Section D": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 8.6,
+                        "y": -8.8,
+                        "z": -1.11
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "dock_index": 1,
+                        "nonstandard": false
+                    },
+                    "valid_starting_location": true,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Frigate Orpheon",
+                        "area": "Main Ventilation Shaft Section D",
+                        "node": "Door to Main Ventilation Shaft Section E"
+                    },
+                    "default_dock_weakness": "Permanently Locked",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Main Ventilation Shaft Section F": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Items Every Room)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "items_every_room"
+                    ],
+                    "extra": {
+                        "position_required": true
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 151,
+                    "location_category": "minor",
+                    "connections": {}
+                }
+            }
+        },
+        "Deck Beta Conduit Hall": {
+            "default_node": "Door to Connection Elevator to Deck Beta",
+            "extra": {
+                "asset_id": 2827042742,
+                "size_index": 0.1,
+                "aabb": [
+                    8.5677185,
+                    -204.85638,
+                    -37.052113,
+                    32.791523,
+                    -156.91931,
+                    -29.421213
+                ]
+            },
+            "nodes": {
+                "Door to Biotech Research Area 1": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 6.239264965057373,
+                        "y": -16.888110876083374,
+                        "z": 2.5499974144622684
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "dock_index": 0,
+                        "nonstandard": false
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Frigate Orpheon",
+                        "area": "Biotech Research Area 1",
+                        "node": "Door to Deck Beta Conduit Hall"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Connection Elevator to Deck Beta": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "MorphBall",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Door to Connection Elevator to Deck Beta": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -13.792423248291016,
+                        "y": 26.465730667114258,
+                        "z": 2.625003904104233
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "dock_index": 1,
+                        "nonstandard": false
+                    },
+                    "valid_starting_location": true,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Frigate Orpheon",
+                        "area": "Connection Elevator to Deck Beta",
+                        "node": "Door to Deck Beta Conduit Hall"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Biotech Research Area 1": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "MorphBall",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Pickup (Items Every Room)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "items_every_room"
+                    ],
+                    "extra": {
+                        "position_required": true
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 152,
+                    "location_category": "minor",
+                    "connections": {}
+                }
+            }
+        },
+        "Main Ventilation Shaft Section D": {
+            "default_node": "Door from Main Ventilation Shaft Section C",
+            "extra": {
+                "asset_id": 1040562396,
+                "size_index": 0.1,
+                "aabb": [
+                    223.858,
+                    -102.50653,
+                    -80.26732,
+                    273.65005,
+                    -37.63449,
+                    -50.72226
+                ]
+            },
+            "nodes": {
+                "Door from Main Ventilation Shaft Section C": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 35.47,
+                        "y": -37.5,
+                        "z": -11.42
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "dock_index": 0,
+                        "nonstandard": false
+                    },
+                    "valid_starting_location": true,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Frigate Orpheon",
+                        "area": "Main Ventilation Shaft Section C",
+                        "node": "Door to Main Ventilation Shaft Section D"
+                    },
+                    "default_dock_weakness": "Permanently Locked",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Main Ventilation Shaft Section E": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Main Ventilation Shaft Section E": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -9.74,
+                        "y": 24.01,
+                        "z": 8.14
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "dock_index": 1,
+                        "nonstandard": false
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Frigate Orpheon",
+                        "area": "Main Ventilation Shaft Section E",
+                        "node": "Door from Main Ventilation Shaft Section D"
+                    },
+                    "default_dock_weakness": "Circular Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {}
+                },
+                "Pickup (Items Every Room)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "items_every_room"
+                    ],
+                    "extra": {
+                        "position_required": true
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 153,
+                    "location_category": "minor",
+                    "connections": {}
+                }
+            }
+        },
+        "Biotech Research Area 1": {
+            "default_node": "Door to Deck Beta Conduit Hall",
+            "extra": {
+                "asset_id": 2237107796,
+                "size_index": 0.6,
+                "aabb": [
+                    32.791523,
+                    -224.20995,
+                    -46.73259,
+                    101.80783,
+                    -161.28946,
+                    24.330963
+                ]
+            },
+            "nodes": {
+                "Door to Deck Beta Security Hall": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 49.18739700317383,
+                        "y": 11.628427982330322,
+                        "z": 12.500041007995605
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "dock_index": 0,
+                        "nonstandard": false
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Frigate Orpheon",
+                        "area": "Deck Beta Security Hall",
+                        "node": "Door to Biotech Research Area 1"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Deck Beta Conduit Hall": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Event33",
+                                            "amount": 1,
+                                            "negate": true
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Door to Subventilation Shaft Section A": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Event33",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Door to Deck Beta Conduit Hall": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -12.241524696350098,
+                        "y": -23.36069965362549,
+                        "z": 12.499906539916992
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "dock_index": 1,
+                        "nonstandard": false
+                    },
+                    "valid_starting_location": true,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Frigate Orpheon",
+                        "area": "Deck Beta Conduit Hall",
+                        "node": "Door to Biotech Research Area 1"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Deck Beta Security Hall": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Subventilation Shaft Section A": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Event33",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Door from Connection Elevator to Deck Beta (2)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 35.96,
+                        "y": -41.58,
+                        "z": 2.5
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "dock_index": 2,
+                        "nonstandard": false
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Frigate Orpheon",
+                        "area": "Connection Elevator to Deck Beta (2)",
+                        "node": "Door to Biotech Research Area 1"
+                    },
+                    "default_dock_weakness": "Permanently Locked",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Deck Beta Security Hall": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Event33",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "MorphBall",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Bombs",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "or",
+                                                                            "data": {
+                                                                                "comment": null,
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "BJ",
+                                                                                            "amount": 3,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "or",
+                                                                                        "data": {
+                                                                                            "comment": null,
+                                                                                            "items": [
+                                                                                                {
+                                                                                                    "type": "and",
+                                                                                                    "data": {
+                                                                                                        "comment": null,
+                                                                                                        "items": [
+                                                                                                            {
+                                                                                                                "type": "resource",
+                                                                                                                "data": {
+                                                                                                                    "type": "items",
+                                                                                                                    "name": "SpaceJump",
+                                                                                                                    "amount": 1,
+                                                                                                                    "negate": false
+                                                                                                                }
+                                                                                                            },
+                                                                                                            {
+                                                                                                                "type": "resource",
+                                                                                                                "data": {
+                                                                                                                    "type": "tricks",
+                                                                                                                    "name": "Standable",
+                                                                                                                    "amount": 1,
+                                                                                                                    "negate": false
+                                                                                                                }
+                                                                                                            }
+                                                                                                        ]
+                                                                                                    }
+                                                                                                },
+                                                                                                {
+                                                                                                    "type": "and",
+                                                                                                    "data": {
+                                                                                                        "comment": null,
+                                                                                                        "items": [
+                                                                                                            {
+                                                                                                                "type": "resource",
+                                                                                                                "data": {
+                                                                                                                    "type": "tricks",
+                                                                                                                    "name": "Standable",
+                                                                                                                    "amount": 3,
+                                                                                                                    "negate": false
+                                                                                                                }
+                                                                                                            },
+                                                                                                            {
+                                                                                                                "type": "resource",
+                                                                                                                "data": {
+                                                                                                                    "type": "tricks",
+                                                                                                                    "name": "LJump",
+                                                                                                                    "amount": 1,
+                                                                                                                    "negate": false
+                                                                                                                }
+                                                                                                            }
+                                                                                                        ]
+                                                                                                    }
+                                                                                                }
+                                                                                            ]
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "OoB",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Door to Subventilation Shaft Section A": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Event33",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Door to Subventilation Shaft Section A": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 48.6,
+                        "y": -2.54,
+                        "z": 15.5
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "dock_index": 3,
+                        "nonstandard": true
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Frigate Orpheon",
+                        "area": "Subventilation Shaft Section A",
+                        "node": "Door from Biotech Research Area 1"
+                    },
+                    "default_dock_weakness": "Circular Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Deck Beta Security Hall": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Deck Beta Conduit Hall": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Event33",
+                                            "amount": 1,
+                                            "negate": true
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Pickup (Items Every Room)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "items_every_room"
+                    ],
+                    "extra": {
+                        "position_required": true
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 154,
+                    "location_category": "minor",
+                    "connections": {}
+                }
+            }
+        },
+        "Main Ventilation Shaft Section C": {
+            "default_node": "Door from Main Ventilation Shaft Section B",
+            "extra": {
+                "asset_id": 1541179036,
+                "size_index": 0.1,
+                "aabb": [
+                    273.65,
+                    -145.08824,
+                    -116.60791,
+                    336.6398,
+                    -88.19056,
+                    -20.26212
+                ]
+            },
+            "nodes": {
+                "Door to Main Ventilation Shaft Section D": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -31.7,
+                        "y": 17.5,
+                        "z": -8.9
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "dock_index": 0,
+                        "nonstandard": false
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Frigate Orpheon",
+                        "area": "Main Ventilation Shaft Section D",
+                        "node": "Door from Main Ventilation Shaft Section C"
+                    },
+                    "default_dock_weakness": "Circular Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {}
+                },
+                "Door from Main Ventilation Shaft Section B": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -10.14,
+                        "y": -24.33,
+                        "z": 4.18
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "dock_index": 1,
+                        "nonstandard": false
+                    },
+                    "valid_starting_location": true,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Frigate Orpheon",
+                        "area": "Main Ventilation Shaft Section B",
+                        "node": "Door to Main Ventilation Shaft Section C"
+                    },
+                    "default_dock_weakness": "Permanently Locked",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Main Ventilation Shaft Section D": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Items Every Room)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "items_every_room"
+                    ],
+                    "extra": {
+                        "position_required": true
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 155,
+                    "location_category": "minor",
+                    "connections": {}
+                }
+            }
+        },
+        "Deck Beta Security Hall": {
+            "default_node": "Door to Biotech Research Area 1",
+            "extra": {
+                "asset_id": 1237686565,
+                "size_index": 0.1,
+                "aabb": [
+                    94.22044,
+                    -169.30379,
+                    -37.04504,
+                    120.81659,
+                    -138.41971,
+                    -26.992891
+                ]
+            },
+            "nodes": {
+                "Door to Biohazard Containment": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 0.5316100120544434,
+                        "y": 9.719512462615967,
+                        "z": 2.500000976837157
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "dock_index": 0,
+                        "nonstandard": false
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Frigate Orpheon",
+                        "area": "Biohazard Containment",
+                        "node": "Door to Deck Beta Security Hall"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Biotech Research Area 1": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Biotech Research Area 1": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -21.451522827148438,
+                        "y": -17.167717218399048,
+                        "z": 2.480997531209141
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "dock_index": 1,
+                        "nonstandard": false
+                    },
+                    "valid_starting_location": true,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Frigate Orpheon",
+                        "area": "Biotech Research Area 1",
+                        "node": "Door to Deck Beta Security Hall"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Biohazard Containment": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Items Every Room)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "items_every_room"
+                    ],
+                    "extra": {
+                        "position_required": true
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 156,
+                    "location_category": "minor",
+                    "connections": {}
+                }
+            }
+        },
+        "Connection Elevator to Deck Beta (2)": {
+            "default_node": "Door from Deck Gamma Monitor Hall",
+            "extra": {
+                "asset_id": 1859330843,
+                "size_index": 0.3,
+                "aabb": [
+                    76.80737,
+                    -264.21964,
+                    -109.16401,
+                    106.86839,
+                    -218.51312,
+                    -36.962128
+                ]
+            },
+            "nodes": {
+                "Door to Biotech Research Area 1": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -175.57569885253906,
+                        "y": 88.08171081542969,
+                        "z": -17.505359649658203
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "dock_index": 0,
+                        "nonstandard": false
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Frigate Orpheon",
+                        "area": "Biotech Research Area 1",
+                        "node": "Door from Connection Elevator to Deck Beta (2)"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {}
+                },
+                "Door from Deck Gamma Monitor Hall": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -155.08,
+                        "y": 42.38,
+                        "z": -57.6
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "dock_index": 1,
+                        "nonstandard": false
+                    },
+                    "valid_starting_location": true,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Frigate Orpheon",
+                        "area": "Deck Gamma Monitor Hall",
+                        "node": "Door to Connection Elevator to Deck Beta (2)"
+                    },
+                    "default_dock_weakness": "Permanently Locked",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Biotech Research Area 1": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Scan",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Pickup (Items Every Room)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "items_every_room"
+                    ],
+                    "extra": {
+                        "position_required": true
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 157,
+                    "location_category": "minor",
+                    "connections": {}
+                }
+            }
+        },
+        "Subventilation Shaft Section A": {
+            "default_node": "Door from Biotech Research Area 1",
+            "extra": {
+                "asset_id": 154468580,
+                "size_index": 0.1,
+                "aabb": [
+                    93.63032,
+                    -287.56635,
+                    -52.560314,
+                    170.73416,
+                    -172.93942,
+                    -25.948427
+                ]
+            },
+            "nodes": {
+                "Door from Biotech Research Area 1": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 48.6,
+                        "y": -2.55,
+                        "z": 15.5
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "dock_index": 0,
+                        "nonstandard": true
+                    },
+                    "valid_starting_location": true,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Frigate Orpheon",
+                        "area": "Biotech Research Area 1",
+                        "node": "Door to Subventilation Shaft Section A"
+                    },
+                    "default_dock_weakness": "Permanently Locked",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Subventilation Shaft Section B": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Subventilation Shaft Section B": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 75.45,
+                        "y": -74.82,
+                        "z": -2.7
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "dock_index": 1,
+                        "nonstandard": false
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Frigate Orpheon",
+                        "area": "Subventilation Shaft Section B",
+                        "node": "Door from Subventilation Shaft Section A"
+                    },
+                    "default_dock_weakness": "Circular Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {}
+                },
+                "Pickup (Items Every Room)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "items_every_room"
+                    ],
+                    "extra": {
+                        "position_required": true
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 158,
+                    "location_category": "minor",
+                    "connections": {}
+                }
+            }
+        },
+        "Main Ventilation Shaft Section B": {
+            "default_node": "Door from Main Ventilation Shaft Section A",
+            "extra": {
+                "asset_id": 1291117148,
+                "size_index": 0.1,
+                "aabb": [
+                    240.68193,
+                    -151.91791,
+                    -103.88626,
+                    295.20752,
+                    -129.99814,
+                    -6.9333344
+                ]
+            },
+            "nodes": {
+                "Door from Main Ventilation Shaft Section A": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -27.57,
+                        "y": 0.74,
+                        "z": -6.58
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "dock_index": 0,
+                        "nonstandard": false
+                    },
+                    "valid_starting_location": true,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Frigate Orpheon",
+                        "area": "Main Ventilation Shaft Section A",
+                        "node": "Door to Main Ventilation Shaft Section B"
+                    },
+                    "default_dock_weakness": "Permanently Locked",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Main Ventilation Shaft Section C": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Shoot Any Beam"
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Power",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Wave",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Plasma",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Missile",
+                                                                    "amount": 4,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Missile",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "misc",
+                                                                                "name": "hard_mode",
+                                                                                "amount": 1,
+                                                                                "negate": true
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Door to Main Ventilation Shaft Section C": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 26.96,
+                        "y": 0.72,
+                        "z": -0.36
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "dock_index": 1,
+                        "nonstandard": false
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Frigate Orpheon",
+                        "area": "Main Ventilation Shaft Section C",
+                        "node": "Door from Main Ventilation Shaft Section B"
+                    },
+                    "default_dock_weakness": "Circular Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {}
+                },
+                "Pickup (Items Every Room)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "items_every_room"
+                    ],
+                    "extra": {
+                        "position_required": true
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 159,
+                    "location_category": "minor",
+                    "connections": {}
+                }
+            }
+        },
+        "Biohazard Containment": {
+            "default_node": "Door to Deck Beta Transit Hall",
+            "extra": {
+                "asset_id": 3513460432,
+                "size_index": 0.8,
+                "aabb": [
+                    92.32477,
+                    -138.41971,
+                    -37.702404,
+                    132.39034,
+                    -81.78292,
+                    -3.7646732
+                ]
+            },
+            "nodes": {
+                "Door to Deck Beta Transit Hall": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 20.109954833984375,
+                        "y": -6.971122860908508,
+                        "z": 3.495651140809059
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "dock_index": 0,
+                        "nonstandard": false
+                    },
+                    "valid_starting_location": true,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Frigate Orpheon",
+                        "area": "Deck Beta Transit Hall",
+                        "node": "Door to Biohazard Containment"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Deck Beta Security Hall": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Deck Beta Security Hall": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 3.923192024230957,
+                        "y": -27.087387084960938,
+                        "z": -11.447588920593262
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "dock_index": 1,
+                        "nonstandard": false
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Frigate Orpheon",
+                        "area": "Deck Beta Security Hall",
+                        "node": "Door to Biohazard Containment"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Deck Beta Transit Hall": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Scan",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Pickup (Items Every Room)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "items_every_room"
+                    ],
+                    "extra": {
+                        "position_required": true
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 160,
+                    "location_category": "minor",
+                    "connections": {}
+                }
+            }
+        },
+        "Deck Gamma Monitor Hall": {
+            "default_node": "Door from Reactor Core",
+            "extra": {
+                "asset_id": 3865556485,
+                "size_index": 0.1,
+                "aabb": [
+                    98.23192,
+                    -316.5242,
+                    -99.70372,
+                    140.88274,
+                    -264.2196,
+                    -80.83344
+                ]
+            },
+            "nodes": {
+                "Door from Reactor Core": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -117.36,
+                        "y": -5.12,
+                        "z": -69.97
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "dock_index": 0,
+                        "nonstandard": false
+                    },
+                    "valid_starting_location": true,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Frigate Orpheon",
+                        "area": "Reactor Core",
+                        "node": "Door to Deck Gamma Monitor Hall"
+                    },
+                    "default_dock_weakness": "Permanently Locked",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Connection Elevator to Deck Beta (2)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Connection Elevator to Deck Beta (2)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -155.0777359008789,
+                        "y": 42.375253677368164,
+                        "z": -57.59830284118652
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "dock_index": 1,
+                        "nonstandard": false
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Frigate Orpheon",
+                        "area": "Connection Elevator to Deck Beta (2)",
+                        "node": "Door from Deck Gamma Monitor Hall"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {}
+                },
+                "Pickup (Items Every Room)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "items_every_room"
+                    ],
+                    "extra": {
+                        "position_required": true
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 161,
+                    "location_category": "minor",
+                    "connections": {}
+                }
+            }
+        },
+        "Subventilation Shaft Section B": {
+            "default_node": "Door from Subventilation Shaft Section A",
+            "extra": {
+                "asset_id": 3233526410,
+                "size_index": 0.3,
+                "aabb": [
+                    109.60294,
+                    -266.02185,
+                    -80.34119,
+                    178.36012,
+                    -171.03748,
+                    -43.28549
+                ]
+            },
+            "nodes": {
+                "Door to Cargo Freight Lift to Deck Gamma": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 133.33,
+                        "y": -30.2,
+                        "z": -30.48
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "dock_index": 0,
+                        "nonstandard": true
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Frigate Orpheon",
+                        "area": "Cargo Freight Lift to Deck Gamma",
+                        "node": "Door from Subventilation Shaft Section B"
+                    },
+                    "default_dock_weakness": "Circular Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {}
+                },
+                "Door from Subventilation Shaft Section A": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 75.45,
+                        "y": -74.82,
+                        "z": -2.7
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "dock_index": 1,
+                        "nonstandard": false
+                    },
+                    "valid_starting_location": true,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Frigate Orpheon",
+                        "area": "Subventilation Shaft Section A",
+                        "node": "Door to Subventilation Shaft Section B"
+                    },
+                    "default_dock_weakness": "Permanently Locked",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Cargo Freight Lift to Deck Gamma": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Items Every Room)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "items_every_room"
+                    ],
+                    "extra": {
+                        "position_required": true
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 162,
+                    "location_category": "minor",
+                    "connections": {}
+                }
+            }
+        },
+        "Main Ventilation Shaft Section A": {
+            "default_node": "Door from Cargo Freight Lift to Deck Gamma",
+            "extra": {
+                "asset_id": 1972129564,
+                "size_index": 0.3,
+                "aabb": [
+                    193.10922,
+                    -210.75241,
+                    -80.38012,
+                    240.682,
+                    -137.61028,
+                    -62.754517
+                ]
+            },
+            "nodes": {
+                "Door from Cargo Freight Lift to Deck Gamma": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -15.28,
+                        "y": -15.51,
+                        "z": -5.41
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "dock_index": 0,
+                        "nonstandard": true
+                    },
+                    "valid_starting_location": true,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Frigate Orpheon",
+                        "area": "Cargo Freight Lift to Deck Gamma",
+                        "node": "Door to Main Ventilation Shaft Section A"
+                    },
+                    "default_dock_weakness": "Permanently Locked",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Main Ventilation Shaft Section B": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Main Ventilation Shaft Section B": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 30.04,
+                        "y": 50.91,
+                        "z": 1.44
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "dock_index": 1,
+                        "nonstandard": false
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Frigate Orpheon",
+                        "area": "Main Ventilation Shaft Section B",
+                        "node": "Door from Main Ventilation Shaft Section A"
+                    },
+                    "default_dock_weakness": "Circular Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {}
+                },
+                "Pickup (Items Every Room)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "items_every_room"
+                    ],
+                    "extra": {
+                        "position_required": true
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 163,
+                    "location_category": "minor",
+                    "connections": {}
+                }
+            }
+        },
+        "Deck Beta Transit Hall": {
+            "default_node": "Door to Biohazard Containment",
+            "extra": {
+                "asset_id": 748855907,
+                "size_index": 0.1,
+                "aabb": [
+                    132.39032,
+                    -123.02151,
+                    -21.726954,
+                    177.64603,
+                    -113.69043,
+                    -15.969067
+                ]
+            },
+            "nodes": {
+                "Door to Cargo Freight Lift to Deck Gamma": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 21.76881980895996,
+                        "y": -2.5000004884185785,
+                        "z": 2.5096628139726818
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "dock_index": 0,
+                        "nonstandard": false
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Frigate Orpheon",
+                        "area": "Cargo Freight Lift to Deck Gamma",
+                        "node": "Door to Deck Beta Transit Hall"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Biohazard Containment": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Biohazard Containment": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -23.48688316345215,
+                        "y": -2.394950445741415,
+                        "z": 2.519327570218593
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "dock_index": 1,
+                        "nonstandard": false
+                    },
+                    "valid_starting_location": true,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Frigate Orpheon",
+                        "area": "Biohazard Containment",
+                        "node": "Door to Deck Beta Transit Hall"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Cargo Freight Lift to Deck Gamma": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Items Every Room)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "items_every_room"
+                    ],
+                    "extra": {
+                        "position_required": true
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 164,
+                    "location_category": "minor",
+                    "connections": {}
+                }
+            }
+        },
+        "Reactor Core": {
+            "default_node": "Door from Reactor Core Entrance",
+            "extra": {
+                "asset_id": 2269457857,
+                "size_index": 0.6,
+                "aabb": [
+                    139.20834,
+                    -377.1841,
+                    -156.8139,
+                    225.37779,
+                    -271.66705,
+                    -19.186909
+                ]
+            },
+            "nodes": {
+                "Door from Reactor Core Entrance": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -0.08,
+                        "y": 66.14,
+                        "z": -5.07
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "dock_index": 0,
+                        "nonstandard": false
+                    },
+                    "valid_starting_location": true,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Frigate Orpheon",
+                        "area": "Reactor Core Entrance",
+                        "node": "Door to Reactor Core"
+                    },
+                    "default_dock_weakness": "Permanently Locked",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Event - Parasite Queen": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Shoot Any Beam"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "MorphBall",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Combat",
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "PowerBomb",
+                                                        "amount": 4,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": "https://youtu.be/kTApU65vDP8",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Bombs",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "BJ",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": "https://youtu.be/kTApU65vDP8?t=21",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Boost",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "WallBoost",
+                                                                                "amount": 3,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Door to Deck Gamma Monitor Hall": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -45.736595153808594,
+                        "y": 26.08659076690674,
+                        "z": -19.988420486450195
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "dock_index": 1,
+                        "nonstandard": false
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Frigate Orpheon",
+                        "area": "Deck Gamma Monitor Hall",
+                        "node": "Door from Reactor Core"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {}
+                },
+                "Event - Parasite Queen": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "Event33",
+                    "connections": {
+                        "Door to Deck Gamma Monitor Hall": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Items Every Room)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "items_every_room"
+                    ],
+                    "extra": {
+                        "position_required": true
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 165,
+                    "location_category": "minor",
+                    "connections": {}
+                }
+            }
+        },
+        "Cargo Freight Lift to Deck Gamma": {
+            "default_node": "Door to Deck Beta Transit Hall",
+            "extra": {
+                "asset_id": 1878064482,
+                "size_index": 0.6,
+                "aabb": [
+                    177.21198,
+                    -243.26288,
+                    -93.86903,
+                    196.48601,
+                    -110.13571,
+                    -0.608448
+                ]
+            },
+            "nodes": {
+                "Door to Deck Beta Transit Hall": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -8.789896965026855,
+                        "y": 50.654659271240234,
+                        "z": 25.20549488067627
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "dock_index": 0,
+                        "nonstandard": false
+                    },
+                    "valid_starting_location": true,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Frigate Orpheon",
+                        "area": "Deck Beta Transit Hall",
+                        "node": "Door to Cargo Freight Lift to Deck Gamma"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Reactor Core Entrance": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Scan",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "MorphBall",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Door from Subventilation Shaft Section B": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -8.08,
+                        "y": -38.06,
+                        "z": -32.73
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "dock_index": 1,
+                        "nonstandard": true
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Frigate Orpheon",
+                        "area": "Subventilation Shaft Section B",
+                        "node": "Door to Cargo Freight Lift to Deck Gamma"
+                    },
+                    "default_dock_weakness": "Permanently Locked",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Main Ventilation Shaft Section A": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Main Ventilation Shaft Section A": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 8.92,
+                        "y": -38.32,
+                        "z": -32.64
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "dock_index": 2,
+                        "nonstandard": true
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Frigate Orpheon",
+                        "area": "Main Ventilation Shaft Section A",
+                        "node": "Door from Cargo Freight Lift to Deck Gamma"
+                    },
+                    "default_dock_weakness": "Circular Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {}
+                },
+                "Door to Reactor Core Entrance": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -1.58,
+                        "y": -74.2,
+                        "z": -37.29
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "dock_index": 3,
+                        "nonstandard": false
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Frigate Orpheon",
+                        "area": "Reactor Core Entrance",
+                        "node": "Door from Cargo Freight Lift to Deck Gamma"
+                    },
+                    "default_dock_weakness": "Square Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {}
+                },
+                "Pickup (Items Every Room)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "items_every_room"
+                    ],
+                    "extra": {
+                        "position_required": true
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 166,
+                    "location_category": "minor",
+                    "connections": {}
+                }
+            }
+        },
+        "Reactor Core Entrance": {
+            "default_node": "Save Station",
+            "extra": {
+                "asset_id": 1050775790,
+                "size_index": 0.3,
+                "aabb": [
+                    169.7645,
+                    -271.66705,
+                    -89.60429,
+                    216.26378,
+                    -243.26312,
+                    -64.27898
+                ]
+            },
+            "nodes": {
+                "Door from Cargo Freight Lift to Deck Gamma": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -0.7,
+                        "y": 14.2,
+                        "z": 5.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "dock_index": 0,
+                        "nonstandard": false
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Frigate Orpheon",
+                        "area": "Cargo Freight Lift to Deck Gamma",
+                        "node": "Door to Reactor Core Entrance"
+                    },
+                    "default_dock_weakness": "Permanently Locked",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Reactor Core": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Scan",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "MorphBall",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Save Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Reactor Core": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -0.7,
+                        "y": -14.2,
+                        "z": 5.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "dock_index": 1,
+                        "nonstandard": false
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Frigate Orpheon",
+                        "area": "Reactor Core",
+                        "node": "Door from Reactor Core Entrance"
+                    },
+                    "default_dock_weakness": "Square Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Save Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Save Station": {
+                    "node_type": "generic",
+                    "heal": true,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": true,
+                    "connections": {
+                        "Door from Cargo Freight Lift to Deck Gamma": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Items Every Room)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "items_every_room"
+                    ],
+                    "extra": {
+                        "position_required": true
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 167,
+                    "location_category": "minor",
+                    "connections": {}
+                }
+            }
+        }
+    }
+}

@@ -12,6 +12,7 @@ from randovania.games.game import RandovaniaGame
 from randovania.games.prime1.layout.artifact_mode import LayoutArtifactMode
 from randovania.games.prime1.layout.hint_configuration import HintConfiguration
 from randovania.layout.base.base_configuration import BaseConfiguration
+from randovania.lib import enum_lib
 
 
 class RoomRandoMode(BitPackEnum, Enum):
@@ -27,6 +28,37 @@ class LayoutCutsceneMode(BitPackEnum, Enum):
     MAJOR = "Major"
     SKIPPABLE = "Skippable"
     SKIPPABLE_COMPETITIVE = "SkippableCompetitive"
+
+
+class IngameDifficulty(BitPackEnum, Enum):
+    randomprime_value: str
+    description: str | None
+
+    NORMAL = "Normal"
+    HARD = "Hard"
+    EITHER = "Either"
+
+
+enum_lib.add_per_enum_field(
+    IngameDifficulty,
+    "randomprime_value",
+    {
+        IngameDifficulty.NORMAL: "NormalOnly",
+        IngameDifficulty.HARD: "HardOnly",
+        IngameDifficulty.EITHER: "Either",
+    },
+)
+
+
+enum_lib.add_per_enum_field(
+    IngameDifficulty,
+    "description",
+    {
+        IngameDifficulty.NORMAL: None,
+        IngameDifficulty.HARD: "Hard Mode",
+        IngameDifficulty.EITHER: None,
+    },
+)
 
 
 @dataclasses.dataclass(frozen=True)
@@ -50,6 +82,7 @@ class PrimeConfiguration(BaseConfiguration):
     hints: HintConfiguration
     energy_per_tank: int = dataclasses.field(metadata={"min": 1, "max": 1000, "precision": 1})
     artifact_target: LayoutArtifactMode
+    artifact_required: LayoutArtifactMode
     artifact_minimum_progression: int = dataclasses.field(metadata={"min": 0, "max": 99})
     heat_damage: float = dataclasses.field(metadata={"min": 0.1, "max": 99.9, "precision": 3.0})
     warp_to_start: bool
@@ -80,6 +113,7 @@ class PrimeConfiguration(BaseConfiguration):
 
     legacy_mode: bool
     qol_cutscenes: LayoutCutsceneMode
+    ingame_difficulty: IngameDifficulty
 
     enemy_attributes: EnemyAttributeRandomizer | None
 
@@ -121,3 +155,13 @@ class PrimeConfiguration(BaseConfiguration):
         if self.items_every_room:
             layers.add("items_every_room")
         return layers
+
+    def unsupported_features(self) -> list[str]:
+        result = super().unsupported_features()
+
+        if self.artifact_required.value > self.artifact_target.value:
+            result.append(
+                "The amount of required artifacts cannot be higher than the total amount of shuffled artifacts."
+            )
+
+        return result

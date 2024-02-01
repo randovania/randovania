@@ -610,8 +610,9 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
     def setup_starting_location(self, node_location: NodeIdentifier | None) -> None:
         region_list = self.game_description.region_list
 
-        if len(self.game_configuration.starting_location.locations) > 1:
-            if node_location is None:
+        if node_location is None:
+            locations_len = len(self.game_configuration.starting_location.locations)
+            if locations_len > 1:
                 node_locations = sorted(
                     self.game_configuration.starting_location.locations,
                     key=lambda it: region_list.node_name(region_list.node_by_identifier(it), with_region=True),
@@ -624,10 +625,13 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
                     self, "Starting Location", "Select starting location", location_names, 0, False
                 )
                 node_location = node_locations[location_names.index(selected_name[0])]
+            elif locations_len == 1:
+                node_location = self.game_configuration.starting_location.locations[0]
+            else:
+                raise ValueError("Preset without a starting location.")
 
-            # TODO If there is no `default_node` anymore, what would be the replacement?
-            node = region_list.node_by_identifier(node_location)
-            self._initial_state.node = region_list.nodes_to_area(node).get_start_nodes()[0]
+        node = region_list.node_by_identifier(node_location)
+        self._initial_state.node = node
 
         def is_resource_node_present(node: Node, state: State):
             if node.is_resource_node:

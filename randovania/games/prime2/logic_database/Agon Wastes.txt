@@ -1,0 +1,3727 @@
+----------------
+Transport to Temple Grounds
+Extra - asset_id: 1473133138
+Extra - in_dark_aether: False
+> Door to Plaza Access; Heals? False
+  * Layers: default
+  * Normal Door to Plaza Access/Door to Transport to Temple Grounds
+  * Extra - dock_name: East
+  > Elevator to Temple Grounds
+      Scan Visor
+
+> Elevator to Temple Grounds; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Elevator to Transport to Agon Wastes/Elevator to Agon Wastes
+  * Extra - scan_asset_id: 2084247194
+  * Extra - teleporter_instance_id: 122
+  * Extra - keep_name_when_vanilla: False
+  > Door to Plaza Access
+      Trivial
+
+----------------
+Plaza Access
+Extra - asset_id: 2918746407
+Extra - in_dark_aether: False
+> Door to Transport to Temple Grounds; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Normal Door to Transport to Temple Grounds/Door to Plaza Access
+  * Extra - dock_name: West
+  > Door to Mining Plaza
+      Trivial
+
+> Door to Mining Plaza; Heals? False
+  * Layers: default
+  * Normal Door to Mining Plaza/Door to Plaza Access
+  * Extra - dock_name: East
+  > Door to Transport to Temple Grounds
+      Trivial
+
+----------------
+Mining Plaza
+Extra - asset_id: 1115663770
+Extra - in_dark_aether: False
+> Door to Transit Station; Heals? False
+  * Layers: default
+  * Normal Door to Transit Station/Door to Mining Plaza
+  * Extra - dock_name: North
+
+> Portal from Duelling Range; Heals? False
+  * Layers: default
+  * No Return Portal to Duelling Range/Portal to Mining Plaza
+  * Extra - dock_name: VirtualDock
+  > Door to Transit Station
+      Trivial
+
+> Morph Ball Door to Agon Map Station; Heals? False
+  * Layers: default
+  * Morph Ball Door to Agon Map Station/Morph Ball Door to Mining Plaza
+  * Extra - dock_name: NorthMap
+  > Translator Gate
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Morph Ball Bomb or Power Bomb
+              # Use Boost Ball to destroy the rock
+              Boost Ball and Knowledge (Beginner)
+
+> Door to Save Station A; Heals? False
+  * Layers: default
+  * Missile Blast Shield to Save Station A/Door to Mining Plaza
+  * Extra - dock_name: South
+  > Door to Plaza Access
+      Trivial
+
+> Door to Mining Station Access; Heals? False
+  * Layers: default
+  * Normal Door to Mining Station Access/Door to Mining Plaza
+  * Extra - dock_name: East1
+  > Door to Plaza Access
+      Trivial
+  > Pickup (Energy Tank)
+      All of the following:
+          Echo Visor and After Agon Energy Returned
+          Any of the following:
+              Use Screw Attack (Space Jump)
+              # https://www.youtube.com/watch?v=A9JXJVOykZU
+              Scan Visor and Space Jump Boots and Extended Dash (Hypermode)
+  > Lore Scan
+      Trivial
+
+> Door to Plaza Access; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Normal Door to Plaza Access/Door to Mining Plaza
+  * Extra - dock_name: West
+  > Door to Save Station A
+      Trivial
+  > Door to Mining Station Access
+      Any of the following:
+          Missile or Space Jump Boots
+          # Double Bomb Jump
+          Morph Ball Bomb and Morph Ball and Bomb Jump (Beginner)
+          # https://www.youtube.com/watch?v=drldqXBvPLs
+          Movement (Beginner) and Use Screw Attack (No Space Jump)
+          # https://www.youtube.com/watch?v=0BuPg72jQgI
+          Combat/Scan Dash (Intermediate) and Slope Jump (Intermediate)
+  > Translator Gate
+      Trivial
+
+> Pickup (Energy Tank); Heals? False
+  * Layers: default
+  * Pickup 25; Category? Major
+  > Door to Plaza Access
+      Trivial
+
+> Translator Gate; Heals? False
+  * Layers: default
+  * Configurable Node
+  * Extra - gate_index: 10
+  * Extra - vanilla_actual: Amber
+  * Extra - vanilla_color: Amber
+  > Morph Ball Door to Agon Map Station
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Morph Ball Bomb or Power Bomb
+              All of the following:
+                  Knowledge (Beginner)
+                  # Use Boost Ball or Screw Attack to destroy the rock
+                  Boost Ball or Use Screw Attack (Space Jump)
+  > Door to Plaza Access
+      Trivial
+
+> Lore Scan; Heals? False
+  * Layers: default
+  * Hint
+  * Extra - translator: Amber
+  * Extra - string_asset_id: 619091749
+  > Door to Plaza Access
+      Trivial
+
+----------------
+Agon Map Station
+Extra - asset_id: 2220656039
+Extra - in_dark_aether: False
+> Morph Ball Door to Mining Plaza; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Morph Ball Door to Mining Plaza/Morph Ball Door to Agon Map Station
+  * Extra - dock_name: South
+  > Map Station
+      Morph Ball
+
+> Map Station; Heals? False
+  * Layers: default
+  > Morph Ball Door to Mining Plaza
+      Morph Ball
+
+----------------
+Transit Station
+Extra - asset_id: 2043266464
+Extra - in_dark_aether: False
+> Door to Mining Plaza; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Normal Door to Mining Plaza/Door to Transit Station
+  * Extra - dock_name: South
+  > Door to Mining Station B
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Morph Ball Bomb or Power Bomb
+              # Use Boost Ball to destroy the rock
+              Boost Ball and Knowledge (Beginner)
+
+> Door to Mining Station B; Heals? False
+  * Layers: default
+  * Normal Door to Mining Station B/Door to Transit Station
+  * Extra - dock_name: East
+  > Door to Mining Plaza
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Morph Ball Bomb or Power Bomb
+              # Use Boost Ball to destroy the rock
+              Boost Ball and Knowledge (Beginner)
+
+----------------
+Save Station A
+Extra - asset_id: 1342271826
+Extra - unlocked_save_station: True
+Extra - in_dark_aether: False
+> Save Station; Heals? True; Spawn Point; Default Node
+  * Layers: default
+  > Door to Transport Center
+      Morph Ball
+  > Door to Mining Plaza
+      Trivial
+
+> Door to Transport Center; Heals? False
+  * Layers: default
+  * Normal Door to Transport Center/Door to Save Station A
+  * Extra - dock_name: East
+  > Save Station
+      Morph Ball
+
+> Door to Mining Plaza; Heals? False
+  * Layers: default
+  * Missile Blast Shield to Mining Plaza/Door to Save Station A
+  * Extra - dock_name: North
+  > Save Station
+      Trivial
+
+----------------
+Mining Station Access
+Extra - asset_id: 2373615500
+Extra - in_dark_aether: False
+> Door to Mining Station A; Heals? False
+  * Layers: default
+  * Normal Door to Mining Station A/Door to Mining Station Access
+  * Extra - dock_name: East
+  > Door to Mining Plaza
+      Morph Ball
+
+> Door to Mining Plaza; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Normal Door to Mining Plaza/Door to Mining Station Access
+  * Extra - dock_name: West
+  > Door to Mining Station A
+      Morph Ball
+  > Pickup (Energy Tank)
+      All of the following:
+          Morph Ball
+          Morph Ball Bomb or Power Bomb
+
+> Pickup (Energy Tank); Heals? False
+  * Layers: default
+  * Pickup 26; Category? Major
+  > Door to Mining Plaza
+      Morph Ball
+
+----------------
+Duelling Range
+Extra - asset_id: 1063051065
+Extra - in_dark_aether: True
+> Door to Junction Site; Heals? True
+  * Layers: default
+  * Normal Door to Junction Site/Door to Duelling Range
+  * Extra - dock_name: East
+  > Door to Save Station 2
+      Any of the following:
+          Dark World Damage ≥ 70
+          Morph Ball and Dark World Damage ≥ 60
+          Dark World Damage ≥ 20 and Activate Safe Zone
+  > Door to Ing Cache 4
+      All of the following:
+          Dark World Damage ≥ 10 or Activate Safe Zone
+          Any of the following:
+              Dark World Damage ≥ 55
+              Morph Ball and Dark World Damage ≥ 40
+
+> Door to Dark Transit Station; Heals? False
+  * Layers: default
+  * Normal Door to Dark Transit Station/Door to Duelling Range
+  * Extra - dock_name: North
+  > Portal to Mining Plaza
+      Dark World Damage ≥ 4
+
+> Door to Save Station 2; Heals? True; Spawn Point; Default Node
+  * Layers: default
+  * Normal Door to Save Station 2/Door to Duelling Range
+  * Extra - dock_name: South
+  > Door to Ing Cache 4
+      All of the following:
+          Dark World Damage ≥ 15 or Activate Safe Zone
+          Any of the following:
+              Dark World Damage ≥ 40
+              Morph Ball and Dark World Damage ≥ 30
+
+> Door to Ing Cache 4; Heals? True
+  * Layers: default
+  * Dark Door to Ing Cache 4/Door to Duelling Range
+  * Extra - dock_name: West
+  > Door to Save Station 2
+      All of the following:
+          Dark World Damage ≥ 27 or Activate Safe Zone
+          Any of the following:
+              Dark World Damage ≥ 38
+              Morph Ball and Dark World Damage ≥ 28
+  > Safe Zone (Outside Portal Wall)
+      Dark World Damage ≥ 31
+
+> Portal to Mining Plaza; Heals? True
+  * Layers: default
+  * Light Portal to Mining Plaza/Portal from Duelling Range
+  * Extra - dock_name: VirtualDock
+  > Door to Dark Transit Station
+      Trivial
+
+> Safe Zone (Outside Portal Wall); Heals? True
+  * Layers: default
+  > Door to Junction Site
+      Any of the following:
+          Dark World Damage ≥ 60
+          Morph Ball and Dark World Damage ≥ 50
+          All of the following:
+              Activate Safe Zone
+              Any of the following:
+                  Dark World Damage ≥ 36
+                  Morph Ball and Dark World Damage ≥ 23
+  > Door to Ing Cache 4
+      Any of the following:
+          Dark World Damage ≥ 31
+          Morph Ball and Dark World Damage ≥ 18
+
+----------------
+Mining Station B
+Extra - asset_id: 3682282733
+Extra - in_dark_aether: False
+> Door to Storage A; Heals? False
+  * Layers: default
+  * Light Door to Storage A/Door to Mining Station B
+  * Extra - dock_name: Docks_SouthLower
+  > Room Center
+      Morph Ball and Power Bomb
+
+> Door to Transit Station; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Normal Door to Transit Station/Door to Mining Station B
+  * Extra - dock_name: West
+  > Portal to Trial Grounds
+      # https://www.youtube.com/watch?v=RAVTrB3Mhrs
+      Scan Visor and Space Jump Boots and Combat/Scan Dash (Expert) and Single Room Out of Bounds (Expert) and Standable Terrain (Expert)
+  > Pickup (Darkburst)
+      Trivial
+  > Room Center
+      Trivial
+
+> Door to Mine Shaft; Heals? False
+  * Layers: default
+  * Seeker Launcher Blast Shield to Mine Shaft/Door to Mining Station B
+  * https://www.youtube.com/watch?v=-LZluWe8QvM&list=PLevfta9o_QKWuQNXAnmBXtzW4nmU5VLyN&index=46
+  * Extra - dock_name: East
+  > Room Center
+      Trivial
+
+> Portal to Trial Grounds; Heals? False
+  * Layers: default
+  * Dark Portal to Trial Grounds/Portal to Mining Station B
+  * Extra - dock_name: VirtualNorth
+  > Room Center
+      After Mining Station B Portal Opened
+
+> Pickup (Darkburst); Heals? False
+  * Layers: default
+  * Pickup 27; Category? Major
+  > Door to Transit Station
+      Trivial
+
+> Event - Mining Station B Portal Opened; Heals? False
+  * Layers: default
+  * Event Mining Station B Portal Opened
+  > Room Center
+      Trivial
+
+> Room Center; Heals? False
+  * Layers: default
+  > Door to Storage A
+      Morph Ball and Power Bomb
+  > Door to Transit Station
+      Any of the following:
+          # https://www.youtube.com/watch?v=G6Sq--yB5UY
+          Morph Ball Bomb and Morph Ball and Space Jump Boots and Bomb Space Jump (Advanced)
+          All of the following:
+              After Mining Station B Portal Opened
+              Any of the following:
+                  Movement (Intermediate) and Use Screw Attack (Space Jump)
+                  All of the following:
+                      Space Jump Boots
+                      Any of the following:
+                          Slope Jump (Intermediate) and Standable Terrain (Intermediate)
+                          Morph Ball Bomb and Morph Ball and Bomb Space Jump (Intermediate)
+                  Morph Ball Bomb and Morph Ball and Bomb Jump (Advanced)
+          # https://www.youtube.com/watch?v=-Midfbv_BMU
+          Standable Terrain (Advanced) and Use Screw Attack (Space Jump)
+          # https://www.youtube.com/watch?v=aNdF-X_OUH8&list=PLevfta9o_QKWuQNXAnmBXtzW4nmU5VLyN&index=44
+          Scan Visor and Space Jump Boots and Before Mining Station B Portal Opened and Combat/Scan Dash (Expert) and Slope Jump (Expert) and Standable Terrain (Expert)
+  > Door to Mine Shaft
+      Any of the following:
+          Morph Ball and Scan Visor
+          All of the following:
+              Space Jump Boots
+              # https://www.youtube.com/watch?v=OOliuV6E6s4
+              Slope Jump (Intermediate) or Standable Terrain (Beginner)
+  > Portal to Trial Grounds
+      Any of the following:
+          All of the following:
+              After Mining Station B Portal Opened
+              Any of the following:
+                  All of the following:
+                      Morph Ball
+                      Any of the following:
+                          Boost Ball
+                          Morph Ball Bomb and Space Jump Boots and Bomb Space Jump (Intermediate)
+                  Movement (Beginner) and Use Screw Attack (Space Jump)
+                  Space Jump Boots and Slope Jump (Intermediate)
+          All of the following:
+              Single Room Out of Bounds (Expert) and Screw Attack into Tunnels/Openings (Expert)
+              Any of the following:
+                  Use Screw Attack (Space Jump)
+                  # https://www.youtube.com/watch?v=SCqO5QVJHfE
+                  Screw Attack at Z-Axis (Expert) and Disabled Room Randomizer and Use Screw Attack (No Space Jump)
+  > Event - Mining Station B Portal Opened
+      All of the following:
+          Morph Ball Bomb and Morph Ball
+          Any of the following:
+              Scan Visor
+              Standable Terrain (Intermediate) and Use Screw Attack (Space Jump)
+              Space Jump Boots and Slope Jump (Advanced)
+  > Lore Scan
+      Scan Visor
+
+> Lore Scan; Heals? False
+  * Layers: default
+  * Hint
+  * Extra - translator: Amber
+  * Extra - string_asset_id: 2725438859
+  > Room Center
+      Trivial
+
+----------------
+Transport Center
+Extra - asset_id: 1272952761
+Extra - in_dark_aether: False
+> Portal to Crossroads; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Dark Portal to Crossroads/Portal from Transport Center
+  * Extra - dock_name: VirtualNorth
+  > Door to Transport to Torvus Bog
+      Any of the following:
+          Space Jump Boots
+          # https://www.youtube.com/watch?v=fjjsnAXoaIc
+          Movement (Beginner) and Use Screw Attack (No Space Jump)
+          # https://www.youtube.com/watch?v=F1MFnqIj9gg
+          Scan Visor and Combat/Scan Dash (Intermediate)
+  > Bottom of Halfpipe
+      Trivial
+
+> Door to Save Station A; Heals? False
+  * Layers: default
+  * Normal Door to Save Station A/Door to Transport Center
+  * Extra - dock_name: West
+  > Bottom of Halfpipe
+      After Transport Center Gate
+
+> Door to Transport to Torvus Bog; Heals? False
+  * Layers: default
+  * Seeker Launcher Blast Shield to Transport to Torvus Bog/Door to Transport Center
+  * https://www.youtube.com/watch?v=yZIy4aLaKNU&list=PLZkUEWCHwYRyXIU-to88js2M6mEOBoHUy&index=83
+  * Extra - dock_name: South
+  > Portal to Crossroads
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Boost Ball
+              # https://www.youtube.com/watch?v=Rp3OR7CoL5M
+              Morph Ball Bomb and Bomb Space Jump (Advanced) and Use Screw Attack (Space Jump)
+  > Bottom of Halfpipe
+      Trivial
+
+> Door to Portal Terminal; Heals? False
+  * Layers: default
+  * Normal Door to Portal Terminal/Door to Transport Center
+  * Extra - dock_name: East
+  > Bottom of Halfpipe
+      Trivial
+
+> Pickup (Missile); Heals? False
+  * Layers: default
+  * Pickup 28; Category? Minor
+  > Bottom of Halfpipe
+      After Transport Center Gate
+
+> Event - Transport Center Gate; Heals? False
+  * Layers: default
+  * Event Transport Center Gate
+  > Bottom of Halfpipe
+      Trivial
+
+> Bottom of Halfpipe; Heals? False
+  * Layers: default
+  > Portal to Crossroads
+      Boost Ball and Morph Ball
+  > Door to Save Station A
+      After Transport Center Gate
+  > Door to Transport to Torvus Bog
+      Any of the following:
+          Boost Ball and Morph Ball
+          # https://www.youtube.com/watch?v=QR7cK9gGVLY
+          Slope Jump (Intermediate) and Use Screw Attack (Space Jump)
+          # https://www.youtube.com/watch?v=dpwWRVCUBdY
+          Space Jump Boots and Standable Terrain (Advanced)
+  > Door to Portal Terminal
+      Trivial
+  > Pickup (Missile)
+      After Transport Center Gate
+  > Event - Transport Center Gate
+      Any of the following:
+          Morph Ball Bomb and Morph Ball
+          # https://www.youtube.com/watch?v=kX1HXF_BCew
+          Bomb Slot without Bombs (Advanced) and Activate Bomb Slot without Bombs (No Space Jump)
+
+----------------
+Mining Station A
+Extra - asset_id: 3820941951
+Extra - in_dark_aether: False
+> Door to Temple Access; Heals? False
+  * Layers: default
+  * Missile Blast Shield to Temple Access/Door to Mining Station A
+  * Extra - dock_name: North
+  > Room Center
+      Trivial
+
+> Door to Sand Cache; Heals? False
+  * Layers: default
+  * Normal Door to Sand Cache/Door to Mining Station A
+  * Extra - dock_name: South_save
+  > Translator Gate
+      Trivial
+
+> Door to Central Station Access; Heals? False
+  * Layers: default
+  * Normal Door to Central Station Access/Door to Mining Station A
+  * Extra - dock_name: East1
+  > Room Center
+      Any of the following:
+          After Mining Station A Gate
+          All of the following:
+              Morph Ball and Space Jump Boots
+              Any of the following:
+                  # https://www.youtube.com/watch?v=aqyWUg1eiVI&list=PLevfta9o_QKWuQNXAnmBXtzW4nmU5VLyN&index=41
+                  Morph Ball Bomb and Bomb Space Jump (Advanced)
+                  # https://www.youtube.com/watch?v=4bzhMg0WwbQ
+                  Screw Attack and Movement (Expert)
+
+> Door to Mining Station Access; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Normal Door to Mining Station Access/Door to Mining Station A
+  * Extra - dock_name: West1
+  > Room Center
+      Trivial
+
+> Door to Portal Access A; Heals? False
+  * Layers: default
+  * Normal Door to Portal Access A/Door to Mining Station A
+  * Extra - dock_name: South1
+  > Room Center
+      Trivial
+
+> Room Center; Heals? False
+  * Layers: default
+  > Door to Temple Access
+      Any of the following:
+          Missile or Space Jump Boots
+          # https://www.youtube.com/watch?v=rWNazr6v578
+          Movement (Beginner) and Use Screw Attack (No Space Jump)
+          Boost Ball and Morph Ball and Boost Jump (Advanced)
+          # https://www.youtube.com/watch?v=ljIhZ5Ae6Lg
+          Combat/Scan Dash (Advanced)
+          # https://www.youtube.com/watch?v=5j4pWnuojmc
+          Scan Visor and Extended Dash (Advanced)
+          # https://www.youtube.com/watch?v=Xlu62DIi4tY
+          Screw Attack at Z-Axis (Beginner) and Use Screw Attack (No Space Jump)
+  > Door to Central Station Access
+      All of the following:
+          After Mining Station A Gate
+          Any of the following:
+              Space Jump Boots
+              # https://www.youtube.com/watch?v=vJ_MaFqBo0E&list=PLx6vT1x-80zuA1vUepQUSqYOQeHiRNbt5&index=40
+              Morph Ball Bomb and Morph Ball and Bomb Jump (Advanced)
+  > Door to Mining Station Access
+      Trivial
+  > Door to Portal Access A
+      Trivial
+  > Pickup (Missile)
+      All of the following:
+          Morph Ball
+          Any of the following:
+              # https://www.youtube.com/watch?v=oXg5O2Oa01Q
+              Boost Ball and Power Bomb and After Agon Wastes Ing Cache 1 Pickup and Jump Off Enemy (Advanced)
+              Morph Ball Bomb and Power Bomb and Spider Ball
+              # https://www.youtube.com/watch?v=Z17kkmEA-HE&list=PLevfta9o_QKWuQNXAnmBXtzW4nmU5VLyN&index=39
+              Morph Ball Bomb and Space Jump Boots and Bomb Space Jump (Advanced)
+  > Translator Gate
+      Trivial
+  > Front of Lore Scan
+      Any of the following:
+          Space Jump Boots
+          # https://www.youtube.com/watch?v=j_kCNsjwzgI
+          Morph Ball Bomb and Morph Ball and Bomb Jump (Intermediate)
+  > Lore Scan
+      Trivial
+
+> Pickup (Missile); Heals? False
+  * Layers: default
+  * Pickup 29; Category? Minor
+  > Room Center
+      Trivial
+
+> Event - Mining Station A Gate; Heals? False
+  * Layers: default
+  * Event Mining Station A Gate
+  > Front of Lore Scan
+      Trivial
+
+> Translator Gate; Heals? False
+  * Layers: default
+  * Configurable Node
+  * Extra - gate_index: 11
+  * Extra - vanilla_actual: Amber
+  * Extra - vanilla_color: Amber
+  > Door to Sand Cache
+      Trivial
+  > Room Center
+      Trivial
+
+> Front of Lore Scan; Heals? False
+  * Layers: default
+  > Door to Central Station Access
+      Any of the following:
+          All of the following:
+              After Mining Station A Gate
+              Any of the following:
+                  Space Jump Boots
+                  # https://www.youtube.com/watch?v=wlzNifVoqTI
+                  Combat/Scan Dash (Intermediate)
+          Morph Ball Bomb and Morph Ball and Space Jump Boots and Bomb Space Jump (Expert)
+  > Room Center
+      Trivial
+  > Event - Mining Station A Gate
+      Scan Visor
+
+> Lore Scan; Heals? False
+  * Layers: default
+  * Hint
+  * Extra - translator: Amber
+  * Extra - string_asset_id: 1394890590
+  > Room Center
+      Trivial
+
+----------------
+Dark Transit Station
+Extra - asset_id: 3611217256
+Extra - in_dark_aether: True
+> Door to Duelling Range; Heals? False
+  * Layers: default
+  * Normal Door to Duelling Range/Door to Dark Transit Station
+  * Extra - dock_name: South
+  > Safe Zone (Duelling Range Side)
+      Dark World Damage ≥ 7
+
+> Door to Trial Grounds; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Normal Door to Trial Grounds/Door to Dark Transit Station
+  * Extra - dock_name: East
+  > Safe Zone (Trial Grounds Side)
+      Dark World Damage ≥ 3
+
+> Safe Zone (Trial Grounds Side); Heals? True
+  * Layers: default
+  > Door to Trial Grounds
+      Trivial
+  > Safe Zone (Duelling Range Side)
+      Morph Ball and Dark World Damage ≥ 3
+
+> Safe Zone (Duelling Range Side); Heals? True
+  * Layers: default
+  > Door to Duelling Range
+      Dark World Damage ≥ 7
+  > Safe Zone (Trial Grounds Side)
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Space Jump Boots and Dark World Damage ≥ 3
+              Standable Terrain (Beginner) and Dark World Damage ≥ 4
+              Morph Ball Bomb and Bomb Jump (Beginner) and Dark World Damage ≥ 7
+
+----------------
+Save Station 2
+Extra - asset_id: 2887798667
+Extra - unlocked_save_station: True
+Extra - in_dark_aether: True
+> Save Station; Heals? True; Spawn Point; Default Node
+  * Layers: default
+  > Door to Duelling Range
+      Any of the following:
+          Dark World Damage ≥ 12
+          Morph Ball and Dark World Damage ≥ 8
+  > Safe Zone (Crossroads Side)
+      Any of the following:
+          Dark World Damage ≥ 50
+          Morph Ball and Dark World Damage ≥ 35
+          Dark World Damage ≥ 8 and Activate Safe Zone
+
+> Door to Duelling Range; Heals? False
+  * Layers: default
+  * Normal Door to Duelling Range/Door to Save Station 2
+  * Extra - dock_name: North
+  > Save Station
+      Dark World Damage ≥ 13
+
+> Door to Crossroads; Heals? True
+  * Layers: default
+  * Missile Blast Shield to Crossroads/Door to Save Station 2
+  * Extra - dock_name: East
+  > Safe Zone (Crossroads Side)
+      Dark World Damage ≥ 5
+
+> Safe Zone (Crossroads Side); Heals? True
+  * Layers: default
+  > Save Station
+      Any of the following:
+          Dark World Damage ≥ 50
+          Morph Ball and Dark World Damage ≥ 30
+          Dark World Damage ≥ 10 and Activate Safe Zone
+  > Door to Crossroads
+      Dark World Damage ≥ 3
+
+----------------
+Ing Cache 4
+Extra - asset_id: 3318204883
+Extra - in_dark_aether: True
+> Door to Duelling Range; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Dark Door to Duelling Range/Door to Ing Cache 4
+  * Extra - dock_name: East
+  > Pickup (Missile)
+      Morph Ball and Dark World Damage ≥ 10
+
+> Pickup (Missile); Heals? True
+  * Layers: default
+  * Pickup 30; Category? Minor
+  > Door to Duelling Range
+      Dark World Damage ≥ 6
+
+----------------
+Junction Site
+Extra - asset_id: 369673571
+Extra - in_dark_aether: True
+> Door to Duelling Range; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Normal Door to Duelling Range/Door to Junction Site
+  * Extra - dock_name: West
+  > Central Safe Zone
+      Morph Ball and Dark World Damage ≥ 8
+
+> Door to Judgment Pit; Heals? False
+  * Layers: default
+  * Normal Door to Judgment Pit/Door to Junction Site
+  * Extra - dock_name: East
+  > Central Safe Zone
+      Morph Ball and Dark World Damage ≥ 7
+
+> Pickup (Missile); Heals? False
+  * Layers: default
+  * Pickup 31; Category? Minor
+  > Central Safe Zone
+      Morph Ball Bomb and Morph Ball and Spider Ball
+
+> Central Safe Zone; Heals? True
+  * Layers: default
+  > Door to Duelling Range
+      Morph Ball and Dark World Damage ≥ 5
+  > Door to Judgment Pit
+      Morph Ball and Dark World Damage ≥ 5
+  > Pickup (Missile)
+      Morph Ball Bomb and Morph Ball and Spider Ball
+
+----------------
+Storage A
+Extra - asset_id: 271726916
+Extra - in_dark_aether: False
+> Door to Mining Station B; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Normal Door to Mining Station B/Door to Storage A
+  * Extra - dock_name: North
+  > Pickup (Missile)
+      Trivial
+
+> Pickup (Missile); Heals? False
+  * Layers: default
+  * Pickup 32; Category? Minor
+  > Door to Mining Station B
+      Trivial
+
+----------------
+Mine Shaft
+Extra - asset_id: 3617674289
+Extra - in_dark_aether: False
+> Door to Agon Temple; Heals? False
+  * Layers: default
+  * Dark Door to Agon Temple/Door to Mine Shaft
+  * Extra - dock_name: East
+  > Door to Mining Station B
+      Morph Ball
+  > Pickup (Energy Tank)
+      Morph Ball Bomb and Morph Ball
+
+> Door to Mining Station B; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Seeker Launcher Blast Shield to Mining Station B/Door to Mine Shaft
+  * https://youtu.be/Myr8MRM5ZDc?list=PLPFZVy8SRe3tAkQMzVw8vWt_w_AF2_l91&t=76
+  * Extra - dock_name: West
+  > Door to Agon Temple
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Morph Ball Bomb
+              # https://www.youtube.com/watch?v=w0Sepfbbj5g
+              Boost Ball and Wall Boost (Expert)
+
+> Pickup (Energy Tank); Heals? False
+  * Layers: default
+  * Pickup 33; Category? Major
+  > Door to Mining Station B
+      Morph Ball
+
+----------------
+Trial Grounds
+Extra - asset_id: 2260839223
+Extra - in_dark_aether: True
+> Door to Dark Transit Station; Heals? False
+  * Layers: default
+  * Normal Door to Dark Transit Station/Door to Trial Grounds
+  * Extra - dock_name: West
+  > Portal to Mining Station B
+      Any of the following:
+          Dark World Damage ≥ 25
+          Morph Ball and Dark World Damage ≥ 10
+          All of the following:
+              Activate Safe Zone
+              Any of the following:
+                  Dark World Damage ≥ 10
+                  Morph Ball and Dark World Damage ≥ 5
+
+> Portal to Mining Station B; Heals? True
+  * Layers: default
+  * Light Portal to Mining Station B/Portal to Trial Grounds
+  * Extra - dock_name: VirtualNorth
+  > Door to Dark Transit Station
+      Any of the following:
+          All of the following:
+              Space Jump Boots
+              Any of the following:
+                  All of the following:
+                      Standable Terrain (Beginner)
+                      Any of the following:
+                          Dark World Damage ≥ 25
+                          Dark World Damage ≥ 10 and Activate Safe Zone
+                  All of the following:
+                      Slope Jump (Beginner)
+                      Any of the following:
+                          Dark World Damage ≥ 30
+                          Dark World Damage ≥ 20 and Activate Safe Zone
+          All of the following:
+              Morph Ball Bomb and Morph Ball and Bomb Space Jump (Advanced)
+              Any of the following:
+                  Dark World Damage ≥ 60
+                  Dark World Damage ≥ 50 and Activate Safe Zone
+  > Safe Zone (Upper Ledge Crystal)
+      All of the following:
+          Any of the following:
+              Dark World Damage ≥ 12
+              Morph Ball and Dark World Damage ≥ 8
+          Any of the following:
+              Space Jump Boots or Standable Terrain (Beginner)
+              Morph Ball Bomb and Morph Ball and Bomb Jump (Beginner)
+
+> Spawn Point; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  > Safe Zone (Upper Ledge Crystal)
+      Any of the following:
+          Dark World Damage ≥ 18
+          Dark World Damage ≥ 2 and Activate Safe Zone
+
+> Safe Zone (Upper Ledge Crystal); Heals? True
+  * Layers: default
+  > Door to Dark Transit Station
+      All of the following:
+          Any of the following:
+              Dark World Damage ≥ 60
+              Dark World Damage ≥ 10 and Activate Safe Zone
+          Any of the following:
+              # NSJ https://www.youtube.com/watch?v=jaC_kKw7RSs
+              Space Jump Boots or Movement (Advanced)
+              Screw Attack and Movement (Beginner)
+              Scan Visor and Combat/Scan Dash (Advanced)
+  > Portal to Mining Station B
+      Any of the following:
+          Dark World Damage ≥ 12
+          Morph Ball and Dark World Damage ≥ 8
+
+----------------
+Portal Terminal
+Extra - asset_id: 734872743
+Extra - in_dark_aether: False
+> Door to Portal Access A; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Normal Door to Portal Access A/Door to Portal Terminal
+  * Extra - dock_name: North
+  > Room Center
+      Trivial
+
+> Door to Transport Center; Heals? False
+  * Layers: default
+  * Normal Door to Transport Center/Door to Portal Terminal
+  * Extra - dock_name: West
+  > Room Center
+      Any of the following:
+          After Portal Site Gate
+          All of the following:
+              Movement (Intermediate)
+              Any of the following:
+                  # https://www.youtube.com/watch?v=kyb7lYUdc14&t=10s
+                  Morph Ball Bomb and Morph Ball and Bomb Jump (Intermediate)
+                  # https://www.youtube.com/watch?v=kyb7lYUdc14
+                  Space Jump Boots
+
+> Portal to Portal Site; Heals? False
+  * Layers: default
+  * Scan Portal to Portal Site/Portal to Portal Terminal
+  * Extra - dock_name: VirtualNorth1
+  > Room Center
+      Trivial
+
+> Room Center; Heals? False
+  * Layers: default
+  > Door to Portal Access A
+      Trivial
+  > Door to Transport Center
+      After Portal Site Gate
+  > Portal to Portal Site
+      Any of the following:
+          Morph Ball Bomb and Morph Ball
+          # https://www.youtube.com/watch?v=mTvERL0H_NI
+          Bomb Slot without Bombs (Advanced) and Knowledge (Advanced) and Activate Bomb Slot without Bombs (Space Jump) and Use Screw Attack (Space Jump)
+          # https://www.youtube.com/watch?v=KKoOubP1P7g
+          Bomb Slot without Bombs (Expert) and Knowledge (Expert) and Screw Attack at Z-Axis (Expert) and Slope Jump (Expert) and Standable Terrain (Expert) and Disabled Room Randomizer and Activate Bomb Slot without Bombs (No Space Jump) and Use Screw Attack (No Space Jump)
+  > Lore Scan
+      Trivial
+
+> Lore Scan; Heals? False
+  * Layers: default
+  * Hint
+  * Extra - translator: Amber
+  * Extra - string_asset_id: 1764636206
+  > Room Center
+      Trivial
+
+----------------
+Transport to Torvus Bog
+Extra - asset_id: 2806956034
+Extra - in_dark_aether: False
+> Door to Transport Center; Heals? False
+  * Layers: default
+  * Seeker Launcher Blast Shield to Transport Center/Door to Transport to Torvus Bog
+  * https://www.youtube.com/watch?v=xjfVuXDROz0
+  * Extra - dock_name: Dock - North
+  > Elevator to Torvus Bog
+      Scan Visor
+
+> Elevator to Torvus Bog; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Elevator to Transport to Agon Wastes/Elevator to Agon Wastes
+  * Extra - scan_asset_id: 3549584208
+  * Extra - teleporter_instance_id: 1245307
+  * Extra - keep_name_when_vanilla: False
+  > Door to Transport Center
+      Trivial
+
+----------------
+Crossroads
+Extra - asset_id: 2384714559
+Extra - in_dark_aether: True
+> Portal from Transport Center; Heals? True
+  * Layers: default
+  * No Return Portal to Transport Center/Portal to Crossroads
+  * Extra - dock_name: VirtualNorth
+  > Pickup (Missile)
+      Trivial
+  > Central Safe Zone
+      Dark World Damage ≥ 7
+
+> Door to Portal Site; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Normal Door to Portal Site/Door to Crossroads
+  * Extra - dock_name: East
+  > Central Safe Zone
+      Any of the following:
+          Dark World Damage ≥ 30
+          Morph Ball and Dark World Damage ≥ 20
+          Dark World Damage ≥ 6 and Activate Safe Zone
+
+> Door to Save Station 2; Heals? False
+  * Layers: default
+  * Missile Blast Shield to Save Station 2/Door to Crossroads
+  * Extra - dock_name: West
+  > Central Safe Zone
+      Any of the following:
+          Dark World Damage ≥ 20
+          Dark World Damage ≥ 3 and Activate Safe Zone
+
+> Pickup (Missile); Heals? False
+  * Layers: default
+  * Pickup 34; Category? Minor
+  > Portal from Transport Center
+      Trivial
+
+> Central Safe Zone; Heals? True
+  * Layers: default
+  > Door to Portal Site
+      Any of the following:
+          Dark World Damage ≥ 20
+          Dark World Damage ≥ 4 and Activate Safe Zone
+  > Door to Save Station 2
+      Any of the following:
+          Dark World Damage ≥ 20
+          Dark World Damage ≥ 4 and Activate Safe Zone
+  > Top of Halfpipe
+      Any of the following:
+          Boost Ball and Morph Ball and Dark World Damage ≥ 2
+          All of the following:
+              Space Jump Boots
+              Any of the following:
+                  # https://www.youtube.com/watch?v=spitKAZQrB4
+                  Slope Jump (Intermediate) and Dark World Damage ≥ 10 and Use Screw Attack (Space Jump)
+                  # https://www.youtube.com/watch?v=LE2kJ08IxEU
+                  Standable Terrain (Advanced) and Dark World Damage ≥ 25
+                  # https://www.youtube.com/watch?v=v68NS3FfSV4&list=PLZkUEWCHwYRyXIU-to88js2M6mEOBoHUy&index=29
+                  Morph Ball Bomb and Bomb Space Jump (Expert) and Dark World Damage ≥ 40 and Use Screw Attack (Space Jump)
+                  # https://www.youtube.com/watch?v=P6C2mDAXwjA
+                  Jump Off Enemy (Advanced) and Normal Damage ≥ 10 and Dark World Damage ≥ 15
+
+> Top of Halfpipe; Heals? False
+  * Layers: default
+  > Portal from Transport Center
+      Any of the following:
+          All of the following:
+              Morph Ball Bomb and Morph Ball and Space Jump Boots
+              Any of the following:
+                  Screw Attack and Bomb Space Jump (Advanced) and Dark World Damage ≥ 35
+                  # https://www.youtube.com/watch?v=P6C2mDAXwjA&t=28s
+                  Bomb Space Jump (Expert) and Dark World Damage ≥ 40
+          # https://www.youtube.com/watch?v=3UaA3tgmzX8&list=PLevfta9o_QKWuQNXAnmBXtzW4nmU5VLyN&index=14
+          No Space Jump Boots and Screw Attack at Z-Axis (Advanced) and Dark World Damage ≥ 7 and Disabled Room Randomizer and Use Screw Attack (No Space Jump)
+  > Central Safe Zone
+      Dark World Damage ≥ 6
+
+----------------
+Temple Access
+Extra - asset_id: 710454340
+Extra - in_dark_aether: False
+> Door to Agon Temple; Heals? False
+  * Layers: default
+  * Normal Door to Agon Temple/Door to Temple Access
+  * Extra - dock_name: North
+  > Door to Mining Station A
+      Trivial
+
+> Door to Mining Station A; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Normal Door to Mining Station A/Door to Temple Access
+  * Extra - dock_name: South
+  > Door to Agon Temple
+      Trivial
+
+----------------
+Central Station Access
+Extra - asset_id: 4268351683
+Extra - in_dark_aether: False
+> Door to Mining Station A; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Normal Door to Mining Station A/Door to Central Station Access
+  * Extra - dock_name: West
+  > Door to Central Mining Station
+      Trivial
+
+> Door to Central Mining Station; Heals? False
+  * Layers: default
+  * Missile Blast Shield to Central Mining Station/Door to Central Station Access
+  * Extra - dock_name: East
+  > Door to Mining Station A
+      Any of the following:
+          Space Jump Boots
+          All of the following:
+              Morph Ball
+              Any of the following:
+                  Bomb Space Jump (Hypermode)
+                  # Double Bomb Jump
+                  Morph Ball Bomb and Bomb Jump (Beginner)
+                  Screw Attack and Slope Jump (Expert)
+                  Boost Ball and Wall Boost (Hypermode)
+
+----------------
+Sand Cache
+Extra - asset_id: 4105303847
+Extra - in_dark_aether: False
+> Door to Mining Station A; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Normal Door to Mining Station A/Door to Sand Cache
+  * Extra - dock_name: North
+  > Pickup (Missile)
+      Trivial
+
+> Pickup (Missile); Heals? False
+  * Layers: default
+  * Pickup 35; Category? Minor
+  > Door to Mining Station A
+      Trivial
+
+----------------
+Portal Access A
+Extra - asset_id: 588443165
+Extra - in_dark_aether: False
+> Door to Portal Terminal; Heals? False
+  * Layers: default
+  * Normal Door to Portal Terminal/Door to Portal Access A
+  * Extra - dock_name: South
+  > Door to Mining Station A
+      Morph Ball
+  > Pickup (Missile)
+      Morph Ball
+
+> Door to Mining Station A; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Normal Door to Mining Station A/Door to Portal Access A
+  * Extra - dock_name: North
+  > Door to Portal Terminal
+      Morph Ball
+
+> Pickup (Missile); Heals? False
+  * Layers: default
+  * Pickup 36; Category? Minor
+  > Door to Portal Terminal
+      Morph Ball
+
+----------------
+Judgment Pit
+Extra - asset_id: 1803024829
+Extra - in_dark_aether: True
+> Door to Dark Agon Temple Access; Heals? True
+  * Layers: default
+  * Missile Blast Shield to Dark Agon Temple Access/Door to Judgment Pit
+  * Extra - dock_name: North
+  > Door to Save Station 1
+      Any of the following:
+          Dark World Damage ≥ 55
+          Dark World Damage ≥ 15 and Activate Safe Zone
+  > Door to Warrior's Walk
+      All of the following:
+          Dark World Damage ≥ 25 or Activate Safe Zone
+          Any of the following:
+              Space Jump Boots and Dark World Damage ≥ 25
+              # https://www.youtube.com/watch?v=C8FZgsHFKw8
+              Morph Ball Bomb and Morph Ball and Bomb Jump (Advanced) and Dark World Damage ≥ 65
+  > Central Safe Zone
+      Any of the following:
+          Dark World Damage ≥ 5
+          Morph Ball and Dark World Damage ≥ 2
+
+> Door to Save Station 1; Heals? False
+  * Layers: default
+  * Dark Door to Save Station 1/Door to Judgment Pit
+  * Extra - dock_name: South_save
+  > Door to Dark Agon Temple Access
+      All of the following:
+          Dark World Damage ≥ 15
+          Any of the following:
+              All of the following:
+                  Dark World Damage ≥ 20 or Activate Safe Zone
+                  Any of the following:
+                      Space Jump Boots
+                      # https://www.youtube.com/watch?v=9ldu-Rh8DOQ&t=32s
+                      Screw Attack and Movement (Beginner)
+              All of the following:
+                  # Double Bomb Jump
+                  Morph Ball Bomb and Morph Ball and Bomb Jump (Beginner)
+                  Any of the following:
+                      Dark World Damage ≥ 60
+                      Dark World Damage ≥ 10 and Activate Safe Zone
+              All of the following:
+                  # https://www.youtube.com/watch?v=9ldu-Rh8DOQ&t=26s
+                  Scan Visor and Combat/Scan Dash (Intermediate)
+                  Dark World Damage ≥ 30 or Activate Safe Zone
+  > Door to Warrior's Walk
+      All of the following:
+          Dark World Damage ≥ 35
+          Any of the following:
+              All of the following:
+                  Space Jump Boots
+                  Dark World Damage ≥ 20 or Activate Safe Zone
+              All of the following:
+                  # https://www.youtube.com/watch?v=C8FZgsHFKw8
+                  Morph Ball Bomb and Morph Ball and Bomb Jump (Advanced)
+                  Any of the following:
+                      Dark World Damage ≥ 30
+                      Dark World Damage ≥ 45 and Activate Safe Zone
+  > Door to Portal Access
+      Any of the following:
+          Dark World Damage ≥ 20
+          Dark World Damage ≥ 12 and Activate Safe Zone
+
+> Door to Warrior's Walk; Heals? False
+  * Layers: default
+  * Super Missile Blast Shield to Warrior's Walk/Door to Judgment Pit
+  * Extra - dock_name: East1
+  > Door to Dark Agon Temple Access
+      All of the following:
+          Dark World Damage ≥ 25
+          Any of the following:
+              All of the following:
+                  Dark World Damage ≥ 20 or Activate Safe Zone
+                  Any of the following:
+                      Space Jump Boots
+                      # https://www.youtube.com/watch?v=9ldu-Rh8DOQ&t=32s
+                      Screw Attack and Movement (Beginner)
+                      # https://www.youtube.com/watch?v=9ldu-Rh8DOQ&t=26s
+                      Scan Visor and Combat/Scan Dash (Intermediate)
+              All of the following:
+                  # Double Bomb Jump
+                  Morph Ball Bomb and Morph Ball and Bomb Jump (Beginner)
+                  Dark World Damage ≥ 30 or Activate Safe Zone
+  > Door to Save Station 1
+      Any of the following:
+          Dark World Damage ≥ 50
+          Dark World Damage ≥ 25 and Activate Safe Zone
+  > Central Safe Zone
+      Any of the following:
+          Dark World Damage ≥ 40
+          Morph Ball and Dark World Damage ≥ 35
+
+> Door to Portal Access; Heals? True
+  * Layers: default
+  * Normal Door to Portal Access/Door to Judgment Pit
+  * Extra - dock_name: South1
+  > Door to Dark Agon Temple Access
+      # https://www.youtube.com/watch?v=9ldu-Rh8DOQ&t=39s
+      Screw Attack at Z-Axis (Intermediate) and Dark World Damage ≥ 5 and Disabled Room Randomizer and Use Screw Attack (No Space Jump)
+  > Door to Save Station 1
+      All of the following:
+          Dark World Damage ≥ 15
+          Any of the following:
+              All of the following:
+                  Space Jump Boots
+                  Dark World Damage ≥ 30 or Activate Safe Zone
+              All of the following:
+                  # https://www.youtube.com/watch?v=9ldu-Rh8DOQ&t=8s
+                  Morph Ball Bomb and Morph Ball and Bomb Jump (Intermediate)
+                  Dark World Damage ≥ 50 or Activate Safe Zone
+              All of the following:
+                  # https://www.youtube.com/watch?v=9ldu-Rh8DOQ&t=39s
+                  Screw Attack at Z-Axis (Intermediate) and Disabled Room Randomizer and Use Screw Attack (No Space Jump)
+                  Dark World Damage ≥ 20 or Activate Safe Zone
+  > Central Safe Zone
+      Any of the following:
+          Dark World Damage ≥ 8
+          Morph Ball and Dark World Damage ≥ 3
+
+> Door to Junction Site; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Normal Door to Junction Site/Door to Judgment Pit
+  * Extra - dock_name: West1
+  > Central Safe Zone
+      Any of the following:
+          Dark World Damage ≥ 35
+          Morph Ball and Dark World Damage ≥ 25
+          Dark World Damage ≥ 10 and Activate Safe Zone
+
+> Pickup (Space Jump Boots); Heals? False
+  * Layers: default
+  * Pickup 37; Category? Major
+  * Extra - boss: sub-guardian
+  > Central Safe Zone
+      Trivial
+
+> Event - Jump Guardian; Heals? False
+  * Layers: default
+  * Event Jump Guardian
+  > Pickup (Space Jump Boots)
+      Trivial
+
+> Central Safe Zone; Heals? True
+  * Layers: default
+  > Door to Portal Access
+      Any of the following:
+          # https://www.youtube.com/watch?v=9ldu-Rh8DOQ
+          Morph Ball Bomb and Morph Ball and Bomb Jump (Beginner) and Dark World Damage ≥ 20
+          Space Jump Boots and Dark World Damage ≥ 7
+          Standable Terrain (Intermediate) and Dark World Damage ≥ 9 and Use Screw Attack (No Space Jump)
+  > Door to Junction Site
+      All of the following:
+          Dark World Damage ≥ 25 or Activate Safe Zone
+          Any of the following:
+              Dark World Damage ≥ 10
+              Morph Ball and Dark World Damage ≥ 5
+  > Event - Jump Guardian
+      Trivial
+
+----------------
+Agon Temple
+Extra - asset_id: 1979488942
+Extra - in_dark_aether: False
+> Door to Mine Shaft; Heals? False
+  * Layers: default
+  * Dark Door to Mine Shaft/Door to Agon Temple
+  * Extra - dock_name: West
+  > Door to Temple Access
+      Any of the following:
+          Morph Ball Bomb and Morph Ball
+          Space Jump Boots and Standable Terrain (Intermediate)
+  > Door to Controller Access
+      Trivial
+
+> Door to Temple Access; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Normal Door to Temple Access/Door to Agon Temple
+  * Extra - dock_name: South
+  > Door to Mine Shaft
+      Any of the following:
+          # Double Bomb Jump
+          Morph Ball Bomb and Morph Ball
+          Movement (Intermediate) and Use Screw Attack (Space Jump)
+  > Door to Sandcanyon
+      Trivial
+  > Room Center
+      Any of the following:
+          Space Jump Boots or Before Bomb Guardian
+          All of the following:
+              Morph Ball
+              Morph Ball Bomb or Power Bomb
+          All of the following:
+              Knowledge (Beginner)
+              Any of the following:
+                  Use Screw Attack (Space Jump)
+                  Boost Ball and Morph Ball
+                  Screw Attack at Z-Axis (Beginner) and Disabled Room Randomizer and Use Screw Attack (No Space Jump)
+
+> Door to Controller Access; Heals? False
+  * Layers: default
+  * Normal Door to Controller Access/Door to Agon Temple
+  * Extra - dock_name: North
+  > Door to Mine Shaft
+      Trivial
+  > Door to Sandcanyon
+      Any of the following:
+          Morph Ball Bomb and Morph Ball
+          Movement (Intermediate) and Use Screw Attack (Space Jump)
+  > Room Center
+      Any of the following:
+          Space Jump Boots or Before Bomb Guardian
+          All of the following:
+              Morph Ball
+              Morph Ball Bomb or Power Bomb
+          All of the following:
+              Knowledge (Beginner)
+              Any of the following:
+                  Use Screw Attack (Space Jump)
+                  Boost Ball and Morph Ball
+                  Screw Attack at Z-Axis (Beginner) and Disabled Room Randomizer and Use Screw Attack (No Space Jump)
+
+> Door to Sandcanyon; Heals? False
+  * Layers: default
+  * Light Door to Sandcanyon/Door to Agon Temple
+  * Extra - dock_name: East
+  > Door to Temple Access
+      Trivial
+  > Door to Controller Access
+      Any of the following:
+          Morph Ball Bomb and Morph Ball
+          Movement (Intermediate) and Use Screw Attack (Space Jump)
+
+> Pickup (Morph Ball Bomb); Heals? False
+  * Layers: default
+  * Pickup 38; Category? Major
+  * Extra - boss: sub-guardian
+  > Room Center
+      Trivial
+
+> Event - Bomb Guardian; Heals? False
+  * Layers: default
+  * Event Bomb Guardian
+  > Pickup (Morph Ball Bomb)
+      Trivial
+
+> Room Center; Heals? False
+  * Layers: default
+  > Door to Temple Access
+      Any of the following:
+          All of the following:
+              Morph Ball
+              Morph Ball Bomb or Power Bomb
+          All of the following:
+              Knowledge (Beginner)
+              Any of the following:
+                  Use Screw Attack (Space Jump)
+                  Boost Ball and Morph Ball
+                  Screw Attack at Z-Axis (Beginner) and Disabled Room Randomizer and Use Screw Attack (No Space Jump)
+          Space Jump Boots and Slope Jump (Beginner)
+  > Door to Controller Access
+      Any of the following:
+          Before Bomb Guardian
+          All of the following:
+              Morph Ball
+              Morph Ball Bomb or Power Bomb
+          All of the following:
+              Knowledge (Beginner)
+              Any of the following:
+                  Use Screw Attack (Space Jump)
+                  Boost Ball and Morph Ball
+                  Screw Attack at Z-Axis (Beginner) and Disabled Room Randomizer and Use Screw Attack (No Space Jump)
+          Space Jump Boots and Slope Jump (Beginner)
+  > Event - Bomb Guardian
+      Any of the following:
+          Power Beam
+          All of the following:
+              Combat (Beginner)
+              Any of the following:
+                  Missile ≥ 15
+                  Morph Ball and Power Bomb
+                  Charge Beam and Dark Beam and Dark Ammo ≥ 25
+          All of the following:
+              Combat (Advanced)
+              Any of the following:
+                  Use Screw Attack (Space Jump)
+                  Screw Attack at Z-Axis (Beginner) and Disabled Room Randomizer and Use Screw Attack (No Space Jump)
+
+----------------
+Trial Tunnel
+Extra - asset_id: 1222921974
+Extra - in_dark_aether: True
+> Door to Dark Agon Temple; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Normal Door to Dark Agon Temple/Door to Trial Tunnel
+  * Extra - dock_name: East
+  > Pickup (Dark Agon Key 1)
+      Trivial
+
+> Pickup (Dark Agon Key 1); Heals? True
+  * Layers: default
+  * Pickup 39; Category? Major
+  > Door to Dark Agon Temple
+      Trivial
+
+----------------
+Portal Site
+Extra - asset_id: 3212793644
+Extra - in_dark_aether: True
+> Door to Crossroads; Heals? False
+  * Layers: default
+  * Normal Door to Crossroads/Door to Portal Site
+  * Extra - dock_name: West
+  > Event - Portal Site Cutscene
+      # https://www.youtube.com/watch?v=Pqc62B5dJPE
+      Before Portal Site Cutscene and Knowledge (Beginner)
+  > Safe Zone (Bomb Slot)
+      All of the following:
+          After Portal Site Cutscene
+          Any of the following:
+              All of the following:
+                  Before Portal Site Gate and Movement (Intermediate) and Dark World Damage ≥ 10
+                  Any of the following:
+                      # https://www.youtube.com/watch?v=kyb7lYUdc14&t=22s
+                      Space Jump Boots
+                      # https://www.youtube.com/watch?v=kyb7lYUdc14&t=31s
+                      Morph Ball Bomb and Morph Ball and Bomb Jump (Intermediate)
+              After Portal Site Gate and Dark World Damage ≥ 4
+
+> Door to Portal Access; Heals? False
+  * Layers: default
+  * Normal Door to Portal Access/Door to Portal Site
+  * Extra - dock_name: North
+  > Event - Portal Site Cutscene
+      Before Portal Site Cutscene
+  > Safe Zone (Bomb Slot)
+      Dark World Damage ≥ 7
+
+> Portal to Portal Terminal; Heals? True; Spawn Point; Default Node
+  * Layers: default
+  * Scan Portal to Portal Terminal/Portal to Portal Site
+  * Extra - dock_name: VirtualNorth1
+  > Event - Portal Site Cutscene
+      Trivial
+  > Safe Zone (Bomb Slot)
+      All of the following:
+          After Portal Site Cutscene
+          Dark World Damage ≥ 20 or Activate Safe Zone
+          Any of the following:
+              Dark World Damage ≥ 6
+              Morph Ball and Dark World Damage ≥ 3
+
+> Event - Portal Site Gate; Heals? False
+  * Layers: default
+  * Event Portal Site Gate
+  > Safe Zone (Bomb Slot)
+      Trivial
+
+> Event - Portal Site Cutscene; Heals? False
+  * Layers: default
+  * Event Portal Site Cutscene
+  > Portal to Portal Terminal
+      Trivial
+
+> Safe Zone (Bomb Slot); Heals? True
+  * Layers: default
+  > Door to Crossroads
+      All of the following:
+          After Portal Site Gate and After Portal Site Cutscene
+          Any of the following:
+              Dark World Damage ≥ 8
+              Morph Ball and Dark World Damage ≥ 4
+  > Door to Portal Access
+      All of the following:
+          After Portal Site Cutscene and Dark World Damage ≥ 10
+          Any of the following:
+              All of the following:
+                  Space Jump Boots
+                  Dark World Damage ≥ 35 or Activate Safe Zone
+              All of the following:
+                  Morph Ball Bomb and Morph Ball and Bomb Jump (Intermediate)
+                  Dark World Damage ≥ 50 or Activate Safe Zone
+  > Portal to Portal Terminal
+      All of the following:
+          After Portal Site Cutscene and Dark World Damage ≥ 6
+          Any of the following:
+              All of the following:
+                  Dark World Damage ≥ 20 or Activate Safe Zone
+                  Any of the following:
+                      Space Jump Boots
+                      # https://www.youtube.com/watch?v=NbSjeK62Bfc&t=12s
+                      Scan Visor and Combat/Scan Dash (Advanced) and Standable Terrain (Beginner)
+              All of the following:
+                  Dark World Damage ≥ 10 or Activate Safe Zone
+                  Any of the following:
+                      # Double Bomb Jump
+                      Morph Ball Bomb and Morph Ball and Bomb Jump (Beginner)
+                      # https://www.youtube.com/watch?v=NbSjeK62Bfc
+                      Screw Attack and Standable Terrain (Beginner)
+  > Event - Portal Site Gate
+      All of the following:
+          After Portal Site Cutscene
+          Any of the following:
+              Morph Ball Bomb and Morph Ball
+              All of the following:
+                  # https://www.youtube.com/watch?v=bTxB3IsThaU
+                  Bomb Slot without Bombs (Advanced) and Activate Bomb Slot without Bombs (No Space Jump)
+                  Space Jump Boots or Standable Terrain (Intermediate)
+
+----------------
+Central Mining Station
+Extra - asset_id: 4121352562
+Extra - in_dark_aether: False
+> Door to Command Center Access (Top); Heals? False
+  * Layers: default
+  * Light Door to Command Center Access/Door to Central Mining Station (Top)
+  * Extra - dock_name: East_Upper
+  > Door to Central Station Access
+      After Central Mining Station Pirates
+  > Door to Command Center Access (Bottom)
+      After Central Mining Station Pirates
+  > Event - Central Mining Station Pirates
+      Trivial
+  > Next to Pickup
+      Any of the following:
+          # https://www.youtube.com/watch?v=E5M-lcPZDdY
+          Morph Ball Bomb and After Central Mining Station Pirates and Bomb Space Jump (Expert) and Movement (Expert) and Use Screw Attack (No Space Jump)
+          All of the following:
+              Space Jump Boots
+              Any of the following:
+                  After Central Mining Station Pirates
+                  # https://www.youtube.com/watch?v=BUgMb5tSmhE
+                  Scan Visor and Combat/Scan Dash (Advanced)
+                  # https://www.youtube.com/watch?v=vF4o7gumWNQ
+                  Morph Ball and Roll Jump (Advanced)
+          # https://www.youtube.com/watch?v=7IYUQ9MRmCE
+          Scan Visor and Extended Dash (Expert)
+
+> Door to Central Station Access; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Missile Blast Shield to Central Station Access/Door to Central Mining Station
+  * Extra - dock_name: West
+  > Door to Command Center Access (Top)
+      All of the following:
+          After Central Mining Station Pirates
+          Any of the following:
+              All of the following:
+                  Morph Ball
+                  Any of the following:
+                      Spider Ball
+                      Morph Ball Bomb and Space Jump Boots and Bomb Space Jump (Intermediate)
+              # https://www.youtube.com/watch?v=mprL_DAECUI
+              Standable Terrain (Beginner) and Use Screw Attack (Space Jump)
+              All of the following:
+                  Space Jump Boots
+                  Any of the following:
+                      # https://youtu.be/qvaGUSk41g8?list=PLx6vT1x-80zuA1vUepQUSqYOQeHiRNbt5&t=22 Slope Jump
+                      Slope Jump (Expert)
+                      Scan Visor and Combat/Scan Dash (Expert) and Standable Terrain (Expert)
+  > Door to Command Center Access (Bottom)
+      After Central Mining Station Pirates
+  > Event - Central Mining Station Pirates
+      Trivial
+
+> Door to Command Center Access (Bottom); Heals? False
+  * Layers: default
+  * Normal Door to Command Center Access/Door to Central Mining Station (Bottom)
+  * Extra - dock_name: East_Lower
+  > Door to Central Station Access
+      After Central Mining Station Pirates
+
+> Pickup (Dark Ammo); Heals? False
+  * Layers: default
+  * Pickup 40; Category? Minor
+  > Next to Pickup
+      Morph Ball
+
+> Event - Central Mining Station Pirates; Heals? False
+  * Layers: default
+  * Event Central Mining Station Pirates
+  > Door to Central Station Access
+      Trivial
+
+> Next to Pickup; Heals? False
+  * Layers: default
+  > Door to Command Center Access (Top)
+      Any of the following:
+          Morph Ball and Spider Ball
+          All of the following:
+              Space Jump Boots
+              Any of the following:
+                  Scan Visor and Combat/Scan Dash (Advanced)
+                  Morph Ball and Roll Jump (Advanced)
+  > Door to Central Station Access
+      Trivial
+  > Door to Command Center Access (Bottom)
+      After Central Mining Station Pirates
+  > Pickup (Dark Ammo)
+      Morph Ball
+  > Keybearer Corpse (J-Stl)
+      Morph Ball and After Central Mining Station Pirates
+
+> Keybearer Corpse (J-Stl); Heals? False
+  * Layers: default
+  * Hint
+  * Extra - hint_index: 45
+  * Extra - string_asset_id: 353275320
+  > Next to Pickup
+      Morph Ball
+
+----------------
+Dark Agon Temple Access
+Extra - asset_id: 553896110
+Extra - in_dark_aether: True
+> Door to Judgment Pit; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Missile Blast Shield to Judgment Pit/Door to Dark Agon Temple Access
+  * Extra - dock_name: South
+  > Door to Dark Agon Temple
+      Any of the following:
+          Dark World Damage ≥ 25
+          Morph Ball and Dark World Damage ≥ 20
+          Dark World Damage ≥ 8 and Activate Safe Zone
+
+> Door to Dark Agon Temple; Heals? True
+  * Layers: default
+  * Normal Door to Dark Agon Temple/Door to Dark Agon Temple Access
+  * Extra - dock_name: North
+  > Door to Judgment Pit
+      Any of the following:
+          Dark World Damage ≥ 25
+          Dark World Damage ≥ 8 and Activate Safe Zone
+
+----------------
+Warrior's Walk
+Extra - asset_id: 872074261
+Extra - in_dark_aether: True
+> Door to Judgment Pit; Heals? True; Spawn Point; Default Node
+  * Layers: default
+  * Super Missile Blast Shield to Judgment Pit/Door to Warrior's Walk
+  * Extra - dock_name: West
+  > Safe Zone (Battleground Side)
+      All of the following:
+          Dark World Damage ≥ 10 or Activate Safe Zone
+          Any of the following:
+              Dark World Damage ≥ 20
+              Morph Ball and Dark World Damage ≥ 10
+
+> Door to Battleground; Heals? False
+  * Layers: default
+  * Super Missile Blast Shield to Battleground/Door to Warrior's Walk
+  * Extra - dock_name: East
+  > Safe Zone (Battleground Side)
+      Dark World Damage ≥ 10
+
+> Pickup (Missile); Heals? False
+  * Layers: default
+  * Pickup 41; Category? Minor
+  > Safe Zone (Battleground Side)
+      Any of the following:
+          # Double Bomb Jump
+          Morph Ball Bomb and Morph Ball and Bomb Jump (Beginner) and Normal Damage ≥ 55 and Dark World Damage ≥ 25
+          Space Jump Boots and Normal Damage ≥ 15 and Dark World Damage ≥ 15
+          Slope Jump (Intermediate) and Normal Damage ≥ 50 and Dark World Damage ≥ 10
+
+> Safe Zone (Battleground Side); Heals? True
+  * Layers: default
+  > Door to Judgment Pit
+      All of the following:
+          Dark World Damage ≥ 15 or Activate Safe Zone
+          Any of the following:
+              Space Jump Boots and Dark World Damage ≥ 15
+              All of the following:
+                  Morph Ball
+                  Any of the following:
+                      # Double Bomb Jump
+                      Morph Ball Bomb and Bomb Jump (Beginner) and Dark World Damage ≥ 25
+                      Screw Attack and Slope Jump (Expert) and Dark World Damage ≥ 20
+                      Boost Ball and Wall Boost (Hypermode) and Dark World Damage ≥ 30
+                      Bomb Space Jump (Hypermode) and Dark World Damage ≥ 40
+  > Door to Battleground
+      Any of the following:
+          Dark World Damage ≥ 10
+          Morph Ball and Dark World Damage ≥ 5
+  > Pickup (Missile)
+      All of the following:
+          Morph Ball and Normal Damage ≥ 15 and Dark World Damage ≥ 15
+          Morph Ball Bomb or Power Bomb
+
+----------------
+Save Station 1
+Extra - asset_id: 1511345710
+Extra - unlocked_save_station: True
+Extra - in_dark_aether: True
+> Save Station; Heals? True; Spawn Point; Default Node
+  * Layers: default
+  > Door to Judgment Pit
+      Dark World Damage ≥ 5
+
+> Door to Judgment Pit; Heals? False
+  * Layers: default
+  * Dark Door to Judgment Pit/Door to Save Station 1
+  * Extra - dock_name: North
+  > Save Station
+      Dark World Damage ≥ 7
+
+----------------
+Portal Access
+Extra - asset_id: 2312259325
+Extra - in_dark_aether: True
+> Door to Judgment Pit; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Normal Door to Judgment Pit/Door to Portal Access
+  * Extra - dock_name: North
+  > Door to Portal Site
+      Any of the following:
+          All of the following:
+              Dark World Damage ≥ 30
+              Any of the following:
+                  Space Jump Boots
+                  # https://www.youtube.com/watch?v=0kxSs6SPkCw&t=15s
+                  Standable Terrain (Beginner)
+          # https://www.youtube.com/watch?v=0kxSs6SPkCw&t=15s
+          Screw Attack at Z-Axis (Beginner) and Dark World Damage ≥ 25 and Disabled Room Randomizer and Use Screw Attack (No Space Jump)
+
+> Door to Portal Site; Heals? False
+  * Layers: default
+  * Normal Door to Portal Site/Door to Portal Access
+  * Extra - dock_name: South
+  > Door to Judgment Pit
+      Any of the following:
+          All of the following:
+              Dark World Damage ≥ 30
+              Any of the following:
+                  Space Jump Boots
+                  # https://www.youtube.com/watch?v=0kxSs6SPkCw&t=30s
+                  Standable Terrain (Beginner) and Use Screw Attack (No Space Jump)
+                  # https://www.youtube.com/watch?v=0kxSs6SPkCw&t=24s
+                  Standable Terrain (Intermediate)
+          # https://www.youtube.com/watch?v=0kxSs6SPkCw&t=9s
+          Screw Attack at Z-Axis (Beginner) and Dark World Damage ≥ 25 and Disabled Room Randomizer and Use Screw Attack (No Space Jump)
+
+----------------
+Controller Access
+Extra - asset_id: 3209927104
+Extra - in_dark_aether: False
+> Door to Agon Energy Controller; Heals? False
+  * Layers: default
+  * Normal Door to Agon Energy Controller/Door to Controller Access
+  * Extra - dock_name: North
+  > Door to Agon Temple
+      Any of the following:
+          Morph Ball Bomb and Morph Ball
+          # https://www.youtube.com/watch?v=-26zjhgXqWQ
+          Bomb Slot without Bombs (Advanced) and Activate Bomb Slot without Bombs (Space Jump)
+
+> Door to Agon Temple; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Normal Door to Agon Temple/Door to Controller Access
+  * Extra - dock_name: South1
+  > Door to Agon Energy Controller
+      Any of the following:
+          Morph Ball Bomb and Morph Ball
+          # https://www.youtube.com/watch?v=-26zjhgXqWQ
+          Bomb Slot without Bombs (Advanced) and Activate Bomb Slot without Bombs (Space Jump)
+
+----------------
+Sandcanyon
+Extra - asset_id: 3853985320
+Extra - in_dark_aether: False
+> Door to Ventilation Area A; Heals? False
+  * Layers: default
+  * Normal Door to Ventilation Area A/Door to Sandcanyon
+  * Extra - dock_name: East
+  > Door to Agon Temple
+      Morph Ball
+  > Center Platform
+      All of the following:
+          Morph Ball and Space Jump Boots
+          Any of the following:
+              # https://www.youtube.com/watch?v=RbjGLyA2qAc
+              Screw Attack or Single Room Out of Bounds (Expert)
+              # https://www.youtube.com/watch?v=KFsv-zg_w50
+              Boost Ball and Before Sandcanyon Denzium and Boost Jump (Expert)
+
+> Door to Agon Temple; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Light Door to Agon Temple/Door to Sandcanyon
+  * Extra - dock_name: West
+  > Door to Ventilation Area A
+      Morph Ball
+  > Center Platform
+      Use Screw Attack (Space Jump)
+
+> Pickup (Power Bomb); Heals? False
+  * Layers: default
+  * Pickup 42; Category? Minor
+  > Center Platform
+      Trivial
+
+> Center Platform; Heals? False
+  * Layers: default
+  > Door to Ventilation Area A
+      # https://www.youtube.com/watch?v=1mbgP8epiQw
+      Terminal Fall Abuse (Beginner) and Normal Damage ≥ 10 and Use Screw Attack (Space Jump)
+  > Door to Agon Temple
+      All of the following:
+          Morph Ball and Space Jump Boots
+          Any of the following:
+              Screw Attack
+              # https://www.youtube.com/watch?v=PWAG1cT-GLM
+              Boost Ball and Before Sandcanyon Denzium and Boost Jump (Expert)
+  > Pickup (Power Bomb)
+      After Sandcanyon Denzium
+  > Event - Sandcanyon Denzium
+      Morph Ball and Power Bomb
+
+> Event - Sandcanyon Denzium; Heals? False
+  * Layers: default
+  * Event Sandcanyon Denzium
+  > Center Platform
+      Trivial
+
+----------------
+Dark Agon Temple
+Extra - asset_id: 1970603146
+Extra - in_dark_aether: True
+> Door to Dark Agon Temple Access; Heals? True; Spawn Point; Default Node
+  * Layers: default
+  * Normal Door to Dark Agon Temple Access/Door to Dark Agon Temple
+  * Extra - dock_name: South
+  > Door to Trial Tunnel
+      Any of the following:
+          Dark World Damage ≥ 50
+          Dark World Damage ≥ 15 and Activate Safe Zone
+          All of the following:
+              Morph Ball
+              Any of the following:
+                  Dark World Damage ≥ 40
+                  Dark World Damage ≥ 10 and Activate Safe Zone
+  > Event - Dark Agon Temple Key Gate
+      Dark Agon Key 1 and Dark Agon Key 2 and Dark Agon Key 3
+  > Safe Zone (Behind Key Gate)
+      All of the following:
+          After Dark Agon Temple Key Gate
+          Any of the following:
+              After Amorbis
+              All of the following:
+                  Knowledge (Intermediate) and Movement (Expert)
+                  Any of the following:
+                      # https://www.youtube.com/watch?v=xdh5gbAjEiM
+                      Space Jump Boots and Dark World Damage ≥ 15
+                      All of the following:
+                          Dark World Damage ≥ 20
+                          Any of the following:
+                              # https://youtu.be/7Of-RgRcAAg
+                              Slope Jump (Expert)
+                              # https://youtu.be/Id8jXMOi91s
+                              Morph Ball Bomb and Morph Ball and Bomb Jump (Intermediate)
+  > Amorbis Trigger
+      After Dark Agon Temple Key Gate
+
+> Door to Dark Controller Access; Heals? False
+  * Layers: default
+  * Normal Door to Dark Controller Access/Door to Dark Agon Temple; Excluded from Dock Lock Rando
+  * Extra - dock_name: North
+  > Safe Zone (Behind Key Gate)
+      Any of the following:
+          Dark World Damage ≥ 45
+          Dark World Damage ≥ 25 and Activate Safe Zone
+
+> Door to Trial Tunnel; Heals? False
+  * Layers: default
+  * Normal Door to Trial Tunnel/Door to Dark Agon Temple
+  * Extra - dock_name: West
+  > Door to Dark Agon Temple Access
+      Any of the following:
+          Dark World Damage ≥ 60
+          Dark World Damage ≥ 15 and Activate Safe Zone
+          All of the following:
+              Morph Ball
+              Any of the following:
+                  Dark World Damage ≥ 40
+                  Dark World Damage ≥ 10 and Activate Safe Zone
+
+> Pickup (Dark Suit); Heals? True
+  * Layers: default
+  * Pickup 43; Category? Major
+  * Extra - boss: guardian
+  > Safe Zone (Behind Key Gate)
+      Dark World Damage ≥ 5
+
+> Event - Dark Agon Temple Key Gate; Heals? False
+  * Layers: default
+  * Event Dark Agon Temple Key Gate
+  > Door to Dark Agon Temple Access
+      Trivial
+
+> Event - Amorbis; Heals? True
+  * Layers: default
+  * Event Amorbis
+  > Pickup (Dark Suit)
+      Trivial
+
+> Safe Zone (Behind Key Gate); Heals? True
+  * Layers: default
+  > Door to Dark Agon Temple Access
+      All of the following:
+          After Dark Agon Temple Key Gate
+          Any of the following:
+              # https://youtu.be/spBMSGyl9Vk?t=63
+              Space Jump Boots and After Dark Agon Energy Taken and Knowledge (Intermediate) and Movement (Expert) and Dark World Damage ≥ 25
+              All of the following:
+                  After Amorbis
+                  Any of the following:
+                      Space Jump Boots and Standable Terrain (Intermediate) and Dark World Damage ≥ 15 and Shoot Dark Beam
+                      All of the following:
+                          # Double Bomb Jump
+                          Morph Ball Bomb and Morph Ball and Dark World Damage ≥ 5
+                          Any of the following:
+                              Space Jump Boots and Bomb Space Jump (Intermediate)
+                              After Dark Agon Energy Taken and Bomb Jump (Beginner)
+                      Space Jump Boots and After Dark Agon Energy Taken
+                      Screw Attack at Z-Axis (Intermediate) and Disabled Room Randomizer and Use Screw Attack (No Space Jump)
+  > Door to Dark Controller Access
+      Any of the following:
+          All of the following:
+              Space Jump Boots
+              Any of the following:
+                  All of the following:
+                      After Amorbis
+                      Any of the following:
+                          Dark World Damage ≥ 40
+                          Dark World Damage ≥ 25 and Activate Safe Zone
+                  All of the following:
+                      Standable Terrain (Advanced) and Shoot Dark Beam
+                      Any of the following:
+                          Dark World Damage ≥ 50
+                          Dark World Damage ≥ 35 and Activate Safe Zone
+          All of the following:
+              # Double Bomb Jump
+              After Amorbis and Bomb Jump (Beginner)
+              Any of the following:
+                  Dark World Damage ≥ 80
+                  Dark World Damage ≥ 45 and Activate Safe Zone
+          All of the following:
+              Screw Attack at Z-Axis (Intermediate) and Disabled Room Randomizer and Use Screw Attack (No Space Jump)
+              Any of the following:
+                  Dark World Damage ≥ 25
+                  Dark World Damage ≥ 20 and Activate Safe Zone
+          Standable Terrain (Intermediate) and Dark World Damage ≥ 20 and Use Screw Attack (Space Jump)
+  > Event - Dark Agon Temple Key Gate
+      # https://www.youtube.com/watch?v=yd91qBUxCeA
+      Dark Agon Key 1 and Dark Agon Key 2 and Dark Agon Key 3 and Morph Ball Bomb and Morph Ball and Space Jump Boots and Bomb Space Jump (Expert) and Single Room Out of Bounds (Expert) and Slope Jump (Expert) and Standable Terrain (Expert) and Dark World Damage ≥ 175
+  > Amorbis Trigger
+      All of the following:
+          Knowledge (Intermediate)
+          Any of the following:
+              Space Jump Boots
+              Screw Attack at Z-Axis (Beginner) and Disabled Room Randomizer and Use Screw Attack (No Space Jump)
+              All of the following:
+                  Morph Ball Bomb and Morph Ball
+                  Any of the following:
+                      Bomb Space Jump (Intermediate) or Bomb Jump (Intermediate)
+                      All of the following:
+                          # https://youtu.be/u9MdGBmDjNU
+                          After Dark Agon Energy Taken and Combat (Advanced) and Normal Damage ≥ 100 and Dark World Damage ≥ 100
+                          Bomb Jump (Beginner) or Standable Terrain (Beginner)
+
+> Amorbis Trigger; Heals? False
+  * Layers: default
+  > Event - Amorbis
+      All of the following:
+          Morph Ball Bomb and Morph Ball and Normal Damage ≥ 10 and Dark World Damage ≥ 30
+          Any of the following:
+              Combat (Intermediate)
+              All of the following:
+                  Any of the following:
+                      Normal Damage ≥ 200
+                      Combat (Beginner) and Normal Damage ≥ 100
+                  Any of the following:
+                      Shoot Supers
+                      Light Beam and Light Ammo ≥ 60
+          Dark World Damage ≥ 30 or Activate Safe Zone
+
+----------------
+Command Center Access
+Extra - asset_id: 1887668217
+Extra - in_dark_aether: False
+> Door to Command Center (Bottom); Heals? False
+  * Layers: default
+  * Dark Door to Command Center/Door to Command Center Access (Bottom)
+  * Extra - dock_name: EastLowerDoor
+  > Door to Central Mining Station (Bottom)
+      Trivial
+
+> Door to Central Mining Station (Top); Heals? False
+  * Layers: default
+  * Light Door to Central Mining Station/Door to Command Center Access (Top)
+  * Extra - dock_name: West_Upper
+  > Door to Command Center (Top)
+      Trivial
+
+> Morph Ball Door to Command Center; Heals? False
+  * Layers: default
+  * Morph Ball Door to Command Center/Morph Ball Door to Command Center Access
+  * Extra - dock_name: EastMorphballTunnel
+  > Door to Central Mining Station (Bottom)
+      All of the following:
+          After Command Center Access Grates/Crates
+          Any of the following:
+              All of the following:
+                  Morph Ball
+                  Any of the following:
+                      # Double Bomb Jump
+                      Bomb Jump (Beginner)
+                      # https://www.youtube.com/watch?v=4cgde9IBaM4
+                      Boost Ball and Wall Boost (Advanced)
+              All of the following:
+                  After Command Center Gate Closed
+                  Any of the following:
+                      Space Jump Boots
+                      # https://www.youtube.com/watch?v=IC4xKReG6jk
+                      Standable Terrain (Beginner)
+  > Event - Command Center Access Grates/Crates
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Morph Ball Bomb or Power Bomb
+              Boost Ball and Wall Boost (Expert)
+
+> Door to Central Mining Station (Bottom); Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Normal Door to Central Mining Station/Door to Command Center Access (Bottom)
+  * Extra - dock_name: West_Lower
+  > Door to Command Center (Bottom)
+      Trivial
+  > Morph Ball Door to Command Center
+      After Command Center Access Grates/Crates
+  > Event - Command Center Access Grates/Crates
+      Any of the following:
+          All of the following:
+              Morph Ball
+              Any of the following:
+                  Morph Ball Bomb or Power Bomb
+                  Boost Ball and Knowledge (Beginner)
+          Knowledge (Beginner) and Disabled Room Randomizer and Use Screw Attack (No Space Jump)
+
+> Door to Command Center (Top); Heals? False
+  * Layers: default
+  * Light Door to Command Center/Door to Command Center Access (Top)
+  * Extra - dock_name: EastUpperDoor
+  > Door to Central Mining Station (Top)
+      Trivial
+
+> Event - Command Center Access Grates/Crates; Heals? False
+  * Layers: default
+  * Event Command Center Access Grates/Crates
+  > Morph Ball Door to Command Center
+      Trivial
+  > Door to Central Mining Station (Bottom)
+      Any of the following:
+          All of the following:
+              Morph Ball
+              Any of the following:
+                  Morph Ball Bomb and Bomb Jump (Beginner)
+                  Boost Ball and Wall Boost (Advanced)
+          All of the following:
+              After Command Center Gate Closed
+              Space Jump Boots or Standable Terrain (Beginner)
+
+----------------
+Battleground
+Extra - asset_id: 3933819436
+Extra - in_dark_aether: True
+> Door to Double Path (Top); Heals? False
+  * Layers: default
+  * Light Door to Double Path/Door to Battleground (Top)
+  * Extra - dock_name: East_Upper
+  > Pickup (Dark Agon Key 3)
+      Any of the following:
+          Dark World Damage ≥ 35
+          Morph Ball and Dark World Damage ≥ 25
+  > Pickup 2 (Sky Temple Key 1)
+      All of the following:
+          Dark Visor
+          Any of the following:
+              Morph Ball Bomb and Morph Ball and Bomb Jump (Intermediate) and Standable Terrain (Intermediate) and Dark World Damage ≥ 155
+              All of the following:
+                  Space Jump Boots
+                  Any of the following:
+                      Dark World Damage ≥ 105
+                      Scan Visor and Combat/Scan Dash (Intermediate) and Dark World Damage ≥ 60
+              Slope Jump (Advanced) and Standable Terrain (Advanced) and Dark World Damage ≥ 130 and Use Screw Attack (No Space Jump)
+  > Safe Zone (Double Path Side, Top)
+      Dark World Damage ≥ 9 and Activate Safe Zone
+
+> Door to Double Path (Bottom); Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Light Door to Double Path/Door to Battleground (Bottom)
+  * Extra - dock_name: East_Lower
+  > Pickup (Dark Agon Key 3)
+      Any of the following:
+          Dark World Damage ≥ 35
+          Morph Ball and Dark World Damage ≥ 25
+  > Safe Zone (Double Path Side, Bottom)
+      Dark World Damage ≥ 5 and Activate Safe Zone
+
+> Door to Warrior's Walk; Heals? False
+  * Layers: default
+  * Super Missile Blast Shield to Warrior's Walk/Door to Battleground
+  * Extra - dock_name: West
+  > Pickup (Dark Agon Key 3)
+      All of the following:
+          Suitless Dark Aether (Beginner) or Has Suit
+          Any of the following:
+              Dark World Damage ≥ 6 and Ingclaw Vapor Damage ≥ 85
+              Morph Ball and Dark World Damage ≥ 3 and Ingclaw Vapor Damage ≥ 55
+
+> Pickup (Dark Agon Key 3); Heals? True
+  * Layers: default
+  * Pickup 44; Category? Major
+  > Door to Double Path (Top)
+      Any of the following:
+          Space Jump Boots and Standable Terrain (Beginner) and Dark World Damage ≥ 40
+          Morph Ball Bomb and Morph Ball and Bomb Space Jump (Expert) and Dark World Damage ≥ 85
+  > Door to Double Path (Bottom)
+      Any of the following:
+          Dark World Damage ≥ 30
+          Morph Ball and Dark World Damage ≥ 20
+  > Door to Warrior's Walk
+      All of the following:
+          Suitless Dark Aether (Beginner) or Has Suit
+          Any of the following:
+              Dark World Damage ≥ 10 and Ingclaw Vapor Damage ≥ 50
+              Morph Ball and Dark World Damage ≥ 8 and Ingclaw Vapor Damage ≥ 24
+  > Pickup 2 (Sky Temple Key 1)
+      Dark Visor and Scan Visor and Space Jump Boots and Combat/Scan Dash (Intermediate) and Standable Terrain (Intermediate) and Dark World Damage ≥ 70
+  > Safe Zone (Double Path Side, Bottom)
+      Dark World Damage ≥ 7 and Activate Safe Zone
+
+> Pickup 2 (Sky Temple Key 1); Heals? False
+  * Layers: default
+  * Pickup 45; Category? Major
+  > Door to Warrior's Walk
+      All of the following:
+          Dark World Damage ≥ 25
+          Any of the following:
+              Has Suit
+              Suitless Dark Aether (Beginner) and Ingclaw Vapor Damage ≥ 45
+  > Pickup (Dark Agon Key 3)
+      Dark World Damage ≥ 18
+
+> Safe Zone (Double Path Side, Bottom); Heals? True
+  * Layers: default
+  > Door to Double Path (Bottom)
+      Dark World Damage ≥ 3
+  > Pickup (Dark Agon Key 3)
+      Dark World Damage ≥ 5 and Activate Safe Zone
+  > Safe Zone (Double Path Side, Top)
+      All of the following:
+          Activate Safe Zone
+          Any of the following:
+              Space Jump Boots and Standable Terrain (Beginner) and Dark World Damage ≥ 12
+              # https://www.youtube.com/watch?v=ZBsoXsayArI&list=PLx6vT1x-80zuA1vUepQUSqYOQeHiRNbt5&index=61
+              Morph Ball Bomb and Morph Ball and Bomb Space Jump (Expert) and Dark World Damage ≥ 20
+
+> Safe Zone (Double Path Side, Top); Heals? True
+  * Layers: default
+  > Door to Double Path (Top)
+      Dark World Damage ≥ 6
+  > Safe Zone (Double Path Side, Bottom)
+      Dark World Damage ≥ 2 and Activate Safe Zone
+
+----------------
+Agon Energy Controller
+Extra - asset_id: 50083607
+Extra - in_dark_aether: False
+> Door to Controller Access; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Normal Door to Controller Access/Door to Agon Energy Controller
+  * Extra - dock_name: South
+  > Teleporter to Sanctuary Fortress
+      After Main Energy Controller Pickup
+  > Teleporter to Torvus Bog
+      After Main Energy Controller Pickup
+  > Teleporter to Great Temple
+      After Main Energy Controller Pickup
+  > Event - Agon Energy Returned
+      After Dark Agon Energy Taken
+  > Event - Agon Energy Controller Pickup
+      Trivial
+  > Lore Scan
+      Trivial
+
+> Pickup (Amber Translator); Heals? False
+  * Layers: default
+  * Pickup 46; Category? Major
+  > Door to Controller Access
+      Trivial
+
+> Teleporter to Sanctuary Fortress; Heals? False
+  * Layers: default
+  * Teleporter to Sanctuary Energy Controller/Teleporter to Agon Wastes
+  * Extra - scan_asset_id: None
+  * Extra - teleporter_instance_id: 405209185
+  * Extra - keep_name_when_vanilla: False
+  > Door to Controller Access
+      Trivial
+
+> Teleporter to Torvus Bog; Heals? False
+  * Layers: default
+  * Teleporter to Torvus Energy Controller/Teleporter to Agon Wastes
+  * Extra - scan_asset_id: None
+  * Extra - teleporter_instance_id: 405209407
+  * Extra - keep_name_when_vanilla: False
+  > Door to Controller Access
+      Trivial
+
+> Teleporter to Great Temple; Heals? False
+  * Layers: default
+  * Teleporter to Main Energy Controller/Teleporter to Agon Wastes
+  * Extra - scan_asset_id: None
+  * Extra - teleporter_instance_id: 405209411
+  * Extra - keep_name_when_vanilla: False
+  > Door to Controller Access
+      Trivial
+
+> Event - Agon Energy Returned; Heals? False
+  * Layers: default
+  * Event Agon Energy Returned
+  > Door to Controller Access
+      Trivial
+
+> Event - Agon Energy Controller Pickup; Heals? False
+  * Layers: default
+  * Event Agon Energy Controller Pickup
+  > Pickup (Amber Translator)
+      Trivial
+
+> Lore Scan; Heals? False
+  * Layers: default
+  * Hint
+  * Extra - translator: Amber
+  * Extra - string_asset_id: 4021961856
+  > Door to Controller Access
+      Trivial
+
+----------------
+Ventilation Area A
+Extra - asset_id: 2217754069
+Extra - in_dark_aether: False
+> Door to Transport to Sanctuary Fortress; Heals? False
+  * Layers: default
+  * Power Bomb Blast Shield to Transport to Sanctuary Fortress/Door to Ventilation Area A
+  * Extra - dock_name: docks_North
+  > Door to Main Reactor
+      Morph Ball
+
+> Door to Sandcanyon; Heals? False
+  * Layers: default
+  * Normal Door to Sandcanyon/Door to Ventilation Area A
+  * Extra - dock_name: docks_West
+  > Door to Main Reactor
+      Morph Ball
+
+> Door to Main Reactor; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Light Door to Main Reactor/Door to Ventilation Area A
+  * Extra - dock_name: docks_docks_East
+  > Door to Transport to Sanctuary Fortress
+      Morph Ball Bomb and Morph Ball
+  > Door to Sandcanyon
+      Morph Ball
+  > Pickup (Missile)
+      Morph Ball Bomb and Morph Ball
+
+> Pickup (Missile); Heals? False
+  * Layers: default
+  * Pickup 47; Category? Minor
+  > Door to Main Reactor
+      Trivial
+
+----------------
+Dark Controller Access
+Extra - asset_id: 2733852625
+Extra - in_dark_aether: True
+> Door to Dark Agon Temple; Heals? True; Spawn Point; Default Node
+  * Layers: default
+  * Normal Door to Dark Agon Temple/Door to Dark Controller Access
+  * Extra - dock_name: South1
+  > Door to Dark Agon Energy Controller
+      All of the following:
+          Dark World Damage ≥ 10
+          Any of the following:
+              Morph Ball Bomb and Morph Ball
+              # Works the same as: https://www.youtube.com/watch?v=-26zjhgXqWQ
+              Bomb Slot without Bombs (Advanced) and Activate Bomb Slot without Bombs (Space Jump)
+
+> Door to Dark Agon Energy Controller; Heals? True
+  * Layers: default
+  * Normal Door to Dark Agon Energy Controller/Door to Dark Controller Access
+  * Extra - dock_name: North
+  > Door to Dark Agon Temple
+      All of the following:
+          Dark World Damage ≥ 15
+          Any of the following:
+              Morph Ball Bomb and Morph Ball
+              # Works the same as: https://www.youtube.com/watch?v=-26zjhgXqWQ
+              Bomb Slot without Bombs (Advanced) and Activate Bomb Slot without Bombs (Space Jump)
+
+----------------
+Command Center
+Extra - asset_id: 834819415
+Extra - in_dark_aether: False
+> Door to Command Center Access (Top); Heals? False
+  * Layers: default
+  * Light Door to Command Center Access/Door to Command Center (Top)
+  * Extra - dock_name: WestUpperDoor
+  > Door to Security Station B (First)
+      Trivial
+  > Door to Command Center Access (Bottom)
+      Trivial
+
+> Morph Ball Door to Command Center Access; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Morph Ball Door to Command Center Access/Morph Ball Door to Command Center
+  * Extra - dock_name: WestMorphballTunnel
+  > Door to Command Center Access (Bottom)
+      After Command Center Gate Closed and After Command Center Gate Opened
+  > Pickup (Missile)
+      Morph Ball
+  > Event - Command Center Gate Closed
+      Morph Ball
+
+> Door to Security Station B (First); Heals? False
+  * Layers: default
+  * Normal Door to Security Station B/Door to Command Center (First)
+  * Extra - dock_name: North
+  > Door to Command Center Access (Top)
+      Trivial
+
+> Door to Biostorage Access; Heals? False
+  * Layers: default
+  * Normal Door to Biostorage Access/Door to Command Center
+  * Extra - dock_name: South
+  > Door to Command Center Access (Bottom)
+      Before Command Center Gate Closed or After Command Center Gate Opened
+
+> Door to Command Center Access (Bottom); Heals? False
+  * Layers: default
+  * Dark Door to Command Center Access/Door to Command Center (Bottom)
+  * Extra - dock_name: WestLowerDoor
+  > Door to Command Center Access (Top)
+      All of the following:
+          Scan Visor
+          Any of the following:
+              Space Jump Boots or Combat/Scan Dash (Beginner)
+              Movement (Beginner) and Use Screw Attack (No Space Jump)
+  > Morph Ball Door to Command Center Access
+      Morph Ball and After Command Center Gate Closed and After Command Center Gate Opened
+  > Door to Biostorage Access
+      Before Command Center Gate Closed or After Command Center Gate Opened
+  > Portal to Doomed Entry
+      Trivial
+  > Event - Command Center Gate Closed
+      Trivial
+
+> Portal to Doomed Entry; Heals? False
+  * Layers: default
+  * Dark Portal to Doomed Entry/Portal from Command Center
+  * Extra - dock_name: VirtualNorth
+  > Door to Command Center Access (Bottom)
+      Trivial
+
+> Door to Security Station B (Second); Heals? False
+  * Layers: default
+  * Missile Blast Shield to Security Station B/Door to Command Center (Second)
+  * Extra - dock_name: NorthObservation
+  > Event - Command Center Gate Opened
+      Scan Visor
+
+> Pickup (Missile); Heals? False
+  * Layers: default
+  * Pickup 48; Category? Minor
+  > Morph Ball Door to Command Center Access
+      Morph Ball
+
+> Event - Command Center Gate Closed; Heals? False
+  * Layers: default
+  * Event Command Center Gate Closed
+  > Door to Command Center Access (Bottom)
+      Trivial
+
+> Event - Command Center Gate Opened; Heals? False
+  * Layers: default
+  * Event Command Center Gate Opened
+  > Door to Security Station B (Second)
+      Trivial
+
+----------------
+Double Path
+Extra - asset_id: 2146386747
+Extra - in_dark_aether: True
+> Door to Battleground (Bottom); Heals? False
+  * Layers: default
+  * Light Door to Battleground/Door to Double Path (Bottom)
+  * Extra - dock_name: West_Lower
+  > Door to Doomed Entry (Bottom)
+      All of the following:
+          Dark World Damage ≥ 30 or Activate Safe Zone
+          Any of the following:
+              All of the following:
+                  Dark World Damage ≥ 22
+                  Space Jump Boots or Standable Terrain (Intermediate)
+              No Light Suit and Movement (Beginner) and Dark World Damage ≥ 33 and Poison Water Damage ≥ 10 and Enabled Allow Jumping on Dark Water
+
+> Door to Battleground (Top); Heals? True
+  * Layers: default
+  * Light Door to Battleground/Door to Double Path (Top)
+  * Extra - dock_name: West_Upper
+  > Door to Doomed Entry (Top)
+      Any of the following:
+          Dark World Damage ≥ 80
+          Dark World Damage ≥ 12 and Activate Safe Zone
+
+> Door to Doomed Entry (Top); Heals? True
+  * Layers: default
+  * Dark Door to Doomed Entry/Door to Double Path (Top)
+  * Extra - dock_name: EastUpperDoor
+  > Door to Battleground (Top)
+      Any of the following:
+          Dark World Damage ≥ 55
+          Dark World Damage ≥ 12 and Activate Safe Zone
+
+> Door to Doomed Entry (Bottom); Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Light Door to Doomed Entry/Door to Double Path (Bottom)
+  * Extra - dock_name: EastLowerDoor
+  > Door to Battleground (Bottom)
+      All of the following:
+          Any of the following:
+              Dark World Damage ≥ 60
+              Dark World Damage ≥ 30 and Activate Safe Zone
+          Any of the following:
+              Space Jump Boots or Standable Terrain (Intermediate)
+              No Light Suit and Movement (Beginner) and Poison Water Damage ≥ 10 and Enabled Allow Jumping on Dark Water
+
+----------------
+Transport to Sanctuary Fortress
+Extra - asset_id: 3331021649
+Extra - in_dark_aether: False
+> Door to Ventilation Area A; Heals? False
+  * Layers: default
+  * Power Bomb Blast Shield to Ventilation Area A/Door to Transport to Sanctuary Fortress
+  * Extra - dock_name: Dock - South
+  > Elevator to Sanctuary Fortress
+      Scan Visor
+
+> Elevator to Sanctuary Fortress; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Elevator to Transport to Agon Wastes/Elevator to Agon Wastes
+  * Extra - scan_asset_id: 3069534230
+  * Extra - teleporter_instance_id: 2949235
+  * Extra - keep_name_when_vanilla: False
+  > Door to Ventilation Area A
+      Trivial
+
+----------------
+Main Reactor
+Extra - asset_id: 3436835742
+Extra - in_dark_aether: False
+Extra - low_memory_mode: True
+> Portal from Dark Oasis; Heals? False
+  * Layers: default
+  * No Return Portal to Dark Oasis/Portal to Main Reactor
+  * Extra - dock_name: VirtualEast
+  > Door to Sand Processing
+      Trivial
+
+> Door to Ventilation Area A; Heals? False
+  * Layers: default
+  * Light Door to Ventilation Area A/Door to Main Reactor
+  * Extra - dock_name: West_TopNorth
+  > Door to Storage D
+      Trivial
+  > Event - Dark Samus 1
+      # https://www.youtube.com/watch?v=ZcW-Ws9nA6Q
+      Morph Ball Bomb and Morph Ball and Space Jump Boots and Bomb Space Jump (Intermediate) and Single Room Out of Bounds (Intermediate) and Standable Terrain (Intermediate)
+  > Keybearer Corpse (B-Stl)
+      After Dark Samus 1
+  > Bottom Floor (Center)
+      After Dark Samus 1
+
+> Door to Sand Processing; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Normal Door to Sand Processing/Door to Main Reactor
+  * Extra - dock_name: East_TopSouth
+  > Door to Security Station B
+      Trivial
+
+> Door to Storage D; Heals? False
+  * Layers: default
+  * Normal Door to Storage D/Door to Main Reactor
+  * Extra - dock_name: West_TopSouth
+  > Door to Ventilation Area A
+      # https://www.youtube.com/watch?v=KIP9PWtVt7o
+      Morph Ball Bomb and Bomb Space Jump (Expert) and Use Screw Attack (Space Jump)
+  > Door to Security Station B
+      Any of the following:
+          Shoot Dark Beam
+          Knowledge (Beginner) and Use Screw Attack (No Space Jump)
+  > Bottom Floor (Center)
+      After Dark Samus 1
+
+> Door to Security Station B; Heals? False
+  * Layers: default
+  * Dark Door to Security Station B/Door to Main Reactor
+  * Extra - dock_name: Docks_Docks_Docks_South
+  > Door to Sand Processing
+      After Dark Samus 1
+  > Door to Storage D
+      Any of the following:
+          Shoot Dark Beam
+          Knowledge (Beginner) and Use Screw Attack (No Space Jump)
+  > Event - Dark Samus 1
+      Trivial
+  > Next to Pickup
+      All of the following:
+          Morph Ball and After Dark Samus 1 and After Main Reactor Reloaded after DS1
+          Any of the following:
+              # https://www.youtube.com/watch?v=Ibb9XlRcAQE
+              Screw Attack into Tunnels/Openings (Intermediate) and Use Screw Attack (Space Jump)
+              All of the following:
+                  Space Jump Boots and Standable Terrain (Advanced)
+                  Any of the following:
+                      # https://www.youtube.com/watch?v=X8Fe5va-ehc
+                      Roll Jump (Advanced) and Slope Jump (Advanced)
+                      # https://www.youtube.com/watch?v=Yr-cCSIIWfM&list=PLZkUEWCHwYRyXIU-to88js2M6mEOBoHUy&index=19
+                      Scan Visor and Combat/Scan Dash (Expert)
+  > Bottom Floor (Center)
+      After Dark Samus 1
+
+> Pickup (Missile); Heals? False
+  * Layers: default
+  * Pickup 49; Category? Minor
+  > Next to Pickup
+      Trivial
+
+> Event - Dark Samus 1; Heals? False
+  * Layers: default
+  * Event Dark Samus 1
+  > Bottom Floor (Center)
+      Trivial
+
+> Keybearer Corpse (B-Stl); Heals? False
+  * Layers: default
+  * Hint
+  * Extra - hint_index: 53
+  * Extra - string_asset_id: 3729939997
+  > Door to Ventilation Area A
+      Trivial
+
+> Next to Pickup; Heals? False
+  * Layers: default
+  > Pickup (Missile)
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Morph Ball Bomb or Power Bomb
+              All of the following:
+                  Knowledge (Beginner)
+                  Boost Ball or Power Beam or Screw Attack
+  > Bottom Floor (Center)
+      Morph Ball
+
+> Bottom Floor (Center); Heals? False
+  * Layers: default
+  > Door to Ventilation Area A
+      All of the following:
+          Morph Ball and After Dark Samus 1 and After Main Reactor Reloaded after DS1
+          Any of the following:
+              Spider Ball
+              Morph Ball Bomb and Bomb Space Jump (Expert) and Use Screw Attack (Space Jump)
+  > Door to Storage D
+      After Dark Samus 1
+  > Door to Security Station B
+      # https://www.youtube.com/watch?v=5oRhpi4sF8M
+      Morph Ball Bomb and Morph Ball and Space Jump Boots and Bomb Space Jump (Advanced) and Standable Terrain (Advanced)
+  > Next to Pickup
+      All of the following:
+          Morph Ball and After Dark Samus 1 and After Main Reactor Reloaded after DS1
+          Any of the following:
+              # https://youtu.be/q_Dwaw9d8f8
+              Morph Ball Bomb and Space Jump Boots and Bomb Space Jump (Intermediate) and Combat/Scan Dash (Advanced) and Slope Jump (Intermediate) and Standable Terrain (Advanced)
+              All of the following:
+                  Spider Ball
+                  Any of the following:
+                      Boost Ball
+                      All of the following:
+                          Morph Ball Bomb
+                          Any of the following:
+                              # No Space Jump -> https://www.youtube.com/watch?v=PHjXnyJA2is
+                              Bomb Space Jump (Expert) and Standable Terrain (Intermediate)
+                              Space Jump Boots and Bomb Space Jump (Intermediate) and Standable Terrain (Intermediate)
+
+----------------
+Dark Agon Energy Controller
+Extra - asset_id: 3084730374
+Extra - in_dark_aether: True
+> Door to Dark Controller Access; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Normal Door to Dark Controller Access/Door to Dark Agon Energy Controller
+  * Extra - dock_name: South
+  > Event - Dark Agon Energy Taken
+      Dark World Damage ≥ 10
+
+> Event - Dark Agon Energy Taken; Heals? True
+  * Layers: default
+  * Event Dark Agon Energy Taken
+  > Door to Dark Controller Access
+      Any of the following:
+          Dark World Damage ≥ 7
+          Morph Ball and Dark World Damage ≥ 5
+
+----------------
+Biostorage Access
+Extra - asset_id: 3739948648
+Extra - in_dark_aether: False
+> Door to Command Center; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Normal Door to Command Center/Door to Biostorage Access
+  * Extra - dock_name: North
+  > Door to Biostorage Station
+      Trivial
+
+> Door to Biostorage Station; Heals? False
+  * Layers: default
+  * Missile Blast Shield to Biostorage Station/Door to Biostorage Access
+  * Extra - dock_name: South
+  > Door to Command Center
+      Trivial
+
+----------------
+Security Station B
+Extra - asset_id: 182082287
+Extra - in_dark_aether: False
+> Door to Command Center (Second); Heals? False
+  * Layers: default
+  * Missile Blast Shield to Command Center/Door to Security Station B (Second)
+  * Extra - dock_name: South_Observation
+  > Door to Command Center (First)
+      After Security Station B DS Appearance
+
+> Door to Main Reactor; Heals? False
+  * Layers: default
+  * Dark Door to Main Reactor/Door to Security Station B
+  * Extra - dock_name: North
+  > Door to Command Center (First)
+      After Security Station B DS Appearance and Shoot Dark Beam
+  > Event - Security Station B DS Appearance
+      Before Security Station B DS Appearance
+
+> Door to Command Center (First); Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Normal Door to Command Center/Door to Security Station B (First); Excluded from Dock Lock Rando
+  * Extra - dock_name: South
+  > Door to Command Center (Second)
+      After Security Station B DS Appearance
+  > Door to Main Reactor
+      After Security Station B DS Appearance and Shoot Dark Beam
+  > Event - Security Station B DS Appearance
+      Trivial
+  > Event - Main Reactor Reloaded via Security Station B
+      After Dark Samus 1
+
+> Event - Security Station B DS Appearance; Heals? False
+  * Layers: default
+  * Event Security Station B DS Appearance
+  > Door to Command Center (Second)
+      Trivial
+  > Door to Command Center (First)
+      Trivial
+
+> Event - Main Reactor Reloaded via Security Station B; Heals? False
+  * Layers: default
+  * Event Main Reactor Reloaded after DS1
+  > Door to Command Center (Second)
+      Trivial
+
+----------------
+Doomed Entry
+Extra - asset_id: 2761919085
+Extra - in_dark_aether: True
+> Door to Double Path (Bottom); Heals? True
+  * Layers: default
+  * Light Door to Double Path/Door to Doomed Entry (Bottom)
+  * Extra - dock_name: WestLowerDoor
+  > Portal from Command Center
+      Any of the following:
+          Dark World Damage ≥ 45
+          Morph Ball and Dark World Damage ≥ 30
+          All of the following:
+              Activate Safe Zone
+              Any of the following:
+                  Dark World Damage ≥ 20
+                  Morph Ball and Dark World Damage ≥ 15
+  > Door to Feeding Pit Access
+      Any of the following:
+          Dark World Damage ≥ 60
+          Morph Ball and Dark World Damage ≥ 50
+          Dark World Damage ≥ 10 and Activate Safe Zone
+  > Safe Zone (Movable Platform)
+      All of the following:
+          Missile and Space Jump Boots and Shoot Dark Beam
+          Dark World Damage ≥ 30 or Activate Safe Zone
+
+> Portal from Command Center; Heals? True; Spawn Point; Default Node
+  * Layers: default
+  * No Return Portal to Command Center/Portal to Doomed Entry
+  * Extra - dock_name: VirtualNorth
+  > Door to Double Path (Bottom)
+      All of the following:
+          Any of the following:
+              Dark World Damage ≥ 20
+              Morph Ball and Dark World Damage ≥ 10
+          Dark World Damage ≥ 40 or Activate Safe Zone
+  > Safe Zone (Movable Platform)
+      Space Jump Boots and Slope Jump (Beginner) and Dark World Damage ≥ 10
+
+> Door to Double Path (Top); Heals? True
+  * Layers: default
+  * Dark Door to Double Path/Door to Doomed Entry (Top)
+  * Extra - dock_name: WestUpperDoor
+  > Next to Key
+      Any of the following:
+          Dark World Damage ≥ 20
+          Dark World Damage ≥ 5 and Activate Safe Zone
+
+> Door to Oasis Access; Heals? True
+  * Layers: default
+  * Dark Door to Oasis Access/Door to Doomed Entry
+  * Extra - dock_name: NorthObservation
+  > Portal from Command Center
+      Any of the following:
+          Dark World Damage ≥ 30
+          Morph Ball and Dark World Damage ≥ 20
+          Dark World Damage ≥ 10 and Activate Safe Zone
+  > Safe Zone (Movable Platform)
+      Any of the following:
+          Dark World Damage ≥ 40
+          Dark World Damage ≥ 25 and Activate Safe Zone
+
+> Door to Feeding Pit Access; Heals? True
+  * Layers: default
+  * Light Door to Feeding Pit Access/Door to Doomed Entry
+  * Extra - dock_name: South
+  > Door to Double Path (Bottom)
+      Any of the following:
+          Dark World Damage ≥ 60
+          Morph Ball and Dark World Damage ≥ 50
+          Dark World Damage ≥ 10 and Activate Safe Zone
+  > Safe Zone (Movable Platform)
+      Any of the following:
+          All of the following:
+              Space Jump Boots
+              Any of the following:
+                  All of the following:
+                      Missile and Dark World Damage ≥ 10 and Shoot Dark Beam
+                      Dark World Damage ≥ 15 or Activate Safe Zone
+                  All of the following:
+                      Scan Visor and Combat/Scan Dash (Intermediate) and Standable Terrain (Beginner) and Dark World Damage ≥ 20
+                      Dark World Damage ≥ 10 or Activate Safe Zone
+          All of the following:
+              Movement (Beginner) and Dark World Damage ≥ 7 and Use Screw Attack (Space Jump)
+              Dark World Damage ≥ 8 or Activate Safe Zone
+          All of the following:
+              # https://www.youtube.com/watch?v=bEZGy9Fg6a8&list=PLevfta9o_QKWuQNXAnmBXtzW4nmU5VLyN&index=21
+              Morph Ball Bomb and Morph Ball and Bomb Space Jump (Expert) and Dark World Damage ≥ 40
+              Dark World Damage ≥ 20 or Activate Safe Zone
+
+> Pickup (Dark Agon Key 2); Heals? False
+  * Layers: default
+  * Pickup 50; Category? Major
+  > Next to Key
+      Trivial
+
+> Safe Zone (Movable Platform); Heals? True
+  * Layers: default
+  > Door to Oasis Access
+      Any of the following:
+          Dark World Damage ≥ 40
+          Dark World Damage ≥ 25 and Activate Safe Zone
+  > Door to Feeding Pit Access
+      Any of the following:
+          Dark World Damage ≥ 20
+          Morph Ball and Dark World Damage ≥ 15
+          Dark World Damage ≥ 5 and Activate Safe Zone
+  > Next to Key
+      Any of the following:
+          Space Jump Boots and Dark World Damage ≥ 15
+          Movement (Intermediate) and Dark World Damage ≥ 20
+
+> Next to Key; Heals? False
+  * Layers: default
+  > Door to Double Path (Top)
+      Any of the following:
+          Dark World Damage ≥ 30
+          Dark World Damage ≥ 10 and Activate Safe Zone
+  > Pickup (Dark Agon Key 2)
+      Trivial
+  > Safe Zone (Movable Platform)
+      Any of the following:
+          Space Jump Boots and Dark World Damage ≥ 20
+          Movement (Intermediate) and Dark World Damage ≥ 25
+
+----------------
+Sand Processing
+Extra - asset_id: 2763180926
+Extra - in_dark_aether: False
+> Door to Main Reactor; Heals? False
+  * Layers: default
+  * Normal Door to Main Reactor/Door to Sand Processing
+  * Extra - dock_name: West
+  > Bottom of Halfpipe
+      Any of the following:
+          Missile
+          # https://youtu.be/C8Qaq6Qx1Ns
+          Movement (Intermediate) and Use Screw Attack (No Space Jump)
+
+> Door to Save Station C; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Normal Door to Save Station C/Door to Sand Processing
+  * Extra - dock_name: East
+  > Event - Main Reactor Reloaded via Sand Processing
+      After Dark Samus 1
+  > Bottom of Halfpipe
+      Trivial
+
+> Pickup (Missile); Heals? False
+  * Layers: default
+  * Pickup 51; Category? Minor
+  > Bottom of Halfpipe
+      Trivial
+
+> Event - Sand Processing Sand Drained; Heals? False
+  * Layers: default
+  * Event Sand Processing Sand Drained
+  > Tunnel
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Morph Ball Bomb
+              # https://youtu.be/cEghPZPy_AM?t=95
+              Boost Ball and Wall Boost (Expert)
+
+> Event - Main Reactor Reloaded via Sand Processing; Heals? False
+  * Layers: default
+  * Event Main Reactor Reloaded after DS1
+  > Door to Save Station C
+      Trivial
+
+> Bottom of Halfpipe; Heals? False
+  * Layers: default
+  > Door to Main Reactor
+      Missile
+  > Door to Save Station C
+      Any of the following:
+          All of the following:
+              Before Sand Processing Sand Drained
+              Any of the following:
+                  Space Jump Boots
+                  # Double Bomb Jump
+                  Morph Ball Bomb and Morph Ball and Bomb Jump (Beginner)
+                  # https://www.youtube.com/watch?v=0krWKUXX1AE
+                  Slope Jump (Intermediate) and Use Screw Attack (No Space Jump)
+          All of the following:
+              Morph Ball
+              Any of the following:
+                  Boost Ball
+                  # https://www.youtube.com/watch?v=1wn3oAxQg4I&list=PLx6vT1x-80zuA1vUepQUSqYOQeHiRNbt5&index=55
+                  Morph Ball Bomb and Space Jump Boots and Bomb Space Jump (Advanced)
+                  Slope Jump (Intermediate) and Use Screw Attack (Space Jump)
+  > Pickup (Missile)
+      After Sand Processing Sand Drained
+  > Tunnel
+      All of the following:
+          Morph Ball
+          Any of the following:
+              All of the following:
+                  Boost Ball
+                  # https://youtu.be/cEghPZPy_AM?t=35
+                  Morph Ball Bomb or Wall Boost (Expert)
+              # https://www.youtube.com/watch?v=CzhDj8MmERg&list=PLx6vT1x-80zuA1vUepQUSqYOQeHiRNbt5&index=54
+              Morph Ball Bomb and Space Jump Boots and Bomb Space Jump (Advanced)
+              # https://www.youtube.com/watch?v=1Meg1C7X-1Q&list=PLZkUEWCHwYRyXIU-to88js2M6mEOBoHUy&index=27
+              Screw Attack into Tunnels/Openings (Expert) and Use Screw Attack (Space Jump)
+
+> Tunnel; Heals? False
+  * Layers: default
+  > Event - Sand Processing Sand Drained
+      All of the following:
+          Scan Visor
+          Any of the following:
+              Morph Ball Bomb and Morph Ball
+              All of the following:
+                  # https://www.youtube.com/watch?v=9i3Tc8UlFts&list=PL_plBDqKQVr8JAkV0Q2KYBl4JYxZPkfYo&index=5 Space Jump
+                  Bomb Slot without Bombs (Advanced) and Activate Bomb Slot without Bombs (No Space Jump)
+                  # https://youtu.be/cEghPZPy_AM?t=81 No Space Jump
+                  Space Jump Boots or Slope Jump (Advanced)
+  > Bottom of Halfpipe
+      Trivial
+
+----------------
+Storage D
+Extra - asset_id: 1090496759
+Extra - in_dark_aether: False
+> Door to Main Reactor; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Dark Door to Main Reactor/Door to Storage D
+  * Extra - dock_name: East
+  > Pickup (Dark Beam)
+      Enabled Door Randomizer or Enabled Allow Vanilla Dark Beam or Shoot Dark Beam
+
+> Pickup (Dark Beam); Heals? False
+  * Layers: default
+  * Pickup 52; Category? Major
+  > Door to Main Reactor
+      Trivial
+
+----------------
+Dark Oasis
+Extra - asset_id: 2583401855
+Extra - in_dark_aether: True
+> Portal to Main Reactor; Heals? True
+  * Layers: default
+  * Light Portal to Main Reactor/Portal from Dark Oasis
+  * Extra - dock_name: VirtualEast
+  > Door to Hall of Stairs
+      Trivial
+  > Door to Oasis Access
+      Any of the following:
+          Dark World Damage ≥ 18
+          Morph Ball and Dark World Damage ≥ 10
+
+> Door to Hall of Stairs; Heals? False
+  * Layers: default
+  * Normal Door to Hall of Stairs/Door to Dark Oasis
+  * Extra - dock_name: East_TopSouth
+  > Portal to Main Reactor
+      Dark World Damage ≥ 3
+
+> Door to Oasis Access; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Normal Door to Oasis Access/Door to Dark Oasis
+  * Extra - dock_name: South1
+  > Portal to Main Reactor
+      Any of the following:
+          Dark World Damage ≥ 20
+          Morph Ball and Dark World Damage ≥ 10
+  > Door to Ing Cache 3
+      Any of the following:
+          Dark World Damage ≥ 40
+          Morph Ball and Dark World Damage ≥ 35
+          Dark World Damage ≥ 10 and Activate Safe Zone
+  > Pickup (Sky Temple Key 2)
+      All of the following:
+          Dark Visor and Light Suit and Morph Ball and Power Bomb and After Power Bomb Guardian
+          Any of the following:
+              Space Jump Boots or Combat/Scan Dash (Intermediate)
+              # Double Bomb Jump
+              Morph Ball Bomb and Bomb Jump (Beginner)
+
+> Door to Ing Cache 3; Heals? False
+  * Layers: default
+  * Light Door to Ing Cache 3/Door to Dark Oasis
+  * Extra - dock_name: West_TopSouth
+  > Door to Oasis Access
+      Any of the following:
+          Dark World Damage ≥ 25
+          Morph Ball and Dark World Damage ≥ 20
+          Dark World Damage ≥ 10 and Activate Safe Zone
+
+> Pickup (Sky Temple Key 2); Heals? False
+  * Layers: default
+  * Pickup 53; Category? Major
+  > Door to Oasis Access
+      All of the following:
+          Light Suit and Morph Ball and Power Bomb
+          Any of the following:
+              Space Jump Boots
+              All of the following:
+                  Morph Ball Bomb
+                  Any of the following:
+                      # https://www.youtube.com/watch?v=TJNbIv-HuY4&list=PLevfta9o_QKWuQNXAnmBXtzW4nmU5VLyN&index=18
+                      Gravity Boost and Bomb Jump (Advanced) and Movement (Advanced) and Use Screw Attack (No Space Jump)
+                      # https://www.youtube.com/watch?v=PppPrXchqRE
+                      Bomb Space Jump (Expert) and Combat/Scan Dash (Expert)
+
+----------------
+Biostorage Station
+Extra - asset_id: 2156489961
+Extra - in_dark_aether: False
+> Door to Security Station A; Heals? False
+  * Layers: default
+  * Normal Door to Security Station A/Door to Biostorage Station
+  * Extra - dock_name: East
+  > Top Level
+      Trivial
+
+> Door to Biostorage Access; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Missile Blast Shield to Biostorage Access/Door to Biostorage Station
+  * Extra - dock_name: North
+  > Top Level
+      Any of the following:
+          Scan Visor
+          # https://www.youtube.com/watch?v=Pnm3-uD9BeM
+          Space Jump Boots and Standable Terrain (Beginner)
+          # https://www.youtube.com/watch?v=vScEQWXSHKw
+          Morph Ball Bomb and Morph Ball and Bomb Space Jump (Advanced)
+
+> Door to Storage B; Heals? False
+  * Layers: default
+  * Dark Door to Storage B/Door to Biostorage Station
+  * Extra - dock_name: West
+  > Top Level
+      Trivial
+
+> Top Level; Heals? False
+  * Layers: default
+  > Door to Security Station A
+      Trivial
+  > Door to Biostorage Access
+      Trivial
+  > Door to Storage B
+      Trivial
+
+----------------
+Feeding Pit Access
+Extra - asset_id: 3761619109
+Extra - in_dark_aether: True
+> Door to Feeding Pit; Heals? False
+  * Layers: default
+  * Light Door to Feeding Pit/Door to Feeding Pit Access
+  * Extra - dock_name: South
+  > Door to Doomed Entry
+      All of the following:
+          Dark World Damage ≥ 20
+          Any of the following:
+              Light Ammo ≥ 2 and Shoot Light Beam
+              All of the following:
+                  Knowledge (Beginner)
+                  Any of the following:
+                      Use Screw Attack (Space Jump)
+                      Disabled Room Randomizer and Use Screw Attack (No Space Jump)
+
+> Door to Doomed Entry; Heals? False
+  * Layers: default
+  * Light Door to Doomed Entry/Door to Feeding Pit Access
+  * Extra - dock_name: North
+  > Door to Feeding Pit
+      Any of the following:
+          All of the following:
+              Light Ammo ≥ 2 and Shoot Light Beam
+              Any of the following:
+                  Dark World Damage ≥ 20
+                  Morph Ball and Dark World Damage ≥ 10
+          All of the following:
+              Knowledge (Beginner) and Dark World Damage ≥ 25
+              Any of the following:
+                  Use Screw Attack (Space Jump)
+                  Disabled Room Randomizer and Use Screw Attack (No Space Jump)
+
+> Spawn Point; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  > Door to Feeding Pit
+      Any of the following:
+          Dark World Damage ≥ 20
+          Morph Ball and Dark World Damage ≥ 10
+  > Door to Doomed Entry
+      Dark World Damage ≥ 2
+
+----------------
+Oasis Access
+Extra - asset_id: 4073505822
+Extra - in_dark_aether: True
+> Door to Dark Oasis; Heals? False
+  * Layers: default
+  * Normal Door to Dark Oasis/Door to Oasis Access
+  * Extra - dock_name: North
+  > Central Safe Zone
+      Any of the following:
+          Dark World Damage ≥ 6
+          Morph Ball and Dark World Damage ≥ 6
+
+> Door to Doomed Entry; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Dark Door to Doomed Entry/Door to Oasis Access
+  * Extra - dock_name: South_Observation
+  > Central Safe Zone
+      Dark World Damage ≥ 3
+
+> Central Safe Zone; Heals? True
+  * Layers: default
+  > Door to Dark Oasis
+      Any of the following:
+          Dark World Damage ≥ 11
+          Morph Ball and Dark World Damage ≥ 6
+  > Door to Doomed Entry
+      Dark World Damage ≥ 2
+
+----------------
+Save Station C
+Extra - asset_id: 3111736876
+Extra - unlocked_save_station: True
+Extra - in_dark_aether: False
+> Save Station; Heals? True; Spawn Point; Default Node
+  * Layers: default
+  > Door to Sand Processing
+      Trivial
+  > Door to Ventilation Area B
+      Trivial
+
+> Door to Sand Processing; Heals? False
+  * Layers: default
+  * Normal Door to Sand Processing/Door to Save Station C
+  * Extra - dock_name: West
+  > Save Station
+      Trivial
+
+> Door to Ventilation Area B; Heals? False
+  * Layers: default
+  * Missile Blast Shield to Ventilation Area B/Door to Save Station C
+  * Extra - dock_name: South
+  > Save Station
+      Trivial
+
+----------------
+Hall of Stairs
+Extra - asset_id: 1830176640
+Extra - in_dark_aether: True
+> Door to Save Station 3; Heals? False
+  * Layers: default
+  * Missile Blast Shield to Save Station 3/Door to Hall of Stairs
+  * Extra - dock_name: East
+  > Safe Zone (Under Lift Crystal)
+      Any of the following:
+          Dark World Damage ≥ 20
+          Dark World Damage ≥ 10 and Activate Safe Zone
+
+> Door to Dark Oasis; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Normal Door to Dark Oasis/Door to Hall of Stairs
+  * Extra - dock_name: West
+  > Safe Zone (Under Lift Crystal)
+      Any of the following:
+          Dark World Damage ≥ 25
+          Morph Ball and Dark World Damage ≥ 20
+          Dark World Damage ≥ 10 and Activate Safe Zone
+
+> Safe Zone (Under Lift Crystal); Heals? True
+  * Layers: default
+  > Door to Save Station 3
+      All of the following:
+          Dark World Damage ≥ 20 or Activate Safe Zone
+          Any of the following:
+              All of the following:
+                  Space Jump Boots
+                  Any of the following:
+                      Dark World Damage ≥ 15 and Shoot Dark Beam
+                      Standable Terrain (Beginner) and Dark World Damage ≥ 5
+              All of the following:
+                  Morph Ball
+                  Any of the following:
+                      Boost Ball and Movement (Intermediate) and Dark World Damage ≥ 30
+                      Any of the following:
+                          # https://youtu.be/9YUW5K-nkGg?si=Om_MB9scqa2d5S98
+                          Morph Ball Bomb and Bomb Jump (Expert) and Standable Terrain (Intermediate) and Dark World Damage ≥ 10
+                          # https://www.youtube.com/watch?v=fnqMz66rGQY
+                          Morph Ball Bomb and Bomb Space Jump (Advanced) and Standable Terrain (Intermediate) and Dark World Damage ≥ 10
+              Scan Visor and Combat/Scan Dash (Expert) and Standable Terrain (Intermediate) and Dark World Damage ≥ 40 and Shoot Dark Beam and Shoot Light Beam
+  > Door to Dark Oasis
+      Any of the following:
+          Dark World Damage ≥ 25
+          Morph Ball and Dark World Damage ≥ 15
+          Dark World Damage ≥ 10 and Activate Safe Zone
+
+----------------
+Ing Cache 3
+Extra - asset_id: 3122914805
+Extra - in_dark_aether: True
+> Door to Dark Oasis; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Light Door to Dark Oasis/Door to Ing Cache 3
+  * Extra - dock_name: East
+  > Ammo Station
+      Dark World Damage ≥ 4
+
+> Ammo Station; Heals? True
+  * Layers: default
+  > Door to Dark Oasis
+      Trivial
+
+----------------
+Security Station A
+Extra - asset_id: 4146307738
+Extra - in_dark_aether: False
+> Door to Biostorage Station; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Normal Door to Biostorage Station/Door to Security Station A
+  * Extra - dock_name: West
+  > Door to Bioenergy Production
+      Any of the following:
+          Morph Ball Bomb and Morph Ball
+          # https://www.youtube.com/watch?v=D45mIwT082E
+          Bomb Slot without Bombs (Expert) and Activate Bomb Slot without Bombs (Space Jump)
+
+> Door to Bioenergy Production; Heals? False
+  * Layers: default
+  * Normal Door to Bioenergy Production/Door to Security Station A
+  * Extra - dock_name: North
+  > Door to Biostorage Station
+      Any of the following:
+          Morph Ball Bomb and Morph Ball
+          # https://www.youtube.com/watch?v=D45mIwT082E
+          Bomb Slot without Bombs (Expert) and Activate Bomb Slot without Bombs (Space Jump)
+
+----------------
+Storage B
+Extra - asset_id: 2527480810
+Extra - in_dark_aether: False
+> Door to Biostorage Station; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Dark Door to Biostorage Station/Door to Storage B
+  * Extra - dock_name: East
+  > Pickup (Missile)
+      Trivial
+
+> Pickup (Missile); Heals? False
+  * Layers: default
+  * Pickup 54; Category? Minor
+  > Door to Biostorage Station
+      Trivial
+
+----------------
+Feeding Pit
+Extra - asset_id: 123369195
+Extra - in_dark_aether: True
+> Door to Feeding Pit Access; Heals? True
+  * Layers: default
+  * Light Door to Feeding Pit Access/Door to Feeding Pit
+  * Extra - dock_name: North
+  > Door to Ing Cache 1
+      Any of the following:
+          All of the following:
+              # https://www.youtube.com/watch?v=PXGPV28nJss
+              Space Jump Boots and Slope Jump (Intermediate)
+              Any of the following:
+                  Dark World Damage ≥ 35
+                  Dark World Damage ≥ 15 and Activate Safe Zone
+          All of the following:
+              Shoot Dark Beam
+              Any of the following:
+                  All of the following:
+                      Dark Ammo ≥ 2
+                      Any of the following:
+                          All of the following:
+                              Space Jump Boots
+                              Any of the following:
+                                  Dark World Damage ≥ 40
+                                  Dark World Damage ≥ 15 and Activate Safe Zone
+                          All of the following:
+                              Standable Terrain (Advanced) and Dark World Damage ≥ 20 and Shoot Light Beam
+                              Any of the following:
+                                  # https://www.twitch.tv/videos/511537135
+                                  Scan Visor and Combat/Scan Dash (Expert)
+                                  # https://www.youtube.com/watch?v=MkWRz6Gfv8c
+                                  Morph Ball and Roll Jump (Expert)
+                  All of the following:
+                      # https://www.youtube.com/watch?v=-T5Xhs6p9zQ&list=PLevfta9o_QKWuQNXAnmBXtzW4nmU5VLyN&index=25
+                      Morph Ball Bomb and Morph Ball and Bomb Jump (Expert)
+                      Any of the following:
+                          Dark World Damage ≥ 50
+                          Dark World Damage ≥ 15 and Activate Safe Zone
+  > Door to Watering Hole
+      All of the following:
+          Any of the following:
+              Dark World Damage ≥ 20
+              Dark World Damage ≥ 10 and Activate Safe Zone
+          Any of the following:
+              Space Jump Boots
+              # Double Bomb Jump
+              Morph Ball Bomb and Morph Ball and Bomb Jump (Beginner)
+              All of the following:
+                  Standable Terrain (Beginner)
+                  Any of the following:
+                      # https://www.youtube.com/watch?v=RXPo9ukf-EM&t=6s
+                      Screw Attack
+                      # https://www.youtube.com/watch?v=RXPo9ukf-EM
+                      Movement (Expert)
+  > Pickup (Power Bomb)
+      Light Suit
+
+> Door to Ing Cache 1; Heals? True
+  * Layers: default
+  * Dark Door to Ing Cache 1/Door to Feeding Pit
+  * Extra - dock_name: West
+  > Door to Feeding Pit Access
+      Any of the following:
+          Dark World Damage ≥ 30
+          Dark World Damage ≥ 10 and Activate Safe Zone
+
+> Door to Watering Hole; Heals? True; Spawn Point; Default Node
+  * Layers: default
+  * Missile Blast Shield to Watering Hole/Door to Feeding Pit
+  * Extra - dock_name: East
+  > Door to Feeding Pit Access
+      Any of the following:
+          Dark World Damage ≥ 20
+          Dark World Damage ≥ 7 and Activate Safe Zone
+  > Door to Ing Cache 1
+      Dark World Damage ≥ 7 and Use Screw Attack (Space Jump)
+
+> Pickup (Power Bomb); Heals? False
+  * Layers: default
+  * Pickup 55; Category? Minor
+  > Door to Feeding Pit Access
+      All of the following:
+          Light Suit
+          Any of the following:
+              Space Jump Boots
+              All of the following:
+                  Morph Ball Bomb and Morph Ball
+                  Any of the following:
+                      # https://www.youtube.com/watch?v=1xyy9IJB3Hs&t=25s
+                      Gravity Boost and Bomb Jump (Beginner)
+                      # https://www.youtube.com/watch?v=1xyy9IJB3Hs&t=34s
+                      Bomb Space Jump (Hypermode)
+              # https://www.youtube.com/watch?v=1xyy9IJB3Hs
+              Screw Attack at Z-Axis (Intermediate) and Disabled Room Randomizer and Use Screw Attack (No Space Jump)
+
+----------------
+Ventilation Area B
+Extra - asset_id: 1498100491
+Extra - in_dark_aether: False
+> Door to Save Station C; Heals? False
+  * Layers: default
+  * Missile Blast Shield to Save Station C/Door to Ventilation Area B
+  * Extra - dock_name: North
+  > Door to Bioenergy Production
+      Morph Ball Bomb and Morph Ball
+
+> Door to Bioenergy Production; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Normal Door to Bioenergy Production/Door to Ventilation Area B
+  * Extra - dock_name: South
+  > Door to Save Station C
+      Any of the following:
+          Morph Ball Bomb and Morph Ball
+          All of the following:
+              # https://www.youtube.com/watch?v=VzJDml0DK_Q
+              Screw Attack into Tunnels/Openings (Advanced) and Use Screw Attack (Space Jump)
+              Charge Beam or Missile ≥ 2
+
+----------------
+Save Station 3
+Extra - asset_id: 41547759
+Extra - unlocked_save_station: True
+Extra - in_dark_aether: True
+> Save Station; Heals? True; Spawn Point; Default Node
+  * Layers: default
+  > Door to Bitter Well
+      Dark World Damage ≥ 4
+  > Door to Hall of Stairs
+      Dark World Damage ≥ 5
+
+> Door to Bitter Well; Heals? False
+  * Layers: default
+  * Normal Door to Bitter Well/Door to Save Station 3
+  * Extra - dock_name: South
+  > Save Station
+      Dark World Damage ≥ 7
+
+> Door to Hall of Stairs; Heals? False
+  * Layers: default
+  * Missile Blast Shield to Hall of Stairs/Door to Save Station 3
+  * Extra - dock_name: West
+  > Save Station
+      Dark World Damage ≥ 7
+
+----------------
+Bioenergy Production
+Extra - asset_id: 323423656
+Extra - in_dark_aether: False
+> Door to Storage C; Heals? False
+  * Layers: default
+  * Super Missile Blast Shield to Storage C/Door to Bioenergy Production
+  * Extra - dock_name: East
+  > Door to Security Station A
+      Trivial
+  > Door to Ventilation Area B
+      Use Screw Attack (Space Jump)
+  > Pickup (Energy Tank)
+      Use Screw Attack (Space Jump)
+
+> Door to Security Station A; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Normal Door to Security Station A/Door to Bioenergy Production
+  * Extra - dock_name: South
+  > Door to Storage C
+      Any of the following:
+          Standable Terrain (Intermediate) and Use Screw Attack (Space Jump)
+          All of the following:
+              Scan Visor
+              Any of the following:
+                  Use Screw Attack (Space Jump)
+                  All of the following:
+                      Morph Ball
+                      Any of the following:
+                          Boost Ball and Spider Ball
+                          Morph Ball Bomb and Screw Attack and Bomb Space Jump (Hypermode) and Movement (Hypermode)
+                          Space Jump Boots and Roll Jump (Advanced)
+                  Space Jump Boots and Combat/Scan Dash (Advanced)
+  > Door to Ventilation Area B
+      Any of the following:
+          Standable Terrain (Intermediate) and Use Screw Attack (Space Jump)
+          All of the following:
+              Scan Visor
+              Any of the following:
+                  Space Jump Boots
+                  All of the following:
+                      Morph Ball
+                      Any of the following:
+                          All of the following:
+                              Boost Ball and Spider Ball
+                              Any of the following:
+                                  Combat/Scan Dash (Intermediate)
+                                  # https://youtu.be/cEiwn9ZE2W4
+                                  Screw Attack and Movement (Beginner)
+                          Morph Ball Bomb and Bomb Space Jump (Hypermode) and Movement (Hypermode)
+  > Pickup (Energy Tank)
+      Any of the following:
+          Standable Terrain (Intermediate) and Use Screw Attack (Space Jump)
+          All of the following:
+              Scan Visor
+              Any of the following:
+                  Space Jump Boots
+                  All of the following:
+                      Morph Ball
+                      Any of the following:
+                          All of the following:
+                              Boost Ball and Spider Ball
+                              Any of the following:
+                                  Combat/Scan Dash (Expert) or Extended Dash (Expert)
+                                  # https://youtu.be/cEiwn9ZE2W4
+                                  Screw Attack and Movement (Advanced)
+                          Morph Ball Bomb and Bomb Space Jump (Hypermode) and Movement (Hypermode) and Use Screw Attack (No Space Jump)
+
+> Door to Ventilation Area B; Heals? False
+  * Layers: default
+  * Normal Door to Ventilation Area B/Door to Bioenergy Production
+  * Extra - dock_name: North
+  > Door to Security Station A
+      Trivial
+  > Pickup (Energy Tank)
+      Use Screw Attack (Space Jump)
+
+> Pickup (Energy Tank); Heals? False
+  * Layers: default
+  * Pickup 56; Category? Major
+  > Door to Storage C
+      Use Screw Attack (Space Jump)
+  > Door to Security Station A
+      Trivial
+  > Door to Ventilation Area B
+      Use Screw Attack (Space Jump)
+
+----------------
+Watering Hole
+Extra - asset_id: 2603303494
+Extra - in_dark_aether: True
+> Door to Phazon Site; Heals? True; Spawn Point; Default Node
+  * Layers: default
+  * Normal Door to Phazon Site/Door to Watering Hole
+  * Extra - dock_name: North
+  > Door to Feeding Pit
+      Any of the following:
+          Dark World Damage ≥ 50
+          Dark World Damage ≥ 15 and Activate Safe Zone
+          # https://www.youtube.com/watch?v=VGNqDNlpiag
+          Scan Visor and Space Jump Boots and Combat/Scan Dash (Intermediate) and Dark World Damage ≥ 30
+
+> Door to Feeding Pit; Heals? True
+  * Layers: default
+  * Missile Blast Shield to Feeding Pit/Door to Watering Hole
+  * Extra - dock_name: West
+  > Door to Phazon Site
+      Any of the following:
+          Dark World Damage ≥ 50
+          Dark World Damage ≥ 15 and Activate Safe Zone
+          Scan Visor and Space Jump Boots and Combat/Scan Dash (Intermediate) and Dark World Damage ≥ 35
+
+----------------
+Ing Cache 1
+Extra - asset_id: 1385574326
+Extra - in_dark_aether: True
+> Door to Feeding Pit; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Light Door to Feeding Pit/Door to Ing Cache 1
+  * Extra - dock_name: East
+  > Event - Agon Wastes Ing Cache 1 Pickup
+      All of the following:
+          Dark World Damage ≥ 7
+          Enabled Door Randomizer or Enabled Allow Vanilla Light Beam or Shoot Light Beam
+
+> Event - Agon Wastes Ing Cache 1 Pickup; Heals? False
+  * Layers: default
+  * Event Agon Wastes Ing Cache 1 Pickup
+  > Pickup (Light Beam)
+      Trivial
+
+> Pickup (Light Beam); Heals? True
+  * Layers: default
+  * Pickup 57; Category? Major
+  > Door to Feeding Pit
+      Dark World Damage ≥ 4
+
+----------------
+Bitter Well
+Extra - asset_id: 82952664
+Extra - in_dark_aether: True
+> Door to Phazon Site; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Normal Door to Phazon Site/Door to Bitter Well
+  * Extra - dock_name: South
+  > Door to Save Station 3
+      Morph Ball Bomb and Morph Ball and Dark World Damage ≥ 13
+
+> Door to Save Station 3; Heals? False
+  * Layers: default
+  * Normal Door to Save Station 3/Door to Bitter Well
+  * Extra - dock_name: North
+  > Door to Phazon Site
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Morph Ball Bomb and Dark World Damage ≥ 13
+              # https://www.youtube.com/watch?v=_HOE7J2Vt1o&list=PLevfta9o_QKWuQNXAnmBXtzW4nmU5VLyN&index=6
+              Boost Ball and Wall Boost (Hypermode) and Normal Damage ≥ 300
+
+----------------
+Storage C
+Extra - asset_id: 1576704079
+Extra - in_dark_aether: False
+> Door to Bioenergy Production; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Super Missile Blast Shield to Bioenergy Production/Door to Storage C
+  * Extra - dock_name: West
+  > Pickup (Missile)
+      Trivial
+
+> Pickup (Missile); Heals? False
+  * Layers: default
+  * Pickup 58; Category? Minor
+  > Door to Bioenergy Production
+      Trivial
+
+----------------
+Phazon Site
+Extra - asset_id: 537851367
+Extra - in_dark_aether: True
+> Door to Watering Hole; Heals? False
+  * Layers: default
+  * Normal Door to Watering Hole/Door to Phazon Site
+  * Extra - dock_name: South
+  > Safe Zone (Watering Hole Side)
+      After Phazon Site Barrier and Dark World Damage ≥ 4
+
+> Door to Bitter Well; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Normal Door to Bitter Well/Door to Phazon Site
+  * Extra - dock_name: North
+  > Safe Zone (Elevator)
+      Dark World Damage ≥ 5
+
+> Door to Ing Cache 2; Heals? False
+  * Layers: default
+  * Annihilator Door to Ing Cache 2/Door to Phazon Site
+  * Extra - dock_name: East
+  > Safe Zone (Elevator)
+      Any of the following:
+          Dark World Damage ≥ 35
+          Dark World Damage ≥ 15 and Activate Safe Zone
+
+> Event - Phazon Site Barrier; Heals? False
+  * Layers: default
+  * Event Phazon Site Barrier
+  > Safe Zone (Watering Hole Side)
+      Dark World Damage ≥ 2
+
+> Safe Zone (Elevator); Heals? True
+  * Layers: default
+  > Door to Bitter Well
+      Any of the following:
+          All of the following:
+              Dark World Damage ≥ 10
+              Any of the following:
+                  Space Jump Boots
+                  # Double Bomb Jump
+                  Morph Ball Bomb and Morph Ball and Bomb Jump (Beginner)
+                  # https://www.youtube.com/watch?v=HtakkB-kQjg
+                  Movement (Intermediate) and Use Screw Attack (No Space Jump)
+          All of the following:
+              # https://www.youtube.com/watch?v=HtakkB-kQjg&t=10s
+              Scan Visor and Combat/Scan Dash (Advanced) and Standable Terrain (Advanced) and Dark World Damage ≥ 60
+              Dark World Damage ≥ 10 or Activate Safe Zone
+  > Door to Ing Cache 2
+      Dark World Damage ≥ 25 and Use Screw Attack (Space Jump)
+  > Event - Phazon Site Barrier
+      All of the following:
+          Scan Visor
+          Any of the following:
+              All of the following:
+                  Space Jump Boots
+                  Any of the following:
+                      Dark World Damage ≥ 80
+                      Dark World Damage ≥ 15 and Activate Safe Zone
+              All of the following:
+                  # https://www.youtube.com/watch?v=g0dv6Qa_DU4
+                  Screw Attack and Movement (Intermediate)
+                  Any of the following:
+                      Dark World Damage ≥ 99
+                      Dark World Damage ≥ 10 and Activate Safe Zone
+              All of the following:
+                  # https://www.youtube.com/watch?v=PC3LJkZ3r1g
+                  Combat/Scan Dash (Advanced)
+                  Any of the following:
+                      Dark World Damage ≥ 99
+                      Dark World Damage ≥ 25 and Use Screw Attack (Space Jump)
+  > Safe Zone (Watering Hole Side)
+      Any of the following:
+          Dark World Damage ≥ 60
+          Dark World Damage ≥ 25 and Activate Safe Zone
+          All of the following:
+              Morph Ball
+              Any of the following:
+                  Dark World Damage ≥ 30
+                  Dark World Damage ≥ 15 and Activate Safe Zone
+
+> Safe Zone (Watering Hole Side); Heals? True
+  * Layers: default
+  > Door to Watering Hole
+      After Phazon Site Barrier and Dark World Damage ≥ 2
+  > Door to Ing Cache 2
+      All of the following:
+          Dark World Damage ≥ 30 or Activate Safe Zone
+          Any of the following:
+              Dark World Damage ≥ 15 and Use Screw Attack (Space Jump)
+              # https://www.youtube.com/watch?v=niaVE36EbY4&list=PLx6vT1x-80zuA1vUepQUSqYOQeHiRNbt5&index=62
+              Scan Visor and Space Jump Boots and Combat/Scan Dash (Advanced) and Dark World Damage ≥ 30
+  > Safe Zone (Elevator)
+      Any of the following:
+          Morph Ball or Dark World Damage ≥ 30 or Dark World Damage ≥ 60
+          Dark World Damage ≥ 15 and Activate Safe Zone
+
+----------------
+Ing Cache 2
+Extra - asset_id: 2467885174
+Extra - in_dark_aether: True
+> Door to Phazon Site; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Annihilator Door to Phazon Site/Door to Ing Cache 2
+  * Extra - dock_name: West
+  > Pickup (Sonic Boom)
+      Dark World Damage ≥ 4
+
+> Pickup (Sonic Boom); Heals? True
+  * Layers: default
+  * Pickup 59; Category? Major
+  > Door to Phazon Site
+      Dark World Damage ≥ 7
+

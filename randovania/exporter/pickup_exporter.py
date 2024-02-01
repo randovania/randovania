@@ -79,17 +79,36 @@ def _pickup_description(pickup: PickupEntry) -> str:
             return ""
 
     ammo_desc = [
-        item_names.add_quantity_to_resource(item_names.resource_user_friendly_name(resource), quantity, True)
+        (
+            item_names.add_quantity_to_resource(item_names.resource_user_friendly_name(resource), abs(quantity), True),
+            quantity < 0,
+        )
         for resource, quantity in pickup.extra_resources
     ]
     if ammo_desc:
-        return "Provides {}{}{}.".format(
-            ", ".join(ammo_desc[:-1]),
-            " and " if len(ammo_desc) > 1 else "",
-            ammo_desc[-1],
-        )
+        positive_items = [name for name, negative in ammo_desc if not negative]
+        negative_items = [name for name, negative in ammo_desc if negative]
+        text = ""
+        # First add all the positive items, then we add all the negative items. For the negative items, if we added
+        # positive items before, we include a space character so that the sentence looks nice.
+        if positive_items:
+            text += _text_for_ammo_description(False, positive_items)
+        if negative_items:
+            if text:
+                text += " "
+            text += _text_for_ammo_description(True, negative_items)
+        return text
     else:
         return ""
+
+
+def _text_for_ammo_description(negative: bool, ammo_desc: list[str]) -> str:
+    return "{} {}{}{}.".format(
+        "Provides" if not negative else "Removes",
+        ", ".join(ammo_desc[:-1]),
+        " and " if len(ammo_desc) > 1 else "",
+        ammo_desc[-1],
+    )
 
 
 def _get_single_hud_text(
@@ -165,12 +184,23 @@ class PickupExporter:
         original_index: PickupIndex,
         pickup_target: PickupTarget,
         visual_pickup: PickupEntry,
+        model_pickup: PickupEntry,
         model_style: PickupModelStyle,
         name: str,
         description: str,
-        model: PickupModel,
     ) -> ExportedPickupDetails:
         raise NotImplementedError
+
+    def get_model(self, model_pickup: PickupEntry) -> PickupModel:
+        if self.game != model_pickup.model.game:
+            return PickupModel(
+                model_pickup.model.game,
+                model_pickup.offworld_models.get(
+                    self.game, default_database.pickup_database_for_game(self.game).default_offworld_model
+                ),
+            )
+        else:
+            return model_pickup.model
 
     def export(
         self,
@@ -189,7 +219,7 @@ class PickupExporter:
             description = ""
 
         return self.create_details(
-            original_index, pickup_target, visual_pickup, model_style, name, description, model_pickup.model
+            original_index, pickup_target, visual_pickup, model_pickup, model_style, name, description
         )
 
 
@@ -203,10 +233,10 @@ class PickupExporterSolo(PickupExporter):
         original_index: PickupIndex,
         pickup_target: PickupTarget,
         visual_pickup: PickupEntry,
+        model_pickup: PickupEntry,
         model_style: PickupModelStyle,
         name: str,
         description: str,
-        model: PickupModel,
     ) -> ExportedPickupDetails:
         pickup = pickup_target.pickup
         return ExportedPickupDetails(
@@ -216,8 +246,8 @@ class PickupExporterSolo(PickupExporter):
             collection_text=_calculate_collection_text(pickup, visual_pickup, model_style, self.memo_data),
             conditional_resources=_conditional_resources_for_pickup(pickup),
             conversion=list(pickup.convert_resources),
-            model=model,
-            original_model=model,
+            model=self.get_model(model_pickup),
+            original_model=model_pickup.model,
             other_player=False,
             original_pickup=pickup,
         )
@@ -234,28 +264,23 @@ class PickupExporterMulti(PickupExporter):
         original_index: PickupIndex,
         pickup_target: PickupTarget,
         visual_pickup: PickupEntry,
+        model_pickup: PickupEntry,
         model_style: PickupModelStyle,
         name: str,
         description: str,
-        model: PickupModel,
     ) -> ExportedPickupDetails:
+        """
+        Exports a pickup, for a multiworld game.
+        If for yourself, use the solo creator but adjust the name to mention it's yours.
+        For offworld, create a custom details.
+        """
         if pickup_target.player == self.players_config.player_index:
             details = self.solo_creator.create_details(
-                original_index, pickup_target, visual_pickup, model_style, name, description, model
+                original_index, pickup_target, visual_pickup, model_pickup, model_style, name, description
             )
             return dataclasses.replace(details, name=f"Your {details.name}")
         else:
             other_name = self.players_config.player_names[pickup_target.player]
-
-            model_pickup = pickup_target.pickup if model_style == PickupModelStyle.ALL_VISIBLE else visual_pickup
-            offworld_model = PickupModel(
-                model.game,
-                model_pickup.offworld_models.get(
-                    self.game, default_database.pickup_database_for_game(self.game).default_offworld_model
-                ),
-            )
-
-            is_different_game = self.game != model.game
             return ExportedPickupDetails(
                 index=original_index,
                 name=f"{other_name}'s {name}",
@@ -269,8 +294,8 @@ class PickupExporterMulti(PickupExporter):
                     )
                 ],
                 conversion=[],
-                model=offworld_model if is_different_game else model,
-                original_model=model,
+                model=self.get_model(model_pickup),
+                original_model=model_pickup.model,
                 other_player=True,
                 original_pickup=pickup_target.pickup,
             )

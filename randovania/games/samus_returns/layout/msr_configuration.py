@@ -11,6 +11,9 @@ from randovania.layout.base.base_configuration import BaseConfiguration
 @dataclasses.dataclass(frozen=True)
 class MSRArtifactConfig(BitPackDataclass, JsonDataclass):
     prefer_metroids: bool
+    prefer_stronger_metroids: bool
+    prefer_bosses: bool
+    prefer_anywhere: bool
     required_artifacts: int = dataclasses.field(metadata={"min": 0, "max": 39, "precision": 1})
 
 
@@ -18,14 +21,19 @@ class MSRArtifactConfig(BitPackDataclass, JsonDataclass):
 class MSRConfiguration(BaseConfiguration):
     energy_per_tank: int = dataclasses.field(metadata={"min": 100, "max": 100, "precision": 1})
     starting_energy: int = dataclasses.field(metadata={"min": 99, "max": 99, "precision": 1})
-    aeion_per_tank: int = dataclasses.field(metadata={"min": 1, "max": 1000, "precision": 1})
     starting_aeion: int = dataclasses.field(metadata={"min": 1000, "max": 2200, "precision": 1})
+    life_tank_size: int = dataclasses.field(metadata={"min": 1, "max": 1099, "precision": 1})
+    aeion_tank_size: int = dataclasses.field(metadata={"min": 1, "max": 2200, "precision": 1})
+    missile_tank_size: int = dataclasses.field(metadata={"min": 1, "max": 999, "precision": 1})
+    super_missile_tank_size: int = dataclasses.field(metadata={"min": 1, "max": 99, "precision": 1})
     elevator_grapple_blocks: bool
     area3_interior_shortcut_no_grapple: bool
-    nerf_power_bombs: bool
+    charge_door_buff: bool
+    beam_door_buff: bool
     nerf_super_missiles: bool
     surface_crumbles: bool
     area1_crumbles: bool
+    reverse_area8: bool
     allow_highly_dangerous_logic: bool
     artifacts: MSRArtifactConfig
 

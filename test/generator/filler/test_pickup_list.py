@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import dataclasses
 from random import Random
+from typing import TYPE_CHECKING
 from unittest.mock import MagicMock
 
 import pytest
@@ -18,6 +19,11 @@ from randovania.generator.pickup_pool import pickup_creator
 from randovania.layout.base.base_configuration import StartingLocationList
 from randovania.layout.base.standard_pickup_state import StandardPickupState
 from randovania.resolver.state import State, StateGameData
+
+if TYPE_CHECKING:
+    from randovania.game_description.db.resource_node import ResourceNode
+    from randovania.game_description.pickup.pickup_entry import PickupEntry
+    from randovania.game_description.resources.resource_info import ResourceInfo
 
 
 def test_requirement_lists_without_satisfied_resources(
@@ -36,7 +42,7 @@ def test_requirement_lists_without_satisfied_resources(
             (item("Space Jump Boots"), 1),
         ]
     )
-    uncollected_resources = []
+    uncollected_resources: set[ResourceInfo] = set()
     possible_sets = [
         RequirementSet(
             [
@@ -119,15 +125,16 @@ def test_get_pickups_that_solves_unreachable(echoes_game_description, mocker):
     )
 
     collection = ResourceCollection.with_database(echoes_game_description.resource_database)
-    pickups_left = []
+    pickups_left: list[PickupEntry] = []
     reach = MagicMock()
     reach.state.resources = collection
     reach.state.energy = 100
     possible_set = MagicMock()
     reach.unreachable_nodes_with_requirements.return_value = {"foo": possible_set}
-    uncollected_resource_nodes = [MagicMock()]
     resource = MagicMock()
-    uncollected_resource_nodes[0].resource_gain_on_collect.return_value = [(resource, 1)]
+    uncollected_resource_node = MagicMock()
+    uncollected_resource_node.resource_gain_on_collect.return_value = [(resource, 1)]
+    uncollected_resource_nodes: list[ResourceNode] = [uncollected_resource_node]
 
     mock_req_lists.return_value = {
         RequirementList(
@@ -190,7 +197,7 @@ def test_pickups_to_solve_list_multiple(echoes_game_description, echoes_pickup_d
         resources,
         (),
         99,
-        None,
+        MagicMock(),
         echoes_game_patches,
         None,
         StateGameData(

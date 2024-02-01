@@ -59,7 +59,11 @@ game_data: game.GameData = game.GameData(
     short_name="CS",
     long_name="Cave Story",
     development_state=game.DevelopmentState.STABLE,
-    presets=[{"path": "starter_preset.rdvpreset"}, {"path": "classic.rdvpreset"}],
+    presets=[
+        {"path": "starter_preset.rdvpreset"},
+        {"path": "multiworld-starter-preset.rdvpreset"},
+        {"path": "classic.rdvpreset"},
+    ],
     faq=[],
     layout=game.GameLayout(
         configuration=CSConfiguration,
@@ -72,4 +76,5 @@ game_data: game.GameData = game.GameData(
     generator=_generator,
     patch_data_factory=_patch_data_factory,
     exporter=_exporter,
+    defaults_available_in_game_sessions=True,
 )

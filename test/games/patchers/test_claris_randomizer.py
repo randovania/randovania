@@ -208,7 +208,10 @@ def test_add_menu_mod_to_files(
 
     # Assert
     mock_run_with_args.assert_called_once_with(
-        [Path("data", "ClarisEchoesMenu", "EchoesMenu.exe"), game_root.joinpath("files")], "", "Done!", status_update
+        [Path("data", "ClarisPrimeRandomizer", "EchoesMenu.exe"), game_root.joinpath("files")],
+        "",
+        "Done!",
+        status_update,
     )
     assert game_root.joinpath("files", "menu_mod.txt").is_file()
 

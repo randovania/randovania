@@ -57,9 +57,9 @@
        <property name="geometry">
         <rect>
          <x>0</x>
-         <y>0</y>
-         <width>640</width>
-         <height>533</height>
+         <y>-65</y>
+         <width>623</width>
+         <height>652</height>
         </rect>
        </property>
        <property name="minimumSize">
@@ -180,6 +180,26 @@
              </property>
             </widget>
            </item>
+           <item>
+            <widget class="QCheckBox" name="reverse_area8_check">
+             <property name="text">
+              <string>Reverse Area 8</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="reverse_area8_label">
+             <property name="mouseTracking">
+              <bool>true</bool>
+             </property>
+             <property name="text">
+              <string>Removes the wall between the Queen and Baby, allowing for earlier access into Area 8 by entering the area backwards.</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
           </layout>
          </widget>
         </item>
@@ -190,16 +210,33 @@
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_2">
            <item>
-            <widget class="QCheckBox" name="nerf_power_bombs_check">
+            <widget class="QCheckBox" name="charge_door_buff_check">
              <property name="text">
-              <string>Nerf Power Bombs</string>
+              <string>Buff Charge Doors</string>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QLabel" name="nerf_power_bombs_label">
+            <widget class="QLabel" name="charge_door_buff_label">
              <property name="text">
-              <string>Removes the Power Bomb weakness from beam doors. This gives each respective beam more logical value.</string>
+              <string>Makes Charge Doors invulnerable to Power Bombs. Beam Burst is unaffected.</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="beam_door_buff_check">
+             <property name="text">
+              <string>Buff Beam Doors</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="beam_door_buff_label">
+             <property name="text">
+              <string>Makes Beam Doors invulnerable to Power Bombs.</string>
              </property>
              <property name="wordWrap">
               <bool>true</bool>
@@ -209,14 +246,14 @@
            <item>
             <widget class="QCheckBox" name="nerf_super_missiles_check">
              <property name="text">
-              <string>Nerf Super Missiles</string>
+              <string>Buff Missile Doors</string>
              </property>
             </widget>
            </item>
            <item>
             <widget class="QLabel" name="nerf_super_missiles_label">
              <property name="text">
-              <string>Removes the Super Missile weakness from Missile doors.</string>
+              <string>Makes Missile Doors invulnerable to Super Missiles. Missile blocks are unaffected.</string>
              </property>
              <property name="wordWrap">
               <bool>true</bool>

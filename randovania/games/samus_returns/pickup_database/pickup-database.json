@@ -63,6 +63,14 @@
                 "an ",
                 "Energy Tank"
             ],
+            "hinted_as_major": false
+        },
+        "reserve_tank": {
+            "long_name": "Reserve Tanks",
+            "hint_details": [
+                "a ",
+                "Reserve Tank"
+            ],
             "hinted_as_major": true
         },
         "missile_related": {
@@ -193,10 +201,10 @@
             "preferred_location_category": "major",
             "original_location": 60
         },
-        "Missile": {
+        "Missile Launcher": {
             "pickup_category": "missile",
             "broad_category": "missile_related",
-            "model_name": "itemsphere",
+            "model_name": "powerup_missilelauncher",
             "offworld_models": {},
             "progression": [
                 "MissileLauncher"
@@ -207,10 +215,9 @@
             "ammo": [
                 "MissileAmmo"
             ],
-            "unlocks_ammo": true,
-            "must_be_starting": true
+            "unlocks_ammo": true
         },
-        "Super Missile": {
+        "Super Missile Launcher": {
             "pickup_category": "missile",
             "broad_category": "missile_related",
             "model_name": "powerup_supermissile",
@@ -387,7 +394,7 @@
             "preferred_location_category": "major",
             "original_location": 37
         },
-        "Power Bomb": {
+        "Power Bomb Launcher": {
             "pickup_category": "morph_ball",
             "broad_category": "morph_ball_related",
             "model_name": "powerup_powerbomb",
@@ -459,7 +466,7 @@
         "Baby Metroid": {
             "pickup_category": "misc",
             "broad_category": "misc",
-            "model_name": "itemsphere",
+            "model_name": "babyhatchling",
             "offworld_models": {},
             "progression": [
                 "Baby"
@@ -480,6 +487,42 @@
             "default_shuffled_count": 10,
             "default_starting_count": 0,
             "preferred_location_category": "major"
+        },
+        "Energy Reserve Tank": {
+            "pickup_category": "reserve_tank",
+            "broad_category": "life_support",
+            "model_name": "item_energytank",
+            "offworld_models": {},
+            "progression": [
+                "ERTank"
+            ],
+            "default_shuffled_count": 1,
+            "default_starting_count": 0,
+            "preferred_location_category": "minor"
+        },
+        "Aeion Reserve Tank": {
+            "pickup_category": "reserve_tank",
+            "broad_category": "aeion",
+            "model_name": "item_senergytank",
+            "offworld_models": {},
+            "progression": [
+                "ARTank"
+            ],
+            "default_shuffled_count": 1,
+            "default_starting_count": 0,
+            "preferred_location_category": "minor"
+        },
+        "Missile Reserve Tank": {
+            "pickup_category": "reserve_tank",
+            "broad_category": "missile_related",
+            "model_name": "item_missiletank",
+            "offworld_models": {},
+            "progression": [
+                "MRTank"
+            ],
+            "default_shuffled_count": 1,
+            "default_starting_count": 0,
+            "preferred_location_category": "minor"
         }
     },
     "ammo_pickups": {
@@ -490,7 +533,9 @@
             "items": [
                 "MissileAmmo"
             ],
-            "preferred_location_category": "minor"
+            "preferred_location_category": "minor",
+            "unlocked_by": "MissileLauncher",
+            "temporary": "MissileLocked"
         },
         "Super Missile Tank": {
             "broad_category": "missile_related",
@@ -501,7 +546,7 @@
             ],
             "preferred_location_category": "minor",
             "unlocked_by": "Supers",
-            "temporary": "SMAmmo"
+            "temporary": "SMLocked"
         },
         "Power Bomb Tank": {
             "broad_category": "morph_ball_related",
@@ -512,7 +557,7 @@
             ],
             "preferred_location_category": "minor",
             "unlocked_by": "MainPB",
-            "temporary": "PBAmmo"
+            "temporary": "PBLocked"
         },
         "Aeion Tank": {
             "broad_category": "aeion",

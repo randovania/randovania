@@ -1,0 +1,1887 @@
+----------------
+Transport to Chozo Ruins North
+Extra - asset_id: 1005235657
+Extra - size_index: 0.3
+Extra - aabb: [-147.23378, 299.99185, 40.79885, -112.47564, 340.10565, 94.96539]
+> Door to Burning Trail; Heals? False
+  * Layers: default
+  * Normal Door to Burning Trail/Door to Transport to Chozo Ruins North
+  * Extra - dock_index: 0
+  * Extra - nonstandard: False
+  > Teleporter to Chozo Ruins
+      Trivial
+
+> Teleporter to Chozo Ruins; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Teleporter to Transport to Magmoor Caverns North/Teleporter to Magmoor Caverns
+  * Extra - scan_asset_id: 222218204
+  * Extra - teleporter_instance_id: 31
+  > Door to Burning Trail
+      Trivial
+
+> Pickup (Items Every Room); Heals? False
+  * Layers: items_every_room
+  * Pickup 180; Category? Minor
+  * Extra - position_required: True
+
+----------------
+Burning Trail
+Extra - asset_id: 1833127758
+Extra - size_index: 0.3
+Extra - aabb: [-140.35077, 122.487495, -2.3768935, -83.59502, 299.99188, 60.06766]
+> Door to Lake Tunnel; Heals? False
+  * Layers: default
+  * Normal Door to Lake Tunnel/Door to Burning Trail
+  * Extra - dock_index: 0
+  * Extra - nonstandard: False
+  > Door to Save Station Magmoor A
+      Trivial
+
+> Door to Transport to Chozo Ruins North; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Normal Door to Transport to Chozo Ruins North/Door to Burning Trail
+  * Extra - dock_index: 1
+  * Extra - nonstandard: False
+  > Door to Save Station Magmoor A
+      Trivial
+
+> Door to Save Station Magmoor A; Heals? False
+  * Layers: default
+  * Missile Blast Shield to Save Station Magmoor A/Door to Burning Trail
+  * Extra - dock_index: 2
+  * Extra - nonstandard: False
+  > Door to Lake Tunnel
+      Trivial
+  > Door to Transport to Chozo Ruins North
+      Trivial
+
+> Pickup (Items Every Room); Heals? False
+  * Layers: items_every_room
+  * Pickup 181; Category? Minor
+  * Extra - position_required: True
+
+----------------
+Lake Tunnel
+Extra - asset_id: 2037927229
+Extra - size_index: 0.1
+Extra - aabb: [-105.48368, 43.396126, 2.5074134, -67.87636, 123.062164, 21.059673]
+> Door to Lava Lake; Heals? False
+  * Layers: default
+  * Normal Door to Lava Lake/Door to Lake Tunnel
+  * Extra - dock_index: 0
+  * Extra - nonstandard: False
+  > Door to Burning Trail
+      Any of the following:
+          Heat-Resisting Suit
+          Heat Runs (Beginner) and Heated Rooms Damage ≥ 90
+          Combat/Scan Dash (Beginner) and Heat Runs (Intermediate) and Heated Rooms Damage ≥ 75
+
+> Door to Burning Trail; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Normal Door to Burning Trail/Door to Lake Tunnel
+  * Extra - dock_index: 1
+  * Extra - nonstandard: False
+  > Door to Lava Lake
+      Any of the following:
+          Heat-Resisting Suit
+          Heat Runs (Beginner) and Heated Rooms Damage ≥ 90
+          Combat/Scan Dash (Beginner) and Heat Runs (Intermediate) and Heated Rooms Damage ≥ 75
+
+> Pickup (Items Every Room); Heals? False
+  * Layers: items_every_room
+  * Pickup 182; Category? Minor
+  * Extra - position_required: True
+
+----------------
+Save Station Magmoor A
+Extra - asset_id: 162783260
+Extra - size_index: 0.1
+Extra - unlocked_save_station: True
+Extra - aabb: [-123.28598, 211.88713, 5.2094584, -84.58805, 248.54086, 30.572773]
+> Door to Burning Trail; Heals? False
+  * Layers: default
+  * Normal Door to Burning Trail/Door to Save Station Magmoor A
+  * Extra - dock_index: 0
+  * Extra - nonstandard: False
+  > Save Station
+      Trivial
+
+> Save Station; Heals? True; Spawn Point; Default Node
+  * Layers: default
+  > Door to Burning Trail
+      Trivial
+
+> Pickup (Items Every Room); Heals? False
+  * Layers: items_every_room
+  * Pickup 183; Category? Minor
+  * Extra - position_required: True
+
+----------------
+Lava Lake
+Extra - asset_id: 2758909034
+Extra - size_index: 0.6
+Extra - aabb: [-88.72691, -54.28413, -6.816518, 86.88941, 55.28312, 30.909273]
+> Door to Lake Tunnel; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Normal Door to Lake Tunnel/Door to Lava Lake
+  * Extra - dock_index: 0
+  * Extra - nonstandard: False
+  > Pickup (Artifact of Nature)
+      All of the following:
+          Shoot Any Beam
+          Any of the following:
+              Missile ≥ 4
+              Missile ≥ 2 and Disabled Hard Mode
+          Any of the following:
+              Heat-Resisting Suit and Use Grapple Beam
+              All of the following:
+                  Heat Runs (Beginner) or Heat-Resisting Suit
+                  Any of the following:
+                      Space Jump Boots and Heated Rooms Damage ≥ 120
+                      # https://youtu.be/TjoCnZ4e8LU
+                      Standable Terrain (Beginner) and Heated Rooms Damage ≥ 190
+                      # https://youtu.be/DnktNBI_DQI
+                      Combat/Scan Dash (Beginner) and Heated Rooms Damage ≥ 190
+  > Next to Crates
+      Any of the following:
+          Heat-Resisting Suit
+          All of the following:
+              Heat Runs (Intermediate)
+              Any of the following:
+                  Heated Rooms Damage ≥ 140 and Lava Damage ≥ 20
+                  Combat/Scan Dash (Intermediate) and Heated Rooms Damage ≥ 110 and Lava Damage ≥ 10
+                  All of the following:
+                      Space Jump Boots
+                      Any of the following:
+                          Combat/Scan Dash (Beginner) and Heated Rooms Damage ≥ 100
+                          R-Jump (Intermediate) and Heated Rooms Damage ≥ 120
+
+> Door to Pit Tunnel; Heals? False
+  * Layers: default
+  * Normal Door to Pit Tunnel/Door to Lava Lake
+  * Extra - dock_index: 1
+  * Extra - nonstandard: False
+  > Next to Crates
+      All of the following:
+          Morph Ball
+          Any of the following:
+              All of the following:
+                  Heat-Resisting Suit
+                  Any of the following:
+                      Morph Ball Bomb
+                      Power Bomb ≥ 2 and Knowledge (Beginner)
+              All of the following:
+                  Heat Runs (Intermediate)
+                  Any of the following:
+                      All of the following:
+                          Morph Ball Bomb
+                          Any of the following:
+                              Heated Rooms Damage ≥ 285
+                              Combat/Scan Dash (Intermediate) and Heated Rooms Damage ≥ 250
+                              All of the following:
+                                  Space Jump Boots
+                                  Any of the following:
+                                      Heated Rooms Damage ≥ 265
+                                      Combat/Scan Dash (Intermediate) and Heated Rooms Damage ≥ 255
+                      All of the following:
+                          Power Bomb ≥ 2 and Knowledge (Beginner)
+                          Any of the following:
+                              Heated Rooms Damage ≥ 360
+                              Combat/Scan Dash (Intermediate) and Heated Rooms Damage ≥ 325
+
+> Pickup (Artifact of Nature); Heals? False
+  * Layers: default
+  * Pickup 90; Category? Major
+  * Extra - position_required: False
+  > Door to Lake Tunnel
+      Any of the following:
+          Heat-Resisting Suit
+          All of the following:
+              Heat Runs (Beginner)
+              Any of the following:
+                  Heated Rooms Damage ≥ 150
+                  Space Jump Boots and Heated Rooms Damage ≥ 135
+                  All of the following:
+                      Heated Rooms Damage ≥ 120
+                      Any of the following:
+                          Combat/Scan Dash (Intermediate)
+                          Space Jump Boots and Movement (Intermediate)
+  > Next to Crates
+      Any of the following:
+          Heat-Resisting Suit
+          All of the following:
+              Heat Runs (Intermediate)
+              Any of the following:
+                  Heated Rooms Damage ≥ 65
+                  Combat/Scan Dash (Beginner) and Heated Rooms Damage ≥ 45
+
+> Next to Crates; Heals? False
+  * Layers: default
+  > Door to Lake Tunnel
+      Any of the following:
+          Heat-Resisting Suit
+          All of the following:
+              Heat Runs (Beginner)
+              Any of the following:
+                  Heated Rooms Damage ≥ 160 and Lava Damage ≥ 25
+                  Combat/Scan Dash (Beginner) and Heated Rooms Damage ≥ 115 and Lava Damage ≥ 10
+                  All of the following:
+                      Space Jump Boots
+                      Any of the following:
+                          Heated Rooms Damage ≥ 155 and Lava Damage ≥ 10
+                          Combat/Scan Dash (Beginner) and Heated Rooms Damage ≥ 125
+                          R-Jump (Intermediate) and Heated Rooms Damage ≥ 135
+  > Door to Pit Tunnel
+      All of the following:
+          Morph Ball
+          Any of the following:
+              All of the following:
+                  Heat-Resisting Suit
+                  Any of the following:
+                      Morph Ball Bomb
+                      Power Bomb ≥ 2 and Knowledge (Beginner)
+              All of the following:
+                  Heat Runs (Intermediate)
+                  Any of the following:
+                      All of the following:
+                          Morph Ball Bomb
+                          Any of the following:
+                              Heated Rooms Damage ≥ 340
+                              Combat/Scan Dash (Intermediate) and Heated Rooms Damage ≥ 265
+                              All of the following:
+                                  Space Jump Boots
+                                  Any of the following:
+                                      Heated Rooms Damage ≥ 305
+                                      Combat/Scan Dash (Intermediate) and Heated Rooms Damage ≥ 245
+                                      R-Jump (Intermediate) and Heated Rooms Damage ≥ 270
+                      All of the following:
+                          Power Bomb ≥ 2 and Knowledge (Beginner)
+                          Any of the following:
+                              Heated Rooms Damage ≥ 360
+                              Combat/Scan Dash (Intermediate) and Heated Rooms Damage ≥ 340
+                              All of the following:
+                                  Space Jump Boots
+                                  Any of the following:
+                                      Heated Rooms Damage ≥ 365
+                                      Combat/Scan Dash (Intermediate) and Heated Rooms Damage ≥ 320
+                                      R-Jump (Intermediate) and Heated Rooms Damage ≥ 340
+  > Pickup (Artifact of Nature)
+      All of the following:
+          Shoot Any Beam
+          Any of the following:
+              Missile ≥ 4
+              Missile ≥ 2 and Disabled Hard Mode
+          Any of the following:
+              Heat-Resisting Suit and Use Grapple Beam
+              All of the following:
+                  Heat Runs (Beginner) or Heat-Resisting Suit
+                  Any of the following:
+                      Space Jump Boots and Heated Rooms Damage ≥ 80
+                      # https://youtu.be/TjoCnZ4e8LU
+                      Standable Terrain (Beginner) and Heated Rooms Damage ≥ 90
+                      # https://youtu.be/DnktNBI_DQI
+                      Combat/Scan Dash (Beginner) and Heated Rooms Damage ≥ 90
+
+----------------
+Pit Tunnel
+Extra - asset_id: 3660499860
+Extra - size_index: 0.3
+Extra - aabb: [38.849495, -85.48528, 6.4267626, 88.469696, -24.359688, 35.04981]
+> Door to Triclops Pit; Heals? False
+  * Layers: default
+  * Normal Door to Triclops Pit/Door to Pit Tunnel
+  * Extra - dock_index: 0
+  * Extra - nonstandard: False
+  > Door to Lava Lake
+      Any of the following:
+          All of the following:
+              Morph Ball
+              Any of the following:
+                  Heat-Resisting Suit
+                  Heat Runs (Beginner) and Heated Rooms Damage ≥ 95
+          All of the following:
+              Space Jump Boots
+              Any of the following:
+                  Heat-Resisting Suit
+                  Heat Runs (Beginner) and Heated Rooms Damage ≥ 99
+
+> Door to Lava Lake; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Normal Door to Lava Lake/Door to Pit Tunnel
+  * Extra - dock_index: 1
+  * Extra - nonstandard: False
+  > Door to Triclops Pit
+      Any of the following:
+          All of the following:
+              Morph Ball
+              Any of the following:
+                  Heat-Resisting Suit
+                  Heat Runs (Beginner) and Heated Rooms Damage ≥ 90
+          All of the following:
+              Space Jump Boots
+              Any of the following:
+                  Heat-Resisting Suit
+                  Heat Runs (Beginner) and Heated Rooms Damage ≥ 99
+
+> Pickup (Items Every Room); Heals? False
+  * Layers: items_every_room
+  * Pickup 184; Category? Minor
+  * Extra - position_required: True
+
+----------------
+Triclops Pit
+Extra - asset_id: 3134844351
+Extra - size_index: 0.6
+Extra - aabb: [-30.763367, -243.35587, -15.128777, 161.2667, -85.48529, 78.1868]
+> Door to Monitor Tunnel; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Normal Door to Monitor Tunnel/Door to Triclops Pit
+  * Extra - dock_index: 0
+  * Extra - nonstandard: False
+  > Door to Pit Tunnel
+      Any of the following:
+          Heat-Resisting Suit
+          Heat Runs (Intermediate) and Heated Rooms Damage ≥ 160
+          All of the following:
+              Heat Runs (Advanced)
+              Any of the following:
+                  Combat/Scan Dash (Intermediate) and Heated Rooms Damage ≥ 120
+                  Space Jump Boots and R-Jump (Advanced) and Heated Rooms Damage ≥ 110
+  > Pickup (Missile Expansion)
+      All of the following:
+          Shoot Any Beam
+          Any of the following:
+              Charge Beam or Missile ≥ 2
+              Missile and Disabled Hard Mode
+          Any of the following:
+              All of the following:
+                  Space Jump Boots
+                  Any of the following:
+                      All of the following:
+                          # https://youtu.be/puEX6Ofl_5k
+                          X-Ray Visor or Invisible Objects (Intermediate)
+                          Any of the following:
+                              Heat-Resisting Suit
+                              Heat Runs (Intermediate) and Heated Rooms Damage ≥ 280
+                      All of the following:
+                          # https://youtu.be/C7caSCXbLFc
+                          Combat/Scan Dash (Intermediate)
+                          Any of the following:
+                              Heat-Resisting Suit
+                              All of the following:
+                                  Heat Runs (Intermediate)
+                                  Any of the following:
+                                      Heated Rooms Damage ≥ 155
+                                      R-Jump (Intermediate) and Heated Rooms Damage ≥ 125
+                      All of the following:
+                          # https://youtu.be/DWJhZjuiMKY
+                          Standable Terrain (Beginner)
+                          Any of the following:
+                              Heat-Resisting Suit
+                              Heat Runs (Intermediate) and Heated Rooms Damage ≥ 220
+              All of the following:
+                  X-Ray Visor and Invisible Objects (Intermediate) and L-Jump (Advanced)
+                  Heat Runs (Advanced) or Heat-Resisting Suit
+                  Any of the following:
+                      # https://youtu.be/Auy_WagsHf4
+                      Slope Jump (Advanced) and Standable Terrain (Advanced) and Heated Rooms Damage ≥ 255
+                      Combat/Scan Dash (Expert) and Heated Rooms Damage ≥ 225
+  > Tunnel Entrance
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Heat-Resisting Suit
+              All of the following:
+                  Heat Runs (Intermediate)
+                  Any of the following:
+                      Heated Rooms Damage ≥ 145
+                      Space Jump Boots and R-Jump (Intermediate) and Heated Rooms Damage ≥ 110
+
+> Door to Storage Cavern; Heals? False
+  * Layers: default
+  * Normal Door to Storage Cavern/Door to Triclops Pit
+  * Extra - dock_index: 1
+  * Extra - nonstandard: False
+  > Tunnel Entrance
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Heat-Resisting Suit
+              All of the following:
+                  Heat Runs (Intermediate)
+                  Any of the following:
+                      Heated Rooms Damage ≥ 120
+                      Boost Ball and Heated Rooms Damage ≥ 99
+
+> Door to Pit Tunnel; Heals? False
+  * Layers: default
+  * Normal Door to Pit Tunnel/Door to Triclops Pit
+  * Extra - dock_index: 2
+  * Extra - nonstandard: False
+  > Door to Monitor Tunnel
+      Any of the following:
+          Heat-Resisting Suit
+          All of the following:
+              Heat Runs (Intermediate)
+              Any of the following:
+                  Heated Rooms Damage ≥ 160
+                  Morph Ball and Heated Rooms Damage ≥ 150
+                  All of the following:
+                      Space Jump Boots
+                      Any of the following:
+                          Combat/Scan Dash (Intermediate) and Heated Rooms Damage ≥ 140
+                          R-Jump (Intermediate) and Heated Rooms Damage ≥ 130
+  > Pickup (Missile Expansion)
+      All of the following:
+          Shoot Any Beam
+          Any of the following:
+              Charge Beam or Missile ≥ 2
+              Missile and Disabled Hard Mode
+          Any of the following:
+              All of the following:
+                  Space Jump Boots
+                  Any of the following:
+                      All of the following:
+                          # https://youtu.be/puEX6Ofl_5k
+                          X-Ray Visor or Invisible Objects (Intermediate)
+                          Any of the following:
+                              Heat-Resisting Suit
+                              Heat Runs (Intermediate) and Heated Rooms Damage ≥ 130
+                      All of the following:
+                          # https://youtu.be/C7caSCXbLFc
+                          Combat/Scan Dash (Intermediate)
+                          Any of the following:
+                              Heat-Resisting Suit
+                              All of the following:
+                                  Heat Runs (Intermediate)
+                                  Any of the following:
+                                      Heated Rooms Damage ≥ 75
+                                      R-Jump (Intermediate) and Heated Rooms Damage ≥ 60
+                      All of the following:
+                          # https://youtu.be/DWJhZjuiMKY
+                          Standable Terrain (Beginner)
+                          Any of the following:
+                              Heat-Resisting Suit
+                              Heat Runs (Intermediate) and Heated Rooms Damage ≥ 100
+              All of the following:
+                  L-Jump (Advanced)
+                  Heat Runs (Advanced) or Heat-Resisting Suit
+                  X-Ray Visor or Invisible Objects (Intermediate)
+                  Any of the following:
+                      # https://youtu.be/Auy_WagsHf4
+                      Slope Jump (Advanced) and Standable Terrain (Advanced) and Heated Rooms Damage ≥ 200
+                      Combat/Scan Dash (Expert) and Heated Rooms Damage ≥ 180
+  > Tunnel Entrance
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Heat-Resisting Suit
+              Heat Runs (Intermediate) and Heated Rooms Damage ≥ 95
+
+> Pickup (Missile Expansion); Heals? False
+  * Layers: default
+  * Pickup 91; Category? Minor
+  * Extra - position_required: False
+  > Door to Monitor Tunnel
+      Any of the following:
+          Heat-Resisting Suit
+          All of the following:
+              Heat Runs (Intermediate)
+              Any of the following:
+                  Heated Rooms Damage ≥ 170
+                  All of the following:
+                      Space Jump Boots
+                      Any of the following:
+                          Heated Rooms Damage ≥ 145
+                          R-Jump (Intermediate) and Heated Rooms Damage ≥ 110
+  > Door to Pit Tunnel
+      Any of the following:
+          Heat-Resisting Suit
+          All of the following:
+              Heat Runs (Intermediate)
+              Any of the following:
+                  Heated Rooms Damage ≥ 145
+                  All of the following:
+                      Space Jump Boots
+                      Any of the following:
+                          Heated Rooms Damage ≥ 120
+                          R-Jump (Intermediate) and Heated Rooms Damage ≥ 99
+  > Tunnel Entrance
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Heat-Resisting Suit
+              Heat Runs (Intermediate) and Heated Rooms Damage ≥ 95
+
+> Tunnel Entrance; Heals? False
+  * Layers: default
+  > Door to Monitor Tunnel
+      Any of the following:
+          Heat-Resisting Suit
+          All of the following:
+              Heat Runs (Intermediate)
+              Any of the following:
+                  Heated Rooms Damage ≥ 185
+                  Space Jump Boots and Heated Rooms Damage ≥ 145
+  > Door to Storage Cavern
+      Any of the following:
+          Heat-Resisting Suit
+          All of the following:
+              Heat Runs (Intermediate)
+              Any of the following:
+                  Heated Rooms Damage ≥ 130
+                  Boost Ball and Heated Rooms Damage ≥ 99
+  > Door to Pit Tunnel
+      Any of the following:
+          Heat-Resisting Suit
+          All of the following:
+              Heat Runs (Intermediate)
+              Any of the following:
+                  Heated Rooms Damage ≥ 150
+                  Space Jump Boots and Heated Rooms Damage ≥ 130
+
+----------------
+Monitor Tunnel
+Extra - asset_id: 231492556
+Extra - size_index: 0.1
+Extra - aabb: [160.40108, -195.93513, 17.468498, 223.91365, -123.40329, 43.622154]
+> Door to Monitor Station; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Normal Door to Monitor Station/Door to Monitor Tunnel
+  * Extra - dock_index: 0
+  * Extra - nonstandard: False
+  > Door to Triclops Pit
+      Any of the following:
+          Heat-Resisting Suit
+          Heat Runs (Intermediate) and Heated Rooms Damage ≥ 120
+          Heat Runs (Advanced) and Heated Rooms Damage ≥ 99
+
+> Door to Triclops Pit; Heals? False
+  * Layers: default
+  * Normal Door to Triclops Pit/Door to Monitor Tunnel
+  * Extra - dock_index: 1
+  * Extra - nonstandard: False
+  > Door to Monitor Station
+      Any of the following:
+          Heat-Resisting Suit
+          Heat Runs (Intermediate) and Heated Rooms Damage ≥ 120
+          Heat Runs (Advanced) and Heated Rooms Damage ≥ 99
+
+> Pickup (Items Every Room); Heals? False
+  * Layers: items_every_room
+  * Pickup 185; Category? Minor
+  * Extra - position_required: True
+
+----------------
+Storage Cavern
+Extra - asset_id: 2918155326
+Extra - size_index: 0.1
+Extra - aabb: [-61.65484, -284.10428, -18.559872, -1.8976536, -235.26112, 8.758942]
+> Door to Triclops Pit; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Normal Door to Triclops Pit/Door to Storage Cavern
+  * Extra - dock_index: 0
+  * Extra - nonstandard: False
+  > Pickup (Missile)
+      Trivial
+
+> Pickup (Missile); Heals? False
+  * Layers: default
+  * Pickup 92; Category? Minor
+  * Extra - position_required: False
+  > Door to Triclops Pit
+      Trivial
+
+----------------
+Monitor Station
+Extra - asset_id: 207070785
+Extra - size_index: 0.8
+Extra - aabb: [144.24341, -362.28824, 16.64048, 287.9853, -179.72269, 124.370575]
+> Door to Monitor Tunnel; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Normal Door to Monitor Tunnel/Door to Monitor Station
+  * Extra - dock_index: 0
+  * Extra - nonstandard: False
+  > Door to Transport Tunnel A
+      Any of the following:
+          All of the following:
+              # https://youtu.be/8Xzak1I7Fx8
+              Space Jump Boots and Slope Jump (Intermediate) and Standable Terrain (Intermediate)
+              Any of the following:
+                  Heat-Resisting Suit
+                  Heat Runs (Intermediate) and Heated Rooms Damage ≥ 235
+                  Heat Runs (Advanced) and Heated Rooms Damage ≥ 135
+          # https://youtu.be/KuvfXDG6Wt8
+          Scan Visor and Combat/Scan Dash (Advanced) and Heat Runs (Expert) and Movement (Advanced) and Normal Damage ≥ 15 and Heated Rooms Damage ≥ 135
+  > Door to Warrior Shrine
+      All of the following:
+          Space Jump Boots and Slope Jump (Intermediate) and Standable Terrain (Intermediate)
+          Any of the following:
+              Heat-Resisting Suit
+              All of the following:
+                  Heat Runs (Advanced)
+                  Any of the following:
+                      Heated Rooms Damage ≥ 230
+                      # https://youtu.be/Gg96zB6NmI8
+                      R-Jump (Intermediate) and Heated Rooms Damage ≥ 199
+  > Door to Shore Tunnel
+      Any of the following:
+          Heat-Resisting Suit
+          Heat Runs (Intermediate) and Heated Rooms Damage ≥ 99
+  > Middle Level
+      Any of the following:
+          All of the following:
+              Heat Runs (Advanced) or Heat-Resisting Suit
+              All of the following:
+                  # Combat traversal example with Combat Dash and Standable: https://youtu.be/G71ZZKcC7wU
+                  Shoot Any Beam
+                  Any of the following:
+                      # Combat traversal example with Combat Dash and Standable: https://youtu.be/G71ZZKcC7wU
+                      L-Jump (Intermediate) and Heated Rooms Damage ≥ 255 and Lava Damage ≥ 85
+                      Charge Beam and Heated Rooms Damage ≥ 415
+                      All of the following:
+                          Heated Rooms Damage ≥ 320 and Shoot Any Beam
+                          Any of the following:
+                              Missile ≥ 16
+                              Missile ≥ 8 and Disabled Hard Mode
+                      Combat (Intermediate) and Heated Rooms Damage ≥ 440
+          All of the following:
+              Combat/Scan Dash (Expert) and Lava Damage ≥ 60
+              Any of the following:
+                  Heat Runs (Expert) and Heated Rooms Damage ≥ 315
+                  Heat Runs (Hypermode) and Heated Rooms Damage ≥ 205
+
+> Door to Transport Tunnel A; Heals? False
+  * Layers: default
+  * Normal Door to Transport Tunnel A/Door to Monitor Station
+  * Extra - dock_index: 1
+  * Extra - nonstandard: False
+  > Door to Warrior Shrine
+      Any of the following:
+          All of the following:
+              Space Jump Boots
+              Heat Runs (Advanced) or Heat-Resisting Suit
+              Any of the following:
+                  Combat/Scan Dash (Intermediate) and Heated Rooms Damage ≥ 99
+                  R-Jump (Intermediate) and Standable Terrain (Intermediate) and Heated Rooms Damage ≥ 135
+                  R-Jump (Advanced) and Heated Rooms Damage ≥ 199
+                  Boost Ball and Morph Ball and Heated Rooms Damage ≥ 235
+          All of the following:
+              Heat Runs (Expert) or Heat-Resisting Suit
+              Any of the following:
+                  All of the following:
+                      Morph Ball Bomb and Morph Ball and Bomb Jump (Intermediate)
+                      Any of the following:
+                          Boost Ball and L-Jump (Advanced) and Heated Rooms Damage ≥ 299
+                          # https://youtu.be/YD4FKuH406E
+                          Combat/Scan Dash (Intermediate) and Standable Terrain (Intermediate) and Heated Rooms Damage ≥ 199
+                  Combat/Scan Dash (Advanced) and Standable Terrain (Expert) and Heated Rooms Damage ≥ 199
+  > Middle Level
+      Any of the following:
+          Heat-Resisting Suit
+          Heat Runs (Intermediate) and Heated Rooms Damage ≥ 45
+
+> Door to Warrior Shrine; Heals? False
+  * Layers: default
+  * Normal Door to Warrior Shrine/Door to Monitor Station
+  * Extra - dock_index: 2
+  * Extra - nonstandard: False
+  > Door to Monitor Tunnel
+      All of the following:
+          Heat Runs (Advanced) and Heated Rooms Damage ≥ 99
+          Any of the following:
+              Combat/Scan Dash (Intermediate)
+              Space Jump Boots and R-Jump (Intermediate)
+  > Door to Transport Tunnel A
+      All of the following:
+          Heat Runs (Advanced) or Heat-Resisting Suit
+          Any of the following:
+              Combat/Scan Dash (Intermediate) and Heated Rooms Damage ≥ 99
+              All of the following:
+                  Space Jump Boots and Heated Rooms Damage ≥ 90
+                  Combat/Scan Dash (Advanced) or R-Jump (Advanced)
+  > Door to Shore Tunnel
+      Any of the following:
+          Heat-Resisting Suit
+          Heat Runs (Intermediate) and Heated Rooms Damage ≥ 75
+  > Middle Level
+      All of the following:
+          Heat Runs (Advanced) or Heat-Resisting Suit
+          Any of the following:
+              L-Jump (Intermediate) and Heated Rooms Damage ≥ 70
+              Normal Damage ≥ 30 and Heated Rooms Damage ≥ 120
+              All of the following:
+                  Heated Rooms Damage ≥ 60 and Shoot Any Beam
+                  Any of the following:
+                      Missile ≥ 4
+                      Missile ≥ 2 and Disabled Hard Mode
+              All of the following:
+                  Heated Rooms Damage ≥ 75
+                  Any of the following:
+                      Charge Beam or Missile ≥ 2 or Shoot Any Beam
+                      Missile and Disabled Hard Mode
+
+> Door to Shore Tunnel; Heals? False
+  * Layers: default
+  * Normal Door to Shore Tunnel/Door to Monitor Station
+  * Extra - dock_index: 3
+  * Extra - nonstandard: False
+  > Door to Monitor Tunnel
+      Any of the following:
+          Heat-Resisting Suit
+          Heat Runs (Intermediate) and Heated Rooms Damage ≥ 99
+  > Middle Level
+      Any of the following:
+          All of the following:
+              Heat Runs (Advanced) or Heat-Resisting Suit
+              Any of the following:
+                  # Standable for fast ascent with SJ: https://youtu.be/SxJp9io5Gds
+                  Combat (Advanced) and Heated Rooms Damage ≥ 430
+                  L-Jump (Advanced) and Heated Rooms Damage ≥ 255 and Lava Damage ≥ 65
+                  Charge Beam and Heated Rooms Damage ≥ 354 and Shoot Any Beam
+                  All of the following:
+                      Heated Rooms Damage ≥ 300 and Shoot Any Beam
+                      Any of the following:
+                          Missile ≥ 16
+                          Missile ≥ 8 and Disabled Hard Mode
+          All of the following:
+              Space Jump Boots and Combat/Scan Dash (Advanced) and Standable Terrain (Advanced)
+              Any of the following:
+                  Heat Runs (Advanced) and Heated Rooms Damage ≥ 205
+                  Heat Runs (Expert) and Heated Rooms Damage ≥ 125
+          All of the following:
+              Combat/Scan Dash (Expert) and Lava Damage ≥ 35
+              Any of the following:
+                  Heat Runs (Expert) and Heated Rooms Damage ≥ 235
+                  Heat Runs (Hypermode) and Heated Rooms Damage ≥ 119
+
+> Middle Level; Heals? False
+  * Layers: default
+  > Door to Monitor Tunnel
+      Any of the following:
+          Heat-Resisting Suit
+          All of the following:
+              Heat Runs (Advanced)
+              Any of the following:
+                  L-Jump (Intermediate) and Heated Rooms Damage ≥ 55 and Lava Damage ≥ 40
+                  Scan Visor and Combat/Scan Dash (Intermediate) and Heated Rooms Damage ≥ 45
+                  Space Jump Boots and R-Jump (Intermediate) and Heated Rooms Damage ≥ 54
+  > Door to Transport Tunnel A
+      Any of the following:
+          Heat-Resisting Suit
+          Heat Runs (Intermediate) and Heated Rooms Damage ≥ 45
+  > Door to Warrior Shrine
+      Any of the following:
+          All of the following:
+              Space Jump Boots
+              Heat Runs (Advanced) or Heat-Resisting Suit
+              Any of the following:
+                  # Example with Standable and Dash: https://youtu.be/Hdr0jzVoMnc
+                  Combat/Scan Dash (Beginner) and Heated Rooms Damage ≥ 99
+                  R-Jump (Intermediate) and Standable Terrain (Intermediate) and Heated Rooms Damage ≥ 135
+                  R-Jump (Advanced) and Heated Rooms Damage ≥ 199
+                  Boost Ball and Morph Ball and Heated Rooms Damage ≥ 235
+          All of the following:
+              Heat Runs (Expert) or Heat-Resisting Suit
+              Any of the following:
+                  All of the following:
+                      Morph Ball Bomb and Morph Ball and Bomb Jump (Intermediate)
+                      Any of the following:
+                          Boost Ball and L-Jump (Advanced) and Heated Rooms Damage ≥ 319
+                          # https://youtu.be/YD4FKuH406E
+                          Combat/Scan Dash (Intermediate) and Standable Terrain (Intermediate) and Heated Rooms Damage ≥ 219
+                  # https://www.youtube.com/watch?v=0hJhOR1YmAs
+                  Combat/Scan Dash (Intermediate) and Standable Terrain (Intermediate) and Heated Rooms Damage ≥ 199
+  > Door to Shore Tunnel
+      Any of the following:
+          Heat-Resisting Suit
+          All of the following:
+              L-Jump (Intermediate)
+              Any of the following:
+                  Heat Runs (Intermediate) and Heated Rooms Damage ≥ 154
+                  Heat Runs (Advanced) and Heated Rooms Damage ≥ 54
+
+> Pickup (Items Every Room); Heals? False
+  * Layers: items_every_room
+  * Pickup 186; Category? Minor
+  * Extra - position_required: True
+
+----------------
+Transport Tunnel A
+Extra - asset_id: 1207091335
+Extra - size_index: 0.1
+Extra - aabb: [84.93076, -299.18347, 26.95768, 158.32776, -269.4869, 61.957718]
+> Door to Transport to Phendrana Drifts North; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Normal Door to Transport to Phendrana Drifts North/Door to Transport Tunnel A
+  * Extra - dock_index: 0
+  * Extra - nonstandard: False
+  > Door to Monitor Station
+      All of the following:
+          Morph Ball
+          Any of the following:
+              All of the following:
+                  Morph Ball Bomb
+                  Any of the following:
+                      Heat-Resisting Suit
+                      Heat Runs (Intermediate) and Heated Rooms Damage ≥ 120
+              All of the following:
+                  # https://youtu.be/uowYhKwb4B0
+                  Boost Ball and Wall Boost (Expert)
+                  Any of the following:
+                      Heat-Resisting Suit
+                      Heat Runs (Expert) and Heated Rooms Damage ≥ 250
+                      Heat Runs (Hypermode) and Heated Rooms Damage ≥ 150
+  > Pickup (Energy Tank)
+      All of the following:
+          Morph Ball Bomb and Morph Ball
+          Any of the following:
+              Heat-Resisting Suit
+              Heat Runs (Beginner) and Heated Rooms Damage ≥ 185
+
+> Door to Monitor Station; Heals? False
+  * Layers: default
+  * Normal Door to Monitor Station/Door to Transport Tunnel A
+  * Extra - dock_index: 1
+  * Extra - nonstandard: False
+  > Door to Transport to Phendrana Drifts North
+      All of the following:
+          Morph Ball
+          Any of the following:
+              All of the following:
+                  Morph Ball Bomb
+                  Any of the following:
+                      Heat-Resisting Suit
+                      Heat Runs (Intermediate) and Heated Rooms Damage ≥ 99
+              All of the following:
+                  # https://youtu.be/uowYhKwb4B0?t=45
+                  Boost Ball and Wall Boost (Expert)
+                  Any of the following:
+                      Heat-Resisting Suit
+                      Heat Runs (Expert) and Heated Rooms Damage ≥ 240
+                      Heat Runs (Hypermode) and Heated Rooms Damage ≥ 140
+  > Pickup (Energy Tank)
+      All of the following:
+          Morph Ball Bomb and Morph Ball
+          Any of the following:
+              Heat-Resisting Suit
+              Heat Runs (Beginner) and Heated Rooms Damage ≥ 135
+
+> Pickup (Energy Tank); Heals? False
+  * Layers: default
+  * Pickup 93; Category? Minor
+  * Extra - position_required: False
+  > Door to Transport to Phendrana Drifts North
+      All of the following:
+          Morph Ball Bomb and Morph Ball
+          Any of the following:
+              Heat-Resisting Suit
+              Heat Runs (Beginner) and Heated Rooms Damage ≥ 80
+  > Door to Monitor Station
+      All of the following:
+          Morph Ball Bomb and Morph Ball
+          Any of the following:
+              Heat-Resisting Suit
+              Heat Runs (Intermediate) and Heated Rooms Damage ≥ 90
+
+----------------
+Warrior Shrine
+Extra - asset_id: 2309409677
+Extra - size_index: 0.3
+Extra - aabb: [268.55615, -320.61682, 51.208496, 321.55612, -274.98724, 99.7836]
+> Door to Monitor Station; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Normal Door to Monitor Station/Door to Warrior Shrine
+  * Extra - dock_index: 0
+  * Extra - nonstandard: False
+  > Above Exit Tunnel
+      Any of the following:
+          Heat-Resisting Suit
+          Heat Runs (Beginner) and Heated Rooms Damage ≥ 40
+
+> Morph Ball Door to Fiery Shores; Heals? False
+  * Layers: default
+  * Morph Ball Door to Fiery Shores/Morph Ball Door to Warrior Shrine
+  * Extra - dock_index: 1
+  * Extra - nonstandard: False
+
+> Pickup (Artifact of Strength); Heals? False
+  * Layers: default
+  * Pickup 94; Category? Major
+  * Extra - position_required: False
+  > Above Exit Tunnel
+      Any of the following:
+          Heat-Resisting Suit
+          Heat Runs (Intermediate) and Heated Rooms Damage ≥ 20
+
+> Above Exit Tunnel; Heals? False
+  * Layers: default
+  > Door to Monitor Station
+      Any of the following:
+          Heat-Resisting Suit
+          Heat Runs (Intermediate) and Heated Rooms Damage ≥ 80
+  > Morph Ball Door to Fiery Shores
+      All of the following:
+          Morph Ball and Power Bomb
+          Any of the following:
+              Heat-Resisting Suit
+              Heat Runs (Intermediate) and Heated Rooms Damage ≥ 70
+  > Pickup (Artifact of Strength)
+      Any of the following:
+          Heat-Resisting Suit
+          Heat Runs (Intermediate) and Heated Rooms Damage ≥ 30
+
+----------------
+Shore Tunnel
+Extra - asset_id: 2416984287
+Extra - size_index: 0.3
+Extra - aabb: [267.3108, -336.17535, 14.812267, 312.09927, -260.9869, 41.839653]
+> Door to Monitor Station; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Normal Door to Monitor Station/Door to Shore Tunnel
+  * Extra - dock_index: 0
+  * Extra - nonstandard: False
+  > Room Center
+      Any of the following:
+          Heat-Resisting Suit
+          All of the following:
+              Heat Runs (Intermediate)
+              Any of the following:
+                  Heated Rooms Damage ≥ 55
+                  All of the following:
+                      Morph Ball
+                      Any of the following:
+                          Heated Rooms Damage ≥ 45
+                          Boost Ball and Heated Rooms Damage ≥ 35
+
+> Door to Fiery Shores; Heals? False
+  * Layers: default
+  * Normal Door to Fiery Shores/Door to Shore Tunnel
+  * Extra - dock_index: 1
+  * Extra - nonstandard: False
+  > Room Center
+      Any of the following:
+          Heat-Resisting Suit
+          All of the following:
+              Heat Runs (Intermediate)
+              Any of the following:
+                  Heated Rooms Damage ≥ 55
+                  All of the following:
+                      Morph Ball
+                      Any of the following:
+                          Heated Rooms Damage ≥ 45
+                          Boost Ball and Heated Rooms Damage ≥ 35
+
+> Pickup (Ice Spreader); Heals? False
+  * Layers: default
+  * Pickup 95; Category? Major
+  * Extra - position_required: False
+  > Room Center
+      All of the following:
+          Heat Runs (Intermediate) or Heat-Resisting Suit
+          Any of the following:
+              Space Jump Boots and Heated Rooms Damage ≥ 35
+              # https://youtu.be/QX7J-L3B0Hs
+              Morph Ball Bomb and Morph Ball and Bomb Jump (Intermediate) and Heated Rooms Damage ≥ 85
+              # https://youtu.be/Ym7dbJ0o8VQ
+              Movement (Advanced) and Heated Rooms Damage ≥ 65
+
+> Room Center; Heals? False
+  * Layers: default
+  > Door to Monitor Station
+      Any of the following:
+          Heat-Resisting Suit
+          Heat Runs (Intermediate) and Heated Rooms Damage ≥ 60
+  > Door to Fiery Shores
+      Any of the following:
+          Heat-Resisting Suit
+          Heat Runs (Advanced) and Heated Rooms Damage ≥ 65
+  > Pickup (Ice Spreader)
+      All of the following:
+          Morph Ball and Power Bomb
+          Any of the following:
+              Heat-Resisting Suit
+              Heat Runs (Intermediate) and Heated Rooms Damage ≥ 65
+
+----------------
+Transport to Phendrana Drifts North
+Extra - asset_id: 3702104715
+Extra - size_index: 0.3
+Extra - aabb: [42.786617, -292.52704, 31.417091, 84.944626, -255.71051, 82.878075]
+> Door to Transport Tunnel A; Heals? False
+  * Layers: default
+  * Normal Door to Transport Tunnel A/Door to Transport to Phendrana Drifts North
+  * Extra - dock_index: 0
+  * Extra - nonstandard: False
+  > Teleporter to Phendrana Drifts
+      Trivial
+
+> Teleporter to Phendrana Drifts; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Teleporter to Transport to Magmoor Caverns West/Teleporter to Magmoor Caverns
+  * Extra - scan_asset_id: 3500678745
+  * Extra - teleporter_instance_id: 852002
+  > Door to Transport Tunnel A
+      Trivial
+
+> Pickup (Items Every Room); Heals? False
+  * Layers: items_every_room
+  * Pickup 187; Category? Minor
+  * Extra - position_required: True
+
+----------------
+Fiery Shores
+Extra - asset_id: 4126087266
+Extra - size_index: 0.6
+Extra - aabb: [302.71906, -445.42334, 22.246521, 401.0058, -280.04095, 71.81508]
+> Door to Shore Tunnel; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Normal Door to Shore Tunnel/Door to Fiery Shores
+  * Extra - dock_index: 0
+  * Extra - nonstandard: False
+  > Below Upper Item Exit Tunnel
+      Any of the following:
+          Heat-Resisting Suit
+          Heat Runs (Intermediate) and Heated Rooms Damage ≥ 30
+
+> Door to Transport Tunnel B; Heals? False
+  * Layers: default
+  * Normal Door to Transport Tunnel B/Door to Fiery Shores
+  * Extra - dock_index: 1
+  * Extra - nonstandard: False
+  > Door to Shore Tunnel
+      Any of the following:
+          Heat-Resisting Suit and Use Grapple Beam
+          All of the following:
+              Movement (Beginner)
+              Heat Runs (Advanced) or Heat-Resisting Suit
+              Any of the following:
+                  Heated Rooms Damage ≥ 239 and Lava Damage ≥ 50
+                  All of the following:
+                      L-Jump (Beginner)
+                      Any of the following:
+                          Combat/Scan Dash (Intermediate) and Heated Rooms Damage ≥ 235 and Lava Damage ≥ 20
+                          Combat/Scan Dash (Expert) and Heated Rooms Damage ≥ 189
+                          Heated Rooms Damage ≥ 230 and Lava Damage ≥ 40
+                  All of the following:
+                      Space Jump Boots
+                      Any of the following:
+                          Heated Rooms Damage ≥ 279 and Lava Damage ≥ 30
+                          R-Jump (Advanced) and Heated Rooms Damage ≥ 245 and Lava Damage ≥ 15
+  > Pickup (Missile)
+      Any of the following:
+          All of the following:
+              Morph Ball Bomb and Morph Ball
+              Any of the following:
+                  Heat-Resisting Suit
+                  Heat Runs (Intermediate) and Heated Rooms Damage ≥ 245
+          All of the following:
+              # https://youtu.be/sbwLymFj43s
+              Space Jump Boots and Standable Terrain (Beginner)
+              Any of the following:
+                  Heat-Resisting Suit
+                  Heat Runs (Intermediate) and Heated Rooms Damage ≥ 270
+                  Heat Runs (Advanced) and Heated Rooms Damage ≥ 170
+          All of the following:
+              # https://youtu.be/nWCD5bVO1QA
+              Combat/Scan Dash (Advanced) and Standable Terrain (Advanced)
+              Any of the following:
+                  Heat-Resisting Suit
+                  Heat Runs (Advanced) and Heated Rooms Damage ≥ 315
+                  Heat Runs (Expert) and Heated Rooms Damage ≥ 215
+
+> Morph Ball Door to Warrior Shrine; Heals? False
+  * Layers: default
+  * Morph Ball Door to Warrior Shrine/Morph Ball Door to Fiery Shores
+  * Extra - dock_index: 2
+  * Extra - nonstandard: False
+  > Pickup (Power Bomb)
+      Any of the following:
+          Heat-Resisting Suit
+          Heat Runs (Intermediate) and Heated Rooms Damage ≥ 25
+
+> Pickup (Power Bomb); Heals? False
+  * Layers: default
+  * Pickup 97; Category? Minor
+  * Extra - position_required: False
+  > Below Upper Item Exit Tunnel
+      All of the following:
+          Morph Ball
+          Any of the following:
+              All of the following:
+                  Morph Ball Bomb
+                  Any of the following:
+                      Heat-Resisting Suit
+                      Heat Runs (Intermediate) and Heated Rooms Damage ≥ 55
+              All of the following:
+                  # https://youtu.be/ZCiHkUyTMm8
+                  Boost Ball and Wall Boost (Advanced)
+                  Any of the following:
+                      Heat-Resisting Suit
+                      Heat Runs (Advanced) and Heated Rooms Damage ≥ 199
+                      Heat Runs (Expert) and Heated Rooms Damage ≥ 99
+
+> Pickup (Missile); Heals? False
+  * Layers: default
+  * Pickup 96; Category? Minor
+  > Door to Shore Tunnel
+      All of the following:
+          Heat Runs (Advanced) or Heat-Resisting Suit
+          Any of the following:
+              Heated Rooms Damage ≥ 160 and Lava Damage ≥ 10
+              L-Jump (Intermediate) and Standable Terrain (Beginner) and Heated Rooms Damage ≥ 125
+  > Door to Transport Tunnel B
+      Any of the following:
+          Heat-Resisting Suit and Use Grapple Beam
+          All of the following:
+              Heat Runs (Intermediate) or Heat-Resisting Suit
+              Any of the following:
+                  Standable Terrain (Beginner) and Heated Rooms Damage ≥ 170
+                  Combat/Scan Dash (Intermediate) and Heated Rooms Damage ≥ 199 and Lava Damage ≥ 20
+                  All of the following:
+                      Morph Ball Bomb and Morph Ball
+                      Any of the following:
+                          Heated Rooms Damage ≥ 220
+                          Heat Runs (Advanced) and Heated Rooms Damage ≥ 185
+
+> Below Upper Item Exit Tunnel; Heals? False
+  * Layers: default
+  > Door to Shore Tunnel
+      Any of the following:
+          Heat-Resisting Suit
+          Heat Runs (Intermediate) and Heated Rooms Damage ≥ 40
+  > Door to Transport Tunnel B
+      Any of the following:
+          Heat-Resisting Suit and Use Grapple Beam
+          All of the following:
+              Morph Ball Bomb and Morph Ball
+              Any of the following:
+                  Heat-Resisting Suit
+                  Heat Runs (Advanced) and L-Jump (Beginner) and Heated Rooms Damage ≥ 250
+          All of the following:
+              Movement (Beginner)
+              Heat Runs (Advanced) or Heat-Resisting Suit
+              Any of the following:
+                  All of the following:
+                      Space Jump Boots
+                      Any of the following:
+                          Heated Rooms Damage ≥ 210 and Lava Damage ≥ 35
+                          R-Jump (Advanced) and Heated Rooms Damage ≥ 170
+                          All of the following:
+                              L-Jump (Intermediate)
+                              Any of the following:
+                                  Heated Rooms Damage ≥ 175 and Lava Damage ≥ 20
+                                  Combat/Scan Dash (Intermediate) and Heated Rooms Damage ≥ 160
+                  All of the following:
+                      L-Jump (Intermediate)
+                      Any of the following:
+                          Heated Rooms Damage ≥ 185 and Lava Damage ≥ 35
+                          Combat/Scan Dash (Intermediate) and Heated Rooms Damage ≥ 170 and Lava Damage ≥ 20
+                  Heated Rooms Damage ≥ 215 and Lava Damage ≥ 50
+                  Gravity Suit and Heated Rooms Damage ≥ 175 and Lava Damage ≥ 25
+          All of the following:
+              Space Jump Boots and Combat/Scan Dash (Expert) and L-Jump (Intermediate) and R-Jump (Advanced) and Lava Damage ≥ 25
+              Heat Runs (Expert) or Heat-Resisting Suit
+              Any of the following:
+                  Heated Rooms Damage ≥ 130
+                  Scan Visor and Heated Rooms Damage ≥ 115
+  > Pickup (Power Bomb)
+      All of the following:
+          Boost Ball and Morph Ball and Clip Through Objects (Expert) and Normal Damage ≥ 9
+          Any of the following:
+              # Navigate Aether
+              Single Room Out of Bounds (Hypermode)
+              All of the following:
+                  # Navigate Standable Terrain
+                  Single Room Out of Bounds (Expert) and Standable Terrain (Expert)
+                  Any of the following:
+                      Space Jump Boots
+                      Morph Ball Bomb and Bomb Jump (Advanced)
+          Any of the following:
+              Heat-Resisting Suit
+              Heat Runs (Expert) and Heated Rooms Damage ≥ 249
+  > Pickup (Missile)
+      Any of the following:
+          All of the following:
+              Heat-Resisting Suit and Use Grapple Beam
+              Any of the following:
+                  Morph Ball Bomb and Morph Ball
+                  Space Jump Boots and Standable Terrain (Beginner)
+                  Combat/Scan Dash (Advanced) and Standable Terrain (Advanced)
+          All of the following:
+              Morph Ball Bomb and Morph Ball
+              Any of the following:
+                  Heat-Resisting Suit
+                  Heat Runs (Advanced) and L-Jump (Beginner) and Heated Rooms Damage ≥ 275
+          All of the following:
+              Space Jump Boots and L-Jump (Intermediate) and Standable Terrain (Beginner)
+              Heat Runs (Advanced) or Heat-Resisting Suit
+              Any of the following:
+                  Heated Rooms Damage ≥ 170 and Lava Damage ≥ 15
+                  Combat/Scan Dash (Intermediate) and Heated Rooms Damage ≥ 165
+                  R-Jump (Beginner) and Heated Rooms Damage ≥ 140 and Lava Damage ≥ 20
+          All of the following:
+              Combat/Scan Dash (Advanced) and L-Jump (Intermediate) and Standable Terrain (Advanced) and Lava Damage ≥ 20
+              Any of the following:
+                  Heat-Resisting Suit
+                  Heat Runs (Expert) and Heated Rooms Damage ≥ 215
+
+----------------
+Transport Tunnel B
+Extra - asset_id: 860276342
+Extra - size_index: 0.1
+Extra - aabb: [336.6439, -517.1814, 30.817385, 367.80676, -445.09094, 51.45369]
+> Door to Transport to Tallon Overworld West; Heals? False
+  * Layers: default
+  * Normal Door to Transport to Tallon Overworld West/Door to Transport Tunnel B
+  * Extra - dock_index: 0
+  * Extra - nonstandard: False
+  > Door to Fiery Shores
+      Any of the following:
+          All of the following:
+              Morph Ball
+              Any of the following:
+                  Heat-Resisting Suit
+                  Heat Runs (Beginner) and Heated Rooms Damage ≥ 120
+                  Heat Runs (Intermediate) and Heated Rooms Damage ≥ 99
+          All of the following:
+              Movement (Beginner) and Lava Damage ≥ 45
+              Any of the following:
+                  Heat-Resisting Suit
+                  Heat Runs (Beginner) and Heated Rooms Damage ≥ 100
+                  Heat Runs (Intermediate) and Heated Rooms Damage ≥ 65
+          All of the following:
+              L-Jump (Intermediate) and Lava Damage ≥ 40
+              Any of the following:
+                  Heat-Resisting Suit
+                  Heat Runs (Beginner) and Heated Rooms Damage ≥ 99
+                  Heat Runs (Intermediate) and Heated Rooms Damage ≥ 59
+
+> Door to Fiery Shores; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Normal Door to Fiery Shores/Door to Transport Tunnel B
+  * Extra - dock_index: 1
+  * Extra - nonstandard: False
+  > Door to Transport to Tallon Overworld West
+      Any of the following:
+          All of the following:
+              Morph Ball
+              Any of the following:
+                  Heat-Resisting Suit
+                  Heat Runs (Beginner) and Heated Rooms Damage ≥ 120
+                  Heat Runs (Intermediate) and Heated Rooms Damage ≥ 99
+          All of the following:
+              Movement (Beginner) and Lava Damage ≥ 45
+              Any of the following:
+                  Heat-Resisting Suit
+                  Heat Runs (Beginner) and Heated Rooms Damage ≥ 100
+                  Heat Runs (Intermediate) and Heated Rooms Damage ≥ 65
+          All of the following:
+              L-Jump (Intermediate) and Lava Damage ≥ 40
+              Any of the following:
+                  Heat-Resisting Suit
+                  Heat Runs (Beginner) and Heated Rooms Damage ≥ 99
+                  Heat Runs (Intermediate) and Heated Rooms Damage ≥ 59
+
+> Pickup (Items Every Room); Heals? False
+  * Layers: items_every_room
+  * Pickup 188; Category? Minor
+  * Extra - position_required: True
+
+----------------
+Transport to Tallon Overworld West
+Extra - asset_id: 1279075404
+Extra - size_index: 0.3
+Extra - aabb: [342.43243, -568.61035, 31.93206, 376.56888, -517.1814, 67.622406]
+> Door to Twin Fires Tunnel; Heals? False
+  * Layers: default
+  * Normal Door to Twin Fires Tunnel/Door to Transport to Tallon Overworld West
+  * Extra - dock_index: 0
+  * Extra - nonstandard: False
+  > Door to Transport Tunnel B
+      Trivial
+
+> Door to Transport Tunnel B; Heals? False
+  * Layers: default
+  * Normal Door to Transport Tunnel B/Door to Transport to Tallon Overworld West
+  * Extra - dock_index: 1
+  * Extra - nonstandard: False
+  > Door to Twin Fires Tunnel
+      Trivial
+  > Teleporter to Tallon Overworld
+      Trivial
+
+> Teleporter to Tallon Overworld; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Teleporter to Transport to Magmoor Caverns East/Teleporter to Magmoor Caverns
+  * Extra - scan_asset_id: 1273603276
+  * Extra - teleporter_instance_id: 1048608
+  > Door to Transport Tunnel B
+      Trivial
+
+> Pickup (Items Every Room); Heals? False
+  * Layers: items_every_room
+  * Pickup 189; Category? Minor
+  * Extra - position_required: True
+
+----------------
+Twin Fires Tunnel
+Extra - asset_id: 3835971118
+Extra - size_index: 0.3
+Extra - aabb: [299.85785, -645.52344, 22.734497, 367.19962, -567.72406, 82.52421]
+> Door to Twin Fires; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Normal Door to Twin Fires/Door to Twin Fires Tunnel
+  * Extra - dock_index: 0
+  * Extra - nonstandard: False
+  > Door to Transport to Tallon Overworld West
+      Any of the following:
+          All of the following:
+              Space Jump Boots
+              Any of the following:
+                  Heat-Resisting Suit
+                  Heat Runs (Beginner) and Heated Rooms Damage ≥ 100
+                  Heat Runs (Intermediate) and Heated Rooms Damage ≥ 65
+              L-Jump (Intermediate) or Lava Damage ≥ 50
+          Morph Ball and Spider Ball and Heat-Resisting Suit
+          All of the following:
+              Morph Ball Bomb and Morph Ball and Bomb Jump (Beginner) and Gravityless Underwater Movement (Beginner) and Lava Damage ≥ 60
+              Any of the following:
+                  Heat-Resisting Suit
+                  Heat Runs (Beginner) and Heated Rooms Damage ≥ 185
+                  Heat Runs (Intermediate) and Heated Rooms Damage ≥ 85
+          All of the following:
+              Combat/Scan Dash (Expert) and Standable Terrain (Advanced) and Disabled Dock Rando
+              Any of the following:
+                  Heat-Resisting Suit
+                  Heat Runs (Advanced) and Heated Rooms Damage ≥ 160
+                  Heat Runs (Expert) and Heated Rooms Damage ≥ 80
+          All of the following:
+              Gravity Suit and Lava Damage ≥ 40
+              Any of the following:
+                  Heat-Resisting Suit
+                  Heat Runs (Beginner) and Heated Rooms Damage ≥ 120
+                  Heat Runs (Intermediate) and Heated Rooms Damage ≥ 70
+          All of the following:
+              # https://youtu.be/9jk5s2W6yhY
+              Movement (Expert) and Standable Terrain (Intermediate) and Lava Damage ≥ 10
+              Any of the following:
+                  Heat-Resisting Suit
+                  Heat Runs (Advanced) and Heated Rooms Damage ≥ 110
+
+> Door to Transport to Tallon Overworld West; Heals? False
+  * Layers: default
+  * Normal Door to Transport to Tallon Overworld West/Door to Twin Fires Tunnel
+  * Extra - dock_index: 1
+  * Extra - nonstandard: False
+  > Door to Twin Fires
+      Any of the following:
+          All of the following:
+              Morph Ball
+              Any of the following:
+                  Spider Ball and Heat-Resisting Suit
+                  All of the following:
+                      Morph Ball Bomb
+                      Any of the following:
+                          All of the following:
+                              Gravity Suit and Bomb Jump (Intermediate) and Lava Damage ≥ 95
+                              Any of the following:
+                                  Heat-Resisting Suit
+                                  Heat Runs (Beginner) and Heated Rooms Damage ≥ 125
+                                  Heat Runs (Intermediate) and Heated Rooms Damage ≥ 75
+                          All of the following:
+                              Bomb Jump (Expert) and L-Jump (Advanced) and Gravityless Underwater Movement (Advanced) and Lava Damage ≥ 200
+                              Any of the following:
+                                  Heat-Resisting Suit
+                                  Heat Runs (Advanced) and Heated Rooms Damage ≥ 150
+                                  Heat Runs (Expert) and Heated Rooms Damage ≥ 99
+          All of the following:
+              Space Jump Boots
+              Any of the following:
+                  Heat-Resisting Suit
+                  Heat Runs (Beginner) and Heated Rooms Damage ≥ 125
+                  Heat Runs (Intermediate) and Heated Rooms Damage ≥ 85
+              Any of the following:
+                  # https://youtu.be/TleaFWdVhUg
+                  R-Jump (Advanced)
+                  Gravity Suit and Movement (Beginner) and Lava Damage ≥ 15
+          All of the following:
+              Scan Visor
+              Any of the following:
+                  All of the following:
+                      # https://youtu.be/OK3lSWvTKKU
+                      Space Jump Boots and Combat/Scan Dash (Advanced) and Standable Terrain (Intermediate)
+                      Any of the following:
+                          Heat-Resisting Suit
+                          Heat Runs (Intermediate) and Heated Rooms Damage ≥ 135
+                          Heat Runs (Advanced) and Heated Rooms Damage ≥ 85
+                  All of the following:
+                      # https://youtu.be/Ue9T-9SY0o4
+                      Combat/Scan Dash (Expert) and Standable Terrain (Advanced)
+                      Any of the following:
+                          Heat-Resisting Suit
+                          Heat Runs (Advanced) and Heated Rooms Damage ≥ 145
+                          Heat Runs (Expert) and Heated Rooms Damage ≥ 95
+
+> Pickup (Items Every Room); Heals? False
+  * Layers: items_every_room
+  * Pickup 190; Category? Minor
+  * Extra - position_required: True
+
+----------------
+Twin Fires
+Extra - asset_id: 1282952170
+Extra - size_index: 0.3
+Extra - aabb: [260.97873, -808.0589, 27.867846, 370.546, -643.1559, 57.711136]
+> Door to North Core Tunnel; Heals? False
+  * Layers: default
+  * Wave Door to North Core Tunnel/Door to Twin Fires
+  * Extra - dock_index: 0
+  * Extra - nonstandard: False
+  > Door to Twin Fires Tunnel
+      Any of the following:
+          Use Grapple Beam
+          All of the following:
+              Space Jump Boots
+              Any of the following:
+                  Combat/Scan Dash (Intermediate) or R-Jump (Beginner) or Lava Damage ≥ 20
+                  Missile and Shoot Any Beam
+          # https://youtu.be/6tAv_ivVvAQ
+          Morph Ball Bomb and Morph Ball and Bomb Jump (Beginner) and Gravityless Underwater Movement (Beginner) and Lava Damage ≥ 120
+          Combat/Scan Dash (Advanced) and Lava Damage ≥ 60
+          Missile ≥ 3 and Combat/Scan Dash (Intermediate) and L-Jump (Beginner) and Shoot Any Beam
+          L-Jump (Beginner) and Slope Jump (Expert) and Gravityless Underwater Movement (Expert) and Lava Damage ≥ 200
+          Gravity Suit and L-Jump (Beginner) and Lava Damage ≥ 55
+
+> Door to Twin Fires Tunnel; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Normal Door to Twin Fires Tunnel/Door to Twin Fires
+  * Extra - dock_index: 1
+  * Extra - nonstandard: False
+  > Door to North Core Tunnel
+      Any of the following:
+          Combat/Scan Dash (Expert) or Use Grapple Beam
+          All of the following:
+              Space Jump Boots
+              Any of the following:
+                  Combat/Scan Dash (Beginner) or R-Jump (Beginner) or Lava Damage ≥ 50
+                  Missile and Shoot Any Beam
+          # https://youtu.be/6tAv_ivVvAQ?t=37
+          Morph Ball Bomb and Morph Ball and Bomb Jump (Beginner) and Gravityless Underwater Movement (Beginner) and Lava Damage ≥ 285
+          Missile ≥ 3 and Combat/Scan Dash (Intermediate) and L-Jump (Intermediate) and Shoot Any Beam
+          Gravity Suit and Lava Damage ≥ 60
+
+> Pickup (Items Every Room); Heals? False
+  * Layers: items_every_room
+  * Pickup 191; Category? Minor
+  * Extra - position_required: True
+
+----------------
+North Core Tunnel
+Extra - asset_id: 2805715168
+Extra - size_index: 0.1
+Extra - aabb: [263.98804, -862.0356, 27.763062, 327.5006, -789.5037, 56.726116]
+> Door to Twin Fires; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Wave Door to Twin Fires/Door to North Core Tunnel
+  * Extra - dock_index: 0
+  * Extra - nonstandard: False
+  > Door to Geothermal Core
+      Any of the following:
+          Gravity Suit or Space Jump Boots
+          # https://youtu.be/v2uQH10pPco?t=24
+          Morph Ball Bomb and Morph Ball and Bomb Jump (Beginner) and Gravityless Underwater Movement (Beginner) and Lava Damage ≥ 105
+          # https://youtu.be/v2uQH10pPco?t=40
+          Missile and Standable Terrain (Beginner) and Shoot Any Beam
+          # https://youtu.be/v2uQH10pPco
+          Slope Jump (Advanced) and Gravityless Underwater Movement (Advanced) and Lava Damage ≥ 120
+
+> Door to Geothermal Core; Heals? False
+  * Layers: default
+  * Wave Door to Geothermal Core/Door to North Core Tunnel
+  * Extra - dock_index: 1
+  * Extra - nonstandard: False
+  > Door to Twin Fires
+      Any of the following:
+          Gravity Suit or Space Jump Boots
+          # https://youtu.be/v2uQH10pPco?t=31
+          Morph Ball Bomb and Morph Ball and Bomb Jump (Beginner) and Gravityless Underwater Movement (Beginner) and Lava Damage ≥ 105
+          # https://youtu.be/v2uQH10pPco?t=49
+          Missile and Standable Terrain (Beginner) and Shoot Any Beam
+          # https://youtu.be/v2uQH10pPco?t=14
+          Slope Jump (Intermediate) and Gravityless Underwater Movement (Intermediate) and Lava Damage ≥ 40
+
+> Pickup (Items Every Room); Heals? False
+  * Layers: items_every_room
+  * Pickup 192; Category? Minor
+  * Extra - position_required: True
+
+----------------
+Geothermal Core
+Extra - asset_id: 3226044022
+Extra - size_index: 0.8
+Extra - aabb: [325.43393, -886.59106, 26.961174, 448.0504, -795.0569, 116.78]
+> Door to North Core Tunnel; Heals? False
+  * Layers: default
+  * Normal Door to North Core Tunnel/Door to Geothermal Core
+  * Extra - dock_index: 0
+  * Extra - nonstandard: False
+  > Door to South Core Tunnel
+      Any of the following:
+          Space Jump Boots or Lava Damage ≥ 230
+          Morph Ball Bomb and Morph Ball and Bomb Jump (Beginner) and Gravityless Underwater Movement (Beginner) and Lava Damage ≥ 185
+          Boost Ball and Morph Ball and Movement (Beginner) and Gravityless Underwater Movement (Beginner) and Lava Damage ≥ 75
+          Gravity Suit and Lava Damage ≥ 100
+          Scan Visor and Combat/Scan Dash (Intermediate)
+          Before Storage Depot B Item and Shoot Any Beam
+  > First Spinner
+      Any of the following:
+          # https://youtu.be/4uV36UbD2b4
+          Space Jump Boots and L-Jump (Intermediate) and Standable Terrain (Intermediate)
+          Morph Ball Bomb and Boost Ball and Morph Ball and After Storage Depot B Item and Complex Bomb Jump (Hypermode) and Movement (Hypermode) and Jump Off Enemies (Hypermode)
+
+> Door to Plasma Processing; Heals? False
+  * Layers: default
+  * Ice Door to Plasma Processing/Door to Geothermal Core
+  * Extra - dock_index: 1
+  * Extra - nonstandard: False
+  > Door to North Core Tunnel
+      Any of the following:
+          After Geothermal Core Puzzle
+          # https://youtu.be/Edzhf9hl0w8
+          Clip Through Objects (Advanced)
+
+> Door to South Core Tunnel; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Normal Door to South Core Tunnel/Door to Geothermal Core
+  * Extra - dock_index: 2
+  * Extra - nonstandard: False
+  > Door to North Core Tunnel
+      Any of the following:
+          Space Jump Boots
+          Morph Ball Bomb and Morph Ball and Bomb Jump (Beginner) and Gravityless Underwater Movement (Beginner) and Lava Damage ≥ 185
+          Scan Visor and Combat/Scan Dash (Beginner)
+          All of the following:
+              Slope Jump (Intermediate) and Gravityless Underwater Movement (Intermediate)
+              Any of the following:
+                  Lava Damage ≥ 300
+                  Boost Ball and Morph Ball and Movement (Intermediate) and Lava Damage ≥ 70
+          Gravity Suit and Lava Damage ≥ 85
+          Before Storage Depot B Item and Shoot Any Beam
+  > First Spinner
+      Any of the following:
+          All of the following:
+              Space Jump Boots
+              Any of the following:
+                  Use Grapple Beam
+                  All of the following:
+                      # https://youtu.be/svpG1lg1ahw
+                      Combat/Scan Dash (Intermediate)
+                      Scan Visor or Before Storage Depot B Item
+          Morph Ball Bomb and Morph Ball and Bomb Jump (Beginner) and Use Grapple Beam
+
+> Event - Geothermal Core Opened; Heals? False
+  * Layers: default
+  * Event Geothermal Core Puzzle
+  > Door to Plasma Processing
+      Any of the following:
+          Morph Ball Bomb and Morph Ball and Spider Ball
+          # https://youtu.be/OwsVX5HEGVQ?t=7
+          Space Jump Boots and Slope Jump (Intermediate) and Standable Terrain (Intermediate)
+
+> First Spinner; Heals? False
+  * Layers: default
+  > Event - Geothermal Core Opened
+      All of the following:
+          Morph Ball Bomb and Morph Ball
+          Any of the following:
+              All of the following:
+                  Space Jump Boots
+                  Any of the following:
+                      All of the following:
+                          Spinners without Boost (Advanced) and Movement (Expert) and Standable Terrain (Hypermode)
+                          Any of the following:
+                              R-Jump (Expert)
+                              All of the following:
+                                  Combat/Scan Dash (Expert)
+                                  Scan Visor or After Storage Depot B Item
+                      All of the following:
+                          Boost Ball
+                          Any of the following:
+                              Spider Ball
+                              # https://www.youtube.com/watch?v=OwsVX5HEGVQ
+                              Slope Jump (Beginner)
+              Boost Ball and Spider Ball and Before Storage Depot B Item and Bomb Jump (Expert) and Combat/Scan Dash (Hypermode)
+
+> Pickup (Items Every Room); Heals? False
+  * Layers: items_every_room
+  * Pickup 193; Category? Minor
+  * Extra - position_required: True
+
+----------------
+Plasma Processing
+Extra - asset_id: 1287753306
+Extra - size_index: 0.3
+Extra - aabb: [324.22482, -808.70245, 85.270874, 412.18738, -720.1435, 116.73451]
+> Door to Geothermal Core; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Plasma Door to Geothermal Core/Door to Plasma Processing
+  * Extra - dock_index: 0
+  * Extra - nonstandard: False
+  > Event - Plasma Beam
+      Trivial
+
+> Pickup (Plasma Beam); Heals? False
+  * Layers: default
+  * Pickup 98; Category? Major
+  * Extra - position_required: False
+  > Door to Geothermal Core
+      Trivial
+
+> Event - Plasma Beam; Heals? False
+  * Layers: default
+  * Event Plasma Processing Item
+  > Pickup (Plasma Beam)
+      Trivial
+
+----------------
+South Core Tunnel
+Extra - asset_id: 1893290168
+Extra - size_index: 0.1
+Extra - aabb: [448.05045, -935.38007, 31.728664, 485.65778, -855.714, 58.295074]
+> Door to Geothermal Core; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Wave Door to Geothermal Core/Door to South Core Tunnel
+  * Extra - dock_index: 0
+  * Extra - nonstandard: False
+  > Door to Magmoor Workstation
+      Any of the following:
+          Space Jump Boots or Shoot Any Beam
+          Gravity Suit and Lava Damage ≥ 40
+          Morph Ball Bomb and Morph Ball and Bomb Jump (Intermediate) and Lava Damage ≥ 100
+          Slope Jump (Advanced) and Gravityless Underwater Movement (Advanced) and Lava Damage ≥ 80
+
+> Door to Magmoor Workstation; Heals? False
+  * Layers: default
+  * Wave Door to Magmoor Workstation/Door to South Core Tunnel
+  * Extra - dock_index: 1
+  * Extra - nonstandard: False
+  > Door to Geothermal Core
+      Any of the following:
+          Space Jump Boots or Shoot Any Beam
+          Gravity Suit and Lava Damage ≥ 40
+          Morph Ball Bomb and Morph Ball and Bomb Jump (Intermediate) and Lava Damage ≥ 100
+          Slope Jump (Intermediate) and Gravityless Underwater Movement (Advanced) and Lava Damage ≥ 80
+
+> Pickup (Items Every Room); Heals? False
+  * Layers: items_every_room
+  * Pickup 194; Category? Minor
+  * Extra - position_required: True
+
+----------------
+Magmoor Workstation
+Extra - asset_id: 2327753667
+Extra - size_index: 0.8
+Extra - aabb: [360.1392, -1048.9818, 21.99028, 492.0931, -921.3259, 113.2094]
+> Door to South Core Tunnel; Heals? False
+  * Layers: default
+  * Normal Door to South Core Tunnel/Door to Magmoor Workstation
+  * Extra - dock_index: 0
+  * Extra - nonstandard: False
+  > Door to Workstation Tunnel
+      All of the following:
+          Any of the following:
+              Space Jump Boots
+              Morph Ball Bomb and Morph Ball and Bomb Jump (Beginner)
+              # https://youtu.be/3N7BMPBBHsI
+              Scan Visor and Combat/Scan Dash (Intermediate) and Slope Jump (Beginner) and Standable Terrain (Beginner)
+          Knowledge (Beginner) or Heat-Resisting Suit
+  > Door to Transport Tunnel C
+      All of the following:
+          Knowledge (Beginner) or Heat-Resisting Suit
+          Any of the following:
+              Space Jump Boots
+              Morph Ball Bomb and Morph Ball and Bomb Jump (Beginner)
+              # https://youtu.be/3N7BMPBBHsI
+              Scan Visor and Combat/Scan Dash (Intermediate) and Slope Jump (Beginner) and Standable Terrain (Beginner)
+  > Pickup (Energy Tank)
+      All of the following:
+          Morph Ball and Scan Visor
+          Any of the following:
+              Boost Ball and Space Jump Boots and Clip Through Objects (Advanced) and Combat/Scan Dash (Advanced) and Single Room Out of Bounds (Expert) and Lava Damage ≥ 75
+              All of the following:
+                  Shoot Wave Beam
+                  Thermal Visor or Invisible Objects (Beginner)
+          Knowledge (Beginner) or Heat-Resisting Suit
+
+> Door to Workstation Tunnel; Heals? False
+  * Layers: default
+  * Normal Door to Workstation Tunnel/Door to Magmoor Workstation
+  * Extra - dock_index: 1
+  * Extra - nonstandard: False
+  > Door to South Core Tunnel
+      Knowledge (Beginner) or Heat-Resisting Suit
+  > Door to Transport Tunnel C
+      All of the following:
+          # https://youtu.be/qnOw1NJdHDg?t=17
+          Slope Jump (Beginner)
+          Knowledge (Beginner) or Heat-Resisting Suit
+
+> Door to Transport Tunnel C; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Wave Door to Transport Tunnel C/Door to Magmoor Workstation
+  * Extra - dock_index: 2
+  * Extra - nonstandard: False
+  > Door to South Core Tunnel
+      Knowledge (Beginner) or Heat-Resisting Suit
+  > Door to Workstation Tunnel
+      All of the following:
+          # https://youtu.be/qnOw1NJdHDg
+          Standable Terrain (Beginner)
+          Knowledge (Beginner) or Heat-Resisting Suit
+
+> Pickup (Energy Tank); Heals? False
+  * Layers: default
+  * Pickup 99; Category? Minor
+  * Extra - position_required: False
+  > Door to South Core Tunnel
+      Trivial
+
+----------------
+Workstation Tunnel
+Extra - asset_id: 74274377
+Extra - size_index: 0.1
+Extra - aabb: [433.53445, -1134.2877, 45.87078, 479.449, -1047.1273, 57.93933]
+> Door to Transport to Phazon Mines West; Heals? False
+  * Layers: default
+  * Ice Door to Transport to Phazon Mines West/Door to Workstation Tunnel
+  * Extra - dock_index: 0
+  * Extra - nonstandard: False
+  > Door to Magmoor Workstation
+      Morph Ball and Power Bomb
+
+> Door to Magmoor Workstation; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Normal Door to Magmoor Workstation/Door to Workstation Tunnel
+  * Extra - dock_index: 1
+  * Extra - nonstandard: False
+  > Door to Transport to Phazon Mines West
+      Morph Ball and Power Bomb
+
+> Pickup (Items Every Room); Heals? False
+  * Layers: items_every_room
+  * Pickup 195; Category? Minor
+  * Extra - position_required: True
+
+----------------
+Transport Tunnel C
+Extra - asset_id: 3549419025
+Extra - size_index: 0.1
+Extra - aabb: [345.76917, -994.8324, 44.096222, 389.5644, -964.4511, 51.761158]
+> Door to Transport to Phendrana Drifts South; Heals? False
+  * Layers: default
+  * Wave Door to Transport to Phendrana Drifts South/Door to Transport Tunnel C
+  * Extra - dock_index: 0
+  * Extra - nonstandard: False
+  > Door to Magmoor Workstation
+      Trivial
+
+> Door to Magmoor Workstation; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Wave Door to Magmoor Workstation/Door to Transport Tunnel C
+  * Extra - dock_index: 1
+  * Extra - nonstandard: False
+  > Door to Transport to Phendrana Drifts South
+      Trivial
+
+> Pickup (Items Every Room); Heals? False
+  * Layers: items_every_room
+  * Pickup 196; Category? Minor
+  * Extra - position_required: True
+
+----------------
+Transport to Phazon Mines West
+Extra - asset_id: 4012840000
+Extra - size_index: 0.3
+Extra - aabb: [479.2223, -1196.5626, 26.105343, 519.2223, -1124.9379, 75.90487]
+> Door to Workstation Tunnel; Heals? False
+  * Layers: default
+  * Ice Door to Workstation Tunnel/Door to Transport to Phazon Mines West
+  * Extra - dock_index: 0
+  * Extra - nonstandard: False
+  > Teleporter to Phazon Mines
+      Trivial
+
+> Teleporter to Phazon Mines; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Teleporter to Transport to Magmoor Caverns South/Teleporter to Magmoor Caverns
+  * Extra - scan_asset_id: 800030426
+  * Extra - teleporter_instance_id: 1703972
+  > Door to Workstation Tunnel
+      Trivial
+
+> Pickup (Items Every Room); Heals? False
+  * Layers: items_every_room
+  * Pickup 197; Category? Minor
+  * Extra - position_required: True
+
+----------------
+Transport to Phendrana Drifts South
+Extra - asset_id: 3249312307
+Extra - size_index: 0.6
+Extra - aabb: [300.98132, -992.19653, 40.19651, 346.4252, -945.13025, 93.83966]
+> Door to Save Station Magmoor B; Heals? False
+  * Layers: default
+  * Missile Blast Shield to Save Station Magmoor B/Door to Transport to Phendrana Drifts South
+  * Extra - dock_index: 0
+  * Extra - nonstandard: False
+  > Door to Transport Tunnel C
+      Trivial
+  > Teleporter to Phendrana Drifts
+      Trivial
+
+> Door to Transport Tunnel C; Heals? False
+  * Layers: default
+  * Wave Door to Transport Tunnel C/Door to Transport to Phendrana Drifts South
+  * Extra - dock_index: 1
+  * Extra - nonstandard: False
+  > Door to Save Station Magmoor B
+      Trivial
+
+> Teleporter to Phendrana Drifts; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Teleporter to Transport to Magmoor Caverns South/Teleporter to Magmoor Caverns
+  * Extra - scan_asset_id: 1865475028
+  * Extra - teleporter_instance_id: 1769512
+  > Door to Save Station Magmoor B
+      Trivial
+
+> Pickup (Items Every Room); Heals? False
+  * Layers: items_every_room
+  * Pickup 198; Category? Minor
+  * Extra - position_required: True
+
+----------------
+Save Station Magmoor B
+Extra - asset_id: 2136398113
+Extra - size_index: 0.1
+Extra - unlocked_save_station: True
+Extra - aabb: [276.66666, -983.6523, 42.449593, 304.32828, -955.99066, 58.789864]
+> Door to Transport to Phendrana Drifts South; Heals? False
+  * Layers: default
+  * Normal Door to Transport to Phendrana Drifts South/Door to Save Station Magmoor B
+  * Extra - dock_index: 0
+  * Extra - nonstandard: False
+  > Save Station
+      Trivial
+
+> Save Station; Heals? True; Spawn Point; Default Node
+  * Layers: default
+  > Door to Transport to Phendrana Drifts South
+      Trivial
+
+> Pickup (Items Every Room); Heals? False
+  * Layers: items_every_room
+  * Pickup 199; Category? Minor
+  * Extra - position_required: True
+

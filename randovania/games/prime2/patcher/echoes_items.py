@@ -1,6 +1,7 @@
 """
 Some constants related to specific Echoes items that the logic needs to deal with.
 """
+
 from __future__ import annotations
 
 DARK_TEMPLE_KEY_MODEL = "DarkTempleKey"

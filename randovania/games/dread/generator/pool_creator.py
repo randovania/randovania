@@ -2,10 +2,13 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
+from frozendict import frozendict
+
 from randovania.game_description.pickup import pickup_category
 from randovania.game_description.pickup.pickup_entry import PickupEntry, PickupGeneratorParams, PickupModel
 from randovania.game_description.resources.location_category import LocationCategory
 from randovania.games.dread.layout.dread_configuration import DreadArtifactConfig, DreadConfiguration
+from randovania.games.game import RandovaniaGame
 from randovania.generator.pickup_pool import PoolResults
 
 if TYPE_CHECKING:
@@ -42,6 +45,7 @@ def create_dread_artifact(
         model=PickupModel(game=resource_database.game_enum, name=f"DNA_{artifact_number + 1}"),
         pickup_category=DREAD_ARTIFACT_CATEGORY,
         broad_category=pickup_category.GENERIC_KEY_CATEGORY,
+        offworld_models=frozendict({RandovaniaGame.AM2R: "sItemDNA"}),
         generator_params=PickupGeneratorParams(
             preferred_location_category=LocationCategory.MAJOR,
             probability_offset=0.25,

@@ -98,7 +98,7 @@ def _test_preset(rdvgame_file: Path, expected_results_file: Path, mocker):
     expected_data = json_lib.read_path(expected_results_file)
 
     # # Uncomment to easily view diff of failed test
-    # json_lib.write_path(expected_results_file, data); assert False
+    # json_lib.write_path(expected_results_file, data)
 
     # Ignore the part of the main menu message which has the randovania version in it
     data["gameConfig"]["mainMenuMessage"] = data["gameConfig"]["mainMenuMessage"].split("\n")[1]

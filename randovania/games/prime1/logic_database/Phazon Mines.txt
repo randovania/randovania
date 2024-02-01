@@ -1,0 +1,2006 @@
+----------------
+Transport to Tallon Overworld South
+Extra - asset_id: 1125030300
+Extra - size_index: 0.3
+Extra - aabb: [260.33414, 81.07292, 16.824417, 304.50952, 121.239456, 67.27582]
+> Door to Quarry Access; Heals? False
+  * Layers: default
+  * Wave Door to Quarry Access/Door to Transport to Tallon Overworld South
+  * Extra - dock_index: 0
+  * Extra - nonstandard: False
+  > Teleporter to Tallon Overworld
+      Trivial
+
+> Teleporter to Tallon Overworld; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Teleporter to Transport to Phazon Mines East/Teleporter to Phazon Mines
+  * Extra - scan_asset_id: 2685334598
+  * Extra - teleporter_instance_id: 28
+  > Door to Quarry Access
+      Trivial
+
+> Pickup (Items Every Room); Heals? False
+  * Layers: items_every_room
+  * Pickup 200; Category? Minor
+  * Extra - position_required: True
+
+----------------
+Quarry Access
+Extra - asset_id: 1758230360
+Extra - size_index: 0.1
+Extra - aabb: [201.19872, 68.6595, 5.336385, 260.348, 107.23985, 50.83834]
+> Door to Main Quarry; Heals? False
+  * Layers: default
+  * Wave Door to Main Quarry/Door to Quarry Access
+  * Extra - dock_index: 0
+  * Extra - nonstandard: False
+  > Door to Transport to Tallon Overworld South
+      Trivial
+
+> Door to Transport to Tallon Overworld South; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Wave Door to Transport to Tallon Overworld South/Door to Quarry Access
+  * Extra - dock_index: 1
+  * Extra - nonstandard: False
+  > Door to Main Quarry
+      Trivial
+
+> Pickup (Items Every Room); Heals? False
+  * Layers: items_every_room
+  * Pickup 201; Category? Minor
+  * Extra - position_required: True
+
+----------------
+Main Quarry
+Extra - asset_id: 1681720207
+Extra - size_index: 0.6
+Extra - aabb: [58.95912, -13.365204, -0.8746805, 213.88028, 134.1634, 99.340744]
+> Door to Waste Disposal; Heals? False
+  * Layers: default
+  * Ice Door to Waste Disposal/Door to Main Quarry
+  * Extra - dock_index: 0
+  * Extra - nonstandard: False
+  > Door to Quarry Access
+      Trivial
+  > Crane Platform
+      Use Grapple Beam
+
+> Door to Quarry Access; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Wave Door to Quarry Access/Door to Main Quarry
+  * Extra - dock_index: 1
+  * Extra - nonstandard: False
+  > Door to Waste Disposal
+      Space Jump Boots and Use Grapple Beam
+  > Door to Save Station Mines A
+      Any of the following:
+          # https://youtu.be/8hDg9fJZH1c
+          Space Jump Boots or L-Jump (Beginner) or Movement (Intermediate)
+          Morph Ball and Spider Ball
+  > Door to Security Access A
+      After Main Quarry Barrier
+  > Event - Main Quarry Barrier Deactivated
+      Scan Visor
+  > Crane Platform
+      Any of the following:
+          Space Jump Boots
+          Morph Ball Bomb and Morph Ball and Bomb Jump (Beginner)
+          # https://youtu.be/lhgy7ja-uMU
+          Grapple Beam and Movement (Beginner)
+          # https://youtu.be/w6UegkJsX2c
+          Boost Ball and Morph Ball and Slope Jump (Intermediate) and Wall Boost (Expert)
+
+> Door to Save Station Mines A; Heals? False
+  * Layers: default
+  * Wave Door to Save Station Mines A/Door to Main Quarry
+  * Extra - dock_index: 2
+  * Extra - nonstandard: False
+  > Door to Quarry Access
+      Trivial
+
+> Door to Security Access A; Heals? False
+  * Layers: default
+  * Ice Door to Security Access A/Door to Main Quarry
+  * Extra - dock_index: 3
+  * Extra - nonstandard: False
+  > Door to Quarry Access
+      After Main Quarry Barrier or Enabled Backwards Upper Mines
+
+> Pickup (Missile); Heals? False
+  * Layers: default
+  * Pickup 73; Category? Minor
+  * Extra - position_required: False
+  > Crane Platform
+      Trivial
+
+> Event - Main Quarry Barrier Deactivated; Heals? False
+  * Layers: default
+  * Event Main Quarry Barrier
+  > Door to Quarry Access
+      Trivial
+
+> Crane Platform; Heals? False
+  * Layers: default
+  > Door to Waste Disposal
+      Any of the following:
+          Use Grapple Beam
+          All of the following:
+              Space Jump Boots
+              Any of the following:
+                  # https://youtu.be/gdX17ZXOKuo
+                  Slope Jump (Intermediate) and Standable Terrain (Beginner)
+                  Scan Visor and Combat/Scan Dash (Beginner)
+                  # https://youtu.be/DJzZA1VrvEY
+                  R-Jump (Intermediate)
+          # https://youtu.be/pebPvJHAFxk
+          Scan Visor and Combat/Scan Dash (Intermediate)
+          # https://youtu.be/mVH_SHAqZFE
+          Combat/Scan Dash (Advanced)
+  > Door to Quarry Access
+      Trivial
+  > Pickup (Missile)
+      All of the following:
+          Scan Visor and Shoot Wave Beam
+          Thermal Visor or Invisible Objects (Beginner)
+          Any of the following:
+              All of the following:
+                  Morph Ball and Spider Ball
+                  Any of the following:
+                      Morph Ball Bomb
+                      # https://youtu.be/i_l-GC9z9eI
+                      Boost Ball and Wall Boost (Intermediate)
+                      # https://www.youtube.com/watch?v=TgGo2RyY79w
+                      Knowledge (Intermediate) and Movement (Intermediate)
+              All of the following:
+                  Space Jump Boots and Slope Jump (Intermediate) and Standable Terrain (Beginner)
+                  Any of the following:
+                      # https://youtu.be/J0IPE2WIXXw
+                      Scan Visor and Combat/Scan Dash (Intermediate)
+                      # https://youtu.be/KitFN4fnGkk
+                      L-Jump (Beginner)
+
+----------------
+Waste Disposal
+Extra - asset_id: 665031095
+Extra - size_index: 0.3
+Extra - aabb: [95.84184, 100.52373, 29.230505, 116.84188, 133.5831, 62.536324]
+> Door to Main Quarry; Heals? False
+  * Layers: default
+  * Ice Door to Main Quarry/Door to Waste Disposal
+  * Extra - dock_index: 0
+  * Extra - nonstandard: False
+  > Door to Ore Processing
+      Morph Ball Bomb and Morph Ball
+
+> Door to Ore Processing; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Ice Door to Ore Processing/Door to Waste Disposal
+  * Extra - dock_index: 1
+  * Extra - nonstandard: False
+  > Door to Main Quarry
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Morph Ball Bomb
+              Boost Ball and Wall Boost (Expert)
+
+> Pickup (Items Every Room); Heals? False
+  * Layers: items_every_room
+  * Pickup 202; Category? Minor
+  * Extra - position_required: True
+
+----------------
+Save Station Mines A
+Extra - asset_id: 907887024
+Extra - size_index: 0.1
+Extra - unlocked_save_station: True
+Extra - aabb: [131.38985, -30.599165, 12.26794, 156.20804, 7.0214443, 21.498444]
+> Door to Main Quarry; Heals? True
+  * Layers: default
+  * Wave Door to Main Quarry/Door to Save Station Mines A
+  * Extra - dock_index: 0
+  * Extra - nonstandard: False
+  > Save Station
+      After Phazon Mines Save Station A Barrier
+  > Event - Save Station A Barrier Opened
+      Scan Visor
+
+> Save Station; Heals? True; Default Node
+  * Layers: default
+  > Door to Main Quarry
+      After Phazon Mines Save Station A Barrier
+
+> Event - Save Station A Barrier Opened; Heals? False
+  * Layers: default
+  * Event Phazon Mines Save Station A Barrier
+  > Door to Main Quarry
+      Trivial
+
+> Pickup (Items Every Room); Heals? False
+  * Layers: items_every_room
+  * Pickup 203; Category? Minor
+  * Extra - position_required: True
+
+----------------
+Security Access A
+Extra - asset_id: 3345300114
+Extra - size_index: 0.1
+Extra - aabb: [23.658386, -20.741074, -5.5762477, 100.966, 12.423266, 16.894772]
+> Door to Main Quarry; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Ice Door to Main Quarry/Door to Security Access A
+  * Extra - dock_index: 0
+  * Extra - nonstandard: False
+  > Door to Mine Security Station
+      Trivial
+  > Pickup (Missile)
+      Morph Ball and Power Bomb
+
+> Door to Mine Security Station; Heals? False
+  * Layers: default
+  * Ice Door to Mine Security Station/Door to Security Access A
+  * Extra - dock_index: 1
+  * Extra - nonstandard: False
+  > Door to Main Quarry
+      Trivial
+
+> Pickup (Missile); Heals? False
+  * Layers: default
+  * Pickup 74; Category? Minor
+  * Extra - position_required: False
+  > Door to Main Quarry
+      Trivial
+
+----------------
+Ore Processing
+Extra - asset_id: 2547167990
+Extra - size_index: 0.6
+Extra - aabb: [66.58455, 129.7148, 11.163003, 138.8284, 204.85583, 77.01038]
+> Door to Research Access; Heals? False
+  * Layers: default
+  * Ice Door to Research Access/Door to Ore Processing
+  * Extra - dock_index: 0
+  * Extra - nonstandard: False
+  > Door to Elevator Access A
+      Any of the following:
+          All of the following:
+              Morph Ball and Spider Ball and Shoot Power Beam
+              Any of the following:
+                  Morph Ball Bomb
+                  Boost Ball and Power Bomb ≥ 3 and Wall Boost (Advanced)
+          All of the following:
+              # https://youtu.be/gnqifLICKyo
+              Space Jump Boots and Slope Jump (Intermediate) and Standable Terrain (Intermediate)
+              Combat (Advanced) or Shoot Power Beam
+
+> Door to Storage Depot B; Heals? False
+  * Layers: default
+  * Ice Door to Storage Depot B/Door to Ore Processing
+  * Extra - dock_index: 1
+  * Extra - nonstandard: False
+  > Door to Waste Disposal
+      All of the following:
+          Any of the following:
+              Use Grapple Beam
+              # https://youtu.be/oRZOljmytRQ
+              Standable Terrain (Beginner)
+              # https://youtu.be/7ATtR9o9PRw
+              Space Jump Boots and L-Jump (Beginner)
+          Combat (Beginner) or Normal Damage ≥ 50 or Shoot Wave Beam
+  > Door to Elevator Access A
+      Trivial
+
+> Door to Waste Disposal; Heals? False
+  * Layers: default
+  * Ice Door to Waste Disposal/Door to Ore Processing
+  * Extra - dock_index: 2
+  * Extra - nonstandard: False
+  > Door to Storage Depot B
+      Any of the following:
+          Standable Terrain (Beginner) or Use Grapple Beam
+          All of the following:
+              Space Jump Boots
+              L-Jump (Beginner) or R-Jump (Beginner)
+          Scan Visor and Combat/Scan Dash (Intermediate)
+  > Door to Elevator Access A
+      Trivial
+
+> Door to Elevator Access A; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Ice Door to Elevator Access A/Door to Ore Processing
+  * Extra - dock_index: 3
+  * Extra - nonstandard: False
+  > Door to Research Access
+      Trivial
+  > Door to Storage Depot B
+      Any of the following:
+          Use Grapple Beam
+          All of the following:
+              Morph Ball Bomb and Morph Ball and Spider Ball
+              Any of the following:
+                  All of the following:
+                      Power Bomb
+                      Any of the following:
+                          Space Jump Boots
+                          L-Jump (Beginner) and Standable Terrain (Beginner)
+                  Scan Visor and Bomb Jump (Advanced) and Combat/Scan Dash (Expert) and Standable Terrain (Intermediate)
+          All of the following:
+              Space Jump Boots
+              Any of the following:
+                  # https://youtu.be/vA9uH9u1RjE
+                  Power Bomb and L-Jump (Intermediate) and Standable Terrain (Intermediate)
+                  # https://youtu.be/Wf1Pz9bXAgQ
+                  R-Jump (Intermediate) and Standable Terrain (Advanced)
+          All of the following:
+              Boost Ball and Morph Ball and Power Bomb ≥ 4 and Wall Boost (Advanced)
+              Any of the following:
+                  Space Jump Boots
+                  L-Jump (Beginner) and Standable Terrain (Beginner)
+
+> Pickup (Items Every Room); Heals? False
+  * Layers: items_every_room
+  * Pickup 204; Category? Minor
+  * Extra - position_required: True
+
+----------------
+Mine Security Station
+Extra - asset_id: 2507085138
+Extra - size_index: 0.6
+Extra - aabb: [-36.12424, -29.465834, -4.4074636, 29.15716, 66.50636, 24.451797]
+> Door to Security Access A; Heals? False; Default Node
+  * Layers: default
+  * Ice Door to Security Access A/Door to Mine Security Station
+  * Extra - dock_index: 0
+  * Extra - nonstandard: False
+  > Room Center
+      Trivial
+
+> Door to Security Access B; Heals? False
+  * Layers: default
+  * Wave Door to Security Access B/Door to Mine Security Station
+  * Extra - dock_index: 1
+  * Extra - nonstandard: False
+  > Room Center
+      Trivial
+
+> Door to Storage Depot A; Heals? False
+  * Layers: default
+  * Plasma Door to Storage Depot A/Door to Mine Security Station
+  * Extra - dock_index: 2
+  * Extra - nonstandard: False
+  > Room Center
+      After Mine Security Station Barrier
+
+> Event - Mine Security Station Barrier Opened; Heals? False
+  * Layers: default
+  * Event Mine Security Station Barrier
+  > Room Center
+      Trivial
+
+> Pickup (Items Every Room); Heals? False
+  * Layers: items_every_room
+  * Pickup 205; Category? Minor
+  * Extra - position_required: True
+
+> Event - Mine Security Station Doors Unlocked; Heals? False
+  * Layers: default
+  * Event Mine Security Station Unlock Doors
+  > Door to Security Access A
+      Trivial
+  > Door to Security Access B
+      Trivial
+  > Room Center
+      Trivial
+
+> Room Center; Heals? False; Spawn Point
+  * Layers: default
+  > Door to Security Access A
+      All of the following:
+          After Mine Security Station Unlock Doors
+          Any of the following:
+              Combat (Intermediate) or Normal Damage ≥ 125
+              Shoot Ice Beam and Shoot Wave Beam
+  > Door to Security Access B
+      All of the following:
+          After Mine Security Station Unlock Doors
+          Any of the following:
+              Combat (Intermediate) or Normal Damage ≥ 125
+              Shoot Ice Beam and Shoot Wave Beam
+  > Door to Storage Depot A
+      After Mine Security Station Barrier
+  > Event - Mine Security Station Barrier Opened
+      Morph Ball and Power Bomb and Scan Visor
+  > Event - Mine Security Station Doors Unlocked
+      All of the following:
+          Before Mine Security Station Unlock Doors and Shoot Wave Beam
+          Any of the following:
+              Charge Beam or Combat (Advanced)
+              Combat (Intermediate) and Normal Damage ≥ 125
+
+----------------
+Research Access
+Extra - asset_id: 1128703815
+Extra - size_index: 0.3
+Extra - aabb: [21.132175, 150.98628, 9.5497265, 67.11244, 174.17516, 75.12991]
+> Door to Ore Processing; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Ice Door to Ore Processing/Door to Research Access
+  * Extra - dock_index: 0
+  * Extra - nonstandard: False
+  > Door to Elite Research
+      Any of the following:
+          Morph Ball and Spider Ball
+          # https://youtu.be/X-6LeSNC5LM?t=757
+          Space Jump Boots and Slope Jump (Intermediate) and Standable Terrain (Advanced)
+
+> Door to Elite Research; Heals? False
+  * Layers: default
+  * Ice Door to Elite Research/Door to Research Access
+  * Extra - dock_index: 1
+  * Extra - nonstandard: False
+  > Door to Ore Processing
+      Trivial
+
+> Pickup (Items Every Room); Heals? False
+  * Layers: items_every_room
+  * Pickup 206; Category? Minor
+  * Extra - position_required: True
+
+----------------
+Storage Depot B
+Extra - asset_id: 3818665003
+Extra - size_index: 0.1
+Extra - aabb: [85.17375, 201.43071, 54.532803, 121.04616, 239.88766, 74.44488]
+> Door to Ore Processing; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Ice Door to Ore Processing/Door to Storage Depot B
+  * Extra - dock_index: 0
+  * Extra - nonstandard: False
+  > Event - Storage Depot B Item
+      Trivial
+
+> Pickup (Grapple Beam); Heals? False
+  * Layers: default
+  * Pickup 75; Category? Major
+  * Extra - position_required: False
+  > Door to Ore Processing
+      Trivial
+
+> Event - Storage Depot B Item; Heals? False
+  * Layers: default
+  * Event Storage Depot B Item
+  > Pickup (Grapple Beam)
+      Trivial
+
+----------------
+Elevator Access A
+Extra - asset_id: 639736833
+Extra - size_index: 0.1
+Extra - aabb: [40.680916, 162.93446, 9.550913, 70.02207, 207.09828, 75.1311]
+> Door to Ore Processing; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Ice Door to Ore Processing/Door to Elevator Access A
+  * Extra - dock_index: 0
+  * Extra - nonstandard: False
+  > Door to Elevator A
+      Trivial
+
+> Door to Elevator A; Heals? False
+  * Layers: default
+  * Ice Door to Elevator A/Door to Elevator Access A
+  * Extra - dock_index: 1
+  * Extra - nonstandard: False
+  > Door to Ore Processing
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Spider Ball
+              # https://youtu.be/X-6LeSNC5LM?t=408
+              Morph Ball Bomb and Space Jump Boots and Bomb Space Jump (Advanced) and Standable Terrain (Expert) and Shoot Wave Beam
+
+> Pickup (Items Every Room); Heals? False
+  * Layers: items_every_room
+  * Pickup 207; Category? Minor
+  * Extra - position_required: True
+
+----------------
+Security Access B
+Extra - asset_id: 2718040532
+Extra - size_index: 0.1
+Extra - aabb: [-37.44287, 53.214096, 5.0618, 7.18207, 140.8923, 33.829872]
+> Door to Elite Research; Heals? False
+  * Layers: default
+  * Ice Door to Elite Research/Door to Security Access B
+  * Extra - dock_index: 0
+  * Extra - nonstandard: False
+  > Door to Mine Security Station
+      Trivial
+
+> Door to Mine Security Station; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Wave Door to Mine Security Station/Door to Security Access B
+  * Extra - dock_index: 1
+  * Extra - nonstandard: False
+  > Door to Elite Research
+      Trivial
+
+> Pickup (Items Every Room); Heals? False
+  * Layers: items_every_room
+  * Pickup 208; Category? Minor
+  * Extra - position_required: True
+
+----------------
+Storage Depot A
+Extra - asset_id: 902158134
+Extra - size_index: 0.1
+Extra - aabb: [-22.358103, 66.50636, -6.551444, 14.069801, 104.96331, 16.117886]
+> Door to Mine Security Station; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Plasma Door to Mine Security Station/Door to Storage Depot A
+  * Extra - dock_index: 0
+  * Extra - nonstandard: False
+  > Pickup (Flamethrower)
+      Trivial
+
+> Pickup (Flamethrower); Heals? False
+  * Layers: default
+  * Pickup 76; Category? Major
+  * Extra - position_required: False
+  > Door to Mine Security Station
+      Trivial
+
+----------------
+Elite Research
+Extra - asset_id: 2325199700
+Extra - size_index: 0.8
+Extra - aabb: [-86.10738, 118.43238, 15.926657, 29.835865, 233.99252, 83.92861]
+> Door to Research Access; Heals? False
+  * Layers: default
+  * Ice Door to Research Access/Door to Elite Research
+  * Extra - dock_index: 0
+  * Extra - nonstandard: False
+  > Top Floor
+      Any of the following:
+          After Elite Research Rock Wall
+          # https://youtu.be/ljX553EUfX4
+          Boost Ball and Morph Ball and Clip Through Objects (Beginner)
+
+> Door to Security Access B; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Ice Door to Security Access B/Door to Elite Research
+  * Extra - dock_index: 1
+  * Extra - nonstandard: False
+  > Pickup (Artifact of Warrior)
+      All of the following:
+          Morph Ball and Power Bomb and Shoot Any Beam
+          After Invisible Drone or Enabled Phazon Elite without Dynamo
+          Charge Beam or Combat (Beginner)
+  > Top Floor
+      All of the following:
+          Scan Visor
+          Any of the following:
+              # Standable for fast ascent: https://youtu.be/ezNh_4a3uNg
+              Space Jump Boots
+              Morph Ball Bomb and Morph Ball and Bomb Jump (Intermediate)
+          Any of the following:
+              Combat (Intermediate) or Normal Damage ≥ 125
+              Shoot Power Beam and Shoot Wave Beam
+          Normal Damage ≥ 200 or Shoot Any Beam
+
+> Event - Rock Wall in Elite Research Destroyed; Heals? False
+  * Layers: default
+  * Event Elite Research Rock Wall
+  > Top Floor
+      Trivial
+
+> Pickup (Missile); Heals? False
+  * Layers: default
+  * Pickup 78; Category? Minor
+  * Extra - position_required: False
+  > Top Floor
+      Any of the following:
+          All of the following:
+              After Elite Research Rock Wall
+              Any of the following:
+                  Space Jump Boots or Combat/Scan Dash (Intermediate) or Standable Terrain (Beginner)
+                  Scan Visor and Combat/Scan Dash (Beginner)
+          Boost Ball and Morph Ball and Clip Through Objects (Advanced)
+
+> Pickup (Artifact of Warrior); Heals? False
+  * Layers: default
+  * Pickup 77; Category? Major
+  > Door to Security Access B
+      Trivial
+
+> Top Floor; Heals? False
+  * Layers: default
+  > Door to Research Access
+      After Elite Research Rock Wall
+  > Door to Security Access B
+      Any of the following:
+          Combat (Intermediate) or Normal Damage ≥ 125
+          Shoot Power Beam and Shoot Wave Beam
+  > Event - Rock Wall in Elite Research Destroyed
+      All of the following:
+          Morph Ball and Scan Visor
+          Any of the following:
+              # https://youtu.be/qQOtfh5u_bQ
+              Morph Ball Bomb and Spinners without Boost (Intermediate)
+              All of the following:
+                  Boost Ball
+                  Any of the following:
+                      Morph Ball Bomb
+                      Power Bomb and Knowledge (Beginner)
+  > Pickup (Missile)
+      Any of the following:
+          All of the following:
+              After Elite Research Rock Wall
+              Any of the following:
+                  Space Jump Boots or Combat/Scan Dash (Intermediate) or Standable Terrain (Beginner)
+                  Scan Visor and Combat/Scan Dash (Beginner)
+          Boost Ball and Morph Ball and Space Jump Boots and Clip Through Objects (Expert) and Single Room Out of Bounds (Expert) and Standable Terrain (Advanced)
+
+----------------
+Elevator A
+Extra - asset_id: 21425475
+Extra - size_index: 0.6
+Extra - aabb: [2.163498, 185.95581, -70.273094, 40.68094, 212.25165, 21.601616]
+> Door to Elevator Access A; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Ice Door to Elevator Access A/Door to Elevator A
+  * Extra - dock_index: 0
+  * Extra - nonstandard: False
+  > Door to Elite Control Access
+      Scan Visor
+
+> Door to Elite Control Access; Heals? False
+  * Layers: default
+  * Ice Door to Elite Control Access/Door to Elevator A
+  * Extra - dock_index: 1
+  * Extra - nonstandard: False
+  > Door to Elevator Access A
+      Trivial
+
+> Pickup (Items Every Room); Heals? False
+  * Layers: items_every_room
+  * Pickup 209; Category? Minor
+  * Extra - position_required: True
+
+----------------
+Elite Control Access
+Extra - asset_id: 2307445195
+Extra - size_index: 0.1
+Extra - aabb: [39.633324, 157.56491, -80.02066, 95.99235, 211.56596, -47.37211]
+> Door to Elevator A; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Ice Door to Elevator A/Door to Elite Control Access
+  * Extra - dock_index: 0
+  * Extra - nonstandard: False
+  > Door to Elite Control
+      Trivial
+  > Pickup (Missile)
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Space Jump Boots
+              # https://youtu.be/yIYfpeVsYCU
+              Morph Ball Bomb and Complex Bomb Jump (Expert)
+              # https://www.youtube.com/watch?v=2kknFYIyAEo
+              Damage Boosting (Expert) and Normal Damage ≥ 100
+
+> Door to Elite Control; Heals? False
+  * Layers: default
+  * Wave Door to Elite Control/Door to Elite Control Access
+  * Extra - dock_index: 1
+  * Extra - nonstandard: False
+  > Door to Elevator A
+      Any of the following:
+          Space Jump Boots
+          All of the following:
+              Morph Ball
+              Any of the following:
+                  Morph Ball Bomb and Bomb Jump (Beginner)
+                  # https://www.youtube.com/watch?v=8jxY6XLwTzE
+                  Boost Ball and Wall Boost (Beginner)
+
+> Pickup (Missile); Heals? False
+  * Layers: default
+  * Pickup 79; Category? Minor
+  * Extra - position_required: False
+  > Door to Elite Control
+      Trivial
+
+----------------
+Elite Control
+Extra - asset_id: 3305828730
+Extra - size_index: 0.6
+Extra - aabb: [-18.74421, 79.04062, -74.48461, 91.819305, 157.94768, -0.48807144]
+> Door to Maintenance Tunnel; Heals? False
+  * Layers: default
+  * Ice Door to Maintenance Tunnel/Door to Elite Control
+  * Extra - dock_index: 0
+  * Extra - nonstandard: False
+  > Bottom Floor Center
+      Trivial
+
+> Door to Elite Control Access; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Wave Door to Elite Control Access/Door to Elite Control
+  * Extra - dock_index: 1
+  * Extra - nonstandard: False
+  > Event - Elite Pirate Defeated
+      # https://youtu.be/mx0rQa9ZAY4
+      Charge Beam or Combat (Beginner) or Normal Damage ≥ 200
+  > Bottom Floor Center
+      Any of the following:
+          After Elite Pirate Fight (Elite Control)
+          # https://youtu.be/86eWOxO83Zk
+          Movement (Intermediate) and Standable Terrain (Advanced)
+
+> Door to Ventilation Shaft; Heals? False
+  * Layers: default
+  * Ice Door to Ventilation Shaft/Door to Elite Control
+  * Extra - dock_index: 2
+  * Extra - nonstandard: False
+  > Event - Elite Control Barriers Lowered
+      Scan Visor and Enabled Backwards Lower Mines
+  > Bottom Floor Center
+      After Elite Control Barriers
+
+> Event - Elite Control Barriers Lowered; Heals? False
+  * Layers: default
+  * Event Elite Control Barriers
+  > Bottom Floor Center
+      Trivial
+
+> Event - Elite Pirate Defeated; Heals? False
+  * Layers: default
+  * Event Elite Pirate Fight (Elite Control)
+  > Bottom Floor Center
+      Trivial
+
+> Bottom Floor Center; Heals? False
+  * Layers: default
+  > Door to Maintenance Tunnel
+      Trivial
+  > Door to Elite Control Access
+      Any of the following:
+          After Elite Pirate Fight (Elite Control)
+          # https://youtu.be/lmEsr1Y1izM
+          Movement (Beginner) and Standable Terrain (Intermediate)
+  > Door to Ventilation Shaft
+      All of the following:
+          After Elite Control Barriers
+          Any of the following:
+              # https://youtu.be/VOesQWYfL-4
+              Standable Terrain (Intermediate)
+              All of the following:
+                  After Elite Pirate Fight (Elite Control)
+                  Combat (Intermediate) or Normal Damage ≥ 125 or Shoot Ice Beam
+  > Event - Elite Control Barriers Lowered
+      All of the following:
+          Scan Visor
+          Any of the following:
+              After Elite Pirate Fight (Elite Control)
+              # https://youtu.be/VOesQWYfL-4
+              Standable Terrain (Intermediate)
+  > Event - Elite Pirate Defeated
+      # https://youtu.be/mx0rQa9ZAY4
+      Charge Beam or Combat (Beginner) or Normal Damage ≥ 200
+
+> Pickup (Items Every Room); Heals? False
+  * Layers: items_every_room
+  * Pickup 210; Category? Minor
+  * Extra - position_required: True
+
+----------------
+Maintenance Tunnel
+Extra - asset_id: 3975146125
+Extra - size_index: 0.1
+Extra - aabb: [-83.276855, 61.53632, -74.12119, 1.8154144, 130.33823, -51.051174]
+> Door to Elite Control; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Ice Door to Elite Control/Door to Maintenance Tunnel
+  * Extra - dock_index: 0
+  * Extra - nonstandard: False
+  > Door to Phazon Processing Center
+      Morph Ball and Power Bomb
+
+> Door to Phazon Processing Center; Heals? False
+  * Layers: default
+  * Ice Door to Phazon Processing Center/Door to Maintenance Tunnel
+  * Extra - dock_index: 1
+  * Extra - nonstandard: False
+  > Door to Elite Control
+      Morph Ball and Power Bomb
+
+> Pickup (Items Every Room); Heals? False
+  * Layers: items_every_room
+  * Pickup 211; Category? Minor
+  * Extra - position_required: True
+
+----------------
+Ventilation Shaft
+Extra - asset_id: 2423298732
+Extra - size_index: 0.3
+Extra - aabb: [5.424013, 33.537285, -58.636707, 65.094376, 96.8914, -32.222157]
+> Door to Omega Research; Heals? False
+  * Layers: default
+  * Ice Door to Omega Research/Door to Ventilation Shaft
+  * Extra - dock_index: 0
+  * Extra - nonstandard: False
+  > Door to Elite Control
+      Any of the following:
+          All of the following:
+              Morph Ball
+              Any of the following:
+                  Boost Ball
+                  All of the following:
+                      Morph Ball Bomb
+                      Any of the following:
+                          Complex Bomb Jump (Hypermode)
+                          Space Jump Boots and Complex Bomb Jump (Expert)
+          # https://youtu.be/P5YAnNux51U
+          Space Jump Boots and Combat/Scan Dash (Expert) and Standable Terrain (Intermediate) and Disabled Dock Rando
+  > Pickup (Energy Tank)
+      Morph Ball and Power Bomb and Scan Visor
+
+> Door to Elite Control; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Ice Door to Elite Control/Door to Ventilation Shaft
+  * Extra - dock_index: 1
+  * Extra - nonstandard: False
+  > Door to Omega Research
+      Trivial
+
+> Pickup (Energy Tank); Heals? False
+  * Layers: default
+  * Pickup 80; Category? Minor
+  * Extra - position_required: False
+  > Door to Omega Research
+      Trivial
+
+----------------
+Phazon Processing Center
+Extra - asset_id: 2905505465
+Extra - size_index: 0.6
+Extra - aabb: [-132.15839, 87.526505, -111.61871, -26.354706, 153.05708, -8.02652]
+> Door to Transport Access; Heals? False
+  * Layers: default
+  * Ice Door to Transport Access/Door to Phazon Processing Center
+  * Extra - dock_index: 0
+  * Extra - nonstandard: False
+  > Door to Maintenance Tunnel
+      Trivial
+
+> Door to Maintenance Tunnel; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Ice Door to Maintenance Tunnel/Door to Phazon Processing Center
+  * Extra - dock_index: 1
+  * Extra - nonstandard: False
+  > Door to Transport Access
+      All of the following:
+          Any of the following:
+              All of the following:
+                  Space Jump Boots
+                  Any of the following:
+                      # Halfway up: https://youtu.be/vOr2W2ut25k All the way up: https://youtu.be/gU2yAun0Zvg
+                      Standable Terrain (Intermediate)
+                      Morph Ball and Spider Ball
+              All of the following:
+                  Morph Ball Bomb and Morph Ball
+                  Any of the following:
+                      Spider Ball and Bomb Jump (Expert) and Standable Terrain (Expert)
+                      Complex Bomb Jump (Hypermode) and L-Jump (Expert) and Standable Terrain (Hypermode)
+          Any of the following:
+              Before Plasma Processing Item
+              All of the following:
+                  After Plasma Processing Item
+                  Any of the following:
+                      Combat (Intermediate) or Normal Damage ≥ 200
+                      Shoot Plasma Beam and Shoot Power Beam and Shoot Wave Beam
+  > Door to Processing Center Access
+      Any of the following:
+          Phazon Suit
+          Movement (Beginner) and Phazon Damage ≥ 45
+  > Pickup (Missile)
+      Morph Ball and Power Bomb
+
+> Door to Processing Center Access; Heals? False
+  * Layers: default
+  * Plasma Door to Processing Center Access/Door to Phazon Processing Center
+  * Extra - dock_index: 2
+  * Extra - nonstandard: False
+  > Door to Maintenance Tunnel
+      All of the following:
+          Any of the following:
+              All of the following:
+                  Space Jump Boots
+                  Any of the following:
+                      Phazon Suit
+                      Movement (Beginner) and Phazon Damage ≥ 45
+                  Any of the following:
+                      # https://youtu.be/SjS_b_HBmqE
+                      Standable Terrain (Beginner)
+                      Morph Ball Bomb and Morph Ball and Spider Ball
+              All of the following:
+                  Morph Ball Bomb and Morph Ball and L-Jump (Advanced) and Standable Terrain (Advanced) and Phazon Damage ≥ 65
+                  Any of the following:
+                      Spider Ball and Bomb Jump (Advanced)
+                      Bomb Space Jump (Expert) and Complex Bomb Jump (Expert)
+          Any of the following:
+              Before Plasma Processing Item
+              All of the following:
+                  After Plasma Processing Item
+                  Any of the following:
+                      Combat (Intermediate) or Normal Damage ≥ 125
+                      Shoot Plasma Beam and Shoot Power Beam and Shoot Wave Beam
+  > Pickup (Missile)
+      All of the following:
+          Morph Ball and Power Bomb and Space Jump Boots
+          # https://youtu.be/cxZ7-YewvDw
+          Thermal Visor or X-Ray Visor or Invisible Objects (Beginner)
+          Any of the following:
+              Before Plasma Processing Item
+              All of the following:
+                  After Plasma Processing Item
+                  Any of the following:
+                      Combat (Intermediate) or Normal Damage ≥ 125
+                      Shoot Plasma Beam and Shoot Power Beam and Shoot Wave Beam
+
+> Pickup (Missile); Heals? False
+  * Layers: default
+  * Pickup 81; Category? Minor
+  * Extra - position_required: False
+  > Door to Maintenance Tunnel
+      All of the following:
+          Any of the following:
+              Space Jump Boots
+              All of the following:
+                  Morph Ball Bomb and Morph Ball
+                  Any of the following:
+                      L-Jump (Intermediate)
+                      Bomb Jump (Intermediate) and Invisible Objects (Beginner)
+                  Any of the following:
+                      Complex Bomb Jump (Advanced) and Invisible Objects (Beginner)
+                      Bomb Jump (Advanced) and Combat/Scan Dash (Advanced) and Standable Terrain (Advanced)
+          X-Ray Visor or Invisible Objects (Beginner)
+  > Door to Processing Center Access
+      Trivial
+
+----------------
+Omega Research
+Extra - asset_id: 1060593356
+Extra - size_index: 0.8
+Extra - aabb: [-30.495464, -73.79053, -86.16589, 78.22917, 33.54581, 12.443928]
+> Door to Map Station Mines; Heals? False
+  * Layers: default
+  * Ice Door to Map Station Mines/Door to Omega Research
+  * Extra - dock_index: 0
+  * Extra - nonstandard: False
+  > Door to Ventilation Shaft
+      Morph Ball and Power Bomb
+
+> Door to Ventilation Shaft; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Ice Door to Ventilation Shaft/Door to Omega Research
+  * Extra - dock_index: 1
+  * Extra - nonstandard: False
+  > Door to Map Station Mines
+      Morph Ball and Power Bomb
+  > Door to Dynamo Access
+      Any of the following:
+          Combat (Intermediate) or Normal Damage ≥ 125
+          Shoot Power Beam and Shoot Wave Beam
+
+> Door to Dynamo Access; Heals? False
+  * Layers: default
+  * Ice Door to Dynamo Access/Door to Omega Research
+  * Extra - dock_index: 2
+  * Extra - nonstandard: False
+  > Door to Ventilation Shaft
+      All of the following:
+          Scan Visor or After Invisible Drone
+          Any of the following:
+              Space Jump Boots
+              Morph Ball Bomb and Morph Ball and Bomb Jump (Beginner)
+              # https://youtu.be/uxpkppiw3O8
+              Slope Jump (Intermediate)
+          Any of the following:
+              Combat (Intermediate) or Normal Damage ≥ 125
+              Shoot Power Beam and Shoot Wave Beam
+
+> Pickup (Items Every Room); Heals? False
+  * Layers: items_every_room
+  * Pickup 212; Category? Minor
+  * Extra - position_required: True
+
+----------------
+Transport Access
+Extra - asset_id: 1120185073
+Extra - size_index: 0.1
+Extra - aabb: [-131.295, 131.10147, -26.54456, -111.45558, 193.1018, -4.131468]
+> Door to Phazon Processing Center; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Ice Door to Phazon Processing Center/Door to Transport Access
+  * Extra - dock_index: 0
+  * Extra - nonstandard: False
+  > Door to Transport to Magmoor Caverns South
+      Space Jump Boots or Slope Jump (Beginner) or Use Grapple Beam
+
+> Door to Transport to Magmoor Caverns South; Heals? False
+  * Layers: default
+  * Ice Door to Transport to Magmoor Caverns South/Door to Transport Access
+  * Extra - dock_index: 1
+  * Extra - nonstandard: False
+  > Door to Phazon Processing Center
+      Space Jump Boots or Slope Jump (Beginner) or Use Grapple Beam
+
+> Pickup (Items Every Room); Heals? False
+  * Layers: items_every_room
+  * Pickup 213; Category? Minor
+  * Extra - position_required: True
+
+----------------
+Processing Center Access
+Extra - asset_id: 3983402811
+Extra - size_index: 0.1
+Extra - aabb: [-163.20789, 71.449905, -117.49063, -119.851204, 124.62913, -96.187004]
+> Door to Phazon Processing Center; Heals? False
+  * Layers: default
+  * Plasma Door to Phazon Processing Center/Door to Processing Center Access
+  * Extra - dock_index: 0
+  * Extra - nonstandard: False
+  > Door to Elite Quarters
+      All of the following:
+          After Processing Center Access Barrier or Enabled Backwards Lower Mines
+          Any of the following:
+              Phazon Suit
+              Movement (Beginner) and Phazon Damage ≥ 99
+
+> Door to Elite Quarters; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Plasma Door to Elite Quarters/Door to Processing Center Access
+  * Extra - dock_index: 1
+  * Extra - nonstandard: False
+  > Door to Phazon Processing Center
+      All of the following:
+          After Processing Center Access Barrier
+          Any of the following:
+              Phazon Suit
+              Movement (Beginner) and Phazon Damage ≥ 199
+              Movement (Intermediate) and Phazon Damage ≥ 99
+  > Event - Processing Center Access Barrier Opened
+      Scan Visor
+  > Pickup (Energy Tank)
+      Trivial
+
+> Event - Processing Center Access Barrier Opened; Heals? False
+  * Layers: default
+  * Event Processing Center Access Barrier
+  > Door to Elite Quarters
+      Trivial
+
+> Pickup (Energy Tank); Heals? False
+  * Layers: default
+  * Pickup 82; Category? Minor
+  * Extra - position_required: False
+  > Door to Elite Quarters
+      Trivial
+
+----------------
+Map Station Mines
+Extra - asset_id: 428864988
+Extra - size_index: 0.1
+Extra - aabb: [20.17642, -77.24749, -77.06698, 39.075035, -49.53195, -34.70632]
+> Door to Omega Research; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Ice Door to Omega Research/Door to Map Station Mines
+  * Extra - dock_index: 0
+  * Extra - nonstandard: False
+  > Map Station
+      Trivial
+
+> Map Station; Heals? False
+  * Layers: default
+  > Door to Omega Research
+      Trivial
+
+> Pickup (Items Every Room); Heals? False
+  * Layers: items_every_room
+  * Pickup 214; Category? Minor
+  * Extra - position_required: True
+
+----------------
+Dynamo Access
+Extra - asset_id: 4111966698
+Extra - size_index: 0.1
+Extra - aabb: [57.918835, -49.629333, -88.16487, 129.05498, -6.0125637, -65.82009]
+> Door to Central Dynamo; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Ice Door to Central Dynamo/Door to Dynamo Access
+  * Extra - dock_index: 0
+  * Extra - nonstandard: False
+  > Door to Omega Research
+      No Plasma Beam or After Elite Pirate Fight (Dynamo Access)
+  > Event - Elite Pirate Fight
+      Plasma Beam
+
+> Door to Omega Research; Heals? False
+  * Layers: default
+  * Ice Door to Omega Research/Door to Dynamo Access
+  * Extra - dock_index: 1
+  * Extra - nonstandard: False
+  > Door to Central Dynamo
+      No Plasma Beam or After Elite Pirate Fight (Dynamo Access)
+  > Event - Elite Pirate Fight
+      Plasma Beam
+
+> Event - Elite Pirate Fight; Heals? False
+  * Layers: default
+  * Event Elite Pirate Fight (Dynamo Access)
+  > Door to Omega Research
+      # https://youtu.be/20peXRPG-e0
+      Charge Beam or Combat (Beginner) or Normal Damage ≥ 200
+
+> Pickup (Items Every Room); Heals? False
+  * Layers: items_every_room
+  * Pickup 215; Category? Minor
+  * Extra - position_required: True
+
+----------------
+Transport to Magmoor Caverns South
+Extra - asset_id: 3804417848
+Extra - size_index: 0.3
+Extra - aabb: [-143.05084, 192.08687, -49.47048, -104.58562, 236.35016, 27.738552]
+> Door to Transport Access; Heals? False
+  * Layers: default
+  * Ice Door to Transport Access/Door to Transport to Magmoor Caverns South
+  * Extra - dock_index: 0
+  * Extra - nonstandard: False
+  > Teleporter to Magmoor Caverns
+      Trivial
+
+> Teleporter to Magmoor Caverns; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Teleporter to Transport to Phazon Mines West/Teleporter to Phazon Mines
+  * Extra - scan_asset_id: 495694188
+  * Extra - teleporter_instance_id: 1638417
+  > Door to Transport Access
+      Trivial
+
+> Pickup (Items Every Room); Heals? False
+  * Layers: items_every_room
+  * Pickup 216; Category? Minor
+  * Extra - position_required: True
+
+----------------
+Elite Quarters
+Extra - asset_id: 961790803
+Extra - size_index: 0.8
+Extra - aabb: [-209.90451, -63.744553, -141.35068, -99.78124, 74.70173, -75.977715]
+> Door to Elite Quarters Access; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Plasma Door to Elite Quarters Access/Door to Elite Quarters
+  * Extra - dock_index: 0
+  * Extra - nonstandard: False
+  > Door to Processing Center Access
+      All of the following:
+          After Omega Pirate
+          Any of the following:
+              Scan Visor
+              # https://www.youtube.com/watch?v=fMCAymS0zYE
+              Morph Ball Bomb and Morph Ball and Space Jump Boots and Bomb Space Jump (Advanced) and Slope Jump (Intermediate) and Standable Terrain (Beginner)
+  > Fight Trigger
+      Trivial
+
+> Door to Processing Center Access; Heals? False
+  * Layers: default
+  * Plasma Door to Processing Center Access/Door to Elite Quarters
+  * Extra - dock_index: 1
+  * Extra - nonstandard: False
+  > Door to Elite Quarters Access
+      After Omega Pirate
+  > Fight Trigger
+      Trivial
+
+> Event - Omega Pirate; Heals? False
+  * Layers: default
+  * Event Omega Pirate
+  > Pickup (Phazon Suit)
+      Trivial
+
+> Pickup (Phazon Suit); Heals? False
+  * Layers: default
+  * Pickup 83; Category? Major
+  * Extra - position_required: False
+  > Door to Elite Quarters Access
+      Trivial
+
+> Fight Trigger; Heals? False
+  * Layers: default
+  > Event - Omega Pirate
+      All of the following:
+          X-Ray Visor and Shoot Any Beam
+          Any of the following:
+              Combat (Hypermode)
+              Charge Beam and Normal Damage ≥ 300 and Have all Beams
+              All of the following:
+                  Charge Beam and Combat (Beginner) and Normal Damage ≥ 200
+                  Any of the following:
+                      # https://youtu.be/xJxxT3yuXZ8 1-Cycle Strats
+                      Plasma Beam
+                      All of the following:
+                          # https://youtu.be/lX3IAoDGC30
+                          Shoot Super Missile
+                          Any of the following:
+                              Missile ≥ 60
+                              Missile ≥ 30 and Disabled Hard Mode
+              # https://youtu.be/kAvAMLyvQTk
+              Morph Ball and Power Bomb ≥ 3 and Combat (Advanced)
+              Combat (Expert) and Normal Damage ≥ 300
+              Combat (Intermediate) and Normal Damage ≥ 500
+              Combat (Beginner) and Normal Damage ≥ 800
+
+----------------
+Central Dynamo
+Extra - asset_id: 4272124642
+Extra - size_index: 0.8
+Extra - aabb: [122.126015, -44.231895, -102.18276, 201.19897, 105.61425, -30.731926]
+> Door to Dynamo Access; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Ice Door to Dynamo Access/Door to Central Dynamo
+  * Extra - dock_index: 0
+  * Extra - nonstandard: False
+  > Fight Trigger
+      Trivial
+
+> Door to Quarantine Access A; Heals? False
+  * Layers: default
+  * Ice Door to Quarantine Access A/Door to Central Dynamo
+  * Extra - dock_index: 1
+  * Extra - nonstandard: False
+  > Pickup (Main Power Bombs)
+      All of the following:
+          # Achieving the Infinite Speed without going up to hit the fight trigger: https://youtu.be/LRmJn2BAYwc
+          Boost Ball and Morph Ball and Infinite Speed (Intermediate) and Normal Damage ≥ 280
+          Morph Ball Bomb or Power Bomb
+  > Room Bottom
+      Morph Ball and Power Bomb
+
+> Door to Save Station Mines B; Heals? False
+  * Layers: default
+  * Ice Door to Save Station Mines B/Door to Central Dynamo
+  * Extra - dock_index: 2
+  * Extra - nonstandard: False
+  > Room Bottom
+      Trivial
+
+> Event - Security Drone; Heals? False
+  * Layers: default
+  * Event Invisible Drone
+  > Pickup (Main Power Bombs)
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Morph Ball Bomb
+              # Destroying the drone requires Samus being able to take 400 more damage during item acquisition. The video shows how to avoid destroying it. https://youtu.be/LRmJn2BAYwc
+              Boost Ball and Power Bomb and Infinite Speed (Intermediate) and Normal Damage ≥ 680
+
+> Pickup (Main Power Bombs); Heals? False
+  * Layers: default
+  * Pickup 84; Category? Major
+  * Extra - position_required: False
+  > Room Bottom
+      Trivial
+
+> Fight Trigger; Heals? False
+  * Layers: default
+  > Door to Dynamo Access
+      After Invisible Drone
+  > Event - Security Drone
+      # Easy kills - Wavebuster (no X-Ray): https://youtu.be/3Y2n-boOGUw Super Missiles: https://youtu.be/aprVv7pePYc
+      Combat (Beginner) or Normal Damage ≥ 100
+  > Pickup (Main Power Bombs)
+      # Skipping the Security Drone trigger to take 400 less damage during item acquisition: https://youtu.be/LRmJn2BAYwc
+      Boost Ball and Morph Ball and Power Bomb and Infinite Speed (Intermediate) and Knowledge (Advanced) and Normal Damage ≥ 280
+  > Room Bottom
+      Trivial
+
+> Room Bottom; Heals? False
+  * Layers: default
+  > Door to Quarantine Access A
+      All of the following:
+          # The Security Drone event triggers door locks on all doors in Central Dynamo except for the door to Quarantine Access A.
+          Morph Ball and Power Bomb
+          Any of the following:
+              Knowledge (Beginner)
+              All of the following:
+                  After Invisible Drone
+                  Ice Beam or Combat (Intermediate) or Normal Damage ≥ 200
+  > Door to Save Station Mines B
+      Before Invisible Drone or Combat (Intermediate) or Normal Damage ≥ 200 or Shoot Ice Beam
+  > Fight Trigger
+      All of the following:
+          Any of the following:
+              # Fast climb with Standable: https://youtu.be/MtpgWKgaF-U
+              Space Jump Boots
+              # https://youtu.be/GTSoLLbo2vk
+              Morph Ball Bomb and Morph Ball and Complex Bomb Jump (Expert) and Standable Terrain (Intermediate)
+          Before Invisible Drone or Combat (Intermediate) or Normal Damage ≥ 125 or Shoot Ice Beam
+
+----------------
+Elite Quarters Access
+Extra - asset_id: 1899248703
+Extra - size_index: 0.1
+Extra - aabb: [-162.80762, -94.60118, -150.71225, -105.42819, -56.492065, -124.98163]
+> Door to Metroid Quarantine B; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Plasma Door to Metroid Quarantine B/Door to Elite Quarters Access
+  * Extra - dock_index: 0
+  * Extra - nonstandard: False
+  > Door to Elite Quarters
+      After Elite Quarters Access Barrier
+  > Event - Elite Quarters Access Barrier Opened
+      Shoot Plasma Beam
+
+> Door to Elite Quarters; Heals? False
+  * Layers: default
+  * Plasma Door to Elite Quarters/Door to Elite Quarters Access
+  * Extra - dock_index: 1
+  * Extra - nonstandard: False
+  > Door to Metroid Quarantine B
+      After Elite Quarters Access Barrier
+  > Event - Elite Quarters Access Barrier Opened
+      Enabled Backwards Lower Mines
+
+> Event - Elite Quarters Access Barrier Opened; Heals? False
+  * Layers: default
+  * Event Elite Quarters Access Barrier
+  > Door to Metroid Quarantine B
+      Trivial
+
+> Pickup (Items Every Room); Heals? False
+  * Layers: items_every_room
+  * Pickup 217; Category? Minor
+  * Extra - position_required: True
+
+----------------
+Quarantine Access A
+Extra - asset_id: 1522461728
+Extra - size_index: 0.3
+Extra - aabb: [127.70681, 85.29369, -96.93268, 177.26456, 146.28539, -74.011665]
+> Door to Central Dynamo; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Ice Door to Central Dynamo/Door to Quarantine Access A
+  * Extra - dock_index: 0
+  * Extra - nonstandard: False
+  > Door to Metroid Quarantine A
+      Trivial
+
+> Door to Metroid Quarantine A; Heals? False
+  * Layers: default
+  * Wave Door to Metroid Quarantine A/Door to Quarantine Access A
+  * Extra - dock_index: 1
+  * Extra - nonstandard: False
+  > Door to Central Dynamo
+      Trivial
+
+> Pickup (Items Every Room); Heals? False
+  * Layers: items_every_room
+  * Pickup 218; Category? Minor
+  * Extra - position_required: True
+
+----------------
+Save Station Mines B
+Extra - asset_id: 2077614267
+Extra - size_index: 0.1
+Extra - unlocked_save_station: True
+Extra - aabb: [164.23203, -42.884247, -96.278015, 187.07254, -18.917255, -87.71871]
+> Door to Central Dynamo; Heals? False
+  * Layers: default
+  * Ice Door to Central Dynamo/Door to Save Station Mines B
+  * Extra - dock_index: 0
+  * Extra - nonstandard: False
+  > Save Station
+      Trivial
+
+> Save Station; Heals? True; Spawn Point; Default Node
+  * Layers: default
+  > Door to Central Dynamo
+      Trivial
+
+> Pickup (Items Every Room); Heals? False
+  * Layers: items_every_room
+  * Pickup 219; Category? Minor
+  * Extra - position_required: True
+
+----------------
+Metroid Quarantine B
+Extra - asset_id: 3141205070
+Extra - size_index: 0.6
+Extra - aabb: [-108.57961, -160.31125, -168.22823, 77.58658, -50.59403, -92.429504]
+> Door to Quarantine Access B; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Plasma Door to Quarantine Access B/Door to Metroid Quarantine B
+  * Extra - dock_index: 0
+  * Extra - nonstandard: False
+  > Front of Barrier
+      Any of the following:
+          All of the following:
+              Space Jump Boots
+              Any of the following:
+                  All of the following:
+                      # https://www.youtube.com/watch?v=h9of56WsG4s
+                      Slope Jump (Beginner) and Standable Terrain (Intermediate)
+                      L-Jump (Intermediate) or Use Grapple Beam
+                  # https://www.youtube.com/watch?v=v3VMpJELp_4
+                  Combat/Scan Dash (Advanced)
+              Any of the following:
+                  Shoot Plasma Beam
+                  Combat (Advanced) and Normal Damage ≥ 125
+          All of the following:
+              Morph Ball
+              Any of the following:
+                  All of the following:
+                      Spider Ball
+                      Any of the following:
+                          Use Grapple Beam
+                          Scan Visor and Combat/Scan Dash (Expert)
+                  # https://youtu.be/wXxYBRIgDb4?t=62
+                  Morph Ball Bomb and Scan Visor and Complex Bomb Jump (Expert) and Combat/Scan Dash (Expert) and Standable Terrain (Intermediate)
+                  All of the following:
+                      # https://youtu.be/Ic3nXNhiUP8?t=16
+                      Morph Ball Bomb and Complex Bomb Jump (Hypermode)
+                      Phazon Suit or Phazon Damage ≥ 249
+              Combat (Intermediate) or Normal Damage ≥ 200 or Shoot Plasma Beam
+
+> Door to Elite Quarters Access; Heals? False
+  * Layers: default
+  * Plasma Door to Elite Quarters Access/Door to Metroid Quarantine B
+  * Extra - dock_index: 1
+  * Extra - nonstandard: False
+  > Door to Save Station Mines C
+      Any of the following:
+          Combat (Intermediate) or Normal Damage ≥ 125
+          Shoot Plasma Beam and Shoot Wave Beam
+
+> Door to Save Station Mines C; Heals? False
+  * Layers: default
+  * Plasma Door to Save Station Mines C/Door to Metroid Quarantine B
+  * Extra - dock_index: 2
+  * Extra - nonstandard: False
+  > Door to Quarantine Access B
+      All of the following:
+          Boost Ball and Morph Ball and Clip Through Objects (Advanced)
+          Any of the following:
+              Space Jump Boots and Single Room Out of Bounds (Advanced) and Standable Terrain (Advanced)
+              Morph Ball Bomb and Bomb Jump (Advanced) and Complex Bomb Jump (Expert) and Single Room Out of Bounds (Expert) and Standable Terrain (Hypermode)
+          Any of the following:
+              Combat (Intermediate) or Normal Damage ≥ 200
+              Shoot Plasma Beam and Shoot Wave Beam
+  > Door to Elite Quarters Access
+      All of the following:
+          Any of the following:
+              Space Jump Boots
+              Morph Ball Bomb and Morph Ball and Bomb Jump (Beginner)
+              # https://youtu.be/MwycHUSwAaQ?t=10
+              Slope Jump (Beginner)
+              # https://youtu.be/MwycHUSwAaQ
+              Scan Visor and Combat/Scan Dash (Beginner) and Standable Terrain (Beginner)
+          Any of the following:
+              Combat (Intermediate) or Normal Damage ≥ 125
+              Shoot Plasma Beam and Shoot Wave Beam
+  > Pickup (Missile)
+      Shoot Super Missile
+  > Event - Metroid Quarantine B Barrier Lowered
+      Scan Visor and Enabled Backwards Lower Mines
+  > Front of Barrier
+      After Metroid Quarantine B Barrier
+
+> Pickup (Missile); Heals? False
+  * Layers: default
+  * Pickup 85; Category? Minor
+  * Extra - position_required: False
+  > Door to Save Station Mines C
+      Trivial
+
+> Event - Metroid Quarantine B Barrier Lowered; Heals? False
+  * Layers: default
+  * Event Metroid Quarantine B Barrier
+  > Front of Barrier
+      Trivial
+
+> Front of Barrier; Heals? False
+  * Layers: default
+  > Door to Quarantine Access B
+      All of the following:
+          Any of the following:
+              Space Jump Boots
+              Morph Ball Bomb and Morph Ball and Bomb Jump (Beginner) and Phazon Damage ≥ 150
+              Slope Jump (Beginner) and Phazon Damage ≥ 50
+          Combat (Intermediate) or Normal Damage ≥ 200 or Shoot Plasma Beam
+  > Door to Save Station Mines C
+      After Metroid Quarantine B Barrier
+  > Event - Metroid Quarantine B Barrier Lowered
+      Scan Visor
+
+----------------
+Metroid Quarantine A
+Extra - asset_id: 4211416922
+Extra - size_index: 0.6
+Extra - aabb: [111.66573, 146.28539, -114.17708, 246.21591, 324.61493, -51.890182]
+> Door to Quarantine Access A; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Wave Door to Quarantine Access A/Door to Metroid Quarantine A
+  * Extra - dock_index: 0
+  * Extra - nonstandard: False
+  > Event - Metroid Quarantine A Barrier Lowered
+      Scan Visor
+  > Front of Spider Track (Wall)
+      All of the following:
+          After Metroid Quarantine A Barrier
+          Any of the following:
+              X-Ray Visor or Invisible Objects (Intermediate)
+              Thermal Visor and Invisible Objects (Beginner)
+          Any of the following:
+              Space Jump Boots
+              # https://youtu.be/x036CC58IZ8?t=9
+              Morph Ball Bomb and Morph Ball and Bomb Jump (Expert) and L-Jump (Advanced)
+  > Front of Spider Track (Bridge)
+      All of the following:
+          Shoot Ice Beam
+          Any of the following:
+              L-Jump (Beginner) and Jump Off Enemies (Expert)
+              Space Jump Boots and Jump Off Enemies (Advanced)
+
+> Door to Elevator Access B; Heals? False
+  * Layers: default
+  * Ice Door to Elevator Access B/Door to Metroid Quarantine A
+  * Extra - dock_index: 1
+  * Extra - nonstandard: False
+  > Door to Quarantine Access A
+      All of the following:
+          After Metroid Quarantine A Barrier or Enabled Backwards Lower Mines
+          Any of the following:
+              Space Jump Boots
+              Morph Ball Bomb and Morph Ball and Bomb Jump (Beginner) and Phazon Damage ≥ 200
+              Slope Jump (Intermediate) and Phazon Damage ≥ 150
+  > Pickup (Missile)
+      All of the following:
+          Space Jump Boots and Standable Terrain (Intermediate)
+          Any of the following:
+              Scan Visor and Combat/Scan Dash (Advanced)
+              Movement (Expert) and R-Jump (Expert)
+  > Front of Spider Track (Wall)
+      Any of the following:
+          Space Jump Boots or Combat/Scan Dash (Advanced)
+          Morph Ball Bomb and Morph Ball and Spider Ball
+
+> Pickup (Missile); Heals? False
+  * Layers: default
+  * Pickup 86; Category? Minor
+  * Extra - position_required: False
+  > Door to Elevator Access B
+      Any of the following:
+          # https://youtu.be/tQzvoPTimww?t=35
+          Space Jump Boots and Combat/Scan Dash (Advanced) and Standable Terrain (Beginner)
+          # https://www.youtube.com/watch?v=EgTFsy2qGh8&t=28s
+          Scan Visor and Combat/Scan Dash (Expert) and Standable Terrain (Advanced)
+  > Front of Spider Track (Bridge)
+      Any of the following:
+          Standable Terrain (Beginner)
+          Morph Ball and Spider Ball
+
+> Event - Metroid Quarantine A Barrier Lowered; Heals? False
+  * Layers: default
+  * Event Metroid Quarantine A Barrier
+  > Door to Quarantine Access A
+      Trivial
+
+> Front of Spider Track (Wall); Heals? False
+  * Layers: default
+  > Door to Quarantine Access A
+      All of the following:
+          After Metroid Quarantine A Barrier
+          Any of the following:
+              All of the following:
+                  Space Jump Boots
+                  Any of the following:
+                      X-Ray Visor or Invisible Objects (Intermediate)
+                      Thermal Visor and Invisible Objects (Beginner)
+              Slope Jump (Advanced) and Phazon Damage ≥ 99
+              Morph Ball Bomb and Morph Ball and Bomb Jump (Intermediate) and Phazon Damage ≥ 75
+              Standable Terrain (Advanced) and Phazon Damage ≥ 55
+  > Door to Elevator Access B
+      All of the following:
+          Morph Ball
+          Any of the following:
+              All of the following:
+                  Spider Ball
+                  Any of the following:
+                      Morph Ball Bomb
+                      # https://youtu.be/zPD0diebSX8
+                      Boost Ball and Wall Boost (Beginner)
+              All of the following:
+                  Scan Visor
+                  # https://youtu.be/tQzvoPTimww
+                  Power Bomb and Space Jump Boots and Combat/Scan Dash (Advanced) and Slope Jump (Advanced) and Standable Terrain (Advanced)
+  > Pickup (Missile)
+      All of the following:
+          Space Jump Boots
+          Any of the following:
+              Morph Ball and Power Bomb and Slope Jump (Intermediate) and Standable Terrain (Beginner)
+              Scan Visor and Combat/Scan Dash (Advanced)
+              Movement (Advanced) and R-Jump (Expert)
+          Any of the following:
+              X-Ray Visor or Invisible Objects (Intermediate)
+              Thermal Visor and Invisible Objects (Beginner)
+  > Front of Spider Track (Bridge)
+      Morph Ball and Power Bomb ≥ 2
+
+> Front of Spider Track (Bridge); Heals? False
+  * Layers: default
+  > Door to Quarantine Access A
+      After Metroid Quarantine A Barrier or Enabled Backwards Lower Mines
+  > Pickup (Missile)
+      All of the following:
+          Any of the following:
+              X-Ray Visor or Invisible Objects (Intermediate)
+              Thermal Visor and Invisible Objects (Beginner)
+          Any of the following:
+              Spider Ball
+              # https://youtu.be/tQzvoPTimww?t=19
+              Standable Terrain (Beginner)
+  > Front of Spider Track (Wall)
+      Morph Ball and Power Bomb ≥ 2
+
+----------------
+Quarantine Access B
+Extra - asset_id: 340985721
+Extra - size_index: 0.1
+Extra - aabb: [71.02483, -87.01303, -159.26898, 123.01101, -41.865093, -138.19998]
+> Door to Metroid Quarantine B; Heals? False
+  * Layers: default
+  * Plasma Door to Metroid Quarantine B/Door to Quarantine Access B
+  * Extra - dock_index: 0
+  * Extra - nonstandard: False
+  > Door to Fungal Hall B
+      Any of the following:
+          Space Jump Boots
+          Morph Ball Bomb and Morph Ball and Bomb Jump (Beginner) and Phazon Damage ≥ 150
+          X-Ray Visor and Combat/Scan Dash (Beginner) and L-Jump (Beginner) and Phazon Damage ≥ 150
+          Slope Jump (Advanced) and Phazon Damage ≥ 300
+
+> Door to Fungal Hall B; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Plasma Door to Fungal Hall B/Door to Quarantine Access B
+  * Extra - dock_index: 1
+  * Extra - nonstandard: False
+  > Door to Metroid Quarantine B
+      Any of the following:
+          Space Jump Boots
+          Morph Ball Bomb and Morph Ball and Bomb Jump (Beginner) and Phazon Damage ≥ 150
+          # https://youtu.be/nZafCBqD5EQ
+          Slope Jump (Beginner) and Phazon Damage ≥ 100
+
+> Pickup (Items Every Room); Heals? False
+  * Layers: items_every_room
+  * Pickup 220; Category? Minor
+  * Extra - position_required: True
+
+----------------
+Save Station Mines C
+Extra - asset_id: 1724960771
+Extra - size_index: 0.1
+Extra - unlocked_save_station: True
+Extra - aabb: [-94.1811, -193.16371, -160.72958, -57.753193, -154.70676, -138.06024]
+> Door to Metroid Quarantine B; Heals? False
+  * Layers: default
+  * Plasma Door to Metroid Quarantine B/Door to Save Station Mines C
+  * Extra - dock_index: 0
+  * Extra - nonstandard: False
+  > Save Station
+      Trivial
+
+> Save Station; Heals? True; Spawn Point; Default Node
+  * Layers: default
+  > Door to Metroid Quarantine B
+      Trivial
+
+> Pickup (Items Every Room); Heals? False
+  * Layers: items_every_room
+  * Pickup 221; Category? Minor
+  * Extra - position_required: True
+
+----------------
+Elevator Access B
+Extra - asset_id: 1071241062
+Extra - size_index: 0.1
+Extra - aabb: [140.16626, 321.78094, -86.563934, 200.5625, 382.84692, -38.296978]
+> Door to Metroid Quarantine A; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Ice Door to Metroid Quarantine A/Door to Elevator Access B
+  * Extra - dock_index: 0
+  * Extra - nonstandard: False
+  > Door to Elevator B
+      Trivial
+
+> Door to Elevator B; Heals? False
+  * Layers: default
+  * Plasma Door to Elevator B/Door to Elevator Access B
+  * Extra - dock_index: 1
+  * Extra - nonstandard: False
+  > Door to Metroid Quarantine A
+      Trivial
+
+> Pickup (Items Every Room); Heals? False
+  * Layers: items_every_room
+  * Pickup 222; Category? Minor
+  * Extra - position_required: True
+
+----------------
+Fungal Hall B
+Extra - asset_id: 3964125762
+Extra - size_index: 0.6
+Extra - aabb: [98.72754, -44.531593, -167.96475, 187.92752, 134.34625, -115.89773]
+> Door to Missile Station Mines; Heals? False
+  * Layers: default
+  * Plasma Door to Missile Station Mines/Door to Fungal Hall B
+  * Extra - dock_index: 0
+  * Extra - nonstandard: False
+  > Door to Phazon Mining Tunnel
+      Trivial
+
+> Door to Quarantine Access B; Heals? False
+  * Layers: default
+  * Plasma Door to Quarantine Access B/Door to Fungal Hall B
+  * Extra - dock_index: 1
+  * Extra - nonstandard: False
+  > Door to Phazon Mining Tunnel
+      Trivial
+
+> Door to Phazon Mining Tunnel; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Plasma Door to Phazon Mining Tunnel/Door to Fungal Hall B
+  * Extra - dock_index: 2
+  * Extra - nonstandard: False
+  > Door to Missile Station Mines
+      All of the following:
+          Space Jump Boots
+          Slope Jump (Intermediate) or Use Grapple Beam
+  > Door to Quarantine Access B
+      Any of the following:
+          All of the following:
+              Space Jump Boots
+              Any of the following:
+                  Use Grapple Beam
+                  # https://youtu.be/v_MgT0eE-LY?t=10
+                  Slope Jump (Beginner)
+                  # https://youtu.be/v_MgT0eE-LY?t=37
+                  Scan Visor and Combat/Scan Dash (Intermediate)
+                  # https://youtu.be/v_MgT0eE-LY?t=21
+                  Standable Terrain (Beginner)
+          # https://youtu.be/HbzeA1Z4_nc
+          Morph Ball Bomb and Morph Ball and Complex Bomb Jump (Expert)
+          Jump Off Enemies (Expert) and Shoot Ice Beam
+  > Pickup (Missile)
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Morph Ball Bomb
+              Power Bomb and Knowledge (Beginner)
+
+> Pickup (Missile); Heals? False
+  * Layers: default
+  * Pickup 87; Category? Minor
+  * Extra - position_required: False
+  > Door to Phazon Mining Tunnel
+      Trivial
+
+----------------
+Elevator B
+Extra - asset_id: 3900266464
+Extra - size_index: 0.3
+Extra - aabb: [150.87694, 381.88913, -150.76053, 176.09467, 419.10742, -64.71138]
+> Door to Elevator Access B; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Plasma Door to Elevator Access B/Door to Elevator B
+  * Extra - dock_index: 0
+  * Extra - nonstandard: False
+  > Door to Fungal Hall Access
+      Scan Visor
+
+> Door to Fungal Hall Access; Heals? False
+  * Layers: default
+  * Plasma Door to Fungal Hall Access/Door to Elevator B
+  * Extra - dock_index: 1
+  * Extra - nonstandard: False
+  > Door to Elevator Access B
+      Trivial
+
+> Pickup (Items Every Room); Heals? False
+  * Layers: items_every_room
+  * Pickup 223; Category? Minor
+  * Extra - position_required: True
+
+----------------
+Missile Station Mines
+Extra - asset_id: 2961781534
+Extra - size_index: 0.1
+Extra - aabb: [186.02907, -16.215353, -144.68292, 249.02724, 27.720753, -121.77229]
+> Door to Fungal Hall B; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Plasma Door to Fungal Hall B/Door to Missile Station Mines
+  * Extra - dock_index: 0
+  * Extra - nonstandard: False
+  > Missile Station
+      Trivial
+
+> Missile Station; Heals? False
+  * Layers: default
+  > Door to Fungal Hall B
+      Trivial
+
+> Pickup (Items Every Room); Heals? False
+  * Layers: items_every_room
+  * Pickup 224; Category? Minor
+  * Extra - position_required: True
+
+----------------
+Phazon Mining Tunnel
+Extra - asset_id: 3153742515
+Extra - size_index: 0.3
+Extra - aabb: [101.97653, 132.17677, -171.1141, 156.53535, 161.4677, -131.1141]
+> Door to Fungal Hall B; Heals? False
+  * Layers: default
+  * Plasma Door to Fungal Hall B/Door to Phazon Mining Tunnel
+  * Extra - dock_index: 0
+  * Extra - nonstandard: False
+  > Door to Fungal Hall A
+      All of the following:
+          Morph Ball Bomb and Morph Ball and Power Bomb
+          Any of the following:
+              Boost Ball or Phazon Suit
+              Movement (Beginner) and Phazon Damage ≥ 30
+  > Pickup (Artifact of Newborn)
+      All of the following:
+          Morph Ball Bomb and Morph Ball
+          Any of the following:
+              Phazon Suit
+              All of the following:
+                  Boost Ball
+                  Any of the following:
+                      Movement (Intermediate) and Phazon Damage ≥ 1299
+                      Movement (Advanced) and Phazon Damage ≥ 1199
+                      Movement (Expert) and Phazon Damage ≥ 1099
+                      Movement (Hypermode) and Phazon Damage ≥ 999
+
+> Door to Fungal Hall A; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Plasma Door to Fungal Hall A/Door to Phazon Mining Tunnel
+  * Extra - dock_index: 1
+  * Extra - nonstandard: False
+  > Door to Fungal Hall B
+      All of the following:
+          Morph Ball and Power Bomb
+          Any of the following:
+              Boost Ball
+              All of the following:
+                  Morph Ball Bomb
+                  Any of the following:
+                      Phazon Suit
+                      Movement (Beginner) and Phazon Damage ≥ 30
+
+> Pickup (Artifact of Newborn); Heals? False
+  * Layers: default
+  * Pickup 88; Category? Major
+  * Extra - position_required: False
+  > Door to Fungal Hall B
+      All of the following:
+          Morph Ball Bomb and Morph Ball
+          Any of the following:
+              Phazon Suit
+              All of the following:
+                  Boost Ball
+                  Any of the following:
+                      Movement (Expert) and Phazon Damage ≥ 200
+                      Movement (Advanced) and Phazon Damage ≥ 300
+                      Movement (Intermediate) and Phazon Damage ≥ 400
+
+----------------
+Fungal Hall Access
+Extra - asset_id: 3734860277
+Extra - size_index: 0.3
+Extra - aabb: [132.64903, 328.942, -184.2123, 180.28085, 381.88913, -101.63486]
+> Door to Fungal Hall A; Heals? False
+  * Layers: default
+  * Plasma Door to Fungal Hall A/Door to Fungal Hall Access
+  * Extra - dock_index: 0
+  * Extra - nonstandard: False
+  > Door to Elevator B
+      Any of the following:
+          Space Jump Boots
+          All of the following:
+              Morph Ball Bomb and Morph Ball and Standable Terrain (Advanced)
+              Any of the following:
+                  # https://youtu.be/0MdHYuM1mIQ
+                  Bomb Jump (Advanced)
+                  # https://www.youtube.com/watch?v=0oZ7WaA8P4I
+                  Bomb Space Jump (Advanced)
+  > Pickup (Missile)
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Phazon Suit
+              Movement (Beginner) and Phazon Damage ≥ 100
+
+> Door to Elevator B; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Plasma Door to Elevator B/Door to Fungal Hall Access
+  * Extra - dock_index: 1
+  * Extra - nonstandard: False
+  > Door to Fungal Hall A
+      Any of the following:
+          Space Jump Boots or Movement (Beginner)
+          Morph Ball Bomb and Morph Ball and Bomb Jump (Beginner)
+
+> Pickup (Missile); Heals? False
+  * Layers: default
+  * Pickup 89; Category? Minor
+  * Extra - position_required: False
+  > Door to Fungal Hall A
+      Any of the following:
+          Space Jump Boots
+          Morph Ball Bomb and Morph Ball and Bomb Jump (Beginner)
+          # https://www.youtube.com/watch?v=CeQFOSCvZPE
+          Movement (Hypermode)
+  > Door to Elevator B
+      Space Jump Boots
+
+----------------
+Fungal Hall A
+Extra - asset_id: 257062865
+Extra - size_index: 0.6
+Extra - aabb: [90.076614, 160.53384, -176.2045, 166.0206, 330.8736, -124.46773]
+> Door to Phazon Mining Tunnel; Heals? False
+  * Layers: default
+  * Ice Door to Phazon Mining Tunnel/Door to Fungal Hall A
+  * Extra - dock_index: 0
+  * Extra - nonstandard: False
+  > Door to Fungal Hall Access
+      Space Jump Boots or Slope Jump (Beginner)
+
+> Door to Fungal Hall Access; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Ice Door to Fungal Hall Access/Door to Fungal Hall A
+  * Extra - dock_index: 1
+  * Extra - nonstandard: False
+  > Door to Phazon Mining Tunnel
+      All of the following:
+          Any of the following:
+              All of the following:
+                  Space Jump Boots
+                  Any of the following:
+                      R-Jump (Intermediate) or Use Grapple Beam
+                      Scan Visor and Combat/Scan Dash (Intermediate)
+              All of the following:
+                  Scan Visor
+                  Any of the following:
+                      Combat/Scan Dash (Hypermode)
+                      Combat/Scan Dash (Expert) and Use Grapple Beam
+          Any of the following:
+              Combat (Expert) or Normal Damage ≥ 599
+              Missile ≥ 4 and Shoot Ice Beam
+              Charge Beam and Shoot Plasma Beam
+              Space Jump Boots and Combat (Beginner) and Normal Damage ≥ 299
+              Combat (Advanced) and Normal Damage ≥ 299
+              Space Jump Boots and Combat (Intermediate)
+              Plasma Beam and Combat (Beginner)
+              Plasma Beam and Normal Damage ≥ 299
+
+> Pickup (Items Every Room); Heals? False
+  * Layers: items_every_room
+  * Pickup 225; Category? Minor
+  * Extra - position_required: True
+

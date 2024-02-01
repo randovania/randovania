@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import TYPE_CHECKING, Any, TypeVar
 
 if TYPE_CHECKING:
-    from collections.abc import Callable, Iterable, Iterator
+    from collections.abc import Callable, Iterable, Iterator, Mapping
     from random import Random
 
 T = TypeVar("T")
@@ -23,7 +23,7 @@ def shuffle(rng: Random, x: Iterator[T]) -> list[T]:
 
 def iterate_with_weights(
     items: Iterable[T],
-    item_weights: dict[T, float],
+    item_weights: Mapping[T, float],
     rng: Random,
 ) -> Iterator[T]:
     """
@@ -48,7 +48,7 @@ def iterate_with_weights(
         yield pickup_node
 
 
-def select_element_with_weight(weighted_items: dict[T, float], rng: Random) -> T:
+def select_element_with_weight(weighted_items: Mapping[T, float], rng: Random) -> T:
     return next(iterate_with_weights(items=list(weighted_items.keys()), item_weights=weighted_items, rng=rng))
 
 

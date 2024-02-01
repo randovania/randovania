@@ -19,11 +19,12 @@ from randovania import VERSION
 from randovania.cli import database
 from randovania.games import default_data
 from randovania.games.game import RandovaniaGame
+from randovania.interface_common import installation_check
 from randovania.lib import json_lib
 from randovania.lib.enum_lib import iterate_enum
 
 _ROOT_FOLDER = Path(__file__).parents[1]
-_NINTENDONT_RELEASES_URL = "https://api.github.com/repos/randovania/Nintendont/releases"
+_NINTENDONT_DOWNLOAD_URL = "https://github.com/randovania/Nintendont/releases/download/v5-multiworld/boot.dol"
 zip_folder = f"randovania-{VERSION}"
 
 
@@ -37,13 +38,11 @@ def open_zip(platform_name: str) -> zipfile.ZipFile:
     )
 
 
-async def get_nintendont_releases(session: aiohttp.ClientSession):
-    async with session.get(_NINTENDONT_RELEASES_URL) as response:
-        try:
-            response.raise_for_status()
-            return await response.json()
-        except aiohttp.ClientResponseError as e:
-            raise RuntimeError("Unable to get Nintendont releases") from e
+def get_dotnet_url() -> str:
+    if platform.system() == "Windows":
+        return "https://dot.net/v1/dotnet-install.ps1"
+
+    return "https://dot.net/v1/dotnet-install.sh"
 
 
 @tenacity.retry(
@@ -57,24 +56,52 @@ async def download_nintendont():
         headers = {"Authorization": f"Bearer {os.environ['GITHUB_TOKEN']}"}
 
     async with aiohttp.ClientSession(headers=headers) as session:
-        print("Fetching list of Nintendont releases.")
-        releases = await get_nintendont_releases(session)
-        latest_release = releases[0]
-
-        download_urls = [
-            asset["browser_download_url"] for asset in latest_release["assets"] if asset["name"] == "boot.dol"
-        ]
-        if not download_urls:
-            raise RuntimeError("No boot.dol found in latest release")
-
-        print(f"Downloading {download_urls[0]}")
-        async with session.get(download_urls[0]) as download_response:
+        print(f"Downloading {_NINTENDONT_DOWNLOAD_URL}")
+        async with session.get(_NINTENDONT_DOWNLOAD_URL) as download_response:
             download_response.raise_for_status()
             dol_bytes = await download_response.read()
 
         final_dol_path = _ROOT_FOLDER.joinpath("randovania", "data", "nintendont", "boot.dol")
         print(f"Saving to {final_dol_path}")
         final_dol_path.write_bytes(dol_bytes)
+
+
+async def download_dotnet() -> None:
+    # Windows is finnicky about the file extension. Not sure why.
+    script_path = _ROOT_FOLDER.joinpath("dotnet.ps1" if platform.system() == "Windows" else "dotnet.sh")
+    dotnet_path = _ROOT_FOLDER.joinpath("randovania", "data", "dotnet_runtime")
+    async with aiohttp.ClientSession() as session:
+        url = get_dotnet_url()
+        print(f"Downloading {url}")
+        async with session.get(url) as response:
+            response.raise_for_status()
+            script_bytes = await response.read()
+
+            print(f"Saving to {script_path}")
+            script_path.write_bytes(script_bytes)
+
+    print("Executing dotnet script")
+    # I would like to use Unix-style arguments everywhere, but sadly those aren't fully supported. PS-Style are tho.
+    args = [
+        f"{script_path}",
+        "-Version",
+        "latest",
+        "-InstallDir",
+        f"{dotnet_path}",
+        "-Runtime",
+        "dotnet",
+    ]
+    if platform.system() == "Windows":
+        args = ["powershell.exe", *args]
+    else:
+        subprocess.run(["chmod", "+x", script_path], check=True)
+        args = ["bash", *args]
+    subprocess.run(
+        args,
+        check=True,
+    )
+    print("Removing downloaded script")
+    script_path.unlink()
 
 
 def write_obfuscator_secret(path: Path, secret: bytes):
@@ -86,6 +113,13 @@ secret = b"".join(
     {numbers}
 )
 """
+    )
+
+
+def write_frozen_file_list(package_folder: Path) -> None:
+    internal = package_folder.joinpath("_internal")
+    json_lib.write_path(
+        internal.joinpath("data", "frozen_file_list.json"), installation_check.hash_everything_in(internal)
     )
 
 
@@ -129,6 +163,8 @@ async def main():
 
     await download_nintendont()
 
+    await download_dotnet()
+
     # HACK: pyintaller calls lipo/codesign on macOS and frequently timeout in github actions
     # There's also timeouts on Windows so we're expanding this to everyone
     print("Will patch timeout in PyInstaller compat")
@@ -142,10 +178,12 @@ async def main():
 
     if platform.system() == "Windows":
         create_windows_zip(package_folder)
+        write_frozen_file_list(package_folder)
     elif platform.system() == "Darwin":
         create_macos_zip(app_folder)
     elif platform.system() == "Linux":
         create_linux_zip(package_folder)
+        write_frozen_file_list(package_folder)
     else:
         raise ValueError(f"Unknown system: {platform.system()}")
 

@@ -7,7 +7,7 @@ from unittest.mock import ANY, MagicMock, call
 
 import pytest
 
-from randovania.games.dread.gui.dialog.ftp_uploader import FtpUploader
+from randovania.lib.ftp_uploader import FtpUploader
 
 if TYPE_CHECKING:
     from pytest_localftpserver.servers import PytestLocalFTPServer

@@ -1,0 +1,213 @@
+----------------
+Landing Site
+Extra - total_boundings: {'x1': -23100.0, 'x2': -3300.0, 'y1': 1700.0, 'y2': 14000.0}
+Extra - polygon: [[-12600.0, 1700.0], [-3300.0, 1700.0], [-3300.0, 14000.0], [-23100.0, 14000.0], [-23100.0, 4100.0], [-18900.0, 4100.0], [-18900.0, 7900.0], [-19700.0, 9300.0], [-12600.0, 8700.0], [-12600.0, 6900.0]]
+Extra - asset_id: collision_camera_000
+> Save Station; Heals? False; Default Node
+  * Layers: default
+  * Extra - actor_name: LE_Platform_SaveStation_004
+  * Extra - actor_type: weightactivatedplatform
+  * Extra - start_point_actor_name: ST_SaveStation_004
+  > Top of Mountain
+      Climb Rooms Vertically (No High Jump)
+  > Dock to Transport to Area 8
+      Baby Metroid
+
+> Top of Mountain; Heals? False
+  * Layers: default
+  * Extra - start_point_actor_name: ST_Ridley
+  > Save Station
+      Trivial
+  > Event - Proteus Ridley
+      All of the following:
+          Any of the following:
+              # Energy Requirements
+              Combat (Advanced) or Normal Damage ≥ 599
+              Combat (Beginner) and Normal Damage ≥ 399
+              Combat (Intermediate) and Normal Damage ≥ 199
+          # Dealing Damage
+          Plasma Beam
+          Any of the following:
+              # Dodging Attacks
+              Space Jump
+              Movement (Advanced) and Use Spider Ball
+
+> Event - Proteus Ridley; Heals? False
+  * Layers: default
+  * Event Surface (West) - Proteus Ridley
+  > Top of Mountain
+      Trivial
+
+> Dock to Transport to Area 8; Heals? False
+  * Layers: default
+  * Open Passage to Transport to Area 8/Dock to Landing Site
+  > Save Station
+      Trivial
+
+----------------
+Transport to Area 8
+Extra - total_boundings: {'x1': -40700.0, 'x2': -22900.0, 'y1': -100.0, 'y2': 4900.0}
+Extra - polygon: [[-40700.0, 4900.0], [-40700.0, 100.0], [-37000.0, 100.0], [-36500.0, -100.0], [-22900.0, -100.0], [-22900.0, 4900.0]]
+Extra - asset_id: collision_camera_017
+> Pickup (Super Missile Tank); Heals? False
+  * Layers: default
+  * Pickup 169; Category? Minor
+  * Extra - actor_name: LE_Item_013
+  * Extra - actor_type: item_supermissiletank
+  > Above Elevator
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Grapple Beam
+              Lightning Armor and Baby Metroid
+
+> Elevator to Area 8; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Elevator to Transport to Surface West/Elevator to Surface - West
+  * Extra - actor_name: LE_Platform_Elevator_FromArea10
+  * Extra - actor_type: weightactivatedplatform
+  * Extra - start_point_actor_name: ST_FromArea10
+  > Above Elevator
+      All of the following:
+          Baby Metroid
+          Any of the following:
+              Super Jump (Intermediate) or Climb Rooms Vertically (High Jump)
+              Morph Ball and Unmorph Extend (Beginner)
+
+> Energy Recharge Station; Heals? True
+  * Layers: default
+  * Extra - actor_name: LE_Platform_EnergyRecharge_001
+  * Extra - actor_type: weightactivatedplatform
+  > DNA Check
+      Any of the following:
+          Walljump (Advanced)
+          Screw Attack and Walljump (Intermediate)
+          All of the following:
+              Space Jump
+              Screw Attack or Movement (Beginner)
+          Movement (Beginner) and Use Spider Ball
+          Spiderspark (Intermediate) and Can Spiderspark
+          Combat (Intermediate) and Infinite Bomb Jump (Advanced) and Lay Bomb
+  > Below Ceiling Pickup
+      Any of the following:
+          Spiderspark (Intermediate) and Can Spiderspark
+          Space Jump and Movement (Beginner)
+          All of the following:
+              Lightning Armor
+              Baby Metroid or Morph Ball
+
+> Save Station; Heals? False; Spawn Point
+  * Layers: default
+  * Extra - actor_name: LE_Platform_SaveStation_003
+  * Extra - actor_type: weightactivatedplatform
+  * Extra - start_point_actor_name: ST_SaveStation_003
+  > Above Elevator
+      Trivial
+  > Below Ceiling Pickup
+      Baby Metroid
+
+> Teleporter; Heals? False
+  * Layers: default
+  * Teleporter Network (Unlocked by After Surface (West) - Teleporter Unlocked)
+  * Extra - actor_name: LE_Platform_Teleporter_00b_01
+  * Extra - actor_type: weightactivatedplatform
+  * Extra - start_point_actor_name: ST_Teleporter_00b_01
+  > DNA Check
+      Baby Metroid
+
+> Pickup (Missile Tank); Heals? False
+  * Layers: default
+  * Pickup 170; Category? Minor
+  * Extra - actor_name: HiddenPowerup002
+  * Extra - actor_type: item_missiletank
+  > Below Ceiling Pickup
+      Trivial
+
+> Dock to Landing Site; Heals? False
+  * Layers: default
+  * Open Passage to Landing Site/Dock to Transport to Area 8
+  > DNA Check
+      Trivial
+
+> Event - Teleporter Unlocked; Heals? False
+  * Layers: default
+  * Event Surface (West) - Teleporter Unlocked
+  > DNA Check
+      Baby Metroid
+
+> Above Elevator; Heals? False
+  * Layers: default
+  > Pickup (Super Missile Tank)
+      Lightning Armor and Baby Metroid and Morph Ball and Climb Rooms Vertically (No High Jump)
+  > Elevator to Area 8
+      Baby Metroid
+  > Save Station
+      Single-wall Wall Jump (Beginner) or Walljump (Intermediate) or Climb Rooms Vertically (No High Jump)
+
+> Dock to Surface - East; Heals? False
+  * Layers: default
+  * Open Passage to Landing Site/Dock to Surface - West
+  > DNA Check
+      Trivial
+
+> DNA Check; Heals? False
+  * Layers: default
+  > Energy Recharge Station
+      Trivial
+  > Teleporter
+      Baby Metroid
+  > Dock to Landing Site
+      Baby Metroid and All DNA
+  > Event - Teleporter Unlocked
+      Baby Metroid
+  > Dock to Surface - East
+      Baby Metroid
+
+> Below Ceiling Pickup; Heals? False
+  * Layers: default
+  > Energy Recharge Station
+      Any of the following:
+          Spiderspark (Intermediate) and Can Spiderspark
+          Space Jump and Movement (Beginner)
+          All of the following:
+              Lightning Armor
+              Baby Metroid or Morph Ball
+  > Save Station
+      All of the following:
+          Baby Metroid
+          Walljump (Beginner) or Climb Rooms Vertically (High Jump)
+  > Pickup (Missile Tank)
+      All of the following:
+          Baby Metroid
+          Any of the following:
+              Spiderspark (Beginner) and Can Spiderspark
+              Spider Ball and Simple IBJ
+              All of the following:
+                  Any of the following:
+                      # Break the bomb block
+                      Lay Power Bomb
+                      Mid-Air Morph (Beginner) and Lay Bomb
+                      Lightning Armor and Simple IBJ
+                  Any of the following:
+                      # Break the baby blocks
+                      # SJ Movement: https://www.youtube.com/watch?v=9BBVrE-_2UU
+                      Space Jump and Movement (Advanced)
+                      # Freeze enemy: https://www.youtube.com/watch?v=3WCWdGmymCU
+                      Lightning Armor and Stand on Frozen Enemy (Intermediate) and Fully Freeze Enemy
+
+----------------
+Landing Site Storage
+Extra - total_boundings: {'x1': -19000.0, 'x2': -16300.0, 'y1': 4500.0, 'y2': 6900.0}
+Extra - polygon: [[-19000.0, 6900.0], [-19000.0, 4500.0], [-16300.0, 4500.0], [-16300.0, 6900.0]]
+Extra - asset_id: collision_camera_018
+> Placeholder room. See Surface - East for the actual connections; Heals? False
+  * Layers: default
+
+----------------
+Crumble Drop Shaft
+Extra - total_boundings: {'x1': -24900.0, 'x2': -23000.0, 'y1': 7200.0, 'y2': 11100.0}
+Extra - polygon: [[-24900.0, 11100.0], [-24900.0, 7200.0], [-23000.0, 7200.0], [-23000.0, 11100.0]]
+Extra - asset_id: collision_camera_019
+> Placeholder room. See Surface - East for the actual connections; Heals? False
+  * Layers: default
+

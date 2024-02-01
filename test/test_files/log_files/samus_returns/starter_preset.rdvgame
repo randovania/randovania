@@ -1,16 +1,16 @@
 {
     "schema_version": 23,
     "info": {
-        "randovania_version": "6.3.0.dev263",
-        "randovania_version_git": "e08e00e5",
-        "permalink": "DcjLbSQrtuCOAOUJdJDSbNaw-LC8AKrh",
+        "randovania_version": "7.1.0.dev325-dirty",
+        "randovania_version_git": "184357f7",
+        "permalink": "DeyRR278mxhDV_cLmYzeLLKI-mG4SqQAAFKS",
         "has_spoiler": true,
-        "seed": 4100891,
-        "hash": "ZNWSIK5W",
-        "word_hash": "Wallfire Super Metroid",
+        "seed": 1831247653,
+        "hash": "SFDW57E3",
+        "word_hash": "Orb Meboid Zeta",
         "presets": [
             {
-                "schema_version": 64,
+                "schema_version": 69,
                 "base_preset_uuid": null,
                 "name": "Starter Preset",
                 "uuid": "b400da54-584e-496b-a6c9-140b847d40d9",
@@ -49,13 +49,13 @@
                             "Grapple Beam": {
                                 "num_shuffled_pickups": 1
                             },
-                            "Missile": {
+                            "Missile Launcher": {
                                 "num_included_in_starting_pickups": 1,
                                 "included_ammo": [
                                     24
                                 ]
                             },
-                            "Super Missile": {
+                            "Super Missile Launcher": {
                                 "num_shuffled_pickups": 1,
                                 "included_ammo": [
                                     5
@@ -102,7 +102,7 @@
                             "Spring Ball": {
                                 "num_shuffled_pickups": 1
                             },
-                            "Power Bomb": {
+                            "Power Bomb Launcher": {
                                 "num_shuffled_pickups": 1,
                                 "included_ammo": [
                                     5
@@ -121,6 +121,15 @@
                             },
                             "Energy Tank": {
                                 "num_shuffled_pickups": 10
+                            },
+                            "Energy Reserve Tank": {
+                                "num_shuffled_pickups": 1
+                            },
+                            "Aeion Reserve Tank": {
+                                "num_shuffled_pickups": 1
+                            },
+                            "Missile Reserve Tank": {
+                                "num_shuffled_pickups": 1
                             }
                         },
                         "default_pickups": {},
@@ -170,22 +179,30 @@
                         "mode": "vanilla",
                         "types_state": {}
                     },
-                    "single_set_for_pickups_that_solve": false,
-                    "staggered_multi_pickup_placement": false,
+                    "single_set_for_pickups_that_solve": true,
+                    "staggered_multi_pickup_placement": true,
                     "check_if_beatable_after_base_patches": false,
                     "energy_per_tank": 100,
                     "starting_energy": 99,
-                    "aeion_per_tank": 50,
                     "starting_aeion": 1000,
+                    "life_tank_size": 299,
+                    "aeion_tank_size": 500,
+                    "missile_tank_size": 30,
+                    "super_missile_tank_size": 10,
                     "elevator_grapple_blocks": true,
                     "area3_interior_shortcut_no_grapple": true,
-                    "nerf_power_bombs": true,
+                    "charge_door_buff": true,
+                    "beam_door_buff": true,
                     "nerf_super_missiles": false,
-                    "allow_highly_dangerous_logic": false,
                     "surface_crumbles": true,
                     "area1_crumbles": true,
+                    "reverse_area8": false,
+                    "allow_highly_dangerous_logic": false,
                     "artifacts": {
                         "prefer_metroids": true,
+                        "prefer_stronger_metroids": true,
+                        "prefer_bosses": false,
+                        "prefer_anywhere": false,
                         "required_artifacts": 10
                     }
                 }
@@ -197,8 +214,37 @@
             "game": "samus_returns",
             "starting_equipment": {
                 "pickups": [
-                    "Missile",
-                    "Scan Pulse"
+                    "Missile Launcher",
+                    "Scan Pulse",
+                    "Metroid DNA 11",
+                    "Metroid DNA 12",
+                    "Metroid DNA 13",
+                    "Metroid DNA 14",
+                    "Metroid DNA 15",
+                    "Metroid DNA 16",
+                    "Metroid DNA 17",
+                    "Metroid DNA 18",
+                    "Metroid DNA 19",
+                    "Metroid DNA 20",
+                    "Metroid DNA 21",
+                    "Metroid DNA 22",
+                    "Metroid DNA 23",
+                    "Metroid DNA 24",
+                    "Metroid DNA 25",
+                    "Metroid DNA 26",
+                    "Metroid DNA 27",
+                    "Metroid DNA 28",
+                    "Metroid DNA 29",
+                    "Metroid DNA 30",
+                    "Metroid DNA 31",
+                    "Metroid DNA 32",
+                    "Metroid DNA 33",
+                    "Metroid DNA 34",
+                    "Metroid DNA 35",
+                    "Metroid DNA 36",
+                    "Metroid DNA 37",
+                    "Metroid DNA 38",
+                    "Metroid DNA 39"
                 ]
             },
             "starting_location": "Surface - East/Landing Site/Ship",
@@ -248,275 +294,387 @@
             "configurable_nodes": {},
             "locations": {
                 "Area 1": {
-                    "Alpha Arena East/Pickup (DNA)": "Grapple Beam",
-                    "Alpha Arena North/Pickup (DNA)": "Progressive Beam",
-                    "Alpha Arena North/Pickup (Energy Tank)": "Aeion Tank",
-                    "Alpha Arena South/Pickup (DNA)": "Progressive Beam",
-                    "Alpha Arena West/Pickup (DNA)": "Energy Transfer Module",
-                    "Bomb Room/Pickup (Bomb)": "Missile Tank",
-                    "Bomb Room/Pickup (Missile Tank)": "Super Missile",
-                    "Chozo Seal Storage/Pickup (Missile Tank)": "Missile Tank",
-                    "Ice Beam Room/Pickup (Ice Beam)": "Missile Tank",
-                    "Ice Beam Room/Pickup (Super Missile Tank)": "Power Bomb Tank",
-                    "Inner Shaft/Pickup (Missile Tank)": "Screw Attack",
-                    "Lava Shortcut/Pickup (Missile Tank)": "Progressive Suit",
-                    "Lava Shortcut/Pickup (Super Missile Tank)": "Power Bomb Tank",
-                    "One-Way Puzzle/Pickup (Missile Tank)": "Aeion Tank",
-                    "Outer Hub/Pickup (Missile Tank Crevice)": "Energy Transfer Module",
-                    "Outer Hub/Pickup (Missile Tank Hidden)": "Missile Tank",
-                    "Outer Hub/Pickup (Missile Tank Puzzle)": "Missile Tank",
-                    "Save Station South/Pickup (Missile Tank)": "Super Missile Tank",
-                    "Spider Ball Balcony/Pickup (Aeion Tank)": "Missile Tank",
-                    "Spider Ball Room/Pickup (Missile Tank)": "Energy Transfer Module",
-                    "Spider Ball Room/Pickup (Spider Ball)": "Power Bomb Tank"
+                    "Alpha Arena East/Pickup (DNA)": "Missile Tank",
+                    "Exterior Alpha Arena/Pickup (DNA)": "Missile Tank",
+                    "Exterior Alpha Arena/Pickup (Energy Tank)": "Energy Transfer Module",
+                    "Alpha Arena South/Pickup (DNA)": "Missile Tank",
+                    "Alpha Arena West/Pickup (DNA)": "Metroid DNA 2",
+                    "Bomb Chamber/Pickup (Bomb)": "Missile Tank",
+                    "Bomb Chamber/Pickup (Missile Tank)": "Energy Transfer Module",
+                    "Chozo Seal Storage/Pickup (Missile Tank)": "Energy Reserve Tank",
+                    "Ice Beam Chamber/Pickup (Ice Beam)": "Progressive Jump",
+                    "Ice Beam Chamber/Pickup (Super Missile Tank)": "Charge Beam",
+                    "Inner Temple Ventilation Shaft/Pickup (Missile Tank)": "Energy Transfer Module",
+                    "Lava Shortcut/Pickup (Missile Tank)": "Missile Tank",
+                    "Lava Shortcut/Pickup (Super Missile Tank)": "Energy Transfer Module",
+                    "One-Way Puzzle/Pickup (Missile Tank)": "Missile Tank",
+                    "Temple Exterior/Pickup (Missile Tank Crevice)": "Missile Tank",
+                    "Temple Exterior/Pickup (Missile Tank Hidden)": "Power Bomb Tank",
+                    "Temple Exterior/Pickup (Missile Tank Puzzle)": "Energy Transfer Module",
+                    "Save Station South/Pickup (Missile Tank)": "Missile Tank",
+                    "Destroyed Armory/Pickup (Aeion Tank)": "Bomb",
+                    "Spider Ball Chamber/Pickup (Missile Tank)": "Missile Tank",
+                    "Spider Ball Chamber/Pickup (Spider Ball)": "Grapple Beam"
                 },
                 "Area 2 - Entrance": {
-                    "Alpha Arena/Pickup (DNA)": "Missile Tank",
+                    "Alpha+ Arena/Pickup (DNA)": "Super Missile Tank",
                     "Chozo Seal/Pickup (Missile Tank)": "Missile Tank",
                     "Chozo Seal/Pickup (Power Bomb Tank)": "Missile Tank",
-                    "Teleporter Room/Pickup (Missile Tank)": "Baby Metroid",
-                    "Transport to Area 2 Exterior/Pickup (Lightning Armor)": "Super Missile Tank",
-                    "Transport to Area 2 Exterior/Pickup (Missile Tank)": "Energy Transfer Module",
-                    "Water Storage/Pickup (Missile Tank)": "Super Missile Tank"
+                    "Teleporter Room/Pickup (Missile Tank)": "Super Missile Tank",
+                    "Transport to Area 2 Exterior/Pickup (Lightning Armor)": "Lightning Armor",
+                    "Transport to Area 2 Exterior/Pickup (Missile Tank)": "Progressive Jump",
+                    "Water Storage/Pickup (Missile Tank)": "Missile Tank"
                 },
                 "Area 2 - Exterior": {
                     "Alpha Arena Heated/Pickup (DNA)": "Super Missile Tank",
-                    "Alpha Arena North/Pickup (DNA)": "Missile Tank",
-                    "Alpha Arena South/Pickup (DNA)": "Missile Tank",
+                    "Alpha Arena North/Pickup (DNA)": "Metroid DNA 8",
+                    "Alpha Arena South/Pickup (DNA)": "Super Missile Tank",
                     "Alpha Arena West/Pickup (DNA)": "Energy Transfer Module",
-                    "Alpha+ Arena Heated/Pickup (DNA)": "Super Missile Tank",
-                    "Alpha+ Arena North/Pickup (DNA)": "Aeion Tank",
-                    "Alpha+ Storage/Pickup (Super Missile Tank)": "Super Missile Tank",
+                    "Alpha+ Arena Heated/Pickup (DNA)": "Missile Tank",
+                    "Alpha+ Arena North/Pickup (DNA)": "Missile Tank",
+                    "Alpha+ Storage/Pickup (Super Missile Tank)": "Missile Tank",
                     "Arachnus Arena/Pickup (Spring Ball)": "Energy Transfer Module",
-                    "Fiery Crossing/Pickup (Missile Tank)": "Missile Tank",
-                    "Glow Fly Tunnel/Pickup (Missile Tank)": "Aeion Tank",
-                    "Grapple Gap/Pickup (Aeion Tank)": "Power Bomb",
-                    "Outer Hub Shaft/Pickup (Super Missile Tank)": "Charge Beam",
-                    "Outer Hub/Pickup (Missile Tank)": "Super Missile Tank",
+                    "Fiery Crossing/Pickup (Missile Tank)": "Power Bomb Tank",
+                    "Glow Fly Tunnel/Pickup (Missile Tank)": "Missile Tank",
+                    "Grapple Gap/Pickup (Aeion Tank)": "Energy Tank",
+                    "Outer Hub Shaft/Pickup (Super Missile Tank)": "Super Missile Tank",
+                    "Outer Hub/Pickup (Missile Tank)": "Progressive Beam",
                     "Split Pathways/Pickup (Missile Tank)": "Missile Tank"
                 },
                 "Area 2 - Interior": {
-                    "Fan Tunnel/Pickup (Aeion Tank)": "Power Bomb Tank",
-                    "Fiery Path/Pickup (Missile Tank)": "Energy Tank",
-                    "Fiery Storage/Pickup (Power Bomb Tank)": "Power Bomb Tank",
-                    "Gamma Arena/Pickup (DNA)": "Phase Drift",
-                    "High Jump Room/Pickup (High Jump Boots)": "Missile Tank",
-                    "High Jump Storage/Pickup (Energy Tank)": "Missile Tank",
-                    "High Jump Storage/Pickup (Missile Tank)": "Missile Tank",
-                    "Main Hub/Pickup (Wave Beam)": "Energy Transfer Module",
-                    "Varia Suit Room/Pickup (Super Missile Tank)": "Missile Tank",
+                    "Fan Tunnel/Pickup (Aeion Tank)": "Missile Tank",
+                    "Fiery Path/Pickup (Missile Tank)": "Energy Transfer Module",
+                    "Fiery Storage/Pickup (Power Bomb Tank)": "Aeion Tank",
+                    "Gamma Arena/Pickup (DNA)": "Metroid DNA 9",
+                    "High Jump Room/Pickup (High Jump Boots)": "Energy Transfer Module",
+                    "High Jump Storage/Pickup (Energy Tank)": "Baby Metroid",
+                    "High Jump Storage/Pickup (Missile Tank)": "Super Missile Tank",
+                    "Main Hub/Pickup (Wave Beam)": "Missile Tank",
+                    "Varia Suit Room/Pickup (Super Missile Tank)": "Aeion Tank",
                     "Varia Suit Room/Pickup (Varia Suit)": "Missile Tank"
                 },
                 "Area 3 - Exterior": {
-                    "Entrance Hub/Pickup (Beam Burst)": "Energy Tank",
-                    "Gamma Arena/Pickup (DNA)": "Missile Tank",
-                    "Gamma Shaft/Pickup (Missile Tank)": "Energy Transfer Module",
-                    "Gamma Shaft/Pickup (Power Bomb Tank)": "Super Missile Tank",
-                    "Glow Fly Tunnel/Pickup (Missile Tank)": "Super Missile Tank",
-                    "Grapple Beam Room/Pickup (Grapple Beam)": "Power Bomb Tank",
-                    "Outer Hub Tunnel/Pickup (Power Bomb Tank)": "Missile Tank",
-                    "Outer Hub/Pickup (Missile Tank Ceiling)": "Super Missile Tank",
+                    "Entrance Hub/Pickup (Beam Burst)": "Super Missile Tank",
+                    "Gamma Arena/Pickup (DNA)": "Metroid DNA 3",
+                    "Gamma Shaft/Pickup (Missile Tank)": "Missile Tank",
+                    "Gamma Shaft/Pickup (Power Bomb Tank)": "Missile Tank",
+                    "Glow Fly Tunnel/Pickup (Missile Tank)": "Power Bomb Tank",
+                    "Grapple Beam Room/Pickup (Grapple Beam)": "Energy Transfer Module",
+                    "Outer Hub Tunnel/Pickup (Power Bomb Tank)": "Power Bomb Tank",
+                    "Outer Hub/Pickup (Missile Tank Ceiling)": "Super Missile Launcher",
                     "Outer Hub/Pickup (Missile Tank Shaft)": "Missile Tank",
-                    "Transport to Area 3 Interior West (Lower)/Pickup (Missile Tank)": "Missile Tank",
-                    "Transport to Area 4 West/Pickup (Missile Tank)": "Progressive Jump"
+                    "Transport to Area 3 Interior West (Lower)/Pickup (Missile Tank)": "Super Missile Tank",
+                    "Transport to Area 4 West/Pickup (Missile Tank)": "Power Bomb Tank"
                 },
                 "Area 3 - Interior (East)": {
                     "Alpha Arena/Pickup (DNA)": "Missile Tank",
-                    "Alpha Arena/Pickup (Super Missile Tank)": "Super Missile Tank",
-                    "Fan Puzzle Room/Pickup (Super Missile Tank)": "Energy Transfer Module",
-                    "Fiery Path Access/Pickup (Energy Tank)": "Energy Transfer Module",
+                    "Alpha Arena/Pickup (Super Missile Tank)": "Power Bomb Tank",
+                    "Fan Puzzle Room/Pickup (Super Missile Tank)": "Missile Tank",
+                    "Fiery Path Access/Pickup (Energy Tank)": "Super Missile Tank",
                     "Gamma Arena South/Pickup (DNA)": "Super Missile Tank",
-                    "Gamma Storage/Pickup (Power Bomb Tank)": "Super Missile Tank",
-                    "Main Shaft/Pickup (Aeion Tank)": "Missile Tank",
-                    "Transport to Area 3 Interior West/Pickup (DNA)": "Missile Tank"
+                    "Gamma Storage/Pickup (Power Bomb Tank)": "Energy Tank",
+                    "Main Shaft/Pickup (Aeion Tank)": "Aeion Tank",
+                    "Transport to Area 3 Interior West/Pickup (DNA)": "Ice Beam"
                 },
                 "Area 3 - Interior (West)": {
-                    "Alpha+ Arena East/Pickup (DNA)": "Super Missile Tank",
+                    "Alpha+ Arena East/Pickup (DNA)": "Power Bomb Tank",
                     "Alpha+ Arena West/Pickup (DNA)": "Missile Tank",
                     "Central Shaft/Pickup (Missile Tank)": "Missile Tank",
-                    "Gamma Arena North/Pickup (DNA)": "Ice Beam",
-                    "Gamma Arena South/Pickup (DNA)": "Energy Tank",
-                    "Gamma Arena South/Pickup (Super Missile Tank)": "Missile Tank",
-                    "Gamma+ Arena Heat/Pickup (DNA)": "Aeion Tank",
-                    "Gamma+ Arena South/Pickup (DNA)": "Energy Transfer Module",
-                    "Mid-Shaft Shortcut/Pickup (Missile Tank)": "Aeion Tank",
-                    "Shaft East/Pickup (Aeion Tank)": "Missile Tank",
-                    "Shaft West/Pickup (Missile Tank)": "Power Bomb Tank",
-                    "Transport to Area 3 Exterior (Upper)/Pickup (Missile Tank)": "Bomb",
+                    "Gamma Arena North/Pickup (DNA)": "Missile Tank",
+                    "Gamma Arena South/Pickup (DNA)": "Super Missile Tank",
+                    "Gamma Arena South/Pickup (Super Missile Tank)": "Super Missile Tank",
+                    "Gamma+ Arena Heat/Pickup (DNA)": "Missile Tank",
+                    "Gamma+ Arena South/Pickup (DNA)": "Missile Tank",
+                    "Mid-Shaft Shortcut/Pickup (Missile Tank)": "Missile Tank",
+                    "Shaft East/Pickup (Aeion Tank)": "Progressive Suit",
+                    "Shaft West/Pickup (Missile Tank)": "Missile Tank",
+                    "Transport to Area 3 Exterior (Upper)/Pickup (Missile Tank)": "Aeion Reserve Tank",
                     "Transport to Area 3 Interior East/Pickup (Super Missile Tank)": "Energy Transfer Module",
-                    "Upper Shaft/Pickup (Missile Tank)": "Aeion Tank"
+                    "Upper Shaft/Pickup (Missile Tank)": "Super Missile Tank"
                 },
                 "Area 4 - East": {
                     "Diggernaut Chase Room/Pickup (Aeion Tank)": "Missile Tank",
-                    "Diggernaut Chase Room/Pickup (Missile Tank Bottom)": "Energy Transfer Module",
-                    "Diggernaut Chase Room/Pickup (Missile Tank Middle)": "Missile Tank",
-                    "Diggernaut Chase Room/Pickup (Missile Tank Top)": "Missile Tank",
-                    "Gamma Arena/Pickup (DNA)": "Super Missile Tank",
-                    "Gamma Arena/Pickup (Super Missile Tank)": "Missile Tank",
+                    "Diggernaut Chase Room/Pickup (Missile Tank Bottom)": "Missile Tank",
+                    "Diggernaut Chase Room/Pickup (Missile Tank Middle)": "Progressive Suit",
+                    "Diggernaut Chase Room/Pickup (Missile Tank Top)": "Super Missile Tank",
+                    "Gamma Arena/Pickup (DNA)": "Metroid DNA 10",
+                    "Gamma Arena/Pickup (Super Missile Tank)": "Super Missile Tank",
                     "Lava Shortcut/Pickup (Missile Tank)": "Missile Tank",
-                    "Main Shaft Secret/Pickup (Power Bomb Tank)": "Missile Tank",
+                    "Main Shaft Secret/Pickup (Power Bomb Tank)": "Aeion Tank",
                     "Main Shaft/Pickup (Super Missile Tank Bottom)": "Missile Tank",
                     "Main Shaft/Pickup (Super Missile Tank Top)": "Missile Tank",
-                    "Space Jump Room/Pickup (Space Jump)": "Aeion Tank",
-                    "Super Missile Room/Pickup (Super Missile)": "Energy Tank",
+                    "Space Jump Room/Pickup (Space Jump)": "Missile Tank",
+                    "Super Missile Room/Pickup (Super Missile)": "Beam Burst",
                     "Zeta Arena Access/Pickup (Missile Tank)": "Missile Tank",
                     "Zeta Arena/Pickup (DNA)": "Missile Tank",
-                    "Zeta Shaft/Pickup (Energy Tank)": "Super Missile Tank"
+                    "Zeta Shaft/Pickup (Energy Tank)": "Missile Tank"
                 },
                 "Area 4 - West": {
-                    "Alpha+ Arena/Pickup (DNA)": "Energy Transfer Module",
-                    "Alpha+ Arena/Pickup (Missile Tank)": "Energy Transfer Module",
-                    "Chozo Seals/Pickup (Energy Tank)": "Missile Tank",
-                    "Fleech Swarm Cave/Pickup (Aeion Tank)": "Super Missile Tank",
-                    "Gamma Access Path Lower/Pickup (Aeion Tank)": "Missile Tank",
-                    "Gamma Arena Room 1/Pickup (DNA)": "Missile Tank",
-                    "Gamma Arena Room 1/Pickup (Missile Tank)": "Power Bomb Tank",
+                    "Alpha+ Arena/Pickup (DNA)": "Metroid DNA 4",
+                    "Alpha+ Arena/Pickup (Missile Tank)": "Missile Tank",
+                    "Chozo Seals/Pickup (Energy Tank)": "Energy Transfer Module",
+                    "Fleech Swarm Cave/Pickup (Aeion Tank)": "Energy Transfer Module",
+                    "Gamma Access Path Lower/Pickup (Aeion Tank)": "Energy Transfer Module",
+                    "Gamma Arena Room 1/Pickup (DNA)": "Metroid DNA 6",
+                    "Gamma Arena Room 1/Pickup (Missile Tank)": "Super Missile Tank",
                     "Moheek Hallway/Pickup (Missile Tank)": "Super Missile Tank",
                     "One-Way Bridge/Pickup (Super Missile Tank)": "Super Missile Tank",
-                    "Roundabout/Pickup (Missile Tank)": "Missile Tank",
+                    "Roundabout/Pickup (Missile Tank)": "Super Missile Tank",
                     "Spazer Beam Room/Pickup (Spazer Beam)": "Aeion Tank",
-                    "Transport to Area 5 Entrance/Pickup (Super Missile Tank)": "Missile Tank",
-                    "West Hub/Pickup (Missile Tank)": "Missile Tank"
+                    "Transport to Area 5 Entrance/Pickup (Super Missile Tank)": "Progressive Beam",
+                    "West Hub/Pickup (Missile Tank)": "Energy Transfer Module"
                 },
                 "Area 5 - Entrance": {
-                    "Alpha+ Arena Access/Pickup (Missile Tank)": "Aeion Tank",
-                    "Alpha+ Arena/Pickup (DNA)": "Missile Tank",
-                    "Chozo Seal/Pickup (Power Bomb Tank)": "Energy Transfer Module",
-                    "Chozo Seal/Pickup (Super Missile Tank)": "Energy Transfer Module",
-                    "Gamma+ Arena/Pickup (DNA)": "Super Missile Tank",
+                    "Alpha+ Arena Access/Pickup (Missile Tank)": "Missile Tank",
+                    "Alpha+ Arena/Pickup (DNA)": "Power Bomb Tank",
+                    "Chozo Seal/Pickup (Power Bomb Tank)": "Aeion Tank",
+                    "Chozo Seal/Pickup (Super Missile Tank)": "Missile Tank",
+                    "Gamma+ Arena/Pickup (DNA)": "Missile Tank",
                     "Phase Drift Room/Pickup (Phase Drift)": "Missile Tank",
-                    "Phase Drift Room/Pickup (Super Missile Tank)": "Missile Tank",
+                    "Phase Drift Room/Pickup (Super Missile Tank)": "Power Bomb Tank",
                     "Pool East/Pickup (Missile Tank)": "Missile Tank",
-                    "Pool West/Pickup (Aeion Tank)": "Missile Tank",
+                    "Pool West/Pickup (Aeion Tank)": "Missile Reserve Tank",
                     "Pool West/Pickup (Power Bomb Tank)": "Super Missile Tank"
                 },
                 "Area 5 - Exterior": {
-                    "Dangerous Hallway/Pickup (Energy Tank)": "Power Bomb Tank",
+                    "Dangerous Hallway/Pickup (Energy Tank)": "Spring Ball",
                     "Dangerous Hallway/Pickup (Power Bomb Tank)": "Missile Tank",
                     "Gamma Arena/Pickup (DNA)": "Missile Tank",
-                    "Gamma Arena/Pickup (Missile Tank)": "Energy Transfer Module",
-                    "Gamma+ Arena/Pickup (DNA)": "Energy Transfer Module",
-                    "Poison Plants Hallway/Pickup (Aeion Tank)": "Energy Transfer Module",
+                    "Gamma Arena/Pickup (Missile Tank)": "Missile Tank",
+                    "Gamma+ Arena/Pickup (DNA)": "Aeion Tank",
+                    "Poison Plants Hallway/Pickup (Aeion Tank)": "Missile Tank",
                     "Screw Attack Room/Pickup (Screw Attack)": "Missile Tank",
-                    "Tower/Pickup (Missile Tank Bottom)": "Progressive Suit",
-                    "Tower/Pickup (Missile Tank Hidden)": "Energy Transfer Module",
-                    "Tower/Pickup (Super Missile Tank Bottom)": "Super Missile Tank",
-                    "Tower/Pickup (Super Missile Tank Top)": "Energy Transfer Module",
-                    "Zeta Arena/Pickup (DNA)": "Super Missile Tank"
+                    "Tower/Pickup (Missile Tank Bottom)": "Aeion Tank",
+                    "Tower/Pickup (Missile Tank Hidden)": "Aeion Tank",
+                    "Tower/Pickup (Super Missile Tank Bottom)": "Energy Transfer Module",
+                    "Tower/Pickup (Super Missile Tank Top)": "Missile Tank",
+                    "Zeta Arena/Pickup (DNA)": "Power Bomb Tank"
                 },
                 "Area 5 - Interior": {
-                    "Gamma+ Arena/Pickup (DNA)": "Missile Tank",
+                    "Gamma+ Arena/Pickup (DNA)": "Energy Tank",
                     "Grapple Shuffler/Pickup (Missile Tank)": "Missile Tank",
-                    "Gravity Suit Room/Pickup (Gravity Suit)": "Missile Tank",
-                    "Plasma Beam Room/Pickup (Plasma Beam)": "Energy Transfer Module",
-                    "Teleporter Room/Pickup (Missile Tank)": "Energy Tank",
-                    "Transport Connector/Pickup (Missile Tank)": "Energy Transfer Module",
-                    "Underwater Path/Pickup (Missile Tank)": "Super Missile Tank",
+                    "Gravity Suit Room/Pickup (Gravity Suit)": "Power Bomb Tank",
+                    "Plasma Beam Room/Pickup (Plasma Beam)": "Missile Tank",
+                    "Teleporter Room/Pickup (Missile Tank)": "Missile Tank",
+                    "Transport Connector/Pickup (Missile Tank)": "Missile Tank",
+                    "Underwater Path/Pickup (Missile Tank)": "Aeion Tank",
                     "Upper Path Left/Pickup (Missile Tank)": "Missile Tank",
-                    "Upper Path Left/Pickup (Super Missile Tank)": "Missile Tank",
+                    "Upper Path Left/Pickup (Super Missile Tank)": "Energy Transfer Module",
                     "Upper Path Storage/Pickup (Power Bomb Tank)": "Missile Tank",
-                    "Zeta+ Arena Access/Pickup (Missile Tank)": "Power Bomb Tank",
-                    "Zeta+ Arena/Pickup (DNA)": "Energy Transfer Module"
+                    "Zeta+ Arena Access/Pickup (Missile Tank)": "Aeion Tank",
+                    "Zeta+ Arena/Pickup (DNA)": "Energy Tank"
                 },
                 "Area 6": {
-                    "Chozo Seal East/Pickup (Super Missile Tank)": "Missile Tank",
-                    "Chozo Seal West/Pickup (Missile Tank Ceiling)": "Missile Tank",
+                    "Chozo Seal East/Pickup (Super Missile Tank)": "Super Missile Tank",
+                    "Chozo Seal West/Pickup (Missile Tank Ceiling)": "Energy Tank",
                     "Chozo Seal West/Pickup (Missile Tank Save)": "Energy Transfer Module",
-                    "Chozo Seal West/Pickup (Super Missile Tank)": "Energy Transfer Module",
-                    "Crumble Bridge/Pickup (Energy Tank)": "Aeion Tank",
-                    "Crumble Bridge/Pickup (Missile Tank)": "Energy Transfer Module",
-                    "Crumble Steps/Pickup (Missile Tank)": "Missile Tank",
-                    "Diggernaut Arena/Pickup (Power Bomb)": "Super Missile Tank",
-                    "Diggernaut Shaft/Pickup (Power Bomb Tank)": "Energy Transfer Module",
-                    "Omega Arena/Pickup (DNA)": "Energy Tank",
-                    "Red Plant Tunnel/Pickup (Missile Tank)": "Missile Tank",
-                    "Stolen Power Bomb Room/Pickup (Power Bomb Tank)": "Spring Ball",
-                    "Stolen Power Bomb Room/Pickup (Super Missile Tank)": "Super Missile Tank",
-                    "Transport to Area 7/Pickup (Aeion Tank)": "Power Bomb Tank",
-                    "Zeta Arena/Pickup (DNA)": "Beam Burst"
+                    "Chozo Seal West/Pickup (Super Missile Tank)": "Missile Tank",
+                    "Crumble Bridge/Pickup (Energy Tank)": "Energy Tank",
+                    "Crumble Bridge/Pickup (Missile Tank)": "Super Missile Tank",
+                    "Crumble Steps/Pickup (Missile Tank)": "Energy Transfer Module",
+                    "Diggernaut Arena/Pickup (Power Bomb)": "Phase Drift",
+                    "Diggernaut Shaft/Pickup (Power Bomb Tank)": "Missile Tank",
+                    "Omega Arena/Pickup (DNA)": "Missile Tank",
+                    "Red Plant Tunnel/Pickup (Missile Tank)": "Power Bomb Tank",
+                    "Stolen Power Bomb Room/Pickup (Power Bomb Tank)": "Energy Transfer Module",
+                    "Stolen Power Bomb Room/Pickup (Super Missile Tank)": "Missile Tank",
+                    "Transport to Area 7/Pickup (Aeion Tank)": "Energy Tank",
+                    "Zeta Arena/Pickup (DNA)": "Power Bomb Tank"
                 },
                 "Area 7": {
-                    "Entrance Shaft/Pickup (Power Bomb Tank)": "Aeion Tank",
-                    "Exit Puzzle Room 2/Pickup (Aeion Tank)": "Aeion Tank",
-                    "Launch Tunnel North/Pickup (Super Missile Tank)": "Energy Transfer Module",
+                    "Entrance Shaft/Pickup (Power Bomb Tank)": "Missile Tank",
+                    "Exit Puzzle Room 2/Pickup (Aeion Tank)": "Missile Tank",
+                    "Launch Tunnel North/Pickup (Super Missile Tank)": "Super Missile Tank",
                     "Launch Tunnel South/Pickup (Energy Tank)": "Energy Transfer Module",
                     "Launch Tunnels Shaft/Pickup (Aeion Tank)": "Missile Tank",
-                    "Launch Tunnels Shaft/Pickup (Missile Tank)": "Spider Ball",
+                    "Launch Tunnels Shaft/Pickup (Missile Tank)": "Energy Transfer Module",
                     "Omega Arena North Access/Pickup (Missile Tank)": "Missile Tank",
-                    "Omega Arena North/Pickup (DNA)": "Energy Transfer Module",
-                    "Omega Arena South Access/Pickup (Missile Tank)": "Energy Transfer Module",
-                    "Omega Arena South/Pickup (DNA)": "Energy Transfer Module",
-                    "Omega+ Arena Access/Pickup (Missile Tank)": "Missile Tank",
-                    "Omega+ Arena/Pickup (DNA)": "Missile Tank",
-                    "Transport to Area 6/Pickup (Missile Tank Baby Locked)": "Missile Tank",
-                    "Transport to Area 6/Pickup (Missile Tank Hidden)": "Super Missile Tank",
-                    "Transport to Area 6/Pickup (Missile Tank West)": "Power Bomb Tank",
-                    "Transport to Area 6/Pickup (Super Missile Tank)": "Energy Transfer Module"
+                    "Omega Arena North/Pickup (DNA)": "Metroid DNA 5",
+                    "Omega Arena South Access/Pickup (Missile Tank)": "Missile Tank",
+                    "Omega Arena South/Pickup (DNA)": "Metroid DNA 7",
+                    "Omega+ Arena Access/Pickup (Missile Tank)": "Super Missile Tank",
+                    "Omega+ Arena/Pickup (DNA)": "Metroid DNA 1",
+                    "Transport to Area 6/Pickup (Missile Tank Baby Locked)": "Super Missile Tank",
+                    "Transport to Area 6/Pickup (Missile Tank Hidden)": "Aeion Tank",
+                    "Transport to Area 6/Pickup (Missile Tank West)": "Missile Tank",
+                    "Transport to Area 6/Pickup (Super Missile Tank)": "Missile Tank"
                 },
                 "Area 8": {
-                    "Central Chamber Access/Pickup (Missile Tank Baby Locked)": "Missile Tank",
+                    "Central Chamber Access/Pickup (Missile Tank Baby Locked)": "Power Bomb Launcher",
                     "Central Chamber Access/Pickup (Missile Tank Hallway)": "Missile Tank",
-                    "Central Chamber/Pickup (Missile Tank Hidden)": "Energy Transfer Module",
-                    "Central Chamber/Pickup (Missile Tank Left)": "Power Bomb Tank",
-                    "Central Chamber/Pickup (Missile Tank Top)": "Lightning Armor",
-                    "Central Chamber/Pickup (Power Bomb Tank)": "Missile Tank",
-                    "Central Chamber/Pickup (Super Missile Tank)": "Missile Tank",
-                    "Entrance Hallway/Pickup (Energy Tank)": "Missile Tank",
-                    "Larva Shaft 3/Pickup (Missile Tank)": "Aeion Tank",
+                    "Central Chamber/Pickup (Missile Tank Hidden)": "Aeion Tank",
+                    "Central Chamber/Pickup (Missile Tank Left)": "Missile Tank",
+                    "Central Chamber/Pickup (Missile Tank Top)": "Energy Tank",
+                    "Central Chamber/Pickup (Power Bomb Tank)": "Energy Transfer Module",
+                    "Central Chamber/Pickup (Super Missile Tank)": "Super Missile Tank",
+                    "Entrance Hallway/Pickup (Energy Tank)": "Super Missile Tank",
+                    "Larva Shaft 3/Pickup (Missile Tank)": "Super Missile Tank",
                     "Queen Arena/Pickup (Baby Metroid)": "Energy Transfer Module",
-                    "Shaft East/Pickup (Missile Tank)": "Energy Tank",
-                    "Shaft East/Pickup (Super Missile Tank)": "Aeion Tank",
-                    "Teleporter Shaft South/Pickup (Missile Tank)": "Super Missile Tank",
-                    "Transport to Surface West/Pickup (Missile Tank)": "Missile Tank",
-                    "Transport to Surface West/Pickup (Super Missile Tank)": "Missile Tank"
+                    "Shaft East/Pickup (Missile Tank)": "Missile Tank",
+                    "Shaft East/Pickup (Super Missile Tank)": "Progressive Beam",
+                    "Teleporter Shaft South/Pickup (Missile Tank)": "Missile Tank",
+                    "Transport to Surface West/Pickup (Missile Tank)": "Screw Attack",
+                    "Transport to Surface West/Pickup (Super Missile Tank)": "Super Missile Tank"
                 },
                 "Surface - East": {
-                    "Alpha Arena Access/Pickup (Missile Tank)": "Energy Tank",
-                    "Alpha Arena/Pickup (DNA)": "Energy Tank",
-                    "Alpha Arena/Pickup (Missile Tank)": "Missile Tank",
-                    "Alpha Storage/Pickup (Super Missile Tank)": "Energy Transfer Module",
-                    "Charge Beam Room/Pickup (Charge Beam)": "Power Bomb Tank",
+                    "Alpha Arena Access/Pickup (Missile Tank)": "Energy Transfer Module",
+                    "Alpha Arena/Pickup (DNA)": "Energy Transfer Module",
+                    "Alpha Arena/Pickup (Missile Tank)": "Super Missile Tank",
+                    "Alpha Storage/Pickup (Super Missile Tank)": "Energy Tank",
+                    "Charge Beam Room/Pickup (Charge Beam)": "Energy Tank",
                     "Charge Beam Shaft/Pickup (Energy Tank)": "Missile Tank",
-                    "Charge Beam Storage/Pickup (Missile Tank)": "Missile Tank",
-                    "Chozo Seal/Pickup (Missile Tank)": "Progressive Beam",
-                    "Crumble Drop Shaft/Pickup (Super Missile Tank)": "Missile Tank",
-                    "Landing Site Storage/Pickup (Aeion Tank)": "Super Missile Tank",
-                    "Melee Tutorial Pathway/Pickup (Missile Tank)": "Progressive Jump",
+                    "Charge Beam Storage/Pickup (Missile Tank)": "Power Bomb Tank",
+                    "Chozo Seal/Pickup (Missile Tank)": "Aeion Tank",
+                    "Crumble Drop Shaft/Pickup (Super Missile Tank)": "Energy Transfer Module",
+                    "Landing Site Storage/Pickup (Aeion Tank)": "Missile Tank",
+                    "Melee Tutorial Pathway/Pickup (Missile Tank)": "Spider Ball",
                     "Morph Ball Room/Pickup (Morph Ball)": "Morph Ball",
-                    "Scan Pulse Room/Pickup (Scan Pulse)": "Energy Tank",
-                    "Transport Storage/Pickup (Power Bomb Tank)": "Super Missile Tank",
-                    "Transport to Area 1/Pickup (Missile Expansion)": "Energy Transfer Module",
-                    "Upper Storage/Pickup (Missile Tank)": "Power Bomb Tank"
+                    "Scan Pulse Room/Pickup (Scan Pulse)": "Missile Tank",
+                    "Transport Storage/Pickup (Power Bomb Tank)": "Missile Tank",
+                    "Transport to Area 1/Pickup (Missile Expansion)": "Power Bomb Tank",
+                    "Upper Storage/Pickup (Missile Tank)": "Missile Tank"
                 },
                 "Surface - West": {
                     "Transport to Area 8/Pickup (Missile Tank)": "Missile Tank",
-                    "Transport to Area 8/Pickup (Super Missile Tank)": "Energy Transfer Module"
+                    "Transport to Area 8/Pickup (Super Missile Tank)": "Aeion Tank"
                 }
             },
-            "hints": {}
+            "hints": {
+                "Area 2 - Entrance/Chozo Seal/Chozo Seal": {
+                    "hint_type": "location",
+                    "precision": {
+                        "location": "region-only",
+                        "item": "detailed",
+                        "include_owner": true,
+                        "relative": null
+                    },
+                    "target": 50,
+                    "dark_temple": null
+                },
+                "Area 3 - Exterior/Transport to Area 2 Entrance/Chozo Seal": {
+                    "hint_type": "location",
+                    "precision": {
+                        "location": "region-only",
+                        "item": "detailed",
+                        "include_owner": true,
+                        "relative": null
+                    },
+                    "target": 27,
+                    "dark_temple": null
+                },
+                "Surface - East/Chozo Seal/Chozo Seal": {
+                    "hint_type": "location",
+                    "precision": {
+                        "location": "region-only",
+                        "item": "detailed",
+                        "include_owner": true,
+                        "relative": null
+                    },
+                    "target": 34,
+                    "dark_temple": null
+                },
+                "Area 1/Chozo Seal/Chozo Seal": {
+                    "hint_type": "location",
+                    "precision": {
+                        "location": "region-only",
+                        "item": "detailed",
+                        "include_owner": true,
+                        "relative": null
+                    },
+                    "target": 40,
+                    "dark_temple": null
+                },
+                "Area 4 - West/Chozo Seals/Chozo Seal Top": {
+                    "hint_type": "location",
+                    "precision": {
+                        "location": "region-only",
+                        "item": "detailed",
+                        "include_owner": true,
+                        "relative": null
+                    },
+                    "target": 98,
+                    "dark_temple": null
+                },
+                "Area 4 - West/Chozo Seals/Chozo Seal Bottom": {
+                    "hint_type": "location",
+                    "precision": {
+                        "location": "region-only",
+                        "item": "detailed",
+                        "include_owner": true,
+                        "relative": null
+                    },
+                    "target": 57,
+                    "dark_temple": null
+                },
+                "Area 5 - Entrance/Chozo Seal/Chozo Seal": {
+                    "hint_type": "location",
+                    "precision": {
+                        "location": "region-only",
+                        "item": "detailed",
+                        "include_owner": true,
+                        "relative": null
+                    },
+                    "target": 87,
+                    "dark_temple": null
+                },
+                "Area 6/Chozo Seal West/Chozo Seal": {
+                    "hint_type": "location",
+                    "precision": {
+                        "location": "region-only",
+                        "item": "detailed",
+                        "include_owner": true,
+                        "relative": null
+                    },
+                    "target": 68,
+                    "dark_temple": null
+                },
+                "Area 6/Chozo Seal East/Chozo Seal": {
+                    "hint_type": "location",
+                    "precision": {
+                        "location": "region-only",
+                        "item": "detailed",
+                        "include_owner": true,
+                        "relative": null
+                    },
+                    "target": 155,
+                    "dark_temple": null
+                },
+                "Area 7/Transport to Area 6/Chozo Seal": {
+                    "hint_type": "location",
+                    "precision": {
+                        "location": "region-only",
+                        "item": "detailed",
+                        "include_owner": true,
+                        "relative": null
+                    },
+                    "target": 76,
+                    "dark_temple": null
+                }
+            }
         }
     ],
     "item_order": [
         "Morph Ball at Surface - East/Morph Ball Room/Pickup (Morph Ball)",
-        "Grapple Beam at Area 1/Alpha Arena East/Pickup (DNA)",
-        "Progressive Jump at Surface - East/Melee Tutorial Pathway/Pickup (Missile Tank)",
-        "Baby Metroid at Area 2 - Entrance/Teleporter Room/Pickup (Missile Tank)",
-        "Progressive Jump at Area 3 - Exterior/Transport to Area 4 West/Pickup (Missile Tank)",
-        "Power Bomb at Area 2 - Exterior/Grapple Gap/Pickup (Aeion Tank)",
-        "Progressive Beam at Surface - East/Chozo Seal/Pickup (Missile Tank)",
-        "Progressive Beam at Area 1/Alpha Arena South/Pickup (DNA)",
-        "Screw Attack at Area 1/Inner Shaft/Pickup (Missile Tank)",
-        "Super Missile at Area 1/Bomb Room/Pickup (Missile Tank)",
-        "Super Missile Tank at Area 2 - Exterior/Alpha+ Storage/Pickup (Super Missile Tank)",
-        "Phase Drift at Area 2 - Interior/Gamma Arena/Pickup (DNA)",
-        "Charge Beam at Area 2 - Exterior/Outer Hub Shaft/Pickup (Super Missile Tank)",
-        "Beam Burst at Area 6/Zeta Arena/Pickup (DNA)",
-        "Bomb at Area 3 - Interior (West)/Transport to Area 3 Exterior (Upper)/Pickup (Missile Tank)",
-        "Spider Ball at Area 7/Launch Tunnels Shaft/Pickup (Missile Tank)",
-        "Spring Ball at Area 6/Stolen Power Bomb Room/Pickup (Power Bomb Tank)",
-        "Lightning Armor at Area 8/Central Chamber/Pickup (Missile Tank Top)",
-        "Progressive Suit at Area 5 - Exterior/Tower/Pickup (Missile Tank Bottom)",
-        "Progressive Suit at Area 1/Lava Shortcut/Pickup (Missile Tank)",
-        "Ice Beam at Area 3 - Interior (West)/Gamma Arena North/Pickup (DNA)"
+        "Spider Ball at Surface - East/Melee Tutorial Pathway/Pickup (Missile Tank)",
+        "Grapple Beam at Area 1/Spider Ball Room/Pickup (Spider Ball)",
+        "Lightning Armor at Area 2 - Entrance/Transport to Area 2 Exterior/Pickup (Lightning Armor)",
+        "Progressive Jump at Area 2 - Entrance/Transport to Area 2 Exterior/Pickup (Missile Tank) with hint at Area 2 - Entrance/Chozo Seal/Chozo Seal",
+        "Progressive Jump at Area 1/Ice Beam Room/Pickup (Ice Beam) with hint at Area 3 - Exterior/Transport to Area 2 Entrance/Chozo Seal",
+        "Progressive Beam at Area 2 - Exterior/Outer Hub/Pickup (Missile Tank) with hint at Surface - East/Chozo Seal/Chozo Seal",
+        "Baby Metroid at Area 2 - Interior/High Jump Storage/Pickup (Energy Tank) with hint at Area 1/Chozo Seal/Chozo Seal",
+        "Screw Attack at Area 8/Transport to Surface West/Pickup (Missile Tank)",
+        "Charge Beam at Area 1/Ice Beam Room/Pickup (Super Missile Tank)",
+        "Bomb at Area 1/Spider Ball Balcony/Pickup (Aeion Tank)",
+        "Beam Burst at Area 4 - East/Super Missile Room/Pickup (Super Missile) with hint at Area 4 - West/Chozo Seals/Chozo Seal Top",
+        "Super Missile Launcher at Area 3 - Exterior/Outer Hub/Pickup (Missile Tank Ceiling) with hint at Area 4 - West/Chozo Seals/Chozo Seal Bottom",
+        "Progressive Beam at Area 4 - West/Transport to Area 5 Entrance/Pickup (Super Missile Tank) with hint at Area 5 - Entrance/Chozo Seal/Chozo Seal",
+        "Progressive Suit at Area 3 - Interior (West)/Shaft East/Pickup (Aeion Tank) with hint at Area 6/Chozo Seal West/Chozo Seal",
+        "Progressive Beam at Area 8/Shaft East/Pickup (Super Missile Tank) with hint at Area 6/Chozo Seal East/Chozo Seal",
+        "Power Bomb Launcher at Area 8/Central Chamber Access/Pickup (Missile Tank Baby Locked)",
+        "Energy Tank at Area 6/Crumble Bridge/Pickup (Energy Tank)",
+        "Energy Tank at Area 3 - Interior (East)/Gamma Storage/Pickup (Power Bomb Tank) with hint at Area 7/Transport to Area 6/Chozo Seal",
+        "Energy Tank at Surface - East/Alpha Storage/Pickup (Super Missile Tank)",
+        "Energy Tank at Area 6/Transport to Area 7/Pickup (Aeion Tank)",
+        "Progressive Suit at Area 4 - East/Diggernaut Chase Room/Pickup (Missile Tank Middle)"
     ]
 }

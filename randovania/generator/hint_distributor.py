@@ -18,6 +18,7 @@ from randovania.game_description.hint import (
     HintRelativeAreaName,
     HintType,
     PrecisionPair,
+    RelativeData,
     RelativeDataArea,
     RelativeDataItem,
 )
@@ -31,10 +32,9 @@ if TYPE_CHECKING:
     from randovania.game_description.db.area import Area
     from randovania.game_description.db.node_identifier import NodeIdentifier
     from randovania.game_description.db.region_list import RegionList
-    from randovania.game_description.game_description import GameDescription
     from randovania.game_description.pickup.pickup_entry import PickupEntry
-    from randovania.generator.filler.runner import PlayerPool
-    from randovania.layout.base.base_configuration import BaseConfiguration
+    from randovania.generator.filler.filler_configuration import PlayerPool
+    from randovania.generator.pre_fill_params import PreFillParams
 
 HintProvider = Callable[[PlayerState, GamePatches, Random, PickupIndex], Hint | None]
 
@@ -44,14 +44,6 @@ def _not_empty(it: Iterator) -> bool:
 
 
 HintTargetPrecision = tuple[PickupIndex, PrecisionPair]
-
-
-@dataclasses.dataclass(frozen=True)
-class PreFillParams:
-    rng: Random
-    configuration: BaseConfiguration
-    game: GameDescription
-    is_multiworld: bool
 
 
 class HintDistributor(ABC):
@@ -358,9 +350,14 @@ class HintDistributor(ABC):
         if not precise_distance:
             distance_offset = max_distance - distances[area]
 
+        relative: RelativeData
+
         if relative_type == HintLocationPrecision.RELATIVE_TO_AREA:
+            assert isinstance(precision, HintRelativeAreaName)
             relative = RelativeDataArea(distance_offset, region_list.identifier_for_area(area), precision)
+
         elif relative_type == HintLocationPrecision.RELATIVE_TO_INDEX:
+            assert isinstance(precision, HintItemPrecision)
             relative = RelativeDataItem(distance_offset, rng.choice(list(_major_pickups(area))), precision)
         else:
             raise ValueError(f"Invalid relative_type: {relative_type}")
@@ -375,7 +372,7 @@ class HintDistributor(ABC):
         precision: HintItemPrecision | HintRelativeAreaName,
         max_distance: int,
     ) -> HintProvider:
-        def _wrapper(player_state: PlayerState, patches: GamePatches, rng: Random, target: PickupIndex):
+        def _wrapper(player_state: PlayerState, patches: GamePatches, rng: Random, target: PickupIndex) -> Hint | None:
             return self.add_relative_hint(
                 player_state.game.region_list,
                 patches,
@@ -418,14 +415,14 @@ class HintDistributor(ABC):
         rng.shuffle(identifiers)
 
         while identifiers and relative_hint_providers:
-            new_hint = relative_hint_providers.pop()(
-                player_state, patches, rng, hints_to_replace[identifiers[-1]].target
-            )
+            hint_target = hints_to_replace[identifiers[-1]].target
+            assert hint_target is not None
+            new_hint = relative_hint_providers.pop()(player_state, patches, rng, hint_target)
             if new_hint is not None:
                 hints_to_replace[identifiers.pop()] = new_hint
 
         # Add random precisions
-        precisions = []
+        precisions: list[PrecisionPair] = []
         for identifier in identifiers:
             precisions = random_lib.create_weighted_list(rng, precisions, self.precision_pair_weighted_list)
             precision = precisions.pop()

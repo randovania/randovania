@@ -13,7 +13,6 @@ if TYPE_CHECKING:
     from randovania.game_description.pickup.standard_pickup import StandardPickupDefinition
     from randovania.game_description.resources.item_resource_info import ItemResourceInfo
     from randovania.game_description.resources.resource_database import ResourceDatabase
-    from randovania.game_description.resources.resource_info import ResourceQuantity
     from randovania.games.game import RandovaniaGame
     from randovania.layout.base.standard_pickup_state import StandardPickupState
 
@@ -43,7 +42,7 @@ def create_standard_pickup(
         (resource_database.get_item(item), count) for item, count in pickup.additional_resources.items()
     )
 
-    def _create_resources(base_resource: str | None) -> ResourceQuantity:
+    def _create_resources(base_resource: str) -> tuple[ItemResourceInfo, int]:
         return resource_database.get_item(base_resource), 1
 
     return PickupEntry(

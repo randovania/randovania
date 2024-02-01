@@ -15,6 +15,7 @@ from randovania.lib import json_lib
     ("rdvgame_filename", "expected_results_filename", "num_of_players"),
     [
         ("starter_preset.rdvgame", "starter_preset.json", 1),  # starter preset
+        ("start_inventory.rdvgame", "start_inventory.json", 1),  # test for starting inventory and export ids
     ],
 )
 def test_create_patch_data(test_files_dir, rdvgame_filename, expected_results_filename, num_of_players, mocker):

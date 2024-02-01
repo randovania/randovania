@@ -21,11 +21,9 @@ def test_aeion_increase(skip_qtbot, msr_game_description, preset_manager):
     skip_qtbot.addWidget(tab)
     tab.on_preset_changed(preset)
 
-    tab.aeion_tank_capacity_spin_box.stepUp()
     tab.aeion_capacity_spin_box.stepUp()
     tab.on_preset_changed(editor.create_custom_preset_with())
 
     configuration = editor.configuration
     assert isinstance(configuration, MSRConfiguration)
-    assert configuration.aeion_per_tank == base_configuration.aeion_per_tank + 10
     assert configuration.starting_aeion == base_configuration.starting_aeion + 10

@@ -44,6 +44,8 @@ class PrimePresetDescriber(GamePresetDescriber):
         assert isinstance(configuration, PrimeConfiguration)
         template_strings = super().format_params(configuration)
         cutscene_removal = _PRIME1_CUTSCENE_MODE_DESCRIPTION[configuration.qol_cutscenes]
+        ingame_difficulty = configuration.ingame_difficulty.description
+
         phazon_hint = _PRIME1_PHAZON_SUIT_HINT[configuration.hints.phazon_suit]
 
         room_rando = _PRIME1_ROOM_RANDO_MODE_DESCRIPTION[configuration.room_rando]
@@ -174,6 +176,9 @@ class PrimePresetDescriber(GamePresetDescriber):
                 },
                 {
                     cutscene_removal: cutscene_removal is not None,
+                },
+                {
+                    ingame_difficulty: ingame_difficulty is not None,
                 },
                 {
                     enemy_rando_range_scale: enemy_rando_range_scale is not None,

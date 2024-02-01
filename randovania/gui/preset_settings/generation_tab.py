@@ -54,14 +54,6 @@ class PresetGeneration(PresetTab, Ui_PresetGeneration):
 
         # Development
         signal_handling.on_checked(
-            self.single_set_for_pickups_that_solve_check,
-            self._persist_bool_layout_field("single_set_for_pickups_that_solve"),
-        )
-        signal_handling.on_checked(
-            self.staggered_multi_pickup_placement_check,
-            self._persist_bool_layout_field("staggered_multi_pickup_placement"),
-        )
-        signal_handling.on_checked(
             self.check_if_beatable_after_base_patches_check,
             self._persist_bool_layout_field("check_if_beatable_after_base_patches"),
         )
@@ -89,8 +81,6 @@ class PresetGeneration(PresetTab, Ui_PresetGeneration):
         self.trick_level_minimal_logic_check.setChecked(layout.trick_level.minimal_logic)
         signal_handling.set_combo_with_value(self.dangerous_combo, layout.logical_resource_action)
 
-        self.single_set_for_pickups_that_solve_check.setChecked(layout.single_set_for_pickups_that_solve)
-        self.staggered_multi_pickup_placement_check.setChecked(layout.staggered_multi_pickup_placement)
         self.check_if_beatable_after_base_patches_check.setChecked(
             layout.check_if_beatable_after_base_patches and False  # always disable it when changing from the UI
         )
@@ -115,8 +105,6 @@ class PresetGeneration(PresetTab, Ui_PresetGeneration):
 
     @property
     def experimental_settings(self) -> Iterable[QtWidgets.QWidget]:
-        yield self.single_set_for_pickups_that_solve_check
-        yield self.staggered_multi_pickup_placement_check
         # Always hidden right now
         # yield self.check_if_beatable_after_base_patches_check
         yield self.local_first_progression_check

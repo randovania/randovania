@@ -218,12 +218,20 @@ def test_list_dangerous_resources(database, input_data, output_data):
     assert result == expected_result
 
 
-def test_set_dangerous_resources():
+def test_set_dangerous_resources(database):
     # setup
-    list_a = MagicMock()
-    list_b = MagicMock()
-    list_a.dangerous_resources = [1, 2, 3]
-    list_b.dangerous_resources = ["a", "b", "c"]
+    list_a = RequirementList(
+        [
+            ResourceRequirement.create(database.get_item("A"), 1, True),
+            ResourceRequirement.create(database.get_item("B"), 1, True),
+        ]
+    )
+    list_b = RequirementList(
+        [
+            ResourceRequirement.create(database.get_item("C"), 1, True),
+            ResourceRequirement.create(database.get_item("D"), 1, True),
+        ]
+    )
 
     req_set = RequirementSet([])
     req_set.alternatives = frozenset([list_a, list_b])
@@ -232,7 +240,7 @@ def test_set_dangerous_resources():
     result = set(req_set.dangerous_resources)
 
     # Assert
-    assert result == {1, 2, 3, "a", "b", "c"}
+    assert result == {database.get_item(c) for c in "ABCD"}
 
 
 def test_requirement_as_set_0(database):

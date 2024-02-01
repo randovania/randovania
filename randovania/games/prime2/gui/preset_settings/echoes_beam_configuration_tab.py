@@ -12,9 +12,8 @@ from randovania.gui.lib.signal_handling import set_combo_with_value
 from randovania.gui.preset_settings.preset_tab import PresetTab
 
 if TYPE_CHECKING:
-    from open_prime_rando.dol_patching.echoes.beam_configuration import BeamAmmoConfiguration
-
     from randovania.game_description.game_description import GameDescription
+    from randovania.games.prime2.layout.beam_configuration import BeamAmmoConfiguration
     from randovania.gui.lib.window_manager import WindowManager
     from randovania.interface_common.preset_editor import PresetEditor
     from randovania.layout.preset import Preset

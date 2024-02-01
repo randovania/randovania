@@ -43,7 +43,9 @@ class PresetLocationPool(PresetTab, Ui_PresetLocationPool, NodeListHelper):
 
         nodes_by_region: dict[str, list[PickupNode]] = collections.defaultdict(list)
         node_names = {}
-        pickup_match = re.compile(r"Pickup \(([^\)]+)\)")
+        # Needs to start with "Pickup (", then needs to
+        # contain at least one character in there, and needs to end with ")"
+        pickup_match = re.compile(r"^Pickup \((.+)\)$")
 
         for region in region_list.regions:
             for use_dark_name in dark_name_flags(region):

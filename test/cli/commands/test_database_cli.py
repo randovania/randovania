@@ -57,10 +57,10 @@ def test_write_game_descriptions(mocker):
     # Assert
     mock_write_game_description.assert_has_calls([call(g) for g in gds.values()])
     mock_write_human_readable_game.assert_has_calls(
-        [call(gd, g.data_path.joinpath("json_data")) for g, gd in gds.items()]
+        [call(gd, g.data_path.joinpath("logic_database")) for g, gd in gds.items()]
     )
     mock_write_as_split_files.assert_has_calls(
-        [call(mock_write_game_description.return_value, g.data_path.joinpath("json_data")) for g in gds.keys()]
+        [call(mock_write_game_description.return_value, g.data_path.joinpath("logic_database")) for g in gds.keys()]
     )
 
 

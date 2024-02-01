@@ -59,6 +59,9 @@ class AM2RBootstrap(MetroidBootstrap):
             if getattr(configuration, name):
                 enabled_resources.add(index)
 
+        if configuration.dock_rando.is_enabled():
+            enabled_resources.add("DoorLockRando")
+
         return enabled_resources
 
     def _damage_reduction(self, db: ResourceDatabase, current_resources: ResourceCollection):
@@ -73,6 +76,9 @@ class AM2RBootstrap(MetroidBootstrap):
     def assign_pool_results(self, rng: Random, patches: GamePatches, pool_results: PoolResults) -> GamePatches:
         assert isinstance(patches.configuration, AM2RConfiguration)
         config = patches.configuration.artifacts
+
+        if config.prefer_anywhere:
+            return super().assign_pool_results(rng, patches, pool_results)
 
         locations = all_dna_locations(patches.game, config)
         rng.shuffle(locations)

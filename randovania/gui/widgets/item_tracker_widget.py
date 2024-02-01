@@ -32,6 +32,7 @@ class Element:
     resources: list[ItemResourceInfo]
     text_template: str
     minimum_to_check: int
+    maximum_to_check: int
     field_to_check: FieldToCheck
     disabled_image: TrackerItemImage | None
 
@@ -64,6 +65,7 @@ class ItemTrackerWidget(QtWidgets.QGroupBox):
             col_span = element.get("col_span", 1)
             row_span = element.get("row_span", 1)
             minimum_to_check = element.get("minimum_to_check", 1)
+            maximum_to_check = element.get("maximum_to_check", -1)
             field_to_check = FieldToCheck(element.get("field_to_check", FieldToCheck.CAPACITY.value))
 
             labels = []
@@ -105,6 +107,8 @@ class ItemTrackerWidget(QtWidgets.QGroupBox):
             elif "label" in element:
                 label = QtWidgets.QLabel(self)
                 label.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
+                if "style" in element:
+                    label.setStyleSheet(element["style"])
                 text_template = element["label"]
                 labels.append(label)
 
@@ -123,9 +127,20 @@ class ItemTrackerWidget(QtWidgets.QGroupBox):
                 label.setToolTip(resource.long_name)
 
             self.tracker_elements.append(
-                Element(list(labels), resources, text_template, minimum_to_check, field_to_check, disabled_image)
+                Element(
+                    list(labels),
+                    resources,
+                    text_template,
+                    minimum_to_check,
+                    maximum_to_check,
+                    field_to_check,
+                    disabled_image,
+                )
             )
             if disabled_image is not None:
+                # this is lazy for progressives, but would require editing all json & adding a field I think
+                if resources:
+                    disabled_image.setToolTip(resources[0].long_name)
                 labels.append(disabled_image)
 
             for label in labels:
@@ -180,9 +195,11 @@ class ItemTrackerWidget(QtWidgets.QGroupBox):
 
                 if isinstance(label, TrackerItemImage):
                     fields = {"amount": amount, "capacity": capacity, "max_capacity": max_capacity}
-                    value_target = element.minimum_to_check
                     value = fields[element.field_to_check.value]
-                    satisfied = max_capacity == 0 or value >= value_target
+                    satisfied = max_capacity == 0 or (
+                        value >= element.minimum_to_check
+                        and (element.maximum_to_check == -1 or value <= element.maximum_to_check)
+                    )
                     label.set_checked(satisfied)
                     label.setVisible(satisfied)
                     element.disabled_image.set_checked(not satisfied)

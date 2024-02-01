@@ -1,0 +1,421 @@
+----------------
+Crater Entry Point
+Extra - asset_id: 2472970646
+Extra - size_index: 0.3
+Extra - aabb: [-34.99226, 33.156616, -3.0840695, 27.790567, 97.286415, 52.03466]
+> Door to Crater Tunnel A; Heals? False
+  * Layers: default
+  * Plasma Door to Crater Tunnel A/Door to Crater Entry Point
+  * Extra - dock_index: 0
+  * Extra - nonstandard: False
+  > Teleporter to Tallon Overworld
+      Trivial
+
+> Teleporter to Tallon Overworld; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Teleporter to Artifact Temple/Teleporter to Impact Crater
+  * Extra - scan_asset_id: None
+  * Extra - teleporter_instance_id: 152
+  > Door to Crater Tunnel A
+      Trivial
+  > Save Station
+      Trivial
+
+> Save Station; Heals? True
+  * Layers: default
+  > Teleporter to Tallon Overworld
+      Trivial
+
+> Pickup (Items Every Room); Heals? False
+  * Layers: items_every_room
+  * Pickup 168; Category? Minor
+  * Extra - position_required: True
+
+----------------
+Crater Tunnel A
+Extra - asset_id: 1238049635
+Extra - size_index: 0.1
+Extra - aabb: [-23.104336, -35.499622, -4.009928, 11.508916, 35.501053, 17.09382]
+> Door to Phazon Core; Heals? False
+  * Layers: default
+  * Plasma Door to Phazon Core/Door to Crater Tunnel A
+  * Extra - dock_index: 0
+  * Extra - nonstandard: False
+  > Door to Crater Entry Point
+      Trivial
+
+> Door to Crater Entry Point; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Plasma Door to Crater Entry Point/Door to Crater Tunnel A
+  * Extra - dock_index: 1
+  * Extra - nonstandard: False
+  > Door to Phazon Core
+      Trivial
+
+> Pickup (Items Every Room); Heals? False
+  * Layers: items_every_room
+  * Pickup 169; Category? Minor
+  * Extra - position_required: True
+
+----------------
+Phazon Core
+Extra - asset_id: 3180620483
+Extra - size_index: 0.3
+Extra - aabb: [-60.524654, -183.18188, -2.189436, 81.86241, -33.338776, 99.45756]
+> Door to Crater Missile Station; Heals? False
+  * Layers: default
+  * Plasma Door to Crater Missile Station/Door to Phazon Core
+  * Extra - dock_index: 0
+  * Extra - nonstandard: False
+  > Door to Crater Tunnel A
+      Trivial
+  > Door to Crater Tunnel B
+      Any of the following:
+          Space Jump Boots
+          All of the following:
+              Morph Ball Bomb and Morph Ball and Bomb Jump (Hypermode)
+              Any of the following:
+                  L-Jump (Expert)
+                  Scan Visor and Combat/Scan Dash (Intermediate)
+          # https://youtu.be/bbYIFF00zYM?t=24117
+          Combat/Scan Dash (Expert) and Jump Off Enemies (Hypermode) and Standable Terrain (Expert)
+
+> Door to Crater Tunnel A; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Plasma Door to Crater Tunnel A/Door to Phazon Core
+  * Extra - dock_index: 1
+  * Extra - nonstandard: False
+  > Door to Crater Missile Station
+      Any of the following:
+          Space Jump Boots
+          Morph Ball Bomb and Morph Ball and Bomb Jump (Expert) and Complex Bomb Jump (Hypermode) and Slope Jump (Advanced) and Standable Terrain (Expert)
+          # https://youtu.be/bbYIFF00zYM?t=24029
+          Scan Visor and Combat/Scan Dash (Expert) and L-Jump (Expert) and Slope Jump (Expert) and Standable Terrain (Expert)
+
+> Door to Crater Tunnel B; Heals? False
+  * Layers: default
+  * Plasma Door to Crater Tunnel B/Door to Phazon Core
+  * Extra - dock_index: 2
+  * Extra - nonstandard: False
+  > Door to Crater Missile Station
+      Trivial
+
+> Pickup (Items Every Room); Heals? False
+  * Layers: items_every_room
+  * Pickup 170; Category? Minor
+  * Extra - position_required: True
+
+----------------
+Crater Missile Station
+Extra - asset_id: 1296329791
+Extra - size_index: 0.1
+Extra - aabb: [-92.82292, -145.4459, 35.740475, -56.359234, -111.74536, 59.004593]
+> Door to Phazon Core; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Plasma Door to Phazon Core/Door to Crater Missile Station
+  * Extra - dock_index: 0
+  * Extra - nonstandard: False
+  > Missile Station
+      Trivial
+
+> Missile Station; Heals? False
+  * Layers: default
+  > Door to Phazon Core
+      Trivial
+
+> Pickup (Items Every Room); Heals? False
+  * Layers: items_every_room
+  * Pickup 171; Category? Minor
+  * Extra - position_required: True
+
+----------------
+Crater Tunnel B
+Extra - asset_id: 852861312
+Extra - size_index: 0.1
+Extra - aabb: [26.808683, -237.58188, 44.60038, 62.751793, -166.22278, 69.466774]
+> Door to Phazon Infusion Chamber; Heals? False
+  * Layers: default
+  * Plasma Door to Phazon Infusion Chamber/Door to Crater Tunnel B
+  * Extra - dock_index: 0
+  * Extra - nonstandard: False
+  > Door to Phazon Core
+      Any of the following:
+          Space Jump Boots and Movement (Beginner) and Normal Damage ≥ 5
+          All of the following:
+              Morph Ball Bomb and Morph Ball
+              Any of the following:
+                  Spider Ball
+                  Bomb Jump (Beginner) and Movement (Beginner) and Normal Damage ≥ 40
+
+> Door to Phazon Core; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Plasma Door to Phazon Core/Door to Crater Tunnel B
+  * Extra - dock_index: 1
+  * Extra - nonstandard: False
+  > Door to Phazon Infusion Chamber
+      Any of the following:
+          Space Jump Boots and Movement (Beginner) and Normal Damage ≥ 5
+          All of the following:
+              Morph Ball Bomb and Morph Ball
+              Any of the following:
+                  Spider Ball
+                  Bomb Jump (Beginner) and Movement (Beginner) and Normal Damage ≥ 40
+
+> Pickup (Items Every Room); Heals? False
+  * Layers: items_every_room
+  * Pickup 172; Category? Minor
+  * Extra - position_required: True
+
+----------------
+Phazon Infusion Chamber
+Extra - asset_id: 1729456653
+Extra - size_index: 0.3
+Extra - aabb: [6.539173, -337.83148, 44.879646, 79.305176, -237.58188, 116.430115]
+> Dock to Subchamber One; Heals? False
+  * Layers: default
+  * Open Passage to Subchamber One/Dock from Phazon Infusion Chamber
+  * Extra - dock_index: 0
+  * Extra - nonstandard: True
+  > Door to Crater Tunnel B
+      Trivial
+
+> Door to Crater Tunnel B; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Plasma Door to Crater Tunnel B/Door to Phazon Infusion Chamber
+  * Extra - dock_index: 1
+  * Extra - nonstandard: False
+  > Dock to Subchamber One
+      Trivial
+
+> Pickup (Items Every Room); Heals? False
+  * Layers: items_every_room
+  * Pickup 173; Category? Minor
+  * Extra - position_required: True
+
+----------------
+Subchamber One
+Extra - asset_id: 3672049347
+Extra - size_index: 0.3
+Extra - aabb: [-49.130936, -391.06018, 2.7536602, 70.97014, -331.07498, 78.62515]
+> Dock from Phazon Infusion Chamber; Heals? False; Default Node
+  * Layers: default
+  * Closed Passage to Phazon Infusion Chamber/Dock to Subchamber One
+  * Extra - dock_index: 0
+  * Extra - nonstandard: True
+  > Dock to Subchamber Two
+      All of the following:
+          Shoot Wave Beam
+          Charge Beam or Combat (Intermediate)
+          Any of the following:
+              Shoot Power Beam
+              All of the following:
+                  # Fight Without Power Beam
+                  Charge Beam and Flamethrower and Plasma Beam and Combat (Intermediate) and Knowledge (Intermediate)
+                  Any of the following:
+                      Missile ≥ 50
+                      Missile ≥ 25 and Disabled Hard Mode
+          Combat (Beginner) or Normal Damage ≥ 54
+
+> Dock to Subchamber Two; Heals? False
+  * Layers: default
+  * Open Passage to Subchamber Two/Dock to Subchamber One
+  * Extra - dock_index: 1
+  * Extra - nonstandard: True
+  > Dock from Phazon Infusion Chamber
+      Trivial
+
+> Pickup (Items Every Room); Heals? False
+  * Layers: items_every_room
+  * Pickup 174; Category? Minor
+  * Extra - position_required: True
+
+----------------
+Subchamber Two
+Extra - asset_id: 122281798
+Extra - size_index: 0.3
+Extra - aabb: [-53.122448, -399.23877, -44.54401, 2.4719353, -265.25775, 6.1368313]
+> Dock to Subchamber One; Heals? False; Default Node
+  * Layers: default
+  * Open Passage to Subchamber One/Dock to Subchamber Two
+  * Extra - dock_index: 0
+  * Extra - nonstandard: True
+  > Dock to Subchamber Three
+      All of the following:
+          Shoot Ice Beam and Shoot Wave Beam
+          Charge Beam or Combat (Intermediate)
+          Any of the following:
+              Shoot Power Beam
+              All of the following:
+                  # Fight Without Power Beam
+                  Charge Beam and Flamethrower and Plasma Beam and Combat (Intermediate) and Knowledge (Intermediate)
+                  Any of the following:
+                      Missile ≥ 50
+                      Missile ≥ 25 and Disabled Hard Mode
+          All of the following:
+              # Dodge/Tank Charge Attacks
+              Morph Ball or Combat (Beginner) or Normal Damage ≥ 76
+          Combat (Beginner) or Normal Damage ≥ 119
+
+> Dock to Subchamber Three; Heals? False
+  * Layers: default
+  * Open Passage to Subchamber Three/Dock to Subchamber Two
+  * Extra - dock_index: 1
+  * Extra - nonstandard: True
+  > Dock to Subchamber One
+      Trivial
+
+> Pickup (Items Every Room); Heals? False
+  * Layers: items_every_room
+  * Pickup 175; Category? Minor
+  * Extra - position_required: True
+
+----------------
+Subchamber Three
+Extra - asset_id: 2050677022
+Extra - size_index: 0.3
+Extra - aabb: [-53.408024, -326.7987, -95.44707, 1.3040276, -200.94498, -42.09618]
+> Dock to Subchamber Four; Heals? False
+  * Layers: default
+  * Open Passage to Subchamber Four/Dock to Subchamber Three
+  * Extra - dock_index: 0
+  * Extra - nonstandard: True
+  > Dock to Subchamber Two
+      Trivial
+
+> Dock to Subchamber Two; Heals? False; Default Node
+  * Layers: default
+  * Open Passage to Subchamber Two/Dock to Subchamber Three
+  * Extra - dock_index: 1
+  * Extra - nonstandard: True
+  > Dock to Subchamber Four
+      All of the following:
+          Shoot Ice Beam and Shoot Plasma Beam and Shoot Wave Beam
+          Charge Beam or Combat (Intermediate)
+          Any of the following:
+              Shoot Power Beam
+              All of the following:
+                  # Fight Without Power Beam
+                  Charge Beam and Flamethrower and Combat (Intermediate) and Knowledge (Intermediate)
+                  Any of the following:
+                      Missile ≥ 50
+                      Missile ≥ 25 and Disabled Hard Mode
+          All of the following:
+              # Dodge/Tank Charge Attacks
+              Morph Ball or Combat (Beginner) or Normal Damage ≥ 76
+          Combat (Beginner) or Normal Damage ≥ 179
+
+> Pickup (Items Every Room); Heals? False
+  * Layers: items_every_room
+  * Pickup 176; Category? Minor
+  * Extra - position_required: True
+
+----------------
+Subchamber Four
+Extra - asset_id: 2813067419
+Extra - size_index: 0.3
+Extra - aabb: [-50.18615, -254.7384, -139.54082, 68.2874, -202.18901, -92.29172]
+> Dock to Subchamber Five; Heals? False
+  * Layers: default
+  * Open Passage to Subchamber Five/Dock to Subchamber Four
+  * Extra - dock_index: 0
+  * Extra - nonstandard: True
+  > Dock to Subchamber Three
+      Trivial
+
+> Dock to Subchamber Three; Heals? False; Default Node
+  * Layers: default
+  * Open Passage to Subchamber Three/Dock to Subchamber Four
+  * Extra - dock_index: 1
+  * Extra - nonstandard: True
+  > Dock to Subchamber Five
+      All of the following:
+          Charge Beam or Combat (Intermediate)
+          Any of the following:
+              Have all Beams
+              # Abuse Exo Color Swaps
+              Combat (Advanced) and Shoot Any Beam
+          # Dodge/Tank Charge Attacks
+          Morph Ball or Combat (Beginner) or Normal Damage ≥ 99
+          Any of the following:
+              Combat (Intermediate) or Normal Damage ≥ 239
+              Combat (Beginner) and Normal Damage ≥ 149
+
+> Pickup (Items Every Room); Heals? False
+  * Layers: items_every_room
+  * Pickup 177; Category? Minor
+  * Extra - position_required: True
+
+----------------
+Subchamber Five
+Extra - asset_id: 2003911832
+Extra - size_index: 0.3
+Extra - aabb: [16.109423, -309.67264, -240.70438, 66.46333, -253.04669, -98.60705]
+> Dock to Subchamber Four; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Open Passage to Subchamber Four/Dock to Subchamber Five
+  * Extra - dock_index: 0
+  * Extra - nonstandard: True
+  > Dock to Metroid Prime Lair
+      Trivial
+
+> Dock to Metroid Prime Lair; Heals? False
+  * Layers: default
+  * Open Passage to Metroid Prime Lair/Dock to Subchamber Five
+  * Extra - dock_index: 1
+  * Extra - nonstandard: True
+  > Dock to Subchamber Four
+      Trivial
+
+> Pickup (Items Every Room); Heals? False
+  * Layers: items_every_room
+  * Pickup 178; Category? Minor
+  * Extra - position_required: True
+
+----------------
+Metroid Prime Lair
+Extra - asset_id: 442920021
+Extra - size_index: 0.3
+Extra - aabb: [-16.162354, -345.93686, -384.52725, 104.365326, -220.52472, -240.70435]
+> Dock to Subchamber Five; Heals? False; Default Node
+  * Layers: default
+  * Open Passage to Subchamber Five/Dock to Metroid Prime Lair
+  * Extra - dock_index: 0
+  * Extra - nonstandard: True
+  > Teleporter to Credits
+      All of the following:
+          Phazon Suit and Shoot Any Beam
+          Any of the following:
+              # Finding Essence
+              Invisible Objects (Advanced)
+              Thermal Visor and X-Ray Visor
+          Charge Beam or Combat (Beginner)
+          All of the following:
+              # Dodging Shockwave Attacks
+              Space Jump Boots or Combat (Advanced)
+          Any of the following:
+              # Killing Metroids
+              Combat (Advanced)
+              Morph Ball and Power Bomb ≥ 2
+              Missile ≥ 5 and Shoot Ice Beam
+          Any of the following:
+              # Health Requirements
+              Combat (Hypermode) or Normal Damage ≥ 299
+              Combat (Expert) and Normal Damage ≥ 99
+              Combat (Advanced) and Normal Damage ≥ 149
+              Combat (Intermediate) and Normal Damage ≥ 199
+              Combat (Beginner) and Normal Damage ≥ 249
+
+> Teleporter to Credits; Heals? False
+  * Layers: default
+  * Teleporter to Credits/Event - Credits
+  * Extra - scan_asset_id: None
+  * Extra - teleporter_instance_id: 721282
+  * Extra - different_strongly_connected_component: True
+  > Dock to Subchamber Five
+      Trivial
+
+> Pickup (Items Every Room); Heals? False
+  * Layers: items_every_room
+  * Pickup 179; Category? Minor
+  * Extra - position_required: True
+

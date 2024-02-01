@@ -333,7 +333,7 @@ def new_game_command_logic(args):
 def create_new_database_logic(args):
     new_enum = RandovaniaGame(args.game)
 
-    game_db = create_new_database(new_enum, _GAMES_PATH.joinpath(new_enum.value).joinpath("json_data"))
+    game_db = create_new_database(new_enum, _GAMES_PATH.joinpath(new_enum.value).joinpath("logic_database"))
     pickup_db = create_pickup_database(new_enum)
     copy_presets(load_presets(RandovaniaGame.BLANK), game_db, pickup_db)
     print(f"{new_enum.long_name} created successfully. New files can be found at {new_enum.data_path}")

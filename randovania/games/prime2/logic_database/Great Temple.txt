@@ -1,0 +1,493 @@
+----------------
+Temple Transport A
+Extra - asset_id: 408633584
+Extra - in_dark_aether: False
+> Door to Transport A Access; Heals? False
+  * Layers: default
+  * Normal Door to Transport A Access/Door to Temple Transport A
+  * Extra - dock_name: South
+  > Elevator to Temple Grounds
+      Scan Visor
+
+> Elevator to Temple Grounds; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Elevator to Temple Transport A/Elevator to Great Temple
+  * Extra - scan_asset_id: 827726881
+  * Extra - teleporter_instance_id: 152
+  * Extra - keep_name_when_vanilla: False
+  > Door to Transport A Access
+      Trivial
+
+----------------
+Transport A Access
+Extra - asset_id: 3885674414
+Extra - in_dark_aether: False
+> Save Station; Heals? True; Spawn Point; Default Node
+  * Layers: default
+  > Door to Temple Sanctuary
+      Morph Ball
+  > Pickup (Missile)
+      Any of the following:
+          All of the following:
+              Morph Ball
+              Morph Ball Bomb or Power Bomb
+          All of the following:
+              # https://www.youtube.com/watch?v=a5GsV49RVDs
+              Knowledge (Beginner) and NTSC
+              Any of the following:
+                  Use Screw Attack (Space Jump)
+                  Boost Ball and Morph Ball
+                  Charge Beam and Missile ≥ 5 and Power Beam and Super Missile
+
+> Door to Temple Sanctuary; Heals? False
+  * Layers: default
+  * Normal Door to Temple Sanctuary/Door to Transport A Access
+  * Extra - dock_name: South
+  > Save Station
+      Morph Ball
+  > Door to Temple Transport A
+      Any of the following:
+          Space Jump Boots
+          # Double Bomb Jump
+          Morph Ball Bomb and Morph Ball and Bomb Jump (Beginner)
+          # https://www.youtube.com/watch?v=feHJ7rsjW0g&t=22s
+          Slope Jump (Intermediate) and Use Screw Attack (No Space Jump)
+          # https://www.youtube.com/watch?v=feHJ7rsjW0g
+          Boost Ball and Morph Ball and Wall Boost (Advanced)
+
+> Door to Temple Transport A; Heals? False
+  * Layers: default
+  * Normal Door to Temple Transport A/Door to Transport A Access
+  * Extra - dock_name: North
+  > Door to Temple Sanctuary
+      Trivial
+
+> Pickup (Missile); Heals? False
+  * Layers: default
+  * Pickup 20; Category? Minor
+  > Save Station
+      Trivial
+
+----------------
+Temple Sanctuary
+Extra - asset_id: 2731245106
+Extra - in_dark_aether: False
+> Door to Transport B Access; Heals? False
+  * Layers: default
+  * Normal Door to Transport B Access/Door to Temple Sanctuary
+  * Extra - dock_name: East
+  > Transport B Translator Gate
+      Trivial
+
+> Door to Transport A Access; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Normal Door to Transport A Access/Door to Temple Sanctuary
+  * Extra - dock_name: North
+  > Room Center
+      Any of the following:
+          After Great Temple Transport A Translator Gone
+          Before Alpha Splinter and Enabled Vanilla Great Temple Emerald Translator Gate
+  > Transport A Translator Gate
+      Trivial
+  > Event - Transport A Gate Removal
+      Disabled Room Randomizer and Disabled Vanilla Great Temple Emerald Translator Gate
+
+> Door to Controller Transport; Heals? False
+  * Layers: default
+  * Normal Door to Controller Transport/Door to Temple Sanctuary
+  * Extra - dock_name: South
+  > Room Center
+      Trivial
+
+> Door to Transport C Access; Heals? False
+  * Layers: default
+  * Normal Door to Transport C Access/Door to Temple Sanctuary
+  * Extra - dock_name: West
+  > Transport C Translator Gate
+      Trivial
+
+> Pickup (Energy Transfer Module); Heals? False
+  * Layers: default
+  * Pickup 21; Category? Major
+  > Room Center
+      Trivial
+
+> Event - Alpha Splinter; Heals? False
+  * Layers: default
+  * Event Alpha Splinter
+  > Pickup (Energy Transfer Module)
+      Trivial
+
+> Room Center; Heals? False
+  * Layers: default
+  > Door to Transport A Access
+      After Great Temple Transport A Translator Gone
+  > Door to Controller Transport
+      After Alpha Splinter
+  > Event - Alpha Splinter
+      Any of the following:
+          Power Beam
+          All of the following:
+              Morph Ball
+              Any of the following:
+                  Power Bomb and Combat (Beginner)
+                  Boost Ball and Combat (Expert)
+                  Morph Ball Bomb and Combat (Hypermode)
+          Combat (Intermediate) and Use Screw Attack (Space Jump)
+          All of the following:
+              Light Beam
+              Charge Beam or Light Ammo ≥ 15
+          All of the following:
+              Dark Beam
+              Charge Beam or Dark Ammo ≥ 40
+          All of the following:
+              Annihilator Beam
+              Any of the following:
+                  Charge Beam
+                  Dark Ammo ≥ 30 and Light Ammo ≥ 30
+  > Transport A Translator Gate
+      After Alpha Splinter
+  > Transport B Translator Gate
+      After Alpha Splinter
+  > Transport C Translator Gate
+      After Alpha Splinter
+
+> Transport A Translator Gate; Heals? False
+  * Layers: default
+  * Configurable Node
+  * Extra - gate_index: 9
+  * Extra - vanilla_actual: Emerald
+  * Extra - vanilla_color: Emerald
+  > Door to Transport A Access
+      Trivial
+  > Room Center
+      Trivial
+
+> Transport B Translator Gate; Heals? False
+  * Layers: default
+  * Configurable Node
+  * Extra - gate_index: 7
+  * Extra - vanilla_actual: Violet
+  * Extra - vanilla_color: Violet
+  > Door to Transport B Access
+      Trivial
+  > Room Center
+      Trivial
+
+> Transport C Translator Gate; Heals? False
+  * Layers: default
+  * Configurable Node
+  * Extra - gate_index: 8
+  * Extra - vanilla_actual: Amber
+  * Extra - vanilla_color: Amber
+  > Door to Transport C Access
+      Trivial
+  > Room Center
+      Trivial
+
+> Event - Transport A Gate Removal; Heals? False
+  * Layers: default
+  * Event Great Temple Transport A Translator Gone
+  > Door to Transport A Access
+      Trivial
+
+----------------
+Transport C Access
+Extra - asset_id: 441310400
+Extra - in_dark_aether: False
+> Door to Temple Transport C; Heals? False
+  * Layers: default
+  * Normal Door to Temple Transport C/Door to Transport C Access
+  * Extra - dock_name: West
+  > Door to Temple Sanctuary
+      After Transport C Access Light Block
+
+> Door to Temple Sanctuary; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Normal Door to Temple Sanctuary/Door to Transport C Access
+  * Extra - dock_name: East
+  > Door to Temple Transport C
+      After Transport C Access Light Block
+  > Event - Transport C Access Light Block
+      Shoot Light Beam
+
+> Event - Transport C Access Light Block; Heals? False
+  * Layers: default
+  * Event Transport C Access Light Block
+  > Door to Temple Transport C
+      Trivial
+  > Door to Temple Sanctuary
+      Trivial
+
+----------------
+Controller Transport
+Extra - asset_id: 300223430
+Extra - in_dark_aether: False
+> Door to Temple Sanctuary; Heals? False
+  * Layers: default
+  * Normal Door to Temple Sanctuary/Door to Controller Transport
+  * Extra - dock_name: NorthBottom
+  > Door to Main Energy Controller
+      Scan Visor
+
+> Door to Main Energy Controller; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Normal Door to Main Energy Controller/Door to Controller Transport
+  * Extra - dock_name: NorthTop
+  > Door to Temple Sanctuary
+      Scan Visor
+
+----------------
+Transport B Access
+Extra - asset_id: 4273454375
+Extra - in_dark_aether: False
+> Door to Temple Sanctuary; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Normal Door to Temple Sanctuary/Door to Transport B Access
+  * Extra - dock_name: West
+  > Door to Temple Transport B
+      Trivial
+  > Pickup (Missile)
+      Any of the following:
+          All of the following:
+              Morph Ball
+              Any of the following:
+                  Morph Ball Bomb
+                  # https://www.youtube.com/watch?v=F167mmNCEWc
+                  Boost Ball and Wall Boost (Hypermode)
+          # https://www.youtube.com/watch?v=mwdZjDuRuGM
+          Space Jump Boots and Slope Jump (Intermediate)
+
+> Door to Temple Transport B; Heals? False
+  * Layers: default
+  * Normal Door to Temple Transport B/Door to Transport B Access
+  * Extra - dock_name: East
+  > Door to Temple Sanctuary
+      Trivial
+
+> Pickup (Missile); Heals? False
+  * Layers: default
+  * Pickup 22; Category? Minor
+  > Door to Temple Sanctuary
+      Trivial
+
+----------------
+Temple Transport C
+Extra - asset_id: 2556480432
+Extra - in_dark_aether: False
+> Door to Transport C Access; Heals? False
+  * Layers: default
+  * Normal Door to Transport C Access/Door to Temple Transport C
+  * Extra - dock_name: East
+  > Elevator to Temple Grounds
+      Scan Visor
+
+> Elevator to Temple Grounds; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Elevator to Temple Transport C/Elevator to Great Temple
+  * Extra - scan_asset_id: 1430348762
+  * Extra - teleporter_instance_id: 393260
+  * Extra - keep_name_when_vanilla: False
+  > Door to Transport C Access
+      Trivial
+
+----------------
+Main Energy Controller
+Extra - asset_id: 44045108
+Extra - in_dark_aether: False
+> Door to Controller Transport; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Normal Door to Controller Transport/Door to Main Energy Controller
+  * Extra - dock_name: SouthLight
+  > Pickup (Violet Translator)
+      Trivial
+  > Teleporter to Agon Wastes
+      After Main Energy Controller Pickup
+  > Teleporter to Torvus Bog
+      After Main Energy Controller Pickup
+  > Teleporter to Sanctuary Fortress
+      After Main Energy Controller Pickup
+  > Event - Main Energy Controller Pickup
+      After Sanctuary Energy Returned
+  > Lore Scan
+      Trivial
+
+> Pickup (Violet Translator); Heals? False
+  * Layers: default
+  * Pickup 23; Category? Major
+  > Door to Controller Transport
+      Trivial
+
+> Pickup (Light Suit); Heals? False
+  * Layers: default
+  * Pickup 24; Category? Major
+  > Door to Controller Transport
+      Trivial
+
+> Teleporter to Agon Wastes; Heals? False
+  * Layers: default
+  * Teleporter to Agon Energy Controller/Teleporter to Great Temple
+  * Extra - scan_asset_id: None
+  * Extra - teleporter_instance_id: 939982960
+  * Extra - keep_name_when_vanilla: False
+  > Door to Controller Transport
+      Trivial
+
+> Teleporter to Torvus Bog; Heals? False
+  * Layers: default
+  * Teleporter to Torvus Energy Controller/Teleporter to Great Temple
+  * Extra - scan_asset_id: None
+  * Extra - teleporter_instance_id: 939982964
+  * Extra - keep_name_when_vanilla: False
+  > Door to Controller Transport
+      Trivial
+
+> Teleporter to Sanctuary Fortress; Heals? False
+  * Layers: default
+  * Teleporter to Sanctuary Energy Controller/Teleporter to Great Temple
+  * Extra - scan_asset_id: None
+  * Extra - teleporter_instance_id: 939982965
+  * Extra - keep_name_when_vanilla: False
+  > Door to Controller Transport
+      Trivial
+
+> Event - Main Energy Controller Pickup; Heals? False
+  * Layers: default
+  * Event Main Energy Controller Pickup
+  > Pickup (Light Suit)
+      Trivial
+
+> Lore Scan; Heals? False
+  * Layers: default
+  * Hint
+  * Extra - translator: Violet
+  * Extra - string_asset_id: 3277287077
+  > Door to Controller Transport
+      Trivial
+
+----------------
+Temple Transport B
+Extra - asset_id: 2399252740
+Extra - in_dark_aether: False
+> Door to Transport B Access; Heals? False
+  * Layers: default
+  * Normal Door to Transport B Access/Door to Temple Transport B
+  * Extra - dock_name: West
+  > Elevator to Temple Grounds
+      Scan Visor
+
+> Elevator to Temple Grounds; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Elevator to Temple Transport B/Elevator to Great Temple
+  * Extra - scan_asset_id: 2113337837
+  * Extra - teleporter_instance_id: 524321
+  * Extra - keep_name_when_vanilla: False
+  > Door to Transport B Access
+      Trivial
+
+----------------
+Sky Temple Energy Controller
+Extra - asset_id: 2068511343
+Extra - in_dark_aether: True
+> Save Station; Heals? True; Spawn Point; Default Node
+  * Layers: default
+  > Door to Sanctum Access
+      Any of the following:
+          Dark World Damage ≥ 30 and Use Screw Attack (Space Jump)
+          Space Jump Boots and Dark World Damage ≥ 70
+          Slope Jump (Intermediate) and Dark World Damage ≥ 70
+  > Elevator to Temple Grounds
+      Dark World Damage ≥ 20
+
+> Door to Sanctum Access; Heals? False
+  * Layers: default
+  * Normal Door to Sanctum Access/Door to Sky Temple Energy Controller; Dock Lock Rando incompatible with: Boost Ball Blast Shield, Bomb Blast Shield
+  * Extra - dock_name: SouthLight
+  > Save Station
+      All of the following:
+          Before Emperor Ing
+          Any of the following:
+              Dark World Damage ≥ 60
+              Dark World Damage ≥ 30 and Use Screw Attack (Space Jump)
+  > Elevator to Temple Grounds
+      Dark World Damage ≥ 25
+
+> Elevator to Temple Grounds; Heals? False
+  * Layers: default
+  * Elevator to Sky Temple Gateway/Spawn Point/Front of Teleporter
+  * Extra - scan_asset_id: None
+  * Extra - teleporter_instance_id: 589949
+  * Extra - keep_name_when_vanilla: True
+  > Save Station
+      Any of the following:
+          Morph Ball Bomb and Morph Ball and Bomb Jump (Beginner) and Dark World Damage ≥ 80
+          Dark World Damage ≥ 30 and Use Screw Attack (Space Jump)
+          Space Jump Boots and Dark World Damage ≥ 40
+  > Door to Sanctum Access
+      Any of the following:
+          Morph Ball Bomb and Morph Ball and Bomb Jump (Intermediate) and Dark World Damage ≥ 120
+          All of the following:
+              Space Jump Boots
+              Any of the following:
+                  Dark World Damage ≥ 80
+                  Slope Jump (Intermediate) and Dark World Damage ≥ 40
+
+----------------
+Sanctum Access
+Extra - asset_id: 3417147547
+Extra - in_dark_aether: True
+> Door to Sky Temple Energy Controller; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Normal Door to Sky Temple Energy Controller/Door to Sanctum Access; Dock Lock Rando incompatible with: Boost Ball Blast Shield, Bomb Blast Shield
+  * Extra - dock_name: Darkbottom
+  > Door to Sanctum
+      Any of the following:
+          Dark World Damage ≥ 50 and Use Screw Attack (Space Jump)
+          # https://www.youtube.com/watch?v=KT5PE0xdq0Y&list=PLevfta9o_QKWuQNXAnmBXtzW4nmU5VLyN&index=56
+          Screw Attack at Z-Axis (Advanced) and Dark World Damage ≥ 70 and Disabled Room Randomizer and Use Screw Attack (No Space Jump)
+
+> Door to Sanctum; Heals? False
+  * Layers: default
+  * Normal Door to Sanctum/Door to Sanctum Access; Dock Lock Rando incompatible with: Boost Ball Blast Shield, Bomb Blast Shield
+  * Extra - dock_name: DarkTop
+  > Door to Sky Temple Energy Controller
+      Dark World Damage ≥ 55
+
+----------------
+Sanctum
+Extra - asset_id: 3619928121
+Extra - in_dark_aether: True
+> Door to Sanctum Access; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Normal Door to Sanctum Access/Door to Sanctum; Dock Lock Rando incompatible with: Boost Ball Blast Shield, Bomb Blast Shield
+  * Extra - dock_name: SouthDark
+  > Event - Emperor Ing
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Spider Ball
+              Space Jump Boots and Combat (Hypermode) and Jump Off Enemy (Hypermode) and Slope Jump (Hypermode) and Standable Terrain (Hypermode) and Normal Damage ≥ 500 and Enabled Refill with Drops
+          Any of the following:
+              Morph Ball Bomb
+              Power Bomb ≥ 3 and Knowledge (Beginner)
+          Any of the following:
+              All of the following:
+                  Any of the following:
+                      Charge Beam
+                      Dark Ammo ≥ 50 and Light Ammo ≥ 50
+                  Any of the following:
+                      Annihilator Beam
+                      Dark Beam and Light Beam
+              Combat (Intermediate) and Use Screw Attack (Space Jump)
+          Any of the following:
+              Light Suit
+              Combat (Intermediate) and Dark World Damage ≥ 800
+
+> Event - Emperor Ing; Heals? True
+  * Layers: default
+  * Event Emperor Ing
+  > Door to Sanctum Access
+      Any of the following:
+          Dark World Damage ≥ 40 and Use Screw Attack (Space Jump)
+          Screw Attack at Z-Axis (Intermediate) and Dark World Damage ≥ 50 and Disabled Room Randomizer and Use Screw Attack (No Space Jump)
+
