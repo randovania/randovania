@@ -1,5 +1,5 @@
 {
-    "name": "Area 3 - Interior (West)",
+    "name": "Area 3 - Metroid Caverns",
     "extra": {
         "asset_id": "maps/levels/c10_samus/s033_area3b/s033_area3b.bmsld",
         "map_min_x": 41,
@@ -9,8 +9,8 @@
         "scenario_id": "s033_area3b"
     },
     "areas": {
-        "Transport to Area 3 Exterior (Upper)": {
-            "default_node": "Elevator to Area 3 - Exterior",
+        "Transport to Area 3 Factory Exterior (Upper)": {
+            "default_node": "Elevator to Area 3 - Factory Exterior",
             "extra": {
                 "total_boundings": {
                     "x1": -14150.0,
@@ -63,7 +63,7 @@
                 "asset_id": "collision_camera_006"
             },
             "nodes": {
-                "Elevator to Area 3 - Exterior": {
+                "Elevator to Area 3 - Factory Exterior": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -83,9 +83,9 @@
                     "valid_starting_location": true,
                     "dock_type": "elevator",
                     "default_connection": {
-                        "region": "Area 3 - Exterior",
-                        "area": "Transport to Area 3 Interior West (Upper)",
-                        "node": "Elevator to Area 3 - Interior (West)"
+                        "region": "Area 3 - Factory Exterior",
+                        "area": "Transport to Area 3 Metroid Caverns (Upper)",
+                        "node": "Elevator to Area 3 - Metroid Caverns"
                     },
                     "default_dock_weakness": "Elevator",
                     "exclude_from_dock_rando": false,
@@ -297,9 +297,9 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 3 - Interior (West)",
+                        "region": "Area 3 - Metroid Caverns",
                         "area": "Gamma Arena North",
-                        "node": "Door to Transport to Area 3 Exterior (Upper)"
+                        "node": "Door to Transport to Area 3 Factory Exterior (Upper)"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -346,9 +346,9 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 3 - Interior (West)",
+                        "region": "Area 3 - Metroid Caverns",
                         "area": "Gamma Arena South",
-                        "node": "Door to Transport to Area 3 Exterior (Upper)"
+                        "node": "Door to Transport to Area 3 Factory Exterior (Upper)"
                     },
                     "default_dock_weakness": "Access Locked",
                     "exclude_from_dock_rando": false,
@@ -384,9 +384,9 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 3 - Interior (West)",
+                        "region": "Area 3 - Metroid Caverns",
                         "area": "Alpha+ Arena West",
-                        "node": "Door to Transport to Area 3 Exterior (Upper)"
+                        "node": "Door to Transport to Area 3 Factory Exterior (Upper)"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -394,7 +394,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Elevator to Area 3 - Exterior": {
+                        "Elevator to Area 3 - Factory Exterior": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -469,9 +469,9 @@
                     "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
-                        "region": "Area 3 - Interior (West)",
+                        "region": "Area 3 - Metroid Caverns",
                         "area": "Gamma Arena South",
-                        "node": "Tunnel to Transport to Area 3 Exterior (Upper)"
+                        "node": "Tunnel to Transport to Area 3 Factory Exterior (Upper)"
                     },
                     "default_dock_weakness": "Tunnel",
                     "exclude_from_dock_rando": false,
@@ -591,7 +591,7 @@
                 "asset_id": "collision_camera_007"
             },
             "nodes": {
-                "Door to Transport to Area 3 Exterior (Upper)": {
+                "Door to Transport to Area 3 Factory Exterior (Upper)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -610,8 +610,8 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 3 - Interior (West)",
-                        "area": "Transport to Area 3 Exterior (Upper)",
+                        "region": "Area 3 - Metroid Caverns",
+                        "area": "Transport to Area 3 Factory Exterior (Upper)",
                         "node": "Door to Alpha+ Arena West"
                     },
                     "default_dock_weakness": "Power Beam Door",
@@ -629,7 +629,7 @@
                         }
                     }
                 },
-                "Door to Transport to Area 3 Exterior (Lower)": {
+                "Door to Transport to Area 3 Factory Exterior (Lower)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -648,8 +648,8 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 3 - Interior (West)",
-                        "area": "Transport to Area 3 Exterior (Lower)",
+                        "region": "Area 3 - Metroid Caverns",
+                        "area": "Transport to Area 3 Factory Exterior (Lower)",
                         "node": "Door to Alpha+ Arena West"
                     },
                     "default_dock_weakness": "Power Beam Door",
@@ -709,14 +709,14 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Transport to Area 3 Exterior (Upper)": {
+                        "Door to Transport to Area 3 Factory Exterior (Upper)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Door to Transport to Area 3 Exterior (Lower)": {
+                        "Door to Transport to Area 3 Factory Exterior (Lower)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -790,7 +790,7 @@
                 "asset_id": "collision_camera_008"
             },
             "nodes": {
-                "Door to Transport to Area 3 Exterior (Upper)": {
+                "Door to Transport to Area 3 Factory Exterior (Upper)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -809,8 +809,8 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 3 - Interior (West)",
-                        "area": "Transport to Area 3 Exterior (Upper)",
+                        "region": "Area 3 - Metroid Caverns",
+                        "area": "Transport to Area 3 Factory Exterior (Upper)",
                         "node": "Door to Gamma Arena North"
                     },
                     "default_dock_weakness": "Power Beam Door",
@@ -847,7 +847,7 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 3 - Interior (West)",
+                        "region": "Area 3 - Metroid Caverns",
                         "area": "Teleporter Access",
                         "node": "Door to Gamma Arena North"
                     },
@@ -908,7 +908,7 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Transport to Area 3 Exterior (Upper)": {
+                        "Door to Transport to Area 3 Factory Exterior (Upper)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1230,7 +1230,7 @@
                         }
                     }
                 },
-                "Door to Transport to Area 3 Exterior (Upper)": {
+                "Door to Transport to Area 3 Factory Exterior (Upper)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1249,8 +1249,8 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 3 - Interior (West)",
-                        "area": "Transport to Area 3 Exterior (Upper)",
+                        "region": "Area 3 - Metroid Caverns",
+                        "area": "Transport to Area 3 Factory Exterior (Upper)",
                         "node": "Door to Gamma Arena South"
                     },
                     "default_dock_weakness": "Power Beam Door",
@@ -1289,7 +1289,7 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 3 - Interior (West)",
+                        "region": "Area 3 - Metroid Caverns",
                         "area": "Shaft West",
                         "node": "Door to Gamma Arena South"
                     },
@@ -1308,7 +1308,7 @@
                         }
                     }
                 },
-                "Tunnel to Transport to Area 3 Exterior (Upper)": {
+                "Tunnel to Transport to Area 3 Factory Exterior (Upper)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1324,8 +1324,8 @@
                     "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
-                        "region": "Area 3 - Interior (West)",
-                        "area": "Transport to Area 3 Exterior (Upper)",
+                        "region": "Area 3 - Metroid Caverns",
+                        "area": "Transport to Area 3 Factory Exterior (Upper)",
                         "node": "Tunnel to Gamma Arena South"
                     },
                     "default_dock_weakness": "Tunnel",
@@ -1385,7 +1385,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Tunnel to Transport to Area 3 Exterior (Upper)": {
+                        "Tunnel to Transport to Area 3 Factory Exterior (Upper)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1817,7 +1817,7 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Transport to Area 3 Exterior (Upper)": {
+                        "Door to Transport to Area 3 Factory Exterior (Upper)": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -1978,7 +1978,7 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 3 - Interior (West)",
+                        "region": "Area 3 - Metroid Caverns",
                         "area": "Upper Shaft",
                         "node": "Door to Save Station Hallway"
                     },
@@ -2030,7 +2030,7 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 3 - Interior (West)",
+                        "region": "Area 3 - Metroid Caverns",
                         "area": "Diggernaut Tunnel",
                         "node": "Door to Save Station Hallway"
                     },
@@ -2116,7 +2116,7 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 3 - Interior (West)",
+                        "region": "Area 3 - Metroid Caverns",
                         "area": "Save Station Hallway",
                         "node": "Door to Upper Shaft"
                     },
@@ -2175,7 +2175,7 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 3 - Interior (West)",
+                        "region": "Area 3 - Metroid Caverns",
                         "area": "Alpha+ Arena East",
                         "node": "Door to Upper Shaft"
                     },
@@ -2246,7 +2246,7 @@
                     "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
-                        "region": "Area 3 - Interior (West)",
+                        "region": "Area 3 - Metroid Caverns",
                         "area": "Teleporter Access",
                         "node": "Tunnel to Upper Shaft"
                     },
@@ -2410,7 +2410,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "events",
-                                            "name": "Area 3 (Interior West) - Upper Shaft Access Grapple Block",
+                                            "name": "Area 3 (Metroid Caverns) - Upper Shaft Access Grapple Block",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -2592,7 +2592,7 @@
                     "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
-                        "region": "Area 3 - Interior (West)",
+                        "region": "Area 3 - Metroid Caverns",
                         "area": "Shaft West",
                         "node": "Tunnel to Mid-Shaft Shortcut"
                     },
@@ -2692,7 +2692,7 @@
                     "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
-                        "region": "Area 3 - Interior (West)",
+                        "region": "Area 3 - Metroid Caverns",
                         "area": "Shaft East",
                         "node": "Tunnel to Mid-Shaft Shortcut"
                     },
@@ -2727,7 +2727,7 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "event_name": "Area 3 (Interior West) - Grappling Steps Grapple Block",
+                    "event_name": "Area 3 (Metroid Caverns) - Grappling Steps Grapple Block",
                     "connections": {
                         "Left of Grapple Block": {
                             "type": "and",
@@ -2780,7 +2780,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "events",
-                                            "name": "Area 3 (Interior West) - Grappling Steps Grapple Block",
+                                            "name": "Area 3 (Metroid Caverns) - Grappling Steps Grapple Block",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -2973,7 +2973,7 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 3 - Interior (West)",
+                        "region": "Area 3 - Metroid Caverns",
                         "area": "Gamma Arena South",
                         "node": "Door to Shaft West"
                     },
@@ -3108,7 +3108,7 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 3 - Interior (West)",
+                        "region": "Area 3 - Metroid Caverns",
                         "area": "Central Shaft",
                         "node": "Door to Shaft West"
                     },
@@ -3356,7 +3356,7 @@
                     "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
-                        "region": "Area 3 - Interior (West)",
+                        "region": "Area 3 - Metroid Caverns",
                         "area": "Mid-Shaft Shortcut",
                         "node": "Tunnel to Shaft West"
                     },
@@ -3560,7 +3560,7 @@
                         "type": "resource",
                         "data": {
                             "type": "events",
-                            "name": "Area 3 Interior East Teleporter Lower",
+                            "name": "Area 3 Factory Interior Teleporter Lower",
                             "amount": 1,
                             "negate": false
                         }
@@ -3602,7 +3602,7 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 3 - Interior (West)",
+                        "region": "Area 3 - Metroid Caverns",
                         "area": "Shaft West",
                         "node": "Door to Central Shaft"
                     },
@@ -3763,7 +3763,7 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 3 - Interior (West)",
+                        "region": "Area 3 - Metroid Caverns",
                         "area": "Shaft East",
                         "node": "Door to Central Shaft"
                     },
@@ -3801,7 +3801,7 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 3 - Interior (West)",
+                        "region": "Area 3 - Metroid Caverns",
                         "area": "Gamma+ Arena South Access",
                         "node": "Door to Central Shaft"
                     },
@@ -3834,7 +3834,7 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "event_name": "Area 3 Interior East Teleporter Lower",
+                    "event_name": "Area 3 Factory Interior Teleporter Lower",
                     "connections": {
                         "Above Teleporter": {
                             "type": "and",
@@ -4013,7 +4013,7 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 3 - Interior (West)",
+                        "region": "Area 3 - Metroid Caverns",
                         "area": "Central Shaft",
                         "node": "Door to Shaft East"
                     },
@@ -4023,7 +4023,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Transport to Area 3 Interior East": {
+                        "Door to Transport to Area 3 Factory Interior": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -4121,7 +4121,7 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 3 - Interior (West)",
+                        "region": "Area 3 - Metroid Caverns",
                         "area": "Side Passage",
                         "node": "Door to Shaft East"
                     },
@@ -4140,7 +4140,7 @@
                         }
                     }
                 },
-                "Door to Transport to Area 3 Interior East": {
+                "Door to Transport to Area 3 Factory Interior": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4159,8 +4159,8 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 3 - Interior (West)",
-                        "area": "Transport to Area 3 Interior East",
+                        "region": "Area 3 - Metroid Caverns",
+                        "area": "Transport to Area 3 Factory Interior",
                         "node": "Door to Shaft East"
                     },
                     "default_dock_weakness": "Power Beam Door",
@@ -4196,7 +4196,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "events",
-                                            "name": "Area 3 (Interior West) - Grappling Steps Grapple Block",
+                                            "name": "Area 3 (Metroid Caverns) - Grappling Steps Grapple Block",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -4222,7 +4222,7 @@
                     "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
-                        "region": "Area 3 - Interior (West)",
+                        "region": "Area 3 - Metroid Caverns",
                         "area": "Mid-Shaft Shortcut",
                         "node": "Tunnel to Shaft East"
                     },
@@ -4232,7 +4232,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Transport to Area 3 Interior East": {
+                        "Door to Transport to Area 3 Factory Interior": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4288,7 +4288,7 @@
                     "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
-                        "region": "Area 3 - Interior (West)",
+                        "region": "Area 3 - Metroid Caverns",
                         "area": "Side Passage",
                         "node": "Tunnel to Shaft East"
                     },
@@ -4368,7 +4368,7 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 3 - Interior (West)",
+                        "region": "Area 3 - Metroid Caverns",
                         "area": "Shaft East",
                         "node": "Door to Side Passage"
                     },
@@ -4405,7 +4405,7 @@
                     "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
-                        "region": "Area 3 - Interior (West)",
+                        "region": "Area 3 - Metroid Caverns",
                         "area": "Shaft East",
                         "node": "Tunnel to Side Passage"
                     },
@@ -4589,7 +4589,7 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 3 - Interior (West)",
+                        "region": "Area 3 - Metroid Caverns",
                         "area": "Save Station Hallway",
                         "node": "Door to Diggernaut Tunnel"
                     },
@@ -4599,11 +4599,11 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Transport to Area 3 Interior East": {
+                        "Door to Transport to Area 3 Factory Interior": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
-                                "name": "Area 3 (Interior West) - Diggernaut Awakened",
+                                "name": "Area 3 (Metroid Caverns) - Diggernaut Awakened",
                                 "amount": 1,
                                 "negate": false
                             }
@@ -4619,7 +4619,7 @@
                         }
                     }
                 },
-                "Door to Transport to Area 3 Interior East": {
+                "Door to Transport to Area 3 Factory Interior": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4638,8 +4638,8 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 3 - Interior (West)",
-                        "area": "Transport to Area 3 Interior East",
+                        "region": "Area 3 - Metroid Caverns",
+                        "area": "Transport to Area 3 Factory Interior",
                         "node": "Door to Diggernaut Tunnel"
                     },
                     "default_dock_weakness": "Power Beam Door",
@@ -4652,7 +4652,7 @@
                             "type": "resource",
                             "data": {
                                 "type": "events",
-                                "name": "Area 3 (Interior West) - Diggernaut Awakened",
+                                "name": "Area 3 (Metroid Caverns) - Diggernaut Awakened",
                                 "amount": 1,
                                 "negate": false
                             }
@@ -4673,7 +4673,7 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "event_name": "Area 3 (Interior West) - Diggernaut Awakened",
+                    "event_name": "Area 3 (Metroid Caverns) - Diggernaut Awakened",
                     "connections": {
                         "Door to Save Station Hallway": {
                             "type": "and",
@@ -4686,8 +4686,8 @@
                 }
             }
         },
-        "Transport to Area 3 Interior East": {
-            "default_node": "Elevator to Area 3 - Interior (East)",
+        "Transport to Area 3 Factory Interior": {
+            "default_node": "Elevator to Area 3 - Factory Interior",
             "extra": {
                 "total_boundings": {
                     "x1": 3800.0,
@@ -4716,7 +4716,7 @@
                 "asset_id": "collision_camera_032"
             },
             "nodes": {
-                "Elevator to Area 3 - Interior (East)": {
+                "Elevator to Area 3 - Factory Interior": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4736,9 +4736,9 @@
                     "valid_starting_location": true,
                     "dock_type": "elevator",
                     "default_connection": {
-                        "region": "Area 3 - Interior (East)",
-                        "area": "Transport to Area 3 Interior West",
-                        "node": "Elevator to Area 3 - Interior (West)"
+                        "region": "Area 3 - Factory Interior",
+                        "area": "Transport to Area 3 Metroid Caverns",
+                        "node": "Elevator to Area 3 - Metroid Caverns"
                     },
                     "default_dock_weakness": "Elevator",
                     "exclude_from_dock_rando": false,
@@ -4816,9 +4816,9 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 3 - Interior (West)",
+                        "region": "Area 3 - Metroid Caverns",
                         "area": "Diggernaut Tunnel",
-                        "node": "Door to Transport to Area 3 Interior East"
+                        "node": "Door to Transport to Area 3 Factory Interior"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -4854,9 +4854,9 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 3 - Interior (West)",
+                        "region": "Area 3 - Metroid Caverns",
                         "area": "Shaft East",
-                        "node": "Door to Transport to Area 3 Interior East"
+                        "node": "Door to Transport to Area 3 Factory Interior"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -4864,7 +4864,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Elevator to Area 3 - Interior (East)": {
+                        "Elevator to Area 3 - Factory Interior": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -4922,7 +4922,7 @@
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "events",
-                                                                    "name": "Area 3 (Interior West) - Transport to Area 3 Interior West Grapple Block",
+                                                                    "name": "Area 3 (Metroid Caverns) - Transport to Area 3 Metroid Caverns Grapple Block",
                                                                     "amount": 1,
                                                                     "negate": false
                                                                 }
@@ -5009,7 +5009,7 @@
                     "pickup_index": 72,
                     "location_category": "minor",
                     "connections": {
-                        "Elevator to Area 3 - Interior (East)": {
+                        "Elevator to Area 3 - Factory Interior": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5032,9 +5032,9 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "event_name": "Area 3 (Interior West) - Transport to Area 3 Interior West Grapple Block",
+                    "event_name": "Area 3 (Metroid Caverns) - Transport to Area 3 Metroid Caverns Grapple Block",
                     "connections": {
-                        "Elevator to Area 3 - Interior (East)": {
+                        "Elevator to Area 3 - Factory Interior": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5102,7 +5102,7 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 3 - Interior (West)",
+                        "region": "Area 3 - Metroid Caverns",
                         "area": "Gamma+ Arena South Access",
                         "node": "Door to Gamma+ Arena South"
                     },
@@ -5259,7 +5259,7 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 3 - Interior (West)",
+                        "region": "Area 3 - Metroid Caverns",
                         "area": "Central Shaft",
                         "node": "Door to Gamma+ Arena South Access"
                     },
@@ -5297,7 +5297,7 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 3 - Interior (West)",
+                        "region": "Area 3 - Metroid Caverns",
                         "area": "Gamma+ Arena South",
                         "node": "Door to Gamma+ Arena South Access"
                     },
@@ -5400,7 +5400,7 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 3 - Interior (West)",
+                        "region": "Area 3 - Metroid Caverns",
                         "area": "Alpha+ Arena East",
                         "node": "Door to Gamma+ Arena Heat"
                     },
@@ -5668,8 +5668,8 @@
                 }
             }
         },
-        "Transport to Area 3 Exterior (Lower)": {
-            "default_node": "Elevator to Area 3 - Exterior",
+        "Transport to Area 3 Factory Exterior (Lower)": {
+            "default_node": "Elevator to Area 3 - Factory Exterior",
             "extra": {
                 "total_boundings": {
                     "x1": -19050.0,
@@ -5698,7 +5698,7 @@
                 "asset_id": "collision_camera_037"
             },
             "nodes": {
-                "Elevator to Area 3 - Exterior": {
+                "Elevator to Area 3 - Factory Exterior": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5718,9 +5718,9 @@
                     "valid_starting_location": true,
                     "dock_type": "elevator",
                     "default_connection": {
-                        "region": "Area 3 - Exterior",
-                        "area": "Transport to Area 3 Interior West (Lower)",
-                        "node": "Elevator to Area 3 - Interior (West)"
+                        "region": "Area 3 - Factory Exterior",
+                        "area": "Transport to Area 3 Metroid Caverns (Lower)",
+                        "node": "Elevator to Area 3 - Metroid Caverns"
                     },
                     "default_dock_weakness": "Elevator",
                     "exclude_from_dock_rando": false,
@@ -5756,9 +5756,9 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 3 - Interior (West)",
+                        "region": "Area 3 - Metroid Caverns",
                         "area": "Alpha+ Arena West",
-                        "node": "Door to Transport to Area 3 Exterior (Lower)"
+                        "node": "Door to Transport to Area 3 Factory Exterior (Lower)"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -5766,7 +5766,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Elevator to Area 3 - Exterior": {
+                        "Elevator to Area 3 - Factory Exterior": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5826,7 +5826,7 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 3 - Interior (West)",
+                        "region": "Area 3 - Metroid Caverns",
                         "area": "Gamma+ Arena Heat",
                         "node": "Door to Alpha+ Arena East"
                     },
@@ -5878,7 +5878,7 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 3 - Interior (West)",
+                        "region": "Area 3 - Metroid Caverns",
                         "area": "Upper Shaft",
                         "node": "Door to Alpha+ Arena East"
                     },
@@ -6068,7 +6068,7 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 3 - Interior (West)",
+                        "region": "Area 3 - Metroid Caverns",
                         "area": "Gamma Arena North",
                         "node": "Door to Teleporter Access"
                     },
@@ -6103,7 +6103,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "events",
-                                            "name": "Area 3 (Interior West) - Upper Shaft Access Grapple Block",
+                                            "name": "Area 3 (Metroid Caverns) - Upper Shaft Access Grapple Block",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -6141,7 +6141,7 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 3 - Interior (West)",
+                        "region": "Area 3 - Metroid Caverns",
                         "area": "Teleporter Room",
                         "node": "Door to Teleporter Access"
                     },
@@ -6176,7 +6176,7 @@
                     "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
-                        "region": "Area 3 - Interior (West)",
+                        "region": "Area 3 - Metroid Caverns",
                         "area": "Upper Shaft",
                         "node": "Tunnel to Teleporter Access"
                     },
@@ -6211,7 +6211,7 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "event_name": "Area 3 (Interior West) - Upper Shaft Access Grapple Block",
+                    "event_name": "Area 3 (Metroid Caverns) - Upper Shaft Access Grapple Block",
                     "connections": {
                         "Door to Gamma Arena North": {
                             "type": "and",
@@ -6276,7 +6276,7 @@
                         "type": "resource",
                         "data": {
                             "type": "events",
-                            "name": "Area 3 Interior West Teleporter Upper",
+                            "name": "Area 3 Metroid Caverns Teleporter Upper",
                             "amount": 1,
                             "negate": false
                         }
@@ -6320,7 +6320,7 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 3 - Interior (West)",
+                        "region": "Area 3 - Metroid Caverns",
                         "area": "Teleporter Access",
                         "node": "Door to Teleporter Room"
                     },
@@ -6362,7 +6362,7 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "event_name": "Area 3 Interior West Teleporter Upper",
+                    "event_name": "Area 3 Metroid Caverns Teleporter Upper",
                     "connections": {
                         "Door to Teleporter Access": {
                             "type": "and",

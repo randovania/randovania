@@ -60,8 +60,12 @@ class PresetDockRando(PresetTab, Ui_PresetDockRando):
             rando_params = self.game_description.dock_weakness_database.dock_rando_params[dock_type]
             unlocked_check = weakness_checks[rando_params.unlocked]["can_change_from"]
             unlocked_check.setEnabled(dock_rando.mode != DockRandoMode.WEAKNESSES)
+            unlocked_check_to = weakness_checks[rando_params.unlocked]["can_change_to"]
+            unlocked_check_to.setEnabled(dock_rando.mode == DockRandoMode.WEAKNESSES)
             if dock_rando.mode == DockRandoMode.WEAKNESSES:
                 unlocked_check.setChecked(False)
+            else:
+                unlocked_check_to.setChecked(True)
 
             state = dock_rando.types_state[dock_type]
             for weakness, checks in weakness_checks.items():

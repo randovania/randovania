@@ -7,10 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [7.3.0] - 2024-02-??
 
+- Added: Ability to turn off changing "to" Normal Doors in Door Type dock rando.
 - Fixed: For Linux and macOS, the auto tracker tooltip will not show black text on black background anymore.
 - Fixed: Searching for your own pickup in Multiworld sessions will now show only pickups which match *exactly* the name, instead of showing pickups which start with that name.
 - Fixed: The import in a multiworld session is blocked if it contains an unsupported game.
 - Fixed: Opening the webbrowser for Discord Login doesn't fail on Linux anymore.
+- Changed: Scanning ammo in the Prime games will now show nicer text for items that provide negative ammo or multiple positive ammo.
 - Fixed: For Windows, the game select tooltip will not render as grey text on grey background in darkmode.
 - Added: Games display a banner if they are multiworld compatible.
 
@@ -20,7 +22,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### AM2R
 
-- **Major** - Added: Multiworld support for AM2R. 
+- **Major** - Added: Multiworld support for AM2R.
+- Added: Auto-Tracker functionality.
+- Changed: Minimal Logic has been adjusted. It now also checks for Morph Ball, Missile Launcher, the DNA and the Baby collection.
 - Changed: The Baby now checks for all DNA being collected and will display a message if not.
 
 #### Logic Database
@@ -57,11 +61,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Distribution Center Exterior West: Shinesparking to get the top Missile Tank is now an intermediate shinesparking trick.
 - Changed: Bullet Hell Room Access: Shinesparking to get from `Door to Bullet Hell Room` to `Door to Distribution Facility Intersection` now requires an intermediate shinesparking trick.
 
+### Cave Story
+
+- Fixed: The name for Puppy locations and Labyrinth Shop locations will now be shown correctly on the Location Pool tab.
+
 ### Metroid Dread
 
+- Added: Changing the volume of the music, SFX and background ambience is now possible via cosmetic options.
 - Changed: Speed Booster Upgrades and Flash Shift Upgrades are now considered minor items instead of major.
 
 #### Logic Database
+
+- Removed: It's no longer logical to push Wide Beam Blocks with Wave Beam without Wide Beam.
+- Fixed: All usages of Missiles now require the Missile Launcher.
+  - Affects:
+    - Fighting Corpius with Normal Missiles.
+    - The part of the Z57 fight where you use Storm Missiles to stop the healing.
+    - Breaking the Missile Blocks in Dairon - Transport to Artaria.
+    - Fighting Escue with Normal Missiles.
+    - Fighting Golzuna with Storm Missiles and Normal Missiles.
+    - Fighting Central Units.
 
 ##### Artaria
 
@@ -73,6 +92,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: The Wide Beam Block in Dairon Transport Access can now be traversed with a Diffusion Abuse trick from below.
 
+##### Ferenia
+
+- Changed: Using Speed Booster to reach the item at the top of Purple EMMI Introduction now requires Speed Booster Conservation (Intermediate).
+- Fixed: Energy Recharge Station (Gate): Clearing the Grapple Block from the Upper Bomb Ledge now additionally requires the Main Power Bomb instead of only Power Bomb Ammo.
+  - All the other usages of Power Bombs in this area also now require the Main Power Bomb.
+
 ##### Ghavoran
 
 - Added: Bomb Jump in Right Entrance, out of the water to the Grapple Block Alcove. Requires Diagonal Bomb Jump and either Out of Water Bomb Jump or Gravity Suit.
@@ -81,11 +106,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Metroid Prime
 
 - Added: It is now possible to have a seperate total amount and required amount of Artifacts.
+- Changed: Minimal Logic now also checks for the Ridley event.
 - Fixed: Rare softlock/glitches regarding Central Dynamo maze
 
 ### Metroid Prime 2: Echoes
 
 - Added: Having Double Damage no longer causes the morph ball to glow.
+- Added: 8 more joke hints.
+- Changed: Minimal Logic now also checks for the Emperor Ing event.
 
 #### Logic Database
 

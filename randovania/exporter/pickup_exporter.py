@@ -79,17 +79,36 @@ def _pickup_description(pickup: PickupEntry) -> str:
             return ""
 
     ammo_desc = [
-        item_names.add_quantity_to_resource(item_names.resource_user_friendly_name(resource), quantity, True)
+        (
+            item_names.add_quantity_to_resource(item_names.resource_user_friendly_name(resource), abs(quantity), True),
+            quantity < 0,
+        )
         for resource, quantity in pickup.extra_resources
     ]
     if ammo_desc:
-        return "Provides {}{}{}.".format(
-            ", ".join(ammo_desc[:-1]),
-            " and " if len(ammo_desc) > 1 else "",
-            ammo_desc[-1],
-        )
+        positive_items = [name for name, negative in ammo_desc if not negative]
+        negative_items = [name for name, negative in ammo_desc if negative]
+        text = ""
+        # First add all the positive items, then we add all the negative items. For the negative items, if we added
+        # positive items before, we include a space character so that the sentence looks nice.
+        if positive_items:
+            text += _text_for_ammo_description(False, positive_items)
+        if negative_items:
+            if text:
+                text += " "
+            text += _text_for_ammo_description(True, negative_items)
+        return text
     else:
         return ""
+
+
+def _text_for_ammo_description(negative: bool, ammo_desc: list[str]) -> str:
+    return "{} {}{}{}.".format(
+        "Provides" if not negative else "Removes",
+        ", ".join(ammo_desc[:-1]),
+        " and " if len(ammo_desc) > 1 else "",
+        ammo_desc[-1],
+    )
 
 
 def _get_single_hud_text(

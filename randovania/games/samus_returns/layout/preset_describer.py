@@ -107,7 +107,7 @@ class MSRPresetDescriber(GamePresetDescriber):
                     "Missile Door Buff": configuration.nerf_super_missiles,
                 },
                 {
-                    "Open Area 3 Interior East Shortcut": configuration.area3_interior_shortcut_no_grapple,
+                    "Open Area 3 Factory Interior East Shortcut": configuration.area3_interior_shortcut_no_grapple,
                     "Remove Area Exit Grapple Blocks": configuration.elevator_grapple_blocks,
                 },
                 {
