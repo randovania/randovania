@@ -18,8 +18,6 @@ def test_custom_laser_color(skip_qtbot: pytestqt.qtbot.QtBot) -> None:
     skip_qtbot.addWidget(dialog)
 
     skip_qtbot.mouseClick(dialog.custom_laser_color_check, QtCore.Qt.MouseButton.LeftButton)
-    skip_qtbot.mouseClick(dialog.custom_laser_locked_color_button, QtCore.Qt.MouseButton.LeftButton)
-    skip_qtbot.mouseClick(dialog.custom_laser_unlocked_color_button, QtCore.Qt.MouseButton.LeftButton)
 
     assert dialog.cosmetic_patches == MSRCosmeticPatches(use_laser_color=True)
 
@@ -31,8 +29,6 @@ def test_custom_grapple_laser_color(skip_qtbot: pytestqt.qtbot.QtBot) -> None:
     skip_qtbot.addWidget(dialog)
 
     skip_qtbot.mouseClick(dialog.custom_grapple_laser_color_check, QtCore.Qt.MouseButton.LeftButton)
-    skip_qtbot.mouseClick(dialog.custom_grapple_laser_locked_color_button, QtCore.Qt.MouseButton.LeftButton)
-    skip_qtbot.mouseClick(dialog.custom_grapple_laser_unlocked_color_button, QtCore.Qt.MouseButton.LeftButton)
 
     assert dialog.cosmetic_patches == MSRCosmeticPatches(use_grapple_laser_color=True)
 
@@ -44,7 +40,6 @@ def test_custom_energy_tank_color(skip_qtbot: pytestqt.qtbot.QtBot) -> None:
     skip_qtbot.addWidget(dialog)
 
     skip_qtbot.mouseClick(dialog.custom_energy_tank_color_check, QtCore.Qt.MouseButton.LeftButton)
-    skip_qtbot.mouseClick(dialog.custom_energy_tank_color_button, QtCore.Qt.MouseButton.LeftButton)
 
     assert dialog.cosmetic_patches == MSRCosmeticPatches(use_energy_tank_color=True)
 
@@ -56,7 +51,6 @@ def test_custom_aeion_bar_color(skip_qtbot: pytestqt.qtbot.QtBot) -> None:
     skip_qtbot.addWidget(dialog)
 
     skip_qtbot.mouseClick(dialog.custom_aeion_bar_color_check, QtCore.Qt.MouseButton.LeftButton)
-    skip_qtbot.mouseClick(dialog.custom_aeion_bar_color_button, QtCore.Qt.MouseButton.LeftButton)
 
     assert dialog.cosmetic_patches == MSRCosmeticPatches(use_aeion_bar_color=True)
 
@@ -68,6 +62,5 @@ def test_custom_ammo_hud_color(skip_qtbot: pytestqt.qtbot.QtBot) -> None:
     skip_qtbot.addWidget(dialog)
 
     skip_qtbot.mouseClick(dialog.custom_ammo_hud_color_check, QtCore.Qt.MouseButton.LeftButton)
-    skip_qtbot.mouseClick(dialog.custom_ammo_hud_color_button, QtCore.Qt.MouseButton.LeftButton)
 
     assert dialog.cosmetic_patches == MSRCosmeticPatches(use_ammo_hud_color=True)
