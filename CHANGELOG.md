@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Scanning ammo in the Prime games will now show nicer text for items that provide negative ammo or multiple positive ammo.
 - Fixed: For Windows, the game select tooltip will not render as grey text on grey background in darkmode.
 - Added: Games display a banner if they are multiworld compatible.
+- Fixed: Changelog window properly displays images
 
 ### Resolver
 
