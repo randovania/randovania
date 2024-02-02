@@ -28,47 +28,47 @@ EXPECTED_VERSIONS_COUNT = len(CUSTOM_LOGS_KEYS)
 
 async def test_create(skip_qtbot: QtBot, mocker):
     # Setup
-    mocked_fetch = mocker.patch("randovania.gui.widgets.changelog_widget.ChangeLogWidget.startFetchingData")
+    mocked_fetch = mocker.patch("randovania.gui.widgets.changelog_widget.ChangeLogWidget.start_fetching_data")
     widget = ChangeLogWidget(CUSTOM_LOGS)
     skip_qtbot.addWidget(widget)
 
     # Assert
-    with skip_qtbot.waitSignal(widget.doneFetchingData):
+    with skip_qtbot.waitSignal(widget.done_fetching_data):
         mocked_fetch.emit.assert_called()
-        await widget.setup_lables()
+        await widget.setup_labels()
         assert widget.select_version.count() == EXPECTED_VERSIONS_COUNT
 
     for i in range(1, EXPECTED_VERSIONS_COUNT + 1):
         assert widget.select_version.itemText(i - 1) == CUSTOM_LOGS_KEYS[i - 1]
 
     widget.select_version.setCurrentIndex(0)
-    qScroll0 = cast(QtWidgets.QScrollArea, widget.changelog.currentWidget())
-    qFrame0 = cast(QtWidgets.QFrame, qScroll0.widget())
-    qLabel0 = cast(DelayedTextLabel, qFrame0.findChild(DelayedTextLabel))
-    assert qLabel0.text() == "Foo"
+    qscroll_0 = cast(QtWidgets.QScrollArea, widget.changelog.currentWidget())
+    qframe_0 = cast(QtWidgets.QFrame, qscroll_0.widget())
+    qlabel_0 = cast(DelayedTextLabel, qframe_0.findChild(DelayedTextLabel))
+    assert qlabel_0.text() == "Foo"
 
     widget.select_version.setCurrentIndex(1)
-    qScroll1 = cast(QtWidgets.QScrollArea, widget.changelog.currentWidget())
-    qFrame1 = cast(QtWidgets.QFrame, qScroll1.widget())
-    qLabel1 = cast(DelayedTextLabel, qFrame1.findChild(DelayedTextLabel))
-    assert qLabel1.text() == "Bar"
+    qscroll_1 = cast(QtWidgets.QScrollArea, widget.changelog.currentWidget())
+    qsrame_1 = cast(QtWidgets.QFrame, qscroll_1.widget())
+    qlabel_1 = cast(DelayedTextLabel, qsrame_1.findChild(DelayedTextLabel))
+    assert qlabel_1.text() == "Bar"
 
     widget.select_version.setCurrentIndex(2)
-    qScroll2 = cast(QtWidgets.QScrollArea, widget.changelog.currentWidget())
-    qFrame2 = cast(QtWidgets.QFrame, qScroll2.widget())
-    qLabel2_list = cast(list[DelayedTextLabel], qFrame2.findChildren(DelayedTextLabel))
-    assert len(qFrame2.findChildren(DelayedTextLabel)) == 3
-    assert qLabel2_list[0].text() == "### Testing ^_^"
-    assert not qLabel2_list[1].pixmap().isNull()
-    assert qLabel2_list[2].text() == "Text after image"
+    qscroll_2 = cast(QtWidgets.QScrollArea, widget.changelog.currentWidget())
+    qframe_2 = cast(QtWidgets.QFrame, qscroll_2.widget())
+    qlabel_2_list = cast(list[DelayedTextLabel], qframe_2.findChildren(DelayedTextLabel))
+    assert len(qframe_2.findChildren(DelayedTextLabel)) == 3
+    assert qlabel_2_list[0].text() == "### Testing ^_^"
+    assert not qlabel_2_list[1].pixmap().isNull()
+    assert qlabel_2_list[2].text() == "Text after image"
 
     widget.select_version.setCurrentIndex(3)
-    qScroll3 = cast(QtWidgets.QScrollArea, widget.changelog.currentWidget())
-    qFrame3 = cast(QtWidgets.QFrame, qScroll3.widget())
-    qLabel3_list = cast(list[DelayedTextLabel], qFrame3.findChildren(DelayedTextLabel))
-    assert len(qFrame3.findChildren(DelayedTextLabel)) == 5
-    assert qLabel3_list[0].text() == "### Get ready for 2 images!!!\nFirst:"
-    assert not qLabel3_list[1].pixmap().isNull()
-    assert qLabel3_list[2].text() == "Second:"
-    assert not qLabel3_list[3].pixmap().isNull()
-    assert qLabel3_list[4].text() == "blah blah blah"
+    qscroll_3 = cast(QtWidgets.QScrollArea, widget.changelog.currentWidget())
+    qframe_3 = cast(QtWidgets.QFrame, qscroll_3.widget())
+    qlabel_3_list = cast(list[DelayedTextLabel], qframe_3.findChildren(DelayedTextLabel))
+    assert len(qframe_3.findChildren(DelayedTextLabel)) == 5
+    assert qlabel_3_list[0].text() == "### Get ready for 2 images!!!\nFirst:"
+    assert not qlabel_3_list[1].pixmap().isNull()
+    assert qlabel_3_list[2].text() == "Second:"
+    assert not qlabel_3_list[3].pixmap().isNull()
+    assert qlabel_3_list[4].text() == "blah blah blah"

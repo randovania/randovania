@@ -11,8 +11,8 @@ from randovania.gui.widgets.delayed_text_label import DelayedTextLabel
 
 
 class ChangeLogWidget(QtWidgets.QWidget):
-    doneFetchingData = QtCore.Signal()
-    startFetchingData = QtCore.Signal()
+    done_fetching_data = QtCore.Signal()
+    start_fetching_data = QtCore.Signal()
 
     def __init__(self, all_change_logs: dict[str, str]) -> None:
         super().__init__()
@@ -36,10 +36,10 @@ class ChangeLogWidget(QtWidgets.QWidget):
         self.changelog = QtWidgets.QStackedWidget(self)
         layout.addWidget(self.changelog)
 
-        self.startFetchingData.connect(self.setup_lables)
-        self.doneFetchingData.connect(lambda: self.changelog.setCurrentIndex(0))
+        self.start_fetching_data.connect(self.setup_labels)
+        self.done_fetching_data.connect(lambda: self.changelog.setCurrentIndex(0))
 
-        self.startFetchingData.emit()
+        self.start_fetching_data.emit()
 
     def select_version_index_changed(self) -> None:
         selected_widget = cast(
@@ -56,7 +56,7 @@ class ChangeLogWidget(QtWidgets.QWidget):
         label.setWordWrap(True)
 
     @asyncSlot()
-    async def setup_lables(self) -> None:
+    async def setup_labels(self) -> None:
         for version_name, version_text in self.all_change_logs.items():
             scroll_area = QtWidgets.QScrollArea()
             scroll_area.setObjectName(f"scroll_area {version_name}")
@@ -76,7 +76,7 @@ class ChangeLogWidget(QtWidgets.QWidget):
 
             self.select_version.addItem(version_name)
 
-        self.doneFetchingData.emit()
+        self.done_fetching_data.emit()
 
     async def image_parse(self, version_text: str, layout: QtWidgets.QVBoxLayout) -> None:
         links: list[str] = re.findall(r"!\[image\][^)]+", version_text)
