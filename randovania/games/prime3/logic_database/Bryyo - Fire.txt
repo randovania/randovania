@@ -419,7 +419,7 @@ Extra - asset_id: 13296637487518400273
 > Pickup (Missile Expansion); Heals? False
   * Layers: default
   * Pickup 22; Category? Minor
-  > Event - Gel Pickup
+  > Above Ground
       Trivial
 
 > Above Ground; Heals? False
@@ -428,17 +428,6 @@ Extra - asset_id: 13296637487518400273
       After Rundas
   > Door to Temple Reservoir
       After Rundas
-  > Pickup (Missile Expansion)
-      All of the following:
-          Morph Ball and Nova Beam
-          X-Ray Visor or Invisible Objects (Beginner)
-          Any of the following:
-              Hazard Shield
-              All of the following:
-                  Hazards without Hazard Shield (Expert)
-                  Any of the following:
-                      Damage ≥ 1000
-                      Boost Ball and Damage ≥ 700
   > Event - Rundas
       Any of the following:
           All of the following:
@@ -450,9 +439,20 @@ Extra - asset_id: 13296637487518400273
                   After Hangar Bay Ship Upgrade and Before Temple of Bryyo Turret and Combat (Intermediate) and Use Ship Missile (Command Visor and Ship Missile)
           Combat (Advanced) and Use Screw Attack (Space Jump)
           # Collect Gel Pickup to Activate the Elevator to Kill Rundas
-          After TempleOfBryyoGelPickup and Knowledge (Expert)
+          After Temple of Bryyo Gel Pickup Collected and Knowledge (Expert)
   > Event - Turret
       Grapple Lasso and After Hangar Bay Ship Upgrade and Use Ship Missile (Command Visor and Ship Missile)
+  > Event - Gel Pickup
+      All of the following:
+          Morph Ball and Nova Beam
+          X-Ray Visor or Invisible Objects (Beginner)
+          Any of the following:
+              Hazard Shield
+              All of the following:
+                  Hazards without Hazard Shield (Expert)
+                  Any of the following:
+                      Damage ≥ 1000
+                      Boost Ball and Damage ≥ 700
 
 > Event - Rundas; Heals? False
   * Layers: default
@@ -468,8 +468,8 @@ Extra - asset_id: 13296637487518400273
 
 > Event - Gel Pickup; Heals? False
   * Layers: default
-  * Event TempleOfBryyoGelPickup
-  > Above Ground
+  * Event Temple of Bryyo Gel Pickup Collected
+  > Pickup (Missile Expansion)
       Trivial
 
 ----------------
