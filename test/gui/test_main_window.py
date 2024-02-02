@@ -198,7 +198,7 @@ def test_on_menu_action_help(default_main_window, monkeypatch):
 def test_on_menu_action_changelog(default_main_window, monkeypatch, has_changelog):
     mock_show = MagicMock()
     monkeypatch.setattr(QtWidgets.QWidget, "show", mock_show)
-    monkeypatch.setattr(ChangeLogWidget, "setup_lables", MagicMock())
+    monkeypatch.setattr(ChangeLogWidget, "setup_labels", MagicMock())
     if has_changelog:
         default_main_window.all_change_logs = {}
 
