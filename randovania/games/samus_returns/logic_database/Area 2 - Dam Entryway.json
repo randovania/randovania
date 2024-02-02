@@ -1,5 +1,5 @@
 {
-    "name": "Area 2 - Entrance",
+    "name": "Area 2 - Dam Entryway",
     "extra": {
         "asset_id": "maps/levels/c10_samus/s028_area2c/s028_area2c.bmsld",
         "map_min_x": 16,
@@ -112,7 +112,7 @@
                     "default_connection": {
                         "region": "Area 1",
                         "area": "Chozo Seal",
-                        "node": "Elevator to Area 2 - Entrance"
+                        "node": "Elevator to Area 2 - Dam Entryway"
                     },
                     "default_dock_weakness": "Elevator",
                     "exclude_from_dock_rando": false,
@@ -129,7 +129,7 @@
                         }
                     }
                 },
-                "Elevator to Area 3 - Exterior": {
+                "Elevator to Area 3 - Factory Exterior": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -149,9 +149,9 @@
                     "valid_starting_location": false,
                     "dock_type": "elevator",
                     "default_connection": {
-                        "region": "Area 3 - Exterior",
-                        "area": "Transport to Area 2 Entrance",
-                        "node": "Elevator to Area 2 - Entrance"
+                        "region": "Area 3 - Factory Exterior",
+                        "area": "Transport to Area 2 Dam Entryway",
+                        "node": "Elevator to Area 2 - Dam Entryway"
                     },
                     "default_dock_weakness": "Elevator",
                     "exclude_from_dock_rando": false,
@@ -205,7 +205,7 @@
                                 "negate": false
                             }
                         },
-                        "Door to Entrance Teleporter (Top)": {
+                        "Door to Teleporter Room (Top)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -262,7 +262,7 @@
                                 ]
                             }
                         },
-                        "Elevator to Area 3 - Exterior": {
+                        "Elevator to Area 3 - Factory Exterior": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -280,7 +280,7 @@
                                 "negate": false
                             }
                         },
-                        "Door to Entrance Teleporter (Bottom)": {
+                        "Door to Teleporter Room (Bottom)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -339,7 +339,7 @@
                         }
                     }
                 },
-                "Door to Entrance Teleporter (Top)": {
+                "Door to Teleporter Room (Top)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -358,8 +358,8 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 2 - Entrance",
-                        "area": "Entrance Teleporter",
+                        "region": "Area 2 - Dam Entryway",
+                        "area": "Teleporter Room",
                         "node": "Door to Chozo Seal (Top)"
                     },
                     "default_dock_weakness": "Access Locked",
@@ -377,7 +377,7 @@
                         }
                     }
                 },
-                "Door to Entrance Teleporter (Bottom)": {
+                "Door to Teleporter Room (Bottom)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -396,8 +396,8 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 2 - Entrance",
-                        "area": "Entrance Teleporter",
+                        "region": "Area 2 - Dam Entryway",
+                        "area": "Teleporter Room",
                         "node": "Door to Chozo Seal (Bottom)"
                     },
                     "default_dock_weakness": "Power Beam Door",
@@ -443,7 +443,7 @@
                 }
             }
         },
-        "Entrance Teleporter": {
+        "Teleporter Room": {
             "default_node": "Start Point",
             "extra": {
                 "total_boundings": {
@@ -540,7 +540,7 @@
                         "type": "resource",
                         "data": {
                             "type": "events",
-                            "name": "Area 2 Interior Teleporter",
+                            "name": "Area 2 Dam Interior Teleporter",
                             "amount": 1,
                             "negate": false
                         }
@@ -582,9 +582,9 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 2 - Entrance",
+                        "region": "Area 2 - Dam Entryway",
                         "area": "Chozo Seal",
-                        "node": "Door to Entrance Teleporter (Top)"
+                        "node": "Door to Teleporter Room (Top)"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -622,9 +622,9 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 2 - Entrance",
+                        "region": "Area 2 - Dam Entryway",
                         "area": "Chozo Seal",
-                        "node": "Door to Entrance Teleporter (Bottom)"
+                        "node": "Door to Teleporter Room (Bottom)"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -721,9 +721,9 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 2 - Entrance",
+                        "region": "Area 2 - Dam Entryway",
                         "area": "Alpha+ Arena",
-                        "node": "Door to Entrance Teleporter"
+                        "node": "Door to Teleporter Room"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -761,7 +761,7 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "event_name": "Area 2 Entrance Teleporter",
+                    "event_name": "Area 2 Dam Entryway Teleporter",
                     "connections": {
                         "Below Teleporter": {
                             "type": "and",
@@ -854,8 +854,8 @@
                 }
             }
         },
-        "Transport to Area 2 Exterior": {
-            "default_node": "Elevator to Area 2 - Exterior",
+        "Transport to Area 2 Dam Exterior": {
+            "default_node": "Elevator to Area 2 - Dam Exterior",
             "extra": {
                 "total_boundings": {
                     "x1": 3900.0,
@@ -941,7 +941,7 @@
                     "pickup_index": 53,
                     "location_category": "major",
                     "connections": {
-                        "Door to Entrance Hub (Bottom)": {
+                        "Door to Main Shaft (Bottom)": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -961,7 +961,7 @@
                         }
                     }
                 },
-                "Elevator to Area 2 - Exterior": {
+                "Elevator to Area 2 - Dam Exterior": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -981,9 +981,9 @@
                     "valid_starting_location": true,
                     "dock_type": "elevator",
                     "default_connection": {
-                        "region": "Area 2 - Exterior",
-                        "area": "Hydro Station Exterior",
-                        "node": "Elevator to Area 2 - Entrance"
+                        "region": "Area 2 - Dam Exterior",
+                        "area": "Outer Hub",
+                        "node": "Elevator to Area 2 - Dam Entryway"
                     },
                     "default_dock_weakness": "Elevator",
                     "exclude_from_dock_rando": false,
@@ -991,7 +991,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Entrance Hub (Top)": {
+                        "Door to Main Shaft (Top)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1000,7 +1000,7 @@
                         }
                     }
                 },
-                "Door to Entrance Hub (Bottom)": {
+                "Door to Main Shaft (Bottom)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1019,9 +1019,9 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 2 - Entrance",
-                        "area": "Entrance Hub",
-                        "node": "Door to Transport to Area 2 Exterior (Bottom)"
+                        "region": "Area 2 - Dam Entryway",
+                        "area": "Main Shaft",
+                        "node": "Door to Transport to Area 2 Dam Exterior (Bottom)"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -1047,7 +1047,7 @@
                         }
                     }
                 },
-                "Door to Entrance Hub (Top)": {
+                "Door to Main Shaft (Top)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1066,9 +1066,9 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 2 - Entrance",
-                        "area": "Entrance Hub",
-                        "node": "Door to Transport to Area 2 Exterior (Top)"
+                        "region": "Area 2 - Dam Entryway",
+                        "area": "Main Shaft",
+                        "node": "Door to Transport to Area 2 Dam Exterior (Top)"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -1076,7 +1076,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Elevator to Area 2 - Exterior": {
+                        "Elevator to Area 2 - Dam Exterior": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1128,7 +1128,7 @@
                                 ]
                             }
                         },
-                        "Door to Entrance Hub (Bottom)": {
+                        "Door to Main Shaft (Bottom)": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -1165,7 +1165,7 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Entrance Hub (Bottom)": {
+                        "Door to Main Shaft (Bottom)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1188,7 +1188,7 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "event_name": "Area 2 (Entrance) - Transport to Area 2 Exterior Unlock Door",
+                    "event_name": "Area 2 (Dam Entryway) - Transport to Area 2 Dam Exterior Unlock Door",
                     "connections": {
                         "Left of Statue": {
                             "type": "resource",
@@ -1203,7 +1203,7 @@
                 }
             }
         },
-        "Entrance Hub": {
+        "Main Shaft": {
             "default_node": null,
             "extra": {
                 "total_boundings": {
@@ -1233,7 +1233,7 @@
                 "asset_id": "collision_camera_005"
             },
             "nodes": {
-                "Door to Transport to Area 2 Exterior (Bottom)": {
+                "Door to Transport to Area 2 Dam Exterior (Bottom)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1252,9 +1252,9 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 2 - Entrance",
-                        "area": "Transport to Area 2 Exterior",
-                        "node": "Door to Entrance Hub (Bottom)"
+                        "region": "Area 2 - Dam Entryway",
+                        "area": "Transport to Area 2 Dam Exterior",
+                        "node": "Door to Main Shaft (Bottom)"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -1369,7 +1369,7 @@
                                 ]
                             }
                         },
-                        "Dock to Fleech Swarm Waterway": {
+                        "Dock to Water Storage": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -1418,7 +1418,7 @@
                         }
                     }
                 },
-                "Door to Transport to Area 2 Exterior (Top)": {
+                "Door to Transport to Area 2 Dam Exterior (Top)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1437,9 +1437,9 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 2 - Entrance",
-                        "area": "Transport to Area 2 Exterior",
-                        "node": "Door to Entrance Hub (Top)"
+                        "region": "Area 2 - Dam Entryway",
+                        "area": "Transport to Area 2 Dam Exterior",
+                        "node": "Door to Main Shaft (Top)"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -1472,9 +1472,9 @@
                     "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
-                        "region": "Area 2 - Entrance",
+                        "region": "Area 2 - Dam Entryway",
                         "area": "Alpha+ Arena",
-                        "node": "Dock to Entrance Hub"
+                        "node": "Dock to Main Shaft"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -1482,7 +1482,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Transport to Area 2 Exterior (Bottom)": {
+                        "Door to Transport to Area 2 Dam Exterior (Bottom)": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -1529,7 +1529,7 @@
                                 ]
                             }
                         },
-                        "Door to Transport to Area 2 Exterior (Top)": {
+                        "Door to Transport to Area 2 Dam Exterior (Top)": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -1538,7 +1538,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "events",
-                                            "name": "Area 2 (Entrance) - Transport to Area 2 Exterior Unlock Door",
+                                            "name": "Area 2 (Dam Entryway) - Transport to Area 2 Dam Exterior Unlock Door",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -1574,7 +1574,7 @@
                         }
                     }
                 },
-                "Dock to Fleech Swarm Waterway": {
+                "Dock to Water Storage": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1590,9 +1590,9 @@
                     "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
-                        "region": "Area 2 - Entrance",
-                        "area": "Fleech Swarm Waterway",
-                        "node": "Dock to Entrance Hub"
+                        "region": "Area 2 - Dam Entryway",
+                        "area": "Water Storage",
+                        "node": "Dock to Main Shaft"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -1600,7 +1600,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Transport to Area 2 Exterior (Bottom)": {
+                        "Door to Transport to Area 2 Dam Exterior (Bottom)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1611,7 +1611,7 @@
                 }
             }
         },
-        "Fleech Swarm Waterway": {
+        "Water Storage": {
             "default_node": null,
             "extra": {
                 "total_boundings": {
@@ -1661,7 +1661,7 @@
                     "pickup_index": 49,
                     "location_category": "minor",
                     "connections": {
-                        "Dock to Entrance Hub": {
+                        "Dock to Main Shaft": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1684,7 +1684,7 @@
                         }
                     }
                 },
-                "Dock to Entrance Hub": {
+                "Dock to Main Shaft": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1700,9 +1700,9 @@
                     "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
-                        "region": "Area 2 - Entrance",
-                        "area": "Entrance Hub",
-                        "node": "Dock to Fleech Swarm Waterway"
+                        "region": "Area 2 - Dam Entryway",
+                        "area": "Main Shaft",
+                        "node": "Dock to Water Storage"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -1765,7 +1765,7 @@
                 "asset_id": "collision_camera_007"
             },
             "nodes": {
-                "Door to Entrance Teleporter": {
+                "Door to Teleporter Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1784,8 +1784,8 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 2 - Entrance",
-                        "area": "Entrance Teleporter",
+                        "region": "Area 2 - Dam Entryway",
+                        "area": "Teleporter Room",
                         "node": "Door to Alpha+ Arena"
                     },
                     "default_dock_weakness": "Power Beam Door",
@@ -1803,7 +1803,7 @@
                         }
                     }
                 },
-                "Dock to Entrance Hub": {
+                "Dock to Main Shaft": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1819,8 +1819,8 @@
                     "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
-                        "region": "Area 2 - Entrance",
-                        "area": "Entrance Hub",
+                        "region": "Area 2 - Dam Entryway",
+                        "area": "Main Shaft",
                         "node": "Dock to Alpha+ Arena"
                     },
                     "default_dock_weakness": "Open Passage",
@@ -1901,14 +1901,14 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Entrance Teleporter": {
+                        "Door to Teleporter Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Dock to Entrance Hub": {
+                        "Dock to Main Shaft": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1952,7 +1952,7 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Dock to Entrance Hub": {
+                        "Dock to Main Shaft": {
                             "type": "and",
                             "data": {
                                 "comment": null,

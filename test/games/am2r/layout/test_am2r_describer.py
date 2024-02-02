@@ -56,9 +56,9 @@ def test_am2r_format_params(artifacts):
             "Skip gameplay cutscenes, Open Missile Doors with Supers",
         ],
         "Gameplay": ["Starts at Main Caves - Landing Site"],
-        "Goal": [f"{artifacts.required_artifacts} Metroid DNA", dna_where]
-        if artifacts.required_artifacts
-        else [dna_where],
+        "Goal": (
+            [f"{artifacts.required_artifacts} Metroid DNA", dna_where] if artifacts.required_artifacts else [dna_where]
+        ),
         "Hints": ["DNA Hint: Area and room", "Ice Beam Hint: Area only"],
         "Item Pool": [f"Size: {118+artifacts.required_artifacts} of 134", "Vanilla starting items"],
         "Logic Settings": ["All tricks disabled"],
