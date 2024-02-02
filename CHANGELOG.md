@@ -22,7 +22,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### AM2R
 
-- **Major** - Added: Multiworld support for AM2R. 
+- **Major** - Added: Multiworld support for AM2R.
+- Added: Auto-Tracker functionality.
 - Changed: Minimal Logic has been adjusted. It now also checks for Morph Ball, Missile Launcher, the DNA and the Baby collection.
 - Changed: The Baby now checks for all DNA being collected and will display a message if not.
 
@@ -59,6 +60,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: In Dual Gamma Nest, the fight now requires Gravity suit on Trickless Combat. Health requirements adjusted around this change.
 - Changed: Distribution Center Exterior West: Shinesparking to get the top Missile Tank is now an intermediate shinesparking trick.
 - Changed: Bullet Hell Room Access: Shinesparking to get from `Door to Bullet Hell Room` to `Door to Distribution Facility Intersection` now requires an intermediate shinesparking trick.
+
+### Cave Story
+
+- Fixed: The name for Puppy locations and Labyrinth Shop locations will now be shown correctly on the Location Pool tab.
 
 ### Metroid Dread
 
@@ -107,6 +112,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Metroid Prime 2: Echoes
 
 - Added: Having Double Damage no longer causes the morph ball to glow.
+- Added: 8 more joke hints.
 - Changed: Minimal Logic now also checks for the Emperor Ing event.
 
 #### Logic Database

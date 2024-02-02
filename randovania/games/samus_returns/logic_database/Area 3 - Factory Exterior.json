@@ -1,5 +1,5 @@
 {
-    "name": "Area 3 - Exterior",
+    "name": "Area 3 - Factory Exterior",
     "extra": {
         "asset_id": "maps/levels/c10_samus/s030_area3/s030_area3.bmsld",
         "map_min_x": 11,
@@ -9,8 +9,8 @@
         "scenario_id": "s030_area3"
     },
     "areas": {
-        "Transport to Area 2 Entrance": {
-            "default_node": "Elevator to Area 2 - Entrance",
+        "Transport to Area 2 Dam Entryway": {
+            "default_node": "Elevator to Area 2 - Dam Entryway",
             "extra": {
                 "total_boundings": {
                     "x1": -26400.0,
@@ -102,7 +102,7 @@
                         }
                     },
                     "connections": {
-                        "Elevator to Area 2 - Entrance": {
+                        "Elevator to Area 2 - Dam Entryway": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -116,7 +116,7 @@
                                 "items": []
                             }
                         },
-                        "Door to Transport to Area 4 West (Top)": {
+                        "Door to Transport to Area 4 Central Caves (Top)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -125,7 +125,7 @@
                         }
                     }
                 },
-                "Elevator to Area 2 - Entrance": {
+                "Elevator to Area 2 - Dam Entryway": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -145,9 +145,9 @@
                     "valid_starting_location": true,
                     "dock_type": "elevator",
                     "default_connection": {
-                        "region": "Area 2 - Entrance",
+                        "region": "Area 2 - Dam Entryway",
                         "area": "Chozo Seal",
-                        "node": "Elevator to Area 3 - Exterior"
+                        "node": "Elevator to Area 3 - Factory Exterior"
                     },
                     "default_dock_weakness": "Elevator",
                     "exclude_from_dock_rando": false,
@@ -183,9 +183,9 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 3 - Exterior",
+                        "region": "Area 3 - Factory Exterior",
                         "area": "Entrance Hub",
-                        "node": "Door to Transport to Area 2 Entrance"
+                        "node": "Door to Transport to Area 2 Dam Entryway"
                     },
                     "default_dock_weakness": "Charge Beam Door",
                     "exclude_from_dock_rando": false,
@@ -216,7 +216,7 @@
                         }
                     }
                 },
-                "Door to Transport to Area 4 West (Top)": {
+                "Door to Transport to Area 4 Central Caves (Top)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -235,9 +235,9 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 3 - Exterior",
-                        "area": "Transport to Area 4 West",
-                        "node": "Door from Transport to Area 2 Entrance"
+                        "region": "Area 3 - Factory Exterior",
+                        "area": "Transport to Area 4 Central Caves",
+                        "node": "Door from Transport to Area 2 Dam Entryway"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -252,7 +252,7 @@
                                 "items": []
                             }
                         },
-                        "Door from Transport to Area 4 West": {
+                        "Door from Transport to Area 4 Central Caves": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -261,7 +261,7 @@
                         }
                     }
                 },
-                "Door from Transport to Area 4 West": {
+                "Door from Transport to Area 4 Central Caves": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -280,9 +280,9 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 3 - Exterior",
-                        "area": "Transport to Area 4 West",
-                        "node": "Door to Transport to Area 2 Entrance (Top)"
+                        "region": "Area 3 - Factory Exterior",
+                        "area": "Transport to Area 4 Central Caves",
+                        "node": "Door to Transport to Area 2 Dam Entryway (Top)"
                     },
                     "default_dock_weakness": "Access Closed",
                     "exclude_from_dock_rando": false,
@@ -290,7 +290,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Transport to Area 4 West (Top)": {
+                        "Door to Transport to Area 4 Central Caves (Top)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -303,7 +303,7 @@
                         }
                     }
                 },
-                "Door to Transport to Area 4 West (Middle)": {
+                "Door to Transport to Area 4 Central Caves (Middle)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -322,9 +322,9 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 3 - Exterior",
-                        "area": "Transport to Area 4 West",
-                        "node": "Door to Transport to Area 2 Entrance (Middle)"
+                        "region": "Area 3 - Factory Exterior",
+                        "area": "Transport to Area 4 Central Caves",
+                        "node": "Door to Transport to Area 2 Dam Entryway (Middle)"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -362,7 +362,7 @@
                         }
                     }
                 },
-                "Door to Transport to Area 4 West (Bottom)": {
+                "Door to Transport to Area 4 Central Caves (Bottom)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -381,9 +381,9 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 3 - Exterior",
-                        "area": "Transport to Area 4 West",
-                        "node": "Door to Transport to Area 2 Entrance (Bottom)"
+                        "region": "Area 3 - Factory Exterior",
+                        "area": "Transport to Area 4 Central Caves",
+                        "node": "Door to Transport to Area 2 Dam Entryway (Bottom)"
                     },
                     "default_dock_weakness": "Charge Beam Door",
                     "exclude_from_dock_rando": false,
@@ -419,9 +419,9 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 3 - Exterior",
+                        "region": "Area 3 - Factory Exterior",
                         "area": "Glow Fly Tunnel",
-                        "node": "Door to Transport to Area 2 Entrance (Top)"
+                        "node": "Door to Transport to Area 2 Dam Entryway (Top)"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -429,11 +429,11 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door from Transport to Area 4 West": {
+                        "Door from Transport to Area 4 Central Caves": {
                             "type": "template",
                             "data": "Lay Any Bomb"
                         },
-                        "Door to Transport to Area 4 West (Middle)": {
+                        "Door to Transport to Area 4 Central Caves (Middle)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -484,9 +484,9 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 3 - Exterior",
+                        "region": "Area 3 - Factory Exterior",
                         "area": "Glow Fly Tunnel",
-                        "node": "Door to Transport to Area 2 Entrance (Bottom)"
+                        "node": "Door to Transport to Area 2 Dam Entryway (Bottom)"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -494,14 +494,14 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Transport to Area 4 West (Middle)": {
+                        "Door to Transport to Area 4 Central Caves (Middle)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Door to Transport to Area 4 West (Bottom)": {
+                        "Door to Transport to Area 4 Central Caves (Bottom)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -672,7 +672,7 @@
                     "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
-                        "region": "Area 3 - Exterior",
+                        "region": "Area 3 - Factory Exterior",
                         "area": "Outer Hub",
                         "node": "Tunnel to Outer Hub Tunnel (Top)"
                     },
@@ -824,7 +824,7 @@
                     "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
-                        "region": "Area 3 - Exterior",
+                        "region": "Area 3 - Factory Exterior",
                         "area": "Outer Hub",
                         "node": "Tunnel to Outer Hub Tunnel (Bottom)"
                     },
@@ -923,7 +923,7 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 3 - Exterior",
+                        "region": "Area 3 - Factory Exterior",
                         "area": "Outer Hub",
                         "node": "Door to Grapple Beam Room"
                     },
@@ -1058,7 +1058,7 @@
                         "type": "resource",
                         "data": {
                             "type": "events",
-                            "name": "Area 3 Exterior Teleporter West",
+                            "name": "Area 3 Factory Exterior Teleporter West",
                             "amount": 1,
                             "negate": false
                         }
@@ -1097,7 +1097,7 @@
                     "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
-                        "region": "Area 3 - Exterior",
+                        "region": "Area 3 - Factory Exterior",
                         "area": "Outer Hub",
                         "node": "Dock to Outer Hub Teleporter"
                     },
@@ -1137,7 +1137,7 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "event_name": "Area 3 Exterior Teleporter West",
+                    "event_name": "Area 3 Factory Exterior Teleporter West",
                     "connections": {
                         "Dock to Outer Hub": {
                             "type": "and",
@@ -1151,7 +1151,7 @@
             }
         },
         "Outer Hub": {
-            "default_node": "Elevator to Area 3 - Interior (East)",
+            "default_node": "Elevator to Area 3 - Factory Interior",
             "extra": {
                 "total_boundings": {
                     "x1": -6600.0,
@@ -1306,7 +1306,7 @@
                         }
                     }
                 },
-                "Elevator to Area 3 - Interior (East)": {
+                "Elevator to Area 3 - Factory Interior": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1326,9 +1326,9 @@
                     "valid_starting_location": true,
                     "dock_type": "elevator",
                     "default_connection": {
-                        "region": "Area 3 - Interior (East)",
-                        "area": "Transport to Area 3 Exterior",
-                        "node": "Elevator to Area 3 - Exterior"
+                        "region": "Area 3 - Factory Interior",
+                        "area": "Transport to Area 3 Factory Exterior",
+                        "node": "Elevator to Area 3 - Factory Exterior"
                     },
                     "default_dock_weakness": "Elevator",
                     "exclude_from_dock_rando": false,
@@ -1371,7 +1371,7 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Elevator to Area 3 - Interior (East)": {
+                        "Elevator to Area 3 - Factory Interior": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1409,7 +1409,7 @@
                         "type": "resource",
                         "data": {
                             "type": "events",
-                            "name": "Area 3 Exterior Teleporter East",
+                            "name": "Area 3 Factory Exterior Teleporter East",
                             "amount": 1,
                             "negate": false
                         }
@@ -1451,7 +1451,7 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 3 - Exterior",
+                        "region": "Area 3 - Factory Exterior",
                         "area": "Grapple Beam Room",
                         "node": "Door to Outer Hub"
                     },
@@ -1545,7 +1545,7 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 3 - Exterior",
+                        "region": "Area 3 - Factory Exterior",
                         "area": "Outer Hub Access",
                         "node": "Door to Outer Hub"
                     },
@@ -1630,7 +1630,7 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 3 - Exterior",
+                        "region": "Area 3 - Factory Exterior",
                         "area": "Gamma Shaft",
                         "node": "Door to Outer Hub"
                     },
@@ -1728,7 +1728,7 @@
                     "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
-                        "region": "Area 3 - Exterior",
+                        "region": "Area 3 - Factory Exterior",
                         "area": "Outer Hub Teleporter",
                         "node": "Dock to Outer Hub"
                     },
@@ -1901,7 +1901,7 @@
                     "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
-                        "region": "Area 3 - Exterior",
+                        "region": "Area 3 - Factory Exterior",
                         "area": "Outer Hub Tunnel",
                         "node": "Tunnel to Outer Hub (Top)"
                     },
@@ -1936,7 +1936,7 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "event_name": "Area 3 Exterior Teleporter East",
+                    "event_name": "Area 3 Factory Exterior Teleporter East",
                     "connections": {
                         "Door to Gamma Shaft": {
                             "type": "and",
@@ -1994,7 +1994,7 @@
                     "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
-                        "region": "Area 3 - Exterior",
+                        "region": "Area 3 - Factory Exterior",
                         "area": "Outer Hub Tunnel",
                         "node": "Tunnel to Outer Hub (Bottom)"
                     },
@@ -2037,7 +2037,7 @@
                                 "negate": false
                             }
                         },
-                        "Elevator to Area 3 - Interior (East)": {
+                        "Elevator to Area 3 - Factory Interior": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -2122,8 +2122,8 @@
                 }
             }
         },
-        "Transport to Area 3 Interior West (Lower)": {
-            "default_node": "Elevator to Area 3 - Interior (West)",
+        "Transport to Area 3 Metroid Caverns (Lower)": {
+            "default_node": "Elevator to Area 3 - Metroid Caverns",
             "extra": {
                 "total_boundings": {
                     "x1": -18100.0,
@@ -2152,7 +2152,7 @@
                 "asset_id": "collision_camera_031"
             },
             "nodes": {
-                "Elevator to Area 3 - Interior (West)": {
+                "Elevator to Area 3 - Metroid Caverns": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2172,9 +2172,9 @@
                     "valid_starting_location": true,
                     "dock_type": "elevator",
                     "default_connection": {
-                        "region": "Area 3 - Interior (West)",
-                        "area": "Transport to Area 3 Exterior (Lower)",
-                        "node": "Elevator to Area 3 - Exterior"
+                        "region": "Area 3 - Metroid Caverns",
+                        "area": "Transport to Area 3 Factory Exterior (Lower)",
+                        "node": "Elevator to Area 3 - Factory Exterior"
                     },
                     "default_dock_weakness": "Elevator",
                     "exclude_from_dock_rando": false,
@@ -2231,9 +2231,9 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 3 - Exterior",
+                        "region": "Area 3 - Factory Exterior",
                         "area": "Entrance Hub",
-                        "node": "Door to Transport to Area 3 Interior West (Lower)"
+                        "node": "Door to Transport to Area 3 Metroid Caverns (Lower)"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -2241,7 +2241,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Elevator to Area 3 - Interior (West)": {
+                        "Elevator to Area 3 - Metroid Caverns": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2270,7 +2270,7 @@
                     "pickup_index": 62,
                     "location_category": "minor",
                     "connections": {
-                        "Elevator to Area 3 - Interior (West)": {
+                        "Elevator to Area 3 - Metroid Caverns": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2281,8 +2281,8 @@
                 }
             }
         },
-        "Transport to Area 4 West": {
-            "default_node": "Elevator to Area 4 - West",
+        "Transport to Area 4 Central Caves": {
+            "default_node": "Elevator to Area 4 - Central Caves",
             "extra": {
                 "total_boundings": {
                     "x1": -26100.0,
@@ -2339,7 +2339,7 @@
                     "pickup_index": 56,
                     "location_category": "minor",
                     "connections": {
-                        "Door to Transport to Area 2 Entrance (Top)": {
+                        "Door to Transport to Area 2 Dam Entryway (Top)": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -2362,7 +2362,7 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "events",
-                                                        "name": "Area 3 (Exterior) - Transport to Area 4 West Grapple Block",
+                                                        "name": "Area 3 (Factory Exterior) - Transport to Area 4 Central Caves Grapple Block",
                                                         "amount": 1,
                                                         "negate": false
                                                     }
@@ -2384,7 +2384,7 @@
                         }
                     }
                 },
-                "Elevator to Area 4 - West": {
+                "Elevator to Area 4 - Central Caves": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2404,9 +2404,9 @@
                     "valid_starting_location": true,
                     "dock_type": "elevator",
                     "default_connection": {
-                        "region": "Area 4 - West",
+                        "region": "Area 4 - Central Caves",
                         "area": "Chozo Seals",
-                        "node": "Elevator to Area 3 - Exterior"
+                        "node": "Elevator to Area 3 - Factory Exterior"
                     },
                     "default_dock_weakness": "Elevator",
                     "exclude_from_dock_rando": false,
@@ -2414,7 +2414,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Transport to Area 2 Entrance (Bottom)": {
+                        "Door to Transport to Area 2 Dam Entryway (Bottom)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2423,7 +2423,7 @@
                         }
                     }
                 },
-                "Door from Transport to Area 2 Entrance": {
+                "Door from Transport to Area 2 Dam Entryway": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2442,9 +2442,9 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 3 - Exterior",
-                        "area": "Transport to Area 2 Entrance",
-                        "node": "Door to Transport to Area 4 West (Top)"
+                        "region": "Area 3 - Factory Exterior",
+                        "area": "Transport to Area 2 Dam Entryway",
+                        "node": "Door to Transport to Area 4 Central Caves (Top)"
                     },
                     "default_dock_weakness": "Access Closed",
                     "exclude_from_dock_rando": false,
@@ -2496,7 +2496,7 @@
                                 ]
                             }
                         },
-                        "Door to Transport to Area 2 Entrance (Top)": {
+                        "Door to Transport to Area 2 Dam Entryway (Top)": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -2507,7 +2507,7 @@
                         }
                     }
                 },
-                "Door to Transport to Area 2 Entrance (Top)": {
+                "Door to Transport to Area 2 Dam Entryway (Top)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2526,9 +2526,9 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 3 - Exterior",
-                        "area": "Transport to Area 2 Entrance",
-                        "node": "Door from Transport to Area 4 West"
+                        "region": "Area 3 - Factory Exterior",
+                        "area": "Transport to Area 2 Dam Entryway",
+                        "node": "Door from Transport to Area 4 Central Caves"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -2545,7 +2545,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "events",
-                                            "name": "Area 3 (Exterior) - Transport to Area 4 West Grapple Block",
+                                            "name": "Area 3 (Factory Exterior) - Transport to Area 4 Central Caves Grapple Block",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -2583,7 +2583,7 @@
                                 ]
                             }
                         },
-                        "Door from Transport to Area 2 Entrance": {
+                        "Door from Transport to Area 2 Dam Entryway": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -2592,7 +2592,7 @@
                                 "negate": false
                             }
                         },
-                        "Door to Transport to Area 2 Entrance (Middle)": {
+                        "Door to Transport to Area 2 Dam Entryway (Middle)": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -2629,7 +2629,7 @@
                         }
                     }
                 },
-                "Door to Transport to Area 2 Entrance (Middle)": {
+                "Door to Transport to Area 2 Dam Entryway (Middle)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2648,9 +2648,9 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 3 - Exterior",
-                        "area": "Transport to Area 2 Entrance",
-                        "node": "Door to Transport to Area 4 West (Middle)"
+                        "region": "Area 3 - Factory Exterior",
+                        "area": "Transport to Area 2 Dam Entryway",
+                        "node": "Door to Transport to Area 4 Central Caves (Middle)"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -2658,7 +2658,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Transport to Area 2 Entrance (Top)": {
+                        "Door to Transport to Area 2 Dam Entryway (Top)": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -2669,7 +2669,7 @@
                         }
                     }
                 },
-                "Door to Transport to Area 2 Entrance (Bottom)": {
+                "Door to Transport to Area 2 Dam Entryway (Bottom)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2688,9 +2688,9 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 3 - Exterior",
-                        "area": "Transport to Area 2 Entrance",
-                        "node": "Door to Transport to Area 4 West (Bottom)"
+                        "region": "Area 3 - Factory Exterior",
+                        "area": "Transport to Area 2 Dam Entryway",
+                        "node": "Door to Transport to Area 4 Central Caves (Bottom)"
                     },
                     "default_dock_weakness": "Charge Beam Door",
                     "exclude_from_dock_rando": false,
@@ -2698,7 +2698,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Elevator to Area 4 - West": {
+                        "Elevator to Area 4 - Central Caves": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2721,9 +2721,9 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "event_name": "Area 3 (Exterior) - Transport to Area 4 West Grapple Block",
+                    "event_name": "Area 3 (Factory Exterior) - Transport to Area 4 Central Caves Grapple Block",
                     "connections": {
-                        "Door to Transport to Area 2 Entrance (Top)": {
+                        "Door to Transport to Area 2 Dam Entryway (Top)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2784,7 +2784,7 @@
                     "pickup_index": 55,
                     "location_category": "minor",
                     "connections": {
-                        "Door to Transport to Area 2 Entrance (Bottom)": {
+                        "Door to Transport to Area 2 Dam Entryway (Bottom)": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -2795,7 +2795,7 @@
                         }
                     }
                 },
-                "Door to Transport to Area 2 Entrance (Top)": {
+                "Door to Transport to Area 2 Dam Entryway (Top)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2814,8 +2814,8 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 3 - Exterior",
-                        "area": "Transport to Area 2 Entrance",
+                        "region": "Area 3 - Factory Exterior",
+                        "area": "Transport to Area 2 Dam Entryway",
                         "node": "Door to Glow Fly Tunnel (Top)"
                     },
                     "default_dock_weakness": "Power Beam Door",
@@ -2878,7 +2878,7 @@
                         }
                     }
                 },
-                "Door to Transport to Area 2 Entrance (Bottom)": {
+                "Door to Transport to Area 2 Dam Entryway (Bottom)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2897,8 +2897,8 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 3 - Exterior",
-                        "area": "Transport to Area 2 Entrance",
+                        "region": "Area 3 - Factory Exterior",
+                        "area": "Transport to Area 2 Dam Entryway",
                         "node": "Door to Glow Fly Tunnel (Bottom)"
                     },
                     "default_dock_weakness": "Power Beam Door",
@@ -2910,8 +2910,8 @@
                 }
             }
         },
-        "Transport to Area 3 Interior West (Upper)": {
-            "default_node": "Elevator to Area 3 - Interior (West)",
+        "Transport to Area 3 Metroid Caverns (Upper)": {
+            "default_node": "Elevator to Area 3 - Metroid Caverns",
             "extra": {
                 "total_boundings": {
                     "x1": -11800.0,
@@ -2958,7 +2958,7 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Elevator to Area 3 - Interior (West)": {
+                        "Elevator to Area 3 - Metroid Caverns": {
                             "type": "template",
                             "data": "Lay Any Bomb"
                         },
@@ -3080,7 +3080,7 @@
                         }
                     }
                 },
-                "Elevator to Area 3 - Interior (West)": {
+                "Elevator to Area 3 - Metroid Caverns": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3100,9 +3100,9 @@
                     "valid_starting_location": true,
                     "dock_type": "elevator",
                     "default_connection": {
-                        "region": "Area 3 - Interior (West)",
-                        "area": "Transport to Area 3 Exterior (Upper)",
-                        "node": "Elevator to Area 3 - Exterior"
+                        "region": "Area 3 - Metroid Caverns",
+                        "area": "Transport to Area 3 Factory Exterior (Upper)",
+                        "node": "Elevator to Area 3 - Factory Exterior"
                     },
                     "default_dock_weakness": "Elevator",
                     "exclude_from_dock_rando": false,
@@ -3163,9 +3163,9 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 3 - Exterior",
+                        "region": "Area 3 - Factory Exterior",
                         "area": "Entrance Hub",
-                        "node": "Door to Transport to Area 3 Interior West (Upper)"
+                        "node": "Door to Transport to Area 3 Metroid Caverns (Upper)"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -3173,7 +3173,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Elevator to Area 3 - Interior (West)": {
+                        "Elevator to Area 3 - Metroid Caverns": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3201,9 +3201,9 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 3 - Exterior",
+                        "region": "Area 3 - Factory Exterior",
                         "area": "Outer Hub Access",
-                        "node": "Door to Transport to Area 3 Interior West (Upper)"
+                        "node": "Door to Transport to Area 3 Metroid Caverns (Upper)"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -3220,7 +3220,7 @@
                                 "negate": false
                             }
                         },
-                        "Elevator to Area 3 - Interior (West)": {
+                        "Elevator to Area 3 - Metroid Caverns": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3370,7 +3370,7 @@
                     },
                     "valid_starting_location": true,
                     "connections": {
-                        "Door to Transport to Area 2 Entrance": {
+                        "Door to Transport to Area 2 Dam Entryway": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3379,7 +3379,7 @@
                         }
                     }
                 },
-                "Door to Transport to Area 2 Entrance": {
+                "Door to Transport to Area 2 Dam Entryway": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3398,8 +3398,8 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 3 - Exterior",
-                        "area": "Transport to Area 2 Entrance",
+                        "region": "Area 3 - Factory Exterior",
+                        "area": "Transport to Area 2 Dam Entryway",
                         "node": "Door to Entrance Hub"
                     },
                     "default_dock_weakness": "Power Beam Door",
@@ -3415,7 +3415,7 @@
                                 "items": []
                             }
                         },
-                        "Door to Transport to Area 3 Interior West (Lower)": {
+                        "Door to Transport to Area 3 Metroid Caverns (Lower)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3431,7 +3431,7 @@
                         }
                     }
                 },
-                "Door to Transport to Area 3 Interior West (Lower)": {
+                "Door to Transport to Area 3 Metroid Caverns (Lower)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3450,8 +3450,8 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 3 - Exterior",
-                        "area": "Transport to Area 3 Interior West (Lower)",
+                        "region": "Area 3 - Factory Exterior",
+                        "area": "Transport to Area 3 Metroid Caverns (Lower)",
                         "node": "Door to Entrance Hub"
                     },
                     "default_dock_weakness": "Access Locked",
@@ -3460,7 +3460,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Transport to Area 2 Entrance": {
+                        "Door to Transport to Area 2 Dam Entryway": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3469,7 +3469,7 @@
                         }
                     }
                 },
-                "Door to Transport to Area 3 Interior West (Upper)": {
+                "Door to Transport to Area 3 Metroid Caverns (Upper)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3488,8 +3488,8 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 3 - Exterior",
-                        "area": "Transport to Area 3 Interior West (Upper)",
+                        "region": "Area 3 - Factory Exterior",
+                        "area": "Transport to Area 3 Metroid Caverns (Upper)",
                         "node": "Door to Entrance Hub"
                     },
                     "default_dock_weakness": "Power Beam Door",
@@ -3631,7 +3631,7 @@
                     "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
-                        "region": "Area 3 - Exterior",
+                        "region": "Area 3 - Factory Exterior",
                         "area": "Outer Hub Access",
                         "node": "Tunnel to Entrance Hub"
                     },
@@ -3667,14 +3667,14 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Transport to Area 2 Entrance": {
+                        "Door to Transport to Area 2 Dam Entryway": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Door to Transport to Area 3 Interior West (Upper)": {
+                        "Door to Transport to Area 3 Metroid Caverns (Upper)": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -4009,7 +4009,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "events",
-                                            "name": "Area 3 (Exterior) - Inner Hub Access Grapple Block Left",
+                                            "name": "Area 3 (Factory Exterior) - Inner Hub Access Grapple Block Left",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -4317,7 +4317,7 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 3 - Exterior",
+                        "region": "Area 3 - Factory Exterior",
                         "area": "Gamma Arena",
                         "node": "Door to Gamma Shaft"
                     },
@@ -4345,7 +4345,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "events",
-                                            "name": "Area 3 (Exterior) - Gamma Shaft Grapple Block",
+                                            "name": "Area 3 (Factory Exterior) - Gamma Shaft Grapple Block",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -4531,7 +4531,7 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 3 - Exterior",
+                        "region": "Area 3 - Factory Exterior",
                         "area": "Outer Hub",
                         "node": "Door to Gamma Shaft"
                     },
@@ -4555,7 +4555,7 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "events",
-                                                        "name": "Area 3 (Exterior) - Gamma Shaft Grapple Block",
+                                                        "name": "Area 3 (Factory Exterior) - Gamma Shaft Grapple Block",
                                                         "amount": 1,
                                                         "negate": false
                                                     }
@@ -4832,7 +4832,7 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "event_name": "Area 3 (Exterior) - Gamma Shaft Grapple Block",
+                    "event_name": "Area 3 (Factory Exterior) - Gamma Shaft Grapple Block",
                     "connections": {
                         "Door to Outer Hub": {
                             "type": "and",
@@ -4928,7 +4928,7 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 3 - Exterior",
+                        "region": "Area 3 - Factory Exterior",
                         "area": "Gamma Shaft",
                         "node": "Door to Gamma Arena"
                     },
@@ -5055,7 +5055,7 @@
                 "asset_id": "collision_camera_040"
             },
             "nodes": {
-                "Door to Transport to Area 3 Interior West (Upper)": {
+                "Door to Transport to Area 3 Metroid Caverns (Upper)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5074,8 +5074,8 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 3 - Exterior",
-                        "area": "Transport to Area 3 Interior West (Upper)",
+                        "region": "Area 3 - Factory Exterior",
+                        "area": "Transport to Area 3 Metroid Caverns (Upper)",
                         "node": "Door to Outer Hub Access"
                     },
                     "default_dock_weakness": "Power Beam Door",
@@ -5102,7 +5102,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "events",
-                                            "name": "Area 3 (Exterior) - Inner Hub Access Grapple Block Left",
+                                            "name": "Area 3 (Factory Exterior) - Inner Hub Access Grapple Block Left",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -5300,7 +5300,7 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "region": "Area 3 - Exterior",
+                        "region": "Area 3 - Factory Exterior",
                         "area": "Outer Hub",
                         "node": "Door to Outer Hub Access"
                     },
@@ -5444,7 +5444,7 @@
                     "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
-                        "region": "Area 3 - Exterior",
+                        "region": "Area 3 - Factory Exterior",
                         "area": "Entrance Hub",
                         "node": "Tunnel to Outer Hub Access"
                     },
@@ -5454,7 +5454,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Transport to Area 3 Interior West (Upper)": {
+                        "Door to Transport to Area 3 Metroid Caverns (Upper)": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -5479,9 +5479,9 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "event_name": "Area 3 (Exterior) - Inner Hub Access Grapple Block Left",
+                    "event_name": "Area 3 (Factory Exterior) - Inner Hub Access Grapple Block Left",
                     "connections": {
-                        "Door to Transport to Area 3 Interior West (Upper)": {
+                        "Door to Transport to Area 3 Metroid Caverns (Upper)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5504,7 +5504,7 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "event_name": "Area 3 (Exterior) - Inner Hub Access Grapple Block Right",
+                    "event_name": "Area 3 (Factory Exterior) - Inner Hub Access Grapple Block Right",
                     "connections": {
                         "Right of Crumble Block": {
                             "type": "resource",
@@ -5532,7 +5532,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Transport to Area 3 Interior West (Upper)": {
+                        "Door to Transport to Area 3 Metroid Caverns (Upper)": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -5555,7 +5555,7 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "events",
-                                                        "name": "Area 3 (Exterior) - Inner Hub Access Grapple Block Right",
+                                                        "name": "Area 3 (Factory Exterior) - Inner Hub Access Grapple Block Right",
                                                         "amount": 1,
                                                         "negate": false
                                                     }
