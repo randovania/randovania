@@ -4,6 +4,7 @@ from pathlib import Path
 from unittest.mock import MagicMock
 
 import pytest
+from caver.patcher import CSPlatform
 from PySide6 import QtCore
 
 from randovania.games.cave_story.exporter.game_exporter import CSGameExportParams
@@ -79,12 +80,14 @@ def test_save_options(skip_qtbot, tmp_path):
     assert options.options_for_game(RandovaniaGame.CAVE_STORY).output_directory == Path("somewhere/foo")
 
 
-def test_get_game_export_params(skip_qtbot, tmp_path):
+@pytest.mark.parametrize("export_platform", [CSPlatform.FREEWARE, CSPlatform.TWEAKED])
+def test_get_game_export_params(skip_qtbot, tmp_path, export_platform):
     # Setup
     options = MagicMock()
     options.options_for_game.return_value = CSPerGameOptions(
         cosmetic_patches=CSCosmeticPatches.default(),
         output_directory=tmp_path.joinpath("output"),
+        platform=export_platform,
     )
     window = CSGameExportDialog(options, {}, "MyHash", True, [])
 
@@ -95,4 +98,5 @@ def test_get_game_export_params(skip_qtbot, tmp_path):
     assert result == CSGameExportParams(
         spoiler_output=tmp_path.joinpath("output", "spoiler.rdvgame"),
         output_path=tmp_path.joinpath("output"),
+        platform=export_platform,
     )
