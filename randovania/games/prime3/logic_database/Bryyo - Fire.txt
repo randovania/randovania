@@ -419,7 +419,7 @@ Extra - asset_id: 13296637487518400273
 > Pickup (Missile Expansion); Heals? False
   * Layers: default
   * Pickup 22; Category? Minor
-  > Above Ground
+  > Event - Gel Pickup
       Trivial
 
 > Above Ground; Heals? False
@@ -448,7 +448,9 @@ Extra - asset_id: 13296637487518400273
                   Combat (Beginner) and Damage ≥ 100
                   # https://youtu.be/4OggF458OMI&t=65
                   After Hangar Bay Ship Upgrade and Before Temple of Bryyo Turret and Combat (Intermediate) and Use Ship Missile (Command Visor and Ship Missile)
-          Combat (Intermediate) and Use Screw Attack (Space Jump)
+          Combat (Advanced) and Use Screw Attack (Space Jump)
+          # Collect Gel Pickup to Activate the Elevator to Kill Rundas
+          After TempleOfBryyoGelPickup and Knowledge (Expert)
   > Event - Turret
       Grapple Lasso and After Hangar Bay Ship Upgrade and Use Ship Missile (Command Visor and Ship Missile)
 
@@ -461,6 +463,12 @@ Extra - asset_id: 13296637487518400273
 > Event - Turret; Heals? False
   * Layers: default
   * Event Temple of Bryyo Turret
+  > Above Ground
+      Trivial
+
+> Event - Gel Pickup; Heals? False
+  * Layers: default
+  * Event TempleOfBryyoGelPickup
   > Above Ground
       Trivial
 

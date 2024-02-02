@@ -3043,7 +3043,7 @@
                     "pickup_index": 22,
                     "location_category": "minor",
                     "connections": {
-                        "Above Ground": {
+                        "Event - Gel Pickup": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3326,7 +3326,33 @@
                                                     "data": {
                                                         "type": "tricks",
                                                         "name": "Combat",
-                                                        "amount": 2,
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "Collect Gel Pickup to Activate the Elevator to Kill Rundas",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "TempleOfBryyoGelPickup",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Knowledge",
+                                                        "amount": 4,
                                                         "negate": false
                                                     }
                                                 }
@@ -3400,6 +3426,27 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "event_name": "Event56",
+                    "connections": {
+                        "Above Ground": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Gel Pickup": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "TempleOfBryyoGelPickup",
                     "connections": {
                         "Above Ground": {
                             "type": "and",
