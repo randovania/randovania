@@ -24,11 +24,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - **Major** - Added: Multiworld support for AM2R.
 - Added: Auto-Tracker functionality.
+- Added: A "Hints"-tab, which describes the hint system used in AM2R in detail.
+- Added: A "Hint Item Names"-tab, which describes which names are used to describe the items in offworld hints.
 - Changed: Minimal Logic has been adjusted. It now also checks for Morph Ball, Missile Launcher, the DNA and the Baby collection.
 - Changed: The Baby now checks for all DNA being collected and will display a message if not.
 - Changed: Progressive Suits and Progressive Jumps now display custom sprites instead of Space Jump / Gravity Suit sprites in order to make them more distinct.
 - Changed: The yams.json file will not be present anymore for race seeds.
 - Fixed: The shell script after exporting works now on Flatpak environments.
+- Fixed: Typos in FAQ.
 
 #### Logic Database
 
