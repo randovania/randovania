@@ -9,7 +9,7 @@
         "scenario_id": "s025_area2b"
     },
     "areas": {
-        "Main Hub": {
+        "Transport to Area 2 Dam Exterior": {
             "default_node": "Elevator to Area 2 - Dam Exterior",
             "extra": {
                 "total_boundings": {
@@ -87,7 +87,7 @@
                     "pickup_index": 46,
                     "location_category": "major",
                     "connections": {
-                        "Door to Varia Suit Room (Middle)": {
+                        "Door to Varia Chamber (Middle)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -117,7 +117,7 @@
                     "dock_type": "elevator",
                     "default_connection": {
                         "region": "Area 2 - Dam Exterior",
-                        "area": "Outer Hub",
+                        "area": "Dam Exterior",
                         "node": "Elevator to Area 2 - Dam Interior"
                     },
                     "default_dock_weakness": "Elevator",
@@ -291,21 +291,21 @@
                                 ]
                             }
                         },
-                        "Door to Fiery Path": {
+                        "Door to Lava Generator": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Door to Fiery Balcony": {
+                        "Door to Generator Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Door to Varia Suit Room (Bottom)": {
+                        "Door to Varia Chamber (Bottom)": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -314,7 +314,7 @@
                                 "negate": false
                             }
                         },
-                        "Door to Varia Suit Room (Top)": {
+                        "Door to Varia Chamber (Top)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -400,7 +400,7 @@
                         }
                     }
                 },
-                "Door to Fiery Path": {
+                "Door to Lava Generator": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -420,8 +420,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 2 - Dam Interior",
-                        "area": "Fiery Path",
-                        "node": "Door to Main Hub"
+                        "area": "Lava Generator",
+                        "node": "Door to Transport to Area 2 Dam Exterior"
                     },
                     "default_dock_weakness": "Charge Beam Door",
                     "exclude_from_dock_rando": false,
@@ -438,7 +438,7 @@
                         }
                     }
                 },
-                "Door to Fiery Balcony": {
+                "Door to Generator Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -458,8 +458,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 2 - Dam Interior",
-                        "area": "Fiery Balcony",
-                        "node": "Door to Main Hub"
+                        "area": "Generator Access",
+                        "node": "Door to Transport to Area 2 Dam Exterior"
                     },
                     "default_dock_weakness": "Charge Beam Door",
                     "exclude_from_dock_rando": false,
@@ -474,7 +474,7 @@
                                 "items": []
                             }
                         },
-                        "Door to Wallfire Path": {
+                        "Door to Wallfire Corridor": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -485,7 +485,7 @@
                         }
                     }
                 },
-                "Door to Wallfire Path": {
+                "Door to Wallfire Corridor": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -505,8 +505,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 2 - Dam Interior",
-                        "area": "Wallfire Path",
-                        "node": "Door to Main Hub"
+                        "area": "Wallfire Corridor",
+                        "node": "Door to Transport to Area 2 Dam Exterior"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -514,7 +514,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Fiery Balcony": {
+                        "Door to Generator Access": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -525,7 +525,7 @@
                         }
                     }
                 },
-                "Door to Varia Suit Room (Bottom)": {
+                "Door to Varia Chamber (Bottom)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -545,8 +545,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 2 - Dam Interior",
-                        "area": "Varia Suit Room",
-                        "node": "Door to Main Hub (Bottom)"
+                        "area": "Varia Chamber",
+                        "node": "Door to Transport to Area 2 Dam Exterior (Bottom)"
                     },
                     "default_dock_weakness": "Wave Beam Door",
                     "exclude_from_dock_rando": false,
@@ -563,7 +563,7 @@
                                 "negate": false
                             }
                         },
-                        "Door to Varia Suit Room (Middle)": {
+                        "Door to Varia Chamber (Middle)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -591,7 +591,7 @@
                         }
                     }
                 },
-                "Door to Varia Suit Room (Middle)": {
+                "Door to Varia Chamber (Middle)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -611,8 +611,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 2 - Dam Interior",
-                        "area": "Varia Suit Room",
-                        "node": "Door to Main Hub (Middle)"
+                        "area": "Varia Chamber",
+                        "node": "Door to Transport to Area 2 Dam Exterior (Middle)"
                     },
                     "default_dock_weakness": "Missile Door",
                     "exclude_from_dock_rando": false,
@@ -636,7 +636,7 @@
                         }
                     }
                 },
-                "Door to Varia Suit Room (Top)": {
+                "Door to Varia Chamber (Top)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -656,8 +656,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 2 - Dam Interior",
-                        "area": "Varia Suit Room",
-                        "node": "Door to Main Hub (Top)"
+                        "area": "Varia Chamber",
+                        "node": "Door to Transport to Area 2 Dam Exterior (Top)"
                     },
                     "default_dock_weakness": "Wave Beam Door",
                     "exclude_from_dock_rando": false,
@@ -693,7 +693,7 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Varia Suit Room (Middle)": {
+                        "Door to Varia Chamber (Middle)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -704,7 +704,7 @@
                 }
             }
         },
-        "Varia Suit Room": {
+        "Varia Chamber": {
             "default_node": "Start Point",
             "extra": {
                 "total_boundings": {
@@ -794,7 +794,7 @@
                     "pickup_index": 45,
                     "location_category": "major",
                     "connections": {
-                        "Door to Wallfire Path": {
+                        "Door to Wallfire Corridor": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -803,7 +803,7 @@
                         }
                     }
                 },
-                "Ammo Recharge Station": {
+                "Metroid Caverns Ammo Recharge Station": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
@@ -842,14 +842,14 @@
                                 ]
                             }
                         },
-                        "Door to Main Hub (Bottom)": {
+                        "Door to Transport to Area 2 Dam Exterior (Bottom)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Door to Main Hub (Middle)": {
+                        "Door to Transport to Area 2 Dam Exterior (Middle)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -984,7 +984,7 @@
                         }
                     }
                 },
-                "Door to Fiery Balcony": {
+                "Door to Generator Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1004,8 +1004,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 2 - Dam Interior",
-                        "area": "Fiery Balcony",
-                        "node": "Door to Varia Suit Room"
+                        "area": "Generator Access",
+                        "node": "Door to Varia Chamber"
                     },
                     "default_dock_weakness": "Charge Beam Door",
                     "exclude_from_dock_rando": false,
@@ -1013,7 +1013,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Wallfire Path": {
+                        "Door to Wallfire Corridor": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1022,7 +1022,7 @@
                         }
                     }
                 },
-                "Door to Wallfire Path": {
+                "Door to Wallfire Corridor": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1042,8 +1042,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 2 - Dam Interior",
-                        "area": "Wallfire Path",
-                        "node": "Door to Varia Suit Room"
+                        "area": "Wallfire Corridor",
+                        "node": "Door to Varia Chamber"
                     },
                     "default_dock_weakness": "Missile Door",
                     "exclude_from_dock_rando": false,
@@ -1058,7 +1058,7 @@
                                 "items": []
                             }
                         },
-                        "Door to Fiery Balcony": {
+                        "Door to Generator Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1083,7 +1083,7 @@
                         }
                     }
                 },
-                "Door to Main Hub (Bottom)": {
+                "Door to Transport to Area 2 Dam Exterior (Bottom)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1103,8 +1103,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 2 - Dam Interior",
-                        "area": "Main Hub",
-                        "node": "Door to Varia Suit Room (Bottom)"
+                        "area": "Transport to Area 2 Dam Exterior",
+                        "node": "Door to Varia Chamber (Bottom)"
                     },
                     "default_dock_weakness": "Wave Beam Door",
                     "exclude_from_dock_rando": false,
@@ -1112,7 +1112,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Ammo Recharge Station": {
+                        "Metroid Caverns Ammo Recharge Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1121,7 +1121,7 @@
                         }
                     }
                 },
-                "Door to Main Hub (Middle)": {
+                "Door to Transport to Area 2 Dam Exterior (Middle)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1141,8 +1141,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 2 - Dam Interior",
-                        "area": "Main Hub",
-                        "node": "Door to Varia Suit Room (Middle)"
+                        "area": "Transport to Area 2 Dam Exterior",
+                        "node": "Door to Varia Chamber (Middle)"
                     },
                     "default_dock_weakness": "Missile Door",
                     "exclude_from_dock_rando": false,
@@ -1150,7 +1150,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Ammo Recharge Station": {
+                        "Metroid Caverns Ammo Recharge Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1159,7 +1159,7 @@
                         }
                     }
                 },
-                "Door to Teleporter Shaft Access": {
+                "Door to Interior Energy Recharge Station": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1179,8 +1179,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 2 - Dam Interior",
-                        "area": "Teleporter Shaft Access",
-                        "node": "Door to Varia Suit Room"
+                        "area": "Interior Energy Recharge Station",
+                        "node": "Door to Varia Chamber"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -1258,7 +1258,7 @@
                     "default_connection": {
                         "region": "Area 2 - Dam Interior",
                         "area": "Gamma Arena",
-                        "node": "Door to Varia Suit Room"
+                        "node": "Door to Varia Chamber"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -1377,7 +1377,7 @@
                         }
                     }
                 },
-                "Door to Main Hub (Top)": {
+                "Door to Transport to Area 2 Dam Exterior (Top)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1397,8 +1397,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 2 - Dam Interior",
-                        "area": "Main Hub",
-                        "node": "Door to Varia Suit Room (Top)"
+                        "area": "Transport to Area 2 Dam Exterior",
+                        "node": "Door to Varia Chamber (Top)"
                     },
                     "default_dock_weakness": "Wave Beam Door",
                     "exclude_from_dock_rando": false,
@@ -1459,7 +1459,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Wallfire Path": {
+                        "Door to Wallfire Corridor": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -1549,7 +1549,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Ammo Recharge Station": {
+                        "Metroid Caverns Ammo Recharge Station": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -1591,14 +1591,14 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Teleporter Shaft Access": {
+                        "Door to Interior Energy Recharge Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Door to Main Hub (Top)": {
+                        "Door to Transport to Area 2 Dam Exterior (Top)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1633,7 +1633,7 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Wallfire Path": {
+                        "Door to Wallfire Corridor": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1644,7 +1644,7 @@
                 }
             }
         },
-        "Fiery Path": {
+        "Lava Generator": {
             "default_node": "Start Point",
             "extra": {
                 "total_boundings": {
@@ -1710,7 +1710,7 @@
                 "asset_id": "collision_camera012"
             },
             "nodes": {
-                "Door to Main Hub": {
+                "Door to Transport to Area 2 Dam Exterior": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1730,8 +1730,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 2 - Dam Interior",
-                        "area": "Main Hub",
-                        "node": "Door to Fiery Path"
+                        "area": "Transport to Area 2 Dam Exterior",
+                        "node": "Door to Lava Generator"
                     },
                     "default_dock_weakness": "Charge Beam Door",
                     "exclude_from_dock_rando": false,
@@ -1771,7 +1771,7 @@
                     "default_connection": {
                         "region": "Area 2 - Dam Interior",
                         "area": "Gamma Arena",
-                        "node": "Door to Fiery Path"
+                        "node": "Door to Lava Generator"
                     },
                     "default_dock_weakness": "Charge Beam Door",
                     "exclude_from_dock_rando": false,
@@ -1797,7 +1797,7 @@
                         }
                     }
                 },
-                "Door to Fiery Storage": {
+                "Door to Crumble Cavern": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1817,8 +1817,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 2 - Dam Interior",
-                        "area": "Fiery Storage",
-                        "node": "Door to Fiery Path"
+                        "area": "Crumble Cavern",
+                        "node": "Door to Lava Generator"
                     },
                     "default_dock_weakness": "Power Bomb Door",
                     "exclude_from_dock_rando": false,
@@ -1837,7 +1837,7 @@
                         }
                     }
                 },
-                "Door to Fiery Balcony": {
+                "Door to Generator Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1857,8 +1857,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 2 - Dam Interior",
-                        "area": "Fiery Balcony",
-                        "node": "Door to Fiery Path"
+                        "area": "Generator Access",
+                        "node": "Door to Lava Generator"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -1918,7 +1918,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Main Hub": {
+                        "Door to Transport to Area 2 Dam Exterior": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -1936,7 +1936,7 @@
                                 "negate": false
                             }
                         },
-                        "Door to Fiery Storage": {
+                        "Door to Crumble Cavern": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -1945,7 +1945,7 @@
                                 "negate": false
                             }
                         },
-                        "Door to Fiery Balcony": {
+                        "Door to Generator Access": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -2154,7 +2154,7 @@
                 }
             }
         },
-        "Fiery Storage": {
+        "Crumble Cavern": {
             "default_node": null,
             "extra": {
                 "total_boundings": {
@@ -2204,7 +2204,7 @@
                     "pickup_index": 43,
                     "location_category": "minor",
                     "connections": {
-                        "Door to Fiery Path": {
+                        "Door to Lava Generator": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2232,7 +2232,7 @@
                         }
                     }
                 },
-                "Door to Fiery Path": {
+                "Door to Lava Generator": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2252,8 +2252,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 2 - Dam Interior",
-                        "area": "Fiery Path",
-                        "node": "Door to Fiery Storage"
+                        "area": "Lava Generator",
+                        "node": "Door to Crumble Cavern"
                     },
                     "default_dock_weakness": "Power Bomb Door",
                     "exclude_from_dock_rando": false,
@@ -2420,7 +2420,7 @@
                 }
             }
         },
-        "Teleporter Shaft Access": {
+        "Interior Energy Recharge Station": {
             "default_node": null,
             "extra": {
                 "total_boundings": {
@@ -2458,7 +2458,7 @@
                 "asset_id": "collision_camera015"
             },
             "nodes": {
-                "Door to Varia Suit Room": {
+                "Door to Varia Chamber": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2478,8 +2478,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 2 - Dam Interior",
-                        "area": "Varia Suit Room",
-                        "node": "Door to Teleporter Shaft Access"
+                        "area": "Varia Chamber",
+                        "node": "Door to Interior Energy Recharge Station"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -2487,7 +2487,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Tunnel to Teleporter Shaft": {
+                        "Tunnel to Interior Teleporter": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -2502,7 +2502,7 @@
                         }
                     }
                 },
-                "Tunnel to Teleporter Shaft": {
+                "Tunnel to Interior Teleporter": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2519,8 +2519,8 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Area 2 - Dam Interior",
-                        "area": "Teleporter Shaft",
-                        "node": "Tunnel to Teleporter Shaft Access"
+                        "area": "Interior Teleporter",
+                        "node": "Tunnel to Interior Energy Recharge Station"
                     },
                     "default_dock_weakness": "Tunnel",
                     "exclude_from_dock_rando": false,
@@ -2528,7 +2528,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Varia Suit Room": {
+                        "Door to Varia Chamber": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -2557,7 +2557,7 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Varia Suit Room": {
+                        "Door to Varia Chamber": {
                             "type": "template",
                             "data": "Lay Any Bomb"
                         }
@@ -2565,7 +2565,7 @@
                 }
             }
         },
-        "Teleporter Shaft": {
+        "Interior Teleporter": {
             "default_node": "Teleporter",
             "extra": {
                 "total_boundings": {
@@ -2648,7 +2648,7 @@
                         }
                     }
                 },
-                "Door to Horseshoe Path": {
+                "Door to Fleech Fire Containment": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2668,8 +2668,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 2 - Dam Interior",
-                        "area": "Horseshoe Path",
-                        "node": "Door to Teleporter Shaft"
+                        "area": "Fleech Fire Containment",
+                        "node": "Door to Interior Teleporter"
                     },
                     "default_dock_weakness": "Wave Beam Door",
                     "exclude_from_dock_rando": false,
@@ -2686,7 +2686,7 @@
                         }
                     }
                 },
-                "Door to Fan Tunnel": {
+                "Door to Teleporter Storage": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2706,8 +2706,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 2 - Dam Interior",
-                        "area": "Fan Tunnel",
-                        "node": "Door to Teleporter Shaft"
+                        "area": "Teleporter Storage",
+                        "node": "Door to Interior Teleporter"
                     },
                     "default_dock_weakness": "Plasma Beam Door",
                     "exclude_from_dock_rando": false,
@@ -2724,7 +2724,7 @@
                         }
                     }
                 },
-                "Tunnel to High Jump Shaft": {
+                "Tunnel to High Jump Chamber Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2741,8 +2741,8 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Area 2 - Dam Interior",
-                        "area": "High Jump Shaft",
-                        "node": "Tunnel to Teleporter Shaft"
+                        "area": "High Jump Chamber Access",
+                        "node": "Tunnel to Interior Teleporter"
                     },
                     "default_dock_weakness": "Tunnel",
                     "exclude_from_dock_rando": false,
@@ -2761,7 +2761,7 @@
                         }
                     }
                 },
-                "Tunnel to Teleporter Shaft Access": {
+                "Tunnel to Interior Energy Recharge Station": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2778,8 +2778,8 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Area 2 - Dam Interior",
-                        "area": "Teleporter Shaft Access",
-                        "node": "Tunnel to Teleporter Shaft"
+                        "area": "Interior Energy Recharge Station",
+                        "node": "Tunnel to Interior Teleporter"
                     },
                     "default_dock_weakness": "Tunnel",
                     "exclude_from_dock_rando": false,
@@ -2813,21 +2813,21 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Horseshoe Path": {
+                        "Door to Fleech Fire Containment": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Door to Fan Tunnel": {
+                        "Door to Teleporter Storage": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Tunnel to High Jump Shaft": {
+                        "Tunnel to High Jump Chamber Access": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -2836,7 +2836,7 @@
                                 "negate": false
                             }
                         },
-                        "Tunnel to Teleporter Shaft Access": {
+                        "Tunnel to Interior Energy Recharge Station": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -2991,7 +2991,7 @@
                 }
             }
         },
-        "Horseshoe Path": {
+        "Fleech Fire Containment": {
             "default_node": null,
             "extra": {
                 "total_boundings": {
@@ -3033,7 +3033,7 @@
                 "asset_id": "collision_camera017"
             },
             "nodes": {
-                "Door to High Jump Storage": {
+                "Door to Dam Basement": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3053,8 +3053,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 2 - Dam Interior",
-                        "area": "High Jump Storage",
-                        "node": "Door to Horseshoe Path"
+                        "area": "Dam Basement",
+                        "node": "Door to Fleech Fire Containment"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -3062,7 +3062,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Teleporter Shaft": {
+                        "Door to Interior Teleporter": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3169,7 +3169,7 @@
                         }
                     }
                 },
-                "Door to Teleporter Shaft": {
+                "Door to Interior Teleporter": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3189,8 +3189,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 2 - Dam Interior",
-                        "area": "Teleporter Shaft",
-                        "node": "Door to Horseshoe Path"
+                        "area": "Interior Teleporter",
+                        "node": "Door to Fleech Fire Containment"
                     },
                     "default_dock_weakness": "Wave Beam Door",
                     "exclude_from_dock_rando": false,
@@ -3198,7 +3198,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to High Jump Storage": {
+                        "Door to Dam Basement": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3223,7 +3223,7 @@
                 }
             }
         },
-        "High Jump Storage": {
+        "Dam Basement": {
             "default_node": null,
             "extra": {
                 "total_boundings": {
@@ -3273,7 +3273,7 @@
                     "pickup_index": 40,
                     "location_category": "major",
                     "connections": {
-                        "Door to Horseshoe Path": {
+                        "Door to Fleech Fire Containment": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3302,7 +3302,7 @@
                     "pickup_index": 41,
                     "location_category": "minor",
                     "connections": {
-                        "Tunnel to High Jump Secret": {
+                        "Tunnel to Gullugg Hideout": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -3313,7 +3313,7 @@
                         }
                     }
                 },
-                "Door to Horseshoe Path": {
+                "Door to Fleech Fire Containment": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3333,8 +3333,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 2 - Dam Interior",
-                        "area": "Horseshoe Path",
-                        "node": "Door to High Jump Storage"
+                        "area": "Fleech Fire Containment",
+                        "node": "Door to Dam Basement"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -3351,7 +3351,7 @@
                         }
                     }
                 },
-                "Tunnel to High Jump Secret": {
+                "Tunnel to Gullugg Hideout": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3368,8 +3368,8 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Area 2 - Dam Interior",
-                        "area": "High Jump Secret",
-                        "node": "Tunnel to High Jump Storage"
+                        "area": "Gullugg Hideout",
+                        "node": "Tunnel to Dam Basement"
                     },
                     "default_dock_weakness": "Tunnel",
                     "exclude_from_dock_rando": false,
@@ -3390,7 +3390,7 @@
                 }
             }
         },
-        "High Jump Secret": {
+        "Gullugg Hideout": {
             "default_node": null,
             "extra": {
                 "total_boundings": {
@@ -3420,7 +3420,7 @@
                 "asset_id": "collision_camera019"
             },
             "nodes": {
-                "Tunnel to High Jump Storage": {
+                "Tunnel to Dam Basement": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3437,8 +3437,8 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Area 2 - Dam Interior",
-                        "area": "High Jump Storage",
-                        "node": "Tunnel to High Jump Secret"
+                        "area": "Dam Basement",
+                        "node": "Tunnel to Gullugg Hideout"
                     },
                     "default_dock_weakness": "Tunnel",
                     "exclude_from_dock_rando": false,
@@ -3446,13 +3446,13 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Tunnel to High Jump Room": {
+                        "Tunnel to High Jump Chamber": {
                             "type": "template",
                             "data": "Lay Any Bomb"
                         }
                     }
                 },
-                "Tunnel to High Jump Room": {
+                "Tunnel to High Jump Chamber": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3469,8 +3469,8 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Area 2 - Dam Interior",
-                        "area": "High Jump Room",
-                        "node": "Tunnel to High Jump Secret"
+                        "area": "High Jump Chamber",
+                        "node": "Tunnel to Gullugg Hideout"
                     },
                     "default_dock_weakness": "Tunnel with Bomb Block",
                     "exclude_from_dock_rando": false,
@@ -3478,7 +3478,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Tunnel to High Jump Storage": {
+                        "Tunnel to Dam Basement": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3594,7 +3594,7 @@
                 }
             }
         },
-        "High Jump Room": {
+        "High Jump Chamber": {
             "default_node": "Room Center",
             "extra": {
                 "total_boundings": {
@@ -3653,7 +3653,7 @@
                         }
                     }
                 },
-                "Door to High Jump Shaft": {
+                "Door to High Jump Chamber Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3673,8 +3673,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 2 - Dam Interior",
-                        "area": "High Jump Shaft",
-                        "node": "Door to High Jump Room"
+                        "area": "High Jump Chamber Access",
+                        "node": "Door to High Jump Chamber"
                     },
                     "default_dock_weakness": "Missile Door",
                     "exclude_from_dock_rando": false,
@@ -3691,7 +3691,7 @@
                         }
                     }
                 },
-                "Tunnel to High Jump Secret": {
+                "Tunnel to Gullugg Hideout": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3708,8 +3708,8 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Area 2 - Dam Interior",
-                        "area": "High Jump Secret",
-                        "node": "Tunnel to High Jump Room"
+                        "area": "Gullugg Hideout",
+                        "node": "Tunnel to High Jump Chamber"
                     },
                     "default_dock_weakness": "Tunnel with Bomb Block",
                     "exclude_from_dock_rando": false,
@@ -3747,14 +3747,14 @@
                                 "items": []
                             }
                         },
-                        "Door to High Jump Shaft": {
+                        "Door to High Jump Chamber Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Tunnel to High Jump Secret": {
+                        "Tunnel to Gullugg Hideout": {
                             "type": "template",
                             "data": "Lay Any Bomb"
                         }
@@ -3762,7 +3762,7 @@
                 }
             }
         },
-        "High Jump Shaft": {
+        "High Jump Chamber Access": {
             "default_node": null,
             "extra": {
                 "total_boundings": {
@@ -3792,7 +3792,7 @@
                 "asset_id": "collision_camera022"
             },
             "nodes": {
-                "Door to High Jump Room": {
+                "Door to High Jump Chamber": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3812,8 +3812,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 2 - Dam Interior",
-                        "area": "High Jump Room",
-                        "node": "Door to High Jump Shaft"
+                        "area": "High Jump Chamber",
+                        "node": "Door to High Jump Chamber Access"
                     },
                     "default_dock_weakness": "Missile Door",
                     "exclude_from_dock_rando": false,
@@ -3821,7 +3821,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Tunnel to Teleporter Shaft": {
+                        "Tunnel to Interior Teleporter": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4016,7 +4016,7 @@
                         }
                     }
                 },
-                "Tunnel to Teleporter Shaft": {
+                "Tunnel to Interior Teleporter": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4033,8 +4033,8 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Area 2 - Dam Interior",
-                        "area": "Teleporter Shaft",
-                        "node": "Tunnel to High Jump Shaft"
+                        "area": "Interior Teleporter",
+                        "node": "Tunnel to High Jump Chamber Access"
                     },
                     "default_dock_weakness": "Tunnel",
                     "exclude_from_dock_rando": false,
@@ -4042,7 +4042,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to High Jump Room": {
+                        "Door to High Jump Chamber": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -4055,7 +4055,7 @@
                 }
             }
         },
-        "Wallfire Path": {
+        "Wallfire Corridor": {
             "default_node": null,
             "extra": {
                 "total_boundings": {
@@ -4085,7 +4085,7 @@
                 "asset_id": "collision_camera035"
             },
             "nodes": {
-                "Door to Main Hub": {
+                "Door to Transport to Area 2 Dam Exterior": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4105,8 +4105,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 2 - Dam Interior",
-                        "area": "Main Hub",
-                        "node": "Door to Wallfire Path"
+                        "area": "Transport to Area 2 Dam Exterior",
+                        "node": "Door to Wallfire Corridor"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -4114,7 +4114,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Varia Suit Room": {
+                        "Door to Varia Chamber": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4123,7 +4123,7 @@
                         }
                     }
                 },
-                "Door to Varia Suit Room": {
+                "Door to Varia Chamber": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4143,8 +4143,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 2 - Dam Interior",
-                        "area": "Varia Suit Room",
-                        "node": "Door to Wallfire Path"
+                        "area": "Varia Chamber",
+                        "node": "Door to Wallfire Corridor"
                     },
                     "default_dock_weakness": "Missile Door",
                     "exclude_from_dock_rando": false,
@@ -4152,7 +4152,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Main Hub": {
+                        "Door to Transport to Area 2 Dam Exterior": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4163,7 +4163,7 @@
                 }
             }
         },
-        "Fan Tunnel": {
+        "Teleporter Storage": {
             "default_node": null,
             "extra": {
                 "total_boundings": {
@@ -4213,13 +4213,13 @@
                     "pickup_index": 42,
                     "location_category": "minor",
                     "connections": {
-                        "Door to Teleporter Shaft": {
+                        "Door to Interior Teleporter": {
                             "type": "template",
                             "data": "Lay Any Bomb"
                         }
                     }
                 },
-                "Door to Teleporter Shaft": {
+                "Door to Interior Teleporter": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4239,8 +4239,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 2 - Dam Interior",
-                        "area": "Teleporter Shaft",
-                        "node": "Door to Fan Tunnel"
+                        "area": "Interior Teleporter",
+                        "node": "Door to Teleporter Storage"
                     },
                     "default_dock_weakness": "Plasma Beam Door",
                     "exclude_from_dock_rando": false,
@@ -4310,7 +4310,7 @@
                 "asset_id": "collision_camera037"
             },
             "nodes": {
-                "Door to Fiery Path": {
+                "Door to Lava Generator": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4330,7 +4330,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 2 - Dam Interior",
-                        "area": "Fiery Path",
+                        "area": "Lava Generator",
                         "node": "Door to Gamma Arena"
                     },
                     "default_dock_weakness": "Charge Beam Door",
@@ -4348,7 +4348,7 @@
                         }
                     }
                 },
-                "Door to Varia Suit Room": {
+                "Door to Varia Chamber": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4368,7 +4368,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 2 - Dam Interior",
-                        "area": "Varia Suit Room",
+                        "area": "Varia Chamber",
                         "node": "Door to Gamma Arena"
                     },
                     "default_dock_weakness": "Power Beam Door",
@@ -4428,14 +4428,14 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Fiery Path": {
+                        "Door to Lava Generator": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Door to Varia Suit Room": {
+                        "Door to Varia Chamber": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4479,7 +4479,7 @@
                 }
             }
         },
-        "Fiery Balcony": {
+        "Generator Access": {
             "default_node": null,
             "extra": {
                 "total_boundings": {
@@ -4509,7 +4509,7 @@
                 "asset_id": "collision_camera041"
             },
             "nodes": {
-                "Door to Main Hub": {
+                "Door to Transport to Area 2 Dam Exterior": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4529,8 +4529,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 2 - Dam Interior",
-                        "area": "Main Hub",
-                        "node": "Door to Fiery Balcony"
+                        "area": "Transport to Area 2 Dam Exterior",
+                        "node": "Door to Generator Access"
                     },
                     "default_dock_weakness": "Charge Beam Door",
                     "exclude_from_dock_rando": false,
@@ -4538,7 +4538,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Varia Suit Room": {
+                        "Door to Varia Chamber": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4564,7 +4564,7 @@
                                 ]
                             }
                         },
-                        "Door to Fiery Path": {
+                        "Door to Lava Generator": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4592,7 +4592,7 @@
                         }
                     }
                 },
-                "Door to Varia Suit Room": {
+                "Door to Varia Chamber": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4612,8 +4612,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 2 - Dam Interior",
-                        "area": "Varia Suit Room",
-                        "node": "Door to Fiery Balcony"
+                        "area": "Varia Chamber",
+                        "node": "Door to Generator Access"
                     },
                     "default_dock_weakness": "Charge Beam Door",
                     "exclude_from_dock_rando": false,
@@ -4621,7 +4621,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Main Hub": {
+                        "Door to Transport to Area 2 Dam Exterior": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4649,7 +4649,7 @@
                         }
                     }
                 },
-                "Door to Fiery Path": {
+                "Door to Lava Generator": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4669,8 +4669,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 2 - Dam Interior",
-                        "area": "Fiery Path",
-                        "node": "Door to Fiery Balcony"
+                        "area": "Lava Generator",
+                        "node": "Door to Generator Access"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -4678,7 +4678,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Main Hub": {
+                        "Door to Transport to Area 2 Dam Exterior": {
                             "type": "and",
                             "data": {
                                 "comment": null,
