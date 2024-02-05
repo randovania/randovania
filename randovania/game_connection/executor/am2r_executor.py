@@ -114,9 +114,9 @@ class AM2RExecutor:
             return None
 
         except (
+            TimeoutError,
             OSError,
             AttributeError,
-            asyncio.TimeoutError,
             struct.error,
             UnicodeError,
             RuntimeError,
@@ -205,7 +205,7 @@ class AM2RExecutor:
         while self.is_connected():
             try:
                 await self._read_response()
-            except (OSError, asyncio.TimeoutError, AttributeError, Exception) as e:
+            except (TimeoutError, OSError, AttributeError, Exception) as e:
                 self.logger.warning(
                     f"Connection lost. Unable to send packet to {self._ip}:{self._port}: {e} ({type(e)})"
                 )
