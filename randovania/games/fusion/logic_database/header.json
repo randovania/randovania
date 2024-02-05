@@ -19,82 +19,87 @@
                 "extra": {}
             },
             "ChargeBeam": {
-                "long_name": "ChargeBeam",
+                "long_name": "Charge Beam",
                 "max_capacity": 1,
                 "extra": {}
             },
             "WideBeam": {
-                "long_name": "WideBeam",
+                "long_name": "Wide Beam",
                 "max_capacity": 1,
                 "extra": {}
             },
             "PlasmaBeam": {
-                "long_name": "PlasmaBeam",
+                "long_name": "Plasma Beam",
                 "max_capacity": 1,
                 "extra": {}
             },
             "WaveBeam": {
-                "long_name": "WaveBeam",
+                "long_name": "Wave Beam",
                 "max_capacity": 1,
                 "extra": {}
             },
             "IceBeam": {
-                "long_name": "IceBeam",
+                "long_name": "Ice Beam",
                 "max_capacity": 1,
                 "extra": {}
             },
             "VariaSuit": {
-                "long_name": "VariaSuit",
+                "long_name": "Varia Suit",
                 "max_capacity": 1,
                 "extra": {}
             },
             "GravitySuit": {
-                "long_name": "GravitySuit",
+                "long_name": "Gravity Suit",
                 "max_capacity": 1,
                 "extra": {}
             },
             "MorphBall": {
-                "long_name": "MorphBall",
+                "long_name": "Morph Ball",
                 "max_capacity": 1,
                 "extra": {}
             },
             "MorphBallBombs": {
-                "long_name": "MorphBallBombs",
+                "long_name": "Morph Ball Bombs",
                 "max_capacity": 1,
                 "extra": {}
             },
             "PowerBombs": {
-                "long_name": "PowerBombs",
+                "long_name": "Power Bombs",
                 "max_capacity": 70,
                 "extra": {}
             },
             "HighJump": {
-                "long_name": "HighJump",
+                "long_name": "High Jump",
                 "max_capacity": 1,
                 "extra": {}
             },
             "SpaceJump": {
-                "long_name": "SpaceJump",
+                "long_name": "Space Jump",
                 "max_capacity": 1,
                 "extra": {}
             },
             "ScrewAttack": {
-                "long_name": "ScrewAttack",
+                "long_name": "Screw Attack",
                 "max_capacity": 1,
                 "extra": {}
             },
             "SuperMissiles": {
-                "long_name": "SuperMissiles",
+                "long_name": "Super Missiles",
                 "max_capacity": 1,
                 "extra": {}
             },
             "IceMissiles": {
-                "long_name": "IceMissiles",
+                "long_name": "Ice Missiles",
                 "max_capacity": 1,
                 "extra": {}
             },
             "DiffusionMissiles": {
-                "long_name": "DiffusionMissiles",
+                "long_name": "Diffusion Missiles",
+                "max_capacity": 1,
+                "extra": {}
+            },
+            "SpeedBooster": {
+                "long_name": "Speed Booster",
                 "max_capacity": 1,
                 "extra": {}
             }
@@ -132,6 +137,10 @@
                 "long_name": "Arachnus",
                 "extra": {}
             },
+            "Charge X": {
+                "long_name": "Charge X",
+                "extra": {}
+            },
             "Zazabi": {
                 "long_name": "Zazabi",
                 "extra": {}
@@ -160,10 +169,6 @@
                 "long_name": "Core X",
                 "extra": {}
             },
-            "Charge X": {
-                "long_name": "Charge X",
-                "extra": {}
-            },
             "Reactor": {
                 "long_name": "Reactor",
                 "extra": {}
@@ -189,7 +194,103 @@
         },
         "versions": {},
         "misc": {},
-        "requirement_template": {},
+        "requirement_template": {
+            "Can Use Bombs": {
+                "type": "and",
+                "data": {
+                    "comment": null,
+                    "items": [
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "MorphBall",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "MorphBallBombs",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    ]
+                }
+            },
+            "Can Use Power Bombs": {
+                "type": "and",
+                "data": {
+                    "comment": null,
+                    "items": [
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "MorphBall",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "PowerBombs",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    ]
+                }
+            },
+            "Can Use Any Bombs": {
+                "type": "and",
+                "data": {
+                    "comment": null,
+                    "items": [
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "MorphBall",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "MorphBallBombs",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "PowerBombs",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            }
+        },
         "damage_reductions": [],
         "energy_tank_item_index": "Health"
     },

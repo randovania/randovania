@@ -45,8 +45,9 @@ Extra - map_name: hangar_access
 ----------------
 Hangar Shaft
 Extra - map_name: hangar_shaft
-> Dock to station entrance; Heals? False
+> Door to Station Entrance; Heals? False
   * Layers: default
+  * Normal to Station Entrance/Door to Hangar Shaft
   > Door to Hangar Access
       Trivial
 
@@ -65,7 +66,7 @@ Extra - map_name: hangar_shaft
 > Door to Hangar Access; Heals? False
   * Layers: default
   * Normal to Hangar Access/Door to Hangar Shaft
-  > Dock to station entrance
+  > Door to Station Entrance
       Trivial
   > Door to Reactor Access (Upper)
       Trivial
@@ -75,6 +76,36 @@ Extra - map_name: hangar_shaft
 ----------------
 Station Entrance
 Extra - map_name: station_entrance
+> Door to Hangar Shaft; Heals? False
+  * Layers: default
+  * Normal to Hangar Shaft/Door to Station Entrance
+  > Door to East Shaft
+      Trivial
+  > Door to Lizard Lane
+      Morph Ball and Power Bombs
+  > Pickup (Missile)
+      Morph Ball and Power Bombs
+
+> Door to East Shaft; Heals? False
+  * Layers: default
+  * Normal to East Shaft/Door to Station Entrance
+  > Door to Hangar Shaft
+      Trivial
+
+> Door to Lizard Lane; Heals? False
+  * Layers: default
+  * Normal to Lizard Lane/Door to Station Entrance
+  > Door to Hangar Shaft
+      Any of the following:
+          Speed Booster
+          Morph Ball and Power Bombs
+
+> Pickup (Missile); Heals? False
+  * Layers: default
+  * Pickup 0; Category? Minor
+  > Door to Hangar Shaft
+      Trivial
+
 ----------------
 Reactor Access
 Extra - map_name: reactor_access
@@ -88,15 +119,15 @@ Extra - map_name: reactor_access
   * Layers: default
   * Normal to Hangar Shaft/Door to Reactor Access (Lower)
   > Door to Hangar Shaft (Upper)
-      HighJump or SpaceJump
+      High Jump or Space Jump
   > Door to Reactore Core
-      MorphBall
+      Morph Ball
 
 > Door to Reactore Core; Heals? False
   * Layers: default
   * Normal to Reactore Core/Door to Reactor Access
   > Door to Hangar Shaft (Lower)
-      MorphBall
+      Morph Ball
 
 ----------------
 Reactore Core
@@ -132,11 +163,11 @@ Extra - map_name: reactor_core
 > Bottom of Room; Heals? False
   * Layers: default
   > Door to Reactor Access
-      HighJump or SpaceJump
+      High Jump or Space Jump
   > dock to maze
-      HighJump or SpaceJump
+      High Jump or Space Jump
   > Door to Reactor Control Access
-      HighJump or SpaceJump
+      High Jump or Space Jump
   > Door to Reactor Save Station
       Trivial
 
@@ -180,12 +211,12 @@ Extra - map_name: yakuza_arena
 > Bottom of Room; Heals? False
   * Layers: default
   > dock to maze
-      SpaceJump
+      Space Jump
   > Door to Reactor Control Room
-      SpaceJump
+      Space Jump
   > Event - Yakuza
       All of the following:
-          ChargeBeam or Missiles ≥ 100
+          Charge Beam or Missiles ≥ 100
           Combat (Beginner) or Normal Damage ≥ 300
 
 ----------------
@@ -218,7 +249,7 @@ Extra - map_name: control_room_access
   * Layers: default
   * Normal to Reactore Core/Door to Reactor Control Access
   > Door to Reactor Navigation Room
-      WaveBeam
+      Wave Beam
 
 > Door to Reactor Navigation Room; Heals? False
   * Layers: default
@@ -232,4 +263,505 @@ Extra - map_name: reactor_save
 > Door to Reactore Core; Heals? False
   * Layers: default
   * Normal to Reactore Core/Door to Reactor Save Station
+
+----------------
+Lizard Lane
+Extra - map_name: lizard_lane
+> Door to Station Entrance; Heals? False
+  * Layers: default
+  * Normal to Station Entrance/Door to Lizard Lane
+  > Pickup (Power Bomb Expansion)
+      High Jump and Morph Ball and Power Bombs
+
+> Pickup (Power Bomb Expansion); Heals? False
+  * Layers: default
+  * Pickup 1; Category? Minor
+  > Door to Station Entrance
+      Morph Ball
+
+----------------
+East Shaft
+Extra - map_name: east_shaft
+> Door to Station Entrance; Heals? False
+  * Layers: default
+  * Normal to Station Entrance/Door to East Shaft
+  > dock to nav
+      Trivial
+  > Door to Hornoad Hallway
+      Trivial
+  > dock to item room
+      Trivial
+  > dock to elevator
+      Trivial
+  > tunnel to shortcut
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Power Bombs
+              High Jump and Morph Ball Bombs and Movement (Beginner)
+
+> dock to nav; Heals? False
+  * Layers: default
+  > Door to Station Entrance
+      Trivial
+
+> Door to Hornoad Hallway; Heals? False
+  * Layers: default
+  * L0 Locked Door to Hornoad Hallway/Door to East Shaft
+  > Door to Station Entrance
+      Trivial
+
+> dock to item room; Heals? False
+  * Layers: default
+  > Door to Station Entrance
+      Trivial
+
+> dock to elevator; Heals? False
+  * Layers: default
+  > Door to Station Entrance
+      Trivial
+
+> tunnel to shortcut; Heals? False
+  * Layers: default
+  > Door to Station Entrance
+      All of the following:
+          Morph Ball
+          Morph Ball Bombs or Power Bombs
+
+----------------
+Main Deck Nav Room
+Extra - map_name: reactor_save
+----------------
+Hornoad Hallway
+Extra - map_name: hornoad_hallway
+> Door to East Shaft; Heals? False
+  * Layers: default
+  * L0 Locked Door to East Shaft/Door to Hornoad Hallway
+  > Door to Save2
+      Trivial
+
+> Door to Save2; Heals? False
+  * Layers: default
+  * L0 Locked Door to Save2/Door to Hornoad Hallway
+  > Door to East Shaft
+      Trivial
+
+----------------
+Save2
+Extra - map_name: main_deck_save
+> Door to Hornoad Hallway; Heals? False
+  * Layers: default
+  * L0 Locked Door to Hornoad Hallway/Door to Save2
+  > Door to Main Deck Hub
+      Trivial
+
+> Door to Main Deck Hub; Heals? False
+  * Layers: default
+  * L0 Locked Door to Main Deck Hub/Door to Save2
+  > Door to Hornoad Hallway
+      Trivial
+
+----------------
+Main Deck Hub
+Extra - map_name: main_deck_hub
+> Door to Maintenance Corridor; Heals? False
+  * Layers: default
+  * Normal to Maintenance Corridor/Door to Main Deck Hub
+  > Door to Save2
+      Trivial
+
+> Door to Save2; Heals? False
+  * Layers: default
+  * Normal to Save2/Door to Main Deck Hub
+  > Door to Maintenance Corridor
+      Trivial
+  > Door to Main Deck Nav Room 2
+      Trivial
+  > Door to Main Deck Recharge Station
+      Trivial
+
+> Door to Main Deck Nav Room 2; Heals? False
+  * Layers: default
+  * Normal to Main Deck Nav Room 2/Door to Main Deck Hub
+  > Door to Save2
+      Trivial
+
+> Door to Main Deck Recharge Station; Heals? False
+  * Layers: default
+  * L0 Locked Door to Main Deck Recharge Station/Door to Main Deck Hub
+  > Door to Save2
+      Trivial
+
+----------------
+Main Deck Nav Room 2
+Extra - map_name: generic_nav
+> Door to Lounge; Heals? False
+  * Layers: default
+  * Normal to Lounge/Door to Main Deck Nav Room 2
+  > Door to Main Deck Hub
+      Trivial
+
+> Door to Main Deck Hub; Heals? False
+  * Layers: default
+  * Normal to Main Deck Hub/Door to Main Deck Nav Room 2
+  > Door to Lounge
+      Trivial
+
+----------------
+Main Deck Recharge Station
+Extra - map_name: main_deck_recharge
+> Door to Main Deck Hub; Heals? False
+  * Layers: default
+  * L0 Locked Door to Main Deck Hub/Door to Main Deck Recharge Station
+
+----------------
+Lounge
+Extra - map_name: lounge
+> Door to Main Deck Nav Room 2; Heals? False
+  * Layers: default
+  * Normal to Main Deck Nav Room 2/Door to Lounge
+  > Door to Elevator To Nav Deck
+      Trivial
+  > Door to Maintenance Shaft
+      Trivial
+
+> Door to Elevator To Nav Deck; Heals? False
+  * Layers: default
+  * L0 Locked Door to Elevator To Nav Deck/Door to Lounge
+  > Door to Main Deck Nav Room 2
+      Trivial
+
+> Door to Maintenance Shaft; Heals? False
+  * Layers: default
+  * Normal to Maintenance Shaft/Door to Lounge
+  > Door to Main Deck Nav Room 2
+      Trivial
+
+----------------
+Elevator To Nav Deck
+Extra - map_name: elevator_to_nav
+> Door to Elevator to Lounge; Heals? False
+  * Layers: default
+  * Normal to Elevator to Lounge/Door to Elevator To Nav Deck
+  > Door to Lounge
+      Trivial
+
+> Door to Lounge; Heals? False
+  * Layers: default
+  * L0 Locked Door to Lounge/Door to Elevator To Nav Deck
+  > Door to Elevator to Lounge
+      Trivial
+
+----------------
+Elevator to Lounge
+Extra - map_name: elevator_to_lounge
+> Door to Elevator To Nav Deck; Heals? False
+  * Layers: default
+  * Normal to Elevator To Nav Deck/Door to Elevator to Lounge
+  > Door to SA-X Arena
+      Trivial
+
+> Door to SA-X Arena; Heals? False
+  * Layers: default
+  * L0 Locked Door to SA-X Arena/Door to Elevator to Lounge
+  > Door to Elevator To Nav Deck
+      Trivial
+
+----------------
+SA-X Arena
+Extra - map_name: sax_arena
+> Door to Maintenance Shaft; Heals? False
+  * Layers: default
+  * Normal to Maintenance Shaft/Door to SA-X Arena
+  > Door to Elevator to Lounge
+      Trivial
+
+> Door to Elevator to Lounge; Heals? False
+  * Layers: default
+  * L0 Locked Door to Elevator to Lounge/Door to SA-X Arena
+  > Door to Maintenance Shaft
+      Missiles
+  > Door to Navigation Deck Nav Room
+      Trivial
+  > Door to Navigation Deck Recharge
+      Trivial
+  > Event - SA-X
+      All of the following:
+          Charge Beam and Plasma Beam
+          Combat (Beginner) or Normal Damage ≥ 800
+
+> Door to Navigation Deck Nav Room; Heals? False
+  * Layers: default
+  * L0 Locked Door to Navigation Deck Nav Room/Door to SA-X Arena
+  > Door to Elevator to Lounge
+      Trivial
+
+> Door to Navigation Deck Recharge; Heals? False
+  * Layers: default
+  * L1 Locked Door to Navigation Deck Recharge/Door to SA-X Arena
+  > Door to Elevator to Lounge
+      Trivial
+
+> Door to Navigation Deck Controls; Heals? False
+  * Layers: default
+  * L0 Locked Door to Navigation Deck Controls/Door to SA-X Arena
+  > Door to Elevator to Lounge
+      Trivial
+
+> Event - SA-X; Heals? False
+  * Layers: default
+  * Event SA-X
+  > Door to Navigation Deck Controls
+      Trivial
+
+----------------
+Navigation Deck Recharge
+Extra - map_name: generic_recharge
+> Door to SA-X Arena; Heals? False
+  * Layers: default
+  * L0 Locked Door to SA-X Arena/Door to Navigation Deck Recharge
+  > Door to Navigation Deck Save
+      Trivial
+
+> Door to Navigation Deck Save; Heals? False
+  * Layers: default
+  * L0 Locked Door to Navigation Deck Save/Door to Navigation Deck Recharge
+  > Door to SA-X Arena
+      Trivial
+
+----------------
+Navigation Deck Save
+Extra - map_name: nav_deck_save
+> Door to Navigation Deck Recharge; Heals? False
+  * Layers: default
+  * L0 Locked Door to Navigation Deck Recharge/Door to Navigation Deck Save
+
+----------------
+Navigation Deck Nav Room
+Extra - map_name: generic_nav
+> Door to SA-X Arena; Heals? False
+  * Layers: default
+  * Normal to SA-X Arena/Door to Navigation Deck Nav Room
+  > Door to Navigation Deck Data Room
+      Trivial
+
+> Door to Navigation Deck Data Room; Heals? False
+  * Layers: default
+  * L0 Locked Door to Navigation Deck Data Room/Door to Navigation Deck Nav Room
+  > Door to SA-X Arena
+      Trivial
+
+----------------
+Navigation Deck Data Room
+Extra - map_name: nav_data_room
+> Door to Navigation Deck Nav Room; Heals? False
+  * Layers: default
+  * L0 Locked Door to Navigation Deck Nav Room/Door to Navigation Deck Data Room
+  > Pickup (Missile Launcher)
+      Trivial
+
+> Pickup (Missile Launcher); Heals? False
+  * Layers: default
+  * Pickup 7; Category? Major
+  > Door to Navigation Deck Nav Room
+      Trivial
+
+----------------
+Navigation Deck Controls
+Extra - map_name: navigation_control_room
+> Event- Controls; Heals? False
+  * Layers: default
+  > Door to SA-X Arena
+      Trivial
+
+> Door to SA-X Arena; Heals? False
+  * Layers: default
+  * L0 Locked Door to SA-X Arena/Door to Navigation Deck Controls
+  > Event- Controls
+      Trivial
+
+----------------
+Maintenance Shaft
+Extra - map_name: maintenance_shaft
+> Door to Maintenance Item Room; Heals? False
+  * Layers: default
+  * Normal to Maintenance Item Room/Door to Maintenance Shaft
+  > Door to Lounge 2 (Lower)
+      Trivial
+
+> Pickup (Missile); Heals? False
+  * Layers: default
+  * Pickup 5; Category? Minor
+  > Door to Lounge 2 (Lower)
+      Trivial
+
+> Door to SA-X Arena; Heals? False
+  * Layers: default
+  * Normal to SA-X Arena/Door to Maintenance Shaft
+  > Door to Lounge 2 (Lower)
+      Missiles ≥ 5
+
+> Door to Lounge 2 (Lower); Heals? False
+  * Layers: default
+  * Normal to Lounge 2/Door to Maintenance Shaft (Lower)
+  > Door to Maintenance Item Room
+      Trivial
+  > Pickup (Missile)
+      Trivial
+
+> Door to Lounge 2 (Upper); Heals? False
+  * Layers: default
+  * Normal to Lounge 2/Door to Maintenance Shaft (Upper)
+
+> Door to Lounge; Heals? False
+  * Layers: default
+  * L0 Locked Door to Lounge/Door to Maintenance Shaft
+
+----------------
+Maintenance Item Room
+Extra - map_name: maintenance_item_room
+> Pickup (Missile); Heals? False
+  * Layers: default
+  * Pickup 6; Category? Minor
+  > Door to Maintenance Shaft
+      Trivial
+
+> Door to Maintenance Shaft; Heals? False
+  * Layers: default
+  * Normal to Maintenance Shaft/Door to Maintenance Item Room
+  > Pickup (Missile)
+      Trivial
+
+----------------
+Lounge 2
+Extra - map_name: lounge2
+> Door to Maintenance Shaft (Lower); Heals? False
+  * Layers: default
+  * Normal to Maintenance Shaft/Door to Lounge 2 (Lower)
+  > Door to Maintenance Shaft (Upper)
+      Trivial
+  > Door to Lounge 2 Save
+      Trivial
+  > Door to Arachnus Arena
+      Trivial
+
+> Door to Maintenance Shaft (Upper); Heals? False
+  * Layers: default
+  * L0 Locked Door to Maintenance Shaft/Door to Lounge 2 (Upper)
+  > Door to Maintenance Shaft (Lower)
+      Trivial
+
+> Door to Lounge 2 Save; Heals? False
+  * Layers: default
+  * L0 Locked Door to Lounge 2 Save/Door to Lounge 2
+  > Door to Maintenance Shaft (Lower)
+      Trivial
+
+> Door to Arachnus Arena; Heals? False
+  * Layers: default
+  * L0 Locked Door to Arachnus Arena/Door to Lounge 2
+  > Door to Maintenance Shaft (Lower)
+      Trivial
+
+----------------
+Lounge 2 Save
+Extra - map_name: lounge_save
+> Door to Lounge 2; Heals? False
+  * Layers: default
+  * L0 Locked Door to Lounge 2/Door to Lounge 2 Save
+
+----------------
+Arachnus Arena
+Extra - map_name: arachnus_arena
+> Door to Maintenance Corridor; Heals? False
+  * Layers: default
+  * Normal to Maintenance Corridor/Door to Arachnus Arena
+  > arena
+      Morph Ball
+
+> Event - Arachnus; Heals? False
+  * Layers: default
+  * Event Arachnus
+  > arena
+      Trivial
+  > Pickup (Morph Ball)
+      Trivial
+
+> Door to Lounge 2; Heals? False
+  * Layers: default
+  * L0 Locked Door to Lounge 2/Door to Arachnus Arena
+  > Above Arena
+      Trivial
+  > arena
+      Morph Ball and Screw Attack
+
+> Pickup (Energy Tank); Heals? False
+  * Layers: default
+  * Pickup 2; Category? Minor
+  > Above Arena
+      Trivial
+
+> Above Arena; Heals? False
+  * Layers: default
+  > Door to Lounge 2
+      High Jump or Space Jump
+  > Pickup (Energy Tank)
+      Trivial
+  > Door to Arachnus Hidden CHamber
+      Missiles
+
+> Door to Arachnus Hidden CHamber; Heals? False
+  * Layers: default
+  * Normal to Arachnus Hidden CHamber/Door to Arachnus Arena
+  > Above Arena
+      Missiles
+
+> arena; Heals? False
+  * Layers: default
+  > Door to Maintenance Corridor
+      Morph Ball
+  > Event - Arachnus
+      Any of the following:
+          Missiles
+          Combat (Beginner) and Normal Damage ≥ 100
+  > Door to Lounge 2
+      All of the following:
+          Morph Ball and Screw Attack
+          High Jump or Space Jump
+
+> Pickup (Morph Ball); Heals? False
+  * Layers: default
+  * Pickup 3; Category? Major
+  > Event - Arachnus
+      Trivial
+
+----------------
+Maintenance Corridor
+Extra - map_name: maintenance_corridor
+> Door to Arachnus Arena; Heals? False
+  * Layers: default
+  * Normal to Arachnus Arena/Door to Maintenance Corridor
+  > Door to Main Deck Hub
+      Morph Ball
+
+> Door to Main Deck Hub; Heals? False
+  * Layers: default
+  * Normal to Main Deck Hub/Door to Maintenance Corridor
+  > Door to Arachnus Arena
+      Trivial
+
+----------------
+Arachnus Hidden CHamber
+Extra - map_name: arachnus_hidden_chamber
+> Pickup (Energy Tank); Heals? False
+  * Layers: default
+  * Pickup 4; Category? Minor
+  > Door to Arachnus Arena
+      Trivial
+
+> Door to Arachnus Arena; Heals? False
+  * Layers: default
+  * Normal to Arachnus Arena/Door to Arachnus Hidden CHamber
+  > Pickup (Energy Tank)
+      Trivial
 
