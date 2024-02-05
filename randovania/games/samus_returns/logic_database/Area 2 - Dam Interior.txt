@@ -8,7 +8,7 @@ Extra - asset_id: collision_camera009
   * Pickup 46; Category? Major
   * Extra - actor_name: LE_PowerUp_WaveBeam
   * Extra - actor_type: itemsphere_wavebeam
-  > Door to Varia Chamber (Middle)
+  > Door to Wave Beam Chamber Access (Middle)
       Trivial
 
 > Elevator to Area 2 - Dam Exterior; Heals? False; Spawn Point; Default Node
@@ -36,9 +36,9 @@ Extra - asset_id: collision_camera009
       Trivial
   > Door to Generator Access
       Trivial
-  > Door to Varia Chamber (Bottom)
+  > Door to Wave Beam Chamber Access (Bottom)
       Morph Ball
-  > Door to Varia Chamber (Top)
+  > Door to Wave Beam Chamber Access (Top)
       All of the following:
           Morph Ball
           Any of the following:
@@ -73,19 +73,19 @@ Extra - asset_id: collision_camera009
   > Door to Generator Access
       Morph Ball
 
-> Door to Varia Chamber (Bottom); Heals? False
+> Door to Wave Beam Chamber Access (Bottom); Heals? False
   * Layers: default
-  * Wave Beam Door to Varia Chamber/Door to Transport to Area 2 Dam Exterior (Bottom)
+  * Wave Beam Door to Wave Beam Chamber Access/Door to Transport to Area 2 Dam Exterior (Bottom)
   * Extra - actor_name: Door008
   * Extra - actor_type: doorpowerpower
   > Save Station
       Morph Ball
-  > Door to Varia Chamber (Middle)
+  > Door to Wave Beam Chamber Access (Middle)
       Morph Ball and Melee Clip (Intermediate)
 
-> Door to Varia Chamber (Middle); Heals? False
+> Door to Wave Beam Chamber Access (Middle); Heals? False
   * Layers: default
-  * Missile Door to Varia Chamber/Door to Transport to Area 2 Dam Exterior (Middle)
+  * Missile Door to Wave Beam Chamber Access/Door to Transport to Area 2 Dam Exterior (Middle)
   * Extra - actor_name: Door009
   * Extra - actor_type: doorpowerpower
   > Pickup (Wave Beam)
@@ -93,9 +93,9 @@ Extra - asset_id: collision_camera009
   > Next to Pickup
       Trivial
 
-> Door to Varia Chamber (Top); Heals? False
+> Door to Wave Beam Chamber Access (Top); Heals? False
   * Layers: default
-  * Wave Beam Door to Varia Chamber/Door to Transport to Area 2 Dam Exterior (Top)
+  * Wave Beam Door to Wave Beam Chamber Access/Door to Transport to Area 2 Dam Exterior (Top)
   * Extra - actor_name: Door019
   * Extra - actor_type: doorpowerpower
   > Save Station
@@ -104,14 +104,14 @@ Extra - asset_id: collision_camera009
 > Next to Pickup; Heals? False
   * Layers: default
   * Extra - start_point_actor_name: ST_CheckPoint_003
-  > Door to Varia Chamber (Middle)
+  > Door to Wave Beam Chamber Access (Middle)
       Trivial
 
 ----------------
 Varia Chamber
-Extra - total_boundings: {'x1': -4200.0, 'x2': 1000.0, 'y1': -4600.0, 'y2': 2400.0}
-Extra - polygon: [[-3400.0, 2400.0], [-3400.0, 350.0], [-4200.0, 100.0], [-4200.0, -1600.0], [-3800.0, -1600.0], [-3200.0, -2000.0], [-3200.0, -4000.0], [-1850.0, -4100.0], [-1850.0, -4600.0], [1000.0, -4600.0], [1000.0, -3000.0], [100.0, -3000.0], [-200.0, -2900.0], [-200.0, 2400.0]]
-Extra - asset_id: collision_camera011
+Extra - total_boundings: {'x1': -4200.0, 'x2': -1550.0, 'y1': -1700.0, 'y2': -100.0}
+Extra - polygon: [[-1550.0, -100.0], [-4200.0, -100.0], [-4200.0, -1700.0], [-1550.0, -1700.0]]
+Extra - asset_id: collision_camera040
 > Pickup (Varia Suit); Heals? False
   * Layers: default
   * Pickup 45; Category? Major
@@ -119,26 +119,6 @@ Extra - asset_id: collision_camera011
   * Extra - actor_type: itemsphere_variasuit
   > Door to Wallfire Corridor
       Trivial
-
-> Metroid Caverns Ammo Recharge Station; Heals? False
-  * Layers: default
-  * Extra - actor_name: LE_Platform_AmmoCharge
-  * Extra - actor_type: weightactivatedplatform
-  > Pickup (Varia Suit)
-      Spider Ball Clip (Advanced) and Use Spider Ball
-  > Door to Transport to Area 2 Dam Exterior (Bottom)
-      Trivial
-  > Door to Transport to Area 2 Dam Exterior (Middle)
-      Trivial
-  > Top of Morph Ball Shaft
-      All of the following:
-          Morph Ball
-          # Breaking the block
-          Power Bomb or Wave Beam or Movement (Intermediate)
-          Any of the following:
-              # Dealing with the Gravitt
-              Lightning Armor or Bomb or Power Bomb or Combat (Beginner) or Shoot Any Missile
-              Damage Boost (Beginner) and Normal Damage ≥ 30
 
 > Door to Generator Access; Heals? False
   * Layers: default
@@ -157,30 +137,83 @@ Extra - asset_id: collision_camera011
       Trivial
   > Door to Generator Access
       Trivial
-  > Inside Shortcut
+  > Dock to Wave Beam Chamber Access
       Screw Attack
   > Start Point
       Trivial
 
+> Pickup (Super Missile Tank); Heals? False
+  * Layers: default
+  * Pickup 48; Category? Minor
+  * Extra - actor_name: HP_Item_002
+  * Extra - actor_type: item_supermissiletank
+  > Dock to Wave Beam Chamber Access
+      Screw Attack
+
+> Start Point; Heals? False; Default Node
+  * Layers: default
+  * Extra - start_point_actor_name: ST_CheckPoint_004
+  > Door to Wallfire Corridor
+      Trivial
+
+> Dock to Wave Beam Chamber Access; Heals? False
+  * Layers: default
+  * Open Passage to Wave Beam Chamber Access/Dock to Varia Chamber (Blocks)
+  > Door to Wallfire Corridor
+      Screw Attack
+  > Pickup (Super Missile Tank)
+      Lay Any Bomb
+
+> Dock from Wave Beam Chamber Access; Heals? False
+  * Layers: default
+  * Blocked Passage to Wave Beam Chamber Access/Dock to Varia Chamber (OoB)
+  > Door to Wallfire Corridor
+      Trivial
+
+----------------
+Wave Beam Chamber Access
+Extra - total_boundings: {'x1': -3400.0, 'x2': 1000.0, 'y1': -4600.0, 'y2': 2400.0}
+Extra - polygon: [[-3400.0, 2400.0], [-3400.0, -4000.0], [-1850.0, -4100.0], [-1850.0, -4600.0], [1000.0, -4600.0], [1000.0, -3000.0], [100.0, -3000.0], [-200.0, -2900.0], [-200.0, 2400.0]]
+Extra - asset_id: collision_camera011
+> Ammo Recharge Station; Heals? False
+  * Layers: default
+  * Extra - actor_name: LE_Platform_AmmoCharge
+  * Extra - actor_type: weightactivatedplatform
+  > Door to Transport to Area 2 Dam Exterior (Bottom)
+      Trivial
+  > Door to Transport to Area 2 Dam Exterior (Middle)
+      Trivial
+  > Top of Morph Ball Shaft
+      All of the following:
+          Morph Ball
+          # Breaking the block
+          Power Bomb or Wave Beam or Movement (Intermediate)
+          Any of the following:
+              # Dealing with the Gravitt
+              Lightning Armor or Bomb or Power Bomb or Combat (Beginner) or Shoot Any Missile
+              Damage Boost (Beginner) and Normal Damage ≥ 30
+  > Dock to Varia Chamber (OoB)
+      Spider Ball Clip (Advanced) and Use Spider Ball
+
 > Door to Transport to Area 2 Dam Exterior (Bottom); Heals? False
   * Layers: default
-  * Wave Beam Door to Transport to Area 2 Dam Exterior/Door to Varia Chamber (Bottom)
+  * Wave Beam Door to Transport to Area 2 Dam Exterior/Door to Wave Beam Chamber Access (Bottom)
   * Extra - actor_name: Door008
   * Extra - actor_type: doorclosedpower
-  > Metroid Caverns Ammo Recharge Station
+  > Ammo Recharge Station
       Trivial
 
 > Door to Transport to Area 2 Dam Exterior (Middle); Heals? False
   * Layers: default
-  * Missile Door to Transport to Area 2 Dam Exterior/Door to Varia Chamber (Middle)
+  * Missile Door to Transport to Area 2 Dam Exterior/Door to Wave Beam Chamber Access (Middle)
   * Extra - actor_name: Door009
   * Extra - actor_type: doorpowerpower
-  > Metroid Caverns Ammo Recharge Station
+  > Ammo Recharge Station
       Trivial
 
 > Door to Interior Energy Recharge Station; Heals? False
   * Layers: default
-  * Power Beam Door to Interior Energy Recharge Station/Door to Varia Chamber
+  * Access Open to Interior Energy Recharge Station/Door to Wave Beam Chamber Access
   * Extra - actor_name: Door012
   * Extra - actor_type: doorpowerpower
   > Right Shaft
@@ -190,7 +223,7 @@ Extra - asset_id: collision_camera011
 
 > Door to Gamma Arena; Heals? False
   * Layers: default
-  * Power Beam Door to Gamma Arena/Door to Varia Chamber
+  * Access Open to Gamma Arena/Door to Wave Beam Chamber Access
   * Extra - actor_name: Door018
   * Extra - actor_type: doorpowerpower
   > Bottom of Morph Ball Shaft
@@ -205,30 +238,11 @@ Extra - asset_id: collision_camera011
 
 > Door to Transport to Area 2 Dam Exterior (Top); Heals? False
   * Layers: default
-  * Wave Beam Door to Transport to Area 2 Dam Exterior/Door to Varia Chamber (Top)
+  * Wave Beam Door to Transport to Area 2 Dam Exterior/Door to Wave Beam Chamber Access (Top)
   * Extra - actor_name: Door019
   * Extra - actor_type: doorpowerpower
   > Right Shaft
       Trivial
-
-> Pickup (Super Missile Tank); Heals? False
-  * Layers: default
-  * Pickup 48; Category? Minor
-  * Extra - actor_name: HP_Item_002
-  * Extra - actor_type: item_supermissiletank
-  > Inside Shortcut
-      Trivial
-
-> Inside Shortcut; Heals? False
-  * Layers: default
-  > Door to Wallfire Corridor
-      Screw Attack
-  > Pickup (Super Missile Tank)
-      Lay Any Bomb
-  > Bottom of Morph Ball Shaft
-      Screw Attack
-  > Right Shaft
-      Screw Attack
 
 > Bottom of Morph Ball Shaft; Heals? False
   * Layers: default
@@ -239,12 +253,12 @@ Extra - asset_id: collision_camera011
 
 > Top of Morph Ball Shaft; Heals? False
   * Layers: default
-  > Metroid Caverns Ammo Recharge Station
+  > Ammo Recharge Station
       Morph Ball
-  > Inside Shortcut
-      Screw Attack
   > Bottom of Morph Ball Shaft
       Trivial
+  > Dock to Varia Chamber (Blocks)
+      Screw Attack
 
 > Right Shaft; Heals? False
   * Layers: default
@@ -252,14 +266,20 @@ Extra - asset_id: collision_camera011
       Trivial
   > Door to Transport to Area 2 Dam Exterior (Top)
       Trivial
-  > Inside Shortcut
+  > Dock to Varia Chamber (Blocks)
       Screw Attack
 
-> Start Point; Heals? False; Default Node
+> Dock to Varia Chamber (Blocks); Heals? False
   * Layers: default
-  * Extra - start_point_actor_name: ST_CheckPoint_004
-  > Door to Wallfire Corridor
-      Trivial
+  * Open Passage to Varia Chamber/Dock to Wave Beam Chamber Access
+  > Bottom of Morph Ball Shaft
+      Screw Attack
+  > Right Shaft
+      Screw Attack
+
+> Dock to Varia Chamber (OoB); Heals? False
+  * Layers: default
+  * Open Passage to Varia Chamber/Dock from Wave Beam Chamber Access
 
 ----------------
 Lava Generator
@@ -373,9 +393,9 @@ Interior Energy Recharge Station
 Extra - total_boundings: {'x1': -1700.0, 'x2': 3100.0, 'y1': -3100.0, 'y2': -1700.0}
 Extra - polygon: [[-300.0, -1700.0], [-300.0, -2339.639892578125], [-1700.0, -2339.639892578125], [-1700.0, -3100.0], [3100.0, -3100.0], [3100.0, -1700.0]]
 Extra - asset_id: collision_camera015
-> Door to Varia Chamber; Heals? False
+> Door to Wave Beam Chamber Access; Heals? False
   * Layers: default
-  * Power Beam Door to Varia Chamber/Door to Interior Energy Recharge Station
+  * Access Open to Wave Beam Chamber Access/Door to Interior Energy Recharge Station
   * Extra - actor_name: Door012
   * Extra - actor_type: doorpowerpower
   > Tunnel to Interior Teleporter
@@ -386,14 +406,14 @@ Extra - asset_id: collision_camera015
 > Tunnel to Interior Teleporter; Heals? False
   * Layers: default
   * Tunnel to Interior Teleporter/Tunnel to Interior Energy Recharge Station
-  > Door to Varia Chamber
+  > Door to Wave Beam Chamber Access
       Morph Ball
 
 > Energy Recharge Station; Heals? True
   * Layers: default
   * Extra - actor_name: LE_Platform_EnergyCharge
   * Extra - actor_type: weightactivatedplatform
-  > Door to Varia Chamber
+  > Door to Wave Beam Chamber Access
       Lay Any Bomb
 
 ----------------
@@ -403,7 +423,7 @@ Extra - polygon: [[3000.0, -1600.0], [3000.0, -5200.0], [2200.0, -5200.0], [2200
 Extra - asset_id: collision_camera016
 > Teleporter; Heals? False; Default Node
   * Layers: default
-  * Teleporter Network (Unlocked by After Area 2 (Dam Interior) - Teleporter Unlocked)
+  * Teleporter Network (Unlocked by After Area 2 (Dam Interior) - Interior Teleporter Unlocked)
   * Extra - actor_name: LE_Platform_Teleporter_02_04
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: ST_Teleporter_02_04
@@ -457,7 +477,7 @@ Extra - asset_id: collision_camera016
 
 > Event - Teleporter Unlocked; Heals? False
   * Layers: default
-  * Event Area 2 (Dam Interior) - Teleporter Unlocked
+  * Event Area 2 (Dam Interior) - Interior Teleporter Unlocked
   > Next to Teleporter
       Trivial
 
@@ -677,9 +697,9 @@ Extra - asset_id: collision_camera037
   > Room Center
       Trivial
 
-> Door to Varia Chamber; Heals? False
+> Door to Wave Beam Chamber Access; Heals? False
   * Layers: default
-  * Power Beam Door to Varia Chamber/Door to Gamma Arena
+  * Power Beam Door to Wave Beam Chamber Access/Door to Gamma Arena
   * Extra - actor_name: Door018
   * Extra - actor_type: doorpowerpower
   > Room Center
@@ -696,7 +716,7 @@ Extra - asset_id: collision_camera037
   * Extra - start_point_actor_name: ST_Gamma_001_Checkpoint
   > Door to Lava Generator
       Trivial
-  > Door to Varia Chamber
+  > Door to Wave Beam Chamber Access
       Trivial
   > Event - Gamma Metroid
       Defeat Gamma Metroid

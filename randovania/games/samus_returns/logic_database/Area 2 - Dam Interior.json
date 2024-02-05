@@ -87,7 +87,7 @@
                     "pickup_index": 46,
                     "location_category": "major",
                     "connections": {
-                        "Door to Varia Chamber (Middle)": {
+                        "Door to Wave Beam Chamber Access (Middle)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -305,7 +305,7 @@
                                 "items": []
                             }
                         },
-                        "Door to Varia Chamber (Bottom)": {
+                        "Door to Wave Beam Chamber Access (Bottom)": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -314,7 +314,7 @@
                                 "negate": false
                             }
                         },
-                        "Door to Varia Chamber (Top)": {
+                        "Door to Wave Beam Chamber Access (Top)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -525,7 +525,7 @@
                         }
                     }
                 },
-                "Door to Varia Chamber (Bottom)": {
+                "Door to Wave Beam Chamber Access (Bottom)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -545,7 +545,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 2 - Dam Interior",
-                        "area": "Varia Chamber",
+                        "area": "Wave Beam Chamber Access",
                         "node": "Door to Transport to Area 2 Dam Exterior (Bottom)"
                     },
                     "default_dock_weakness": "Wave Beam Door",
@@ -563,7 +563,7 @@
                                 "negate": false
                             }
                         },
-                        "Door to Varia Chamber (Middle)": {
+                        "Door to Wave Beam Chamber Access (Middle)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -591,12 +591,12 @@
                         }
                     }
                 },
-                "Door to Varia Chamber (Middle)": {
+                "Door to Wave Beam Chamber Access (Middle)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -3370.605448625478,
-                        "y": 710.9368631707173,
+                        "x": -3370.61,
+                        "y": 710.94,
                         "z": 0.0
                     },
                     "description": "",
@@ -611,7 +611,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 2 - Dam Interior",
-                        "area": "Varia Chamber",
+                        "area": "Wave Beam Chamber Access",
                         "node": "Door to Transport to Area 2 Dam Exterior (Middle)"
                     },
                     "default_dock_weakness": "Missile Door",
@@ -636,12 +636,12 @@
                         }
                     }
                 },
-                "Door to Varia Chamber (Top)": {
+                "Door to Wave Beam Chamber Access (Top)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -3370.605448625478,
-                        "y": 1741.1291541304317,
+                        "x": -3370.61,
+                        "y": 1741.13,
                         "z": 0.0
                     },
                     "description": "",
@@ -656,7 +656,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 2 - Dam Interior",
-                        "area": "Varia Chamber",
+                        "area": "Wave Beam Chamber Access",
                         "node": "Door to Transport to Area 2 Dam Exterior (Top)"
                     },
                     "default_dock_weakness": "Wave Beam Door",
@@ -693,7 +693,7 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Varia Chamber (Middle)": {
+                        "Door to Wave Beam Chamber Access (Middle)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -709,6 +709,299 @@
             "extra": {
                 "total_boundings": {
                     "x1": -4200.0,
+                    "x2": -1550.0,
+                    "y1": -1700.0,
+                    "y2": -100.0
+                },
+                "polygon": [
+                    [
+                        -1550.0,
+                        -100.0
+                    ],
+                    [
+                        -4200.0,
+                        -100.0
+                    ],
+                    [
+                        -4200.0,
+                        -1700.0
+                    ],
+                    [
+                        -1550.0,
+                        -1700.0
+                    ]
+                ],
+                "asset_id": "collision_camera040"
+            },
+            "nodes": {
+                "Pickup (Varia Suit)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -2048.0737799156054,
+                        "y": -852.0368402408785,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "LE_PowerUp_VariaSuite",
+                        "actor_type": "itemsphere_variasuit"
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 45,
+                    "location_category": "major",
+                    "connections": {
+                        "Door to Wallfire Corridor": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Generator Access": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -4170.986445923523,
+                        "y": -1382.765006742858,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "Door004",
+                        "actor_type": "doorchargecharge"
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Area 2 - Dam Interior",
+                        "area": "Generator Access",
+                        "node": "Door to Varia Chamber"
+                    },
+                    "default_dock_weakness": "Charge Beam Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Wallfire Corridor": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Wallfire Corridor": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -4144.885060685721,
+                        "y": -730.2303757978011,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "Door006",
+                        "actor_type": "doorpowerpower"
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Area 2 - Dam Interior",
+                        "area": "Wallfire Corridor",
+                        "node": "Door to Varia Chamber"
+                    },
+                    "default_dock_weakness": "Missile Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Pickup (Varia Suit)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Generator Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Start Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Dock to Wave Beam Chamber Access": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Screw",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Pickup (Super Missile Tank)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -2361.290402769233,
+                        "y": -1556.7742416615397,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "HP_Item_002",
+                        "actor_type": "item_supermissiletank"
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 48,
+                    "location_category": "minor",
+                    "connections": {
+                        "Dock to Wave Beam Chamber Access": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Screw",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -2500.0,
+                        "y": -700.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_CheckPoint_004"
+                    },
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Wallfire Corridor": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Dock to Wave Beam Chamber Access": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -1650.0,
+                        "y": -1370.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "other",
+                    "default_connection": {
+                        "region": "Area 2 - Dam Interior",
+                        "area": "Wave Beam Chamber Access",
+                        "node": "Dock to Varia Chamber (Blocks)"
+                    },
+                    "default_dock_weakness": "Open Passage",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Wallfire Corridor": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Screw",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Pickup (Super Missile Tank)": {
+                            "type": "template",
+                            "data": "Lay Any Bomb"
+                        }
+                    }
+                },
+                "Dock from Wave Beam Chamber Access": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -1926.36,
+                        "y": -307.87,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "other",
+                    "default_connection": {
+                        "region": "Area 2 - Dam Interior",
+                        "area": "Wave Beam Chamber Access",
+                        "node": "Dock to Varia Chamber (OoB)"
+                    },
+                    "default_dock_weakness": "Blocked Passage",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Wallfire Corridor": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Wave Beam Chamber Access": {
+            "default_node": null,
+            "extra": {
+                "total_boundings": {
+                    "x1": -3400.0,
                     "x2": 1000.0,
                     "y1": -4600.0,
                     "y2": 2400.0
@@ -720,26 +1013,6 @@
                     ],
                     [
                         -3400.0,
-                        350.0
-                    ],
-                    [
-                        -4200.0,
-                        100.0
-                    ],
-                    [
-                        -4200.0,
-                        -1600.0
-                    ],
-                    [
-                        -3800.0,
-                        -1600.0
-                    ],
-                    [
-                        -3200.0,
-                        -2000.0
-                    ],
-                    [
-                        -3200.0,
                         -4000.0
                     ],
                     [
@@ -774,36 +1047,7 @@
                 "asset_id": "collision_camera011"
             },
             "nodes": {
-                "Pickup (Varia Suit)": {
-                    "node_type": "pickup",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -2048.0737799156054,
-                        "y": -852.0368402408785,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "LE_PowerUp_VariaSuite",
-                        "actor_type": "itemsphere_variasuit"
-                    },
-                    "valid_starting_location": false,
-                    "pickup_index": 45,
-                    "location_category": "major",
-                    "connections": {
-                        "Door to Wallfire Corridor": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Metroid Caverns Ammo Recharge Station": {
+                "Ammo Recharge Station": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
@@ -821,27 +1065,6 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Pickup (Varia Suit)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Use Spider Ball"
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "tricks",
-                                            "name": "SpiderClip",
-                                            "amount": 3,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        },
                         "Door to Transport to Area 2 Dam Exterior (Bottom)": {
                             "type": "and",
                             "data": {
@@ -981,104 +1204,26 @@
                                     }
                                 ]
                             }
-                        }
-                    }
-                },
-                "Door to Generator Access": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -4170.986445923523,
-                        "y": -1382.765006742858,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "Door004",
-                        "actor_type": "doorchargecharge"
-                    },
-                    "valid_starting_location": false,
-                    "dock_type": "door",
-                    "default_connection": {
-                        "region": "Area 2 - Dam Interior",
-                        "area": "Generator Access",
-                        "node": "Door to Varia Chamber"
-                    },
-                    "default_dock_weakness": "Charge Beam Door",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {
-                        "Door to Wallfire Corridor": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Door to Wallfire Corridor": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -4144.885060685721,
-                        "y": -730.2303757978011,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "Door006",
-                        "actor_type": "doorpowerpower"
-                    },
-                    "valid_starting_location": false,
-                    "dock_type": "door",
-                    "default_connection": {
-                        "region": "Area 2 - Dam Interior",
-                        "area": "Wallfire Corridor",
-                        "node": "Door to Varia Chamber"
-                    },
-                    "default_dock_weakness": "Missile Door",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {
-                        "Pickup (Varia Suit)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
                         },
-                        "Door to Generator Access": {
+                        "Dock to Varia Chamber (OoB)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Inside Shortcut": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Screw",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        "Start Point": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "SpiderClip",
+                                            "amount": 3,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Use Spider Ball"
+                                    }
+                                ]
                             }
                         }
                     }
@@ -1087,8 +1232,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -3370.543965297587,
-                        "y": 244.22133974681674,
+                        "x": -3370.54,
+                        "y": 244.22,
                         "z": 0.0
                     },
                     "description": "",
@@ -1104,7 +1249,7 @@
                     "default_connection": {
                         "region": "Area 2 - Dam Interior",
                         "area": "Transport to Area 2 Dam Exterior",
-                        "node": "Door to Varia Chamber (Bottom)"
+                        "node": "Door to Wave Beam Chamber Access (Bottom)"
                     },
                     "default_dock_weakness": "Wave Beam Door",
                     "exclude_from_dock_rando": false,
@@ -1112,7 +1257,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Metroid Caverns Ammo Recharge Station": {
+                        "Ammo Recharge Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1125,8 +1270,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -3361.843503551653,
-                        "y": 722.7467357731914,
+                        "x": -3361.84,
+                        "y": 722.75,
                         "z": 0.0
                     },
                     "description": "",
@@ -1142,7 +1287,7 @@
                     "default_connection": {
                         "region": "Area 2 - Dam Interior",
                         "area": "Transport to Area 2 Dam Exterior",
-                        "node": "Door to Varia Chamber (Middle)"
+                        "node": "Door to Wave Beam Chamber Access (Middle)"
                     },
                     "default_dock_weakness": "Missile Door",
                     "exclude_from_dock_rando": false,
@@ -1150,7 +1295,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Metroid Caverns Ammo Recharge Station": {
+                        "Ammo Recharge Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1163,8 +1308,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -238.3777367613152,
-                        "y": -2096.2028699094526,
+                        "x": -238.38,
+                        "y": -2096.2,
                         "z": 0.0
                     },
                     "description": "",
@@ -1180,9 +1325,9 @@
                     "default_connection": {
                         "region": "Area 2 - Dam Interior",
                         "area": "Interior Energy Recharge Station",
-                        "node": "Door to Varia Chamber"
+                        "node": "Door to Wave Beam Chamber Access"
                     },
-                    "default_dock_weakness": "Power Beam Door",
+                    "default_dock_weakness": "Access Open",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -1241,8 +1386,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -1804.460851029451,
-                        "y": -4445.327541311656,
+                        "x": -1804.46,
+                        "y": -4445.33,
                         "z": 0.0
                     },
                     "description": "",
@@ -1258,9 +1403,9 @@
                     "default_connection": {
                         "region": "Area 2 - Dam Interior",
                         "area": "Gamma Arena",
-                        "node": "Door to Varia Chamber"
+                        "node": "Door to Wave Beam Chamber Access"
                     },
-                    "default_dock_weakness": "Power Beam Door",
+                    "default_dock_weakness": "Access Open",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -1381,8 +1526,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -3370.543965297587,
-                        "y": 1758.101683539348,
+                        "x": -3370.54,
+                        "y": 1758.1,
                         "z": 0.0
                     },
                     "description": "",
@@ -1398,7 +1543,7 @@
                     "default_connection": {
                         "region": "Area 2 - Dam Interior",
                         "area": "Transport to Area 2 Dam Exterior",
-                        "node": "Door to Varia Chamber (Top)"
+                        "node": "Door to Wave Beam Chamber Access (Top)"
                     },
                     "default_dock_weakness": "Wave Beam Door",
                     "exclude_from_dock_rando": false,
@@ -1411,83 +1556,6 @@
                             "data": {
                                 "comment": null,
                                 "items": []
-                            }
-                        }
-                    }
-                },
-                "Pickup (Super Missile Tank)": {
-                    "node_type": "pickup",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -2361.290402769233,
-                        "y": -1556.7742416615397,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "HP_Item_002",
-                        "actor_type": "item_supermissiletank"
-                    },
-                    "valid_starting_location": false,
-                    "pickup_index": 48,
-                    "location_category": "minor",
-                    "connections": {
-                        "Inside Shortcut": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Inside Shortcut": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -2700.608410860662,
-                        "y": -1365.3640832509896,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "connections": {
-                        "Door to Wallfire Corridor": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Screw",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        "Pickup (Super Missile Tank)": {
-                            "type": "template",
-                            "data": "Lay Any Bomb"
-                        },
-                        "Bottom of Morph Ball Shaft": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Screw",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        "Right Shaft": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Screw",
-                                "amount": 1,
-                                "negate": false
                             }
                         }
                     }
@@ -1549,20 +1617,11 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Metroid Caverns Ammo Recharge Station": {
+                        "Ammo Recharge Station": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
                                 "name": "Morph",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        "Inside Shortcut": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Screw",
                                 "amount": 1,
                                 "negate": false
                             }
@@ -1572,6 +1631,15 @@
                             "data": {
                                 "comment": null,
                                 "items": []
+                            }
+                        },
+                        "Dock to Varia Chamber (Blocks)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Screw",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -1605,7 +1673,7 @@
                                 "items": []
                             }
                         },
-                        "Inside Shortcut": {
+                        "Dock to Varia Chamber (Blocks)": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -1616,31 +1684,78 @@
                         }
                     }
                 },
-                "Start Point": {
-                    "node_type": "generic",
+                "Dock to Varia Chamber (Blocks)": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -2500.0,
-                        "y": -700.0,
+                        "x": -1650.0,
+                        "y": -1370.0,
                         "z": 0.0
                     },
                     "description": "",
                     "layers": [
                         "default"
                     ],
-                    "extra": {
-                        "start_point_actor_name": "ST_CheckPoint_004"
-                    },
+                    "extra": {},
                     "valid_starting_location": false,
+                    "dock_type": "other",
+                    "default_connection": {
+                        "region": "Area 2 - Dam Interior",
+                        "area": "Varia Chamber",
+                        "node": "Dock to Wave Beam Chamber Access"
+                    },
+                    "default_dock_weakness": "Open Passage",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Wallfire Corridor": {
-                            "type": "and",
+                        "Bottom of Morph Ball Shaft": {
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "type": "items",
+                                "name": "Screw",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Right Shaft": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Screw",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
+                },
+                "Dock to Varia Chamber (OoB)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -1926.36,
+                        "y": -307.87,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "other",
+                    "default_connection": {
+                        "region": "Area 2 - Dam Interior",
+                        "area": "Varia Chamber",
+                        "node": "Dock from Wave Beam Chamber Access"
+                    },
+                    "default_dock_weakness": "Open Passage",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {}
                 }
             }
         },
@@ -2458,7 +2573,7 @@
                 "asset_id": "collision_camera015"
             },
             "nodes": {
-                "Door to Varia Chamber": {
+                "Door to Wave Beam Chamber Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2478,10 +2593,10 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 2 - Dam Interior",
-                        "area": "Varia Chamber",
+                        "area": "Wave Beam Chamber Access",
                         "node": "Door to Interior Energy Recharge Station"
                     },
-                    "default_dock_weakness": "Power Beam Door",
+                    "default_dock_weakness": "Access Open",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -2528,7 +2643,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Varia Chamber": {
+                        "Door to Wave Beam Chamber Access": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -2557,7 +2672,7 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Varia Chamber": {
+                        "Door to Wave Beam Chamber Access": {
                             "type": "template",
                             "data": "Lay Any Bomb"
                         }
@@ -2625,7 +2740,7 @@
                         "type": "resource",
                         "data": {
                             "type": "events",
-                            "name": "Area 2 Dam Interior Teleporter",
+                            "name": "Area 2 (Dam Interior) Interior Teleporter",
                             "amount": 1,
                             "negate": false
                         }
@@ -2938,7 +3053,7 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "event_name": "Area 2 Dam Interior Teleporter",
+                    "event_name": "Area 2 (Dam Interior) Interior Teleporter",
                     "connections": {
                         "Next to Teleporter": {
                             "type": "and",
@@ -4348,12 +4463,12 @@
                         }
                     }
                 },
-                "Door to Varia Chamber": {
+                "Door to Wave Beam Chamber Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -1807.9986252362878,
-                        "y": -4433.8134591450425,
+                        "x": -1808.0,
+                        "y": -4433.81,
                         "z": 0.0
                     },
                     "description": "",
@@ -4368,7 +4483,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 2 - Dam Interior",
-                        "area": "Varia Chamber",
+                        "area": "Wave Beam Chamber Access",
                         "node": "Door to Gamma Arena"
                     },
                     "default_dock_weakness": "Power Beam Door",
@@ -4435,7 +4550,7 @@
                                 "items": []
                             }
                         },
-                        "Door to Varia Chamber": {
+                        "Door to Wave Beam Chamber Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
