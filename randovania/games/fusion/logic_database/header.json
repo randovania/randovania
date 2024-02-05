@@ -1,0 +1,227 @@
+{
+    "schema_version": 22,
+    "game": "fusion",
+    "resource_database": {
+        "items": {
+            "Weapon": {
+                "long_name": "Missiles",
+                "max_capacity": 250,
+                "extra": {}
+            },
+            "VictoryKey": {
+                "long_name": "Victory Key",
+                "max_capacity": 1,
+                "extra": {}
+            },
+            "Health": {
+                "long_name": "Etank",
+                "max_capacity": 20,
+                "extra": {}
+            },
+            "ChargeBeam": {
+                "long_name": "ChargeBeam",
+                "max_capacity": 1,
+                "extra": {}
+            },
+            "WideBeam": {
+                "long_name": "WideBeam",
+                "max_capacity": 1,
+                "extra": {}
+            },
+            "PlasmaBeam": {
+                "long_name": "PlasmaBeam",
+                "max_capacity": 1,
+                "extra": {}
+            },
+            "WaveBeam": {
+                "long_name": "WaveBeam",
+                "max_capacity": 1,
+                "extra": {}
+            },
+            "IceBeam": {
+                "long_name": "IceBeam",
+                "max_capacity": 1,
+                "extra": {}
+            },
+            "VariaSuit": {
+                "long_name": "VariaSuit",
+                "max_capacity": 1,
+                "extra": {}
+            },
+            "GravitySuit": {
+                "long_name": "GravitySuit",
+                "max_capacity": 1,
+                "extra": {}
+            },
+            "MorphBall": {
+                "long_name": "MorphBall",
+                "max_capacity": 1,
+                "extra": {}
+            },
+            "MorphBallBombs": {
+                "long_name": "MorphBallBombs",
+                "max_capacity": 1,
+                "extra": {}
+            },
+            "PowerBombs": {
+                "long_name": "PowerBombs",
+                "max_capacity": 70,
+                "extra": {}
+            },
+            "HighJump": {
+                "long_name": "HighJump",
+                "max_capacity": 1,
+                "extra": {}
+            },
+            "SpaceJump": {
+                "long_name": "SpaceJump",
+                "max_capacity": 1,
+                "extra": {}
+            },
+            "ScrewAttack": {
+                "long_name": "ScrewAttack",
+                "max_capacity": 1,
+                "extra": {}
+            },
+            "SuperMissiles": {
+                "long_name": "SuperMissiles",
+                "max_capacity": 1,
+                "extra": {}
+            },
+            "IceMissiles": {
+                "long_name": "IceMissiles",
+                "max_capacity": 1,
+                "extra": {}
+            },
+            "DiffusionMissiles": {
+                "long_name": "DiffusionMissiles",
+                "max_capacity": 1,
+                "extra": {}
+            }
+        },
+        "events": {
+            "Level0Locks": {
+                "long_name": "Level0Locks",
+                "extra": {}
+            },
+            "Level1Locks": {
+                "long_name": "Level1Locks",
+                "extra": {}
+            },
+            "Level2Locks": {
+                "long_name": "Level2Locks",
+                "extra": {}
+            },
+            "Level3Locks": {
+                "long_name": "Level3Locks",
+                "extra": {}
+            },
+            "Level4Locks": {
+                "long_name": "Level4Locks",
+                "extra": {}
+            },
+            "Omega": {
+                "long_name": "Omega",
+                "extra": {}
+            },
+            "SA-X": {
+                "long_name": "SA-X",
+                "extra": {}
+            }
+        },
+        "tricks": {
+            "Combat": {
+                "long_name": "Combat",
+                "description": "",
+                "extra": {}
+            }
+        },
+        "damage": {
+            "NormalDamage": {
+                "long_name": "Normal Damage",
+                "extra": {}
+            }
+        },
+        "versions": {},
+        "misc": {},
+        "requirement_template": {},
+        "damage_reductions": [],
+        "energy_tank_item_index": "Health"
+    },
+    "layers": [
+        "default"
+    ],
+    "starting_location": {
+        "region": "Main Deck",
+        "area": "Docking Hangar",
+        "node": "Ship"
+    },
+    "initial_states": {},
+    "minimal_logic": null,
+    "victory_condition": {
+        "type": "resource",
+        "data": {
+            "type": "items",
+            "name": "VictoryKey",
+            "amount": 1,
+            "negate": false
+        }
+    },
+    "dock_weakness_database": {
+        "types": {
+            "Door": {
+                "name": "Door",
+                "extra": {},
+                "items": {
+                    "Normal": {
+                        "extra": {},
+                        "requirement": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "lock": null
+                    }
+                },
+                "dock_rando": null
+            },
+            "Other": {
+                "name": "Other",
+                "extra": {},
+                "items": {
+                    "Not Determined": {
+                        "extra": {},
+                        "requirement": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "lock": null
+                    }
+                },
+                "dock_rando": null
+            }
+        },
+        "default_weakness": {
+            "type": "Other",
+            "name": "Not Determined"
+        },
+        "dock_rando": {
+            "force_change_two_way": false,
+            "resolver_attempts": 100,
+            "to_shuffle_proportion": 1.0
+        }
+    },
+    "used_trick_levels": {
+        "Combat": [
+            1
+        ]
+    },
+    "regions": [
+        "Main Deck.json"
+    ]
+}

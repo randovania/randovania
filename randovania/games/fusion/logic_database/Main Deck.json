@@ -1,0 +1,200 @@
+{
+    "name": "Main Deck",
+    "extra": {},
+    "areas": {
+        "Docking Hangar": {
+            "default_node": null,
+            "extra": {
+                "map_name": "docking_hangar"
+            },
+            "nodes": {
+                "Ship": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 415.1669490328957,
+                        "y": 50.61118170266835,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": true,
+                    "connections": {
+                        "Door to Hangar Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Hangar Access": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 32.21,
+                        "y": 49.86,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "Door",
+                    "default_connection": {
+                        "region": "Main Deck",
+                        "area": "Hangar Access",
+                        "node": "Door to Docking Hangar"
+                    },
+                    "default_dock_weakness": "Normal",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Ship": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Event - Omega": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "SA-X",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Combat",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "damage",
+                                                        "name": "NormalDamage",
+                                                        "amount": 700,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Event - Omega": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 372.8684879288437,
+                        "y": 120.8568403218975,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "Omega",
+                    "connections": {
+                        "Victory": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Victory": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 475.08377425044085,
+                        "y": 115.25847540662355,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Ship": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Hangar Access": {
+            "default_node": null,
+            "extra": {
+                "map_name": "hangar_access"
+            },
+            "nodes": {
+                "Door to Docking Hangar": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 501.31,
+                        "y": 64.42,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "Door",
+                    "default_connection": {
+                        "region": "Main Deck",
+                        "area": "Docking Hangar",
+                        "node": "Door to Hangar Access"
+                    },
+                    "default_dock_weakness": "Normal",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {}
+                }
+            }
+        }
+    }
+}

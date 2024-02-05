@@ -1,0 +1,36 @@
+----------------
+Docking Hangar
+Extra - map_name: docking_hangar
+> Ship; Heals? False; Spawn Point
+  * Layers: default
+  > Door to Hangar Access
+      Trivial
+
+> Door to Hangar Access; Heals? False
+  * Layers: default
+  * Normal to Hangar Access/Door to Docking Hangar
+  > Ship
+      Trivial
+  > Event - Omega
+      All of the following:
+          After SA-X
+          Combat (Beginner) or Normal Damage ≥ 700
+
+> Event - Omega; Heals? False
+  * Layers: default
+  * Event Omega
+  > Victory
+      Trivial
+
+> Victory; Heals? False
+  * Layers: default
+  > Ship
+      Trivial
+
+----------------
+Hangar Access
+Extra - map_name: hangar_access
+> Door to Docking Hangar; Heals? False
+  * Layers: default
+  * Normal to Docking Hangar/Door to Hangar Access
+
