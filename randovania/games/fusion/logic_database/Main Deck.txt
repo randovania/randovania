@@ -33,4 +33,203 @@ Extra - map_name: hangar_access
 > Door to Docking Hangar; Heals? False
   * Layers: default
   * Normal to Docking Hangar/Door to Hangar Access
+  > Door to Hangar Shaft
+      Trivial
+
+> Door to Hangar Shaft; Heals? False
+  * Layers: default
+  * Normal to Hangar Shaft/Door to Hangar Access
+  > Door to Docking Hangar
+      Trivial
+
+----------------
+Hangar Shaft
+Extra - map_name: hangar_shaft
+> Dock to station entrance; Heals? False
+  * Layers: default
+  > Door to Hangar Access
+      Trivial
+
+> Door to Reactor Access (Upper); Heals? False
+  * Layers: default
+  * Normal to Reactor Access/Door to Hangar Shaft (Upper)
+  > Door to Hangar Access
+      Trivial
+
+> Door to Reactor Access (Lower); Heals? False
+  * Layers: default
+  * Normal to Reactor Access/Door to Hangar Shaft (Lower)
+  > Door to Hangar Access
+      Trivial
+
+> Door to Hangar Access; Heals? False
+  * Layers: default
+  * Normal to Hangar Access/Door to Hangar Shaft
+  > Dock to station entrance
+      Trivial
+  > Door to Reactor Access (Upper)
+      Trivial
+  > Door to Reactor Access (Lower)
+      Trivial
+
+----------------
+Station Entrance
+Extra - map_name: station_entrance
+----------------
+Reactor Access
+Extra - map_name: reactor_access
+> Door to Hangar Shaft (Upper); Heals? False
+  * Layers: default
+  * L4 Locked Door to Hangar Shaft/Door to Reactor Access (Upper)
+  > Door to Hangar Shaft (Lower)
+      Trivial
+
+> Door to Hangar Shaft (Lower); Heals? False
+  * Layers: default
+  * Normal to Hangar Shaft/Door to Reactor Access (Lower)
+  > Door to Hangar Shaft (Upper)
+      HighJump or SpaceJump
+  > Door to Reactore Core
+      MorphBall
+
+> Door to Reactore Core; Heals? False
+  * Layers: default
+  * Normal to Reactore Core/Door to Reactor Access
+  > Door to Hangar Shaft (Lower)
+      MorphBall
+
+----------------
+Reactore Core
+Extra - map_name: reactor_core
+> Door to Reactor Access; Heals? False
+  * Layers: default
+  * Normal to Reactor Access/Door to Reactore Core
+  > Door to Reactor Control Access
+      Movement (Beginner)
+  > Bottom of Room
+      Trivial
+
+> dock to maze; Heals? False
+  * Layers: default
+  > Bottom of Room
+      Trivial
+
+> Door to Reactor Control Access; Heals? False
+  * Layers: default
+  * Normal to Reactor Control Access/Door to Reactore Core
+  > Bottom of Room
+      Trivial
+
+> Door to Reactor Save Station; Heals? False
+  * Layers: default
+  * Normal to Reactor Save Station/Door to Reactore Core
+  > Bottom of Room
+      Trivial
+
+> dock to a2; Heals? False
+  * Layers: default
+
+> Bottom of Room; Heals? False
+  * Layers: default
+  > Door to Reactor Access
+      HighJump or SpaceJump
+  > dock to maze
+      HighJump or SpaceJump
+  > Door to Reactor Control Access
+      HighJump or SpaceJump
+  > Door to Reactor Save Station
+      Trivial
+
+----------------
+Reactor Navigation Room
+Extra - map_name: reactor_nav_room
+> Door to Reactor Control Access; Heals? False
+  * Layers: default
+  * Normal to Reactor Control Access/Door to Reactor Navigation Room
+  > Door to Reactor Control Room
+      Trivial
+
+> Door to Reactor Control Room; Heals? False
+  * Layers: default
+  * Normal to Reactor Control Room/Door to Reactor Navigation Room
+  > Door to Reactor Control Access
+      Trivial
+
+----------------
+Reactor Maze
+----------------
+Yakuza Arena
+Extra - map_name: yakuza_arena
+> dock to maze; Heals? False
+  * Layers: default
+  > Bottom of Room
+      Trivial
+
+> Door to Reactor Control Room; Heals? False
+  * Layers: default
+  * Normal to Reactor Control Room/Door to Yakuza Arena
+  > Bottom of Room
+      Trivial
+
+> Event - Yakuza; Heals? False
+  * Layers: default
+  * Event Yakuza
+  > Bottom of Room
+      Trivial
+
+> Bottom of Room; Heals? False
+  * Layers: default
+  > dock to maze
+      SpaceJump
+  > Door to Reactor Control Room
+      SpaceJump
+  > Event - Yakuza
+      All of the following:
+          ChargeBeam or Missiles ≥ 100
+          Combat (Beginner) or Normal Damage ≥ 300
+
+----------------
+Reactor Control Room
+Extra - map_name: reactor_control_room
+> Door to Yakuza Arena; Heals? False
+  * Layers: default
+  * Normal to Yakuza Arena/Door to Reactor Control Room
+  > Door to Reactor Navigation Room
+      Trivial
+  > Event - Reactor
+      Trivial
+
+> Door to Reactor Navigation Room; Heals? False
+  * Layers: default
+  * Normal to Reactor Navigation Room/Door to Reactor Control Room
+  > Door to Yakuza Arena
+      Trivial
+
+> Event - Reactor; Heals? False
+  * Layers: default
+  * Event Reactor
+  > Door to Yakuza Arena
+      Trivial
+
+----------------
+Reactor Control Access
+Extra - map_name: control_room_access
+> Door to Reactore Core; Heals? False
+  * Layers: default
+  * Normal to Reactore Core/Door to Reactor Control Access
+  > Door to Reactor Navigation Room
+      WaveBeam
+
+> Door to Reactor Navigation Room; Heals? False
+  * Layers: default
+  * Normal to Reactor Navigation Room/Door to Reactor Control Access
+  > Door to Reactore Core
+      Trivial
+
+----------------
+Reactor Save Station
+Extra - map_name: reactor_save
+> Door to Reactore Core; Heals? False
+  * Layers: default
+  * Normal to Reactore Core/Door to Reactor Save Station
 

@@ -3,7 +3,7 @@
     "game": "fusion",
     "resource_database": {
         "items": {
-            "Weapon": {
+            "Missiles": {
                 "long_name": "Missiles",
                 "max_capacity": 250,
                 "extra": {}
@@ -127,11 +127,56 @@
             "SA-X": {
                 "long_name": "SA-X",
                 "extra": {}
+            },
+            "Arachnus": {
+                "long_name": "Arachnus",
+                "extra": {}
+            },
+            "Zazabi": {
+                "long_name": "Zazabi",
+                "extra": {}
+            },
+            "Serris": {
+                "long_name": "Serris",
+                "extra": {}
+            },
+            "BOX": {
+                "long_name": "BOX",
+                "extra": {}
+            },
+            "BOX2": {
+                "long_name": "BOX2",
+                "extra": {}
+            },
+            "Yakuza": {
+                "long_name": "Yakuza",
+                "extra": {}
+            },
+            "Nittori": {
+                "long_name": "Nittori",
+                "extra": {}
+            },
+            "Core X": {
+                "long_name": "Core X",
+                "extra": {}
+            },
+            "Charge X": {
+                "long_name": "Charge X",
+                "extra": {}
+            },
+            "Reactor": {
+                "long_name": "Reactor",
+                "extra": {}
             }
         },
         "tricks": {
             "Combat": {
                 "long_name": "Combat",
+                "description": "",
+                "extra": {}
+            },
+            "Movement": {
+                "long_name": "Movement",
                 "description": "",
                 "extra": {}
             }
@@ -183,6 +228,71 @@
                             }
                         },
                         "lock": null
+                    },
+                    "L0 Locked Door": {
+                        "extra": {},
+                        "requirement": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "Level0Locks",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "lock": null
+                    },
+                    "L1 Locked Door": {
+                        "extra": {},
+                        "requirement": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "Level1Locks",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "lock": null
+                    },
+                    "L2 Locked Door": {
+                        "extra": {},
+                        "requirement": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "Level2Locks",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "lock": null
+                    },
+                    "L3 Locked Door": {
+                        "extra": {},
+                        "requirement": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "Level3Locks",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "lock": null
+                    },
+                    "L4 Locked Door": {
+                        "extra": {},
+                        "requirement": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "Level4Locks",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "lock": null
                     }
                 },
                 "dock_rando": null
@@ -218,6 +328,9 @@
     },
     "used_trick_levels": {
         "Combat": [
+            1
+        ],
+        "Movement": [
             1
         ]
     },
