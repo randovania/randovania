@@ -1,6 +1,935 @@
 ----------------
 Sector 5 Elevator
+Extra - map_name: s5_elevator
 > Elevator to Main Deck; Heals? False
   * Layers: default
   * Elevator to Elevator to Sector 5/Elevator to Sector 5
+  > Door to Entrance Nav Room
+      Trivial
+
+> Door to Entrance Nav Room; Heals? False
+  * Layers: default
+  * L0 Hatch to Entrance Nav Room/Door to Sector 5 Elevator
+  > Elevator to Main Deck
+      Trivial
+
+----------------
+Entrance Nav Room
+Extra - map_name: generic_nav
+> Door to Sector 5 Elevator; Heals? False
+  * Layers: default
+  * L0 Hatch to Sector 5 Elevator/Door to Entrance Nav Room
+  > Door to Entrance Save Station
+      Trivial
+
+> Door to Entrance Save Station; Heals? False
+  * Layers: default
+  * Open Hatch to Entrance Save Station/Door to Entrance Nav Room
+  > Door to Sector 5 Elevator
+      Trivial
+
+----------------
+Entrance Save Station
+Extra - map_name: generic_save
+> Door to Entrance Nav Room; Heals? False
+  * Layers: default
+  * L0 Hatch to Entrance Nav Room/Door to Entrance Save Station
+  > Door to Entrance Recharge Station
+      Trivial
+
+> Door to Entrance Recharge Station; Heals? False
+  * Layers: default
+  * L0 Hatch to Entrance Recharge Station/Door to Entrance Save Station
+  > Door to Entrance Nav Room
+      Trivial
+
+----------------
+Entrance Recharge Station
+Extra - map_name: generic_recharge
+> Door to Entrance Shaft; Heals? False
+  * Layers: default
+  * L0 Hatch to Entrance Shaft/Door to Entrance Recharge Station
+  > Door to Entrance Save Station
+      Trivial
+
+> Door to Entrance Save Station; Heals? False
+  * Layers: default
+  * L0 Hatch to Entrance Save Station/Door to Entrance Recharge Station
+  > Door to Entrance Shaft
+      Trivial
+
+----------------
+Entrance Shaft
+Extra - map_name: s5_shaft
+> Door to Entrance Recharge Station; Heals? False
+  * Layers: default
+  * L0 Hatch to Entrance Recharge Station/Door to Entrance Shaft
+  > Door to Wreck Room
+      Missiles and Morph Ball
+  > Door to Shortcut Access
+      Trivial
+
+> Door to Wreck Room; Heals? False
+  * Layers: default
+  * L0 Hatch to Wreck Room/Door to Entrance Shaft
+  > Door to Entrance Recharge Station
+      Morph Ball
+
+> Door to Checkpoint; Heals? False
+  * Layers: default
+  * L3 Hatch to Checkpoint/Door to Entrance Shaft
+  > Door to Shortcut Access
+      Trivial
+
+> Door to Shortcut Access; Heals? False
+  * Layers: default
+  * L3 Hatch to Shortcut Access/Door to Entrance Shaft
+  > Door to Entrance Recharge Station
+      High Jump or Space Jump
+  > Door to Checkpoint
+      Trivial
+
+----------------
+Shortcut Access
+Extra - map_name: s5_shortcut_access
+> Door to Entrance Shaft; Heals? False
+  * Layers: default
+  * L3 Hatch to Entrance Shaft/Door to Shortcut Access
+  > Pickup (Missile Exp)
+      Trivial
+  > Door to Connection to Sector 6
+      Trivial
+
+> Pickup (Missile Exp); Heals? False
+  * Layers: default
+  * Pickup 45; Category? Minor
+  > Door to Entrance Shaft
+      Trivial
+
+> Door to Connection to Sector 6; Heals? False
+  * Layers: default
+  * L0 Hatch to Connection to Sector 6/Door to Shortcut Access
+  > Door to Entrance Shaft
+      Screw Attack
+
+----------------
+Connection to Sector 6
+Extra - map_name: s5_to_s6
+> Door to Shortcut Access; Heals? False
+  * Layers: default
+  * L0 Hatch to Shortcut Access/Door to Connection to Sector 6
+  > 6
+      Trivial
+
+> 6; Heals? False
+  * Layers: default
+  > Door to Shortcut Access
+      Trivial
+
+----------------
+Checkpoint
+Extra - map_name: s5_checkpoint
+> Door to Entrance Shaft; Heals? False
+  * Layers: default
+  * L3 Hatch to Entrance Shaft/Door to Checkpoint
+  > Door to Wreck Room
+      Trivial
+
+> Door to Wreck Room; Heals? False
+  * Layers: default
+  * L3 Hatch to Wreck Room/Door to Checkpoint
+  > Door to Entrance Shaft
+      Trivial
+  > Pickup (Missile Exp)
+      Can Use Any Bombs
+
+> Pickup (Missile Exp); Heals? False
+  * Layers: default
+  * Pickup 33; Category? Minor
+  > Door to Wreck Room
+      Trivial
+
+----------------
+Wreck Room
+Extra - map_name: s5_wreck_room
+> Door to Speed Puzzle; Heals? False
+  * Layers: default
+  * L0 Hatch to Speed Puzzle/Door to Wreck Room
+  > Door to Entrance Shaft
+      Trivial
+
+> Door to Entrance Shaft; Heals? False
+  * Layers: default
+  * L0 Hatch to Entrance Shaft/Door to Wreck Room
+  > Door to Speed Puzzle
+      Trivial
+  > Door to Checkpoint
+      Trivial
+
+> Door to Checkpoint; Heals? False
+  * Layers: default
+  * L3 Hatch to Checkpoint/Door to Wreck Room
+  > Door to Entrance Shaft
+      Trivial
+  > Other to Hub
+      Trivial
+
+> Other to Hub; Heals? False
+  * Layers: default
+  * Open Passage to Hub/Other to Wreck Room
+  > Door to Checkpoint
+      Trivial
+
+----------------
+Speed Puzzle
+Extra - map_name: s5_speed_puzzle
+> Door to Wreck Room; Heals? False
+  * Layers: default
+  * L0 Hatch to Wreck Room/Door to Speed Puzzle
+  > Pickup (Missile Exp)
+      Trivial
+  > Pickup (PB Expansion)
+      Speed Booster
+
+> Pickup (Missile Exp); Heals? False
+  * Layers: default
+  * Pickup 42; Category? Minor
+  > Door to Wreck Room
+      Trivial
+
+> Pickup (PB Expansion); Heals? False
+  * Layers: default
+  * Pickup 43; Category? Minor
+  > Door to Wreck Room
+      Trivial
+
+----------------
+Hub
+Extra - map_name: s5_hub
+> Other to Wreck Room; Heals? False
+  * Layers: default
+  * Open Passage to Wreck Room/Other to Hub
+  > Door to Data Room Checkpoint
+      Trivial
+  > Other to Tall Room
+      Trivial
+
+> Door to Crumble Puzzle; Heals? False
+  * Layers: default
+  * L0 Hatch to Crumble Puzzle/Door to Hub
+  > Door to Data Room Checkpoint
+      Can Use Any Bombs
+
+> Door to Security Lockdown; Heals? False
+  * Layers: default
+  * L0 Hatch to Security Lockdown/Door to Hub
+  > Door to One Way
+      Speed Booster
+  > Door to Data Room Checkpoint
+      High Jump or Space Jump
+
+> Door to One Way; Heals? False
+  * Layers: default
+  * L3 Hatch to One Way/Door to Hub
+  > Door to Security Lockdown
+      High Jump or Space Jump
+  > Door to Bomb Trap
+      Can Use Any Bombs
+
+> Door to Bomb Trap; Heals? False
+  * Layers: default
+  * L0 Hatch to Bomb Trap/Door to Hub
+  > Door to One Way
+      Can Use Any Bombs
+
+> Door to Data Room Checkpoint; Heals? False
+  * Layers: default
+  * L0 Hatch to Data Room Checkpoint/Door to Hub
+  > Other to Wreck Room
+      High Jump or Space Jump
+  > Door to Crumble Puzzle
+      Can Use Any Bombs
+  > Door to Security Lockdown
+      Trivial
+
+> Other to Tall Room; Heals? False
+  * Layers: default
+  * Open Passage to Tall Room/Other to Hub
+  > Other to Wreck Room
+      Trivial
+
+----------------
+Tall Room
+Extra - map_name: s5_tall_room
+> Other to Hub; Heals? False
+  * Layers: default
+  * Open Passage to Hub/Other to Tall Room
+  > Other to Data Room
+      Trivial
+  > Door to Connection to Sector 3
+      High Jump or Space Jump
+
+> Other to Data Room; Heals? False
+  * Layers: default
+  * Open Passage to Data Room/Other to Tall Room
+  > Other to Hub
+      Trivial
+
+> Door to Connection to Sector 3; Heals? False
+  * Layers: default
+  * L0 Hatch to Connection to Sector 3/Door to Tall Room
+  > Other to Hub
+      Trivial
+  > Pickup (PB Expansion)
+      All of the following:
+          Can Use Any Bombs
+          High Jump or Space Jump
+
+> Pickup (PB Expansion); Heals? False
+  * Layers: default
+  * Pickup 44; Category? Minor
+  > Door to Connection to Sector 3
+      Trivial
+
+----------------
+Connection to Sector 3
+Extra - map_name: s5_to_s3
+> Door to Tall Room; Heals? False
+  * Layers: default
+  * L0 Hatch to Tall Room/Door to Connection to Sector 3
+  > 3
+      Trivial
+
+> 3; Heals? False
+  * Layers: default
+  > Door to Tall Room
+      Trivial
+
+----------------
+Data Room Checkpoint
+Extra - map_name: s5_data_checkpoint
+> Door to Hub; Heals? False
+  * Layers: default
+  * L0 Hatch to Hub/Door to Data Room Checkpoint
+  > Door to Data Room
+      Trivial
+
+> Door to Data Room; Heals? False
+  * Layers: default
+  * L3 Hatch to Data Room/Door to Data Room Checkpoint
+  > Door to Hub
+      Wave Beam
+
+----------------
+Data Room
+Extra - map_name: s5_data_room
+> Other to Tall Room; Heals? False
+  * Layers: default
+  * Open Passage to Tall Room/Other to Data Room
+  > Other to Wrecked Hallway
+      Trivial
+  > Door to Data Room Checkpoint
+      Trivial
+
+> Other to Wrecked Hallway; Heals? False
+  * Layers: default
+  * Open Passage to Wrecked Hallway/Other to Data Room
+  > Other to Tall Room
+      Trivial
+
+> Door to Data Room Checkpoint; Heals? False
+  * Layers: default
+  * L3 Hatch to Data Room Checkpoint/Door to Data Room
+  > Other to Tall Room
+      High Jump or Space Jump
+
+----------------
+Bomb Trap
+Extra - map_name: s5_bomb_trap
+> Door to Hub; Heals? False
+  * Layers: default
+  * L0 Hatch to Hub/Door to Bomb Trap
+  > Door to Lower Shaft
+      Can Use Any Bombs
+
+> Door to Lower Shaft; Heals? False
+  * Layers: default
+  * L0 Hatch to Lower Shaft/Door to Bomb Trap
+  > Door to Hub
+      Can Use Any Bombs
+
+----------------
+Lower Shaft
+Extra - map_name: s5_lower_shaft
+> Door to Bomb Trap; Heals? False
+  * Layers: default
+  * L0 Hatch to Bomb Trap/Door to Lower Shaft
+  > Door to One Way Access
+      Trivial
+
+> Door to One Way Access; Heals? False
+  * Layers: default
+  * L0 Hatch to One Way Access/Door to Lower Shaft
+  > Door to Bomb Trap
+      Space Jump
+  > Door to Lower Save Station
+      Trivial
+
+> Door to Lower Save Station; Heals? False
+  * Layers: default
+  * L0 Hatch to Lower Save Station/Door to Lower Shaft
+  > Door to One Way Access
+      Missiles or Space Jump
+  > Door to Lower Corridor
+      Can Use Power Bombs
+  > Door to Ladder
+      Trivial
+
+> Door to Lower Corridor; Heals? False
+  * Layers: default
+  * L0 Hatch to Lower Corridor/Door to Lower Shaft
+
+> Door to Ladder; Heals? False
+  * Layers: default
+  * L3 Hatch to Ladder/Door to Lower Shaft
+  > Door to Lower Save Station
+      Trivial
+
+----------------
+Ladder
+Extra - map_name: s5_ladder
+> Door to Lower Shaft; Heals? False
+  * Layers: default
+  * L3 Hatch to Lower Shaft/Door to Ladder
+  > Door to Hidden Storage
+      Trivial
+  > Other to Ice Puzzle
+      Trivial
+
+> Door to Hidden Storage; Heals? False
+  * Layers: default
+  * L0 Hatch to Hidden Storage/Door to Ladder
+  > Door to Lower Shaft
+      Trivial
+
+> Other to Ice Puzzle; Heals? False
+  * Layers: default
+  * Tunnel to Ice Puzzle/Other to Ladder
+  > Door to Lower Shaft
+      Trivial
+
+----------------
+Hidden Storage
+Extra - map_name: s5_hidden_storage
+> Pickup (Energy Tank); Heals? False
+  * Layers: default
+  * Pickup 37; Category? Minor
+  > Door to Ladder
+      Morph Ball
+
+> Door to Ladder; Heals? False
+  * Layers: default
+  * L0 Hatch to Ladder/Door to Hidden Storage
+  > Pickup (Energy Tank)
+      Can Use Any Bombs
+
+----------------
+Ice Puzzle
+Extra - map_name: s5_ice_puzzle
+> Other to Ladder; Heals? False
+  * Layers: default
+  * Tunnel to Ladder/Other to Ice Puzzle
+  > Pickup (Missile Exp)
+      Trivial
+
+> Pickup (Missile Exp); Heals? False
+  * Layers: default
+  * Pickup 38; Category? Minor
+  > Other to Ladder
+      Trivial
+
+----------------
+Lower Corridor
+Extra - map_name: s5_lower_corridor
+> Door to Security Shaft East; Heals? False
+  * Layers: default
+  * L0 Hatch to Security Shaft East/Door to Lower Corridor
+  > Door to Lower Shaft
+      Morph Ball
+
+> Door to Lower Shaft; Heals? False
+  * Layers: default
+  * L0 Hatch to Lower Shaft/Door to Lower Corridor
+  > Door to Security Shaft East
+      Morph Ball
+
+----------------
+Lower Save Station
+Extra - map_name: generic_save
+> Door to Dead End; Heals? False
+  * Layers: default
+  * L0 Hatch to Dead End/Door to Lower Save Station
+  > Door to Lower Shaft
+      Trivial
+
+> Door to Lower Shaft; Heals? False
+  * Layers: default
+  * L0 Hatch to Lower Shaft/Door to Lower Save Station
+  > Door to Dead End
+      Trivial
+
+----------------
+Dead End
+Extra - map_name: s5_dead_end
+> Door to Lower Save Station; Heals? False
+  * Layers: default
+  * L0 Hatch to Lower Save Station/Door to Dead End
+
+----------------
+Security Shaft East
+Extra - map_name: s5_security_shaft_east
+> Door to Security Station L3; Heals? False
+  * Layers: default
+  * L0 Hatch to Security Station L3/Door to Security Shaft East
+  > Door to Lower Corridor
+      Trivial
+  > Door to Boring Room
+      High Jump and Ice Missiles
+
+> Door to Lower Corridor; Heals? False
+  * Layers: default
+  * L0 Hatch to Lower Corridor/Door to Security Shaft East
+  > Door to Security Station L3
+      Trivial
+  > Pickup (PB Expansion)
+      Trivial
+
+> Door to Boring Room; Heals? False
+  * Layers: default
+  * L0 Hatch to Boring Room/Door to Security Shaft East
+  > Door to Security Station L3
+      Trivial
+
+> Pickup (PB Expansion); Heals? False
+  * Layers: default
+  * Pickup 41; Category? Minor
+  > Door to Lower Corridor
+      Trivial
+
+----------------
+Security Station L3
+Extra - map_name: s5_security
+> Door to Security Shaft East; Heals? False
+  * Layers: default
+  * L0 Hatch to Security Shaft East/Door to Security Station L3
+  > Door to Crumble Climb
+      Trivial
+  > Event - L3 Locks
+      Trivial
+
+> Door to Crumble Climb; Heals? False
+  * Layers: default
+  * L3 Hatch to Crumble Climb/Door to Security Station L3
+  > Door to Security Shaft East
+      Trivial
+
+> Event - L3 Locks; Heals? False
+  * Layers: default
+  * Event Level3Locks
+  > Door to Security Shaft East
+      Trivial
+
+----------------
+Boring Room
+Extra - map_name: s5_boring_room
+> Pickup (PB Expansion); Heals? False
+  * Layers: default
+  * Pickup 32; Category? Minor
+  > Door to Security Shaft East
+      Trivial
+
+> Door to Security Shaft East; Heals? False
+  * Layers: default
+  * L0 Hatch to Security Shaft East/Door to Boring Room
+  > Pickup (PB Expansion)
+      Trivial
+
+----------------
+One Way
+Extra - map_name: s5_one_way
+> Door to Hub; Heals? False
+  * Layers: default
+  * L3 Hatch to Hub/Door to One Way
+  > Door to One Way Access
+      Speed Booster
+
+> Door to One Way Access; Heals? False
+  * Layers: default
+  * L0 Hatch to One Way Access/Door to One Way
+  > Door to Hub
+      Speed Booster
+
+----------------
+One Way Access
+Extra - map_name: s5_one_way_access
+> Door to One Way; Heals? False
+  * Layers: default
+  * L0 Hatch to One Way/Door to One Way Access
+  > Door to Lower Shaft
+      Trivial
+
+> Door to Lower Shaft; Heals? False
+  * Layers: default
+  * L0 Hatch to Lower Shaft/Door to One Way Access
+  > Door to One Way
+      Trivial
+
+----------------
+Crumble Climb
+Extra - map_name: s5_crumble_climb
+> Door to Security Station L3; Heals? False
+  * Layers: default
+  * L3 Hatch to Security Station L3/Door to Crumble Climb
+  > Door to Security Save Station
+      Trivial
+
+> Door to Security Save Station; Heals? False
+  * Layers: default
+  * L3 Hatch to Security Save Station/Door to Crumble Climb
+  > Door to Security Station L3
+      Trivial
+
+----------------
+Security Save Station
+Extra - map_name: s5_west_save
+> Door to Security Lockdown; Heals? False
+  * Layers: default
+  * L0 Hatch to Security Lockdown/Door to Security Save Station
+  > Door to Crumble Climb
+      Trivial
+
+> Door to Crumble Climb; Heals? False
+  * Layers: default
+  * L3 Hatch to Crumble Climb/Door to Security Save Station
+  > Door to Security Lockdown
+      Trivial
+
+----------------
+Security Lockdown
+Extra - map_name: s5_security_lockdown
+> Door to Security Save Station; Heals? False
+  * Layers: default
+  * L0 Hatch to Security Save Station/Door to Security Lockdown
+  > Door to Hub
+      Trivial
+
+> Door to Hub; Heals? False
+  * Layers: default
+  * L0 Hatch to Hub/Door to Security Lockdown
+  > Door to Security Save Station
+      Wave Beam
+
+----------------
+Crumble Puzzle
+Extra - map_name: s5_crumble_puzzle
+> Pickup (PB Expansion); Heals? False
+  * Layers: default
+  * Pickup 35; Category? Minor
+  > Door to Hub
+      Trivial
+
+> Door to Hub; Heals? False
+  * Layers: default
+  * L0 Hatch to Hub/Door to Crumble Puzzle
+  > Pickup (PB Expansion)
+      All of the following:
+          Can Use Bombs or Can Use Springball
+          Diffusion Missiles or Ice Beam or Ice Missiles
+
+----------------
+Wrecked Hallway
+Extra - map_name: s5_wrecked_hallway
+> Other to Data Room; Heals? False
+  * Layers: default
+  * Open Passage to Data Room/Other to Wrecked Hallway
+  > Other to Water Shaft
+      Trivial
+
+> Other to Water Shaft; Heals? False
+  * Layers: default
+  * Open Passage to Water Shaft/Other to Wrecked Hallway
+  > Other to Data Room
+      Trivial
+
+----------------
+Water Shaft
+Extra - map_name: s5_water_crumble
+> Other to Wrecked Hallway; Heals? False
+  * Layers: default
+  * Open Passage to Wrecked Hallway/Other to Water Shaft
+  > Door to Sea Pirate Home
+      Trivial
+
+> Other to Bomb Puzzle; Heals? False
+  * Layers: default
+  * Tunnel to Bomb Puzzle/Other to Water Shaft
+  > Door to Sea Pirate Home
+      Trivial
+
+> Door to Sea Pirate Home; Heals? False
+  * Layers: default
+  * L0 Hatch to Sea Pirate Home/Door to Water Shaft
+  > Other to Wrecked Hallway
+      Gravity Suit and Screw Attack and Space Jump
+  > Other to Bomb Puzzle
+      Gravity Suit and Missiles and Space Jump
+
+----------------
+Bomb Puzzle
+Extra - map_name: s5_bomb_puzzle
+> Pickup (Energy Tank); Heals? False
+  * Layers: default
+  * Pickup 31; Category? Minor
+  > Other to Water Shaft
+      Morph Ball
+
+> Other to Water Shaft; Heals? False
+  * Layers: default
+  * Tunnel to Water Shaft/Other to Bomb Puzzle
+  > Pickup (Energy Tank)
+      Can Use Bombs or Can Use Springball
+
+----------------
+Sea Pirate Home
+Extra - map_name: s5_sea_pirate
+> Door to Water Shaft; Heals? False
+  * Layers: default
+  * L0 Hatch to Water Shaft/Door to Sea Pirate Home
+  > Door to Connection to Lower Sector 4
+      Trivial
+
+> Door to Wraparound; Heals? False
+  * Layers: default
+  * L0 Hatch to Wraparound/Door to Sea Pirate Home
+  > Door to Connection to Lower Sector 4
+      Trivial
+
+> Door to Connection to Lower Sector 4; Heals? False
+  * Layers: default
+  * L0 Hatch to Connection to Lower Sector 4/Door to Sea Pirate Home
+  > Door to Water Shaft
+      Trivial
+  > Door to Wraparound
+      Gravity Suit or High Jump
+
+----------------
+Wraparound
+Extra - map_name: s5_wraparound
+> Door to East Hub; Heals? False
+  * Layers: default
+  * L0 Hatch to East Hub/Door to Wraparound
+  > Door to Sea Pirate Home
+      Trivial
+
+> Door to Sea Pirate Home; Heals? False
+  * Layers: default
+  * L0 Hatch to Sea Pirate Home/Door to Wraparound
+  > Door to East Hub
+      Trivial
+
+----------------
+East Hub
+Extra - map_name: s5_east_hub
+> Door to Wraparound; Heals? False
+  * Layers: default
+  * L0 Hatch to Wraparound/Door to East Hub
+  > Door to Nightmare Escape
+      Trivial
+  > Middle Level
+      High Jump or Space Jump
+
+> Other to Item Room; Heals? False
+  * Layers: default
+  * Open Passage to Item Room/Other to East Hub
+  > Middle Level
+      Trivial
+
+> Door to East Recharge Station; Heals? False
+  * Layers: default
+  * L0 Hatch to East Recharge Station/Door to East Hub
+  > Middle Level
+      Can Use Any Bombs
+
+> Door to East Save Station; Heals? False
+  * Layers: default
+  * L0 Hatch to East Save Station/Door to East Hub
+  > Middle Level
+      Trivial
+
+> Other to Up and Over; Heals? False
+  * Layers: default
+  * Open Passage to Up and Over/Other to East Hub
+  > Middle Level
+      Trivial
+
+> Door to Nightmare Escape; Heals? False
+  * Layers: default
+  * L0 Hatch to Nightmare Escape/Door to East Hub
+  > Door to Wraparound
+      Trivial
+
+> Pickup (PB Expansion); Heals? False
+  * Layers: default
+  * Pickup 36; Category? Minor
+  > Middle Level
+      Can Use Any Bombs
+
+> Middle Level; Heals? False
+  * Layers: default
+  > Door to Wraparound
+      Trivial
+  > Other to Item Room
+      Trivial
+  > Door to East Recharge Station
+      Can Use Any Bombs
+  > Door to East Save Station
+      Trivial
+  > Other to Up and Over
+      Trivial
+  > Pickup (PB Expansion)
+      Any of the following:
+          Can Use Any Bombs
+          Can Use Power Bombs and Can Use Springball
+
+----------------
+Item Room
+Extra - map_name: s5_item_room
+> Other to East Hub; Heals? False
+  * Layers: default
+  * Open Passage to East Hub/Other to Item Room
+  > Pickup (PB Expansion)
+      Trivial
+
+> Pickup (PB Expansion); Heals? False
+  * Layers: default
+  * Pickup 39; Category? Minor
+  > Other to East Hub
+      Trivial
+
+----------------
+East Recharge Station
+Extra - map_name: s5_east_recharge
+> Door to East Hub; Heals? False
+  * Layers: default
+  * L0 Hatch to East Hub/Door to East Recharge Station
+
+----------------
+East Save Station
+Extra - map_name: s5_east_save
+> Door to East Hub; Heals? False
+  * Layers: default
+  * L0 Hatch to East Hub/Door to East Save Station
+
+----------------
+Up and Over
+Extra - map_name: s5_up_and_over
+> Other to East Hub; Heals? False
+  * Layers: default
+  * Open Passage to East Hub/Other to Up and Over
+  > Door to Nightmare Access
+      Space Jump
+
+> Door to Nightmare Access; Heals? False
+  * Layers: default
+  * L0 Hatch to Nightmare Access/Door to Up and Over
+  > Other to East Hub
+      Trivial
+
+----------------
+Nightmare Access
+Extra - map_name: s5_nightmare_access
+> Door to Up and Over; Heals? False
+  * Layers: default
+  * L0 Hatch to Up and Over/Door to Nightmare Access
+  > Other to Nightmare Arena
+      Morph Ball
+  > Pickup (Energy Tank)
+      Morph Ball
+
+> Other to Nightmare Arena; Heals? False
+  * Layers: default
+  * Open Passage to Nightmare Arena/Other to Nightmare Access
+
+> Pickup (Energy Tank); Heals? False
+  * Layers: default
+  * Pickup 40; Category? Minor
+  > Other to Nightmare Arena
+      Morph Ball
+
+----------------
+Nightmare Arena
+Extra - map_name: s5_nightmare_arena
+> Other to Nightmare Access; Heals? False
+  * Layers: default
+  * Open Passage to Nightmare Access/Other to Nightmare Arena
+  > Event - Nightmare
+      # dmg
+      Missiles
+
+> Door to Nightmare Escape; Heals? False
+  * Layers: default
+  * L0 Hatch to Nightmare Escape/Door to Nightmare Arena
+  > Event - Nightmare
+      Trivial
+
+> Event - Nightmare; Heals? False
+  * Layers: default
+  * Event Nightmare
+  > Door to Nightmare Escape
+      Trivial
+  > Pickup (Gravity Suit)
+      Trivial
+
+> Pickup (Gravity Suit); Heals? False
+  * Layers: default
+  * Pickup 46; Category? Major
+  > Event - Nightmare
+      Trivial
+
+----------------
+Nightmare Escape
+Extra - map_name: s5_nightmare_escape
+> Door to Nightmare Arena; Heals? False
+  * Layers: default
+  * L0 Hatch to Nightmare Arena/Door to Nightmare Escape
+  > Door to East Hub
+      Gravity Suit and Speed Booster
+
+> Door to East Hub; Heals? False
+  * Layers: default
+  * L0 Hatch to East Hub/Door to Nightmare Escape
+  > Door to Nightmare Arena
+      Gravity Suit and Speed Booster
+
+----------------
+Connection to Lower Sector 4
+Extra - map_name: s5_lower_s4
+> Door to Sea Pirate Home; Heals? False
+  * Layers: default
+  * L0 Hatch to Sea Pirate Home/Door to Connection to Lower Sector 4
+  > s4
+      Gravity Suit and Speed Booster
+  > Pickup (PB Expansion)
+      Gravity Suit and Speed Booster
+
+> s4; Heals? False
+  * Layers: default
+  > Door to Sea Pirate Home
+      Gravity Suit and Speed Booster
+
+> Pickup (PB Expansion); Heals? False
+  * Layers: default
+  * Pickup 34; Category? Minor
+  > Door to Sea Pirate Home
+      Trivial
 
