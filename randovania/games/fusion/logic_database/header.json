@@ -172,6 +172,14 @@
             "Reactor": {
                 "long_name": "Reactor",
                 "extra": {}
+            },
+            "Controls": {
+                "long_name": "Controls",
+                "extra": {}
+            },
+            "Animals": {
+                "long_name": "Animals",
+                "extra": {}
             }
         },
         "tricks": {
@@ -182,6 +190,11 @@
             },
             "Movement": {
                 "long_name": "Movement",
+                "description": "",
+                "extra": {}
+            },
+            "ShinesparkTrick": {
+                "long_name": "ShinesparkTrick",
                 "description": "",
                 "extra": {}
             }
@@ -280,6 +293,58 @@
                                         "data": {
                                             "type": "items",
                                             "name": "PowerBombs",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            },
+            "Can Kill Eye Door": {
+                "type": "or",
+                "data": {
+                    "comment": null,
+                    "items": [
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Missiles",
+                                "amount": 5,
+                                "negate": false
+                            }
+                        },
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "ChargeBeam",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Missiles",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "SuperMissiles",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -394,6 +459,23 @@
                             }
                         },
                         "lock": null
+                    },
+                    "Eye Door": {
+                        "extra": {},
+                        "requirement": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "lock": {
+                            "lock_type": "front-blast-back-free-unlock",
+                            "requirement": {
+                                "type": "template",
+                                "data": "Can Kill Eye Door"
+                            }
+                        }
                     }
                 },
                 "dock_rando": null
@@ -432,6 +514,9 @@
             1
         ],
         "Movement": [
+            1
+        ],
+        "ShinesparkTrick": [
             1
         ]
     },
