@@ -205,7 +205,7 @@
         },
         "damage": {
             "NormalDamage": {
-                "long_name": "Normal Damage",
+                "long_name": "Open Hatch Damage",
                 "extra": {}
             },
             "HeatDamage": {
@@ -396,7 +396,7 @@
                 "name": "Door",
                 "extra": {},
                 "items": {
-                    "Normal": {
+                    "Open Hatch": {
                         "extra": {},
                         "requirement": {
                             "type": "and",
@@ -407,7 +407,7 @@
                         },
                         "lock": null
                     },
-                    "L0 Locked Door": {
+                    "L0 Hatch": {
                         "extra": {},
                         "requirement": {
                             "type": "resource",
@@ -420,7 +420,7 @@
                         },
                         "lock": null
                     },
-                    "L1 Locked Door": {
+                    "L1 Hatch": {
                         "extra": {},
                         "requirement": {
                             "type": "resource",
@@ -433,7 +433,7 @@
                         },
                         "lock": null
                     },
-                    "L2 Locked Door": {
+                    "L2 Hatch": {
                         "extra": {},
                         "requirement": {
                             "type": "resource",
@@ -446,7 +446,7 @@
                         },
                         "lock": null
                     },
-                    "L3 Locked Door": {
+                    "L3 Hatch": {
                         "extra": {},
                         "requirement": {
                             "type": "resource",
@@ -459,7 +459,7 @@
                         },
                         "lock": null
                     },
-                    "L4 Locked Door": {
+                    "L4 Hatch": {
                         "extra": {},
                         "requirement": {
                             "type": "resource",
@@ -536,7 +536,7 @@
                 "name": "Other",
                 "extra": {},
                 "items": {
-                    "Not Determined": {
+                    "Tunnel": {
                         "extra": {},
                         "requirement": {
                             "type": "resource",
@@ -548,6 +548,17 @@
                             }
                         },
                         "lock": null
+                    },
+                    "Open Passage": {
+                        "extra": {},
+                        "requirement": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "lock": null
                     }
                 },
                 "dock_rando": null
@@ -555,7 +566,7 @@
         },
         "default_weakness": {
             "type": "Other",
-            "name": "Not Determined"
+            "name": "Tunnel"
         },
         "dock_rando": {
             "force_change_two_way": false,
