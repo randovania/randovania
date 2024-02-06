@@ -1,2 +1,793 @@
 ----------------
 Sector 3 Elevator
+Extra - map_name: s3_elevator
+> Elevator to Main Deck; Heals? False
+  * Layers: default
+  * Elevator to Elevator to Sector 3/Elevator to Sector 3
+  > Door to Entrance Nav Room
+      Trivial
+
+> Door to Entrance Nav Room; Heals? False
+  * Layers: default
+  * L0 Locked Door to Entrance Nav Room/Door to Sector 3 Elevator
+  > Elevator to Main Deck
+      Trivial
+
+----------------
+Entrance Nav Room
+Extra - map_name: generic_nav
+> Door to Entrance Save Station; Heals? False
+  * Layers: default
+  * Normal to Entrance Save Station/Door to Entrance Nav Room
+  > Door to Sector 3 Elevator
+      Trivial
+
+> Door to Sector 3 Elevator; Heals? False
+  * Layers: default
+  * Normal to Sector 3 Elevator/Door to Entrance Nav Room
+  > Door to Entrance Save Station
+      Trivial
+
+----------------
+Entrance Save Station
+Extra - map_name: generic_save
+> Door to Entrance Recharge Station; Heals? False
+  * Layers: default
+  * L0 Locked Door to Entrance Recharge Station/Door to Entrance Save Station
+  > Door to Entrance Nav Room
+      Trivial
+
+> Door to Entrance Nav Room; Heals? False
+  * Layers: default
+  * L0 Locked Door to Entrance Nav Room/Door to Entrance Save Station
+  > Door to Entrance Recharge Station
+      Trivial
+
+----------------
+Entrance Recharge Station
+Extra - map_name: generic_recharge
+> Door to Entrance Save Station; Heals? False
+  * Layers: default
+  * L0 Locked Door to Entrance Save Station/Door to Entrance Recharge Station
+  > Door to Entrance Hub
+      Trivial
+
+> Door to Entrance Hub; Heals? False
+  * Layers: default
+  * L0 Locked Door to Entrance Hub/Door to Entrance Recharge Station
+  > Door to Entrance Save Station
+      Trivial
+
+----------------
+Entrance Hub
+Extra - map_name: s3_hub
+> Door to Entrance Recharge Station; Heals? False
+  * Layers: default
+  * L0 Locked Door to Entrance Recharge Station/Door to Entrance Hub
+  > Door to Monkey Bars
+      Trivial
+
+> Door to Monkey Bars; Heals? False
+  * Layers: default
+  * L0 Locked Door to Monkey Bars/Door to Entrance Hub
+  > Door to Entrance Recharge Station
+      Trivial
+  > Door to Security Station Access
+      Trivial
+  > Door to Shaft
+      Trivial
+  > Other to Upper Room
+      Screw Attack and Space Jump
+
+> Door to Security Station Access; Heals? False
+  * Layers: default
+  * L0 Locked Door to Security Station Access/Door to Entrance Hub
+  > Door to Monkey Bars
+      Trivial
+
+> Door to Shaft; Heals? False
+  * Layers: default
+  * L0 Locked Door to Shaft/Door to Entrance Hub
+  > Door to Monkey Bars
+      Trivial
+
+> Other to Upper Room; Heals? False
+  * Layers: default
+  * Not Determined to Upper Room/Other to Entrance Hub
+  > Door to Monkey Bars
+      Trivial
+
+----------------
+Monkey Bars
+Extra - map_name: s3_monkey_bars
+> Door to Entrance Hub; Heals? False
+  * Layers: default
+  * L0 Locked Door to Entrance Hub/Door to Monkey Bars
+  > Door to Western Room
+      Varia Suit
+
+> Door to Western Room; Heals? False
+  * Layers: default
+  * L0 Locked Door to Western Room/Door to Monkey Bars
+  > Door to Entrance Hub
+      Varia Suit
+
+----------------
+Western Room
+Extra - map_name: s3_west
+> Door to Sector 5 Access; Heals? False
+  * Layers: default
+  * L0 Locked Door to Sector 5 Access/Door to Western Room
+  > Door to Monkey Bars
+      All of the following:
+          Screw Attack
+          High Jump or Space Jump or Speed Booster
+
+> Door to Monkey Bars; Heals? False
+  * Layers: default
+  * L0 Locked Door to Monkey Bars/Door to Western Room
+  > Door to Sector 5 Access
+      Screw Attack
+  > Pickup (Missile Exp)
+      Trivial
+  > Pickup (Energy Tank)
+      All of the following:
+          Speed Booster
+          Any of the following:
+              Space Jump
+              High Jump and Can Use Any Bombs
+
+> Pickup (Missile Exp); Heals? False
+  * Layers: default
+  * Pickup 27; Category? Minor
+  > Door to Monkey Bars
+      Trivial
+
+> Pickup (Energy Tank); Heals? False
+  * Layers: default
+  * Pickup 26; Category? Minor
+  > Door to Monkey Bars
+      Trivial
+
+----------------
+Sector 5 Access
+Extra - map_name: s3_to_s5
+> Pickup (PB Expansion); Heals? False
+  * Layers: default
+  * Pickup 21; Category? Minor
+  > Door to Western Room
+      Can Use Any Bombs
+
+> Door to Western Room; Heals? False
+  * Layers: default
+  * L0 Locked Door to Western Room/Door to Sector 5 Access
+  > Pickup (PB Expansion)
+      Can Use Any Bombs
+  > sec 5
+      Trivial
+
+> sec 5; Heals? False
+  * Layers: default
+  > Door to Western Room
+      Trivial
+
+----------------
+Security Station Access
+Extra - map_name: s3_security_access
+> Door to Entrance Hub; Heals? False
+  * Layers: default
+  * L0 Locked Door to Entrance Hub/Door to Security Station Access
+  > Room Center
+      Speed Booster
+
+> Pickup (Missile Expansion); Heals? False
+  * Layers: default
+  * Pickup 22; Category? Minor
+  > Room Center
+      Trivial
+
+> Other to Security Station L2; Heals? False
+  * Layers: default
+  * Not Determined to Security Station L2/Other to Security Station Access
+
+> Door to Security Station L2; Heals? False
+  * Layers: default
+  * L2 Locked Door to Security Station L2/Door to Security Station Access
+  > Room Center
+      Trivial
+
+> Room Center; Heals? False
+  * Layers: default
+  > Door to Entrance Hub
+      Speed Booster
+  > Pickup (Missile Expansion)
+      High Jump or Space Jump
+  > Other to Security Station L2
+      All of the following:
+          Speed Booster
+          High Jump or Space Jump
+  > Door to Security Station L2
+      Trivial
+
+----------------
+Security Station L2
+Extra - map_name: s3_security
+> Other to Security Station Access; Heals? False
+  * Layers: default
+  * Not Determined to Security Station Access/Other to Security Station L2
+  > Door to Security Station Access
+      Morph Ball
+
+> Door to Security Station Access; Heals? False
+  * Layers: default
+  * L2 Locked Door to Security Station Access/Door to Security Station L2
+  > Event - L2 Locks
+      Trivial
+
+> Event - L2 Locks; Heals? False
+  * Layers: default
+  * Event Level2Locks
+  > Door to Security Station Access
+      Trivial
+
+----------------
+Shaft
+Extra - map_name: s3_shaft
+> Door to Entrance Hub; Heals? False
+  * Layers: default
+  * L0 Locked Door to Entrance Hub/Door to Shaft
+  > Door to Speed Corridor
+      Any of the following:
+          Ice Missiles or Wave Beam
+          Morph Ball and Movement (Beginner)
+  > Door to BOB Room
+      Trivial
+
+> Door to Speed Corridor; Heals? False
+  * Layers: default
+  * Normal to Speed Corridor/Door to Shaft
+  > Door to Entrance Hub
+      Trivial
+
+> Door to BOB Room; Heals? False
+  * Layers: default
+  * L2 Locked Door to BOB Room/Door to Shaft
+  > Door to Entrance Hub
+      Trivial
+
+----------------
+Speed Corridor
+Extra - map_name: s3_speed_corridor
+> Door to Shaft; Heals? False
+  * Layers: default
+  * Normal to Shaft/Door to Speed Corridor
+  > Door to Long Shaft West
+      Speed Booster
+
+> Door to Long Shaft West; Heals? False
+  * Layers: default
+  * L0 Locked Door to Long Shaft West/Door to Speed Corridor
+  > Pickup (PB Expansion)
+      All of the following:
+          Can Use Power Bombs
+          High Jump or Space Jump
+
+> Other to BOB Room; Heals? False
+  * Layers: default
+  * Not Determined to BOB Room/Other to Speed Corridor
+  > Door to Shaft
+      Trivial
+
+> Pickup (PB Expansion); Heals? False
+  * Layers: default
+  * Pickup 23; Category? Minor
+  > Door to Long Shaft West
+      All of the following:
+          Can Use Power Bombs
+          High Jump or Space Jump
+
+----------------
+Long Shaft West
+Extra - map_name: s3_west_shaft
+> Door to BOB Room; Heals? False
+  * Layers: default
+  * L0 Locked Door to BOB Room/Door to Long Shaft West
+  > Door to Speed Corridor
+      Trivial
+
+> Door to Speed Corridor; Heals? False
+  * Layers: default
+  * L0 Locked Door to Speed Corridor/Door to Long Shaft West
+  > Door to BOB Room
+      Trivial
+  > Door to Monkey Bars 2
+      Trivial
+  > Door to Trifecta
+      Trivial
+
+> Door to Monkey Bars 2; Heals? False
+  * Layers: default
+  * L2 Locked Door to Monkey Bars 2/Door to Long Shaft West
+  > Door to Speed Corridor
+      Trivial
+
+> Door to Trifecta; Heals? False
+  * Layers: default
+  * L2 Locked Door to Trifecta/Door to Long Shaft West
+  > Door to Speed Corridor
+      Trivial
+
+----------------
+BOB Room
+Extra - map_name: s3_bob
+> Pickup (Missile Exp); Heals? False
+  * Layers: default
+  * Pickup 16; Category? Minor
+  > Door to Long Shaft West
+      Can Use Any Bombs
+
+> Door to Long Shaft West; Heals? False
+  * Layers: default
+  * L0 Locked Door to Long Shaft West/Door to BOB Room
+  > Pickup (Missile Exp)
+      Can Use Any Bombs
+  > Door to Shaft
+      Can Use Any Bombs
+  > Other to Speed Corridor
+      Can Use Any Bombs
+
+> Door to Shaft; Heals? False
+  * Layers: default
+  * L2 Locked Door to Shaft/Door to BOB Room
+  > Door to Long Shaft West
+      Morph Ball
+
+> Other to Speed Corridor; Heals? False
+  * Layers: default
+  * Not Determined to Speed Corridor/Other to BOB Room
+
+----------------
+Upper Room
+Extra - map_name: s3_upper
+> Other to Entrance Hub; Heals? False
+  * Layers: default
+  * Not Determined to Entrance Hub/Other to Upper Room
+  > Bottom of Room
+      Can Use Any Bombs
+
+> Pickup (PB Exp); Heals? False
+  * Layers: default
+  * Pickup 15; Category? Minor
+  > Other to Entrance Hub
+      Trivial
+
+> Pickup (Energy Tank); Heals? False
+  * Layers: default
+  * Pickup 14; Category? Minor
+  > Bottom of Room
+      Can Use Any Bombs
+
+> Door to Upper Corridor; Heals? False
+  * Layers: default
+  * L0 Locked Door to Upper Corridor/Door to Upper Room
+  > Pickup (PB Exp)
+      Speed Booster and Can Use Power Bombs
+  > Bottom of Room
+      Can Use Any Bombs
+
+> Bottom of Room; Heals? False
+  * Layers: default
+  > Other to Entrance Hub
+      Can Use Any Bombs
+  > Pickup (PB Exp)
+      Can Use Power Bombs
+  > Pickup (Energy Tank)
+      Can Use Any Bombs
+  > Door to Upper Corridor
+      All of the following:
+          Can Use Any Bombs
+          High Jump or Space Jump
+
+----------------
+Upper Corridor
+Extra - map_name: s3_upper_corridor
+> Door to Long Shaft East; Heals? False
+  * Layers: default
+  * L0 Locked Door to Long Shaft East/Door to Upper Corridor
+  > Door to Upper Room
+      Screw Attack
+
+> Door to BOX Arena; Heals? False
+  * Layers: default
+  * Normal to BOX Arena/Door to Upper Corridor
+  > Door to Upper Room
+      Trivial
+
+> Door to Sector 1 Access; Heals? False
+  * Layers: default
+  * L0 Locked Door to Sector 1 Access/Door to Upper Corridor
+  > Door to Upper Room
+      Screw Attack
+
+> Pickup (Missile Exp); Heals? False
+  * Layers: default
+  * Pickup 25; Category? Minor
+  > Door to Upper Room
+      Trivial
+
+> Door to Upper Room; Heals? False
+  * Layers: default
+  * L0 Locked Door to Upper Room/Door to Upper Corridor
+  > Door to Long Shaft East
+      Screw Attack
+  > Door to BOX Arena
+      Trivial
+  > Door to Sector 1 Access
+      All of the following:
+          Screw Attack
+          High Jump or Space Jump or Speed Booster
+  > Pickup (Missile Exp)
+      Speed Booster
+
+----------------
+Sector 1 Access
+Extra - map_name: s3_to_s1
+> Door to Upper Corridor; Heals? False
+  * Layers: default
+  * L0 Locked Door to Upper Corridor/Door to Sector 1 Access
+  > sector 1
+      Trivial
+
+> sector 1; Heals? False
+  * Layers: default
+  > Door to Upper Corridor
+      Trivial
+
+----------------
+BOX Arena
+Extra - map_name: box_arena
+> Event - BOX; Heals? False
+  * Layers: default
+  * Event BOX
+
+> Door to Sector 3 Data Room; Heals? False
+  * Layers: default
+  * L2 Locked Door to Sector 3 Data Room/Door to BOX Arena
+  > Door to Collapsed Room
+      Trivial
+
+> Door to Upper Corridor; Heals? False
+  * Layers: default
+  * Normal to Upper Corridor/Door to BOX Arena
+  > Door to Collapsed Room
+      Trivial
+
+> Door to Collapsed Room; Heals? False
+  * Layers: default
+  * L0 Locked Door to Collapsed Room/Door to BOX Arena
+  > Door to Sector 3 Data Room
+      Trivial
+  > Door to Upper Corridor
+      High Jump or Space Jump or Speed Booster
+
+----------------
+Sector 3 Data Room
+Extra - map_name: s3_data_room
+> Pickup (Super Missile); Heals? False
+  * Layers: default
+  * Pickup 28; Category? Major
+  > Door to BOX Arena
+      Trivial
+
+> Door to BOX Arena; Heals? False
+  * Layers: default
+  * L2 Locked Door to BOX Arena/Door to Sector 3 Data Room
+  > Pickup (Super Missile)
+      Trivial
+
+----------------
+Save Station East
+Extra - map_name: s3_save_east
+> Door to Collapsed Room; Heals? False
+  * Layers: default
+  * L0 Locked Door to Collapsed Room/Door to Save Station East
+  > Door to Item Room East
+      Trivial
+
+> Door to Item Room East; Heals? False
+  * Layers: default
+  * L0 Locked Door to Item Room East/Door to Save Station East
+  > Door to Collapsed Room
+      Trivial
+
+----------------
+Item Room East
+Extra - map_name: s3_east_item
+> Door to Save Station East; Heals? False
+  * Layers: default
+  * L0 Locked Door to Save Station East/Door to Item Room East
+  > Pickup (Missile Exp)
+      Trivial
+
+> Pickup (Missile Exp); Heals? False
+  * Layers: default
+  * Pickup 17; Category? Minor
+  > Door to Save Station East
+      Trivial
+
+----------------
+Collapsed Room
+Extra - map_name: s3_collapse
+> Door to BOX Arena; Heals? False
+  * Layers: default
+  * L0 Locked Door to BOX Arena/Door to Collapsed Room
+  > Door to Save Station East
+      Trivial
+
+> Door to Save Station East; Heals? False
+  * Layers: default
+  * L0 Locked Door to Save Station East/Door to Collapsed Room
+  > Door to BOX Arena
+      Trivial
+
+----------------
+Trifecta
+Extra - map_name: s3_trifecta
+> Door to Long Shaft West; Heals? False
+  * Layers: default
+  * L2 Locked Door to Long Shaft West/Door to Trifecta
+  > Door to Lava Lake (Lower)
+      Trivial
+
+> Door to Lava Lake (Lower); Heals? False
+  * Layers: default
+  * L0 Locked Door to Lava Lake/Door to Trifecta (Lower)
+  > Door to Long Shaft West
+      Trivial
+  > Door to Lava Lake (Upper)
+      High Jump or Space Jump
+  > Pickup (Missile Exp)
+      Trivial
+
+> Door to Lava Lake (Upper); Heals? False
+  * Layers: default
+  * L0 Locked Door to Lava Lake/Door to Trifecta (Upper)
+  > Door to Lava Lake (Lower)
+      Trivial
+
+> Pickup (Missile Exp); Heals? False
+  * Layers: default
+  * Pickup 24; Category? Minor
+  > Door to Lava Lake (Lower)
+      Trivial
+
+----------------
+Lava Lake
+Extra - map_name: s3_lava_lake
+> Door to Trifecta (Lower); Heals? False
+  * Layers: default
+  * L0 Locked Door to Trifecta/Door to Lava Lake (Lower)
+  > Door to Trifecta (Upper)
+      Trivial
+  > Door to Long Shaft East
+      All of the following:
+          Screw Attack
+          # Heat Damage
+          Varia Suit or Heat Damage ≥ 100
+          # Lava Damage
+          Gravity Suit or Lava Damage ≥ 200
+  > Pickup (Energy Tank)
+      All of the following:
+          Morph Ball
+          High Jump or Space Jump
+  > Pickup (Missile Exp)
+      All of the following:
+          Morph Ball
+          High Jump or Space Jump
+
+> Door to Trifecta (Upper); Heals? False
+  * Layers: default
+  * L0 Locked Door to Trifecta/Door to Lava Lake (Upper)
+  > Door to Trifecta (Lower)
+      Trivial
+
+> Door to Long Shaft East; Heals? False
+  * Layers: default
+  * L0 Locked Door to Long Shaft East/Door to Lava Lake
+  > Door to Trifecta (Lower)
+      All of the following:
+          Screw Attack
+          Varia Suit or Heat Damage
+          Gravity Suit or Lava Damage
+
+> Pickup (Energy Tank); Heals? False
+  * Layers: default
+  * Pickup 30; Category? Minor
+  > Door to Trifecta (Lower)
+      Morph Ball
+
+> Pickup (Missile Exp); Heals? False
+  * Layers: default
+  * Pickup 29; Category? Minor
+  > Door to Trifecta (Lower)
+      Trivial
+
+----------------
+Long Shaft East
+Extra - map_name: s3_shaft_east
+> Door to Upper Corridor; Heals? False
+  * Layers: default
+  * L0 Locked Door to Upper Corridor/Door to Long Shaft East
+
+> Door to Lava Lake; Heals? False
+  * Layers: default
+  * L0 Locked Door to Lava Lake/Door to Long Shaft East
+  > Door to Upper Corridor
+      Gravity Suit and Screw Attack
+  > Pickup (PB Expansion 1)
+      Gravity Suit and Speed Booster
+  > Pickup (PB Expansion 2)
+      All of the following:
+          Gravity Suit and Screw Attack and Speed Booster
+          High Jump or Space Jump
+
+> Pickup (PB Expansion 1); Heals? False
+  * Layers: default
+  * Pickup 19; Category? Minor
+  > Door to Lava Lake
+      Trivial
+
+> Pickup (PB Expansion 2); Heals? False
+  * Layers: default
+  * Pickup 20; Category? Minor
+  > Door to Lava Lake
+      All of the following:
+          Screw Attack
+          High Jump or Space Jump
+
+----------------
+Monkey Bars 2
+Extra - map_name: s3_monkey_bars2
+> Door to Lava Maze; Heals? False
+  * Layers: default
+  * L0 Locked Door to Lava Maze/Door to Monkey Bars 2
+  > Door to Long Shaft West
+      High Jump and Varia Suit
+
+> Door to Long Shaft West; Heals? False
+  * Layers: default
+  * L2 Locked Door to Long Shaft West/Door to Monkey Bars 2
+  > Door to Lava Maze
+      High Jump and Varia Suit
+
+----------------
+Lava Maze
+Extra - map_name: s3_lava_maze
+> Door to Monkey Bars 2; Heals? False
+  * Layers: default
+  * L0 Locked Door to Monkey Bars 2/Door to Lava Maze
+  > Door to Melty Room
+      Diffusion Missiles or High Jump or Ice Beam or Ice Missiles or Space Jump
+  > Pickup (PB Expansion)
+      All of the following:
+          Morph Ball
+          Gravity Suit or Lava Damage ≥ 10
+
+> Door to Melty Room; Heals? False
+  * Layers: default
+  * L0 Locked Door to Melty Room/Door to Lava Maze
+  > Door to Monkey Bars 2
+      Trivial
+
+> Pickup (PB Expansion); Heals? False
+  * Layers: default
+  * Pickup 18; Category? Minor
+  > Door to Monkey Bars 2
+      All of the following:
+          Morph Ball
+          # lava
+          Gravity Suit or Lava Damage ≥ 10
+
+----------------
+Melty Room
+Extra - map_name: s3_melty_room
+> Door to Lava Maze; Heals? False
+  * Layers: default
+  * L0 Locked Door to Lava Maze/Door to Melty Room
+  > Door to Necky bois room
+      Trivial
+
+> Door to Necky bois room; Heals? False
+  * Layers: default
+  * L0 Locked Door to Necky bois room/Door to Melty Room
+  > Door to Lava Maze
+      Trivial
+
+----------------
+Necky bois room
+Extra - map_name: s3_necky_bois
+> Door to Melty Room; Heals? False
+  * Layers: default
+  * L0 Locked Door to Melty Room/Door to Necky bois room
+  > Door to Trapdoor Room
+      All of the following:
+          Any of the following:
+              Space Jump
+              All of the following:
+                  High Jump
+                  Diffusion Missiles or Ice Beam or Ice Missiles
+          # heat
+          Varia Suit
+
+> Door to Trapdoor Room; Heals? False
+  * Layers: default
+  * L0 Locked Door to Trapdoor Room/Door to Necky bois room
+  > Door to Melty Room
+      Trivial
+
+----------------
+Trapdoor Room
+Extra - map_name: s3_trapdoor_big
+> Door to Necky bois room; Heals? False
+  * Layers: default
+  * L0 Locked Door to Necky bois room/Door to Trapdoor Room
+  > Door to Trapdoor little
+      # heat
+      Varia Suit or Heat Damage
+
+> Door to Trapdoor little; Heals? False
+  * Layers: default
+  * L0 Locked Door to Trapdoor little/Door to Trapdoor Room
+  > Door to Necky bois room
+      # Heat
+      Varia Suit or Heat Damage
+
+----------------
+Trapdoor little
+Extra - map_name: s3_trapdoor_little
+> Door to Trapdoor Room; Heals? False
+  * Layers: default
+  * L0 Locked Door to Trapdoor Room/Door to Trapdoor little
+  > Door to Sidehopper Station
+      # heat
+      Varia Suit
+
+> Door to Sidehopper Station; Heals? False
+  * Layers: default
+  * L0 Locked Door to Sidehopper Station/Door to Trapdoor little
+  > Door to Trapdoor Room
+      # heat
+      Varia Suit
+
+----------------
+Sidehopper Station
+Extra - map_name: s3_sidehopper_station
+> Door to Control Room; Heals? False
+  * Layers: default
+  * L0 Locked Door to Control Room/Door to Sidehopper Station
+  > Door to Trapdoor little
+      Trivial
+
+> Door to Trapdoor little; Heals? False
+  * Layers: default
+  * L0 Locked Door to Trapdoor little/Door to Sidehopper Station
+  > Door to Control Room
+      Trivial
+
+----------------
+Control Room
+Extra - map_name: s3_control_room
+> Door to Sidehopper Station; Heals? False
+  * Layers: default
+  * L0 Locked Door to Sidehopper Station/Door to Control Room
+  > Event - Wave Core
+      All of the following:
+          Missiles ≥ 5
+          Combat (Beginner) or Normal Damage ≥ 100
+
+> Event - Wave Core; Heals? False
+  * Layers: default
+  * Event Wide X
+  > Door to Sidehopper Station
+      Trivial
+

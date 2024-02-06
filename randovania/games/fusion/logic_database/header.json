@@ -180,6 +180,10 @@
             "Animals": {
                 "long_name": "Animals",
                 "extra": {}
+            },
+            "Wide X": {
+                "long_name": "Wide X",
+                "extra": {}
             }
         },
         "tricks": {
@@ -202,6 +206,14 @@
         "damage": {
             "NormalDamage": {
                 "long_name": "Normal Damage",
+                "extra": {}
+            },
+            "HeatDamage": {
+                "long_name": "Heat Damage",
+                "extra": {}
+            },
+            "LavaDamage": {
+                "long_name": "Lava Damage",
                 "extra": {}
             }
         },
@@ -480,6 +492,46 @@
                 },
                 "dock_rando": null
             },
+            "Elevator": {
+                "name": "Elevator",
+                "extra": {
+                    "is_elevator": true
+                },
+                "items": {
+                    "Elevator": {
+                        "extra": {},
+                        "requirement": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "lock": null
+                    }
+                },
+                "dock_rando": null
+            },
+            "area_transition": {
+                "name": "Area Transition",
+                "extra": {
+                    "is_area_transition": true
+                },
+                "items": {
+                    "Open Passage": {
+                        "extra": {},
+                        "requirement": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "lock": null
+                    }
+                },
+                "dock_rando": null
+            },
             "Other": {
                 "name": "Other",
                 "extra": {},
@@ -487,10 +539,12 @@
                     "Not Determined": {
                         "extra": {},
                         "requirement": {
-                            "type": "or",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "type": "items",
+                                "name": "MorphBall",
+                                "amount": 1,
+                                "negate": false
                             }
                         },
                         "lock": null
