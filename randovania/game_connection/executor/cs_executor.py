@@ -179,9 +179,9 @@ class CSExecutor:
             return None
 
         except (
+            TimeoutError,
             OSError,
             AttributeError,
-            asyncio.TimeoutError,
             struct.error,
             UnicodeError,
             RuntimeError,
@@ -206,15 +206,7 @@ class CSExecutor:
     async def _send_request(self, packet: Packet) -> Packet:
         try:
             return await self._internal_send_request(packet)
-        except (
-            OSError,
-            AttributeError,
-            asyncio.TimeoutError,
-            struct.error,
-            UnicodeError,
-            RuntimeError,
-            ValueError,
-        ):
+        except (TimeoutError, OSError, AttributeError, struct.error, UnicodeError, RuntimeError, ValueError):
             self.disconnect()
             raise
         except TSCError as e:

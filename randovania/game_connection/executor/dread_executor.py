@@ -200,9 +200,9 @@ class DreadExecutor:
             return None
 
         except (
+            TimeoutError,
             OSError,
             AttributeError,
-            asyncio.TimeoutError,
             struct.error,
             UnicodeError,
             RuntimeError,
@@ -303,7 +303,7 @@ class DreadExecutor:
                 await asyncio.sleep(2)
                 self._socket.writer.write(self._build_packet(PacketType.PACKET_KEEP_ALIVE, None))
                 await asyncio.wait_for(self._socket.writer.drain(), timeout=30)
-            except (OSError, asyncio.TimeoutError, AttributeError) as e:
+            except (TimeoutError, OSError, AttributeError) as e:
                 self.logger.warning(
                     "Unable to send keep-alive packet to %s:%d: %s (%s)", self._ip, self._port, e, type(e)
                 )
@@ -342,7 +342,7 @@ class DreadExecutor:
         while self.is_connected():
             try:
                 await self._read_response()
-            except (OSError, asyncio.TimeoutError, AttributeError, DreadLuaException) as e:
+            except (TimeoutError, OSError, AttributeError, DreadLuaException) as e:
                 self.logger.warning(
                     f"Connection lost. Unable to send packet to {self._ip}:{self._port}: {e} ({type(e)})"
                 )
