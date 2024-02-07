@@ -3,6 +3,11 @@
     "game": "fusion",
     "resource_database": {
         "items": {
+            "MissileLauncher": {
+                "long_name": "Missile Launcher",
+                "max_capacity": 1,
+                "extra": {}
+            },
             "Missiles": {
                 "long_name": "Missiles",
                 "max_capacity": 250,
@@ -63,6 +68,11 @@
                 "max_capacity": 1,
                 "extra": {}
             },
+            "PowerBombLauncher": {
+                "long_name": "Power Bomb Launcher",
+                "max_capacity": 1,
+                "extra": {}
+            },
             "PowerBombs": {
                 "long_name": "Power Bombs",
                 "max_capacity": 70,
@@ -100,6 +110,16 @@
             },
             "SpeedBooster": {
                 "long_name": "Speed Booster",
+                "max_capacity": 1,
+                "extra": {}
+            },
+            "LockedMissiles": {
+                "long_name": "Locked Missiles",
+                "max_capacity": 1,
+                "extra": {}
+            },
+            "LockedPowerBombs": {
+                "long_name": "Locked Power Bombs",
                 "max_capacity": 1,
                 "extra": {}
             }
@@ -202,14 +222,14 @@
                 "extra": {}
             },
             "ShinesparkTrick": {
-                "long_name": "ShinesparkTrick",
+                "long_name": "Shinespark Tricks",
                 "description": "",
                 "extra": {}
             }
         },
         "damage": {
             "NormalDamage": {
-                "long_name": "Open Hatch Damage",
+                "long_name": "Normal Damage",
                 "extra": {}
             },
             "HeatDamage": {
@@ -520,7 +540,26 @@
                         }
                     }
                 },
-                "dock_rando": null
+                "dock_rando": {
+                    "unlocked": "Open Hatch",
+                    "locked": "Open Hatch",
+                    "change_from": [
+                        "L0 Hatch",
+                        "L1 Hatch",
+                        "L2 Hatch",
+                        "L3 Hatch",
+                        "L4 Hatch",
+                        "Open Hatch"
+                    ],
+                    "change_to": [
+                        "L0 Hatch",
+                        "L1 Hatch",
+                        "L2 Hatch",
+                        "L3 Hatch",
+                        "L4 Hatch",
+                        "Open Hatch"
+                    ]
+                }
             },
             "Elevator": {
                 "name": "Elevator",
