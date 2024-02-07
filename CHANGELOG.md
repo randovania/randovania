@@ -9,11 +9,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - TODO: Fill.
 
+## [7.3.2] - 2024-02-??
+
+- TODO: fill out or remove.
+
 ## [7.3.1] - 2024-02-07
 
 ### AM2R
 
-- Fixed: Receiving a suit in a Multiworld session will not place you in the most upper-left position of a room.
+- Fixed: Receiving a suit in a Multiworld session will not place you in the most upper-left position of a room anymore.
 
 ## [7.3.0] - 2024-02-07
 
