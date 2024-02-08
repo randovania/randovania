@@ -5,20 +5,34 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [7.3.0] - 2024-02-??
+## [7.4.0] - 2024-03-??
+
+- TODO: Fill.
+
+## [7.3.2] - 2024-02-??
+
+- TODO: fill out or remove.
+
+## [7.3.1] - 2024-02-07
+
+### AM2R
+
+- Fixed: Receiving a suit in a Multiworld session will not place you in the most upper-left position of a room anymore.
+
+## [7.3.0] - 2024-02-07
 
 - Added: Ability to turn off changing "to" Normal Doors in Door Type dock rando.
 - Fixed: For Linux and macOS, the auto tracker tooltip will not show black text on black background anymore.
-- Fixed: Searching for your own pickup in Multiworld sessions will now show only pickups which match *exactly* the name, instead of showing pickups which start with that name.
+- Fixed: Searching for your own pickup in multiworld sessions will now show only pickups which match *exactly* the name, instead of showing pickups which start with that name.
 - Fixed: The import in a multiworld session is blocked if it contains an unsupported game.
 - Fixed: Opening the webbrowser for Discord Login doesn't fail on Linux anymore.
 - Changed: Scanning ammo in the Prime games will now show nicer text for items that provide negative ammo or multiple positive ammo.
-- Fixed: For Windows, the game select tooltip will not render as grey text on grey background in darkmode.
+- Fixed: For Windows, the game select tooltip will not render as grey text on grey background in dark mode.
 - Added: Games display a banner if they are multiworld compatible.
 
 ### Resolver
 
-- Fixed: Some cases of resolver timout.
+- Fixed: Some cases of resolver timeout.
 
 ### AM2R
 
