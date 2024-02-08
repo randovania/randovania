@@ -16,7 +16,10 @@ from randovania.interface_common.preset_manager import PresetManager
 )
 def test_planets_zebeth_format_params(preset_name):
     # Setup
-    presets = {preset.name: preset.get_preset() for preset in PresetManager(None).presets_for_game(RandovaniaGame.METROID_PLANETS_ZEBETH)}
+    presets = {
+        preset.name: preset.get_preset()
+        for preset in PresetManager(None).presets_for_game(RandovaniaGame.METROID_PLANETS_ZEBETH)
+    }
     preset = presets[preset_name]
     assert isinstance(preset.configuration, PlanetsZebethConfiguration)
 
