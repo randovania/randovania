@@ -61,6 +61,7 @@ game_data: game.GameData = game.GameData(
     development_state=game.DevelopmentState.EXPERIMENTAL,
     presets=[
         {"path": "starter_preset.rdvpreset"},
+        {"path": "starter_preset_shuffle_keys.rdvpreset"},
     ],
     faq=[
         (
