@@ -87,4 +87,7 @@ async def run_filler(
             unassigned_pickups=player_state.pickups_left,
         )
 
+    if any(pool.configuration.should_hide_generation_log() for pool in player_pools):
+        actions_log = ()
+
     return FillerResults(results, actions_log)
