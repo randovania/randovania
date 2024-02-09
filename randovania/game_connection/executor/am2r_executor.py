@@ -5,10 +5,11 @@ import dataclasses
 import logging
 import struct
 import typing
-from asyncio import StreamReader, StreamWriter
 from enum import IntEnum
 
 from PySide6.QtCore import QObject, Signal
+
+from randovania.game_connection.executor.common_socket_holder import CommonSocketHolder
 
 
 class AM2RConnectionException(Exception):
@@ -16,12 +17,7 @@ class AM2RConnectionException(Exception):
 
 
 @dataclasses.dataclass()
-# TODO: AM2R, Dread and future MSR have here very similar attribute. Refactor this to a common SocketHolder
-class AM2RSocketHolder:
-    reader: StreamReader
-    writer: StreamWriter
-    api_version: int
-    buffer_size: int
+class AM2RSocketHolder(CommonSocketHolder):
     request_number: int
 
 
@@ -78,7 +74,7 @@ class AM2RExecutor:
             self._socket_error = None
             self.logger.debug("Connecting to %s:%d.", self._ip, self._port)
             reader, writer = await asyncio.open_connection(self._ip, self._port)
-            self._socket = AM2RSocketHolder(reader, writer, 1, 4096, 0)
+            self._socket = AM2RSocketHolder(reader, writer, 1, 0)
             self._socket.request_number = 0
 
             # Send interests
@@ -105,7 +101,6 @@ class AM2RExecutor:
                 self.layout_uuid_str,
             )
             self._socket.api_version = int(api_version)
-            self._socket.buffer_size = 1024
 
             loop = asyncio.get_event_loop()
             loop.create_task(self.read_loop())

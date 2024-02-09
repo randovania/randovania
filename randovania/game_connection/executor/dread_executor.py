@@ -5,12 +5,12 @@ import dataclasses
 import logging
 import re
 import struct
-from asyncio import StreamReader, StreamWriter
 from enum import IntEnum
 from typing import TYPE_CHECKING, Any
 
 from PySide6.QtCore import QObject, Signal
 
+from randovania.game_connection.executor.common_socket_holder import CommonSocketHolder
 from randovania.game_description import default_database
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.games.game import RandovaniaGame
@@ -26,11 +26,7 @@ class DreadLuaException(Exception):
 
 
 @dataclasses.dataclass()
-# TODO: AM2R, Dread and future MSR have here very similar attribute. Refactor this to a common SocketHolder
-class DreadSocketHolder:
-    reader: StreamReader
-    writer: StreamWriter
-    api_version: int
+class DreadSocketHolder(CommonSocketHolder):
     buffer_size: int
     request_number: int
 
