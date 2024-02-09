@@ -5,28 +5,60 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [7.3.0] - 2024-02-??
+## [7.4.0] - 2024-03-??
+
+- TODO: Fill.
+
+### Cave Story
+
+#### Logic Database
+
+##### Egg Corridor
+
+- Added: Health requirements for the Igor boss fight.
+
+##### Mimiga Village
+
+- Added: Health requirements for the Balrog 1 boss fight.
+
+## [7.3.2] - 2024-02-??
+
+- TODO: fill out or remove.
+
+## [7.3.1] - 2024-02-07
+
+### AM2R
+
+- Fixed: Receiving a suit in a Multiworld session will not place you in the most upper-left position of a room anymore.
+
+## [7.3.0] - 2024-02-07
 
 - Added: Ability to turn off changing "to" Normal Doors in Door Type dock rando.
 - Fixed: For Linux and macOS, the auto tracker tooltip will not show black text on black background anymore.
-- Fixed: Searching for your own pickup in Multiworld sessions will now show only pickups which match *exactly* the name, instead of showing pickups which start with that name.
+- Fixed: Searching for your own pickup in multiworld sessions will now show only pickups which match *exactly* the name, instead of showing pickups which start with that name.
 - Fixed: The import in a multiworld session is blocked if it contains an unsupported game.
 - Fixed: Opening the webbrowser for Discord Login doesn't fail on Linux anymore.
 - Changed: Scanning ammo in the Prime games will now show nicer text for items that provide negative ammo or multiple positive ammo.
-- Fixed: For Windows, the game select tooltip will not render as grey text on grey background in darkmode.
+- Fixed: For Windows, the game select tooltip will not render as grey text on grey background in dark mode.
 - Added: Games display a banner if they are multiworld compatible.
 - Fixed: Changelog window properly displays images
 
 ### Resolver
 
-- Fixed: Some cases of resolver timout.
+- Fixed: Some cases of resolver timeout.
 
 ### AM2R
 
 - **Major** - Added: Multiworld support for AM2R.
 - Added: Auto-Tracker functionality.
+- Added: A "Hints"-tab, which describes the hint system used in AM2R in detail.
+- Added: A "Hint Item Names"-tab, which describes which names are used to describe the items in offworld hints.
 - Changed: Minimal Logic has been adjusted. It now also checks for Morph Ball, Missile Launcher, the DNA and the Baby collection.
 - Changed: The Baby now checks for all DNA being collected and will display a message if not.
+- Changed: Progressive Suits and Progressive Jumps now display custom sprites instead of Space Jump / Gravity Suit sprites in order to make them more distinct.
+- Changed: The yams.json file will not be present anymore for race seeds.
+- Fixed: The shell script after exporting works now on Flatpak environments.
+- Fixed: Typos in FAQ.
 
 #### Logic Database
 
@@ -113,7 +145,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Metroid Prime 2: Echoes
 
 - Added: Having Double Damage no longer causes the morph ball to glow.
-- Added: 8 more joke hints.
+- Added: 7 more joke hints.
 - Changed: Minimal Logic now also checks for the Emperor Ing event.
 
 #### Logic Database
