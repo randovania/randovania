@@ -1,0 +1,147 @@
+{
+    "schema_version": 73,
+    "base_preset_uuid": null,
+    "name": "Starter Preset",
+    "uuid": "bb84005f-b0f1-4e7e-8057-f4275ff4b2a3",
+    "description": "A basic preset with no tricks enabled. The default settings.",
+    "game": "fusion",
+    "configuration": {
+        "trick_level": {
+            "minimal_logic": false,
+            "specific_levels": {}
+        },
+        "starting_location": [
+            {
+                "region": "Main Deck",
+                "area": "Docking Bay Hangar",
+                "node": "Ship"
+            }
+        ],
+        "available_locations": {
+            "randomization_mode": "full",
+            "excluded_indices": []
+        },
+        "standard_pickup_configuration": {
+            "pickups_state": {
+                "Charge Beam": {
+                    "num_shuffled_pickups": 1
+                },
+                "Wide Beam": {
+                    "num_shuffled_pickups": 1
+                },
+                "Plasma Beam": {
+                    "num_shuffled_pickups": 1
+                },
+                "Wave Beam": {
+                    "num_shuffled_pickups": 1
+                },
+                "Ice Beam": {
+                    "num_shuffled_pickups": 1
+                },
+                "Missile Launcher": {
+                    "num_shuffled_pickups": 1,
+                    "included_ammo": [
+                        10
+                    ]
+                },
+                "Super Missile": {
+                    "num_shuffled_pickups": 1
+                },
+                "Ice Missile": {
+                    "num_shuffled_pickups": 1
+                },
+                "Diffusion Missile": {
+                    "num_shuffled_pickups": 1
+                },
+                "Morph Ball": {
+                    "num_shuffled_pickups": 1
+                },
+                "Morph Ball Bombs": {
+                    "num_shuffled_pickups": 1
+                },
+                "Power Bomb Launcher": {
+                    "num_shuffled_pickups": 1,
+                    "included_ammo": [
+                        2
+                    ]
+                },
+                "Hi-Jump Boots": {
+                    "num_shuffled_pickups": 1
+                },
+                "Space Jump": {
+                    "num_shuffled_pickups": 1
+                },
+                "Screw Attack": {
+                    "num_shuffled_pickups": 1
+                },
+                "Speed Booster": {
+                    "num_shuffled_pickups": 1
+                },
+                "Varia Suit": {
+                    "num_shuffled_pickups": 1
+                },
+                "Gravity Suit": {
+                    "num_shuffled_pickups": 1
+                },
+                "Energy Tank": {
+                    "num_shuffled_pickups": 20
+                }
+            },
+            "default_pickups": {},
+            "minimum_random_starting_pickups": 0,
+            "maximum_random_starting_pickups": 0
+        },
+        "ammo_pickup_configuration": {
+            "pickups_state": {
+                "Missile Expansion": {
+                    "ammo_count": [
+                        5
+                    ],
+                    "pickup_count": 40,
+                    "requires_main_item": true
+                },
+                "Power Bomb Expansion": {
+                    "ammo_count": [
+                        5
+                    ],
+                    "pickup_count": 10,
+                    "requires_main_item": true
+                }
+            }
+        },
+        "damage_strictness": 1.5,
+        "pickup_model_style": "all-visible",
+        "pickup_model_data_source": "etm",
+        "logical_resource_action": "randomly",
+        "first_progression_must_be_local": false,
+        "minimum_available_locations_for_hint_placement": 0,
+        "minimum_location_weight_for_hint_placement": 0.0,
+        "dock_rando": {
+            "mode": "vanilla",
+            "types_state": {
+                "Door": {
+                    "can_change_from": [
+                        "L0 Hatch",
+                        "L1 Hatch",
+                        "L2 Hatch",
+                        "L3 Hatch",
+                        "L4 Hatch",
+                        "Open Hatch"
+                    ],
+                    "can_change_to": [
+                        "L0 Hatch",
+                        "L1 Hatch",
+                        "L2 Hatch",
+                        "L3 Hatch",
+                        "L4 Hatch",
+                        "Open Hatch"
+                    ]
+                }
+            }
+        },
+        "single_set_for_pickups_that_solve": true,
+        "staggered_multi_pickup_placement": true,
+        "check_if_beatable_after_base_patches": false,
+        "include_extra_pickups": false
+    }
+}

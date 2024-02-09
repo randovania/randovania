@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>FusionGameTabWidget</class>
+ <widget class="QTabWidget" name="FusionGameTabWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>501</width>
+    <height>393</height>
+   </rect>
+  </property>
+  <property name="currentIndex">
+   <number>0</number>
+  </property>
+  <widget class="QWidget" name="tab_intro">
+   <attribute name="title">
+    <string>Introduction</string>
+   </attribute>
+   <layout class="QVBoxLayout" name="intro_layout">
+    <item>
+     <layout class="QHBoxLayout" name="intro_cover_layout">
+      <item>
+       <widget class="QLabel" name="game_cover_label">
+        <property name="text">
+         <string>TextLabel</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="intro_label">
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;justify&quot;&gt;Explore the B.S.L Station while gearing up to fight the SA-X before destroying the station.&lt;/p&gt;&lt;p align=&quot;justify&quot;&gt;What blocks you from triggering end game.&lt;/p&gt;&lt;p align=&quot;justify&quot;&gt;Anything about hints, nav rooms?&lt;/p&gt;&lt;p align=&quot;justify&quot;&gt;For more details, checkout the (FAQ) and (Differences) tabs.&lt;/p&gt;&lt;p align=&quot;justify&quot;&gt;To get started, use the Quick Generate button to generate a game using the default settings.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+        <property name="wordWrap">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <widget class="QPushButton" name="quick_generate_button">
+      <property name="text">
+       <string>Quick generate</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <spacer name="intro_spacer">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>20</width>
+        <height>40</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+   </layout>
+  </widget>
+  <widget class="GenerateGameWidget" name="tab_generate_game">
+   <attribute name="title">
+    <string>Play</string>
+   </attribute>
+  </widget>
+  <widget class="QWidget" name="faq_tab">
+   <attribute name="title">
+    <string>FAQ</string>
+   </attribute>
+   <layout class="QGridLayout" name="faq_layout">
+    <property name="leftMargin">
+     <number>0</number>
+    </property>
+    <property name="topMargin">
+     <number>0</number>
+    </property>
+    <property name="rightMargin">
+     <number>0</number>
+    </property>
+    <property name="bottomMargin">
+     <number>0</number>
+    </property>
+    <item row="0" column="0">
+     <widget class="QScrollArea" name="faq_scroll_area">
+      <property name="widgetResizable">
+       <bool>true</bool>
+      </property>
+      <widget class="QWidget" name="faq_scroll_area_contents">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>495</width>
+         <height>361</height>
+        </rect>
+       </property>
+       <layout class="QGridLayout" name="faq_scroll_layout">
+        <item row="0" column="0">
+         <widget class="QLabel" name="faq_label">
+          <property name="text">
+           <string># updated from code</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+          </property>
+          <property name="wordWrap">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+    <widget class="QWidget" name="hint_item_names_tab">
+   <attribute name="title">
+    <string>Hint Item Names</string>
+   </attribute>
+   <layout class="QVBoxLayout" name="hint_item_names_layout_4">
+    <property name="spacing">
+     <number>0</number>
+    </property>
+    <property name="leftMargin">
+     <number>0</number>
+    </property>
+    <property name="topMargin">
+     <number>0</number>
+    </property>
+    <property name="rightMargin">
+     <number>0</number>
+    </property>
+    <property name="bottomMargin">
+     <number>0</number>
+    </property>
+    <item>
+     <widget class="QScrollArea" name="hint_item_names_scroll_area">
+      <property name="widgetResizable">
+       <bool>true</bool>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+      </property>
+      <widget class="QWidget" name="hint_item_names_scroll_contents">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>99</width>
+         <height>462</height>
+        </rect>
+       </property>
+       <layout class="QVBoxLayout" name="hint_item_names_scroll_layout_4">
+        <item>
+         <widget class="QLabel" name="hint_item_names_label">
+          <property name="text">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When
+                                                items are referenced in a hint, multiple names can be
+                                                used depending on how precise the hint is. The names
+                                                each item can use are the following:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
+                                            </string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+          </property>
+          <property name="wordWrap">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QTableWidget" name="hint_item_names_tree_widget">
+          <property name="editTriggers">
+           <set>QAbstractItemView::NoEditTriggers</set>
+          </property>
+          <property name="sortingEnabled">
+           <bool>true</bool>
+          </property>
+          <column>
+           <property name="text">
+            <string>Item</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Precise Category</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>General Category</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Broad Category</string>
+           </property>
+          </column>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>GenerateGameWidget</class>
+   <extends>QWidget</extends>
+   <header location="global">randovania/gui/widgets/generate_game_widget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>
