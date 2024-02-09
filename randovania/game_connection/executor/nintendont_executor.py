@@ -3,8 +3,8 @@ from __future__ import annotations
 import asyncio
 import dataclasses
 import struct
-from asyncio import StreamReader, StreamWriter
 
+from randovania.game_connection.executor.common_socket_holder import CommonSocketHolder
 from randovania.game_connection.executor.memory_operation import (
     MemoryOperation,
     MemoryOperationException,
@@ -12,11 +12,8 @@ from randovania.game_connection.executor.memory_operation import (
 )
 
 
-@dataclasses.dataclass(frozen=True)
-class SocketHolder:
-    reader: StreamReader
-    writer: StreamWriter
-    api_version: int
+@dataclasses.dataclass()
+class SocketHolder(CommonSocketHolder):
     max_input: int
     max_output: int
     max_addresses: int
