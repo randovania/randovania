@@ -6,21 +6,33 @@ Extra - room_id: 0
   * Layers: default
   * L1 Hatch to Lava Lake Annex/Door to Entrance Hub
   * Extra - door_idx: 1
+  > Door to Entrance Recharge Room
+      Trivial
 
 > Door to Entrance Recharge Room; Heals? False
   * Layers: default
   * L0 Hatch to Entrance Recharge Room/Door to Entrance Hub
   * Extra - door_idx: 2
+  > Door to Lava Lake Annex
+      Trivial
+  > Door to Yameba Corridor
+      Trivial
+  > Door to Antechamber
+      Trivial
 
 > Door to Yameba Corridor; Heals? False
   * Layers: default
   * L0 Hatch to Yameba Corridor/Door to Entrance Hub
   * Extra - door_idx: 3
+  > Door to Entrance Recharge Room
+      Trivial
 
 > Door to Antechamber; Heals? False
   * Layers: default
   * L2 Hatch to Antechamber/Door to Entrance Hub
   * Extra - door_idx: 76
+  > Door to Entrance Recharge Room
+      Trivial
 
 ----------------
 Entrance Save Room
@@ -30,11 +42,15 @@ Extra - room_id: 1
   * Layers: default
   * L0 Hatch to Entrance Recharge Room/Door to Entrance Save Room
   * Extra - door_idx: 4
+  > Door to Entrance Navigation Room
+      Trivial
 
 > Door to Entrance Navigation Room; Heals? False
   * Layers: default
   * L0 Hatch to Entrance Navigation Room/Door to Entrance Save Room
   * Extra - door_idx: 5
+  > Door to Entrance Recharge Room
+      Trivial
 
 ----------------
 Entrance Navigation Room
@@ -44,11 +60,15 @@ Extra - room_id: 2
   * Layers: default
   * Open Hatch to Entrance Save Room/Door to Entrance Navigation Room
   * Extra - door_idx: 6
+  > Door to Elevator to Main Deck
+      Trivial
 
 > Door to Elevator to Main Deck; Heals? False
   * Layers: default
   * Open Hatch to Elevator to Main Deck/Door to Entrance Navigation Room
   * Extra - door_idx: 87
+  > Door to Entrance Save Room
+      Trivial
 
 ----------------
 Yameba Corridor
@@ -58,11 +78,17 @@ Extra - room_id: 3
   * Layers: default
   * L0 Hatch to Entrance Hub/Door to Yameba Corridor
   * Extra - door_idx: 9
+  > Door to Atmospheric Stabilizer Northwest
+      Any of the following:
+          Missiles ≥ 3
+          Speed Booster and Knowledge (Beginner)
 
 > Door to Atmospheric Stabilizer Northwest; Heals? False
   * Layers: default
   * L0 Hatch to Atmospheric Stabilizer Northwest/Door to Yameba Corridor
   * Extra - door_idx: 10
+  > Door to Entrance Hub
+      Missiles ≥ 3
 
 ----------------
 Atmospheric Stabilizer Northwest
@@ -72,11 +98,15 @@ Extra - room_id: 4
   * Layers: default
   * L0 Hatch to Yameba Corridor/Door to Atmospheric Stabilizer Northwest
   * Extra - door_idx: 11
+  > Door to Hornoad Hole
+      Trivial
 
 > Door to Hornoad Hole; Heals? False
   * Layers: default
   * L0 Hatch to Hornoad Hole/Door to Atmospheric Stabilizer Northwest
   * Extra - door_idx: 12
+  > Door to Yameba Corridor
+      Trivial
 
 ----------------
 Hornoad Hole
@@ -85,16 +115,24 @@ Extra - room_id: 5
 > Pickup (Energy Tank); Heals? False
   * Layers: default
   * Pickup 13; Category? Minor
+  > Door to Atmospheric Stabilizer Northwest
+      Morph Ball
 
 > Door to Atmospheric Stabilizer Northwest; Heals? False
   * Layers: default
   * L0 Hatch to Atmospheric Stabilizer Northwest/Door to Hornoad Hole
   * Extra - door_idx: 13
+  > Pickup (Energy Tank)
+      Morph Ball
+  > Door to Shaft North
+      Trivial
 
 > Door to Shaft North; Heals? False
   * Layers: default
   * L0 Hatch to Shaft North/Door to Hornoad Hole
   * Extra - door_idx: 14
+  > Door to Atmospheric Stabilizer Northwest
+      Trivial
 
 ----------------
 Shaft North
@@ -104,21 +142,33 @@ Extra - room_id: 6
   * Layers: default
   * L0 Hatch to Hornoad Hole/Door to Shaft North
   * Extra - door_idx: 15
+  > Door to Atmospheric Stabilizer Northeast
+      Trivial
+  > Door to Moto Motorway
+      Trivial
+  > Door to Short Shaft
+      Trivial
 
 > Door to Atmospheric Stabilizer Northeast; Heals? False
   * Layers: default
   * L0 Hatch to Atmospheric Stabilizer Northeast/Door to Shaft North
   * Extra - door_idx: 16
+  > Door to Hornoad Hole
+      Trivial
 
 > Door to Moto Motorway; Heals? False
   * Layers: default
   * L0 Hatch to Moto Motorway/Door to Shaft North
   * Extra - door_idx: 17
+  > Door to Hornoad Hole
+      Trivial
 
 > Door to Short Shaft; Heals? False
   * Layers: default
   * L0 Hatch to Short Shaft/Door to Shaft North
   * Extra - door_idx: 18
+  > Door to Hornoad Hole
+      Trivial
 
 ----------------
 Moto Motorway
@@ -128,11 +178,15 @@ Extra - room_id: 7
   * Layers: default
   * L0 Hatch to Shaft North/Door to Moto Motorway
   * Extra - door_idx: 19
+  > Door to Zebesian Tower
+      Trivial
 
 > Door to Zebesian Tower; Heals? False
   * Layers: default
   * L0 Hatch to Zebesian Tower/Door to Moto Motorway
   * Extra - door_idx: 20
+  > Door to Shaft North
+      Trivial
 
 ----------------
 Zebesian Tower
@@ -142,16 +196,24 @@ Extra - room_id: 8
   * Layers: default
   * L0 Hatch to Moto Motorway/Door to Zebesian Tower
   * Extra - door_idx: 21
+  > Door to Sciser Puddle
+      Trivial
+  > Door to Lava Lake
+      Trivial
 
 > Door to Sciser Puddle; Heals? False
   * Layers: default
   * L0 Hatch to Sciser Puddle/Door to Zebesian Tower
   * Extra - door_idx: 31
+  > Door to Moto Motorway
+      Trivial
 
 > Door to Lava Lake; Heals? False
   * Layers: default
   * L0 Hatch to Lava Lake/Door to Zebesian Tower
   * Extra - door_idx: 44
+  > Door to Moto Motorway
+      Trivial
 
 ----------------
 Atmospheric Stabilizer Central
@@ -161,11 +223,15 @@ Extra - room_id: 9
   * Layers: default
   * L0 Hatch to Charge Core Exit/Door to Atmospheric Stabilizer Central
   * Extra - door_idx: 23
+  > Door to Checkpoint
+      Trivial
 
 > Door to Checkpoint; Heals? False
   * Layers: default
   * L0 Hatch to Checkpoint/Door to Atmospheric Stabilizer Central
   * Extra - door_idx: 88
+  > Door to Charge Core Exit
+      Trivial
 
 ----------------
 Charge Core Exit
@@ -175,16 +241,24 @@ Extra - room_id: 10
   * Layers: default
   * L0 Hatch to Atmospheric Stabilizer Central/Door to Charge Core Exit
   * Extra - door_idx: 24
+  > Door to Charge Core Arena
+      Trivial
+  > Other to Crab Rave
+      Missiles and Morph Ball
 
 > Door to Charge Core Arena; Heals? False
   * Layers: default
   * L0 Hatch to Charge Core Arena/Door to Charge Core Exit
   * Extra - door_idx: 84
+  > Door to Atmospheric Stabilizer Central
+      Trivial
 
 > Other to Crab Rave; Heals? False
   * Layers: default
   * Tunnel to Crab Rave/Other to Charge Core Exit
   * Extra - door_idx: 92
+  > Door to Atmospheric Stabilizer Central
+      Trivial
 
 ----------------
 Entrance Recharge Room
@@ -194,11 +268,15 @@ Extra - room_id: 11
   * Layers: default
   * L0 Hatch to Entrance Hub/Door to Entrance Recharge Room
   * Extra - door_idx: 78
+  > Door to Entrance Save Room
+      Trivial
 
 > Door to Entrance Save Room; Heals? False
   * Layers: default
   * L0 Hatch to Entrance Save Room/Door to Entrance Recharge Room
   * Extra - door_idx: 90
+  > Door to Entrance Hub
+      Trivial
 
 ----------------
 Moto Manor
@@ -208,11 +286,15 @@ Extra - room_id: 12
   * Layers: default
   * L0 Hatch to Atmospheric Stabilizer Southwest/Door to Moto Manor
   * Extra - door_idx: 27
+  > Door to Screw Shaft
+      Trivial
 
 > Door to Screw Shaft; Heals? False
   * Layers: default
   * L0 Hatch to Screw Shaft/Door to Moto Manor
   * Extra - door_idx: 28
+  > Door to Atmospheric Stabilizer Southwest
+      Trivial
 
 ----------------
 Atmospheric Stabilizer Southwest
@@ -222,11 +304,15 @@ Extra - room_id: 13
   * Layers: default
   * L0 Hatch to Moto Manor/Door to Atmospheric Stabilizer Southwest
   * Extra - door_idx: 29
+  > Door to Sciser Puddle
+      Trivial
 
 > Door to Sciser Puddle; Heals? False
   * Layers: default
   * L0 Hatch to Sciser Puddle/Door to Atmospheric Stabilizer Southwest
   * Extra - door_idx: 30
+  > Door to Moto Manor
+      Trivial
 
 ----------------
 Checkpoint
@@ -236,11 +322,15 @@ Extra - room_id: 14
   * Layers: default
   * L0 Hatch to Short Shaft/Door to Checkpoint
   * Extra - door_idx: 22
+  > Door to Atmospheric Stabilizer Central
+      Wave Beam
 
 > Door to Atmospheric Stabilizer Central; Heals? False
   * Layers: default
   * L0 Hatch to Atmospheric Stabilizer Central/Door to Checkpoint
   * Extra - door_idx: 89
+  > Door to Short Shaft
+      Trivial
 
 ----------------
 Atmospheric Stabilizer Southeast
@@ -250,16 +340,24 @@ Extra - room_id: 15
   * Layers: default
   * L0 Hatch to Sciser Storage/Door to Atmospheric Stabilizer Southeast
   * Extra - door_idx: 32
+  > Door to Screw Shaft
+      Trivial
 
 > Door to Screw Shaft; Heals? False
   * Layers: default
   * L0 Hatch to Screw Shaft/Door to Atmospheric Stabilizer Southeast
   * Extra - door_idx: 33
+  > Door to Sciser Storage
+      Trivial
+  > Door to South Shaft
+      Trivial
 
 > Door to South Shaft; Heals? False
   * Layers: default
   * L0 Hatch to South Shaft/Door to Atmospheric Stabilizer Southeast
   * Extra - door_idx: 75
+  > Door to Screw Shaft
+      Trivial
 
 ----------------
 Screw Shaft
@@ -269,16 +367,24 @@ Extra - room_id: 16
   * Layers: default
   * L0 Hatch to Atmospheric Stabilizer Southeast/Door to Screw Shaft
   * Extra - door_idx: 34
+  > Door to Moto Manor
+      Trivial
 
 > Door to Tourian Entrance; Heals? False
   * Layers: default
   * L0 Hatch to Tourian Entrance/Door to Screw Shaft
   * Extra - door_idx: 35
+  > Door to Moto Manor
+      Screw Attack and Space Jump
 
 > Door to Moto Manor; Heals? False
   * Layers: default
   * L0 Hatch to Moto Manor/Door to Screw Shaft
   * Extra - door_idx: 94
+  > Door to Atmospheric Stabilizer Southeast
+      Trivial
+  > Door to Tourian Entrance
+      Screw Attack
 
 ----------------
 Lava Lake
@@ -287,20 +393,54 @@ Extra - room_id: 17
 > Pickup (Missile Tank); Heals? False
   * Layers: default
   * Pickup 14; Category? Minor
+  > Door to Zebesian Tower
+      Any of the following:
+          Gravity Suit or Space Jump
+          Heat Runs (Intermediate) and Lava Damage ≥ 100
 
 > Pickup (Missile Tank 2); Heals? False
   * Layers: default
   * Pickup 16; Category? Minor
+  > Door to Zebesian Tower
+      All of the following:
+          Charge Beam
+          Any of the following:
+              Gravity Suit
+              Heat Runs (Intermediate) and Lava Damage ≥ 100
 
 > Door to Lava Lake Annex; Heals? False
   * Layers: default
   * L2 Hatch to Lava Lake Annex/Door to Lava Lake
   * Extra - door_idx: 36
+  > Door to Zebesian Tower
+      Any of the following:
+          Gravity Suit
+          Heat Runs (Intermediate) and Lava Damage ≥ 150
 
 > Door to Zebesian Tower; Heals? False
   * Layers: default
   * L0 Hatch to Zebesian Tower/Door to Lava Lake
   * Extra - door_idx: 37
+  > Pickup (Missile Tank)
+      Space Jump or Speed Booster
+  > Pickup (Missile Tank 2)
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Gravity Suit
+              Heat Runs (Intermediate) and Lava Damage ≥ 100
+  > Door to Lava Lake Annex
+      Any of the following:
+          Gravity Suit
+          Heat Runs (Intermediate) and Heat Damage ≥ 150
+  > Pickup (Missile Tank 3)
+      Trivial
+
+> Pickup (Missile Tank 3); Heals? False
+  * Layers: default
+  * Pickup 101; Category? Minor
+  > Door to Zebesian Tower
+      Trivial
 
 ----------------
 Tourian Shaft East
@@ -310,11 +450,17 @@ Extra - room_id: 18
   * Layers: default
   * L0 Hatch to Tourian Central Checkpoint/Door to Tourian Shaft East
   * Extra - door_idx: 38
+  > Door to Tourian Entrance
+      Screw Attack
 
 > Door to Tourian Entrance; Heals? False
   * Layers: default
   * L0 Hatch to Tourian Entrance/Door to Tourian Shaft East
   * Extra - door_idx: 39
+  > Door to Tourian Central Checkpoint
+      All of the following:
+          Morph Ball and Screw Attack
+          High Jump or Space Jump
 
 ----------------
 Tourian Save Room East
@@ -333,16 +479,28 @@ Extra - room_id: 20
   * Layers: default
   * L1 Hatch to Entrance Hub/Door to Lava Lake Annex
   * Extra - door_idx: 42
+  > Door to Lava Lake
+      Any of the following:
+          Gravity Suit
+          Heat Runs (Intermediate) and Lava Damage ≥ 25
+  > Door to Connection to Sector 3 (PYR)
+      Morph Ball and Screw Attack
 
 > Door to Lava Lake; Heals? False
   * Layers: default
   * L2 Hatch to Lava Lake/Door to Lava Lake Annex
   * Extra - door_idx: 43
+  > Door to Entrance Hub
+      Any of the following:
+          Gravity Suit
+          Heat Runs (Intermediate) and Lava Damage ≥ 50
 
 > Door to Connection to Sector 3 (PYR); Heals? False
   * Layers: default
   * L0 Hatch to Connection to Sector 3 (PYR)/Door to Lava Lake Annex
   * Extra - door_idx: 106
+  > Door to Entrance Hub
+      Morph Ball and Screw Attack
 
 ----------------
 Tourian Central Hub
@@ -352,26 +510,44 @@ Extra - room_id: 21
   * Layers: default
   * Open Hatch to Golden Pirates/Door to Tourian Central Hub
   * Extra - door_idx: 45
+  > Door to Ripper Maze Access
+      Can Use Any Bombs
 
 > Door to Tourian Central Checkpoint; Heals? False
   * Layers: default
   * L0 Hatch to Tourian Central Checkpoint/Door to Tourian Central Hub
   * Extra - door_idx: 46
+  > Door to Ripper Maze Access
+      Missiles ≥ 3 and Morph Ball
 
 > Door to Ripper Maze Access; Heals? False
   * Layers: default
   * L0 Hatch to Ripper Maze Access/Door to Tourian Central Hub
   * Extra - door_idx: 47
+  > Door to Golden Pirates
+      All of the following:
+          Can Use Any Bombs
+          High Jump or Space Jump
+  > Door to Tourian Central Checkpoint
+      Missiles ≥ 3 and Morph Ball
+  > Door to Tourian Save Room East
+      Trivial
+  > Other to Animorphs
+      Trivial
 
 > Door to Tourian Save Room East; Heals? False
   * Layers: default
   * L0 Hatch to Tourian Save Room East/Door to Tourian Central Hub
   * Extra - door_idx: 95
+  > Door to Ripper Maze Access
+      Trivial
 
 > Other to Animorphs; Heals? False
   * Layers: default
   * Open Passage to Animorphs/Other to Tourian Central Hub
   * Extra - door_idx: 110
+  > Door to Ripper Maze Access
+      Trivial
 
 ----------------
 Golden Pirates
@@ -460,11 +636,15 @@ Extra - room_id: 28
   * Layers: default
   * L0 Hatch to Tourian Shaft East/Door to Tourian Central Checkpoint
   * Extra - door_idx: 41
+  > Door to Tourian Central Hub
+      Trivial
 
 > Door to Tourian Central Hub; Heals? False
   * Layers: default
   * L0 Hatch to Tourian Central Hub/Door to Tourian Central Checkpoint
   * Extra - door_idx: 59
+  > Door to Tourian Shaft East
+      Trivial
 
 ----------------
 Ripper Maze Access
@@ -474,11 +654,15 @@ Extra - room_id: 29
   * Layers: default
   * L0 Hatch to Tourian Central Hub/Door to Ripper Maze Access
   * Extra - door_idx: 60
+  > Door to Ripper Maze
+      Trivial
 
 > Door to Ripper Maze; Heals? False
   * Layers: default
   * L0 Hatch to Ripper Maze/Door to Ripper Maze Access
   * Extra - door_idx: 61
+  > Door to Tourian Central Hub
+      Trivial
 
 ----------------
 Ripper Maze
@@ -487,16 +671,24 @@ Extra - room_id: 30
 > Pickup (Hidden Energy Tank); Heals? False
   * Layers: default
   * Pickup 17; Category? Minor
+  > Door to Elevator to Restricted Labs
+      Trivial
 
 > Door to Ripper Maze Access; Heals? False
   * Layers: default
   * L0 Hatch to Ripper Maze Access/Door to Ripper Maze
   * Extra - door_idx: 62
+  > Door to Elevator to Restricted Labs
+      Trivial
 
 > Door to Elevator to Restricted Labs; Heals? False
   * Layers: default
   * L0 Hatch to Elevator to Restricted Labs/Door to Ripper Maze
   * Extra - door_idx: 63
+  > Pickup (Hidden Energy Tank)
+      Diffusion Missiles and Missiles and Morph Ball
+  > Door to Ripper Maze Access
+      Trivial
 
 ----------------
 Elevator to Restricted Labs
@@ -529,26 +721,38 @@ Extra - room_id: 33
   * Layers: default
   * L0 Hatch to Shaft North/Door to Short Shaft
   * Extra - door_idx: 67
+  > Door to Save Room East
+      Trivial
+  > Door to Checkpoint
+      Trivial
 
 > Door to Save Room East; Heals? False
   * Layers: default
   * L0 Hatch to Save Room East/Door to Short Shaft
   * Extra - door_idx: 68
+  > Door to Shaft North
+      Trivial
 
 > Door to Checkpoint; Heals? False
   * Layers: default
   * L0 Hatch to Checkpoint/Door to Short Shaft
   * Extra - door_idx: 69
+  > Door to Shaft North
+      Trivial
 
 > Door to Monkey Bars; Heals? False
   * Layers: default
   * L0 Hatch to Monkey Bars/Door to Short Shaft
   * Extra - door_idx: 70
+  > Door to South Shaft
+      Wave Beam
 
 > Door to South Shaft; Heals? False
   * Layers: default
   * L0 Hatch to South Shaft/Door to Short Shaft
   * Extra - door_idx: 71
+  > Door to Monkey Bars
+      Trivial
 
 ----------------
 Save Room East
@@ -558,11 +762,15 @@ Extra - room_id: 34
   * Layers: default
   * L0 Hatch to Short Shaft/Door to Save Room East
   * Extra - door_idx: 74
+  > Other to Wall Jump Tutorial
+      Morph Ball
 
 > Other to Wall Jump Tutorial; Heals? False
   * Layers: default
   * Tunnel to Wall Jump Tutorial/Other to Save Room East
   * Extra - door_idx: 108
+  > Door to Short Shaft
+      Trivial
 
 ----------------
 South Shaft
@@ -572,11 +780,15 @@ Extra - room_id: 35
   * Layers: default
   * L0 Hatch to Short Shaft/Door to South Shaft
   * Extra - door_idx: 72
+  > Door to Atmospheric Stabilizer Southeast
+      Trivial
 
 > Door to Atmospheric Stabilizer Southeast; Heals? False
   * Layers: default
   * L0 Hatch to Atmospheric Stabilizer Southeast/Door to South Shaft
   * Extra - door_idx: 73
+  > Door to Short Shaft
+      Trivial
 
 ----------------
 Tourian Entrance
@@ -586,11 +798,15 @@ Extra - room_id: 36
   * Layers: default
   * L0 Hatch to Screw Shaft/Door to Tourian Entrance
   * Extra - door_idx: 7
+  > Door to Tourian Shaft East
+      Morph Ball and Screw Attack
 
 > Door to Tourian Shaft East; Heals? False
   * Layers: default
   * L0 Hatch to Tourian Shaft East/Door to Tourian Entrance
   * Extra - door_idx: 8
+  > Door to Screw Shaft
+      Morph Ball and Screw Attack and Wave Beam
 
 ----------------
 Charge Core Access
@@ -600,21 +816,31 @@ Extra - room_id: 37
   * Layers: default
   * L0 Hatch to Monkey Bars/Door to Charge Core Access
   * Extra - door_idx: 25
+  > Door to Hornoad Housing
+      Trivial
 
 > Door to Hornoad Housing; Heals? False
   * Layers: default
   * L0 Hatch to Hornoad Housing/Door to Charge Core Access
   * Extra - door_idx: 77
+  > Door to Charge Core Arena
+      Trivial
+  > Other to Watering Hole
+      Can Use Bombs
 
 > Door to Charge Core Arena; Heals? False
   * Layers: default
   * L0 Hatch to Charge Core Arena/Door to Charge Core Access
   * Extra - door_idx: 83
+  > Door to Hornoad Housing
+      Trivial
 
 > Other to Watering Hole; Heals? False
   * Layers: default
   * Open Passage to Watering Hole/Other to Charge Core Access
   * Extra - door_idx: 100
+  > Door to Hornoad Housing
+      Can Use Any Bombs
 
 ----------------
 Monkey Bars
@@ -624,11 +850,15 @@ Extra - room_id: 38
   * Layers: default
   * L0 Hatch to Charge Core Access/Door to Monkey Bars
   * Extra - door_idx: 79
+  > Door to Short Shaft
+      Morph Ball
 
 > Door to Short Shaft; Heals? False
   * Layers: default
   * L0 Hatch to Short Shaft/Door to Monkey Bars
   * Extra - door_idx: 80
+  > Door to Charge Core Access
+      Morph Ball
 
 ----------------
 Antechamber
@@ -655,16 +885,36 @@ Extra - room_id: 40
 > Pickup (Energy Tank); Heals? False
   * Layers: default
   * Pickup 19; Category? Minor
+  > Door to Charge Core Access
+      Trivial
 
 > Door to Charge Core Access; Heals? False
   * Layers: default
   * L0 Hatch to Charge Core Access/Door to Charge Core Arena
   * Extra - door_idx: 82
+  > Pickup (Energy Tank)
+      Speed Booster
+  > Door to Charge Core Exit
+      Trivial
+  > Event - Charge Core-X
+      Missiles
 
 > Door to Charge Core Exit; Heals? False
   * Layers: default
   * L0 Hatch to Charge Core Exit/Door to Charge Core Arena
   * Extra - door_idx: 85
+  > Door to Charge Core Access
+      Trivial
+
+> Event - Charge Core-X; Heals? False
+  * Layers: default
+  > Pickup (Charge Beam)
+      Trivial
+
+> Pickup (Charge Beam); Heals? False
+  * Layers: default
+  > Door to Charge Core Access
+      Trivial
 
 ----------------
 Elevator to Main Deck
@@ -674,11 +924,15 @@ Extra - room_id: 41
   * Layers: default
   * Open Passage to Elevator to Sector 1 (SRX)/Other to Elevator to Main Deck
   * Extra - door_idx: 0
+  > Door to Entrance Navigation Room
+      Trivial
 
 > Door to Entrance Navigation Room; Heals? False
   * Layers: default
   * L0 Hatch to Entrance Navigation Room/Door to Elevator to Main Deck
   * Extra - door_idx: 86
+  > Other to Elevator to Sector 1 (SRX)
+      Trivial
 
 ----------------
 Central Save Station
@@ -696,11 +950,15 @@ Extra - room_id: 43
 > Pickup (Missile Tank); Heals? False
   * Layers: default
   * Pickup 20; Category? Minor
+  > Other to Charge Core Exit
+      Trivial
 
 > Other to Charge Core Exit; Heals? False
   * Layers: default
   * Tunnel to Charge Core Exit/Other to Crab Rave
   * Extra - door_idx: 93
+  > Pickup (Missile Tank)
+      Trivial
 
 ----------------
 Sciser Storage
@@ -709,11 +967,15 @@ Extra - room_id: 44
 > Pickup (Missile Tank); Heals? False
   * Layers: default
   * Pickup 21; Category? Minor
+  > Door to Atmospheric Stabilizer Southeast
+      Trivial
 
 > Door to Atmospheric Stabilizer Southeast; Heals? False
   * Layers: default
   * L0 Hatch to Atmospheric Stabilizer Southeast/Door to Sciser Storage
   * Extra - door_idx: 26
+  > Pickup (Missile Tank)
+      Trivial
 
 ----------------
 Sciser Puddle
@@ -723,11 +985,15 @@ Extra - room_id: 45
   * Layers: default
   * L0 Hatch to Zebesian Tower/Door to Sciser Puddle
   * Extra - door_idx: 96
+  > Door to Atmospheric Stabilizer Southwest
+      Trivial
 
 > Door to Atmospheric Stabilizer Southwest; Heals? False
   * Layers: default
   * L0 Hatch to Atmospheric Stabilizer Southwest/Door to Sciser Puddle
   * Extra - door_idx: 97
+  > Door to Zebesian Tower
+      Trivial
 
 ----------------
 Hornoad Housing
@@ -737,11 +1003,15 @@ Extra - room_id: 46
   * Layers: default
   * L0 Hatch to Central Save Station/Door to Hornoad Housing
   * Extra - door_idx: 98
+  > Door to Charge Core Access
+      Trivial
 
 > Door to Charge Core Access; Heals? False
   * Layers: default
   * L0 Hatch to Charge Core Access/Door to Hornoad Housing
   * Extra - door_idx: 99
+  > Door to Central Save Station
+      Trivial
 
 ----------------
 Watering Hole
@@ -791,11 +1061,15 @@ Extra - room_id: 50
 > Pickup (Missile Tank); Heals? False
   * Layers: default
   * Pickup 23; Category? Minor
+  > Other to Save Room East
+      Trivial
 
 > Other to Save Room East; Heals? False
   * Layers: default
   * Tunnel to Save Room East/Other to Wall Jump Tutorial
   * Extra - door_idx: 109
+  > Pickup (Missile Tank)
+      Trivial
 
 ----------------
 Animorphs
