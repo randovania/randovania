@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [7.4.0] - 2024-03-??
 
 - TODO: Fill.
+- Fixed: Changelog window properly displays images
 
 ### Cave Story
 
