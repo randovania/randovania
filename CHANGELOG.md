@@ -9,6 +9,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - TODO: Fill.
 
+### Cave Story
+
+#### Logic Database
+
+##### Egg Corridor
+
+- Added: Health requirements for the Igor boss fight.
+
+##### Mimiga Village
+
+- Added: Health requirements for the Balrog 1 boss fight.
+
 ## [7.3.2] - 2024-02-??
 
 - TODO: fill out or remove.
