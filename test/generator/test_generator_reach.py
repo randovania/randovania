@@ -154,12 +154,17 @@ _include_tricks_for_game = {
     ],
 )
 def test_database_collectable(
+    mocker,
     preset_manager,
     game_enum: RandovaniaGame,
     ignore_events: set[str],
     ignore_pickups: set[int],
     include_tricks: set[tuple[str, LayoutTrickLevel]],
 ):
+    mocker.patch(
+        "randovania.generator.base_patches_factory.BasePatchesFactory.check_item_pool",
+        autospec=True,
+    )
     game, initial_state, permalink = run_bootstrap(
         preset_manager.default_preset_for_game(game_enum).get_preset(), include_tricks
     )
@@ -295,6 +300,10 @@ def test_reach_size_from_start_echoes(small_echoes_game_description, default_ech
     ).get_mutable()
 
     mocker.patch("randovania.game_description.default_database.game_description_for", return_value=game)
+    mocker.patch(
+        "randovania.generator.base_patches_factory.BasePatchesFactory.check_item_pool",
+        autospec=True,
+    )
     generator = game.game.generator
 
     specific_levels = {trick.short_name: LayoutTrickLevel.maximum() for trick in game.resource_database.trick}
