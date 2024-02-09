@@ -9,7 +9,7 @@
         "scenario_id": "s040_area4"
     },
     "areas": {
-        "West Hub": {
+        "Caves Intersection Terminal": {
             "default_node": "Save Station",
             "extra": {
                 "total_boundings": {
@@ -108,7 +108,7 @@
                                 "negate": false
                             }
                         },
-                        "Door to Chozo Seals (Top)": {
+                        "Door to Transport to Areas 3 and 4 Crystal Mines (Top)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -142,7 +142,7 @@
                                 "items": []
                             }
                         },
-                        "Door to Gamma Arena Room 3": {
+                        "Door to Lava Pond": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -168,7 +168,7 @@
                                 ]
                             }
                         },
-                        "Door to One-Way Bridge": {
+                        "Door to Crumble Catwalk": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -226,14 +226,14 @@
                                 "items": []
                             }
                         },
-                        "Door to Chozo Seals (Bottom)": {
+                        "Door to Transport to Areas 3 and 4 Crystal Mines (Bottom)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Door to Roundabout": {
+                        "Door to Transit Tunnel": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -304,7 +304,7 @@
                         }
                     },
                     "connections": {
-                        "Door to Roundabout": {
+                        "Door to Transit Tunnel": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -315,7 +315,7 @@
                         }
                     }
                 },
-                "Door to Chozo Seals (Top)": {
+                "Door to Transport to Areas 3 and 4 Crystal Mines (Top)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -335,8 +335,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 4 - Central Caves",
-                        "area": "Chozo Seals",
-                        "node": "Door to West Hub (Top)"
+                        "area": "Transport to Areas 3 and 4 Crystal Mines",
+                        "node": "Door to Caves Intersection Terminal (Top)"
                     },
                     "default_dock_weakness": "Spazer Beam Door",
                     "exclude_from_dock_rando": false,
@@ -353,7 +353,7 @@
                         }
                     }
                 },
-                "Door to Gamma Arena Room 3": {
+                "Door to Lava Pond": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -373,8 +373,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 4 - Central Caves",
-                        "area": "Gamma Arena Room 3",
-                        "node": "Door to West Hub"
+                        "area": "Lava Pond",
+                        "node": "Door to Caves Intersection Terminal"
                     },
                     "default_dock_weakness": "Spazer Beam Door",
                     "exclude_from_dock_rando": false,
@@ -410,7 +410,7 @@
                         }
                     }
                 },
-                "Door to One-Way Bridge": {
+                "Door to Crumble Catwalk": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -430,8 +430,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 4 - Central Caves",
-                        "area": "One-Way Bridge",
-                        "node": "Door from West Hub"
+                        "area": "Crumble Catwalk",
+                        "node": "Door from Caves Intersection Terminal"
                     },
                     "default_dock_weakness": "Plasma Beam Door",
                     "exclude_from_dock_rando": false,
@@ -440,7 +440,7 @@
                     "override_default_lock_requirement": null,
                     "connections": {}
                 },
-                "Door to Chozo Seals (Bottom)": {
+                "Door to Transport to Areas 3 and 4 Crystal Mines (Bottom)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -460,8 +460,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 4 - Central Caves",
-                        "area": "Chozo Seals",
-                        "node": "Door to West Hub (Bottom)"
+                        "area": "Transport to Areas 3 and 4 Crystal Mines",
+                        "node": "Door to Caves Intersection Terminal (Bottom)"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -478,7 +478,7 @@
                         }
                     }
                 },
-                "Door to Roundabout": {
+                "Door to Transit Tunnel": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -498,8 +498,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 4 - Central Caves",
-                        "area": "Roundabout",
-                        "node": "Door to West Hub"
+                        "area": "Transit Tunnel",
+                        "node": "Door to Caves Intersection Terminal"
                     },
                     "default_dock_weakness": "Charge Beam Door",
                     "exclude_from_dock_rando": false,
@@ -520,7 +520,7 @@
                                 "negate": false
                             }
                         },
-                        "Dock to Moheek Hallway": {
+                        "Dock to Amethyst Altars": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -538,7 +538,7 @@
                         }
                     }
                 },
-                "Tunnel to One-Way Bridge": {
+                "Tunnel to Crumble Catwalk": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -555,8 +555,8 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Area 4 - Central Caves",
-                        "area": "One-Way Bridge",
-                        "node": "Tunnel to West Hub"
+                        "area": "Crumble Catwalk",
+                        "node": "Tunnel to Caves Intersection Terminal"
                     },
                     "default_dock_weakness": "Tunnel",
                     "exclude_from_dock_rando": false,
@@ -593,7 +593,7 @@
                     "default_connection": {
                         "region": "Area 4 - Central Caves",
                         "area": "Fleech Swarm Cave",
-                        "node": "Tunnel to West Hub"
+                        "node": "Tunnel to Caves Intersection Terminal"
                     },
                     "default_dock_weakness": "Tunnel with Bomb Block",
                     "exclude_from_dock_rando": false,
@@ -612,7 +612,7 @@
                         }
                     }
                 },
-                "Dock to Moheek Hallway": {
+                "Dock to Amethyst Altars": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -629,8 +629,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Area 4 - Central Caves",
-                        "area": "Moheek Hallway",
-                        "node": "Dock to West Hub"
+                        "area": "Amethyst Altars",
+                        "node": "Dock to Caves Intersection Terminal"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -638,7 +638,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Roundabout": {
+                        "Door to Transit Tunnel": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -663,7 +663,7 @@
                     "valid_starting_location": false,
                     "event_name": "Area 4 Central Caves Teleporter",
                     "connections": {
-                        "Door to Roundabout": {
+                        "Door to Transit Tunnel": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -674,7 +674,7 @@
                 }
             }
         },
-        "Spazer Beam Room": {
+        "Spazer Beam Chamber": {
             "default_node": "Start Point",
             "extra": {
                 "total_boundings": {
@@ -724,7 +724,7 @@
                     "pickup_index": 84,
                     "location_category": "major",
                     "connections": {
-                        "Door from Moheek Hallway": {
+                        "Door from Amethyst Altars": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -733,7 +733,7 @@
                         }
                     }
                 },
-                "Door from Moheek Hallway": {
+                "Door from Amethyst Altars": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -753,8 +753,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 4 - Central Caves",
-                        "area": "Moheek Hallway",
-                        "node": "Door to Spazer Beam Room"
+                        "area": "Amethyst Altars",
+                        "node": "Door to Spazer Beam Chamber"
                     },
                     "default_dock_weakness": "Access Closed",
                     "exclude_from_dock_rando": false,
@@ -769,7 +769,7 @@
                                 "items": []
                             }
                         },
-                        "Door to Moheek Hallway": {
+                        "Door to Amethyst Altars": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -825,7 +825,7 @@
                         }
                     }
                 },
-                "Door to Moheek Hallway": {
+                "Door to Amethyst Altars": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -845,8 +845,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 4 - Central Caves",
-                        "area": "Moheek Hallway",
-                        "node": "Door from Spazer Beam Room"
+                        "area": "Amethyst Altars",
+                        "node": "Door from Spazer Beam Chamber"
                     },
                     "default_dock_weakness": "Spazer Beam Door",
                     "exclude_from_dock_rando": false,
@@ -854,7 +854,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door from Moheek Hallway": {
+                        "Door from Amethyst Altars": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -880,7 +880,7 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Door from Moheek Hallway": {
+                        "Door from Amethyst Altars": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -891,7 +891,7 @@
                 }
             }
         },
-        "One-Way Bridge": {
+        "Crumble Catwalk": {
             "default_node": null,
             "extra": {
                 "total_boundings": {
@@ -941,7 +941,7 @@
                     "pickup_index": 81,
                     "location_category": "minor",
                     "connections": {
-                        "Tunnel to West Hub": {
+                        "Tunnel to Caves Intersection Terminal": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -969,7 +969,7 @@
                         }
                     }
                 },
-                "Door from West Hub": {
+                "Door from Caves Intersection Terminal": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -989,8 +989,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 4 - Central Caves",
-                        "area": "West Hub",
-                        "node": "Door to One-Way Bridge"
+                        "area": "Caves Intersection Terminal",
+                        "node": "Door to Crumble Catwalk"
                     },
                     "default_dock_weakness": "Access Closed",
                     "exclude_from_dock_rando": false,
@@ -1047,7 +1047,7 @@
                         }
                     }
                 },
-                "Tunnel to West Hub": {
+                "Tunnel to Caves Intersection Terminal": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1064,8 +1064,8 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Area 4 - Central Caves",
-                        "area": "West Hub",
-                        "node": "Tunnel to One-Way Bridge"
+                        "area": "Caves Intersection Terminal",
+                        "node": "Tunnel to Crumble Catwalk"
                     },
                     "default_dock_weakness": "Tunnel",
                     "exclude_from_dock_rando": false,
@@ -1209,7 +1209,7 @@
                 }
             }
         },
-        "Gamma Arena Room 3": {
+        "Lava Pond": {
             "default_node": "Start Point",
             "extra": {
                 "total_boundings": {
@@ -1239,7 +1239,7 @@
                 "asset_id": "collision_camera_005"
             },
             "nodes": {
-                "Door to West Hub": {
+                "Door to Caves Intersection Terminal": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1259,8 +1259,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 4 - Central Caves",
-                        "area": "West Hub",
-                        "node": "Door to Gamma Arena Room 3"
+                        "area": "Caves Intersection Terminal",
+                        "node": "Door to Lava Pond"
                     },
                     "default_dock_weakness": "Spazer Beam Door",
                     "exclude_from_dock_rando": false,
@@ -1268,7 +1268,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Gamma Access Path Lower": {
+                        "Door to Gamma Arena Access South": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1388,7 +1388,7 @@
                         }
                     }
                 },
-                "Door to Gamma Access Path Lower": {
+                "Door to Gamma Arena Access South": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1408,8 +1408,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 4 - Central Caves",
-                        "area": "Gamma Access Path Lower",
-                        "node": "Door to Gamma Arena Room 3"
+                        "area": "Gamma Arena Access South",
+                        "node": "Door to Lava Pond"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -1417,7 +1417,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to West Hub": {
+                        "Door to Caves Intersection Terminal": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1462,7 +1462,7 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to West Hub": {
+                        "Door to Caves Intersection Terminal": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -1475,7 +1475,7 @@
                 }
             }
         },
-        "Chozo Seals": {
+        "Transport to Areas 3 and 4 Crystal Mines": {
             "default_node": "Elevator to Area 3 - Factory Exterior",
             "extra": {
                 "total_boundings": {
@@ -1803,7 +1803,7 @@
                                 ]
                             }
                         },
-                        "Door to West Hub (Bottom)": {
+                        "Door to Caves Intersection Terminal (Bottom)": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -1866,7 +1866,7 @@
                                 ]
                             }
                         },
-                        "Tunnel to Roundabout": {
+                        "Tunnel to Transit Tunnel": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2269,7 +2269,7 @@
                                 ]
                             }
                         },
-                        "Door to Transport to Area 5 Tower Lobby": {
+                        "Door to Transport to Area 5": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2299,7 +2299,7 @@
                         }
                     }
                 },
-                "Door to West Hub (Top)": {
+                "Door to Caves Intersection Terminal (Top)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2319,8 +2319,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 4 - Central Caves",
-                        "area": "West Hub",
-                        "node": "Door to Chozo Seals (Top)"
+                        "area": "Caves Intersection Terminal",
+                        "node": "Door to Transport to Areas 3 and 4 Crystal Mines (Top)"
                     },
                     "default_dock_weakness": "Spazer Beam Door",
                     "exclude_from_dock_rando": false,
@@ -2328,7 +2328,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to West Hub (Bottom)": {
+                        "Door to Caves Intersection Terminal (Bottom)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2337,7 +2337,7 @@
                         }
                     }
                 },
-                "Door to West Hub (Bottom)": {
+                "Door to Caves Intersection Terminal (Bottom)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2357,8 +2357,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 4 - Central Caves",
-                        "area": "West Hub",
-                        "node": "Door to Chozo Seals (Bottom)"
+                        "area": "Caves Intersection Terminal",
+                        "node": "Door to Transport to Areas 3 and 4 Crystal Mines (Bottom)"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -2373,7 +2373,7 @@
                                 "items": []
                             }
                         },
-                        "Door to West Hub (Top)": {
+                        "Door to Caves Intersection Terminal (Top)": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -2417,7 +2417,7 @@
                         }
                     }
                 },
-                "Door to Transport to Area 5 Tower Lobby": {
+                "Door to Transport to Area 5": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2437,8 +2437,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 4 - Central Caves",
-                        "area": "Transport to Area 5 Tower Lobby",
-                        "node": "Door to Chozo Seals"
+                        "area": "Transport to Area 5",
+                        "node": "Door to Transport to Areas 3 and 4 Crystal Mines"
                     },
                     "default_dock_weakness": "Charge Beam Door",
                     "exclude_from_dock_rando": false,
@@ -2453,13 +2453,13 @@
                                 "items": []
                             }
                         },
-                        "Tunnel to The Big Gap": {
+                        "Tunnel to Venomous Pond": {
                             "type": "template",
                             "data": "Lay Any Bomb"
                         }
                     }
                 },
-                "Tunnel to Roundabout": {
+                "Tunnel to Transit Tunnel": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2476,8 +2476,8 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Area 4 - Central Caves",
-                        "area": "Roundabout",
-                        "node": "Tunnel to Chozo Seals"
+                        "area": "Transit Tunnel",
+                        "node": "Tunnel to Transport to Areas 3 and 4 Crystal Mines"
                     },
                     "default_dock_weakness": "Tunnel",
                     "exclude_from_dock_rando": false,
@@ -2494,7 +2494,7 @@
                         }
                     }
                 },
-                "Tunnel to The Big Gap": {
+                "Tunnel to Venomous Pond": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2511,8 +2511,8 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Area 4 - Central Caves",
-                        "area": "The Big Gap",
-                        "node": "Tunnel to Chozo Seals"
+                        "area": "Venomous Pond",
+                        "node": "Tunnel to Transport to Areas 3 and 4 Crystal Mines"
                     },
                     "default_dock_weakness": "Tunnel with Bomb Block",
                     "exclude_from_dock_rando": false,
@@ -2520,11 +2520,11 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Transport to Area 5 Tower Lobby": {
+                        "Door to Transport to Area 5": {
                             "type": "template",
                             "data": "Lay Any Bomb"
                         },
-                        "Tunnel to Transport to Area 5 Tower Lobby": {
+                        "Tunnel to Transport to Area 5": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2547,7 +2547,7 @@
                         }
                     }
                 },
-                "Tunnel to Transport to Area 5 Tower Lobby": {
+                "Tunnel to Transport to Area 5": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2564,8 +2564,8 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Area 4 - Central Caves",
-                        "area": "Transport to Area 5 Tower Lobby",
-                        "node": "Tunnel to Chozo Seals"
+                        "area": "Transport to Area 5",
+                        "node": "Tunnel to Transport to Areas 3 and 4 Crystal Mines"
                     },
                     "default_dock_weakness": "Tunnel",
                     "exclude_from_dock_rando": false,
@@ -2573,7 +2573,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Tunnel to The Big Gap": {
+                        "Tunnel to Venomous Pond": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3126,8 +3126,8 @@
                 }
             }
         },
-        "Roundabout": {
-            "default_node": "Door to West Hub",
+        "Transit Tunnel": {
+            "default_node": "Door to Caves Intersection Terminal",
             "extra": {
                 "total_boundings": {
                     "x1": 6500.0,
@@ -3164,7 +3164,7 @@
                 "asset_id": "collision_camera_010"
             },
             "nodes": {
-                "Door to West Hub": {
+                "Door to Caves Intersection Terminal": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3184,8 +3184,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 4 - Central Caves",
-                        "area": "West Hub",
-                        "node": "Door to Roundabout"
+                        "area": "Caves Intersection Terminal",
+                        "node": "Door to Transit Tunnel"
                     },
                     "default_dock_weakness": "Charge Beam Door",
                     "exclude_from_dock_rando": false,
@@ -3223,7 +3223,7 @@
                     "default_connection": {
                         "region": "Area 4 - Central Caves",
                         "area": "Alpha+ Arena Access",
-                        "node": "Door to Roundabout"
+                        "node": "Door to Transit Tunnel"
                     },
                     "default_dock_weakness": "Access Locked",
                     "exclude_from_dock_rando": false,
@@ -3231,7 +3231,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to West Hub": {
+                        "Door to Caves Intersection Terminal": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3282,7 +3282,7 @@
                     "default_connection": {
                         "region": "Area 4 - Central Caves",
                         "area": "Alpha+ Arena Access",
-                        "node": "Door from Roundabout"
+                        "node": "Door from Transit Tunnel"
                     },
                     "default_dock_weakness": "Spazer Beam Door",
                     "exclude_from_dock_rando": false,
@@ -3325,7 +3325,7 @@
                         }
                     }
                 },
-                "Tunnel to Chozo Seals": {
+                "Tunnel to Transport to Areas 3 and 4 Crystal Mines": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3342,8 +3342,8 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Area 4 - Central Caves",
-                        "area": "Chozo Seals",
-                        "node": "Tunnel to Roundabout"
+                        "area": "Transport to Areas 3 and 4 Crystal Mines",
+                        "node": "Tunnel to Transit Tunnel"
                     },
                     "default_dock_weakness": "Tunnel",
                     "exclude_from_dock_rando": false,
@@ -3393,7 +3393,7 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "event_name": "Area 4 (Central Caves) - Roundabout Grapple Block",
+                    "event_name": "Area 4 (Central Caves) - Transit Tunnel Grapple Block",
                     "connections": {
                         "Next to Grapple Blocks": {
                             "type": "and",
@@ -3419,7 +3419,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Tunnel to Chozo Seals": {
+                        "Tunnel to Transport to Areas 3 and 4 Crystal Mines": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3549,7 +3549,7 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "events",
-                                                        "name": "Area 4 (Central Caves) - Roundabout Grapple Block",
+                                                        "name": "Area 4 (Central Caves) - Transit Tunnel Grapple Block",
                                                         "amount": 1,
                                                         "negate": false
                                                     }
@@ -3678,7 +3678,7 @@
                     "pickup_index": 80,
                     "location_category": "minor",
                     "connections": {
-                        "Tunnel to West Hub": {
+                        "Tunnel to Caves Intersection Terminal": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3696,7 +3696,7 @@
                         }
                     }
                 },
-                "Tunnel to West Hub": {
+                "Tunnel to Caves Intersection Terminal": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3713,7 +3713,7 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Area 4 - Central Caves",
-                        "area": "West Hub",
+                        "area": "Caves Intersection Terminal",
                         "node": "Tunnel to Fleech Swarm Cave"
                     },
                     "default_dock_weakness": "Tunnel with Bomb Block",
@@ -3747,7 +3747,7 @@
                 }
             }
         },
-        "Gamma Arena Room 2": {
+        "Hostile Hangout": {
             "default_node": "Start Point",
             "extra": {
                 "total_boundings": {
@@ -3777,7 +3777,7 @@
                 "asset_id": "collision_camera_012"
             },
             "nodes": {
-                "Tunnel to Gamma Access Path Lower": {
+                "Tunnel to Gamma Arena Access South": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3794,8 +3794,8 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Area 4 - Central Caves",
-                        "area": "Gamma Access Path Lower",
-                        "node": "Tunnel to Gamma Arena Room 2"
+                        "area": "Gamma Arena Access South",
+                        "node": "Tunnel to Hostile Hangout"
                     },
                     "default_dock_weakness": "Tunnel with Bomb Block",
                     "exclude_from_dock_rando": false,
@@ -3826,7 +3826,7 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Tunnel to Gamma Access Path Lower": {
+                        "Tunnel to Gamma Arena Access South": {
                             "type": "template",
                             "data": "Lay Any Bomb"
                         }
@@ -3834,7 +3834,7 @@
                 }
             }
         },
-        "Gamma Arena Room 1": {
+        "Gamma Arena": {
             "default_node": "Inside Arena",
             "extra": {
                 "total_boundings": {
@@ -3864,7 +3864,7 @@
                 "asset_id": "collision_camera_013"
             },
             "nodes": {
-                "Door to Gamma Access Path Upper": {
+                "Door to Gamma Arena Access North": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3884,8 +3884,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 4 - Central Caves",
-                        "area": "Gamma Access Path Upper",
-                        "node": "Door to Gamma Arena Room 1"
+                        "area": "Gamma Arena Access North",
+                        "node": "Door to Gamma Arena"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -3922,13 +3922,13 @@
                     "pickup_index": 85,
                     "location_category": "minor",
                     "connections": {
-                        "Dock to Gamma Access Path Lower": {
+                        "Dock to Gamma Arena Access South": {
                             "type": "template",
                             "data": "Climb Rooms Vertically (High Jump)"
                         }
                     }
                 },
-                "Dock to Gamma Access Path Lower": {
+                "Dock to Gamma Arena Access South": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3945,8 +3945,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Area 4 - Central Caves",
-                        "area": "Gamma Access Path Lower",
-                        "node": "Dock to Gamma Arena Room 1"
+                        "area": "Gamma Arena Access South",
+                        "node": "Dock to Gamma Arena"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -4044,14 +4044,14 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Gamma Access Path Upper": {
+                        "Door to Gamma Arena Access North": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Dock to Gamma Access Path Lower": {
+                        "Dock to Gamma Arena Access South": {
                             "type": "template",
                             "data": "Lay Any Bomb"
                         },
@@ -4092,7 +4092,7 @@
                 }
             }
         },
-        "Gamma Access Path Lower": {
+        "Gamma Arena Access South": {
             "default_node": null,
             "extra": {
                 "total_boundings": {
@@ -4150,7 +4150,7 @@
                     "pickup_index": 83,
                     "location_category": "minor",
                     "connections": {
-                        "Door to Gamma Arena Room 3": {
+                        "Door to Lava Pond": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4159,7 +4159,7 @@
                         }
                     }
                 },
-                "Door to Gamma Arena Room 3": {
+                "Door to Lava Pond": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4179,8 +4179,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 4 - Central Caves",
-                        "area": "Gamma Arena Room 3",
-                        "node": "Door to Gamma Access Path Lower"
+                        "area": "Lava Pond",
+                        "node": "Door to Gamma Arena Access South"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -4257,7 +4257,7 @@
                                 ]
                             }
                         },
-                        "Dock to Gamma Access Shaft": {
+                        "Dock to Outward Climb": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -4313,7 +4313,7 @@
                                 ]
                             }
                         },
-                        "Dock to Gamma Arena Room 1": {
+                        "Dock to Gamma Arena": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4331,7 +4331,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "events",
-                                            "name": "Area 4 (Central Caves) - Gamma Access Path Lower Grapple Block",
+                                            "name": "Area 4 (Central Caves) - Gamma Arena Access South Grapple Block",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -4341,7 +4341,7 @@
                         }
                     }
                 },
-                "Tunnel to Gamma Arena Room 2": {
+                "Tunnel to Hostile Hangout": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4358,8 +4358,8 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Area 4 - Central Caves",
-                        "area": "Gamma Arena Room 2",
-                        "node": "Tunnel to Gamma Access Path Lower"
+                        "area": "Hostile Hangout",
+                        "node": "Tunnel to Gamma Arena Access South"
                     },
                     "default_dock_weakness": "Tunnel with Bomb Block",
                     "exclude_from_dock_rando": false,
@@ -4367,7 +4367,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Gamma Arena Room 1": {
+                        "Dock to Gamma Arena": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -4378,7 +4378,7 @@
                         }
                     }
                 },
-                "Dock to Gamma Access Shaft": {
+                "Dock to Outward Climb": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4395,8 +4395,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Area 4 - Central Caves",
-                        "area": "Gamma Access Shaft",
-                        "node": "Dock to Gamma Access Path Lower"
+                        "area": "Outward Climb",
+                        "node": "Dock to Gamma Arena Access South"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -4404,7 +4404,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Gamma Arena Room 3": {
+                        "Door to Lava Pond": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -4462,7 +4462,7 @@
                         }
                     }
                 },
-                "Dock to Gamma Arena Room 1": {
+                "Dock to Gamma Arena": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4479,8 +4479,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Area 4 - Central Caves",
-                        "area": "Gamma Arena Room 1",
-                        "node": "Dock to Gamma Access Path Lower"
+                        "area": "Gamma Arena",
+                        "node": "Dock to Gamma Arena Access South"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -4488,7 +4488,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Gamma Arena Room 3": {
+                        "Door to Lava Pond": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4501,7 +4501,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "events",
-                                            "name": "Area 4 (Central Caves) - Gamma Access Path Lower Grapple Block",
+                                            "name": "Area 4 (Central Caves) - Gamma Arena Access South Grapple Block",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -4509,7 +4509,7 @@
                                 ]
                             }
                         },
-                        "Tunnel to Gamma Arena Room 2": {
+                        "Tunnel to Hostile Hangout": {
                             "type": "template",
                             "data": "Lay Any Bomb"
                         },
@@ -4538,9 +4538,9 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "event_name": "Area 4 (Central Caves) - Gamma Access Path Lower Grapple Block",
+                    "event_name": "Area 4 (Central Caves) - Gamma Arena Access South Grapple Block",
                     "connections": {
-                        "Dock to Gamma Arena Room 1": {
+                        "Dock to Gamma Arena": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4551,7 +4551,7 @@
                 }
             }
         },
-        "Gamma Access Shaft": {
+        "Outward Climb": {
             "default_node": null,
             "extra": {
                 "total_boundings": {
@@ -4589,7 +4589,7 @@
                 "asset_id": "collision_camera_015"
             },
             "nodes": {
-                "Dock to Gamma Access Path Lower": {
+                "Dock to Gamma Arena Access South": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4606,8 +4606,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Area 4 - Central Caves",
-                        "area": "Gamma Access Path Lower",
-                        "node": "Dock to Gamma Access Shaft"
+                        "area": "Gamma Arena Access South",
+                        "node": "Dock to Outward Climb"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -4615,7 +4615,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Gamma Access Path Upper": {
+                        "Dock to Gamma Arena Access North": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4624,7 +4624,7 @@
                         }
                     }
                 },
-                "Dock to Gamma Access Path Upper": {
+                "Dock to Gamma Arena Access North": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4641,8 +4641,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Area 4 - Central Caves",
-                        "area": "Gamma Access Path Upper",
-                        "node": "Dock to Gamma Access Shaft"
+                        "area": "Gamma Arena Access North",
+                        "node": "Dock to Outward Climb"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -4650,7 +4650,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Gamma Access Path Lower": {
+                        "Dock to Gamma Arena Access South": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4661,7 +4661,7 @@
                 }
             }
         },
-        "Moheek Hallway": {
+        "Amethyst Altars": {
             "default_node": null,
             "extra": {
                 "total_boundings": {
@@ -4691,7 +4691,7 @@
                 "asset_id": "collision_camera_016"
             },
             "nodes": {
-                "Door to Spazer Beam Room": {
+                "Door to Spazer Beam Chamber": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4711,8 +4711,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 4 - Central Caves",
-                        "area": "Spazer Beam Room",
-                        "node": "Door from Moheek Hallway"
+                        "area": "Spazer Beam Chamber",
+                        "node": "Door from Amethyst Altars"
                     },
                     "default_dock_weakness": "Missile Door",
                     "exclude_from_dock_rando": false,
@@ -4721,7 +4721,7 @@
                     "override_default_lock_requirement": null,
                     "connections": {}
                 },
-                "Door from Spazer Beam Room": {
+                "Door from Spazer Beam Chamber": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4741,8 +4741,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 4 - Central Caves",
-                        "area": "Spazer Beam Room",
-                        "node": "Door to Moheek Hallway"
+                        "area": "Spazer Beam Chamber",
+                        "node": "Door to Amethyst Altars"
                     },
                     "default_dock_weakness": "Access Closed",
                     "exclude_from_dock_rando": false,
@@ -4788,7 +4788,7 @@
                         }
                     }
                 },
-                "Dock to West Hub": {
+                "Dock to Caves Intersection Terminal": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4805,8 +4805,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Area 4 - Central Caves",
-                        "area": "West Hub",
-                        "node": "Dock to Moheek Hallway"
+                        "area": "Caves Intersection Terminal",
+                        "node": "Dock to Amethyst Altars"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -4838,7 +4838,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Spazer Beam Room": {
+                        "Door to Spazer Beam Chamber": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4968,7 +4968,7 @@
                                 ]
                             }
                         },
-                        "Dock to West Hub": {
+                        "Dock to Caves Intersection Terminal": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4979,7 +4979,7 @@
                 }
             }
         },
-        "Gamma Access Path Upper": {
+        "Gamma Arena Access North": {
             "default_node": "Start Point",
             "extra": {
                 "total_boundings": {
@@ -5009,7 +5009,7 @@
                 "asset_id": "collision_camera_018"
             },
             "nodes": {
-                "Door to Gamma Arena Room 1": {
+                "Door to Gamma Arena": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5029,8 +5029,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 4 - Central Caves",
-                        "area": "Gamma Arena Room 1",
-                        "node": "Door to Gamma Access Path Upper"
+                        "area": "Gamma Arena",
+                        "node": "Door to Gamma Arena Access North"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -5038,7 +5038,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Gamma Access Shaft": {
+                        "Dock to Outward Climb": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -5103,7 +5103,7 @@
                         }
                     }
                 },
-                "Dock to Gamma Access Shaft": {
+                "Dock to Outward Climb": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5120,8 +5120,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Area 4 - Central Caves",
-                        "area": "Gamma Access Shaft",
-                        "node": "Dock to Gamma Access Path Upper"
+                        "area": "Outward Climb",
+                        "node": "Dock to Gamma Arena Access North"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -5129,7 +5129,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Gamma Arena Room 1": {
+                        "Door to Gamma Arena": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -5204,7 +5204,7 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Gamma Arena Room 1": {
+                        "Door to Gamma Arena": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5245,7 +5245,7 @@
                 "asset_id": "collision_camera_019"
             },
             "nodes": {
-                "Door to Roundabout": {
+                "Door to Transit Tunnel": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5265,7 +5265,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 4 - Central Caves",
-                        "area": "Roundabout",
+                        "area": "Transit Tunnel",
                         "node": "Door to Alpha+ Arena Access (Top)"
                     },
                     "default_dock_weakness": "Power Beam Door",
@@ -5274,7 +5274,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door from Roundabout": {
+                        "Door from Transit Tunnel": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -5301,7 +5301,7 @@
                         }
                     }
                 },
-                "Door from Roundabout": {
+                "Door from Transit Tunnel": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5321,7 +5321,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 4 - Central Caves",
-                        "area": "Roundabout",
+                        "area": "Transit Tunnel",
                         "node": "Door to Alpha+ Arena Access (Bottom)"
                     },
                     "default_dock_weakness": "Access Closed",
@@ -5330,7 +5330,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Roundabout": {
+                        "Door to Transit Tunnel": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -5370,7 +5370,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Roundabout": {
+                        "Door to Transit Tunnel": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -5407,7 +5407,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Roundabout": {
+                        "Door to Transit Tunnel": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -5435,7 +5435,7 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Roundabout": {
+                        "Door to Transit Tunnel": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5446,7 +5446,7 @@
                 }
             }
         },
-        "The Big Gap": {
+        "Venomous Pond": {
             "default_node": null,
             "extra": {
                 "total_boundings": {
@@ -5484,7 +5484,7 @@
                 "asset_id": "collision_camera_022"
             },
             "nodes": {
-                "Door to Transport to Area 5 Tower Lobby": {
+                "Door to Transport to Area 5": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5504,8 +5504,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 4 - Central Caves",
-                        "area": "Transport to Area 5 Tower Lobby",
-                        "node": "Door to The Big Gap"
+                        "area": "Transport to Area 5",
+                        "node": "Door to Venomous Pond"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -5553,7 +5553,7 @@
                         }
                     }
                 },
-                "Tunnel to Chozo Seals": {
+                "Tunnel to Transport to Areas 3 and 4 Crystal Mines": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5570,8 +5570,8 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Area 4 - Central Caves",
-                        "area": "Chozo Seals",
-                        "node": "Tunnel to The Big Gap"
+                        "area": "Transport to Areas 3 and 4 Crystal Mines",
+                        "node": "Tunnel to Venomous Pond"
                     },
                     "default_dock_weakness": "Tunnel with Bomb Block",
                     "exclude_from_dock_rando": false,
@@ -5605,7 +5605,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Transport to Area 5 Tower Lobby": {
+                        "Door to Transport to Area 5": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -5700,7 +5700,7 @@
                                 ]
                             }
                         },
-                        "Tunnel to Chozo Seals": {
+                        "Tunnel to Transport to Areas 3 and 4 Crystal Mines": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5801,7 +5801,7 @@
                 }
             }
         },
-        "Transport to Area 5 Tower Lobby": {
+        "Transport to Area 5": {
             "default_node": "Elevator to Area 5 - Tower Lobby",
             "extra": {
                 "total_boundings": {
@@ -5869,7 +5869,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to The Big Gap": {
+                        "Door to Venomous Pond": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5887,7 +5887,7 @@
                         }
                     }
                 },
-                "Door to Chozo Seals": {
+                "Door to Transport to Areas 3 and 4 Crystal Mines": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5907,8 +5907,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 4 - Central Caves",
-                        "area": "Chozo Seals",
-                        "node": "Door to Transport to Area 5 Tower Lobby"
+                        "area": "Transport to Areas 3 and 4 Crystal Mines",
+                        "node": "Door to Transport to Area 5"
                     },
                     "default_dock_weakness": "Charge Beam Door",
                     "exclude_from_dock_rando": false,
@@ -5934,7 +5934,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "events",
-                                            "name": "Area 4 (Central Caves) - Transport to Area 5 Tower Lobby Grapple Block",
+                                            "name": "Area 4 (Central Caves) - Transport to Area 5 Grapple Block",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -5944,7 +5944,7 @@
                         }
                     }
                 },
-                "Door to The Big Gap": {
+                "Door to Venomous Pond": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5964,8 +5964,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 4 - Central Caves",
-                        "area": "The Big Gap",
-                        "node": "Door to Transport to Area 5 Tower Lobby"
+                        "area": "Venomous Pond",
+                        "node": "Door to Transport to Area 5"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -6011,7 +6011,7 @@
                         }
                     }
                 },
-                "Tunnel to Chozo Seals": {
+                "Tunnel to Transport to Areas 3 and 4 Crystal Mines": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6028,8 +6028,8 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Area 4 - Central Caves",
-                        "area": "Chozo Seals",
-                        "node": "Tunnel to Transport to Area 5 Tower Lobby"
+                        "area": "Transport to Areas 3 and 4 Crystal Mines",
+                        "node": "Tunnel to Transport to Area 5"
                     },
                     "default_dock_weakness": "Tunnel",
                     "exclude_from_dock_rando": false,
@@ -6062,7 +6062,7 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "event_name": "Area 4 (Central Caves) - Transport to Area 5 Tower Lobby Grapple Block",
+                    "event_name": "Area 4 (Central Caves) - Transport to Area 5 Grapple Block",
                     "connections": {
                         "Next to Grapple Block": {
                             "type": "and",
@@ -6149,7 +6149,7 @@
                                 ]
                             }
                         },
-                        "Door to Chozo Seals": {
+                        "Door to Transport to Areas 3 and 4 Crystal Mines": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6167,7 +6167,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "events",
-                                            "name": "Area 4 (Central Caves) - Transport to Area 5 Tower Lobby Grapple Block",
+                                            "name": "Area 4 (Central Caves) - Transport to Area 5 Grapple Block",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -6202,7 +6202,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "events",
-                                            "name": "Area 4 (Central Caves) - Transport to Area 5 Tower Lobby Grapple Block",
+                                            "name": "Area 4 (Central Caves) - Transport to Area 5 Grapple Block",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -6210,7 +6210,7 @@
                                 ]
                             }
                         },
-                        "Tunnel to Chozo Seals": {
+                        "Tunnel to Transport to Areas 3 and 4 Crystal Mines": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
