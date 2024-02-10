@@ -201,17 +201,25 @@ Extra - room_id: 7
 
 > Door to Data Room; Heals? False
   * Layers: default
-  * L1 Hatch to Data Room/Door to Data Hub
+  * L1 Hatch to Data Room/Door to Data Hub (D)
   * Extra - door_idx: 17
 
 ----------------
 Data Room
 Extra - map_name: Sector 28
 Extra - room_id: 8
-> Door to Data Hub; Heals? False
+> Door to Data Hub (D); Heals? False
   * Layers: default
-  * L1 Hatch to Data Hub/Door to Data Room
+  * L1 Hatch to Data Hub (D)/Door to Data Room
   * Extra - door_idx: 19
+  > Pickup (Morph Ball Bombs)
+      Trivial
+
+> Pickup (Morph Ball Bombs); Heals? False
+  * Layers: default
+  * Pickup 105; Category? Major
+  > Door to Data Hub (D)
+      Trivial
 
 ----------------
 Zoro Zig-Zag
@@ -228,9 +236,7 @@ Extra - room_id: 9
   * L0 Hatch to Data Hub (D)/Door to Zoro Zig-Zag
   * Extra - door_idx: 20
   > Pickup (Missile Tank)
-      Any of the following:
-          Can Use Any Bombs
-          Morph Ball and Wave Beam and Knowledge (Beginner)
+      Morph Ball and Can Activate Pillar
   > Door to Maintenance Annex
       Can Use Any Bombs
 
@@ -265,9 +271,7 @@ Extra - room_id: 10
   > Pickup (Missile Tank)
       Can Use Any Bombs
   > Door to Maintenance Annex
-      All of the following:
-          Can Use Any Bombs
-          High Jump or Space Jump
+      Can Use Any Bombs and Can climb High Jump Wall
 
 ----------------
 Puyo Corridor
@@ -278,18 +282,14 @@ Extra - room_id: 11
   * L0 Hatch to Cultivation Station/Door to Puyo Corridor
   * Extra - door_idx: 24
   > Door to Central Shaft
-      Any of the following:
-          Can Use Any Bombs
-          All of the following:
-              Knowledge (Beginner)
-              Diffusion Missiles or Wave Beam
+      Morph Ball and Can Activate Pillar
 
 > Door to Central Shaft; Heals? False
   * Layers: default
   * L0 Hatch to Central Shaft/Door to Puyo Corridor
   * Extra - door_idx: 27
   > Door to Cultivation Station
-      High Jump or Space Jump
+      Morph Ball and Can climb High Jump Wall
 
 ----------------
 Shooting Gallery
@@ -299,11 +299,15 @@ Extra - room_id: 12
   * Layers: default
   * L0 Hatch to Nettori Access (C)/Door to Shooting Gallery
   * Extra - door_idx: 25
+  > Door to Nettori Arena (C)
+      Trivial
 
 > Door to Nettori Arena (C); Heals? False
   * Layers: default
   * L0 Hatch to Nettori Arena (C)/Door to Shooting Gallery
   * Extra - door_idx: 26
+  > Door to Nettori Access (C)
+      Trivial
 
 ----------------
 Central Shaft
@@ -313,31 +317,71 @@ Extra - room_id: 13
   * Layers: default
   * L0 Hatch to Puyo Corridor/Door to Central Shaft
   * Extra - door_idx: 28
+  > Door to Southern Save Access
+      Trivial
+  > Door to Dessgeega Dormitory
+      Trivial
+  > Door to Oasis
+      Trivial
+  > Door to Conceiled Ceiling
+      Trivial
+  > Door to Puyo Palace
+      Trivial
+  > Door to Reo
+      All of the following:
+          Can Use Any Bombs
+          Any of the following:
+              Space Jump
+              High Jump and Can Freeze Enemies
 
 > Door to Southern Save Access; Heals? False
   * Layers: default
   * L0 Hatch to Southern Save Access/Door to Central Shaft
   * Extra - door_idx: 29
+  > Door to Puyo Corridor
+      Trivial
 
 > Door to Dessgeega Dormitory; Heals? False
   * Layers: default
   * L0 Hatch to Dessgeega Dormitory/Door to Central Shaft
   * Extra - door_idx: 30
+  > Door to Puyo Corridor
+      Can climb High Jump Wall
 
 > Door to Oasis; Heals? False
   * Layers: default
   * L0 Hatch to Oasis/Door to Central Shaft
   * Extra - door_idx: 94
+  > Door to Puyo Corridor
+      Trivial
 
 > Door to Conceiled Ceiling; Heals? False
   * Layers: default
   * L0 Hatch to Conceiled Ceiling/Door to Central Shaft
   * Extra - door_idx: 96
+  > Door to Puyo Corridor
+      Trivial
 
 > Door to Puyo Palace; Heals? False
   * Layers: default
   * Open Hatch to Puyo Palace/Door to Central Shaft
   * Extra - door_idx: 111
+  > Door to Puyo Corridor
+      Trivial
+
+> Door to Reo; Heals? False
+  * Layers: default
+  * Open Hatch to Reo Room/Door to Central Shaft
+  > Door to Puyo Corridor
+      Can Use Any Bombs
+  > Door to Ripper Roost
+      Can Use Any Bombs
+
+> Door to Ripper Roost; Heals? False
+  * Layers: default
+  * Open Hatch to Ripper Roost/Door to Central Shaft
+  > Door to Reo
+      Can Use Any Bombs
 
 ----------------
 Dessgeega Dormitory
@@ -361,11 +405,15 @@ Extra - room_id: 15
   * Layers: default
   * L0 Hatch to Central Shaft/Door to Southern Save Access
   * Extra - door_idx: 35
+  > Door to Save Room South
+      Trivial
 
 > Door to Save Room South; Heals? False
   * Layers: default
   * L0 Hatch to Save Room South/Door to Southern Save Access
   * Extra - door_idx: 36
+  > Door to Central Shaft
+      Trivial
 
 ----------------
 Save Room South
@@ -383,6 +431,8 @@ Extra - room_id: 17
 > Pickup (Energy Tank); Heals? False
   * Layers: default
   * Pickup 28; Category? Minor
+  > Door to Owtch Office
+      Trivial
 
 > Door to Collapsed Shaft; Heals? False
   * Layers: default
@@ -393,11 +443,17 @@ Extra - room_id: 17
   * Layers: default
   * L0 Hatch to Zazabi Arena/Door to Zazabi Access
   * Extra - door_idx: 39
+  > Door to Owtch Office
+      Can climb High Jump Wall
 
 > Door to Owtch Office; Heals? False
   * Layers: default
   * L0 Hatch to Owtch Office/Door to Zazabi Access
   * Extra - door_idx: 93
+  > Pickup (Energy Tank)
+      Trivial
+  > Door to Zazabi Arena
+      Can Kill Eye Door
 
 ----------------
 Zazabi Arena
@@ -407,11 +463,43 @@ Extra - room_id: 18
   * Layers: default
   * L0 Hatch to Zazabi Access/Door to Zazabi Arena
   * Extra - door_idx: 40
+  > Arena Floor
+      Trivial
 
 > Door to Zazabi Speedway; Heals? False
   * Layers: default
   * L0 Hatch to Zazabi Speedway/Door to Zazabi Arena
   * Extra - door_idx: 133
+  > Arena Floor
+      Screw Attack
+
+> Event - Zazabi; Heals? False
+  * Layers: default
+  * Event Zazabi
+  > Pickup (High Jump)
+      Trivial
+
+> Pickup (High Jump); Heals? False
+  * Layers: default
+  * Pickup 104; Category? Major
+  > Arena Floor
+      Trivial
+
+> Arena Floor; Heals? False
+  * Layers: default
+  > Door to Zazabi Access
+      Can climb High Jump Wall
+  > Door to Zazabi Speedway
+      Screw Attack and Can climb High Jump Wall
+  > Event - Zazabi
+      All of the following:
+          # Weapons Requirements
+          Charge Beam or Missiles ≥ 20
+          Any of the following:
+              # Health Requirements
+              Combat (Advanced) or Normal Damage ≥ 225
+              Combat (Beginner) and Normal Damage ≥ 150
+              Combat (Intermediate) and Normal Damage ≥ 75
 
 ----------------
 Collapsed Shaft
@@ -421,26 +509,42 @@ Extra - room_id: 19
   * Layers: default
   * L0 Hatch to Zazabi Access/Door to Collapsed Shaft
   * Extra - door_idx: 41
+  > Door to Dessgeega Dormitory
+      Trivial
 
 > Door to Dessgeega Dormitory; Heals? False
   * Layers: default
   * L0 Hatch to Dessgeega Dormitory/Door to Collapsed Shaft
   * Extra - door_idx: 42
+  > Door to Zazabi Access
+      Trivial
+  > Door to Zazabi Save Room
+      Trivial
+  > Door to Puyo Palace
+      Can Use Power Bombs
 
-> Door to Eastern Shaft; Heals? False
+> Door to Eastern Shaft (C); Heals? False
   * Layers: default
-  * Open Hatch to Eastern Shaft/Door to Collapsed Shaft
+  * Open Hatch to Eastern Shaft (C)/Door to Collapsed Shaft
   * Extra - door_idx: 70
+  > Door to Puyo Palace
+      Trivial
 
-> Door to Nettori Save Room; Heals? False
+> Door to Zazabi Save Room; Heals? False
   * Layers: default
-  * L0 Hatch to Nettori Save Room/Door to Collapsed Shaft
+  * L0 Hatch to Zazabi Save Room/Door to Collapsed Shaft
   * Extra - door_idx: 88
+  > Door to Dessgeega Dormitory
+      Trivial
 
 > Door to Puyo Palace; Heals? False
   * Layers: default
   * Open Hatch to Puyo Palace/Door to Collapsed Shaft
   * Extra - door_idx: 108
+  > Door to Dessgeega Dormitory
+      Can Use Power Bombs
+  > Door to Eastern Shaft (C)
+      Trivial
 
 ----------------
 Nettori Access
@@ -468,11 +572,15 @@ Extra - room_id: 21
 > Pickup (Hidden Energy Tank); Heals? False
   * Layers: default
   * Pickup 29; Category? Minor
+  > Door to Eastern Shaft (C)
+      Trivial
 
-> Door to Eastern Shaft; Heals? False
+> Door to Eastern Shaft (C); Heals? False
   * Layers: default
-  * L0 Hatch to Eastern Shaft/Door to Owtch Cache B
+  * L0 Hatch to Eastern Shaft (C)/Door to Owtch Cache B
   * Extra - door_idx: 49
+  > Pickup (Hidden Energy Tank)
+      Morph Ball and Can climb High Jump Wall
 
 ----------------
 Nettori Arena
@@ -492,15 +600,19 @@ Extra - room_id: 22
 Kihunter Hallway
 Extra - map_name: Sector 223
 Extra - room_id: 23
-> Door to Eastern Shaft; Heals? False
+> Door to Eastern Shaft (C); Heals? False
   * Layers: default
-  * L0 Hatch to Eastern Shaft/Door to Kihunter Hallway
+  * L0 Hatch to Eastern Shaft (C)/Door to Kihunter Hallway
   * Extra - door_idx: 52
+  > Other to Entrance Hub
+      Trivial
 
 > Other to Entrance Hub; Heals? False
   * Layers: default
   * Tunnel to Entrance Hub/Other to Kihunter Hallway
   * Extra - door_idx: 53
+  > Door to Eastern Shaft (C)
+      Trivial
 
 ----------------
 Overgrown Entrance
@@ -523,11 +635,19 @@ Extra - room_id: 25
 > Pickup (Missile Tank); Heals? False
   * Layers: default
   * Pickup 30; Category? Minor
+  > Door to Oasis
+      All of the following:
+          Can Use Any Bombs
+          Gravity Suit or High Jump
 
 > Door to Oasis; Heals? False
   * Layers: default
   * L0 Hatch to Oasis/Door to Oasis Storage
   * Extra - door_idx: 57
+  > Pickup (Missile Tank)
+      All of the following:
+          Can Use Any Bombs
+          Gravity Suit or High Jump
 
 ----------------
 Level 1 Security Room
@@ -571,16 +691,24 @@ Extra - room_id: 27
 > Pickup (Missile Tank); Heals? False
   * Layers: default
   * Pickup 31; Category? Minor
+  > Other to Entrance Hub
+      Can Use Any Bombs
 
 > Other to Entrance Hub; Heals? False
   * Layers: default
   * Tunnel to Entrance Hub/Other to Entrance Hub Underside
   * Extra - door_idx: 62
+  > Pickup (Missile Tank)
+      Can Use Any Bombs
+  > Door to Reo Room
+      Trivial
 
 > Door to Reo Room; Heals? False
   * Layers: default
   * L0 Hatch to Reo Room/Door to Entrance Hub Underside
   * Extra - door_idx: 63
+  > Other to Entrance Hub
+      Can climb High Jump Wall
 
 ----------------
 Reo Room
@@ -590,11 +718,15 @@ Extra - room_id: 28
   * Layers: default
   * L0 Hatch to Entrance Hub Underside/Door to Reo Room
   * Extra - door_idx: 64
+  > Door to Central Shaft
+      Trivial
 
-> Door to Central Shaft (D); Heals? False
+> Door to Central Shaft; Heals? False
   * Layers: default
-  * L0 Hatch to Central Shaft (D)/Door to Reo Room
+  * L0 Hatch to Central Shaft/Door to Reo
   * Extra - door_idx: 65
+  > Door to Entrance Hub Underside
+      Trivial
 
 ----------------
 Elevator to Main Deck
@@ -642,7 +774,7 @@ Extra - room_id: 31
 
 > Door to Data Room; Heals? False
   * Layers: default
-  * L1 Hatch to Data Room/Door to Data Hub
+  * L1 Hatch to Data Room/Door to Data Hub (D)
   * Extra - door_idx: 69
   > Door to Data Hub Access
       Trivial
@@ -674,20 +806,22 @@ Extra - room_id: 32
   * Layers: default
   * Open Hatch to Nettori Access/Door to Eastern Shaft
   * Extra - door_idx: 43
+  > Door to Nettori Save Room
+      Trivial
 
 > Door to Owtch Cache B; Heals? False
   * Layers: default
-  * L0 Hatch to Owtch Cache B/Door to Eastern Shaft
+  * L0 Hatch to Owtch Cache B/Door to Eastern Shaft (C)
   * Extra - door_idx: 44
 
 > Door to Kihunter Hallway; Heals? False
   * Layers: default
-  * L0 Hatch to Kihunter Hallway/Door to Eastern Shaft
+  * L0 Hatch to Kihunter Hallway/Door to Eastern Shaft (C)
   * Extra - door_idx: 45
 
 > Door to Collapsed Shaft; Heals? False
   * Layers: default
-  * Open Hatch to Collapsed Shaft/Door to Eastern Shaft
+  * Open Hatch to Collapsed Shaft/Door to Eastern Shaft (C)
   * Extra - door_idx: 71
 
 > Door to Overgrown Checkpoint; Heals? False
@@ -700,9 +834,9 @@ Extra - room_id: 32
   * Tunnel to Hidden Recharge Room/Other to Eastern Shaft
   * Extra - door_idx: 117
 
-> Door to Zazabi Save Room; Heals? False
+> Door to Nettori Save Room; Heals? False
   * Layers: default
-  * Open Hatch to Zazabi Save Room/Door to Eastern Shaft
+  * Open Hatch to Nettori Save Room/Door to Eastern Shaft (C)
   * Extra - door_idx: 120
 
 ----------------
@@ -746,16 +880,24 @@ Extra - room_id: 34
   * Layers: default
   * Open Hatch to Nettori Arena (C)/Door to Nettori Access (C)
   * Extra - door_idx: 74
+  > Door to Eastern Shaft (C)
+      Trivial
 
 > Door to Shooting Gallery; Heals? False
   * Layers: default
   * L0 Hatch to Shooting Gallery/Door to Nettori Access (C)
   * Extra - door_idx: 75
+  > Door to Eastern Shaft (C)
+      Trivial
 
 > Door to Eastern Shaft (C); Heals? False
   * Layers: default
   * Open Hatch to Eastern Shaft (C)/Door to Nettori Access (C)
   * Extra - door_idx: 76
+  > Door to Nettori Arena (C)
+      Can climb High Jump Wall
+  > Door to Shooting Gallery
+      Trivial
 
 ----------------
 Eastern Shaft (C)
@@ -763,38 +905,66 @@ Extra - map_name: Sector 235
 Extra - room_id: 35
 > Door to Kihunter Hallway; Heals? False
   * Layers: default
-  * L0 Hatch to Kihunter Hallway/Door to Eastern Shaft
+  * L0 Hatch to Kihunter Hallway/Door to Eastern Shaft (C)
   * Extra - door_idx: 77
+  > Door to Owtch Cache B
+      Trivial
+  > Door to Nettori Save Room
+      Trivial
+  > Other to Hidden Recharge Room
+      Trivial
 
 > Door to Owtch Cache B; Heals? False
   * Layers: default
-  * L0 Hatch to Owtch Cache B/Door to Eastern Shaft
+  * L0 Hatch to Owtch Cache B/Door to Eastern Shaft (C)
   * Extra - door_idx: 78
+  > Door to Kihunter Hallway
+      Trivial
 
 > Door to Nettori Access (C); Heals? False
   * Layers: default
   * Open Hatch to Nettori Access (C)/Door to Eastern Shaft (C)
   * Extra - door_idx: 79
+  > Door to Nettori Save Room
+      Trivial
 
 > Door to Collapsed Shaft; Heals? False
   * Layers: default
-  * Open Hatch to Collapsed Shaft/Door to Eastern Shaft
+  * Open Hatch to Collapsed Shaft/Door to Eastern Shaft (C)
   * Extra - door_idx: 80
+  > Door to Overgrown Checkpoint (C)
+      Trivial
+  > Door to Nettori Save Room
+      Any of the following:
+          Space Jump
+          High Jump and Can Freeze Enemies
 
 > Door to Overgrown Checkpoint (C); Heals? False
   * Layers: default
   * Open Hatch to Overgrown Checkpoint (C)/Door to Eastern Shaft (C)
   * Extra - door_idx: 81
+  > Door to Collapsed Shaft
+      Trivial
 
-> Door to Zazabi Save Room; Heals? False
+> Door to Nettori Save Room; Heals? False
   * Layers: default
-  * Open Hatch to Zazabi Save Room/Door to Eastern Shaft
+  * Open Hatch to Nettori Save Room/Door to Eastern Shaft (C)
   * Extra - door_idx: 121
+  > Door to Kihunter Hallway
+      Any of the following:
+          Space Jump
+          High Jump and Can Freeze Enemies
+  > Door to Nettori Access (C)
+      Trivial
+  > Door to Collapsed Shaft
+      Trivial
 
 > Other to Hidden Recharge Room; Heals? False
   * Layers: default
   * Tunnel to Hidden Recharge Room/Other to Eastern Shaft
   * Extra - door_idx: 122
+  > Door to Kihunter Hallway
+      Can climb High Jump Wall
 
 ----------------
 Overgrown Entrance (C)
@@ -841,29 +1011,37 @@ Extra - room_id: 38
 Owtch Office
 Extra - map_name: Sector 239
 Extra - room_id: 39
-> Door to Nettori Save Room; Heals? False
+> Door to Zazabi Save Room; Heals? False
   * Layers: default
-  * L0 Hatch to Nettori Save Room/Door to Owtch Office
+  * L0 Hatch to Zazabi Save Room/Door to Owtch Office
   * Extra - door_idx: 89
+  > Door to Zazabi Access
+      Trivial
 
 > Door to Zazabi Access; Heals? False
   * Layers: default
   * L0 Hatch to Zazabi Access/Door to Owtch Office
   * Extra - door_idx: 90
+  > Door to Zazabi Save Room
+      Trivial
 
 ----------------
-Nettori Save Room
+Zazabi Save Room
 Extra - map_name: Sector 240
 Extra - room_id: 40
 > Door to Collapsed Shaft; Heals? False
   * Layers: default
-  * L0 Hatch to Collapsed Shaft/Door to Nettori Save Room
+  * L0 Hatch to Collapsed Shaft/Door to Zazabi Save Room
   * Extra - door_idx: 91
+  > Door to Owtch Office
+      Trivial
 
 > Door to Owtch Office; Heals? False
   * Layers: default
-  * L0 Hatch to Owtch Office/Door to Nettori Save Room
+  * L0 Hatch to Owtch Office/Door to Zazabi Save Room
   * Extra - door_idx: 92
+  > Door to Collapsed Shaft
+      Trivial
 
 ----------------
 Conceiled Ceiling
@@ -881,16 +1059,28 @@ Extra - room_id: 42
 > Pickup (Missile Tank); Heals? False
   * Layers: default
   * Pickup 34; Category? Minor
+  > Door to Central Shaft
+      Trivial
 
 > Door to Oasis Storage; Heals? False
   * Layers: default
   * L0 Hatch to Oasis Storage/Door to Oasis
   * Extra - door_idx: 56
+  > Door to Central Shaft
+      All of the following:
+          Morph Ball
+          Gravity Suit or High Jump
 
 > Door to Central Shaft; Heals? False
   * Layers: default
   * L0 Hatch to Central Shaft/Door to Oasis
   * Extra - door_idx: 95
+  > Pickup (Missile Tank)
+      Can climb High Jump Wall
+  > Door to Oasis Storage
+      All of the following:
+          Morph Ball
+          Gravity Suit or High Jump
 
 ----------------
 Maintenance Annex
@@ -933,9 +1123,9 @@ Extra - room_id: 45
   * Tunnel to Dessgeega Dormitory (D)/Other to Conceiled Ceiling (C)(?)
   * Extra - door_idx: 102
 
-> Door to Central Shaft (D); Heals? False
+> Door to Central Shaft; Heals? False
   * Layers: default
-  * L0 Hatch to Central Shaft (D)/Door to Conceiled Ceiling (C)(?)
+  * L0 Hatch to Central Shaft/Door to Conceiled Ceiling
   * Extra - door_idx: 103
 
 ----------------
@@ -944,7 +1134,7 @@ Extra - map_name: Sector 246
 Extra - room_id: 46
 > Door to Reo Room; Heals? False
   * Layers: default
-  * L0 Hatch to Reo Room/Door to Central Shaft (D)
+  * L0 Hatch to Reo Room/Door to Central Shaft
   * Extra - door_idx: 31
 
 > Door to Puyo Corridor; Heals? False
@@ -964,7 +1154,7 @@ Extra - room_id: 46
 
 > Door to Conceiled Ceiling (C)(?); Heals? False
   * Layers: default
-  * L0 Hatch to Conceiled Ceiling (C)(?)/Door to Central Shaft (D)
+  * L0 Hatch to Conceiled Ceiling (C)(?)/Door to Central Shaft
   * Extra - door_idx: 107
 
 > Door to Puyo Palace; Heals? False
@@ -974,7 +1164,7 @@ Extra - room_id: 46
 
 > Door to Ripper Roost; Heals? False
   * Layers: default
-  * L0 Hatch to Ripper Roost/Door to Central Shaft (D)
+  * L0 Hatch to Ripper Roost/Door to Central Shaft
   * Extra - door_idx: 113
 
 ----------------
@@ -984,21 +1174,35 @@ Extra - room_id: 47
 > Pickup (Power Bomb Tank); Heals? False
   * Layers: default
   * Pickup 35; Category? Minor
+  > Door to Central Shaft
+      Trivial
 
 > Door to Collapsed Shaft; Heals? False
   * Layers: default
   * Open Hatch to Collapsed Shaft/Door to Puyo Palace
   * Extra - door_idx: 109
+  > Door to Central Shaft
+      Can climb High Jump Wall
 
 > Door to Central Shaft; Heals? False
   * Layers: default
   * Open Hatch to Central Shaft/Door to Puyo Palace
   * Extra - door_idx: 110
+  > Door to Collapsed Shaft
+      Space Jump or Speed Booster
+  > Door to Nettori Save Room
+      Any of the following:
+          Space Jump
+          Speed Booster and Shinespark Tricks (Beginner)
 
-> Door to Zazabi Save Room; Heals? False
+> Door to Nettori Save Room; Heals? False
   * Layers: default
-  * Open Hatch to Zazabi Save Room/Door to Puyo Palace
+  * Open Hatch to Nettori Save Room/Door to Puyo Palace
   * Extra - door_idx: 115
+  > Pickup (Power Bomb Tank)
+      Space Jump or Movement (Intermediate)
+  > Door to Central Shaft
+      Trivial
 
 ----------------
 Hidden Recharge Room
@@ -1010,18 +1214,22 @@ Extra - room_id: 48
   * Extra - door_idx: 116
 
 ----------------
-Zazabi Save Room
+Nettori Save Room
 Extra - map_name: Sector 249
 Extra - room_id: 49
 > Door to Puyo Palace; Heals? False
   * Layers: default
-  * Open Hatch to Puyo Palace/Door to Zazabi Save Room
+  * Open Hatch to Puyo Palace/Door to Nettori Save Room
   * Extra - door_idx: 118
+  > Door to Eastern Shaft (C)
+      Trivial
 
-> Door to Eastern Shaft; Heals? False
+> Door to Eastern Shaft (C); Heals? False
   * Layers: default
-  * Open Hatch to Eastern Shaft/Door to Zazabi Save Room
+  * Open Hatch to Eastern Shaft (C)/Door to Nettori Save Room
   * Extra - door_idx: 119
+  > Door to Puyo Palace
+      Trivial
 
 ----------------
 Ripper Roost
@@ -1030,15 +1238,23 @@ Extra - room_id: 50
 > Pickup (Power Bomb Tank); Heals? False
   * Layers: default
   * Pickup 36; Category? Minor
+  > Door to Central Shaft
+      Trivial
 
 > Pickup (Hidden Power Bomb Tank); Heals? False
   * Layers: default
   * Pickup 37; Category? Minor
+  > Door to Central Shaft
+      Can Use Any Bombs
 
-> Door to Central Shaft (D); Heals? False
+> Door to Central Shaft; Heals? False
   * Layers: default
-  * L0 Hatch to Central Shaft (D)/Door to Ripper Roost
+  * L0 Hatch to Central Shaft/Door to Ripper Roost
   * Extra - door_idx: 114
+  > Pickup (Power Bomb Tank)
+      Morph Ball and Can Freeze Enemies
+  > Pickup (Hidden Power Bomb Tank)
+      Morph Ball and Can Freeze Enemies
 
 ----------------
 Nettori Arena (C)
@@ -1062,11 +1278,15 @@ Extra - room_id: 52
   * Layers: default
   * L0 Hatch to Kago Room/Door to Connection to Sector 1 (SRX)
   * Extra - door_idx: 126
+  > Other to Connection to Sector 2 (TRO)
+      Trivial
 
 > Other to Connection to Sector 2 (TRO); Heals? False
   * Layers: default
   * Open Passage to Connection to Sector 2 (TRO)/Other to Connection to Sector 1 (SRX)
   * Extra - door_idx: 127
+  > Door to Kago Room
+      Trivial
 
 ----------------
 Connection to Sector 4 (AQA)
@@ -1076,11 +1296,15 @@ Extra - room_id: 53
   * Layers: default
   * L0 Hatch to Security Access/Door to Connection to Sector 4 (AQA)
   * Extra - door_idx: 129
+  > Other to Connection to Sector 2 (TRO)
+      Trivial
 
 > Other to Connection to Sector 2 (TRO); Heals? False
   * Layers: default
   * Open Passage to Connection to Sector 2 (TRO)/Other to Connection to Sector 4 (AQA)
   * Extra - door_idx: 130
+  > Door to Security Access
+      Trivial
 
 ----------------
 Crumble City
@@ -1114,15 +1338,23 @@ Extra - room_id: 55
 > Pickup (Power Bomb Tank); Heals? False
   * Layers: default
   * Pickup 40; Category? Minor
+  > Door to Zazabi Arena
+      Trivial
 
 > Pickup (Hidden Missile Tank); Heals? False
   * Layers: default
   * Pickup 41; Category? Minor
+  > Door to Zazabi Arena
+      Can climb High Jump Wall
 
 > Door to Zazabi Arena; Heals? False
   * Layers: default
   * L0 Hatch to Zazabi Arena/Door to Zazabi Speedway
   * Extra - door_idx: 134
+  > Pickup (Power Bomb Tank)
+      Speed Booster
+  > Pickup (Hidden Missile Tank)
+      Speed Booster
 
 ----------------
 Overgrown Hallway

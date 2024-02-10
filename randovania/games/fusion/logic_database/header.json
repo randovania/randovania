@@ -802,6 +802,32 @@
                         }
                     ]
                 }
+            },
+            "Can climb High Jump Wall": {
+                "type": "or",
+                "data": {
+                    "comment": null,
+                    "items": [
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "HighJump",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "SpaceJump",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    ]
+                }
             }
         },
         "damage_reductions": [],
@@ -1032,10 +1058,12 @@
     "used_trick_levels": {
         "Combat": [
             1,
+            2,
             3
         ],
         "Knowledge": [
-            1
+            1,
+            2
         ],
         "HeatRuns": [
             1,
