@@ -80,7 +80,7 @@ Extra - room_id: 3
   * Extra - door_idx: 9
   > Door to Atmospheric Stabilizer Northwest
       Any of the following:
-          Missiles ≥ 3
+          Missiles ≥ 3 or Screw Attack
           Speed Booster and Knowledge (Beginner)
 
 > Door to Atmospheric Stabilizer Northwest; Heals? False
@@ -88,7 +88,7 @@ Extra - room_id: 3
   * L0 Hatch to Atmospheric Stabilizer Northwest/Door to Yameba Corridor
   * Extra - door_idx: 10
   > Door to Entrance Hub
-      Missiles ≥ 3
+      Missiles ≥ 3 or Screw Attack
 
 ----------------
 Atmospheric Stabilizer Northwest
@@ -98,15 +98,36 @@ Extra - room_id: 4
   * Layers: default
   * L0 Hatch to Yameba Corridor/Door to Atmospheric Stabilizer Northwest
   * Extra - door_idx: 11
-  > Door to Hornoad Hole
+  > Room Center
       Trivial
 
 > Door to Hornoad Hole; Heals? False
   * Layers: default
   * L0 Hatch to Hornoad Hole/Door to Atmospheric Stabilizer Northwest
   * Extra - door_idx: 12
+  > Room Center
+      Trivial
+
+> Stabilizer 1 Online; Heals? False
+  * Layers: default
+  * Event Stabilizer 1 Online
+  > Room Center
+      Trivial
+
+> Room Center; Heals? False
+  * Layers: default
   > Door to Yameba Corridor
       Trivial
+  > Door to Hornoad Hole
+      After Stabilizer 1 Online
+  > Stabilizer 1 Online
+      Any of the following:
+          Charge Beam or Missiles or Screw Attack
+          All of the following:
+              Speed Booster
+              Any of the following:
+                  Shinespark Tricks (Advanced)
+                  High Jump and Shinespark Tricks (Intermediate)
 
 ----------------
 Hornoad Hole
@@ -223,14 +244,29 @@ Extra - room_id: 9
   * Layers: default
   * L0 Hatch to Charge Core Exit/Door to Atmospheric Stabilizer Central
   * Extra - door_idx: 23
-  > Door to Checkpoint
+  > Room Center
       Trivial
 
 > Door to Checkpoint; Heals? False
   * Layers: default
   * L0 Hatch to Checkpoint/Door to Atmospheric Stabilizer Central
   * Extra - door_idx: 88
+  > Room Center
+      Trivial
+
+> Room Center; Heals? False
+  * Layers: default
   > Door to Charge Core Exit
+      After Stabilizer 5 Online
+  > Door to Checkpoint
+      After Stabilizer 5 Online
+  > Stabilizer 5 Online
+      Charge Beam or Missiles or Screw Attack
+
+> Stabilizer 5 Online; Heals? False
+  * Layers: default
+  * Event Stabilizer 5 Online
+  > Room Center
       Trivial
 
 ----------------
@@ -304,14 +340,29 @@ Extra - room_id: 13
   * Layers: default
   * L0 Hatch to Moto Manor/Door to Atmospheric Stabilizer Southwest
   * Extra - door_idx: 29
-  > Door to Sciser Puddle
+  > Room Center
       Trivial
 
 > Door to Sciser Puddle; Heals? False
   * Layers: default
   * L0 Hatch to Sciser Puddle/Door to Atmospheric Stabilizer Southwest
   * Extra - door_idx: 30
+  > Room Center
+      Trivial
+
+> Room Center; Heals? False
+  * Layers: default
   > Door to Moto Manor
+      After Stabilizer 3 Online
+  > Door to Sciser Puddle
+      Trivial
+  > Stabilizer 3 Online
+      Charge Beam or Missiles or Screw Attack
+
+> Stabilizer 3 Online; Heals? False
+  * Layers: default
+  * Event Stabilizer 3 Online
+  > Room Center
       Trivial
 
 ----------------
@@ -340,23 +391,38 @@ Extra - room_id: 15
   * Layers: default
   * L0 Hatch to Sciser Storage/Door to Atmospheric Stabilizer Southeast
   * Extra - door_idx: 32
-  > Door to Screw Shaft
+  > Room Center
       Trivial
 
 > Door to Screw Shaft; Heals? False
   * Layers: default
   * L0 Hatch to Screw Shaft/Door to Atmospheric Stabilizer Southeast
   * Extra - door_idx: 33
-  > Door to Sciser Storage
-      Trivial
-  > Door to South Shaft
+  > Room Center
       Trivial
 
 > Door to South Shaft; Heals? False
   * Layers: default
   * L0 Hatch to South Shaft/Door to Atmospheric Stabilizer Southeast
   * Extra - door_idx: 75
+  > Room Center
+      Trivial
+
+> Room Center; Heals? False
+  * Layers: default
+  > Door to Sciser Storage
+      After Stabilizer 4 Online
   > Door to Screw Shaft
+      After Stabilizer 4 Online
+  > Door to South Shaft
+      After Stabilizer 4 Online
+  > Stabilizer 4 Online
+      Charge Beam or Missiles or Screw Attack
+
+> Stabilizer 4 Online; Heals? False
+  * Layers: default
+  * Event Stabilizer 4 Online
+  > Room Center
       Trivial
 
 ----------------
@@ -451,7 +517,7 @@ Extra - room_id: 18
   * L0 Hatch to Tourian Central Checkpoint/Door to Tourian Shaft East
   * Extra - door_idx: 38
   > Door to Tourian Entrance
-      Screw Attack
+      Morph Ball and Screw Attack
 
 > Door to Tourian Entrance; Heals? False
   * Layers: default
@@ -557,11 +623,19 @@ Extra - room_id: 22
   * Layers: default
   * Open Hatch to Tourian Central Hub/Door to Golden Pirates
   * Extra - door_idx: 48
+  > Door to Tourian Hub West
+      All of the following:
+          Can Use Power Bombs
+          Charge Beam or Screw Attack
 
 > Door to Tourian Hub West; Heals? False
   * Layers: default
   * L0 Hatch to Tourian Hub West/Door to Golden Pirates
   * Extra - door_idx: 49
+  > Door to Tourian Central Hub
+      All of the following:
+          Can Use Power Bombs
+          Charge Beam or Screw Attack
 
 ----------------
 Tourian Hub West
@@ -571,21 +645,33 @@ Extra - room_id: 23
   * Layers: default
   * L0 Hatch to Golden Pirates/Door to Tourian Hub West
   * Extra - door_idx: 50
+  > Door to Tourian Save Room West
+      Trivial
+  > Door to Genesis Habitation
+      Trivial
+  > Door to Ridley Access
+      Trivial
 
 > Door to Tourian Save Room West; Heals? False
   * Layers: default
   * L0 Hatch to Tourian Save Room West/Door to Tourian Hub West
   * Extra - door_idx: 51
+  > Door to Golden Pirates
+      Trivial
 
 > Door to Genesis Habitation; Heals? False
   * Layers: default
   * L0 Hatch to Genesis Habitation/Door to Tourian Hub West
   * Extra - door_idx: 52
+  > Door to Golden Pirates
+      Trivial
 
 > Door to Ridley Access; Heals? False
   * Layers: default
   * L0 Hatch to Ridley Access/Door to Tourian Hub West
   * Extra - door_idx: 53
+  > Door to Golden Pirates
+      Trivial
 
 ----------------
 Tourian Save Room West
@@ -613,11 +699,15 @@ Extra - room_id: 26
   * Layers: default
   * L0 Hatch to Tourian Hub West/Door to Ridley Access
   * Extra - door_idx: 56
+  > Door to Ridley Arena
+      Can Kill Eye Door
 
 > Door to Ridley Arena; Heals? False
   * Layers: default
   * L0 Hatch to Ridley Arena/Door to Ridley Access
   * Extra - door_idx: 57
+  > Door to Tourian Hub West
+      Trivial
 
 ----------------
 Ridley Arena
@@ -627,6 +717,22 @@ Extra - room_id: 27
   * Layers: default
   * L0 Hatch to Ridley Access/Door to Ridley Arena
   * Extra - door_idx: 58
+  > Neo-Ridley
+      All of the following:
+          Normal Damage
+          Charge Beam or Missiles ≥ 100
+
+> Neo-Ridley; Heals? False
+  * Layers: default
+  * Event Neo-Ridley
+  > Pickup (Screw Attack)
+      Trivial
+
+> Pickup (Screw Attack); Heals? False
+  * Layers: default
+  * Pickup 104; Category? Major
+  > Door to Ridley Access
+      Space Jump and After Neo-Ridley
 
 ----------------
 Tourian Central Checkpoint
@@ -644,7 +750,7 @@ Extra - room_id: 28
   * L0 Hatch to Tourian Central Hub/Door to Tourian Central Checkpoint
   * Extra - door_idx: 59
   > Door to Tourian Shaft East
-      Trivial
+      Wave Beam
 
 ----------------
 Ripper Maze Access
@@ -679,7 +785,7 @@ Extra - room_id: 30
   * L0 Hatch to Ripper Maze Access/Door to Ripper Maze
   * Extra - door_idx: 62
   > Door to Elevator to Restricted Labs
-      Trivial
+      Movement (Beginner)
 
 > Door to Elevator to Restricted Labs; Heals? False
   * Layers: default
@@ -698,11 +804,15 @@ Extra - room_id: 31
   * Layers: default
   * L0 Hatch to Ripper Maze/Door to Elevator to Restricted Labs
   * Extra - door_idx: 64
+  > Other to Elevator to Sector 1 (Tourian)
+      Trivial
 
 > Other to Elevator to Sector 1 (Tourian); Heals? False
   * Layers: default
   * Open Passage to Elevator to Sector 1 (Tourian)/Other to Elevator to Restricted Labs
   * Extra - door_idx: 65
+  > Door to Ripper Maze
+      Trivial
 
 ----------------
 Atmospheric Stabilizer Northeast
@@ -712,6 +822,21 @@ Extra - room_id: 32
   * Layers: default
   * L0 Hatch to Shaft North/Door to Atmospheric Stabilizer Northeast
   * Extra - door_idx: 66
+  > Room Center
+      Trivial
+
+> Room Center; Heals? False
+  * Layers: default
+  > Door to Shaft North
+      After Stabilizer 2 Online
+  > Stabilizer 2 Online
+      Charge Beam or Missiles or Screw Attack
+
+> Stabilizer 2 Online; Heals? False
+  * Layers: default
+  * Event Stabilizer 2 Online
+  > Room Center
+      Trivial
 
 ----------------
 Short Shaft
@@ -799,14 +924,18 @@ Extra - room_id: 36
   * L0 Hatch to Screw Shaft/Door to Tourian Entrance
   * Extra - door_idx: 7
   > Door to Tourian Shaft East
-      Morph Ball and Screw Attack
+      All of the following:
+          Morph Ball and Screw Attack
+          Space Jump or Damage Runs (Intermediate)
 
 > Door to Tourian Shaft East; Heals? False
   * Layers: default
   * L0 Hatch to Tourian Shaft East/Door to Tourian Entrance
   * Extra - door_idx: 8
   > Door to Screw Shaft
-      Morph Ball and Screw Attack and Wave Beam
+      All of the following:
+          Morph Ball and Screw Attack and Wave Beam
+          Space Jump or Damage Runs (Intermediate)
 
 ----------------
 Charge Core Access
@@ -817,16 +946,16 @@ Extra - room_id: 37
   * L0 Hatch to Monkey Bars/Door to Charge Core Access
   * Extra - door_idx: 25
   > Door to Hornoad Housing
-      Trivial
+      Morph Ball
 
 > Door to Hornoad Housing; Heals? False
   * Layers: default
   * L0 Hatch to Hornoad Housing/Door to Charge Core Access
   * Extra - door_idx: 77
   > Door to Charge Core Arena
-      Trivial
+      Can Kill Eye Door
   > Other to Watering Hole
-      Can Use Bombs
+      Can Use Any Bombs
 
 > Door to Charge Core Arena; Heals? False
   * Layers: default
@@ -867,16 +996,33 @@ Extra - room_id: 39
 > Pickup (Power Bomb Tank); Heals? False
   * Layers: default
   * Pickup 18; Category? Minor
+  > Top of Room
+      Trivial
 
 > Door to Entrance Hub; Heals? False
   * Layers: default
   * L2 Hatch to Entrance Hub/Door to Antechamber
   * Extra - door_idx: 81
+  > Top of Room
+      All of the following:
+          Screw Attack
+          High Jump or Space Jump
 
 > Door to Connection to Sector 2 (TRO); Heals? False
   * Layers: default
   * L0 Hatch to Connection to Sector 2 (TRO)/Door to Antechamber
   * Extra - door_idx: 102
+  > Top of Room
+      Can Use Bombs or Can Use Springball
+
+> Top of Room; Heals? False
+  * Layers: default
+  > Pickup (Power Bomb Tank)
+      Trivial
+  > Door to Entrance Hub
+      Screw Attack
+  > Door to Connection to Sector 2 (TRO)
+      Morph Ball
 
 ----------------
 Charge Core Arena
@@ -895,7 +1041,7 @@ Extra - room_id: 40
   > Pickup (Energy Tank)
       Speed Booster
   > Door to Charge Core Exit
-      Trivial
+      After Charge Core-X
   > Event - Charge Core-X
       Missiles
 
@@ -908,13 +1054,14 @@ Extra - room_id: 40
 
 > Event - Charge Core-X; Heals? False
   * Layers: default
+  * Event Charge Core-X
   > Pickup (Charge Beam)
       Trivial
 
 > Pickup (Charge Beam); Heals? False
   * Layers: default
   > Door to Charge Core Access
-      Trivial
+      After Charge Core-X
 
 ----------------
 Elevator to Main Deck
@@ -951,14 +1098,14 @@ Extra - room_id: 43
   * Layers: default
   * Pickup 20; Category? Minor
   > Other to Charge Core Exit
-      Trivial
+      Morph Ball
 
 > Other to Charge Core Exit; Heals? False
   * Layers: default
   * Tunnel to Charge Core Exit/Other to Crab Rave
   * Extra - door_idx: 93
   > Pickup (Missile Tank)
-      Trivial
+      Morph Ball
 
 ----------------
 Sciser Storage
@@ -1025,6 +1172,11 @@ Extra - room_id: 47
   * Layers: default
   * Open Passage to Charge Core Access/Other to Watering Hole
   * Extra - door_idx: 101
+  > Pickup (Hidden Power Bomb Tank)
+      All of the following:
+          Morph Ball and Speed Booster
+          Can Use Bombs or Can Use Springball
+          Gravity Suit or Shinespark Tricks (Expert)
 
 ----------------
 Connection to Sector 2 (TRO)
@@ -1034,11 +1186,15 @@ Extra - room_id: 48
   * Layers: default
   * L0 Hatch to Antechamber/Door to Connection to Sector 2 (TRO)
   * Extra - door_idx: 103
+  > Other to Connection to Sector 1 (SRX)
+      Trivial
 
 > Other to Connection to Sector 1 (SRX); Heals? False
   * Layers: default
   * Open Passage to Connection to Sector 1 (SRX)/Other to Connection to Sector 2 (TRO)
   * Extra - door_idx: 104
+  > Door to Antechamber
+      Trivial
 
 ----------------
 Connection to Sector 3 (PYR)
@@ -1048,11 +1204,15 @@ Extra - room_id: 49
   * Layers: default
   * L0 Hatch to Lava Lake Annex/Door to Connection to Sector 3 (PYR)
   * Extra - door_idx: 105
+  > Other to Connection to Sector 1 (SRX)
+      Trivial
 
 > Other to Connection to Sector 1 (SRX); Heals? False
   * Layers: default
   * Open Passage to Connection to Sector 1 (SRX)/Other to Connection to Sector 3 (PYR)
   * Extra - door_idx: 107
+  > Door to Lava Lake Annex
+      Trivial
 
 ----------------
 Wall Jump Tutorial
@@ -1079,11 +1239,27 @@ Extra - room_id: 51
   * Layers: default
   * Open Passage to Tourian Central Hub/Other to Animorphs
   * Extra - door_idx: 111
+  > Room Center
+      Trivial
 
 > Door to Animorphs Cache; Heals? False
   * Layers: default
   * L0 Hatch to Animorphs Cache/Door to Animorphs
   * Extra - door_idx: 112
+  > Room Center
+      Trivial
+
+> Room Center; Heals? False
+  * Layers: default
+  > Other to Tourian Central Hub
+      High Jump or Space Jump
+  > Door to Animorphs Cache
+      All of the following:
+          Any of the following:
+              Can Use Power Bombs
+              Charge Beam and Wave Beam
+          Missiles or Screw Attack
+          Charge Beam or Screw Attack
 
 ----------------
 Animorphs Cache
@@ -1092,11 +1268,15 @@ Extra - room_id: 52
 > Pickup (Power Bomb Tank); Heals? False
   * Layers: default
   * Pickup 24; Category? Minor
+  > Door to Animorphs
+      Trivial
 
 > Door to Animorphs; Heals? False
   * Layers: default
   * L0 Hatch to Animorphs/Door to Animorphs Cache
   * Extra - door_idx: 113
+  > Pickup (Power Bomb Tank)
+      Trivial
 
 ----------------
 unused
