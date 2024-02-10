@@ -6,26 +6,42 @@ Extra - room_id: 0
   * Layers: default
   * L0 Hatch to Entrance Recharge Room/Door to Entrance Hub
   * Extra - door_idx: 1
+  > Door to Security Access
+      Trivial
+  > Other to Alcove
+      Screw Attack and Space Jump
+  > Door to Monkey Bars of Fire
+      Trivial
 
 > Door to Security Access; Heals? False
   * Layers: default
   * Open Hatch to Security Access/Door to Entrance Hub
   * Extra - door_idx: 2
+  > Door to Entrance Recharge Room
+      High Jump or Space Jump or Speed Booster
+  > Door to Checkpoint Shaft
+      Trivial
 
 > Door to Checkpoint Shaft; Heals? False
   * Layers: default
   * L0 Hatch to Checkpoint Shaft/Door to Entrance Hub
   * Extra - door_idx: 3
+  > Door to Security Access
+      Trivial
 
 > Other to Alcove; Heals? False
   * Layers: default
   * Tunnel to Alcove/Other to Entrance Hub
   * Extra - door_idx: 4
+  > Door to Entrance Recharge Room
+      Trivial
 
 > Door to Monkey Bars of Fire; Heals? False
   * Layers: default
   * L0 Hatch to Monkey Bars of Fire/Door to Entrance Hub
   * Extra - door_idx: 53
+  > Door to Entrance Recharge Room
+      Trivial
 
 ----------------
 Entrance Save Room
@@ -35,11 +51,15 @@ Extra - room_id: 1
   * Layers: default
   * L0 Hatch to Entrance Recharge Room/Door to Entrance Save Room
   * Extra - door_idx: 5
+  > Door to Entrance Navigation Room
+      Trivial
 
 > Door to Entrance Navigation Room; Heals? False
   * Layers: default
   * L0 Hatch to Entrance Navigation Room/Door to Entrance Save Room
   * Extra - door_idx: 6
+  > Door to Entrance Recharge Room
+      Trivial
 
 ----------------
 Entrance Navigation Room
@@ -49,11 +69,15 @@ Extra - room_id: 2
   * Layers: default
   * Open Hatch to Entrance Save Room/Door to Entrance Navigation Room
   * Extra - door_idx: 7
+  > Door to Elevator to Main Deck
+      Trivial
 
 > Door to Elevator to Main Deck; Heals? False
   * Layers: default
   * Open Hatch to Elevator to Main Deck/Door to Entrance Navigation Room
   * Extra - door_idx: 41
+  > Door to Entrance Save Room
+      Trivial
 
 ----------------
 Security Access
@@ -62,21 +86,38 @@ Extra - room_id: 3
 > Pickup (Hidden Missile Tank); Heals? False
   * Layers: default
   * Pickup 42; Category? Minor
+  > Behind Wall
+      Trivial
 
 > Door to Entrance Hub; Heals? False
   * Layers: default
   * Open Hatch to Entrance Hub/Door to Security Access
   * Extra - door_idx: 8
+  > Behind Wall
+      Speed Booster
 
 > Door to Level 2 Security Room; Heals? False
   * Layers: default
   * L2 Hatch to Level 2 Security Room/Door to Security Access
   * Extra - door_idx: 9
+  > Behind Wall
+      Trivial
 
 > Other to Level 2 Security Room; Heals? False
   * Layers: default
   * Tunnel to Level 2 Security Room/Other to Security Access
   * Extra - door_idx: 76
+
+> Behind Wall; Heals? False
+  * Layers: default
+  > Pickup (Hidden Missile Tank)
+      Speed Booster
+  > Door to Entrance Hub
+      Speed Booster
+  > Door to Level 2 Security Room
+      Trivial
+  > Other to Level 2 Security Room
+      Speed Booster and Can Use Any Bombs
 
 ----------------
 Level 2 Security Room
@@ -86,11 +127,21 @@ Extra - room_id: 4
   * Layers: default
   * L2 Hatch to Security Access/Door to Level 2 Security Room
   * Extra - door_idx: 10
+  > Event - L2 Locks
+      Trivial
 
 > Other to Security Access; Heals? False
   * Layers: default
   * Tunnel to Security Access/Other to Level 2 Security Room
   * Extra - door_idx: 77
+  > Door to Security Access
+      Trivial
+
+> Event - L2 Locks; Heals? False
+  * Layers: default
+  * Event Level 2 Locks
+  > Door to Security Access
+      Trivial
 
 ----------------
 Checkpoint Shaft
@@ -378,11 +429,15 @@ Extra - room_id: 20
   * Layers: default
   * Open Passage to Elevator to Sector 3 (PYR)/Other to Elevator to Main Deck
   * Extra - door_idx: 0
+  > Door to Entrance Navigation Room
+      Trivial
 
 > Door to Entrance Navigation Room; Heals? False
   * Layers: default
   * L0 Hatch to Entrance Navigation Room/Door to Elevator to Main Deck
   * Extra - door_idx: 42
+  > Other to Elevator to Sector 3 (PYR)
+      Trivial
 
 ----------------
 Data Room
@@ -457,11 +512,15 @@ Extra - room_id: 26
   * Layers: default
   * L0 Hatch to Entrance Save Room/Door to Entrance Recharge Room
   * Extra - door_idx: 51
+  > Door to Entrance Hub
+      Trivial
 
 > Door to Entrance Hub; Heals? False
   * Layers: default
   * L0 Hatch to Entrance Hub/Door to Entrance Recharge Room
   * Extra - door_idx: 52
+  > Door to Entrance Save Room
+      Trivial
 
 ----------------
 Monkey Bars of Fire
@@ -471,11 +530,27 @@ Extra - room_id: 27
   * Layers: default
   * L0 Hatch to Entrance Hub/Door to Monkey Bars of Fire
   * Extra - door_idx: 54
+  > Door to Fiery Storage
+      Any of the following:
+          Varia Suit
+          All of the following:
+              Heat Runs (Intermediate)
+              Any of the following:
+                  Heat Damage ≥ 200
+                  Speed Booster and Shinespark Tricks (Intermediate) and Heat Damage ≥ 50
 
 > Door to Fiery Storage; Heals? False
   * Layers: default
   * L0 Hatch to Fiery Storage/Door to Monkey Bars of Fire
   * Extra - door_idx: 55
+  > Door to Entrance Hub
+      Any of the following:
+          Varia Suit
+          All of the following:
+              Heat Runs (Intermediate)
+              Any of the following:
+                  Heat Damage ≥ 200
+                  Speed Booster and Shinespark Tricks (Intermediate) and Heat Damage ≥ 50
 
 ----------------
 Fiery Storage
@@ -484,20 +559,34 @@ Extra - room_id: 28
 > Pickup (Energy Tank); Heals? False
   * Layers: default
   * Pickup 50; Category? Minor
+  > Door to Monkey Bars of Fire
+      Trivial
 
 > Pickup (Missile Tank); Heals? False
   * Layers: default
   * Pickup 51; Category? Minor
+  > Door to Monkey Bars of Fire
+      Trivial
 
 > Door to Monkey Bars of Fire; Heals? False
   * Layers: default
   * L0 Hatch to Monkey Bars of Fire/Door to Fiery Storage
   * Extra - door_idx: 56
+  > Pickup (Energy Tank)
+      Charge Beam and Speed Booster and Can Use Any Bombs
+  > Pickup (Missile Tank)
+      Trivial
+  > Door to Connection to Sector 6 (NOC)
+      Screw Attack and Can Use Any Bombs
 
 > Door to Connection to Sector 6 (NOC); Heals? False
   * Layers: default
   * L0 Hatch to Connection to Sector 6 (NOC)/Door to Fiery Storage
   * Extra - door_idx: 87
+  > Door to Monkey Bars of Fire
+      All of the following:
+          Screw Attack and Can Use Any Bombs
+          High Jump or Space Jump
 
 ----------------
 Main Boiler (C)

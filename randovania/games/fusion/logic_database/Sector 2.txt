@@ -6,36 +6,62 @@ Extra - room_id: 0
   * Layers: default
   * L0 Hatch to Entrance Recharge Room/Door to Entrance Hub
   * Extra - door_idx: 1
+  > Door to Data Hub Access
+      Trivial
+  > Door to Kago Room
+      Trivial
 
 > Door to Data Hub Access; Heals? False
   * Layers: default
   * L0 Hatch to Data Hub Access/Door to Entrance Hub
   * Extra - door_idx: 2
+  > Door to Entrance Recharge Room
+      High Jump or Space Jump or Can Use Any Bombs
+  > Other to Kihunter Hallway
+      All of the following:
+          Can Use Power Bombs
+          High Jump or Space Jump
+  > Door to Owtch Cache A
+      Trivial
+  > Door to Security Corridor
+      Trivial
+  > Other to Entrance Hub Underside
+      Can Use Any Bombs
 
 > Other to Kihunter Hallway; Heals? False
   * Layers: default
   * Tunnel to Kihunter Hallway/Other to Entrance Hub
   * Extra - door_idx: 3
+  > Door to Data Hub Access
+      Can Use Power Bombs
 
 > Door to Owtch Cache A; Heals? False
   * Layers: default
   * L1 Hatch to Owtch Cache A/Door to Entrance Hub
   * Extra - door_idx: 4
+  > Door to Data Hub Access
+      Trivial
 
 > Door to Security Corridor; Heals? False
   * Layers: default
   * L0 Hatch to Security Corridor/Door to Entrance Hub
   * Extra - door_idx: 5
+  > Door to Data Hub Access
+      Trivial
 
 > Door to Kago Room; Heals? False
   * Layers: default
   * L0 Hatch to Kago Room/Door to Entrance Hub
   * Extra - door_idx: 15
+  > Door to Entrance Recharge Room
+      Trivial
 
 > Other to Entrance Hub Underside; Heals? False
   * Layers: default
   * Tunnel to Entrance Hub Underside/Other to Entrance Hub
   * Extra - door_idx: 32
+  > Door to Data Hub Access
+      Can Use Any Bombs
 
 ----------------
 Entrance Save Room
@@ -45,11 +71,15 @@ Extra - room_id: 1
   * Layers: default
   * L0 Hatch to Entrance Recharge Room/Door to Entrance Save Room
   * Extra - door_idx: 6
+  > Door to Entrance Navigation Room
+      Trivial
 
 > Door to Entrance Navigation Room; Heals? False
   * Layers: default
   * L0 Hatch to Entrance Navigation Room/Door to Entrance Save Room
   * Extra - door_idx: 7
+  > Door to Entrance Recharge Room
+      Trivial
 
 ----------------
 Entrance Navigation Room
@@ -59,11 +89,15 @@ Extra - room_id: 2
   * Layers: default
   * Open Hatch to Entrance Save Room/Door to Entrance Navigation Room
   * Extra - door_idx: 8
+  > Door to Elevator to Main Deck
+      Trivial
 
 > Door to Elevator to Main Deck; Heals? False
   * Layers: default
   * Open Hatch to Elevator to Main Deck/Door to Entrance Navigation Room
   * Extra - door_idx: 67
+  > Door to Entrance Save Room
+      Trivial
 
 ----------------
 Data Hub Access
@@ -73,11 +107,15 @@ Extra - room_id: 3
   * Layers: default
   * L0 Hatch to Entrance Hub/Door to Data Hub Access
   * Extra - door_idx: 9
+  > Door to Data Hub (D)
+      Trivial
 
-> Door to Data Hub; Heals? False
+> Door to Data Hub (D); Heals? False
   * Layers: default
-  * L0 Hatch to Data Hub/Door to Data Hub Access
+  * L0 Hatch to Data Hub (D)/Door to Data Hub Access
   * Extra - door_idx: 10
+  > Door to Entrance Hub
+      Trivial
 
 ----------------
 Security Corridor
@@ -87,11 +125,15 @@ Extra - room_id: 4
   * Layers: default
   * L0 Hatch to Entrance Hub/Door to Security Corridor
   * Extra - door_idx: 11
+  > Door to Security Access
+      Trivial
 
 > Door to Security Access; Heals? False
   * Layers: default
   * L0 Hatch to Security Access/Door to Security Corridor
   * Extra - door_idx: 12
+  > Door to Entrance Hub
+      Trivial
 
 ----------------
 Security Access
@@ -101,21 +143,33 @@ Extra - room_id: 5
   * Layers: default
   * L0 Hatch to Security Corridor/Door to Security Access
   * Extra - door_idx: 13
+  > Door to Level 1 Security Room
+      Trivial
+  > Door to Level 1 Security Room (60)
+      Trivial
+  > Door to Connection to Sector 4 (AQA)
+      Screw Attack
 
 > Door to Level 1 Security Room; Heals? False
   * Layers: default
   * L1 Hatch to Level 1 Security Room/Door to Security Access
   * Extra - door_idx: 58
+  > Door to Security Corridor
+      Trivial
 
 > Door to Level 1 Security Room (60); Heals? False
   * Layers: default
   * L0 Hatch to Level 1 Security Room/Door to Security Access
   * Extra - door_idx: 60
+  > Door to Security Corridor
+      Trivial
 
 > Door to Connection to Sector 4 (AQA); Heals? False
   * Layers: default
   * L0 Hatch to Connection to Sector 4 (AQA)/Door to Security Access
   * Extra - door_idx: 128
+  > Door to Security Corridor
+      Screw Attack
 
 ----------------
 Owtch Cache A
@@ -124,11 +178,15 @@ Extra - room_id: 6
 > Pickup (Missile Tank); Heals? False
   * Layers: default
   * Pickup 25; Category? Minor
+  > Door to Entrance Hub
+      Can Use Any Bombs
 
 > Door to Entrance Hub; Heals? False
   * Layers: default
   * L1 Hatch to Entrance Hub/Door to Owtch Cache A
   * Extra - door_idx: 14
+  > Pickup (Missile Tank)
+      Can Use Any Bombs
 
 ----------------
 Data Hub
@@ -136,8 +194,10 @@ Extra - map_name: Sector 27
 Extra - room_id: 7
 > Door to Data Hub Access; Heals? False
   * Layers: default
-  * L0 Hatch to Data Hub Access/Door to Data Hub
+  * L0 Hatch to Data Hub Access/Door to Data Hub (D)
   * Extra - door_idx: 16
+  > Door to Data Room
+      Trivial
 
 > Door to Data Room; Heals? False
   * Layers: default
@@ -160,16 +220,26 @@ Extra - room_id: 9
 > Pickup (Missile Tank); Heals? False
   * Layers: default
   * Pickup 26; Category? Minor
+  > Door to Data Hub (D)
+      Morph Ball
 
 > Door to Data Hub (D); Heals? False
   * Layers: default
   * L0 Hatch to Data Hub (D)/Door to Zoro Zig-Zag
   * Extra - door_idx: 20
+  > Pickup (Missile Tank)
+      Any of the following:
+          Can Use Any Bombs
+          Morph Ball and Wave Beam and Knowledge (Beginner)
+  > Door to Maintenance Annex
+      Can Use Any Bombs
 
 > Door to Maintenance Annex; Heals? False
   * Layers: default
   * L0 Hatch to Maintenance Annex/Door to Zoro Zig-Zag
   * Extra - door_idx: 21
+  > Door to Data Hub (D)
+      Space Jump and Can Use Any Bombs
 
 ----------------
 Cultivation Station
@@ -178,16 +248,26 @@ Extra - room_id: 10
 > Pickup (Missile Tank); Heals? False
   * Layers: default
   * Pickup 27; Category? Minor
+  > Door to Puyo Corridor
+      Can Use Any Bombs
 
 > Door to Maintenance Annex; Heals? False
   * Layers: default
   * L0 Hatch to Maintenance Annex/Door to Cultivation Station
   * Extra - door_idx: 22
+  > Door to Puyo Corridor
+      Can Use Any Bombs
 
 > Door to Puyo Corridor; Heals? False
   * Layers: default
   * L0 Hatch to Puyo Corridor/Door to Cultivation Station
   * Extra - door_idx: 23
+  > Pickup (Missile Tank)
+      Can Use Any Bombs
+  > Door to Maintenance Annex
+      All of the following:
+          Can Use Any Bombs
+          High Jump or Space Jump
 
 ----------------
 Puyo Corridor
@@ -197,11 +277,19 @@ Extra - room_id: 11
   * Layers: default
   * L0 Hatch to Cultivation Station/Door to Puyo Corridor
   * Extra - door_idx: 24
+  > Door to Central Shaft
+      Any of the following:
+          Can Use Any Bombs
+          All of the following:
+              Knowledge (Beginner)
+              Diffusion Missiles or Wave Beam
 
 > Door to Central Shaft; Heals? False
   * Layers: default
   * L0 Hatch to Central Shaft/Door to Puyo Corridor
   * Extra - door_idx: 27
+  > Door to Cultivation Station
+      High Jump or Space Jump
 
 ----------------
 Shooting Gallery
@@ -449,16 +537,32 @@ Extra - room_id: 26
   * Layers: default
   * L1 Hatch to Security Access/Door to Level 1 Security Room
   * Extra - door_idx: 59
+  > Door to Security Access (61)
+      Space Jump
+  > Door to Crumble City
+      Screw Attack and Space Jump
+  > Event - L1 Locks
+      Trivial
 
 > Door to Security Access (61); Heals? False
   * Layers: default
   * L0 Hatch to Security Access/Door to Level 1 Security Room
   * Extra - door_idx: 61
+  > Door to Security Access
+      Trivial
 
 > Door to Crumble City; Heals? False
   * Layers: default
   * L0 Hatch to Crumble City/Door to Level 1 Security Room
   * Extra - door_idx: 131
+  > Door to Security Access
+      Screw Attack
+
+> Event - L1 Locks; Heals? False
+  * Layers: default
+  * Event Level 1 Locks
+  > Door to Security Access
+      Trivial
 
 ----------------
 Entrance Hub Underside
@@ -500,11 +604,15 @@ Extra - room_id: 29
   * Layers: default
   * Open Passage to Elevator to Sector 2 (TRO)/Other to Elevator to Main Deck
   * Extra - door_idx: 0
+  > Door to Entrance Navigation Room
+      Trivial
 
 > Door to Entrance Navigation Room; Heals? False
   * Layers: default
   * L0 Hatch to Entrance Navigation Room/Door to Elevator to Main Deck
   * Extra - door_idx: 66
+  > Other to Elevator to Sector 2 (TRO)
+      Trivial
 
 ----------------
 Data Access (D)
@@ -522,21 +630,41 @@ Extra - room_id: 31
 > Pickup (Missile Tank); Heals? False
   * Layers: default
   * Pickup 32; Category? Minor
+  > Door to Data Hub Access
+      Trivial
 
 > Door to Zoro Zig-Zag; Heals? False
   * Layers: default
   * L0 Hatch to Zoro Zig-Zag/Door to Data Hub (D)
   * Extra - door_idx: 18
+  > Door to Data Save Room
+      Trivial
 
 > Door to Data Room; Heals? False
   * Layers: default
   * L1 Hatch to Data Room/Door to Data Hub
   * Extra - door_idx: 69
+  > Door to Data Hub Access
+      Trivial
 
 > Door to Data Save Room; Heals? False
   * Layers: default
   * L0 Hatch to Data Save Room/Door to Data Hub (D)
   * Extra - door_idx: 84
+  > Door to Zoro Zig-Zag
+      Trivial
+  > Door to Data Hub Access
+      Can Use Any Bombs
+
+> Door to Data Hub Access; Heals? False
+  * Layers: default
+  * L0 Hatch to Data Hub Access/Door to Data Hub (D)
+  > Pickup (Missile Tank)
+      Can Use Any Bombs
+  > Door to Data Room
+      Trivial
+  > Door to Data Save Room
+      Can Use Any Bombs
 
 ----------------
 Eastern Shaft
@@ -584,16 +712,31 @@ Extra - room_id: 33
 > Pickup (Missile Tank); Heals? False
   * Layers: default
   * Pickup 33; Category? Minor
+  > Beside missile tank
+      Trivial
 
 > Door to Entrance Hub; Heals? False
   * Layers: default
   * L0 Hatch to Entrance Hub/Door to Kago Room
   * Extra - door_idx: 73
+  > Beside missile tank
+      High Jump or Space Jump or Movement (Expert) or Can Freeze Enemies
 
 > Door to Connection to Sector 1 (SRX); Heals? False
   * Layers: default
   * L0 Hatch to Connection to Sector 1 (SRX)/Door to Kago Room
   * Extra - door_idx: 125
+  > Beside missile tank
+      Screw Attack
+
+> Beside missile tank; Heals? False
+  * Layers: default
+  > Pickup (Missile Tank)
+      Trivial
+  > Door to Entrance Hub
+      High Jump or Space Jump or Combat (Advanced) or Can Freeze Enemies
+  > Door to Connection to Sector 1 (SRX)
+      Screw Attack
 
 ----------------
 Nettori Access (C)
@@ -675,11 +818,15 @@ Extra - room_id: 37
   * Layers: default
   * L0 Hatch to Entrance Save Room/Door to Entrance Recharge Room
   * Extra - door_idx: 85
+  > Door to Entrance Hub
+      Trivial
 
 > Door to Entrance Hub; Heals? False
   * Layers: default
   * L0 Hatch to Entrance Hub/Door to Entrance Recharge Room
   * Extra - door_idx: 86
+  > Door to Entrance Save Room
+      Trivial
 
 ----------------
 Data Save Room
@@ -753,11 +900,15 @@ Extra - room_id: 43
   * Layers: default
   * L0 Hatch to Zoro Zig-Zag/Door to Maintenance Annex
   * Extra - door_idx: 98
+  > Door to Cultivation Station
+      Trivial
 
 > Door to Cultivation Station; Heals? False
   * Layers: default
   * L0 Hatch to Cultivation Station/Door to Maintenance Annex
   * Extra - door_idx: 99
+  > Door to Zoro Zig-Zag
+      Space Jump
 
 ----------------
 Dessgeega Dormitory (D)
@@ -938,15 +1089,23 @@ Extra - room_id: 54
 > Pickup (Energy Tank); Heals? False
   * Layers: default
   * Pickup 38; Category? Minor
+  > Door to Level 1 Security Room
+      High Jump or Space Jump
 
 > Pickup (Power Bomb Tank); Heals? False
   * Layers: default
   * Pickup 39; Category? Minor
+  > Door to Level 1 Security Room
+      High Jump or Space Jump
 
 > Door to Level 1 Security Room; Heals? False
   * Layers: default
   * L0 Hatch to Level 1 Security Room/Door to Crumble City
   * Extra - door_idx: 132
+  > Pickup (Energy Tank)
+      Space Jump
+  > Pickup (Power Bomb Tank)
+      Space Jump
 
 ----------------
 Zazabi Speedway
