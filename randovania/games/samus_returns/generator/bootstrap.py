@@ -83,7 +83,7 @@ class MSRBootstrap(MetroidBootstrap):
         if configuration.elevator_grapple_blocks:
             for name in [
                 "Area 4 (Central Caves) - Transport Area Grapple Block Pull Right",
-                "Area 5 (Tower Lobby) - Chozo Seal Grapple Block Bottom",
+                "Area 5 (Tower Lobby) - Transport to Areas 4 and 6 Grapple Block Bottom",
                 "Area 6 - Transport to Area 7 Grapple Block Pull",
                 "Area 7 - Transport to Area 8 Grapple Block",
             ]:
