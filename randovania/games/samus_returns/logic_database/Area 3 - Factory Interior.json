@@ -9,7 +9,7 @@
         "scenario_id": "s036_area3c"
     },
     "areas": {
-        "Gamma Storage": {
+        "Security Site": {
             "default_node": null,
             "extra": {
                 "total_boundings": {
@@ -137,7 +137,7 @@
                     "default_connection": {
                         "region": "Area 3 - Factory Interior",
                         "area": "Gamma Arena South",
-                        "node": "Door to Gamma Storage"
+                        "node": "Door to Security Site"
                     },
                     "default_dock_weakness": "Power Bomb Door",
                     "exclude_from_dock_rando": false,
@@ -388,7 +388,7 @@
                 }
             }
         },
-        "Fiery Path Access": {
+        "Mumbo Midpoint": {
             "default_node": null,
             "extra": {
                 "total_boundings": {
@@ -438,13 +438,13 @@
                     "pickup_index": 75,
                     "location_category": "major",
                     "connections": {
-                        "Door to Fiery Path": {
+                        "Door to Alpha Arena Access": {
                             "type": "template",
                             "data": "Lay Any Bomb"
                         }
                     }
                 },
-                "Door to Fiery Path": {
+                "Door to Alpha Arena Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -464,8 +464,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 3 - Factory Interior",
-                        "area": "Fiery Path",
-                        "node": "Door to Fiery Path Access"
+                        "area": "Alpha Arena Access",
+                        "node": "Door to Mumbo Midpoint"
                     },
                     "default_dock_weakness": "Charge Beam Door",
                     "exclude_from_dock_rando": false,
@@ -572,7 +572,7 @@
                     "default_connection": {
                         "region": "Area 3 - Factory Interior",
                         "area": "Transport to Area 3 Metroid Caverns",
-                        "node": "Door to Fiery Path Access"
+                        "node": "Door to Mumbo Midpoint"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -580,7 +580,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Fiery Path": {
+                        "Door to Alpha Arena Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -591,7 +591,7 @@
                 }
             }
         },
-        "Fan Puzzle Room": {
+        "Fan Control": {
             "default_node": null,
             "extra": {
                 "total_boundings": {
@@ -641,7 +641,7 @@
                     "pickup_index": 74,
                     "location_category": "minor",
                     "connections": {
-                        "Door to Gamma Awakening Access": {
+                        "Door to Wallfire Watch": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -688,7 +688,7 @@
                         }
                     }
                 },
-                "Door to Gamma Awakening Access": {
+                "Door to Wallfire Watch": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -708,8 +708,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 3 - Factory Interior",
-                        "area": "Gamma Awakening Access",
-                        "node": "Door to Fan Puzzle Room"
+                        "area": "Wallfire Watch",
+                        "node": "Door to Fan Control"
                     },
                     "default_dock_weakness": "Super Missile Door",
                     "exclude_from_dock_rando": false,
@@ -759,7 +759,7 @@
                 }
             }
         },
-        "Double Back": {
+        "Grapple Circuit": {
             "default_node": null,
             "extra": {
                 "total_boundings": {
@@ -819,7 +819,7 @@
                     "default_connection": {
                         "region": "Area 3 - Factory Interior",
                         "area": "Transport to Area 3 Factory Exterior",
-                        "node": "Tunnel to Double Back"
+                        "node": "Tunnel to Grapple Circuit"
                     },
                     "default_dock_weakness": "Tunnel",
                     "exclude_from_dock_rando": false,
@@ -838,7 +838,7 @@
                         }
                     }
                 },
-                "Tunnel to Main Shaft (Bottom)": {
+                "Tunnel to Factory Intersection (Bottom)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -855,8 +855,8 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Area 3 - Factory Interior",
-                        "area": "Main Shaft",
-                        "node": "Tunnel to Double Back (Bottom)"
+                        "area": "Factory Intersection",
+                        "node": "Tunnel to Grapple Circuit (Bottom)"
                     },
                     "default_dock_weakness": "Tunnel with Bomb Block",
                     "exclude_from_dock_rando": false,
@@ -882,7 +882,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "events",
-                                            "name": "Area 3 (Factory Interior) - Double Back Grapple Block Right",
+                                            "name": "Area 3 (Factory Interior) - Grapple Circuit Grapple Block Right",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -892,7 +892,7 @@
                         }
                     }
                 },
-                "Tunnel to Main Shaft (Top)": {
+                "Tunnel to Factory Intersection (Top)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -909,8 +909,8 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Area 3 - Factory Interior",
-                        "area": "Main Shaft",
-                        "node": "Tunnel to Double Back (Top)"
+                        "area": "Factory Intersection",
+                        "node": "Tunnel to Grapple Circuit (Top)"
                     },
                     "default_dock_weakness": "Tunnel",
                     "exclude_from_dock_rando": false,
@@ -945,7 +945,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "events",
-                                            "name": "Area 3 (Factory Interior) - Double Back Grapple Block Left",
+                                            "name": "Area 3 (Factory Interior) - Grapple Circuit Grapple Block Left",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -969,7 +969,7 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "event_name": "Area 3 (Factory Interior) - Double Back Grapple Block Left",
+                    "event_name": "Area 3 (Factory Interior) - Grapple Circuit Grapple Block Left",
                     "connections": {
                         "Room Center": {
                             "type": "and",
@@ -994,9 +994,9 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "event_name": "Area 3 (Factory Interior) - Double Back Grapple Block Right",
+                    "event_name": "Area 3 (Factory Interior) - Grapple Circuit Grapple Block Right",
                     "connections": {
-                        "Tunnel to Main Shaft (Top)": {
+                        "Tunnel to Factory Intersection (Top)": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -1031,7 +1031,7 @@
                                 "negate": false
                             }
                         },
-                        "Tunnel to Main Shaft (Bottom)": {
+                        "Tunnel to Factory Intersection (Bottom)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1040,7 +1040,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "events",
-                                            "name": "Area 3 (Factory Interior) - Double Back Grapple Block Right",
+                                            "name": "Area 3 (Factory Interior) - Grapple Circuit Grapple Block Right",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -1065,7 +1065,7 @@
                 }
             }
         },
-        "Main Shaft": {
+        "Factory Intersection": {
             "default_node": null,
             "extra": {
                 "total_boundings": {
@@ -1127,7 +1127,7 @@
                     "pickup_index": 73,
                     "location_category": "minor",
                     "connections": {
-                        "Tunnel to Double Back (Bottom)": {
+                        "Tunnel to Grapple Circuit (Bottom)": {
                             "type": "template",
                             "data": "Lay Any Bomb"
                         }
@@ -1158,14 +1158,14 @@
                                 "items": []
                             }
                         },
-                        "Door to Mini-Shaft East": {
+                        "Door to Ramulken Residence": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Door to Mini-Shaft West": {
+                        "Door to Decaying Robot Path": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -1197,7 +1197,7 @@
                     "default_connection": {
                         "region": "Area 3 - Factory Interior",
                         "area": "Transport to Area 3 Factory Exterior",
-                        "node": "Door to Main Shaft"
+                        "node": "Door to Factory Intersection"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -1212,7 +1212,7 @@
                                 "items": []
                             }
                         },
-                        "Tunnel to Double Back (Top)": {
+                        "Tunnel to Grapple Circuit (Top)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1230,7 +1230,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "events",
-                                            "name": "Area 3 (Factory Interior) - Double Back Grapple Block Left",
+                                            "name": "Area 3 (Factory Interior) - Grapple Circuit Grapple Block Left",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -1240,7 +1240,7 @@
                         }
                     }
                 },
-                "Door to Mini-Shaft East": {
+                "Door to Ramulken Residence": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1260,8 +1260,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 3 - Factory Interior",
-                        "area": "Mini-Shaft East",
-                        "node": "Door to Main Shaft"
+                        "area": "Ramulken Residence",
+                        "node": "Door to Factory Intersection"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -1278,7 +1278,7 @@
                         }
                     }
                 },
-                "Door to Mini-Shaft West": {
+                "Door to Decaying Robot Path": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1298,8 +1298,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 3 - Factory Interior",
-                        "area": "Mini-Shaft West",
-                        "node": "Door to Main Shaft"
+                        "area": "Decaying Robot Path",
+                        "node": "Door to Factory Intersection"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -1318,7 +1318,7 @@
                         }
                     }
                 },
-                "Tunnel to Double Back (Bottom)": {
+                "Tunnel to Grapple Circuit (Bottom)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1335,8 +1335,8 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Area 3 - Factory Interior",
-                        "area": "Double Back",
-                        "node": "Tunnel to Main Shaft (Bottom)"
+                        "area": "Grapple Circuit",
+                        "node": "Tunnel to Factory Intersection (Bottom)"
                     },
                     "default_dock_weakness": "Tunnel with Bomb Block",
                     "exclude_from_dock_rando": false,
@@ -1355,7 +1355,7 @@
                         }
                     }
                 },
-                "Tunnel to Double Back (Top)": {
+                "Tunnel to Grapple Circuit (Top)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1372,8 +1372,8 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Area 3 - Factory Interior",
-                        "area": "Double Back",
-                        "node": "Tunnel to Main Shaft (Top)"
+                        "area": "Grapple Circuit",
+                        "node": "Tunnel to Factory Intersection (Top)"
                     },
                     "default_dock_weakness": "Tunnel",
                     "exclude_from_dock_rando": false,
@@ -1394,7 +1394,7 @@
                 }
             }
         },
-        "Dead-End Teleporter": {
+        "Factory Interior Teleporter": {
             "default_node": "Teleporter",
             "extra": {
                 "total_boundings": {
@@ -1459,7 +1459,7 @@
                         }
                     },
                     "connections": {
-                        "Door to Teleporter Access": {
+                        "Door to Factory Teleporter Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1468,7 +1468,7 @@
                         }
                     }
                 },
-                "Door to Teleporter Access": {
+                "Door to Factory Teleporter Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1488,8 +1488,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 3 - Factory Interior",
-                        "area": "Teleporter Access",
-                        "node": "Door to Dead-End Teleporter"
+                        "area": "Factory Teleporter Access",
+                        "node": "Door to Factory Interior Teleporter"
                     },
                     "default_dock_weakness": "Charge Beam Door",
                     "exclude_from_dock_rando": false,
@@ -1529,7 +1529,7 @@
                     "valid_starting_location": false,
                     "event_name": "Area 3 Factory Interior Teleporter",
                     "connections": {
-                        "Door to Teleporter Access": {
+                        "Door to Factory Teleporter Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1591,7 +1591,7 @@
                     "dock_type": "elevator",
                     "default_connection": {
                         "region": "Area 3 - Factory Exterior",
-                        "area": "Outer Hub",
+                        "area": "Factory Exterior",
                         "node": "Elevator to Area 3 - Factory Interior"
                     },
                     "default_dock_weakness": "Elevator",
@@ -1600,14 +1600,14 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Main Shaft": {
+                        "Door to Factory Intersection": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Tunnel to Double Back": {
+                        "Tunnel to Grapple Circuit": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -1618,7 +1618,7 @@
                         }
                     }
                 },
-                "Door to Main Shaft": {
+                "Door to Factory Intersection": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1638,7 +1638,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 3 - Factory Interior",
-                        "area": "Main Shaft",
+                        "area": "Factory Intersection",
                         "node": "Door to Transport to Area 3 Factory Exterior"
                     },
                     "default_dock_weakness": "Power Beam Door",
@@ -1656,7 +1656,7 @@
                         }
                     }
                 },
-                "Tunnel to Double Back": {
+                "Tunnel to Grapple Circuit": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1673,7 +1673,7 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Area 3 - Factory Interior",
-                        "area": "Double Back",
+                        "area": "Grapple Circuit",
                         "node": "Tunnel to Transport to Area 3 Factory Exterior"
                     },
                     "default_dock_weakness": "Tunnel",
@@ -1695,7 +1695,7 @@
                 }
             }
         },
-        "Fiery Path": {
+        "Alpha Arena Access": {
             "default_node": "Start Point",
             "extra": {
                 "total_boundings": {
@@ -1733,7 +1733,7 @@
                 "asset_id": "collision_camera_022"
             },
             "nodes": {
-                "Door to Fiery Path Access": {
+                "Door to Mumbo Midpoint": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1753,8 +1753,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 3 - Factory Interior",
-                        "area": "Fiery Path Access",
-                        "node": "Door to Fiery Path"
+                        "area": "Mumbo Midpoint",
+                        "node": "Door to Alpha Arena Access"
                     },
                     "default_dock_weakness": "Charge Beam Door",
                     "exclude_from_dock_rando": false,
@@ -1875,7 +1875,7 @@
                     "default_connection": {
                         "region": "Area 3 - Factory Interior",
                         "area": "Alpha Arena",
-                        "node": "Door to Fiery Path"
+                        "node": "Door to Alpha Arena Access"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -1988,7 +1988,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Fiery Path Access": {
+                        "Door to Mumbo Midpoint": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -2275,7 +2275,7 @@
                                 "items": []
                             }
                         },
-                        "Door to Fiery Path Access": {
+                        "Door to Mumbo Midpoint": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2379,7 +2379,7 @@
                                 "negate": false
                             }
                         },
-                        "Tunnel to Gamma Awakening (Bottom)": {
+                        "Tunnel to Gamma Arena Center Access (Bottom)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2608,7 +2608,7 @@
                         }
                     }
                 },
-                "Door to Fiery Path Access": {
+                "Door to Mumbo Midpoint": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2628,7 +2628,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 3 - Factory Interior",
-                        "area": "Fiery Path Access",
+                        "area": "Mumbo Midpoint",
                         "node": "Door to Transport to Area 3 Metroid Caverns"
                     },
                     "default_dock_weakness": "Power Beam Door",
@@ -2646,7 +2646,7 @@
                         }
                     }
                 },
-                "Tunnel to Gamma Awakening (Bottom)": {
+                "Tunnel to Gamma Arena Center Access (Bottom)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2663,7 +2663,7 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Area 3 - Factory Interior",
-                        "area": "Gamma Awakening",
+                        "area": "Gamma Arena Center Access",
                         "node": "Tunnel to Transport to Area 3 Metroid Caverns (Bottom)"
                     },
                     "default_dock_weakness": "Tunnel",
@@ -2708,7 +2708,7 @@
                         }
                     }
                 },
-                "Tunnel to Gamma Awakening (Top)": {
+                "Tunnel to Gamma Arena Center Access (Top)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2725,7 +2725,7 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Area 3 - Factory Interior",
-                        "area": "Gamma Awakening",
+                        "area": "Gamma Arena Center Access",
                         "node": "Tunnel to Transport to Area 3 Metroid Caverns (Top)"
                     },
                     "default_dock_weakness": "Tunnel",
@@ -2855,7 +2855,7 @@
                                 ]
                             }
                         },
-                        "Tunnel to Gamma Awakening (Top)": {
+                        "Tunnel to Gamma Arena Center Access (Top)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3003,7 +3003,7 @@
                 }
             }
         },
-        "Mini-Shaft East": {
+        "Ramulken Residence": {
             "default_node": null,
             "extra": {
                 "total_boundings": {
@@ -3033,7 +3033,7 @@
                 "asset_id": "collision_camera_024"
             },
             "nodes": {
-                "Door to Main Shaft": {
+                "Door to Factory Intersection": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3053,8 +3053,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 3 - Factory Interior",
-                        "area": "Main Shaft",
-                        "node": "Door to Mini-Shaft East"
+                        "area": "Factory Intersection",
+                        "node": "Door to Ramulken Residence"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -3062,7 +3062,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Gamma Awakening Access": {
+                        "Door to Wallfire Watch": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3071,7 +3071,7 @@
                         }
                     }
                 },
-                "Door to Gamma Awakening Access": {
+                "Door to Wallfire Watch": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3091,8 +3091,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 3 - Factory Interior",
-                        "area": "Gamma Awakening Access",
-                        "node": "Door to Mini-Shaft East"
+                        "area": "Wallfire Watch",
+                        "node": "Door to Ramulken Residence"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -3100,7 +3100,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Main Shaft": {
+                        "Door to Factory Intersection": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -3125,7 +3125,7 @@
                 }
             }
         },
-        "Gamma Awakening Access": {
+        "Wallfire Watch": {
             "default_node": null,
             "extra": {
                 "total_boundings": {
@@ -3163,7 +3163,7 @@
                 "asset_id": "collision_camera_025"
             },
             "nodes": {
-                "Door to Fan Puzzle Room": {
+                "Door to Fan Control": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3183,8 +3183,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 3 - Factory Interior",
-                        "area": "Fan Puzzle Room",
-                        "node": "Door to Gamma Awakening Access"
+                        "area": "Fan Control",
+                        "node": "Door to Wallfire Watch"
                     },
                     "default_dock_weakness": "Super Missile Door",
                     "exclude_from_dock_rando": false,
@@ -3192,7 +3192,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Mini-Shaft East": {
+                        "Door to Ramulken Residence": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -3203,7 +3203,7 @@
                         }
                     }
                 },
-                "Door to Mini-Shaft East": {
+                "Door to Ramulken Residence": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3223,8 +3223,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 3 - Factory Interior",
-                        "area": "Mini-Shaft East",
-                        "node": "Door to Gamma Awakening Access"
+                        "area": "Ramulken Residence",
+                        "node": "Door to Wallfire Watch"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -3232,7 +3232,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Fan Puzzle Room": {
+                        "Door to Fan Control": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -3346,7 +3346,7 @@
                                 ]
                             }
                         },
-                        "Door to Gamma Awakening": {
+                        "Door to Gamma Arena Center Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3355,7 +3355,7 @@
                         }
                     }
                 },
-                "Door to Gamma Awakening": {
+                "Door to Gamma Arena Center Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3375,8 +3375,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 3 - Factory Interior",
-                        "area": "Gamma Awakening",
-                        "node": "Door to Gamma Awakening Access"
+                        "area": "Gamma Arena Center Access",
+                        "node": "Door to Wallfire Watch"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -3384,7 +3384,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Mini-Shaft East": {
+                        "Door to Ramulken Residence": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3433,7 +3433,7 @@
                 "asset_id": "collision_camera_026"
             },
             "nodes": {
-                "Door to Fiery Path": {
+                "Door to Alpha Arena Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3453,7 +3453,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 3 - Factory Interior",
-                        "area": "Fiery Path",
+                        "area": "Alpha Arena Access",
                         "node": "Door to Alpha Arena"
                     },
                     "default_dock_weakness": "Power Beam Door",
@@ -3546,7 +3546,7 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Fiery Path": {
+                        "Door to Alpha Arena Access": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -3725,7 +3725,7 @@
                 "asset_id": "collision_camera_027"
             },
             "nodes": {
-                "Door to Gamma Storage": {
+                "Door to Security Site": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3745,7 +3745,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 3 - Factory Interior",
-                        "area": "Gamma Storage",
+                        "area": "Security Site",
                         "node": "Door to Gamma Arena South"
                     },
                     "default_dock_weakness": "Power Bomb Door",
@@ -3842,7 +3842,7 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Gamma Storage": {
+                        "Door to Security Site": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -4033,7 +4033,7 @@
                 }
             }
         },
-        "Mini-Shaft West": {
+        "Decaying Robot Path": {
             "default_node": null,
             "extra": {
                 "total_boundings": {
@@ -4063,7 +4063,7 @@
                 "asset_id": "collision_camera_028"
             },
             "nodes": {
-                "Door to Main Shaft": {
+                "Door to Factory Intersection": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4083,8 +4083,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 3 - Factory Interior",
-                        "area": "Main Shaft",
-                        "node": "Door to Mini-Shaft West"
+                        "area": "Factory Intersection",
+                        "node": "Door to Decaying Robot Path"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -4092,7 +4092,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Teleporter Access": {
+                        "Door to Factory Teleporter Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4101,7 +4101,7 @@
                         }
                     }
                 },
-                "Door to Teleporter Access": {
+                "Door to Factory Teleporter Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4121,8 +4121,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 3 - Factory Interior",
-                        "area": "Teleporter Access",
-                        "node": "Door to Mini-Shaft West"
+                        "area": "Factory Teleporter Access",
+                        "node": "Door to Decaying Robot Path"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -4130,7 +4130,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Main Shaft": {
+                        "Door to Factory Intersection": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -4155,7 +4155,7 @@
                 }
             }
         },
-        "Teleporter Access": {
+        "Factory Teleporter Access": {
             "default_node": null,
             "extra": {
                 "total_boundings": {
@@ -4185,7 +4185,7 @@
                 "asset_id": "collision_camera_029"
             },
             "nodes": {
-                "Door to Dead-End Teleporter": {
+                "Door to Factory Interior Teleporter": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4205,8 +4205,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 3 - Factory Interior",
-                        "area": "Dead-End Teleporter",
-                        "node": "Door to Teleporter Access"
+                        "area": "Factory Interior Teleporter",
+                        "node": "Door to Factory Teleporter Access"
                     },
                     "default_dock_weakness": "Charge Beam Door",
                     "exclude_from_dock_rando": false,
@@ -4214,7 +4214,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Mini-Shaft West": {
+                        "Door to Decaying Robot Path": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -4237,7 +4237,7 @@
                         }
                     }
                 },
-                "Door to Mini-Shaft West": {
+                "Door to Decaying Robot Path": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4257,8 +4257,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 3 - Factory Interior",
-                        "area": "Mini-Shaft West",
-                        "node": "Door to Teleporter Access"
+                        "area": "Decaying Robot Path",
+                        "node": "Door to Factory Teleporter Access"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -4266,7 +4266,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Dead-End Teleporter": {
+                        "Door to Factory Interior Teleporter": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4277,7 +4277,7 @@
                 }
             }
         },
-        "Gamma Awakening": {
+        "Gamma Arena Center Access": {
             "default_node": "Start Point",
             "extra": {
                 "total_boundings": {
@@ -4307,7 +4307,7 @@
                 "asset_id": "collision_camera_030"
             },
             "nodes": {
-                "Door to Gamma Awakening Access": {
+                "Door to Wallfire Watch": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4327,8 +4327,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 3 - Factory Interior",
-                        "area": "Gamma Awakening Access",
-                        "node": "Door to Gamma Awakening"
+                        "area": "Wallfire Watch",
+                        "node": "Door to Gamma Arena Center Access"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -4372,7 +4372,7 @@
                     "default_connection": {
                         "region": "Area 3 - Factory Interior",
                         "area": "Transport to Area 3 Metroid Caverns",
-                        "node": "Tunnel to Gamma Awakening (Bottom)"
+                        "node": "Tunnel to Gamma Arena Center Access (Bottom)"
                     },
                     "default_dock_weakness": "Tunnel",
                     "exclude_from_dock_rando": false,
@@ -4459,7 +4459,7 @@
                     "default_connection": {
                         "region": "Area 3 - Factory Interior",
                         "area": "Transport to Area 3 Metroid Caverns",
-                        "node": "Tunnel to Gamma Awakening (Top)"
+                        "node": "Tunnel to Gamma Arena Center Access (Top)"
                     },
                     "default_dock_weakness": "Tunnel",
                     "exclude_from_dock_rando": false,
@@ -4467,7 +4467,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Gamma Awakening Access": {
+                        "Door to Wallfire Watch": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -4517,7 +4517,7 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Gamma Awakening Access": {
+                        "Door to Wallfire Watch": {
                             "type": "and",
                             "data": {
                                 "comment": null,
