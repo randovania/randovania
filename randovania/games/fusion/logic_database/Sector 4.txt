@@ -6,16 +6,24 @@ Extra - room_id: 0
   * Layers: default
   * L0 Hatch to Entrance Recharge Room/Door to Entrance Hub
   * Extra - door_idx: 2
+  > Door to Sciser Stall
+      Trivial
+  > Door to Powamp Place
+      Trivial
 
 > Door to Sciser Stall; Heals? False
   * Layers: default
   * L0 Hatch to Sciser Stall/Door to Entrance Hub
   * Extra - door_idx: 3
+  > Door to Entrance Recharge Room
+      Trivial
 
 > Door to Powamp Place; Heals? False
   * Layers: default
   * L0 Hatch to Powamp Place/Door to Entrance Hub
   * Extra - door_idx: 58
+  > Door to Entrance Recharge Room
+      Trivial
 
 ----------------
 Entrance Save Room
@@ -25,11 +33,15 @@ Extra - room_id: 1
   * Layers: default
   * L0 Hatch to Entrance Recharge Room/Door to Entrance Save Room
   * Extra - door_idx: 5
+  > Door to Entrance Navigation Room
+      Trivial
 
 > Door to Entrance Navigation Room; Heals? False
   * Layers: default
   * L0 Hatch to Entrance Navigation Room/Door to Entrance Save Room
   * Extra - door_idx: 6
+  > Door to Entrance Recharge Room
+      Trivial
 
 ----------------
 Entrance Navigation Room
@@ -39,11 +51,15 @@ Extra - room_id: 2
   * Layers: default
   * Open Hatch to Elevator to Main Deck/Door to Entrance Navigation Room
   * Extra - door_idx: 1
+  > Door to Entrance Save Room
+      Trivial
 
 > Door to Entrance Save Room; Heals? False
   * Layers: default
   * Open Hatch to Entrance Save Room/Door to Entrance Navigation Room
   * Extra - door_idx: 7
+  > Door to Elevator to Main Deck
+      Trivial
 
 ----------------
 Powamp Place
@@ -53,21 +69,77 @@ Extra - room_id: 3
   * Layers: default
   * L0 Hatch to Entrance Hub/Door to Powamp Place
   * Extra - door_idx: 8
+  > Left Side
+      Trivial
 
 > Door to Owtch-Couch; Heals? False
   * Layers: default
   * L4 Hatch to Owtch-Couch/Door to Powamp Place
   * Extra - door_idx: 9
+  > Right Side
+      Trivial
 
 > Door to Data Room; Heals? False
   * Layers: default
   * L4 Hatch to Data Room/Door to Powamp Place
   * Extra - door_idx: 27
+  > Before Data Room
+      Trivial
 
 > Other to Drain Pipe; Heals? False
   * Layers: default
   * Open Passage to Drain Pipe/Other to Powamp Place
   * Extra - door_idx: 84
+  > Left Side
+      Any of the following:
+          After Water Level Lowered or Damage Runs (Intermediate)
+          Gravity Suit and Damage Runs (Beginner)
+
+> Left Side; Heals? False
+  * Layers: default
+  > Door to Entrance Hub
+      Trivial
+  > Other to Drain Pipe
+      Any of the following:
+          After Water Level Lowered or Damage Runs (Intermediate)
+          Gravity Suit and Damage Runs (Beginner)
+  > Right Side
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Diffusion Missiles
+              Ice Beam and Wave Beam
+
+> Right Side; Heals? False
+  * Layers: default
+  > Door to Owtch-Couch
+      Trivial
+  > Left Side
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Diffusion Missiles
+              Ice Beam and Wave Beam
+  > Before Data Room
+      After Water Level Lowered or Damage Runs (Beginner)
+
+> Before Data Room; Heals? False
+  * Layers: default
+  > Door to Data Room
+      Trivial
+  > Left Side
+      All of the following:
+          Morph Ball
+          Any of the following:
+              After Water Level Lowered or Damage Runs (Intermediate)
+              Gravity Suit and Damage Runs (Beginner)
+          Any of the following:
+              Diffusion Missiles
+              Ice Beam and Wave Beam
+  > Right Side
+      All of the following:
+          Gravity Suit
+          After Water Level Lowered or Damage Runs (Beginner)
 
 ----------------
 Data Room
@@ -77,6 +149,14 @@ Extra - room_id: 4
   * Layers: default
   * L4 Hatch to Powamp Place/Door to Data Room
   * Extra - door_idx: 10
+  > Data (Diffusion Missiles)
+      Trivial
+
+> Data (Diffusion Missiles); Heals? False
+  * Layers: default
+  * Pickup 103; Category? Major
+  > Door to Powamp Place
+      Trivial
 
 ----------------
 Sciser Stall
@@ -86,58 +166,110 @@ Extra - room_id: 5
   * Layers: default
   * L0 Hatch to Entrance Hub/Door to Sciser Stall
   * Extra - door_idx: 11
+  > Door to Reservoir East
+      Trivial
 
-> Door to Reservoir Est; Heals? False
+> Door to Reservoir East; Heals? False
   * Layers: default
-  * L0 Hatch to Reservoir Est/Door to Sciser Stall
+  * L0 Hatch to Reservoir East/Door to Sciser Stall
   * Extra - door_idx: 12
+  > Door to Entrance Hub
+      Trivial
 
 ----------------
-Reservoir Est
+Reservoir East
 Extra - map_name: Sector 46
 Extra - room_id: 6
 > Pickup (Hidden Power Bomb Tank); Heals? False
   * Layers: default
   * Pickup 58; Category? Minor
+  > Door to Sciser Stall
+      All of the following:
+          Can Use Any Bombs
+          Any of the following:
+              After Water Level Lowered or Damage Runs (Intermediate)
+              Gravity Suit and Damage Runs (Beginner)
 
 > Door to Sciser Stall; Heals? False
   * Layers: default
-  * L0 Hatch to Sciser Stall/Door to Reservoir Est
+  * L0 Hatch to Sciser Stall/Door to Reservoir East
   * Extra - door_idx: 13
+  > Pickup (Hidden Power Bomb Tank)
+      All of the following:
+          Power Bombs and Can Use Bombs
+          Any of the following:
+              After Water Level Lowered
+              Gravity Suit and Damage Runs (Beginner)
+  > Room Center
+      Can Use Any Bombs
 
 > Door to Skultera Sanctuary; Heals? False
   * Layers: default
-  * L0 Hatch to Skultera Sanctuary/Door to Reservoir Est
+  * L0 Hatch to Skultera Sanctuary/Door to Reservoir East
   * Extra - door_idx: 14
+  > Room Center
+      Trivial
 
 > Other to Waterway; Heals? False
   * Layers: default
-  * Open Passage to Waterway/Other to Reservoir Est
+  * Open Passage to Waterway/Other to Reservoir East
   * Extra - door_idx: 18
 
 > Other to Serris Escape; Heals? False
   * Layers: default
-  * Open Passage to Serris Escape/Other to Reservoir Est
+  * Open Passage to Serris Escape/Other to Reservoir East
   * Extra - door_idx: 65
+  > Room Center
+      Trivial
+
+> Room Center; Heals? False
+  * Layers: default
+  > Door to Sciser Stall
+      Any of the following:
+          High Jump and Movement (Beginner) and Can Freeze Enemies and Can Use Bombs
+          Space Jump and Can Use Any Bombs
+          All of the following:
+              Speed Booster
+              Any of the following:
+                  After Water Level Lowered
+                  Gravity Suit and Damage Runs (Beginner)
+  > Door to Skultera Sanctuary
+      Trivial
+  > Other to Waterway
+      All of the following:
+          Speed Booster
+          Any of the following:
+              After Water Level Lowered
+              Gravity Suit and Damage Runs (Beginner)
+  > Other to Serris Escape
+      Trivial
 
 ----------------
 Skultera Sanctuary
 Extra - map_name: Sector 47
 Extra - room_id: 7
-> Door to Reservoir Est; Heals? False
+> Door to Reservoir East; Heals? False
   * Layers: default
-  * L0 Hatch to Reservoir Est/Door to Skultera Sanctuary
+  * L0 Hatch to Reservoir East/Door to Skultera Sanctuary
   * Extra - door_idx: 15
+  > Door to Reservoir West
+      Trivial
+  > Door to Bridge Access
+      Trivial
 
 > Door to Reservoir West; Heals? False
   * Layers: default
   * L0 Hatch to Reservoir West/Door to Skultera Sanctuary
   * Extra - door_idx: 16
+  > Door to Reservoir East
+      Trivial
 
 > Door to Bridge Access; Heals? False
   * Layers: default
   * L0 Hatch to Bridge Access/Door to Skultera Sanctuary
   * Extra - door_idx: 19
+  > Door to Reservoir East
+      Trivial
 
 ----------------
 Bridge Access
@@ -147,16 +279,24 @@ Extra - room_id: 8
   * Layers: default
   * L0 Hatch to Skultera Sanctuary/Door to Bridge Access
   * Extra - door_idx: 20
+  > Door to Bridge Save Room
+      Trivial
 
 > Door to Broken Bridge; Heals? False
   * Layers: default
   * L0 Hatch to Broken Bridge/Door to Bridge Access
   * Extra - door_idx: 21
+  > Door to Bridge Save Room
+      Morph Ball
 
 > Door to Bridge Save Room; Heals? False
   * Layers: default
   * L0 Hatch to Bridge Save Room/Door to Bridge Access
   * Extra - door_idx: 74
+  > Door to Skultera Sanctuary
+      Trivial
+  > Door to Broken Bridge
+      Morph Ball
 
 ----------------
 Serris Speedway
@@ -166,6 +306,10 @@ Extra - room_id: 9
   * Layers: default
   * L0 Hatch to Serris Arena/Door to Serris Speedway
   * Extra - door_idx: 23
+  > Other to Serris Escape
+      All of the following:
+          Speed Booster
+          Screw Attack or Can Use Any Bombs
 
 > Other to Serris Escape; Heals? False
   * Layers: default
@@ -179,21 +323,29 @@ Extra - room_id: 10
 > Pickup (Energy Tank); Heals? False
   * Layers: default
   * Pickup 59; Category? Minor
+  > Door to Bridge Access
+      Trivial
 
 > Door to Bridge Access; Heals? False
   * Layers: default
   * L0 Hatch to Bridge Access/Door to Broken Bridge
   * Extra - door_idx: 22
+  > Pickup (Energy Tank)
+      Trivial
 
 > Door to Breeding Tank; Heals? False
   * Layers: default
   * L0 Hatch to Breeding Tank/Door to Broken Bridge
   * Extra - door_idx: 63
+  > Door to Serris Arena
+      Can Kill Eye Door
 
 > Door to Serris Arena; Heals? False
   * Layers: default
   * L0 Hatch to Serris Arena/Door to Broken Bridge
   * Extra - door_idx: 64
+  > Door to Breeding Tank
+      Gravity Suit
 
 ----------------
 Escape Save Room
@@ -212,16 +364,26 @@ Extra - room_id: 12
   * Layers: default
   * L0 Hatch to Aquarium Hub/Door to Aquarium Speedway
   * Extra - door_idx: 88
+  > Door to Powamp Shaft
+      Trivial
 
 > Door to Powamp Shaft; Heals? False
   * Layers: default
   * L0 Hatch to Powamp Shaft/Door to Aquarium Speedway
   * Extra - door_idx: 89
+  > Door to Aquarium Hub
+      Trivial
+  > Other to Aquarium Storage
+      All of the following:
+          Gravity Suit
+          High Jump or Space Jump
 
 > Other to Aquarium Storage; Heals? False
   * Layers: default
   * Open Passage to Aquarium Storage/Other to Aquarium Speedway
   * Extra - door_idx: 95
+  > Door to Powamp Shaft
+      Trivial
 
 ----------------
 Serris Escape
@@ -240,9 +402,9 @@ Extra - room_id: 13
   * Open Passage to Serris Speedway/Other to Serris Escape
   * Extra - door_idx: 29
 
-> Other to Reservoir Est; Heals? False
+> Other to Reservoir East; Heals? False
   * Layers: default
-  * Open Passage to Reservoir Est/Other to Serris Escape
+  * Open Passage to Reservoir East/Other to Serris Escape
   * Extra - door_idx: 30
 
 > Door to Escape Save Room; Heals? False
@@ -258,31 +420,65 @@ Extra - room_id: 14
   * Layers: default
   * L0 Hatch to Cargo Hold to Sector 5 (ARC)/Door to Aquarium Shaft West
   * Extra - door_idx: 31
+  > Room Center
+      Trivial
 
 > Door to Worst Room in the Game; Heals? False
   * Layers: default
   * L0 Hatch to Worst Room in the Game/Door to Aquarium Shaft West
   * Extra - door_idx: 32
+  > Room Center
+      Trivial
 
 > Door to Cheddar Bay; Heals? False
   * Layers: default
   * L0 Hatch to Cheddar Bay/Door to Aquarium Shaft West
   * Extra - door_idx: 33
+  > Bottom of Room
+      Trivial
 
 > Door to Aquarium Tank; Heals? False
   * Layers: default
   * L0 Hatch to Aquarium Tank/Door to Aquarium Shaft West
   * Extra - door_idx: 34
+  > Bottom of Room
+      Trivial
 
 > Other to Cargo Hold to Sector 5 (ARC); Heals? False
   * Layers: default
   * Tunnel to Cargo Hold to Sector 5 (ARC)/Other to Aquarium Shaft West
   * Extra - door_idx: 79
+  > Room Center
+      Morph Ball
 
 > Door to Aquarium Save Room West; Heals? False
   * Layers: default
   * L0 Hatch to Aquarium Save Room West/Door to Aquarium Shaft West
   * Extra - door_idx: 96
+  > Room Center
+      Trivial
+
+> Bottom of Room; Heals? False
+  * Layers: default
+  > Door to Cheddar Bay
+      Trivial
+  > Door to Aquarium Tank
+      Trivial
+  > Room Center
+      Gravity Suit and Space Jump
+
+> Room Center; Heals? False
+  * Layers: default
+  > Door to Cargo Hold to Sector 5 (ARC)
+      Trivial
+  > Door to Worst Room in the Game
+      Trivial
+  > Other to Cargo Hold to Sector 5 (ARC)
+      Morph Ball
+  > Door to Aquarium Save Room West
+      Trivial
+  > Bottom of Room
+      Trivial
 
 ----------------
 Worst Room in the Game
@@ -305,11 +501,19 @@ Extra - room_id: 16
   * Layers: default
   * L0 Hatch to Aquarium Tank/Door to Evir Shaft
   * Extra - door_idx: 36
+  > Door to Aquarium Hub Access
+      All of the following:
+          Gravity Suit
+          Any of the following:
+              Space Jump or Can Freeze Enemies
+              High Jump and Movement (Beginner)
 
 > Door to Aquarium Hub Access; Heals? False
   * Layers: default
   * L4 Hatch to Aquarium Hub Access/Door to Evir Shaft
   * Extra - door_idx: 37
+  > Door to Aquarium Tank
+      Trivial
 
 ----------------
 Aquarium Tank
@@ -318,16 +522,31 @@ Extra - room_id: 17
 > Pickup (Missile Tank); Heals? False
   * Layers: default
   * Pickup 63; Category? Minor
+  > Room Center
+      Gravity Suit or Space Jump or Can Freeze Enemies
 
 > Door to Evir Shaft; Heals? False
   * Layers: default
   * L0 Hatch to Evir Shaft/Door to Aquarium Tank
   * Extra - door_idx: 38
+  > Room Center
+      Trivial
 
 > Door to Aquarium Shaft West; Heals? False
   * Layers: default
   * L0 Hatch to Aquarium Shaft West/Door to Aquarium Tank
   * Extra - door_idx: 39
+  > Room Center
+      Trivial
+
+> Room Center; Heals? False
+  * Layers: default
+  > Pickup (Missile Tank)
+      Can Use Power Bombs
+  > Door to Evir Shaft
+      Trivial
+  > Door to Aquarium Shaft West
+      Trivial
 
 ----------------
 Aquarium Hub Access
@@ -337,11 +556,15 @@ Extra - room_id: 18
   * Layers: default
   * L4 Hatch to Evir Shaft/Door to Aquarium Hub Access
   * Extra - door_idx: 40
+  > Door to Aquarium Hub
+      Trivial
 
 > Door to Aquarium Hub; Heals? False
   * Layers: default
   * L0 Hatch to Aquarium Hub/Door to Aquarium Hub Access
   * Extra - door_idx: 41
+  > Door to Evir Shaft
+      Trivial
 
 ----------------
 Aquarium Hub
@@ -351,21 +574,50 @@ Extra - room_id: 19
   * Layers: default
   * L0 Hatch to Aquarium Hub Access/Door to Aquarium Hub
   * Extra - door_idx: 42
+  > Room Center
+      Any of the following:
+          Morph Ball
+          All of the following:
+              Can Freeze Enemies
+              Can Use Bombs or Can Use Springball
 
 > Door to Aquarium Speedway; Heals? False
   * Layers: default
   * L0 Hatch to Aquarium Speedway/Door to Aquarium Hub
   * Extra - door_idx: 55
+  > Room Center
+      Gravity Suit and Screw Attack
 
 > Door to Drain Pipe; Heals? False
   * Layers: default
   * L0 Hatch to Drain Pipe/Door to Aquarium Hub
   * Extra - door_idx: 90
+  > Door to Aquarium Speedway
+      Gravity Suit and Speed Booster
 
 > Door to Aquarium Save Room East; Heals? False
   * Layers: default
   * L0 Hatch to Aquarium Save Room East/Door to Aquarium Hub
   * Extra - door_idx: 116
+  > Room Center
+      Trivial
+
+> Room Center; Heals? False
+  * Layers: default
+  > Door to Aquarium Hub Access
+      Any of the following:
+          Morph Ball
+          All of the following:
+              Can Freeze Enemies
+              Can Use Bombs or Can Use Springball
+  > Door to Aquarium Speedway
+      Gravity Suit and Screw Attack
+  > Door to Drain Pipe
+      All of the following:
+          Can Freeze Enemies
+          Can Use Bombs or Can Use Springball
+  > Door to Aquarium Save Room East
+      Trivial
 
 ----------------
 Reservoir West
@@ -375,21 +627,62 @@ Extra - room_id: 20
   * Layers: default
   * L0 Hatch to Skultera Sanctuary/Door to Reservoir West
   * Extra - door_idx: 17
+  > Right Side
+      Trivial
 
 > Door to Pump Control Access; Heals? False
   * Layers: default
   * L0 Hatch to Pump Control Access/Door to Reservoir West
   * Extra - door_idx: 43
+  > Left Side
+      Trivial
 
 > Other to Waterway; Heals? False
   * Layers: default
   * Open Passage to Waterway/Other to Reservoir West
   * Extra - door_idx: 59
+  > Right Side
+      All of the following:
+          Speed Booster
+          Any of the following:
+              After Water Level Lowered
+              Gravity Suit and Damage Runs (Beginner)
 
 > Other to Breeding Tank Access; Heals? False
   * Layers: default
   * Open Passage to Breeding Tank Access/Other to Reservoir West
   * Extra - door_idx: 71
+
+> Right Side; Heals? False
+  * Layers: default
+  > Door to Skultera Sanctuary
+      Trivial
+  > Other to Waterway
+      All of the following:
+          Speed Booster
+          Any of the following:
+              After Water Level Lowered
+              Gravity Suit and Damage Runs (Beginner)
+  > Other to Breeding Tank Access
+      Can Use Any Bombs
+  > Left Side
+      All of the following:
+          Morph Ball
+          Any of the following:
+              After Water Level Lowered
+              Gravity Suit and Damage Runs (Beginner)
+          High Jump or Space Jump
+
+> Left Side; Heals? False
+  * Layers: default
+  > Door to Pump Control Access
+      Trivial
+  > Other to Breeding Tank Access
+      Screw Attack or Can Use Any Bombs
+  > Right Side
+      All of the following:
+          Morph Ball
+          After Water Level Lowered or Damage Runs (Beginner)
 
 ----------------
 Pump Control Access
@@ -399,21 +692,33 @@ Extra - room_id: 21
   * Layers: default
   * L0 Hatch to Reservoir West/Door to Pump Control Access
   * Extra - door_idx: 44
+  > Door to Cargo Hold to Sector 5 (ARC)
+      After Water Level Lowered or Damage Runs (Beginner)
+  > Door to Pump Control Save Room
+      Morph Ball
+  > Door to Pump Control Unit
+      Trivial
 
 > Door to Cargo Hold to Sector 5 (ARC); Heals? False
   * Layers: default
   * L4 Hatch to Cargo Hold to Sector 5 (ARC)/Door to Pump Control Access
   * Extra - door_idx: 45
+  > Door to Reservoir West
+      After Water Level Lowered or Damage Runs (Beginner)
 
 > Door to Pump Control Save Room; Heals? False
   * Layers: default
   * L0 Hatch to Pump Control Save Room/Door to Pump Control Access
   * Extra - door_idx: 46
+  > Door to Reservoir West
+      Trivial
 
 > Door to Pump Control Unit; Heals? False
   * Layers: default
   * L1 Hatch to Pump Control Unit/Door to Pump Control Access
   * Extra - door_idx: 75
+  > Door to Reservoir West
+      Trivial
 
 ----------------
 Pump Control Save Room
@@ -423,11 +728,15 @@ Extra - room_id: 22
   * Layers: default
   * L0 Hatch to Pump Control Access/Door to Pump Control Save Room
   * Extra - door_idx: 47
+  > Other to Breeding Tank Access
+      Morph Ball
 
 > Other to Breeding Tank Access; Heals? False
   * Layers: default
   * Tunnel to Breeding Tank Access/Other to Pump Control Save Room
   * Extra - door_idx: 69
+  > Door to Pump Control Access
+      Morph Ball
 
 ----------------
 Cargo Hold to Sector 5 (ARC)
@@ -436,11 +745,15 @@ Extra - room_id: 23
 > Pickup (Power Bomb Tank); Heals? False
   * Layers: default
   * Pickup 64; Category? Minor
+  > Other to Aquarium Shaft West
+      Trivial
 
 > Door to Pump Control Access; Heals? False
   * Layers: default
   * L4 Hatch to Pump Control Access/Door to Cargo Hold to Sector 5 (ARC)
   * Extra - door_idx: 48
+  > Room Center
+      Trivial
 
 > Door to Aquarium Shaft West; Heals? False
   * Layers: default
@@ -451,11 +764,30 @@ Extra - room_id: 23
   * Layers: default
   * Open Passage to Flooded Airlock to Sector 4 (AQA)/Door to Cargo Hold to Sector 5 (ARC)
   * Extra - door_idx: 77
+  > Room Center
+      Trivial
 
 > Other to Aquarium Shaft West; Heals? False
   * Layers: default
   * Tunnel to Aquarium Shaft West/Other to Cargo Hold to Sector 5 (ARC)
   * Extra - door_idx: 78
+  > Pickup (Power Bomb Tank)
+      Trivial
+  > Room Center
+      Gravity Suit and Screw Attack
+
+> Room Center; Heals? False
+  * Layers: default
+  > Door to Pump Control Access
+      Gravity Suit or High Jump
+  > Door to Aquarium Shaft West
+      All of the following:
+          Gravity Suit and Speed Booster
+          High Jump or Movement (Beginner)
+  > Other to Flooded Airlock to Sector 4 (AQA)
+      Trivial
+  > Other to Aquarium Shaft West
+      Gravity Suit and Screw Attack
 
 ----------------
 Cheddar Bay
@@ -464,21 +796,47 @@ Extra - room_id: 24
 > Pickup (Power Bomb Tank); Heals? False
   * Layers: default
   * Pickup 65; Category? Minor
+  > Evir
+      Morph Ball
 
 > Door to Security Access; Heals? False
   * Layers: default
   * L4 Hatch to Security Access/Door to Cheddar Bay
   * Extra - door_idx: 49
+  > Inside Pipe
+      Trivial
 
 > Door to Aquarium Shaft West; Heals? False
   * Layers: default
   * L0 Hatch to Aquarium Shaft West/Door to Cheddar Bay
   * Extra - door_idx: 54
+  > Inside Pipe
+      Trivial
 
 > Other to Security Bypass; Heals? False
   * Layers: default
   * Open Passage to Security Bypass/Other to Cheddar Bay
   * Extra - door_idx: 80
+  > Evir
+      Morph Ball
+
+> Inside Pipe; Heals? False
+  * Layers: default
+  > Door to Security Access
+      Trivial
+  > Door to Aquarium Shaft West
+      Trivial
+
+> Evir; Heals? False
+  * Layers: default
+  > Pickup (Power Bomb Tank)
+      Morph Ball
+  > Other to Security Bypass
+      Morph Ball
+  > Inside Pipe
+      All of the following:
+          Missiles
+          Screw Attack or Can Use Any Bombs
 
 ----------------
 Security Access
@@ -488,11 +846,19 @@ Extra - room_id: 25
   * Layers: default
   * L4 Hatch to Cheddar Bay/Door to Security Access
   * Extra - door_idx: 50
+  > Other to Security Bypass
+      Trivial
+  > By Hole
+      Trivial
 
 > Door to Level 4 Security Room; Heals? False
   * Layers: default
   * L4 Hatch to Level 4 Security Room/Door to Security Access
   * Extra - door_idx: 51
+  > By Hole
+      All of the following:
+          Gravity Suit
+          Space Jump or Movement (Beginner)
 
 > Other to Security Bypass; Heals? False
   * Layers: default
@@ -503,6 +869,21 @@ Extra - room_id: 25
   * Layers: default
   * Tunnel to Sciser Sanctuary/Other to Security Access
   * Extra - door_idx: 100
+  > By Hole
+      Morph Ball
+
+> By Hole; Heals? False
+  * Layers: default
+  > Door to Cheddar Bay
+      All of the following:
+          Gravity Suit
+          Space Jump or Movement (Beginner)
+  > Door to Level 4 Security Room
+      Trivial
+  > Other to Sciser Sanctuary
+      All of the following:
+          No Gravity Suit and Morph Ball and Movement (Intermediate)
+          Can Use Bombs or Can Use Springball
 
 ----------------
 Level 4 Security Room
@@ -512,11 +893,21 @@ Extra - room_id: 26
   * Layers: default
   * L4 Hatch to Security Access/Door to Level 4 Security Room
   * Extra - door_idx: 52
+  > Doors Unlocked
+      Trivial
 
 > Other to Security Bypass; Heals? False
   * Layers: default
   * Tunnel to Security Bypass/Other to Level 4 Security Room
   * Extra - door_idx: 98
+  > Door to Security Access
+      Trivial
+
+> Doors Unlocked; Heals? False
+  * Layers: default
+  * Event Level 4 Locks
+  > Door to Security Access
+      Trivial
 
 ----------------
 Elevator to Main Deck
@@ -526,11 +917,15 @@ Extra - room_id: 27
   * Layers: default
   * Open Passage to Elevator to Sector 4 (AQA)/Other to Elevator to Main Deck
   * Extra - door_idx: 0
+  > Door to Entrance Navigation Room
+      Trivial
 
 > Door to Entrance Navigation Room; Heals? False
   * Layers: default
   * L0 Hatch to Entrance Navigation Room/Door to Elevator to Main Deck
   * Extra - door_idx: 57
+  > Other to Elevator to Sector 4 (AQA)
+      Trivial
 
 ----------------
 Waterway
@@ -539,16 +934,24 @@ Extra - room_id: 28
 > Pickup (Underwater Missile Tank); Heals? False
   * Layers: default
   * Pickup 66; Category? Minor
+  > Other to Reservoir East
+      Morph Ball
 
-> Other to Reservoir Est; Heals? False
+> Other to Reservoir East; Heals? False
   * Layers: default
-  * Open Passage to Reservoir Est/Other to Waterway
+  * Open Passage to Reservoir East/Other to Waterway
   * Extra - door_idx: 4
+  > Pickup (Underwater Missile Tank)
+      Morph Ball
+  > Other to Reservoir West
+      Trivial
 
 > Other to Reservoir West; Heals? False
   * Layers: default
   * Open Passage to Reservoir West/Other to Waterway
   * Extra - door_idx: 60
+  > Other to Reservoir East
+      Trivial
 
 ----------------
 Entrance Recharge Room
@@ -558,11 +961,15 @@ Extra - room_id: 29
   * Layers: default
   * L0 Hatch to Entrance Save Room/Door to Entrance Recharge Room
   * Extra - door_idx: 61
+  > Door to Entrance Hub
+      Trivial
 
 > Door to Entrance Hub; Heals? False
   * Layers: default
   * L0 Hatch to Entrance Hub/Door to Entrance Recharge Room
   * Extra - door_idx: 99
+  > Door to Entrance Save Room
+      Trivial
 
 ----------------
 Breeding Tank Access
@@ -572,21 +979,29 @@ Extra - room_id: 30
   * Layers: default
   * Tunnel to Pump Control Save Room/Other to Breeding Tank Access
   * Extra - door_idx: 66
+  > Door to Breeding Tank
+      Can Use Any Bombs
 
 > Door to Breeding Tank; Heals? False
   * Layers: default
   * L0 Hatch to Breeding Tank/Door to Breeding Tank Access
   * Extra - door_idx: 67
+  > Other to Pump Control Save Room
+      Can Use Any Bombs
 
 > Other to Reservoir West; Heals? False
   * Layers: default
   * Open Passage to Reservoir West/Other to Breeding Tank Access
   * Extra - door_idx: 68
+  > Other to Owtch Cache
+      Morph Ball
 
 > Other to Owtch Cache; Heals? False
   * Layers: default
   * Tunnel to Owtch Cache/Other to Breeding Tank Access
   * Extra - door_idx: 113
+  > Other to Reservoir West
+      Morph Ball
 
 ----------------
 Breeding Tank
@@ -596,11 +1011,15 @@ Extra - room_id: 31
   * Layers: default
   * L0 Hatch to Breeding Tank Access/Door to Breeding Tank
   * Extra - door_idx: 70
+  > Door to Broken Bridge
+      Gravity Suit or High Jump
 
 > Door to Broken Bridge; Heals? False
   * Layers: default
   * L0 Hatch to Broken Bridge/Door to Breeding Tank
   * Extra - door_idx: 73
+  > Door to Breeding Tank Access
+      Gravity Suit or High Jump
 
 ----------------
 Bridge Save Room
@@ -618,11 +1037,32 @@ Extra - room_id: 33
 > Pickup (Missile Tank); Heals? False
   * Layers: default
   * Pickup 67; Category? Minor
+  > Door to Pump Control Access
+      Can Use Bombs or Can Use Springball
+  > Behind Speed Blocks
+      Can Use Bombs or Can Use Springball
 
 > Door to Pump Control Access; Heals? False
   * Layers: default
   * L1 Hatch to Pump Control Access/Door to Pump Control Unit
   * Extra - door_idx: 76
+  > Pickup (Missile Tank)
+      Gravity Suit and Space Jump and Damage Runs (Beginner)
+  > Behind Speed Blocks
+      Speed Booster
+
+> Behind Speed Blocks; Heals? False
+  * Layers: default
+  > Pickup (Missile Tank)
+      Morph Ball
+  > Use Terminal
+      Trivial
+
+> Use Terminal; Heals? False
+  * Layers: default
+  * Event Water Level Lowered
+  > Behind Speed Blocks
+      Trivial
 
 ----------------
 Security Bypass
@@ -637,11 +1077,21 @@ Extra - room_id: 34
   * Layers: default
   * Open Passage to Cheddar Bay/Other to Security Bypass
   * Extra - door_idx: 81
+  > Other to Security Access
+      Can Use Any Bombs
 
 > Other to Security Access; Heals? False
   * Layers: default
   * Open Passage to Security Access/Other to Security Bypass
   * Extra - door_idx: 82
+  > Other to Level 4 Security Room
+      Any of the following:
+          Can Use Any Bombs
+          Gravity Suit and Screw Attack
+  > Other to Cheddar Bay
+      All of the following:
+          Gravity Suit
+          Screw Attack or Can Use Any Bombs
 
 ----------------
 Powamp Shaft
@@ -651,21 +1101,41 @@ Extra - room_id: 35
   * Layers: default
   * L0 Hatch to Owtch-Couch/Door to Powamp Shaft
   * Extra - door_idx: 28
+  > Door to Aquarium Speedway
+      Diffusion Missiles and Morph Ball
+  > Other to Diffusion Connection Access
+      Diffusion Missiles and Morph Ball
 
 > Door to Aquarium Speedway; Heals? False
   * Layers: default
   * L0 Hatch to Aquarium Speedway/Door to Powamp Shaft
   * Extra - door_idx: 56
+  > Door to Owtch-Couch
+      All of the following:
+          Missiles
+          Any of the following:
+              Movement (Beginner) and Can Freeze Enemies
+              All of the following:
+                  Gravity Suit
+                  Space Jump or Speed Booster
+  > Door to Connection to Sector 2 (TRO)
+      Gravity Suit and Screw Attack
 
 > Door to Connection to Sector 2 (TRO); Heals? False
   * Layers: default
   * L0 Hatch to Connection to Sector 2 (TRO)/Door to Powamp Shaft
   * Extra - door_idx: 109
+  > Door to Aquarium Speedway
+      All of the following:
+          Gravity Suit and Screw Attack
+          Space Jump or Movement (Intermediate)
 
 > Other to Diffusion Connection Access; Heals? False
   * Layers: default
   * Tunnel to Diffusion Connection Access/Other to Powamp Shaft
   * Extra - door_idx: 112
+  > Door to Owtch-Couch
+      Missiles and Morph Ball
 
 ----------------
 Drain Pipe
@@ -674,21 +1144,54 @@ Extra - room_id: 36
 > Pickup (Hidden Missile Tank); Heals? False
   * Layers: default
   * Pickup 68; Category? Minor
+  > Other to Powamp Place
+      Trivial
 
 > Other to Powamp Place; Heals? False
   * Layers: default
   * Open Passage to Powamp Place/Other to Drain Pipe
   * Extra - door_idx: 85
+  > Pickup (Hidden Missile Tank)
+      All of the following:
+          Morph Ball
+          Any of the following:
+              After Water Level Lowered or Damage Runs (Intermediate)
+              Gravity Suit and Damage Runs (Beginner)
+          Any of the following:
+              Super Missiles or Wave Beam
+              Gravity Suit and Screw Attack
+  > Door to Aquarium Storage
+      All of the following:
+          Morph Ball
+          Any of the following:
+              After Water Level Lowered or Damage Runs (Intermediate)
+              Gravity Suit and Damage Runs (Beginner)
+          Any of the following:
+              Diffusion Missiles
+              Ice Beam and Wave Beam
 
 > Door to Aquarium Hub; Heals? False
   * Layers: default
   * L0 Hatch to Aquarium Hub/Door to Drain Pipe
   * Extra - door_idx: 91
+  > Door to Aquarium Storage
+      After Water Level Lowered or Damage Runs (Beginner)
 
 > Door to Aquarium Storage; Heals? False
   * Layers: default
   * L0 Hatch to Aquarium Storage/Door to Drain Pipe
   * Extra - door_idx: 92
+  > Other to Powamp Place
+      All of the following:
+          Morph Ball
+          Any of the following:
+              After Water Level Lowered or Damage Runs (Intermediate)
+              Gravity Suit and Damage Runs (Beginner)
+          Any of the following:
+              Diffusion Missiles
+              Ice Beam and Wave Beam
+  > Door to Aquarium Hub
+      After Water Level Lowered or Damage Runs (Beginner)
 
 ----------------
 Owtch-Couch
@@ -698,11 +1201,15 @@ Extra - room_id: 37
   * Layers: default
   * L4 Hatch to Powamp Place/Door to Owtch-Couch
   * Extra - door_idx: 86
+  > Door to Powamp Shaft
+      Can Use Any Bombs
 
 > Door to Powamp Shaft; Heals? False
   * Layers: default
   * L0 Hatch to Powamp Shaft/Door to Owtch-Couch
   * Extra - door_idx: 87
+  > Door to Powamp Place
+      Can Use Any Bombs
 
 ----------------
 Aquarium Storage
@@ -715,16 +1222,39 @@ Extra - room_id: 38
 > Pickup (Missile Tank); Heals? False
   * Layers: default
   * Pickup 70; Category? Minor
+  > Door to Drain Pipe
+      Trivial
 
 > Door to Drain Pipe; Heals? False
   * Layers: default
   * L0 Hatch to Drain Pipe/Door to Aquarium Storage
   * Extra - door_idx: 93
+  > Pickup (Missile Tank)
+      Trivial
+  > After Kago
+      All of the following:
+          Gravity Suit
+          Any of the following:
+              Screw Attack
+              Speed Booster and Shinespark Tricks (Beginner)
 
 > Other to Aquarium Speedway; Heals? False
   * Layers: default
   * Open Passage to Aquarium Speedway/Other to Aquarium Storage
   * Extra - door_idx: 94
+  > Pickup (Power Bomb Tank)
+      Gravity Suit and Speed Booster
+  > After Kago
+      All of the following:
+          Gravity Suit and Morph Ball and Knowledge (Beginner)
+          Space Jump or Speed Booster
+
+> After Kago; Heals? False
+  * Layers: default
+  > Door to Drain Pipe
+      Gravity Suit and Screw Attack
+  > Other to Aquarium Speedway
+      Morph Ball and Knowledge (Beginner)
 
 ----------------
 Aquarium Save Room West
@@ -743,11 +1273,21 @@ Extra - room_id: 40
   * Layers: default
   * Tunnel to Security Access/Other to Sciser Sanctuary
   * Extra - door_idx: 101
+  > Door to Sanctuary Cache
+      All of the following:
+          Any of the following:
+              Charge Beam
+              Gravity Suit and Screw Attack
+          Any of the following:
+              Wave Beam
+              Missiles ≥ 2 and Can Use Power Bombs
 
 > Door to Sanctuary Cache; Heals? False
   * Layers: default
   * L0 Hatch to Sanctuary Cache/Door to Sciser Sanctuary
   * Extra - door_idx: 102
+  > Other to Security Access
+      Morph Ball
 
 ----------------
 Sanctuary Cache
@@ -756,11 +1296,17 @@ Extra - room_id: 41
 > Pickup (Hidden Energy Tank); Heals? False
   * Layers: default
   * Pickup 71; Category? Minor
+  > Door to Sciser Sanctuary
+      Can Use Any Bombs
 
 > Door to Sciser Sanctuary; Heals? False
   * Layers: default
   * L0 Hatch to Sciser Sanctuary/Door to Sanctuary Cache
   * Extra - door_idx: 103
+  > Pickup (Hidden Energy Tank)
+      All of the following:
+          Can Use Any Bombs
+          Can Use Bombs or Can Use Springball
 
 ----------------
 Serris Arena
@@ -775,6 +1321,29 @@ Extra - room_id: 42
   * Layers: default
   * L0 Hatch to Broken Bridge/Door to Serris Arena
   * Extra - door_idx: 104
+  > Arena
+      Trivial
+
+> Serris; Heals? False
+  * Layers: default
+  * Event Serris
+  > Pickup (Speed Booster)
+      Trivial
+
+> Pickup (Speed Booster); Heals? False
+  * Layers: default
+  * Pickup 102; Category? Major
+  > Arena
+      Trivial
+
+> Arena; Heals? False
+  * Layers: default
+  > Door to Serris Speedway
+      After Serris
+  > Door to Broken Bridge
+      After Serris
+  > Serris
+      Missiles ≥ 10
 
 ----------------
 Connection to Sector 6 (NOC)
@@ -784,11 +1353,15 @@ Extra - room_id: 43
   * Layers: default
   * L0 Hatch to Diffusion Connection Access/Door to Connection to Sector 6 (NOC)
   * Extra - door_idx: 105
+  > Other to Connection to Sector 4 (AQA)
+      Trivial
 
 > Other to Connection to Sector 4 (AQA); Heals? False
   * Layers: default
   * Open Passage to Connection to Sector 4 (AQA)/Other to Connection to Sector 6 (NOC)
   * Extra - door_idx: 106
+  > Door to Diffusion Connection Access
+      Trivial
 
 ----------------
 Connection to Sector 2 (TRO)
@@ -798,11 +1371,15 @@ Extra - room_id: 44
   * Layers: default
   * L0 Hatch to Powamp Shaft/Door to Connection to Sector 2 (TRO)
   * Extra - door_idx: 107
+  > Other to Connection to Sector 4 (AQA)
+      Trivial
 
 > Other to Connection to Sector 4 (AQA); Heals? False
   * Layers: default
   * Open Passage to Connection to Sector 4 (AQA)/Other to Connection to Sector 2 (TRO)
   * Extra - door_idx: 108
+  > Door to Powamp Shaft
+      Trivial
 
 ----------------
 Diffusion Connection Access
@@ -812,11 +1389,15 @@ Extra - room_id: 45
   * Layers: default
   * L0 Hatch to Connection to Sector 6 (NOC)/Door to Diffusion Connection Access
   * Extra - door_idx: 110
+  > Other to Powamp Shaft
+      Morph Ball
 
 > Other to Powamp Shaft; Heals? False
   * Layers: default
   * Tunnel to Powamp Shaft/Other to Diffusion Connection Access
   * Extra - door_idx: 111
+  > Door to Connection to Sector 6 (NOC)
+      Morph Ball
 
 ----------------
 Owtch Cache
@@ -825,11 +1406,15 @@ Extra - room_id: 46
 > Pickup (Underwater Missile Tank); Heals? False
   * Layers: default
   * Pickup 72; Category? Minor
+  > Other to Breeding Tank Access
+      Morph Ball
 
 > Other to Breeding Tank Access; Heals? False
   * Layers: default
   * Tunnel to Breeding Tank Access/Other to Owtch Cache
   * Extra - door_idx: 114
+  > Pickup (Underwater Missile Tank)
+      Morph Ball
 
 ----------------
 Aquarium Save Room East

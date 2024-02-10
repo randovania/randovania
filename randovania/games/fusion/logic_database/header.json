@@ -184,6 +184,10 @@
                 "long_name": "Controls",
                 "extra": {}
             },
+            "LowerWaterLevel": {
+                "long_name": "Water Level Lowered",
+                "extra": {}
+            },
             "Animals": {
                 "long_name": "Animals",
                 "extra": {}
@@ -232,17 +236,17 @@
             },
             "HeatRuns": {
                 "long_name": "Damage Runs",
-                "description": "git gud",
+                "description": "The player may be expected to traverse a room while taking damage from the environment (Heat/Lava/Cold/Electric)",
                 "extra": {}
             },
             "KickClimb": {
                 "long_name": "Kick Climb",
-                "description": "For advanced ones, try to delay your jump as late as you can after turning.",
+                "description": "The player may be expected to wall jump to traverse rooms vertically.",
                 "extra": {}
             },
             "JBJ": {
                 "long_name": "Jump Bombjump",
-                "description": "Place bomb midair, be morphed on it having 0 vertical speed as it explodes.",
+                "description": "The player may be expected to place bombs midair and then get hit by them to gain more height.",
                 "extra": {}
             }
         },
@@ -1034,12 +1038,16 @@
             1
         ],
         "HeatRuns": [
+            1,
             2
         ],
         "Movement": [
+            1,
+            2,
             4
         ],
         "ShinesparkTrick": [
+            1,
             2,
             4
         ]
