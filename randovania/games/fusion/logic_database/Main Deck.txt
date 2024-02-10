@@ -14,7 +14,11 @@ Extra - room_id: 0
   > Ship
       Trivial
   > Event - Omega Metroid
-      Charge Beam and Gravity Suit
+      All of the following:
+          After SA-X
+          # Weapon Requirements
+          Wide Beam or Combat (Intermediate)
+          Combat (Advanced) or Normal Damage ≥ 400
 
 > Ship; Heals? False; Spawn Point
   * Layers: default
@@ -47,11 +51,6 @@ Extra - room_id: 1
 Unused2
 Extra - map_name: Main Deck2
 Extra - room_id: 2
-> Door to Unused3; Heals? False
-  * Layers: default
-  * L0 Hatch to Unused3/Door to Unused2
-  * Extra - door_idx: 5
-
 ----------------
 Docking Bay Access
 Extra - map_name: Main Deck3
@@ -88,16 +87,6 @@ Extra - room_id: 4
 Unused3
 Extra - map_name: Main Deck5
 Extra - room_id: 5
-> Door to Unused2; Heals? False
-  * Layers: default
-  * L0 Hatch to Unused2/Door to Unused3
-  * Extra - door_idx: 6
-
-> Door to Docking Bay Shaft; Heals? False
-  * Layers: default
-  * L2 Hatch to Docking Bay Shaft/Door to Unused3
-  * Extra - door_idx: 11
-
 ----------------
 Docking Bay Shaft
 Extra - map_name: Main Deck6
@@ -115,13 +104,7 @@ Extra - room_id: 6
 
 > Door to Docking Bay Access (D); Heals? False
   * Layers: default
-  * Open Hatch to Docking Bay Access (D)/Door to Docking Bay Shaft
   * Extra - door_idx: 10
-
-> Door to Unused3; Heals? False
-  * Layers: default
-  * Open Hatch to Unused3/Door to Docking Bay Shaft
-  * Extra - door_idx: 12
 
 > Other to Silo Access; Heals? False
   * Layers: default
@@ -317,11 +300,21 @@ Extra - room_id: 13
       All of the following:
           After SA-X
           High Jump or Space Jump
+  > Event - SA-X
+      All of the following:
+          Charge Beam and Plasma Beam
+          Combat (Beginner) or Normal Damage ≥ 100
 
 > Door to Operations Room; Heals? False
   * Layers: default
   * L4 Hatch to Operations Room/Door to Operations Deck
   * Extra - door_idx: 193
+  > Door to Elevator to Crew Quarters
+      Trivial
+
+> Event - SA-X; Heals? False
+  * Layers: default
+  * Event SA-X
   > Door to Elevator to Crew Quarters
       Trivial
 
@@ -351,21 +344,37 @@ Extra - room_id: 15
   * Layers: default
   * L2 Hatch to Elevator to Central Hub/Door to Habitation Deck Entrance
   * Extra - door_idx: 30
+  > Door to Habitation Deck
+      Trivial
+  > Door to Habitation Deck (157)
+      Any of the following:
+          High Jump
+          High Jump and Can Freeze Enemies
 
 > Door to Habitation Deck; Heals? False
   * Layers: default
   * L2 Hatch to Habitation Deck/Door to Habitation Deck Entrance
   * Extra - door_idx: 31
+  > Door to Elevator to Central Hub
+      Trivial
 
 > Door to Habitation Deck (157); Heals? False
   * Layers: default
   * L2 Hatch to Habitation Deck/Door to Habitation Deck Entrance
   * Extra - door_idx: 157
+  > Door to Elevator to Central Hub
+      Trivial
+  > Door to Habitation Deck (158)
+      Any of the following:
+          Space Jump
+          High Jump and Can Freeze Enemies
 
 > Door to Habitation Deck (158); Heals? False
   * Layers: default
   * L2 Hatch to Habitation Deck/Door to Habitation Deck Entrance
   * Extra - door_idx: 158
+  > Door to Habitation Deck (157)
+      Trivial
 
 ----------------
 Main Deck Navigation Room West
@@ -447,6 +456,8 @@ Extra - room_id: 18
   * Layers: default
   * L2 Hatch to PB Geron Cache/Door to Central Hub
   * Extra - door_idx: 132
+  > Door to Station Entrance
+      Can Use Any Bombs
 
 > Other to Western Hub; Heals? False
   * Layers: default
@@ -523,7 +534,7 @@ Extra - room_id: 21
   * L0 Hatch to Main Deck Recharge Room/Door to Eastern Hub
   * Extra - door_idx: 29
   > Door to Main Deck Save Room
-      Trivial
+      Missiles ≥ 3
 
 > Door to Main Deck Navigation Room East; Heals? False
   * Layers: default
@@ -558,11 +569,15 @@ Extra - room_id: 22
   * Layers: default
   * Open Passage to Habitation Deck/Other to Habitation Maintenance
   * Extra - door_idx: 46
+  > Other to Habitation Deck (47)
+      Trivial
 
 > Other to Habitation Deck (47); Heals? False
   * Layers: default
   * Open Passage to Habitation Deck/Other to Habitation Maintenance
   * Extra - door_idx: 47
+  > Other to Habitation Deck
+      Space Jump or Can Freeze Enemies
 
 ----------------
 Quarantine Access
@@ -1167,16 +1182,24 @@ Extra - room_id: 50
 > Pickup (Energy Tank); Heals? False
   * Layers: default
   * Pickup 6; Category? Minor
+  > Door to Reactor Scaffolding B
+      Trivial
 
 > Door to Central Reactor Core (V); Heals? False
   * Layers: default
   * Open Hatch to Central Reactor Core (V)/Door to Reactor Scaffolding A
   * Extra - door_idx: 114
+  > Door to Reactor Scaffolding B
+      Trivial
 
 > Door to Reactor Scaffolding B; Heals? False
   * Layers: default
   * Open Hatch to Reactor Scaffolding B/Door to Reactor Scaffolding A
   * Extra - door_idx: 115
+  > Pickup (Energy Tank)
+      Trivial
+  > Door to Central Reactor Core (V)
+      Trivial
 
 ----------------
 Reactor Scaffolding B
@@ -1185,16 +1208,33 @@ Extra - room_id: 51
 > Pickup (Missile Tank); Heals? False
   * Layers: default
   * Pickup 7; Category? Minor
+  > Beside Pickup
+      Trivial
 
 > Door to Reactor Scaffolding A; Heals? False
   * Layers: default
   * Open Hatch to Reactor Scaffolding A/Door to Reactor Scaffolding B
   * Extra - door_idx: 116
+  > Beside Pickup
+      Trivial
 
 > Door to Yakuza Arena; Heals? False
   * Layers: default
   * Open Hatch to Yakuza Arena/Door to Reactor Scaffolding B
   * Extra - door_idx: 117
+
+> Beside Pickup; Heals? False
+  * Layers: default
+  > Pickup (Missile Tank)
+      Morph Ball
+  > Door to Reactor Scaffolding A
+      Can climb High Jump Wall
+  > Door to Yakuza Arena
+      All of the following:
+          Morph Ball and Can Kill Eye Door
+          Any of the following:
+              Can Use Any Bombs
+              Diffusion Missiles and Missiles
 
 ----------------
 Reactor Checkpoint
@@ -1204,21 +1244,20 @@ Extra - room_id: 52
   * Layers: default
   * Open Hatch to Auxiliary Navigation Room/Door to Reactor Checkpoint
   * Extra - door_idx: 118
+  > Door to Central Reactor Core (V)
+      Trivial
 
 > Door to Central Reactor Core (V); Heals? False
   * Layers: default
   * Open Hatch to Central Reactor Core (V)/Door to Reactor Checkpoint
   * Extra - door_idx: 119
+  > Door to Auxiliary Navigation Room
+      Wave Beam
 
 ----------------
 Unused4
 Extra - map_name: Main Deck53
 Extra - room_id: 53
-> Door to Reactor Scaffolding B; Heals? False
-  * Layers: default
-  * Open Hatch to Reactor Scaffolding B/Door to Yakuza Arena
-  * Extra - door_idx: 120
-
 ----------------
 Auxiliary Power Station
 Extra - map_name: Main Deck54
@@ -1235,6 +1274,14 @@ Extra - room_id: 54
   * Open Hatch to Auxiliary Navigation Room/Door to Auxiliary Power Station
   * Extra - door_idx: 123
   > Other to Yakuza Arena
+      Trivial
+  > Event - Reactor Control
+      Trivial
+
+> Event - Reactor Control; Heals? False
+  * Layers: default
+  * Event Reactor Control
+  > Door to Auxiliary Navigation Room
       Trivial
 
 ----------------
@@ -1276,11 +1323,15 @@ Extra - room_id: 57
 > Pickup (Power Bomb Tank); Heals? False
   * Layers: default
   * Pickup 8; Category? Minor
+  > Door to Central Hub
+      Can Use Any Bombs
 
 > Door to Central Hub; Heals? False
   * Layers: default
   * L2 Hatch to Central Hub/Door to PB Geron Cache
   * Extra - door_idx: 131
+  > Pickup (Power Bomb Tank)
+      Morph Ball
 
 ----------------
 Silo Save Room
@@ -1456,31 +1507,73 @@ Extra - room_id: 69
 > Pickup (Missile Tank); Heals? False
   * Layers: default
   * Pickup 9; Category? Minor
+  > Beside Pickup
+      Trivial
 
 > Door to Habitation Deck Entrance; Heals? False
   * Layers: default
   * L2 Hatch to Habitation Deck Entrance/Door to Habitation Deck
   * Extra - door_idx: 159
+  > Beside Pickup
+      Wave Beam
 
 > Door to Habitation Deck Entrance (160); Heals? False
   * Layers: default
   * L2 Hatch to Habitation Deck Entrance/Door to Habitation Deck
   * Extra - door_idx: 160
+  > Door to Habitation Deck Entrance
+      Trivial
+  > Above Pickup
+      Wave Beam
 
 > Door to Habitation Deck Entrance (161); Heals? False
   * Layers: default
   * L2 Hatch to Habitation Deck Entrance/Door to Habitation Deck
   * Extra - door_idx: 161
+  > Door to Habitation Deck Entrance (160)
+      Trivial
+  > Other to Habitation Maintenance (163)
+      After Animals
+  > Above Pickup
+      Trivial
 
 > Other to Habitation Maintenance; Heals? False
   * Layers: default
   * Open Passage to Habitation Maintenance/Other to Habitation Deck
   * Extra - door_idx: 162
+  > Beside Pickup
+      Trivial
 
 > Other to Habitation Maintenance (163); Heals? False
   * Layers: default
   * Open Passage to Habitation Maintenance/Other to Habitation Deck
   * Extra - door_idx: 163
+  > Door to Habitation Deck Entrance (161)
+      After Animals
+  > Event - Save the Animals
+      Trivial
+
+> Event - Save the Animals; Heals? False
+  * Layers: default
+  * Event Animals
+  > Other to Habitation Maintenance (163)
+      Trivial
+
+> Above Pickup; Heals? False
+  * Layers: default
+  > Other to Habitation Maintenance
+      Speed Booster
+  > Beside Pickup
+      Trivial
+
+> Beside Pickup; Heals? False
+  * Layers: default
+  > Pickup (Missile Tank)
+      Trivial
+  > Door to Habitation Deck Entrance
+      Trivial
+  > Other to Habitation Maintenance
+      Wave Beam
 
 ----------------
 Hornoad Hallway
@@ -1575,11 +1668,15 @@ Extra - room_id: 75
   * Layers: default
   * L2 Hatch to Central Hub/Door to Elevator to Habitation Deck
   * Extra - door_idx: 176
+  > Other to Elevator to Central Hub
+      Trivial
 
 > Other to Elevator to Central Hub; Heals? False
   * Layers: default
   * Open Passage to Elevator to Central Hub/Other to Elevator to Habitation Deck
   * Extra - door_idx: 177
+  > Door to Central Hub
+      Trivial
 
 ----------------
 Elevator to Central Hub
@@ -1589,16 +1686,24 @@ Extra - room_id: 76
   * Layers: default
   * L0 Hatch to Crew Loung Save Room/Door to Elevator to Central Hub
   * Extra - door_idx: 100
+  > Door to Habitation Deck Entrance
+      Trivial
 
 > Other to Elevator to Habitation Deck; Heals? False
   * Layers: default
   * Open Passage to Elevator to Habitation Deck/Other to Elevator to Central Hub
   * Extra - door_idx: 178
+  > Door to Habitation Deck Entrance
+      Trivial
 
 > Door to Habitation Deck Entrance; Heals? False
   * Layers: default
   * L2 Hatch to Habitation Deck Entrance/Door to Elevator to Central Hub
   * Extra - door_idx: 179
+  > Door to Crew Loung Save Room
+      Trivial
+  > Other to Elevator to Habitation Deck
+      Trivial
 
 ----------------
 Restricted Airlock (C)
@@ -1697,6 +1802,14 @@ Extra - room_id: 82
   * Layers: default
   * L4 Hatch to Operations Deck/Door to Operations Room
   * Extra - door_idx: 194
+  > Event - Flight Controls
+      Trivial
+
+> Event - Flight Controls; Heals? False
+  * Layers: default
+  * Event Controls
+  > Door to Operations Deck
+      Trivial
 
 ----------------
 Silo Access (D)
@@ -1751,9 +1864,42 @@ Extra - room_id: 86
   * Layers: default
   * Open Hatch to Reactor Scaffolding B/Door to Yakuza Arena
   * Extra - door_idx: 3
+  > Arena
+      Trivial
 
 > Other to Auxiliary Power Station; Heals? False
   * Layers: default
   * Open Passage to Auxiliary Power Station/Other to Yakuza Arena
   * Extra - door_idx: 121
+  > Arena
+      Trivial
+
+> Event - Yakuza; Heals? False
+  * Layers: default
+  * Event Yakuza
+  > Pickup (Space Jump)
+      Trivial
+
+> Pickup (Space Jump); Heals? False
+  * Layers: default
+  * Pickup 106; Category? Major
+  > Arena
+      Trivial
+
+> Arena; Heals? False
+  * Layers: default
+  > Door to Reactor Scaffolding B
+      Space Jump and After Yakuza
+  > Other to Auxiliary Power Station
+      Space Jump
+  > Event - Yakuza
+      All of the following:
+          All of the following:
+              # Weapon Requirements
+              # Yakuza
+              Charge Beam or Missiles ≥ 100
+              # Core-X
+              Missiles
+          # Health Requirements
+          Combat (Beginner) or Normal Damage ≥ 100
 
