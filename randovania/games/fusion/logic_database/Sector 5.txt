@@ -181,6 +181,8 @@ Extra - room_id: 7
   * Extra - door_idx: 14
   > Door to Data Checkpoint
       Trivial
+  > Door to Crow's Nest
+      Trivial
 
 > Door to Geron Checkpoint; Heals? False
   * Layers: default
@@ -226,6 +228,12 @@ Extra - room_id: 7
           High Jump or Space Jump
   > Door to Waver Ward
       Can Use Any Bombs
+
+> Door to Crow's Nest; Heals? False
+  * Layers: default
+  * Open Hatch to Crow's Nest/Door to Arctic Containment
+  > Door to Nightmare Training Grounds
+      Trivial
 
 ----------------
 Geron Checkpoint
@@ -367,11 +375,15 @@ Extra - room_id: 14
 > Pickup (Energy Tank); Heals? False
   * Layers: default
   * Pickup 76; Category? Minor
+  > Other to Flooded Tower
+      Trivial
 
 > Other to Flooded Tower; Heals? False
   * Layers: default
   * Tunnel to Flooded Tower/Other to Mini-Fridge
   * Extra - door_idx: 69
+  > Pickup (Energy Tank)
+      Can Use Bombs or Can Use Springball
 
 ----------------
 Arctic Containment (D)
@@ -399,7 +411,7 @@ Extra - room_id: 15
 
 > Door to Crow's Nest; Heals? False
   * Layers: default
-  * Open Hatch to Crow's Nest/Door to Arctic Containment (D)
+  * Open Hatch to Crow's Nest/Door to Arctic Containment
   * Extra - door_idx: 53
 
 > Door to Ripper Road; Heals? False
@@ -420,16 +432,24 @@ Extra - room_id: 16
   * Layers: default
   * Open Hatch to Crow's Nest/Door to Data Room (D)
   * Extra - door_idx: 91
+  > Door to Data Checkpoint
+      Trivial
+  > Door to Ruined Corridor
+      Trivial
 
 > Door to Data Checkpoint; Heals? False
   * Layers: default
   * L3 Hatch to Data Checkpoint/Door to Data Room
   * Extra - door_idx: 92
+  > Door to Crow's Nest
+      Space Jump
 
 > Door to Ruined Corridor; Heals? False
   * Layers: default
   * Open Hatch to Ruined Corridor/Door to Data Room (D)
   * Extra - door_idx: 93
+  > Door to Crow's Nest
+      Trivial
 
 ----------------
 Ruined Corridor
@@ -439,11 +459,15 @@ Extra - room_id: 17
   * Layers: default
   * Open Hatch to Data Room (D)/Door to Ruined Corridor
   * Extra - door_idx: 32
+  > Door to Flooded Tower
+      Trivial
 
 > Door to Flooded Tower; Heals? False
   * Layers: default
   * Open Hatch to Flooded Tower/Door to Ruined Corridor
   * Extra - door_idx: 33
+  > Door to Data Room (D)
+      Trivial
 
 ----------------
 Nightmare Hub West
@@ -452,36 +476,60 @@ Extra - room_id: 18
 > Pickup (Hidden Power Bomb Tank); Heals? False
   * Layers: default
   * Pickup 77; Category? Minor
+  > Door to Nightmare Recharge Room
+      Trivial
 
 > Door to Ruined Break Room; Heals? False
   * Layers: default
   * Open Hatch to Ruined Break Room/Door to Nightmare Hub West
   * Extra - door_idx: 34
+  > Door to Nightmare Hub East
+      Trivial
+  > Door to Flooded Access
+      Trivial
+  > Door to Nightmare Save Room
+      Trivial
+  > Door to Nightmare Recharge Room
+      Can Use Any Bombs and Can climb High Jump Wall
 
 > Door to Nightmare Hub East; Heals? False
   * Layers: default
   * Open Hatch to Nightmare Hub East/Door to Nightmare Hub West
   * Extra - door_idx: 35
+  > Door to Ruined Break Room
+      Trivial
 
 > Door to Nightmare Access; Heals? False
   * Layers: default
   * L0 Hatch to Nightmare Access/Door to Nightmare Hub West
   * Extra - door_idx: 61
+  > Door to Flooded Access
+      Trivial
 
 > Door to Flooded Access; Heals? False
   * Layers: default
   * L0 Hatch to Flooded Access/Door to Nightmare Hub West
   * Extra - door_idx: 62
+  > Door to Ruined Break Room
+      Can climb High Jump Wall
+  > Door to Nightmare Access
+      Trivial
 
 > Door to Nightmare Save Room; Heals? False
   * Layers: default
   * L0 Hatch to Nightmare Save Room/Door to Nightmare Hub West
   * Extra - door_idx: 119
+  > Door to Ruined Break Room
+      Trivial
 
 > Door to Nightmare Recharge Room; Heals? False
   * Layers: default
   * L0 Hatch to Nightmare Recharge Room/Door to Nightmare Hub West
   * Extra - door_idx: 120
+  > Pickup (Hidden Power Bomb Tank)
+      Can Use Any Bombs
+  > Door to Ruined Break Room
+      Can Use Any Bombs
 
 ----------------
 Nightmare Hub East
@@ -491,6 +539,8 @@ Extra - room_id: 19
   * Layers: default
   * Open Hatch to Nightmare Hub West/Door to Nightmare Hub East
   * Extra - door_idx: 37
+  > Door to Nightmare Nook
+      Can Kill Eye Door and Can climb High Jump Wall
 
 > Door to Nightmare Nook; Heals? False
   * Layers: default
@@ -505,11 +555,42 @@ Extra - room_id: 20
   * Layers: default
   * L0 Hatch to Nightmare Access/Door to Nightmare Arena
   * Extra - door_idx: 58
+  > Arena
+      Trivial
 
 > Other to Nightmare Nook; Heals? False
   * Layers: default
   * Open Passage to Nightmare Nook/Other to Nightmare Arena
   * Extra - door_idx: 84
+  > Arena
+      Trivial
+
+> Arena; Heals? False
+  * Layers: default
+  > Door to Nightmare Access
+      After Nightmare
+  > Event - Nightmare
+      All of the following:
+          # Grav Phase
+          Charge Beam
+          # Normal Phase
+          Charge Beam or Missiles
+          # Core-X
+          Missiles
+          # Health
+          Combat (Expert) or Normal Damage ≥ 500
+
+> Event - Nightmare; Heals? False
+  * Layers: default
+  * Event Nightmare
+  > Pickup (Gravity Suit)
+      Trivial
+
+> Pickup (Gravity Suit); Heals? False
+  * Layers: default
+  * Pickup 109; Category? Major
+  > Arena
+      Trivial
 
 ----------------
 Security Shaft East
@@ -670,11 +751,15 @@ Extra - room_id: 27
   * Layers: default
   * L0 Hatch to Nightmare Arena/Door to Nightmare Access
   * Extra - door_idx: 59
+  > Door to Nightmare Hub West
+      Gravity Suit and Speed Booster
 
 > Door to Nightmare Hub West; Heals? False
   * Layers: default
   * L0 Hatch to Nightmare Hub West/Door to Nightmare Access
   * Extra - door_idx: 60
+  > Door to Nightmare Arena
+      Gravity Suit and Speed Booster
 
 ----------------
 Flooded Access
@@ -684,11 +769,15 @@ Extra - room_id: 28
   * Layers: default
   * L0 Hatch to Nightmare Hub West/Door to Flooded Access
   * Extra - door_idx: 63
+  > Door to Zebesian Waters
+      Trivial
 
 > Door to Zebesian Waters; Heals? False
   * Layers: default
   * L0 Hatch to Zebesian Waters/Door to Flooded Access
   * Extra - door_idx: 117
+  > Door to Nightmare Hub West
+      Trivial
 
 ----------------
 Security Save Room
@@ -742,11 +831,15 @@ Extra - room_id: 31
   * Layers: default
   * Open Passage to Connection to Sector 5 (ARC)/Other to Connection to Sector 6 (NOC)
   * Extra - door_idx: 2
+  > Door to Magic Box
+      Trivial
 
 > Door to Magic Box; Heals? False
   * Layers: default
   * L0 Hatch to Magic Box/Door to Connection to Sector 6 (NOC)
   * Extra - door_idx: 71
+  > Other to Connection to Sector 5 (ARC)
+      Trivial
 
 ----------------
 Entrance Recharge Room
@@ -801,6 +894,8 @@ Extra - room_id: 34
 > Pickup (Energy Tank); Heals? False
   * Layers: default
   * Pickup 83; Category? Minor
+  > Other to Nightmare Arena
+      Morph Ball
 
 > Other to Nightmare Arena; Heals? False
   * Layers: default
@@ -811,6 +906,10 @@ Extra - room_id: 34
   * Layers: default
   * L0 Hatch to Nightmare Hub East/Door to Nightmare Nook
   * Extra - door_idx: 39
+  > Pickup (Energy Tank)
+      Can Use Any Bombs
+  > Other to Nightmare Arena
+      Morph Ball
 
 ----------------
 Data Checkpoint
@@ -837,21 +936,33 @@ Extra - room_id: 36
 > Pickup (Hidden Power Bomb Tank); Heals? False
   * Layers: default
   * Pickup 84; Category? Minor
+  > Door to Arctic Containment
+      Trivial
 
 > Door to Connection to Sector 3 (PYR); Heals? False
   * Layers: default
   * L0 Hatch to Connection to Sector 3 (PYR)/Door to Crow's Nest
   * Extra - door_idx: 75
+  > Door to Arctic Containment
+      Trivial
 
-> Door to Arctic Containment (D); Heals? False
+> Door to Arctic Containment; Heals? False
   * Layers: default
-  * Open Hatch to Arctic Containment (D)/Door to Crow's Nest
+  * Open Hatch to Arctic Containment/Door to Crow's Nest
   * Extra - door_idx: 87
+  > Pickup (Hidden Power Bomb Tank)
+      Can Use Any Bombs and Can climb High Jump Wall
+  > Door to Connection to Sector 3 (PYR)
+      Can climb High Jump Wall
+  > Door to Data Room (D)
+      Trivial
 
 > Door to Data Room (D); Heals? False
   * Layers: default
   * Open Hatch to Data Room (D)/Door to Crow's Nest
   * Extra - door_idx: 88
+  > Door to Arctic Containment
+      Trivial
 
 ----------------
 Connection to Sector 3 (PYR)
@@ -861,11 +972,15 @@ Extra - room_id: 37
   * Layers: default
   * L0 Hatch to Crow's Nest/Door to Connection to Sector 3 (PYR)
   * Extra - door_idx: 76
+  > Other to Connection to Sector 6 (NOC)
+      Trivial
 
 > Other to Connection to Sector 6 (NOC); Heals? False
   * Layers: default
   * Open Passage to Connection to Sector 6 (NOC)/Other to Connection to Sector 3 (PYR)
   * Extra - door_idx: 83
+  > Door to Crow's Nest
+      Trivial
 
 ----------------
 Save Room South
@@ -986,16 +1101,31 @@ Extra - room_id: 45
   * Layers: default
   * Open Hatch to Ruined Corridor/Door to Flooded Tower
   * Extra - door_idx: 54
+  > Beside Missile Block
+      Trivial
 
 > Other to Mini-Fridge; Heals? False
   * Layers: default
   * Tunnel to Mini-Fridge/Other to Flooded Tower
   * Extra - door_idx: 68
+  > Beside Missile Block
+      Trivial
 
 > Door to Zebesian Waters; Heals? False
   * Layers: default
   * L0 Hatch to Zebesian Waters/Door to Flooded Tower
   * Extra - door_idx: 112
+  > Beside Missile Block
+      Gravity Suit and Space Jump
+
+> Beside Missile Block; Heals? False
+  * Layers: default
+  > Door to Ruined Corridor
+      Gravity Suit and Screw Attack and Space Jump
+  > Other to Mini-Fridge
+      Missiles
+  > Door to Zebesian Waters
+      Trivial
 
 ----------------
 Zebesian Waters
@@ -1005,16 +1135,24 @@ Extra - room_id: 46
   * Layers: default
   * L0 Hatch to Flooded Tower/Door to Zebesian Waters
   * Extra - door_idx: 113
+  > Door to Flooded Airlock to Sector 4 (AQA)
+      Plasma Beam or Combat (Intermediate) or Normal Damage ≥ 75
 
 > Door to Flooded Airlock to Sector 4 (AQA); Heals? False
   * Layers: default
   * L0 Hatch to Flooded Airlock to Sector 4 (AQA)/Door to Zebesian Waters
   * Extra - door_idx: 114
+  > Door to Flooded Tower
+      Plasma Beam or Combat (Intermediate) or Normal Damage ≥ 75
+  > Door to Flooded Access
+      Gravity Suit and High Jump
 
 > Door to Flooded Access; Heals? False
   * Layers: default
   * L0 Hatch to Flooded Access/Door to Zebesian Waters
   * Extra - door_idx: 116
+  > Door to Flooded Airlock to Sector 4 (AQA)
+      Trivial
 
 ----------------
 Ruined Break Room
@@ -1023,11 +1161,15 @@ Extra - room_id: 47
 > Pickup (Hidden Power Bomb Tank); Heals? False
   * Layers: default
   * Pickup 85; Category? Minor
+  > Door to Nightmare Hub West
+      Trivial
 
 > Door to Nightmare Hub West; Heals? False
   * Layers: default
   * Open Hatch to Nightmare Hub West/Door to Ruined Break Room
   * Extra - door_idx: 118
+  > Pickup (Hidden Power Bomb Tank)
+      Can Use Power Bombs
 
 ----------------
 Nightmare Recharge Room
@@ -1054,16 +1196,24 @@ Extra - room_id: 50
 > Pickup (Power Bomb Tank); Heals? False
   * Layers: default
   * Pickup 86; Category? Minor
+  > Door to Zebesian Waters
+      Trivial
 
 > Door to Zebesian Waters; Heals? False
   * Layers: default
   * L0 Hatch to Zebesian Waters/Door to Flooded Airlock to Sector 4 (AQA)
   * Extra - door_idx: 115
+  > Pickup (Power Bomb Tank)
+      Gravity Suit and Speed Booster
+  > Door to Cargo Hold to Sector 5 (ARC)
+      Gravity Suit and Speed Booster
 
 > Door to Cargo Hold to Sector 5 (ARC); Heals? False
   * Layers: default
   * Open Hatch to Cargo Hold to Sector 5 (ARC)/Other to Flooded Airlock to Sector 4 (AQA)
   * Extra - door_idx: 123
+  > Door to Zebesian Waters
+      Gravity Suit and Speed Booster
 
 ----------------
 Transformation Trial

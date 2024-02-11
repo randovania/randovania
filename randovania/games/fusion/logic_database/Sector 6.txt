@@ -5,31 +5,38 @@ Extra - room_id: 0
 > Pickup (Missile Tank); Heals? False
   * Layers: default
   * Pickup 88; Category? Minor
+  > Other to Geron's Crossing
+      Trivial
 
 > Door to Entrance Recharge Room; Heals? False
   * Layers: default
   * L0 Hatch to Entrance Recharge Room/Door to Entrance Hub
   * Extra - door_idx: 1
+  > Door to Geron's Crossing
+      Trivial
+  > Door to Connection to Sector 4 (AQA)
+      Screw Attack and Can Use Any Bombs
 
 > Door to Geron's Crossing; Heals? False
   * Layers: default
   * L0 Hatch to Geron's Crossing/Door to Entrance Hub
   * Extra - door_idx: 2
+  > Door to Entrance Recharge Room
+      Trivial
 
 > Other to Geron's Crossing; Heals? False
   * Layers: default
   * Tunnel to Geron's Crossing/Other to Entrance Hub
   * Extra - door_idx: 51
+  > Pickup (Missile Tank)
+      Trivial
 
 > Door to Connection to Sector 4 (AQA); Heals? False
   * Layers: default
   * L0 Hatch to Connection to Sector 4 (AQA)/Door to Entrance Hub
   * Extra - door_idx: 79
-
-> Other to Elevator to Main Deck; Heals? False
-  * Layers: default
-  * Tunnel to Elevator to Main Deck/Other to Elevator to Sector 6 (NOC)
-  * Extra - door_idx: 93
+  > Door to Entrance Recharge Room
+      Screw Attack and Can Use Any Bombs and Can climb High Jump Wall
 
 ----------------
 Entrance Save Room
@@ -39,11 +46,15 @@ Extra - room_id: 1
   * Layers: default
   * L0 Hatch to Entrance Recharge Room/Door to Entrance Save Room
   * Extra - door_idx: 4
+  > Door to Entrance Navigation Room
+      Trivial
 
 > Door to Entrance Navigation Room; Heals? False
   * Layers: default
   * L0 Hatch to Entrance Navigation Room/Door to Entrance Save Room
   * Extra - door_idx: 5
+  > Door to Entrance Recharge Room
+      Trivial
 
 ----------------
 Entrance Navigation Room
@@ -53,11 +64,15 @@ Extra - room_id: 2
   * Layers: default
   * Open Hatch to Entrance Save Room/Door to Entrance Navigation Room
   * Extra - door_idx: 6
+  > Door to Elevator to Main Deck
+      Trivial
 
 > Door to Elevator to Main Deck; Heals? False
   * Layers: default
   * Open Hatch to Elevator to Main Deck/Door to Entrance Navigation Room
   * Extra - door_idx: 34
+  > Door to Entrance Save Room
+      Trivial
 
 ----------------
 Geron's Crossing
@@ -67,21 +82,39 @@ Extra - room_id: 3
   * Layers: default
   * L0 Hatch to Entrance Hub/Door to Geron's Crossing
   * Extra - door_idx: 7
+  > Door to Nocturnal Access
+      Any of the following:
+          Missiles and Super Missiles
+          # Screw Attack Shortcut
+          Screw Attack
+  > Other to Entrance Hub
+      Can Use Any Bombs
 
 > Door to Nocturnal Access; Heals? False
   * Layers: default
   * L0 Hatch to Nocturnal Access/Door to Geron's Crossing
   * Extra - door_idx: 8
+  > Door to Entrance Hub
+      Any of the following:
+          # Screw Attack Shortcut
+          Missiles and Super Missiles
+          Screw Attack and Can climb High Jump Wall
+  > Other to Vault
+      Can Use Any Bombs
 
 > Other to Entrance Hub; Heals? False
   * Layers: default
   * Tunnel to Entrance Hub/Other to Geron's Crossing
   * Extra - door_idx: 50
+  > Door to Entrance Hub
+      Can Use Any Bombs and Can climb High Jump Wall
 
 > Other to Vault; Heals? False
   * Layers: default
   * Tunnel to Vault/Other to Geron's Crossing
   * Extra - door_idx: 75
+  > Door to Nocturnal Access
+      Can Use Any Bombs
 
 ----------------
 Nocturnal Access
@@ -91,11 +124,18 @@ Extra - room_id: 4
   * Layers: default
   * L0 Hatch to Geron's Crossing/Door to Nocturnal Access
   * Extra - door_idx: 9
+  > Door to Nocturnal Shaft
+      Any of the following:
+          Varia Suit or Movement (Advanced)
+          # Ice X
+          Normal Damage ≥ 200
 
 > Door to Nocturnal Shaft; Heals? False
   * Layers: default
   * L0 Hatch to Nocturnal Shaft/Door to Nocturnal Access
   * Extra - door_idx: 10
+  > Door to Geron's Crossing
+      Varia Suit or Movement (Advanced) or Normal Damage ≥ 200
 
 ----------------
 Nocturnal Shaft
@@ -105,31 +145,51 @@ Extra - room_id: 5
   * Layers: default
   * L0 Hatch to Nocturnal Access/Door to Nocturnal Shaft
   * Extra - door_idx: 11
+  > Door to Missile Access
+      Trivial
+  > Door to Forbidden Entrance
+      Trivial
+  > Door to Nocturnal Playground
+      Trivial
+  > Door to Connection to Sector 5 (ARC)
+      Screw Attack
 
 > Door to Missile Access; Heals? False
   * Layers: default
   * L0 Hatch to Missile Access/Door to Nocturnal Shaft
   * Extra - door_idx: 12
+  > Door to Nocturnal Access
+      Trivial
 
 > Door to Forbidden Entrance; Heals? False
   * Layers: default
   * L0 Hatch to Forbidden Entrance/Door to Nocturnal Shaft
   * Extra - door_idx: 13
+  > Door to Nocturnal Access
+      Trivial
+  > Door to Pillar Puzzle
+      Speed Booster
 
 > Door to Nocturnal Playground; Heals? False
   * Layers: default
   * L0 Hatch to Nocturnal Playground/Door to Nocturnal Shaft
   * Extra - door_idx: 14
+  > Door to Nocturnal Access
+      Movement (Beginner) or Can climb High Jump Wall
 
 > Door to Connection to Sector 5 (ARC); Heals? False
   * Layers: default
   * L0 Hatch to Connection to Sector 5 (ARC)/Door to Nocturnal Shaft
   * Extra - door_idx: 82
+  > Door to Nocturnal Access
+      Screw Attack
 
 > Door to Pillar Puzzle; Heals? False
   * Layers: default
   * L0 Hatch to Pillar Puzzle/Door to Nocturnal Shaft
   * Extra - door_idx: 85
+  > Door to Forbidden Entrance
+      Speed Booster
 
 ----------------
 Missile Access
@@ -139,11 +199,15 @@ Extra - room_id: 6
   * Layers: default
   * L0 Hatch to Nocturnal Shaft/Door to Missile Access
   * Extra - door_idx: 32
+  > Door to Missile Storage
+      Varia Suit or Normal Damage ≥ 300
 
 > Door to Missile Storage; Heals? False
   * Layers: default
   * L0 Hatch to Missile Storage/Door to Missile Access
   * Extra - door_idx: 48
+  > Door to Nocturnal Shaft
+      Varia Suit or Normal Damage ≥ 300
 
 ----------------
 Forbidden Entrance
@@ -167,16 +231,24 @@ Extra - room_id: 8
   * Layers: default
   * L0 Hatch to Nocturnal Shaft/Door to Nocturnal Playground
   * Extra - door_idx: 15
+  > Door to Clogged Cavern
+      Trivial
+  > Door to Maintenance Annex
+      Morph Ball and Screw Attack
 
 > Door to Clogged Cavern; Heals? False
   * Layers: default
   * L0 Hatch to Clogged Cavern/Door to Nocturnal Playground
   * Extra - door_idx: 16
+  > Door to Nocturnal Shaft
+      Trivial
 
 > Door to Maintenance Annex; Heals? False
   * Layers: default
   * L0 Hatch to Maintenance Annex/Door to Nocturnal Playground
   * Extra - door_idx: 71
+  > Door to Nocturnal Shaft
+      Morph Ball
 
 ----------------
 Clogged Cavern
@@ -191,11 +263,15 @@ Extra - room_id: 9
   * Layers: default
   * L0 Hatch to Shell Access/Door to Clogged Cavern
   * Extra - door_idx: 18
+  > Door to Menu Corridor
+      Trivial
 
 > Door to Menu Corridor; Heals? False
   * Layers: default
   * L0 Hatch to Menu Corridor/Door to Clogged Cavern
   * Extra - door_idx: 46
+  > Door to Shell Access
+      Trivial
 
 ----------------
 Blue X Blockade
@@ -205,21 +281,33 @@ Extra - room_id: 10
   * Layers: default
   * L0 Hatch to Data Save Room/Door to Blue X Blockade
   * Extra - door_idx: 20
+  > Door to Big Shell 2
+      Trivial
 
 > Door to Data Access; Heals? False
   * Layers: default
   * L0 Hatch to Data Access/Door to Blue X Blockade
   * Extra - door_idx: 21
+  > Other to Zozoro Wine Cellar
+      Varia Suit or Knowledge (Beginner) or Normal Damage ≥ 100
+  > Door to Big Shell 2
+      Can climb High Jump Wall
 
 > Other to Zozoro Wine Cellar; Heals? False
   * Layers: default
   * Tunnel to Zozoro Wine Cellar/Other to Blue X Blockade
   * Extra - door_idx: 27
+  > Door to Data Access
+      Varia Suit or Knowledge (Beginner) or Normal Damage ≥ 100
 
 > Door to Big Shell 2; Heals? False
   * Layers: default
   * L0 Hatch to Big Shell 2/Door to Blue X Blockade
   * Extra - door_idx: 61
+  > Door to Data Save Room
+      Trivial
+  > Door to Data Access
+      Varia Suit or Knowledge (Beginner) or Normal Damage ≥ 100
 
 ----------------
 Data Save Room
@@ -238,11 +326,15 @@ Extra - room_id: 12
   * Layers: default
   * L0 Hatch to Blue X Blockade/Door to Data Access
   * Extra - door_idx: 23
+  > Door to Data Room
+      Can Kill Eye Door
 
 > Door to Data Room; Heals? False
   * Layers: default
   * L2 Hatch to Data Room/Door to Data Access
   * Extra - door_idx: 24
+  > Door to Blue X Blockade
+      Trivial
 
 ----------------
 Varia Core-X Arena
@@ -252,11 +344,36 @@ Extra - room_id: 13
   * Layers: default
   * L2 Hatch to Data Room/Door to Varia Core-X Arena
   * Extra - door_idx: 25
+  > Arena
+      Trivial
 
 > Door to Twin Caverns West; Heals? False
   * Layers: default
   * L0 Hatch to Twin Caverns West/Door to Varia Core-X Arena
   * Extra - door_idx: 52
+  > Arena
+      Trivial
+
+> Event - Varia Core-X; Heals? False
+  * Layers: default
+  * Event Varia Core-X
+  > Pickup (Varia Suit)
+      Trivial
+
+> Pickup (Varia Suit); Heals? False
+  * Layers: default
+  * Pickup 108; Category? Major
+  > Arena
+      Trivial
+
+> Arena; Heals? False
+  * Layers: default
+  > Door to Data Room
+      After Varia Core-X
+  > Door to Twin Caverns West
+      After Varia Core-X
+  > Event - Varia Core-X
+      Charge Beam and Missiles
 
 ----------------
 X-B.O.X. Access
@@ -284,11 +401,15 @@ Extra - room_id: 15
 > Pickup (Hidden Missile Tank); Heals? False
   * Layers: default
   * Pickup 89; Category? Minor
+  > Other to Blue X Blockade
+      Can Use Any Bombs
 
 > Other to Blue X Blockade; Heals? False
   * Layers: default
   * Tunnel to Blue X Blockade/Other to Zozoro Wine Cellar
   * Extra - door_idx: 29
+  > Pickup (Hidden Missile Tank)
+      Can Use Any Bombs
 
 ----------------
 X-B.O.X. Arena
@@ -322,11 +443,15 @@ Extra - room_id: 17
   * Layers: default
   * Open Passage to Elevator to Sector 6 (NOC)/Other to Elevator to Main Deck
   * Extra - door_idx: 0
+  > Door to Entrance Navigation Room
+      Trivial
 
 > Door to Entrance Navigation Room; Heals? False
   * Layers: default
   * L0 Hatch to Entrance Navigation Room/Door to Elevator to Main Deck
   * Extra - door_idx: 35
+  > Other to Elevator to Sector 6 (NOC)
+      Trivial
 
 ----------------
 X-B.O.X. Garage
@@ -422,11 +547,15 @@ Extra - room_id: 24
 > Pickup (Missile Tank); Heals? False
   * Layers: default
   * Pickup 92; Category? Minor
+  > Door to Missile Access
+      Can Use Any Bombs
 
 > Door to Missile Access; Heals? False
   * Layers: default
   * L0 Hatch to Missile Access/Door to Missile Storage
   * Extra - door_idx: 49
+  > Pickup (Missile Tank)
+      Can Use Any Bombs
 
 ----------------
 Data Room
@@ -436,11 +565,15 @@ Extra - room_id: 25
   * Layers: default
   * L2 Hatch to Data Access/Door to Data Room
   * Extra - door_idx: 53
+  > Door to Varia Core-X Arena
+      Trivial
 
 > Door to Varia Core-X Arena; Heals? False
   * Layers: default
   * L2 Hatch to Varia Core-X Arena/Door to Data Room
   * Extra - door_idx: 62
+  > Door to Data Access
+      Trivial
 
 ----------------
 Shell Access
@@ -449,16 +582,24 @@ Extra - room_id: 26
 > Pickup (Energy Tank); Heals? False
   * Layers: default
   * Pickup 93; Category? Minor
+  > Door to Clogged Cavern
+      Trivial
 
 > Door to Clogged Cavern; Heals? False
   * Layers: default
   * L0 Hatch to Clogged Cavern/Door to Shell Access
   * Extra - door_idx: 19
+  > Pickup (Energy Tank)
+      Trivial
+  > Door to Big Shell 1
+      Can Use Any Bombs
 
 > Door to Big Shell 1; Heals? False
   * Layers: default
   * L0 Hatch to Big Shell 1/Door to Shell Access
   * Extra - door_idx: 54
+  > Door to Clogged Cavern
+      Can Use Power Bombs and Can climb High Jump Wall
 
 ----------------
 Big Shell 1
@@ -468,11 +609,15 @@ Extra - room_id: 27
   * Layers: default
   * L0 Hatch to Shell Access/Door to Big Shell 1
   * Extra - door_idx: 55
+  > Door to Big Shell 2
+      Can Use Power Bombs
 
 > Door to Big Shell 2; Heals? False
   * Layers: default
   * L0 Hatch to Big Shell 2/Door to Big Shell 1
   * Extra - door_idx: 56
+  > Door to Shell Access
+      Space Jump and Can Use Power Bombs
 
 ----------------
 Big Shell 2
@@ -482,11 +627,15 @@ Extra - room_id: 28
   * Layers: default
   * L0 Hatch to Big Shell 1/Door to Big Shell 2
   * Extra - door_idx: 57
+  > Door to Blue X Blockade
+      Morph Ball
 
 > Door to Blue X Blockade; Heals? False
   * Layers: default
   * L0 Hatch to Blue X Blockade/Door to Big Shell 2
   * Extra - door_idx: 58
+  > Door to Big Shell 1
+      Morph Ball
 
 ----------------
 Entrance Recharge Room
@@ -496,11 +645,15 @@ Extra - room_id: 29
   * Layers: default
   * L0 Hatch to Entrance Hub/Door to Entrance Recharge Room
   * Extra - door_idx: 59
+  > Door to Entrance Save Room
+      Trivial
 
 > Door to Entrance Save Room; Heals? False
   * Layers: default
   * L0 Hatch to Entrance Save Room/Door to Entrance Recharge Room
   * Extra - door_idx: 60
+  > Door to Entrance Hub
+      Trivial
 
 ----------------
 Twin Caverns West
@@ -509,25 +662,46 @@ Extra - room_id: 30
 > Pickup (Missile Tank); Heals? False
   * Layers: default
   * Pickup 94; Category? Minor
+  > Door to Twin Caverns East (66)
+      Movement (Intermediate)
+  > Ledge
+      Trivial
 
 > Pickup (Hidden Missile Tank); Heals? False
   * Layers: default
   * Pickup 95; Category? Minor
+  > Ledge
+      Morph Ball
 
 > Door to Varia Core-X Arena; Heals? False
   * Layers: default
   * L0 Hatch to Varia Core-X Arena/Door to Twin Caverns West
   * Extra - door_idx: 63
+  > Door to Twin Caverns East
+      Trivial
 
 > Door to Twin Caverns East; Heals? False
   * Layers: default
   * L0 Hatch to Twin Caverns East/Door to Twin Caverns West
   * Extra - door_idx: 64
+  > Door to Varia Core-X Arena
+      Trivial
+  > Ledge
+      Can climb High Jump Wall
 
 > Door to Twin Caverns East (66); Heals? False
   * Layers: default
   * L0 Hatch to Twin Caverns East/Door to Twin Caverns West
   * Extra - door_idx: 66
+  > Pickup (Missile Tank)
+      Trivial
+
+> Ledge; Heals? False
+  * Layers: default
+  > Pickup (Hidden Missile Tank)
+      Morph Ball
+  > Door to Twin Caverns East
+      Trivial
 
 ----------------
 Twin Caverns East
@@ -537,21 +711,33 @@ Extra - room_id: 31
   * Layers: default
   * L0 Hatch to Twin Caverns West/Door to Twin Caverns East
   * Extra - door_idx: 65
+  > Door to Twin Cavern Save Room
+      Trivial
 
 > Door to Twin Caverns West (67); Heals? False
   * Layers: default
   * L0 Hatch to Twin Caverns West/Door to Twin Caverns East
   * Extra - door_idx: 67
+  > Door to Maintenance Annex
+      Trivial
 
 > Door to Maintenance Annex; Heals? False
   * Layers: default
   * L0 Hatch to Maintenance Annex/Door to Twin Caverns East
   * Extra - door_idx: 68
+  > Door to Twin Caverns West (67)
+      Trivial
+  > Door to Twin Cavern Save Room
+      Trivial
 
 > Door to Twin Cavern Save Room; Heals? False
   * Layers: default
   * L0 Hatch to Twin Cavern Save Room/Door to Twin Caverns East
   * Extra - door_idx: 77
+  > Door to Twin Caverns West
+      Trivial
+  > Door to Maintenance Annex
+      Varia Suit or Normal Damage ≥ 500
 
 ----------------
 Maintenance Annex
@@ -561,11 +747,15 @@ Extra - room_id: 32
   * Layers: default
   * L0 Hatch to Twin Caverns East/Door to Maintenance Annex
   * Extra - door_idx: 69
+  > Door to Nocturnal Playground
+      Trivial
 
 > Door to Nocturnal Playground; Heals? False
   * Layers: default
   * L0 Hatch to Nocturnal Playground/Door to Maintenance Annex
   * Extra - door_idx: 70
+  > Door to Twin Caverns East
+      Trivial
 
 ----------------
 Blockaded Cavern but with no Blockade?
@@ -593,11 +783,15 @@ Extra - room_id: 34
 > Pickup (Energy Tank); Heals? False
   * Layers: default
   * Pickup 96; Category? Minor
+  > Other to Geron's Crossing
+      Can Use Any Bombs
 
 > Other to Geron's Crossing; Heals? False
   * Layers: default
   * Tunnel to Geron's Crossing/Other to Vault
   * Extra - door_idx: 76
+  > Pickup (Energy Tank)
+      Can Use Any Bombs
 
 ----------------
 Twin Cavern Save Room
@@ -616,11 +810,15 @@ Extra - room_id: 36
   * Layers: default
   * L0 Hatch to Entrance Hub/Door to Connection to Sector 4 (AQA)
   * Extra - door_idx: 80
+  > Other to Connection to Sector 6 (NOC)
+      Trivial
 
 > Other to Connection to Sector 6 (NOC); Heals? False
   * Layers: default
   * Open Passage to Connection to Sector 6 (NOC)/Other to Connection to Sector 4 (AQA)
   * Extra - door_idx: 81
+  > Door to Entrance Hub
+      Trivial
 
 ----------------
 Connection to Sector 5 (ARC)
@@ -630,11 +828,15 @@ Extra - room_id: 37
   * Layers: default
   * L0 Hatch to Nocturnal Shaft/Door to Connection to Sector 5 (ARC)
   * Extra - door_idx: 83
+  > Other to Connection to Sector 6 (NOC)
+      Trivial
 
 > Other to Connection to Sector 6 (NOC); Heals? False
   * Layers: default
   * Open Passage to Connection to Sector 6 (NOC)/Other to Connection to Sector 5 (ARC)
   * Extra - door_idx: 84
+  > Door to Nocturnal Shaft
+      Trivial
 
 ----------------
 Pillar Puzzle
@@ -674,9 +876,13 @@ Extra - room_id: 40
   * Layers: default
   * L0 Hatch to Clogged Cavern/Door to Menu Corridor
   * Extra - door_idx: 47
+  > Door to Menu Save Room
+      Trivial
 
 > Door to Menu Save Room; Heals? False
   * Layers: default
   * L0 Hatch to Menu Save Room/Door to Menu Corridor
   * Extra - door_idx: 91
+  > Door to Clogged Cavern
+      Trivial
 
