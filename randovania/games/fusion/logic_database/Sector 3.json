@@ -3363,7 +3363,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Pre B.O.X.": {
+                        "Door to B.O.X. Access (D)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3400,38 +3400,49 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Pre B.O.X.": {
-                            "type": "and",
+                        "Other to Deserted Runway": {
+                            "type": "or",
                             "data": {
-                                "comment": "Box Trigger Requirements",
+                                "comment": null,
                                 "items": [
                                     {
-                                        "type": "or",
+                                        "type": "and",
                                         "data": {
                                             "comment": null,
-                                            "items": []
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "HighJump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "B.O.X.",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "SpaceJump",
+                                            "amount": 1,
+                                            "negate": false
                                         }
                                     }
                                 ]
                             }
-                        }
-                    }
-                },
-                "Pre B.O.X.": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 249.42,
-                        "y": 91.87,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "connections": {
+                        },
                         "Event - B.O.X.": {
                             "type": "and",
                             "data": {
@@ -3440,7 +3451,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": "Weapons Requirements",
+                                            "comment": null,
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -3466,7 +3477,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": "Health Requirements",
+                                            "comment": null,
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -3510,7 +3521,7 @@
                     "valid_starting_location": false,
                     "event_name": "B.O.X.",
                     "connections": {
-                        "Pre B.O.X.": {
+                        "Door to B.O.X. Access (D)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3518,22 +3529,6 @@
                             }
                         }
                     }
-                },
-                "Post B.O.X.": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 320.06,
-                        "y": 88.95,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "connections": {}
                 }
             }
         },
