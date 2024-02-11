@@ -1,9 +1,11 @@
 from __future__ import annotations
 
 import dataclasses
+from enum import Enum
 
 from randovania.games.game import RandovaniaGame
 from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
+from randovania.lib import enum_lib
 
 DEFAULT_LASER_LOCKED_COLOR = (255, 0, 0)
 DEFAULT_LASER_UNLOCKED_COLOR = (255, 127, 0)
@@ -12,6 +14,24 @@ DEFAULT_GRAPPLE_LASER_UNLOCKED_COLOR = (0, 0, 255)
 DEFAULT_ENERGY_TANK_COLOR = (255, 255, 255)
 DEFAULT_AEION_BAR_COLOR = (255, 255, 255)
 DEFAULT_AMMO_HUD_COLOR = (255, 255, 255)
+
+
+class MSRRoomGuiType(Enum):
+    """Types of Room Name GUI to display."""
+
+    long_name: str
+
+    NONE = "NEVER"
+    ALWAYS = "ALWAYS"
+
+
+enum_lib.add_long_name(
+    MSRRoomGuiType,
+    {
+        MSRRoomGuiType.NONE: "Never",
+        MSRRoomGuiType.ALWAYS: "Always",
+    },
+)
 
 
 @dataclasses.dataclass(frozen=True)
@@ -28,6 +48,7 @@ class MSRCosmeticPatches(BaseCosmeticPatches):
     energy_tank_color: tuple[int, int, int] = DEFAULT_ENERGY_TANK_COLOR
     aeion_bar_color: tuple[int, int, int] = DEFAULT_AEION_BAR_COLOR
     ammo_hud_color: tuple[int, int, int] = DEFAULT_AMMO_HUD_COLOR
+    show_room_names: MSRRoomGuiType = MSRRoomGuiType.NONE
 
     @classmethod
     def default(cls) -> MSRCosmeticPatches:

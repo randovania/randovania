@@ -304,6 +304,21 @@ class MSRPatchDataFactory(PatchDataFactory):
             MSRHintNamer(self.description.all_patches, self.players_config),
         )
 
+    def _build_area_name_dict(self) -> dict[str, dict[str, str]]:
+        # generate a 2D dictionary of (scenario, collision camera) => room name
+        all_dict: dict = {}
+        for region in self.game.region_list.regions:
+            scenario = region.extra["scenario_id"]
+            region_dict: dict = {}
+
+            for area in region.areas:
+                cc_name = area.extra["asset_id"]
+                area_name = area.name
+                region_dict[cc_name] = area_name
+            all_dict[scenario] = region_dict
+
+        return all_dict
+
     def _create_cosmetics(self) -> dict:
         c = self.cosmetic_patches
         cosmetic_patches = {}
@@ -324,6 +339,9 @@ class MSRPatchDataFactory(PatchDataFactory):
 
         if self.cosmetic_patches.use_ammo_hud_color:
             cosmetic_patches["ammo_hud_color"] = [x / 255 for x in c.ammo_hud_color]
+
+        cosmetic_patches["enable_room_name_display"] = c.show_room_names.value
+        cosmetic_patches["camera_names_dict"] = self._build_area_name_dict()
 
         return cosmetic_patches
 
@@ -376,7 +394,7 @@ class MSRPatchDataFactory(PatchDataFactory):
             "text_patches": self._static_text_changes(),
             "spoiler_log": self._credits_spoiler() if self.description.has_spoiler else {},
             "hints": self._encode_hints(),
-            "cosmetics_patches": self._create_cosmetics(),
+            "cosmetic_patches": self._create_cosmetics(),
             "configuration_identifier": self.description.shareable_hash,
         }
 

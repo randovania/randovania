@@ -4,9 +4,11 @@ import dataclasses
 
 from PySide6 import QtGui, QtWidgets
 
-from randovania.games.samus_returns.layout.msr_cosmetic_patches import MSRCosmeticPatches
+from randovania.games.samus_returns.layout.msr_cosmetic_patches import MSRCosmeticPatches, MSRRoomGuiType
 from randovania.gui.dialog.base_cosmetic_patches_dialog import BaseCosmeticPatchesDialog
 from randovania.gui.generated.msr_cosmetic_patches_dialog_ui import Ui_MSRCosmeticPatchesDialog
+from randovania.gui.lib import signal_handling
+from randovania.gui.lib.signal_handling import set_combo_with_value
 
 
 class MSRCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_MSRCosmeticPatchesDialog):
@@ -16,6 +18,9 @@ class MSRCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_MSRCosmeticPatchesD
         super().__init__(parent)
         self.setupUi(self)
         self._cosmetic_patches = current
+
+        for room_gui_type in MSRRoomGuiType:
+            self.room_names_dropdown.addItem(room_gui_type.long_name, room_gui_type)
 
         self.connect_signals()
         self.on_new_cosmetic_patches(current)
@@ -53,12 +58,16 @@ class MSRCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_MSRCosmeticPatchesD
             lambda: self._open_color_picker(self._cosmetic_patches.ammo_hud_color, "ammo_hud")
         )
 
+        signal_handling.on_combo(self.room_names_dropdown, self._on_room_name_mode_update)
+
     def on_new_cosmetic_patches(self, patches: MSRCosmeticPatches) -> None:
         self.custom_laser_color_check.setChecked(patches.use_laser_color)
         self.custom_grapple_laser_color_check.setChecked(patches.use_grapple_laser_color)
         self.custom_energy_tank_color_check.setChecked(patches.use_energy_tank_color)
         self.custom_aeion_bar_color_check.setChecked(patches.use_aeion_bar_color)
         self.custom_ammo_hud_color_check.setChecked(patches.use_ammo_hud_color)
+
+        set_combo_with_value(self.room_names_dropdown, patches.show_room_names)
 
     def _open_color_picker(self, color: tuple, propertyName: str) -> None:
         picker_result = QtWidgets.QColorDialog.getColor(QtGui.QColor(*color))
@@ -97,6 +106,9 @@ class MSRCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_MSRCosmeticPatchesD
         for box, new_color in mapping:
             style = "background-color: rgb({},{},{})".format(*new_color)
             box.setStyleSheet(style)
+
+    def _on_room_name_mode_update(self, value: MSRRoomGuiType) -> None:
+        self._cosmetic_patches = dataclasses.replace(self._cosmetic_patches, show_room_names=value)
 
     @property
     def cosmetic_patches(self) -> MSRCosmeticPatches:
