@@ -217,11 +217,21 @@ Extra - room_id: 7
   * Layers: default
   * L4 Hatch to X-B.O.X. Access/Door to Forbidden Entrance
   * Extra - door_idx: 3
+  > Door to Nocturnal Shaft
+      All of the following:
+          Can Use Power Bombs
+          # Ice X logic
+          Varia Suit
 
 > Door to Nocturnal Shaft; Heals? False
   * Layers: default
   * L0 Hatch to Nocturnal Shaft/Door to Forbidden Entrance
   * Extra - door_idx: 33
+  > Door to X-B.O.X. Access
+      All of the following:
+          Can Use Power Bombs
+          # Ice X logic
+          Varia Suit
 
 ----------------
 Nocturnal Playground
@@ -258,11 +268,15 @@ Extra - room_id: 9
   * Layers: default
   * L0 Hatch to Nocturnal Playground/Door to Clogged Cavern
   * Extra - door_idx: 17
+  > Door to Shell Access
+      Speed Booster
 
 > Door to Shell Access; Heals? False
   * Layers: default
   * L0 Hatch to Shell Access/Door to Clogged Cavern
   * Extra - door_idx: 18
+  > Door to Nocturnal Playground
+      Speed Booster and Shinespark Tricks (Intermediate)
   > Door to Menu Corridor
       Trivial
 
@@ -373,7 +387,11 @@ Extra - room_id: 13
   > Door to Twin Caverns West
       After Varia Core-X
   > Event - Varia Core-X
-      Charge Beam and Missiles
+      All of the following:
+          # Weapon Requirements
+          Charge Beam
+          # Health Requirements
+          Normal Damage ≥ 100
 
 ----------------
 X-B.O.X. Access
@@ -383,16 +401,28 @@ Extra - room_id: 14
   * Layers: default
   * L4 Hatch to Forbidden Entrance/Door to X-B.O.X. Access
   * Extra - door_idx: 26
+  > Door to X-B.O.X. Arena
+      Trivial
+  > Door to Spaceboost Alley
+      Screw Attack and Speed Booster and Can Use Power Bombs
 
 > Door to X-B.O.X. Arena; Heals? False
   * Layers: default
   * L0 Hatch to X-B.O.X. Arena/Door to X-B.O.X. Access
   * Extra - door_idx: 28
+  > Door to Forbidden Entrance
+      Any of the following:
+          Space Jump
+          High Jump and Wall Jump (Beginner)
 
 > Door to Spaceboost Alley; Heals? False
   * Layers: default
   * Open Hatch to Spaceboost Alley/Door to X-B.O.X. Access
   * Extra - door_idx: 89
+  > Door to Forbidden Entrance
+      Any of the following:
+          Morph Ball
+          Space Jump and Shinespark Tricks (Beginner)
 
 ----------------
 Zozoro Wine Cellar
@@ -419,21 +449,70 @@ Extra - room_id: 16
   * Layers: default
   * L0 Hatch to X-B.O.X. Access/Door to X-B.O.X. Arena
   * Extra - door_idx: 30
+  > Beside Crumble Blocks
+      Trivial
 
 > Door to Bull Bend; Heals? False
   * Layers: default
   * L0 Hatch to Bull Bend/Door to X-B.O.X. Arena
   * Extra - door_idx: 31
+  > Arena
+      Trivial
 
 > Door to X-B.O.X. Garage; Heals? False
   * Layers: default
   * L0 Hatch to X-B.O.X. Garage/Door to X-B.O.X. Arena
   * Extra - door_idx: 36
+  > Arena
+      Trivial
 
 > Door to X-B.O.X. Garage (87); Heals? False
   * Layers: default
   * L0 Hatch to X-B.O.X. Garage/Door to X-B.O.X. Arena
   * Extra - door_idx: 87
+  > Beside Crumble Blocks
+      Screw Attack
+
+> Event - X-B.O.X.; Heals? False
+  * Layers: default
+  * Event X-B.O.X.
+  > Pickup (Wave Beam)
+      Trivial
+
+> Pickup (Wave Beam); Heals? False
+  * Layers: default
+  * Pickup 111; Category? Major
+  > Arena
+      Trivial
+
+> Beside Crumble Blocks; Heals? False
+  * Layers: default
+  > Door to X-B.O.X. Access
+      After X-B.O.X.
+  > Door to X-B.O.X. Garage (87)
+      Screw Attack and After X-B.O.X.
+  > Arena
+      Trivial
+
+> Arena; Heals? False
+  * Layers: default
+  > Door to Bull Bend
+      After X-B.O.X.
+  > Door to X-B.O.X. Garage
+      After X-B.O.X.
+  > Event - X-B.O.X.
+      All of the following:
+          Any of the following:
+              # Weapon Requirements for X-B.O.X.
+              Missiles ≥ 100 and Super Missiles
+          # Weapon Requirements for Core-X
+          Missiles
+          # Health Requirements
+          Combat (Beginner) or Normal Damage ≥ 1000
+          Any of the following:
+              # Arena Requirements
+              Combat (Advanced)
+              High Jump and Can Use Any Bombs
 
 ----------------
 Elevator to Main Deck
@@ -460,20 +539,32 @@ Extra - room_id: 18
 > Pickup (Hidden Power Bomb Tank); Heals? False
   * Layers: default
   * Pickup 90; Category? Minor
+  > Door to X-B.O.X. Arena (88)
+      Trivial
 
 > Pickup (Missile Tank); Heals? False
   * Layers: default
   * Pickup 91; Category? Minor
+  > Door to X-B.O.X. Arena
+      Trivial
 
 > Door to X-B.O.X. Arena; Heals? False
   * Layers: default
   * L0 Hatch to X-B.O.X. Arena/Door to X-B.O.X. Garage
   * Extra - door_idx: 37
+  > Pickup (Missile Tank)
+      Wave Beam
+  > Door to X-B.O.X. Arena (88)
+      Screw Attack and Can climb High Jump Wall
 
 > Door to X-B.O.X. Arena (88); Heals? False
   * Layers: default
   * L0 Hatch to X-B.O.X. Arena/Door to X-B.O.X. Garage
   * Extra - door_idx: 88
+  > Pickup (Hidden Power Bomb Tank)
+      Can Use Any Bombs
+  > Door to X-B.O.X. Arena
+      Screw Attack
 
 ----------------
 Bull Bend
@@ -483,11 +574,15 @@ Extra - room_id: 19
   * Layers: default
   * L0 Hatch to X-B.O.X. Arena/Door to Bull Bend
   * Extra - door_idx: 38
+  > Door to Neglected Shaft
+      Trivial
 
 > Door to Neglected Shaft; Heals? False
   * Layers: default
   * L0 Hatch to Neglected Shaft/Door to Bull Bend
   * Extra - door_idx: 39
+  > Door to X-B.O.X. Arena
+      Trivial
 
 ----------------
 Neglected Shaft
@@ -497,16 +592,24 @@ Extra - room_id: 20
   * Layers: default
   * L0 Hatch to Bull Bend/Door to Neglected Shaft
   * Extra - door_idx: 40
+  > Door to Neglected Save Room
+      Trivial
 
 > Door to Neglected Save Room; Heals? False
   * Layers: default
   * L0 Hatch to Neglected Save Room/Door to Neglected Shaft
   * Extra - door_idx: 41
+  > Door to Bull Bend
+      Can climb High Jump Wall
+  > Door to Checkpoint to Restricted Labs
+      Trivial
 
 > Door to Checkpoint to Restricted Labs; Heals? False
   * Layers: default
   * L4 Hatch to Checkpoint to Restricted Labs/Door to Neglected Shaft
   * Extra - door_idx: 42
+  > Door to Neglected Save Room
+      Speed Booster or Can climb High Jump Wall
 
 ----------------
 Neglected Save Room
@@ -525,11 +628,15 @@ Extra - room_id: 22
   * Layers: default
   * L4 Hatch to Neglected Shaft/Door to Checkpoint to Restricted Labs
   * Extra - door_idx: 44
+  > Other to Restricted Labs Entrance
+      Morph Ball and Wave Beam
 
 > Other to Restricted Labs Entrance; Heals? False
   * Layers: default
   * Tunnel to Restricted Labs Entrance/Other to Checkpoint to Restricted Labs
   * Extra - door_idx: 45
+  > Door to Neglected Shaft
+      Morph Ball
 
 ----------------
 Menu Save Room
@@ -845,11 +952,17 @@ Extra - room_id: 38
 > Pickup (Energy Tank); Heals? False
   * Layers: default
   * Pickup 97; Category? Minor
+  > Door to Nocturnal Shaft
+      Trivial
 
 > Door to Nocturnal Shaft; Heals? False
   * Layers: default
   * L0 Hatch to Nocturnal Shaft/Door to Pillar Puzzle
   * Extra - door_idx: 86
+  > Pickup (Energy Tank)
+      All of the following:
+          Speed Booster
+          Wave Beam or Can Use Bombs
 
 ----------------
 Spaceboost Alley
@@ -858,15 +971,34 @@ Extra - room_id: 39
 > Pickup (Power Bomb Tank); Heals? False
   * Layers: default
   * Pickup 98; Category? Minor
+  > Bottom of Room
+      Trivial
 
 > Pickup (Power Bomb Tank 2); Heals? False
   * Layers: default
   * Pickup 99; Category? Minor
+  > Bottom of Room
+      Trivial
 
 > Door to X-B.O.X. Access; Heals? False
   * Layers: default
   * Open Hatch to X-B.O.X. Access/Door to Spaceboost Alley
   * Extra - door_idx: 90
+  > Bottom of Room
+      Trivial
+
+> Bottom of Room; Heals? False
+  * Layers: default
+  > Pickup (Power Bomb Tank)
+      Speed Booster
+  > Pickup (Power Bomb Tank 2)
+      All of the following:
+          Space Jump and Speed Booster
+          High Jump or Movement (Intermediate)
+  > Door to X-B.O.X. Access
+      Any of the following:
+          Wall Jump (Beginner) or Can climb High Jump Wall
+          Speed Booster and Shinespark Tricks (Beginner)
 
 ----------------
 Menu Corridor
