@@ -27,6 +27,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: Health requirements for the Balrog 1 boss fight.
 
+### Metroid Dread
+
+#### Logic Database
+
+##### Ghavoran
+
+- Added: In Spin Boost Tower: Expert Speed Booster Conservation from Ledge Below PB Tank to Pickup (PB Tank), as well as a video for this trick.
+
 ## [7.3.2] - 2024-02-??
 
 - TODO: fill out or remove.
