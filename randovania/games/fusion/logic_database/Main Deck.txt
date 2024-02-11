@@ -226,12 +226,12 @@ Extra - room_id: 10
       Trivial
 
 ----------------
-Crew Loung Save Room
+Crew Quarters Save Room
 Extra - map_name: Main Deck11
 Extra - room_id: 11
 > Door to Elevator to Central Hub; Heals? False
   * Layers: default
-  * L0 Hatch to Elevator to Central Hub/Door to Crew Loung Save Room
+  * L0 Hatch to Elevator to Central Hub/Door to Crew Quarters Save Room
   * Extra - door_idx: 24
 
 ----------------
@@ -433,7 +433,7 @@ Extra - room_id: 18
       Trivial
   > Door to Main Deck Navigation Room West
       Trivial
-  > Door to PB Geron Cache
+  > Door to Habitation Storage
       Can Use Power Bombs
   > Other to Western Hub
       Can Use Any Bombs
@@ -452,9 +452,9 @@ Extra - room_id: 18
   > Door to Station Entrance
       Trivial
 
-> Door to PB Geron Cache; Heals? False
+> Door to Habitation Storage; Heals? False
   * Layers: default
-  * L2 Hatch to PB Geron Cache/Door to Central Hub
+  * L2 Hatch to Habitation Storage/Door to Central Hub
   * Extra - door_idx: 132
   > Door to Station Entrance
       Can Use Any Bombs
@@ -1168,9 +1168,9 @@ Extra - room_id: 49
   * Open Hatch to Silo Access/Door to Central Reactor Core (V)
   * Extra - door_idx: 112
 
-> Door to Reactor Scaffolding A; Heals? False
+> Door to Silo Scaffolding A; Heals? False
   * Layers: default
-  * Open Hatch to Reactor Scaffolding A/Door to Central Reactor Core (V)
+  * Open Hatch to Silo Scaffolding A/Door to Central Reactor Core (V)
   * Extra - door_idx: 113
 
 > Door to Reactor Checkpoint; Heals? False
@@ -1189,25 +1189,25 @@ Extra - room_id: 49
   * Extra - door_idx: 130
 
 ----------------
-Reactor Scaffolding A
+Silo Scaffolding A
 Extra - map_name: Main Deck50
 Extra - room_id: 50
 > Pickup (Energy Tank); Heals? False
   * Layers: default
   * Pickup 6; Category? Minor
-  > Door to Reactor Scaffolding B
+  > Door to Silo Scaffolding B
       Trivial
 
 > Door to Central Reactor Core (V); Heals? False
   * Layers: default
-  * Open Hatch to Central Reactor Core (V)/Door to Reactor Scaffolding A
+  * Open Hatch to Central Reactor Core (V)/Door to Silo Scaffolding A
   * Extra - door_idx: 114
-  > Door to Reactor Scaffolding B
+  > Door to Silo Scaffolding B
       Trivial
 
-> Door to Reactor Scaffolding B; Heals? False
+> Door to Silo Scaffolding B; Heals? False
   * Layers: default
-  * Open Hatch to Reactor Scaffolding B/Door to Reactor Scaffolding A
+  * Open Hatch to Silo Scaffolding B/Door to Silo Scaffolding A
   * Extra - door_idx: 115
   > Pickup (Energy Tank)
       Trivial
@@ -1215,7 +1215,7 @@ Extra - room_id: 50
       Trivial
 
 ----------------
-Reactor Scaffolding B
+Silo Scaffolding B
 Extra - map_name: Main Deck51
 Extra - room_id: 51
 > Pickup (Missile Tank); Heals? False
@@ -1224,23 +1224,23 @@ Extra - room_id: 51
   > Beside Pickup
       Trivial
 
-> Door to Reactor Scaffolding A; Heals? False
+> Door to Silo Scaffolding A; Heals? False
   * Layers: default
-  * Open Hatch to Reactor Scaffolding A/Door to Reactor Scaffolding B
+  * Open Hatch to Silo Scaffolding A/Door to Silo Scaffolding B
   * Extra - door_idx: 116
   > Beside Pickup
       Trivial
 
 > Door to Yakuza Arena; Heals? False
   * Layers: default
-  * Open Hatch to Yakuza Arena/Door to Reactor Scaffolding B
+  * Open Hatch to Yakuza Arena/Door to Silo Scaffolding B
   * Extra - door_idx: 117
 
 > Beside Pickup; Heals? False
   * Layers: default
   > Pickup (Missile Tank)
       Morph Ball
-  > Door to Reactor Scaffolding A
+  > Door to Silo Scaffolding A
       Can climb High Jump Wall
   > Door to Yakuza Arena
       All of the following:
@@ -1330,7 +1330,7 @@ Extra - room_id: 56
       Trivial
 
 ----------------
-PB Geron Cache
+Habitation Storage
 Extra - map_name: Main Deck57
 Extra - room_id: 57
 > Pickup (Power Bomb Tank); Heals? False
@@ -1341,7 +1341,7 @@ Extra - room_id: 57
 
 > Door to Central Hub; Heals? False
   * Layers: default
-  * L2 Hatch to Central Hub/Door to PB Geron Cache
+  * L2 Hatch to Central Hub/Door to Habitation Storage
   * Extra - door_idx: 131
   > Pickup (Power Bomb Tank)
       Morph Ball
@@ -1369,9 +1369,9 @@ Extra - room_id: 59
   * Tunnel to Silo Tunnel (C)/Other to Central Reactor Core
   * Extra - door_idx: 135
 
-> Door to Reactor Scaffolding A; Heals? False
+> Door to Silo Scaffolding A; Heals? False
   * Layers: default
-  * Open Hatch to Reactor Scaffolding A/Door to Central Reactor Core (V)
+  * Open Hatch to Silo Scaffolding A/Door to Central Reactor Core (V)
   * Extra - door_idx: 136
 
 > Door to Reactor Checkpoint; Heals? False
@@ -1715,9 +1715,9 @@ Extra - room_id: 75
 Elevator to Central Hub
 Extra - map_name: Main Deck76
 Extra - room_id: 76
-> Door to Crew Loung Save Room; Heals? False
+> Door to Crew Quarters Save Room; Heals? False
   * Layers: default
-  * L0 Hatch to Crew Loung Save Room/Door to Elevator to Central Hub
+  * L0 Hatch to Crew Quarters Save Room/Door to Elevator to Central Hub
   * Extra - door_idx: 100
   > Door to Habitation Deck Entrance
       Trivial
@@ -1733,7 +1733,7 @@ Extra - room_id: 76
   * Layers: default
   * L2 Hatch to Habitation Deck Entrance/Door to Elevator to Central Hub
   * Extra - door_idx: 179
-  > Door to Crew Loung Save Room
+  > Door to Crew Quarters Save Room
       Trivial
   > Other to Elevator to Habitation Deck
       Trivial
@@ -1893,9 +1893,9 @@ Extra - room_id: 85
 Yakuza Arena
 Extra - map_name: Main Deck86
 Extra - room_id: 86
-> Door to Reactor Scaffolding B; Heals? False
+> Door to Silo Scaffolding B; Heals? False
   * Layers: default
-  * Open Hatch to Reactor Scaffolding B/Door to Yakuza Arena
+  * Open Hatch to Silo Scaffolding B/Door to Yakuza Arena
   * Extra - door_idx: 3
   > Arena
       Trivial
@@ -1921,7 +1921,7 @@ Extra - room_id: 86
 
 > Arena; Heals? False
   * Layers: default
-  > Door to Reactor Scaffolding B
+  > Door to Silo Scaffolding B
       Space Jump and After Yakuza
   > Other to Auxiliary Power Station
       Space Jump
