@@ -69,7 +69,7 @@ Extra - starting_script: <TRA0006:0098:0004:0018
 > Door to Gum; Heals? False
   * Layers: default
   * Door to Gum/Door to Grasstown
-  > East Side
+  > Near Hint
       Trivial
 
 > Pickup (Grasstown East Chest); Heals? False
@@ -150,10 +150,6 @@ Extra - starting_script: <TRA0006:0098:0004:0018
       After Saved Kazuma
   > Door to Execution Chamber
       Trivial
-  > Door to Gum
-      All of the following:
-          Gum Key
-          After Activated Fans or Has Flight
   > Pickup (Grasstown East Chest)
       Trivial
   > Pickup (Kazuma Crack)
@@ -185,14 +181,14 @@ Extra - starting_script: <TRA0006:0098:0004:0018
               Gravity Hopping (Advanced) and Pacifist Strats (Advanced)
   > Event - Saved Kazuma
       Explosive
-  > Hint - Cthulhu (East)
-      Trivial
   > Event - Level MG (East)
       Machine Gun
+  > Near Hint
+      Trivial
 
 > Area Centre; Heals? False
   * Layers: default
-  > West Side
+  > Door to Chaco's House
       Trivial
   > East Side
       Any of the following:
@@ -228,7 +224,7 @@ Extra - starting_script: <TRA0006:0098:0004:0018
   * Hint
   * Extra - event: 0205
   * Extra - string_asset_id: 3
-  > East Side
+  > Near Hint
       Trivial
 
 > Event - Return Santa's Key; Heals? False
@@ -261,6 +257,24 @@ Extra - starting_script: <TRA0006:0098:0004:0018
   * Layers: default
   * Event Level Up Machine Gun
   > East Side
+      Trivial
+
+> Save Point; Heals? False
+  * Layers: default
+  > Near Hint
+      Trivial
+
+> Near Hint; Heals? False
+  * Layers: default
+  > Door to Gum
+      All of the following:
+          Gum Key
+          After Activated Fans or Has Flight
+  > East Side
+      Trivial
+  > Hint - Cthulhu (East)
+      Trivial
+  > Save Point
       Trivial
 
 ----------------
@@ -318,6 +332,8 @@ Extra - starting_script: <TRA0008:0094:0007:0003
       After Returned Santa's Key
   > Save Point
       Trivial
+  > Bed
+      Trivial
 
 > Exit to Grasstown; Heals? False
   * Layers: default
@@ -340,12 +356,10 @@ Extra - starting_script: <TRA0008:0094:0007:0003
   * Layers: default
   > Door to Grasstown
       Trivial
-  > Bed
-      Trivial
 
 > Bed; Heals? True
   * Layers: default
-  > Save Point
+  > Door to Grasstown
       Trivial
 
 ----------------
@@ -370,6 +384,10 @@ Extra - starting_script: <TRA0025:0094:0016:0007
           Can Kill Bosses
           Missiles ≥ 7 and Super Missile Launcher and Kill Bosses with Missiles (Beginner)
           Missiles ≥ 15 and Missile Launcher and Kill Bosses with Missiles (Intermediate)
+          Any of the following:
+              # Health requirements
+              Combat (Intermediate) or Normal Damage ≥ 14
+              Combat (Beginner) and Normal Damage ≥ 9
 
 > Event - Balrog 2; Heals? False
   * Layers: default
@@ -430,6 +448,7 @@ Extra - starting_script: <TRA0030:0094:0007:0009
   * Pickup 14; Category? Minor
   * Extra - event: 0301
   > Door to Grasstown
+      # Ravil Boss
       Sisters Skip (Beginner) or Has Weapon
 
 ----------------
@@ -442,7 +461,9 @@ Extra - starting_script: <TRA0027:0094:0010:0009
   > Pickup (Execution Chamber)
       Any of the following:
           Can Break Blocks
-          Missiles ≥ 2 and Missile Launcher and Break blocks with Missiles (Beginner)
+          All of the following:
+              Missiles ≥ 2 and Break blocks with Missiles (Beginner)
+              Missile Launcher or Super Missile Launcher
 
 > Pickup (Execution Chamber); Heals? False
   * Layers: default
@@ -470,6 +491,10 @@ Extra - starting_script: <TRA0028:0094:0006:0013
           Can Kill Bosses
           Missiles ≥ 8 and Super Missile Launcher and Kill Bosses with Missiles (Beginner)
           Missile Launcher ≥ 18 and Kill Bosses with Missiles (Intermediate)
+          Any of the following:
+              # Health requirements
+              Combat (Intermediate) or Normal Damage ≥ 14
+              Combat (Beginner) and Normal Damage ≥ 9
 
 > Event - Balfrog; Heals? False
   * Layers: default
@@ -484,8 +509,6 @@ Extra - starting_script: <TRA0018:0099:0015:0010
 > Door to Grasstown; Heals? False
   * Layers: default
   * Door to Grasstown/Door to Shelter
-  > Save Point
-      After Saved Kazuma
   > Teleporter to Jail No. 2
       Trivial
 
@@ -497,7 +520,7 @@ Extra - starting_script: <TRA0018:0099:0015:0010
 
 > Save Point; Heals? False
   * Layers: default
-  > Door to Grasstown
+  > Teleporter to Jail No. 2
       Trivial
   > Refill
       Trivial
@@ -509,6 +532,8 @@ Extra - starting_script: <TRA0018:0099:0015:0010
       After Saved Kazuma
   > Event - Saved Kazuma
       Explosive
+  > Save Point
+      Trivial
 
 > Refill; Heals? True
   * Layers: default
