@@ -3824,7 +3824,12 @@
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can climb High Jump Wall"
+                                    }
+                                ]
                             }
                         }
                     }
@@ -5893,12 +5898,10 @@
                     "valid_starting_location": false,
                     "connections": {
                         "Door to Charge Core Access": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "events",
-                                "name": "ChargeCore-X",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -6363,7 +6366,15 @@
                     "valid_starting_location": false,
                     "pickup_index": 22,
                     "location_category": "minor",
-                    "connections": {}
+                    "connections": {
+                        "Other to Charge Core Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Other to Charge Core Access": {
                     "node_type": "dock",

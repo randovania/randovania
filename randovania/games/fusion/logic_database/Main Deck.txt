@@ -915,9 +915,7 @@ Extra - room_id: 38
   * Layers: default
   * L0 Hatch to Crew Quarters East/Door to Arachnus Arena
   * Extra - door_idx: 88
-  > Other to Maintenance Corridor
-      Morph Ball and Screw Attack
-  > Before Pit
+  > Beside Door
       Trivial
 
 > Other to Maintenance Corridor; Heals? False
@@ -954,12 +952,12 @@ Extra - room_id: 38
   * Layers: default
   > Pickup (Energy Tank)
       Trivial
-  > Door to Crew Quarters East
-      High Jump or Space Jump
   > Other to The Attic
       Missiles
   > Arena
       Trivial
+  > Beside Door
+      Can climb High Jump Wall
 
 > Arena; Heals? False
   * Layers: default
@@ -969,6 +967,15 @@ Extra - room_id: 38
       All of the following:
           Missiles
           Combat (Beginner) or Normal Damage ≥ 50
+
+> Beside Door; Heals? False
+  * Layers: default
+  > Door to Crew Quarters East
+      After Arachnus
+  > Other to Maintenance Corridor
+      Morph Ball and Screw Attack
+  > Before Pit
+      Trivial
 
 ----------------
 Operations Deck Data Room
@@ -1116,16 +1123,22 @@ Extra - room_id: 47
 > Pickup (Hidden Power Bomb Tank); Heals? False
   * Layers: default
   * Pickup 5; Category? Minor
+  > Other to Station Entrance
+      Morph Ball and Can climb High Jump Wall
 
 > Other to Station Entrance; Heals? False
   * Layers: default
   * Open Passage to Station Entrance/Other to Spitter Speedway
   * Extra - door_idx: 107
+  > Pickup (Hidden Power Bomb Tank)
+      Can Use Power Bombs and Can climb High Jump Wall
 
 > Other to Sub-Zero Containment; Heals? False
   * Layers: default
   * Tunnel to Sub-Zero Containment/Other to Spitter Speedway
   * Extra - door_idx: 196
+  > Other to Station Entrance
+      Trivial
 
 ----------------
 Silo Access
@@ -1415,11 +1428,15 @@ Extra - room_id: 62
   * Layers: default
   * Tunnel to Checkpoint to Restricted Labs/Other to Restricted Labs Entrance
   * Extra - door_idx: 143
+  > Door to Restricted Labs Save Room
+      Trivial
 
 > Door to Restricted Labs Save Room; Heals? False
   * Layers: default
   * L4 Hatch to Restricted Labs Save Room/Door to Restricted Labs Entrance
   * Extra - door_idx: 144
+  > Other to Checkpoint to Restricted Labs
+      Screw Attack and Can climb High Jump Wall
 
 ----------------
 Docking Bay Hangar (D)
@@ -1438,11 +1455,15 @@ Extra - room_id: 64
   * Layers: default
   * L4 Hatch to Restricted Labs Entrance/Door to Restricted Labs Save Room
   * Extra - door_idx: 147
+  > Door to Restricted Labs Corridor
+      Trivial
 
 > Door to Restricted Labs Corridor; Heals? False
   * Layers: default
   * L4 Hatch to Restricted Labs Corridor/Door to Restricted Labs Save Room
   * Extra - door_idx: 148
+  > Door to Restricted Labs Entrance
+      Trivial
 
 ----------------
 Restricted Labs Corridor
@@ -1452,11 +1473,15 @@ Extra - room_id: 65
   * Layers: default
   * L4 Hatch to Restricted Labs Save Room/Door to Restricted Labs Corridor
   * Extra - door_idx: 149
+  > Door to Restricted Airlock (C)
+      Trivial
 
 > Door to Restricted Airlock (C); Heals? False
   * Layers: default
   * L4 Hatch to Restricted Airlock (C)/Door to Restricted Labs Corridor
   * Extra - door_idx: 150
+  > Door to Restricted Labs Save Room
+      Trivial
 
 ----------------
 Restricted Labs Navigation Room
@@ -1466,11 +1491,15 @@ Extra - room_id: 66
   * Layers: default
   * Open Hatch to Elevator to Sector 1 (Tourian)/Door to Restricted Labs Navigation Room
   * Extra - door_idx: 151
+  > Door to Restricted Airlock (C)
+      Trivial
 
 > Door to Restricted Airlock (C); Heals? False
   * Layers: default
   * Open Hatch to Restricted Airlock (C)/Door to Restricted Labs Navigation Room
   * Extra - door_idx: 152
+  > Door to Elevator to Sector 1 (Tourian)
+      Trivial
 
 ----------------
 Elevator to Sector 1 (Tourian)
@@ -1480,11 +1509,15 @@ Extra - room_id: 67
   * Layers: default
   * L4 Hatch to Restricted Labs Navigation Room/Door to Elevator to Sector 1 (Tourian)
   * Extra - door_idx: 153
+  > Other to Elevator to Restricted Labs
+      Trivial
 
 > Other to Elevator to Restricted Labs; Heals? False
   * Layers: default
   * Open Passage to Elevator to Restricted Labs/Other to Elevator to Sector 1 (Tourian)
   * Extra - door_idx: 154
+  > Door to Restricted Labs Navigation Room
+      Trivial
 
 ----------------
 Silo Tunnel (C)
