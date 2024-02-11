@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Changelog window properly displays images.
 - Fixed: Cancelling connecting to the server is better handled now.
 
+### Resolver
+
+- Fixed: Some cases of resolver timeout.
+
 ### Cave Story
 
 #### Logic Database
