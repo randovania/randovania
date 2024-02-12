@@ -401,6 +401,8 @@ Extra - room_id: 17
 > Pickup (Power Bomb Tank); Heals? False
   * Layers: default
   * Pickup 1; Category? Minor
+  > Door to Restricted Labs Navigation Room
+      Speed Booster
 
 > Door to Restricted Labs Navigation Room; Heals? False
   * Layers: default
@@ -411,6 +413,8 @@ Extra - room_id: 17
   * Layers: default
   * L4 Hatch to Restricted Labs Corridor/Door to Restricted Airlock (C)
   * Extra - door_idx: 34
+  > Pickup (Power Bomb Tank)
+      Speed Booster
 
 ----------------
 Central Hub
@@ -588,7 +592,9 @@ Extra - room_id: 23
   * Open Hatch to Western Hub/Door to Quarantine Access
   * Extra - door_idx: 48
   > Door to Main Elevator Access (D)
-      Morph Ball or Speed Booster
+      Any of the following:
+          Morph Ball
+          Speed Booster and Shinespark Tricks (Advanced)
   > Door to Quarantine Bay
       Trivial
 
@@ -1146,16 +1152,24 @@ Extra - room_id: 48
   * Layers: default
   * L4 Hatch to Docking Bay Shaft/Door to Silo Access
   * Extra - door_idx: 109
+  > Other to Docking Bay Shaft
+      Trivial
 
 > Other to Docking Bay Shaft; Heals? False
   * Layers: default
   * Open Passage to Docking Bay Shaft/Other to Silo Access
   * Extra - door_idx: 110
+  > Door to Docking Bay Shaft
+      Trivial
+  > Door to Central Reactor Core (V)
+      Can Use Power Bombs
 
 > Door to Central Reactor Core (V); Heals? False
   * Layers: default
   * Open Hatch to Central Reactor Core (V)/Door to Silo Access
   * Extra - door_idx: 111
+  > Other to Docking Bay Shaft
+      Can Use Power Bombs
 
 ----------------
 Central Reactor Core (V)
@@ -1165,26 +1179,44 @@ Extra - room_id: 49
   * Layers: default
   * Open Hatch to Silo Access/Door to Central Reactor Core (V)
   * Extra - door_idx: 112
+  > Door to Silo Save Room
+      Trivial
 
 > Door to Silo Scaffolding A; Heals? False
   * Layers: default
   * Open Hatch to Silo Scaffolding A/Door to Central Reactor Core (V)
   * Extra - door_idx: 113
+  > Door to Silo Save Room
+      Trivial
 
 > Door to Reactor Checkpoint; Heals? False
   * Layers: default
   * Open Hatch to Reactor Checkpoint/Door to Central Reactor Core (V)
   * Extra - door_idx: 124
+  > Door to Silo Save Room
+      Trivial
 
 > Other to Silo Tunnel; Heals? False
   * Layers: default
   * Tunnel to Silo Tunnel/Other to Central Reactor Core (V)
   * Extra - door_idx: 125
+  > Door to Silo Save Room
+      Trivial
 
 > Door to Silo Save Room; Heals? False
   * Layers: default
   * Open Hatch to Silo Save Room/Door to Central Reactor Core (V)
   * Extra - door_idx: 130
+  > Door to Silo Access
+      Any of the following:
+          Space Jump
+          Speed Booster and Shinespark Tricks (Beginner)
+  > Door to Silo Scaffolding A
+      Wall Jump (Beginner) or Can climb High Jump Wall
+  > Door to Reactor Checkpoint
+      Trivial
+  > Other to Silo Tunnel
+      Space Jump
 
 ----------------
 Silo Scaffolding A
@@ -1303,11 +1335,15 @@ Extra - room_id: 55
   * Layers: default
   * Tunnel to Central Reactor Core (V)/Other to Silo Tunnel
   * Extra - door_idx: 126
+  > Other to Overgrown Entrance
+      Can Use Any Bombs
 
 > Other to Overgrown Entrance; Heals? False
   * Layers: default
   * Tunnel to Overgrown Entrance/Other to Silo Tunnel
   * Extra - door_idx: 127
+  > Other to Central Reactor Core (V)
+      Can Use Any Bombs
 
 ----------------
 Auxiliary Navigation Room
