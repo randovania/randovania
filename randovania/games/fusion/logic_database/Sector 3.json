@@ -3200,7 +3200,7 @@
                     "pickup_index": 48,
                     "location_category": "minor",
                     "connections": {
-                        "Door to Processing Access (75)": {
+                        "Door to Processing Access (Upper)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3226,7 +3226,7 @@
                     "pickup_index": 49,
                     "location_category": "minor",
                     "connections": {
-                        "Door to Processing Access (75)": {
+                        "Door to Processing Access (Upper)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3235,7 +3235,7 @@
                         }
                     }
                 },
-                "Door to Processing Access": {
+                "Door to Processing Access (Lower)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3257,7 +3257,7 @@
                     "default_connection": {
                         "region": "Sector 3",
                         "area": "Processing Access",
-                        "node": "Door to Sova Processing"
+                        "node": "Door to Sova Processing (Lower)"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -3265,7 +3265,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Processing Access (75)": {
+                        "Door to Processing Access (Upper)": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -3284,7 +3284,7 @@
                         }
                     }
                 },
-                "Door to Processing Access (75)": {
+                "Door to Processing Access (Upper)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3306,7 +3306,7 @@
                     "default_connection": {
                         "region": "Sector 3",
                         "area": "Processing Access",
-                        "node": "Door to Sova Processing"
+                        "node": "Door to Sova Processing (Upper)"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -3398,7 +3398,7 @@
                                 ]
                             }
                         },
-                        "Door to Processing Access": {
+                        "Door to Processing Access (Lower)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3506,7 +3506,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Processing Access (75)": {
+                        "Door to Processing Access (Upper)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3707,7 +3707,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Data (Super Missiles)": {
+                        "Pickup (Super Missiles)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3716,7 +3716,7 @@
                         }
                     }
                 },
-                "Data (Super Missiles)": {
+                "Pickup (Super Missiles)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -4083,8 +4083,8 @@
                 ]
             },
             "nodes": {
-                "Door to Checkpoint Shaft": {
-                    "node_type": "dock",
+                "Checkpoint Shaft": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": {
                         "x": 40.0,
@@ -4101,21 +4101,10 @@
                         ]
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Door",
-                    "default_connection": {
-                        "region": "Sector 3",
-                        "area": "Checkpoint Shaft",
-                        "node": "Door to Bob Room"
-                    },
-                    "default_dock_weakness": "L2 Hatch",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
                     "connections": {}
                 },
-                "Door to Fune Tower": {
-                    "node_type": "dock",
+                "Fune Tower": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": {
                         "x": 504.0,
@@ -4132,21 +4121,10 @@
                         ]
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Door",
-                    "default_connection": {
-                        "region": "Sector 3",
-                        "area": "Fune Tower",
-                        "node": "Door to Bob Room"
-                    },
-                    "default_dock_weakness": "L0 Hatch",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
                     "connections": {}
                 },
-                "Other to Namihe's Abode": {
-                    "node_type": "dock",
+                "Namihe's Abode": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": {
                         "x": 72.0,
@@ -4163,17 +4141,6 @@
                         ]
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Other",
-                    "default_connection": {
-                        "region": "Sector 3",
-                        "area": "Namihe's Abode",
-                        "node": "Other to Bob Room"
-                    },
-                    "default_dock_weakness": "Tunnel",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
                     "connections": {}
                 }
             }
@@ -4943,8 +4910,8 @@
                 ]
             },
             "nodes": {
-                "Door to Boiler Access": {
-                    "node_type": "dock",
+                "Boiler Access": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": {
                         "x": 504.0,
@@ -4961,29 +4928,10 @@
                         ]
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Door",
-                    "default_connection": {
-                        "region": "Sector 3",
-                        "area": "Boiler Access",
-                        "node": "Door to Main Boiler"
-                    },
-                    "default_dock_weakness": "L0 Hatch",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {
-                        "Door to Main Boiler Control Room": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
+                    "connections": {}
                 },
-                "Door to Main Boiler Control Room": {
-                    "node_type": "dock",
+                "Main Boiler Control Room": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": {
                         "x": 40.0,
@@ -5000,26 +4948,7 @@
                         ]
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Door",
-                    "default_connection": {
-                        "region": "Sector 3",
-                        "area": "Main Boiler Control Room",
-                        "node": "Door to Main Boiler"
-                    },
-                    "default_dock_weakness": "L0 Hatch",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {
-                        "Door to Boiler Access": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
+                    "connections": {}
                 }
             }
         },
@@ -5551,7 +5480,7 @@
                         }
                     }
                 },
-                "Door to Sova Processing": {
+                "Door to Sova Processing (Lower)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5573,7 +5502,7 @@
                     "default_connection": {
                         "region": "Sector 3",
                         "area": "Sova Processing",
-                        "node": "Door to Processing Access"
+                        "node": "Door to Processing Access (Lower)"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -5602,7 +5531,7 @@
                                 ]
                             }
                         },
-                        "Door to Sova Processing (74)": {
+                        "Door to Sova Processing (Upper)": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -5679,7 +5608,7 @@
                                 "items": []
                             }
                         },
-                        "Door to Sova Processing": {
+                        "Door to Sova Processing (Lower)": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -5702,7 +5631,7 @@
                         }
                     }
                 },
-                "Door to Sova Processing (74)": {
+                "Door to Sova Processing (Upper)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5724,7 +5653,7 @@
                     "default_connection": {
                         "region": "Sector 3",
                         "area": "Sova Processing",
-                        "node": "Door to Processing Access"
+                        "node": "Door to Processing Access (Upper)"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -5732,7 +5661,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Sova Processing": {
+                        "Door to Sova Processing (Lower)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
