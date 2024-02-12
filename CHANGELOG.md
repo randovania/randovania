@@ -35,7 +35,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Ruined: Nursery Bombless Standable Terrain NSJ adjusted to Advanced and w/ SJ adjusted to Intermediate
 - Changed: Hive Mecha: Fight Skip via Walkway Adjusted to Intermediate Movement
 - Added: Hive Mecha: Fight Skip NSJ Advanced Movement Bunny Hop
-- Added: Furnace: Spider Track Climb Trick Description
+- Added: Furnace: Comment explaining Spider Track Climb
 - Changed: Furnace: "Under Spider Track" Node Renamed to "Next to Half-Pipe"
 - Added: Furnace: Bombless Intermediate Movement to West Furnace Access 
 - Added: Burn Dome Access: Advanced Movement and Wallboost Bombless Escape 
