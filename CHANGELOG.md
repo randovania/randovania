@@ -23,6 +23,51 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: Health requirements for the Balrog 1 boss fight.
 
+### Metroid Prime
+
+#### Logic Database
+
+- Added: 29 New videos to the database, bringing the 
+
+##### Chozo Ruins
+
+- Changed: Vault NSJ Bombless Adjustment
+- Changed: Ruined Nursery Bombless Adjustments
+- Changed: Hive Mecha Fight Skip via Walkway Adjustment
+- Added: Hive Mecha Fight Skip NSJ Bunny Hop
+- Added: Furnace Spider Track Climb Trick Description
+- Changed: Furnace "Under Spider Track" Node Renamed to "Next to Half-Pipe"
+- Added: Furnace Movement to West Furnace Access Bombless
+- Added: Easier Bombless Escape out of Zoid
+- Added: Hall of the Elders Complex Bomb Jump Wave Slot Skip
+
+##### Phazon Mines
+
+- Added: Elite Research Climb Scanless
+- Added: Main Quarry BSJ to Waste Disposal
+- Added: Metroid Quarantine B Backwards Barrier Skip NSJ Bombless
+- Added: Elevator Access A Bombless Spiderless Climb
+- Changed: Elevator Access A Spiderless Climb Adjustments
+- Changed: Phazon Processing Center Item to Maintenance Tunnel Adjustments
+
+##### Phendrana Drifts
+
+- Changed: Frozen Pike NSJ Bombless Climb from Frost Cave Access Adjustments
+- Added: Frozen Pike NSJ Bombless Climb
+- Added: Frozen Pike BSJ to Transport Access
+- Added: Frozen Pike NSJ Hunter Cave to Frost Cave Slope Jump
+- Changed: Transport Access Single Room OOB Adjustments
+- Added: Ice Ruins West Courtyard Entryway to Middle Platform NSJ and NSJ Bombless
+- Added: Ice Ruins East Single Room OOB Ice Item heist
+- Added: Ice Ruins East Single Room OOB Spider Track item
+- Added: Ruined Courtyard Scan Dash to Specimen Storage
+- Added: Ruined Courtyard Bunny Hop to Save Station A
+- Added: Quarantine Cave Sheegoth Jump Escape
+
+##### Tallon Overworld
+
+- Changed: Frigate Crash Site Climb to Overgrown Cavern Adjustment to Beginner
+
 ## [7.3.2] - 2024-02-??
 
 - TODO: fill out or remove.
