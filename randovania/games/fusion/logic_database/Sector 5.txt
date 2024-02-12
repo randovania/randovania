@@ -83,7 +83,7 @@ Extra - room_id: 3
   > Door to Arctic Containment
       Trivial
   > Door to Entrance Hub
-      High Jump or Space Jump
+      Can climb High Jump Wall
 
 > Door to Aerie; Heals? False
   * Layers: default
@@ -106,7 +106,13 @@ Extra - room_id: 3
   > Door to Gerubus Gully
       Trivial
   > Door to Aerie
-      Space Jump
+      Any of the following:
+          Space Jump
+          All of the following:
+              Can Freeze Enemies
+              Any of the following:
+                  Movement (Intermediate)
+                  High Jump and Movement (Beginner)
 
 ----------------
 Aerie
@@ -141,11 +147,31 @@ Extra - room_id: 5
   * Layers: default
   * L3 Hatch to Data Checkpoint/Door to Data Room
   * Extra - door_idx: 52
+  > Door to Frozen Tower
+      Trivial
+  > Data (Ice Missiles)
+      Trivial
+  > Data (Power Bombs)
+      Trivial
 
 > Door to Frozen Tower; Heals? False
   * Layers: default
   * L3 Hatch to Frozen Tower/Door to Data Room
   * Extra - door_idx: 89
+  > Door to Data Checkpoint
+      Trivial
+
+> Data (Ice Missiles); Heals? False
+  * Layers: default
+  * Pickup 114; Category? Major
+  > Door to Data Checkpoint
+      Trivial
+
+> Data (Power Bombs); Heals? False
+  * Layers: default
+  * Pickup 113; Category? Major
+  > Door to Data Checkpoint
+      Trivial
 
 ----------------
 Nightmare Training Grounds (D)
@@ -155,21 +181,39 @@ Extra - room_id: 6
   * Layers: default
   * L3 Hatch to Gerubus Gully/Door to Nightmare Training Grounds
   * Extra - door_idx: 11
+  > Door to Arctic Containment (D)
+      Trivial
+  > Door to Entrance Hub
+      Can climb High Jump Wall
 
 > Door to Aerie; Heals? False
   * Layers: default
   * L0 Hatch to Aerie/Door to Nightmare Training Grounds
   * Extra - door_idx: 12
+  > Door to Entrance Hub
+      Trivial
 
 > Door to Arctic Containment (D); Heals? False
   * Layers: default
   * Open Hatch to Arctic Containment (D)/Door to Nightmare Training Grounds (D)
   * Extra - door_idx: 13
+  > Door to Gerubus Gully
+      Trivial
 
 > Door to Entrance Hub; Heals? False
   * Layers: default
   * L0 Hatch to Entrance Hub/Door to Nightmare Training Grounds
   * Extra - door_idx: 80
+  > Door to Gerubus Gully
+      Trivial
+  > Door to Aerie
+      Any of the following:
+          Space Jump
+          All of the following:
+              Can Freeze Enemies
+              Any of the following:
+                  Movement (Intermediate)
+                  High Jump and Combat (Beginner)
 
 ----------------
 Arctic Containment
@@ -269,9 +313,7 @@ Extra - room_id: 9
   * L3 Hatch to Level 3 Security Room/Door to Security Shaft West
   * Extra - door_idx: 20
   > Door to Security Save Room
-      Any of the following:
-          Space Jump
-          High Jump and Can Use Any Bombs
+      Trivial
 
 ----------------
 Level 3 Security Room
@@ -324,11 +366,24 @@ Extra - room_id: 12
 > Pickup (Hidden Energy Tank); Heals? False
   * Layers: default
   * Pickup 75; Category? Minor
+  > Door to Frozen Tower
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Can Use Bombs
+              Screw Attack and Knowledge (Beginner)
+              Can Use Power Bombs and Can Use Springball
 
 > Door to Frozen Tower; Heals? False
   * Layers: default
   * L0 Hatch to Frozen Tower/Door to Energy Tank Storage
   * Extra - door_idx: 23
+  > Pickup (Hidden Energy Tank)
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Can Use Bombs
+              Screw Attack and Can Use Power Bombs and Can Use Springball
 
 ----------------
 Frozen Tower
@@ -348,11 +403,9 @@ Extra - room_id: 13
   * L3 Hatch to Groznyj Shaft/Door to Frozen Tower
   * Extra - door_idx: 49
   > Door to Energy Tank Storage
-      Any of the following:
-          Space Jump
-          High Jump and Can Freeze Enemies
+      Space Jump or Can Freeze Enemies
   > Other to Transformation Trial
-      Trivial
+      Can Use Bombs or Can Use Springball
 
 > Other to Transformation Trial; Heals? False
   * Layers: default
@@ -383,7 +436,7 @@ Extra - room_id: 14
   * Tunnel to Flooded Tower/Other to Mini-Fridge
   * Extra - door_idx: 69
   > Pickup (Energy Tank)
-      Can Use Bombs or Can Use Springball
+      Morph Ball
 
 ----------------
 Arctic Containment (D)
@@ -489,8 +542,6 @@ Extra - room_id: 18
       Trivial
   > Door to Nightmare Save Room
       Trivial
-  > Door to Nightmare Recharge Room
-      Can Use Any Bombs and Can climb High Jump Wall
 
 > Door to Nightmare Hub East; Heals? False
   * Layers: default
@@ -521,14 +572,18 @@ Extra - room_id: 18
   * Extra - door_idx: 119
   > Door to Ruined Break Room
       Trivial
+  > Door to Nightmare Recharge Room
+      Can Use Power Bombs
 
 > Door to Nightmare Recharge Room; Heals? False
   * Layers: default
   * L0 Hatch to Nightmare Recharge Room/Door to Nightmare Hub West
   * Extra - door_idx: 120
   > Pickup (Hidden Power Bomb Tank)
-      Can Use Any Bombs
-  > Door to Ruined Break Room
+      Any of the following:
+          Can Use Bombs
+          Can Use Power Bombs and Can Use Springball
+  > Door to Nightmare Save Room
       Can Use Any Bombs
 
 ----------------
@@ -546,6 +601,8 @@ Extra - room_id: 19
   * Layers: default
   * L0 Hatch to Nightmare Nook/Door to Nightmare Hub East
   * Extra - door_idx: 38
+  > Door to Nightmare Hub West
+      Trivial
 
 ----------------
 Nightmare Arena
@@ -627,7 +684,9 @@ Extra - room_id: 22
           Can Use Power Bombs
           Any of the following:
               Space Jump
-              High Jump and Can Freeze Enemies
+              All of the following:
+                  Can Freeze Enemies
+                  High Jump or Movement (Beginner)
 
 > Door to Groznyj Grad; Heals? False
   * Layers: default
@@ -652,11 +711,15 @@ Extra - room_id: 23
 > Pickup (Power Bomb Tank); Heals? False
   * Layers: default
   * Pickup 79; Category? Minor
+  > Door to Security Shaft East (D)
+      Trivial
 
 > Door to Security Shaft East (D); Heals? False
   * Layers: default
   * L0 Hatch to Security Shaft East (D)/Door to Security Cache
   * Extra - door_idx: 111
+  > Pickup (Power Bomb Tank)
+      Trivial
 
 ----------------
 Groznyj Shaft
@@ -683,7 +746,7 @@ Extra - room_id: 24
   > Door to Frozen Tower
       Trivial
   > Door to Kago Speedway
-      High Jump or Space Jump
+      Space Jump
   > Door to Groznyj Grad
       Can Use Power Bombs
 
@@ -692,7 +755,7 @@ Extra - room_id: 24
   * L0 Hatch to Kago Speedway/Door to Groznyj Shaft
   * Extra - door_idx: 104
   > Door to Waver Ward
-      High Jump or Space Jump
+      Space Jump
   > Door to Save Room South
       Trivial
 
@@ -882,7 +945,7 @@ Extra - room_id: 33
   * Extra - door_idx: 82
   > Pickup (Hidden Missile Tank)
       Any of the following:
-          Can Use Any Bombs
+          Can Use Power Bombs
           Screw Attack and Knowledge (Beginner)
   > Door to Nightmare Training Grounds
       Trivial
@@ -894,7 +957,7 @@ Extra - room_id: 34
 > Pickup (Energy Tank); Heals? False
   * Layers: default
   * Pickup 83; Category? Minor
-  > Other to Nightmare Arena
+  > Past Pit
       Morph Ball
 
 > Other to Nightmare Arena; Heals? False
@@ -906,8 +969,17 @@ Extra - room_id: 34
   * Layers: default
   * L0 Hatch to Nightmare Hub East/Door to Nightmare Nook
   * Extra - door_idx: 39
+  > Other to Nightmare Arena
+      Morph Ball
+  > Past Pit
+      Any of the following:
+          Movement (Hypermode) or Can Use Bombs
+          Can Use Power Bombs and Can Use Springball
+
+> Past Pit; Heals? False
+  * Layers: default
   > Pickup (Energy Tank)
-      Can Use Any Bombs
+      Morph Ball
   > Other to Nightmare Arena
       Morph Ball
 
@@ -951,9 +1023,11 @@ Extra - room_id: 36
   * Open Hatch to Arctic Containment/Door to Crow's Nest
   * Extra - door_idx: 87
   > Pickup (Hidden Power Bomb Tank)
-      Can Use Any Bombs and Can climb High Jump Wall
+      All of the following:
+          Morph Ball and Can climb High Jump Wall
+          Screw Attack or Can Use Any Bombs
   > Door to Connection to Sector 3 (PYR)
-      Can climb High Jump Wall
+      Trivial
   > Door to Data Room (D)
       Trivial
 
@@ -990,11 +1064,15 @@ Extra - room_id: 38
   * Layers: default
   * L0 Hatch to Kago Blockade/Door to Save Room South
   * Extra - door_idx: 45
+  > Door to Groznyj Shaft
+      Trivial
 
 > Door to Groznyj Shaft; Heals? False
   * Layers: default
   * L0 Hatch to Groznyj Shaft/Door to Save Room South
   * Extra - door_idx: 46
+  > Door to Kago Blockade
+      Trivial
 
 ----------------
 Kago Blockade
@@ -1004,11 +1082,15 @@ Extra - room_id: 39
   * Layers: default
   * L0 Hatch to Security Shaft East/Door to Kago Blockade
   * Extra - door_idx: 43
+  > Door to Save Room South
+      Trivial
 
 > Door to Save Room South; Heals? False
   * Layers: default
   * L0 Hatch to Save Room South/Door to Kago Blockade
   * Extra - door_idx: 44
+  > Door to Security Shaft East
+      Trivial
 
 ----------------
 Kago Blockade (D)
@@ -1116,7 +1198,9 @@ Extra - room_id: 45
   * L0 Hatch to Zebesian Waters/Door to Flooded Tower
   * Extra - door_idx: 112
   > Beside Missile Block
-      Gravity Suit and Space Jump
+      Any of the following:
+          Can Freeze Enemies
+          Gravity Suit and Space Jump
 
 > Beside Missile Block; Heals? False
   * Layers: default
@@ -1145,7 +1229,7 @@ Extra - room_id: 46
   > Door to Flooded Tower
       Plasma Beam or Combat (Intermediate) or Normal Damage ≥ 75
   > Door to Flooded Access
-      Gravity Suit and High Jump
+      Trivial
 
 > Door to Flooded Access; Heals? False
   * Layers: default
@@ -1230,5 +1314,7 @@ Extra - room_id: 51
   * Tunnel to Frozen Tower/Other to Transformation Trial
   * Extra - door_idx: 47
   > Pickup (Hidden Missile Tank)
-      High Jump and Can Freeze Enemies
+      All of the following:
+          Can Freeze Enemies
+          High Jump or Movement (Intermediate)
 
