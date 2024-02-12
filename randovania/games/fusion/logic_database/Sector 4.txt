@@ -155,10 +155,10 @@ Extra - room_id: [4]
   * Layers: default
   * L4 Hatch to Powamp Place/Door to Data Room
   * Extra - door_idx: (10,)
-  > Data (Diffusion Missiles)
+  > Pickup (Diffusion Missiles)
       Trivial
 
-> Data (Diffusion Missiles); Heals? False
+> Pickup (Diffusion Missiles); Heals? False
   * Layers: default
   * Pickup 103; Category? Major
   > Door to Powamp Place
@@ -905,7 +905,7 @@ Extra - room_id: [26]
   * Layers: default
   * L4 Hatch to Security Access/Door to Level 4 Security Room
   * Extra - door_idx: (52,)
-  > Doors Unlocked
+  > Event - Level 4 Doors Unlocked
       Trivial
 
 > Other to Security Bypass; Heals? False
@@ -915,7 +915,7 @@ Extra - room_id: [26]
   > Door to Security Access
       Trivial
 
-> Doors Unlocked; Heals? False
+> Event - Level 4 Doors Unlocked; Heals? False
   * Layers: default
   * Event Level 4 Locks
   > Door to Security Access
@@ -1067,10 +1067,10 @@ Extra - room_id: [33]
   * Layers: default
   > Pickup (Missile Tank)
       Morph Ball
-  > Use Terminal
+  > Event - Pump Control Terminal
       Trivial
 
-> Use Terminal; Heals? False
+> Event - Pump Control Terminal; Heals? False
   * Layers: default
   * Event Water Level Lowered
   > Behind Speed Blocks
@@ -1338,7 +1338,7 @@ Extra - room_id: [42]
   > Arena
       Trivial
 
-> Serris; Heals? False
+> Event - Serris; Heals? False
   * Layers: default
   * Event Serris
   > Pickup (Speed Booster)
@@ -1356,7 +1356,7 @@ Extra - room_id: [42]
       After Serris
   > Door to Broken Bridge
       After Serris
-  > Serris
+  > Event - Serris
       Missiles ≥ 10
 
 ----------------
