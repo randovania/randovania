@@ -27,7 +27,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Logic Database
 
-- Added: 29 New videos to the database, bringing the 
+- Added: 34 new Videos to the Database
 
 ##### Chozo Ruins
 
