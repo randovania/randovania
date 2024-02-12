@@ -49,7 +49,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Elevator Access A: Hypermode Bombless Spiderless Climb from Elevator A
 - Added: Elevator Access A: Expert Movement logic for climbing without Wave Beam
 - Changed: Phazon Processing Center: Item to Maintenance Tunnel L-Jump now has proper X-Ray logic
-- Changed: Phazon Processing Center: Item to Maitenance Tunnel Complex Bomb Jump has been properly replaced with Bomb Jump
+- Changed: Phazon Processing Center: Item to Maintenance Tunnel Complex Bomb Jump has been properly replaced with Bomb Jump
 
 ##### Phendrana Drifts
 
