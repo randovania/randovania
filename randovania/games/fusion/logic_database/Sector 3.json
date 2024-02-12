@@ -110,38 +110,10 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Entrance Recharge Room": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "HighJump",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "SpaceJump",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "SpeedBooster",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "items": []
                             }
                         },
                         "Door to Checkpoint Shaft": {
@@ -594,18 +566,39 @@
                     "valid_starting_location": false,
                     "connections": {
                         "Pickup (Hidden Missile Tank)": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "resource",
+                                        "type": "and",
                                         "data": {
-                                            "type": "items",
-                                            "name": "SpeedBooster",
-                                            "amount": 1,
-                                            "negate": false
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "SpeedBooster",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "ShinesparkTrick",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Can climb High Jump Wall"
                                     }
                                 ]
                             }
@@ -649,8 +642,37 @@
                                         }
                                     },
                                     {
-                                        "type": "template",
-                                        "data": "Can Use Any Bombs"
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Use Bombs"
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Use Springball"
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Movement",
+                                                                    "amount": 3,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -841,6 +863,15 @@
                                         "data": {
                                             "type": "items",
                                             "name": "WaveBeam",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "MorphBall",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -1097,7 +1128,23 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Can Use Any Bombs"
+                                        "data": "Can Use Bombs"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Use Power Bombs"
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Use Springball"
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -1254,11 +1301,21 @@
                     "pickup_index": 44,
                     "location_category": "minor",
                     "connections": {
-                        "Other to Entrance Hub": {
-                            "type": "and",
+                        "Above E-Tank": {
+                            "type": "or",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "MorphBall",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -1280,16 +1337,11 @@
                     "pickup_index": 45,
                     "location_category": "minor",
                     "connections": {
-                        "Other to Entrance Hub": {
-                            "type": "or",
+                        "Above E-Tank": {
+                            "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Can Use Any Bombs"
-                                    }
-                                ]
+                                "items": []
                             }
                         }
                     }
@@ -1322,35 +1374,23 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Pickup (Hidden Energy Tank)": {
+                        "Below E-Tank": {
                             "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "template",
-                                        "data": "Can Use Any Bombs"
-                                    }
-                                ]
-                            }
-                        },
-                        "Door to Deserted Runway": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Can Use Any Bombs"
-                                    },
-                                    {
                                         "type": "resource",
                                         "data": {
                                             "type": "items",
-                                            "name": "SpaceJump",
+                                            "name": "ScrewAttack",
                                             "amount": 1,
                                             "negate": false
                                         }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Can Use Any Bombs"
                                     }
                                 ]
                             }
@@ -1385,7 +1425,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Pickup (Power Bomb Tank)": {
+                        "Above E-Tank": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1398,6 +1438,139 @@
                                             "amount": 1,
                                             "negate": false
                                         }
+                                    }
+                                ]
+                            }
+                        },
+                        "Bottom Right": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Above E-Tank": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 420.4296757817007,
+                        "y": 249.82854505595938,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Pickup (Power Bomb Tank)": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Use Power Bombs"
+                                    }
+                                ]
+                            }
+                        },
+                        "Pickup (Hidden Energy Tank)": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "ScrewAttack",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Can Use Any Bombs"
+                                    }
+                                ]
+                            }
+                        },
+                        "Below E-Tank": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "ScrewAttack",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Can Use Any Bombs"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Below E-Tank": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 408.799353871005,
+                        "y": 90.23468328141223,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Other to Entrance Hub": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "ScrewAttack",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Use Bombs"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "HighJump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     },
                                     {
                                         "type": "template",
@@ -1406,7 +1579,79 @@
                                 ]
                             }
                         },
-                        "Other to Entrance Hub": {
+                        "Above E-Tank": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "SpaceJump",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "HighJump",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "WallJump",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "ScrewAttack",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Can Activate Pillar"
+                                    }
+                                ]
+                            }
+                        },
+                        "Bottom Right": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -1414,6 +1659,73 @@
                                     {
                                         "type": "template",
                                         "data": "Can Use Any Bombs"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Bottom Right": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 654.9745009807315,
+                        "y": 108.32629514249453,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Deserted Runway": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can climb High Jump Wall"
+                                    }
+                                ]
+                            }
+                        },
+                        "Below E-Tank": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "MorphBall",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Use Any Bombs"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "ScrewAttack",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -1544,13 +1856,8 @@
                                             "comment": null,
                                             "items": [
                                                 {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "SpaceJump",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
+                                                    "type": "template",
+                                                    "data": "Can climb High Jump Wall"
                                                 },
                                                 {
                                                     "type": "resource",
@@ -1778,17 +2085,7 @@
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "VariaSuit",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "items": []
                             }
                         },
                         "Door to Processing Access": {
@@ -1839,17 +2136,7 @@
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "VariaSuit",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "items": []
                             }
                         }
                     }
@@ -2088,10 +2375,24 @@
                             }
                         },
                         "Door to Sova Suite": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Freeze Enemies"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "SpaceJump",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -2291,23 +2592,6 @@
                                                                 }
                                                             }
                                                         ]
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "VariaSuit",
-                                                        "amount": 1,
-                                                        "negate": false
                                                     }
                                                 }
                                             ]
@@ -2705,7 +2989,15 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Door to Data Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Door to Data Room": {
                     "node_type": "dock",
@@ -2734,7 +3026,15 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Door to B.O.X. Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -2887,8 +3187,25 @@
                                         }
                                     },
                                     {
-                                        "type": "template",
-                                        "data": "Can climb High Jump Wall"
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "SpaceJump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Freeze Enemies"
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -2909,7 +3226,32 @@
                                     },
                                     {
                                         "type": "template",
-                                        "data": "Can climb High Jump Wall"
+                                        "data": "Can Use Springball"
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Can Use Bombs"
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "SpaceJump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Freeze Enemies"
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -3210,7 +3552,41 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Data (Super Missiles)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Data (Super Missiles)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 181.18,
+                        "y": 73.82,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "pickup_index": 112,
+                    "location_category": "major",
+                    "connections": {
+                        "Door to B.O.X. Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -3663,7 +4039,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Event - Thermal Control?": {
+                        "Event - Cooling Unit": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3758,7 +4134,7 @@
                         }
                     }
                 },
-                "Event - Thermal Control?": {
+                "Event - Cooling Unit": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -3772,7 +4148,7 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "event_name": "Animals",
+                    "event_name": "Cooling",
                     "connections": {
                         "Door to Main Boiler": {
                             "type": "and",
@@ -4264,16 +4640,24 @@
                                         }
                                     },
                                     {
-                                        "type": "template",
-                                        "data": "Can Use Any Bombs"
-                                    },
-                                    {
-                                        "type": "resource",
+                                        "type": "or",
                                         "data": {
-                                            "type": "items",
-                                            "name": "ChargeBeam",
-                                            "amount": 1,
-                                            "negate": false
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Activate Pillar"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "SpaceJump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -4291,10 +4675,6 @@
                             "data": {
                                 "comment": null,
                                 "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Can Use Any Bombs"
-                                    },
                                     {
                                         "type": "resource",
                                         "data": {
@@ -4343,42 +4723,12 @@
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "template",
-                                        "data": "Can Use Any Bombs"
-                                    },
-                                    {
                                         "type": "resource",
                                         "data": {
                                             "type": "items",
                                             "name": "ScrewAttack",
                                             "amount": 1,
                                             "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "HighJump",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "SpaceJump",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
                                         }
                                     }
                                 ]
@@ -4422,7 +4772,15 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Door to Main Boiler Control Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Door to Main Boiler Control Room": {
                     "node_type": "dock",
@@ -4451,7 +4809,15 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Door to Boiler Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -4483,7 +4849,21 @@
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "MorphBall",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Can climb High Jump Wall"
+                                    }
+                                ]
                             }
                         }
                     }
@@ -4526,8 +4906,20 @@
                                         "data": "Can Use Power Bombs"
                                     },
                                     {
-                                        "type": "template",
-                                        "data": "Can climb High Jump Wall"
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can climb High Jump Wall"
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Freeze Enemies"
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -4967,6 +5359,15 @@
                                     {
                                         "type": "template",
                                         "data": "Can Use Any Bombs"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "ScrewAttack",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
                                     }
                                 ]
                             }
@@ -5054,6 +5455,15 @@
                                     {
                                         "type": "template",
                                         "data": "Can Use Any Bombs"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "ScrewAttack",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
                                     }
                                 ]
                             }

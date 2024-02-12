@@ -18,7 +18,7 @@ Extra - room_id: 0
   * Open Hatch to Security Access/Door to Entrance Hub
   * Extra - door_idx: 2
   > Door to Entrance Recharge Room
-      High Jump or Space Jump or Speed Booster
+      Trivial
   > Door to Checkpoint Shaft
       Trivial
 
@@ -111,13 +111,17 @@ Extra - room_id: 3
 > Behind Wall; Heals? False
   * Layers: default
   > Pickup (Hidden Missile Tank)
-      Speed Booster
+      Any of the following:
+          Can climb High Jump Wall
+          Speed Booster and Shinespark Tricks (Beginner)
   > Door to Entrance Hub
       Speed Booster
   > Door to Level 2 Security Room
       Trivial
   > Other to Level 2 Security Room
-      Speed Booster and Can Use Any Bombs
+      All of the following:
+          Speed Booster
+          Movement (Advanced) or Can Use Bombs or Can Use Springball
 
 ----------------
 Level 2 Security Room
@@ -154,7 +158,7 @@ Extra - room_id: 5
   > Door to Bob Room
       Can Freeze Enemies or Can climb High Jump Wall
   > Door to Namihe's Abode
-      Missiles ≥ 5 or Wave Beam or Can Freeze Enemies
+      Missiles ≥ 5 or Morph Ball or Wave Beam or Can Freeze Enemies
 
 > Door to Bob Room; Heals? False
   * Layers: default
@@ -203,7 +207,9 @@ Extra - room_id: 6
   > Pickup (Missile Tank)
       Can Use Any Bombs
   > Door to B.O.X. Access
-      Can Use Any Bombs
+      Any of the following:
+          Can Use Bombs
+          Can Use Power Bombs and Can Use Springball
   > Other to Namihe's Abode
       Can Use Any Bombs
 
@@ -237,32 +243,65 @@ Extra - room_id: 8
 > Pickup (Power Bomb Tank); Heals? False
   * Layers: default
   * Pickup 44; Category? Minor
-  > Other to Entrance Hub
-      Trivial
+  > Above E-Tank
+      Morph Ball
 
 > Pickup (Hidden Energy Tank); Heals? False
   * Layers: default
   * Pickup 45; Category? Minor
-  > Other to Entrance Hub
-      Can Use Any Bombs
+  > Above E-Tank
+      Trivial
 
 > Other to Entrance Hub; Heals? False
   * Layers: default
   * Tunnel to Entrance Hub/Other to Alcove
   * Extra - door_idx: 17
-  > Pickup (Hidden Energy Tank)
-      Can Use Any Bombs
-  > Door to Deserted Runway
-      Space Jump and Can Use Any Bombs
+  > Below E-Tank
+      Screw Attack or Can Use Any Bombs
 
 > Door to Deserted Runway; Heals? False
   * Layers: default
   * L0 Hatch to Deserted Runway/Door to Alcove
   * Extra - door_idx: 18
+  > Above E-Tank
+      Speed Booster
+  > Bottom Right
+      Trivial
+
+> Above E-Tank; Heals? False
+  * Layers: default
   > Pickup (Power Bomb Tank)
-      Speed Booster and Can Use Power Bombs
+      Can Use Power Bombs
+  > Pickup (Hidden Energy Tank)
+      Screw Attack or Can Use Any Bombs
+  > Below E-Tank
+      Screw Attack or Can Use Any Bombs
+
+> Below E-Tank; Heals? False
+  * Layers: default
   > Other to Entrance Hub
+      Any of the following:
+          Screw Attack or Can Use Power Bombs
+          High Jump and Can Use Bombs
+  > Above E-Tank
+      Any of the following:
+          Can Activate Pillar
+          All of the following:
+              Screw Attack
+              Any of the following:
+                  Space Jump
+                  High Jump and Wall Jump (Intermediate)
+  > Bottom Right
       Can Use Any Bombs
+
+> Bottom Right; Heals? False
+  * Layers: default
+  > Door to Deserted Runway
+      Can climb High Jump Wall
+  > Below E-Tank
+      All of the following:
+          Morph Ball
+          Screw Attack or Can Use Any Bombs
 
 ----------------
 Deserted Runway
@@ -287,7 +326,7 @@ Extra - room_id: 9
   > Door to Connection to Sector 1 (SRX)
       All of the following:
           Screw Attack
-          Space Jump or Speed Booster
+          Speed Booster or Can climb High Jump Wall
 
 > Other to B.O.X. Arena (D); Heals? False
   * Layers: default
@@ -326,7 +365,7 @@ Extra - room_id: 10
   * L2 Hatch to Lava Reservoirs/Door to Fune Tower
   * Extra - door_idx: 21
   > Door to Namihe's Abode
-      Varia Suit
+      Trivial
   > Door to Processing Access
       Trivial
 
@@ -337,7 +376,7 @@ Extra - room_id: 10
   > Door to Bob Room
       Trivial
   > Door to Lava Reservoirs
-      Varia Suit
+      Trivial
 
 > Door to Processing Access; Heals? False
   * Layers: default
@@ -381,7 +420,7 @@ Extra - room_id: 12
   > Pickup (Power Bomb Tank)
       Gravity Suit and Varia Suit and Can Use Power Bombs
   > Door to Sova Suite
-      Trivial
+      Space Jump or Can Freeze Enemies
 
 > Door to Sova Suite; Heals? False
   * Layers: default
@@ -417,11 +456,9 @@ Extra - room_id: 14
   * L0 Hatch to Sova Suite/Door to Pyrochamber Access
   * Extra - door_idx: 28
   > Door to Pyrochamber
-      All of the following:
-          Varia Suit
-          Any of the following:
-              Space Jump
-              High Jump and Can Freeze Enemies
+      Any of the following:
+          Space Jump
+          High Jump and Can Freeze Enemies
 
 > Door to Pyrochamber; Heals? False
   * Layers: default
@@ -500,11 +537,15 @@ Extra - room_id: 18
   * Layers: default
   * L0 Hatch to B.O.X. Access/Door to B.O.X. Arena
   * Extra - door_idx: 36
+  > Door to Data Room
+      Trivial
 
 > Door to Data Room; Heals? False
   * Layers: default
   * L2 Hatch to Data Room/Door to B.O.X. Arena
   * Extra - door_idx: 43
+  > Door to B.O.X. Access
+      Trivial
 
 ----------------
 Sova Processing
@@ -534,9 +575,13 @@ Extra - room_id: 19
   * L0 Hatch to Processing Access/Door to Sova Processing
   * Extra - door_idx: 75
   > Pickup (Energy Tank)
-      Morph Ball and Can climb High Jump Wall
+      All of the following:
+          Morph Ball
+          Space Jump or Can Freeze Enemies
   > Pickup (Missile Tank)
-      Morph Ball and Can climb High Jump Wall
+      All of the following:
+          Morph Ball and Can Use Bombs and Can Use Springball
+          Space Jump or Can Freeze Enemies
   > Door to Processing Access
       Trivial
   > Door to Garbage Chute
@@ -584,6 +629,14 @@ Extra - room_id: 21
   * Layers: default
   * L2 Hatch to B.O.X. Arena/Door to Data Room
   * Extra - door_idx: 44
+  > Data (Super Missiles)
+      Trivial
+
+> Data (Super Missiles); Heals? False
+  * Layers: default
+  * Pickup 112; Category? Major
+  > Door to B.O.X. Arena
+      Trivial
 
 ----------------
 B.O.X. Access (D)
@@ -667,7 +720,7 @@ Extra - room_id: 25
   * Layers: default
   * L0 Hatch to Main Boiler/Door to Main Boiler Control Room
   * Extra - door_idx: 50
-  > Event - Thermal Control?
+  > Event - Cooling Unit
       After Wide X
   > Event - Wide Core-X
       All of the following:
@@ -677,9 +730,9 @@ Extra - room_id: 25
           # Normal DMG
           Combat (Beginner) or Normal Damage ≥ 100
 
-> Event - Thermal Control?; Heals? False
+> Event - Cooling Unit; Heals? False
   * Layers: default
-  * Event Animals
+  * Event Cooling Unit Operational
   > Door to Main Boiler
       Trivial
 
@@ -764,20 +817,20 @@ Extra - room_id: 28
   * L0 Hatch to Monkey Bars of Fire/Door to Fiery Storage
   * Extra - door_idx: 56
   > Pickup (Energy Tank)
-      Charge Beam and Speed Booster and Can Use Any Bombs
+      All of the following:
+          Speed Booster
+          Space Jump or Can Activate Pillar
   > Pickup (Missile Tank)
       Trivial
   > Door to Connection to Sector 6 (NOC)
-      Screw Attack and Can Use Any Bombs
+      Screw Attack
 
 > Door to Connection to Sector 6 (NOC); Heals? False
   * Layers: default
   * L0 Hatch to Connection to Sector 6 (NOC)/Door to Fiery Storage
   * Extra - door_idx: 87
   > Door to Monkey Bars of Fire
-      All of the following:
-          Screw Attack and Can Use Any Bombs
-          High Jump or Space Jump
+      Screw Attack
 
 ----------------
 Main Boiler (C)
@@ -787,11 +840,15 @@ Extra - room_id: 29
   * Layers: default
   * L0 Hatch to Boiler Access/Door to Main Boiler
   * Extra - door_idx: 72
+  > Door to Main Boiler Control Room
+      Trivial
 
 > Door to Main Boiler Control Room; Heals? False
   * Layers: default
   * L0 Hatch to Main Boiler Control Room/Door to Main Boiler
   * Extra - door_idx: 73
+  > Door to Boiler Access
+      Trivial
 
 ----------------
 Namihe's Abode
@@ -801,14 +858,16 @@ Extra - room_id: 30
   * Layers: default
   * Pickup 52; Category? Minor
   > Door to Fune Tower
-      Trivial
+      Morph Ball and Can climb High Jump Wall
 
 > Door to Fune Tower; Heals? False
   * Layers: default
   * L0 Hatch to Fune Tower/Door to Namihe's Abode
   * Extra - door_idx: 58
   > Pickup (Power Bomb Tank)
-      Can Use Power Bombs and Can climb High Jump Wall
+      All of the following:
+          Can Use Power Bombs
+          Can Freeze Enemies or Can climb High Jump Wall
 
 > Other to Bob Room; Heals? False
   * Layers: default
@@ -894,7 +953,7 @@ Extra - room_id: 34
   * L0 Hatch to Sova Processing/Door to Processing Access
   * Extra - door_idx: 39
   > Door to Fune Tower
-      Can Use Any Bombs
+      Screw Attack or Can Use Any Bombs
   > Door to Sova Processing (74)
       Any of the following:
           Space Jump
@@ -907,7 +966,7 @@ Extra - room_id: 34
   > Pickup (Hidden Missile Tank)
       Trivial
   > Door to Sova Processing
-      Can Use Any Bombs
+      Screw Attack or Can Use Any Bombs
 
 > Door to Sova Processing (74); Heals? False
   * Layers: default
