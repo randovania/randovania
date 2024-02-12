@@ -16,9 +16,7 @@ Extra - room_id: [0]
   > Door to Entrance Recharge Room
       Trivial
   > Door to Nightmare Training Grounds
-      All of the following:
-          Missiles and Morph Ball
-          High Jump or Space Jump
+      Missiles and Morph Ball and Can climb High Jump Wall
   > Door to Gerubus Gully
       Trivial
 
@@ -149,9 +147,9 @@ Extra - room_id: [5]
   * Extra - door_idx: (52,)
   > Door to Frozen Tower
       Trivial
-  > Data (Ice Missiles)
+  > Pickup (Ice Missiles)
       Trivial
-  > Data (Power Bombs)
+  > Pickup (Power Bombs)
       Trivial
 
 > Door to Frozen Tower; Heals? False
@@ -161,13 +159,13 @@ Extra - room_id: [5]
   > Door to Data Checkpoint
       Trivial
 
-> Data (Ice Missiles); Heals? False
+> Pickup (Ice Missiles); Heals? False
   * Layers: default
   * Pickup 114; Category? Major
   > Door to Data Checkpoint
       Trivial
 
-> Data (Power Bombs); Heals? False
+> Pickup (Power Bombs); Heals? False
   * Layers: default
   * Pickup 113; Category? Major
   > Door to Data Checkpoint
@@ -224,16 +222,16 @@ Extra - room_id: [7]
   * L0 Hatch to Nightmare Training Grounds/Door to Arctic Containment
   * Extra - door_idx: (14,)
   > Door to Data Checkpoint
-      Trivial
+      Varia Suit
   > Door to Crow's Nest
-      Trivial
+      Varia Suit
 
 > Door to Geron Checkpoint; Heals? False
   * Layers: default
   * L0 Hatch to Geron Checkpoint/Door to Arctic Containment
   * Extra - door_idx: (15,)
   > Door to Data Checkpoint
-      High Jump or Space Jump or Speed Booster
+      Speed Booster or Can climb High Jump Wall
   > Door to Artic Underside
       Speed Booster
 
@@ -249,27 +247,25 @@ Extra - room_id: [7]
   * L0 Hatch to Data Checkpoint/Door to Arctic Containment
   * Extra - door_idx: (30,)
   > Door to Nightmare Training Grounds
-      High Jump or Space Jump
+      Can climb High Jump Wall
   > Door to Geron Checkpoint
       Trivial
   > Door to Ripper Road
-      Can Use Any Bombs
+      Can Use Power Bombs
 
 > Door to Ripper Road; Heals? False
   * Layers: default
   * L0 Hatch to Ripper Road/Door to Arctic Containment
   * Extra - door_idx: (56,)
   > Door to Data Checkpoint
-      Can Use Any Bombs
+      Can Use Power Bombs
 
 > Door to Artic Underside; Heals? False
   * Layers: default
   * L3 Hatch to Artic Underside/Door to Arctic Containment
   * Extra - door_idx: (99,)
   > Door to Geron Checkpoint
-      All of the following:
-          Morph Ball
-          High Jump or Space Jump
+      Morph Ball and Can climb High Jump Wall
   > Door to Waver Ward
       Can Use Any Bombs
 
@@ -945,7 +941,7 @@ Extra - room_id: [33]
   * Extra - door_idx: (82,)
   > Pickup (Hidden Missile Tank)
       Any of the following:
-          Can Use Power Bombs
+          Can Use Any Bombs
           Screw Attack and Knowledge (Beginner)
   > Door to Nightmare Training Grounds
       Trivial
@@ -1027,7 +1023,7 @@ Extra - room_id: [36]
           Morph Ball and Can climb High Jump Wall
           Screw Attack or Can Use Any Bombs
   > Door to Connection to Sector 3 (PYR)
-      Trivial
+      Wall Jump (Beginner) or Can climb High Jump Wall
   > Door to Data Room (D)
       Trivial
 
@@ -1164,16 +1160,24 @@ Extra - room_id: [44]
   * Layers: default
   * L0 Hatch to Energy Tank Storage/Door to Frozen Tower
   * Extra - door_idx: (94,)
+  > Door to Groznyj Shaft
+      Trivial
 
 > Door to Groznyj Shaft; Heals? False
   * Layers: default
   * L3 Hatch to Groznyj Shaft/Door to Frozen Tower
   * Extra - door_idx: (95,)
+  > Door to Energy Tank Storage
+      Space Jump or Can Freeze Enemies
+  > Other to Transformation Trial
+      Can Use Bombs or Can Use Springball
 
 > Other to Transformation Trial; Heals? False
   * Layers: default
   * Tunnel to Transformation Trial/Other to Frozen Tower
   * Extra - door_idx: (96,)
+  > Door to Groznyj Shaft
+      Trivial
 
 ----------------
 Flooded Tower
@@ -1205,7 +1209,11 @@ Extra - room_id: [45]
 > Beside Missile Block; Heals? False
   * Layers: default
   > Door to Ruined Corridor
-      Gravity Suit and Screw Attack and Space Jump
+      All of the following:
+          Screw Attack
+          Any of the following:
+              Wall Jump (Hypermode)
+              Gravity Suit and Space Jump
   > Other to Mini-Fridge
       Missiles
   > Door to Zebesian Waters
