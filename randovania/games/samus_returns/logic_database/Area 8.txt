@@ -36,10 +36,10 @@ Extra - asset_id: collision_camera_007
       Morph Ball
 
 ----------------
-Transport to Surface West
+Transport to Surface
 Extra - total_boundings: {'x1': -12400.0, 'x2': 7150.0, 'y1': 11000.0, 'y2': 27400.0}
 Extra - polygon: [[-12400.0, 27400.0], [-12400.0, 11000.0], [-6900.0, 11000.0], [-6900.0, 19500.0], [-3100.0, 20900.0], [-1000.0, 20900.0], [100.0, 21600.0], [7150.0, 21600.0], [7150.0, 27400.0]]
-Extra - asset_id: collision_camera_008_A
+Extra - asset_id: collision_camera_007
 > Pickup (Missile Tank); Heals? False
   * Layers: default
   * Pickup 165; Category? Minor
@@ -83,7 +83,7 @@ Extra - asset_id: collision_camera_008_A
   * Extra - actor_name: LE_Platform_SaveStation_005
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: ST_SaveStation_005
-  > Dock to Queen Arena
+  > Dock to Hatchling Room
       All of the following:
           Baby Metroid
           Any of the following:
@@ -104,9 +104,9 @@ Extra - asset_id: collision_camera_008_A
                       Spiderspark (Intermediate) and Can Spiderspark
                       Infinite Bomb Jump (Advanced) and Lay Any Bomb
 
-> Dock to Queen Arena; Heals? False
+> Dock to Hatchling Room; Heals? False
   * Layers: default
-  * Open Passage to Queen Arena/Dock to Transport to Surface West
+  * Open Passage to Hatchling Room/Dock to Transport to Surface
   > Save Station
       Any of the following:
           Normal Damage ≥ 199 and Defeat Gold Robots
@@ -1044,49 +1044,28 @@ Extra - asset_id: collision_camera_021
 
 ----------------
 Queen Arena
-Extra - total_boundings: {'x1': -7000.0, 'x2': 1600.0, 'y1': 11100.0, 'y2': 12500.0}
-Extra - polygon: [[-7000.0, 11100.0], [1600.0, 11100.0], [1600.0, 12500.0], [-7000.0, 12500.0]]
-Extra - asset_id: collision_camera_022
+Extra - total_boundings: {'x1': -2600.0, 'x2': 1600.0, 'y1': 11100.0, 'y2': 12500.0}
+Extra - polygon: [[-2600.0, 11100.0], [1600.0, 11100.0], [1600.0, 12500.0], [-2600.0, 12500.0]]
+Extra - asset_id: collision_camera_020
 > Dock to Queen Arena Access; Heals? False
   * Layers: default
   * Open Passage to Queen Arena Access/Dock to Queen Arena
-  > Room Center
-      After Area 8 - Queen Metroid or Enabled Remove Queen Wall
   > Before Queen
       After Area 8 - Larva Metroid 1 and After Area 8 - Larva Metroid 10 and After Area 8 - Larva Metroid 2 and After Area 8 - Larva Metroid 3 and After Area 8 - Larva Metroid 4 and After Area 8 - Larva Metroid 5 and After Area 8 - Larva Metroid 6 and After Area 8 - Larva Metroid 7 and After Area 8 - Larva Metroid 8 and After Area 8 - Larva Metroid 9
+  > Dock to Hatchling Room
+      Any of the following:
+          After Area 8 - Queen Metroid
+          Before Area 8 - Queen Metroid and Enabled Remove Queen Wall
 
 > Tunnel to Queen Arena Access; Heals? False
   * Layers: default
   * Tunnel with Bomb Block to Queen Arena Access/Tunnel to Queen Arena
 
-> Dock to Transport to Surface West; Heals? False
-  * Layers: default
-  * Open Passage to Transport to Surface West/Dock to Queen Arena
-  > Room Center
-      After Area 8 - Queen Metroid or Enabled Remove Queen Wall
-
-> Pickup (Baby Metroid); Heals? False
-  * Layers: default
-  * Pickup 171; Category? Major
-  * Extra - actor_name: LE_Baby_Hatchling
-  * Extra - actor_type: ITEM_BABY_HATCHLING
-  > Room Center
-      Trivial
-
 > Event - Queen Metroid; Heals? False
   * Layers: default
   * Event Area 8 - Queen Metroid
-  > Room Center
+  > Dock to Hatchling Room
       Trivial
-
-> Room Center; Heals? False
-  * Layers: default
-  > Tunnel to Queen Arena Access
-      Screw Attack and Space Jump
-  > Dock to Transport to Surface West
-      Baby Metroid
-  > Pickup (Baby Metroid)
-      After Area 8 - Queen Metroid
 
 > Before Queen; Heals? False
   * Layers: default
@@ -1121,6 +1100,46 @@ Extra - asset_id: collision_camera_022
               Use Spider Ball
               # Launch into head to end attack early
               Combat (Intermediate) and Spiderspark (Intermediate) and Can Spiderspark
+
+> Dock to Hatchling Room; Heals? False
+  * Layers: default
+  * Open Passage to Hatchling Room/Dock to Queen Arena
+  > Tunnel to Queen Arena Access
+      Screw Attack and Space Jump
+
+----------------
+Hatchling Room
+Extra - total_boundings: {'x1': -7000.0, 'x2': -2500.0, 'y1': 11100.0, 'y2': 12200.0}
+Extra - polygon: [[-7000.0, 11100.0], [-2500.0, 11100.0], [-2500.0, 12200.0], [-7000.0, 12200.0]]
+Extra - asset_id: collision_camera_020
+> Dock to Queen Arena; Heals? False
+  * Layers: default
+  * Open Passage to Queen Arena/Dock to Hatchling Room
+  > Room Center
+      Trivial
+
+> Dock to Transport to Surface; Heals? False
+  * Layers: default
+  * Open Passage to Transport to Surface/Dock to Hatchling Room
+  > Room Center
+      Trivial
+
+> Pickup (Baby Metroid); Heals? False
+  * Layers: default
+  * Pickup 171; Category? Major
+  * Extra - actor_name: LE_Baby_Hatchling
+  * Extra - actor_type: ITEM_BABY_HATCHLING
+  > Room Center
+      Trivial
+
+> Room Center; Heals? False
+  * Layers: default
+  > Dock to Queen Arena
+      After Area 8 - Queen Metroid or Enabled Remove Queen Wall
+  > Dock to Transport to Surface
+      Baby Metroid
+  > Pickup (Baby Metroid)
+      After Area 8 - Queen Metroid
 
 ----------------
 Entrance Teleporter Access
