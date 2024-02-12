@@ -352,8 +352,8 @@
                 "room_id": 4
             },
             "nodes": {
-                "Door to Docking Bay Hangar (D)": {
-                    "node_type": "dock",
+                "Docking Bay Hangar (D)": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": {
                         "x": 504.0,
@@ -368,21 +368,10 @@
                         "door_idx": 4
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Door",
-                    "default_connection": {
-                        "region": "Main Deck",
-                        "area": "Docking Bay Hangar (D)",
-                        "node": "Door to Docking Bay Access"
-                    },
-                    "default_dock_weakness": "Open Hatch",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
                     "connections": {}
                 },
-                "Door to Docking Bay Shaft": {
-                    "node_type": "dock",
+                "Docking Bay Shaft": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": {
                         "x": 40.0,
@@ -397,17 +386,6 @@
                         "door_idx": 9
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Door",
-                    "default_connection": {
-                        "region": "Main Deck",
-                        "area": "Docking Bay Shaft",
-                        "node": "Door to Docking Bay Access"
-                    },
-                    "default_dock_weakness": "Open Hatch",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
                     "connections": {}
                 }
             }
@@ -483,7 +461,7 @@
                         }
                     }
                 },
-                "Door to Docking Bay Access (D)": {
+                "Docking Bay Access (D)": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
@@ -1743,14 +1721,14 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Habitation Deck": {
+                        "Door to Habitation Deck (Lower)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Door to Habitation Deck (157)": {
+                        "Door to Habitation Deck (Middle)": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -1790,7 +1768,7 @@
                         }
                     }
                 },
-                "Door to Habitation Deck": {
+                "Door to Habitation Deck (Lower)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1810,7 +1788,7 @@
                     "default_connection": {
                         "region": "Main Deck",
                         "area": "Habitation Deck",
-                        "node": "Door to Habitation Deck Entrance"
+                        "node": "Door to Habitation Deck Entrance (Lower)"
                     },
                     "default_dock_weakness": "L2 Hatch",
                     "exclude_from_dock_rando": false,
@@ -1827,7 +1805,7 @@
                         }
                     }
                 },
-                "Door to Habitation Deck (157)": {
+                "Door to Habitation Deck (Middle)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1847,7 +1825,7 @@
                     "default_connection": {
                         "region": "Main Deck",
                         "area": "Habitation Deck",
-                        "node": "Door to Habitation Deck Entrance"
+                        "node": "Door to Habitation Deck Entrance (Middle)"
                     },
                     "default_dock_weakness": "L2 Hatch",
                     "exclude_from_dock_rando": false,
@@ -1862,7 +1840,7 @@
                                 "items": []
                             }
                         },
-                        "Door to Habitation Deck (158)": {
+                        "Door to Habitation Deck (Upper)": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -1902,7 +1880,7 @@
                         }
                     }
                 },
-                "Door to Habitation Deck (158)": {
+                "Door to Habitation Deck (Upper)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1922,7 +1900,7 @@
                     "default_connection": {
                         "region": "Main Deck",
                         "area": "Habitation Deck",
-                        "node": "Door to Habitation Deck Entrance"
+                        "node": "Door to Habitation Deck Entrance (Upper)"
                     },
                     "default_dock_weakness": "L2 Hatch",
                     "exclude_from_dock_rando": false,
@@ -1930,7 +1908,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Habitation Deck (157)": {
+                        "Door to Habitation Deck (Middle)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2087,7 +2065,7 @@
                     "default_connection": {
                         "region": "Main Deck",
                         "area": "Restricted Labs Navigation Room",
-                        "node": "Door to Restricted Airlock (C)"
+                        "node": "Door to Restricted Airlock (D)"
                     },
                     "default_dock_weakness": "L4 Hatch",
                     "exclude_from_dock_rando": false,
@@ -2116,7 +2094,7 @@
                     "default_connection": {
                         "region": "Main Deck",
                         "area": "Restricted Labs Corridor",
-                        "node": "Door to Restricted Airlock (C)"
+                        "node": "Door to Restricted Airlock (D)"
                     },
                     "default_dock_weakness": "L4 Hatch",
                     "exclude_from_dock_rando": false,
@@ -2453,15 +2431,15 @@
                         "area": "Main Elevator Access",
                         "node": "Door to Elevator to Sector Hub (C)"
                     },
-                    "default_dock_weakness": "L0 Hatch",
+                    "default_dock_weakness": "Open Hatch",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {}
                 },
-                "Other to Main Elevator Shaft": {
-                    "node_type": "dock",
+                "Main Elevator Shaft": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": {
                         "x": 160.0,
@@ -2476,17 +2454,6 @@
                         "door_idx": 49
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Other",
-                    "default_connection": {
-                        "region": "Main Deck",
-                        "area": "Main Elevator Shaft",
-                        "node": "Other to Elevator to Sector Hub"
-                    },
-                    "default_dock_weakness": "Open Passage",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
                     "connections": {}
                 }
             }
@@ -2924,7 +2891,7 @@
                 "room_id": 22
             },
             "nodes": {
-                "Other to Habitation Deck": {
+                "Other to Habitation Deck (Upper)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2944,7 +2911,7 @@
                     "default_connection": {
                         "region": "Main Deck",
                         "area": "Habitation Deck",
-                        "node": "Other to Habitation Maintenance"
+                        "node": "Other to Habitation Maintenance (Upper)"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -2952,7 +2919,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Other to Habitation Deck (47)": {
+                        "Other to Habitation Deck (Lower)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2961,7 +2928,7 @@
                         }
                     }
                 },
-                "Other to Habitation Deck (47)": {
+                "Other to Habitation Deck (Lower)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2981,7 +2948,7 @@
                     "default_connection": {
                         "region": "Main Deck",
                         "area": "Habitation Deck",
-                        "node": "Other to Habitation Maintenance"
+                        "node": "Other to Habitation Maintenance (Lower)"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -2989,7 +2956,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Other to Habitation Deck": {
+                        "Other to Habitation Deck (Upper)": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -4004,8 +3971,8 @@
                 "room_id": 31
             },
             "nodes": {
-                "Other to Main Elevator Shaft (D)": {
-                    "node_type": "dock",
+                "Main Elevator Shaft (D)": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": {
                         "x": 40.0,
@@ -4020,17 +3987,6 @@
                         "door_idx": 64
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Other",
-                    "default_connection": {
-                        "region": "Main Deck",
-                        "area": "Main Elevator Shaft (D)",
-                        "node": "Other to Sub-Zero Ventilation"
-                    },
-                    "default_dock_weakness": "Tunnel",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
                     "connections": {}
                 },
                 "Other to Sub-Zero Containment": {
@@ -5391,7 +5347,7 @@
             },
             "nodes": {
                 "Other to Sub-Zero Ventilation": {
-                    "node_type": "dock",
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": {
                         "x": 264.0,
@@ -5406,21 +5362,10 @@
                         "door_idx": 63
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Other",
-                    "default_connection": {
-                        "region": "Main Deck",
-                        "area": "Sub-Zero Ventilation",
-                        "node": "Other to Main Elevator Shaft (D)"
-                    },
-                    "default_dock_weakness": "Tunnel",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
                     "connections": {}
                 },
                 "Other to Sector Hub": {
-                    "node_type": "dock",
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": {
                         "x": 152.0,
@@ -5435,17 +5380,6 @@
                         "door_idx": 98
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Other",
-                    "default_connection": {
-                        "region": "Main Deck",
-                        "area": "Sector Hub",
-                        "node": "Other to Main Elevator Shaft"
-                    },
-                    "default_dock_weakness": "Open Passage",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
                     "connections": {}
                 }
             }
@@ -7470,8 +7404,8 @@
                 "room_id": 63
             },
             "nodes": {
-                "Door to Docking Bay Access": {
-                    "node_type": "dock",
+                "Docking Bay Access": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": {
                         "x": 40.0,
@@ -7486,17 +7420,6 @@
                         "door_idx": 145
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Door",
-                    "default_connection": {
-                        "region": "Main Deck",
-                        "area": "Docking Bay Access",
-                        "node": "Door to Docking Bay Hangar"
-                    },
-                    "default_dock_weakness": "Open Hatch",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
                     "connections": {}
                 }
             }
@@ -7619,7 +7542,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Restricted Airlock (C)": {
+                        "Door to Restricted Airlock (D)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7628,7 +7551,7 @@
                         }
                     }
                 },
-                "Door to Restricted Airlock (C)": {
+                "Door to Restricted Airlock (D)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7647,7 +7570,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Main Deck",
-                        "area": "Restricted Airlock (C)",
+                        "area": "Restricted Airlock (D)",
                         "node": "Door to Restricted Labs Corridor"
                     },
                     "default_dock_weakness": "L4 Hatch",
@@ -7702,7 +7625,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Restricted Airlock (C)": {
+                        "Door to Restricted Airlock (D)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7711,7 +7634,7 @@
                         }
                     }
                 },
-                "Door to Restricted Airlock (C)": {
+                "Door to Restricted Airlock (D)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7730,7 +7653,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Main Deck",
-                        "area": "Restricted Airlock (C)",
+                        "area": "Restricted Airlock (D)",
                         "node": "Door to Restricted Labs Navigation Room"
                     },
                     "default_dock_weakness": "Open Hatch",
@@ -7867,7 +7790,15 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Other to Overgrown Entrance (C)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Other to Overgrown Entrance (C)": {
                     "node_type": "dock",
@@ -7896,7 +7827,15 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Other to Central Reactor Core": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -7933,7 +7872,7 @@
                         }
                     }
                 },
-                "Door to Habitation Deck Entrance": {
+                "Door to Habitation Deck Entrance (Lower)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7953,7 +7892,7 @@
                     "default_connection": {
                         "region": "Main Deck",
                         "area": "Habitation Deck Entrance",
-                        "node": "Door to Habitation Deck"
+                        "node": "Door to Habitation Deck (Lower)"
                     },
                     "default_dock_weakness": "L2 Hatch",
                     "exclude_from_dock_rando": false,
@@ -7980,7 +7919,7 @@
                         }
                     }
                 },
-                "Door to Habitation Deck Entrance (160)": {
+                "Door to Habitation Deck Entrance (Middle)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8000,7 +7939,7 @@
                     "default_connection": {
                         "region": "Main Deck",
                         "area": "Habitation Deck Entrance",
-                        "node": "Door to Habitation Deck"
+                        "node": "Door to Habitation Deck (Middle)"
                     },
                     "default_dock_weakness": "L2 Hatch",
                     "exclude_from_dock_rando": false,
@@ -8008,7 +7947,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Habitation Deck Entrance": {
+                        "Door to Habitation Deck Entrance (Lower)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8034,7 +7973,7 @@
                         }
                     }
                 },
-                "Door to Habitation Deck Entrance (161)": {
+                "Door to Habitation Deck Entrance (Upper)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8054,7 +7993,7 @@
                     "default_connection": {
                         "region": "Main Deck",
                         "area": "Habitation Deck Entrance",
-                        "node": "Door to Habitation Deck"
+                        "node": "Door to Habitation Deck (Upper)"
                     },
                     "default_dock_weakness": "L2 Hatch",
                     "exclude_from_dock_rando": false,
@@ -8062,14 +8001,14 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Habitation Deck Entrance (160)": {
+                        "Door to Habitation Deck Entrance (Middle)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Other to Habitation Maintenance (163)": {
+                        "Other to Habitation Maintenance (Upper)": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -8095,7 +8034,7 @@
                         }
                     }
                 },
-                "Other to Habitation Maintenance": {
+                "Other to Habitation Maintenance (Lower)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8115,7 +8054,7 @@
                     "default_connection": {
                         "region": "Main Deck",
                         "area": "Habitation Maintenance",
-                        "node": "Other to Habitation Deck"
+                        "node": "Other to Habitation Deck (Lower)"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -8132,7 +8071,7 @@
                         }
                     }
                 },
-                "Other to Habitation Maintenance (163)": {
+                "Other to Habitation Maintenance (Upper)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8152,7 +8091,7 @@
                     "default_connection": {
                         "region": "Main Deck",
                         "area": "Habitation Maintenance",
-                        "node": "Other to Habitation Deck"
+                        "node": "Other to Habitation Deck (Upper)"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -8160,7 +8099,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Habitation Deck Entrance (161)": {
+                        "Door to Habitation Deck Entrance (Upper)": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -8202,7 +8141,7 @@
                     "valid_starting_location": false,
                     "event_name": "Animals",
                     "connections": {
-                        "Other to Habitation Maintenance (163)": {
+                        "Other to Habitation Maintenance (Upper)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8226,7 +8165,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Other to Habitation Maintenance": {
+                        "Other to Habitation Maintenance (Lower)": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -8274,14 +8213,14 @@
                                 "items": []
                             }
                         },
-                        "Door to Habitation Deck Entrance": {
+                        "Door to Habitation Deck Entrance (Lower)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Other to Habitation Maintenance": {
+                        "Other to Habitation Maintenance (Lower)": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -8584,8 +8523,8 @@
                 "room_id": 74
             },
             "nodes": {
-                "Door to Operations Deck Navigation Room": {
-                    "node_type": "dock",
+                "Operations Deck Navigation Room": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": {
                         "x": 40.0,
@@ -8600,21 +8539,10 @@
                         "door_idx": 172
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Door",
-                    "default_connection": {
-                        "region": "Main Deck",
-                        "area": "Operations Deck Navigation Room",
-                        "node": "Door to Operations Deck"
-                    },
-                    "default_dock_weakness": "L0 Hatch",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
                     "connections": {}
                 },
-                "Door to Operations Deck Recharge Room": {
-                    "node_type": "dock",
+                "Operations Deck Recharge Room": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": {
                         "x": 40.0,
@@ -8629,21 +8557,10 @@
                         "door_idx": 173
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Door",
-                    "default_connection": {
-                        "region": "Main Deck",
-                        "area": "Operations Deck Recharge Room",
-                        "node": "Door to Operations Deck"
-                    },
-                    "default_dock_weakness": "L0 Hatch",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
                     "connections": {}
                 },
-                "Door to Elevator to Crew Quarters": {
-                    "node_type": "dock",
+                "to Crew Quarters": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": {
                         "x": 504.0,
@@ -8658,21 +8575,10 @@
                         "door_idx": 174
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Door",
-                    "default_connection": {
-                        "region": "Main Deck",
-                        "area": "Elevator to Crew Quarters",
-                        "node": "Door to Operations Deck"
-                    },
-                    "default_dock_weakness": "L0 Hatch",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
                     "connections": {}
                 },
-                "Other to Operations Maintenance Shaft": {
-                    "node_type": "dock",
+                "Operations Maintenance Shaft": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": {
                         "x": 744.0,
@@ -8687,17 +8593,6 @@
                         "door_idx": 175
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Other",
-                    "default_connection": {
-                        "region": "Main Deck",
-                        "area": "Operations Maintenance Shaft",
-                        "node": "Other to Operations Deck"
-                    },
-                    "default_dock_weakness": "Open Passage",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
                     "connections": {}
                 }
             }
@@ -8919,8 +8814,8 @@
                 "room_id": 77
             },
             "nodes": {
-                "Door to Restricted Laboratory (D)": {
-                    "node_type": "dock",
+                "Restricted Laboratory (D)": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": {
                         "x": 40.0,
@@ -8935,21 +8830,10 @@
                         "door_idx": 180
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Door",
-                    "default_connection": {
-                        "region": "Main Deck",
-                        "area": "Restricted Laboratory (D)",
-                        "node": "Door to Restricted Airlock (C)"
-                    },
-                    "default_dock_weakness": "Open Hatch",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
                     "connections": {}
                 },
-                "Door to Restricted Labs Navigation Room": {
-                    "node_type": "dock",
+                "Restricted Labs Navigation Room": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": {
                         "x": 264.0,
@@ -8964,21 +8848,10 @@
                         "door_idx": 181
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Door",
-                    "default_connection": {
-                        "region": "Main Deck",
-                        "area": "Restricted Labs Navigation Room",
-                        "node": "Door to Restricted Airlock (C)"
-                    },
-                    "default_dock_weakness": "L4 Hatch",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
                     "connections": {}
                 },
-                "Door to Restricted Laboratory": {
-                    "node_type": "dock",
+                "Restricted Laboratory": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": {
                         "x": 40.0,
@@ -8993,21 +8866,10 @@
                         "door_idx": 182
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Door",
-                    "default_connection": {
-                        "region": "Main Deck",
-                        "area": "Restricted Laboratory",
-                        "node": "Door to Restricted Airlock (C)"
-                    },
-                    "default_dock_weakness": "L4 Hatch",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
                     "connections": {}
                 },
-                "Door to Restricted Labs Corridor": {
-                    "node_type": "dock",
+                "Restricted Labs Corridor": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": {
                         "x": 264.0,
@@ -9022,17 +8884,6 @@
                         "door_idx": 183
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Door",
-                    "default_connection": {
-                        "region": "Main Deck",
-                        "area": "Restricted Labs Corridor",
-                        "node": "Door to Restricted Airlock (C)"
-                    },
-                    "default_dock_weakness": "L4 Hatch",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
                     "connections": {}
                 }
             }
@@ -9044,8 +8895,8 @@
                 "room_id": 78
             },
             "nodes": {
-                "Door to Restricted Airlock (C)": {
-                    "node_type": "dock",
+                "Restricted Airlock (C)": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": {
                         "x": 264.0,
@@ -9060,21 +8911,10 @@
                         "door_idx": 184
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Door",
-                    "default_connection": {
-                        "region": "Main Deck",
-                        "area": "Restricted Airlock (C)",
-                        "node": "Door to Restricted Laboratory"
-                    },
-                    "default_dock_weakness": "L4 Hatch",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
                     "connections": {}
                 },
-                "Door to Metroid Processing": {
-                    "node_type": "dock",
+                "Metroid Processing": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": {
                         "x": 40.0,
@@ -9089,21 +8929,10 @@
                         "door_idx": 185
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Door",
-                    "default_connection": {
-                        "region": "Main Deck",
-                        "area": "Metroid Processing",
-                        "node": "Door to Restricted Laboratory"
-                    },
-                    "default_dock_weakness": "L4 Hatch",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
                     "connections": {}
                 },
-                "Door to Metroid Processing (186)": {
-                    "node_type": "dock",
+                "Metroid Processing (186)": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": {
                         "x": 40.0,
@@ -9118,17 +8947,6 @@
                         "door_idx": 186
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Door",
-                    "default_connection": {
-                        "region": "Main Deck",
-                        "area": "Metroid Processing",
-                        "node": "Door to Restricted Laboratory"
-                    },
-                    "default_dock_weakness": "L4 Hatch",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
                     "connections": {}
                 }
             }
@@ -9140,8 +8958,8 @@
                 "room_id": 79
             },
             "nodes": {
-                "Door to Restricted Airlock (C)": {
-                    "node_type": "dock",
+                " Restricted Airlock (C)": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": {
                         "x": 264.0,
@@ -9156,21 +8974,10 @@
                         "door_idx": 189
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Door",
-                    "default_connection": {
-                        "region": "Main Deck",
-                        "area": "Restricted Airlock (C)",
-                        "node": "Door to Restricted Laboratory (D)"
-                    },
-                    "default_dock_weakness": "L4 Hatch",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
                     "connections": {}
                 },
-                "Door to Metroid Processing": {
-                    "node_type": "dock",
+                "Metroid Processing": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": {
                         "x": 40.0,
@@ -9185,17 +8992,6 @@
                         "door_idx": 190
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Door",
-                    "default_connection": {
-                        "region": "Main Deck",
-                        "area": "Metroid Processing",
-                        "node": "Door to Restricted Laboratory"
-                    },
-                    "default_dock_weakness": "L4 Hatch",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
                     "connections": {}
                 }
             }
@@ -9207,8 +9003,8 @@
                 "room_id": 80
             },
             "nodes": {
-                "Door to Restricted Laboratory": {
-                    "node_type": "dock",
+                "Restricted Laboratory": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": {
                         "x": 264.0,
@@ -9223,21 +9019,10 @@
                         "door_idx": 187
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Door",
-                    "default_connection": {
-                        "region": "Main Deck",
-                        "area": "Restricted Laboratory",
-                        "node": "Door to Metroid Processing"
-                    },
-                    "default_dock_weakness": "L4 Hatch",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
                     "connections": {}
                 },
-                "Door to Restricted Laboratory (188)": {
-                    "node_type": "dock",
+                "Restricted Laboratory (188)": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": {
                         "x": 264.0,
@@ -9252,17 +9037,6 @@
                         "door_idx": 188
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Door",
-                    "default_connection": {
-                        "region": "Main Deck",
-                        "area": "Restricted Laboratory",
-                        "node": "Door to Metroid Processing"
-                    },
-                    "default_dock_weakness": "L4 Hatch",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
                     "connections": {}
                 }
             }
@@ -9428,8 +9202,8 @@
                 "room_id": 83
             },
             "nodes": {
-                "Door to Docking Bay Shaft": {
-                    "node_type": "dock",
+                "Docking Bay Shaft": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": {
                         "x": 264.0,
@@ -9444,21 +9218,10 @@
                         "door_idx": 197
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Door",
-                    "default_connection": {
-                        "region": "Main Deck",
-                        "area": "Docking Bay Shaft",
-                        "node": "Door to Silo Access"
-                    },
-                    "default_dock_weakness": "L4 Hatch",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
                     "connections": {}
                 },
-                "Door to Central Reactor Core": {
-                    "node_type": "dock",
+                "Central Reactor Core": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": {
                         "x": 264.0,
@@ -9473,21 +9236,10 @@
                         "door_idx": 198
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Door",
-                    "default_connection": {
-                        "region": "Main Deck",
-                        "area": "Central Reactor Core",
-                        "node": "Door to Silo Access"
-                    },
-                    "default_dock_weakness": "Open Hatch",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
                     "connections": {}
                 },
-                "Other to Docking Bay Shaft": {
-                    "node_type": "dock",
+                " Docking Bay Shaft": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": {
                         "x": 264.0,
@@ -9502,17 +9254,6 @@
                         "door_idx": 199
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Other",
-                    "default_connection": {
-                        "region": "Main Deck",
-                        "area": "Docking Bay Shaft",
-                        "node": "Other to Silo Access"
-                    },
-                    "default_dock_weakness": "Open Passage",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
                     "connections": {}
                 }
             }
@@ -9596,8 +9337,8 @@
                 "room_id": 85
             },
             "nodes": {
-                "Door to Operations Room": {
-                    "node_type": "dock",
+                "Operations Room": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": {
                         "x": 40.0,
@@ -9612,17 +9353,6 @@
                         "door_idx": 146
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Door",
-                    "default_connection": {
-                        "region": "Main Deck",
-                        "area": "Operations Room",
-                        "node": "Door to Operations Deck"
-                    },
-                    "default_dock_weakness": "L4 Hatch",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
                     "connections": {}
                 }
             }

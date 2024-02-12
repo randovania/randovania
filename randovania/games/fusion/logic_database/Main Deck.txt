@@ -73,14 +73,12 @@ Extra - room_id: 3
 Docking Bay Access (D)
 Extra - map_name: Main Deck4
 Extra - room_id: 4
-> Door to Docking Bay Hangar (D); Heals? False
+> Docking Bay Hangar (D); Heals? False
   * Layers: default
-  * Open Hatch to Docking Bay Hangar (D)/Door to Docking Bay Access
   * Extra - door_idx: 4
 
-> Door to Docking Bay Shaft; Heals? False
+> Docking Bay Shaft; Heals? False
   * Layers: default
-  * Open Hatch to Docking Bay Shaft/Door to Docking Bay Access
   * Extra - door_idx: 9
 
 ----------------
@@ -102,7 +100,7 @@ Extra - room_id: 6
   > Door to Station Entrance
       Trivial
 
-> Door to Docking Bay Access (D); Heals? False
+> Docking Bay Access (D); Heals? False
   * Layers: default
   * Extra - door_idx: 10
 
@@ -344,36 +342,36 @@ Extra - room_id: 15
   * Layers: default
   * L2 Hatch to Elevator to Central Hub/Door to Habitation Deck Entrance
   * Extra - door_idx: 30
-  > Door to Habitation Deck
+  > Door to Habitation Deck (Lower)
       Trivial
-  > Door to Habitation Deck (157)
+  > Door to Habitation Deck (Middle)
       Any of the following:
           High Jump
           High Jump and Can Freeze Enemies
 
-> Door to Habitation Deck; Heals? False
+> Door to Habitation Deck (Lower); Heals? False
   * Layers: default
-  * L2 Hatch to Habitation Deck/Door to Habitation Deck Entrance
+  * L2 Hatch to Habitation Deck/Door to Habitation Deck Entrance (Lower)
   * Extra - door_idx: 31
   > Door to Elevator to Central Hub
       Trivial
 
-> Door to Habitation Deck (157); Heals? False
+> Door to Habitation Deck (Middle); Heals? False
   * Layers: default
-  * L2 Hatch to Habitation Deck/Door to Habitation Deck Entrance
+  * L2 Hatch to Habitation Deck/Door to Habitation Deck Entrance (Middle)
   * Extra - door_idx: 157
   > Door to Elevator to Central Hub
       Trivial
-  > Door to Habitation Deck (158)
+  > Door to Habitation Deck (Upper)
       Any of the following:
           Space Jump
           High Jump and Can Freeze Enemies
 
-> Door to Habitation Deck (158); Heals? False
+> Door to Habitation Deck (Upper); Heals? False
   * Layers: default
-  * L2 Hatch to Habitation Deck/Door to Habitation Deck Entrance
+  * L2 Hatch to Habitation Deck/Door to Habitation Deck Entrance (Upper)
   * Extra - door_idx: 158
-  > Door to Habitation Deck (157)
+  > Door to Habitation Deck (Middle)
       Trivial
 
 ----------------
@@ -406,12 +404,12 @@ Extra - room_id: 17
 
 > Door to Restricted Labs Navigation Room; Heals? False
   * Layers: default
-  * L4 Hatch to Restricted Labs Navigation Room/Door to Restricted Airlock (C)
+  * L4 Hatch to Restricted Labs Navigation Room/Door to Restricted Airlock (D)
   * Extra - door_idx: 32
 
 > Door to Restricted Labs Corridor; Heals? False
   * Layers: default
-  * L4 Hatch to Restricted Labs Corridor/Door to Restricted Airlock (C)
+  * L4 Hatch to Restricted Labs Corridor/Door to Restricted Airlock (D)
   * Extra - door_idx: 34
   > Pickup (Power Bomb Tank)
       Speed Booster
@@ -476,12 +474,11 @@ Extra - map_name: Main Deck19
 Extra - room_id: 19
 > Door to Main Elevator Access; Heals? False
   * Layers: default
-  * L0 Hatch to Main Elevator Access/Door to Elevator to Sector Hub (C)
+  * Open Hatch to Main Elevator Access/Door to Elevator to Sector Hub (C)
   * Extra - door_idx: 40
 
-> Other to Main Elevator Shaft; Heals? False
+> Main Elevator Shaft; Heals? False
   * Layers: default
-  * Open Passage to Main Elevator Shaft/Other to Elevator to Sector Hub
   * Extra - door_idx: 49
 
 ----------------
@@ -569,18 +566,18 @@ Extra - room_id: 21
 Habitation Maintenance
 Extra - map_name: Main Deck22
 Extra - room_id: 22
-> Other to Habitation Deck; Heals? False
+> Other to Habitation Deck (Upper); Heals? False
   * Layers: default
-  * Open Passage to Habitation Deck/Other to Habitation Maintenance
+  * Open Passage to Habitation Deck/Other to Habitation Maintenance (Upper)
   * Extra - door_idx: 46
-  > Other to Habitation Deck (47)
+  > Other to Habitation Deck (Lower)
       Trivial
 
-> Other to Habitation Deck (47); Heals? False
+> Other to Habitation Deck (Lower); Heals? False
   * Layers: default
-  * Open Passage to Habitation Deck/Other to Habitation Maintenance
+  * Open Passage to Habitation Deck/Other to Habitation Maintenance (Lower)
   * Extra - door_idx: 47
-  > Other to Habitation Deck
+  > Other to Habitation Deck (Upper)
       Space Jump or Can Freeze Enemies
 
 ----------------
@@ -787,9 +784,8 @@ Extra - room_id: 30
 Sub-Zero Ventilation
 Extra - map_name: Main Deck31
 Extra - room_id: 31
-> Other to Main Elevator Shaft (D); Heals? False
+> Main Elevator Shaft (D); Heals? False
   * Layers: default
-  * Tunnel to Main Elevator Shaft (D)/Other to Sub-Zero Ventilation
   * Extra - door_idx: 64
 
 > Other to Sub-Zero Containment; Heals? False
@@ -1067,12 +1063,10 @@ Extra - map_name: Main Deck43
 Extra - room_id: 43
 > Other to Sub-Zero Ventilation; Heals? False
   * Layers: default
-  * Tunnel to Sub-Zero Ventilation/Other to Main Elevator Shaft (D)
   * Extra - door_idx: 63
 
 > Other to Sector Hub; Heals? False
   * Layers: default
-  * Open Passage to Sector Hub/Other to Main Elevator Shaft
   * Extra - door_idx: 98
 
 ----------------
@@ -1476,9 +1470,8 @@ Extra - room_id: 62
 Docking Bay Hangar (D)
 Extra - map_name: Main Deck63
 Extra - room_id: 63
-> Door to Docking Bay Access; Heals? False
+> Docking Bay Access; Heals? False
   * Layers: default
-  * Open Hatch to Docking Bay Access/Door to Docking Bay Hangar
   * Extra - door_idx: 145
 
 ----------------
@@ -1507,12 +1500,12 @@ Extra - room_id: 65
   * Layers: default
   * L4 Hatch to Restricted Labs Save Room/Door to Restricted Labs Corridor
   * Extra - door_idx: 149
-  > Door to Restricted Airlock (C)
+  > Door to Restricted Airlock (D)
       Trivial
 
-> Door to Restricted Airlock (C); Heals? False
+> Door to Restricted Airlock (D); Heals? False
   * Layers: default
-  * L4 Hatch to Restricted Airlock (C)/Door to Restricted Labs Corridor
+  * L4 Hatch to Restricted Airlock (D)/Door to Restricted Labs Corridor
   * Extra - door_idx: 150
   > Door to Restricted Labs Save Room
       Trivial
@@ -1525,12 +1518,12 @@ Extra - room_id: 66
   * Layers: default
   * Open Hatch to Elevator to Sector 1 (Tourian)/Door to Restricted Labs Navigation Room
   * Extra - door_idx: 151
-  > Door to Restricted Airlock (C)
+  > Door to Restricted Airlock (D)
       Trivial
 
-> Door to Restricted Airlock (C); Heals? False
+> Door to Restricted Airlock (D); Heals? False
   * Layers: default
-  * Open Hatch to Restricted Airlock (C)/Door to Restricted Labs Navigation Room
+  * Open Hatch to Restricted Airlock (D)/Door to Restricted Labs Navigation Room
   * Extra - door_idx: 152
   > Door to Elevator to Sector 1 (Tourian)
       Trivial
@@ -1561,11 +1554,15 @@ Extra - room_id: 68
   * Layers: default
   * Tunnel to Central Reactor Core/Other to Silo Tunnel (C)
   * Extra - door_idx: 155
+  > Other to Overgrown Entrance (C)
+      Trivial
 
 > Other to Overgrown Entrance (C); Heals? False
   * Layers: default
   * Tunnel to Overgrown Entrance (C)/Other to Silo Tunnel (C)
   * Extra - door_idx: 156
+  > Other to Central Reactor Core
+      Trivial
 
 ----------------
 Habitation Deck
@@ -1577,45 +1574,45 @@ Extra - room_id: 69
   > Beside Pickup
       Trivial
 
-> Door to Habitation Deck Entrance; Heals? False
+> Door to Habitation Deck Entrance (Lower); Heals? False
   * Layers: default
-  * L2 Hatch to Habitation Deck Entrance/Door to Habitation Deck
+  * L2 Hatch to Habitation Deck Entrance/Door to Habitation Deck (Lower)
   * Extra - door_idx: 159
   > Beside Pickup
       Wave Beam
 
-> Door to Habitation Deck Entrance (160); Heals? False
+> Door to Habitation Deck Entrance (Middle); Heals? False
   * Layers: default
-  * L2 Hatch to Habitation Deck Entrance/Door to Habitation Deck
+  * L2 Hatch to Habitation Deck Entrance/Door to Habitation Deck (Middle)
   * Extra - door_idx: 160
-  > Door to Habitation Deck Entrance
+  > Door to Habitation Deck Entrance (Lower)
       Trivial
   > Above Pickup
       Wave Beam
 
-> Door to Habitation Deck Entrance (161); Heals? False
+> Door to Habitation Deck Entrance (Upper); Heals? False
   * Layers: default
-  * L2 Hatch to Habitation Deck Entrance/Door to Habitation Deck
+  * L2 Hatch to Habitation Deck Entrance/Door to Habitation Deck (Upper)
   * Extra - door_idx: 161
-  > Door to Habitation Deck Entrance (160)
+  > Door to Habitation Deck Entrance (Middle)
       Trivial
-  > Other to Habitation Maintenance (163)
+  > Other to Habitation Maintenance (Upper)
       After Animals
   > Above Pickup
       Trivial
 
-> Other to Habitation Maintenance; Heals? False
+> Other to Habitation Maintenance (Lower); Heals? False
   * Layers: default
-  * Open Passage to Habitation Maintenance/Other to Habitation Deck
+  * Open Passage to Habitation Maintenance/Other to Habitation Deck (Lower)
   * Extra - door_idx: 162
   > Beside Pickup
       Trivial
 
-> Other to Habitation Maintenance (163); Heals? False
+> Other to Habitation Maintenance (Upper); Heals? False
   * Layers: default
-  * Open Passage to Habitation Maintenance/Other to Habitation Deck
+  * Open Passage to Habitation Maintenance/Other to Habitation Deck (Upper)
   * Extra - door_idx: 163
-  > Door to Habitation Deck Entrance (161)
+  > Door to Habitation Deck Entrance (Upper)
       After Animals
   > Event - Save the Animals
       Trivial
@@ -1623,12 +1620,12 @@ Extra - room_id: 69
 > Event - Save the Animals; Heals? False
   * Layers: default
   * Event Animals
-  > Other to Habitation Maintenance (163)
+  > Other to Habitation Maintenance (Upper)
       Trivial
 
 > Above Pickup; Heals? False
   * Layers: default
-  > Other to Habitation Maintenance
+  > Other to Habitation Maintenance (Lower)
       Speed Booster
   > Beside Pickup
       Trivial
@@ -1637,9 +1634,9 @@ Extra - room_id: 69
   * Layers: default
   > Pickup (Missile Tank)
       Trivial
-  > Door to Habitation Deck Entrance
+  > Door to Habitation Deck Entrance (Lower)
       Trivial
-  > Other to Habitation Maintenance
+  > Other to Habitation Maintenance (Lower)
       Wave Beam
 
 ----------------
@@ -1707,24 +1704,20 @@ Extra - room_id: 73
 Operations Deck 2
 Extra - map_name: Main Deck74
 Extra - room_id: 74
-> Door to Operations Deck Navigation Room; Heals? False
+> Operations Deck Navigation Room; Heals? False
   * Layers: default
-  * L0 Hatch to Operations Deck Navigation Room/Door to Operations Deck
   * Extra - door_idx: 172
 
-> Door to Operations Deck Recharge Room; Heals? False
+> Operations Deck Recharge Room; Heals? False
   * Layers: default
-  * L0 Hatch to Operations Deck Recharge Room/Door to Operations Deck
   * Extra - door_idx: 173
 
-> Door to Elevator to Crew Quarters; Heals? False
+> to Crew Quarters; Heals? False
   * Layers: default
-  * L0 Hatch to Elevator to Crew Quarters/Door to Operations Deck
   * Extra - door_idx: 174
 
-> Other to Operations Maintenance Shaft; Heals? False
+> Operations Maintenance Shaft; Heals? False
   * Layers: default
-  * Open Passage to Operations Maintenance Shaft/Other to Operations Deck
   * Extra - door_idx: 175
 
 ----------------
@@ -1776,71 +1769,60 @@ Extra - room_id: 76
 Restricted Airlock (C)
 Extra - map_name: Main Deck77
 Extra - room_id: 77
-> Door to Restricted Laboratory (D); Heals? False
+> Restricted Laboratory (D); Heals? False
   * Layers: default
-  * Open Hatch to Restricted Laboratory (D)/Door to Restricted Airlock (C)
   * Extra - door_idx: 180
 
-> Door to Restricted Labs Navigation Room; Heals? False
+> Restricted Labs Navigation Room; Heals? False
   * Layers: default
-  * L4 Hatch to Restricted Labs Navigation Room/Door to Restricted Airlock (C)
   * Extra - door_idx: 181
 
-> Door to Restricted Laboratory; Heals? False
+> Restricted Laboratory; Heals? False
   * Layers: default
-  * L4 Hatch to Restricted Laboratory/Door to Restricted Airlock (C)
   * Extra - door_idx: 182
 
-> Door to Restricted Labs Corridor; Heals? False
+> Restricted Labs Corridor; Heals? False
   * Layers: default
-  * L4 Hatch to Restricted Labs Corridor/Door to Restricted Airlock (C)
   * Extra - door_idx: 183
 
 ----------------
 Restricted Laboratory
 Extra - map_name: Main Deck78
 Extra - room_id: 78
-> Door to Restricted Airlock (C); Heals? False
+> Restricted Airlock (C); Heals? False
   * Layers: default
-  * L4 Hatch to Restricted Airlock (C)/Door to Restricted Laboratory
   * Extra - door_idx: 184
 
-> Door to Metroid Processing; Heals? False
+> Metroid Processing; Heals? False
   * Layers: default
-  * L4 Hatch to Metroid Processing/Door to Restricted Laboratory
   * Extra - door_idx: 185
 
-> Door to Metroid Processing (186); Heals? False
+> Metroid Processing (186); Heals? False
   * Layers: default
-  * L4 Hatch to Metroid Processing/Door to Restricted Laboratory
   * Extra - door_idx: 186
 
 ----------------
 Restricted Laboratory (D)
 Extra - map_name: Main Deck79
 Extra - room_id: 79
-> Door to Restricted Airlock (C); Heals? False
+>  Restricted Airlock (C); Heals? False
   * Layers: default
-  * L4 Hatch to Restricted Airlock (C)/Door to Restricted Laboratory (D)
   * Extra - door_idx: 189
 
-> Door to Metroid Processing; Heals? False
+> Metroid Processing; Heals? False
   * Layers: default
-  * L4 Hatch to Metroid Processing/Door to Restricted Laboratory
   * Extra - door_idx: 190
 
 ----------------
 Metroid Processing
 Extra - map_name: Main Deck80
 Extra - room_id: 80
-> Door to Restricted Laboratory; Heals? False
+> Restricted Laboratory; Heals? False
   * Layers: default
-  * L4 Hatch to Restricted Laboratory/Door to Metroid Processing
   * Extra - door_idx: 187
 
-> Door to Restricted Laboratory (188); Heals? False
+> Restricted Laboratory (188); Heals? False
   * Layers: default
-  * L4 Hatch to Restricted Laboratory/Door to Metroid Processing
   * Extra - door_idx: 188
 
 ----------------
@@ -1882,19 +1864,16 @@ Extra - room_id: 82
 Silo Access (D)
 Extra - map_name: Main Deck83
 Extra - room_id: 83
-> Door to Docking Bay Shaft; Heals? False
+> Docking Bay Shaft; Heals? False
   * Layers: default
-  * L4 Hatch to Docking Bay Shaft/Door to Silo Access
   * Extra - door_idx: 197
 
-> Door to Central Reactor Core; Heals? False
+> Central Reactor Core; Heals? False
   * Layers: default
-  * Open Hatch to Central Reactor Core/Door to Silo Access
   * Extra - door_idx: 198
 
-> Other to Docking Bay Shaft; Heals? False
+>  Docking Bay Shaft; Heals? False
   * Layers: default
-  * Open Passage to Docking Bay Shaft/Other to Silo Access
   * Extra - door_idx: 199
 
 ----------------
@@ -1918,9 +1897,8 @@ Extra - room_id: 84
 SA-X Arena
 Extra - map_name: Main Deck85
 Extra - room_id: 85
-> Door to Operations Room; Heals? False
+> Operations Room; Heals? False
   * Layers: default
-  * L4 Hatch to Operations Room/Door to Operations Deck
   * Extra - door_idx: 146
 
 ----------------
