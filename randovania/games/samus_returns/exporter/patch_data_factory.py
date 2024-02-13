@@ -18,6 +18,7 @@ if TYPE_CHECKING:
     from collections.abc import Iterator
 
     from randovania.exporter.pickup_exporter import ExportedPickupDetails
+    from randovania.game_description.db.area import Area
     from randovania.game_description.db.node import Node
     from randovania.game_description.db.node_identifier import NodeIdentifier
     from randovania.game_description.pickup.pickup_entry import ConditionalResources, PickupEntry
@@ -304,6 +305,23 @@ class MSRPatchDataFactory(PatchDataFactory):
             MSRHintNamer(self.description.all_patches, self.players_config),
         )
 
+    def _static_room_name_fixes(self, scenario_name: str, area: Area):
+        # static fixes for some rooms
+        cc_name = area.extra["asset_id"]
+        if scenario_name == "s025_area2b":
+            if cc_name == "collision_camera011":
+                return cc_name, "Varia Suit Chamber & Interior Intersection Terminal"
+
+        if scenario_name == "s065_area6b":
+            if cc_name == "collision_camera_014":
+                return cc_name, "Gamma+ Arena & Access"
+
+        if scenario_name == "s100_area10":
+            if cc_name == "collision_camera_008":
+                return cc_name, "Metroid Nest Foyer & Hallway South"
+
+        return cc_name, area.name
+
     def _build_area_name_dict(self) -> dict[str, dict[str, str]]:
         # generate a 2D dictionary of (scenario, collision camera) => room name
         all_dict: dict = {}
@@ -312,8 +330,7 @@ class MSRPatchDataFactory(PatchDataFactory):
             region_dict: dict = {}
 
             for area in region.areas:
-                cc_name = area.extra["asset_id"]
-                area_name = area.name
+                cc_name, area_name = self._static_room_name_fixes(scenario, area)
                 region_dict[cc_name] = area_name
             all_dict[scenario] = region_dict
 
