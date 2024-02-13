@@ -1068,7 +1068,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to B.O.X. Access": {
+                        "Door to B.O.X. Access (D)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1077,7 +1077,7 @@
                         }
                     }
                 },
-                "Door to B.O.X. Access": {
+                "Door to B.O.X. Access (D)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1098,7 +1098,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 3",
-                        "area": "B.O.X. Access",
+                        "area": "B.O.X. Access (D)",
                         "node": "Door to Bob Room"
                     },
                     "default_dock_weakness": "L2 Hatch",
@@ -1175,7 +1175,7 @@
                                 ]
                             }
                         },
-                        "Door to B.O.X. Access": {
+                        "Door to B.O.X. Access (D)": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -1281,7 +1281,7 @@
                     "default_connection": {
                         "region": "Sector 3",
                         "area": "Bob Room",
-                        "node": "Door to B.O.X. Access"
+                        "node": "Door to B.O.X. Access (D)"
                     },
                     "default_dock_weakness": "L2 Hatch",
                     "exclude_from_dock_rando": false,
@@ -1289,7 +1289,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to B.O.X. Arena": {
+                        "Door to B.O.X. Arena (D)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1298,7 +1298,7 @@
                         }
                     }
                 },
-                "Door to B.O.X. Arena": {
+                "Door to B.O.X. Arena (D)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1319,8 +1319,8 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 3",
-                        "area": "B.O.X. Arena",
-                        "node": "Door to B.O.X. Access"
+                        "area": "B.O.X. Arena (D)",
+                        "node": "Door to B.O.X. Access (D)"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -3116,7 +3116,7 @@
                     "default_connection": {
                         "region": "Sector 3",
                         "area": "B.O.X. Access",
-                        "node": "Door to B.O.X. Arena"
+                        "node": "Door to B.O.X. Arena (D)"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -3155,7 +3155,7 @@
                     "default_connection": {
                         "region": "Sector 3",
                         "area": "Data Room",
-                        "node": "Door to B.O.X. Arena"
+                        "node": "Door to B.O.X. Arena (D)"
                     },
                     "default_dock_weakness": "L2 Hatch",
                     "exclude_from_dock_rando": false,
@@ -3677,7 +3677,7 @@
                 ]
             },
             "nodes": {
-                "Door to B.O.X. Arena": {
+                "Door to B.O.X. Arena (D)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3698,7 +3698,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 3",
-                        "area": "B.O.X. Arena",
+                        "area": "B.O.X. Arena (D)",
                         "node": "Door to Data Room"
                     },
                     "default_dock_weakness": "L2 Hatch",
@@ -3733,7 +3733,7 @@
                     "pickup_index": 112,
                     "location_category": "major",
                     "connections": {
-                        "Door to B.O.X. Arena": {
+                        "Door to B.O.X. Arena (D)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3790,7 +3790,7 @@
                                 "items": []
                             }
                         },
-                        "bob room": {
+                        "Door to Bob Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3838,12 +3838,12 @@
                         }
                     }
                 },
-                "bob room": {
-                    "node_type": "generic",
+                "Door to Bob Room": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 41.45649263721553,
-                        "y": 271.239625167336,
+                        "x": 41.46,
+                        "y": 271.24,
                         "z": 0.0
                     },
                     "description": "",
@@ -3852,6 +3852,17 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
+                    "dock_type": "Door",
+                    "default_connection": {
+                        "region": "Sector 3",
+                        "area": "Bob Room",
+                        "node": "Door to B.O.X. Access (D)"
+                    },
+                    "default_dock_weakness": "L2 Hatch",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to B.O.X. Arena": {
                             "type": "and",
@@ -4044,6 +4055,23 @@
                                     }
                                 ]
                             }
+                        },
+                        "Door to Data Room": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "B.O.X.",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
                         }
                     }
                 },
@@ -4062,6 +4090,41 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "event_name": "B.O.X.",
+                    "connections": {
+                        "Door to B.O.X. Access (D)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Data Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 488.96,
+                        "y": 79.36,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "Door",
+                    "default_connection": {
+                        "region": "Sector 3",
+                        "area": "Data Room",
+                        "node": "Door to B.O.X. Arena (D)"
+                    },
+                    "default_dock_weakness": "L2 Hatch",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to B.O.X. Access (D)": {
                             "type": "and",

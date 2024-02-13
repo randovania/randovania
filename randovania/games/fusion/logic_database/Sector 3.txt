@@ -188,12 +188,12 @@ Extra - room_id: [6]
   * Layers: default
   * L2 Hatch to Checkpoint Shaft/Door to Bob Room
   * Extra - door_idx: (13,)
-  > Door to B.O.X. Access
+  > Door to B.O.X. Access (D)
       Trivial
 
-> Door to B.O.X. Access; Heals? False
+> Door to B.O.X. Access (D); Heals? False
   * Layers: default
-  * L2 Hatch to B.O.X. Access/Door to Bob Room
+  * L2 Hatch to B.O.X. Access (D)/Door to Bob Room
   * Extra - door_idx: (14,)
   > Door to Checkpoint Shaft
       Trivial
@@ -206,7 +206,7 @@ Extra - room_id: [6]
   * Extra - door_idx: (15,)
   > Pickup (Missile Tank)
       Can Use Any Bombs
-  > Door to B.O.X. Access
+  > Door to B.O.X. Access (D)
       Any of the following:
           Can Use Bombs
           Can Use Power Bombs and Can Use Springball
@@ -224,14 +224,14 @@ Extra - map_name: Sector 37
 Extra - room_id: [7]
 > Door to Bob Room; Heals? False
   * Layers: default
-  * L2 Hatch to Bob Room/Door to B.O.X. Access
+  * L2 Hatch to Bob Room/Door to B.O.X. Access (D)
   * Extra - door_idx: (16,)
-  > Door to B.O.X. Arena
+  > Door to B.O.X. Arena (D)
       Trivial
 
-> Door to B.O.X. Arena; Heals? False
+> Door to B.O.X. Arena (D); Heals? False
   * Layers: default
-  * L0 Hatch to B.O.X. Arena/Door to B.O.X. Access
+  * L0 Hatch to B.O.X. Arena (D)/Door to B.O.X. Access (D)
   * Extra - door_idx: (35,)
   > Door to Bob Room
       Trivial
@@ -535,14 +535,14 @@ Extra - map_name: Sector 318
 Extra - room_id: [18]
 > Door to B.O.X. Access; Heals? False
   * Layers: default
-  * L0 Hatch to B.O.X. Access/Door to B.O.X. Arena
+  * L0 Hatch to B.O.X. Access/Door to B.O.X. Arena (D)
   * Extra - door_idx: (36,)
   > Door to Data Room
       Trivial
 
 > Door to Data Room; Heals? False
   * Layers: default
-  * L2 Hatch to Data Room/Door to B.O.X. Arena
+  * L2 Hatch to Data Room/Door to B.O.X. Arena (D)
   * Extra - door_idx: (43,)
   > Door to B.O.X. Access
       Trivial
@@ -625,9 +625,9 @@ Extra - room_id: [20]
 Data Room
 Extra - map_name: Sector 321
 Extra - room_id: [21]
-> Door to B.O.X. Arena; Heals? False
+> Door to B.O.X. Arena (D); Heals? False
   * Layers: default
-  * L2 Hatch to B.O.X. Arena/Door to Data Room
+  * L2 Hatch to B.O.X. Arena (D)/Door to Data Room
   * Extra - door_idx: (44,)
   > Pickup (Super Missiles)
       Trivial
@@ -635,7 +635,7 @@ Extra - room_id: [21]
 > Pickup (Super Missiles); Heals? False
   * Layers: default
   * Pickup 112; Category? Major
-  > Door to B.O.X. Arena
+  > Door to B.O.X. Arena (D)
       Trivial
 
 ----------------
@@ -648,7 +648,7 @@ Extra - room_id: [22]
   * Extra - door_idx: (45,)
   > Door to Data Save Room
       Trivial
-  > bob room
+  > Door to Bob Room
       Trivial
 
 > Door to Data Save Room; Heals? False
@@ -658,8 +658,9 @@ Extra - room_id: [22]
   > Door to B.O.X. Arena
       Trivial
 
-> bob room; Heals? False
+> Door to Bob Room; Heals? False
   * Layers: default
+  * L2 Hatch to Bob Room/Door to B.O.X. Access (D)
   > Door to B.O.X. Arena
       Trivial
 
@@ -686,10 +687,18 @@ Extra - room_id: [23]
       All of the following:
           Charge Beam or Missiles
           Combat (Beginner) or Normal Damage ≥ 100
+  > Door to Data Room
+      After B.O.X.
 
 > Event - B.O.X.; Heals? False
   * Layers: default
   * Event B.O.X.
+  > Door to B.O.X. Access (D)
+      Trivial
+
+> Door to Data Room; Heals? False
+  * Layers: default
+  * L2 Hatch to Data Room/Door to B.O.X. Arena (D)
   > Door to B.O.X. Access (D)
       Trivial
 

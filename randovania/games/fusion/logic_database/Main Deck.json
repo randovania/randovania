@@ -981,7 +981,7 @@
                             }
                         },
                         "Door to Arachnus Arena": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": [
@@ -1317,6 +1317,23 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
+                        "Other to Operations Maintenance Shaft": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Missiles",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
                         "Door to Elevator to Crew Quarters": {
                             "type": "and",
                             "data": {
@@ -1391,23 +1408,6 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Other to Operations Maintenance Shaft": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Missiles",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        },
                         "Door to Operations Deck Navigation Room": {
                             "type": "and",
                             "data": {
@@ -4394,7 +4394,7 @@
                                         "data": {
                                             "type": "items",
                                             "name": "Missiles",
-                                            "amount": 3,
+                                            "amount": 1,
                                             "negate": false
                                         }
                                     }

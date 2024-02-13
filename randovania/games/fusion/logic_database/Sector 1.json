@@ -4589,18 +4589,13 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Elevator to Restricted Labs": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "tricks",
-                                            "name": "Movement",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
+                                        "type": "template",
+                                        "data": "Can climb High Jump Wall"
                                     }
                                 ]
                             }
