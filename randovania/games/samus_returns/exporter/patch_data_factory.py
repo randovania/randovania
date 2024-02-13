@@ -240,6 +240,58 @@ class MSRPatchDataFactory(PatchDataFactory):
 
         text["GUI_SAMUS_DATA_TITLE"] = "<version>"
 
+        location_text = ""
+        if self.configuration.artifacts.prefer_anywhere:
+            location_text = "at any location"
+        else:
+            restricted_text = []
+            if self.configuration.artifacts.prefer_metroids:
+                restricted_text.append("on Standard Metroids")
+            if self.configuration.artifacts.prefer_stronger_metroids:
+                restricted_text.append("on Stronger Metroids")
+            if self.configuration.artifacts.prefer_bosses:
+                restricted_text.append("on Bosses")
+            location_text = "{}{}{}".format(
+                ", ".join(restricted_text[:-1]), " and " if len(restricted_text) > 1 else "", restricted_text[-1]
+            )
+
+        # Intro Text
+        text["GUI_CUTSCENE_OPENING_1"] = (
+            "Welcome to the Metroid: Samus Returns Randomizer!|Here are some useful tips to help you on your journey."
+        )
+        text["GUI_CUTSCENE_OPENING_2"] = (
+            "All of the hazardous liquid has been drained. You can thus freely explore the planet.|"
+            "Metroids now also drop items."
+        )
+        text["GUI_CUTSCENE_OPENING_3"] = (
+            "In this randomizer, you need to collect all Metroid DNA, find the Baby, "
+            "and then fight Proteus Ridley at your ship to leave the planet."
+        )
+        text["GUI_CUTSCENE_OPENING_4"] = (
+            f"With your current configuration, you need to find {self.configuration.artifacts.required_artifacts} DNA. "
+            f"It can be found {location_text}."
+        )
+        text["GUI_CUTSCENE_OPENING_5"] = (
+            "You may freely travel between Surface and Area 8.|"
+            "Once you have collected all the required DNA, "
+            "going from Area 8 to Surface will force a confrontation with Proteus Ridley."
+        )
+        text["GUI_CUTSCENE_OPENING_6"] = (
+            "All the Chozo Seals have been repurposed to give hints on the region where a specific item is located.|"
+            "Additionally, more distinct Chozo Seals have been placed that give hints on DNA locations."
+        )
+        text["GUI_CUTSCENE_OPENING_7"] = (
+            "If you're interested in knowing more on how the DNA Seals work, you can check the Hint page in Randovania."
+        )
+        text["GUI_CUTSCENE_OPENING_8"] = (
+            "Some other helpful tips:|You can warp to your starting location by cancelling the save at a Save Station.|"
+            "Scan Pulse can be used to reveal more of your map."
+        )
+        text["GUI_CUTSCENE_OPENING_9"] = (
+            "If you still have more questions, check out the FAQ and Differences pages in Randovania."
+        )
+        text["GUI_CUTSCENE_OPENING_10"] = "Good luck and have fun!"
+
         return text
 
     def _credits_spoiler(self) -> dict[str, str]:
