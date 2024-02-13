@@ -3987,7 +3987,17 @@
                         "door_idx": 64
                     },
                     "valid_starting_location": false,
-                    "connections": {}
+                    "connections": {
+                        "Other to Sub-Zero Containment": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "MorphBall",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
                 },
                 "Other to Sub-Zero Containment": {
                     "node_type": "dock",
@@ -6927,13 +6937,12 @@
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "MorphBall",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
+                                        "type": "template",
+                                        "data": "Can Use Bombs"
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Can Use Springball"
                                     }
                                 ]
                             }
