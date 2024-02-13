@@ -305,7 +305,7 @@ class MSRPatchDataFactory(PatchDataFactory):
             MSRHintNamer(self.description.all_patches, self.players_config),
         )
 
-    def _static_room_name_fixes(self, scenario_name: str, area: Area):
+    def _static_room_name_fixes(self, scenario_name: str, area: Area) -> tuple[str, str]:
         # static fixes for some rooms
         cc_name = area.extra["asset_id"]
         if scenario_name == "s025_area2b":
@@ -338,7 +338,7 @@ class MSRPatchDataFactory(PatchDataFactory):
 
     def _create_cosmetics(self) -> dict:
         c = self.cosmetic_patches
-        cosmetic_patches = {}
+        cosmetic_patches: dict = {}
         # Game needs each color component in [0-1] range
         if self.cosmetic_patches.use_laser_color:
             cosmetic_patches["laser_locked_color"] = [x / 255 for x in c.laser_locked_color]
