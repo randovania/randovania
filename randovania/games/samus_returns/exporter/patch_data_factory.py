@@ -18,12 +18,14 @@ if TYPE_CHECKING:
     from collections.abc import Iterator
 
     from randovania.exporter.pickup_exporter import ExportedPickupDetails
+    from randovania.game_description.db.area import Area
     from randovania.game_description.db.node import Node
     from randovania.game_description.db.node_identifier import NodeIdentifier
     from randovania.game_description.pickup.pickup_entry import ConditionalResources, PickupEntry
     from randovania.game_description.resources.resource_collection import ResourceCollection
     from randovania.game_description.resources.resource_info import ResourceInfo
     from randovania.games.samus_returns.layout.msr_configuration import MSRConfiguration
+    from randovania.games.samus_returns.layout.msr_cosmetic_patches import MSRCosmeticPatches
 
 _ALTERNATIVE_MODELS = {
     PickupModel(RandovaniaGame.METROID_SAMUS_RETURNS, "Nothing"): ["itemsphere"],
@@ -98,6 +100,7 @@ def get_resources_for_details(
 
 
 class MSRPatchDataFactory(PatchDataFactory):
+    cosmetic_patches: MSRCosmeticPatches
     configuration: MSRConfiguration
 
     def __init__(self, *args, **kwargs):
@@ -302,6 +305,63 @@ class MSRPatchDataFactory(PatchDataFactory):
             MSRHintNamer(self.description.all_patches, self.players_config),
         )
 
+    def _static_room_name_fixes(self, scenario_name: str, area: Area) -> tuple[str, str]:
+        # static fixes for some rooms
+        cc_name = area.extra["asset_id"]
+        if scenario_name == "s025_area2b":
+            if cc_name == "collision_camera011":
+                return cc_name, "Varia Suit Chamber & Interior Intersection Terminal"
+
+        if scenario_name == "s065_area6b":
+            if cc_name == "collision_camera_014":
+                return cc_name, "Gamma+ Arena & Access"
+
+        if scenario_name == "s100_area10":
+            if cc_name == "collision_camera_008":
+                return cc_name, "Metroid Nest Foyer & Hallway South"
+
+        return cc_name, area.name
+
+    def _build_area_name_dict(self) -> dict[str, dict[str, str]]:
+        # generate a 2D dictionary of (scenario, collision camera) => room name
+        all_dict: dict = {}
+        for region in self.game.region_list.regions:
+            scenario = region.extra["scenario_id"]
+            region_dict: dict = {}
+
+            for area in region.areas:
+                cc_name, area_name = self._static_room_name_fixes(scenario, area)
+                region_dict[cc_name] = area_name
+            all_dict[scenario] = region_dict
+
+        return all_dict
+
+    def _create_cosmetics(self) -> dict:
+        c = self.cosmetic_patches
+        cosmetic_patches: dict = {}
+        # Game needs each color component in [0-1] range
+        if self.cosmetic_patches.use_laser_color:
+            cosmetic_patches["laser_locked_color"] = [x / 255 for x in c.laser_locked_color]
+            cosmetic_patches["laser_unlocked_color"] = [x / 255 for x in c.laser_unlocked_color]
+
+        if self.cosmetic_patches.use_grapple_laser_color:
+            cosmetic_patches["grapple_laser_locked_color"] = [x / 255 for x in c.grapple_laser_locked_color]
+            cosmetic_patches["grapple_laser_unlocked_color"] = [x / 255 for x in c.grapple_laser_unlocked_color]
+
+        if self.cosmetic_patches.use_energy_tank_color:
+            cosmetic_patches["energy_tank_color"] = [x / 255 for x in c.energy_tank_color]
+
+        if self.cosmetic_patches.use_aeion_bar_color:
+            cosmetic_patches["aeion_bar_color"] = [x / 255 for x in c.aeion_bar_color]
+
+        if self.cosmetic_patches.use_ammo_hud_color:
+            cosmetic_patches["ammo_hud_color"] = [x / 255 for x in c.ammo_hud_color]
+
+        cosmetic_patches["enable_room_name_display"] = c.show_room_names.value
+        cosmetic_patches["camera_names_dict"] = self._build_area_name_dict()
+
+        return cosmetic_patches
+
     def create_data(self) -> dict:
         starting_location = self._start_point_ref_for(self._node_for(self.patches.starting_location))
         starting_items = self._calculate_starting_inventory(self.patches.starting_resources())
@@ -351,6 +411,7 @@ class MSRPatchDataFactory(PatchDataFactory):
             "text_patches": self._static_text_changes(),
             "spoiler_log": self._credits_spoiler() if self.description.has_spoiler else {},
             "hints": self._encode_hints(),
+            "cosmetic_patches": self._create_cosmetics(),
             "configuration_identifier": self.description.shareable_hash,
         }
 
