@@ -112,7 +112,7 @@ class MSRPresetDescriber(GamePresetDescriber):
                     "Remove Area Exit Grapple Blocks": configuration.elevator_grapple_blocks,
                 },
                 {
-                    "Change Surface Cavern Cavern Crumble Blocks": configuration.surface_crumbles,
+                    "Change Surface Cavern Cavity Crumble Blocks": configuration.surface_crumbles,
                     "Change Area 1 Chozo Seal Crumble Blocks": configuration.area1_crumbles,
                 },
                 {
