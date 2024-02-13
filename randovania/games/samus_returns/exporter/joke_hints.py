@@ -6,8 +6,8 @@ JOKE_HINTS = [
     "The Spider Boost can be used while in Spider Ball form.\n"
     "It will launch you forward, damaging enemies you make contact with.",
     "Drag pins onto the map to mark points of interest.",
-    "Samus, we cannot return this hint to you.",
-    "Walls are just a suggestion.",
+    "Samus, we cannot Return this hint to you.",
+    "Rumor has it, that walls are only a suggestion.",
     "See you next mission!",
     "In the year 20X5 of the Cosmic Calendar...",
     "The resulting decision of the Galactic Federation Council was immediate and unanimous.",
