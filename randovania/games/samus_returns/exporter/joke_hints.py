@@ -15,7 +15,7 @@ JOKE_HINTS = [
     "A Galactic Federation research team attacked Space Pirates during their voyage home.",
     "This attack was no coincidence.",
     "The Space Pirates exploit the energy of any life-form powerful enough to conquer the entire galaxy.",
-    "A lone bounty hunter Zebes eradicated defeated Mother Brain... for a time.",
+    "A lone bounty hunter Zebes eradicated Mother Brain... for a time.",
     "The Metroid species mounted another expedition to SR388.",
     "A special squadron of elite soldiers from the interior of planet SR388 posed a devastating threat to the galaxy.",
 ]
