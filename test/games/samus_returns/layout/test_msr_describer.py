@@ -71,4 +71,5 @@ def test_msr_format_params(artifacts):
             "Open Area 3 Factory Interior East Shortcut, Remove Area Exit Grapple Blocks",
             "Change Surface Cavern Cavity Crumble Blocks, Change Area 1 Chozo Seal Crumble Blocks",
         ],
+        "Hints": ["DNA Hints: Area and room"],
     }

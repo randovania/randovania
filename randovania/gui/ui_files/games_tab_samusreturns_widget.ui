@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>637</width>
-    <height>497</height>
+    <width>707</width>
+    <height>675</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -51,7 +51,7 @@
          </sizepolicy>
         </property>
         <property name="text">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Traverse SR388 while collecting Metroid DNA in order to fight Proteus Ridley and bring the Baby to the Ship.&lt;/p&gt;&lt;p&gt;Accessing Ridley is blocked unless you have collected enough DNA. You can find them by defeating bosses, Metroids, or anywhere in the world. The default settings require you to collect 10 Metroid DNA placed on Metroids.&lt;/p&gt;&lt;p&gt;Each Chozo Seal will provide a hint to where an item is by specifiying the region in which is resides.&lt;/p&gt;&lt;p&gt;The HUD shows how much DNA is located in each area.&lt;/p&gt;&lt;p&gt;For more details, check out the &lt;a href=&quot;tab://FAQ&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;FAQ&lt;/span&gt;&lt;/a&gt; and &lt;a href=&quot;tab://Differences&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;Differences&lt;/span&gt;&lt;/a&gt; tabs.&lt;/p&gt;&lt;p&gt;To get started, use the Quick Generate button to generate a game using the default settings!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Traverse SR388 while collecting Metroid DNA in order to fight Proteus Ridley and bring the Baby to the Ship.&lt;/p&gt;&lt;p&gt;Accessing Ridley is blocked unless you have collected enough DNA. You can find them by defeating bosses, Metroids, or anywhere in the world. The default settings require you to collect 10 Metroid DNA placed on Metroids.&lt;/p&gt;&lt;p&gt;Each Chozo Seal will provide a hint to where an item is by specifiying the region in which is resides. New seals have been added which provides hints to where Metroid DNA is located. Check out the &lt;a href=&quot;tab://Hints&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;Hints&lt;/span&gt;&lt;/a&gt; tab for more information.&lt;/p&gt;&lt;p&gt;The HUD shows how much DNA is located in each area.&lt;/p&gt;&lt;p&gt;For more details, check out the &lt;a href=&quot;tab://FAQ&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;FAQ&lt;/span&gt;&lt;/a&gt; and &lt;a href=&quot;tab://Differences&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;Differences&lt;/span&gt;&lt;/a&gt; tabs.&lt;/p&gt;&lt;p&gt;To get started, use the Quick Generate button to generate a game using the default settings!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="wordWrap">
          <bool>true</bool>
@@ -114,8 +114,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>631</width>
-         <height>468</height>
+         <width>701</width>
+         <height>646</height>
         </rect>
        </property>
        <layout class="QGridLayout" name="gridLayout_8">
@@ -149,9 +149,9 @@
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>-304</y>
-      <width>617</width>
-      <height>1003</height>
+      <y>0</y>
+      <width>687</width>
+      <height>938</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout">
@@ -201,15 +201,15 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>631</width>
-         <height>468</height>
+         <width>701</width>
+         <height>646</height>
         </rect>
        </property>
-       <layout class="QVBoxLayout" name="hints_scroll_layout">
+       <layout class="QVBoxLayout" name="verticalLayout_2">
         <item>
          <widget class="QLabel" name="hints_label">
           <property name="text">
-           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;In Metroid: Samus Returns, you can find hints from the following sources:&lt;/p&gt;&lt;p align=&quot;justify&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Chozo Seal&lt;/span&gt;: Each seal provides one hint to where an item is located.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;In Metroid: Samus Returns, you can find hints by using &lt;span style=&quot; font-weight:600;&quot;&gt;Chozo Seals&lt;/span&gt;.&lt;/p&gt;&lt;p align=&quot;justify&quot;&gt;Seals found at the start of each area found in the vanilla game each provide one hint to where an item is located.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
@@ -217,6 +217,283 @@
           <property name="wordWrap">
            <bool>true</bool>
           </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="Line" name="line">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="hints_label_2">
+          <property name="text">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Custom Chozo Seals have also been added to some areas which provide hints to Metroid DNA. Each seal provides a random number of hints which sometimes is no hints. In this case, a joke hint is provided instead. These custom seals can be found in the following areas:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+          </property>
+          <property name="wordWrap">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QTableWidget" name="hints_dna_locations_widget">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="sizeAdjustPolicy">
+           <enum>QAbstractScrollArea::AdjustIgnored</enum>
+          </property>
+          <property name="autoScroll">
+           <bool>true</bool>
+          </property>
+          <property name="sortingEnabled">
+           <bool>true</bool>
+          </property>
+          <property name="rowCount">
+           <number>9</number>
+          </property>
+          <property name="columnCount">
+           <number>2</number>
+          </property>
+          <attribute name="horizontalHeaderVisible">
+           <bool>true</bool>
+          </attribute>
+          <attribute name="horizontalHeaderCascadingSectionResizes">
+           <bool>false</bool>
+          </attribute>
+          <attribute name="horizontalHeaderMinimumSectionSize">
+           <number>30</number>
+          </attribute>
+          <attribute name="horizontalHeaderDefaultSectionSize">
+           <number>322</number>
+          </attribute>
+          <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
+           <bool>false</bool>
+          </attribute>
+          <attribute name="horizontalHeaderStretchLastSection">
+           <bool>false</bool>
+          </attribute>
+          <attribute name="verticalHeaderVisible">
+           <bool>false</bool>
+          </attribute>
+          <attribute name="verticalHeaderMinimumSectionSize">
+           <number>30</number>
+          </attribute>
+          <attribute name="verticalHeaderDefaultSectionSize">
+           <number>30</number>
+          </attribute>
+          <attribute name="verticalHeaderShowSortIndicator" stdset="0">
+           <bool>false</bool>
+          </attribute>
+          <attribute name="verticalHeaderStretchLastSection">
+           <bool>false</bool>
+          </attribute>
+          <row>
+           <property name="text">
+            <string>New Row</string>
+           </property>
+          </row>
+          <row>
+           <property name="text">
+            <string>New Row</string>
+           </property>
+          </row>
+          <row>
+           <property name="text">
+            <string>New Row</string>
+           </property>
+          </row>
+          <row>
+           <property name="text">
+            <string>New Row</string>
+           </property>
+          </row>
+          <row>
+           <property name="text">
+            <string>New Row</string>
+           </property>
+          </row>
+          <row>
+           <property name="text">
+            <string>New Row</string>
+           </property>
+          </row>
+          <row>
+           <property name="text">
+            <string>New Row</string>
+           </property>
+          </row>
+          <row>
+           <property name="text">
+            <string>New Row</string>
+           </property>
+          </row>
+          <row>
+           <property name="text">
+            <string>New Row</string>
+           </property>
+          </row>
+          <column>
+           <property name="text">
+            <string>Location</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Maximum amount of DNA hints</string>
+           </property>
+          </column>
+          <item row="0" column="0">
+           <property name="text">
+            <string>Area 1 - Metroid Caverns Hub</string>
+           </property>
+           <property name="textAlignment">
+            <set>AlignCenter</set>
+           </property>
+          </item>
+          <item row="0" column="1">
+           <property name="text">
+            <string>4</string>
+           </property>
+           <property name="textAlignment">
+            <set>AlignCenter</set>
+           </property>
+          </item>
+          <item row="1" column="0">
+           <property name="text">
+            <string>Area 2: Dam Exterior - Metroid Caverns Teleporter</string>
+           </property>
+           <property name="textAlignment">
+            <set>AlignCenter</set>
+           </property>
+          </item>
+          <item row="1" column="1">
+           <property name="text">
+            <string>5</string>
+           </property>
+           <property name="textAlignment">
+            <set>AlignCenter</set>
+           </property>
+          </item>
+          <item row="2" column="0">
+           <property name="text">
+            <string>Area 3: Metroid Caverns - Gamma+ Arena South</string>
+           </property>
+           <property name="textAlignment">
+            <set>AlignCenter</set>
+           </property>
+          </item>
+          <item row="2" column="1">
+           <property name="text">
+            <string>6</string>
+           </property>
+           <property name="textAlignment">
+            <set>AlignCenter</set>
+           </property>
+          </item>
+          <item row="3" column="0">
+           <property name="text">
+            <string>Area 4: Crystal Mines - Basalt Basin</string>
+           </property>
+           <property name="textAlignment">
+            <set>AlignCenter</set>
+           </property>
+          </item>
+          <item row="3" column="1">
+           <property name="text">
+            <string>4</string>
+           </property>
+           <property name="textAlignment">
+            <set>AlignCenter</set>
+           </property>
+          </item>
+          <item row="4" column="0">
+           <property name="text">
+            <string>Area 5: Tower Exterior - Tower Exterior</string>
+           </property>
+           <property name="textAlignment">
+            <set>AlignCenter</set>
+           </property>
+          </item>
+          <item row="4" column="1">
+           <property name="text">
+            <string>6</string>
+           </property>
+           <property name="textAlignment">
+            <set>AlignCenter</set>
+           </property>
+          </item>
+          <item row="5" column="0">
+           <property name="text">
+            <string>Area 6 - Hideout Sprawl</string>
+           </property>
+           <property name="textAlignment">
+            <set>AlignCenter</set>
+           </property>
+          </item>
+          <item row="5" column="1">
+           <property name="text">
+            <string>3</string>
+           </property>
+           <property name="textAlignment">
+            <set>AlignCenter</set>
+           </property>
+          </item>
+          <item row="6" column="0">
+           <property name="text">
+            <string>Area 6 - Crumbling Stairwell</string>
+           </property>
+           <property name="textAlignment">
+            <set>AlignCenter</set>
+           </property>
+          </item>
+          <item row="6" column="1">
+           <property name="text">
+            <string>3</string>
+           </property>
+           <property name="textAlignment">
+            <set>AlignCenter</set>
+           </property>
+          </item>
+          <item row="7" column="0">
+           <property name="text">
+            <string>Area 7 - Wallfire Workstation</string>
+           </property>
+           <property name="textAlignment">
+            <set>AlignCenter</set>
+           </property>
+          </item>
+          <item row="7" column="1">
+           <property name="text">
+            <string>3</string>
+           </property>
+           <property name="textAlignment">
+            <set>AlignCenter</set>
+           </property>
+          </item>
+          <item row="8" column="0">
+           <property name="text">
+            <string>Area 8 - Hatchling Room</string>
+           </property>
+           <property name="textAlignment">
+            <set>AlignCenter</set>
+           </property>
+          </item>
+          <item row="8" column="1">
+           <property name="text">
+            <string>5</string>
+           </property>
+           <property name="textAlignment">
+            <set>AlignCenter</set>
+           </property>
+          </item>
          </widget>
         </item>
        </layout>
@@ -258,8 +535,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>631</width>
-         <height>468</height>
+         <width>701</width>
+         <height>646</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="hint_item_names_scroll_layout">
@@ -342,8 +619,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>631</width>
-         <height>468</height>
+         <width>701</width>
+         <height>646</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="hint_scroll_layout">
