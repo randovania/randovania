@@ -57,6 +57,7 @@ class MSRBootstrap(MetroidBootstrap):
             "charge_door_buff": "ChargeDoorBuff",
             "beam_door_buff": "BeamDoorBuff",
             "nerf_super_missiles": "NerfSupers",
+            "beam_burst_buff": "BeamBurstBuff",
             "surface_crumbles": "SurfaceCrumbles",
             "area1_crumbles": "Area1Crumbles",
             "reverse_area8": "ReverseArea8",
