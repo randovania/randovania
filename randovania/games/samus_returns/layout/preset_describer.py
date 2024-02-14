@@ -123,7 +123,7 @@ class MSRPresetDescriber(GamePresetDescriber):
                 },
                 {
                     "Change Surface Cavern Cavity Crumble Blocks": configuration.surface_crumbles,
-                    "Change Area 1 Chozo Seal Crumble Blocks": configuration.area1_crumbles,
+                    "Change Area 1 Transport to Surface and Area 2 Crumble Blocks": configuration.area1_crumbles,
                 },
                 {
                     "Enable Reverse Area 8": configuration.reverse_area8,
