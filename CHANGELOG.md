@@ -8,8 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [7.4.0] - 2024-03-??
 
 - Added: A warning will be shown when trying to generate a game where more items are in the pool than the maximum amount of items.
-- TODO: Fill.
-- Fixed: Changelog window properly displays images
+- Fixed: Changelog window properly displays images.
+- Fixed: Cancelling connecting to the server is better handled now.
 
 ### Cave Story
 
