@@ -210,7 +210,7 @@ class QtNetworkClient(QtCore.QObject, NetworkClient):
             try:
                 await wait_dialog.cancellable_wait(
                     parent,
-                    self.connect_to_server(),
+                    asyncio.ensure_future(self.connect_to_server()),
                     "Connecting",
                     "Connecting to server...",
                 )
