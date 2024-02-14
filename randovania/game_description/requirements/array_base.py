@@ -7,10 +7,9 @@ from randovania.game_description.requirements.base import Requirement
 if typing.TYPE_CHECKING:
     from collections.abc import Iterable, Iterator
 
+    from randovania.game_description.db.node import NodeContext
     from randovania.game_description.requirements.requirement_set import RequirementSet
     from randovania.game_description.requirements.resource_requirement import ResourceRequirement
-    from randovania.game_description.resources.resource_collection import ResourceCollection
-    from randovania.game_description.resources.resource_database import ResourceDatabase
 
 
 class RequirementArrayBase(Requirement):
@@ -30,24 +29,22 @@ class RequirementArrayBase(Requirement):
     def __reduce__(self) -> tuple[type[RequirementArrayBase], tuple[tuple[Requirement, ...], str | None]]:
         return type(self), (self.items, self.comment)
 
-    def damage(self, current_resources: ResourceCollection, database: ResourceDatabase) -> int:
+    def damage(self, context: NodeContext) -> int:
         raise NotImplementedError
 
-    def satisfied(self, current_resources: ResourceCollection, current_energy: int, database: ResourceDatabase) -> bool:
+    def satisfied(self, context: NodeContext, current_energy: int) -> bool:
         raise NotImplementedError
 
-    def patch_requirements(
-        self, static_resources: ResourceCollection, damage_multiplier: float, database: ResourceDatabase
-    ) -> Requirement:
+    def patch_requirements(self, damage_multiplier: float, context: NodeContext) -> Requirement:
         return type(self)(
-            (item.patch_requirements(static_resources, damage_multiplier, database) for item in self.items),
+            (item.patch_requirements(damage_multiplier, context) for item in self.items),
             comment=self.comment,
         )
 
     def simplify(self, keep_comments: bool = False) -> Requirement:
         raise NotImplementedError
 
-    def as_set(self, database: ResourceDatabase) -> RequirementSet:
+    def as_set(self, context: NodeContext) -> RequirementSet:
         raise NotImplementedError
 
     @property
@@ -65,9 +62,9 @@ class RequirementArrayBase(Requirement):
     def __repr__(self) -> str:
         return repr(self.items)
 
-    def iterate_resource_requirements(self, database: ResourceDatabase) -> Iterator[ResourceRequirement]:
+    def iterate_resource_requirements(self, context: NodeContext) -> Iterator[ResourceRequirement]:
         for item in self.items:
-            yield from item.iterate_resource_requirements(database)
+            yield from item.iterate_resource_requirements(context)
 
     def __str__(self) -> str:
         if self.items:

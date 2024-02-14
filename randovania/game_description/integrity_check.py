@@ -166,7 +166,7 @@ def find_area_errors(game: GameDescription, area: Area) -> Iterator[str]:
             # if this node would satisfy the victory condition, it does not need outgoing connections
             current = ResourceCollection.with_database(game.resource_database)
             current.set_resource(node.event, 1)
-            if game.victory_condition.satisfied(current, 0, game.resource_database):
+            if game.victory_condition.satisfied(game.create_node_context(current), 0):
                 continue
 
         if node in nodes_with_paths_in:

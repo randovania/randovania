@@ -14,11 +14,13 @@ if typing.TYPE_CHECKING:
     from collections.abc import Iterable, Iterator
 
     from randovania.game_description.db.node_identifier import NodeIdentifier
+    from randovania.game_description.game_patches import GamePatches
 
 
 def _requirement_from_back(context: NodeContext, target_node: Node) -> ResourceRequirement | None:
     if isinstance(target_node, DockNode):
-        weak = context.patches.get_dock_weakness_for(target_node)
+        patches: GamePatches = context.patches  # type: ignore
+        weak = patches.get_dock_weakness_for(target_node)
         if weak.lock is not None:
             return ResourceRequirement.simple(NodeResourceInfo.from_node(target_node, context))
 
@@ -53,9 +55,10 @@ class DockNode(Node):
         return f"DockNode({self.name!r} -> {self.default_connection})"
 
     def get_back_weakness(self, context: NodeContext) -> DockWeakness | None:
-        target_node = context.patches.get_dock_connection_for(self)
+        patches: GamePatches = context.patches  # type: ignore
+        target_node = patches.get_dock_connection_for(self)
         if isinstance(target_node, DockNode):
-            return context.patches.get_dock_weakness_for(target_node)
+            return patches.get_dock_weakness_for(target_node)
 
         return None
 
@@ -76,7 +79,8 @@ class DockNode(Node):
         context: NodeContext,
         target_node: Node,
     ) -> tuple[Node, Requirement]:
-        forward_weakness = context.patches.get_dock_weakness_for(self)
+        patches: GamePatches = context.patches  # type: ignore
+        forward_weakness = patches.get_dock_weakness_for(self)
 
         reqs: list[Requirement] = [self._get_open_requirement(context, forward_weakness)]
 
@@ -99,7 +103,8 @@ class DockNode(Node):
     def _lock_connection(self, context: NodeContext) -> tuple[Node, Requirement] | None:
         requirement = Requirement.trivial()
 
-        forward_weakness = context.patches.get_dock_weakness_for(self)
+        patches: GamePatches = context.patches  # type: ignore
+        forward_weakness = patches.get_dock_weakness_for(self)
         forward_lock = forward_weakness.lock
 
         if forward_lock is not None:
@@ -119,20 +124,22 @@ class DockNode(Node):
         return self.lock_node, requirement
 
     def get_target_node(self, context: NodeContext) -> Node:
-        return context.patches.get_dock_connection_for(self)
+        patches: GamePatches = context.patches  # type: ignore
+        return patches.get_dock_connection_for(self)
 
     def connections_from(self, context: NodeContext) -> Iterator[tuple[Node, Requirement]]:
-        result: Iterable[tuple[Node, Requirement]] | None = context.patches.get_cached_dock_connections_from(self)
+        patches: GamePatches = context.patches  # type: ignore
+        result: Iterable[tuple[Node, Requirement]] | None = patches.get_cached_dock_connections_from(self)
         if result is None:
             connections = []
 
-            target_node = context.patches.get_dock_connection_for(self)
+            target_node = patches.get_dock_connection_for(self)
             connections.append(self._open_dock_connection(context, target_node))
 
             if (lock_connection := self._lock_connection(context)) is not None:
                 connections.append(lock_connection)
 
-            context.patches.set_cached_dock_connections_from(self, tuple(connections))
+            patches.set_cached_dock_connections_from(self, tuple(connections))
             result = connections
 
         yield from result
