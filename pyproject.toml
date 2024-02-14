@@ -1,10 +1,11 @@
 [build-system]
 requires = [
-    "setuptools>=61.2",
-    "setuptools_scm[toml]>=6.2",
+    "setuptools>=64",
+    "setuptools_scm>=8",
     "pyqt-distutils>=0.7.3",
     "wheel>=0.37.0",
     "dulwich",
+    "randovania-scm-version-schema",
 ]
 build-backend = "setuptools.build_meta"
 
@@ -159,6 +160,20 @@ randovania = "randovania.__main__:main"
 
 [tool.setuptools.packages.find]
 include = ["randovania*"]
+
+[tool.setuptools_scm]
+local_scheme = "no-local-version"
+version_file = "randovania/version.py"
+version_scheme = "randovania_scm_version_schema:version_scheme"
+git_describe_command = [
+    "git",
+    "describe",
+    "--dirty",
+    "--tags",
+    "--long",
+    "--match",
+    "v[0-9]*",
+]
 
 [tool.ruff]
 line-length = 120
