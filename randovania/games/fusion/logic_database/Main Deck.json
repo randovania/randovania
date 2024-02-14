@@ -901,7 +901,7 @@
                 "room_id": 10
             },
             "nodes": {
-                "Door to Maintenance Crossing": {
+                "Door to Operations Maintenance Shaft": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -920,7 +920,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Main Deck",
-                        "area": "Maintenance Crossing",
+                        "area": "Operations Maintenance Shaft",
                         "node": "Door to Crew Quarters East"
                     },
                     "default_dock_weakness": "L0 Hatch",
@@ -966,7 +966,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Maintenance Crossing": {
+                        "Door to Operations Maintenance Shaft": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1143,7 +1143,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Maintenance Crossing": {
+                        "Door to Operations Maintenance Shaft": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1159,7 +1159,7 @@
                         }
                     }
                 },
-                "Door to Maintenance Crossing": {
+                "Door to Operations Maintenance Shaft": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1178,7 +1178,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Main Deck",
-                        "area": "Maintenance Crossing",
+                        "area": "Operations Maintenance Shaft",
                         "node": "Door to Crew Quarters West"
                     },
                     "default_dock_weakness": "L0 Hatch",
@@ -1270,8 +1270,8 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Elevator to Crew Quarters": {
-                            "type": "or",
+                        "Door to Operations Deck Navigation Room": {
+                            "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": [
@@ -4353,6 +4353,13 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Door to Crew Quarters East": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -4439,6 +4446,103 @@
                             }
                         }
                     }
+                },
+                "Door to Crew Quarters West": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 52.04,
+                        "y": 258.57,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "Door",
+                    "default_connection": {
+                        "region": "Main Deck",
+                        "area": "Crew Quarters West",
+                        "node": "Door to Operations Maintenance Shaft"
+                    },
+                    "default_dock_weakness": "L0 Hatch",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Crew Quarters East": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Missiles",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Door to Crew Quarters East": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 246.37,
+                        "y": 255.77,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "Door",
+                    "default_connection": {
+                        "region": "Main Deck",
+                        "area": "Crew Quarters East",
+                        "node": "Door to Operations Maintenance Shaft"
+                    },
+                    "default_dock_weakness": "L0 Hatch",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Other to Crew Quarters East": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Crew Quarters West": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Missiles",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -4450,7 +4554,7 @@
             },
             "nodes": {
                 "Door to Crew Quarters West": {
-                    "node_type": "dock",
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": {
                         "x": 40.0,
@@ -4465,21 +4569,10 @@
                         "door_idx": 81
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Door",
-                    "default_connection": {
-                        "region": "Main Deck",
-                        "area": "Crew Quarters West",
-                        "node": "Door to Maintenance Crossing"
-                    },
-                    "default_dock_weakness": "L0 Hatch",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
                     "connections": {}
                 },
                 "Door to Crew Quarters East": {
-                    "node_type": "dock",
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": {
                         "x": 264.0,
@@ -4494,17 +4587,6 @@
                         "door_idx": 82
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Door",
-                    "default_connection": {
-                        "region": "Main Deck",
-                        "area": "Crew Quarters East",
-                        "node": "Door to Maintenance Crossing"
-                    },
-                    "default_dock_weakness": "L0 Hatch",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
                     "connections": {}
                 }
             }

@@ -191,9 +191,9 @@ Extra - room_id: 9
 Crew Quarters East
 Extra - map_name: Main Deck10
 Extra - room_id: 10
-> Door to Maintenance Crossing; Heals? False
+> Door to Operations Maintenance Shaft; Heals? False
   * Layers: default
-  * L0 Hatch to Maintenance Crossing/Door to Crew Quarters East
+  * L0 Hatch to Operations Maintenance Shaft/Door to Crew Quarters East
   * Extra - door_idx: 83
   > Other to Operations Maintenance Shaft
       Trivial
@@ -202,7 +202,7 @@ Extra - room_id: 10
   * Layers: default
   * Open Passage to Operations Maintenance Shaft/Other to Crew Quarters East
   * Extra - door_idx: 84
-  > Door to Maintenance Crossing
+  > Door to Operations Maintenance Shaft
       Trivial
   > Door to Crew Quarters Save Room
       Trivial
@@ -240,14 +240,14 @@ Extra - room_id: 12
   * Layers: default
   * L0 Hatch to Main Deck Navigation Room East/Door to Crew Quarters West
   * Extra - door_idx: 77
-  > Door to Maintenance Crossing
+  > Door to Operations Maintenance Shaft
       Trivial
   > Door to Elevator to Operations Deck
       Trivial
 
-> Door to Maintenance Crossing; Heals? False
+> Door to Operations Maintenance Shaft; Heals? False
   * Layers: default
-  * L0 Hatch to Maintenance Crossing/Door to Crew Quarters West
+  * L0 Hatch to Operations Maintenance Shaft/Door to Crew Quarters West
   * Extra - door_idx: 80
   > Door to Main Deck Navigation Room East
       Trivial
@@ -267,7 +267,7 @@ Extra - room_id: 13
   * Layers: default
   * Open Passage to Operations Maintenance Shaft/Other to Operations Deck
   * Extra - door_idx: 22
-  > Door to Elevator to Crew Quarters
+  > Door to Operations Deck Navigation Room
       Missiles
 
 > Door to Operations Deck Navigation Room; Heals? False
@@ -867,6 +867,8 @@ Extra - room_id: 35
       Trivial
   > Other to Operations Maintenance Storage
       Trivial
+  > Door to Crew Quarters East
+      Trivial
 
 > Other to Operations Deck; Heals? False
   * Layers: default
@@ -882,18 +884,30 @@ Extra - room_id: 35
   > Other to Crew Quarters East
       Trivial
 
+> Door to Crew Quarters West; Heals? False
+  * Layers: default
+  * L0 Hatch to Crew Quarters West/Door to Operations Maintenance Shaft
+  > Door to Crew Quarters East
+      Missiles
+
+> Door to Crew Quarters East; Heals? False
+  * Layers: default
+  * L0 Hatch to Crew Quarters East/Door to Operations Maintenance Shaft
+  > Other to Crew Quarters East
+      Trivial
+  > Door to Crew Quarters West
+      Missiles
+
 ----------------
 Maintenance Crossing
 Extra - map_name: Main Deck36
 Extra - room_id: 36
 > Door to Crew Quarters West; Heals? False
   * Layers: default
-  * L0 Hatch to Crew Quarters West/Door to Maintenance Crossing
   * Extra - door_idx: 81
 
 > Door to Crew Quarters East; Heals? False
   * Layers: default
-  * L0 Hatch to Crew Quarters East/Door to Maintenance Crossing
   * Extra - door_idx: 82
 
 ----------------
