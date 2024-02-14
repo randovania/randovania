@@ -177,6 +177,9 @@ git_describe_command = [
 
 [tool.ruff]
 line-length = 120
+target-version = "py311"
+
+[tool.ruff.lint]
 select = [
     "E", "F", "W", "C90", "I", "UP", "C4",
     "RSE",
@@ -200,19 +203,16 @@ extend-ignore = [
     "PLW2901",  # TODO: should actually fix these
 ]
 
-# Version to target for generated code.
-target-version = "py311"
-
-[tool.ruff.isort]
+[tool.ruff.lint.isort]
 # This is very desirable, but causes issues with py-cord and some usages of construct_pack.encode
 # required-imports = ["from __future__ import annotations"]
 
-[tool.ruff.mccabe]
+[tool.ruff.lint.mccabe]
 # Flag errors (`C901`) whenever the complexity level exceeds 25.
 # Defaults to 10, but we're being very flexible right now
 max-complexity = 25
 
-[tool.ruff.flake8-type-checking]
+[tool.ruff.lint.flake8-type-checking]
 runtime-evaluated-base-classes = [
     "randovania.bitpacking.bitpacking.BitPackDataclass",
     "randovania.bitpacking.type_enforcement.DataclassPostInitTypeCheck",
