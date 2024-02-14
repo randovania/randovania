@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 from randovania.exporter import item_names, pickup_exporter
-from randovania.exporter.hints import credits_spoiler
+from randovania.exporter.hints import credits_spoiler, guaranteed_item_hint
 from randovania.exporter.hints.hint_exporter import HintExporter
 from randovania.exporter.patch_data_factory import PatchDataFactory
 from randovania.game_description.assignment import PickupTarget
@@ -12,10 +12,13 @@ from randovania.game_description.pickup.pickup_entry import PickupModel
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.games.game import RandovaniaGame
 from randovania.games.samus_returns.exporter.hint_namer import MSRHintNamer
+from randovania.games.samus_returns.exporter.joke_hints import JOKE_HINTS
+from randovania.games.samus_returns.layout.hint_configuration import ItemHintMode
 from randovania.generator.pickup_pool import pickup_creator
 
 if TYPE_CHECKING:
     from collections.abc import Iterator
+    from random import Random
 
     from randovania.exporter.pickup_exporter import ExportedPickupDetails
     from randovania.game_description.db.area import Area
@@ -207,11 +210,11 @@ class MSRPatchDataFactory(PatchDataFactory):
 
         return details
 
-    def _encode_hints(self) -> list[dict]:
+    def _encode_hints(self, rng: Random) -> list[dict]:
         namer = MSRHintNamer(self.description.all_patches, self.players_config)
         exporter = HintExporter(namer, self.rng, ["A joke hint."])
 
-        return [
+        hints = [
             {
                 "accesspoint_actor": self._teleporter_ref_for(logbook_node),
                 "text": exporter.create_message_for_hint(
@@ -224,6 +227,50 @@ class MSRPatchDataFactory(PatchDataFactory):
             for logbook_node in self.game.region_list.iterate_nodes()
             if isinstance(logbook_node, HintNode)
         ]
+
+        artifacts = [self.game.resource_database.get_item(f"Metroid DNA {i + 1}") for i in range(39)]
+        dna_hint_mapping = {}
+        hint_config = self.configuration.hints
+        if hint_config.artifacts != ItemHintMode.DISABLED:
+            dna_hint_mapping = guaranteed_item_hint.create_guaranteed_hints_for_resources(
+                self.description.all_patches,
+                self.players_config,
+                MSRHintNamer(self.description.all_patches, self.players_config),
+                hint_config.artifacts == ItemHintMode.HIDE_AREA,
+                artifacts,
+                False,
+            )
+        else:
+            dna_hint_mapping = {k: f"{k.long_name} is hidden somewhere on SR388." for k in artifacts}
+
+        # Shuffle DNA hints
+        hint_texts = list(dna_hint_mapping.values())
+        rng.shuffle(hint_texts)
+        dna_hint_mapping = dict(zip(artifacts, hint_texts))
+
+        dud_hint = "This Chozo Seal did not give any useful DNA hints."
+        actor_to_amount_map = [
+            ("s010_area1", "LE_RandoDNA", 0, 4),
+            ("s020_area2", "LE_RandoDNA", 4, 9),
+            ("s033_area3b", "LE_RandoDNA", 9, 15),
+            ("s050_area5", "LE_RandoDNA", 15, 19),
+            ("s065_area6b", "LE_RandoDNA", 19, 25),
+            ("s070_area7", "LE_RandoDNA_001", 25, 28),
+            ("s070_area7", "LE_RandoDNA_002", 28, 31),
+            ("s090_area9", "LE_RandoDNA", 31, 34),
+            ("s100_area10", "LE_RandoDNA", 34, 39),
+        ]
+
+        for scenario, actor, start, end in actor_to_amount_map:
+            shuffled_hints = list(dna_hint_mapping.values())[start:end]
+            shuffled_hints = [hint for hint in shuffled_hints if "Hunter already started with" not in hint]
+            if not shuffled_hints:
+                shuffled_hints = [rng.choice(JOKE_HINTS + [dud_hint])]
+            hints.append(
+                {"accesspoint_actor": {"scenario": scenario, "actor": actor}, "text": "\n".join(shuffled_hints) + "\n"}
+            )
+
+        return hints
 
     def _node_for(self, identifier: NodeIdentifier) -> Node:
         return self.game.region_list.node_by_identifier(identifier)
@@ -411,7 +458,7 @@ class MSRPatchDataFactory(PatchDataFactory):
             },
             "text_patches": self._static_text_changes(),
             "spoiler_log": self._credits_spoiler() if self.description.has_spoiler else {},
-            "hints": self._encode_hints(),
+            "hints": self._encode_hints(self.rng),
             "cosmetic_patches": self._create_cosmetics(),
             "configuration_identifier": self.description.shareable_hash,
         }
