@@ -787,14 +787,14 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Level 1 Security Room": {
+                        "Door to Level 1 Security Room (Lower)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Door to Level 1 Security Room (60)": {
+                        "Door to Level 1 Security Room (Upper)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -820,7 +820,7 @@
                         }
                     }
                 },
-                "Door to Level 1 Security Room": {
+                "Door to Level 1 Security Room (Lower)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -842,7 +842,7 @@
                     "default_connection": {
                         "region": "Sector 2",
                         "area": "Level 1 Security Room",
-                        "node": "Door to Security Access"
+                        "node": "Door to Security Access (Lower)"
                     },
                     "default_dock_weakness": "L1 Hatch",
                     "exclude_from_dock_rando": false,
@@ -859,7 +859,7 @@
                         }
                     }
                 },
-                "Door to Level 1 Security Room (60)": {
+                "Door to Level 1 Security Room (Upper)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -881,7 +881,7 @@
                     "default_connection": {
                         "region": "Sector 2",
                         "area": "Level 1 Security Room",
-                        "node": "Door to Security Access"
+                        "node": "Door to Security Access (Upper)"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -1044,8 +1044,8 @@
                 ]
             },
             "nodes": {
-                "Door to Data Hub Access": {
-                    "node_type": "dock",
+                "to Data Hub Access": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": {
                         "x": 504.0,
@@ -1062,29 +1062,10 @@
                         ]
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Door",
-                    "default_connection": {
-                        "region": "Sector 2",
-                        "area": "Data Hub Access",
-                        "node": "Door to Data Hub (D)"
-                    },
-                    "default_dock_weakness": "L0 Hatch",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {
-                        "Door to Data Room": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
+                    "connections": {}
                 },
-                "Door to Data Room": {
-                    "node_type": "dock",
+                "to Data Room": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": {
                         "x": 40.0,
@@ -1101,17 +1082,6 @@
                         ]
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Door",
-                    "default_connection": {
-                        "region": "Sector 2",
-                        "area": "Data Room",
-                        "node": "Door to Data Hub (D)"
-                    },
-                    "default_dock_weakness": "L1 Hatch",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
                     "connections": {}
                 }
             }
@@ -1641,7 +1611,7 @@
                 ]
             },
             "nodes": {
-                "Door to Nettori Access (C)": {
+                "Door to Nettori Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1662,7 +1632,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 2",
-                        "area": "Nettori Access (C)",
+                        "area": "Nettori Access",
                         "node": "Door to Shooting Gallery"
                     },
                     "default_dock_weakness": "L0 Hatch",
@@ -1671,7 +1641,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Nettori Arena (C)": {
+                        "Door to Nettori Arena": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1680,7 +1650,7 @@
                         }
                     }
                 },
-                "Door to Nettori Arena (C)": {
+                "Door to Nettori Arena": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1701,7 +1671,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 2",
-                        "area": "Nettori Arena (C)",
+                        "area": "Nettori Arena",
                         "node": "Door to Shooting Gallery"
                     },
                     "default_dock_weakness": "L0 Hatch",
@@ -1710,7 +1680,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Nettori Access (C)": {
+                        "Door to Nettori Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2992,7 +2962,7 @@
                         }
                     }
                 },
-                "Door to Eastern Shaft (C)": {
+                "Door to Eastern Shaft": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3013,7 +2983,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 2",
-                        "area": "Eastern Shaft (C)",
+                        "area": "Eastern Shaft",
                         "node": "Door to Collapsed Shaft"
                     },
                     "default_dock_weakness": "Open Hatch",
@@ -3112,7 +3082,7 @@
                                 ]
                             }
                         },
-                        "Door to Eastern Shaft (C)": {
+                        "Door to Eastern Shaft": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3209,7 +3179,7 @@
                     "default_connection": {
                         "region": "Sector 2",
                         "area": "Shooting Gallery",
-                        "node": "Door to Nettori Access (C)"
+                        "node": "Door to Nettori Access"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -3293,7 +3263,7 @@
                     "pickup_index": 29,
                     "location_category": "minor",
                     "connections": {
-                        "Door to Eastern Shaft (C)": {
+                        "Door to Eastern Shaft": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3302,7 +3272,7 @@
                         }
                     }
                 },
-                "Door to Eastern Shaft (C)": {
+                "Door to Eastern Shaft": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3323,7 +3293,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 2",
-                        "area": "Eastern Shaft (C)",
+                        "area": "Eastern Shaft",
                         "node": "Door to Owtch Cache B"
                     },
                     "default_dock_weakness": "L0 Hatch",
@@ -3388,7 +3358,7 @@
                     "default_connection": {
                         "region": "Sector 2",
                         "area": "Shooting Gallery",
-                        "node": "Door to Nettori Arena (C)"
+                        "node": "Door to Nettori Arena"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -3657,7 +3627,7 @@
                 ]
             },
             "nodes": {
-                "Door to Eastern Shaft (C)": {
+                "Door to Eastern Shaft": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3678,7 +3648,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 2",
-                        "area": "Eastern Shaft (C)",
+                        "area": "Eastern Shaft",
                         "node": "Door to Kihunter Hallway"
                     },
                     "default_dock_weakness": "L0 Hatch",
@@ -3726,7 +3696,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Eastern Shaft (C)": {
+                        "Door to Eastern Shaft": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3983,7 +3953,7 @@
                 ]
             },
             "nodes": {
-                "Door to Security Access": {
+                "Door to Security Access (Lower)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4005,7 +3975,7 @@
                     "default_connection": {
                         "region": "Sector 2",
                         "area": "Security Access",
-                        "node": "Door to Level 1 Security Room"
+                        "node": "Door to Level 1 Security Room (Lower)"
                     },
                     "default_dock_weakness": "L1 Hatch",
                     "exclude_from_dock_rando": false,
@@ -4013,7 +3983,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Security Access (61)": {
+                        "Door to Security Access (Upper)": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -4065,7 +4035,7 @@
                         }
                     }
                 },
-                "Door to Security Access (61)": {
+                "Door to Security Access (Upper)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4087,7 +4057,7 @@
                     "default_connection": {
                         "region": "Sector 2",
                         "area": "Security Access",
-                        "node": "Door to Level 1 Security Room"
+                        "node": "Door to Level 1 Security Room (Upper)"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -4095,7 +4065,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Security Access": {
+                        "Door to Security Access (Lower)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4134,7 +4104,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Security Access": {
+                        "Door to Security Access (Lower)": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -4169,7 +4139,7 @@
                     "valid_starting_location": false,
                     "event_name": "Level1Locks",
                     "connections": {
-                        "Door to Security Access": {
+                        "Door to Security Access (Lower)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4504,8 +4474,8 @@
                 ]
             },
             "nodes": {
-                "Door to Entrance Hub": {
-                    "node_type": "dock",
+                "to Entrance Hub": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": {
                         "x": 504.0,
@@ -4522,17 +4492,6 @@
                         ]
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Door",
-                    "default_connection": {
-                        "region": "Sector 2",
-                        "area": "Entrance Hub",
-                        "node": "Door to Data Hub Access"
-                    },
-                    "default_dock_weakness": "L0 Hatch",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
                     "connections": {}
                 }
             }
@@ -4832,7 +4791,7 @@
                     "default_connection": {
                         "region": "Sector 2",
                         "area": "Owtch Cache B",
-                        "node": "Door to Eastern Shaft (C)"
+                        "node": "Door to Eastern Shaft"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -4871,7 +4830,7 @@
                     "default_connection": {
                         "region": "Sector 2",
                         "area": "Kihunter Hallway",
-                        "node": "Door to Eastern Shaft (C)"
+                        "node": "Door to Eastern Shaft"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -4924,7 +4883,7 @@
                     "default_connection": {
                         "region": "Sector 2",
                         "area": "Collapsed Shaft",
-                        "node": "Door to Eastern Shaft (C)"
+                        "node": "Door to Eastern Shaft"
                     },
                     "default_dock_weakness": "Open Hatch",
                     "exclude_from_dock_rando": false,
@@ -5104,7 +5063,7 @@
                     "default_connection": {
                         "region": "Sector 2",
                         "area": "Nettori Save Room",
-                        "node": "Door to Eastern Shaft (C)"
+                        "node": "Door to Eastern Shaft"
                     },
                     "default_dock_weakness": "Open Hatch",
                     "exclude_from_dock_rando": false,
@@ -5424,8 +5383,8 @@
                 ]
             },
             "nodes": {
-                "Door to Nettori Arena (C)": {
-                    "node_type": "dock",
+                "to Nettori Arena (C)": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": {
                         "x": 504.0,
@@ -5442,19 +5401,8 @@
                         ]
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Door",
-                    "default_connection": {
-                        "region": "Sector 2",
-                        "area": "Nettori Arena (C)",
-                        "node": "Door to Nettori Access (C)"
-                    },
-                    "default_dock_weakness": "Open Hatch",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Eastern Shaft (C)": {
+                        "to Eastern Shaft (C)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5463,8 +5411,8 @@
                         }
                     }
                 },
-                "Door to Shooting Gallery": {
-                    "node_type": "dock",
+                "to Shooting Gallery": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": {
                         "x": 984.0,
@@ -5481,19 +5429,8 @@
                         ]
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Door",
-                    "default_connection": {
-                        "region": "Sector 2",
-                        "area": "Shooting Gallery",
-                        "node": "Door to Nettori Access (C)"
-                    },
-                    "default_dock_weakness": "L0 Hatch",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Eastern Shaft (C)": {
+                        "to Eastern Shaft (C)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5502,8 +5439,8 @@
                         }
                     }
                 },
-                "Door to Eastern Shaft (C)": {
-                    "node_type": "dock",
+                "to Eastern Shaft (C)": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": {
                         "x": 40.0,
@@ -5520,19 +5457,8 @@
                         ]
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Door",
-                    "default_connection": {
-                        "region": "Sector 2",
-                        "area": "Eastern Shaft (C)",
-                        "node": "Door to Nettori Access (C)"
-                    },
-                    "default_dock_weakness": "Open Hatch",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Nettori Arena (C)": {
+                        "to Nettori Arena (C)": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -5544,7 +5470,7 @@
                                 ]
                             }
                         },
-                        "Door to Shooting Gallery": {
+                        "to Shooting Gallery": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5564,8 +5490,8 @@
                 ]
             },
             "nodes": {
-                "Door to Kihunter Hallway": {
-                    "node_type": "dock",
+                "to Kihunter Hallway": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": {
                         "x": 40.0,
@@ -5582,33 +5508,22 @@
                         ]
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Door",
-                    "default_connection": {
-                        "region": "Sector 2",
-                        "area": "Kihunter Hallway",
-                        "node": "Door to Eastern Shaft (C)"
-                    },
-                    "default_dock_weakness": "L0 Hatch",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Owtch Cache B": {
+                        "to Owtch Cache B": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Door to Nettori Save Room": {
+                        "to Nettori Save Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Other to Hidden Recharge Room": {
+                        "to Hidden Recharge Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5617,8 +5532,8 @@
                         }
                     }
                 },
-                "Door to Owtch Cache B": {
-                    "node_type": "dock",
+                "to Owtch Cache B": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": {
                         "x": 264.0,
@@ -5635,19 +5550,8 @@
                         ]
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Door",
-                    "default_connection": {
-                        "region": "Sector 2",
-                        "area": "Owtch Cache B",
-                        "node": "Door to Eastern Shaft (C)"
-                    },
-                    "default_dock_weakness": "L0 Hatch",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Kihunter Hallway": {
+                        "to Kihunter Hallway": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5656,8 +5560,8 @@
                         }
                     }
                 },
-                "Door to Nettori Access (C)": {
-                    "node_type": "dock",
+                "to Nettori Access (C)": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": {
                         "x": 264.0,
@@ -5674,19 +5578,8 @@
                         ]
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Door",
-                    "default_connection": {
-                        "region": "Sector 2",
-                        "area": "Nettori Access (C)",
-                        "node": "Door to Eastern Shaft (C)"
-                    },
-                    "default_dock_weakness": "Open Hatch",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Nettori Save Room": {
+                        "to Nettori Save Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5695,8 +5588,8 @@
                         }
                     }
                 },
-                "Door to Collapsed Shaft": {
-                    "node_type": "dock",
+                "to Collapsed Shaft": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": {
                         "x": 40.0,
@@ -5713,26 +5606,15 @@
                         ]
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Door",
-                    "default_connection": {
-                        "region": "Sector 2",
-                        "area": "Collapsed Shaft",
-                        "node": "Door to Eastern Shaft (C)"
-                    },
-                    "default_dock_weakness": "Open Hatch",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Overgrown Checkpoint (C)": {
+                        "to Overgrown Checkpoint (C)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Door to Nettori Save Room": {
+                        "to Nettori Save Room": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -5772,8 +5654,8 @@
                         }
                     }
                 },
-                "Door to Overgrown Checkpoint (C)": {
-                    "node_type": "dock",
+                "to Overgrown Checkpoint (C)": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": {
                         "x": 264.0,
@@ -5790,19 +5672,8 @@
                         ]
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Door",
-                    "default_connection": {
-                        "region": "Sector 2",
-                        "area": "Overgrown Checkpoint (C)",
-                        "node": "Door to Eastern Shaft (C)"
-                    },
-                    "default_dock_weakness": "Open Hatch",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Collapsed Shaft": {
+                        "to Collapsed Shaft": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5811,8 +5682,8 @@
                         }
                     }
                 },
-                "Door to Nettori Save Room": {
-                    "node_type": "dock",
+                "to Nettori Save Room": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": {
                         "x": 40.0,
@@ -5829,19 +5700,8 @@
                         ]
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Door",
-                    "default_connection": {
-                        "region": "Sector 2",
-                        "area": "Nettori Save Room",
-                        "node": "Door to Eastern Shaft (C)"
-                    },
-                    "default_dock_weakness": "Open Hatch",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Kihunter Hallway": {
+                        "to Kihunter Hallway": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -5879,14 +5739,14 @@
                                 ]
                             }
                         },
-                        "Door to Nettori Access (C)": {
+                        "to Nettori Access (C)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Door to Collapsed Shaft": {
+                        "to Collapsed Shaft": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5895,8 +5755,8 @@
                         }
                     }
                 },
-                "Other to Hidden Recharge Room": {
-                    "node_type": "dock",
+                "to Hidden Recharge Room": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": {
                         "x": 264.0,
@@ -5913,19 +5773,8 @@
                         ]
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Other",
-                    "default_connection": {
-                        "region": "Sector 2",
-                        "area": "Hidden Recharge Room",
-                        "node": "Other to Eastern Shaft"
-                    },
-                    "default_dock_weakness": "Tunnel",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Kihunter Hallway": {
+                        "to Kihunter Hallway": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -5950,8 +5799,8 @@
                 ]
             },
             "nodes": {
-                "Other to Silo Tunnel (C)": {
-                    "node_type": "dock",
+                "to Silo Tunnel (C)": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": {
                         "x": 504.0,
@@ -5968,21 +5817,10 @@
                         ]
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Other",
-                    "default_connection": {
-                        "region": "Main Deck",
-                        "area": "Silo Tunnel (C)",
-                        "node": "Other to Overgrown Entrance (C)"
-                    },
-                    "default_dock_weakness": "Tunnel",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
                     "connections": {}
                 },
-                "Door to Overgrown Hallway (C)": {
-                    "node_type": "dock",
+                "to Overgrown Hallway (C)": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": {
                         "x": 40.0,
@@ -5999,17 +5837,6 @@
                         ]
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Door",
-                    "default_connection": {
-                        "region": "Sector 2",
-                        "area": "Overgrown Hallway (C)",
-                        "node": "Door to Overgrown Entrance (C)"
-                    },
-                    "default_dock_weakness": "Open Hatch",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
                     "connections": {}
                 }
             }
@@ -6831,8 +6658,8 @@
                 ]
             },
             "nodes": {
-                "Door to Reo Room": {
-                    "node_type": "dock",
+                "to Reo Room": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": {
                         "x": 264.0,
@@ -6849,21 +6676,10 @@
                         ]
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Door",
-                    "default_connection": {
-                        "region": "Sector 2",
-                        "area": "Reo Room",
-                        "node": "Door to Central Shaft"
-                    },
-                    "default_dock_weakness": "L0 Hatch",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
                     "connections": {}
                 },
-                "Door to Puyo Corridor": {
-                    "node_type": "dock",
+                "to Puyo Corridor": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": {
                         "x": 40.0,
@@ -6880,21 +6696,10 @@
                         ]
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Door",
-                    "default_connection": {
-                        "region": "Sector 2",
-                        "area": "Puyo Corridor",
-                        "node": "Door to Central Shaft"
-                    },
-                    "default_dock_weakness": "L0 Hatch",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
                     "connections": {}
                 },
-                "Door to Southern Save Access": {
-                    "node_type": "dock",
+                "to Southern Save Access": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": {
                         "x": 264.0,
@@ -6911,21 +6716,10 @@
                         ]
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Door",
-                    "default_connection": {
-                        "region": "Sector 2",
-                        "area": "Southern Save Access",
-                        "node": "Door to Central Shaft"
-                    },
-                    "default_dock_weakness": "L0 Hatch",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
                     "connections": {}
                 },
-                "Door to Oasis": {
-                    "node_type": "dock",
+                "to Oasis": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": {
                         "x": 40.0,
@@ -6942,21 +6736,10 @@
                         ]
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Door",
-                    "default_connection": {
-                        "region": "Sector 2",
-                        "area": "Oasis",
-                        "node": "Door to Central Shaft"
-                    },
-                    "default_dock_weakness": "L0 Hatch",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
                     "connections": {}
                 },
-                "Door to Conceiled Ceiling (C)(?)": {
-                    "node_type": "dock",
+                "to Conceiled Ceiling (C)(?)": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": {
                         "x": 264.0,
@@ -6973,21 +6756,10 @@
                         ]
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Door",
-                    "default_connection": {
-                        "region": "Sector 2",
-                        "area": "Conceiled Ceiling (C)(?)",
-                        "node": "Door to Central Shaft"
-                    },
-                    "default_dock_weakness": "L0 Hatch",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
                     "connections": {}
                 },
-                "Door to Puyo Palace": {
-                    "node_type": "dock",
+                "to Puyo Palace": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": {
                         "x": 264.0,
@@ -7004,21 +6776,10 @@
                         ]
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Door",
-                    "default_connection": {
-                        "region": "Sector 2",
-                        "area": "Puyo Palace",
-                        "node": "Door to Central Shaft"
-                    },
-                    "default_dock_weakness": "Open Hatch",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
                     "connections": {}
                 },
-                "Door to Ripper Roost": {
-                    "node_type": "dock",
+                "to Ripper Roost": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": {
                         "x": 40.0,
@@ -7035,17 +6796,6 @@
                         ]
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Door",
-                    "default_connection": {
-                        "region": "Sector 2",
-                        "area": "Ripper Roost",
-                        "node": "Door to Central Shaft"
-                    },
-                    "default_dock_weakness": "L0 Hatch",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
                     "connections": {}
                 }
             }
@@ -7390,7 +7140,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Eastern Shaft (C)": {
+                        "Door to Eastern Shaft": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7399,7 +7149,7 @@
                         }
                     }
                 },
-                "Door to Eastern Shaft (C)": {
+                "Door to Eastern Shaft": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7420,7 +7170,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 2",
-                        "area": "Eastern Shaft (C)",
+                        "area": "Eastern Shaft",
                         "node": "Door to Nettori Save Room"
                     },
                     "default_dock_weakness": "Open Hatch",
@@ -7591,8 +7341,8 @@
                 ]
             },
             "nodes": {
-                "Door to Shooting Gallery": {
-                    "node_type": "dock",
+                "to Shooting Gallery": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": {
                         "x": 504.0,
@@ -7609,21 +7359,10 @@
                         ]
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Door",
-                    "default_connection": {
-                        "region": "Sector 2",
-                        "area": "Shooting Gallery",
-                        "node": "Door to Nettori Arena (C)"
-                    },
-                    "default_dock_weakness": "L0 Hatch",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
                     "connections": {}
                 },
-                "Door to Nettori Access (C)": {
-                    "node_type": "dock",
+                "to Nettori Access (C)": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": {
                         "x": 56.0,
@@ -7640,17 +7379,6 @@
                         ]
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Door",
-                    "default_connection": {
-                        "region": "Sector 2",
-                        "area": "Nettori Access (C)",
-                        "node": "Door to Nettori Arena (C)"
-                    },
-                    "default_dock_weakness": "Open Hatch",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
                     "connections": {}
                 }
             }
@@ -8407,8 +8135,8 @@
                 ]
             },
             "nodes": {
-                "Door to Eastern Shaft (C)": {
-                    "node_type": "dock",
+                "to Eastern Shaft (C)": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": {
                         "x": 40.0,
@@ -8425,21 +8153,10 @@
                         ]
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Door",
-                    "default_connection": {
-                        "region": "Sector 2",
-                        "area": "Eastern Shaft (C)",
-                        "node": "Door to Overgrown Checkpoint (C)"
-                    },
-                    "default_dock_weakness": "Open Hatch",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
                     "connections": {}
                 },
-                "Door to Cubby": {
-                    "node_type": "dock",
+                "to Cubby": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": {
                         "x": 280.0,
@@ -8456,21 +8173,10 @@
                         ]
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Door",
-                    "default_connection": {
-                        "region": "Sector 2",
-                        "area": "Cubby",
-                        "node": "Door to Overgrown Checkpoint"
-                    },
-                    "default_dock_weakness": "Open Hatch",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
                     "connections": {}
                 },
-                "Door to Overgrown Hallway (C)": {
-                    "node_type": "dock",
+                "to Overgrown Hallway (C)": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": {
                         "x": 744.0,
@@ -8487,17 +8193,6 @@
                         ]
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Door",
-                    "default_connection": {
-                        "region": "Sector 2",
-                        "area": "Overgrown Hallway (C)",
-                        "node": "Door to Overgrown Checkpoint (C)"
-                    },
-                    "default_dock_weakness": "Open Hatch",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
                     "connections": {}
                 }
             }
@@ -8553,8 +8248,8 @@
                 ]
             },
             "nodes": {
-                "Door to Overgrown Checkpoint (C)": {
-                    "node_type": "dock",
+                "to Overgrown Checkpoint (C)": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": {
                         "x": 40.0,
@@ -8571,21 +8266,10 @@
                         ]
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Door",
-                    "default_connection": {
-                        "region": "Sector 2",
-                        "area": "Overgrown Checkpoint (C)",
-                        "node": "Door to Overgrown Hallway (C)"
-                    },
-                    "default_dock_weakness": "Open Hatch",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
                     "connections": {}
                 },
-                "Door to Overgrown Entrance (C)": {
-                    "node_type": "dock",
+                "to Overgrown Entrance (C)": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": {
                         "x": 504.0,
@@ -8602,17 +8286,6 @@
                         ]
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Door",
-                    "default_connection": {
-                        "region": "Sector 2",
-                        "area": "Overgrown Entrance (C)",
-                        "node": "Door to Overgrown Hallway (C)"
-                    },
-                    "default_dock_weakness": "Open Hatch",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
                     "connections": {}
                 }
             }

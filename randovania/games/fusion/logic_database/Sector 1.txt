@@ -108,7 +108,7 @@ Extra - room_id: [4]
   > Room Center
       Trivial
 
-> Stabilizer 1 Online; Heals? False
+> Event - Stabilizer 1 Online; Heals? False
   * Layers: default
   * Event Stabilizer 1 Online
   > Room Center
@@ -120,7 +120,7 @@ Extra - room_id: [4]
       Trivial
   > Door to Hornoad Hole
       After Stabilizer 1 Online
-  > Stabilizer 1 Online
+  > Event - Stabilizer 1 Online
       Any of the following:
           Charge Beam or Missiles or Screw Attack
           All of the following:
@@ -260,10 +260,10 @@ Extra - room_id: [9]
       After Stabilizer 5 Online
   > Door to Checkpoint
       After Stabilizer 5 Online
-  > Stabilizer 5 Online
+  > Event - Stabilizer 5 Online
       Can Kill Geron
 
-> Stabilizer 5 Online; Heals? False
+> Event - Stabilizer 5 Online; Heals? False
   * Layers: default
   * Event Stabilizer 5 Online
   > Room Center
@@ -356,10 +356,10 @@ Extra - room_id: [13]
       After Stabilizer 3 Online
   > Door to Sciser Puddle
       Trivial
-  > Stabilizer 3 Online
+  > Event - Stabilizer 3 Online
       Charge Beam or Missiles or Screw Attack
 
-> Stabilizer 3 Online; Heals? False
+> Event - Stabilizer 3 Online; Heals? False
   * Layers: default
   * Event Stabilizer 3 Online
   > Room Center
@@ -416,10 +416,10 @@ Extra - room_id: [15]
       After Stabilizer 4 Online
   > Door to South Shaft
       After Stabilizer 4 Online
-  > Stabilizer 4 Online
+  > Event - Stabilizer 4 Online
       Charge Beam or Missiles or Screw Attack
 
-> Stabilizer 4 Online; Heals? False
+> Event - Stabilizer 4 Online; Heals? False
   * Layers: default
   * Event Stabilizer 4 Online
   > Room Center
@@ -717,12 +717,12 @@ Extra - room_id: [27]
   * Layers: default
   * L0 Hatch to Ridley Arena Access/Door to Ridley Arena
   * Extra - door_idx: (58,)
-  > Neo-Ridley
+  > Event - Neo-Ridley
       All of the following:
           Normal Damage
           Charge Beam or Missiles ≥ 100
 
-> Neo-Ridley; Heals? False
+> Event - Neo-Ridley; Heals? False
   * Layers: default
   * Event Neo-Ridley
   > Pickup (Screw Attack)
@@ -829,10 +829,10 @@ Extra - room_id: [32]
   * Layers: default
   > Door to Shaft North
       After Stabilizer 2 Online
-  > Stabilizer 2 Online
+  > Event - Stabilizer 2 Online
       Charge Beam or Missiles or Screw Attack
 
-> Stabilizer 2 Online; Heals? False
+> Event - Stabilizer 2 Online; Heals? False
   * Layers: default
   * Event Stabilizer 2 Online
   > Room Center
@@ -1031,25 +1031,21 @@ Extra - room_id: [40]
 > Pickup (Energy Tank); Heals? False
   * Layers: default
   * Pickup 19; Category? Minor
-  > Door to Charge Core Arena Access
+  > Arena
       Trivial
 
 > Door to Charge Core Arena Access; Heals? False
   * Layers: default
   * L0 Hatch to Charge Core Arena Access/Door to Charge Core Arena
   * Extra - door_idx: (82,)
-  > Pickup (Energy Tank)
-      Speed Booster
-  > Door to Charge Core Escape
-      After Charge Core-X
-  > Event - Charge Core-X
-      Missiles
+  > Arena
+      Trivial
 
 > Door to Charge Core Escape; Heals? False
   * Layers: default
   * L0 Hatch to Charge Core Escape/Door to Charge Core Arena
   * Extra - door_idx: (85,)
-  > Door to Charge Core Arena Access
+  > Arena
       Trivial
 
 > Event - Charge Core-X; Heals? False
@@ -1060,8 +1056,24 @@ Extra - room_id: [40]
 
 > Pickup (Charge Beam); Heals? False
   * Layers: default
-  > Door to Charge Core Arena Access
+  * Pickup 116; Category? Major
+  > Arena
       Trivial
+
+> Arena; Heals? False
+  * Layers: default
+  > Pickup (Energy Tank)
+      Any of the following:
+          # Pre-Fight
+          Speed Booster and Shinespark Tricks (Beginner)
+          # After Core-X defeated
+          Speed Booster and After Charge Core-X
+  > Door to Charge Core Arena Access
+      After Charge Core-X
+  > Door to Charge Core Escape
+      After Charge Core-X
+  > Event - Charge Core-X
+      Missiles
 
 ----------------
 Elevator to Main Deck
@@ -1284,8 +1296,7 @@ Extra - room_id: [52]
 unused
 Extra - map_name: Sector 153
 Extra - room_id: [53]
-> Door to Ridley Arena Access; Heals? False
+> Ridley Arena Access; Heals? False
   * Layers: default
-  * L0 Hatch to Ridley Arena Access/Door to Ridley Arena
   * Extra - door_idx: (114,)
 

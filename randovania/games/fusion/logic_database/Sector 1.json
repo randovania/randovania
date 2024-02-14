@@ -603,7 +603,7 @@
                         }
                     }
                 },
-                "Stabilizer 1 Online": {
+                "Event - Stabilizer 1 Online": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -659,7 +659,7 @@
                                 "negate": false
                             }
                         },
-                        "Stabilizer 1 Online": {
+                        "Event - Stabilizer 1 Online": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -1425,7 +1425,7 @@
                                 "negate": false
                             }
                         },
-                        "Stabilizer 5 Online": {
+                        "Event - Stabilizer 5 Online": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -1439,7 +1439,7 @@
                         }
                     }
                 },
-                "Stabilizer 5 Online": {
+                "Event - Stabilizer 5 Online": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -1916,7 +1916,7 @@
                                 "items": []
                             }
                         },
-                        "Stabilizer 3 Online": {
+                        "Event - Stabilizer 3 Online": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -1953,7 +1953,7 @@
                         }
                     }
                 },
-                "Stabilizer 3 Online": {
+                "Event - Stabilizer 3 Online": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -2247,7 +2247,7 @@
                                 "negate": false
                             }
                         },
-                        "Stabilizer 4 Online": {
+                        "Event - Stabilizer 4 Online": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -2284,7 +2284,7 @@
                         }
                     }
                 },
-                "Stabilizer 4 Online": {
+                "Event - Stabilizer 4 Online": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -4226,7 +4226,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Neo-Ridley": {
+                        "Event - Neo-Ridley": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4271,7 +4271,7 @@
                         }
                     }
                 },
-                "Neo-Ridley": {
+                "Event - Neo-Ridley": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -4839,7 +4839,7 @@
                                 "negate": false
                             }
                         },
-                        "Stabilizer 2 Online": {
+                        "Event - Stabilizer 2 Online": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -4876,7 +4876,7 @@
                         }
                     }
                 },
-                "Stabilizer 2 Online": {
+                "Event - Stabilizer 2 Online": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -6014,7 +6014,7 @@
                     "pickup_index": 19,
                     "location_category": "minor",
                     "connections": {
-                        "Door to Charge Core Arena Access": {
+                        "Arena": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6053,47 +6053,11 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Pickup (Energy Tank)": {
-                            "type": "or",
+                        "Arena": {
+                            "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "SpeedBooster",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        },
-                        "Door to Charge Core Escape": {
-                            "type": "resource",
-                            "data": {
-                                "type": "events",
-                                "name": "ChargeCore-X",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        "Event - Charge Core-X": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Missiles",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "items": []
                             }
                         }
                     }
@@ -6128,7 +6092,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Charge Core Arena Access": {
+                        "Arena": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6163,11 +6127,37 @@
                     }
                 },
                 "Pickup (Charge Beam)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 102.0,
+                        "y": 178.11,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "pickup_index": 116,
+                    "location_category": "major",
+                    "connections": {
+                        "Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Arena": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 102.00000000000001,
-                        "y": 178.1111111111111,
+                        "x": 369.4454828660436,
+                        "y": 156.90134994807892,
                         "z": 0.0
                     },
                     "description": "",
@@ -6177,11 +6167,115 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
+                        "Pickup (Energy Tank)": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "Pre-Fight",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "SpeedBooster",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "ShinesparkTrick",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "After Core-X defeated",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "SpeedBooster",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "ChargeCore-X",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
                         "Door to Charge Core Arena Access": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "ChargeCore-X",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Door to Charge Core Escape": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "ChargeCore-X",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Event - Charge Core-X": {
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Missiles",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -7359,8 +7453,8 @@
                 ]
             },
             "nodes": {
-                "Door to Ridley Arena Access": {
-                    "node_type": "dock",
+                "Ridley Arena Access": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": {
                         "x": 264.0,
@@ -7377,17 +7471,6 @@
                         ]
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Door",
-                    "default_connection": {
-                        "region": "Sector 1",
-                        "area": "Ridley Arena Access",
-                        "node": "Door to Ridley Arena"
-                    },
-                    "default_dock_weakness": "L0 Hatch",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
                     "connections": {}
                 }
             }

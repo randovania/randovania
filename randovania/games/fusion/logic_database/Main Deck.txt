@@ -36,6 +36,8 @@ Extra - room_id: 0
 > Event - Victory; Heals? False
   * Layers: default
   * Event Victory Event
+  > Ship
+      Trivial
 
 > Event - L0; Heals? False
   * Layers: default
@@ -474,7 +476,7 @@ Extra - map_name: Main Deck19
 Extra - room_id: 19
 > Door to Main Elevator Access; Heals? False
   * Layers: default
-  * Open Hatch to Main Elevator Access/Door to Elevator to Sector Hub (C)
+  * Open Hatch to Main Elevator Access/to Sector Hub (C)
   * Extra - door_idx: 40
 
 > Main Elevator Shaft; Heals? False
@@ -787,12 +789,9 @@ Extra - room_id: 31
 > Main Elevator Shaft (D); Heals? False
   * Layers: default
   * Extra - door_idx: 64
-  > Other to Sub-Zero Containment
-      Morph Ball
 
-> Other to Sub-Zero Containment; Heals? False
+> to Sub-Zero Containment; Heals? False
   * Layers: default
-  * Tunnel to Sub-Zero Containment/Other to Sub-Zero Ventilation
   * Extra - door_idx: 105
 
 ----------------
@@ -902,11 +901,11 @@ Extra - room_id: 35
 Maintenance Crossing
 Extra - map_name: Main Deck36
 Extra - room_id: 36
-> Door to Crew Quarters West; Heals? False
+> Crew Quarters West; Heals? False
   * Layers: default
   * Extra - door_idx: 81
 
-> Door to Crew Quarters East; Heals? False
+> Crew Quarters East; Heals? False
   * Layers: default
   * Extra - door_idx: 82
 
@@ -1041,18 +1040,16 @@ Extra - room_id: 40
 Main Elevator Access
 Extra - map_name: Main Deck41
 Extra - room_id: 41
-> Door to Elevator to Sector Hub (C); Heals? False
+> to Sector Hub (C); Heals? False
   * Layers: default
-  * L0 Hatch to Elevator to Sector Hub (C)/Door to Main Elevator Access
   * Extra - door_idx: 92
-  > Door to Quarantine Access
+  > Quarantine Access
       Trivial
 
-> Door to Quarantine Access; Heals? False
+> Quarantine Access; Heals? False
   * Layers: default
-  * L0 Hatch to Quarantine Access/Door to Main Elevator Access (D)
   * Extra - door_idx: 93
-  > Door to Elevator to Sector Hub (C)
+  > to Sector Hub (C)
       Trivial
 
 ----------------
@@ -1077,11 +1074,11 @@ Extra - room_id: 42
 Main Elevator Shaft (D)
 Extra - map_name: Main Deck43
 Extra - room_id: 43
-> Other to Sub-Zero Ventilation; Heals? False
+> to Sub-Zero Ventilation; Heals? False
   * Layers: default
   * Extra - door_idx: 63
 
-> Other to Sector Hub; Heals? False
+> to Sector Hub; Heals? False
   * Layers: default
   * Extra - door_idx: 98
 
@@ -1120,14 +1117,12 @@ Extra - room_id: 46
   * L0 Hatch to Western Hub/Door to Sub-Zero Containment
   * Extra - door_idx: 103
 
-> Other to Sub-Zero Ventilation; Heals? False
+> to Sub-Zero Ventilation; Heals? False
   * Layers: default
-  * Tunnel to Sub-Zero Ventilation/Other to Sub-Zero Containment
   * Extra - door_idx: 106
 
-> Other to Spitter Speedway; Heals? False
+> to Spitter Speedway; Heals? False
   * Layers: default
-  * Tunnel to Spitter Speedway/Other to Sub-Zero Containment
   * Extra - door_idx: 195
 
 ----------------
@@ -1147,12 +1142,9 @@ Extra - room_id: 47
   > Pickup (Hidden Power Bomb Tank)
       Can Use Power Bombs and Can climb High Jump Wall
 
-> Other to Sub-Zero Containment; Heals? False
+> to Sub-Zero Containment; Heals? False
   * Layers: default
-  * Tunnel to Sub-Zero Containment/Other to Spitter Speedway
   * Extra - door_idx: 196
-  > Other to Station Entrance
-      Trivial
 
 ----------------
 Silo Access
@@ -1575,7 +1567,7 @@ Extra - room_id: 68
 
 > Other to Overgrown Entrance (C); Heals? False
   * Layers: default
-  * Tunnel to Overgrown Entrance (C)/Other to Silo Tunnel (C)
+  * Tunnel to Overgrown Entrance (C)/to Silo Tunnel (C)
   * Extra - door_idx: 156
   > Other to Central Reactor Core
       Trivial

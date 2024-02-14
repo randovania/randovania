@@ -217,7 +217,15 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "event_name": "VictoryEvent",
-                    "connections": {}
+                    "connections": {
+                        "Ship": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Event - L0": {
                     "node_type": "event",
@@ -2429,7 +2437,7 @@
                     "default_connection": {
                         "region": "Main Deck",
                         "area": "Main Elevator Access",
-                        "node": "Door to Elevator to Sector Hub (C)"
+                        "node": "to Sector Hub (C)"
                     },
                     "default_dock_weakness": "Open Hatch",
                     "exclude_from_dock_rando": false,
@@ -3987,20 +3995,10 @@
                         "door_idx": 64
                     },
                     "valid_starting_location": false,
-                    "connections": {
-                        "Other to Sub-Zero Containment": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "MorphBall",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        }
-                    }
+                    "connections": {}
                 },
-                "Other to Sub-Zero Containment": {
-                    "node_type": "dock",
+                "to Sub-Zero Containment": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": {
                         "x": 504.0,
@@ -4015,17 +4013,6 @@
                         "door_idx": 105
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Other",
-                    "default_connection": {
-                        "region": "Main Deck",
-                        "area": "Sub-Zero Containment",
-                        "node": "Other to Sub-Zero Ventilation"
-                    },
-                    "default_dock_weakness": "Tunnel",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
                     "connections": {}
                 }
             }
@@ -4553,7 +4540,7 @@
                 "room_id": 36
             },
             "nodes": {
-                "Door to Crew Quarters West": {
+                "Crew Quarters West": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
@@ -4571,7 +4558,7 @@
                     "valid_starting_location": false,
                     "connections": {}
                 },
-                "Door to Crew Quarters East": {
+                "Crew Quarters East": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
@@ -5272,8 +5259,8 @@
                 "room_id": 41
             },
             "nodes": {
-                "Door to Elevator to Sector Hub (C)": {
-                    "node_type": "dock",
+                "to Sector Hub (C)": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": {
                         "x": 40.0,
@@ -5288,19 +5275,8 @@
                         "door_idx": 92
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Door",
-                    "default_connection": {
-                        "region": "Main Deck",
-                        "area": "Elevator to Sector Hub (C)",
-                        "node": "Door to Main Elevator Access"
-                    },
-                    "default_dock_weakness": "L0 Hatch",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Quarantine Access": {
+                        "Quarantine Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5309,8 +5285,8 @@
                         }
                     }
                 },
-                "Door to Quarantine Access": {
-                    "node_type": "dock",
+                "Quarantine Access": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": {
                         "x": 504.0,
@@ -5325,19 +5301,8 @@
                         "door_idx": 93
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Door",
-                    "default_connection": {
-                        "region": "Main Deck",
-                        "area": "Quarantine Access",
-                        "node": "Door to Main Elevator Access (D)"
-                    },
-                    "default_dock_weakness": "L0 Hatch",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Elevator to Sector Hub (C)": {
+                        "to Sector Hub (C)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5438,7 +5403,7 @@
                 "room_id": 43
             },
             "nodes": {
-                "Other to Sub-Zero Ventilation": {
+                "to Sub-Zero Ventilation": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
@@ -5456,7 +5421,7 @@
                     "valid_starting_location": false,
                     "connections": {}
                 },
-                "Other to Sector Hub": {
+                "to Sector Hub": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
@@ -5622,8 +5587,8 @@
                     "override_default_lock_requirement": null,
                     "connections": {}
                 },
-                "Other to Sub-Zero Ventilation": {
-                    "node_type": "dock",
+                "to Sub-Zero Ventilation": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": {
                         "x": 40.0,
@@ -5638,21 +5603,10 @@
                         "door_idx": 106
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Other",
-                    "default_connection": {
-                        "region": "Main Deck",
-                        "area": "Sub-Zero Ventilation",
-                        "node": "Other to Sub-Zero Containment"
-                    },
-                    "default_dock_weakness": "Tunnel",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
                     "connections": {}
                 },
-                "Other to Spitter Speedway": {
-                    "node_type": "dock",
+                "to Spitter Speedway": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": {
                         "x": 184.0,
@@ -5667,17 +5621,6 @@
                         "door_idx": 195
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Other",
-                    "default_connection": {
-                        "region": "Main Deck",
-                        "area": "Spitter Speedway",
-                        "node": "Other to Sub-Zero Containment"
-                    },
-                    "default_dock_weakness": "Tunnel",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
                     "connections": {}
                 }
             }
@@ -5775,8 +5718,8 @@
                         }
                     }
                 },
-                "Other to Sub-Zero Containment": {
-                    "node_type": "dock",
+                "to Sub-Zero Containment": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": {
                         "x": 424.0,
@@ -5791,26 +5734,7 @@
                         "door_idx": 196
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Other",
-                    "default_connection": {
-                        "region": "Main Deck",
-                        "area": "Sub-Zero Containment",
-                        "node": "Other to Spitter Speedway"
-                    },
-                    "default_dock_weakness": "Tunnel",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {
-                        "Other to Station Entrance": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
+                    "connections": {}
                 }
             }
         },
@@ -7911,7 +7835,7 @@
                     "default_connection": {
                         "region": "Sector 2",
                         "area": "Overgrown Entrance (C)",
-                        "node": "Other to Silo Tunnel (C)"
+                        "node": "to Silo Tunnel (C)"
                     },
                     "default_dock_weakness": "Tunnel",
                     "exclude_from_dock_rando": false,
