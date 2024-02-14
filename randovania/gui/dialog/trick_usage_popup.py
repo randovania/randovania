@@ -37,7 +37,7 @@ def _area_requirement_sets(
     :param database:
     :return:
     """
-
+    # FIXME
     for node in area.nodes:
         if isinstance(node, DockNode):
             yield node.default_dock_weakness.requirement.as_set(context)

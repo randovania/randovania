@@ -12,6 +12,7 @@ from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.node_requirement import NodeRequirement
 from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.game_description.requirements.requirement_or import RequirementOr
+from randovania.game_description.requirements.requirement_reference import RequirementReference
 from randovania.game_description.requirements.requirement_template import RequirementTemplate
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.resource_type import ResourceType
@@ -466,6 +467,7 @@ class RequirementEditor:
         self.requirement_type_combo.addItem("Node", NodeRequirement)
         if resource_database.requirement_template:
             self.requirement_type_combo.addItem("Template", RequirementTemplate)
+        self.requirement_type_combo.addItem("Reference", RequirementReference)
         self.requirement_type_combo.setMaximumWidth(80)
         self.requirement_type_combo.activated.connect(self._on_change_requirement_type)
         self.line_layout.addWidget(self.requirement_type_combo)

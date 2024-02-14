@@ -15,6 +15,7 @@ from randovania.game_description.db.teleporter_network_node import TeleporterNet
 from randovania.game_description.requirements.node_requirement import NodeRequirement
 from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.game_description.requirements.requirement_or import RequirementOr
+from randovania.game_description.requirements.requirement_reference import RequirementReference
 from randovania.game_description.requirements.requirement_template import RequirementTemplate
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.lib import frozen_lib, json_lib
@@ -66,6 +67,10 @@ def write_requirement_template(requirement: RequirementTemplate) -> dict:
     return {"type": "template", "data": requirement.template_name}
 
 
+def write_requirement_reference(requirement: RequirementReference) -> dict:
+    return {"type": "reference", "data": [it.as_json for it in requirement.references]}
+
+
 def write_node_requirement(requirement: NodeRequirement) -> dict:
     return {"type": "node", "data": requirement.node_identifier.as_json}
 
@@ -85,6 +90,9 @@ def write_requirement(requirement: Requirement) -> dict:
 
     elif isinstance(requirement, NodeRequirement):
         return write_node_requirement(requirement)
+
+    elif isinstance(requirement, RequirementReference):
+        return write_requirement_reference(requirement)
 
     else:
         raise ValueError(f"Unknown requirement type: {type(requirement)}")
