@@ -199,6 +199,7 @@ select = [
     "PLW",
 ]
 extend-ignore = [
+    "ISC001",  # may cause conflicts with formatter
     "PLW0603",  # we use some globals here and there
     "PLW2901",  # TODO: should actually fix these
 ]
@@ -219,10 +220,6 @@ runtime-evaluated-base-classes = [
     "randovania.bitpacking.json_dataclass.JsonDataclass",
     "randovania.layout.base.base_configuration.BaseConfiguration",
 ]
-
-[tool.black]
-line-length = 120
-target-version = ['py311']
 
 [tool.mypy]
 files = [
