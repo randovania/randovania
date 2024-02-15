@@ -26,7 +26,7 @@ OriginalFunc = typing.Callable[Param, RetType]
 
 
 def handle_network_errors(
-    fn: typing.Callable[typing.Concatenate[MultiplayerSessionApi, Param], RetType]
+    fn: typing.Callable[typing.Concatenate[MultiplayerSessionApi, Param], RetType],
 ) -> typing.Callable[Param, RetType]:
     @functools.wraps(fn)
     async def wrapper(self: MultiplayerSessionApi, *args, **kwargs):

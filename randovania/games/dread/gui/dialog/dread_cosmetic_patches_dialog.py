@@ -92,7 +92,8 @@ class DreadCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_DreadCosmeticPatc
         def persist(value: bool) -> None:
             shield_type = DreadShieldType.ALTERNATE if value else DreadShieldType.DEFAULT
             self._cosmetic_patches = dataclasses.replace(
-                self._cosmetic_patches, **{attribute_name: shield_type}  # type: ignore[arg-type]
+                self._cosmetic_patches,
+                **{attribute_name: shield_type},  # type: ignore[arg-type]
             )
 
         signal_handling.on_checked(checkbox, persist)
@@ -105,7 +106,8 @@ class DreadCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_DreadCosmeticPatc
 
     def _on_slider_update(self, slider: QtWidgets.QSlider, field_name: str, _: None) -> None:
         self._cosmetic_patches = dataclasses.replace(
-            self._cosmetic_patches, **{f"{field_name}_volume": slider.value()}  # type: ignore[arg-type]
+            self._cosmetic_patches,
+            **{f"{field_name}_volume": slider.value()},  # type: ignore[arg-type]
         )
         getattr(self, f"{field_name}_label_updater")(slider)
 
