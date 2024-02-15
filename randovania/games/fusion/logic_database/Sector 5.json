@@ -410,7 +410,8 @@
             "extra": {
                 "map_name": "Sector 53",
                 "room_id": [
-                    3
+                    3,
+                    6
                 ]
             },
             "nodes": {
@@ -428,7 +429,8 @@
                     ],
                     "extra": {
                         "door_idx": [
-                            7
+                            7,
+                            11
                         ]
                     },
                     "valid_starting_location": false,
@@ -471,7 +473,8 @@
                     ],
                     "extra": {
                         "door_idx": [
-                            8
+                            8,
+                            12
                         ]
                     },
                     "valid_starting_location": false,
@@ -510,7 +513,8 @@
                     ],
                     "extra": {
                         "door_idx": [
-                            9
+                            9,
+                            13
                         ]
                     },
                     "valid_starting_location": false,
@@ -549,7 +553,8 @@
                     ],
                     "extra": {
                         "door_idx": [
-                            78
+                            78,
+                            80
                         ]
                     },
                     "valid_starting_location": false,
@@ -669,7 +674,12 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "area": 5,
+                        "room": 4,
+                        "blockx": 5,
+                        "blocky": 5
+                    },
                     "valid_starting_location": false,
                     "pickup_index": 73,
                     "location_category": "minor",
@@ -695,7 +705,12 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "area": 5,
+                        "room": 4,
+                        "blockx": 20,
+                        "blocky": 8
+                    },
                     "valid_starting_location": false,
                     "pickup_index": 74,
                     "location_category": "minor",
@@ -767,410 +782,13 @@
                 }
             }
         },
-        "Data Room": {
-            "default_node": null,
-            "extra": {
-                "map_name": "Sector 55",
-                "room_id": [
-                    5
-                ]
-            },
-            "nodes": {
-                "Door to Data Checkpoint": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 40.0,
-                        "y": 112.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "door_idx": [
-                            52
-                        ]
-                    },
-                    "valid_starting_location": false,
-                    "dock_type": "Door",
-                    "default_connection": {
-                        "region": "Sector 5",
-                        "area": "Data Checkpoint",
-                        "node": "Door to Data Room"
-                    },
-                    "default_dock_weakness": "L3 Hatch",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {
-                        "Door to Frozen Tower": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Pickup (Ice Missiles)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Pickup (Power Bombs)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Door to Frozen Tower": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 264.0,
-                        "y": 112.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "door_idx": [
-                            89
-                        ]
-                    },
-                    "valid_starting_location": false,
-                    "dock_type": "Door",
-                    "default_connection": {
-                        "region": "Sector 5",
-                        "area": "Frozen Tower",
-                        "node": "Door to Data Room"
-                    },
-                    "default_dock_weakness": "L3 Hatch",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {
-                        "Door to Data Checkpoint": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Pickup (Ice Missiles)": {
-                    "node_type": "pickup",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 151.12,
-                        "y": 67.15,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "pickup_index": 114,
-                    "location_category": "major",
-                    "connections": {
-                        "Door to Data Checkpoint": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Pickup (Power Bombs)": {
-                    "node_type": "pickup",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 149.58,
-                        "y": 161.04,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "pickup_index": 113,
-                    "location_category": "major",
-                    "connections": {
-                        "Door to Data Checkpoint": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "Nightmare Training Grounds (D)": {
-            "default_node": null,
-            "extra": {
-                "map_name": "Sector 56",
-                "room_id": [
-                    6
-                ]
-            },
-            "nodes": {
-                "Door to Gerubus Gully": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 40.0,
-                        "y": 112.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "door_idx": [
-                            11
-                        ]
-                    },
-                    "valid_starting_location": false,
-                    "dock_type": "Door",
-                    "default_connection": {
-                        "region": "Sector 5",
-                        "area": "Gerubus Gully",
-                        "node": "Door to Nightmare Training Grounds"
-                    },
-                    "default_dock_weakness": "L3 Hatch",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {
-                        "Door to Arctic Containment (D)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Door to Entrance Hub": {
-                            "type": "template",
-                            "data": "Can climb High Jump Wall"
-                        }
-                    }
-                },
-                "Door to Aerie": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 40.0,
-                        "y": 592.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "door_idx": [
-                            12
-                        ]
-                    },
-                    "valid_starting_location": false,
-                    "dock_type": "Door",
-                    "default_connection": {
-                        "region": "Sector 5",
-                        "area": "Aerie",
-                        "node": "Door to Nightmare Training Grounds"
-                    },
-                    "default_dock_weakness": "L0 Hatch",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {
-                        "Door to Entrance Hub": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Door to Arctic Containment (D)": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 744.0,
-                        "y": 112.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "door_idx": [
-                            13
-                        ]
-                    },
-                    "valid_starting_location": false,
-                    "dock_type": "Door",
-                    "default_connection": {
-                        "region": "Sector 5",
-                        "area": "Arctic Containment (D)",
-                        "node": "Door to Nightmare Training Grounds (D)"
-                    },
-                    "default_dock_weakness": "Open Hatch",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {
-                        "Door to Gerubus Gully": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Door to Entrance Hub": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 40.0,
-                        "y": 256.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "door_idx": [
-                            80
-                        ]
-                    },
-                    "valid_starting_location": false,
-                    "dock_type": "Door",
-                    "default_connection": {
-                        "region": "Sector 5",
-                        "area": "Entrance Hub",
-                        "node": "Door to Nightmare Training Grounds"
-                    },
-                    "default_dock_weakness": "L0 Hatch",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {
-                        "Door to Gerubus Gully": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Door to Aerie": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "SpaceJump",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "template",
-                                                    "data": "Can Freeze Enemies"
-                                                },
-                                                {
-                                                    "type": "or",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "and",
-                                                                "data": {
-                                                                    "comment": null,
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "items",
-                                                                                "name": "HighJump",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "Combat",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Movement",
-                                                                    "amount": 2,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
-                            }
-                        }
-                    }
-                }
-            }
-        },
         "Arctic Containment": {
             "default_node": null,
             "extra": {
                 "map_name": "Sector 57",
                 "room_id": [
-                    7
+                    7,
+                    15
                 ]
             },
             "nodes": {
@@ -1188,7 +806,8 @@
                     ],
                     "extra": {
                         "door_idx": [
-                            14
+                            14,
+                            27
                         ]
                     },
                     "valid_starting_location": false,
@@ -1254,7 +873,8 @@
                     ],
                     "extra": {
                         "door_idx": [
-                            15
+                            15,
+                            28
                         ]
                     },
                     "valid_starting_location": false,
@@ -1324,7 +944,8 @@
                     ],
                     "extra": {
                         "door_idx": [
-                            16
+                            16,
+                            29
                         ]
                     },
                     "valid_starting_location": false,
@@ -1368,7 +989,8 @@
                     ],
                     "extra": {
                         "door_idx": [
-                            30
+                            30,
+                            31
                         ]
                     },
                     "valid_starting_location": false,
@@ -1431,7 +1053,8 @@
                     ],
                     "extra": {
                         "door_idx": [
-                            56
+                            56,
+                            57
                         ]
                     },
                     "valid_starting_location": false,
@@ -1475,7 +1098,8 @@
                     ],
                     "extra": {
                         "door_idx": [
-                            99
+                            99,
+                            70
                         ]
                     },
                     "valid_starting_location": false,
@@ -1538,7 +1162,11 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "door_idx": [
+                            53
+                        ]
+                    },
                     "valid_starting_location": false,
                     "dock_type": "Door",
                     "default_connection": {
@@ -1992,7 +1620,12 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "area": 5,
+                        "room": 12,
+                        "blockx": 3,
+                        "blocky": 10
+                    },
                     "valid_starting_location": false,
                     "pickup_index": 75,
                     "location_category": "minor",
@@ -2409,7 +2042,12 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "area": 5,
+                        "room": 14,
+                        "blockx": 13,
+                        "blocky": 3
+                    },
                     "valid_starting_location": false,
                     "pickup_index": 76,
                     "location_category": "minor",
@@ -2474,235 +2112,7 @@
                 }
             }
         },
-        "Arctic Containment (D)": {
-            "default_node": null,
-            "extra": {
-                "map_name": "Sector 515",
-                "room_id": [
-                    15
-                ]
-            },
-            "nodes": {
-                "Door to Nightmare Training Grounds (D)": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 40.0,
-                        "y": 752.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "door_idx": [
-                            27
-                        ]
-                    },
-                    "valid_starting_location": false,
-                    "dock_type": "Door",
-                    "default_connection": {
-                        "region": "Sector 5",
-                        "area": "Nightmare Training Grounds (D)",
-                        "node": "Door to Arctic Containment (D)"
-                    },
-                    "default_dock_weakness": "Open Hatch",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {}
-                },
-                "Door to Geron Checkpoint": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 40.0,
-                        "y": 432.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "door_idx": [
-                            28
-                        ]
-                    },
-                    "valid_starting_location": false,
-                    "dock_type": "Door",
-                    "default_connection": {
-                        "region": "Sector 5",
-                        "area": "Geron Checkpoint",
-                        "node": "Door to Arctic Containment"
-                    },
-                    "default_dock_weakness": "L0 Hatch",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {}
-                },
-                "Door to Waver Ward": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 504.0,
-                        "y": 112.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "door_idx": [
-                            29
-                        ]
-                    },
-                    "valid_starting_location": false,
-                    "dock_type": "Door",
-                    "default_connection": {
-                        "region": "Sector 5",
-                        "area": "Waver Ward",
-                        "node": "Door to Arctic Containment"
-                    },
-                    "default_dock_weakness": "L0 Hatch",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {}
-                },
-                "Door to Data Checkpoint": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 504.0,
-                        "y": 592.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "door_idx": [
-                            31
-                        ]
-                    },
-                    "valid_starting_location": false,
-                    "dock_type": "Door",
-                    "default_connection": {
-                        "region": "Sector 5",
-                        "area": "Data Checkpoint",
-                        "node": "Door to Arctic Containment"
-                    },
-                    "default_dock_weakness": "L0 Hatch",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {}
-                },
-                "Door to Crow's Nest": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 504.0,
-                        "y": 752.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "door_idx": [
-                            53
-                        ]
-                    },
-                    "valid_starting_location": false,
-                    "dock_type": "Door",
-                    "default_connection": {
-                        "region": "Sector 5",
-                        "area": "Crow's Nest",
-                        "node": "Door to Arctic Containment"
-                    },
-                    "default_dock_weakness": "Open Hatch",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {}
-                },
-                "Door to Ripper Road": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 40.0,
-                        "y": 592.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "door_idx": [
-                            57
-                        ]
-                    },
-                    "valid_starting_location": false,
-                    "dock_type": "Door",
-                    "default_connection": {
-                        "region": "Sector 5",
-                        "area": "Ripper Road",
-                        "node": "Door to Arctic Containment"
-                    },
-                    "default_dock_weakness": "L0 Hatch",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {}
-                },
-                "Door to Artic Underside": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 40.0,
-                        "y": 112.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "door_idx": [
-                            70
-                        ]
-                    },
-                    "valid_starting_location": false,
-                    "dock_type": "Door",
-                    "default_connection": {
-                        "region": "Sector 5",
-                        "area": "Artic Underside",
-                        "node": "Door to Arctic Containment"
-                    },
-                    "default_dock_weakness": "L3 Hatch",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {}
-                }
-            }
-        },
-        "Data Room (D)": {
+        "Data Room": {
             "default_node": null,
             "extra": {
                 "map_name": "Sector 516",
@@ -2733,7 +2143,7 @@
                     "default_connection": {
                         "region": "Sector 5",
                         "area": "Crow's Nest",
-                        "node": "Door to Data Room (D)"
+                        "node": "Door to Data Room"
                     },
                     "default_dock_weakness": "Open Hatch",
                     "exclude_from_dock_rando": false,
@@ -2803,6 +2213,13 @@
                                     }
                                 ]
                             }
+                        },
+                        "Door to Frozen Tower": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -2828,7 +2245,7 @@
                     "default_connection": {
                         "region": "Sector 5",
                         "area": "Ruined Corridor",
-                        "node": "Door to Data Room (D)"
+                        "node": "Door to Data Room"
                     },
                     "default_dock_weakness": "Open Hatch",
                     "exclude_from_dock_rando": false,
@@ -2837,6 +2254,67 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Crow's Nest": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Power Bomb Data)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 150.42,
+                        "y": 81.91,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "area": 5,
+                        "room": 5,
+                        "source": "ARC_DATA_1"
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 117,
+                    "location_category": "major",
+                    "connections": {}
+                },
+                "Door to Frozen Tower": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 250.65,
+                        "y": 114.26,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "door_idx": [
+                            89
+                        ]
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "Door",
+                    "default_connection": {
+                        "region": "Sector 5",
+                        "area": "Frozen Tower",
+                        "node": "Door to Data Room"
+                    },
+                    "default_dock_weakness": "L3 Hatch",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Data Checkpoint": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2856,7 +2334,7 @@
                 ]
             },
             "nodes": {
-                "Door to Data Room (D)": {
+                "Door to Data Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2877,7 +2355,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 5",
-                        "area": "Data Room (D)",
+                        "area": "Data Room",
                         "node": "Door to Ruined Corridor"
                     },
                     "default_dock_weakness": "Open Hatch",
@@ -2925,7 +2403,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Data Room (D)": {
+                        "Door to Data Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2957,7 +2435,12 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "area": 5,
+                        "room": 18,
+                        "blockx": 3,
+                        "blocky": 3
+                    },
                     "valid_starting_location": false,
                     "pickup_index": 77,
                     "location_category": "minor",
@@ -3620,7 +3103,11 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "area": 5,
+                        "room": 20,
+                        "source": "NIGHTMARE"
+                    },
                     "valid_starting_location": false,
                     "pickup_index": 109,
                     "location_category": "major",
@@ -3639,82 +3126,10 @@
         "Security Shaft East": {
             "default_node": null,
             "extra": {
-                "map_name": "Sector 521",
-                "room_id": [
-                    21
-                ]
-            },
-            "nodes": {
-                "Door to Level 3 Security Room": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 40.0,
-                        "y": 272.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "door_idx": [
-                            41
-                        ]
-                    },
-                    "valid_starting_location": false,
-                    "dock_type": "Door",
-                    "default_connection": {
-                        "region": "Sector 5",
-                        "area": "Level 3 Security Room",
-                        "node": "Door to Security Shaft East"
-                    },
-                    "default_dock_weakness": "L0 Hatch",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {}
-                },
-                "Door to Kago Blockade": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 264.0,
-                        "y": 272.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "door_idx": [
-                            42
-                        ]
-                    },
-                    "valid_starting_location": false,
-                    "dock_type": "Door",
-                    "default_connection": {
-                        "region": "Sector 5",
-                        "area": "Kago Blockade",
-                        "node": "Door to Security Shaft East"
-                    },
-                    "default_dock_weakness": "L0 Hatch",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {}
-                }
-            }
-        },
-        "Security Shaft East (D)": {
-            "default_node": null,
-            "extra": {
                 "map_name": "Sector 522",
                 "room_id": [
-                    22
+                    22,
+                    21
                 ]
             },
             "nodes": {
@@ -3730,7 +3145,12 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "area": 5,
+                        "room": 22,
+                        "blockx": 3,
+                        "blocky": 48
+                    },
                     "valid_starting_location": false,
                     "pickup_index": 78,
                     "location_category": "minor",
@@ -3758,7 +3178,8 @@
                     ],
                     "extra": {
                         "door_idx": [
-                            108
+                            108,
+                            41
                         ]
                     },
                     "valid_starting_location": false,
@@ -3852,6 +3273,13 @@
                                     }
                                 ]
                             }
+                        },
+                        "Door to Kago Blockade": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -3877,7 +3305,7 @@
                     "default_connection": {
                         "region": "Sector 5",
                         "area": "Groznyj Grad",
-                        "node": "Door to Security Shaft East (D)"
+                        "node": "Door to Security Shaft East"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -3933,7 +3361,7 @@
                     "default_connection": {
                         "region": "Sector 5",
                         "area": "Security Cache",
-                        "node": "Door to Security Shaft East (D)"
+                        "node": "Door to Security Shaft East"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -3951,6 +3379,45 @@
                                         "data": "Can Use Power Bombs"
                                     }
                                 ]
+                            }
+                        }
+                    }
+                },
+                "Door to Kago Blockade": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 255.03931987247609,
+                        "y": 270.29968119022317,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "door_idx": [
+                            42
+                        ]
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "Door",
+                    "default_connection": {
+                        "region": "Sector 5",
+                        "area": "Kago Blockade",
+                        "node": "Door to Security Shaft East"
+                    },
+                    "default_dock_weakness": "Open Hatch",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Level 3 Security Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -3978,12 +3445,17 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "area": 5,
+                        "room": 23,
+                        "blockx": 14,
+                        "blocky": 6
+                    },
                     "valid_starting_location": false,
                     "pickup_index": 79,
                     "location_category": "minor",
                     "connections": {
-                        "Door to Security Shaft East (D)": {
+                        "Door to Security Shaft East": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3992,7 +3464,7 @@
                         }
                     }
                 },
-                "Door to Security Shaft East (D)": {
+                "Door to Security Shaft East": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4013,7 +3485,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 5",
-                        "area": "Security Shaft East (D)",
+                        "area": "Security Shaft East",
                         "node": "Door to Security Cache"
                     },
                     "default_dock_weakness": "L0 Hatch",
@@ -4387,7 +3859,12 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "area": 5,
+                        "room": 26,
+                        "blockx": 4,
+                        "blocky": 6
+                    },
                     "valid_starting_location": false,
                     "pickup_index": 80,
                     "location_category": "minor",
@@ -4841,7 +4318,12 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "area": 5,
+                        "room": 30,
+                        "blockx": 23,
+                        "blocky": 7
+                    },
                     "valid_starting_location": false,
                     "pickup_index": 81,
                     "location_category": "minor",
@@ -5161,7 +4643,12 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "area": 5,
+                        "room": 33,
+                        "blockx": 14,
+                        "blocky": 3
+                    },
                     "valid_starting_location": false,
                     "pickup_index": 82,
                     "location_category": "minor",
@@ -5314,7 +4801,12 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "area": 5,
+                        "room": 34,
+                        "blockx": 14,
+                        "blocky": 8
+                    },
                     "valid_starting_location": false,
                     "pickup_index": 83,
                     "location_category": "minor",
@@ -5620,7 +5112,12 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "area": 5,
+                        "room": 36,
+                        "blockx": 8,
+                        "blocky": 8
+                    },
                     "valid_starting_location": false,
                     "pickup_index": 84,
                     "location_category": "minor",
@@ -5766,7 +5263,7 @@
                                 ]
                             }
                         },
-                        "Door to Data Room (D)": {
+                        "Door to Data Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5775,7 +5272,7 @@
                         }
                     }
                 },
-                "Door to Data Room (D)": {
+                "Door to Data Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5796,7 +5293,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 5",
-                        "area": "Data Room (D)",
+                        "area": "Data Room",
                         "node": "Door to Crow's Nest"
                     },
                     "default_dock_weakness": "Open Hatch",
@@ -6056,7 +5553,8 @@
                     ],
                     "extra": {
                         "door_idx": [
-                            44
+                            44,
+                            98
                         ]
                     },
                     "valid_starting_location": false,
@@ -6080,37 +5578,6 @@
                             }
                         }
                     }
-                }
-            }
-        },
-        "Kago Blockade (D)": {
-            "default_node": null,
-            "extra": {
-                "map_name": "Sector 540",
-                "room_id": [
-                    40
-                ]
-            },
-            "nodes": {
-                "to Save Room South": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 744.0,
-                        "y": 112.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "door_idx": [
-                            98
-                        ]
-                    },
-                    "valid_starting_location": false,
-                    "connections": {}
                 }
             }
         },
@@ -6364,7 +5831,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Security Shaft East (D)": {
+                        "Door to Security Shaft East": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -6378,7 +5845,7 @@
                         }
                     }
                 },
-                "Door to Security Shaft East (D)": {
+                "Door to Security Shaft East": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6399,7 +5866,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 5",
-                        "area": "Security Shaft East (D)",
+                        "area": "Security Shaft East",
                         "node": "Door to Groznyj Grad"
                     },
                     "default_dock_weakness": "L0 Hatch",
@@ -6418,164 +5885,6 @@
                                         "data": "Can Use Any Bombs"
                                     }
                                 ]
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "Frozen Tower (D)": {
-            "default_node": null,
-            "extra": {
-                "map_name": "Sector 544",
-                "room_id": [
-                    44
-                ]
-            },
-            "nodes": {
-                "Door to Energy Tank Storage": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 40.0,
-                        "y": 592.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "door_idx": [
-                            94
-                        ]
-                    },
-                    "valid_starting_location": false,
-                    "dock_type": "Door",
-                    "default_connection": {
-                        "region": "Sector 5",
-                        "area": "Energy Tank Storage",
-                        "node": "Door to Frozen Tower"
-                    },
-                    "default_dock_weakness": "L0 Hatch",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {
-                        "Door to Groznyj Shaft": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Door to Groznyj Shaft": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 40.0,
-                        "y": 112.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "door_idx": [
-                            95
-                        ]
-                    },
-                    "valid_starting_location": false,
-                    "dock_type": "Door",
-                    "default_connection": {
-                        "region": "Sector 5",
-                        "area": "Groznyj Shaft",
-                        "node": "Door to Frozen Tower"
-                    },
-                    "default_dock_weakness": "L3 Hatch",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {
-                        "Door to Energy Tank Storage": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "SpaceJump",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Can Freeze Enemies"
-                                    }
-                                ]
-                            }
-                        },
-                        "Other to Transformation Trial": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Can Use Bombs"
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Can Use Springball"
-                                    }
-                                ]
-                            }
-                        }
-                    }
-                },
-                "Other to Transformation Trial": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 264.0,
-                        "y": 72.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "door_idx": [
-                            96
-                        ]
-                    },
-                    "valid_starting_location": false,
-                    "dock_type": "Other",
-                    "default_connection": {
-                        "region": "Sector 5",
-                        "area": "Transformation Trial",
-                        "node": "Other to Frozen Tower"
-                    },
-                    "default_dock_weakness": "Tunnel",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {
-                        "Door to Groznyj Shaft": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
                             }
                         }
                     }
@@ -7054,7 +6363,12 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "area": 5,
+                        "room": 47,
+                        "blockx": 4,
+                        "blocky": 10
+                    },
                     "valid_starting_location": false,
                     "pickup_index": 85,
                     "location_category": "minor",
@@ -7219,7 +6533,12 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "area": 5,
+                        "room": 50,
+                        "blockx": 13,
+                        "blocky": 8
+                    },
                     "valid_starting_location": false,
                     "pickup_index": 86,
                     "location_category": "minor",
@@ -7398,7 +6717,12 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "area": 5,
+                        "room": 51,
+                        "blockx": 11,
+                        "blocky": 3
+                    },
                     "valid_starting_location": false,
                     "pickup_index": 87,
                     "location_category": "minor",
