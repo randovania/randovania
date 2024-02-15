@@ -181,7 +181,7 @@ Extra - room_id: [5]
 ----------------
 Bob Room
 Extra - map_name: Sector 36
-Extra - room_id: [6]
+Extra - room_id: [6, 24]
 > Pickup (Missile Tank); Heals? False
   * Layers: default
   * Pickup 43; Category? Minor
@@ -195,13 +195,13 @@ Extra - room_id: [6]
 > Door to Checkpoint Shaft; Heals? False
   * Layers: default
   * L2 Hatch to Checkpoint Shaft/Door to Bob Room
-  * Extra - door_idx: (13,)
-  > Door to B.O.X. Access (D)
+  * Extra - door_idx: (13, 47)
+  > Door to B.O.X. Access
       Trivial
 
-> Door to B.O.X. Access (D); Heals? False
+> Door to B.O.X. Access; Heals? False
   * Layers: default
-  * L2 Hatch to B.O.X. Access (D)/Door to Bob Room
+  * L2 Hatch to B.O.X. Access/Door to Bob Room
   * Extra - door_idx: (14,)
   > Door to Checkpoint Shaft
       Trivial
@@ -211,10 +211,10 @@ Extra - room_id: [6]
 > Door to Red Tower; Heals? False
   * Layers: default
   * L0 Hatch to Red Tower/Door to Bob Room
-  * Extra - door_idx: (15,)
+  * Extra - door_idx: (15, 48)
   > Pickup (Missile Tank)
       Can Use Any Bombs
-  > Door to B.O.X. Access (D)
+  > Door to B.O.X. Access
       Any of the following:
           Can Use Bombs
           Can Use Power Bombs and Can Use Springball
@@ -224,23 +224,7 @@ Extra - room_id: [6]
 > Other to Namihe's Abode; Heals? False
   * Layers: default
   * Tunnel to Namihe's Abode/Other to Bob Room
-  * Extra - door_idx: (60,)
-
-----------------
-B.O.X. Access
-Extra - map_name: Sector 37
-Extra - room_id: [7]
-> to Bob Room; Heals? False
-  * Layers: default
-  * Extra - door_idx: (16,)
-  > to B.O.X. Arena (D)
-      Trivial
-
-> to B.O.X. Arena (D); Heals? False
-  * Layers: default
-  * Extra - door_idx: (35,)
-  > to Bob Room
-      Trivial
+  * Extra - door_idx: (60, 63)
 
 ----------------
 Alcove
@@ -337,7 +321,7 @@ Extra - room_id: [9]
   * Extra - door_idx: (19,)
   > Pickup (Missile Tank)
       Speed Booster
-  > Other to B.O.X. Arena (D)
+  > Other to B.O.X. Arena
       Trivial
   > Door to Chute Access
       Screw Attack
@@ -346,9 +330,9 @@ Extra - room_id: [9]
           Screw Attack
           Speed Booster or Can climb High Jump Wall
 
-> Other to B.O.X. Arena (D); Heals? False
+> Other to B.O.X. Arena; Heals? False
   * Layers: default
-  * Open Passage to B.O.X. Arena (D)/Other to Deserted Runway
+  * Open Passage to B.O.X. Arena/Other to Deserted Runway
   * Extra - door_idx: (38,)
   > Door to Alcove
       Trivial
@@ -536,35 +520,19 @@ Extra - room_id: [16]
 ----------------
 Main Boiler
 Extra - map_name: Sector 317
-Extra - room_id: [17]
+Extra - room_id: [17, 29]
 > Door to Boiler Access; Heals? False
   * Layers: default
   * L0 Hatch to Boiler Access/Door to Main Boiler
-  * Extra - door_idx: (34,)
+  * Extra - door_idx: (34, 72)
   > Door to Main Boiler Control Room
       Can Kill Eye Door
 
 > Door to Main Boiler Control Room; Heals? False
   * Layers: default
   * L0 Hatch to Main Boiler Control Room/Door to Main Boiler
-  * Extra - door_idx: (49,)
+  * Extra - door_idx: (49, 73)
   > Door to Boiler Access
-      Trivial
-
-----------------
-B.O.X. Arena
-Extra - map_name: Sector 318
-Extra - room_id: [18]
-> to B.O.X. Access; Heals? False
-  * Layers: default
-  * Extra - door_idx: (36,)
-  > to Data Room
-      Trivial
-
-> to Data Room; Heals? False
-  * Layers: default
-  * Extra - door_idx: (43,)
-  > to B.O.X. Access
       Trivial
 
 ----------------
@@ -653,9 +621,9 @@ Extra - room_id: [20]
 Data Room
 Extra - map_name: Sector 321
 Extra - room_id: [21]
-> Door to B.O.X. Arena (D); Heals? False
+> Door to B.O.X. Arena; Heals? False
   * Layers: default
-  * L2 Hatch to B.O.X. Arena (D)/Door to Data Room
+  * L2 Hatch to B.O.X. Arena/Door to Data Room
   * Extra - door_idx: (44,)
   > Pickup (Super Missiles)
       Trivial
@@ -666,17 +634,17 @@ Extra - room_id: [21]
   * Extra - area: 3
   * Extra - room: 21
   * Extra - source: PYR_DATA
-  > Door to B.O.X. Arena (D)
+  > Door to B.O.X. Arena
       Trivial
 
 ----------------
-B.O.X. Access (D)
+B.O.X. Access
 Extra - map_name: Sector 322
-Extra - room_id: [22]
-> Door to B.O.X. Arena (D); Heals? False
+Extra - room_id: [22, 7]
+> Door to B.O.X. Arena; Heals? False
   * Layers: default
-  * L0 Hatch to B.O.X. Arena (D)/Door to B.O.X. Access (D)
-  * Extra - door_idx: (45,)
+  * L0 Hatch to B.O.X. Arena/Door to B.O.X. Access
+  * Extra - door_idx: (45, 35)
   > Door to Data Save Room
       Trivial
   > Door to Bob Room
@@ -684,32 +652,33 @@ Extra - room_id: [22]
 
 > Door to Data Save Room; Heals? False
   * Layers: default
-  * L0 Hatch to Data Save Room/Door to B.O.X. Access (D)
+  * L0 Hatch to Data Save Room/Door to B.O.X. Access
   * Extra - door_idx: (64,)
-  > Door to B.O.X. Arena (D)
+  > Door to B.O.X. Arena
       Trivial
 
 > Door to Bob Room; Heals? False
   * Layers: default
-  * L2 Hatch to Bob Room/Door to B.O.X. Access (D)
-  > Door to B.O.X. Arena (D)
+  * L2 Hatch to Bob Room/Door to B.O.X. Access
+  * Extra - door_idx: (16,)
+  > Door to B.O.X. Arena
       Trivial
 
 ----------------
-B.O.X. Arena (D)
+B.O.X. Arena
 Extra - map_name: Sector 323
-Extra - room_id: [23]
+Extra - room_id: [23, 18]
 > Other to Deserted Runway; Heals? False
   * Layers: default
-  * Open Passage to Deserted Runway/Other to B.O.X. Arena (D)
+  * Open Passage to Deserted Runway/Other to B.O.X. Arena
   * Extra - door_idx: (37,)
-  > Door to B.O.X. Access (D)
+  > Door to B.O.X. Access
       Trivial
 
-> Door to B.O.X. Access (D); Heals? False
+> Door to B.O.X. Access; Heals? False
   * Layers: default
-  * L0 Hatch to B.O.X. Access (D)/Door to B.O.X. Arena (D)
-  * Extra - door_idx: (46,)
+  * L0 Hatch to B.O.X. Access/Door to B.O.X. Arena
+  * Extra - door_idx: (46, 36)
   > Other to Deserted Runway
       Any of the following:
           Space Jump
@@ -724,30 +693,15 @@ Extra - room_id: [23]
 > Event - B.O.X.; Heals? False
   * Layers: default
   * Event B.O.X.
-  > Door to B.O.X. Access (D)
+  > Door to B.O.X. Access
       Trivial
 
 > Door to Data Room; Heals? False
   * Layers: default
-  * L2 Hatch to Data Room/Door to B.O.X. Arena (D)
-  > Door to B.O.X. Access (D)
+  * L2 Hatch to Data Room/Door to B.O.X. Arena
+  * Extra - door_idx: (43,)
+  > Door to B.O.X. Access
       Trivial
-
-----------------
-Bob Room (D)
-Extra - map_name: Sector 324
-Extra - room_id: [24]
-> Checkpoint Shaft; Heals? False
-  * Layers: default
-  * Extra - door_idx: (47,)
-
-> Red Tower; Heals? False
-  * Layers: default
-  * Extra - door_idx: (48,)
-
-> Namihe's Abode; Heals? False
-  * Layers: default
-  * Extra - door_idx: (63,)
 
 ----------------
 Main Boiler Control Room
@@ -881,18 +835,6 @@ Extra - room_id: [28]
       Screw Attack
 
 ----------------
-Main Boiler (C)
-Extra - map_name: Sector 329
-Extra - room_id: [29]
-> Boiler Access; Heals? False
-  * Layers: default
-  * Extra - door_idx: (72,)
-
-> Main Boiler Control Room; Heals? False
-  * Layers: default
-  * Extra - door_idx: (73,)
-
-----------------
 Namihe's Abode
 Extra - map_name: Sector 330
 Extra - room_id: [30]
@@ -951,9 +893,9 @@ Extra - room_id: [31]
 Data Save Room
 Extra - map_name: Sector 332
 Extra - room_id: [32]
-> Door to B.O.X. Access (D); Heals? False
+> Door to B.O.X. Access; Heals? False
   * Layers: default
-  * L0 Hatch to B.O.X. Access (D)/Door to Data Save Room
+  * L0 Hatch to B.O.X. Access/Door to Data Save Room
   * Extra - door_idx: (67,)
   > Door to Data Recharge Room
       Trivial
@@ -962,7 +904,7 @@ Extra - room_id: [32]
   * Layers: default
   * L0 Hatch to Data Recharge Room/Door to Data Save Room
   * Extra - door_idx: (68,)
-  > Door to B.O.X. Access (D)
+  > Door to B.O.X. Access
       Trivial
 
 ----------------
