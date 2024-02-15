@@ -142,10 +142,14 @@ class StandardPickupWidget(QWidget, Ui_StandardPickupWidget):
             return StandardPickupState(include_copy_in_original_location=True, included_ammo=included_ammo)
 
         elif case == StandardPickupStateCase.STARTING_ITEM:
-            return StandardPickupState(num_included_in_starting_pickups=1, included_ammo=included_ammo)
+            return StandardPickupState(
+                num_included_in_starting_pickups=self._pickup.default_starting_count, included_ammo=included_ammo
+            )
 
         elif case == StandardPickupStateCase.SHUFFLED:
-            return StandardPickupState(num_shuffled_pickups=len(self._pickup.progression), included_ammo=included_ammo)
+            return StandardPickupState(
+                num_shuffled_pickups=self._pickup.default_shuffled_count, included_ammo=included_ammo
+            )
 
         else:
             return None
@@ -188,12 +192,6 @@ class StandardPickupWidget(QWidget, Ui_StandardPickupWidget):
             self.priority_combo.setCurrentIndex(priority_index)
 
         self.Changed.emit()
-
-    def button_box_accepted(self):
-        self.accept()
-
-    def button_box_rejected(self):
-        self.reject()
 
     def _on_select_case(self, _):
         self.set_custom_fields_visible(self.case == StandardPickupStateCase.CUSTOM)
