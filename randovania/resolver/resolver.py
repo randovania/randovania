@@ -54,6 +54,9 @@ def _simplify_requirement_list(
     if not are_damage_reqs_satisfied:
         items.extend(damage_reqs)
 
+    if not items:
+        return None
+
     return RequirementList(items)
 
 
