@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [7.4.0] - 2024-03-??
 
 - Added: A warning will be shown when trying to generate a game where more items are in the pool than the maximum amount of items.
+- Fixed: In the Item Pool tab, selecting Shuffled now works properly for non-progressive entries with multiple copies and certain other items.
 - Fixed: Changelog window properly displays images.
 - Fixed: Cancelling connecting to the server is better handled now.
 
