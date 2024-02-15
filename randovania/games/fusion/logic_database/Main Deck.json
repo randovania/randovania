@@ -2056,7 +2056,7 @@
                 }
             }
         },
-        "Restricted Airlock (D)": {
+        "Restricted Airlock": {
             "default_node": null,
             "extra": {
                 "map_name": "Main Deck17",
@@ -2130,7 +2130,7 @@
                     "default_connection": {
                         "region": "Main Deck",
                         "area": "Restricted Labs Navigation Room",
-                        "node": "Door to Restricted Airlock (D)"
+                        "node": "Door to Restricted Airlock"
                     },
                     "default_dock_weakness": "L4 Hatch",
                     "exclude_from_dock_rando": false,
@@ -2162,7 +2162,7 @@
                     "default_connection": {
                         "region": "Main Deck",
                         "area": "Restricted Labs Corridor",
-                        "node": "Door to Restricted Airlock (D)"
+                        "node": "Door to Restricted Airlock"
                     },
                     "default_dock_weakness": "L4 Hatch",
                     "exclude_from_dock_rando": false,
@@ -2171,6 +2171,23 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Pickup (Power Bomb Tank)": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "SpeedBooster",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Door to Restricted Labs Navigation Room": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -3074,7 +3091,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Main Elevator Access (D)": {
+                        "Door to Main Elevator Access": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -3126,7 +3143,7 @@
                         }
                     }
                 },
-                "Door to Main Elevator Access (D)": {
+                "Door to Main Elevator Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3147,7 +3164,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Main Deck",
-                        "area": "Main Elevator Access (D)",
+                        "area": "Main Elevator Access",
                         "node": "Door to Quarantine Access"
                     },
                     "default_dock_weakness": "L0 Hatch",
@@ -5251,7 +5268,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Main Elevator Access (D)": {
+                        "Door to Main Elevator Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5260,7 +5277,7 @@
                         }
                     }
                 },
-                "Door to Main Elevator Access (D)": {
+                "Door to Main Elevator Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5282,7 +5299,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Main Deck",
-                        "area": "Main Elevator Access (D)",
+                        "area": "Main Elevator Access",
                         "node": "Door to Elevator to Sector Hub"
                     },
                     "default_dock_weakness": "Open Hatch",
@@ -5337,7 +5354,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Main Elevator Access (D)": {
+                        "Door to Main Elevator Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5348,7 +5365,7 @@
                 }
             }
         },
-        "Main Elevator Access (D)": {
+        "Main Elevator Access": {
             "default_node": null,
             "extra": {
                 "map_name": "Main Deck42",
@@ -5381,7 +5398,7 @@
                     "default_connection": {
                         "region": "Main Deck",
                         "area": "Elevator to Sector Hub",
-                        "node": "Door to Main Elevator Access (D)"
+                        "node": "Door to Main Elevator Access"
                     },
                     "default_dock_weakness": "Open Hatch",
                     "exclude_from_dock_rando": false,
@@ -5421,7 +5438,7 @@
                     "default_connection": {
                         "region": "Main Deck",
                         "area": "Quarantine Access",
-                        "node": "Door to Main Elevator Access (D)"
+                        "node": "Door to Main Elevator Access"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -5856,7 +5873,7 @@
                                 "items": []
                             }
                         },
-                        "Door to Central Reactor Core (V)": {
+                        "Door to Central Reactor Core": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5870,7 +5887,7 @@
                         }
                     }
                 },
-                "Door to Central Reactor Core (V)": {
+                "Door to Central Reactor Core": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5892,7 +5909,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Main Deck",
-                        "area": "Central Reactor Core (V)",
+                        "area": "Central Reactor Core",
                         "node": "Door to Silo Access"
                     },
                     "default_dock_weakness": "Open Hatch",
@@ -5917,7 +5934,7 @@
                 }
             }
         },
-        "Central Reactor Core (V)": {
+        "Central Reactor Core": {
             "default_node": null,
             "extra": {
                 "map_name": "Main Deck49",
@@ -5950,7 +5967,7 @@
                     "default_connection": {
                         "region": "Main Deck",
                         "area": "Silo Access",
-                        "node": "Door to Central Reactor Core (V)"
+                        "node": "Door to Central Reactor Core"
                     },
                     "default_dock_weakness": "Open Hatch",
                     "exclude_from_dock_rando": false,
@@ -5990,7 +6007,7 @@
                     "default_connection": {
                         "region": "Main Deck",
                         "area": "Silo Scaffolding A",
-                        "node": "Door to Central Reactor Core (V)"
+                        "node": "Door to Central Reactor Core"
                     },
                     "default_dock_weakness": "Open Hatch",
                     "exclude_from_dock_rando": false,
@@ -6030,7 +6047,7 @@
                     "default_connection": {
                         "region": "Main Deck",
                         "area": "Reactor Checkpoint",
-                        "node": "Door to Central Reactor Core (V)"
+                        "node": "Door to Central Reactor Core"
                     },
                     "default_dock_weakness": "Open Hatch",
                     "exclude_from_dock_rando": false,
@@ -6070,7 +6087,7 @@
                     "default_connection": {
                         "region": "Main Deck",
                         "area": "Silo Tunnel",
-                        "node": "Other to Central Reactor Core (V)"
+                        "node": "Other to Central Reactor Core"
                     },
                     "default_dock_weakness": "Tunnel",
                     "exclude_from_dock_rando": false,
@@ -6110,7 +6127,7 @@
                     "default_connection": {
                         "region": "Main Deck",
                         "area": "Silo Save Room",
-                        "node": "Door to Central Reactor Core (V)"
+                        "node": "Door to Central Reactor Core"
                     },
                     "default_dock_weakness": "Open Hatch",
                     "exclude_from_dock_rando": false,
@@ -6257,7 +6274,7 @@
                         }
                     }
                 },
-                "Door to Central Reactor Core (V)": {
+                "Door to Central Reactor Core": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6278,7 +6295,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Main Deck",
-                        "area": "Central Reactor Core (V)",
+                        "area": "Central Reactor Core",
                         "node": "Door to Silo Scaffolding A"
                     },
                     "default_dock_weakness": "Open Hatch",
@@ -6333,7 +6350,7 @@
                                 "items": []
                             }
                         },
-                        "Door to Central Reactor Core (V)": {
+                        "Door to Central Reactor Core": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6600,7 +6617,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Central Reactor Core (V)": {
+                        "Door to Central Reactor Core": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6609,7 +6626,7 @@
                         }
                     }
                 },
-                "Door to Central Reactor Core (V)": {
+                "Door to Central Reactor Core": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6630,7 +6647,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Main Deck",
-                        "area": "Central Reactor Core (V)",
+                        "area": "Central Reactor Core",
                         "node": "Door to Reactor Checkpoint"
                     },
                     "default_dock_weakness": "Open Hatch",
@@ -6791,7 +6808,7 @@
                 ]
             },
             "nodes": {
-                "Other to Central Reactor Core (V)": {
+                "Other to Central Reactor Core": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6813,7 +6830,7 @@
                     "dock_type": "Other",
                     "default_connection": {
                         "region": "Main Deck",
-                        "area": "Central Reactor Core (V)",
+                        "area": "Central Reactor Core",
                         "node": "Other to Silo Tunnel"
                     },
                     "default_dock_weakness": "Tunnel",
@@ -6867,7 +6884,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Other to Central Reactor Core (V)": {
+                        "Other to Central Reactor Core": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -7076,7 +7093,7 @@
                 ]
             },
             "nodes": {
-                "Door to Central Reactor Core (V)": {
+                "Door to Central Reactor Core": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7097,7 +7114,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Main Deck",
-                        "area": "Central Reactor Core (V)",
+                        "area": "Central Reactor Core",
                         "node": "Door to Silo Save Room"
                     },
                     "default_dock_weakness": "Open Hatch",
@@ -7518,7 +7535,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Restricted Airlock (D)": {
+                        "Door to Restricted Airlock": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7527,7 +7544,7 @@
                         }
                     }
                 },
-                "Door to Restricted Airlock (D)": {
+                "Door to Restricted Airlock": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7548,7 +7565,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Main Deck",
-                        "area": "Restricted Airlock (D)",
+                        "area": "Restricted Airlock",
                         "node": "Door to Restricted Labs Corridor"
                     },
                     "default_dock_weakness": "L4 Hatch",
@@ -7607,7 +7624,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Restricted Airlock (D)": {
+                        "Door to Restricted Airlock": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7616,7 +7633,7 @@
                         }
                     }
                 },
-                "Door to Restricted Airlock (D)": {
+                "Door to Restricted Airlock": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7637,7 +7654,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Main Deck",
-                        "area": "Restricted Airlock (D)",
+                        "area": "Restricted Airlock",
                         "node": "Door to Restricted Labs Navigation Room"
                     },
                     "default_dock_weakness": "Open Hatch",
