@@ -15,7 +15,7 @@ Extra - room_id: [0, 63]
           Wide Beam or Combat (Intermediate)
           Combat (Advanced) or Normal Damage ≥ 400
 
-> Ship; Heals? False; Spawn Point
+> Ship; Heals? True; Spawn Point
   * Layers: default
   > Door to Docking Bay Access
       Trivial
@@ -72,10 +72,6 @@ Extra - room_id: [6]
       Trivial
   > Door to Station Entrance
       Trivial
-
-> Docking Bay Access (D); Heals? False
-  * Layers: default
-  * Extra - door_idx: (10,)
 
 > Other to Silo Access; Heals? False
   * Layers: default
@@ -442,7 +438,7 @@ Extra - room_id: [18]
   * L2 Hatch to Habitation Storage/Door to Central Hub
   * Extra - door_idx: (132,)
   > Door to Station Entrance
-      Can Use Any Bombs
+      Impossible
 
 > Other to Western Hub; Heals? False
   * Layers: default
@@ -616,7 +612,7 @@ Extra - room_id: [25]
   * Extra - door_idx: (52,)
   > Door to Elevator to Sector 4 (AQA)
       Trivial
-  > Other to Elevator to Main Deck
+  > Elevator to Sector 2
       Trivial
 
 > Door to Elevator to Sector 4 (AQA); Heals? False
@@ -626,9 +622,9 @@ Extra - room_id: [25]
   > Door to Sector Hub
       Trivial
 
-> Other to Elevator to Main Deck; Heals? False
+> Elevator to Sector 2; Heals? False
   * Layers: default
-  * Open Passage to Elevator to Main Deck/Other to Elevator to Sector 2 (TRO)
+  * Elevator to Elevator to Main Deck/Elevator to Main Deck
   * Extra - door_idx: (68,)
   > Door to Sector Hub
       Trivial
@@ -643,7 +639,7 @@ Extra - room_id: [26]
   * Extra - door_idx: (54,)
   > Door to Elevator to Sector 6 (NOC)
       Trivial
-  > Other to Elevator to Main Deck
+  > Elevator to Sector 4
       Trivial
 
 > Door to Elevator to Sector 6 (NOC); Heals? False
@@ -653,9 +649,9 @@ Extra - room_id: [26]
   > Door to Elevator to Sector 2 (TRO)
       Trivial
 
-> Other to Elevator to Main Deck; Heals? False
+> Elevator to Sector 4; Heals? False
   * Layers: default
-  * Open Passage to Elevator to Main Deck/Other to Elevator to Sector 4 (AQA)
+  * Elevator to Elevator to Main Deck/Elevator to Main Deck
   * Extra - door_idx: (70,)
   > Door to Elevator to Sector 2 (TRO)
       Trivial
@@ -668,12 +664,12 @@ Extra - room_id: [27]
   * Layers: default
   * L2 Hatch to Elevator to Sector 4 (AQA)/Door to Elevator to Sector 6 (NOC)
   * Extra - door_idx: (56,)
-  > Other to Elevator to Main Deck
+  > Elevator to Sector 6
       Trivial
 
-> Other to Elevator to Main Deck; Heals? False
+> Elevator to Sector 6; Heals? False
   * Layers: default
-  * Open Passage to Elevator to Main Deck/Other to Elevator to Sector 6 (NOC)
+  * Elevator to Elevator to Main Deck/Elevator to Main Deck
   * Extra - door_idx: (72,)
   > Door to Elevator to Sector 4 (AQA)
       Trivial
@@ -688,7 +684,7 @@ Extra - room_id: [28]
   * Extra - door_idx: (58,)
   > Door to Elevator to Sector 3 (PYR)
       Trivial
-  > Other to Elevator to Main Deck
+  > Elevator to Sector 1
       Trivial
 
 > Door to Elevator to Sector 3 (PYR); Heals? False
@@ -698,9 +694,9 @@ Extra - room_id: [28]
   > Door to Sector Hub
       Trivial
 
-> Other to Elevator to Main Deck; Heals? False
+> Elevator to Sector 1; Heals? False
   * Layers: default
-  * Open Passage to Elevator to Main Deck/Other to Elevator to Sector 1 (SRX)
+  * Elevator to Elevator to Main Deck/Elevator to Main Deck
   * Extra - door_idx: (67,)
   > Door to Sector Hub
       Trivial
@@ -715,7 +711,7 @@ Extra - room_id: [29]
   * Extra - door_idx: (60,)
   > Door to Elevator to Sector 5 (ARC)
       Trivial
-  > Other to Elevator to Main Deck
+  > Elevator to Sector 3
       Trivial
 
 > Door to Elevator to Sector 5 (ARC); Heals? False
@@ -725,9 +721,9 @@ Extra - room_id: [29]
   > Door to Elevator to Sector 1 (SRX)
       Trivial
 
-> Other to Elevator to Main Deck; Heals? False
+> Elevator to Sector 3; Heals? False
   * Layers: default
-  * Open Passage to Elevator to Main Deck/Other to Elevator to Sector 3 (PYR)
+  * Elevator to Elevator to Main Deck/Elevator to Main Deck
   * Extra - door_idx: (69,)
   > Door to Elevator to Sector 1 (SRX)
       Trivial
@@ -740,12 +736,12 @@ Extra - room_id: [30]
   * Layers: default
   * L2 Hatch to Elevator to Sector 3 (PYR)/Door to Elevator to Sector 5 (ARC)
   * Extra - door_idx: (62,)
-  > Other to Elevator to Main Deck
+  > Elevator to Sector 5
       Trivial
 
-> Other to Elevator to Main Deck; Heals? False
+> Elevator to Sector 5; Heals? False
   * Layers: default
-  * Open Passage to Elevator to Main Deck/Other to Elevator to Sector 5 (ARC)
+  * Elevator to Elevator to Main Deck/Elevator to Main Deck
   * Extra - door_idx: (71,)
   > Door to Elevator to Sector 3 (PYR)
       Trivial
@@ -792,7 +788,7 @@ Extra - map_name: Main Deck34
 Extra - room_id: [34, 43]
 > Other to Elevator to Sector Hub; Heals? False
   * Layers: default
-  * Open Passage to Elevator to Sector Hub/Other to Main Elevator Shaft
+  * Open Passage to Elevator to Sector Hub/Elevator to Main Elevator Shaft
   * Extra - door_idx: (75,)
   > Other to Sector Hub
       Trivial
@@ -867,6 +863,13 @@ Extra - room_id: [37]
   * Layers: default
   * L0 Hatch to Crew Quarters East/Door to Crew Quarters Save Room
   * Extra - door_idx: (87,)
+  > Save Station
+      Trivial
+
+> Save Station; Heals? False
+  * Layers: default
+  > Door to Crew Quarters East
+      Trivial
 
 ----------------
 Arachnus Arena
@@ -896,14 +899,17 @@ Extra - room_id: [38]
   > Arena
       Morph Ball
   > Beside Door
-      Morph Ball and Screw Attack
+      All of the following:
+          Morph Ball and Screw Attack
+          # Get up
+          Wall Jump (Beginner) or Can climb High Jump Wall
 
 > Other to The Attic; Heals? False
   * Layers: default
   * Open Passage to The Attic/Other to Arachnus Arena
   * Extra - door_idx: (200,)
   > Before Pit
-      Trivial
+      Missiles
 
 > Event - Arachnus; Heals? False
   * Layers: default
@@ -937,6 +943,7 @@ Extra - room_id: [38]
       Morph Ball
   > Event - Arachnus
       All of the following:
+          # TODO: Arachnus boss logic
           Missiles
           Combat (Beginner) or Normal Damage ≥ 50
 
@@ -973,9 +980,9 @@ Extra - room_id: [39]
 Elevator to Sector Hub
 Extra - map_name: Main Deck40
 Extra - room_id: [40, 19]
-> Other to Main Elevator Shaft; Heals? False
+> Elevator to Main Elevator Shaft; Heals? False
   * Layers: default
-  * Open Passage to Main Elevator Shaft/Other to Elevator to Sector Hub
+  * Elevator to Main Elevator Shaft/Other to Elevator to Sector Hub
   * Extra - door_idx: (94, 49)
   > Door to Main Elevator Access
       Trivial
@@ -984,14 +991,14 @@ Extra - room_id: [40, 19]
   * Layers: default
   * Open Hatch to Main Elevator Access/Door to Elevator to Sector Hub
   * Extra - door_idx: (95, 40)
-  > Other to Main Elevator Shaft
+  > Elevator to Main Elevator Shaft
       Trivial
-  > Door to Main Elevator Cache
+  > Other to Main Elevator Cache
       Trivial
 
-> Door to Main Elevator Cache; Heals? False
+> Other to Main Elevator Cache; Heals? False
   * Layers: default
-  * Open Hatch to Main Elevator Cache/Door to Elevator to Sector Hub
+  * Open Passage to Main Elevator Cache/Other to Elevator to Sector Hub
   * Extra - door_idx: (171,)
   > Door to Main Elevator Access
       Trivial
@@ -1152,7 +1159,7 @@ Extra - room_id: [49, 59]
   > Door to Silo Access
       Any of the following:
           Space Jump
-          Speed Booster and Shinespark Tricks (Beginner)
+          Speed Booster and Shinespark Tricks (Beginner) and Disabled Door Lock Rando and Disabled Entrance Rando
   > Door to Silo Scaffolding A
       Wall Jump (Beginner) or Can climb High Jump Wall
   > Door to Reactor Checkpoint
@@ -1308,6 +1315,13 @@ Extra - room_id: [56]
   * Extra - door_idx: (129,)
   > Door to Auxiliary Power Station
       Trivial
+  > Navigation Terminal
+      Trivial
+
+> Navigation Terminal; Heals? False
+  * Layers: default
+  > Door to Reactor Checkpoint
+      Trivial
 
 ----------------
 Habitation Storage
@@ -1343,9 +1357,9 @@ Extra - room_id: [58]
 Elevator to Crew Quarters
 Extra - map_name: Main Deck60
 Extra - room_id: [60]
-> Other to Elevator to Operations Deck; Heals? False
+> Elevator to Elevator to Operations Deck; Heals? False
   * Layers: default
-  * Open Passage to Elevator to Operations Deck/Other to Elevator to Crew Quarters
+  * Elevator to Elevator to Operations Deck/Elevator to Elevator to Crew Quarters
   * Extra - door_idx: (26,)
   > Door to Operations Deck
       Trivial
@@ -1354,16 +1368,16 @@ Extra - room_id: [60]
   * Layers: default
   * L0 Hatch to Operations Deck/Door to Elevator to Crew Quarters
   * Extra - door_idx: (139,)
-  > Other to Elevator to Operations Deck
+  > Elevator to Elevator to Operations Deck
       Trivial
 
 ----------------
 Elevator to Operations Deck
 Extra - map_name: Main Deck61
 Extra - room_id: [61]
-> Other to Elevator to Crew Quarters; Heals? False
+> Elevator to Elevator to Crew Quarters; Heals? False
   * Layers: default
-  * Open Passage to Elevator to Crew Quarters/Other to Elevator to Operations Deck
+  * Elevator to Elevator to Crew Quarters/Elevator to Elevator to Operations Deck
   * Extra - door_idx: (25,)
   > Door to Crew Quarters West
       Trivial
@@ -1372,7 +1386,7 @@ Extra - room_id: [61]
   * Layers: default
   * L0 Hatch to Crew Quarters West/Door to Elevator to Operations Deck
   * Extra - door_idx: (140,)
-  > Other to Elevator to Crew Quarters
+  > Elevator to Elevator to Crew Quarters
       Trivial
 
 ----------------
@@ -1455,12 +1469,12 @@ Extra - room_id: [67]
   * Layers: default
   * L4 Hatch to Restricted Labs Navigation Room/Door to Elevator to Sector 1 (Tourian)
   * Extra - door_idx: (153,)
-  > Other to Elevator to Restricted Labs
+  > Elevator to Sector 1
       Trivial
 
-> Other to Elevator to Restricted Labs; Heals? False
+> Elevator to Sector 1; Heals? False
   * Layers: default
-  * Open Passage to Elevator to Restricted Labs/Other to Elevator to Sector 1 (Tourian)
+  * Elevator to Elevator to Restricted Labs/Elevator to Main Deck
   * Extra - door_idx: (154,)
   > Door to Restricted Labs Navigation Room
       Trivial
@@ -1603,12 +1617,12 @@ Extra - room_id: [73]
   * Extra - room: 73
   * Extra - blockx: 6
   * Extra - blocky: 10
-  > Door to Elevator to Sector Hub
+  > Other to Elevator to Sector Hub
       Trivial
 
-> Door to Elevator to Sector Hub; Heals? False
+> Other to Elevator to Sector Hub; Heals? False
   * Layers: default
-  * Open Hatch to Elevator to Sector Hub/Door to Main Elevator Cache
+  * Open Passage to Elevator to Sector Hub/Other to Main Elevator Cache
   * Extra - door_idx: (170,)
   > Pickup (Missile Tank)
       Speed Booster
@@ -1621,12 +1635,12 @@ Extra - room_id: [75]
   * Layers: default
   * L2 Hatch to Central Hub/Door to Elevator to Habitation Deck
   * Extra - door_idx: (176,)
-  > Other to Elevator to Central Hub
+  > Elevator to Elevator to Central Hub
       Trivial
 
-> Other to Elevator to Central Hub; Heals? False
+> Elevator to Elevator to Central Hub; Heals? False
   * Layers: default
-  * Open Passage to Elevator to Central Hub/Other to Elevator to Habitation Deck
+  * Elevator to Elevator to Central Hub/Elevator to Elevator to Habitation Deck
   * Extra - door_idx: (177,)
   > Door to Central Hub
       Trivial
@@ -1642,9 +1656,9 @@ Extra - room_id: [76]
   > Door to Habitation Deck Entrance
       Trivial
 
-> Other to Elevator to Habitation Deck; Heals? False
+> Elevator to Elevator to Habitation Deck; Heals? False
   * Layers: default
-  * Open Passage to Elevator to Habitation Deck/Other to Elevator to Central Hub
+  * Elevator to Elevator to Habitation Deck/Elevator to Elevator to Central Hub
   * Extra - door_idx: (178,)
   > Door to Habitation Deck Entrance
       Trivial
@@ -1655,7 +1669,7 @@ Extra - room_id: [76]
   * Extra - door_idx: (179,)
   > Door to Habitation Deck Save Room
       Trivial
-  > Other to Elevator to Habitation Deck
+  > Elevator to Elevator to Habitation Deck
       Trivial
 
 ----------------
