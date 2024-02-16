@@ -1092,10 +1092,8 @@ Extra - room_id: [33]
   * Extra - room: 33
   * Extra - blockx: 10
   * Extra - blocky: 13
-  > Door to Pump Control Access
-      Can Use Bombs or Can Use Springball
-  > Behind Speed Blocks
-      Can Use Bombs or Can Use Springball
+  > Next to Pickup
+      Trivial
 
 > Door to Pump Control Access; Heals? False
   * Layers: default
@@ -1108,16 +1106,25 @@ Extra - room_id: [33]
 
 > Behind Speed Blocks; Heals? False
   * Layers: default
-  > Pickup (Missile Tank)
-      Morph Ball
   > Event - Pump Control Terminal
       Trivial
+  > Next to Pickup
+      Morph Ball
 
 > Event - Pump Control Terminal; Heals? False
   * Layers: default
   * Event Water Level Lowered
   > Behind Speed Blocks
       Trivial
+
+> Next to Pickup; Heals? False
+  * Layers: default
+  > Pickup (Missile Tank)
+      Trivial
+  > Door to Pump Control Access
+      Can Use Bombs or Can Use Springball
+  > Behind Speed Blocks
+      Can Use Bombs or Can Use Springball
 
 ----------------
 Security Bypass
