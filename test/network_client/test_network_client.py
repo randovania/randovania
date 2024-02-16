@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import asyncio
 import uuid
 from pathlib import Path
 from typing import TYPE_CHECKING
@@ -58,7 +59,6 @@ async def test_on_connect_restore(tmpdir, valid_session: bool):
     else:
         call_result = InvalidSessionError().as_json
 
-    client.sa = MagicMock()
     client.sio.call = AsyncMock(return_value=call_result)
 
     # Run
@@ -96,7 +96,6 @@ async def test_connect_to_server(tmp_path):
     async def connect(*args, **kwargs):
         client._waiting_for_on_connect.set_result(True)
 
-    client.sa = MagicMock()
     client.sio.connect = AsyncMock(side_effect=connect)
     client.sio.connected = False
 
@@ -110,6 +109,20 @@ async def test_connect_to_server(tmp_path):
     )
 
 
+async def test_connect_to_server_cancel(tmp_path):
+    # Setup
+    client = NetworkClient(tmp_path, {"server_address": "http://localhost:5000", "socketio_path": "/path"})
+
+    client.sio.disconnect = AsyncMock()
+    client._internal_connect_to_server = AsyncMock(side_effect=asyncio.CancelledError())
+
+    # Run
+    await client.connect_to_server()
+
+    # Assert
+    client.sio.disconnect.assert_awaited_once_with()
+
+
 async def test_internal_connect_to_server_failure(tmp_path):
     # Setup
     client = NetworkClient(tmp_path, {"server_address": "http://localhost:5000", "socketio_path": "/path"})
@@ -117,7 +130,6 @@ async def test_internal_connect_to_server_failure(tmp_path):
     async def connect(*args, **kwargs):
         raise (aiohttp.client_exceptions.ContentTypeError(MagicMock(), (), message="thing"))
 
-    client.sa = MagicMock()
     client.sio.disconnect = AsyncMock()
     client.sio.connect = AsyncMock(side_effect=connect)
     client.sio.connected = False

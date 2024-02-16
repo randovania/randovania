@@ -91,9 +91,12 @@ class MSRBootstrap(MetroidBootstrap):
                 yield resource_database.get_event(name), 1
 
         if configuration.area3_interior_shortcut_no_grapple:
-            yield resource_database.get_event(
-                "Area 3 (Factory Interior) - Gamma Arena & Transport to Metroid Caverns East Grapple Block"
-            ), 1
+            yield (
+                resource_database.get_event(
+                    "Area 3 (Factory Interior) - Gamma Arena & Transport to Metroid Caverns East Grapple Block"
+                ),
+                1,
+            )
 
     def assign_pool_results(self, rng: Random, patches: GamePatches, pool_results: PoolResults) -> GamePatches:
         assert isinstance(patches.configuration, MSRConfiguration)
