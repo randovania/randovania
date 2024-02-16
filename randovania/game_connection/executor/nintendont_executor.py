@@ -133,7 +133,7 @@ class NintendontExecutor(MemoryOperationExecutor):
             self._socket = SocketHolder(reader, writer, api_version, max_input, max_output, max_addresses)
             return None
 
-        except (TimeoutError, OSError, struct.error, UnicodeError) as e:
+        except (TimeoutError, OSError, struct.error, UnicodeError, NotImplementedError) as e:
             # UnicodeError is for some invalid ip addresses
             self._socket = None
             message = f"Unable to connect to {self._ip}:{self._port} - ({type(e).__name__}) {e}"

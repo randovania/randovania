@@ -547,6 +547,9 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         current_version = version_lib.current_version()
         last_changelog = self._options.last_changelog_displayed
 
+        if releases is None:
+            return
+
         (all_change_logs, new_change_logs, version_to_display) = update_checker.versions_to_display_for_releases(
             current_version, last_changelog, releases
         )

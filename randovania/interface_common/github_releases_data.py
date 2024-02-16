@@ -83,6 +83,7 @@ async def get_releases() -> list[dict] | None:
     data = await _read_from_persisted()
 
     if data is None:
+        return None
         data = await _download_from_github()
         if data is None:
             logging.warning("Unable to fetch release data from Github")
