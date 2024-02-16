@@ -9,12 +9,11 @@ import pytest
 from frozendict import frozendict
 
 import randovania
+import randovania.games.prime2.exporter.patch_data_factory
 from randovania.exporter import pickup_exporter
-from randovania.game_description import default_database
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.node_identifier import NodeIdentifier
-from randovania.game_description.default_database import default_prime2_memo_data
 from randovania.game_description.pickup.pickup_entry import ConditionalResources, PickupModel
 from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
@@ -512,7 +511,7 @@ def test_pickup_data_for_pb_expansion_locked(
             "Power Bomb Expansion acquired!",
         ]
     else:
-        memo = default_database.default_prime2_memo_data()
+        memo = patch_data_factory.default_prime2_memo_data()
         hud_text = [
             "Power Bomb Expansion acquired! \n"
             "Without the main Power Bomb item, you are still unable to release Power Bombs.",
@@ -579,7 +578,7 @@ def test_create_pickup_all_from_pool(echoes_game_description, default_echoes_con
     if disable_hud_popup:
         memo_data = patch_data_factory._simplified_memo_data()
     else:
-        memo_data = default_prime2_memo_data()
+        memo_data = patch_data_factory.default_prime2_memo_data()
     creator = pickup_exporter.PickupExporterSolo(memo_data, RandovaniaGame.METROID_PRIME_ECHOES)
 
     for item in item_pool.to_place:

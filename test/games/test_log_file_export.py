@@ -36,25 +36,32 @@ def test_layout_patch_data_export(
     )
 
     layout = LayoutDescription.from_file(test_files_dir.joinpath("log_files", layout_name))
-
     game_enum = layout.get_preset(world_index).game
-    factory = game_enum.patch_data_factory(
-        description=layout,
-        players_config=PlayersConfiguration(
-            player_index=world_index, player_names={i: f"World {i + 1}" for i in range(layout.world_count)}
-        ),
-        cosmetic_patches=game_enum.data.layout.cosmetic_patches(),
-    )
-
-    data = factory.create_data()
 
     layout_path = layout_name.replace(".rdvgame", "")
     if layout.world_count > 0:
         layout_path += f"/world_{world_index + 1}"
 
     data_path = test_files_dir.joinpath("patcher_data", game_enum.value, f"{layout_path}.json")
+    cosmetic_path = data_path.with_name(f"cosmetic_{world_index + 1}.json")
+
+    if cosmetic_path.exists():
+        cosmetic_patches = game_enum.data.layout.cosmetic_patches.from_json(json_lib.read_dict(cosmetic_path))
+    else:
+        cosmetic_patches = game_enum.data.layout.cosmetic_patches()
+
+    factory = game_enum.patch_data_factory(
+        description=layout,
+        players_config=PlayersConfiguration(
+            player_index=world_index, player_names={i: f"World {i + 1}" for i in range(layout.world_count)}
+        ),
+        cosmetic_patches=cosmetic_patches,
+    )
+
+    data = factory.create_data()
 
     # json_lib.write_path(data_path, data); assert False
+    # json_lib.write_path(cosmetic_path, cosmetic_patches.as_json); assert False
 
     assert data == json_lib.read_path(data_path)
 
@@ -62,7 +69,13 @@ def test_layout_patch_data_export(
 def pytest_generate_tests(metafunc: _pytest.python.Metafunc) -> None:
     log_dir = Path(__file__).parents[1].joinpath("test_files", "log_files")
 
-    layout_name = "all_game_multi.rdvgame"
-    layout = LayoutDescription.from_file(log_dir.joinpath(layout_name))
+    layout_names = [
+        "all_game_multi.rdvgame",
+        "cs_echoes_multi_1.rdvgame",
+    ]
+    layouts = {layout_name: LayoutDescription.from_file(log_dir.joinpath(layout_name)) for layout_name in layout_names}
 
-    metafunc.parametrize(["layout_name", "world_index"], [(layout_name, world) for world in range(layout.world_count)])
+    metafunc.parametrize(
+        ["layout_name", "world_index"],
+        [(layout_name, world) for layout_name, layout in layouts.items() for world in range(layout.world_count)],
+    )
