@@ -141,6 +141,13 @@ Extra - room_id: [8]
   * Layers: default
   * L0 Hatch to Eastern Hub/Door to Main Deck Recharge Room
   * Extra - door_idx: (16,)
+  > Recharge Terminal
+      Trivial
+
+> Recharge Terminal; Heals? True
+  * Layers: default
+  > Door to Eastern Hub
+      Trivial
 
 ----------------
 Main Deck Navigation Room East
@@ -158,6 +165,13 @@ Extra - room_id: [9]
   * Open Hatch to Eastern Hub/Door to Main Deck Navigation Room East
   * Extra - door_idx: (23,)
   > Door to Crew Quarters West
+      Trivial
+  > Navigation Terminal
+      Trivial
+
+> Navigation Terminal; Heals? False
+  * Layers: default
+  > Door to Eastern Hub
       Trivial
 
 ----------------
@@ -204,6 +218,13 @@ Extra - room_id: [11]
   * Layers: default
   * L0 Hatch to Elevator to Central Hub/Door to Habitation Deck Save Room
   * Extra - door_idx: (24,)
+  > Save Station
+      Trivial
+
+> Save Station; Heals? False
+  * Layers: default
+  > Door to Elevator to Central Hub
+      Trivial
 
 ----------------
 Crew Quarters West
@@ -319,7 +340,7 @@ Extra - room_id: [15]
       Trivial
   > Door to Habitation Deck (Middle)
       Any of the following:
-          High Jump
+          Space Jump
           High Jump and Can Freeze Enemies
 
 > Door to Habitation Deck (Lower); Heals? False
@@ -344,8 +365,11 @@ Extra - room_id: [15]
   * Layers: default
   * L2 Hatch to Habitation Deck/Door to Habitation Deck Entrance (Upper)
   * Extra - door_idx: (158,)
-  > Door to Habitation Deck (Middle)
+  > Door to Elevator to Central Hub
       Trivial
+  > Door to Habitation Deck (Middle)
+      # TODO: spincancel
+      Movement (Beginner)
 
 ----------------
 Main Deck Navigation Room West
@@ -363,6 +387,13 @@ Extra - room_id: [16]
   * Open Hatch to Western Hub/Door to Main Deck Navigation Room West
   * Extra - door_idx: (37,)
   > Door to Central Hub
+      Trivial
+  > Navigation Terminal
+      Trivial
+
+> Navigation Terminal; Heals? False
+  * Layers: default
+  > Door to Western Hub
       Trivial
 
 ----------------
@@ -774,11 +805,18 @@ Extra - room_id: [33]
   * Extra - door_idx: (41,)
   > Door to Eastern Hub
       Trivial
+  > Save Station
+      Trivial
 
 > Door to Eastern Hub; Heals? False
   * Layers: default
   * L0 Hatch to Eastern Hub/Door to Main Deck Save Room
   * Extra - door_idx: (73,)
+  > Door to Hornoad Hallway
+      Trivial
+
+> Save Station; Heals? False
+  * Layers: default
   > Door to Hornoad Hallway
       Trivial
 
