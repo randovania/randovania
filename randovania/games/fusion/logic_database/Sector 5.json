@@ -627,15 +627,6 @@
                                                                                 "amount": 1,
                                                                                 "negate": false
                                                                             }
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "Movement",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
                                                                         }
                                                                     ]
                                                                 }
@@ -2151,13 +2142,6 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Data Checkpoint": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
                         "Door to Ruined Corridor": {
                             "type": "and",
                             "data": {
@@ -2197,21 +2181,11 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Crow's Nest": {
-                            "type": "or",
+                        "Pickup (Power Bomb Data)": {
+                            "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "SpaceJump",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "items": []
                             }
                         },
                         "Pickup (Power Bomb Data)": {
@@ -4752,8 +4726,37 @@
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "template",
-                                        "data": "Can Use Any Bombs"
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "HighJump",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Use Bombs"
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Use Power Bombs"
+                                                }
+                                            ]
+                                        }
                                     },
                                     {
                                         "type": "and",
