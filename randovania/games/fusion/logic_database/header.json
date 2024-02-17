@@ -1143,6 +1143,60 @@
                         }
                     ]
                 }
+            },
+            "Can Bounce in Ball": {
+                "type": "or",
+                "data": {
+                    "comment": null,
+                    "items": [
+                        {
+                            "type": "template",
+                            "data": "Can Use Bombs"
+                        },
+                        {
+                            "type": "template",
+                            "data": "Can Use Springball"
+                        }
+                    ]
+                }
+            },
+            "Can Break Single Bomb Blocks": {
+                "type": "or",
+                "data": {
+                    "comment": null,
+                    "items": [
+                        {
+                            "type": "template",
+                            "data": "Can Use Any Bombs"
+                        },
+                        {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "ScrewAttack",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Knowledge",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
             }
         },
         "damage_reductions": [],
