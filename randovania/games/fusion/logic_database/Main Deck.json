@@ -598,11 +598,26 @@
                         "Other to Spitter Speedway": {
                             "type": "or",
                             "data": {
-                                "comment": null,
+                                "comment": "TODO: this seems very hard to skip",
                                 "items": [
                                     {
                                         "type": "template",
                                         "data": "Can Use Power Bombs"
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": "TODO: SPEEDBOOSTER path",
+                                            "items": [
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": []
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -684,16 +699,50 @@
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "template",
-                                        "data": "Can Use Power Bombs"
+                                        "type": "or",
+                                        "data": {
+                                            "comment": "TODO: This seems hard to skip",
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Use Power Bombs"
+                                                }
+                                            ]
+                                        }
                                     },
                                     {
-                                        "type": "resource",
+                                        "type": "and",
                                         "data": {
-                                            "type": "items",
-                                            "name": "SpeedBooster",
-                                            "amount": 1,
-                                            "negate": false
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "SpeedBooster",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "DoorLockRando",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "EntranceRando",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -2737,6 +2786,30 @@
                                             "amount": 1,
                                             "negate": false
                                         }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Knowledge",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "TODO: can bounce in ball",
+                                            "items": [
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": []
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -2891,7 +2964,7 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Main Deck Navigation Room West": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": [
@@ -2900,6 +2973,15 @@
                                         "data": {
                                             "type": "items",
                                             "name": "ScrewAttack",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Knowledge",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -3503,7 +3585,7 @@
                 ]
             },
             "nodes": {
-                "Other to Main Elevator Shaft": {
+                "Elevator to Main Elevator Shaft": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3521,13 +3603,13 @@
                         ]
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Other",
+                    "dock_type": "Elevator",
                     "default_connection": {
                         "region": "Main Deck",
                         "area": "Main Elevator Shaft",
                         "node": "Other to Sector Hub"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "Elevator",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -3579,7 +3661,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Other to Main Elevator Shaft": {
+                        "Elevator to Main Elevator Shaft": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3618,7 +3700,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Other to Main Elevator Shaft": {
+                        "Elevator to Main Elevator Shaft": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4658,7 +4740,7 @@
                     "default_connection": {
                         "region": "Main Deck",
                         "area": "Sector Hub",
-                        "node": "Other to Main Elevator Shaft"
+                        "node": "Elevator to Main Elevator Shaft"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -6151,8 +6233,25 @@
                                         "data": "Can Use Power Bombs"
                                     },
                                     {
-                                        "type": "template",
-                                        "data": "Can climb High Jump Wall"
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can climb High Jump Wall"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "WallJump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -6262,10 +6361,24 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Docking Bay Shaft": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can climb High Jump Wall"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "WallJump",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         },
                         "Door to Central Reactor Core": {
@@ -6274,8 +6387,13 @@
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "template",
-                                        "data": "Can Use Power Bombs"
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "MorphBall",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
                                     }
                                 ]
                             }
@@ -6314,13 +6432,18 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Other to Docking Bay Shaft": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "template",
-                                        "data": "Can Use Power Bombs"
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "MorphBall",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
                                     }
                                 ]
                             }
@@ -6724,7 +6847,14 @@
                     "pickup_index": 6,
                     "location_category": "minor",
                     "connections": {
-                        "Door to Silo Scaffolding B": {
+                        "Door to Central Reactor Core": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Other to Silo Scaffolding B": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6763,16 +6893,33 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Silo Scaffolding B": {
+                        "Pickup (Energy Tank)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Other to Silo Scaffolding B": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Movement",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
                         }
                     }
                 },
-                "Door to Silo Scaffolding B": {
+                "Other to Silo Scaffolding B": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6790,13 +6937,13 @@
                         ]
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Door",
+                    "dock_type": "Other",
                     "default_connection": {
                         "region": "Main Deck",
                         "area": "Silo Scaffolding B",
-                        "node": "Door to Silo Scaffolding A"
+                        "node": "Other to Silo Scaffolding A"
                     },
-                    "default_dock_weakness": "Open Hatch",
+                    "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -6813,7 +6960,17 @@
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Movement",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -6855,12 +7012,22 @@
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "MorphBall",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
                 },
-                "Door to Silo Scaffolding A": {
+                "Other to Silo Scaffolding A": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6878,13 +7045,13 @@
                         ]
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Door",
+                    "dock_type": "Other",
                     "default_connection": {
                         "region": "Main Deck",
                         "area": "Silo Scaffolding A",
-                        "node": "Door to Silo Scaffolding B"
+                        "node": "Other to Silo Scaffolding B"
                     },
-                    "default_dock_weakness": "Open Hatch",
+                    "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -6962,7 +7129,7 @@
                                 ]
                             }
                         },
-                        "Door to Silo Scaffolding A": {
+                        "Other to Silo Scaffolding A": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -6995,7 +7162,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Destroy shot block before eye door",
                                             "items": [
                                                 {
                                                     "type": "template",
@@ -7642,7 +7809,39 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Save Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Save Station": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 167.96685900281105,
+                        "y": 83.66444740346205,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Central Reactor Core": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -9892,7 +10091,7 @@
                                                     "data": {
                                                         "type": "damage",
                                                         "name": "NormalDamage",
-                                                        "amount": 100,
+                                                        "amount": 300,
                                                         "negate": false
                                                     }
                                                 }

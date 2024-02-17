@@ -117,6 +117,7 @@ Extra - room_id: [7]
   > Door to Central Hub
       Trivial
   > Other to Spitter Speedway
+      # TODO: this seems very hard to skip
       Can Use Power Bombs
 
 > Door to Central Hub; Heals? False
@@ -131,7 +132,10 @@ Extra - room_id: [7]
   * Open Passage to Spitter Speedway/Other to Station Entrance
   * Extra - door_idx: (108,)
   > Door to Docking Bay Shaft
-      Speed Booster or Can Use Power Bombs
+      Any of the following:
+          # TODO: This seems hard to skip
+          Can Use Power Bombs
+          Speed Booster and Disabled Door Lock Rando and Disabled Entrance Rando
 
 ----------------
 Main Deck Recharge Room
@@ -501,7 +505,7 @@ Extra - room_id: [20]
   > Other to Western Hub Cache
       Trivial
   > Other to Central Hub
-      Screw Attack
+      Screw Attack and Knowledge (Beginner)
 
 > Door to Quarantine Access; Heals? False
   * Layers: default
@@ -529,7 +533,7 @@ Extra - room_id: [20]
   * Tunnel to Central Hub/Other to Western Hub
   * Extra - door_idx: (202,)
   > Door to Main Deck Navigation Room West
-      Screw Attack
+      Screw Attack and Knowledge (Beginner)
 
 ----------------
 Eastern Hub
@@ -620,9 +624,9 @@ Extra - room_id: [23]
 Sector Hub
 Extra - map_name: Main Deck24
 Extra - room_id: [24]
-> Other to Main Elevator Shaft; Heals? False
+> Elevator to Main Elevator Shaft; Heals? False
   * Layers: default
-  * Open Passage to Main Elevator Shaft/Other to Sector Hub
+  * Elevator to Main Elevator Shaft/Other to Sector Hub
   * Extra - door_idx: (50,)
   > Door to Elevator to Sector 2 (TRO)
       Trivial
@@ -633,14 +637,14 @@ Extra - room_id: [24]
   * Layers: default
   * L0 Hatch to Elevator to Sector 2 (TRO)/Door to Sector Hub
   * Extra - door_idx: (51,)
-  > Other to Main Elevator Shaft
+  > Elevator to Main Elevator Shaft
       Trivial
 
 > Door to Elevator to Sector 1 (SRX); Heals? False
   * Layers: default
   * L0 Hatch to Elevator to Sector 1 (SRX)/Door to Sector Hub
   * Extra - door_idx: (57,)
-  > Other to Main Elevator Shaft
+  > Elevator to Main Elevator Shaft
       Trivial
 
 ----------------
@@ -850,7 +854,7 @@ Extra - room_id: [34, 43]
 
 > Other to Sector Hub; Heals? False
   * Layers: default
-  * Open Passage to Sector Hub/Other to Main Elevator Shaft
+  * Open Passage to Sector Hub/Elevator to Main Elevator Shaft
   * Extra - door_idx: (76,)
   > Other to Elevator to Sector Hub
       Trivial
@@ -1148,7 +1152,9 @@ Extra - room_id: [47]
   * Open Passage to Station Entrance/Other to Spitter Speedway
   * Extra - door_idx: (107,)
   > Pickup (Hidden Power Bomb Tank)
-      Can Use Power Bombs and Can climb High Jump Wall
+      All of the following:
+          Can Use Power Bombs
+          Wall Jump (Beginner) or Can climb High Jump Wall
 
 > to Sub-Zero Containment; Heals? False
   * Layers: default
@@ -1170,16 +1176,16 @@ Extra - room_id: [48, 83]
   * Open Passage to Docking Bay Shaft/Other to Silo Access
   * Extra - door_idx: (110,)
   > Door to Docking Bay Shaft
-      Trivial
+      Wall Jump (Beginner) or Can climb High Jump Wall
   > Door to Central Reactor Core
-      Can Use Power Bombs
+      Morph Ball
 
 > Door to Central Reactor Core; Heals? False
   * Layers: default
   * Open Hatch to Central Reactor Core/Door to Silo Access
   * Extra - door_idx: (111, 198)
   > Other to Docking Bay Shaft
-      Can Use Power Bombs
+      Morph Ball
 
 ----------------
 Central Reactor Core
@@ -1239,24 +1245,28 @@ Extra - room_id: [50]
   * Extra - room: 50
   * Extra - blockx: 54
   * Extra - blocky: 8
-  > Door to Silo Scaffolding B
+  > Door to Central Reactor Core
+      Trivial
+  > Other to Silo Scaffolding B
       Trivial
 
 > Door to Central Reactor Core; Heals? False
   * Layers: default
   * Open Hatch to Central Reactor Core/Door to Silo Scaffolding A
   * Extra - door_idx: (114,)
-  > Door to Silo Scaffolding B
+  > Pickup (Energy Tank)
       Trivial
+  > Other to Silo Scaffolding B
+      Movement (Intermediate)
 
-> Door to Silo Scaffolding B; Heals? False
+> Other to Silo Scaffolding B; Heals? False
   * Layers: default
-  * Open Hatch to Silo Scaffolding B/Door to Silo Scaffolding A
+  * Open Passage to Silo Scaffolding B/Other to Silo Scaffolding A
   * Extra - door_idx: (115,)
   > Pickup (Energy Tank)
       Trivial
   > Door to Central Reactor Core
-      Trivial
+      Movement (Intermediate)
 
 ----------------
 Silo Scaffolding B
@@ -1270,11 +1280,11 @@ Extra - room_id: [51]
   * Extra - blockx: 5
   * Extra - blocky: 29
   > Beside Pickup
-      Trivial
+      Morph Ball
 
-> Door to Silo Scaffolding A; Heals? False
+> Other to Silo Scaffolding A; Heals? False
   * Layers: default
-  * Open Hatch to Silo Scaffolding A/Door to Silo Scaffolding B
+  * Open Passage to Silo Scaffolding A/Other to Silo Scaffolding B
   * Extra - door_idx: (116,)
   > Beside Pickup
       Trivial
@@ -1288,12 +1298,13 @@ Extra - room_id: [51]
   * Layers: default
   > Pickup (Missile Tank)
       Morph Ball
-  > Door to Silo Scaffolding A
+  > Other to Silo Scaffolding A
       Can climb High Jump Wall
   > Door to Yakuza Arena
       All of the following:
           Morph Ball and Can Kill Eye Door
           Any of the following:
+              # Destroy shot block before eye door
               Can Use Any Bombs
               Diffusion Missiles and Missiles
 
@@ -1413,6 +1424,13 @@ Extra - room_id: [58]
   * Layers: default
   * Open Hatch to Central Reactor Core/Door to Silo Save Room
   * Extra - door_idx: (133,)
+  > Save Station
+      Trivial
+
+> Save Station; Heals? False
+  * Layers: default
+  > Door to Central Reactor Core
+      Trivial
 
 ----------------
 Elevator to Crew Quarters
@@ -1865,5 +1883,5 @@ Extra - room_id: [86]
               # Core-X
               Missiles
           # Health Requirements
-          Combat (Beginner) or Normal Damage ≥ 100
+          Combat (Beginner) or Normal Damage ≥ 300
 
