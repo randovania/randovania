@@ -51,6 +51,13 @@ Extra - room_id: [1]
   * Extra - door_idx: (5,)
   > Door to Entrance Recharge Room
       Trivial
+  > Save Station
+      Trivial
+
+> Save Station; Heals? False
+  * Layers: default
+  > Door to Entrance Navigation Room
+      Trivial
 
 ----------------
 Entrance Navigation Room
@@ -139,7 +146,7 @@ Extra - room_id: [4]
   * L0 Hatch to Nightmare Training Grounds/Door to Aerie
   * Extra - door_idx: (10,)
   > Pickup (Power Bomb Tank)
-      Speed Booster
+      Speed Booster and Disabled Door Lock Rando and Disabled Entrance Rando
   > Pickup (Missile Tank)
       Trivial
 
@@ -161,9 +168,9 @@ Extra - room_id: [7, 15]
   * L0 Hatch to Geron Checkpoint/Door to Arctic Containment
   * Extra - door_idx: (15, 28)
   > Door to Data Checkpoint
-      Speed Booster or Can climb High Jump Wall
+      Trivial
   > Door to Artic Underside
-      Speed Booster
+      Speed Booster and Varia Suit
 
 > Door to Waver Ward; Heals? False
   * Layers: default
@@ -177,11 +184,13 @@ Extra - room_id: [7, 15]
   * L0 Hatch to Data Checkpoint/Door to Arctic Containment
   * Extra - door_idx: (30, 31)
   > Door to Nightmare Training Grounds
-      Can climb High Jump Wall
+      Any of the following:
+          Wall Jump (Beginner) or Can climb High Jump Wall
+          Stand On Frozen Enemies (Beginner) and Can Freeze Enemies
   > Door to Geron Checkpoint
       Trivial
   > Door to Ripper Road
-      Can Use Power Bombs
+      Can Kill PB Geron and Can Use Any Bombs
 
 > Door to Ripper Road; Heals? False
   * Layers: default
@@ -240,7 +249,9 @@ Extra - room_id: [9]
   * L3 Hatch to Level 3 Security Room/Door to Security Shaft West
   * Extra - door_idx: (20,)
   > Door to Security Save Room
-      Trivial
+      All of the following:
+          Varia Suit
+          Wall Jump (Beginner) or Can Use Any Bombs
 
 ----------------
 Level 3 Security Room
@@ -298,23 +309,16 @@ Extra - room_id: [12]
   * Extra - blockx: 3
   * Extra - blocky: 10
   > Door to Frozen Tower
-      All of the following:
-          Morph Ball
-          Any of the following:
-              Can Use Bombs
-              Screw Attack and Knowledge (Beginner)
-              Can Use Power Bombs and Can Use Springball
+      Can Use Bombs or Can Use Springball
 
 > Door to Frozen Tower; Heals? False
   * Layers: default
   * L0 Hatch to Frozen Tower/Door to Energy Tank Storage
   * Extra - door_idx: (23,)
   > Pickup (Hidden Energy Tank)
-      All of the following:
-          Morph Ball
-          Any of the following:
-              Can Use Bombs
-              Screw Attack and Can Use Power Bombs and Can Use Springball
+      Any of the following:
+          Can Use Any Bombs
+          Screw Attack and Knowledge (Beginner)
 
 ----------------
 Frozen Tower
@@ -349,7 +353,7 @@ Extra - room_id: [13]
   * Layers: default
   * L3 Hatch to Data Room/Door to Frozen Tower
   * Extra - door_idx: (90,)
-  > Door to Energy Tank Storage
+  > Door to Groznyj Shaft
       Trivial
 
 ----------------
@@ -595,7 +599,7 @@ Extra - room_id: [22, 21]
               Space Jump
               All of the following:
                   Can Freeze Enemies
-                  High Jump or Movement (Beginner)
+                  High Jump or Wall Jump (Intermediate)
   > Door to Kago Blockade
       Trivial
 
@@ -617,7 +621,7 @@ Extra - room_id: [22, 21]
 
 > Door to Kago Blockade; Heals? False
   * Layers: default
-  * Open Hatch to Kago Blockade/Door to Security Shaft East
+  * L0 Hatch to Kago Blockade/Door to Security Shaft East
   * Extra - door_idx: (42,)
   > Door to Level 3 Security Room
       Trivial
@@ -778,11 +782,18 @@ Extra - room_id: [29]
   * Extra - door_idx: (17,)
   > Door to Geron Checkpoint
       Trivial
+  > Save Station
+      Trivial
 
 > Door to Geron Checkpoint; Heals? False
   * Layers: default
   * L0 Hatch to Geron Checkpoint/Door to Security Save Room
   * Extra - door_idx: (65,)
+  > Door to Security Shaft West
+      Trivial
+
+> Save Station; Heals? False
+  * Layers: default
   > Door to Security Shaft West
       Trivial
 
@@ -931,14 +942,14 @@ Extra - room_id: [35]
   * L0 Hatch to Arctic Containment/Door to Data Checkpoint
   * Extra - door_idx: (85,)
   > Door to Data Room
-      Wave Beam
+      Trivial
 
 > Door to Data Room; Heals? False
   * Layers: default
   * L3 Hatch to Data Room/Door to Data Checkpoint
   * Extra - door_idx: (86,)
   > Door to Arctic Containment
-      Trivial
+      Wave Beam
 
 ----------------
 Crow's Nest
@@ -967,8 +978,13 @@ Extra - room_id: [36]
   * Extra - door_idx: (87,)
   > Pickup (Hidden Power Bomb Tank)
       All of the following:
-          Morph Ball and Can climb High Jump Wall
-          Screw Attack or Can Use Any Bombs
+          Morph Ball
+          Any of the following:
+              Can Use Power Bombs
+              Screw Attack and Knowledge (Beginner)
+          Any of the following:
+              Space Jump
+              High Jump and Wall Jump (Beginner)
   > Door to Connection to Sector 3 (PYR)
       Wall Jump (Beginner) or Can climb High Jump Wall
   > Door to Data Room
@@ -1070,7 +1086,7 @@ Extra - room_id: [42]
   * Extra - door_idx: (101,)
   > Door to Arctic Containment
       # Need to charge spark in other room
-      Speed Booster and Can Freeze Enemies
+      Speed Booster and Disabled Door Lock Rando and Disabled Entrance Rando and Can Freeze Enemies
 
 ----------------
 Groznyj Grad
@@ -1195,6 +1211,13 @@ Extra - room_id: [49]
   * Layers: default
   * L0 Hatch to Nightmare Hub West/Door to Nightmare Save Room
   * Extra - door_idx: (122,)
+  > Save Station
+      Trivial
+
+> Save Station; Heals? False
+  * Layers: default
+  > Door to Nightmare Hub West
+      Trivial
 
 ----------------
 Flooded Airlock to Sector 4 (AQA)
@@ -1245,7 +1268,7 @@ Extra - room_id: [51]
   * Tunnel to Frozen Tower/Other to Transformation Trial
   * Extra - door_idx: (47,)
   > Pickup (Hidden Missile Tank)
-      All of the following:
-          Can Freeze Enemies
-          High Jump or Movement (Intermediate)
+      Any of the following:
+          Space Jump
+          High Jump and Can Freeze Enemies
 
