@@ -51,6 +51,13 @@ Extra - room_id: [1]
   * Extra - door_idx: (5,)
   > Door to Entrance Recharge Room
       Trivial
+  > Save Station
+      Trivial
+
+> Save Station; Heals? False
+  * Layers: default
+  > Door to Entrance Navigation Room
+      Trivial
 
 ----------------
 Entrance Navigation Room
@@ -80,7 +87,9 @@ Extra - room_id: [3]
   * Extra - door_idx: (9,)
   > Door to Atmospheric Stabilizer Northwest
       Any of the following:
+          # TODO: proper reqs
           Missiles ≥ 3 or Screw Attack
+          # TODO: disabled dlr+er?
           Speed Booster and Knowledge (Beginner)
 
 > Door to Atmospheric Stabilizer Northwest; Heals? False
@@ -88,6 +97,7 @@ Extra - room_id: [3]
   * L0 Hatch to Atmospheric Stabilizer Northwest/Door to Yameba Corridor
   * Extra - door_idx: (10,)
   > Door to Entrance Hub
+      # TODO: proper reqs
       Missiles ≥ 3 or Screw Attack
 
 ----------------
@@ -319,6 +329,13 @@ Extra - room_id: [11]
   * Extra - door_idx: (90,)
   > Door to Entrance Hub
       Trivial
+  > Recharge Terminal
+      Trivial
+
+> Recharge Terminal; Heals? True
+  * Layers: default
+  > Door to Entrance Save Room
+      Trivial
 
 ----------------
 Moto Manor
@@ -464,19 +481,21 @@ Extra - room_id: [16]
 Lava Lake
 Extra - map_name: Sector 117
 Extra - room_id: [17]
-> Pickup (Missile Tank); Heals? False
+> Pickup (Missile Tank on Cliffside); Heals? False
   * Layers: default
   * Pickup 14; Category? Minor
   * Extra - area: 1
   * Extra - room: 17
   * Extra - blockx: 8
   * Extra - blocky: 6
+  > Door to Lava Lake Annex
+      Impossible
   > Door to Zebesian Tower
       Any of the following:
           Gravity Suit or Space Jump
           Damage Runs (Intermediate) and Lava Damage ≥ 100
 
-> Pickup (Missile Tank 2); Heals? False
+> Pickup (Missile Tank in Lava); Heals? False
   * Layers: default
   * Pickup 16; Category? Minor
   * Extra - area: 1
@@ -485,7 +504,7 @@ Extra - room_id: [17]
   * Extra - blocky: 19
   > Door to Zebesian Tower
       All of the following:
-          Charge Beam
+          Morph Ball
           Any of the following:
               Gravity Suit
               Damage Runs (Intermediate) and Lava Damage ≥ 100
@@ -494,6 +513,8 @@ Extra - room_id: [17]
   * Layers: default
   * L2 Hatch to Lava Lake Annex/Door to Lava Lake
   * Extra - door_idx: (36,)
+  > Pickup (Missile Tank on Cliffside)
+      Impossible
   > Door to Zebesian Tower
       Any of the following:
           Gravity Suit
@@ -503,9 +524,12 @@ Extra - room_id: [17]
   * Layers: default
   * L0 Hatch to Zebesian Tower/Door to Lava Lake
   * Extra - door_idx: (37,)
-  > Pickup (Missile Tank)
-      Space Jump or Speed Booster
-  > Pickup (Missile Tank 2)
+  > Pickup (Missile Tank on Cliffside)
+      Any of the following:
+          Space Jump
+          # TODO: shinesparking trick?
+          Speed Booster and Disabled Door Lock Rando and Disabled Entrance Rando
+  > Pickup (Missile Tank in Lava)
       All of the following:
           Morph Ball
           Any of the following:
@@ -514,11 +538,11 @@ Extra - room_id: [17]
   > Door to Lava Lake Annex
       Any of the following:
           Gravity Suit
-          Damage Runs (Intermediate) and Heat Damage ≥ 150
-  > Pickup (Missile Tank 3)
+          Damage Runs (Intermediate) and Lava Damage ≥ 150
+  > Pickup (Missile Tank on Platform)
       Trivial
 
-> Pickup (Missile Tank 3); Heals? False
+> Pickup (Missile Tank on Platform); Heals? False
   * Layers: default
   * Pickup 101; Category? Minor
   * Extra - area: 1
@@ -546,7 +570,7 @@ Extra - room_id: [18]
   > Door to Tourian Central Checkpoint
       All of the following:
           Morph Ball and Screw Attack
-          High Jump or Space Jump
+          Wall Jump (Beginner) or Can climb High Jump Wall
 
 ----------------
 Tourian Save Room East
@@ -556,6 +580,13 @@ Extra - room_id: [19]
   * Layers: default
   * L0 Hatch to Tourian Central Hub/Door to Tourian Save Room East
   * Extra - door_idx: (40,)
+  > Save Station
+      Trivial
+
+> Save Station; Heals? False
+  * Layers: default
+  > Door to Tourian Central Hub
+      Trivial
 
 ----------------
 Lava Lake Annex
@@ -667,8 +698,6 @@ Extra - room_id: [23]
   * Extra - door_idx: (50,)
   > Door to Tourian Save Room West
       Trivial
-  > Door to Genesis Habitation
-      Trivial
   > Door to Ridley Arena Access
       Trivial
 
@@ -683,7 +712,7 @@ Extra - room_id: [23]
   * Layers: default
   * L0 Hatch to Genesis Habitation/Door to Tourian Hub West
   * Extra - door_idx: (52,)
-  > Door to Gold Pirate Crossing
+  > Door to Ridley Arena Access
       Trivial
 
 > Door to Ridley Arena Access; Heals? False
@@ -691,7 +720,9 @@ Extra - room_id: [23]
   * L0 Hatch to Ridley Arena Access/Door to Tourian Hub West
   * Extra - door_idx: (53,)
   > Door to Gold Pirate Crossing
-      Can climb High Jump Wall
+      Wall Jump (Beginner) or Can climb High Jump Wall
+  > Door to Genesis Habitation
+      Trivial
 
 ----------------
 Tourian Save Room West
@@ -701,6 +732,13 @@ Extra - room_id: [24]
   * Layers: default
   * L0 Hatch to Tourian Hub West/Door to Tourian Save Room West
   * Extra - door_idx: (54,)
+  > Save Station
+      Trivial
+
+> Save Station; Heals? False
+  * Layers: default
+  > Door to Tourian Hub West
+      Trivial
 
 ----------------
 Genesis Habitation
@@ -720,6 +758,7 @@ Extra - room_id: [26]
   * L0 Hatch to Tourian Hub West/Door to Ridley Arena Access
   * Extra - door_idx: (56,)
   > Door to Ridley Arena
+      # TODO: some way to get past the rippers?
       Can Kill Eye Door
 
 > Door to Ridley Arena; Heals? False
@@ -739,6 +778,7 @@ Extra - room_id: [27]
   * Extra - door_idx: (58,)
   > Event - Neo-Ridley
       All of the following:
+          # TODO: ridley requirements
           Normal Damage
           Charge Beam or Missiles ≥ 100
 
@@ -805,14 +845,14 @@ Extra - room_id: [30]
   * Extra - blockx: 15
   * Extra - blocky: 8
   > Door to Elevator to Restricted Labs
-      Trivial
+      Morph Ball
 
 > Door to Ripper Maze Access; Heals? False
   * Layers: default
   * L0 Hatch to Ripper Maze Access/Door to Ripper Maze
   * Extra - door_idx: (62,)
   > Door to Elevator to Restricted Labs
-      Can climb High Jump Wall
+      Impossible
 
 > Door to Elevator to Restricted Labs; Heals? False
   * Layers: default
@@ -821,7 +861,7 @@ Extra - room_id: [30]
   > Pickup (Hidden Energy Tank)
       Diffusion Missiles and Missiles and Morph Ball
   > Door to Ripper Maze Access
-      Trivial
+      Impossible
 
 ----------------
 Elevator to Restricted Labs
@@ -916,12 +956,23 @@ Extra - room_id: [34]
   * L0 Hatch to Short Shaft/Door to Save Room East
   * Extra - door_idx: (74,)
   > Other to Wall Jump Tutorial
-      Morph Ball
+      All of the following:
+          Morph Ball
+          Any of the following:
+              # Some way to get in. Mid air morph, spring, bombs etc.
+              Trivial
+  > Save Station
+      Trivial
 
 > Other to Wall Jump Tutorial; Heals? False
   * Layers: default
   * Tunnel to Wall Jump Tutorial/Other to Save Room East
   * Extra - door_idx: (108,)
+  > Door to Short Shaft
+      Disabled Entrance Rando or Can Use Any Bombs
+
+> Save Station; Heals? False
+  * Layers: default
   > Door to Short Shaft
       Trivial
 
@@ -1247,7 +1298,8 @@ Extra - room_id: [47]
   * Extra - door_idx: (101,)
   > Pickup (Hidden Power Bomb Tank)
       All of the following:
-          Morph Ball and Speed Booster
+          Morph Ball and Speed Booster and Disabled Door Lock Rando and Disabled Entrance Rando
+          # TODO: template
           Can Use Bombs or Can Use Springball
           Gravity Suit or Shinespark Tricks (Expert)
 

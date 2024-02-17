@@ -269,6 +269,37 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Save Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Save Station": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 153.27257505083125,
+                        "y": 85.82131324004305,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Entrance Navigation Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 }
@@ -405,7 +436,7 @@
                         "Door to Atmospheric Stabilizer Northwest": {
                             "type": "or",
                             "data": {
-                                "comment": null,
+                                "comment": "TODO: proper reqs",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -419,7 +450,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "TODO: disabled dlr+er?",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -489,7 +520,7 @@
                         "Door to Entrance Hub": {
                             "type": "or",
                             "data": {
-                                "comment": null,
+                                "comment": "TODO: proper reqs",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -1227,8 +1258,16 @@
                         "Door to Sciser Puddle": {
                             "type": "and",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "comment": "TODO: space pirate reqs",
+                                "items": [
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": []
+                                        }
+                                    }
+                                ]
                             }
                         },
                         "Door to Lava Lake": {
@@ -1273,8 +1312,16 @@
                         "Door to Moto Motorway": {
                             "type": "and",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "comment": "TODO: space pirate reqs",
+                                "items": [
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": []
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -1714,6 +1761,37 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Entrance Hub": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Recharge Terminal": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Recharge Terminal": {
+                    "node_type": "generic",
+                    "heal": true,
+                    "coordinates": {
+                        "x": 150.72742494916875,
+                        "y": 69.45963401506995,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Entrance Save Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2436,6 +2514,21 @@
                                             "amount": 1,
                                             "negate": false
                                         }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "TODO: can you do some insane shenanigans, where you use HJ and freeze the pirates?",
+                                            "items": [
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": []
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -2509,7 +2602,7 @@
                 ]
             },
             "nodes": {
-                "Pickup (Missile Tank)": {
+                "Pickup (Missile Tank on Cliffside)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -2531,6 +2624,29 @@
                     "pickup_index": 14,
                     "location_category": "minor",
                     "connections": {
+                        "Door to Lava Lake Annex": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": "TODO: damage run damage? this is different than from right door",
+                                            "items": [
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": []
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
                         "Door to Zebesian Tower": {
                             "type": "or",
                             "data": {
@@ -2585,7 +2701,7 @@
                         }
                     }
                 },
-                "Pickup (Missile Tank 2)": {
+                "Pickup (Missile Tank in Lava)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -2616,7 +2732,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "items",
-                                            "name": "ChargeBeam",
+                                            "name": "MorphBall",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -2699,6 +2815,21 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
+                        "Pickup (Missile Tank on Cliffside)": {
+                            "type": "or",
+                            "data": {
+                                "comment": "TODO: can you get up here with shinesparking and gravity?",
+                                "items": [
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": []
+                                        }
+                                    }
+                                ]
+                            }
+                        },
                         "Door to Zebesian Tower": {
                             "type": "or",
                             "data": {
@@ -2774,7 +2905,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Pickup (Missile Tank)": {
+                        "Pickup (Missile Tank on Cliffside)": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -2789,18 +2920,44 @@
                                         }
                                     },
                                     {
-                                        "type": "resource",
+                                        "type": "and",
                                         "data": {
-                                            "type": "items",
-                                            "name": "SpeedBooster",
-                                            "amount": 1,
-                                            "negate": false
+                                            "comment": "TODO: shinesparking trick?",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "SpeedBooster",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "DoorLockRando",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "EntranceRando",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
                             }
                         },
-                        "Pickup (Missile Tank 2)": {
+                        "Pickup (Missile Tank in Lava)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2892,7 +3049,7 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "damage",
-                                                        "name": "HeatDamage",
+                                                        "name": "LavaDamage",
                                                         "amount": 150,
                                                         "negate": false
                                                     }
@@ -2903,7 +3060,7 @@
                                 ]
                             }
                         },
-                        "Pickup (Missile Tank 3)": {
+                        "Pickup (Missile Tank on Platform)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2912,7 +3069,7 @@
                         }
                     }
                 },
-                "Pickup (Missile Tank 3)": {
+                "Pickup (Missile Tank on Platform)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -3062,19 +3219,14 @@
                                             "comment": null,
                                             "items": [
                                                 {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "HighJump",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
+                                                    "type": "template",
+                                                    "data": "Can climb High Jump Wall"
                                                 },
                                                 {
                                                     "type": "resource",
                                                     "data": {
-                                                        "type": "items",
-                                                        "name": "SpaceJump",
+                                                        "type": "tricks",
+                                                        "name": "WallJump",
                                                         "amount": 1,
                                                         "negate": false
                                                     }
@@ -3136,7 +3288,39 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Save Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Save Station": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 163.07,
+                        "y": 70.02,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Tourian Central Hub": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -3917,13 +4101,6 @@
                                 "items": []
                             }
                         },
-                        "Door to Genesis Habitation": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
                         "Door to Ridley Arena Access": {
                             "type": "and",
                             "data": {
@@ -4002,7 +4179,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Gold Pirate Crossing": {
+                        "Door to Ridley Arena Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4042,15 +4219,31 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Gold Pirate Crossing": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
                                         "type": "template",
                                         "data": "Can climb High Jump Wall"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "WallJump",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
                                     }
                                 ]
+                            }
+                        },
+                        "Door to Genesis Habitation": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -4095,7 +4288,39 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Save Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Save Station": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 135.30778180078505,
+                        "y": 72.33532309097433,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Tourian Hub West": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -4181,8 +4406,16 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Ridley Arena": {
-                            "type": "template",
-                            "data": "Can Kill Eye Door"
+                            "type": "and",
+                            "data": {
+                                "comment": "TODO: some way to get past the rippers?",
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Kill Eye Door"
+                                    }
+                                ]
+                            }
                         }
                     }
                 },
@@ -4269,7 +4502,7 @@
                         "Event - Neo-Ridley": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "TODO: ridley requirements",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -4602,7 +4835,17 @@
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "MorphBall",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -4643,8 +4886,40 @@
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "template",
-                                        "data": "Can climb High Jump Wall"
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can climb High Jump Wall"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "WallJump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": "TODO: some way to get past the rippers/big enemies. also needs the above revised with it.",
+                                            "items": [
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": []
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -4720,7 +4995,44 @@
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can climb High Jump Wall"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "WallJump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": "TODO: some way to get past the rippers/big enemies",
+                                            "items": [
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": []
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -5227,8 +5539,30 @@
                                             "amount": 1,
                                             "negate": false
                                         }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": "Some way to get in. Mid air morph, spring, bombs etc.",
+                                            "items": [
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": []
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
+                            }
+                        },
+                        "Save Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -5262,6 +5596,44 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Short Shaft": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "EntranceRando",
+                                            "amount": 1,
+                                            "negate": true
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Can Use Any Bombs"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Save Station": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 167.08910417414185,
+                        "y": 76.36789857672525,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
                     "connections": {
                         "Door to Short Shaft": {
                             "type": "and",
@@ -5316,8 +5688,16 @@
                         "Door to Atmospheric Stabilizer Southeast": {
                             "type": "and",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "comment": "TODO: pirate reqs?",
+                                "items": [
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": []
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -5355,8 +5735,16 @@
                         "Door to Short Shaft": {
                             "type": "and",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "comment": "TODO: pirate reqs?",
+                                "items": [
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": []
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -5446,6 +5834,21 @@
                                                         "name": "HeatRuns",
                                                         "amount": 2,
                                                         "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": "TODO: can you do some insane shenanigans with freezing rippers?",
+                                                        "items": [
+                                                            {
+                                                                "type": "or",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": []
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -6913,7 +7316,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "TODO: template",
                                             "items": [
                                                 {
                                                     "type": "template",
@@ -6927,12 +7330,38 @@
                                         }
                                     },
                                     {
-                                        "type": "resource",
+                                        "type": "and",
                                         "data": {
-                                            "type": "items",
-                                            "name": "SpeedBooster",
-                                            "amount": 1,
-                                            "negate": false
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "SpeedBooster",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "DoorLockRando",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "EntranceRando",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
+                                                }
+                                            ]
                                         }
                                     },
                                     {
@@ -7219,8 +7648,16 @@
                         "Pickup (Missile Tank)": {
                             "type": "and",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "comment": "TODO: WJ reqs?",
+                                "items": [
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": []
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
