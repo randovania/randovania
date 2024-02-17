@@ -50,10 +50,17 @@
                                 "items": []
                             }
                         },
-                        "Other to Alcove": {
+                        "Door to Checkpoint Shaft": {
                             "type": "and",
                             "data": {
                                 "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Other to Alcove": {
+                            "type": "and",
+                            "data": {
+                                "comment": "TODO: cant you do this witha shinespark instead of SJ?",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -121,13 +128,6 @@
                                 "comment": null,
                                 "items": []
                             }
-                        },
-                        "Door to Checkpoint Shaft": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
                         }
                     }
                 },
@@ -161,7 +161,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Security Access": {
+                        "Door to Entrance Recharge Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -334,6 +334,37 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Save Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Save Station": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 150.4042999916016,
+                        "y": 77.21373981691443,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Entrance Navigation Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 }
@@ -418,6 +449,37 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Entrance Save Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Navigation Terminal": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Navigation Terminal": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 152.63828000335937,
+                        "y": 79.4477198286722,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Elevator to Main Deck": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -904,7 +966,7 @@
                         "Door to Bob Room": {
                             "type": "or",
                             "data": {
-                                "comment": null,
+                                "comment": "TODO: dont the wallguys spawn only after you activated the level 2?",
                                 "items": [
                                     {
                                         "type": "template",
@@ -917,10 +979,10 @@
                                 ]
                             }
                         },
-                        "Door to Namihe's Abode": {
+                        "Other to Namihe's Abode": {
                             "type": "or",
                             "data": {
-                                "comment": null,
+                                "comment": "Get past wall enemy - TODO: cant you damage boost through?",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -997,7 +1059,7 @@
                         }
                     }
                 },
-                "Door to Namihe's Abode": {
+                "Other to Namihe's Abode": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1015,13 +1077,13 @@
                         ]
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Door",
+                    "dock_type": "Other",
                     "default_connection": {
                         "region": "Sector 3 (PYR)",
                         "area": "Namihe's Abode",
                         "node": "Door to Checkpoint Shaft"
                     },
-                    "default_dock_weakness": "Open Hatch",
+                    "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -1074,7 +1136,12 @@
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Use Any Bombs"
+                                    }
+                                ]
                             }
                         }
                     }
@@ -1113,8 +1180,16 @@
                         "Door to B.O.X. Access": {
                             "type": "and",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "comment": "TODO: isnt there a geron on the way?",
+                                "items": [
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": []
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -1149,11 +1224,36 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Checkpoint Shaft": {
+                        "Pickup (Missile Tank)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "MorphBall",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Door to Checkpoint Shaft": {
+                            "type": "and",
+                            "data": {
+                                "comment": "TODO: isnt there a geron on the way?",
+                                "items": [
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": []
+                                        }
+                                    }
+                                ]
                             }
                         },
                         "Door to Red Tower": {
@@ -1221,7 +1321,7 @@
                         "Door to B.O.X. Access": {
                             "type": "or",
                             "data": {
-                                "comment": null,
+                                "comment": "TODO: bob skip? sounds like it should have some tricks.",
                                 "items": [
                                     {
                                         "type": "template",
@@ -1331,13 +1431,8 @@
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "MorphBall",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
+                                        "type": "template",
+                                        "data": "Can Use Power Bombs"
                                     }
                                 ]
                             }
@@ -1369,8 +1464,31 @@
                         "Above E-Tank": {
                             "type": "and",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "comment": "TODO: requirements depend on whether you got this item from above or from below",
+                                "items": [
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": []
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Below E-Tank": {
+                            "type": "or",
+                            "data": {
+                                "comment": "TODO: reqs depend on whether you got the item from above or from below",
+                                "items": [
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": []
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -1408,7 +1526,7 @@
                         "Below E-Tank": {
                             "type": "or",
                             "data": {
-                                "comment": null,
+                                "comment": "TODO: template",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -1461,7 +1579,7 @@
                         "Above E-Tank": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "TODO: shinesparking",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -1470,6 +1588,24 @@
                                             "name": "SpeedBooster",
                                             "amount": 1,
                                             "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "DoorLockRando",
+                                            "amount": 1,
+                                            "negate": true
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "EntranceRando",
+                                            "amount": 1,
+                                            "negate": true
                                         }
                                     }
                                 ]
@@ -1570,10 +1706,25 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
+                        "Pickup (Hidden Energy Tank)": {
+                            "type": "or",
+                            "data": {
+                                "comment": "TODO: proper requirements",
+                                "items": [
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": []
+                                        }
+                                    }
+                                ]
+                            }
+                        },
                         "Other to Entrance Hub": {
                             "type": "or",
                             "data": {
-                                "comment": null,
+                                "comment": "TODO: template, also add mid air morph and other stuff to the bombs only path",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -1594,13 +1745,8 @@
                                                     "data": "Can Use Bombs"
                                                 },
                                                 {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "HighJump",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
+                                                    "type": "template",
+                                                    "data": "Can Use Springball"
                                                 }
                                             ]
                                         }
@@ -1716,7 +1862,7 @@
                         "Door to Deserted Runway": {
                             "type": "or",
                             "data": {
-                                "comment": null,
+                                "comment": "TODO: can you do this with only HJ w/ WJ?",
                                 "items": [
                                     {
                                         "type": "template",
@@ -1728,7 +1874,7 @@
                         "Below E-Tank": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "TODO: use template",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -1857,8 +2003,16 @@
                         "Other to B.O.X. Arena": {
                             "type": "and",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "comment": "TODO: trivial to get past enemies?",
+                                "items": [
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": []
+                                        }
+                                    }
+                                ]
                             }
                         },
                         "Door to Chute Access": {
@@ -1895,7 +2049,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "TODO: no shinesparking? can you do this with HJ but w/o WJ?",
                                             "items": [
                                                 {
                                                     "type": "template",
@@ -1951,8 +2105,16 @@
                         "Door to Alcove": {
                             "type": "and",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "comment": "TODO: trivial to get past enemies?",
+                                "items": [
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": []
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -1979,7 +2141,7 @@
                     "default_connection": {
                         "region": "Sector 3 (PYR)",
                         "area": "Chute Access",
-                        "node": "Door to Deserted Runway"
+                        "node": "Other to Deserted Runway"
                     },
                     "default_dock_weakness": "Open Hatch",
                     "exclude_from_dock_rando": false,
@@ -2919,8 +3081,16 @@
                         "Door to Main Boiler": {
                             "type": "and",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "comment": "TODO: isnt this room heated? should it not have varia/damage reqs?",
+                                "items": [
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": []
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -2958,8 +3128,16 @@
                         "Door to Pyrochamber": {
                             "type": "and",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "comment": "TODO: isnt this room heated? should it not have varia/damage reqs?",
+                                "items": [
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": []
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -4052,8 +4230,16 @@
                         "Door to B.O.X. Access": {
                             "type": "and",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "comment": "TODO: intended to just skip box fight, but not skip to go into data room?",
+                                "items": [
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": []
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -4321,6 +4507,13 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Recharge Terminal": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -4353,6 +4546,30 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Entrance Save Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Recharge Terminal": {
+                    "node_type": "generic",
+                    "heal": true,
+                    "coordinates": {
+                        "x": 150.0851599899219,
+                        "y": 70.19265977996136,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
                     "connections": {
                         "Door to Entrance Save Room": {
                             "type": "and",
@@ -5005,7 +5222,7 @@
                     "default_connection": {
                         "region": "Sector 3 (PYR)",
                         "area": "Checkpoint Shaft",
-                        "node": "Door to Namihe's Abode"
+                        "node": "Other to Namihe's Abode"
                     },
                     "default_dock_weakness": "Open Hatch",
                     "exclude_from_dock_rando": false,
@@ -5079,6 +5296,13 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Recharge Terminal": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -5111,6 +5335,30 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Data Save Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Recharge Terminal": {
+                    "node_type": "generic",
+                    "heal": true,
+                    "coordinates": {
+                        "x": 151.12583390844262,
+                        "y": 83.44390767579173,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
                     "connections": {
                         "Door to Data Save Room": {
                             "type": "and",
@@ -5168,6 +5416,13 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Save Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -5200,6 +5455,30 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to B.O.X. Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Save Station": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 152.5827773943716,
+                        "y": 77.61613373207575,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
                     "connections": {
                         "Door to B.O.X. Access": {
                             "type": "and",
@@ -5285,7 +5564,7 @@
                         "Pickup (Missile Tank)": {
                             "type": "or",
                             "data": {
-                                "comment": null,
+                                "comment": "TODO: knowledeg and other geron reqs",
                                 "items": [
                                     {
                                         "type": "and",
@@ -5827,16 +6106,24 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Deserted Runway": {
+                        "Other to Deserted Runway": {
                             "type": "and",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "comment": "TODO: trivial to destroy sidehoppers?",
+                                "items": [
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": []
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
                 },
-                "Door to Deserted Runway": {
+                "Other to Deserted Runway": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5854,13 +6141,13 @@
                         ]
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Door",
+                    "dock_type": "Other",
                     "default_connection": {
                         "region": "Sector 3 (PYR)",
                         "area": "Deserted Runway",
                         "node": "Door to Chute Access"
                     },
-                    "default_dock_weakness": "Open Hatch",
+                    "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -5869,8 +6156,16 @@
                         "Door to Garbage Chute": {
                             "type": "and",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "comment": "TODO: trivial to destroy sidehoppers?",
+                                "items": [
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": []
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -5950,7 +6245,7 @@
                         "Pickup (Hidden Power Bomb Tank)": {
                             "type": "or",
                             "data": {
-                                "comment": null,
+                                "comment": "TODO: mid air morph and similar things?",
                                 "items": [
                                     {
                                         "type": "template",
