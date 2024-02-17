@@ -288,27 +288,33 @@ Extra - room_id: [13, 74, 85]
       Trivial
   > Door to Operations Deck Recharge Room
       Trivial
-  > Door to Operations Room
-      All of the following:
-          After SA-X
-          High Jump or Space Jump
-  > Event - SA-X
-      All of the following:
-          Charge Beam and Plasma Beam
-          Combat (Beginner) or Normal Damage ≥ 100
+  > Before Operations Room
+      Can climb High Jump Wall
 
 > Door to Operations Room; Heals? False
   * Layers: default
   * L4 Hatch to Operations Room/Door to Operations Deck
   * Extra - door_idx: (193, 146)
-  > Door to Elevator to Crew Quarters
+  > Before Operations Room
       Trivial
 
 > Event - SA-X; Heals? False
   * Layers: default
   * Event SA-X
+  > Before Operations Room
+      Trivial
+
+> Before Operations Room; Heals? False
+  * Layers: default
   > Door to Elevator to Crew Quarters
       Trivial
+  > Door to Operations Room
+      After SA-X
+  > Event - SA-X
+      All of the following:
+          # TODO: SA-X combat logic
+          Charge Beam and Plasma Beam
+          Combat (Beginner) or Normal Damage ≥ 500
 
 ----------------
 Maintenance Corridor
@@ -414,6 +420,8 @@ Extra - room_id: [17, 77]
   * Layers: default
   * L4 Hatch to Restricted Labs Navigation Room/Door to Restricted Airlock
   * Extra - door_idx: (32, 181)
+  > Door to Restricted Labs Corridor
+      Impossible
 
 > Door to Restricted Labs Corridor; Heals? False
   * Layers: default
@@ -588,7 +596,7 @@ Extra - room_id: [23]
   > Door to Main Elevator Access
       Any of the following:
           Morph Ball
-          Speed Booster and Shinespark Tricks (Advanced)
+          Speed Booster and Shinespark Tricks (Advanced) and Disabled Door Lock Rando and Disabled Entrance Rando
   > Door to Quarantine Bay
       Trivial
 
@@ -597,7 +605,9 @@ Extra - room_id: [23]
   * L0 Hatch to Main Elevator Access/Door to Quarantine Access
   * Extra - door_idx: (74,)
   > Door to Western Hub
-      Morph Ball or Speed Booster
+      Any of the following:
+          Morph Ball
+          Speed Booster and Disabled Door Lock Rando and Disabled Entrance Rando
 
 > Door to Quarantine Bay; Heals? False
   * Layers: default
@@ -794,6 +804,13 @@ Extra - room_id: [32]
   * Extra - door_idx: (66,)
   > Door to Operations Deck
       Trivial
+  > Navigation Terminal
+      Trivial
+
+> Navigation Terminal; Heals? False
+  * Layers: default
+  > Door to Operations Deck Data Room
+      Trivial
 
 ----------------
 Main Deck Save Room
@@ -860,14 +877,13 @@ Extra - room_id: [35]
       Trivial
   > Other to Operations Maintenance Storage
       Trivial
-  > Door to Crew Quarters East
-      Trivial
 
 > Other to Operations Deck; Heals? False
   * Layers: default
   * Open Passage to Operations Deck/Other to Operations Maintenance Shaft
   * Extra - door_idx: (79,)
   > Other to Crew Quarters East
+      # TODO: proper geron reqs
       Missiles
 
 > Other to Operations Maintenance Storage; Heals? False
@@ -882,15 +898,15 @@ Extra - room_id: [35]
   * L0 Hatch to Crew Quarters West/Door to Operations Maintenance Shaft
   * Extra - door_idx: (81,)
   > Door to Crew Quarters East
+      # TODO: proper geron reqs
       Missiles
 
 > Door to Crew Quarters East; Heals? False
   * Layers: default
   * L0 Hatch to Crew Quarters East/Door to Operations Maintenance Shaft
   * Extra - door_idx: (82,)
-  > Other to Crew Quarters East
-      Trivial
   > Door to Crew Quarters West
+      # TODO: proper geron reqs
       Missiles
 
 ----------------
@@ -1067,6 +1083,13 @@ Extra - room_id: [44]
   * Layers: default
   * L0 Hatch to Operations Deck Recharge Room/Door to Operations Deck Save Room
   * Extra - door_idx: (192,)
+  > Save Station
+      Trivial
+
+> Save Station; Heals? False
+  * Layers: default
+  > Door to Operations Deck Recharge Room
+      Trivial
 
 ----------------
 Operations Maintenance Storage
@@ -1462,6 +1485,13 @@ Extra - room_id: [64]
   * Extra - door_idx: (148,)
   > Door to Restricted Labs Entrance
       Trivial
+  > Save Station
+      Trivial
+
+> Save Station; Heals? False
+  * Layers: default
+  > Door to Restricted Labs Corridor
+      Trivial
 
 ----------------
 Restricted Labs Corridor
@@ -1497,6 +1527,13 @@ Extra - room_id: [66]
   * Open Hatch to Restricted Airlock/Door to Restricted Labs Navigation Room
   * Extra - door_idx: (152,)
   > Door to Elevator to Sector 1 (TRN)
+      Trivial
+  > Navigation Terminal
+      Trivial
+
+> Navigation Terminal; Heals? False
+  * Layers: default
+  > Door to Restricted Airlock
       Trivial
 
 ----------------
@@ -1622,6 +1659,13 @@ Extra - room_id: [71]
   * Layers: default
   * Open Hatch to Quarantine Access/Door to Quarantine Bay
   * Extra - door_idx: (167,)
+  > Hornoad
+      Trivial
+
+> Hornoad; Heals? False
+  * Layers: default
+  > Door to Quarantine Access
+      Trivial
 
 ----------------
 Western Hub Cache
@@ -1663,7 +1707,7 @@ Extra - room_id: [73]
   * Open Passage to Elevator to Sector Hub/Other to Main Elevator Cache
   * Extra - door_idx: (170,)
   > Pickup (Missile Tank)
-      Speed Booster
+      Speed Booster and Disabled Door Lock Rando and Disabled Entrance Rando
 
 ----------------
 Elevator to Habitation Deck
@@ -1726,6 +1770,13 @@ Extra - room_id: [81]
   * L0 Hatch to Operations Deck Save Room/Door to Operations Deck Recharge Room
   * Extra - door_idx: (191,)
   > Door to Operations Deck
+      Trivial
+  > Recharge Terminal
+      Trivial
+
+> Recharge Terminal; Heals? True
+  * Layers: default
+  > Door to Operations Deck Save Room
       Trivial
 
 ----------------

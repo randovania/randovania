@@ -1495,6 +1495,107 @@
                                 "items": []
                             }
                         },
+                        "Before Operations Room": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can climb High Jump Wall"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Door to Operations Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 40.0,
+                        "y": 400.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "door_idx": [
+                            193,
+                            146
+                        ]
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "Door",
+                    "default_connection": {
+                        "region": "Main Deck",
+                        "area": "Operations Room",
+                        "node": "Door to Operations Deck"
+                    },
+                    "default_dock_weakness": "L4 Hatch",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Before Operations Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - SA-X": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 246.81481481481484,
+                        "y": 394.70489844683397,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "SA-X",
+                    "connections": {
+                        "Before Operations Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Before Operations Room": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 128.79330943847074,
+                        "y": 421.86857825567506,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Elevator to Crew Quarters": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Door to Operations Room": {
                             "type": "and",
                             "data": {
@@ -1508,32 +1609,6 @@
                                             "amount": 1,
                                             "negate": false
                                         }
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "HighJump",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "SpaceJump",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
                                     }
                                 ]
                             }
@@ -1541,7 +1616,7 @@
                         "Event - SA-X": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "TODO: SA-X combat logic",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -1580,7 +1655,7 @@
                                                     "data": {
                                                         "type": "damage",
                                                         "name": "NormalDamage",
-                                                        "amount": 100,
+                                                        "amount": 500,
                                                         "negate": false
                                                     }
                                                 }
@@ -1588,71 +1663,6 @@
                                         }
                                     }
                                 ]
-                            }
-                        }
-                    }
-                },
-                "Door to Operations Room": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 40.0,
-                        "y": 400.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "door_idx": [
-                            193,
-                            146
-                        ]
-                    },
-                    "valid_starting_location": false,
-                    "dock_type": "Door",
-                    "default_connection": {
-                        "region": "Main Deck",
-                        "area": "Operations Room",
-                        "node": "Door to Operations Deck"
-                    },
-                    "default_dock_weakness": "L4 Hatch",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {
-                        "Door to Elevator to Crew Quarters": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Event - SA-X": {
-                    "node_type": "event",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 268.11178834258885,
-                        "y": 315.36087408009394,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "event_name": "SA-X",
-                    "connections": {
-                        "Door to Elevator to Crew Quarters": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
                             }
                         }
                     }
@@ -2229,7 +2239,23 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Door to Restricted Labs Corridor": {
+                            "type": "or",
+                            "data": {
+                                "comment": "TODO: can you do this with speedboosting from the other rooms?",
+                                "items": [
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": []
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 },
                 "Door to Restricted Labs Corridor": {
                     "node_type": "dock",
@@ -2274,6 +2300,21 @@
                                             "name": "SpeedBooster",
                                             "amount": 1,
                                             "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": "TODO: you can diagonally shinespark into the corner, and then collect the item with SJ/WJ and then go back down.",
+                                            "items": [
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": []
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -3294,6 +3335,24 @@
                                                         "amount": 3,
                                                         "negate": false
                                                     }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "DoorLockRando",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "EntranceRando",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
                                                 }
                                             ]
                                         }
@@ -3355,12 +3414,38 @@
                                         }
                                     },
                                     {
-                                        "type": "resource",
+                                        "type": "and",
                                         "data": {
-                                            "type": "items",
-                                            "name": "SpeedBooster",
-                                            "amount": 1,
-                                            "negate": false
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "SpeedBooster",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "DoorLockRando",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "EntranceRando",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -4346,6 +4431,37 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Navigation Terminal": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Navigation Terminal": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 149.82078853046593,
+                        "y": 90.93428912783753,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Operations Deck Data Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 }
@@ -4644,13 +4760,6 @@
                                 "comment": null,
                                 "items": []
                             }
-                        },
-                        "Door to Crew Quarters East": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
                         }
                     }
                 },
@@ -4687,7 +4796,7 @@
                         "Other to Crew Quarters East": {
                             "type": "or",
                             "data": {
-                                "comment": null,
+                                "comment": "TODO: proper geron reqs",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -4775,7 +4884,7 @@
                         "Door to Crew Quarters East": {
                             "type": "or",
                             "data": {
-                                "comment": null,
+                                "comment": "TODO: proper geron reqs",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -4821,17 +4930,10 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Other to Crew Quarters East": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
                         "Door to Crew Quarters West": {
                             "type": "or",
                             "data": {
-                                "comment": null,
+                                "comment": "TODO: proper geron reqs",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -5756,7 +5858,39 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Save Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Save Station": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 137.47,
+                        "y": 80.04,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Operations Deck Recharge Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -7877,6 +8011,37 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Save Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Save Station": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 153.25723738626965,
+                        "y": 78.47366969947615,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Restricted Labs Corridor": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 }
@@ -8050,6 +8215,37 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Elevator to Sector 1 (TRN)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Navigation Terminal": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Navigation Terminal": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 150.74276261373038,
+                        "y": 85.17893575958092,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Restricted Airlock": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8695,7 +8891,39 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Hornoad": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Hornoad": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 128.01323407775018,
+                        "y": 113.49986214502341,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Quarantine Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -8851,7 +9079,7 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Pickup (Missile Tank)": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": [
@@ -8862,6 +9090,24 @@
                                             "name": "SpeedBooster",
                                             "amount": 1,
                                             "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "DoorLockRando",
+                                            "amount": 1,
+                                            "negate": true
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "EntranceRando",
+                                            "amount": 1,
+                                            "negate": true
                                         }
                                     }
                                 ]
@@ -9174,6 +9420,37 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Operations Deck": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Recharge Terminal": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Recharge Terminal": {
+                    "node_type": "generic",
+                    "heal": true,
+                    "coordinates": {
+                        "x": 144.73596176821982,
+                        "y": 82.58064516129033,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Operations Deck Save Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
