@@ -170,6 +170,41 @@
                 "extra": {
                     "item": "None"
                 }
+            },
+            "L0Locks": {
+                "long_name": "L0Locks",
+                "max_capacity": 1,
+                "extra": {
+                    "item": "Level_0"
+                }
+            },
+            "L1Locks": {
+                "long_name": "L1Locks",
+                "max_capacity": 1,
+                "extra": {
+                    "item": "Level_1"
+                }
+            },
+            "L2Locks": {
+                "long_name": "L2Locks",
+                "max_capacity": 1,
+                "extra": {
+                    "item": "Level_2"
+                }
+            },
+            "L3Locks": {
+                "long_name": "L3Locks",
+                "max_capacity": 1,
+                "extra": {
+                    "item": "Level_3"
+                }
+            },
+            "L4Locks": {
+                "long_name": "L4Locks",
+                "max_capacity": 1,
+                "extra": {
+                    "item": "Level_4"
+                }
             }
         },
         "events": {
@@ -1154,8 +1189,8 @@
                         "requirement": {
                             "type": "resource",
                             "data": {
-                                "type": "events",
-                                "name": "Level0Locks",
+                                "type": "items",
+                                "name": "L0Locks",
                                 "amount": 1,
                                 "negate": false
                             }
@@ -1167,8 +1202,8 @@
                         "requirement": {
                             "type": "resource",
                             "data": {
-                                "type": "events",
-                                "name": "Level1Locks",
+                                "type": "items",
+                                "name": "L1Locks",
                                 "amount": 1,
                                 "negate": false
                             }
@@ -1180,8 +1215,8 @@
                         "requirement": {
                             "type": "resource",
                             "data": {
-                                "type": "events",
-                                "name": "Level2Locks",
+                                "type": "items",
+                                "name": "L2Locks",
                                 "amount": 1,
                                 "negate": false
                             }
@@ -1193,8 +1228,8 @@
                         "requirement": {
                             "type": "resource",
                             "data": {
-                                "type": "events",
-                                "name": "Level3Locks",
+                                "type": "items",
+                                "name": "L3Locks",
                                 "amount": 1,
                                 "negate": false
                             }
@@ -1206,30 +1241,13 @@
                         "requirement": {
                             "type": "resource",
                             "data": {
-                                "type": "events",
-                                "name": "Level4Locks",
+                                "type": "items",
+                                "name": "L4Locks",
                                 "amount": 1,
                                 "negate": false
                             }
                         },
                         "lock": null
-                    },
-                    "Eye Door": {
-                        "extra": {},
-                        "requirement": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "lock": {
-                            "lock_type": "front-blast-back-free-unlock",
-                            "requirement": {
-                                "type": "template",
-                                "data": "Can Kill Eye Door"
-                            }
-                        }
                     }
                 },
                 "dock_rando": {
@@ -1350,7 +1368,8 @@
             5
         ],
         "Knowledge": [
-            1
+            1,
+            2
         ],
         "ShinesparkTrick": [
             1,
