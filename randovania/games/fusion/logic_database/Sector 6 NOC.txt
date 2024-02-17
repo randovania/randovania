@@ -59,6 +59,13 @@ Extra - room_id: [1]
   * Extra - door_idx: (5,)
   > Door to Entrance Recharge Room
       Trivial
+  > Save Station
+      Trivial
+
+> Save Station; Heals? False
+  * Layers: default
+  > Door to Entrance Navigation Room
+      Trivial
 
 ----------------
 Entrance Navigation Room
@@ -88,7 +95,7 @@ Extra - room_id: [3]
   * Extra - door_idx: (7,)
   > Door to Nocturnal Access
       Any of the following:
-          Missiles and Super Missiles
+          Can Kill Purple Geron
           # Screw Attack Shortcut
           Screw Attack
   > Other to Entrance Hub
@@ -100,7 +107,9 @@ Extra - room_id: [3]
   * Extra - door_idx: (8,)
   > Door to Entrance Hub
       Any of the following:
-          Missiles and Super Missiles
+          All of the following:
+              Can Kill Purple Geron
+              Wall Jump (Beginner) or Can climb High Jump Wall
           # Screw Attack Shortcut
           Screw Attack
   > Other to Vault
@@ -111,7 +120,9 @@ Extra - room_id: [3]
   * Tunnel to Entrance Hub/Other to Geron's Crossing
   * Extra - door_idx: (50,)
   > Door to Entrance Hub
-      Can Use Any Bombs and Can climb High Jump Wall
+      All of the following:
+          Can Use Any Bombs
+          Wall Jump (Beginner) or Can climb High Jump Wall
 
 > Other to Vault; Heals? False
   * Layers: default
@@ -129,17 +140,14 @@ Extra - room_id: [4]
   * L0 Hatch to Geron's Crossing/Door to Nocturnal Access
   * Extra - door_idx: (9,)
   > Door to Nocturnal Shaft
-      Any of the following:
-          Varia Suit or Movement (Advanced)
-          # Ice X
-          Normal Damage ≥ 200
+      Trivial
 
 > Door to Nocturnal Shaft; Heals? False
   * Layers: default
   * L0 Hatch to Nocturnal Shaft/Door to Nocturnal Access
   * Extra - door_idx: (10,)
   > Door to Geron's Crossing
-      Varia Suit or Movement (Advanced) or Normal Damage ≥ 200
+      Trivial
 
 ----------------
 Nocturnal Shaft
@@ -172,7 +180,7 @@ Extra - room_id: [5]
   > Door to Nocturnal Access
       Trivial
   > Door to Pillar Puzzle
-      Speed Booster
+      Screw Attack and Speed Booster and Varia Suit and Disabled Door Lock Rando and Disabled Entrance Rando
 
 > Door to Nocturnal Playground; Heals? False
   * Layers: default
@@ -225,7 +233,7 @@ Extra - room_id: [7]
       All of the following:
           Can Use Power Bombs
           # Ice X logic
-          Varia Suit
+          Varia Suit or Normal Damage ≥ 500
 
 > Door to Nocturnal Shaft; Heals? False
   * Layers: default
@@ -235,7 +243,7 @@ Extra - room_id: [7]
       All of the following:
           Can Use Power Bombs
           # Ice X logic
-          Varia Suit
+          Varia Suit or Normal Damage ≥ 500
 
 ----------------
 Nocturnal Playground
@@ -309,7 +317,7 @@ Extra - room_id: [10]
   > Other to Zozoro Wine Cellar
       Varia Suit or Knowledge (Beginner) or Normal Damage ≥ 100
   > Door to Big Shell 2
-      Can climb High Jump Wall
+      Movement (Beginner) or Can climb High Jump Wall
 
 > Other to Zozoro Wine Cellar; Heals? False
   * Layers: default
@@ -325,7 +333,7 @@ Extra - room_id: [10]
   > Door to Data Save Room
       Trivial
   > Door to Data Access
-      Varia Suit or Knowledge (Beginner) or Normal Damage ≥ 100
+      Trivial
 
 ----------------
 Data Save Room
@@ -335,6 +343,13 @@ Extra - room_id: [11]
   * Layers: default
   * L0 Hatch to Blue X Blockade/Door to Data Save Room
   * Extra - door_idx: (22,)
+  > Save Station
+      Trivial
+
+> Save Station; Heals? False
+  * Layers: default
+  > Door to Blue X Blockade
+      Trivial
 
 ----------------
 Data Access
@@ -620,7 +635,7 @@ Extra - room_id: [20]
   * L0 Hatch to Neglected Save Room/Door to Neglected Shaft
   * Extra - door_idx: (41,)
   > Door to Bull Bend
-      Can climb High Jump Wall
+      Space Jump
   > Door to Checkpoint to Restricted Labs
       Trivial
 
@@ -629,7 +644,7 @@ Extra - room_id: [20]
   * L4 Hatch to Checkpoint to Restricted Labs/Door to Neglected Shaft
   * Extra - door_idx: (42,)
   > Door to Neglected Save Room
-      Speed Booster or Can climb High Jump Wall
+      Can climb High Jump Wall
 
 ----------------
 Neglected Save Room
@@ -639,6 +654,13 @@ Extra - room_id: [21]
   * Layers: default
   * L0 Hatch to Neglected Shaft/Door to Neglected Save Room
   * Extra - door_idx: (43,)
+  > Save Station
+      Trivial
+
+> Save Station; Heals? False
+  * Layers: default
+  > Door to Neglected Shaft
+      Trivial
 
 ----------------
 Checkpoint to Restricted Labs
@@ -666,6 +688,13 @@ Extra - room_id: [23]
   * Layers: default
   * L0 Hatch to Menu Corridor/Door to Menu Save Room
   * Extra - door_idx: (92,)
+  > Save Station
+      Trivial
+
+> Save Station; Heals? False
+  * Layers: default
+  > Door to Menu Corridor
+      Trivial
 
 ----------------
 Missile Storage
@@ -838,6 +867,8 @@ Extra - room_id: [30]
   * Extra - door_idx: (66,)
   > Pickup (Missile Tank)
       Trivial
+  > Ledge
+      Trivial
 
 > Ledge; Heals? False
   * Layers: default
@@ -871,7 +902,9 @@ Extra - room_id: [31]
   > Door to Twin Caverns West (Upper)
       Trivial
   > Door to Twin Cavern Save Room
-      Trivial
+      Any of the following:
+          Varia Suit
+          Damage Runs (Intermediate) and Normal Damage ≥ 200
 
 > Door to Twin Cavern Save Room; Heals? False
   * Layers: default
@@ -929,6 +962,13 @@ Extra - room_id: [35]
   * Layers: default
   * L0 Hatch to Twin Caverns East/Door to Twin Cavern Save Room
   * Extra - door_idx: (78,)
+  > Save Station
+      Trivial
+
+> Save Station; Heals? False
+  * Layers: default
+  > Door to Twin Caverns East
+      Trivial
 
 ----------------
 Connection to Sector 4 (AQA)
