@@ -573,6 +573,24 @@
                                             "amount": 1,
                                             "negate": false
                                         }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "DoorLockRando",
+                                            "amount": 1,
+                                            "negate": true
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "EntranceRando",
+                                            "amount": 1,
+                                            "negate": true
+                                        }
                                     }
                                 ]
                             }
@@ -667,7 +685,7 @@
                         "Pickup (Hidden Missile Tank)": {
                             "type": "or",
                             "data": {
-                                "comment": null,
+                                "comment": "TODO: cant you also freeze the sidehopper?",
                                 "items": [
                                     {
                                         "type": "and",
@@ -743,7 +761,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "TODO: morph? Also whats the movement for, mid air morph?",
                                             "items": [
                                                 {
                                                     "type": "template",
@@ -1081,7 +1099,7 @@
                     "default_connection": {
                         "region": "Sector 3 (PYR)",
                         "area": "Namihe's Abode",
-                        "node": "Door to Checkpoint Shaft"
+                        "node": "Other to Checkpoint Shaft"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -2582,7 +2600,7 @@
                         "Pickup (Power Bomb Tank)": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "TODO: do you need bombs/spring in the maze?",
                                 "items": [
                                     {
                                         "type": "template",
@@ -2612,7 +2630,7 @@
                         "Door to Sova Suite": {
                             "type": "or",
                             "data": {
-                                "comment": null,
+                                "comment": "TODO: Varia?",
                                 "items": [
                                     {
                                         "type": "template",
@@ -2665,7 +2683,7 @@
                         "Door to Lava Reservoirs": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "TODO: varia?",
                                 "items": []
                             }
                         }
@@ -2932,7 +2950,7 @@
                         "Door to Boiler Access": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "TODO: see other connection",
                                 "items": [
                                     {
                                         "type": "or",
@@ -3001,12 +3019,12 @@
                         "Door to Pyrochamber Access": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "TODO: how to get past the wwall things damageless?",
                                 "items": [
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": "Movement",
+                                            "comment": "Movement - TODO: WJ?",
                                             "items": [
                                                 {
                                                     "type": "template",
@@ -3018,7 +3036,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": "Heat DMG",
+                                            "comment": "Heat DMG - TODO: heat run?",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -3188,7 +3206,7 @@
                         "Door to Main Boiler Control Room": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "TODO: varia suit?",
                                 "items": [
                                     {
                                         "type": "template",
@@ -3233,7 +3251,7 @@
                         "Door to Boiler Access": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "TODO: varia suit?",
                                 "items": []
                             }
                         }
@@ -3306,8 +3324,16 @@
                         "Door to Processing Access (Upper)": {
                             "type": "and",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "comment": "Doesnt this require HJ or WJ?",
+                                "items": [
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": []
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -3394,7 +3420,7 @@
                         "Pickup (Energy Tank)": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "TODO: make a general node for reaching the right platform so taht you dont duplicate reqs",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -3408,7 +3434,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "TODO: freezing enemies should probably be a trick?",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -3617,7 +3643,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Heat DMG",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -4305,7 +4331,7 @@
                         "Event - Wide Core-X": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "TODO: wide core x reqs",
                                 "items": [
                                     {
                                         "type": "or",
@@ -4624,7 +4650,7 @@
                         "Door to Fiery Storage": {
                             "type": "or",
                             "data": {
-                                "comment": null,
+                                "comment": "TODO: some more health reqs?",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -4700,6 +4726,24 @@
                                                         "name": "HeatDamage",
                                                         "amount": 50,
                                                         "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "DoorLockRando",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "EntranceRando",
+                                                        "amount": 1,
+                                                        "negate": true
                                                     }
                                                 }
                                             ]
@@ -4743,7 +4787,7 @@
                         "Door to Entrance Hub": {
                             "type": "or",
                             "data": {
-                                "comment": null,
+                                "comment": "TODO: some more health reqs?",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -4819,6 +4863,24 @@
                                                         "name": "HeatDamage",
                                                         "amount": 50,
                                                         "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "EntranceRando",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "EntranceRando",
+                                                        "amount": 1,
+                                                        "negate": true
                                                     }
                                                 }
                                             ]
@@ -4935,7 +4997,7 @@
                         "Pickup (Energy Tank)": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "TODO: can you speedboost without collecting the tank?",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -4949,7 +5011,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "TODO: if pillar, can you do this without jump upgrades",
                                             "items": [
                                                 {
                                                     "type": "template",
@@ -5029,7 +5091,7 @@
                         "Door to Monkey Bars of Fire": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "TODO: you can't do this with SA alone",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -5081,16 +5143,11 @@
                         "Door to Red Tower": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "TODO: cant you use the frozen enemy?",
                                 "items": [
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "MorphBall",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
+                                        "type": "template",
+                                        "data": "Can Use Power Bombs"
                                     },
                                     {
                                         "type": "template",
@@ -5134,7 +5191,7 @@
                         "Pickup (Power Bomb Tank)": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "TODO: do some shenanigans with mid air morph and bombs?",
                                 "items": [
                                     {
                                         "type": "template",
@@ -5191,7 +5248,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Checkpoint Shaft": {
+                        "Other to Checkpoint Shaft": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5200,7 +5257,7 @@
                         }
                     }
                 },
-                "Door to Checkpoint Shaft": {
+                "Other to Checkpoint Shaft": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5218,13 +5275,13 @@
                         ]
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Door",
+                    "dock_type": "Other",
                     "default_connection": {
                         "region": "Sector 3 (PYR)",
                         "area": "Checkpoint Shaft",
                         "node": "Other to Namihe's Abode"
                     },
-                    "default_dock_weakness": "Open Hatch",
+                    "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -5242,6 +5299,24 @@
                                             "name": "SpeedBooster",
                                             "amount": 1,
                                             "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "DoorLockRando",
+                                            "amount": 1,
+                                            "negate": true
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "EntranceRando",
+                                            "amount": 1,
+                                            "negate": true
                                         }
                                     }
                                 ]
@@ -5685,7 +5760,7 @@
                         "Door to Red Tower": {
                             "type": "or",
                             "data": {
-                                "comment": null,
+                                "comment": "TODO: template",
                                 "items": [
                                     {
                                         "type": "template",
@@ -5706,7 +5781,7 @@
                         "Door to Sova Processing (Upper)": {
                             "type": "or",
                             "data": {
-                                "comment": null,
+                                "comment": "TODO: this freezing enemy should probably have a trick?",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -5776,14 +5851,22 @@
                         "Pickup (Hidden Missile Tank)": {
                             "type": "and",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "comment": "TODO: can you unveil this with only beam?",
+                                "items": [
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": []
+                                        }
+                                    }
+                                ]
                             }
                         },
                         "Door to Sova Processing (Lower)": {
                             "type": "or",
                             "data": {
-                                "comment": null,
+                                "comment": "TODO: template for htis",
                                 "items": [
                                     {
                                         "type": "template",
@@ -5853,7 +5936,7 @@
                 ]
             },
             "nodes": {
-                "Pickup (Power Bomb Tank)": {
+                "Pickup (Power Bomb Tank in Cave)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -5884,7 +5967,7 @@
                         }
                     }
                 },
-                "Pickup (Power Bomb Tank 2)": {
+                "Pickup (Power Bomb Tank in Shaft)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -5945,7 +6028,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Pickup (Power Bomb Tank)": {
+                        "Pickup (Power Bomb Tank in Cave)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5980,7 +6063,7 @@
                                 ]
                             }
                         },
-                        "Pickup (Power Bomb Tank 2)": {
+                        "Pickup (Power Bomb Tank in Shaft)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6009,7 +6092,7 @@
                         "Door to Chute Access": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "TODO: Shinesparking? You also cant get here without ocllecting the pb tank in shaft Also varia?",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -6063,7 +6146,23 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Door to Sova Processing": {
+                            "type": "or",
+                            "data": {
+                                "comment": "TODO: arent there crumble blocks here?",
+                                "items": [
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": []
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 }
             }
         },

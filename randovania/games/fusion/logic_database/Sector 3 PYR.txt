@@ -113,7 +113,7 @@ Extra - room_id: [3]
   * Open Hatch to Entrance Hub/Door to Security Access
   * Extra - door_idx: (8,)
   > Behind Wall
-      Speed Booster
+      Speed Booster or Disabled Door Lock Rando or Disabled Entrance Rando
 
 > Door to Level 2 Security Room; Heals? False
   * Layers: default
@@ -131,6 +131,7 @@ Extra - room_id: [3]
   * Layers: default
   > Pickup (Hidden Missile Tank)
       Any of the following:
+          # TODO: cant you also freeze the sidehopper?
           Can climb High Jump Wall
           Speed Booster and Shinespark Tricks (Beginner)
   > Door to Entrance Hub
@@ -140,6 +141,7 @@ Extra - room_id: [3]
   > Other to Level 2 Security Room
       All of the following:
           Speed Booster
+          # TODO: morph? Also whats the movement for, mid air morph?
           Movement (Advanced) or Can Use Bombs or Can Use Springball
 
 ----------------
@@ -199,7 +201,7 @@ Extra - room_id: [5]
 
 > Other to Namihe's Abode; Heals? False
   * Layers: default
-  * Open Passage to Namihe's Abode/Door to Checkpoint Shaft
+  * Open Passage to Namihe's Abode/Other to Checkpoint Shaft
   * Extra - door_idx: (61,)
   > Door to Entrance Hub
       Trivial
@@ -465,8 +467,10 @@ Extra - room_id: [12]
   * L0 Hatch to Lava Reservoirs/Door to Lava Maze
   * Extra - door_idx: (24,)
   > Pickup (Power Bomb Tank)
+      # TODO: do you need bombs/spring in the maze?
       Gravity Suit and Varia Suit and Can Use Power Bombs
   > Door to Sova Suite
+      # TODO: Varia?
       Space Jump or Can Freeze Enemies
 
 > Door to Sova Suite; Heals? False
@@ -524,6 +528,7 @@ Extra - room_id: [15]
   * Extra - door_idx: (30,)
   > Door to Boiler Access
       All of the following:
+          # TODO: see other connection
           # Movement
           Can climb High Jump Wall
           # Heat DMG
@@ -535,9 +540,10 @@ Extra - room_id: [15]
   * Extra - door_idx: (31,)
   > Door to Pyrochamber Access
       All of the following:
-          # Movement
+          # TODO: how to get past the wwall things damageless?
+          # Movement - TODO: WJ?
           Can climb High Jump Wall
-          # Heat DMG
+          # Heat DMG - TODO: heat run?
           Varia Suit
 
 ----------------
@@ -567,6 +573,7 @@ Extra - room_id: [17, 29]
   * L0 Hatch to Boiler Access/Door to Main Boiler
   * Extra - door_idx: (34, 72)
   > Door to Main Boiler Control Room
+      # TODO: varia suit?
       Can Kill Eye Door
 
 > Door to Main Boiler Control Room; Heals? False
@@ -613,7 +620,9 @@ Extra - room_id: [19]
   * Extra - door_idx: (75,)
   > Pickup (Energy Tank)
       All of the following:
+          # TODO: make a general node for reaching the right platform so taht you dont duplicate reqs
           Morph Ball
+          # TODO: freezing enemies should probably be a trick?
           Space Jump or Can Freeze Enemies
   > Pickup (Missile Tank)
       All of the following:
@@ -638,6 +647,7 @@ Extra - room_id: [19]
       All of the following:
           Gravity Suit and Screw Attack
           Any of the following:
+              # Heat DMG
               Varia Suit
               Damage Runs (Intermediate) and Heat Damage ≥ 100
 
@@ -757,6 +767,7 @@ Extra - room_id: [25]
       After Wide X
   > Event - Wide Core-X
       All of the following:
+          # TODO: wide core x reqs
           Missiles
           # Heat DMG
           Varia Suit
@@ -819,12 +830,13 @@ Extra - room_id: [27]
   * Extra - door_idx: (54,)
   > Door to Fiery Storage
       Any of the following:
+          # TODO: some more health reqs?
           Varia Suit
           All of the following:
               Damage Runs (Intermediate)
               Any of the following:
                   Heat Damage ≥ 200
-                  Speed Booster and Shinespark Tricks (Intermediate) and Heat Damage ≥ 50
+                  Speed Booster and Shinespark Tricks (Intermediate) and Heat Damage ≥ 50 and Disabled Door Lock Rando and Disabled Entrance Rando
 
 > Door to Fiery Storage; Heals? False
   * Layers: default
@@ -832,12 +844,13 @@ Extra - room_id: [27]
   * Extra - door_idx: (55,)
   > Door to Entrance Hub
       Any of the following:
+          # TODO: some more health reqs?
           Varia Suit
           All of the following:
               Damage Runs (Intermediate)
               Any of the following:
                   Heat Damage ≥ 200
-                  Speed Booster and Shinespark Tricks (Intermediate) and Heat Damage ≥ 50
+                  Speed Booster and Shinespark Tricks (Intermediate) and Heat Damage ≥ 50 and Disabled Entrance Rando
 
 ----------------
 Fiery Storage
@@ -869,7 +882,9 @@ Extra - room_id: [28]
   * Extra - door_idx: (56,)
   > Pickup (Energy Tank)
       All of the following:
+          # TODO: can you speedboost without collecting the tank?
           Speed Booster
+          # TODO: if pillar, can you do this without jump upgrades
           Space Jump or Can Activate Pillar
   > Pickup (Missile Tank)
       Trivial
@@ -881,6 +896,7 @@ Extra - room_id: [28]
   * L0 Hatch to Connection to Sector 5 (ARC)/Door to Fiery Storage
   * Extra - door_idx: (87,)
   > Door to Monkey Bars of Fire
+      # TODO: you can't do this with SA alone
       Screw Attack
 
 ----------------
@@ -895,7 +911,8 @@ Extra - room_id: [30]
   * Extra - blockx: 4
   * Extra - blocky: 13
   > Door to Red Tower
-      Morph Ball and Can climb High Jump Wall
+      # TODO: cant you use the frozen enemy?
+      Can Use Power Bombs and Can climb High Jump Wall
 
 > Door to Red Tower; Heals? False
   * Layers: default
@@ -903,6 +920,7 @@ Extra - room_id: [30]
   * Extra - door_idx: (58,)
   > Pickup (Power Bomb Tank)
       All of the following:
+          # TODO: do some shenanigans with mid air morph and bombs?
           Can Use Power Bombs
           Can Freeze Enemies or Can climb High Jump Wall
 
@@ -910,15 +928,15 @@ Extra - room_id: [30]
   * Layers: default
   * Tunnel to Bob Room/Other to Namihe's Abode
   * Extra - door_idx: (59,)
-  > Door to Checkpoint Shaft
+  > Other to Checkpoint Shaft
       Trivial
 
-> Door to Checkpoint Shaft; Heals? False
+> Other to Checkpoint Shaft; Heals? False
   * Layers: default
-  * Open Hatch to Checkpoint Shaft/Other to Namihe's Abode
+  * Open Passage to Checkpoint Shaft/Other to Namihe's Abode
   * Extra - door_idx: (62,)
   > Door to Red Tower
-      Speed Booster
+      Speed Booster and Disabled Door Lock Rando and Disabled Entrance Rando
 
 ----------------
 Data Recharge Room
@@ -1013,9 +1031,11 @@ Extra - room_id: [34]
   * L0 Hatch to Sova Processing/Door to Processing Access (Lower)
   * Extra - door_idx: (39,)
   > Door to Red Tower
+      # TODO: template
       Screw Attack or Can Use Any Bombs
   > Door to Sova Processing (Upper)
       Any of the following:
+          # TODO: this freezing enemy should probably have a trick?
           Space Jump
           High Jump and Can Freeze Enemies
 
@@ -1026,6 +1046,7 @@ Extra - room_id: [34]
   > Pickup (Hidden Missile Tank)
       Trivial
   > Door to Sova Processing (Lower)
+      # TODO: template for htis
       Screw Attack or Can Use Any Bombs
 
 > Door to Sova Processing (Upper); Heals? False
@@ -1039,7 +1060,7 @@ Extra - room_id: [34]
 Garbage Chute
 Extra - map_name: Sector 335
 Extra - room_id: [35]
-> Pickup (Power Bomb Tank); Heals? False
+> Pickup (Power Bomb Tank in Cave); Heals? False
   * Layers: default
   * Pickup 55; Category? Minor
   * Extra - area: 3
@@ -1049,7 +1070,7 @@ Extra - room_id: [35]
   > Door to Sova Processing
       Trivial
 
-> Pickup (Power Bomb Tank 2); Heals? False
+> Pickup (Power Bomb Tank in Shaft); Heals? False
   * Layers: default
   * Pickup 56; Category? Minor
   * Extra - area: 3
@@ -1063,17 +1084,20 @@ Extra - room_id: [35]
   * Layers: default
   * L0 Hatch to Sova Processing/Door to Garbage Chute
   * Extra - door_idx: (79,)
-  > Pickup (Power Bomb Tank)
+  > Pickup (Power Bomb Tank in Cave)
       Gravity Suit and Screw Attack and Speed Booster
-  > Pickup (Power Bomb Tank 2)
+  > Pickup (Power Bomb Tank in Shaft)
       Gravity Suit and Speed Booster
   > Door to Chute Access
+      # TODO: Shinesparking? You also cant get here without ocllecting the pb tank in shaft Also varia?
       Gravity Suit and Speed Booster
 
 > Door to Chute Access; Heals? False
   * Layers: default
   * L0 Hatch to Chute Access/Door to Garbage Chute
   * Extra - door_idx: (80,)
+  > Door to Sova Processing
+      Impossible
 
 ----------------
 Chute Access
