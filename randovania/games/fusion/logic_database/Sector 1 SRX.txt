@@ -117,11 +117,12 @@ Extra - room_id: [4]
 > Room Center; Heals? False
   * Layers: default
   > Door to Yameba Corridor
-      Trivial
+      After Stabilizer 1 Online
   > Door to Hornoad Hole
       After Stabilizer 1 Online
   > Event - Stabilizer 1 Online
       Any of the following:
+          # TODO: template
           Charge Beam or Missiles or Screw Attack
           All of the following:
               Speed Booster
@@ -265,6 +266,7 @@ Extra - room_id: [9]
   > Door to Checkpoint
       After Stabilizer 5 Online
   > Event - Stabilizer 5 Online
+      # TODO: different than normal geron.
       Can Kill Geron
 
 > Event - Stabilizer 5 Online; Heals? False
@@ -359,8 +361,9 @@ Extra - room_id: [13]
   > Door to Moto Manor
       After Stabilizer 3 Online
   > Door to Sciser Puddle
-      Trivial
+      After Stabilizer 3 Online
   > Event - Stabilizer 3 Online
+      # TODO: template
       Charge Beam or Missiles or Screw Attack
 
 > Event - Stabilizer 3 Online; Heals? False
@@ -421,6 +424,7 @@ Extra - room_id: [15]
   > Door to South Shaft
       After Stabilizer 4 Online
   > Event - Stabilizer 4 Online
+      # TODO: template
       Charge Beam or Missiles or Screw Attack
 
 > Event - Stabilizer 4 Online; Heals? False
@@ -853,6 +857,7 @@ Extra - room_id: [32]
   > Door to Shaft North
       After Stabilizer 2 Online
   > Event - Stabilizer 2 Online
+      # TODO: template
       Charge Beam or Missiles or Screw Attack
 
 > Event - Stabilizer 2 Online; Heals? False
@@ -1031,15 +1036,14 @@ Extra - room_id: [39]
   * L2 Hatch to Entrance Hub/Door to Antechamber
   * Extra - door_idx: (81,)
   > Top of Room
-      All of the following:
-          Screw Attack
-          High Jump or Space Jump
+      Screw Attack and Can climb High Jump Wall
 
 > Door to Connection to Sector 2 (TRO); Heals? False
   * Layers: default
   * L0 Hatch to Connection to Sector 2 (TRO)/Door to Antechamber
   * Extra - door_idx: (102,)
   > Top of Room
+      # TODO: template
       Can Use Bombs or Can Use Springball
 
 > Top of Room; Heals? False
@@ -1098,6 +1102,7 @@ Extra - room_id: [40]
   * Layers: default
   > Pickup (Energy Tank)
       Any of the following:
+          # TODO: this shinespark isnt trivial and ideally needs more items
           # Pre-Fight
           Speed Booster and Shinespark Tricks (Beginner)
           # After Core-X defeated
@@ -1107,6 +1112,7 @@ Extra - room_id: [40]
   > Door to Charge Core Escape
       After Charge Core-X
   > Event - Charge Core-X
+      # TODO: Charge Core-X reqs
       Missiles
 
 ----------------
@@ -1135,6 +1141,13 @@ Extra - room_id: [42]
   * Layers: default
   * L0 Hatch to Hornoad Housing/Door to Central Save Room
   * Extra - door_idx: (91,)
+  > Save Station
+      Trivial
+
+> Save Station; Heals? False
+  * Layers: default
+  > Door to Hornoad Housing
+      Trivial
 
 ----------------
 Crab Rave
@@ -1148,14 +1161,14 @@ Extra - room_id: [43]
   * Extra - blockx: 13
   * Extra - blocky: 11
   > Other to Charge Core Escape
-      Morph Ball
+      Trivial
 
 > Other to Charge Core Escape; Heals? False
   * Layers: default
   * Tunnel to Charge Core Escape/Other to Crab Rave
   * Extra - door_idx: (93,)
   > Pickup (Missile Tank)
-      Morph Ball
+      Trivial
 
 ----------------
 Sciser Storage
@@ -1316,9 +1329,10 @@ Extra - room_id: [51]
 > Room Center; Heals? False
   * Layers: default
   > Other to Tourian Central Hub
-      High Jump or Space Jump
+      Can climb High Jump Wall
   > Door to Animorphs Cache
       All of the following:
+          # TODO: comment which block is for which enemy
           Any of the following:
               Can Use Power Bombs
               Charge Beam and Wave Beam

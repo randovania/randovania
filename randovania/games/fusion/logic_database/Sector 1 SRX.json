@@ -647,7 +647,17 @@
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Stabilizer1",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         },
                         "Door to Hornoad Hole": {
@@ -662,7 +672,7 @@
                         "Event - Stabilizer 1 Online": {
                             "type": "or",
                             "data": {
-                                "comment": null,
+                                "comment": "TODO: template",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -1433,7 +1443,7 @@
                         "Event - Stabilizer 5 Online": {
                             "type": "or",
                             "data": {
-                                "comment": null,
+                                "comment": "TODO: different than normal geron.",
                                 "items": [
                                     {
                                         "type": "template",
@@ -1918,13 +1928,23 @@
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Stabilizer3",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         },
                         "Event - Stabilizer 3 Online": {
                             "type": "or",
                             "data": {
-                                "comment": null,
+                                "comment": "TODO: template",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -2255,7 +2275,7 @@
                         "Event - Stabilizer 4 Online": {
                             "type": "or",
                             "data": {
-                                "comment": null,
+                                "comment": "TODO: template",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -4871,7 +4891,7 @@
                         "Event - Stabilizer 2 Online": {
                             "type": "or",
                             "data": {
-                                "comment": null,
+                                "comment": "TODO: template",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -5900,30 +5920,8 @@
                                         }
                                     },
                                     {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "HighJump",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "SpaceJump",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
+                                        "type": "template",
+                                        "data": "Can climb High Jump Wall"
                                     }
                                 ]
                             }
@@ -5963,7 +5961,7 @@
                         "Top of Room": {
                             "type": "or",
                             "data": {
-                                "comment": null,
+                                "comment": "TODO: template",
                                 "items": [
                                     {
                                         "type": "template",
@@ -6213,7 +6211,7 @@
                         "Pickup (Energy Tank)": {
                             "type": "or",
                             "data": {
-                                "comment": null,
+                                "comment": "TODO: this shinespark isnt trivial and ideally needs more items",
                                 "items": [
                                     {
                                         "type": "and",
@@ -6307,7 +6305,7 @@
                         "Event - Charge Core-X": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "TODO: Charge Core-X reqs",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -6452,7 +6450,39 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Save Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Save Station": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 137.77777777777777,
+                        "y": 77.62962962962962,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Hornoad Housing": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -6488,12 +6518,10 @@
                     "location_category": "minor",
                     "connections": {
                         "Other to Charge Core Escape": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "items",
-                                "name": "MorphBall",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -6529,12 +6557,10 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Pickup (Missile Tank)": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "items",
-                                "name": "MorphBall",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -7309,22 +7335,8 @@
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "HighJump",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "SpaceJump",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
+                                        "type": "template",
+                                        "data": "Can climb High Jump Wall"
                                     }
                                 ]
                             }
@@ -7332,7 +7344,7 @@
                         "Door to Animorphs Cache": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "TODO: comment which block is for which enemy",
                                 "items": [
                                     {
                                         "type": "or",
