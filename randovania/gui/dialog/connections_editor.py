@@ -22,7 +22,7 @@ from randovania.layout.base.trick_level import LayoutTrickLevel
 from randovania.lib.enum_lib import iterate_enum
 
 if typing.TYPE_CHECKING:
-    from randovania.game_description.resources.resource_database import ResourceDatabase
+    from randovania.game_description.resources.resource_database import NamedRequirementTemplate, ResourceDatabase
     from randovania.game_description.resources.resource_info import ResourceInfo
 
 
@@ -289,8 +289,11 @@ class TemplateRequirementEditor:
 
         template_name_combo = QComboBox(parent)
 
-        for template_name in sorted(resource_database.requirement_template.keys()):
-            template_name_combo.addItem(template_name)
+        def key_get(it: tuple[str, NamedRequirementTemplate]) -> str:
+            return it[1].display_name
+
+        for template_name, template in sorted(resource_database.requirement_template.items(), key=key_get):
+            template_name_combo.addItem(template.display_name, template_name)
             if template_name == item.template_name:
                 template_name_combo.setCurrentIndex(template_name_combo.count() - 1)
 
@@ -302,7 +305,7 @@ class TemplateRequirementEditor:
 
     @property
     def current_requirement(self) -> RequirementTemplate:
-        return RequirementTemplate(self.template_name_combo.currentText())
+        return RequirementTemplate(self.template_name_combo.currentData())
 
 
 class RequirementEditor:

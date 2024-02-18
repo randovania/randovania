@@ -37,7 +37,7 @@ if TYPE_CHECKING:
     from randovania.game_description.game_description import GameDescription
 
 
-def refresh_if_needed(combo: QtWidgets.QComboBox, func):
+def refresh_if_needed(combo: QtWidgets.QComboBox, func) -> None:
     if combo.currentIndex() == 0:
         func(0)
 
@@ -53,7 +53,7 @@ class DockWeaknessListModel(QtCore.QAbstractListModel):
         self.delegate = ComboBoxItemDelegate()
         self.change_type(db.dock_types[0])
 
-    def change_type(self, new_type: DockType):
+    def change_type(self, new_type: DockType) -> None:
         self.type = new_type
         self.items = []
         self.delegate.items = list(self.db.weaknesses[self.type].keys())
@@ -101,7 +101,7 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
     _hint_requirement_to_collect = Requirement.trivial()
     _unlocked_by_requirement = Requirement.trivial()
     _activated_by_requirement = Requirement.trivial()
-    _connections_visualizers = dict[QtWidgets.QWidget, ConnectionsVisualizer]
+    _connections_visualizers: dict[QtWidgets.QWidget, ConnectionsVisualizer]
 
     def __init__(self, game: GameDescription, node: Node):
         super().__init__()
@@ -151,8 +151,8 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
             self.event_resource_combo.addItem("No events in database", None)
             self.event_resource_combo.setEnabled(False)
 
-        for dock_type in enum_lib.iterate_enum(HintNodeKind):
-            self.hint_kind_combo.addItem(dock_type.long_name, dock_type)
+        for hint_node_kind in enum_lib.iterate_enum(HintNodeKind):
+            self.hint_kind_combo.addItem(hint_node_kind.long_name, hint_node_kind)
 
         # Pickup
         for category in enum_lib.iterate_enum(LocationCategory):
@@ -234,7 +234,7 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
         else:
             raise ValueError(f"Unknown node type: {node}")
 
-    def fill_for_dock(self, node: DockNode):
+    def fill_for_dock(self, node: DockNode) -> None:
         # Connection
         other_node = self.game.region_list.node_by_identifier(node.default_connection)
         area = self.game.region_list.nodes_to_area(other_node)
@@ -253,21 +253,21 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
         self.dock_incompatible_model.items = list(node.incompatible_dock_weaknesses)
         self.dock_exclude_lock_rando_check.setChecked(node.exclude_from_dock_rando)
 
-    def fill_for_pickup(self, node: PickupNode):
+    def fill_for_pickup(self, node: PickupNode) -> None:
         self.pickup_index_spin.setValue(node.pickup_index.index)
         signal_handling.set_combo_with_value(self.location_category_combo, node.location_category)
 
-    def fill_for_event(self, node: EventNode):
+    def fill_for_event(self, node: EventNode) -> None:
         signal_handling.set_combo_with_value(self.event_resource_combo, node.event)
 
-    def fill_for_configurable(self, node: ConfigurableNode):
+    def fill_for_configurable(self, node: ConfigurableNode) -> None:
         pass
 
-    def fill_for_hint(self, node: HintNode):
+    def fill_for_hint(self, node: HintNode) -> None:
         signal_handling.set_combo_with_value(self.hint_kind_combo, node.kind)
         self.set_hint_requirement_to_collect(node.requirement_to_collect)
 
-    def set_hint_requirement_to_collect(self, requirement: Requirement):
+    def set_hint_requirement_to_collect(self, requirement: Requirement) -> None:
         self._hint_requirement_to_collect = requirement
         self._create_connections_visualizer(
             self.hint_requirement_to_collect_group,
@@ -275,12 +275,12 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
             requirement,
         )
 
-    def fill_for_teleporter_network(self, node: TeleporterNetworkNode):
+    def fill_for_teleporter_network(self, node: TeleporterNetworkNode) -> None:
         self.set_teleporter_network_unlocked_by(node.is_unlocked)
         self.set_teleporter_network_activated_by(node.requirement_to_activate)
         self.teleporter_network_edit.setText(node.network)
 
-    def set_teleporter_network_unlocked_by(self, requirement: Requirement):
+    def set_teleporter_network_unlocked_by(self, requirement: Requirement) -> None:
         self._unlocked_by_requirement = requirement
         self._create_connections_visualizer(
             self.teleporter_network_unlocked_group,
@@ -288,7 +288,7 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
             requirement,
         )
 
-    def set_teleporter_network_activated_by(self, requirement: Requirement):
+    def set_teleporter_network_activated_by(self, requirement: Requirement) -> None:
         self._activated_by_requirement = requirement
         self._create_connections_visualizer(
             self.teleporter_network_activate_group,
@@ -299,14 +299,16 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
     # Connections Visualizer
     def _create_connections_visualizer(
         self, parent: QtWidgets.QWidget, layout: QtWidgets.QGridLayout, requirement: Requirement
-    ):
+    ) -> None:
         if parent in self._connections_visualizers:
             self._connections_visualizers.pop(parent).deleteLater()
 
-        self._connections_visualizers[parent] = ConnectionsVisualizer(parent, layout, requirement)
+        self._connections_visualizers[parent] = ConnectionsVisualizer(
+            parent, layout, requirement, self.game.resource_database
+        )
 
     # Signals
-    def on_name_edit(self, value: str):
+    def on_name_edit(self, value: str) -> None:
         has_error = False
 
         try:
@@ -320,17 +322,17 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
 
         common_qt_lib.set_error_border_stylesheet(self.name_edit, has_error)
 
-    def on_node_type_combo(self, _):
+    def on_node_type_combo(self, _: None) -> None:
         self.tab_widget.setCurrentWidget(self._type_to_tab[self.node_type_combo.currentData()])
 
-    def on_dock_connection_region_combo(self, _):
+    def on_dock_connection_region_combo(self, _: None) -> None:
         region: Region = self.dock_connection_region_combo.currentData()
 
         self.dock_connection_area_combo.clear()
         for area in sorted(region.areas, key=lambda x: x.name):
             self.dock_connection_area_combo.addItem(area.name, userData=area)
 
-    def on_dock_connection_area_combo(self, _):
+    def on_dock_connection_area_combo(self, _: None) -> None:
         area: Area | None = self.dock_connection_area_combo.currentData()
 
         self.dock_connection_node_combo.clear()
@@ -342,7 +344,7 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
         if empty:
             self.dock_connection_node_combo.addItem("Other", None)
 
-    def on_dock_type_combo(self, _):
+    def on_dock_type_combo(self, _) -> None:
         self.dock_weakness_combo.clear()
         current_type: DockType = self.dock_type_combo.currentData()
 
@@ -352,14 +354,14 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
         for weakness in self.game.dock_weakness_database.get_by_type(current_type):
             self.dock_weakness_combo.addItem(weakness.name, weakness)
 
-    def on_dock_update_name_button(self):
+    def on_dock_update_name_button(self) -> None:
         new_node = self.create_new_node()
         assert isinstance(new_node, DockNode)
         expected_name = next(integrity_check.expected_dock_names(new_node))
         self.name_edit.setText(expected_name)
         self.on_name_edit(self.name_edit.text())
 
-    def on_dock_incompatible_delete_selected(self):
+    def on_dock_incompatible_delete_selected(self) -> None:
         indices = [selection.row() for selection in self.dock_incompatible_list.selectedIndexes()]
         if indices:
             assert len(indices) == 1
@@ -367,7 +369,7 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
 
     # Pickup
 
-    def on_pickup_index_button(self):
+    def on_pickup_index_button(self) -> None:
         used_indices: dict[int, int] = collections.defaultdict(lambda: 0)
         for node in self.game.region_list.iterate_nodes():
             if isinstance(node, PickupNode):
@@ -381,7 +383,7 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
                 self.pickup_index_spin.setValue(new_index)
                 return
 
-    def on_teleporter_destination_region_combo(self, _):
+    def on_teleporter_destination_region_combo(self, _) -> None:
         region: Region = self.teleporter_destination_region_combo.currentData()
 
         self.teleporter_destination_area_combo.clear()
@@ -389,19 +391,19 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
             self.teleporter_destination_area_combo.addItem(area.name, userData=area)
 
     @asyncSlot()
-    async def on_hint_requirement_to_collect_button(self):
+    async def on_hint_requirement_to_collect_button(self) -> None:
         requirement = await self._open_connections_editor(self._hint_requirement_to_collect)
         if requirement is not None:
             self.set_hint_requirement_to_collect(requirement)
 
     @asyncSlot()
-    async def on_teleporter_network_unlocked_button(self):
+    async def on_teleporter_network_unlocked_button(self) -> None:
         requirement = await self._open_connections_editor(self._unlocked_by_requirement)
         if requirement is not None:
             self.set_teleporter_network_unlocked_by(requirement)
 
     @asyncSlot()
-    async def on_teleporter_network_activated_button(self):
+    async def on_teleporter_network_activated_button(self) -> None:
         requirement = await self._open_connections_editor(self._activated_by_requirement)
         if requirement is not None:
             self.set_teleporter_network_activated_by(requirement)
@@ -541,7 +543,7 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
         else:
             raise RuntimeError(f"Unknown node type: {node_type}")
 
-    def try_accept(self):
+    def try_accept(self) -> None:
         try:
             self.create_new_node()
             self.accept()
@@ -549,13 +551,13 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
             logging.exception(f"Unable to save node: {e}")
 
             box = QtWidgets.QMessageBox(
-                QtWidgets.QMessageBox.Warning,
+                QtWidgets.QMessageBox.Icon.Warning,
                 "Invalid configuration",
                 f"Unable to save node: {e}",
-                QtWidgets.QMessageBox.Ok,
+                QtWidgets.QMessageBox.StandardButton.Ok,
                 None,
             )
-            box.setDefaultButton(QtWidgets.QMessageBox.Ok)
+            box.setDefaultButton(QtWidgets.QMessageBox.StandardButton.Ok)
             box.setDetailedText("".join(traceback.format_tb(e.__traceback__)))
             common_qt_lib.set_default_window_icon(box)
             box.exec_()
