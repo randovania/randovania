@@ -7691,15 +7691,38 @@
                                         "data": "Can Use Any Bombs"
                                     },
                                     {
-                                        "type": "or",
+                                        "type": "and",
                                         "data": {
-                                            "comment": "TODO: get out from the upper way?",
+                                            "comment": "Don't fall down the crumble block",
                                             "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Movement",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
                                                 {
                                                     "type": "or",
                                                     "data": {
                                                         "comment": null,
-                                                        "items": []
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can climb High Jump Wall"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "WallJump",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -7752,21 +7775,6 @@
                                     {
                                         "type": "template",
                                         "data": "Can Use Springball"
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": "TODO: mid air morph?",
-                                            "items": [
-                                                {
-                                                    "type": "or",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": []
-                                                    }
-                                                }
-                                            ]
-                                        }
                                     }
                                 ]
                             }
