@@ -303,7 +303,9 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
         if parent in self._connections_visualizers:
             self._connections_visualizers.pop(parent).deleteLater()
 
-        self._connections_visualizers[parent] = ConnectionsVisualizer(parent, layout, requirement)
+        self._connections_visualizers[parent] = ConnectionsVisualizer(
+            parent, layout, requirement, self.game.resource_database
+        )
 
     # Signals
     def on_name_edit(self, value: str):

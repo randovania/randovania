@@ -19,7 +19,7 @@ from randovania.game_description.resources import search
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.node_resource_info import NodeResourceInfo
 from randovania.game_description.resources.resource_collection import ResourceCollection
-from randovania.game_description.resources.resource_database import ResourceDatabase
+from randovania.game_description.resources.resource_database import NamedRequirementTemplate, ResourceDatabase
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
@@ -625,7 +625,7 @@ def test_requirement_template(database):
         return req, id_req
 
     # Setup
-    database.requirement_template["Use A"] = _make_req("A")[1]
+    database.requirement_template["Use A"] = NamedRequirementTemplate("Use A", _make_req("A")[1])
     use_a = RequirementTemplate("Use A")
 
     # Run
@@ -645,8 +645,8 @@ def test_requirement_template_nested(database):
     use_a = RequirementTemplate("Use A")
     use_b = RequirementTemplate("Use B")
 
-    database.requirement_template["Use A"] = _req("A")
-    database.requirement_template["Use B"] = RequirementOr([use_a, _req("B")])
+    database.requirement_template["Use A"] = NamedRequirementTemplate("Use A", _req("A"))
+    database.requirement_template["Use B"] = NamedRequirementTemplate("Use B", RequirementOr([use_a, _req("B")]))
 
     # Run
     as_set = use_b.as_set(database)

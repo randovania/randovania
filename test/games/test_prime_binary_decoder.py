@@ -22,7 +22,12 @@ sample_data = {
         "damage": {},
         "versions": {},
         "misc": {},
-        "requirement_template": {"Foo": {"type": "or", "data": {"comment": None, "items": []}}},
+        "requirement_template": {
+            "Foo": {
+                "display_name": "Foo",
+                "requirement": {"type": "or", "data": {"comment": None, "items": []}},
+            }
+        },
         "damage_reductions": [],
     },
     "layers": ["default"],
@@ -148,4 +153,4 @@ def test_encode_resource_database():
     encoded = binary_data.ConstructResourceDatabase.build(resource_database)
 
     # Assert
-    assert encoded == b"\x00\x00\x00\x00\x00\x00\x01Foo\x00\x02\x00\x00\x00\x00"
+    assert encoded == b"\x00\x00\x00\x00\x00\x00\x01Foo\x00Foo\x00\x02\x00\x00\x00\x00"

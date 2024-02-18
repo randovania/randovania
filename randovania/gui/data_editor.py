@@ -555,7 +555,10 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
             )
 
         create_tree_items_for_requirement(
-            self.other_node_alternatives_contents, self.other_node_alternatives_contents, requirement
+            self.other_node_alternatives_contents,
+            self.other_node_alternatives_contents,
+            requirement,
+            self.resource_database,
         )
 
     def _swap_selected_connection(self):
