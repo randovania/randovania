@@ -1,5 +1,5 @@
 ----------------
-Entrance Shaft
+Laboratory Teleporter West
 Extra - total_boundings: {'x1': -22000.0, 'x2': -16000.0, 'y1': -8700.0, 'y2': 2000.0}
 Extra - polygon: [[-21100.0, 2000.0], [-21100.0, -1800.0], [-22000.0, -2700.0], [-22000.0, -8700.0], [-19550.0, -8700.0], [-19550.0, -6300.0], [-18600.0, -6200.0], [-16000.0, -6200.0], [-16000.0, -4400.0], [-17000.0, -4400.0], [-17700.0, -4300.0], [-17700.0, -200.0], [-18100.0, 600.0], [-18100.0, 2000.0]]
 Extra - asset_id: collision_camera_005
@@ -17,7 +17,7 @@ Extra - asset_id: collision_camera_005
   * Extra - actor_type: weightactivatedplatform
   > Save Station
       Morph Ball
-  > Door to Omega Shaft West
+  > Door to Robot Retreat
       Morph Ball
 
 > Save Station; Heals? False; Spawn Point; Default Node
@@ -25,7 +25,7 @@ Extra - asset_id: collision_camera_005
   * Extra - actor_name: LE_Platform_SaveStation002
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: ST_SaveStation002
-  > Door to Omega Shaft West
+  > Door to Robot Retreat
       All of the following:
           Missile ≥ 10 or Super Missile ≥ 2 or Defeat Gold Robots
           Single-wall Wall Jump (Intermediate) or Walljump (Beginner) or Climb Rooms Vertically (No High Jump)
@@ -43,7 +43,7 @@ Extra - asset_id: collision_camera_005
 
 > Door to Transport to Area 6; Heals? False
   * Layers: default
-  * Power Beam Door to Transport to Area 6/Door to Entrance Shaft
+  * Power Beam Door to Transport to Area 6/Door to Laboratory Teleporter West
   * Extra - actor_name: Door012
   * Extra - actor_type: doorpowerpower
   > 2nd Level
@@ -51,7 +51,7 @@ Extra - asset_id: collision_camera_005
           All of the following:
               Lightning Armor
               Any of the following:
-                  Movement (Intermediate) and Spiderspark (Beginner) and Can Spiderspark
+                  Movement (Intermediate) and Spider Boost (Beginner) and Can Spider Boost
                   All of the following:
                       Infinite Bomb Jump (Intermediate) and Lay Bomb
                       Spider Ball or Movement (Advanced)
@@ -67,11 +67,11 @@ Extra - asset_id: collision_camera_005
                           Infinite Bomb Jump (Intermediate) and Lay Bomb
                           Unmorph Extend (Beginner) and Lay Power Bomb
   > Next to Pickup
-      Power Bomb ≥ 2 and Spiderspark (Beginner) and Can Spiderspark
+      Power Bomb ≥ 2 and Spider Boost (Beginner) and Can Spider Boost
 
-> Door to Omega Shaft West; Heals? False
+> Door to Robot Retreat; Heals? False
   * Layers: default
-  * Power Beam Door to Omega Shaft West/Door to Entrance Shaft
+  * Power Beam Door to Robot Retreat/Door to Laboratory Teleporter West
   * Extra - actor_name: Door017
   * Extra - actor_type: doorpowerpower
   > Energy Recharge Station
@@ -162,44 +162,44 @@ Extra - asset_id: collision_camera_005
                   Bomb
                   Plasma Beam or Shoot Beam Burst
   > 2nd Level
-      Lightning Armor and Movement (Intermediate) and Spiderspark (Beginner) and Can Spiderspark
+      Lightning Armor and Movement (Intermediate) and Spider Boost (Beginner) and Can Spider Boost
   > Event - Teleporter Unlocked Mid-Air
       Trivial
 
 ----------------
-Exit Puzzle Room 1
+Grapple Puzzle Madness
 Extra - total_boundings: {'x1': -22700.0, 'x2': -19200.0, 'y1': -13100.0, 'y2': -11200.0}
 Extra - polygon: [[-22700.0, -11200.0], [-22700.0, -13100.0], [-19200.0, -13100.0], [-19200.0, -11200.0]]
 Extra - asset_id: collision_camera_006
 > Door to Transport to Area 6; Heals? False
   * Layers: default
-  * Power Beam Door to Transport to Area 6/Door to Exit Puzzle Room 1
+  * Power Beam Door to Transport to Area 6/Door to Grapple Puzzle Madness
   * Extra - actor_name: Door008
   * Extra - actor_type: doorpowerpower
-  > Door to Exit Puzzle Room 2 (Top)
+  > Door to Grapple Puzzle Foyer (Top)
       Trivial
   > Middle Level
       Screw Attack
 
-> Door to Exit Puzzle Room 2 (Top); Heals? False
+> Door to Grapple Puzzle Foyer (Top); Heals? False
   * Layers: default
-  * Power Beam Door to Exit Puzzle Room 2/Door to Exit Puzzle Room 1 (Top)
+  * Power Beam Door to Grapple Puzzle Foyer/Door to Grapple Puzzle Madness (Top)
   * Extra - actor_name: Door010
   * Extra - actor_type: doorpowerpower
   > Door to Transport to Area 6
       Trivial
 
-> Door to Exit Puzzle Room 2 (Bottom); Heals? False
+> Door to Grapple Puzzle Foyer (Bottom); Heals? False
   * Layers: default
-  * Power Beam Door to Exit Puzzle Room 2/Door to Exit Puzzle Room 1 (Bottom)
+  * Power Beam Door to Grapple Puzzle Foyer/Door to Grapple Puzzle Madness (Bottom)
   * Extra - actor_name: Door013
   * Extra - actor_type: doorpowerpower
   > Middle Level
-      Morph Ball and After Area 7 - Exit Puzzle Room 1 Grapple Block Right and Climb Rooms Vertically (No High Jump) and Shoot Any Missile
+      Morph Ball and After Area 7 - Grapple Puzzle Madness Grapple Block Right and Climb Rooms Vertically (No High Jump) and Shoot Any Missile
 
-> Tunnel to Exit Puzzle Room 2; Heals? False
+> Tunnel to Grapple Puzzle Foyer; Heals? False
   * Layers: default
-  * Tunnel with Bomb Block to Exit Puzzle Room 2/Tunnel to Exit Puzzle Room 1
+  * Tunnel with Bomb Block to Grapple Puzzle Foyer/Tunnel to Grapple Puzzle Madness
   > Event - Grapple Block Middle
       Grapple Beam and Shoot Any Missile
 
@@ -211,33 +211,33 @@ Extra - asset_id: collision_camera_006
           Any of the following:
               High Jump Boots or Space Jump
               Movement (Beginner) and Shoot Any Missile
-  > Door to Exit Puzzle Room 2 (Bottom)
-      Morph Ball and After Area 7 - Exit Puzzle Room 1 Grapple Block Right and Defeat Gold Robots and Shoot Any Missile
+  > Door to Grapple Puzzle Foyer (Bottom)
+      Morph Ball and After Area 7 - Grapple Puzzle Madness Grapple Block Right and Defeat Gold Robots and Shoot Any Missile
   > Event - Grapple Block Left
       Grapple Beam
   > Event - Grapple Block Right
-      Grapple Beam and Morph Ball and After Area 7 - Exit Puzzle Room 1 Grapple Block Middle and Shoot Any Missile
+      Grapple Beam and Morph Ball and After Area 7 - Grapple Puzzle Madness Grapple Block Middle and Shoot Any Missile
 
 > Event - Grapple Block Left; Heals? False
   * Layers: default
-  * Event Area 7 - Exit Puzzle Room 1 Grapple Block Left
+  * Event Area 7 - Grapple Puzzle Madness Grapple Block Left
   > Middle Level
       Trivial
 
 > Event - Grapple Block Middle; Heals? False
   * Layers: default
-  * Event Area 7 - Exit Puzzle Room 1 Grapple Block Middle
-  > Tunnel to Exit Puzzle Room 2
+  * Event Area 7 - Grapple Puzzle Madness Grapple Block Middle
+  > Tunnel to Grapple Puzzle Foyer
       Lay Any Bomb
 
 > Event - Grapple Block Right; Heals? False
   * Layers: default
-  * Event Area 7 - Exit Puzzle Room 1 Grapple Block Right
+  * Event Area 7 - Grapple Puzzle Madness Grapple Block Right
   > Middle Level
       Lay Any Bomb
 
 ----------------
-Launch Tunnel South
+Spider Boost Tunnel South
 Extra - total_boundings: {'x1': -16300.0, 'x2': -8200.0, 'y1': 2300.0, 'y2': 5600.0}
 Extra - polygon: [[-16300.0, 5600.0], [-16300.0, 2300.0], [-8200.0, 2300.0], [-8200.0, 5600.0]]
 Extra - asset_id: collision_camera_007
@@ -257,28 +257,28 @@ Extra - asset_id: collision_camera_007
   > Above Save Station
       Trivial
 
-> Door to Omega Shaft West; Heals? False
+> Door to Robot Retreat; Heals? False
   * Layers: default
-  * Charge Beam Door to Omega Shaft West/Door to Launch Tunnel South
+  * Charge Beam Door to Robot Retreat/Door to Spider Boost Tunnel South
   * Extra - actor_name: Door001
   * Extra - actor_type: doorchargecharge
-  > Door to Launch Tunnels Shaft
+  > Door to Robot Regime
       All of the following:
           Morph Ball
           Lightning Armor or Normal Damage ≥ 100
-  > Dock to Launch Tunnels Shaft
+  > Dock to Robot Regime
       Any of the following:
           Lightning Armor and Morph Ball
-          After Area 7 - Launch Tunnel South Grapple Block Top and Spiderspark (Beginner) and Can Spiderspark
+          After Area 7 - Spider Boost Tunnel South Grapple Block Top and Spider Boost (Beginner) and Can Spider Boost
   > Event - Grapple Block Top
       Grapple Beam and Morph Ball and Climb Rooms Vertically (No High Jump)
 
-> Door to Launch Tunnels Shaft; Heals? False
+> Door to Robot Regime; Heals? False
   * Layers: default
-  * Charge Beam Door to Launch Tunnels Shaft/Door to Launch Tunnel South
+  * Charge Beam Door to Robot Regime/Door to Spider Boost Tunnel South
   * Extra - actor_name: Door002
   * Extra - actor_type: doorchargecharge
-  > Door to Omega Shaft West
+  > Door to Robot Retreat
       All of the following:
           Morph Ball
           Lightning Armor or Normal Damage ≥ 100
@@ -289,15 +289,15 @@ Extra - asset_id: collision_camera_007
               Normal Damage ≥ 100
               Lightning Armor and Movement (Intermediate)
 
-> Dock to Launch Tunnels Shaft; Heals? False
+> Dock to Robot Regime; Heals? False
   * Layers: default
-  * Open Passage to Launch Tunnels Shaft/Dock to Launch Tunnel South
-  > Door to Omega Shaft West
+  * Open Passage to Robot Regime/Dock to Spider Boost Tunnel South
+  > Door to Robot Retreat
       Lightning Armor and Morph Ball
 
-> Tunnel to Omega Shaft West; Heals? False
+> Tunnel to Robot Retreat; Heals? False
   * Layers: default
-  * Tunnel to Omega Shaft West/Tunnel to Launch Tunnel South
+  * Tunnel to Robot Retreat/Tunnel to Spider Boost Tunnel South
   > Right of Pickup
       Morph Ball
 
@@ -305,8 +305,8 @@ Extra - asset_id: collision_camera_007
   * Layers: default
   > Pickup (Energy Tank)
       Lay Power Bomb
-  > Tunnel to Omega Shaft West
-      Morph Ball and After Area 7 - Launch Tunnel South Grapple Block Bottom
+  > Tunnel to Robot Retreat
+      Morph Ball and After Area 7 - Spider Boost Tunnel South Grapple Block Bottom
   > Event - Grapple Block Bottom
       Grapple Beam
   > Above Save Station
@@ -316,7 +316,7 @@ Extra - asset_id: collision_camera_007
 
 > Event - Grapple Block Bottom; Heals? False
   * Layers: default
-  * Event Area 7 - Launch Tunnel South Grapple Block Bottom
+  * Event Area 7 - Spider Boost Tunnel South Grapple Block Bottom
   > Right of Pickup
       Trivial
 
@@ -324,7 +324,7 @@ Extra - asset_id: collision_camera_007
   * Layers: default
   > Save Station
       Trivial
-  > Door to Launch Tunnels Shaft
+  > Door to Robot Regime
       Any of the following:
           All of the following:
               Any of the following:
@@ -345,12 +345,12 @@ Extra - asset_id: collision_camera_007
 
 > Event - Grapple Block Top; Heals? False
   * Layers: default
-  * Event Area 7 - Launch Tunnel South Grapple Block Top
-  > Door to Omega Shaft West
+  * Event Area 7 - Spider Boost Tunnel South Grapple Block Top
+  > Door to Robot Retreat
       Trivial
 
 ----------------
-Omega Shaft East
+Laboratory Teleporter East
 Extra - total_boundings: {'x1': -10600.0, 'x2': -8200.0, 'y1': -4000.0, 'y2': 1800.0}
 Extra - polygon: [[-10600.0, 1800.0], [-10600.0, -4000.0], [-8200.0, -4000.0], [-8200.0, 1800.0]]
 Extra - asset_id: collision_camera_008
@@ -363,27 +363,27 @@ Extra - asset_id: collision_camera_008
   > Door to Omega Arena South Access
       Trivial
 
-> Door to Launch Tunnels Shaft; Heals? False
+> Door to Robot Regime; Heals? False
   * Layers: default
-  * Plasma Beam Door to Launch Tunnels Shaft/Door to Omega Shaft East
+  * Plasma Beam Door to Robot Regime/Door to Laboratory Teleporter East
   * Extra - actor_name: Door003
   * Extra - actor_type: doorpowerpower
-  > Door to Omega+ Arena Access (Top)
+  > Door to Wallfire Workstation (Top)
       Defeat Gold Robots
 
-> Door to Omega+ Arena Access (Top); Heals? False
+> Door to Wallfire Workstation (Top); Heals? False
   * Layers: default
-  * Access Locked to Omega+ Arena Access/Door to Omega Shaft East (Top)
+  * Access Locked to Wallfire Workstation/Door to Laboratory Teleporter East (Top)
   * Extra - actor_name: Door004
   * Extra - actor_type: doorclosedpower
-  > Door to Launch Tunnels Shaft
+  > Door to Robot Regime
       Defeat Gold Robots
   > Door to Omega Arena South Access
       Trivial
 
-> Door to Omega+ Arena Access (Bottom); Heals? False
+> Door to Wallfire Workstation (Bottom); Heals? False
   * Layers: default
-  * Charge Beam Door to Omega+ Arena Access/Door to Omega Shaft East (Bottom)
+  * Charge Beam Door to Wallfire Workstation/Door to Laboratory Teleporter East (Bottom)
   * Extra - actor_name: Door005
   * Extra - actor_type: doorchargecharge
   > Door to Omega Arena South Access
@@ -393,14 +393,14 @@ Extra - asset_id: collision_camera_008
 
 > Door to Omega Arena South Access; Heals? False
   * Layers: default
-  * Spazer Beam Door to Omega Arena South Access/Door to Omega Shaft East
+  * Spazer Beam Door to Omega Arena South Access/Door to Laboratory Teleporter East
   * Extra - actor_name: Door007
   * Extra - actor_type: doorpowerpower
   > Teleporter
       Trivial
-  > Door to Omega+ Arena Access (Top)
+  > Door to Wallfire Workstation (Top)
       Trivial
-  > Door to Omega+ Arena Access (Bottom)
+  > Door to Wallfire Workstation (Bottom)
       Morph Ball
   > Event - Teleporter Unlocked
       Trivial
@@ -416,9 +416,9 @@ Omega+ Arena
 Extra - total_boundings: {'x1': -1050.0, 'x2': 3100.0, 'y1': -3700.0, 'y2': -2400.0}
 Extra - polygon: [[-1050.0, -2400.0], [-1050.0, -3700.0], [3100.0, -3700.0], [3100.0, -2400.0]]
 Extra - asset_id: collision_camera_009
-> Door to Omega+ Arena Access; Heals? False
+> Door to Wallfire Workstation; Heals? False
   * Layers: default
-  * Spazer Beam Door to Omega+ Arena Access/Door to Omega+ Arena
+  * Spazer Beam Door to Wallfire Workstation/Door to Omega+ Arena
   * Extra - actor_name: Door006
   * Extra - actor_type: doorpowerpower
   > Room Center
@@ -433,7 +433,7 @@ Extra - asset_id: collision_camera_009
 > Room Center; Heals? False; Default Node
   * Layers: default
   * Extra - start_point_actor_name: ST_Omega_002_Checkpoint
-  > Door to Omega+ Arena Access
+  > Door to Wallfire Workstation
       Trivial
   > Event - Omega Metroid+
       Defeat Omega Metroid+
@@ -447,7 +447,7 @@ Extra - asset_id: collision_camera_009
       Trivial
 
 ----------------
-Launch Tunnels Shaft
+Robot Regime
 Extra - total_boundings: {'x1': -8300.0, 'x2': -4800.0, 'y1': 1200.0, 'y2': 9300.0}
 Extra - polygon: [[-8300.0, 9300.0], [-8300.0, 1200.0], [-4800.0, 1200.0], [-4800.0, 9300.0]]
 Extra - asset_id: collision_camera_010
@@ -458,7 +458,7 @@ Extra - asset_id: collision_camera_010
   * Extra - actor_type: item_missiletank
   > Energy Recharge Station
       Any of the following:
-          Spiderspark (Beginner) and Can Spiderspark
+          Spider Boost (Beginner) and Can Spider Boost
           Grapple Beam and Morph Ball
 
 > Pickup (Aeion Tank); Heals? False
@@ -466,20 +466,20 @@ Extra - asset_id: collision_camera_010
   * Pickup 151; Category? Minor
   * Extra - actor_name: LE_Item_013
   * Extra - actor_type: item_senergytank
-  > Door to Launch Tunnel South
+  > Door to Spider Boost Tunnel South
       All of the following:
           Morph Ball
           Lightning Armor or Defeat Gold Robots
-  > Dock to Launch Tunnel South
-      Spiderspark (Beginner) and Can Spiderspark
+  > Dock to Spider Boost Tunnel South
+      Spider Boost (Beginner) and Can Spider Boost
 
 > Ammo Recharge Station; Heals? False
   * Layers: default
   * Extra - actor_name: LE_Platform_AmmoCharge_001
   * Extra - actor_type: weightactivatedplatform
-  > Door to Launch Tunnel South
+  > Door to Spider Boost Tunnel South
       Trivial
-  > Door to Omega Shaft East
+  > Door to Laboratory Teleporter East
       Trivial
 
 > Energy Recharge Station; Heals? True
@@ -488,7 +488,7 @@ Extra - asset_id: collision_camera_010
   * Extra - actor_type: weightactivatedplatform
   > Pickup (Missile Tank)
       Any of the following:
-          Power Bomb ≥ 2 and Spiderspark (Beginner) and Can Spiderspark
+          Power Bomb ≥ 2 and Spider Boost (Beginner) and Can Spider Boost
           All of the following:
               Grapple Beam and Morph Ball
               Any of the following:
@@ -504,18 +504,18 @@ Extra - asset_id: collision_camera_010
   * Extra - start_point_actor_name: ST_SaveStation003
   > Energy Recharge Station
       Lightning Armor or Morph Ball or Defeat Gold Robots
-  > Door to Launch Tunnel South
+  > Door to Spider Boost Tunnel South
       Lightning Armor or Missile ≥ 10 or Super Missile ≥ 2 or Defeat Gold Robots
-  > Tunnel to Launch Tunnel North
+  > Tunnel to Spider Boost Tunnel North
       All of the following:
           Morph Ball
           Any of the following:
               Space Jump or Spider Ball or Single-wall Wall Jump (Intermediate)
               Bomb and Infinite Bomb Jump (Intermediate)
 
-> Door to Launch Tunnel South; Heals? False
+> Door to Spider Boost Tunnel South; Heals? False
   * Layers: default
-  * Charge Beam Door to Launch Tunnel South/Door to Launch Tunnels Shaft
+  * Charge Beam Door to Spider Boost Tunnel South/Door to Robot Regime
   * Extra - actor_name: Door002
   * Extra - actor_type: doorchargecharge
   > Ammo Recharge Station
@@ -525,32 +525,32 @@ Extra - asset_id: collision_camera_010
           Lightning Armor or Missile ≥ 10 or Super Missile ≥ 2 or Defeat Gold Robots
           Any of the following:
               High Jump Boots or Space Jump or Simple IBJ
-              Spiderspark (Intermediate) and Can Spiderspark
+              Spider Boost (Intermediate) and Can Spider Boost
               Lightning Armor and Walljump (Beginner)
               Morph Ball and Unmorph Extend (Intermediate) and Walljump (Intermediate)
-  > Dock to Launch Tunnel South
+  > Dock to Spider Boost Tunnel South
       Lightning Armor
 
-> Door to Omega Shaft East; Heals? False
+> Door to Laboratory Teleporter East; Heals? False
   * Layers: default
-  * Plasma Beam Door to Omega Shaft East/Door to Launch Tunnels Shaft
+  * Plasma Beam Door to Laboratory Teleporter East/Door to Robot Regime
   * Extra - actor_name: Door003
   * Extra - actor_type: doorpowerpower
   > Ammo Recharge Station
       Trivial
 
-> Tunnel to Launch Tunnel North; Heals? False
+> Tunnel to Spider Boost Tunnel North; Heals? False
   * Layers: default
-  * Tunnel to Launch Tunnel North/Tunnel to Launch Tunnels Shaft
+  * Tunnel to Spider Boost Tunnel North/Tunnel to Robot Regime
   > Save Station
       Morph Ball
 
-> Dock to Launch Tunnel South; Heals? False
+> Dock to Spider Boost Tunnel South; Heals? False
   * Layers: default
-  * Open Passage to Launch Tunnel South/Dock to Launch Tunnels Shaft
+  * Open Passage to Spider Boost Tunnel South/Dock to Robot Regime
   > Pickup (Aeion Tank)
-      After Area 7 - Launch Tunnel South Grapple Block Top and Spiderspark (Beginner) and Can Spiderspark
-  > Door to Launch Tunnel South
+      After Area 7 - Spider Boost Tunnel South Grapple Block Top and Spider Boost (Beginner) and Can Spider Boost
+  > Door to Spider Boost Tunnel South
       Lightning Armor
 
 ----------------
@@ -563,7 +563,7 @@ Extra - asset_id: collision_camera_011
   * Pickup 143; Category? Minor
   * Extra - actor_name: LE_Item_002
   * Extra - actor_type: item_missiletank
-  > Door to Exit Puzzle Room 1
+  > Door to Grapple Puzzle Madness
       All of the following:
           Lay Power Bomb
           Phase Drift or Spider Ball
@@ -586,7 +586,7 @@ Extra - asset_id: collision_camera_011
               Morph Ball and Melee Clip (Intermediate) and Out of Bounds Movement (Beginner)
               Any of the following:
                   Baby Metroid or High Jump Boots or Space Jump
-                  Spiderspark (Advanced) and Can Spiderspark
+                  Spider Boost (Advanced) and Can Spider Boost
                   Bomb and Infinite Bomb Jump (Intermediate)
 
 > Chozo Seal; Heals? False
@@ -597,7 +597,7 @@ Extra - asset_id: collision_camera_011
   * Extra - start_point_actor_name: ST_ChozoUnlockAreaDNA_Checkpoint
   > Save Station
       Movement (Beginner) or Normal Damage ≥ 99
-  > Door to Entrance Shaft
+  > Door to Laboratory Teleporter West
       All of the following:
           Combat (Intermediate) or Normal Damage ≥ 150
           Any of the following:
@@ -654,9 +654,9 @@ Extra - asset_id: collision_camera_011
   > Inside Mountain
       Lay Any Bomb
 
-> Door to Exit Puzzle Room 1; Heals? False
+> Door to Grapple Puzzle Madness; Heals? False
   * Layers: default
-  * Power Beam Door to Exit Puzzle Room 1/Door to Transport to Area 6
+  * Power Beam Door to Grapple Puzzle Madness/Door to Transport to Area 6
   * Extra - actor_name: Door008
   * Extra - actor_type: doorpowerpower
   > Pickup (Missile Tank West)
@@ -670,17 +670,17 @@ Extra - asset_id: collision_camera_011
   > Below West Pickup
       Trivial
 
-> Door to Omega+ Arena Access; Heals? False
+> Door to Wallfire Workstation; Heals? False
   * Layers: default
-  * Access Locked to Omega+ Arena Access/Door to Transport to Area 6
+  * Access Locked to Wallfire Workstation/Door to Transport to Area 6
   * Extra - actor_name: Door011
   * Extra - actor_type: doorclosedpower
   > Top of Mountain
       Trivial
 
-> Door to Entrance Shaft; Heals? False
+> Door to Laboratory Teleporter West; Heals? False
   * Layers: default
-  * Power Beam Door to Entrance Shaft/Door to Transport to Area 6
+  * Power Beam Door to Laboratory Teleporter West/Door to Transport to Area 6
   * Extra - actor_name: Door012
   * Extra - actor_type: doorpowerpower
   > Chozo Seal
@@ -708,7 +708,7 @@ Extra - asset_id: collision_camera_011
       Defeat Gold Robots
   > Save Station
       Defeat Gold Robots
-  > Door to Omega+ Arena Access
+  > Door to Wallfire Workstation
       Any of the following:
           Climb Rooms Vertically (No High Jump)
           Charge Beam and Ice Beam and Stand on Frozen Enemy (Beginner)
@@ -723,7 +723,7 @@ Extra - asset_id: collision_camera_011
   * Layers: default
   > Chozo Seal
       Climb Rooms Vertically (No High Jump)
-  > Door to Exit Puzzle Room 1
+  > Door to Grapple Puzzle Madness
       Any of the following:
           Single-wall Wall Jump (Beginner) or Super Jump (Intermediate) or Climb Rooms Vertically (High Jump)
           Morph Ball and Unmorph Extend (Beginner)
@@ -752,16 +752,16 @@ Extra - asset_id: collision_camera_012
   * Pickup 147; Category? Minor
   * Extra - actor_name: LE_Item_009
   * Extra - actor_type: item_missiletank
-  > Door to Omega Shaft East
+  > Door to Laboratory Teleporter East
       All of the following:
           Morph Ball and Screw Attack
           Lightning Armor or Spider Ball
   > Door to Omega Arena South
-      Spiderspark (Beginner) and Can Spiderspark
+      Spider Boost (Beginner) and Can Spider Boost
 
-> Door to Omega Shaft East; Heals? False
+> Door to Laboratory Teleporter East; Heals? False
   * Layers: default
-  * Spazer Beam Door to Omega Shaft East/Door to Omega Arena South Access
+  * Spazer Beam Door to Laboratory Teleporter East/Door to Omega Arena South Access
   * Extra - actor_name: Door007
   * Extra - actor_type: doorpowerpower
   > Door to Omega Arena South
@@ -773,8 +773,8 @@ Extra - asset_id: collision_camera_012
   * Extra - actor_name: Door015
   * Extra - actor_type: doorpowerpower
   > Pickup (Missile Tank)
-      Spiderspark (Beginner) and Can Spiderspark
-  > Door to Omega Shaft East
+      Spider Boost (Beginner) and Can Spider Boost
+  > Door to Laboratory Teleporter East
       Lightning Armor or Screw Attack
   > Start Point
       Trivial
@@ -782,7 +782,7 @@ Extra - asset_id: collision_camera_012
 > Tunnel to Omega Arena South; Heals? False
   * Layers: default
   * Tunnel to Omega Arena South/Tunnel to Omega Arena South Access
-  > Door to Omega Shaft East
+  > Door to Laboratory Teleporter East
       Trivial
 
 > Start Point; Heals? False; Default Node
@@ -879,7 +879,7 @@ Extra - asset_id: collision_camera_015
   * Pickup 145; Category? Minor
   * Extra - actor_name: LE_Item_004
   * Extra - actor_type: item_missiletank
-  > Tunnel to Omega Shaft West
+  > Tunnel to Robot Retreat
       Lay Any Bomb
 
 > Door to Omega Arena North; Heals? False
@@ -889,26 +889,26 @@ Extra - asset_id: collision_camera_015
   * Extra - actor_type: doorpowerpower
   > Pickup (Missile Tank)
       Morph Ball and Power Bomb ≥ 2
-  > Door to Omega Shaft West
+  > Door to Robot Retreat
       Any of the following:
           Lightning Armor or Space Jump
-          Spiderspark (Intermediate) and Can Spiderspark
+          Spider Boost (Intermediate) and Can Spider Boost
   > Start Point
       Trivial
 
-> Door to Omega Shaft West; Heals? False
+> Door to Robot Retreat; Heals? False
   * Layers: default
-  * Power Beam Door to Omega Shaft West/Door to Omega Arena North Access
+  * Power Beam Door to Robot Retreat/Door to Omega Arena North Access
   * Extra - actor_name: Door018
   * Extra - actor_type: doorpowerpower
   > Door to Omega Arena North
       Any of the following:
           Lightning Armor or Space Jump
-          Spiderspark (Intermediate) and Can Spiderspark
+          Spider Boost (Intermediate) and Can Spider Boost
 
-> Tunnel to Omega Shaft West; Heals? False
+> Tunnel to Robot Retreat; Heals? False
   * Layers: default
-  * Tunnel with Bomb Block to Omega Shaft West/Tunnel to Omega Arena North Access
+  * Tunnel with Bomb Block to Robot Retreat/Tunnel to Omega Arena North Access
 
 > Start Point; Heals? False; Default Node
   * Layers: default
@@ -917,7 +917,7 @@ Extra - asset_id: collision_camera_015
       Trivial
 
 ----------------
-Omega+ Arena Access
+Wallfire Workstation
 Extra - total_boundings: {'x1': -8300.0, 'x2': -950.0, 'y1': -6000.0, 'y2': 500.0}
 Extra - polygon: [[-8300.0, 500.0], [-8300.0, -4800.0], [-6200.0, -5200.0], [-6200.0, -6000.0], [-3300.0, -6000.0], [-3300.0, -4500.0], [-950.0, -4300.0], [-950.0, -2000.0], [-1700.0, -1800.0], [-1700.0, 500.0]]
 Extra - asset_id: collision_camera_016
@@ -926,14 +926,14 @@ Extra - asset_id: collision_camera_016
   * Extra - actor_name: LE_Platform_SaveStation005
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: ST_SaveStation005
-  > Door to Omega Shaft East (Bottom)
+  > Door to Laboratory Teleporter East (Bottom)
       Trivial
   > Lower Level
       Lay Power Bomb
 
-> Door to Omega Shaft East (Top); Heals? False
+> Door to Laboratory Teleporter East (Top); Heals? False
   * Layers: default
-  * Power Beam Door to Omega Shaft East/Door to Omega+ Arena Access (Top)
+  * Power Beam Door to Laboratory Teleporter East/Door to Wallfire Workstation (Top)
   * Extra - actor_name: Door004
   * Extra - actor_type: doorclosedpower
   > Door to Omega+ Arena
@@ -941,9 +941,9 @@ Extra - asset_id: collision_camera_016
   > Below Pickup
       Lightning Armor or Defeat Gold Robots
 
-> Door to Omega Shaft East (Bottom); Heals? False
+> Door to Laboratory Teleporter East (Bottom); Heals? False
   * Layers: default
-  * Charge Beam Door to Omega Shaft East/Door to Omega+ Arena Access (Bottom)
+  * Charge Beam Door to Laboratory Teleporter East/Door to Wallfire Workstation (Bottom)
   * Extra - actor_name: Door005
   * Extra - actor_type: doorchargecharge
   > Save Station
@@ -951,10 +951,10 @@ Extra - asset_id: collision_camera_016
 
 > Door to Omega+ Arena; Heals? False
   * Layers: default
-  * Spazer Beam Door to Omega+ Arena/Door to Omega+ Arena Access
+  * Spazer Beam Door to Omega+ Arena/Door to Wallfire Workstation
   * Extra - actor_name: Door006
   * Extra - actor_type: doorpowerpower
-  > Door to Omega Shaft East (Top)
+  > Door to Laboratory Teleporter East (Top)
       All of the following:
           Single-wall Wall Jump (Intermediate) or Walljump (Intermediate) or Climb Rooms Vertically (No High Jump)
           Phase Drift or Defeat Non-Counterable Enemies
@@ -969,7 +969,7 @@ Extra - asset_id: collision_camera_016
 
 > Door to Transport to Area 6; Heals? False
   * Layers: default
-  * Power Beam Door to Transport to Area 6/Door to Omega+ Arena Access
+  * Power Beam Door to Transport to Area 6/Door to Wallfire Workstation
   * Extra - actor_name: Door011
   * Extra - actor_type: doorclosedpower
   > Lower Level
@@ -990,7 +990,7 @@ Extra - asset_id: collision_camera_016
 
 > Below Pickup; Heals? False
   * Layers: default
-  > Door to Omega Shaft East (Top)
+  > Door to Laboratory Teleporter East (Top)
       All of the following:
           Lightning Armor or Defeat Gold Robots
           Any of the following:
@@ -1021,7 +1021,7 @@ Extra - asset_id: collision_camera_016
       Trivial
 
 ----------------
-Exit Puzzle Room 2
+Grapple Puzzle Foyer
 Extra - total_boundings: {'x1': -24750.0, 'x2': -22600.0, 'y1': -13100.0, 'y2': -11000.0}
 Extra - polygon: [[-24750.0, -11000.0], [-24750.0, -13100.0], [-22600.0, -13100.0], [-22600.0, -11000.0]]
 Extra - asset_id: collision_camera_017
@@ -1030,22 +1030,22 @@ Extra - asset_id: collision_camera_017
   * Pickup 149; Category? Minor
   * Extra - actor_name: LE_Item_011
   * Extra - actor_type: item_senergytank
-  > Door to Exit Puzzle Room 1 (Bottom)
+  > Door to Grapple Puzzle Madness (Bottom)
       Trivial
   > Middle Level
       Morph Ball and Screw Attack
 
-> Door to Exit Puzzle Room 1 (Top); Heals? False
+> Door to Grapple Puzzle Madness (Top); Heals? False
   * Layers: default
-  * Power Beam Door to Exit Puzzle Room 1/Door to Exit Puzzle Room 2 (Top)
+  * Power Beam Door to Grapple Puzzle Madness/Door to Grapple Puzzle Foyer (Top)
   * Extra - actor_name: Door010
   * Extra - actor_type: doorpowerpower
   > Door to Transport to Area 8
       Trivial
 
-> Door to Exit Puzzle Room 1 (Bottom); Heals? False
+> Door to Grapple Puzzle Madness (Bottom); Heals? False
   * Layers: default
-  * Power Beam Door to Exit Puzzle Room 1/Door to Exit Puzzle Room 2 (Bottom)
+  * Power Beam Door to Grapple Puzzle Madness/Door to Grapple Puzzle Foyer (Bottom)
   * Extra - actor_name: Door013
   * Extra - actor_type: doorpowerpower
   > Pickup (Aeion Tank)
@@ -1053,17 +1053,17 @@ Extra - asset_id: collision_camera_017
 
 > Door to Transport to Area 8; Heals? False
   * Layers: default
-  * Power Beam Door to Transport to Area 8/Door to Exit Puzzle Room 2
+  * Power Beam Door to Transport to Area 8/Door to Grapple Puzzle Foyer
   * Extra - actor_name: Door014
   * Extra - actor_type: doorpowerpower
-  > Door to Exit Puzzle Room 1 (Top)
+  > Door to Grapple Puzzle Madness (Top)
       Trivial
   > Middle Level
       Screw Attack
 
-> Tunnel to Exit Puzzle Room 1; Heals? False
+> Tunnel to Grapple Puzzle Madness; Heals? False
   * Layers: default
-  * Tunnel with Bomb Block to Exit Puzzle Room 1/Tunnel to Exit Puzzle Room 2
+  * Tunnel with Bomb Block to Grapple Puzzle Madness/Tunnel to Grapple Puzzle Foyer
   > Middle Level
       Morph Ball
 
@@ -1073,11 +1073,11 @@ Extra - asset_id: collision_camera_017
       All of the following:
           Screw Attack
           Space Jump or Walljump (Beginner)
-  > Tunnel to Exit Puzzle Room 1
-      After Area 7 - Exit Puzzle Room 1 Grapple Block Left and Climb Rooms Vertically (No High Jump) and Lay Any Bomb
+  > Tunnel to Grapple Puzzle Madness
+      After Area 7 - Grapple Puzzle Madness Grapple Block Left and Climb Rooms Vertically (No High Jump) and Lay Any Bomb
 
 ----------------
-Omega Shaft West
+Robot Retreat
 Extra - total_boundings: {'x1': -18200.0, 'x2': -16200.0, 'y1': 1300.0, 'y2': 8100.0}
 Extra - polygon: [[-18200.0, 8100.0], [-18200.0, 1300.0], [-16200.0, 1300.0], [-16200.0, 2600.0], [-16400.0, 2600.0], [-16400.0, 3200.0], [-16200.0, 3200.0], [-16200.0, 8100.0]]
 Extra - asset_id: collision_camera_018
@@ -1085,14 +1085,14 @@ Extra - asset_id: collision_camera_018
   * Layers: default
   * Extra - actor_name: LE_Platform_AmmoCharge_002
   * Extra - actor_type: weightactivatedplatform
-  > Tunnel to Launch Tunnel North (Top)
+  > Tunnel to Spider Boost Tunnel North (Top)
       Lay Any Bomb
   > Above Bomb Floor
       Trivial
 
-> Door to Launch Tunnel South; Heals? False
+> Door to Spider Boost Tunnel South; Heals? False
   * Layers: default
-  * Charge Beam Door to Launch Tunnel South/Door to Omega Shaft West
+  * Charge Beam Door to Spider Boost Tunnel South/Door to Robot Retreat
   * Extra - actor_name: Door001
   * Extra - actor_type: doorchargecharge
   > Door to Omega Arena North Access
@@ -1102,9 +1102,9 @@ Extra - asset_id: collision_camera_018
   > Aeion Orb
       Lightning Armor or Defeat Gold Robots
 
-> Door to Entrance Shaft; Heals? False
+> Door to Laboratory Teleporter West; Heals? False
   * Layers: default
-  * Power Beam Door to Entrance Shaft/Door to Omega Shaft West
+  * Power Beam Door to Laboratory Teleporter West/Door to Robot Retreat
   * Extra - actor_name: Door017
   * Extra - actor_type: doorpowerpower
   > Aeion Orb
@@ -1120,10 +1120,10 @@ Extra - asset_id: collision_camera_018
 
 > Door to Omega Arena North Access; Heals? False
   * Layers: default
-  * Power Beam Door to Omega Arena North Access/Door to Omega Shaft West
+  * Power Beam Door to Omega Arena North Access/Door to Robot Retreat
   * Extra - actor_name: Door018
   * Extra - actor_type: doorpowerpower
-  > Door to Launch Tunnel South
+  > Door to Spider Boost Tunnel South
       Lightning Armor or Defeat Gold Robots
   > Above Bomb Floor
       Any of the following:
@@ -1135,40 +1135,40 @@ Extra - asset_id: collision_camera_018
               High Jump Boots and Lay Bomb
               Spider Ball or Mid-Air Morph (Beginner)
 
-> Tunnel to Launch Tunnel North (Top); Heals? False
+> Tunnel to Spider Boost Tunnel North (Top); Heals? False
   * Layers: default
-  * Tunnel with Bomb Block to Launch Tunnel North/Tunnel to Omega Shaft West (Top)
+  * Tunnel with Bomb Block to Spider Boost Tunnel North/Tunnel to Robot Retreat (Top)
   > Ammo Recharge Station
       Trivial
 
-> Tunnel to Launch Tunnel North (Bottom); Heals? False
+> Tunnel to Spider Boost Tunnel North (Bottom); Heals? False
   * Layers: default
-  * Tunnel with Bomb Block to Launch Tunnel North/Tunnel to Omega Shaft West (Bottom)
+  * Tunnel with Bomb Block to Spider Boost Tunnel North/Tunnel to Robot Retreat (Bottom)
   > Above Bomb Floor
       Trivial
 
-> Tunnel to Launch Tunnel South; Heals? False
+> Tunnel to Spider Boost Tunnel South; Heals? False
   * Layers: default
-  * Tunnel to Launch Tunnel South/Tunnel to Omega Shaft West
+  * Tunnel to Spider Boost Tunnel South/Tunnel to Robot Retreat
   > Aeion Orb
       Morph Ball
 
 > Tunnel to Omega Arena North Access; Heals? False
   * Layers: default
-  * Tunnel with Bomb Block to Omega Arena North Access/Tunnel to Omega Shaft West
+  * Tunnel with Bomb Block to Omega Arena North Access/Tunnel to Robot Retreat
   > Above Bomb Floor
       Morph Ball
 
 > Aeion Orb; Heals? False
   * Layers: default
-  > Door to Launch Tunnel South
+  > Door to Spider Boost Tunnel South
       All of the following:
           Walljump (Beginner) or Climb Rooms Vertically (No High Jump)
           Lightning Armor or Defeat Gold Robots
-  > Door to Entrance Shaft
+  > Door to Laboratory Teleporter West
       Trivial
-  > Tunnel to Launch Tunnel South
-      Morph Ball and After Area 7 - Launch Tunnel South Grapple Block Bottom
+  > Tunnel to Spider Boost Tunnel South
+      Morph Ball and After Area 7 - Spider Boost Tunnel South Grapple Block Bottom
 
 > Above Bomb Floor; Heals? False
   * Layers: default
@@ -1176,11 +1176,11 @@ Extra - asset_id: collision_camera_018
       Walljump (Beginner) or Climb Rooms Vertically (No High Jump)
   > Door to Omega Arena North Access
       Lay Any Bomb
-  > Tunnel to Launch Tunnel North (Bottom)
+  > Tunnel to Spider Boost Tunnel North (Bottom)
       Lay Any Bomb
 
 ----------------
-Launch Tunnel North
+Spider Boost Tunnel North
 Extra - total_boundings: {'x1': -16300.0, 'x2': -8200.0, 'y1': 6600.0, 'y2': 8100.0}
 Extra - polygon: [[-16300.0, 8100.0], [-16300.0, 6600.0], [-8200.0, 6600.0], [-8200.0, 8100.0]]
 Extra - asset_id: collision_camera_019
@@ -1189,32 +1189,32 @@ Extra - asset_id: collision_camera_019
   * Pickup 150; Category? Minor
   * Extra - actor_name: LE_Item_012
   * Extra - actor_type: item_supermissiletank
-  > Tunnel to Omega Shaft West (Bottom)
+  > Tunnel to Robot Retreat (Bottom)
       Defeat Gold Robots and Lay Any Bomb
 
-> Tunnel to Omega Shaft West (Top); Heals? False
+> Tunnel to Robot Retreat (Top); Heals? False
   * Layers: default
-  * Tunnel with Bomb Block to Omega Shaft West/Tunnel to Launch Tunnel North (Top)
-  > Tunnel to Launch Tunnels Shaft
-      Spiderspark (Beginner) and Can Spiderspark
+  * Tunnel with Bomb Block to Robot Retreat/Tunnel to Spider Boost Tunnel North (Top)
+  > Tunnel to Robot Regime
+      Spider Boost (Beginner) and Can Spider Boost
 
-> Tunnel to Omega Shaft West (Bottom); Heals? False
+> Tunnel to Robot Retreat (Bottom); Heals? False
   * Layers: default
-  * Tunnel with Bomb Block to Omega Shaft West/Tunnel to Launch Tunnel North (Bottom)
+  * Tunnel with Bomb Block to Robot Retreat/Tunnel to Spider Boost Tunnel North (Bottom)
   > Pickup (Super Missile Tank)
       All of the following:
           Lightning Armor and Morph Ball
           Any of the following:
               Phase Drift
               All of the following:
-                  Movement (Intermediate) and Spiderspark (Intermediate) and Can Spiderspark
+                  Movement (Intermediate) and Spider Boost (Intermediate) and Can Spider Boost
                   Bomb or Power Bomb ≥ 2
 
-> Tunnel to Launch Tunnels Shaft; Heals? False
+> Tunnel to Robot Regime; Heals? False
   * Layers: default
-  * Tunnel to Launch Tunnels Shaft/Tunnel to Launch Tunnel North
-  > Tunnel to Omega Shaft West (Top)
-      Spiderspark (Beginner) and Can Spiderspark
+  * Tunnel to Robot Regime/Tunnel to Spider Boost Tunnel North
+  > Tunnel to Robot Retreat (Top)
+      Spider Boost (Beginner) and Can Spider Boost
 
 ----------------
 Transport to Area 8
@@ -1227,7 +1227,7 @@ Extra - asset_id: collision_camera_021
   * Extra - actor_name: LE_Platform_Elevator_FromArea10
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: ST_FromArea10
-  > Door to Exit Puzzle Room 2
+  > Door to Grapple Puzzle Foyer
       All of the following:
           Morph Ball
           Any of the following:
@@ -1238,9 +1238,9 @@ Extra - asset_id: collision_camera_021
               Normal Damage ≥ 199 and Defeat Non-Counterable Enemies
               Movement (Intermediate) and Normal Damage ≥ 99
 
-> Door to Exit Puzzle Room 2; Heals? False
+> Door to Grapple Puzzle Foyer; Heals? False
   * Layers: default
-  * Power Beam Door to Exit Puzzle Room 2/Door to Transport to Area 8
+  * Power Beam Door to Grapple Puzzle Foyer/Door to Transport to Area 8
   * Extra - actor_name: Door014
   * Extra - actor_type: doorpowerpower
   > Elevator to Area 8
@@ -1257,7 +1257,7 @@ Extra - asset_id: collision_camera_021
 > Event - Grapple Block; Heals? False
   * Layers: default
   * Event Area 7 - Transport to Area 8 Grapple Block
-  > Door to Exit Puzzle Room 2
+  > Door to Grapple Puzzle Foyer
       All of the following:
           Morph Ball
           Lay Any Bomb or Shoot Any Missile

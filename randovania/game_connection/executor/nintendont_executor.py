@@ -3,8 +3,8 @@ from __future__ import annotations
 import asyncio
 import dataclasses
 import struct
-from asyncio import StreamReader, StreamWriter
 
+from randovania.game_connection.executor.common_socket_holder import CommonSocketHolder
 from randovania.game_connection.executor.memory_operation import (
     MemoryOperation,
     MemoryOperationException,
@@ -12,11 +12,8 @@ from randovania.game_connection.executor.memory_operation import (
 )
 
 
-@dataclasses.dataclass(frozen=True)
-class SocketHolder:
-    reader: StreamReader
-    writer: StreamWriter
-    api_version: int
+@dataclasses.dataclass()
+class SocketHolder(CommonSocketHolder):
     max_input: int
     max_output: int
     max_addresses: int
@@ -135,7 +132,7 @@ class NintendontExecutor(MemoryOperationExecutor):
             self._socket = SocketHolder(reader, writer, api_version, max_input, max_output, max_addresses)
             return None
 
-        except (OSError, asyncio.TimeoutError, struct.error, UnicodeError) as e:
+        except (TimeoutError, OSError, struct.error, UnicodeError) as e:
             # UnicodeError is for some invalid ip addresses
             self._socket = None
             message = f"Unable to connect to {self._ip}:{self._port} - ({type(e).__name__}) {e}"
@@ -218,7 +215,7 @@ class NintendontExecutor(MemoryOperationExecutor):
                 else:
                     all_responses.append(b"")
 
-        except (OSError, asyncio.TimeoutError) as e:
+        except (TimeoutError, OSError) as e:
             if isinstance(e, asyncio.TimeoutError):
                 self.logger.warning(f"Timeout when reading response from {self._ip}")
                 self._socket_error = MemoryOperationException("Timeout when reading response")

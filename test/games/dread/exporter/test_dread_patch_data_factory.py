@@ -105,14 +105,16 @@ def test_pickup_data_for_pb_expansion(locked, dread_game_description, preset_man
 
     # Assert
     assert result == [
-        [
-            {"item_id": "ITEM_WEAPON_POWER_BOMB_MAX", "quantity": 2},
-        ]
-        if locked
-        else [
-            {"item_id": "ITEM_WEAPON_POWER_BOMB_MAX", "quantity": 2},
-            {"item_id": "ITEM_WEAPON_POWER_BOMB", "quantity": 1},
-        ]
+        (
+            [
+                {"item_id": "ITEM_WEAPON_POWER_BOMB_MAX", "quantity": 2},
+            ]
+            if locked
+            else [
+                {"item_id": "ITEM_WEAPON_POWER_BOMB_MAX", "quantity": 2},
+                {"item_id": "ITEM_WEAPON_POWER_BOMB", "quantity": 1},
+            ]
+        )
     ]
 
 

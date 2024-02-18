@@ -119,7 +119,7 @@ class NetworkClient:
     _current_user: User | None = None
     _connection_state: ConnectionState
     _call_lock: asyncio.Lock
-    _connect_task: asyncio.Task | None = None
+    _connect_lock: asyncio.Lock
     _waiting_for_on_connect: asyncio.Future | None = None
     _restore_session_task: asyncio.Task | None = None
     _connect_error: str | None = None
@@ -144,6 +144,7 @@ class NetworkClient:
         self._connection_state = ConnectionState.Disconnected
         self.sio = socketio.AsyncClient(ssl_verify=configuration.get("verify_ssl", True), reconnection=False)
         self._call_lock = asyncio.Lock()
+        self._connect_lock = asyncio.Lock()
         self._current_timeout = _MINIMUM_TIMEOUT
         self._sessions_interested_in = set()
         self._tracking_worlds = set()
@@ -184,7 +185,7 @@ class NetworkClient:
     def has_previous_session(self) -> bool:
         return self.session_data_path.is_file()
 
-    async def _internal_connect_to_server(self):
+    async def _internal_connect_to_server(self) -> None:
         import aiohttp.client_exceptions
 
         if self.sio.connected:
@@ -242,15 +243,12 @@ class NetworkClient:
                 self._waiting_for_on_connect.set_exception(error_message)
             self._waiting_for_on_connect = None
 
-    def connect_to_server(self) -> asyncio.Task:
-        if self._connect_task is None:
-            self.logger.debug("creating new _connect_task")
-            self._connect_task = asyncio.create_task(self._internal_connect_to_server())
-            self._connect_task.add_done_callback(lambda _: setattr(self, "_connect_task", None))
-        else:
-            self.logger.debug("_connect_task already exists")
-
-        return self._connect_task
+    async def connect_to_server(self) -> None:
+        async with self._connect_lock:
+            try:
+                return await self._internal_connect_to_server()
+            except asyncio.CancelledError:
+                return await self.disconnect_from_server()
 
     async def disconnect_from_server(self):
         self.logger.debug("will disconnect")

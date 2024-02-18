@@ -20,6 +20,7 @@ _FIELDS = [
     "area3_interior_shortcut_no_grapple",
     "charge_door_buff",
     "beam_door_buff",
+    "beam_burst_buff",
     "nerf_super_missiles",
     "surface_crumbles",
     "area1_crumbles",

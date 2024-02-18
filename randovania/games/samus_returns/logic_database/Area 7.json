@@ -9,7 +9,7 @@
         "scenario_id": "s090_area9"
     },
     "areas": {
-        "Entrance Shaft": {
+        "Laboratory Teleporter West": {
             "default_node": "Save Station",
             "extra": {
                 "total_boundings": {
@@ -135,7 +135,7 @@
                                 "negate": false
                             }
                         },
-                        "Door to Omega Shaft West": {
+                        "Door to Robot Retreat": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -165,7 +165,7 @@
                     },
                     "valid_starting_location": true,
                     "connections": {
-                        "Door to Omega Shaft West": {
+                        "Door to Robot Retreat": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -305,7 +305,7 @@
                     "default_connection": {
                         "region": "Area 7",
                         "area": "Transport to Area 6",
-                        "node": "Door to Entrance Shaft"
+                        "node": "Door to Laboratory Teleporter West"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -344,13 +344,13 @@
                                                                     "items": [
                                                                         {
                                                                             "type": "template",
-                                                                            "data": "Can Spiderspark"
+                                                                            "data": "Can Spider Boost"
                                                                         },
                                                                         {
                                                                             "type": "resource",
                                                                             "data": {
                                                                                 "type": "tricks",
-                                                                                "name": "Spiderspark",
+                                                                                "name": "Spider Boost",
                                                                                 "amount": 1,
                                                                                 "negate": false
                                                                             }
@@ -578,7 +578,7 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Can Spiderspark"
+                                        "data": "Can Spider Boost"
                                     },
                                     {
                                         "type": "resource",
@@ -593,7 +593,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "tricks",
-                                            "name": "Spiderspark",
+                                            "name": "Spider Boost",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -603,7 +603,7 @@
                         }
                     }
                 },
-                "Door to Omega Shaft West": {
+                "Door to Robot Retreat": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -623,8 +623,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 7",
-                        "area": "Omega Shaft West",
-                        "node": "Door to Entrance Shaft"
+                        "area": "Robot Retreat",
+                        "node": "Door to Laboratory Teleporter West"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -1345,13 +1345,13 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Can Spiderspark"
+                                        "data": "Can Spider Boost"
                                     },
                                     {
                                         "type": "resource",
                                         "data": {
                                             "type": "tricks",
-                                            "name": "Spiderspark",
+                                            "name": "Spider Boost",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -1388,7 +1388,7 @@
                 }
             }
         },
-        "Exit Puzzle Room 1": {
+        "Grapple Puzzle Madness": {
             "default_node": null,
             "extra": {
                 "total_boundings": {
@@ -1439,7 +1439,7 @@
                     "default_connection": {
                         "region": "Area 7",
                         "area": "Transport to Area 6",
-                        "node": "Door to Exit Puzzle Room 1"
+                        "node": "Door to Grapple Puzzle Madness"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -1447,7 +1447,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Exit Puzzle Room 2 (Top)": {
+                        "Door to Grapple Puzzle Foyer (Top)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1465,7 +1465,7 @@
                         }
                     }
                 },
-                "Door to Exit Puzzle Room 2 (Top)": {
+                "Door to Grapple Puzzle Foyer (Top)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1485,8 +1485,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 7",
-                        "area": "Exit Puzzle Room 2",
-                        "node": "Door to Exit Puzzle Room 1 (Top)"
+                        "area": "Grapple Puzzle Foyer",
+                        "node": "Door to Grapple Puzzle Madness (Top)"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -1503,7 +1503,7 @@
                         }
                     }
                 },
-                "Door to Exit Puzzle Room 2 (Bottom)": {
+                "Door to Grapple Puzzle Foyer (Bottom)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1523,8 +1523,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 7",
-                        "area": "Exit Puzzle Room 2",
-                        "node": "Door to Exit Puzzle Room 1 (Bottom)"
+                        "area": "Grapple Puzzle Foyer",
+                        "node": "Door to Grapple Puzzle Madness (Bottom)"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -1554,7 +1554,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "events",
-                                            "name": "Area 7 - Exit Puzzle Room 1 Grapple Block Right",
+                                            "name": "Area 7 - Grapple Puzzle Madness Grapple Block Right",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -1568,7 +1568,7 @@
                         }
                     }
                 },
-                "Tunnel to Exit Puzzle Room 2": {
+                "Tunnel to Grapple Puzzle Foyer": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1585,8 +1585,8 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Area 7",
-                        "area": "Exit Puzzle Room 2",
-                        "node": "Tunnel to Exit Puzzle Room 1"
+                        "area": "Grapple Puzzle Foyer",
+                        "node": "Tunnel to Grapple Puzzle Madness"
                     },
                     "default_dock_weakness": "Tunnel with Bomb Block",
                     "exclude_from_dock_rando": false,
@@ -1696,7 +1696,7 @@
                                 ]
                             }
                         },
-                        "Door to Exit Puzzle Room 2 (Bottom)": {
+                        "Door to Grapple Puzzle Foyer (Bottom)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1718,7 +1718,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "events",
-                                            "name": "Area 7 - Exit Puzzle Room 1 Grapple Block Right",
+                                            "name": "Area 7 - Grapple Puzzle Madness Grapple Block Right",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -1748,7 +1748,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "events",
-                                            "name": "Area 7 - Exit Puzzle Room 1 Grapple Block Middle",
+                                            "name": "Area 7 - Grapple Puzzle Madness Grapple Block Middle",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -1794,7 +1794,7 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "event_name": "Area 7 - Exit Puzzle Room 1 Grapple Block Left",
+                    "event_name": "Area 7 - Grapple Puzzle Madness Grapple Block Left",
                     "connections": {
                         "Middle Level": {
                             "type": "and",
@@ -1819,9 +1819,9 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "event_name": "Area 7 - Exit Puzzle Room 1 Grapple Block Middle",
+                    "event_name": "Area 7 - Grapple Puzzle Madness Grapple Block Middle",
                     "connections": {
-                        "Tunnel to Exit Puzzle Room 2": {
+                        "Tunnel to Grapple Puzzle Foyer": {
                             "type": "template",
                             "data": "Lay Any Bomb"
                         }
@@ -1841,7 +1841,7 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "event_name": "Area 7 - Exit Puzzle Room 1 Grapple Block Right",
+                    "event_name": "Area 7 - Grapple Puzzle Madness Grapple Block Right",
                     "connections": {
                         "Middle Level": {
                             "type": "template",
@@ -1851,7 +1851,7 @@
                 }
             }
         },
-        "Launch Tunnel South": {
+        "Spider Boost Tunnel South": {
             "default_node": "Save Station",
             "extra": {
                 "total_boundings": {
@@ -1938,7 +1938,7 @@
                         }
                     }
                 },
-                "Door to Omega Shaft West": {
+                "Door to Robot Retreat": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1958,8 +1958,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 7",
-                        "area": "Omega Shaft West",
-                        "node": "Door to Launch Tunnel South"
+                        "area": "Robot Retreat",
+                        "node": "Door to Spider Boost Tunnel South"
                     },
                     "default_dock_weakness": "Charge Beam Door",
                     "exclude_from_dock_rando": false,
@@ -1967,7 +1967,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Launch Tunnels Shaft": {
+                        "Door to Robot Regime": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2010,7 +2010,7 @@
                                 ]
                             }
                         },
-                        "Dock to Launch Tunnels Shaft": {
+                        "Dock to Robot Regime": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -2048,13 +2048,13 @@
                                             "items": [
                                                 {
                                                     "type": "template",
-                                                    "data": "Can Spiderspark"
+                                                    "data": "Can Spider Boost"
                                                 },
                                                 {
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "events",
-                                                        "name": "Area 7 - Launch Tunnel South Grapple Block Top",
+                                                        "name": "Area 7 - Spider Boost Tunnel South Grapple Block Top",
                                                         "amount": 1,
                                                         "negate": false
                                                     }
@@ -2063,7 +2063,7 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "tricks",
-                                                        "name": "Spiderspark",
+                                                        "name": "Spider Boost",
                                                         "amount": 1,
                                                         "negate": false
                                                     }
@@ -2106,7 +2106,7 @@
                         }
                     }
                 },
-                "Door to Launch Tunnels Shaft": {
+                "Door to Robot Regime": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2126,8 +2126,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 7",
-                        "area": "Launch Tunnels Shaft",
-                        "node": "Door to Launch Tunnel South"
+                        "area": "Robot Regime",
+                        "node": "Door to Spider Boost Tunnel South"
                     },
                     "default_dock_weakness": "Charge Beam Door",
                     "exclude_from_dock_rando": false,
@@ -2135,7 +2135,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Omega Shaft West": {
+                        "Door to Robot Retreat": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2235,7 +2235,7 @@
                         }
                     }
                 },
-                "Dock to Launch Tunnels Shaft": {
+                "Dock to Robot Regime": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2252,8 +2252,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Area 7",
-                        "area": "Launch Tunnels Shaft",
-                        "node": "Dock to Launch Tunnel South"
+                        "area": "Robot Regime",
+                        "node": "Dock to Spider Boost Tunnel South"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -2261,7 +2261,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Omega Shaft West": {
+                        "Door to Robot Retreat": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2289,7 +2289,7 @@
                         }
                     }
                 },
-                "Tunnel to Omega Shaft West": {
+                "Tunnel to Robot Retreat": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2306,8 +2306,8 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Area 7",
-                        "area": "Omega Shaft West",
-                        "node": "Tunnel to Launch Tunnel South"
+                        "area": "Robot Retreat",
+                        "node": "Tunnel to Spider Boost Tunnel South"
                     },
                     "default_dock_weakness": "Tunnel",
                     "exclude_from_dock_rando": false,
@@ -2345,7 +2345,7 @@
                             "type": "template",
                             "data": "Lay Power Bomb"
                         },
-                        "Tunnel to Omega Shaft West": {
+                        "Tunnel to Robot Retreat": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2363,7 +2363,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "events",
-                                            "name": "Area 7 - Launch Tunnel South Grapple Block",
+                                            "name": "Area 7 - Spider Boost Tunnel South Grapple Block",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -2443,7 +2443,7 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "event_name": "Area 7 - Launch Tunnel South Grapple Block",
+                    "event_name": "Area 7 - Spider Boost Tunnel South Grapple Block",
                     "connections": {
                         "Right of Pickup": {
                             "type": "and",
@@ -2476,7 +2476,7 @@
                                 "items": []
                             }
                         },
-                        "Door to Launch Tunnels Shaft": {
+                        "Door to Robot Regime": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -2732,9 +2732,9 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "event_name": "Area 7 - Launch Tunnel South Grapple Block Top",
+                    "event_name": "Area 7 - Spider Boost Tunnel South Grapple Block Top",
                     "connections": {
-                        "Door to Omega Shaft West": {
+                        "Door to Robot Retreat": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2745,7 +2745,7 @@
                 }
             }
         },
-        "Omega Shaft East": {
+        "Laboratory Teleporter East": {
             "default_node": "Teleporter",
             "extra": {
                 "total_boundings": {
@@ -2820,7 +2820,7 @@
                         }
                     }
                 },
-                "Door to Launch Tunnels Shaft": {
+                "Door to Robot Regime": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2840,8 +2840,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 7",
-                        "area": "Launch Tunnels Shaft",
-                        "node": "Door to Omega Shaft East"
+                        "area": "Robot Regime",
+                        "node": "Door to Laboratory Teleporter East"
                     },
                     "default_dock_weakness": "Plasma Beam Door",
                     "exclude_from_dock_rando": false,
@@ -2849,13 +2849,13 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Omega+ Arena Access (Top)": {
+                        "Door to Wallfire Workstation (Top)": {
                             "type": "template",
                             "data": "Defeat Gold Robots"
                         }
                     }
                 },
-                "Door to Omega+ Arena Access (Top)": {
+                "Door to Wallfire Workstation (Top)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2875,8 +2875,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 7",
-                        "area": "Omega+ Arena Access",
-                        "node": "Door to Omega Shaft East (Top)"
+                        "area": "Wallfire Workstation",
+                        "node": "Door to Laboratory Teleporter East (Top)"
                     },
                     "default_dock_weakness": "Access Locked",
                     "exclude_from_dock_rando": false,
@@ -2884,7 +2884,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Launch Tunnels Shaft": {
+                        "Door to Robot Regime": {
                             "type": "template",
                             "data": "Defeat Gold Robots"
                         },
@@ -2897,7 +2897,7 @@
                         }
                     }
                 },
-                "Door to Omega+ Arena Access (Bottom)": {
+                "Door to Wallfire Workstation (Bottom)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2917,8 +2917,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 7",
-                        "area": "Omega+ Arena Access",
-                        "node": "Door to Omega Shaft East (Bottom)"
+                        "area": "Wallfire Workstation",
+                        "node": "Door to Laboratory Teleporter East (Bottom)"
                     },
                     "default_dock_weakness": "Charge Beam Door",
                     "exclude_from_dock_rando": false,
@@ -2987,7 +2987,7 @@
                     "default_connection": {
                         "region": "Area 7",
                         "area": "Omega Arena South Access",
-                        "node": "Door to Omega Shaft East"
+                        "node": "Door to Laboratory Teleporter East"
                     },
                     "default_dock_weakness": "Spazer Beam Door",
                     "exclude_from_dock_rando": false,
@@ -3002,14 +3002,14 @@
                                 "items": []
                             }
                         },
-                        "Door to Omega+ Arena Access (Top)": {
+                        "Door to Wallfire Workstation (Top)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Door to Omega+ Arena Access (Bottom)": {
+                        "Door to Wallfire Workstation (Bottom)": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -3084,7 +3084,7 @@
                 "asset_id": "collision_camera_009"
             },
             "nodes": {
-                "Door to Omega+ Arena Access": {
+                "Door to Wallfire Workstation": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3104,7 +3104,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 7",
-                        "area": "Omega+ Arena Access",
+                        "area": "Wallfire Workstation",
                         "node": "Door to Omega+ Arena"
                     },
                     "default_dock_weakness": "Spazer Beam Door",
@@ -3164,7 +3164,7 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Omega+ Arena Access": {
+                        "Door to Wallfire Workstation": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3208,7 +3208,7 @@
                 }
             }
         },
-        "Launch Tunnels Shaft": {
+        "Robot Regime": {
             "default_node": "Save Station",
             "extra": {
                 "total_boundings": {
@@ -3270,13 +3270,13 @@
                                             "items": [
                                                 {
                                                     "type": "template",
-                                                    "data": "Can Spiderspark"
+                                                    "data": "Can Spider Boost"
                                                 },
                                                 {
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "tricks",
-                                                        "name": "Spiderspark",
+                                                        "name": "Spider Boost",
                                                         "amount": 1,
                                                         "negate": false
                                                     }
@@ -3335,7 +3335,7 @@
                     "pickup_index": 151,
                     "location_category": "minor",
                     "connections": {
-                        "Door to Launch Tunnel South": {
+                        "Door to Spider Boost Tunnel South": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3373,20 +3373,20 @@
                                 ]
                             }
                         },
-                        "Dock to Launch Tunnel South": {
+                        "Dock to Spider Boost Tunnel South": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Can Spiderspark"
+                                        "data": "Can Spider Boost"
                                     },
                                     {
                                         "type": "resource",
                                         "data": {
                                             "type": "tricks",
-                                            "name": "Spiderspark",
+                                            "name": "Spider Boost",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -3414,14 +3414,14 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Launch Tunnel South": {
+                        "Door to Spider Boost Tunnel South": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Door to Omega Shaft East": {
+                        "Door to Laboratory Teleporter East": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3460,7 +3460,7 @@
                                             "items": [
                                                 {
                                                     "type": "template",
-                                                    "data": "Can Spiderspark"
+                                                    "data": "Can Spider Boost"
                                                 },
                                                 {
                                                     "type": "resource",
@@ -3475,7 +3475,7 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "tricks",
-                                                        "name": "Spiderspark",
+                                                        "name": "Spider Boost",
                                                         "amount": 1,
                                                         "negate": false
                                                     }
@@ -3654,7 +3654,7 @@
                                 ]
                             }
                         },
-                        "Door to Launch Tunnel South": {
+                        "Door to Spider Boost Tunnel South": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -3693,7 +3693,7 @@
                                 ]
                             }
                         },
-                        "Tunnel to Launch Tunnel North": {
+                        "Tunnel to Spider Boost Tunnel North": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3773,7 +3773,7 @@
                         }
                     }
                 },
-                "Door to Launch Tunnel South": {
+                "Door to Spider Boost Tunnel South": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3793,8 +3793,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 7",
-                        "area": "Launch Tunnel South",
-                        "node": "Door to Launch Tunnels Shaft"
+                        "area": "Spider Boost Tunnel South",
+                        "node": "Door to Robot Regime"
                     },
                     "default_dock_weakness": "Charge Beam Door",
                     "exclude_from_dock_rando": false,
@@ -3887,13 +3887,13 @@
                                                         "items": [
                                                             {
                                                                 "type": "template",
-                                                                "data": "Can Spiderspark"
+                                                                "data": "Can Spider Boost"
                                                             },
                                                             {
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "tricks",
-                                                                    "name": "Spiderspark",
+                                                                    "name": "Spider Boost",
                                                                     "amount": 2,
                                                                     "negate": false
                                                                 }
@@ -3968,7 +3968,7 @@
                                 ]
                             }
                         },
-                        "Dock to Launch Tunnel South": {
+                        "Dock to Spider Boost Tunnel South": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -3979,7 +3979,7 @@
                         }
                     }
                 },
-                "Door to Omega Shaft East": {
+                "Door to Laboratory Teleporter East": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3999,8 +3999,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 7",
-                        "area": "Omega Shaft East",
-                        "node": "Door to Launch Tunnels Shaft"
+                        "area": "Laboratory Teleporter East",
+                        "node": "Door to Robot Regime"
                     },
                     "default_dock_weakness": "Plasma Beam Door",
                     "exclude_from_dock_rando": false,
@@ -4017,7 +4017,7 @@
                         }
                     }
                 },
-                "Tunnel to Launch Tunnel North": {
+                "Tunnel to Spider Boost Tunnel North": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4034,8 +4034,8 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Area 7",
-                        "area": "Launch Tunnel North",
-                        "node": "Tunnel to Launch Tunnels Shaft"
+                        "area": "Spider Boost Tunnel North",
+                        "node": "Tunnel to Robot Regime"
                     },
                     "default_dock_weakness": "Tunnel",
                     "exclude_from_dock_rando": false,
@@ -4054,7 +4054,7 @@
                         }
                     }
                 },
-                "Dock to Launch Tunnel South": {
+                "Dock to Spider Boost Tunnel South": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4071,8 +4071,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Area 7",
-                        "area": "Launch Tunnel South",
-                        "node": "Dock to Launch Tunnels Shaft"
+                        "area": "Spider Boost Tunnel South",
+                        "node": "Dock to Robot Regime"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -4089,20 +4089,20 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "events",
-                                            "name": "Area 7 - Launch Tunnel South Grapple Block Top",
+                                            "name": "Area 7 - Spider Boost Tunnel South Grapple Block Top",
                                             "amount": 1,
                                             "negate": false
                                         }
                                     },
                                     {
                                         "type": "template",
-                                        "data": "Can Spiderspark"
+                                        "data": "Can Spider Boost"
                                     },
                                     {
                                         "type": "resource",
                                         "data": {
                                             "type": "tricks",
-                                            "name": "Spiderspark",
+                                            "name": "Spider Boost",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -4110,7 +4110,7 @@
                                 ]
                             }
                         },
-                        "Door to Launch Tunnel South": {
+                        "Door to Spider Boost Tunnel South": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -4217,7 +4217,7 @@
                     "pickup_index": 143,
                     "location_category": "minor",
                     "connections": {
-                        "Door to Exit Puzzle Room 1": {
+                        "Door to Grapple Puzzle Madness": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4396,13 +4396,13 @@
                                                                     "items": [
                                                                         {
                                                                             "type": "template",
-                                                                            "data": "Can Spiderspark"
+                                                                            "data": "Can Spider Boost"
                                                                         },
                                                                         {
                                                                             "type": "resource",
                                                                             "data": {
                                                                                 "type": "tricks",
-                                                                                "name": "Spiderspark",
+                                                                                "name": "Spider Boost",
                                                                                 "amount": 3,
                                                                                 "negate": false
                                                                             }
@@ -4509,7 +4509,7 @@
                                 ]
                             }
                         },
-                        "Door to Entrance Shaft": {
+                        "Door to Laboratory Teleporter West": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5018,7 +5018,7 @@
                         }
                     }
                 },
-                "Door to Exit Puzzle Room 1": {
+                "Door to Grapple Puzzle Madness": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5038,7 +5038,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 7",
-                        "area": "Exit Puzzle Room 1",
+                        "area": "Grapple Puzzle Madness",
                         "node": "Door to Transport to Area 6"
                     },
                     "default_dock_weakness": "Power Beam Door",
@@ -5123,7 +5123,7 @@
                         }
                     }
                 },
-                "Door to Omega+ Arena Access": {
+                "Door to Wallfire Workstation": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5143,7 +5143,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 7",
-                        "area": "Omega+ Arena Access",
+                        "area": "Wallfire Workstation",
                         "node": "Door to Transport to Area 6"
                     },
                     "default_dock_weakness": "Access Locked",
@@ -5161,7 +5161,7 @@
                         }
                     }
                 },
-                "Door to Entrance Shaft": {
+                "Door to Laboratory Teleporter West": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5181,7 +5181,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 7",
-                        "area": "Entrance Shaft",
+                        "area": "Laboratory Teleporter West",
                         "node": "Door to Transport to Area 6"
                     },
                     "default_dock_weakness": "Power Beam Door",
@@ -5299,7 +5299,7 @@
                             "type": "template",
                             "data": "Defeat Gold Robots"
                         },
-                        "Door to Omega+ Arena Access": {
+                        "Door to Wallfire Workstation": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -5435,7 +5435,7 @@
                             "type": "template",
                             "data": "Climb Rooms Vertically (No High Jump)"
                         },
-                        "Door to Exit Puzzle Room 1": {
+                        "Door to Grapple Puzzle Madness": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -5688,7 +5688,7 @@
                     "pickup_index": 147,
                     "location_category": "minor",
                     "connections": {
-                        "Door to Omega Shaft East": {
+                        "Door to Laboratory Teleporter East": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5747,13 +5747,13 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Can Spiderspark"
+                                        "data": "Can Spider Boost"
                                     },
                                     {
                                         "type": "resource",
                                         "data": {
                                             "type": "tricks",
-                                            "name": "Spiderspark",
+                                            "name": "Spider Boost",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -5763,7 +5763,7 @@
                         }
                     }
                 },
-                "Door to Omega Shaft East": {
+                "Door to Laboratory Teleporter East": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5783,7 +5783,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 7",
-                        "area": "Omega Shaft East",
+                        "area": "Laboratory Teleporter East",
                         "node": "Door to Omega Arena South Access"
                     },
                     "default_dock_weakness": "Spazer Beam Door",
@@ -5856,13 +5856,13 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Can Spiderspark"
+                                        "data": "Can Spider Boost"
                                     },
                                     {
                                         "type": "resource",
                                         "data": {
                                             "type": "tricks",
-                                            "name": "Spiderspark",
+                                            "name": "Spider Boost",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -5870,7 +5870,7 @@
                                 ]
                             }
                         },
-                        "Door to Omega Shaft East": {
+                        "Door to Laboratory Teleporter East": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -5931,7 +5931,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Omega Shaft East": {
+                        "Door to Laboratory Teleporter East": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6419,7 +6419,7 @@
                     "pickup_index": 145,
                     "location_category": "minor",
                     "connections": {
-                        "Tunnel to Omega Shaft West": {
+                        "Tunnel to Robot Retreat": {
                             "type": "template",
                             "data": "Lay Any Bomb"
                         }
@@ -6480,7 +6480,7 @@
                                 ]
                             }
                         },
-                        "Door to Omega Shaft West": {
+                        "Door to Robot Retreat": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -6510,13 +6510,13 @@
                                             "items": [
                                                 {
                                                     "type": "template",
-                                                    "data": "Can Spiderspark"
+                                                    "data": "Can Spider Boost"
                                                 },
                                                 {
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "tricks",
-                                                        "name": "Spiderspark",
+                                                        "name": "Spider Boost",
                                                         "amount": 2,
                                                         "negate": false
                                                     }
@@ -6536,7 +6536,7 @@
                         }
                     }
                 },
-                "Door to Omega Shaft West": {
+                "Door to Robot Retreat": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6556,7 +6556,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 7",
-                        "area": "Omega Shaft West",
+                        "area": "Robot Retreat",
                         "node": "Door to Omega Arena North Access"
                     },
                     "default_dock_weakness": "Power Beam Door",
@@ -6595,13 +6595,13 @@
                                             "items": [
                                                 {
                                                     "type": "template",
-                                                    "data": "Can Spiderspark"
+                                                    "data": "Can Spider Boost"
                                                 },
                                                 {
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "tricks",
-                                                        "name": "Spiderspark",
+                                                        "name": "Spider Boost",
                                                         "amount": 2,
                                                         "negate": false
                                                     }
@@ -6614,7 +6614,7 @@
                         }
                     }
                 },
-                "Tunnel to Omega Shaft West": {
+                "Tunnel to Robot Retreat": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6631,7 +6631,7 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Area 7",
-                        "area": "Omega Shaft West",
+                        "area": "Robot Retreat",
                         "node": "Tunnel to Omega Arena North Access"
                     },
                     "default_dock_weakness": "Tunnel with Bomb Block",
@@ -6669,7 +6669,7 @@
                 }
             }
         },
-        "Omega+ Arena Access": {
+        "Wallfire Workstation": {
             "default_node": "Start Point",
             "extra": {
                 "total_boundings": {
@@ -6742,7 +6742,7 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Omega Shaft East (Bottom)": {
+                        "Door to Laboratory Teleporter East (Bottom)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6755,7 +6755,7 @@
                         }
                     }
                 },
-                "Door to Omega Shaft East (Top)": {
+                "Door to Laboratory Teleporter East (Top)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6775,8 +6775,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 7",
-                        "area": "Omega Shaft East",
-                        "node": "Door to Omega+ Arena Access (Top)"
+                        "area": "Laboratory Teleporter East",
+                        "node": "Door to Wallfire Workstation (Top)"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -6828,7 +6828,7 @@
                         }
                     }
                 },
-                "Door to Omega Shaft East (Bottom)": {
+                "Door to Laboratory Teleporter East (Bottom)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6848,8 +6848,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 7",
-                        "area": "Omega Shaft East",
-                        "node": "Door to Omega+ Arena Access (Bottom)"
+                        "area": "Laboratory Teleporter East",
+                        "node": "Door to Wallfire Workstation (Bottom)"
                     },
                     "default_dock_weakness": "Charge Beam Door",
                     "exclude_from_dock_rando": false,
@@ -6887,7 +6887,7 @@
                     "default_connection": {
                         "region": "Area 7",
                         "area": "Omega+ Arena",
-                        "node": "Door to Omega+ Arena Access"
+                        "node": "Door to Wallfire Workstation"
                     },
                     "default_dock_weakness": "Spazer Beam Door",
                     "exclude_from_dock_rando": false,
@@ -6895,7 +6895,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Omega Shaft East (Top)": {
+                        "Door to Laboratory Teleporter East (Top)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7048,7 +7048,7 @@
                     "default_connection": {
                         "region": "Area 7",
                         "area": "Transport to Area 6",
-                        "node": "Door to Omega+ Arena Access"
+                        "node": "Door to Wallfire Workstation"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -7199,7 +7199,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Omega Shaft East (Top)": {
+                        "Door to Laboratory Teleporter East (Top)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7453,7 +7453,7 @@
                 }
             }
         },
-        "Exit Puzzle Room 2": {
+        "Grapple Puzzle Foyer": {
             "default_node": null,
             "extra": {
                 "total_boundings": {
@@ -7503,7 +7503,7 @@
                     "pickup_index": 149,
                     "location_category": "minor",
                     "connections": {
-                        "Door to Exit Puzzle Room 1 (Bottom)": {
+                        "Door to Grapple Puzzle Madness (Bottom)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7538,7 +7538,7 @@
                         }
                     }
                 },
-                "Door to Exit Puzzle Room 1 (Top)": {
+                "Door to Grapple Puzzle Madness (Top)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7558,8 +7558,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 7",
-                        "area": "Exit Puzzle Room 1",
-                        "node": "Door to Exit Puzzle Room 2 (Top)"
+                        "area": "Grapple Puzzle Madness",
+                        "node": "Door to Grapple Puzzle Foyer (Top)"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -7576,7 +7576,7 @@
                         }
                     }
                 },
-                "Door to Exit Puzzle Room 1 (Bottom)": {
+                "Door to Grapple Puzzle Madness (Bottom)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7596,8 +7596,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 7",
-                        "area": "Exit Puzzle Room 1",
-                        "node": "Door to Exit Puzzle Room 2 (Bottom)"
+                        "area": "Grapple Puzzle Madness",
+                        "node": "Door to Grapple Puzzle Foyer (Bottom)"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -7635,7 +7635,7 @@
                     "default_connection": {
                         "region": "Area 7",
                         "area": "Transport to Area 8",
-                        "node": "Door to Exit Puzzle Room 2"
+                        "node": "Door to Grapple Puzzle Foyer"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -7643,7 +7643,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Exit Puzzle Room 1 (Top)": {
+                        "Door to Grapple Puzzle Madness (Top)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7661,7 +7661,7 @@
                         }
                     }
                 },
-                "Tunnel to Exit Puzzle Room 1": {
+                "Tunnel to Grapple Puzzle Madness": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7678,8 +7678,8 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Area 7",
-                        "area": "Exit Puzzle Room 1",
-                        "node": "Tunnel to Exit Puzzle Room 2"
+                        "area": "Grapple Puzzle Madness",
+                        "node": "Tunnel to Grapple Puzzle Foyer"
                     },
                     "default_dock_weakness": "Tunnel with Bomb Block",
                     "exclude_from_dock_rando": false,
@@ -7756,7 +7756,7 @@
                                 ]
                             }
                         },
-                        "Tunnel to Exit Puzzle Room 1": {
+                        "Tunnel to Grapple Puzzle Madness": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7765,7 +7765,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "events",
-                                            "name": "Area 7 - Exit Puzzle Room 1 Grapple Block Left",
+                                            "name": "Area 7 - Grapple Puzzle Madness Grapple Block Left",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -7785,7 +7785,7 @@
                 }
             }
         },
-        "Omega Shaft West": {
+        "Robot Retreat": {
             "default_node": null,
             "extra": {
                 "total_boundings": {
@@ -7849,7 +7849,7 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Tunnel to Launch Tunnel North (Top)": {
+                        "Tunnel to Spider Boost Tunnel North (Top)": {
                             "type": "template",
                             "data": "Lay Any Bomb"
                         },
@@ -7862,7 +7862,7 @@
                         }
                     }
                 },
-                "Door to Launch Tunnel South": {
+                "Door to Spider Boost Tunnel South": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7882,8 +7882,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 7",
-                        "area": "Launch Tunnel South",
-                        "node": "Door to Omega Shaft West"
+                        "area": "Spider Boost Tunnel South",
+                        "node": "Door to Robot Retreat"
                     },
                     "default_dock_weakness": "Charge Beam Door",
                     "exclude_from_dock_rando": false,
@@ -7964,7 +7964,7 @@
                         }
                     }
                 },
-                "Door to Entrance Shaft": {
+                "Door to Laboratory Teleporter West": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7984,8 +7984,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 7",
-                        "area": "Entrance Shaft",
-                        "node": "Door to Omega Shaft West"
+                        "area": "Laboratory Teleporter West",
+                        "node": "Door to Robot Retreat"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -8117,7 +8117,7 @@
                     "default_connection": {
                         "region": "Area 7",
                         "area": "Omega Arena North Access",
-                        "node": "Door to Omega Shaft West"
+                        "node": "Door to Robot Retreat"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -8125,7 +8125,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Launch Tunnel South": {
+                        "Door to Spider Boost Tunnel South": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -8257,7 +8257,7 @@
                         }
                     }
                 },
-                "Tunnel to Launch Tunnel North (Top)": {
+                "Tunnel to Spider Boost Tunnel North (Top)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8274,8 +8274,8 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Area 7",
-                        "area": "Launch Tunnel North",
-                        "node": "Tunnel to Omega Shaft West (Top)"
+                        "area": "Spider Boost Tunnel North",
+                        "node": "Tunnel to Robot Retreat (Top)"
                     },
                     "default_dock_weakness": "Tunnel with Bomb Block",
                     "exclude_from_dock_rando": false,
@@ -8292,7 +8292,7 @@
                         }
                     }
                 },
-                "Tunnel to Launch Tunnel North (Bottom)": {
+                "Tunnel to Spider Boost Tunnel North (Bottom)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8309,8 +8309,8 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Area 7",
-                        "area": "Launch Tunnel North",
-                        "node": "Tunnel to Omega Shaft West (Bottom)"
+                        "area": "Spider Boost Tunnel North",
+                        "node": "Tunnel to Robot Retreat (Bottom)"
                     },
                     "default_dock_weakness": "Tunnel with Bomb Block",
                     "exclude_from_dock_rando": false,
@@ -8327,7 +8327,7 @@
                         }
                     }
                 },
-                "Tunnel to Launch Tunnel South": {
+                "Tunnel to Spider Boost Tunnel South": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8344,8 +8344,8 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Area 7",
-                        "area": "Launch Tunnel South",
-                        "node": "Tunnel to Omega Shaft West"
+                        "area": "Spider Boost Tunnel South",
+                        "node": "Tunnel to Robot Retreat"
                     },
                     "default_dock_weakness": "Tunnel",
                     "exclude_from_dock_rando": false,
@@ -8382,7 +8382,7 @@
                     "default_connection": {
                         "region": "Area 7",
                         "area": "Omega Arena North Access",
-                        "node": "Tunnel to Omega Shaft West"
+                        "node": "Tunnel to Robot Retreat"
                     },
                     "default_dock_weakness": "Tunnel with Bomb Block",
                     "exclude_from_dock_rando": false,
@@ -8416,7 +8416,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Launch Tunnel South": {
+                        "Door to Spider Boost Tunnel South": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8466,14 +8466,14 @@
                                 ]
                             }
                         },
-                        "Door to Entrance Shaft": {
+                        "Door to Laboratory Teleporter West": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Tunnel to Launch Tunnel South": {
+                        "Tunnel to Spider Boost Tunnel South": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8491,7 +8491,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "events",
-                                            "name": "Area 7 - Launch Tunnel South Grapple Block",
+                                            "name": "Area 7 - Spider Boost Tunnel South Grapple Block",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -8541,7 +8541,7 @@
                             "type": "template",
                             "data": "Lay Any Bomb"
                         },
-                        "Tunnel to Launch Tunnel North (Bottom)": {
+                        "Tunnel to Spider Boost Tunnel North (Bottom)": {
                             "type": "template",
                             "data": "Lay Any Bomb"
                         }
@@ -8549,7 +8549,7 @@
                 }
             }
         },
-        "Launch Tunnel North": {
+        "Spider Boost Tunnel North": {
             "default_node": null,
             "extra": {
                 "total_boundings": {
@@ -8599,7 +8599,7 @@
                     "pickup_index": 150,
                     "location_category": "minor",
                     "connections": {
-                        "Tunnel to Omega Shaft West (Bottom)": {
+                        "Tunnel to Robot Retreat (Bottom)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8617,7 +8617,7 @@
                         }
                     }
                 },
-                "Tunnel to Omega Shaft West (Top)": {
+                "Tunnel to Robot Retreat (Top)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8634,8 +8634,8 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Area 7",
-                        "area": "Omega Shaft West",
-                        "node": "Tunnel to Launch Tunnel North (Top)"
+                        "area": "Robot Retreat",
+                        "node": "Tunnel to Spider Boost Tunnel North (Top)"
                     },
                     "default_dock_weakness": "Tunnel with Bomb Block",
                     "exclude_from_dock_rando": false,
@@ -8643,20 +8643,20 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Tunnel to Launch Tunnels Shaft": {
+                        "Tunnel to Robot Regime": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Can Spiderspark"
+                                        "data": "Can Spider Boost"
                                     },
                                     {
                                         "type": "resource",
                                         "data": {
                                             "type": "tricks",
-                                            "name": "Spiderspark",
+                                            "name": "Spider Boost",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -8666,7 +8666,7 @@
                         }
                     }
                 },
-                "Tunnel to Omega Shaft West (Bottom)": {
+                "Tunnel to Robot Retreat (Bottom)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8683,8 +8683,8 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Area 7",
-                        "area": "Omega Shaft West",
-                        "node": "Tunnel to Launch Tunnel North (Bottom)"
+                        "area": "Robot Retreat",
+                        "node": "Tunnel to Spider Boost Tunnel North (Bottom)"
                     },
                     "default_dock_weakness": "Tunnel with Bomb Block",
                     "exclude_from_dock_rando": false,
@@ -8736,13 +8736,13 @@
                                                         "items": [
                                                             {
                                                                 "type": "template",
-                                                                "data": "Can Spiderspark"
+                                                                "data": "Can Spider Boost"
                                                             },
                                                             {
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "tricks",
-                                                                    "name": "Spiderspark",
+                                                                    "name": "Spider Boost",
                                                                     "amount": 2,
                                                                     "negate": false
                                                                 }
@@ -8793,7 +8793,7 @@
                         }
                     }
                 },
-                "Tunnel to Launch Tunnels Shaft": {
+                "Tunnel to Robot Regime": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8810,8 +8810,8 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Area 7",
-                        "area": "Launch Tunnels Shaft",
-                        "node": "Tunnel to Launch Tunnel North"
+                        "area": "Robot Regime",
+                        "node": "Tunnel to Spider Boost Tunnel North"
                     },
                     "default_dock_weakness": "Tunnel",
                     "exclude_from_dock_rando": false,
@@ -8819,20 +8819,20 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Tunnel to Omega Shaft West (Top)": {
+                        "Tunnel to Robot Retreat (Top)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Can Spiderspark"
+                                        "data": "Can Spider Boost"
                                     },
                                     {
                                         "type": "resource",
                                         "data": {
                                             "type": "tricks",
-                                            "name": "Spiderspark",
+                                            "name": "Spider Boost",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -8932,7 +8932,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Exit Puzzle Room 2": {
+                        "Door to Grapple Puzzle Foyer": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -9067,7 +9067,7 @@
                         }
                     }
                 },
-                "Door to Exit Puzzle Room 2": {
+                "Door to Grapple Puzzle Foyer": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -9087,7 +9087,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 7",
-                        "area": "Exit Puzzle Room 2",
+                        "area": "Grapple Puzzle Foyer",
                         "node": "Door to Transport to Area 8"
                     },
                     "default_dock_weakness": "Power Beam Door",
@@ -9255,7 +9255,7 @@
                     "valid_starting_location": false,
                     "event_name": "Area 7 - Transport to Area 8 Grapple Block",
                     "connections": {
-                        "Door to Exit Puzzle Room 2": {
+                        "Door to Grapple Puzzle Foyer": {
                             "type": "and",
                             "data": {
                                 "comment": null,

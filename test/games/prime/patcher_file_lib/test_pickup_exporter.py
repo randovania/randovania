@@ -7,7 +7,6 @@ from unittest.mock import MagicMock
 import pytest
 
 from randovania.exporter import pickup_exporter
-from randovania.game_description import default_database
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.db.pickup_node import PickupNode
@@ -30,7 +29,9 @@ from randovania.layout.base.standard_pickup_state import StandardPickupState
 
 
 def test_get_single_hud_text_all_standard_pickups(echoes_pickup_database, echoes_resource_database):
-    memo_data = default_database.default_prime2_memo_data()
+    from randovania.games.prime2.exporter import patch_data_factory
+
+    memo_data = patch_data_factory.default_prime2_memo_data()
 
     # Run
     for item in echoes_pickup_database.standard_pickups.values():
@@ -59,10 +60,11 @@ def test_calculate_hud_text(order: tuple[str, str], generic_pickup_category, def
     # Setup
     resource_a = ItemResourceInfo(0, "A", "A", 10)
     resource_b = ItemResourceInfo(1, "B", "B", 10)
+    game = RandovaniaGame.BLANK
 
     pickup_x = PickupEntry(
         "A",
-        1,
+        PickupModel(game, "1"),
         generic_pickup_category,
         generic_pickup_category,
         progression=(((resource_a, 1),)),
@@ -70,7 +72,7 @@ def test_calculate_hud_text(order: tuple[str, str], generic_pickup_category, def
     )
     pickup_y = PickupEntry(
         "Y",
-        2,
+        PickupModel(game, "2"),
         generic_pickup_category,
         generic_pickup_category,
         progression=(
@@ -81,7 +83,7 @@ def test_calculate_hud_text(order: tuple[str, str], generic_pickup_category, def
     )
     pickup_z = PickupEntry(
         "Z",
-        2,
+        PickupModel(game, "2"),
         generic_pickup_category,
         generic_pickup_category,
         progression=(
@@ -127,7 +129,8 @@ def test_create_pickup_list(
     model_0 = MagicMock(spec=PickupModel)
     model_1 = MagicMock(spec=PickupModel)
     model_2 = MagicMock(spec=PickupModel)
-    for m in [model_0, model_1, model_2]:
+    model_3 = MagicMock(spec=PickupModel)
+    for m in [model_0, model_1, model_2, model_3]:
         m.game = RandovaniaGame.METROID_PRIME_ECHOES
     useless_model = PickupModel(
         game=RandovaniaGame.METROID_PRIME_ECHOES,
@@ -137,6 +140,7 @@ def test_create_pickup_list(
     useless_resource = ItemResourceInfo(0, "Useless", "Useless", 10)
     resource_a = ItemResourceInfo(1, "A", "A", 10)
     resource_b = ItemResourceInfo(2, "B", "B", 10)
+    resource_c = ItemResourceInfo(3, "C", "C", 10)
     pickup_a = PickupEntry(
         "P-A",
         model_1,
@@ -159,9 +163,31 @@ def test_create_pickup_list(
         AMMO_PICKUP_CATEGORY,
         generic_pickup_category,
         progression=(),
+        extra_resources=((resource_a, 1), (resource_c, -3)),
+        unlocks_resource=True,
+        resource_lock=ResourceLock(resource_a, resource_a, useless_resource),
+        generator_params=default_generator_params,
+    )
+    pickup_d = PickupEntry(
+        "P-D",
+        model_2,
+        AMMO_PICKUP_CATEGORY,
+        generic_pickup_category,
+        progression=(),
         extra_resources=((resource_b, 2), (resource_a, 1)),
         unlocks_resource=True,
         resource_lock=ResourceLock(resource_a, resource_a, useless_resource),
+        generator_params=default_generator_params,
+    )
+    pickup_e = PickupEntry(
+        "P-E",
+        model_3,
+        AMMO_PICKUP_CATEGORY,
+        generic_pickup_category,
+        progression=(),
+        extra_resources=((resource_c, -3),),
+        unlocks_resource=True,
+        resource_lock=ResourceLock(resource_c, resource_c, useless_resource),
         generator_params=default_generator_params,
     )
 
@@ -179,6 +205,8 @@ def test_create_pickup_list(
             (PickupIndex(2), PickupTarget(pickup_b, 0)),
             (PickupIndex(3), PickupTarget(pickup_a, 0)),
             (PickupIndex(4), PickupTarget(pickup_c, 0)),
+            (PickupIndex(5), PickupTarget(pickup_d, 0)),
+            (PickupIndex(6), PickupTarget(pickup_e, 0)),
         ]
     )
     creator = pickup_exporter.PickupExporterSolo(
@@ -199,7 +227,7 @@ def test_create_pickup_list(
             PickupIndex(i),
             False,
         )
-        for i in range(5)
+        for i in range(7)
     ]
 
     # Run
@@ -215,7 +243,7 @@ def test_create_pickup_list(
     )
 
     # Assert
-    assert len(result) == 5
+    assert len(result) == 7
     assert result[0] == pickup_exporter.ExportedPickupDetails(
         index=PickupIndex(0),
         name="P-A" if has_scan_text else "Unknown item",
@@ -223,8 +251,8 @@ def test_create_pickup_list(
         collection_text=["A acquired!"] if model_style != PickupModelStyle.HIDE_ALL else ["Unknown item acquired!"],
         conditional_resources=[ConditionalResources("A", None, ((resource_a, 1),))],
         conversion=[],
-        model=model_1 if model_style == PickupModelStyle.ALL_VISIBLE else useless_model,
-        original_model=model_1 if model_style == PickupModelStyle.ALL_VISIBLE else useless_model,
+        model=model_1 if model_style == PickupModelStyle.ALL_VISIBLE else useless_model,  # type: ignore [arg-type]
+        original_model=model_1 if model_style == PickupModelStyle.ALL_VISIBLE else useless_model,  # type: ignore [arg-type]
         other_player=False,
         original_pickup=pickup_a,
     )
@@ -232,13 +260,13 @@ def test_create_pickup_list(
         index=PickupIndex(1),
         name="P-Useless" if has_scan_text else "Unknown item",
         description="",
-        collection_text=["Useless acquired!"]
-        if model_style != PickupModelStyle.HIDE_ALL
-        else ["Unknown item acquired!"],
+        collection_text=(
+            ["Useless acquired!"] if model_style != PickupModelStyle.HIDE_ALL else ["Unknown item acquired!"]
+        ),
         conditional_resources=[ConditionalResources("Useless", None, ((useless_resource, 1),))],
         conversion=[],
-        model=model_0 if model_style == PickupModelStyle.ALL_VISIBLE else useless_model,
-        original_model=model_0 if model_style == PickupModelStyle.ALL_VISIBLE else useless_model,
+        model=model_0 if model_style == PickupModelStyle.ALL_VISIBLE else useless_model,  # type: ignore [arg-type]
+        original_model=model_0 if model_style == PickupModelStyle.ALL_VISIBLE else useless_model,  # type: ignore [arg-type]
         other_player=False,
         original_pickup=useless_pickup,
     )
@@ -246,16 +274,18 @@ def test_create_pickup_list(
         index=PickupIndex(2),
         name="P-B" if has_scan_text else "Unknown item",
         description="Provides the following in order: B, A." if has_scan_text else "",
-        collection_text=["B acquired!", "A acquired!"]
-        if model_style != PickupModelStyle.HIDE_ALL
-        else ["Unknown item acquired!", "Unknown item acquired!"],
+        collection_text=(
+            ["B acquired!", "A acquired!"]
+            if model_style != PickupModelStyle.HIDE_ALL
+            else ["Unknown item acquired!", "Unknown item acquired!"]
+        ),
         conditional_resources=[
             ConditionalResources("B", None, ((resource_b, 1),)),
             ConditionalResources("A", resource_b, ((resource_a, 5),)),
         ],
         conversion=[],
-        model=model_2 if model_style == PickupModelStyle.ALL_VISIBLE else useless_model,
-        original_model=model_2 if model_style == PickupModelStyle.ALL_VISIBLE else useless_model,
+        model=model_2 if model_style == PickupModelStyle.ALL_VISIBLE else useless_model,  # type: ignore [arg-type]
+        original_model=model_2 if model_style == PickupModelStyle.ALL_VISIBLE else useless_model,  # type: ignore [arg-type]
         other_player=False,
         original_pickup=pickup_b,
     )
@@ -266,19 +296,40 @@ def test_create_pickup_list(
         collection_text=["A acquired!"] if model_style != PickupModelStyle.HIDE_ALL else ["Unknown item acquired!"],
         conditional_resources=[ConditionalResources("A", None, ((resource_a, 1),))],
         conversion=[],
-        model=model_1 if model_style == PickupModelStyle.ALL_VISIBLE else useless_model,
-        original_model=model_1 if model_style == PickupModelStyle.ALL_VISIBLE else useless_model,
+        model=model_1 if model_style == PickupModelStyle.ALL_VISIBLE else useless_model,  # type: ignore [arg-type]
+        original_model=model_1 if model_style == PickupModelStyle.ALL_VISIBLE else useless_model,  # type: ignore [arg-type]
         other_player=False,
         original_pickup=pickup_a,
     )
     assert result[4] == pickup_exporter.ExportedPickupDetails(
         index=PickupIndex(4),
         name="P-C" if has_scan_text else "Unknown item",
-        description="Provides 2 B and 1 A." if has_scan_text else "",
+        description="Provides 1 A. Removes 3 C." if has_scan_text else "",
         collection_text=["P-C acquired!"] if model_style != PickupModelStyle.HIDE_ALL else ["Unknown item acquired!"],
         conditional_resources=[
             ConditionalResources(
                 "P-C",
+                None,
+                (
+                    (resource_a, 1),
+                    (resource_c, -3),
+                ),
+            )
+        ],
+        conversion=[ResourceConversion(source=useless_resource, target=resource_a)],
+        model=model_2 if model_style == PickupModelStyle.ALL_VISIBLE else useless_model,  # type: ignore [arg-type]
+        original_model=model_2 if model_style == PickupModelStyle.ALL_VISIBLE else useless_model,  # type: ignore [arg-type]
+        other_player=False,
+        original_pickup=pickup_c,
+    )
+    assert result[5] == pickup_exporter.ExportedPickupDetails(
+        index=PickupIndex(5),
+        name="P-D" if has_scan_text else "Unknown item",
+        description="Provides 2 B and 1 A." if has_scan_text else "",
+        collection_text=["P-D acquired!"] if model_style != PickupModelStyle.HIDE_ALL else ["Unknown item acquired!"],
+        conditional_resources=[
+            ConditionalResources(
+                "P-D",
                 None,
                 (
                     (resource_b, 2),
@@ -287,10 +338,28 @@ def test_create_pickup_list(
             )
         ],
         conversion=[ResourceConversion(source=useless_resource, target=resource_a)],
-        model=model_2 if model_style == PickupModelStyle.ALL_VISIBLE else useless_model,
-        original_model=model_2 if model_style == PickupModelStyle.ALL_VISIBLE else useless_model,
+        model=model_2 if model_style == PickupModelStyle.ALL_VISIBLE else useless_model,  # type: ignore [arg-type]
+        original_model=model_2 if model_style == PickupModelStyle.ALL_VISIBLE else useless_model,  # type: ignore [arg-type]
         other_player=False,
-        original_pickup=pickup_c,
+        original_pickup=pickup_d,
+    )
+    assert result[6] == pickup_exporter.ExportedPickupDetails(
+        index=PickupIndex(6),
+        name="P-E" if has_scan_text else "Unknown item",
+        description="Removes 3 C." if has_scan_text else "",
+        collection_text=["P-E acquired!"] if model_style != PickupModelStyle.HIDE_ALL else ["Unknown item acquired!"],
+        conditional_resources=[
+            ConditionalResources(
+                "P-E",
+                None,
+                ((resource_c, -3),),
+            )
+        ],
+        conversion=[ResourceConversion(source=useless_resource, target=resource_c)],
+        model=model_3 if model_style == PickupModelStyle.ALL_VISIBLE else useless_model,  # type: ignore [arg-type]
+        original_model=model_3 if model_style == PickupModelStyle.ALL_VISIBLE else useless_model,  # type: ignore [arg-type]
+        other_player=False,
+        original_pickup=pickup_e,
     )
 
 
@@ -476,7 +545,21 @@ def test_pickup_scan_for_progressive_suit(echoes_pickup_database, echoes_resourc
 @pytest.mark.parametrize(
     ("item", "ammo", "expected"),
     [
-        ("Beam Ammo Expansion", [4, 20], "Provides 4 Dark Ammo, 20 Light Ammo and 1 Item Percentage."),
+        (
+            "Beam Ammo Expansion",
+            [4, 20],
+            "Provides 4 Dark Ammo, 20 Light Ammo and 1 Item Percentage.",
+        ),
+        (
+            "Beam Ammo Expansion",
+            [-4, -20],
+            "Provides 1 Item Percentage. Removes 4 Dark Ammo and 20 Light Ammo.",
+        ),
+        (
+            "Beam Ammo Expansion",
+            [4, -20],
+            "Provides 4 Dark Ammo and 1 Item Percentage. Removes 20 Light Ammo.",
+        ),
         ("Missile Expansion", [4], "Provides 4 Missiles and 1 Item Percentage."),
     ],
 )

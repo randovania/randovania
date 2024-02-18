@@ -154,9 +154,9 @@ class AM2RPatchDataFactory(PatchDataFactory):
                 "item_effect": pickup.original_pickup.name if not pickup.other_player else "Nothing",
                 "quantity": quantity,
                 "text": {
-                    "header": text_data[pickup.name]["text_header"]
-                    if not self.players_config.is_multiworld
-                    else pickup.name,
+                    "header": (
+                        text_data[pickup.name]["text_header"] if not self.players_config.is_multiworld else pickup.name
+                    ),
                     "description": pickup.collection_text[text_index],
                 },
             }
@@ -215,6 +215,7 @@ class AM2RPatchDataFactory(PatchDataFactory):
 
     def _create_hash_dict(self) -> dict:
         return_dict: dict = {
+            "contains_spoiler": self.description.has_spoiler,
             "word_hash": self.description.shareable_word_hash,
             "hash": self.description.shareable_hash,
             "session_uuid": str(self.players_config.get_own_uuid()),

@@ -1,14 +1,14 @@
 ----------------
-Larva Access
+Metroid Nest Foyer
 Extra - total_boundings: {'x1': -2800.0, 'x2': -270.0, 'y1': 8900.0, 'y2': 11000.0}
 Extra - polygon: [[-2800.0, 8900.0], [-270.0, 8900.0], [-270.0, 11200.0], [-2800.0, 11200.0]]
-Extra - asset_id: collision_camera_007
-> Door to Larva Hallway 1; Heals? False
+Extra - asset_id: collision_camera_008
+> Door to Metroid Nest Hallway South; Heals? False
   * Layers: default
-  * Access Locked to Larva Hallway 1/Door to Larva Access
+  * Access Locked to Metroid Nest Hallway South/Door to Metroid Nest Foyer
   * Extra - actor_name: Door010
   * Extra - actor_type: doorclosedpower
-  > Tunnel to Teleporter Shaft North
+  > Tunnel to Metroid Nest Teleporter
       All of the following:
           Morph Ball
           Any of the following:
@@ -17,29 +17,29 @@ Extra - asset_id: collision_camera_007
   > Start Point
       Screw Attack
 
-> Tunnel to Teleporter Shaft North; Heals? False
+> Tunnel to Metroid Nest Teleporter; Heals? False
   * Layers: default
-  * Tunnel to Teleporter Shaft North/Tunnel to Larva Access
-  > Door to Larva Hallway 1
+  * Tunnel to Metroid Nest Teleporter/Tunnel to Metroid Nest Foyer
+  > Door to Metroid Nest Hallway South
       Morph Ball
 
-> Tunnel to Larva Hallway 1; Heals? False
+> Tunnel to Metroid Nest Hallway South; Heals? False
   * Layers: default
-  * Tunnel to Larva Hallway 1/Tunnel to Larva Access
+  * Tunnel to Metroid Nest Hallway South/Tunnel to Metroid Nest Foyer
 
 > Start Point; Heals? False; Default Node
   * Layers: default
   * Extra - start_point_actor_name: ST_SG_Larva_001
-  > Door to Larva Hallway 1
+  > Door to Metroid Nest Hallway South
       Screw Attack
-  > Tunnel to Larva Hallway 1
+  > Tunnel to Metroid Nest Hallway South
       Morph Ball
 
 ----------------
-Transport to Surface West
+Transport to Surface
 Extra - total_boundings: {'x1': -12400.0, 'x2': 7150.0, 'y1': 11000.0, 'y2': 27400.0}
 Extra - polygon: [[-12400.0, 27400.0], [-12400.0, 11000.0], [-6900.0, 11000.0], [-6900.0, 19500.0], [-3100.0, 20900.0], [-1000.0, 20900.0], [100.0, 21600.0], [7150.0, 21600.0], [7150.0, 27400.0]]
-Extra - asset_id: collision_camera_008_A
+Extra - asset_id: collision_camera_007
 > Pickup (Missile Tank); Heals? False
   * Layers: default
   * Pickup 165; Category? Minor
@@ -62,7 +62,7 @@ Extra - asset_id: collision_camera_008_A
   * Extra - actor_type: weightactivatedplatform
   > Pickup (Super Missile Tank)
       Any of the following:
-          Spiderspark (Beginner) and Can Spiderspark
+          Spider Boost (Beginner) and Can Spider Boost
           Morph Ball and Phase Drift
   > Elevator to Surface - West
       Baby Metroid
@@ -83,7 +83,7 @@ Extra - asset_id: collision_camera_008_A
   * Extra - actor_name: LE_Platform_SaveStation_005
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: ST_SaveStation_005
-  > Dock to Queen Arena
+  > Dock to Hatchling Room
       All of the following:
           Baby Metroid
           Any of the following:
@@ -101,12 +101,12 @@ Extra - asset_id: collision_camera_008_A
               All of the following:
                   Lightning Armor
                   Any of the following:
-                      Spiderspark (Intermediate) and Can Spiderspark
+                      Spider Boost (Intermediate) and Can Spider Boost
                       Infinite Bomb Jump (Advanced) and Lay Any Bomb
 
-> Dock to Queen Arena; Heals? False
+> Dock to Hatchling Room; Heals? False
   * Layers: default
-  * Open Passage to Queen Arena/Dock to Transport to Surface West
+  * Open Passage to Hatchling Room/Dock to Transport to Surface
   > Save Station
       Any of the following:
           Normal Damage ≥ 199 and Defeat Gold Robots
@@ -131,38 +131,38 @@ Extra - asset_id: collision_camera_008_A
               Lightning Armor and Movement (Intermediate)
 
 ----------------
-Larva Hallway 1
+Metroid Nest Hallway South
 Extra - total_boundings: {'x1': -370.0, 'x2': 4160.0, 'y1': 8900.0, 'y2': 10500.0}
 Extra - polygon: [[-370.0, 8900.0], [4160.0, 8900.0], [4160.0, 10500.0], [-370.0, 10500.0]]
-Extra - asset_id: collision_camera_008_B
-> Door to Larva Access; Heals? False
+Extra - asset_id: collision_camera_008
+> Door to Metroid Nest Foyer; Heals? False
   * Layers: default
-  * Power Beam Door to Larva Access/Door to Larva Hallway 1
+  * Power Beam Door to Metroid Nest Foyer/Door to Metroid Nest Hallway South
   * Extra - actor_name: Door010
   * Extra - actor_type: doorclosedpower
   > Room Center
       Trivial
 
-> Door to Larva Shaft 1; Heals? False
+> Door to Metroid Nest Small Shaft; Heals? False
   * Layers: default
-  * Power Beam Door to Larva Shaft 1/Door to Larva Hallway 1
+  * Power Beam Door to Metroid Nest Small Shaft/Door to Metroid Nest Hallway South
   * Extra - actor_name: Door011
   * Extra - actor_type: doorpowerpower
   > Room Center
       Trivial
 
-> Tunnel to Larva Access; Heals? False
+> Tunnel to Metroid Nest Foyer; Heals? False
   * Layers: default
-  * Tunnel to Larva Access/Tunnel to Larva Hallway 1
+  * Tunnel to Metroid Nest Foyer/Tunnel to Metroid Nest Hallway South
   > Room Center
       Morph Ball
 
 > Room Center; Heals? False; Default Node
   * Layers: default
   * Extra - start_point_actor_name: ST_Larva_001_Checkpoint
-  > Door to Larva Access
+  > Door to Metroid Nest Foyer
       After Area 8 - Larva Metroid 1
-  > Door to Larva Shaft 1
+  > Door to Metroid Nest Small Shaft
       After Area 8 - Larva Metroid 1
   > Event - Larva Metroid
       Defeat Larva Metroid
@@ -174,7 +174,7 @@ Extra - asset_id: collision_camera_008_B
       Trivial
 
 ----------------
-Central Chamber
+Amphitheater
 Extra - total_boundings: {'x1': -3900.0, 'x2': 2100.0, 'y1': -2800.0, 'y2': 8800.0}
 Extra - polygon: [[-3700.0, 8800.0], [-3700.0, 5500.0], [-3900.0, 4800.0], [-3900.0, -300.0], [-3700.0, -600.0009765625], [-3700.0, -2800.0], [-1500.0, -2800.0], [200.0, -2500.0], [450.0, -2500.0], [450.0, -1300.0], [2100.0, -1200.0], [2100.0, 8800.0]]
 Extra - asset_id: collision_camera_009
@@ -225,7 +225,7 @@ Extra - asset_id: collision_camera_009
   > Pickup (Missile Tank Hidden)
       Any of the following:
           Spider Ball and Infinite Bomb Jump (Intermediate) and Lay Bomb
-          Power Bomb ≥ 2 and Spiderspark (Intermediate) and Can Spiderspark
+          Power Bomb ≥ 2 and Spider Boost (Intermediate) and Can Spider Boost
           All of the following:
               Space Jump
               Any of the following:
@@ -240,7 +240,7 @@ Extra - asset_id: collision_camera_009
           Lay Any Bomb
           Any of the following:
               Space Jump or Simple IBJ
-              Spiderspark (Intermediate) and Can Spiderspark
+              Spider Boost (Intermediate) and Can Spider Boost
 
 > Energy Recharge Station; Heals? True
   * Layers: default
@@ -254,7 +254,7 @@ Extra - asset_id: collision_camera_009
   * Extra - actor_name: LE_Platform_SaveStation_001
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: ST_SaveStation_001
-  > Door to Central Chamber Access
+  > Door to Nest Network
       Trivial
   > Above Save Station
       Any of the following:
@@ -266,17 +266,17 @@ Extra - asset_id: collision_camera_009
                   High Jump Boots or Super Jump (Advanced)
                   Morph Ball and Unmorph Extend (Intermediate)
 
-> Door to Central Chamber Access; Heals? False
+> Door to Nest Network; Heals? False
   * Layers: default
-  * Power Beam Door to Central Chamber Access/Door to Central Chamber
+  * Power Beam Door to Nest Network/Door to Amphitheater
   * Extra - actor_name: Door007
   * Extra - actor_type: doorpowerpower
   > Save Station
       Trivial
 
-> Door to Teleporter Shaft North; Heals? False
+> Door to Metroid Nest Teleporter; Heals? False
   * Layers: default
-  * Power Beam Door to Teleporter Shaft North/Door to Central Chamber
+  * Power Beam Door to Metroid Nest Teleporter/Door to Amphitheater
   * Extra - actor_name: Door009
   * Extra - actor_type: doorpowerpower
   > Above Top Pickup
@@ -294,13 +294,13 @@ Extra - asset_id: collision_camera_009
 
 > Event - Grapple Block Top; Heals? False
   * Layers: default
-  * Event Area 8 - Central Chamber Grapple Block Top
+  * Event Area 8 - Amphitheater Grapple Block Top
   > Above Top Pickup
       Trivial
 
 > Event - Grapple Block Bottom; Heals? False
   * Layers: default
-  * Event Area 8 - Central Chamber Grapple Block Bottom
+  * Event Area 8 - Amphitheater Grapple Block Bottom
   > Next to Bottom Grapple Block
       Trivial
 
@@ -312,7 +312,7 @@ Extra - asset_id: collision_camera_009
       Lightning Armor or Missile ≥ 10 or Super Missile ≥ 2 or Defeat Gold Robots
   > Next to Bottom Grapple Block
       All of the following:
-          Morph Ball and After Area 8 - Central Chamber Grapple Block Bottom
+          Morph Ball and After Area 8 - Amphitheater Grapple Block Bottom
           Any of the following:
               Super Jump (Intermediate) or Climb Rooms Vertically (High Jump)
               Morph Ball and Unmorph Extend (Intermediate)
@@ -349,7 +349,7 @@ Extra - asset_id: collision_camera_009
   > Event - Grapple Block Bottom
       Grapple Beam
   > Lower Platforms
-      Morph Ball and After Area 8 - Central Chamber Grapple Block Bottom
+      Morph Ball and After Area 8 - Amphitheater Grapple Block Bottom
   > Above Tunnels
       All of the following:
           Morph Ball
@@ -358,8 +358,8 @@ Extra - asset_id: collision_camera_009
 > Above Top Pickup; Heals? False
   * Layers: default
   > Pickup (Missile Tank Top)
-      Morph Ball and After Area 8 - Central Chamber Grapple Block Top
-  > Door to Teleporter Shaft North
+      Morph Ball and After Area 8 - Amphitheater Grapple Block Top
+  > Door to Metroid Nest Teleporter
       All of the following:
           Any of the following:
               Missile ≥ 10 or Super Missile ≥ 2 or Defeat Gold Robots
@@ -370,7 +370,7 @@ Extra - asset_id: collision_camera_009
                   Screw Attack or Movement (Beginner)
               Movement (Beginner) and Use Spider Ball
               Infinite Bomb Jump (Intermediate) and Lay Bomb
-              Spiderspark (Intermediate) and Can Spiderspark
+              Spider Boost (Intermediate) and Can Spider Boost
   > Event - Grapple Block Top
       Grapple Beam
   > Above Tunnels
@@ -388,7 +388,7 @@ Extra - asset_id: collision_camera_009
               All of the following:
                   Space Jump
                   Lightning Armor or Screw Attack
-              Spiderspark (Advanced) and Can Spiderspark
+              Spider Boost (Advanced) and Can Spider Boost
               Infinite Bomb Jump (Intermediate) and Lay Bomb
           Any of the following:
               Missile ≥ 20 or Plasma Beam or Super Missile ≥ 4 or Shoot Beam Burst
@@ -402,7 +402,7 @@ Extra - asset_id: collision_camera_009
           Any of the following:
               # Climbing the right side
               Single-wall Wall Jump (Intermediate) and Walljump (Intermediate)
-              Spiderspark (Advanced) and Can Spiderspark
+              Spider Boost (Advanced) and Can Spider Boost
               Infinite Bomb Jump (Intermediate) and Lay Bomb
               All of the following:
                   Space Jump
@@ -417,7 +417,7 @@ Extra - asset_id: collision_camera_009
           Lightning Armor or Missile ≥ 10 or Super Missile ≥ 2 or Movement (Intermediate) or Defeat Gold Robots
 
 ----------------
-Central Chamber Access
+Nest Network
 Extra - total_boundings: {'x1': -5300.0, 'x2': 1100.0, 'y1': -7300.0, 'y2': -1100.0}
 Extra - polygon: [[-5300.0, -1100.0], [-5300.0, -7300.0], [1100.0, -7300.0], [1100.0, -3600.0], [-2200.0, -3600.0], [-3600.0, -2600.0], [-3600.0, -1100.0]]
 Extra - asset_id: collision_camera_010
@@ -426,54 +426,54 @@ Extra - asset_id: collision_camera_010
   * Pickup 160; Category? Minor
   * Extra - actor_name: LE_Item_008
   * Extra - actor_type: item_missiletank
-  > Door to Shaft East (Bottom)
+  > Door to Nest Nodule (Bottom)
       Trivial
   > Above Grapple Block
       Any of the following:
           Lightning Armor
-          Spiderspark (Beginner) and Can Spiderspark
+          Spider Boost (Beginner) and Can Spider Boost
 
 > Pickup (Missile Tank Baby Locked); Heals? False
   * Layers: default
   * Pickup 163; Category? Minor
   * Extra - actor_name: LE_Item_011
   * Extra - actor_type: item_missiletank
-  > Door to Central Chamber
+  > Door to Amphitheater
       Baby Metroid
 
-> Door to Teleporter Shaft South; Heals? False
+> Door to Entrance Teleporter; Heals? False
   * Layers: default
-  * Power Beam Door to Teleporter Shaft South/Door to Central Chamber Access
+  * Power Beam Door to Entrance Teleporter/Door to Nest Network
   * Extra - actor_name: Door003
   * Extra - actor_type: doorpowerpower
-  > Door to Shaft East (Bottom)
+  > Door to Nest Nodule (Bottom)
       Lightning Armor or Movement (Intermediate) or Normal Damage ≥ 199 or Defeat Non-Counterable Enemies
 
-> Door to Shaft East (Bottom); Heals? False
+> Door to Nest Nodule (Bottom); Heals? False
   * Layers: default
-  * Power Beam Door to Shaft East/Door to Central Chamber Access (Bottom)
+  * Power Beam Door to Nest Nodule/Door to Nest Network (Bottom)
   * Extra - actor_name: Door004
   * Extra - actor_type: doorpowerpower
-  > Door to Teleporter Shaft South
+  > Door to Entrance Teleporter
       Lightning Armor or Movement (Intermediate) or Normal Damage ≥ 199 or Defeat Non-Counterable Enemies
 
-> Door to Shaft East (Top); Heals? False
+> Door to Nest Nodule (Top); Heals? False
   * Layers: default
-  * Power Beam Door to Shaft East/Door to Central Chamber Access (Top)
+  * Power Beam Door to Nest Nodule/Door to Nest Network (Top)
   * Extra - actor_name: Door005
   * Extra - actor_type: doorpowerpower
-  > Door to Shaft East (Bottom)
+  > Door to Nest Nodule (Bottom)
       Trivial
-  > Dock to Shaft East
+  > Dock to Nest Nodule
       Screw Attack
   > Above Screw Attack Blocks
       All of the following:
           Lightning Armor or Movement (Beginner) or Normal Damage ≥ 100
           Ice Beam or Super Missile ≥ 2 or Defeat Gold Robots
 
-> Door to Central Chamber; Heals? False
+> Door to Amphitheater; Heals? False
   * Layers: default
-  * Power Beam Door to Central Chamber/Door to Central Chamber Access
+  * Power Beam Door to Amphitheater/Door to Nest Network
   * Extra - actor_name: Door007
   * Extra - actor_type: doorpowerpower
   > Pickup (Missile Tank Baby Locked)
@@ -485,21 +485,21 @@ Extra - asset_id: collision_camera_010
   > Above Screw Attack Blocks
       Screw Attack
 
-> Dock to Shaft East; Heals? False
+> Dock to Nest Nodule; Heals? False
   * Layers: default
-  * Open Passage to Shaft East/Dock to Central Chamber Access
-  > Door to Shaft East (Bottom)
+  * Open Passage to Nest Nodule/Dock to Nest Network
+  > Door to Nest Nodule (Bottom)
       Trivial
 
-> Tunnel to Teleporter Shaft South; Heals? False
+> Tunnel to Entrance Teleporter; Heals? False
   * Layers: default
-  * Tunnel to Teleporter Shaft South/Tunnel to Central Chamber Access
+  * Tunnel to Entrance Teleporter/Tunnel to Nest Network
   > Above Grapple Block
       Morph Ball
 
 > Event - Grapple Block; Heals? False
   * Layers: default
-  * Event Area 8 - Central Chamber Access Grapple Block
+  * Event Area 8 - Nest Network Grapple Block
   > Above Grapple Block
       Trivial
 
@@ -508,11 +508,11 @@ Extra - asset_id: collision_camera_010
   > Pickup (Missile Tank Hallway)
       Any of the following:
           Lightning Armor
-          Spiderspark (Beginner) and Can Spiderspark
-  > Door to Teleporter Shaft South
+          Spider Boost (Beginner) and Can Spider Boost
+  > Door to Entrance Teleporter
       Lightning Armor
-  > Tunnel to Teleporter Shaft South
-      Morph Ball and After Area 8 - Central Chamber Access Grapple Block
+  > Tunnel to Entrance Teleporter
+      Morph Ball and After Area 8 - Nest Network Grapple Block
   > Event - Grapple Block
       Grapple Beam and Morph Ball
   > Above Screw Attack Blocks
@@ -522,11 +522,11 @@ Extra - asset_id: collision_camera_010
 
 > Above Screw Attack Blocks; Heals? False
   * Layers: default
-  > Door to Shaft East (Top)
+  > Door to Nest Nodule (Top)
       All of the following:
           Lightning Armor or Movement (Beginner) or Normal Damage ≥ 100
           Ice Beam or Super Missile ≥ 2 or Defeat Gold Robots
-  > Door to Central Chamber
+  > Door to Amphitheater
       Any of the following:
           Space Jump or Single-wall Wall Jump (Intermediate) or Use Spider Ball
           Charge Beam and Ice Beam and Stand on Frozen Enemy (Intermediate)
@@ -542,7 +542,7 @@ Extra - asset_id: collision_camera_010
       Screw Attack
 
 ----------------
-Teleporter Shaft South
+Entrance Teleporter
 Extra - total_boundings: {'x1': -7100.0, 'x2': -5200.0, 'y1': -10900.0, 'y2': -5500.0}
 Extra - polygon: [[-7100.0, -5500.0], [-7100.0, -10900.0], [-5200.0, -10900.0], [-5200.0, -5500.0]]
 Extra - asset_id: collision_camera_011
@@ -551,7 +551,7 @@ Extra - asset_id: collision_camera_011
   * Pickup 161; Category? Minor
   * Extra - actor_name: LE_Item_009
   * Extra - actor_type: item_missiletank
-  > Door to Entrance Hallway
+  > Door to Nest Vestibule
       All of the following:
           Morph Ball
           Any of the following:
@@ -565,12 +565,12 @@ Extra - asset_id: collision_camera_011
   * Extra - actor_name: LE_Platform_Teleporter_10_02
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: ST_Teleporter_10_02
-  > Door to Entrance Hallway
+  > Door to Nest Vestibule
       Trivial
 
-> Door to Entrance Hallway; Heals? False
+> Door to Nest Vestibule; Heals? False
   * Layers: default
-  * Power Beam Door to Entrance Hallway/Door to Teleporter Shaft South
+  * Power Beam Door to Nest Vestibule/Door to Entrance Teleporter
   * Extra - actor_name: Door002
   * Extra - actor_type: doorpowerpower
   > Pickup (Missile Tank)
@@ -580,7 +580,7 @@ Extra - asset_id: collision_camera_011
           Lightning Armor or Baby Metroid or Combat (Intermediate)
   > Teleporter
       Trivial
-  > Door to Central Chamber Access
+  > Door to Nest Network
       All of the following:
           Screw Attack
           Any of the following:
@@ -590,25 +590,25 @@ Extra - asset_id: collision_camera_011
   > Event - Teleporter Unlocked
       Trivial
 
-> Door to Central Chamber Access; Heals? False
+> Door to Nest Network; Heals? False
   * Layers: default
-  * Power Beam Door to Central Chamber Access/Door to Teleporter Shaft South
+  * Power Beam Door to Nest Network/Door to Entrance Teleporter
   * Extra - actor_name: Door003
   * Extra - actor_type: doorpowerpower
-  > Door to Entrance Hallway
+  > Door to Nest Vestibule
       Screw Attack
-  > Tunnel to Central Chamber Access
+  > Tunnel to Nest Network
       All of the following:
-          Morph Ball and After Area 8 - Central Chamber Access Grapple Block
+          Morph Ball and After Area 8 - Nest Network Grapple Block
           Walljump (Beginner) or Climb Rooms Vertically (High Jump)
           Any of the following:
               Ice Beam or Super Missile ≥ 2 or Defeat Gold Robots
               Lightning Armor and Movement (Intermediate)
 
-> Tunnel to Central Chamber Access; Heals? False
+> Tunnel to Nest Network; Heals? False
   * Layers: default
-  * Tunnel to Central Chamber Access/Tunnel to Teleporter Shaft South
-  > Door to Central Chamber Access
+  * Tunnel to Nest Network/Tunnel to Entrance Teleporter
+  > Door to Nest Network
       All of the following:
           Morph Ball
           Any of the following:
@@ -618,11 +618,11 @@ Extra - asset_id: collision_camera_011
 > Event - Teleporter Unlocked; Heals? False
   * Layers: default
   * Event Area 8 - Teleporter Unlocked (Lower)
-  > Door to Entrance Hallway
+  > Door to Nest Vestibule
       Trivial
 
 ----------------
-Shaft East
+Nest Nodule
 Extra - total_boundings: {'x1': 1000.0, 'x2': 2900.0, 'y1': -7100.0, 'y2': -3600.0}
 Extra - polygon: [[1000.0, -3600.0], [1000.0, -7100.0], [2900.0, -7100.0], [2900.0, -3600.0]]
 Extra - asset_id: collision_camera_012
@@ -631,7 +631,7 @@ Extra - asset_id: collision_camera_012
   * Pickup 155; Category? Minor
   * Extra - actor_name: LE_Item_001
   * Extra - actor_type: item_supermissiletank
-  > Door to Central Chamber Access (Top)
+  > Door to Nest Network (Top)
       Trivial
 
 > Pickup (Missile Tank); Heals? False
@@ -639,22 +639,22 @@ Extra - asset_id: collision_camera_012
   * Pickup 162; Category? Minor
   * Extra - actor_name: LE_Item_010
   * Extra - actor_type: item_missiletank
-  > Dock to Central Chamber Access
+  > Dock to Nest Network
       Trivial
 
-> Door to Central Chamber Access (Bottom); Heals? False
+> Door to Nest Network (Bottom); Heals? False
   * Layers: default
-  * Power Beam Door to Central Chamber Access/Door to Shaft East (Bottom)
+  * Power Beam Door to Nest Network/Door to Nest Nodule (Bottom)
   * Extra - actor_name: Door004
   * Extra - actor_type: doorpowerpower
-  > Door to Central Chamber Access (Top)
+  > Door to Nest Network (Top)
       All of the following:
           Ice Beam or Super Missile ≥ 2 or Defeat Gold Robots
           Walljump (Beginner) or Climb Rooms Vertically (High Jump)
 
-> Door to Central Chamber Access (Top); Heals? False
+> Door to Nest Network (Top); Heals? False
   * Layers: default
-  * Power Beam Door to Central Chamber Access/Door to Shaft East (Top)
+  * Power Beam Door to Nest Network/Door to Nest Nodule (Top)
   * Extra - actor_name: Door005
   * Extra - actor_type: doorpowerpower
   > Pickup (Super Missile Tank)
@@ -667,33 +667,33 @@ Extra - asset_id: collision_camera_012
               All of the following:
                   Lightning Armor and Power Bomb
                   Phase Drift or Spider Ball
-  > Door to Central Chamber Access (Bottom)
+  > Door to Nest Network (Bottom)
       Ice Beam or Super Missile ≥ 2 or Defeat Gold Robots
 
-> Dock to Central Chamber Access; Heals? False
+> Dock to Nest Network; Heals? False
   * Layers: default
-  * Open Passage to Central Chamber Access/Dock to Shaft East
+  * Open Passage to Nest Network/Dock to Nest Nodule
   > Pickup (Missile Tank)
       Morph Ball
-  > Door to Central Chamber Access (Bottom)
+  > Door to Nest Network (Bottom)
       Lay Any Bomb
 
 ----------------
-Larva Shaft 1
+Metroid Nest Small Shaft
 Extra - total_boundings: {'x1': 4050.0, 'x2': 5950.0, 'y1': 9300.0, 'y2': 12000.0}
 Extra - polygon: [[4050.0, 12000.0], [4050.0, 9300.0], [5950.0, 9300.0], [5950.0, 12000.0]]
 Extra - asset_id: collision_camera_013
-> Door to Larva Hallway 1; Heals? False
+> Door to Metroid Nest Hallway South; Heals? False
   * Layers: default
-  * Power Beam Door to Larva Hallway 1/Door to Larva Shaft 1
+  * Power Beam Door to Metroid Nest Hallway South/Door to Metroid Nest Small Shaft
   * Extra - actor_name: Door011
   * Extra - actor_type: doorpowerpower
   > Room Center
       Trivial
 
-> Door to Larva Shaft 2; Heals? False
+> Door to Metroid Nest Shaft East; Heals? False
   * Layers: default
-  * Power Beam Door to Larva Shaft 2/Door to Larva Shaft 1
+  * Power Beam Door to Metroid Nest Shaft East/Door to Metroid Nest Small Shaft
   * Extra - actor_name: Door012
   * Extra - actor_type: doorpowerpower
   > Room Center
@@ -708,29 +708,29 @@ Extra - asset_id: collision_camera_013
 > Room Center; Heals? False; Default Node
   * Layers: default
   * Extra - start_point_actor_name: ST_Larva_002_Checkpoint
-  > Door to Larva Hallway 1
+  > Door to Metroid Nest Hallway South
       After Area 8 - Larva Metroid 2
-  > Door to Larva Shaft 2
+  > Door to Metroid Nest Shaft East
       After Area 8 - Larva Metroid 2
   > Event - Larva Metroid
       Defeat Larva Metroid
 
 ----------------
-Larva Shaft 2
+Metroid Nest Shaft East
 Extra - total_boundings: {'x1': 5850.0, 'x2': 7500.0, 'y1': 11200.0, 'y2': 16500.0}
 Extra - polygon: [[5850.0, 16500.0], [5850.0, 11200.0], [7500.0, 11200.0], [7500.0, 16500.0]]
 Extra - asset_id: collision_camera_014
-> Door to Larva Shaft 1; Heals? False
+> Door to Metroid Nest Small Shaft; Heals? False
   * Layers: default
-  * Power Beam Door to Larva Shaft 1/Door to Larva Shaft 2
+  * Power Beam Door to Metroid Nest Small Shaft/Door to Metroid Nest Shaft East
   * Extra - actor_name: Door012
   * Extra - actor_type: doorpowerpower
   > Room Bottom
       Trivial
 
-> Door to Larva Hallway 2; Heals? False
+> Door to Metroid Nest Hallway North East; Heals? False
   * Layers: default
-  * Power Beam Door to Larva Hallway 2/Door to Larva Shaft 2
+  * Power Beam Door to Metroid Nest Hallway North East/Door to Metroid Nest Shaft East
   * Extra - actor_name: Door013
   * Extra - actor_type: doorpowerpower
   > Room Top
@@ -739,7 +739,7 @@ Extra - asset_id: collision_camera_014
 > Room Top; Heals? False; Default Node
   * Layers: default
   * Extra - start_point_actor_name: ST_Larva_003_Checkpoint
-  > Door to Larva Hallway 2
+  > Door to Metroid Nest Hallway North East
       After Area 8 - Larva Metroid 3 and After Area 8 - Larva Metroid 4
   > Event - Larva Metroid Top
       Defeat Larva Metroid
@@ -760,7 +760,7 @@ Extra - asset_id: collision_camera_014
 
 > Room Bottom; Heals? False
   * Layers: default
-  > Door to Larva Shaft 1
+  > Door to Metroid Nest Small Shaft
       After Area 8 - Larva Metroid 3 and After Area 8 - Larva Metroid 4
   > Room Top
       Morph Ball
@@ -768,21 +768,21 @@ Extra - asset_id: collision_camera_014
       Defeat Larva Metroid
 
 ----------------
-Larva Hallway 2
+Metroid Nest Hallway North East
 Extra - total_boundings: {'x1': 50.0, 'x2': 5950.0, 'y1': 15100.0, 'y2': 16400.0}
 Extra - polygon: [[50.0, 16400.0], [50.0, 15100.0], [5950.0, 15100.0], [5950.0, 16400.0]]
 Extra - asset_id: collision_camera_015
-> Door to Larva Shaft 2; Heals? False
+> Door to Metroid Nest Shaft East; Heals? False
   * Layers: default
-  * Power Beam Door to Larva Shaft 2/Door to Larva Hallway 2
+  * Power Beam Door to Metroid Nest Shaft East/Door to Metroid Nest Hallway North East
   * Extra - actor_name: Door013
   * Extra - actor_type: doorpowerpower
   > Room Center
       Trivial
 
-> Door to Larva Recharge Stations; Heals? False
+> Door to Metroid Nest Recharge Stations; Heals? False
   * Layers: default
-  * Power Beam Door to Larva Recharge Stations/Door to Larva Hallway 2
+  * Power Beam Door to Metroid Nest Recharge Stations/Door to Metroid Nest Hallway North East
   * Extra - actor_name: Door014
   * Extra - actor_type: doorpowerpower
   > Room Center
@@ -791,9 +791,9 @@ Extra - asset_id: collision_camera_015
 > Room Center; Heals? False; Default Node
   * Layers: default
   * Extra - start_point_actor_name: ST_Larva_004_Checkpoint
-  > Door to Larva Shaft 2
+  > Door to Metroid Nest Shaft East
       After Area 8 - Larva Metroid 5 and After Area 8 - Larva Metroid 6
-  > Door to Larva Recharge Stations
+  > Door to Metroid Nest Recharge Stations
       After Area 8 - Larva Metroid 5 and After Area 8 - Larva Metroid 6
   > Event - Larva Metroid Left
       Defeat Larva Metroid
@@ -813,21 +813,21 @@ Extra - asset_id: collision_camera_015
       Trivial
 
 ----------------
-Larva Hallway 3
+Metroid Nest Hallway North West
 Extra - total_boundings: {'x1': -5350.0, 'x2': -1050.0, 'y1': 15100.0, 'y2': 16400.0}
 Extra - polygon: [[-5350.0, 16400.0], [-5350.0, 15100.0], [-1050.0, 15100.0], [-1050.0, 16400.0]]
 Extra - asset_id: collision_camera_016
-> Door to Larva Recharge Stations; Heals? False
+> Door to Metroid Nest Recharge Stations; Heals? False
   * Layers: default
-  * Power Beam Door to Larva Recharge Stations/Door to Larva Hallway 3
+  * Power Beam Door to Metroid Nest Recharge Stations/Door to Metroid Nest Hallway North West
   * Extra - actor_name: Door015
   * Extra - actor_type: doorpowerpower
   > Room Center
       Trivial
 
-> Door to Larva Shaft 3; Heals? False
+> Door to Metroid Nest Shaft West; Heals? False
   * Layers: default
-  * Power Beam Door to Larva Shaft 3/Door to Larva Hallway 3
+  * Power Beam Door to Metroid Nest Shaft West/Door to Metroid Nest Hallway North West
   * Extra - actor_name: Door016
   * Extra - actor_type: doorpowerpower
   > Room Center
@@ -842,15 +842,15 @@ Extra - asset_id: collision_camera_016
 > Room Center; Heals? False; Default Node
   * Layers: default
   * Extra - start_point_actor_name: ST_Larva_005_Checkpoint
-  > Door to Larva Recharge Stations
+  > Door to Metroid Nest Recharge Stations
       After Area 8 - Larva Metroid 7
-  > Door to Larva Shaft 3
+  > Door to Metroid Nest Shaft West
       After Area 8 - Larva Metroid 7
   > Event - Larva Metroid
       Defeat Larva Metroid
 
 ----------------
-Larva Recharge Stations
+Metroid Nest Recharge Stations
 Extra - total_boundings: {'x1': -1150.0, 'x2': 150.0, 'y1': 15241.5, 'y2': 16000.0}
 Extra - polygon: [[-1150.0, 16000.0], [-1150.0, 15241.5], [150.0, 15241.5], [150.0, 16000.0]]
 Extra - asset_id: collision_camera_017
@@ -860,7 +860,7 @@ Extra - asset_id: collision_camera_017
   * Extra - actor_type: weightactivatedplatform
   > Energy Recharge Station
       Trivial
-  > Door to Larva Hallway 3
+  > Door to Metroid Nest Hallway North West
       Trivial
 
 > Energy Recharge Station; Heals? True
@@ -869,41 +869,41 @@ Extra - asset_id: collision_camera_017
   * Extra - actor_type: weightactivatedplatform
   > Ammo Recharge Station
       Trivial
-  > Door to Larva Hallway 2
+  > Door to Metroid Nest Hallway North East
       Trivial
 
-> Door to Larva Hallway 2; Heals? False
+> Door to Metroid Nest Hallway North East; Heals? False
   * Layers: default
-  * Power Beam Door to Larva Hallway 2/Door to Larva Recharge Stations
+  * Power Beam Door to Metroid Nest Hallway North East/Door to Metroid Nest Recharge Stations
   * Extra - actor_name: Door014
   * Extra - actor_type: doorpowerpower
   > Energy Recharge Station
       Trivial
 
-> Door to Larva Hallway 3; Heals? False
+> Door to Metroid Nest Hallway North West; Heals? False
   * Layers: default
-  * Power Beam Door to Larva Hallway 3/Door to Larva Recharge Stations
+  * Power Beam Door to Metroid Nest Hallway North West/Door to Metroid Nest Recharge Stations
   * Extra - actor_name: Door015
   * Extra - actor_type: doorpowerpower
   > Ammo Recharge Station
       Trivial
 
 ----------------
-Larva Shaft 3
+Metroid Nest Shaft West
 Extra - total_boundings: {'x1': -7100.0, 'x2': -5250.0, 'y1': 12500.0, 'y2': 18500.0}
 Extra - polygon: [[-7100.0, 18500.0], [-7100.0, 12500.0], [-5250.0, 12500.0], [-5250.0, 18500.0]]
 Extra - asset_id: collision_camera_018
-> Door to Larva Hallway 3; Heals? False
+> Door to Metroid Nest Hallway North West; Heals? False
   * Layers: default
-  * Power Beam Door to Larva Hallway 3/Door to Larva Shaft 3
+  * Power Beam Door to Metroid Nest Hallway North West/Door to Metroid Nest Shaft West
   * Extra - actor_name: Door016
   * Extra - actor_type: doorpowerpower
   > Room Top
       Trivial
 
-> Door to Queen Access Path; Heals? False
+> Door to Queen Arena Access; Heals? False
   * Layers: default
-  * Power Beam Door to Queen Access Path/Door to Larva Shaft 3
+  * Power Beam Door to Queen Arena Access/Door to Metroid Nest Shaft West
   * Extra - actor_name: Door017
   * Extra - actor_type: doorpowerpower
   > Room Bottom
@@ -937,7 +937,7 @@ Extra - asset_id: collision_camera_018
 
 > Room Top; Heals? False
   * Layers: default
-  > Door to Larva Hallway 3
+  > Door to Metroid Nest Hallway North West
       After Area 8 - Larva Metroid 10 and After Area 8 - Larva Metroid 8 and After Area 8 - Larva Metroid 9
   > Event - Larva Metroid Top
       All of the following:
@@ -951,7 +951,7 @@ Extra - asset_id: collision_camera_018
 > Room Bottom; Heals? False
   * Layers: default
   * Extra - start_point_actor_name: ST_Larva_006_Checkpoint
-  > Door to Queen Access Path
+  > Door to Queen Arena Access
       After Area 8 - Larva Metroid 10 and After Area 8 - Larva Metroid 8 and After Area 8 - Larva Metroid 9
   > Pickup (Missile Tank)
       Morph Ball and Shoot Any Missile
@@ -961,7 +961,7 @@ Extra - asset_id: collision_camera_018
       Morph Ball
 
 ----------------
-Queen Access Path
+Queen Arena Access
 Extra - total_boundings: {'x1': -5350.0, 'x2': 1200.0, 'y1': 12100.0, 'y2': 13600.0}
 Extra - polygon: [[-5350.0, 13600.0], [-5350.0, 12100.0], [1200.0, 12100.0], [1200.0, 13600.0]]
 Extra - asset_id: collision_camera_019
@@ -970,18 +970,18 @@ Extra - asset_id: collision_camera_019
   * Extra - actor_name: LE_Platform_SaveStation_004
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: ST_SaveStation_004
-  > Door to Larva Shaft 3
+  > Door to Metroid Nest Shaft West
       Any of the following:
           Lightning Armor or High Jump Boots or Space Jump
-          Spiderspark (Intermediate) and Can Spiderspark
+          Spider Boost (Intermediate) and Can Spider Boost
           Diagonal Bomb Jump (Intermediate) and Lay Bomb
           Morph Ball and Unmorph Extend (Intermediate)
   > Dock to Queen Arena
       Trivial
 
-> Door to Larva Shaft 3; Heals? False
+> Door to Metroid Nest Shaft West; Heals? False
   * Layers: default
-  * Power Beam Door to Larva Shaft 3/Door to Queen Access Path
+  * Power Beam Door to Metroid Nest Shaft West/Door to Queen Arena Access
   * Extra - actor_name: Door017
   * Extra - actor_type: doorpowerpower
   > Save Station
@@ -991,11 +991,11 @@ Extra - asset_id: collision_camera_019
 
 > Dock to Queen Arena; Heals? False
   * Layers: default
-  * Open Passage to Queen Arena/Dock to Queen Access Path
+  * Open Passage to Queen Arena/Dock to Queen Arena Access
 
 > Tunnel to Queen Arena; Heals? False
   * Layers: default
-  * Tunnel to Queen Arena/Tunnel to Queen Access Path
+  * Tunnel to Queen Arena/Tunnel to Queen Arena Access
   > Save Station
       Lay Any Bomb
 
@@ -1015,7 +1015,7 @@ Extra - asset_id: collision_camera_021
           Screw Attack
           Any of the following:
               Space Jump
-              Spiderspark (Advanced) and Walljump (Intermediate) and Can Spiderspark
+              Spider Boost (Advanced) and Walljump (Intermediate) and Can Spider Boost
 
 > Save Station; Heals? False
   * Layers: default
@@ -1031,12 +1031,12 @@ Extra - asset_id: collision_camera_021
                   Movement (Advanced)
                   Normal Damage ≥ 199 and Defeat Non-Counterable Enemies
                   Lightning Armor and Movement (Intermediate)
-  > Door to Entrance Hallway
+  > Door to Nest Vestibule
       Trivial
 
-> Door to Entrance Hallway; Heals? False
+> Door to Nest Vestibule; Heals? False
   * Layers: default
-  * Power Beam Door to Entrance Hallway/Door to Transport to Area 7
+  * Power Beam Door to Nest Vestibule/Door to Transport to Area 7
   * Extra - actor_name: Door001
   * Extra - actor_type: doorpowerpower
   > Save Station
@@ -1044,49 +1044,28 @@ Extra - asset_id: collision_camera_021
 
 ----------------
 Queen Arena
-Extra - total_boundings: {'x1': -7000.0, 'x2': 1600.0, 'y1': 11100.0, 'y2': 12500.0}
-Extra - polygon: [[-7000.0, 11100.0], [1600.0, 11100.0], [1600.0, 12500.0], [-7000.0, 12500.0]]
-Extra - asset_id: collision_camera_022
-> Dock to Queen Access Path; Heals? False
+Extra - total_boundings: {'x1': -2600.0, 'x2': 1600.0, 'y1': 11100.0, 'y2': 12500.0}
+Extra - polygon: [[-2600.0, 11100.0], [1600.0, 11100.0], [1600.0, 12500.0], [-2600.0, 12500.0]]
+Extra - asset_id: collision_camera_020
+> Dock to Queen Arena Access; Heals? False
   * Layers: default
-  * Open Passage to Queen Access Path/Dock to Queen Arena
-  > Room Center
-      After Area 8 - Queen Metroid or Enabled Remove Queen Wall
+  * Open Passage to Queen Arena Access/Dock to Queen Arena
   > Before Queen
       After Area 8 - Larva Metroid 1 and After Area 8 - Larva Metroid 10 and After Area 8 - Larva Metroid 2 and After Area 8 - Larva Metroid 3 and After Area 8 - Larva Metroid 4 and After Area 8 - Larva Metroid 5 and After Area 8 - Larva Metroid 6 and After Area 8 - Larva Metroid 7 and After Area 8 - Larva Metroid 8 and After Area 8 - Larva Metroid 9
+  > Dock to Hatchling Room
+      Any of the following:
+          After Area 8 - Queen Metroid
+          Before Area 8 - Queen Metroid and Enabled Remove Queen Wall
 
-> Tunnel to Queen Access Path; Heals? False
+> Tunnel to Queen Arena Access; Heals? False
   * Layers: default
-  * Tunnel with Bomb Block to Queen Access Path/Tunnel to Queen Arena
-
-> Dock to Transport to Surface West; Heals? False
-  * Layers: default
-  * Open Passage to Transport to Surface West/Dock to Queen Arena
-  > Room Center
-      After Area 8 - Queen Metroid or Enabled Remove Queen Wall
-
-> Pickup (Baby Metroid); Heals? False
-  * Layers: default
-  * Pickup 171; Category? Major
-  * Extra - actor_name: LE_Baby_Hatchling
-  * Extra - actor_type: ITEM_BABY_HATCHLING
-  > Room Center
-      Trivial
+  * Tunnel with Bomb Block to Queen Arena Access/Tunnel to Queen Arena
 
 > Event - Queen Metroid; Heals? False
   * Layers: default
   * Event Area 8 - Queen Metroid
-  > Room Center
+  > Dock to Hatchling Room
       Trivial
-
-> Room Center; Heals? False
-  * Layers: default
-  > Tunnel to Queen Access Path
-      Screw Attack and Space Jump
-  > Dock to Transport to Surface West
-      Baby Metroid
-  > Pickup (Baby Metroid)
-      After Area 8 - Queen Metroid
 
 > Before Queen; Heals? False
   * Layers: default
@@ -1120,10 +1099,50 @@ Extra - asset_id: collision_camera_022
               # Dodging Plasma Balls/Fire
               Use Spider Ball
               # Launch into head to end attack early
-              Combat (Intermediate) and Spiderspark (Intermediate) and Can Spiderspark
+              Combat (Intermediate) and Spider Boost (Intermediate) and Can Spider Boost
+
+> Dock to Hatchling Room; Heals? False
+  * Layers: default
+  * Open Passage to Hatchling Room/Dock to Queen Arena
+  > Tunnel to Queen Arena Access
+      Screw Attack and Space Jump
 
 ----------------
-Entrance Hallway
+Hatchling Room
+Extra - total_boundings: {'x1': -7000.0, 'x2': -2500.0, 'y1': 11100.0, 'y2': 12200.0}
+Extra - polygon: [[-7000.0, 11100.0], [-2500.0, 11100.0], [-2500.0, 12200.0], [-7000.0, 12200.0]]
+Extra - asset_id: collision_camera_022
+> Dock to Queen Arena; Heals? False
+  * Layers: default
+  * Open Passage to Queen Arena/Dock to Hatchling Room
+  > Room Center
+      Trivial
+
+> Dock to Transport to Surface; Heals? False
+  * Layers: default
+  * Open Passage to Transport to Surface/Dock to Hatchling Room
+  > Room Center
+      Trivial
+
+> Pickup (Baby Metroid); Heals? False
+  * Layers: default
+  * Pickup 171; Category? Major
+  * Extra - actor_name: LE_Baby_Hatchling
+  * Extra - actor_type: ITEM_BABY_HATCHLING
+  > Room Center
+      Trivial
+
+> Room Center; Heals? False
+  * Layers: default
+  > Dock to Queen Arena
+      After Area 8 - Queen Metroid or Enabled Remove Queen Wall
+  > Dock to Transport to Surface
+      Baby Metroid
+  > Pickup (Baby Metroid)
+      After Area 8 - Queen Metroid
+
+----------------
+Nest Vestibule
 Extra - total_boundings: {'x1': -5300.0, 'x2': 2700.0, 'y1': -9700.0, 'y2': -7700.0}
 Extra - polygon: [[-5300.0, -7700.0], [-5300.0, -9700.0], [2700.0, -9700.0], [2700.0, -7700.0]]
 Extra - asset_id: collision_camera_023
@@ -1137,15 +1156,15 @@ Extra - asset_id: collision_camera_023
 
 > Door to Transport to Area 7; Heals? False
   * Layers: default
-  * Power Beam Door to Transport to Area 7/Door to Entrance Hallway
+  * Power Beam Door to Transport to Area 7/Door to Nest Vestibule
   * Extra - actor_name: Door001
   * Extra - actor_type: doorpowerpower
   > Below Pickup
       Ice Beam or Super Missile ≥ 2 or Movement (Beginner) or Defeat Gold Robots
 
-> Door to Teleporter Shaft South; Heals? False
+> Door to Entrance Teleporter; Heals? False
   * Layers: default
-  * Power Beam Door to Teleporter Shaft South/Door to Entrance Hallway
+  * Power Beam Door to Entrance Teleporter/Door to Nest Vestibule
   * Extra - actor_name: Door002
   * Extra - actor_type: doorpowerpower
   > Below Pickup
@@ -1163,7 +1182,7 @@ Extra - asset_id: collision_camera_023
           Phase Drift or Spider Ball or Movement (Beginner)
   > Door to Transport to Area 7
       Ice Beam or Super Missile ≥ 2 or Movement (Beginner) or Defeat Gold Robots
-  > Door to Teleporter Shaft South
+  > Door to Entrance Teleporter
       Any of the following:
           Defeat Non-Counterable Enemies
           All of the following:
@@ -1171,7 +1190,7 @@ Extra - asset_id: collision_camera_023
               Lightning Armor or Screw Attack
 
 ----------------
-Teleporter Shaft North
+Metroid Nest Teleporter
 Extra - total_boundings: {'x1': -5400.0, 'x2': -2500.0, 'y1': 7500.0, 'y2': 11200.0}
 Extra - polygon: [[-5400.0, 11200.0], [-5400.0, 7500.0], [-3600.0, 7500.0], [-3600.0, 10200.0], [-3600.0, 10900.0], [-2500.0, 10900.0], [-2500.0, 11200.0]]
 Extra - asset_id: collision_camera_024
@@ -1180,9 +1199,9 @@ Extra - asset_id: collision_camera_024
   * Extra - actor_name: LE_Platform_SaveStation_003
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: ST_SaveStation_003
-  > Door to Central Chamber
+  > Door to Amphitheater
       Trivial
-  > Tunnel to Larva Access
+  > Tunnel to Metroid Nest Foyer
       All of the following:
           Morph Ball
           Super Jump (Intermediate) or Unmorph Extend (Beginner) or Climb Rooms Vertically (High Jump)
@@ -1193,12 +1212,12 @@ Extra - asset_id: collision_camera_024
   * Extra - actor_name: LE_Platform_Teleporter_10_01
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: ST_Teleporter_10_01
-  > Door to Central Chamber
+  > Door to Amphitheater
       Screw Attack
 
-> Door to Central Chamber; Heals? False
+> Door to Amphitheater; Heals? False
   * Layers: default
-  * Power Beam Door to Central Chamber/Door to Teleporter Shaft North
+  * Power Beam Door to Amphitheater/Door to Metroid Nest Teleporter
   * Extra - actor_name: Door009
   * Extra - actor_type: doorpowerpower
   > Save Station
@@ -1208,15 +1227,15 @@ Extra - asset_id: collision_camera_024
   > Event - Teleporter Unlocked
       Trivial
 
-> Tunnel to Larva Access; Heals? False
+> Tunnel to Metroid Nest Foyer; Heals? False
   * Layers: default
-  * Tunnel to Larva Access/Tunnel to Teleporter Shaft North
+  * Tunnel to Metroid Nest Foyer/Tunnel to Metroid Nest Teleporter
   > Save Station
       Morph Ball
 
 > Event - Teleporter Unlocked; Heals? False
   * Layers: default
   * Event Area 8 - Teleporter Unlocked (Upper)
-  > Door to Central Chamber
+  > Door to Amphitheater
       Trivial
 

@@ -62,13 +62,14 @@ def test_msr_format_params(artifacts):
         ],
         "Gameplay": ["Starts at Surface - East - Landing Site"],
         "Difficulty": [],
-        "Goal": [f"{artifacts.required_artifacts} Metroid DNA", dna_where]
-        if artifacts.required_artifacts
-        else [dna_where],
+        "Goal": (
+            [f"{artifacts.required_artifacts} Metroid DNA", dna_where] if artifacts.required_artifacts else [dna_where]
+        ),
         "Game Changes": [
             "Missile needs Launcher, Super Missile needs Launcher, Power Bomb needs Launcher",
-            "Charge Door Buff, Beam Door Buff",
-            "Open Area 3 Interior East Shortcut, Remove Area Exit Grapple Blocks",
-            "Change Surface Scan Pulse Crumble Blocks, Change Area 1 Chozo Seal Crumble Blocks",
+            "Charge Door Buff, Beam Door Buff, Beam Burst Buff",
+            "Open Area 3 Factory Interior East Shortcut, Remove Area Exit Grapple Blocks",
+            "Change Surface Cavern Cavity Crumble Blocks, Change Area 1 Transport to Surface and Area 2 Crumble Blocks",
         ],
+        "Hints": ["DNA Hints: Area and room"],
     }

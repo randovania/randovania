@@ -1,10 +1,11 @@
 [build-system]
 requires = [
-    "setuptools>=61.2",
-    "setuptools_scm[toml]>=6.2",
+    "setuptools>=64",
+    "setuptools_scm>=8",
     "pyqt-distutils>=0.7.3",
     "wheel>=0.37.0",
     "dulwich",
+    "randovania-scm-version-schema",
 ]
 build-backend = "setuptools.build_meta"
 
@@ -93,7 +94,7 @@ exporters = [
     "mp2hudcolor>=1.0.10",
 
     # Metroid: Samus Returns
-    "open-samus-returns-rando>=1.0.5",
+    "open-samus-returns-rando>=1.0.7",
 
     # Super Metroid
     "SuperDuperMetroid>=1.2.0",
@@ -160,8 +161,25 @@ randovania = "randovania.__main__:main"
 [tool.setuptools.packages.find]
 include = ["randovania*"]
 
+[tool.setuptools_scm]
+local_scheme = "no-local-version"
+version_file = "randovania/version.py"
+version_scheme = "randovania_scm_version_schema:version_scheme"
+git_describe_command = [
+    "git",
+    "describe",
+    "--dirty",
+    "--tags",
+    "--long",
+    "--match",
+    "v[0-9]*",
+]
+
 [tool.ruff]
 line-length = 120
+target-version = "py311"
+
+[tool.ruff.lint]
 select = [
     "E", "F", "W", "C90", "I", "UP", "C4",
     "RSE",
@@ -181,33 +199,27 @@ select = [
     "PLW",
 ]
 extend-ignore = [
+    "ISC001",  # may cause conflicts with formatter
     "PLW0603",  # we use some globals here and there
     "PLW2901",  # TODO: should actually fix these
 ]
 
-# Version to target for generated code.
-target-version = "py311"
-
-[tool.ruff.isort]
+[tool.ruff.lint.isort]
 # This is very desirable, but causes issues with py-cord and some usages of construct_pack.encode
 # required-imports = ["from __future__ import annotations"]
 
-[tool.ruff.mccabe]
+[tool.ruff.lint.mccabe]
 # Flag errors (`C901`) whenever the complexity level exceeds 25.
 # Defaults to 10, but we're being very flexible right now
 max-complexity = 25
 
-[tool.ruff.flake8-type-checking]
+[tool.ruff.lint.flake8-type-checking]
 runtime-evaluated-base-classes = [
     "randovania.bitpacking.bitpacking.BitPackDataclass",
     "randovania.bitpacking.type_enforcement.DataclassPostInitTypeCheck",
     "randovania.bitpacking.json_dataclass.JsonDataclass",
     "randovania.layout.base.base_configuration.BaseConfiguration",
 ]
-
-[tool.black]
-line-length = 120
-target-version = ['py311']
 
 [tool.mypy]
 files = [
@@ -245,3 +257,4 @@ disallow_untyped_defs = true
 module = "test.*"
 disallow_untyped_defs = false
 check_untyped_defs = true
+disable_error_code = "method-assign"

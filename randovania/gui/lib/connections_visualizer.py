@@ -12,18 +12,20 @@ if TYPE_CHECKING:
     from PySide6.QtWidgets import QGridLayout, QWidget
 
     from randovania.game_description.requirements.base import Requirement
+    from randovania.game_description.resources.resource_database import ResourceDatabase
 
 
 def create_tree_items_for_requirement(
     tree: QtWidgets.QTreeWidget,
     root: QtWidgets.QTreeWidget | QtWidgets.QTreeWidgetItem,
     requirement: Requirement,
+    db: ResourceDatabase,
 ) -> QtWidgets.QTreeWidgetItem:
     parents: list[QtWidgets.QTreeWidget | QtWidgets.QTreeWidgetItem] = [root]
 
     result = None
 
-    for depth, text in pretty_print.pretty_print_requirement(requirement):
+    for depth, text in pretty_print.pretty_print_requirement(requirement, db):
         item = QtWidgets.QTreeWidgetItem(parents[depth])
         item.setExpanded(True)
 
@@ -67,18 +69,19 @@ class ConnectionsVisualizer:
     parent: QWidget
     grid_layout: QGridLayout
 
-    def __init__(self, parent: QWidget, grid_layout: QGridLayout, requirement: Requirement):
+    def __init__(
+        self, parent: QWidget, grid_layout: QGridLayout, requirement: Requirement, resource_database: ResourceDatabase
+    ):
         self.parent = parent
         self.grid_layout = grid_layout
+        self.resource_database = resource_database
+
         self._tree = QtWidgets.QTreeWidget(self.parent)
         self._tree.header().setVisible(False)
         self.grid_layout.addWidget(self._tree)
 
-        self._add_widget_for_requirement_array(requirement)
-
-    def _add_widget_for_requirement_array(self, requirement: Requirement):
-        self.grid_layout.setAlignment(Qt.AlignTop)
-        create_tree_items_for_requirement(self._tree, self._tree, requirement)
+        self.grid_layout.setAlignment(Qt.AlignmentFlag.AlignTop)
+        create_tree_items_for_requirement(self._tree, self._tree, requirement, self.resource_database)
         self._tree.updateGeometries()
 
     def deleteLater(self):

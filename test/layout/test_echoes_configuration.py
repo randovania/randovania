@@ -106,9 +106,11 @@ def layout_config_with_data(request, default_echoes_configuration):
         for key, cls in types_to_mock.items():
             assert key in data
             data[key] = stack.enter_context(make_dummy(cls))
-        yield request.param["encoded"], EchoesConfiguration.from_json(
-            data, game=RandovaniaGame.METROID_PRIME_ECHOES
-        ), data
+        yield (
+            request.param["encoded"],
+            EchoesConfiguration.from_json(data, game=RandovaniaGame.METROID_PRIME_ECHOES),
+            data,
+        )
 
 
 def test_decode(layout_config_with_data):

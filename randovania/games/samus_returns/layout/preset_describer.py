@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
+from randovania.games.samus_returns.layout.hint_configuration import ItemHintMode
 from randovania.games.samus_returns.layout.msr_configuration import MSRArtifactConfig, MSRConfiguration
 from randovania.layout.preset_describer import (
     GamePresetDescriber,
@@ -48,12 +49,21 @@ def describe_artifacts(artifacts: MSRArtifactConfig) -> list[dict[str, bool]]:
         ]
 
 
+_MSR_HINT_TEXT = {
+    ItemHintMode.DISABLED: None,
+    ItemHintMode.HIDE_AREA: "Area only",
+    ItemHintMode.PRECISE: "Area and room",
+}
+
+
 class MSRPresetDescriber(GamePresetDescriber):
     def format_params(self, configuration: BaseConfiguration) -> dict[str, list[str]]:
         assert isinstance(configuration, MSRConfiguration)
 
         standard_pickups = configuration.standard_pickup_configuration
         template_strings = super().format_params(configuration)
+
+        dna_hint = _MSR_HINT_TEXT[configuration.hints.artifacts]
 
         extra_message_tree = {
             "Logic Settings": [
@@ -104,19 +114,23 @@ class MSRPresetDescriber(GamePresetDescriber):
                 {
                     "Charge Door Buff": configuration.charge_door_buff,
                     "Beam Door Buff": configuration.beam_door_buff,
+                    "Beam Burst Buff": configuration.beam_burst_buff,
                     "Missile Door Buff": configuration.nerf_super_missiles,
                 },
                 {
-                    "Open Area 3 Interior East Shortcut": configuration.area3_interior_shortcut_no_grapple,
+                    "Open Area 3 Factory Interior East Shortcut": configuration.area3_interior_shortcut_no_grapple,
                     "Remove Area Exit Grapple Blocks": configuration.elevator_grapple_blocks,
                 },
                 {
-                    "Change Surface Scan Pulse Crumble Blocks": configuration.surface_crumbles,
-                    "Change Area 1 Chozo Seal Crumble Blocks": configuration.area1_crumbles,
+                    "Change Surface Cavern Cavity Crumble Blocks": configuration.surface_crumbles,
+                    "Change Area 1 Transport to Surface and Area 2 Crumble Blocks": configuration.area1_crumbles,
                 },
                 {
                     "Enable Reverse Area 8": configuration.reverse_area8,
                 },
+            ],
+            "Hints": [
+                {f"DNA Hints: {dna_hint}": dna_hint is not None},
             ],
         }
         fill_template_strings_from_tree(template_strings, extra_message_tree)

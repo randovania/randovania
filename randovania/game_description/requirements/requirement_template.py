@@ -27,7 +27,7 @@ class RequirementTemplate(Requirement):
         return RequirementTemplate, (self.template_name,)
 
     def template_requirement(self, database: ResourceDatabase) -> Requirement:
-        return database.requirement_template[self.template_name]
+        return database.requirement_template[self.template_name].requirement
 
     def damage(self, current_resources: ResourceCollection, database: ResourceDatabase) -> int:
         return self.template_requirement(database).damage(current_resources, database)

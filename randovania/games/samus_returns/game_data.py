@@ -92,7 +92,10 @@ game_data: game.GameData = game.GameData(
             "Are there any hints?",
             "All Chozo Seals have been repurposed to provide a hint to "
             "an item somewhere in the world. The region the item is located "
-            "will be specified.",
+            "will be specified."
+            "\n\n"
+            "New seals have been added in all areas except Surface which hint at the location "
+            "of DNA. See the `Hints` tab for more information.",
         ),
         (
             "Why is this pickup not animating?",
@@ -107,7 +110,8 @@ game_data: game.GameData = game.GameData(
             "What are Reserve Tanks?",
             "Reserve Tanks are items that restore a certain ammo type when depleted. "
             "In vanilla, these tanks can be unlocked by using certain amiibo, "
-            "but in the randomizer, this has been changed to make them be actual pickups. "
+            "but in the randomizer, this has been changed to make them be actual pickups."
+            "\n\n"
             "By default, the Energy Reserve Tank restores 299 Energy, the Aeion Reserve Tank "
             "restores 500 Aeion, and the Missile Reserve Tank restores 30 Missiles or "
             "10 Super Missiles. Note that when the Missile Reserve Tank is depeleted, "

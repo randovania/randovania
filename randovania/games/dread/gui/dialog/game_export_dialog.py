@@ -155,7 +155,7 @@ class DreadGameExportDialog(GameExportDialog, Ui_DreadGameExportDialog):
 
         # Output to Ryujinx
         self.update_ryujinx_ui()
-        self.tab_ryujinx.serialize_options = lambda: {}
+        self.tab_ryujinx.serialize_options = dict
         self.tab_ryujinx.restore_options = lambda p: None
         self.tab_ryujinx.is_valid = lambda: True
 

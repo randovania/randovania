@@ -121,6 +121,9 @@ class DreadCosmeticPatches(BaseCosmeticPatches):
     show_player_damage: bool = False
     show_death_counter: bool = False
     enable_auto_tracker: bool = True
+    music_volume: int = 100
+    sfx_volume: int = 100
+    ambience_volume: int = 100
     show_room_names: DreadRoomGuiType = DreadRoomGuiType.NONE
     missile_cosmetic: DreadMissileCosmeticType = DreadMissileCosmeticType.NONE
     alt_ice_missile: DreadShieldType = DreadShieldType.DEFAULT
