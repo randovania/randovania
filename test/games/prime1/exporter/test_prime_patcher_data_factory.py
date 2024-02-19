@@ -147,5 +147,5 @@ def test_create_patch_data(test_files_dir, rdvgame_filename, expected_results_fi
         new_callable=PropertyMock,
         return_value="$$$$$",
     )
-    
+
     _test_preset(rdvgame, expected_results, mocker)
