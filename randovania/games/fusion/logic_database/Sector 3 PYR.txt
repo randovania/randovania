@@ -140,9 +140,8 @@ Extra - room_id: [3]
       Trivial
   > Other to Level 2 Security Room
       All of the following:
-          Speed Booster
-          # TODO: morph? Also whats the movement for, mid air morph?
-          Movement (Advanced) or Can Use Bombs or Can Use Springball
+          Morph Ball and Speed Booster
+          Shinespark Tricks (Advanced) or Can Bounce in Ball
 
 ----------------
 Level 2 Security Room
@@ -856,7 +855,7 @@ Extra - room_id: [28]
   * Extra - room: 28
   * Extra - blockx: 12
   * Extra - blocky: 7
-  > Door to Monkey Bars of Fire
+  > Behind Wall
       Trivial
 
 > Pickup (Missile Tank); Heals? False
@@ -873,23 +872,35 @@ Extra - room_id: [28]
   * Layers: default
   * L0 Hatch to Monkey Bars of Fire/Door to Fiery Storage
   * Extra - door_idx: (56,)
-  > Pickup (Energy Tank)
-      All of the following:
-          # TODO: can you speedboost without collecting the tank?
-          Speed Booster
-          # TODO: if pillar, can you do this without jump upgrades
-          Space Jump or Can Activate Pillar
   > Pickup (Missile Tank)
       Trivial
-  > Door to Connection to Sector 5 (ARC)
-      Screw Attack
+  > Behind Wall
+      Can Break Single Bomb Blocks
 
 > Door to Connection to Sector 5 (ARC); Heals? False
   * Layers: default
   * L0 Hatch to Connection to Sector 5 (ARC)/Door to Fiery Storage
   * Extra - door_idx: (87,)
+  > Behind Wall
+      All of the following:
+          Screw Attack
+          Wall Jump (Beginner) or Can climb High Jump Wall
+
+> Behind Wall; Heals? False
+  * Layers: default
+  > Pickup (Energy Tank)
+      All of the following:
+          Speed Booster
+          Space Jump or Can Activate Pillar
   > Door to Monkey Bars of Fire
-      # TODO: you can't do this with SA alone
+      Any of the following:
+          Can Break Single Bomb Blocks
+          All of the following:
+              Speed Booster
+              Any of the following:
+                  Shinespark Tricks (Advanced)
+                  High Jump and Shinespark Tricks (Intermediate)
+  > Door to Connection to Sector 5 (ARC)
       Screw Attack
 
 ----------------
@@ -1060,8 +1071,8 @@ Extra - room_id: [35]
   * Extra - room: 35
   * Extra - blockx: 4
   * Extra - blocky: 27
-  > Door to Sova Processing
-      Trivial
+  > Beside Pickup
+      Screw Attack
 
 > Pickup (Power Bomb Tank in Shaft); Heals? False
   * Layers: default
@@ -1072,25 +1083,30 @@ Extra - room_id: [35]
   * Extra - blocky: 86
   > Door to Sova Processing
       Trivial
+  > Beside Pickup
+      Speed Booster
 
 > Door to Sova Processing; Heals? False
   * Layers: default
   * L0 Hatch to Sova Processing/Door to Garbage Chute
   * Extra - door_idx: (79,)
-  > Pickup (Power Bomb Tank in Cave)
-      Gravity Suit and Screw Attack and Speed Booster
   > Pickup (Power Bomb Tank in Shaft)
-      Gravity Suit and Speed Booster
-  > Door to Chute Access
-      # TODO: Shinesparking? You also cant get here without ocllecting the pb tank in shaft Also varia?
-      Gravity Suit and Speed Booster
+      # TODO: Heat DMG
+      Gravity Suit and Screw Attack and Speed Booster and Disabled Door Lock Rando and Disabled Entrance Rando
 
 > Door to Chute Access; Heals? False
   * Layers: default
   * L0 Hatch to Chute Access/Door to Garbage Chute
   * Extra - door_idx: (80,)
-  > Door to Sova Processing
-      Impossible
+
+> Beside Pickup; Heals? False
+  * Layers: default
+  > Pickup (Power Bomb Tank in Cave)
+      Screw Attack
+  > Pickup (Power Bomb Tank in Shaft)
+      Trivial
+  > Door to Chute Access
+      Speed Booster
 
 ----------------
 Chute Access
