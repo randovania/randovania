@@ -414,8 +414,13 @@ def write_minimal_logic_db(db: MinimalLogicData | None) -> dict | None:
     }
 
 
-def write_used_trick_levels(game: GameDescription) -> dict[str, list[int]]:
-    return {trick.short_name: sorted(levels) for trick, levels in game.get_used_trick_levels(ignore_cache=True).items()}
+def write_used_trick_levels(game: GameDescription) -> dict[str, list[int]] | None:
+    try:
+        return {
+            trick.short_name: sorted(levels) for trick, levels in game.get_used_trick_levels(ignore_cache=True).items()
+        }
+    except (RecursionError, KeyError):
+        return None
 
 
 def write_game_description(game: GameDescription) -> dict:
