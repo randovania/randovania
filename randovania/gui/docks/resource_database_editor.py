@@ -11,6 +11,7 @@ from PySide6.QtCore import Qt
 
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
+from randovania.game_description.resources.resource_database import NamedRequirementTemplate
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
@@ -253,7 +254,7 @@ class ResourceDatabaseEditor(QtWidgets.QDockWidget, Ui_ResourceDatabaseEditor):
         if not did_confirm or template_name == "":
             return
 
-        self.db.requirement_template[template_name].requirement = Requirement.trivial()
+        self.db.requirement_template[template_name] = NamedRequirementTemplate(template_name, Requirement.trivial())
         self.create_template_editor(template_name).setExpanded(True)
 
     def create_template_editor(self, name: str) -> QtWidgets.QTreeWidgetItem:
