@@ -156,6 +156,7 @@ Extra - room_id: [3]
               Ice Beam and Wave Beam
   > Right Side
       All of the following:
+          # If strictly on right side, space or wall jump required
           Gravity Suit
           Any of the following:
               After Water Level Lowered
@@ -223,7 +224,7 @@ Extra - room_id: [6]
   * Extra - door_idx: (13,)
   > Pickup (Hidden Power Bomb Tank)
       All of the following:
-          Power Bombs and Can Use Bombs
+          Can Use Power Bombs
           Any of the following:
               After Water Level Lowered
               Gravity Suit and Damage Runs (Beginner)
@@ -380,7 +381,7 @@ Extra - room_id: [10]
   * L0 Hatch to Serris Arena/Door to Broken Bridge
   * Extra - door_idx: (64,)
   > Door to Breeding Tank
-      # TODO: Add the whacky WJs
+      # Space Jump or Wall Jumping is also required (very difficult wall jump without gravity, but it is possible)
       Gravity Suit and Space Jump
 
 ----------------
@@ -409,8 +410,6 @@ Extra - room_id: [12]
   * Extra - door_idx: (88,)
   > Door to Powamp Shaft
       Trivial
-  > Other to Aquarium Storage
-      Gravity Suit
 
 > Door to Powamp Shaft; Heals? False
   * Layers: default
@@ -421,6 +420,7 @@ Extra - room_id: [12]
   > Other to Aquarium Storage
       All of the following:
           Gravity Suit
+          # High Jump works if you freeze an enemy, but a wall jump is still required after that
           High Jump or Space Jump
 
 > Other to Aquarium Storage; Heals? False
@@ -475,6 +475,7 @@ Extra - room_id: [13]
   > Pickup (Hidden Missile Tank)
       Any of the following:
           Can Use Bombs
+          # Springball not required for tunnel access but inputs are tight
           Can Use Power Bombs and Can Use Springball
   > Pickup (Missile Tank)
       All of the following:
@@ -503,7 +504,7 @@ Extra - room_id: [14]
   > Door to Aquarium Tank
       Trivial
   > Other to Cargo Hold to Sector 5 (ARC)
-      Trivial
+      Morph Ball
   > Door to Aquarium Save Room West
       Trivial
 
@@ -570,6 +571,7 @@ Extra - room_id: [16]
   * Extra - door_idx: (36,)
   > Door to Aquarium Hub Access
       All of the following:
+          # High Jump would still require freezing enemies
           Gravity Suit
           Any of the following:
               Space Jump
@@ -664,8 +666,15 @@ Extra - room_id: [19]
       Any of the following:
           # To destroy Powamp
           Gravity Suit and Screw Attack
-          # To get over Powamp
-          Can Bounce in Ball and Can Freeze Enemies
+          All of the following:
+              # To get over Powamp
+              Any of the following:
+                  Can Use Springball
+                  Gravity Suit and Can Use Bombs
+              Any of the following:
+                  # To freeze the powamp
+                  Diffusion Missiles
+                  Ice Beam and Wave Beam
 
 > Door to Aquarium Save Room East; Heals? False
   * Layers: default
@@ -677,16 +686,16 @@ Extra - room_id: [19]
 > Room Center; Heals? False
   * Layers: default
   > Door to Aquarium Hub Access
-      Any of the following:
-          Morph Ball
-          All of the following:
-              Can Freeze Enemies
-              Can Use Bombs or Can Use Springball
+      Morph Ball
   > Door to Aquarium Speedway
       Gravity Suit and Screw Attack
   > Door to Drain Pipe
       Any of the following:
-          Can Bounce in Ball and Can Freeze Enemies
+          All of the following:
+              Can Freeze Enemies
+              Any of the following:
+                  Can Use Springball
+                  Gravity Suit and Can Use Bombs
           Gravity Suit and Screw Attack
   > Door to Aquarium Save Room East
       Trivial
@@ -819,7 +828,7 @@ Extra - room_id: [23]
   * Extra - room: 23
   * Extra - blockx: 57
   * Extra - blocky: 19
-  > Other to Aquarium Shaft West
+  > Small Nook
       Trivial
 
 > Door to Pump Control Access; Heals? False
@@ -848,10 +857,8 @@ Extra - room_id: [23]
   * Layers: default
   * Tunnel to Aquarium Shaft West/Other to Cargo Hold to Sector 5 (ARC)
   * Extra - door_idx: (78,)
-  > Pickup (Power Bomb Tank)
-      Trivial
-  > Room Center
-      Gravity Suit and Screw Attack
+  > Small Nook
+      Morph Ball
 
 > Room Center; Heals? False
   * Layers: default
@@ -863,7 +870,20 @@ Extra - room_id: [23]
           High Jump or Movement (Beginner)
   > Other to Flooded Airlock to Sector 4 (AQA)
       Trivial
+  > Small Nook
+      Gravity Suit and Screw Attack
+
+> Small Nook; Heals? False
+  * Layers: default
+  > Pickup (Power Bomb Tank)
+      Trivial
   > Other to Aquarium Shaft West
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Can Use Springball
+              Gravity Suit and Can Use Bombs
+  > Room Center
       Gravity Suit and Screw Attack
 
 ----------------
@@ -887,6 +907,7 @@ Extra - room_id: [24]
   > Door to Aquarium Shaft West
       Trivial
   > Other to Security Bypass
+      # Two block height in tube prevents screw attack from working here
       Missiles and Can Use Any Bombs
 
 > Door to Aquarium Shaft West; Heals? False
@@ -902,6 +923,7 @@ Extra - room_id: [24]
   * Extra - door_idx: (80,)
   > Pickup (Power Bomb Tank)
       All of the following:
+          # Hi Jump not required, with area effect/wall cutting weapon (wave, diffusion, power bomb) or bombs
           Morph Ball
           Gravity Suit or High Jump
   > Door to Security Access
@@ -1147,7 +1169,7 @@ Extra - room_id: [33]
   * L1 Hatch to Pump Control Access/Door to Pump Control Unit
   * Extra - door_idx: (76,)
   > Pickup (Missile Tank)
-      Gravity Suit and Space Jump and Damage Runs (Beginner)
+      Gravity Suit and Morph Ball and Space Jump and Damage Runs (Beginner)
   > Behind Speed Blocks
       Speed Booster
 
@@ -1171,7 +1193,12 @@ Extra - room_id: [33]
   > Door to Pump Control Access
       Can Use Bombs or Can Use Springball
   > Behind Speed Blocks
-      Can Use Bombs or Can Use Springball
+      Any of the following:
+          Can Use Springball
+          All of the following:
+              Can Use Bombs
+              # Bombs assumes the water was lowered, grav required otherwise
+              Gravity Suit or After Water Level Lowered
 
 ----------------
 Security Bypass
@@ -1223,7 +1250,7 @@ Extra - room_id: [35]
   * Extra - door_idx: (56,)
   > Door to Owtch-Couch
       All of the following:
-          Missiles
+          Missiles and Morph Ball
           Any of the following:
               Movement (Beginner) and Can Freeze Enemies
               All of the following:
@@ -1275,6 +1302,7 @@ Extra - room_id: [36]
               After Water Level Lowered or Damage Runs (Intermediate)
               Gravity Suit and Damage Runs (Beginner)
           Any of the following:
+              # Power Bombs also work on Super Missile Geron
               Super Missiles or Wave Beam
               All of the following:
                   Gravity Suit
@@ -1380,6 +1408,7 @@ Extra - room_id: [38]
       All of the following:
           Gravity Suit and Morph Ball and Knowledge (Beginner)
           Any of the following:
+              # Wall Jump is also sufficent here
               Space Jump
               Speed Booster and Disabled Door Lock Rando and Disabled Entrance Rando
 
@@ -1416,12 +1445,16 @@ Extra - room_id: [40]
   * Extra - door_idx: (101,)
   > Door to Sanctuary Cache
       All of the following:
+          Morph Ball
           Any of the following:
-              Charge Beam
-              Gravity Suit and Screw Attack
-          Any of the following:
-              Wave Beam
-              Missiles ≥ 2 and Can Use Power Bombs
+              # To hurt the golden scisers
+              Missiles ≥ 5
+              All of the following:
+                  Charge Beam
+                  Missiles ≥ 2 or Wave Beam
+              Gravity Suit and Missiles ≥ 2 and Screw Attack
+          # To hurt the scisers in the enclosed area
+          Wave Beam or Can Use Power Bombs
 
 > Door to Sanctuary Cache; Heals? False
   * Layers: default
@@ -1449,7 +1482,11 @@ Extra - room_id: [41]
   * L0 Hatch to Sciser Sanctuary/Door to Sanctuary Cache
   * Extra - door_idx: (103,)
   > Pickup (Hidden Energy Tank)
-      Can Bounce in Ball and Can Use Any Bombs
+      All of the following:
+          Can Use Any Bombs
+          Any of the following:
+              Can Use Springball
+              Gravity Suit and Can Use Bombs
 
 ----------------
 Serris Arena
