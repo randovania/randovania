@@ -1780,12 +1780,29 @@
                                 "comment": "TODO: template, also add mid air morph and other stuff to the bombs only path",
                                 "items": [
                                     {
-                                        "type": "resource",
+                                        "type": "and",
                                         "data": {
-                                            "type": "items",
-                                            "name": "ScrewAttack",
-                                            "amount": 1,
-                                            "negate": false
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "ScrewAttack",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "MorphBall",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     },
                                     {
@@ -1915,11 +1932,16 @@
                         "Door to Deserted Runway": {
                             "type": "or",
                             "data": {
-                                "comment": "TODO: can you do this with only HJ w/ WJ?",
+                                "comment": "Space or High Wall Jumping or Wall Jump with Ice",
                                 "items": [
                                     {
-                                        "type": "template",
-                                        "data": "Can climb High Jump Wall"
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "SpaceJump",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
                                     }
                                 ]
                             }
@@ -2985,35 +3007,15 @@
                         "Door to Boiler Access": {
                             "type": "and",
                             "data": {
-                                "comment": "TODO: see other connection",
+                                "comment": "Heat DMG",
                                 "items": [
                                     {
-                                        "type": "or",
+                                        "type": "resource",
                                         "data": {
-                                            "comment": "Movement",
-                                            "items": [
-                                                {
-                                                    "type": "template",
-                                                    "data": "Can climb High Jump Wall"
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": "Heat DMG",
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "VariaSuit",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
+                                            "type": "items",
+                                            "name": "VariaSuit",
+                                            "amount": 1,
+                                            "negate": false
                                         }
                                     }
                                 ]
@@ -3056,18 +3058,6 @@
                             "data": {
                                 "comment": "TODO: how to get past the wwall things damageless?",
                                 "items": [
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": "Movement - TODO: WJ?",
-                                            "items": [
-                                                {
-                                                    "type": "template",
-                                                    "data": "Can climb High Jump Wall"
-                                                }
-                                            ]
-                                        }
-                                    },
                                     {
                                         "type": "or",
                                         "data": {
@@ -4075,7 +4065,17 @@
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "B.O.X.",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }

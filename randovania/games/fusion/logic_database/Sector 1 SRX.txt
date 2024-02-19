@@ -132,8 +132,7 @@ Extra - room_id: [4]
       After Stabilizer 1 Online
   > Event - Stabilizer 1 Online
       Any of the following:
-          # TODO: template
-          Charge Beam or Missiles or Screw Attack
+          Can Kill Geron
           All of the following:
               Speed Booster
               Any of the following:
@@ -380,8 +379,7 @@ Extra - room_id: [13]
   > Door to Sciser Puddle
       After Stabilizer 3 Online
   > Event - Stabilizer 3 Online
-      # TODO: template
-      Charge Beam or Missiles or Screw Attack
+      Can Kill Geron
 
 > Event - Stabilizer 3 Online; Heals? False
   * Layers: default
@@ -441,8 +439,7 @@ Extra - room_id: [15]
   > Door to South Shaft
       After Stabilizer 4 Online
   > Event - Stabilizer 4 Online
-      # TODO: template
-      Charge Beam or Missiles or Screw Attack
+      Can Kill Geron
 
 > Event - Stabilizer 4 Online; Heals? False
   * Layers: default
@@ -644,9 +641,13 @@ Extra - room_id: [21]
   > Door to Gold Pirate Crossing
       All of the following:
           Can Use Any Bombs
-          High Jump or Space Jump
+          # Wall Jump works in place of Space Jump
+          Space Jump
   > Door to Tourian Central Checkpoint
-      Missiles ≥ 3 and Morph Ball
+      All of the following:
+          Missiles ≥ 3 and Morph Ball
+          # Can also Wall Jump instead of Space Jump
+          Space Jump
   > Door to Tourian Save Room East
       Trivial
   > Other to Animorphs
@@ -677,7 +678,7 @@ Extra - room_id: [22]
   > Door to Tourian Hub West
       All of the following:
           Wave Beam or Can Use Power Bombs
-          Charge Beam or Screw Attack
+          Charge Beam or Missiles or Screw Attack
 
 > Door to Tourian Hub West; Heals? False
   * Layers: default
@@ -686,7 +687,7 @@ Extra - room_id: [22]
   > Door to Tourian Central Hub
       All of the following:
           Wave Beam or Can Use Power Bombs
-          Charge Beam or Screw Attack
+          Charge Beam or Missiles or Screw Attack
 
 ----------------
 Tourian Hub West
@@ -720,7 +721,7 @@ Extra - room_id: [23]
   * L0 Hatch to Ridley Arena Access/Door to Tourian Hub West
   * Extra - door_idx: (53,)
   > Door to Gold Pirate Crossing
-      Wall Jump (Beginner) or Can climb High Jump Wall
+      Space Jump or Wall Jump (Beginner)
   > Door to Genesis Habitation
       Trivial
 
@@ -897,8 +898,7 @@ Extra - room_id: [32]
   > Door to Shaft North
       After Stabilizer 2 Online
   > Event - Stabilizer 2 Online
-      # TODO: template
-      Charge Beam or Missiles or Screw Attack
+      Can Kill Geron
 
 > Event - Stabilizer 2 Online; Heals? False
   * Layers: default
@@ -1394,7 +1394,6 @@ Extra - room_id: [51]
               Can Use Power Bombs
               Charge Beam and Wave Beam
           Missiles or Screw Attack
-          Charge Beam or Screw Attack
 
 ----------------
 Animorphs Cache
