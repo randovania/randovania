@@ -118,7 +118,7 @@ game_data: game.GameData = game.GameData(
             "it only restores whatever ammo was last used, and not both.",
         ),
         (
-            "Why did my Missile Reserve Tank activate without me using any Missiles?",
+            "Why did the Missile Reserve Tank activate without me using any Missiles?",
             "Due to how shuffled Missile Launcher is implemented, "
             "Missile Reserve Tanks will attempt to refill Missiles that you do not have. "
             "This will occur on any area/sub-area load and is unavoidable if you have "
