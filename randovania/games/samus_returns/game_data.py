@@ -117,6 +117,13 @@ game_data: game.GameData = game.GameData(
             "10 Super Missiles. Note that when the Missile Reserve Tank is depeleted, "
             "it only restores whatever ammo was last used, and not both.",
         ),
+        (
+            "Why did my Missile Reserve Tank activate without me using any Missiles?",
+            "Due to how shuffled Missile Launcher is implemented, "
+            "Missile Reserve Tanks will attempt to refill Missiles that you do not have. "
+            "This will occur on any area/sub-area load and is unavoidable if you shuffled Missile Launcher "
+            "and have the Missile Reserve Tank in your inventory.",
+        ),
     ],
     layout=game.GameLayout(
         configuration=layout.MSRConfiguration,
