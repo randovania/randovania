@@ -122,7 +122,7 @@ game_data: game.GameData = game.GameData(
             "Due to how shuffled Missile Launcher is implemented, "
             "Missile Reserve Tanks will attempt to refill Missiles that you do not have. "
             "This will occur on any area/sub-area load and is unavoidable if you have "
-            "have the Missile Reserve Tank in your inventory without the Missile Launcher.",
+            "the Missile Reserve Tank and do not have the Missile Launcher.",
         ),
     ],
     layout=game.GameLayout(
