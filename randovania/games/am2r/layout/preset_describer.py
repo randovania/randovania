@@ -7,7 +7,6 @@ from randovania.games.am2r.layout.hint_configuration import ItemHintMode
 from randovania.layout.preset_describer import (
     GamePresetDescriber,
     fill_template_strings_from_tree,
-    has_shuffled_item,
     message_for_required_mains,
 )
 
@@ -55,20 +54,12 @@ _AM2R_HINT_TEXT = {
 class AM2RPresetDescriber(GamePresetDescriber):
     def format_params(self, configuration: BaseConfiguration) -> dict[str, list[str]]:
         assert isinstance(configuration, AM2RConfiguration)
-        standard_pickups = configuration.standard_pickup_configuration
-
         template_strings = super().format_params(configuration)
 
         dna_hint = _AM2R_HINT_TEXT[configuration.hints.artifacts]
         ice_beam_hint = _AM2R_HINT_TEXT[configuration.hints.ice_beam]
 
         extra_message_tree = {
-            "Item Pool": [
-                {
-                    "Progressive Jump": has_shuffled_item(standard_pickups, "Progressive Jump"),
-                    "Progressive Suit": has_shuffled_item(standard_pickups, "Progressive Suit"),
-                }
-            ],
             "Game Changes": [
                 message_for_required_mains(
                     configuration.ammo_pickup_configuration,

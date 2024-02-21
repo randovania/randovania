@@ -87,11 +87,6 @@ class MSRPresetDescriber(GamePresetDescriber):
             ],
             "Item Pool": [
                 {
-                    "Progressive Beam": has_shuffled_item(standard_pickups, "Progressive Beam"),
-                    "Progressive Jump": has_shuffled_item(standard_pickups, "Progressive Jump"),
-                    "Progressive Suit": has_shuffled_item(standard_pickups, "Progressive Suit"),
-                },
-                {
                     "Energy Reserve Tank": has_shuffled_item(standard_pickups, "Energy Reserve Tank"),
                     "Aeion Reserve Tank": has_shuffled_item(standard_pickups, "Aeion Reserve Tank"),
                     "Missile Reserve Tank": has_shuffled_item(standard_pickups, "Missile Reserve Tank"),

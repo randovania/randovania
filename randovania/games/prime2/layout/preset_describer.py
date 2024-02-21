@@ -11,7 +11,6 @@ from randovania.games.prime2.layout.echoes_configuration import (
 from randovania.layout.preset_describer import (
     GamePresetDescriber,
     fill_template_strings_from_tree,
-    has_shuffled_item,
     message_for_required_mains,
 )
 
@@ -97,7 +96,6 @@ def create_beam_configuration_description(
 class EchoesPresetDescriber(GamePresetDescriber):
     def format_params(self, configuration: BaseConfiguration) -> dict[str, list[str]]:
         assert isinstance(configuration, EchoesConfiguration)
-        standard_pickups = configuration.standard_pickup_configuration
         pickup_database = default_database.pickup_database_for_game(configuration.game)
 
         template_strings = super().format_params(configuration)
@@ -127,8 +125,6 @@ class EchoesPresetDescriber(GamePresetDescriber):
         extra_message_tree = {
             "Item Pool": [
                 {
-                    "Progressive Suit": has_shuffled_item(standard_pickups, "Progressive Suit"),
-                    "Progressive Grapple": has_shuffled_item(standard_pickups, "Progressive Grapple"),
                     "Split beam ammo": unified_ammo.pickup_count == 0,
                 }
             ],

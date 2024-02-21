@@ -9,7 +9,6 @@ from randovania.games.dread.layout.dread_configuration import (
 from randovania.layout.preset_describer import (
     GamePresetDescriber,
     fill_template_strings_from_tree,
-    has_shuffled_item,
     message_for_required_mains,
 )
 
@@ -61,7 +60,6 @@ class DreadPresetDescriber(GamePresetDescriber):
     def format_params(self, configuration: BaseConfiguration) -> dict[str, list[str]]:
         assert isinstance(configuration, DreadConfiguration)
 
-        standard_pickups = configuration.standard_pickup_configuration
         template_strings = super().format_params(configuration)
 
         extra_message_tree = {
@@ -75,16 +73,6 @@ class DreadPresetDescriber(GamePresetDescriber):
                     "Immediate Energy Part": configuration.immediate_energy_parts,
                 },
                 {f"{configuration.energy_per_tank} energy per Energy Tank": configuration.energy_per_tank != 100},
-            ],
-            "Item Pool": [
-                {
-                    "Progressive Beam": has_shuffled_item(standard_pickups, "Progressive Beam"),
-                    "Progressive Charge Beam": has_shuffled_item(standard_pickups, "Progressive Charge Beam"),
-                    "Progressive Missile": has_shuffled_item(standard_pickups, "Progressive Missile"),
-                    "Progressive Bomb": has_shuffled_item(standard_pickups, "Progressive Bomb"),
-                    "Progressive Suit": has_shuffled_item(standard_pickups, "Progressive Suit"),
-                    "Progressive Spin": has_shuffled_item(standard_pickups, "Progressive Spin"),
-                }
             ],
             "Gameplay": [
                 {

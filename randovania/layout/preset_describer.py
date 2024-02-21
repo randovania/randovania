@@ -31,6 +31,7 @@ class GamePresetDescriber:
         starting_list = []
         is_vanilla_starting = True
         excluded_list = []
+        progressive_list = []
 
         expected_case_override = {}
 
@@ -39,7 +40,9 @@ class GamePresetDescriber:
             if pickup.expected_case_for_describer != StandardPickupStateCase.SHUFFLED:
                 continue
 
-            if not has_shuffled_item(pickup_config, progressive_item):
+            if has_shuffled_item(pickup_config, progressive_item):
+                progressive_list.append(progressive_item)
+            else:
                 expected_case_override[progressive_item] = StandardPickupStateCase.MISSING
                 for tier in tiers:
                     expected_case_override[tier] = StandardPickupStateCase.SHUFFLED
@@ -57,9 +60,12 @@ class GamePresetDescriber:
                 expected_case_override.get(standard_pickup.name, standard_pickup.expected_case_for_describer),
                 pickup_state.included_ammo,
             )
+            expected_shuffled = expected_state.num_shuffled_pickups + int(
+                expected_state.include_copy_in_original_location
+            )
 
             if starting_count != expected_state.num_included_in_starting_pickups:
-                if starting_count > 1:
+                if starting_count > 1 or expected_state.num_included_in_starting_pickups > 1:
                     starting_list.append(f"{starting_count}x {standard_pickup.name}")
                 elif starting_count == 1:
                     starting_list.append(standard_pickup.name)
@@ -68,10 +74,13 @@ class GamePresetDescriber:
                     if shuffled_count == 0:
                         excluded_list.append(standard_pickup.name)
 
-            if shuffled_count != expected_state.num_shuffled_pickups + int(
-                expected_state.include_copy_in_original_location
-            ):
-                if shuffled_count > 1:
+            if shuffled_count != expected_shuffled:
+                if standard_pickup.name in progressive_list:
+                    # If the progressive shows up because of custom shuffled count,
+                    # no need to mention it as being enabled
+                    progressive_list.remove(standard_pickup.name)
+
+                if shuffled_count > 1 or expected_shuffled > 1:
                     shuffled_list.append(f"{shuffled_count}x {standard_pickup.name}")
                 elif shuffled_count == 1:
                     shuffled_list.append(standard_pickup.name)
@@ -90,6 +99,9 @@ class GamePresetDescriber:
 
         if shuffled_list:
             result.append("Shuffles " + ", ".join(shuffled_list))
+
+        if progressive_list:
+            result.append(", ".join(progressive_list))
 
         return result
 

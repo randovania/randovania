@@ -72,7 +72,8 @@ def test_echoes_format_params(default_echoes_configuration):
         "Item Pool": [
             "Size: 118 of 119",
             "Vanilla starting items",
-            "Progressive Suit, Split beam ammo",
+            "Progressive Suit",
+            "Split beam ammo",
             "Sky Temple Keys at all bosses",
         ],
     }
