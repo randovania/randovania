@@ -4,6 +4,7 @@ import dataclasses
 from typing import TYPE_CHECKING
 
 from randovania.games.am2r.layout.am2r_configuration import AM2RConfiguration
+from randovania.games.fusion.layout.fusion_configuration import FusionConfiguration
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime1.layout.prime_configuration import IngameDifficulty, PrimeConfiguration
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
@@ -81,7 +82,12 @@ class PresetPatcherEnergy(PresetTab, Ui_PresetPatcherEnergy):
     def on_preset_changed(self, preset: Preset) -> None:
         config = preset.configuration
         assert isinstance(
-            config, PrimeConfiguration | EchoesConfiguration | CorruptionConfiguration | AM2RConfiguration
+            config,
+            PrimeConfiguration
+            | EchoesConfiguration
+            | CorruptionConfiguration
+            | AM2RConfiguration
+            | FusionConfiguration,
         )
         self.energy_tank_capacity_spin_box.setValue(config.energy_per_tank)
 

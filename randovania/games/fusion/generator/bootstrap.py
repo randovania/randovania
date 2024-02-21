@@ -1,7 +1,7 @@
 from __future__ import annotations
 
-from randovania.resolver.bootstrap import Bootstrap
+from randovania.resolver.bootstrap import MetroidBootstrap
 
 
-class FusionBootstrap(Bootstrap):
+class FusionBootstrap(MetroidBootstrap):
     pass

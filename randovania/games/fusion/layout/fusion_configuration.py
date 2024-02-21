@@ -10,6 +10,7 @@ from randovania.layout.base.base_configuration import BaseConfiguration
 class FusionConfiguration(BaseConfiguration):
     # These fields aren't necessary for a new game: they're here to have example/test features
     include_extra_pickups: bool
+    energy_per_tank: int = dataclasses.field(metadata={"min": 1, "max": 1000, "precision": 1})
 
     @classmethod
     def game_enum(cls) -> RandovaniaGame:
