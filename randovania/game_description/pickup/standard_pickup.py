@@ -44,6 +44,12 @@ class StandardPickupDefinition(JsonDataclass):
         if not self.progression and not self.ammo:
             raise ValueError(f"Standard Pickup {self.name} has no progression nor ammo.")
 
+        if self.count_for_shuffled_case < 1:
+            raise ValueError(f"Standard Pickup {self.name} count for shuffled case is less than 1.")
+
+        if self.count_for_starting_case < 1:
+            raise ValueError(f"Standard Pickup {self.name} count for starting case is less than 1.")
+
     @classmethod
     def from_json_with_categories(
         cls, name: str, game: RandovaniaGame, pickup_categories: dict[str, PickupCategory], value: dict
@@ -66,8 +72,16 @@ class StandardPickupDefinition(JsonDataclass):
 
     @property
     def count_for_shuffled_case(self) -> int:
-        return self.custom_count_for_shuffled_case or len(self.progression)
+        """How many pickups StandardPickupStateCase.SHUFFLED includes. Defaults to length of progression.
+        Can be manually set via custom_count_for_shuffled_case. Must be at least 1."""
+        if self.custom_count_for_shuffled_case is None:
+            return len(self.progression)
+        return self.custom_count_for_shuffled_case
 
     @property
     def count_for_starting_case(self) -> int:
-        return self.custom_count_for_shuffled_case or 1
+        """How many pickups StandardPickupStateCase.STARTING_ITEM includes. Defaults to 1.
+        Can be manually set via custom_count_for_starting_case. Must be at least 1."""
+        if self.custom_count_for_starting_case is None:
+            return 1
+        return self.custom_count_for_starting_case
