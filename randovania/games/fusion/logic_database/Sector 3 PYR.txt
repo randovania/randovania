@@ -725,27 +725,49 @@ Extra - room_id: [23, 18]
   * Layers: default
   * L0 Hatch to B.O.X. Access/Door to B.O.X. Arena
   * Extra - door_idx: (46, 36)
-  > Other to Deserted Runway
-      Space Jump or After B.O.X.
-  > Event - B.O.X.
-      All of the following:
-          Charge Beam or Missiles
-          Combat (Beginner) or Normal Damage ≥ 100
-  > Door to Data Room
-      After B.O.X.
+  > Arena
+      Trivial
 
 > Event - B.O.X.; Heals? False
   * Layers: default
   * Event B.O.X.
-  > Door to B.O.X. Access
+  > Arena
       Trivial
 
 > Door to Data Room; Heals? False
   * Layers: default
   * L2 Hatch to Data Room/Door to B.O.X. Arena
   * Extra - door_idx: (43,)
-  > Door to B.O.X. Access
+  > Arena
       Trivial
+
+> Arena; Heals? False
+  * Layers: default
+  > Other to Deserted Runway
+      Space Jump or After B.O.X.
+  > Door to B.O.X. Access
+      After B.O.X.
+  > Event - B.O.X.
+      All of the following:
+          Any of the following:
+              # Weapon Requirements
+              Charge Beam
+              Missiles ≥ 30 and 30 DMG Missiles
+              Missiles ≥ 50 and Combat (Beginner) and 20 DMG Missiles
+              Missiles ≥ 75 and Combat (Intermediate) and 10 DMG Missiles
+          Any of the following:
+              # Health Requirements
+              Combat (Hypermode) or Normal Damage ≥ 700
+              Combat (Beginner) and Normal Damage ≥ 600
+              Combat (Intermediate) and Normal Damage ≥ 500
+              Combat (Advanced) and Normal Damage ≥ 200
+              Combat (Expert) and Normal Damage ≥ 100
+          Any of the following:
+              # Dodging Requirements
+              Combat (Advanced) or Normal Damage ≥ 200 or Can climb High Jump Wall
+              Screw Attack and Combat (Intermediate)
+  > Door to Data Room
+      After B.O.X.
 
 ----------------
 Main Boiler Control Room
