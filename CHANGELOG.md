@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: A warning will be shown when trying to generate a game where more items are in the pool than the maximum amount of items.
 - Added: When a game is exported via ftp, a message is displayed indicating that an attempt is being made to connect to the ftp server instead of the patcher's misleading "Done" message.
+- Changed: Improved how requirement templates are simplified, improving generation and resolver performance.
 - Fixed: Generating a game after customizing a preset will not completely freeze Randovania anymore.
 - Fixed: The collection text displayed when mixing Hide All model style with Random models and a cross-game multiworld is now always a generic message when your own pickup is disguised as a pickup of another game.
 - Fixed: In the Item Pool tab, selecting Shuffled now works properly for non-progressive entries with multiple copies and certain other items.
