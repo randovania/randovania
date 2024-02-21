@@ -450,7 +450,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "TODO: disabled dlr+er?",
+                                            "comment": null,
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -468,6 +468,24 @@
                                                         "name": "Knowledge",
                                                         "amount": 1,
                                                         "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "DoorLockRando",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "EntranceRando",
+                                                        "amount": 1,
+                                                        "negate": true
                                                     }
                                                 }
                                             ]
@@ -712,7 +730,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Kill with Shinespark",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -731,7 +749,7 @@
                                                             {
                                                                 "type": "and",
                                                                 "data": {
-                                                                    "comment": null,
+                                                                    "comment": "With HJ",
                                                                     "items": [
                                                                         {
                                                                             "type": "resource",
@@ -755,18 +773,62 @@
                                                                 }
                                                             },
                                                             {
-                                                                "type": "resource",
+                                                                "type": "and",
                                                                 "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "ShinesparkTrick",
-                                                                    "amount": 3,
-                                                                    "negate": false
+                                                                    "comment": "HJ-less",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "ShinesparkTrick",
+                                                                                "amount": 3,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "WallJump",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
                                                                 }
                                                             }
                                                         ]
                                                     }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "DoorLockRando",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "EntranceRando",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
                                                 }
                                             ]
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "ChargeBeam",
+                                            "amount": 1,
+                                            "negate": false
                                         }
                                     }
                                 ]
@@ -1425,8 +1487,16 @@
                         "Room Center": {
                             "type": "and",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "comment": "TODO: intermediate shinespark from the right door to kill this geron",
+                                "items": [
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": []
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -1467,11 +1537,20 @@
                         "Event - Stabilizer 5 Online": {
                             "type": "or",
                             "data": {
-                                "comment": "TODO: different than normal geron.",
+                                "comment": null,
                                 "items": [
                                     {
                                         "type": "template",
                                         "data": "Can Kill Geron"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "ChargeBeam",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
                                     }
                                 ]
                             }
@@ -1989,8 +2068,25 @@
                             }
                         },
                         "Event - Stabilizer 3 Online": {
-                            "type": "template",
-                            "data": "Can Kill Geron"
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Kill Geron"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "ChargeBeam",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
                         }
                     }
                 },
@@ -2289,8 +2385,25 @@
                             }
                         },
                         "Event - Stabilizer 4 Online": {
-                            "type": "template",
-                            "data": "Can Kill Geron"
+                            "type": "or",
+                            "data": {
+                                "comment": "TODO: you can shinespark this geron from both lower doors. possible without HJ, but more difficult. anything < SJ requires WJ",
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Kill Geron"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "ChargeBeam",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
                         }
                     }
                 },
@@ -2605,6 +2718,21 @@
                                     }
                                 ]
                             }
+                        },
+                        "Pickup (Missile Tank on Platform)": {
+                            "type": "or",
+                            "data": {
+                                "comment": "TODO: you can do some jump cancelling to get to this platform directly with only ~10 damage or so. Put in logic?",
+                                "items": [
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": []
+                                        }
+                                    }
+                                ]
+                            }
                         }
                     }
                 },
@@ -2829,7 +2957,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "TODO: shinesparking trick?",
+                                            "comment": "Shinespark across",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -2856,6 +2984,15 @@
                                                         "name": "EntranceRando",
                                                         "amount": 1,
                                                         "negate": true
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "ShinesparkTrick",
+                                                        "amount": 1,
+                                                        "negate": false
                                                     }
                                                 }
                                             ]
@@ -4346,11 +4483,41 @@
                         "Door to Ridley Arena": {
                             "type": "and",
                             "data": {
-                                "comment": "TODO: some way to get past the rippers?",
+                                "comment": null,
                                 "items": [
                                     {
                                         "type": "template",
                                         "data": "Can Kill Eye Door"
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": "Some way to get past the rippers - TODO: damage boosting?",
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Freeze Enemies"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "ScrewAttack",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Combat",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -4388,10 +4555,33 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Tourian Hub West": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "comment": "TODO: see todo on other connection",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "ScrewAttack",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Can Freeze Enemies"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Combat",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -5139,8 +5329,25 @@
                             }
                         },
                         "Event - Stabilizer 2 Online": {
-                            "type": "template",
-                            "data": "Can Kill Geron"
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Kill Geron"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "ChargeBeam",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
                         }
                     }
                 },
@@ -6271,15 +6478,11 @@
                         "Top of Room": {
                             "type": "or",
                             "data": {
-                                "comment": "TODO: template",
+                                "comment": null,
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Can Use Bombs"
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Can Use Springball"
+                                        "data": "Can Bounce in Ball"
                                     }
                                 ]
                             }
@@ -7303,20 +7506,8 @@
                                         }
                                     },
                                     {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": "TODO: template",
-                                            "items": [
-                                                {
-                                                    "type": "template",
-                                                    "data": "Can Use Bombs"
-                                                },
-                                                {
-                                                    "type": "template",
-                                                    "data": "Can Use Springball"
-                                                }
-                                            ]
-                                        }
+                                        "type": "template",
+                                        "data": "Can Bounce in Ball"
                                     },
                                     {
                                         "type": "and",
@@ -7368,12 +7559,20 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "resource",
+                                                    "type": "and",
                                                     "data": {
-                                                        "type": "tricks",
-                                                        "name": "ShinesparkTrick",
-                                                        "amount": 4,
-                                                        "negate": false
+                                                        "comment": "TODO: some other requirements to kill that scizor?",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "ShinesparkTrick",
+                                                                    "amount": 4,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -7770,7 +7969,7 @@
                         "Door to Animorphs Cache": {
                             "type": "and",
                             "data": {
-                                "comment": "TODO: comment which block is for which enemy",
+                                "comment": "TODO: comment which block is for which enemy. Also can probably kill both top enemy and pirate with charge beam",
                                 "items": [
                                     {
                                         "type": "or",

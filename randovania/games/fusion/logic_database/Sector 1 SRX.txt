@@ -89,8 +89,7 @@ Extra - room_id: [3]
       Any of the following:
           # TODO: proper reqs
           Missiles ≥ 3 or Screw Attack
-          # TODO: disabled dlr+er?
-          Speed Booster and Knowledge (Beginner)
+          Speed Booster and Knowledge (Beginner) and Disabled Door Lock Rando and Disabled Entrance Rando
 
 > Door to Atmospheric Stabilizer Northwest; Heals? False
   * Layers: default
@@ -132,12 +131,15 @@ Extra - room_id: [4]
       After Stabilizer 1 Online
   > Event - Stabilizer 1 Online
       Any of the following:
-          Can Kill Geron
+          Charge Beam or Can Kill Geron
           All of the following:
-              Speed Booster
+              # Kill with Shinespark
+              Speed Booster and Disabled Door Lock Rando and Disabled Entrance Rando
               Any of the following:
-                  Shinespark Tricks (Advanced)
+                  # With HJ
                   High Jump and Shinespark Tricks (Intermediate)
+                  # HJ-less
+                  Shinespark Tricks (Advanced) and Wall Jump (Intermediate)
 
 ----------------
 Hornoad Hole
@@ -275,8 +277,7 @@ Extra - room_id: [9]
   > Door to Checkpoint
       After Stabilizer 5 Online
   > Event - Stabilizer 5 Online
-      # TODO: different than normal geron.
-      Can Kill Geron
+      Charge Beam or Can Kill Geron
 
 > Event - Stabilizer 5 Online; Heals? False
   * Layers: default
@@ -379,7 +380,7 @@ Extra - room_id: [13]
   > Door to Sciser Puddle
       After Stabilizer 3 Online
   > Event - Stabilizer 3 Online
-      Can Kill Geron
+      Charge Beam or Can Kill Geron
 
 > Event - Stabilizer 3 Online; Heals? False
   * Layers: default
@@ -439,7 +440,8 @@ Extra - room_id: [15]
   > Door to South Shaft
       After Stabilizer 4 Online
   > Event - Stabilizer 4 Online
-      Can Kill Geron
+      # TODO: you can shinespark this geron from both lower doors. possible without HJ, but more difficult. anything < SJ requires WJ
+      Charge Beam or Can Kill Geron
 
 > Event - Stabilizer 4 Online; Heals? False
   * Layers: default
@@ -491,6 +493,8 @@ Extra - room_id: [17]
       Any of the following:
           Gravity Suit or Space Jump
           Damage Runs (Intermediate) and Lava Damage ≥ 100
+  > Pickup (Missile Tank on Platform)
+      Impossible
 
 > Pickup (Missile Tank in Lava); Heals? False
   * Layers: default
@@ -524,8 +528,8 @@ Extra - room_id: [17]
   > Pickup (Missile Tank on Cliffside)
       Any of the following:
           Space Jump
-          # TODO: shinesparking trick?
-          Speed Booster and Disabled Door Lock Rando and Disabled Entrance Rando
+          # Shinespark across
+          Speed Booster and Shinespark Tricks (Beginner) and Disabled Door Lock Rando and Disabled Entrance Rando
   > Pickup (Missile Tank in Lava)
       All of the following:
           Morph Ball
@@ -759,15 +763,18 @@ Extra - room_id: [26]
   * L0 Hatch to Tourian Hub West/Door to Ridley Arena Access
   * Extra - door_idx: (56,)
   > Door to Ridley Arena
-      # TODO: some way to get past the rippers?
-      Can Kill Eye Door
+      All of the following:
+          Can Kill Eye Door
+          # Some way to get past the rippers - TODO: damage boosting?
+          Screw Attack or Combat (Intermediate) or Can Freeze Enemies
 
 > Door to Ridley Arena; Heals? False
   * Layers: default
   * L0 Hatch to Ridley Arena/Door to Ridley Arena Access
   * Extra - door_idx: (57,)
   > Door to Tourian Hub West
-      Trivial
+      # TODO: see todo on other connection
+      Screw Attack or Combat (Intermediate) or Can Freeze Enemies
 
 ----------------
 Ridley Arena
@@ -898,7 +905,7 @@ Extra - room_id: [32]
   > Door to Shaft North
       After Stabilizer 2 Online
   > Event - Stabilizer 2 Online
-      Can Kill Geron
+      Charge Beam or Can Kill Geron
 
 > Event - Stabilizer 2 Online; Heals? False
   * Layers: default
@@ -1094,8 +1101,7 @@ Extra - room_id: [39]
   * L0 Hatch to Connection to Sector 2 (TRO)/Door to Antechamber
   * Extra - door_idx: (102,)
   > Top of Room
-      # TODO: template
-      Can Use Bombs or Can Use Springball
+      Can Bounce in Ball
 
 > Top of Room; Heals? False
   * Layers: default
@@ -1303,10 +1309,11 @@ Extra - room_id: [47]
   * Extra - door_idx: (101,)
   > Pickup (Hidden Power Bomb Tank)
       All of the following:
-          Morph Ball and Speed Booster and Disabled Door Lock Rando and Disabled Entrance Rando
-          # TODO: template
-          Can Use Bombs or Can Use Springball
-          Gravity Suit or Shinespark Tricks (Expert)
+          Morph Ball and Speed Booster and Disabled Door Lock Rando and Disabled Entrance Rando and Can Bounce in Ball
+          Any of the following:
+              Gravity Suit
+              # TODO: some other requirements to kill that scizor?
+              Shinespark Tricks (Expert)
 
 ----------------
 Connection to Sector 2 (TRO)
@@ -1389,7 +1396,7 @@ Extra - room_id: [51]
       Can climb High Jump Wall
   > Door to Animorphs Cache
       All of the following:
-          # TODO: comment which block is for which enemy
+          # TODO: comment which block is for which enemy. Also can probably kill both top enemy and pirate with charge beam
           Any of the following:
               Can Use Power Bombs
               Charge Beam and Wave Beam
