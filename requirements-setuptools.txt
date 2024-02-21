@@ -19,6 +19,14 @@ dulwich==0.21.7
     #   -c tools/requirements\../../requirements.txt
     #   -r tools/requirements/requirements-setuptools.in
     #   randovania-scm-version-schema
+mypy[mypyc]==1.8.0
+    # via
+    #   -c tools/requirements\../../requirements.txt
+    #   -r tools/requirements/requirements-setuptools.in
+mypy-extensions==1.0.0
+    # via
+    #   -c tools/requirements\../../requirements.txt
+    #   mypy
 packaging==23.2
     # via
     #   -c tools/requirements\../../requirements.txt
@@ -49,6 +57,7 @@ setuptools-scm==8.0.4
 typing-extensions==4.9.0
     # via
     #   -c tools/requirements\../../requirements.txt
+    #   mypy
     #   setuptools-scm
 urllib3==2.2.1
     # via
@@ -61,6 +70,7 @@ wheel==0.42.0
 setuptools==69.1.0
     # via
     #   -r tools/requirements/requirements-setuptools.in
+    #   mypy
     #   pyinstaller
     #   pyinstaller-hooks-contrib
     #   randovania-scm-version-schema
