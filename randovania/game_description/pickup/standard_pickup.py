@@ -11,6 +11,7 @@ from randovania.game_description.pickup.pickup_category import PickupCategory
 from randovania.game_description.resources.location_category import LocationCategory
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.game import RandovaniaGame
+from randovania.layout.base.standard_pickup_state import StandardPickupStateCase
 
 EXCLUDE_DEFAULT = {"exclude_if_default": True}
 
@@ -24,9 +25,10 @@ class StandardPickupDefinition(JsonDataclass):
     model_name: str
     offworld_models: frozendict[RandovaniaGame, str]
     progression: tuple[str, ...]
-    default_shuffled_count: int
-    default_starting_count: int
     preferred_location_category: LocationCategory
+    expected_case_for_describer: StandardPickupStateCase = dataclasses.field(default=StandardPickupStateCase.SHUFFLED)
+    custom_count_for_shuffled_case: int | None = dataclasses.field(default=None, metadata=EXCLUDE_DEFAULT)
+    custom_count_for_starting_case: int | None = dataclasses.field(default=None, metadata=EXCLUDE_DEFAULT)
     ammo: tuple[str, ...] = dataclasses.field(default_factory=tuple, metadata=EXCLUDE_DEFAULT)
     unlocks_ammo: bool = dataclasses.field(default=False, metadata=EXCLUDE_DEFAULT)
     additional_resources: frozendict[str, int] = dataclasses.field(default_factory=frozendict, metadata=EXCLUDE_DEFAULT)
@@ -61,3 +63,11 @@ class StandardPickupDefinition(JsonDataclass):
             "broad_category": self.broad_category.name,
             **super().as_json,
         }
+
+    @property
+    def count_for_shuffled_case(self) -> int:
+        return self.custom_count_for_shuffled_case or len(self.progression)
+
+    @property
+    def count_for_starting_case(self) -> int:
+        return self.custom_count_for_shuffled_case or 1

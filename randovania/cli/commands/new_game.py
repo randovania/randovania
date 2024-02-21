@@ -223,8 +223,6 @@ def create_pickup_database(game_enum: RandovaniaGame):
                 model_name="Powerful",
                 offworld_models=frozendict(),
                 progression=("Weapon",),
-                default_shuffled_count=1,
-                default_starting_count=0,
                 preferred_location_category=LocationCategory.MAJOR,
             ),
         },

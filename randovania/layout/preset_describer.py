@@ -9,6 +9,7 @@ from randovania.generator.pickup_pool import pool_creator
 from randovania.layout.base.available_locations import RandomizationMode
 from randovania.layout.base.damage_strictness import LayoutDamageStrictness
 from randovania.layout.base.pickup_model import PickupModelStyle
+from randovania.layout.base.standard_pickup_state import StandardPickupState
 
 if TYPE_CHECKING:
     from collections.abc import Iterable, Sequence
@@ -24,8 +25,6 @@ PresetDescription = tuple[str, list[str]]
 
 class GamePresetDescriber:
     def _calculate_pickup_pool(self, configuration: BaseConfiguration) -> list[str]:
-        expected_starting_count = self.expected_starting_item_count(configuration)
-        expected_shuffled_count = self.expected_shuffled_pickup_count(configuration)
         shuffled_list = []
         starting_list = []
         is_vanilla_starting = True
@@ -38,7 +37,14 @@ class GamePresetDescriber:
             starting_count = pickup_state.num_included_in_starting_pickups
             shuffled_count = pickup_state.num_shuffled_pickups + int(pickup_state.include_copy_in_original_location)
 
-            if starting_count != expected_starting_count[standard_pickup]:
+            # Get the case we should have
+            expected_state = StandardPickupState.from_case(
+                standard_pickup,
+                standard_pickup.expected_case_for_describer,
+                pickup_state.included_ammo,
+            )
+
+            if starting_count != expected_state.num_included_in_starting_pickups:
                 if starting_count > 1:
                     starting_list.append(f"{starting_count}x {standard_pickup.name}")
                 elif starting_count == 1:
@@ -48,7 +54,9 @@ class GamePresetDescriber:
                     if shuffled_count == 0:
                         excluded_list.append(standard_pickup.name)
 
-            if shuffled_count != expected_shuffled_count[standard_pickup]:
+            if shuffled_count != expected_state.num_shuffled_pickups + int(
+                expected_state.include_copy_in_original_location
+            ):
                 if shuffled_count > 1:
                     shuffled_list.append(f"{shuffled_count}x {standard_pickup.name}")
                 elif shuffled_count == 1:
@@ -146,22 +154,6 @@ class GamePresetDescriber:
             template_strings["Gameplay"].append(dock_rando.mode.description)
 
         return template_strings
-
-    def expected_starting_item_count(self, configuration: BaseConfiguration) -> dict[StandardPickupDefinition, int]:
-        """Lists what are the expected starting item count.
-        The configuration so it can vary based on progressive settings, as example."""
-        return {
-            major: major.default_starting_count
-            for major in configuration.standard_pickup_configuration.pickups_state.keys()
-        }
-
-    def expected_shuffled_pickup_count(self, configuration: BaseConfiguration) -> dict[StandardPickupDefinition, int]:
-        """Lists what are the expected shuffled item count.
-        The configuration so it can vary based on progressive settings, as example."""
-        return {
-            major: major.default_shuffled_count
-            for major in configuration.standard_pickup_configuration.pickups_state.keys()
-        }
 
 
 def _require_majors_check(ammo_configuration: AmmoPickupConfiguration, ammo_names: list[str]) -> list[bool]:
