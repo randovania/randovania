@@ -16,8 +16,9 @@ Extra - room_id: [0]
   > Door to Entrance Recharge Room
       Trivial
   > Door to Nightmare Training Grounds
-      # Or freeze the enemy
-      Missiles and Morph Ball and Can climb High Jump Wall
+      All of the following:
+          Missiles and Morph Ball
+          Can Freeze Enemies or Can climb High Jump Wall
   > Door to Gerubus Gully
       Trivial
 
@@ -70,11 +71,18 @@ Extra - room_id: [2]
   * Extra - door_idx: (6,)
   > Door to Elevator to Main Deck
       Trivial
+  > Navigation Station
+      Trivial
 
 > Door to Elevator to Main Deck; Heals? False
   * Layers: default
   * Open Hatch to Elevator to Main Deck/Door to Entrance Navigation Room
   * Extra - door_idx: (50,)
+  > Door to Entrance Save Room
+      Trivial
+
+> Navigation Station; Heals? False
+  * Layers: default
   > Door to Entrance Save Room
       Trivial
 
@@ -319,7 +327,7 @@ Extra - room_id: [12]
   * Extra - blockx: 3
   * Extra - blocky: 10
   > Door to Frozen Tower
-      Can Use Bombs or Can Use Springball
+      Can Bounce in Ball
 
 > Door to Frozen Tower; Heals? False
   * Layers: default
@@ -350,7 +358,7 @@ Extra - room_id: [13]
   > Door to Energy Tank Storage
       Space Jump or Can Freeze Enemies
   > Other to Transformation Trial
-      Can Use Bombs or Can Use Springball
+      Can Bounce in Ball
 
 > Other to Transformation Trial; Heals? False
   * Layers: default
@@ -525,7 +533,9 @@ Extra - room_id: [19]
   * Open Hatch to Nightmare Hub West/Door to Nightmare Hub East
   * Extra - door_idx: (37,)
   > Door to Nightmare Nook
-      Can Kill Eye Door and Can climb High Jump Wall
+      All of the following:
+          Can Kill Eye Door
+          Wall Jump (Beginner) or Can climb High Jump Wall
 
 > Door to Nightmare Nook; Heals? False
   * Layers: default
@@ -558,14 +568,30 @@ Extra - room_id: [20]
       After Nightmare
   > Event - Nightmare
       All of the following:
-          # Grav Phase
+          # Gravity Phase Requirements
           Charge Beam
-          # Normal Phase
-          Charge Beam or Missiles
-          # Core-X
-          Missiles
-          # Health
-          Combat (Expert) or Normal Damage ≥ 500
+          Any of the following:
+              # Normal Phase Requirements
+              All of the following:
+                  Charge Beam
+                  Plasma Beam or Wide Beam or Combat (Intermediate)
+              Missiles ≥ 80 and 30 DMG Missiles
+              Missiles ≥ 120 and Combat (Beginner) and 20 DMG Missiles
+              Missiles ≥ 200 and Combat (Intermediate) and 10 DMG Missiles
+          All of the following:
+              # Core-X Requirements
+              Missiles
+              Any of the following:
+                  30 DMG Missiles
+                  Combat (Beginner) and 20 DMG Missiles
+                  Combat (Intermediate) and 10 DMG Missiles
+          Any of the following:
+              # Health Requirements
+              Combat (Hypermode) or Normal Damage ≥ 1000
+              Combat (Beginner) and Normal Damage ≥ 800
+              Combat (Intermediate) and Normal Damage ≥ 600
+              Combat (Advanced) and Normal Damage ≥ 300
+              Combat (Expert) and Normal Damage ≥ 100
 
 > Event - Nightmare; Heals? False
   * Layers: default
@@ -755,14 +781,14 @@ Extra - room_id: [27]
   * L0 Hatch to Nightmare Arena/Door to Nightmare Access
   * Extra - door_idx: (59,)
   > Door to Nightmare Hub West
-      Gravity Suit and Speed Booster
+      Gravity Suit and Speed Booster and Disabled Door Lock Rando and Disabled Entrance Rando
 
 > Door to Nightmare Hub West; Heals? False
   * Layers: default
   * L0 Hatch to Nightmare Hub West/Door to Nightmare Access
   * Extra - door_idx: (60,)
   > Door to Nightmare Arena
-      Gravity Suit and Speed Booster
+      Gravity Suit and Speed Booster and Disabled Door Lock Rando and Disabled Entrance Rando
 
 ----------------
 Flooded Access
@@ -872,6 +898,13 @@ Extra - room_id: [32]
   * Extra - door_idx: (74,)
   > Door to Entrance Save Room
       Trivial
+  > Recharge Station
+      Trivial
+
+> Recharge Station; Heals? True
+  * Layers: default
+  > Door to Entrance Hub
+      Trivial
 
 ----------------
 Gerubus Gully
@@ -902,7 +935,7 @@ Extra - room_id: [33]
       Any of the following:
           Can Use Power Bombs
           High Jump and Can Use Bombs
-          Screw Attack and Knowledge (Beginner)
+          Morph Ball and Screw Attack and Knowledge (Beginner)
   > Door to Nightmare Training Grounds
       Trivial
 
@@ -934,7 +967,9 @@ Extra - room_id: [34]
   > Past Pit
       Any of the following:
           Movement (Hypermode) or Can Use Bombs
-          Can Use Power Bombs and Can Use Springball
+          All of the following:
+              Can Use Power Bombs
+              Mid-Air Morph (Advanced) or Can Use Springball
 
 > Past Pit; Heals? False
   * Layers: default
@@ -1043,6 +1078,13 @@ Extra - room_id: [38]
   * Extra - door_idx: (46,)
   > Door to Kago Blockade
       Trivial
+  > Save Station
+      Trivial
+
+> Save Station; Heals? False
+  * Layers: default
+  > Door to Groznyj Shaft
+      Trivial
 
 ----------------
 Kago Blockade
@@ -1089,7 +1131,7 @@ Extra - room_id: [42]
   * L3 Hatch to Arctic Containment/Door to Artic Underside
   * Extra - door_idx: (100,)
   > Door to Kago Speedway
-      Speed Booster and Shinespark Tricks (Expert)
+      Speed Booster and Shinespark Tricks (Expert) and Disabled Door Lock Rando and Disabled Entrance Rando
 
 > Door to Kago Speedway; Heals? False
   * Layers: default
@@ -1141,8 +1183,9 @@ Extra - room_id: [45]
   * Extra - door_idx: (112,)
   > Beside Missile Block
       Any of the following:
-          Can Freeze Enemies
+          Underwater Wall Jump (Expert)
           Gravity Suit and Space Jump
+          High Jump and Can Freeze Enemies
 
 > Beside Missile Block; Heals? False
   * Layers: default
@@ -1150,8 +1193,8 @@ Extra - room_id: [45]
       All of the following:
           Screw Attack
           Any of the following:
-              Wall Jump (Hypermode)
               Gravity Suit and Space Jump
+              Underwater Wall Jump (Hypermode) and Can Screw Single Walljump
   > Other to Mini-Fridge
       Missiles
   > Door to Zebesian Waters
@@ -1213,6 +1256,13 @@ Extra - room_id: [48]
   * Layers: default
   * L0 Hatch to Nightmare Hub West/Door to Nightmare Recharge Room
   * Extra - door_idx: (121,)
+  > Recharge Station
+      Trivial
+
+> Recharge Station; Heals? True
+  * Layers: default
+  > Door to Nightmare Hub West
+      Trivial
 
 ----------------
 Nightmare Save Room
@@ -1249,16 +1299,16 @@ Extra - room_id: [50]
   * L0 Hatch to Zebesian Waters/Door to Flooded Airlock to Sector 4 (AQA)
   * Extra - door_idx: (115,)
   > Pickup (Power Bomb Tank)
-      Gravity Suit and Speed Booster
+      Gravity Suit and Speed Booster and Disabled Door Lock Rando and Disabled Entrance Rando
   > Door to Cargo Hold to Sector 5 (ARC)
-      Gravity Suit and Speed Booster
+      Gravity Suit and Speed Booster and Disabled Door Lock Rando and Disabled Entrance Rando
 
 > Door to Cargo Hold to Sector 5 (ARC); Heals? False
   * Layers: default
   * Open Hatch to Cargo Hold to Sector 5 (ARC)/Other to Flooded Airlock to Sector 4 (AQA)
   * Extra - door_idx: (123,)
   > Door to Zebesian Waters
-      Gravity Suit and Speed Booster
+      Gravity Suit and Speed Booster and Disabled Door Lock Rando and Disabled Entrance Rando
 
 ----------------
 Transformation Trial
