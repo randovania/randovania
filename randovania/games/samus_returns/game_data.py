@@ -119,10 +119,9 @@ game_data: game.GameData = game.GameData(
         ),
         (
             "I collected the Missile Reserve Tank, but I cannot see nor use it.",
-            "Due to how shuffled Missile Launcher and Missile Reserve Tanks function, "
-            "they will remain deactivated until the Missile Launcher is in your inventory. "
-            "This prevents a bug where the reserve will activate even if "
-            "you have no usable Missiles.",
+            "Due to limitations, the Missile Reserve Tank will remain deactivated "
+            "until the Missile Launcher is in your inventory. This prevents a bug where "
+            "the reserve will activate even if you have no usable Missiles.",
         ),
     ],
     layout=game.GameLayout(
