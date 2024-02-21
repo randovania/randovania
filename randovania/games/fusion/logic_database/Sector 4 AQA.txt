@@ -161,6 +161,7 @@ Extra - room_id: [3]
           Any of the following:
               After Water Level Lowered
               Damage Runs (Beginner) and Electrified Water Damage ≥ 99
+          Space Jump or Wall Jump (Intermediate)
 
 ----------------
 Data Room
@@ -381,8 +382,13 @@ Extra - room_id: [10]
   * L0 Hatch to Serris Arena/Door to Broken Bridge
   * Extra - door_idx: (64,)
   > Door to Breeding Tank
-      # Space Jump or Wall Jumping is also required (very difficult wall jump without gravity, but it is possible)
-      Gravity Suit and Space Jump
+      Any of the following:
+          Underwater Wall Jump (Expert)
+          All of the following:
+              Gravity Suit
+              Any of the following:
+                  Space Jump
+                  High Jump and Wall Jump (Intermediate)
 
 ----------------
 Escape Save Room
@@ -420,8 +426,7 @@ Extra - room_id: [12]
   > Other to Aquarium Storage
       All of the following:
           Gravity Suit
-          # High Jump works if you freeze an enemy, but a wall jump is still required after that
-          High Jump or Space Jump or Speed Booster
+          Space Jump or Speed Booster
 
 > Other to Aquarium Storage; Heals? False
   * Layers: default
@@ -863,7 +868,9 @@ Extra - room_id: [23]
 > Room Center; Heals? False
   * Layers: default
   > Door to Pump Control Access
-      Gravity Suit or High Jump
+      Any of the following:
+          Gravity Suit or High Jump
+          Stand On Frozen Enemies (Beginner) and Can Freeze Enemies
   > Door to Aquarium Shaft West
       All of the following:
           Gravity Suit and Speed Booster
@@ -922,7 +929,6 @@ Extra - room_id: [24]
   * Open Passage to Security Bypass/Other to Cheddar Bay
   * Extra - door_idx: (80,)
   > Pickup (Power Bomb Tank)
-      # Knowledge trick maybe for knowing shot blocks are there?
       Morph Ball
   > Door to Security Access
       Missiles and Can Use Any Bombs
@@ -974,7 +980,9 @@ Extra - room_id: [25]
   > Other to Sciser Sanctuary
       All of the following:
           Morph Ball
-          Movement (Intermediate) or Can Bounce in Ball
+          Any of the following:
+              Movement (Intermediate) or Can Use Springball
+              Gravity Suit and Can Use Bombs
 
 ----------------
 Level 4 Security Room
@@ -1123,14 +1131,14 @@ Extra - room_id: [31]
   * L0 Hatch to Breeding Tank Access/Door to Breeding Tank
   * Extra - door_idx: (70,)
   > Door to Broken Bridge
-      Gravity Suit or High Jump or Wall Jump (Intermediate)
+      Gravity Suit or High Jump or Underwater Wall Jump (Intermediate)
 
 > Door to Broken Bridge; Heals? False
   * Layers: default
   * L0 Hatch to Broken Bridge/Door to Breeding Tank
   * Extra - door_idx: (73,)
   > Door to Breeding Tank Access
-      Gravity Suit or High Jump or Wall Jump (Intermediate)
+      Gravity Suit or High Jump or Underwater Wall Jump (Intermediate)
 
 ----------------
 Bridge Save Room
@@ -1223,7 +1231,7 @@ Extra - room_id: [34]
   > Other to Level 4 Security Room
       Any of the following:
           Can Use Any Bombs
-          Gravity Suit and Morph Ball and Screw Attack
+          Gravity Suit and Morph Ball and Screw Attack and Knowledge (Beginner)
   > Other to Cheddar Bay
       All of the following:
           Gravity Suit
@@ -1238,7 +1246,7 @@ Extra - room_id: [35]
   * L0 Hatch to Owtch-Couch/Door to Powamp Shaft
   * Extra - door_idx: (28,)
   > Door to Aquarium Speedway
-      Diffusion Missiles and Morph Ball
+      Diffusion Missiles and Missiles and Morph Ball
   > Other to Diffusion Connection Access
       Diffusion Missiles and Missiles and Morph Ball
 
@@ -1300,12 +1308,14 @@ Extra - room_id: [36]
               After Water Level Lowered or Damage Runs (Intermediate)
               Gravity Suit and Damage Runs (Beginner)
           Any of the following:
-              # Power Bombs also work on Super Missile Geron
-              Super Missiles or Wave Beam
+              Wave Beam
+              Missiles ≥ 3 and Super Missiles
               All of the following:
                   Gravity Suit
                   Any of the following:
-                      Screw Attack
+                      All of the following:
+                          Knowledge (Beginner)
+                          Power Bombs ≥ 2 or Screw Attack
                       # Run past Geron spawning
                       Movement (Intermediate)
   > Door to Aquarium Storage
@@ -1315,7 +1325,7 @@ Extra - room_id: [36]
               After Water Level Lowered or Damage Runs (Intermediate)
               Gravity Suit and Damage Runs (Beginner)
           Any of the following:
-              Diffusion Missiles
+              Diffusion Missiles and Missiles
               Ice Beam and Wave Beam
 
 > Door to Aquarium Hub; Heals? False
@@ -1336,7 +1346,7 @@ Extra - room_id: [36]
               After Water Level Lowered or Damage Runs (Intermediate)
               Gravity Suit and Damage Runs (Beginner)
           Any of the following:
-              Diffusion Missiles
+              Diffusion Missiles and Missiles
               Ice Beam and Wave Beam
   > Door to Aquarium Hub
       After Water Level Lowered or Damage Runs (Beginner)
@@ -1530,9 +1540,15 @@ Extra - room_id: [42]
           # Serris Weapon Requirements
           Charge Beam or Missiles ≥ 10
           # Core-X Requirements
-          Missiles ≥ 10
-          # Health Requirements
-          Combat (Beginner) or Normal Damage ≥ 200
+          Missiles ≥ 5
+          Any of the following:
+              # Health Requirements
+              Combat (Expert) or Normal Damage ≥ 400
+              Combat (Beginner) and Normal Damage ≥ 300
+              Combat (Intermediate) and Normal Damage ≥ 150
+              Combat (Advanced) and Normal Damage ≥ 75
+          # Arena Requirements
+          Combat (Intermediate) or Can climb High Jump Wall
 
 ----------------
 Connection to Sector 6 (NOC)
