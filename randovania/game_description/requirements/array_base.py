@@ -94,15 +94,13 @@ def expand_items(
 ) -> list[Requirement]:
     expanded = []
 
-    def _add(_item: Requirement) -> None:
-        if _item not in expanded and _item != exclude:
-            expanded.append(_item)
-
     for item in items:
         simplified = item.simplify(keep_comments=keep_comments)
         if isinstance(simplified, cls) and mergeable_array(simplified, keep_comments):
             for new_item in simplified.items:
-                _add(new_item)
+                if new_item not in expanded and new_item != exclude:
+                    expanded.append(new_item)
         else:
-            _add(simplified)
+            if simplified not in expanded and simplified != exclude:
+                expanded.append(simplified)
     return expanded
