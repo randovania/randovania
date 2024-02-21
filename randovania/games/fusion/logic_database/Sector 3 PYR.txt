@@ -11,8 +11,12 @@ Extra - room_id: [0]
   > Door to Checkpoint Shaft
       Trivial
   > Other to Alcove
-      # TODO: cant you do this witha shinespark instead of SJ?
-      Screw Attack and Space Jump
+      All of the following:
+          Screw Attack
+          Any of the following:
+              # Get up to the screw blocks
+              Space Jump
+              Speed Booster and Shinespark Tricks (Intermediate) and Disabled Door Lock Rando
   > Door to Monkey Bars of Fire
       Trivial
 
@@ -185,11 +189,16 @@ Extra - room_id: [5]
   * L0 Hatch to Entrance Hub/Door to Checkpoint Shaft
   * Extra - door_idx: (11,)
   > Door to Bob Room
-      # TODO: dont the wallguys spawn only after you activated the level 2?
-      Can Freeze Enemies or Can climb High Jump Wall
+      Any of the following:
+          Can climb High Jump Wall
+          # Enemies only spawn after that event is done
+          After Level 2 Locks and Can Freeze Enemies
   > Other to Namihe's Abode
-      # Get past wall enemy - TODO: cant you damage boost through?
-      Missiles ≥ 5 or Morph Ball or Wave Beam or Can Freeze Enemies
+      Any of the following:
+          # Get past wall enemy. For simplicity's sake, we assume the enemies are always there.
+          Charge Beam or Missiles ≥ 5 or Morph Ball or Screw Attack or Wave Beam or Normal Damage ≥ 80
+          # Shinespark
+          Speed Booster and Shinespark Tricks (Intermediate) and Disabled Door Lock Rando and Disabled Entrance Rando
 
 > Door to Bob Room; Heals? False
   * Layers: default
@@ -224,9 +233,11 @@ Extra - room_id: [6, 24]
   * L2 Hatch to Checkpoint Shaft/Door to Bob Room
   * Extra - door_idx: (13, 47)
   > Door to B.O.X. Access
-      All of the following:
-          # TODO: isnt there a geron on the way?
-          Impossible
+      Any of the following:
+          # TODO: when does this purple dissapear?
+          Can Kill Purple Geron
+          # Old BOB skip
+          High Jump and Speed Booster and Shinespark Tricks (Hypermode) and Disabled Door Lock Rando and Disabled Entrance Rando
 
 > Door to B.O.X. Access; Heals? False
   * Layers: default
@@ -235,7 +246,8 @@ Extra - room_id: [6, 24]
   > Pickup (Missile Tank)
       Morph Ball
   > Door to Checkpoint Shaft
-      Trivial
+      # TODO: when does this purple geron dissapear
+      Can Kill Purple Geron
   > Door to Red Tower
       Morph Ball
 
@@ -289,16 +301,16 @@ Extra - room_id: [8]
   * Tunnel to Entrance Hub/Other to Alcove
   * Extra - door_idx: (17,)
   > Below E-Tank
-      # TODO: template
-      Screw Attack or Can Use Any Bombs
+      Can Break Single Bomb Blocks
 
 > Door to Deserted Runway; Heals? False
   * Layers: default
   * L0 Hatch to Deserted Runway/Door to Alcove
   * Extra - door_idx: (18,)
   > Above E-Tank
-      # TODO: shinesparking
       Speed Booster and Disabled Door Lock Rando and Disabled Entrance Rando
+  > Below E-Tank
+      Speed Booster and Knowledge (Beginner) and Shinespark Tricks (Beginner) and Disabled Door Lock Rando and Disabled Entrance Rando
   > Bottom Right
       Trivial
 
@@ -317,7 +329,7 @@ Extra - room_id: [8]
       Impossible
   > Other to Entrance Hub
       Any of the following:
-          # TODO: template, also add mid air morph and other stuff to the bombs only path
+          # TODO: template, also add mid air morph and other stuff to the bombs only path. Also screw should have knowledge
           Can Use Power Bombs
           Morph Ball and Screw Attack
           Can Use Bombs and Can Use Springball
@@ -335,13 +347,10 @@ Extra - room_id: [8]
 > Bottom Right; Heals? False
   * Layers: default
   > Door to Deserted Runway
-      # Space or High Wall Jumping or Wall Jump with Ice
+      # TODO: Space or High Wall Jumping or Wall Jump with Ice
       Space Jump
   > Below E-Tank
-      All of the following:
-          # TODO: use template
-          Morph Ball
-          Screw Attack or Can Use Any Bombs
+      Can Break Single Bomb Blocks
 
 ----------------
 Deserted Runway
@@ -370,7 +379,6 @@ Extra - room_id: [9]
   > Door to Connection to Sector 1 (SRX)
       All of the following:
           Screw Attack
-          # TODO: no shinesparking? can you do this with HJ but w/o WJ?
           Speed Booster or Can climb High Jump Wall
 
 > Other to B.O.X. Arena; Heals? False
@@ -439,6 +447,7 @@ Extra - room_id: [11]
   * L2 Hatch to Red Tower/Door to Lava Reservoirs
   * Extra - door_idx: (22,)
   > Door to Lava Maze
+      # TODO: add damage reqs
       Varia Suit
 
 > Door to Lava Maze; Heals? False
@@ -446,6 +455,7 @@ Extra - room_id: [11]
   * L0 Hatch to Lava Maze/Door to Lava Reservoirs
   * Extra - door_idx: (23,)
   > Door to Red Tower
+      # TODO: add damage reqs
       Varia Suit
 
 ----------------
@@ -467,18 +477,22 @@ Extra - room_id: [12]
   * L0 Hatch to Lava Reservoirs/Door to Lava Maze
   * Extra - door_idx: (24,)
   > Pickup (Power Bomb Tank)
-      # Can damage run this with varia (about 500 energy), high jump/spring ball not required
+      # TODO: Can damage run this with varia (about 500 energy), high jump/spring ball not required
       Gravity Suit and Varia Suit and Can Use Power Bombs
   > Door to Sova Suite
-      # TODO: Varia?
-      Space Jump or Can Freeze Enemies
+      All of the following:
+          # Heat resistence - TODO: Add damage reqs
+          Varia Suit
+          # Get up
+          Space Jump or Can Freeze Enemies
 
 > Door to Sova Suite; Heals? False
   * Layers: default
   * L0 Hatch to Sova Suite/Door to Lava Maze
   * Extra - door_idx: (25,)
   > Door to Lava Reservoirs
-      Trivial
+      # TODO: Add damage reqs
+      Varia Suit
 
 ----------------
 Sova Suite
@@ -489,14 +503,16 @@ Extra - room_id: [13]
   * L0 Hatch to Lava Maze/Door to Sova Suite
   * Extra - door_idx: (26,)
   > Door to Pyrochamber Access
-      Trivial
+      # TODO: add damage reqs
+      Varia Suit
 
 > Door to Pyrochamber Access; Heals? False
   * Layers: default
   * L0 Hatch to Pyrochamber Access/Door to Sova Suite
   * Extra - door_idx: (27,)
   > Door to Lava Maze
-      Trivial
+      # TODO: add damage reqs
+      Varia Suit
 
 ----------------
 Pyrochamber Access
@@ -527,7 +543,7 @@ Extra - room_id: [15]
   * L0 Hatch to Pyrochamber Access/Door to Pyrochamber
   * Extra - door_idx: (30,)
   > Door to Boiler Access
-      # Heat DMG
+      # TODO: Heat DMG
       Varia Suit
 
 > Door to Boiler Access; Heals? False
@@ -549,14 +565,16 @@ Extra - room_id: [16]
   * L0 Hatch to Pyrochamber/Door to Boiler Access
   * Extra - door_idx: (32,)
   > Door to Main Boiler
-      Trivial
+      # TODO: add damage reqs?
+      Varia Suit
 
 > Door to Main Boiler; Heals? False
   * Layers: default
   * L0 Hatch to Main Boiler/Door to Boiler Access
   * Extra - door_idx: (33,)
   > Door to Pyrochamber
-      Trivial
+      # TODO: Add damage reqs?
+      Varia Suit
 
 ----------------
 Main Boiler
@@ -1033,10 +1051,7 @@ Extra - room_id: [33]
   * L0 Hatch to Data Recharge Room/Door to Data Storage
   * Extra - door_idx: (69,)
   > Pickup (Missile Tank)
-      Any of the following:
-          # TODO: knowledeg and other geron reqs
-          Screw Attack or Can Use Power Bombs
-          Missiles ≥ 5 and Super Missiles
+      Can Kill Purple Geron
 
 ----------------
 Processing Access

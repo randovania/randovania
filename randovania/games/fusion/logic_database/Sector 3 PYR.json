@@ -60,7 +60,7 @@
                         "Other to Alcove": {
                             "type": "and",
                             "data": {
-                                "comment": "TODO: cant you do this witha shinespark instead of SJ?",
+                                "comment": null,
                                 "items": [
                                     {
                                         "type": "resource",
@@ -72,12 +72,64 @@
                                         }
                                     },
                                     {
-                                        "type": "resource",
+                                        "type": "or",
                                         "data": {
-                                            "type": "items",
-                                            "name": "SpaceJump",
-                                            "amount": 1,
-                                            "negate": false
+                                            "comment": "Get up to the screw blocks",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "SpaceJump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "SpeedBooster",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "misc",
+                                                                    "name": "DoorLockRando",
+                                                                    "amount": 1,
+                                                                    "negate": true
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "misc",
+                                                                    "name": "DoorLockRando",
+                                                                    "amount": 1,
+                                                                    "negate": true
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "ShinesparkTrick",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -1016,15 +1068,32 @@
                         "Door to Bob Room": {
                             "type": "or",
                             "data": {
-                                "comment": "TODO: dont the wallguys spawn only after you activated the level 2?",
+                                "comment": null,
                                 "items": [
                                     {
                                         "type": "template",
                                         "data": "Can climb High Jump Wall"
                                     },
                                     {
-                                        "type": "template",
-                                        "data": "Can Freeze Enemies"
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "Enemies only spawn after that event is done",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "Level2Locks",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Freeze Enemies"
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -1032,7 +1101,7 @@
                         "Other to Namihe's Abode": {
                             "type": "or",
                             "data": {
-                                "comment": "Get past wall enemy - TODO: cant you damage boost through?",
+                                "comment": "Get past wall enemy. For simplicity's sake, we assume the enemies are always there.",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -1042,10 +1111,6 @@
                                             "amount": 5,
                                             "negate": false
                                         }
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Can Freeze Enemies"
                                     },
                                     {
                                         "type": "resource",
@@ -1063,6 +1128,77 @@
                                             "name": "MorphBall",
                                             "amount": 1,
                                             "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "damage",
+                                            "name": "NormalDamage",
+                                            "amount": 80,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "ChargeBeam",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "ScrewAttack",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "Shinespark",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "SpeedBooster",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "DoorLockRando",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "EntranceRando",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "ShinesparkTrick",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -1228,15 +1364,65 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Door to B.O.X. Access": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
-                                "comment": "TODO: isnt there a geron on the way?",
+                                "comment": "TODO: when does this purple dissapear?",
                                 "items": [
                                     {
-                                        "type": "or",
+                                        "type": "template",
+                                        "data": "Can Kill Purple Geron"
+                                    },
+                                    {
+                                        "type": "and",
                                         "data": {
-                                            "comment": null,
-                                            "items": []
+                                            "comment": "Old BOB skip",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "SpeedBooster",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "HighJump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "DoorLockRando",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "EntranceRando",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "ShinesparkTrick",
+                                                        "amount": 5,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -1294,14 +1480,11 @@
                         "Door to Checkpoint Shaft": {
                             "type": "and",
                             "data": {
-                                "comment": "TODO: isnt there a geron on the way?",
+                                "comment": "TODO: when does this purple geron dissapear",
                                 "items": [
                                     {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": []
-                                        }
+                                        "type": "template",
+                                        "data": "Can Kill Purple Geron"
                                     }
                                 ]
                             }
@@ -1576,20 +1759,11 @@
                         "Below E-Tank": {
                             "type": "or",
                             "data": {
-                                "comment": "TODO: template",
+                                "comment": null,
                                 "items": [
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "ScrewAttack",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
                                         "type": "template",
-                                        "data": "Can Use Any Bombs"
+                                        "data": "Can Break Single Bomb Blocks"
                                     }
                                 ]
                             }
@@ -1629,7 +1803,7 @@
                         "Above E-Tank": {
                             "type": "and",
                             "data": {
-                                "comment": "TODO: shinesparking",
+                                "comment": null,
                                 "items": [
                                     {
                                         "type": "resource",
@@ -1656,6 +1830,59 @@
                                             "name": "EntranceRando",
                                             "amount": 1,
                                             "negate": true
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Below E-Tank": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "SpeedBooster",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "DoorLockRando",
+                                            "amount": 1,
+                                            "negate": true
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "EntranceRando",
+                                            "amount": 1,
+                                            "negate": true
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "ShinesparkTrick",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Knowledge",
+                                            "amount": 1,
+                                            "negate": false
                                         }
                                     }
                                 ]
@@ -1774,7 +2001,7 @@
                         "Other to Entrance Hub": {
                             "type": "or",
                             "data": {
-                                "comment": "TODO: template, also add mid air morph and other stuff to the bombs only path",
+                                "comment": "TODO: template, also add mid air morph and other stuff to the bombs only path. Also screw should have knowledge",
                                 "items": [
                                     {
                                         "type": "and",
@@ -1929,7 +2156,7 @@
                         "Door to Deserted Runway": {
                             "type": "or",
                             "data": {
-                                "comment": "Space or High Wall Jumping or Wall Jump with Ice",
+                                "comment": "TODO: Space or High Wall Jumping or Wall Jump with Ice",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -1946,37 +2173,11 @@
                         "Below E-Tank": {
                             "type": "and",
                             "data": {
-                                "comment": "TODO: use template",
+                                "comment": null,
                                 "items": [
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "MorphBall",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "template",
-                                                    "data": "Can Use Any Bombs"
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "ScrewAttack",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
+                                        "type": "template",
+                                        "data": "Can Break Single Bomb Blocks"
                                     }
                                 ]
                             }
@@ -2121,7 +2322,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": "TODO: no shinesparking? can you do this with HJ but w/o WJ?",
+                                            "comment": null,
                                             "items": [
                                                 {
                                                     "type": "template",
@@ -2514,7 +2715,7 @@
                         "Door to Lava Maze": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "TODO: add damage reqs",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -2563,7 +2764,7 @@
                         "Door to Red Tower": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "TODO: add damage reqs",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -2654,7 +2855,7 @@
                         "Pickup (Power Bomb Tank)": {
                             "type": "and",
                             "data": {
-                                "comment": "Can damage run this with varia (about 500 energy), high jump/spring ball not required",
+                                "comment": "TODO: Can damage run this with varia (about 500 energy), high jump/spring ball not required",
                                 "items": [
                                     {
                                         "type": "template",
@@ -2682,21 +2883,46 @@
                             }
                         },
                         "Door to Sova Suite": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
-                                "comment": "TODO: Varia?",
+                                "comment": null,
                                 "items": [
                                     {
-                                        "type": "template",
-                                        "data": "Can Freeze Enemies"
+                                        "type": "or",
+                                        "data": {
+                                            "comment": "Heat resistence - TODO: Add damage reqs",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "VariaSuit",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     },
                                     {
-                                        "type": "resource",
+                                        "type": "or",
                                         "data": {
-                                            "type": "items",
-                                            "name": "SpaceJump",
-                                            "amount": 1,
-                                            "negate": false
+                                            "comment": "Get up",
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Freeze Enemies"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "SpaceJump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -2735,10 +2961,20 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Lava Reservoirs": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
-                                "comment": "TODO: varia?",
-                                "items": []
+                                "comment": "TODO: Add damage reqs",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "VariaSuit",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -2785,10 +3021,20 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Pyrochamber Access": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "comment": "TODO: add damage reqs",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "VariaSuit",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -2824,10 +3070,20 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Lava Maze": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "comment": "TODO: add damage reqs",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "VariaSuit",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -3004,7 +3260,7 @@
                         "Door to Boiler Access": {
                             "type": "and",
                             "data": {
-                                "comment": "Heat DMG",
+                                "comment": "TODO: Heat DMG",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -3121,13 +3377,15 @@
                         "Door to Main Boiler": {
                             "type": "and",
                             "data": {
-                                "comment": "TODO: isnt this room heated? should it not have varia/damage reqs?",
+                                "comment": "TODO: add damage reqs?",
                                 "items": [
                                     {
-                                        "type": "and",
+                                        "type": "resource",
                                         "data": {
-                                            "comment": null,
-                                            "items": []
+                                            "type": "items",
+                                            "name": "VariaSuit",
+                                            "amount": 1,
+                                            "negate": false
                                         }
                                     }
                                 ]
@@ -3168,13 +3426,15 @@
                         "Door to Pyrochamber": {
                             "type": "and",
                             "data": {
-                                "comment": "TODO: isnt this room heated? should it not have varia/damage reqs?",
+                                "comment": "TODO: Add damage reqs?",
                                 "items": [
                                     {
-                                        "type": "and",
+                                        "type": "resource",
                                         "data": {
-                                            "comment": null,
-                                            "items": []
+                                            "type": "items",
+                                            "name": "VariaSuit",
+                                            "amount": 1,
+                                            "negate": false
                                         }
                                     }
                                 ]
@@ -3470,6 +3730,21 @@
                                                 {
                                                     "type": "template",
                                                     "data": "Can Freeze Enemies"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "TODO: this whole room needs varia and heat requirements",
+                                            "items": [
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": []
+                                                    }
                                                 }
                                             ]
                                         }
@@ -6041,46 +6316,11 @@
                         "Pickup (Missile Tank)": {
                             "type": "or",
                             "data": {
-                                "comment": "TODO: knowledeg and other geron reqs",
+                                "comment": null,
                                 "items": [
                                     {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Missiles",
-                                                        "amount": 5,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "SuperMissiles",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "ScrewAttack",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
                                         "type": "template",
-                                        "data": "Can Use Power Bombs"
+                                        "data": "Can Kill Purple Geron"
                                     }
                                 ]
                             }
