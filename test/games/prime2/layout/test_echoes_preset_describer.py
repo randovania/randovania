@@ -72,7 +72,8 @@ def test_echoes_format_params(default_echoes_configuration):
         "Item Pool": [
             "Size: 118 of 119",
             "Vanilla starting items",
-            "Progressive Suit, Split beam ammo",
+            "Progressive Suit",
+            "Split beam ammo",
             "Sky Temple Keys at all bosses",
         ],
     }
@@ -88,7 +89,14 @@ def test_echoes_format_params2(default_echoes_configuration):
             randomization_mode=RandomizationMode.MAJOR_MINOR_SPLIT,
         ),
         standard_pickup_configuration=dataclasses.replace(
-            std_pick.replace_states({std_pick.get_pickup_with_name("Scan Visor"): StandardPickupState()}),
+            std_pick.replace_states(
+                {
+                    std_pick.get_pickup_with_name("Scan Visor"): StandardPickupState(),
+                    std_pick.get_pickup_with_name("Dark Suit"): StandardPickupState(num_shuffled_pickups=1),
+                    std_pick.get_pickup_with_name("Light Suit"): StandardPickupState(num_shuffled_pickups=1),
+                    std_pick.get_pickup_with_name("Progressive Suit"): StandardPickupState(),
+                }
+            ),
             minimum_random_starting_pickups=1,
             maximum_random_starting_pickups=2,
         ),
@@ -128,7 +136,7 @@ def test_echoes_format_params2(default_echoes_configuration):
             "Minor: 61/61",
             "1 to 2 random starting items",
             "Excludes Scan Visor",
-            "Progressive Suit, Split beam ammo",
+            "Split beam ammo",
             "Sky Temple Keys at all bosses",
         ],
     }

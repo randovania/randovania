@@ -6,6 +6,7 @@ from typing import TYPE_CHECKING
 
 from randovania.bitpacking import bitpacking
 from randovania.game_description import default_database
+from randovania.lib import enum_lib
 
 if TYPE_CHECKING:
     from collections.abc import Iterator
@@ -224,3 +225,31 @@ class StandardPickupState:
             priority=priority,
             included_ammo=tuple(included_ammo),
         )
+
+    @classmethod
+    def from_case(
+        cls, pickup: StandardPickupDefinition, case: StandardPickupStateCase, included_ammo: tuple[int, ...]
+    ) -> StandardPickupState | None:
+        if case == StandardPickupStateCase.MISSING:
+            return StandardPickupState(included_ammo=included_ammo)
+
+        elif case == StandardPickupStateCase.VANILLA:
+            return StandardPickupState(include_copy_in_original_location=True, included_ammo=included_ammo)
+
+        elif case == StandardPickupStateCase.STARTING_ITEM:
+            return StandardPickupState(
+                num_included_in_starting_pickups=pickup.count_for_starting_case, included_ammo=included_ammo
+            )
+
+        elif case == StandardPickupStateCase.SHUFFLED:
+            return StandardPickupState(num_shuffled_pickups=pickup.count_for_shuffled_case, included_ammo=included_ammo)
+
+        else:
+            return None
+
+    def closest_case(self, pickup: StandardPickupDefinition) -> StandardPickupStateCase:
+        for case in enum_lib.iterate_enum(StandardPickupStateCase):
+            if self == StandardPickupState.from_case(pickup, case, self.included_ammo):
+                return case
+
+        return StandardPickupStateCase.CUSTOM
