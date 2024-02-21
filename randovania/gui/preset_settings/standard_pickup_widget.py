@@ -45,10 +45,10 @@ class StandardPickupWidget(QWidget, Ui_StandardPickupWidget):
             if case == StandardPickupStateCase.STARTING_ITEM and len(pickup.progression) > 1:
                 continue
 
-            if case == StandardPickupStateCase.SHUFFLED and pickup.default_shuffled_count > 1:
-                text = f"{pickup.default_shuffled_count} shuffled copies"
-            elif case == StandardPickupStateCase.STARTING_ITEM and pickup.default_starting_count > 1:
-                text = f"{pickup.default_starting_count} starting copies"
+            if case == StandardPickupStateCase.SHUFFLED and pickup.count_for_shuffled_case > 1:
+                text = f"{pickup.count_for_shuffled_case} shuffled copies"
+            elif case == StandardPickupStateCase.STARTING_ITEM and pickup.count_for_starting_case > 1:
+                text = f"{pickup.count_for_starting_case} starting copies"
             else:
                 text = case.pretty_text
             self.state_case_combo.addItem(text, case)
@@ -134,33 +134,6 @@ class StandardPickupWidget(QWidget, Ui_StandardPickupWidget):
         else:
             self._on_select_case(new_index)
 
-    def _state_from_case(self, case: StandardPickupStateCase, included_ammo) -> StandardPickupState | None:
-        if case == StandardPickupStateCase.MISSING:
-            return StandardPickupState(included_ammo=included_ammo)
-
-        elif case == StandardPickupStateCase.VANILLA:
-            return StandardPickupState(include_copy_in_original_location=True, included_ammo=included_ammo)
-
-        elif case == StandardPickupStateCase.STARTING_ITEM:
-            return StandardPickupState(
-                num_included_in_starting_pickups=self._pickup.default_starting_count, included_ammo=included_ammo
-            )
-
-        elif case == StandardPickupStateCase.SHUFFLED:
-            return StandardPickupState(
-                num_shuffled_pickups=self._pickup.default_shuffled_count, included_ammo=included_ammo
-            )
-
-        else:
-            return None
-
-    def _case_from_state(self, state: StandardPickupState) -> StandardPickupStateCase:
-        for case in enum_lib.iterate_enum(StandardPickupStateCase):
-            if state == self._state_from_case(case, state.included_ammo):
-                return case
-
-        return StandardPickupStateCase.CUSTOM
-
     @property
     def state(self) -> StandardPickupState:
         if self.case == StandardPickupStateCase.CUSTOM:
@@ -172,11 +145,11 @@ class StandardPickupWidget(QWidget, Ui_StandardPickupWidget):
                 included_ammo=self.included_ammo,
             )
         else:
-            return self._state_from_case(self.case, self.included_ammo)
+            return StandardPickupState.from_case(self.pickup, self.case, self.included_ammo)
 
     def set_new_state(self, value: StandardPickupState):
         if self.state != value:
-            self.case = self._case_from_state(value)
+            self.case = value.closest_case(self.pickup)
             self._update_for_state(value)
 
     def _update_for_state(self, state):
