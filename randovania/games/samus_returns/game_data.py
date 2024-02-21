@@ -118,11 +118,11 @@ game_data: game.GameData = game.GameData(
             "it only restores whatever ammo was last used, and not both.",
         ),
         (
-            "Why did the Missile Reserve Tank activate without me using any Missiles?",
-            "Due to how shuffled Missile Launcher is implemented, "
-            "Missile Reserve Tanks will attempt to refill Missiles that you do not have. "
-            "This will occur on any area/sub-area load and is unavoidable if you have "
-            "the Missile Reserve Tank and do not have the Missile Launcher.",
+            "I collected the Missile Reserve Tank, but I cannot see nor use it.",
+            "Due to how shuffled Missile Launcher and Missile Reserve Tanks function, "
+            "they will remain deactivated until the Missile Launcher is in your inventory. "
+            "This prevents a bug where the reserve will activate even if "
+            "you have no usable Missiles.",
         ),
     ],
     layout=game.GameLayout(
