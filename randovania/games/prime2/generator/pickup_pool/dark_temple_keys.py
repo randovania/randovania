@@ -65,6 +65,6 @@ def create_dark_temple_key(
         offworld_models=frozendict({RandovaniaGame.AM2R: am2r_dark_key_sprite[temple_index]}),
         generator_params=PickupGeneratorParams(
             preferred_location_category=LocationCategory.MAJOR,
-            probability_offset=3,
+            probability_offset=3.0,
         ),
     )
