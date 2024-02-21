@@ -41,8 +41,6 @@ def test_create_pickup_for(echoes_resource_database, generic_pickup_category):
         model_name="SuperModel",
         offworld_models=frozendict({}),
         progression=("DarkVisor", "MorphBall", "Bombs"),
-        default_starting_count=0,
-        default_shuffled_count=1,
         ammo=("EnergyTank", "DarkAmmo"),
         must_be_starting=False,
         original_location=None,

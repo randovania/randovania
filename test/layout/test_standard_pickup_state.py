@@ -61,8 +61,6 @@ def standard_pickup_state(request, echoes_pickup_database, generic_pickup_catego
         model_name="Model Name",
         offworld_models=frozendict(),
         progression=(request.param.get("progression", "Power"),),
-        default_starting_count=0,
-        default_shuffled_count=1,
         ammo=request.param.get("ammo_index", ()),
         must_be_starting=True,
         original_location=None,

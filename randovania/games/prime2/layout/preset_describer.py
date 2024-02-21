@@ -11,15 +11,11 @@ from randovania.games.prime2.layout.echoes_configuration import (
 from randovania.layout.preset_describer import (
     GamePresetDescriber,
     fill_template_strings_from_tree,
-    handle_progressive_expected_counts,
-    has_shuffled_item,
     message_for_required_mains,
 )
 
 if TYPE_CHECKING:
-    from randovania.game_description.pickup.standard_pickup import (
-        StandardPickupDefinition,
-    )
+    from randovania.games.game import ProgressiveItemTuples
     from randovania.layout.base.base_configuration import BaseConfiguration
 
 
@@ -100,7 +96,6 @@ def create_beam_configuration_description(
 class EchoesPresetDescriber(GamePresetDescriber):
     def format_params(self, configuration: BaseConfiguration) -> dict[str, list[str]]:
         assert isinstance(configuration, EchoesConfiguration)
-        standard_pickups = configuration.standard_pickup_configuration
         pickup_database = default_database.pickup_database_for_game(configuration.game)
 
         template_strings = super().format_params(configuration)
@@ -130,8 +125,6 @@ class EchoesPresetDescriber(GamePresetDescriber):
         extra_message_tree = {
             "Item Pool": [
                 {
-                    "Progressive Suit": has_shuffled_item(standard_pickups, "Progressive Suit"),
-                    "Progressive Grapple": has_shuffled_item(standard_pickups, "Progressive Grapple"),
                     "Split beam ammo": unified_ammo.pickup_count == 0,
                 }
             ],
@@ -178,13 +171,7 @@ class EchoesPresetDescriber(GamePresetDescriber):
 
         return template_strings
 
-    def expected_shuffled_pickup_count(self, configuration: BaseConfiguration) -> dict[StandardPickupDefinition, int]:
-        count = super().expected_shuffled_pickup_count(configuration)
-        majors = configuration.standard_pickup_configuration
-
+    def progressive_items(self) -> ProgressiveItemTuples:
         from randovania.games.prime2.pickup_database import progressive_items
 
-        for progressive_item_name, non_progressive_items in progressive_items.tuples():
-            handle_progressive_expected_counts(count, majors, progressive_item_name, non_progressive_items)
-
-        return count
+        return progressive_items.tuples()

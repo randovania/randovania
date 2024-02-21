@@ -37,6 +37,7 @@ def test_state_change_to_starting(skip_qtbot, echoes_pickup_database, echoes_res
     set_combo_with_value(popup.state_case_combo, StandardPickupStateCase.STARTING_ITEM)
 
     # Assert
+    assert popup.case == StandardPickupStateCase.STARTING_ITEM
     assert popup.state == StandardPickupState(
         include_copy_in_original_location=False,
         num_shuffled_pickups=0,
