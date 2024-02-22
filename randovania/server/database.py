@@ -413,9 +413,13 @@ class WorldUserAssociation(BaseModel):
 
     @classmethod
     def find_all_for_user_in_session(cls, user_id: int, session_id: int) -> Iterable[Self]:
-        yield from cls.select().join(World).where(
-            World.session == session_id,
-            WorldUserAssociation.user == user_id,
+        yield from (
+            cls.select()
+            .join(World)
+            .where(
+                World.session == session_id,
+                WorldUserAssociation.user == user_id,
+            )
         )
 
     class Meta:

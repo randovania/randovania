@@ -4034,6 +4034,7 @@
     "game_patches": {
         "charge_door_buff": true,
         "beam_door_buff": true,
+        "beam_burst_buff": true,
         "nerf_super_missiles": false,
         "remove_elevator_grapple_blocks": true,
         "remove_grapple_block_area3_interior_shortcut": true,
@@ -4042,33 +4043,43 @@
         "reverse_area8": false
     },
     "text_patches": {
-        "GUI_MSG_NEW_FILE_CREATION": "Words Hash ($$$$$)",
-        "GUI_MSG_NEW_GAME_CONFIRMATION_HARD": "Words Hash ($$$$$)",
-        "GUI_MSG_NEW_GAME_CONFIRMATION": "Words Hash ($$$$$)",
-        "GUI_MSG_NEW_GAME_CONFIRMATION_NORMAL": "Words Hash ($$$$$)",
         "GUI_MSG_NEW_GAME_CONFIRMATION_FUSION": "Words Hash ($$$$$)",
-        "GUI_SAMUS_DATA_TITLE": "<version>"
+        "GUI_MSG_NEW_GAME_CONFIRMATION_NORMAL": "Words Hash ($$$$$)",
+        "GUI_MSG_NEW_FILE_CREATION": "Words Hash ($$$$$)",
+        "GUI_MSG_NEW_GAME_CONFIRMATION": "Words Hash ($$$$$)",
+        "GUI_MSG_NEW_GAME_CONFIRMATION_HARD": "Words Hash ($$$$$)",
+        "GUI_SAMUS_DATA_TITLE": "<version>",
+        "GUI_CUTSCENE_OPENING_1": "Welcome to the Metroid: Samus Returns Randomizer!|Here are some useful tips to help you on your journey.",
+        "GUI_CUTSCENE_OPENING_2": "All of the hazardous liquid has been drained. You can thus freely explore the planet.|Metroids now also drop items.",
+        "GUI_CUTSCENE_OPENING_3": "In this randomizer, you need to collect all Metroid DNA, find the Baby, and then fight Proteus Ridley at your ship to leave the planet.",
+        "GUI_CUTSCENE_OPENING_4": "With your current configuration, you need to find 10 DNA. It can be found on Standard Metroids and on Stronger Metroids.",
+        "GUI_CUTSCENE_OPENING_5": "You may freely travel between Surface and Area 8.|Once you have collected all the required DNA, going from Area 8 to Surface will force a confrontation with Proteus Ridley.",
+        "GUI_CUTSCENE_OPENING_6": "All the Chozo Seals have been repurposed to give hints on the region where a specific item is located.|Additionally, more distinct Chozo Seals have been placed that give hints on DNA locations.",
+        "GUI_CUTSCENE_OPENING_7": "If you're interested in knowing more on how the DNA Seals work, you can check the Hint page in Randovania.",
+        "GUI_CUTSCENE_OPENING_8": "Some other helpful tips:|You can warp to your starting location by cancelling the save at a Save Station.|Scan Pulse can be used to reveal more of your map.",
+        "GUI_CUTSCENE_OPENING_9": "If you still have more questions, check out the FAQ and Differences pages in Randovania.",
+        "GUI_CUTSCENE_OPENING_10": "Good luck and have fun!"
     },
     "spoiler_log": {
         "Progressive Beam": "Area 2 - Dam Exterior - Dam Exterior\nArea 4 - Central Caves - Transport to Area 5\nArea 8 - Nest Nodule",
         "Charge Beam": "Area 1 - Ice Beam Chamber",
-        "Ice Beam": "Area 3 - Factory Interior - Transport to Area 3 Metroid Caverns",
+        "Ice Beam": "Area 3 - Factory Interior - Gamma Arena & Transport to Metroid Caverns East",
         "Grapple Beam": "Area 1 - Spider Ball Chamber",
         "Super Missile Launcher": "Area 3 - Factory Exterior - Factory Exterior",
-        "Lightning Armor": "Area 2 - Dam Entryway - Transport to Area 2 Dam Exterior",
+        "Lightning Armor": "Area 2 - Dam Entryway - Lightning Armor & Transport to Dam Exterior East",
         "Beam Burst": "Area 4 - Crystal Mines - Super Missile Chamber",
         "Phase Drift": "Area 6 - Diggernaut Arena",
         "Progressive Suit": "Area 3 - Metroid Caverns - Quarry Shaft\nArea 4 - Crystal Mines - Diggernaut Excavation Tunnels",
         "Morph Ball": "Surface - East - Morph Ball Chamber",
         "Spider Ball": "Surface - East - Twisty Tunnel",
         "Bomb": "Area 1 - Destroyed Armory",
-        "Spring Ball": "Area 5 - Tower Exterior - Demolished Maze",
+        "Spring Ball": "Area 5 - Tower Exterior - Overgrown Maze",
         "Power Bomb Launcher": "Area 8 - Nest Network",
-        "Progressive Jump": "Area 1 - Ice Beam Chamber\nArea 2 - Dam Entryway - Transport to Area 2 Dam Exterior",
-        "Screw Attack": "Area 8 - Transport to Surface West",
+        "Progressive Jump": "Area 1 - Ice Beam Chamber\nArea 2 - Dam Entryway - Lightning Armor & Transport to Dam Exterior East",
+        "Screw Attack": "Area 8 - Transport to Surface",
         "Baby Metroid": "Area 2 - Dam Interior - Dam Basement",
         "Energy Reserve Tank": "Area 1 - Transport Cache",
-        "Aeion Reserve Tank": "Area 3 - Metroid Caverns - Transport to Area 3 Factory Exterior (Upper)",
+        "Aeion Reserve Tank": "Area 3 - Metroid Caverns - Transport to Factory Exterior North",
         "Missile Reserve Tank": "Area 5 - Tower Lobby - Lobby Teleporter West",
         "Metroid DNA 1": "Area 7 - Omega+ Arena",
         "Metroid DNA 10": "Area 4 - Crystal Mines - Gamma Arena",
@@ -4151,7 +4162,415 @@
                 "actor": "LE_ChozoUnlockAreaDNA"
             },
             "text": "An Energy Tank can be found in Area 3 - Factory Interior.\n"
+        },
+        {
+            "accesspoint_actor": {
+                "scenario": "s010_area1",
+                "actor": "LE_RandoDNA"
+            },
+            "text": "Metroid DNA is located in Area 7 - Omega+ Arena.\n"
+        },
+        {
+            "accesspoint_actor": {
+                "scenario": "s020_area2",
+                "actor": "LE_RandoDNA"
+            },
+            "text": "Metroid DNA is located in Area 4 - Central Caves - Gamma Arena.\nMetroid DNA is located in Area 2 - Dam Exterior - Inner Alpha Arena.\n"
+        },
+        {
+            "accesspoint_actor": {
+                "scenario": "s033_area3b",
+                "actor": "LE_RandoDNA"
+            },
+            "text": "Metroid DNA is located in Area 4 - Crystal Mines - Gamma Arena.\nMetroid DNA is located in Area 7 - Omega Arena South.\n"
+        },
+        {
+            "accesspoint_actor": {
+                "scenario": "s050_area5",
+                "actor": "LE_RandoDNA"
+            },
+            "text": "Metroid DNA is located in Area 4 - Central Caves - Alpha+ Arena.\nMetroid DNA is located in Area 1 - Metroid Caverns Alpha Arena South West.\n"
+        },
+        {
+            "accesspoint_actor": {
+                "scenario": "s065_area6b",
+                "actor": "LE_RandoDNA"
+            },
+            "text": "Samus Aran... You must exterminate the Metroids once and for all!\n"
+        },
+        {
+            "accesspoint_actor": {
+                "scenario": "s070_area7",
+                "actor": "LE_RandoDNA_001"
+            },
+            "text": "Metroid DNA is located in Area 7 - Omega Arena North.\n"
+        },
+        {
+            "accesspoint_actor": {
+                "scenario": "s070_area7",
+                "actor": "LE_RandoDNA_002"
+            },
+            "text": "Samus, we cannot Return this hint to you.\n"
+        },
+        {
+            "accesspoint_actor": {
+                "scenario": "s090_area9",
+                "actor": "LE_RandoDNA"
+            },
+            "text": "Metroid DNA is located in Area 3 - Factory Exterior - Gamma Arena.\nMetroid DNA is located in Area 2 - Dam Interior - Gamma Arena.\n"
+        },
+        {
+            "accesspoint_actor": {
+                "scenario": "s100_area10",
+                "actor": "LE_RandoDNA"
+            },
+            "text": "See you next mission!\n"
         }
     ],
+    "cosmetic_patches": {
+        "laser_locked_color": [
+            1.0,
+            0.0,
+            0.0
+        ],
+        "laser_unlocked_color": [
+            1.0,
+            0.0,
+            0.0
+        ],
+        "grapple_laser_locked_color": [
+            1.0,
+            0.0,
+            0.0
+        ],
+        "grapple_laser_unlocked_color": [
+            1.0,
+            0.0,
+            0.0
+        ],
+        "ammo_hud_color": [
+            1.0,
+            0.0,
+            0.0
+        ],
+        "enable_room_name_display": "ALWAYS",
+        "camera_names_dict": {
+            "s000_surface": {
+                "collision_camera_000": "Landing Site",
+                "collision_camera_002": "Twisty Tunnel",
+                "collision_camera_003": "Morph Ball Chamber",
+                "collision_camera_004": "Chozo Seal",
+                "collision_camera_006": "Transport to Area 1",
+                "collision_camera_007": "Chozo Cache East",
+                "collision_camera_008": "Charge Beam Chamber",
+                "collision_camera_010": "Alpha Arena",
+                "collision_camera_011": "Scan Pulse Chamber",
+                "collision_camera_012": "Chozo Cache West",
+                "collision_camera_013": "Moheek Market",
+                "collision_camera_014": "Cavern Cavity",
+                "collision_camera_015": "Charge Beam Chamber Access",
+                "collision_camera_016": "Hornoad Hallway",
+                "collision_camera_018": "Surface Stash",
+                "collision_camera_019": "Surface Crumble Block Challenge",
+                "collision_camera_020": "Transport Cache",
+                "collision_camera_021": "Cavern Alcove",
+                "collision_camera_023": "Energy Recharge Station Shaft",
+                "collision_camera_024": "Ammo Recharge Station"
+            },
+            "s010_area1": {
+                "collision_camera_000": "Transport to Surface and Area 2",
+                "collision_camera_003": "Moheek Mount",
+                "collision_camera_005": "Gullugg Gangway",
+                "collision_camera_008": "Bomb Chamber",
+                "collision_camera_012": "Inner Temple East Hall",
+                "collision_camera_014": "Destroyed Armory",
+                "collision_camera_016": "Spider Ball Chamber",
+                "collision_camera_017": "Exterior Alpha Arena",
+                "collision_camera_018": "Temple Exterior",
+                "collision_camera_023": "Metroid Caverns Lobby",
+                "collision_camera_024": "Metroid Caverns Alpha Arena South West Access",
+                "collision_camera_025": "Metroid Caverns Alpha Arena South East",
+                "collision_camera_027": "Metroid Caverns Alpha Arena North East",
+                "collision_camera_028": "Water Maze",
+                "collision_camera_030": "Ice Beam Chamber",
+                "collision_camera_031": "Metroid Caverns Energy Recharge Station",
+                "collision_camera_033": "Magma Pool",
+                "collision_camera_035": "Inner Temple West Hall",
+                "collision_camera_041": "Metroid Caverns Save Station",
+                "collision_camera_042": "Inner Temple Teleporter Access",
+                "collision_camera_043": "Inner Temple Ventilation Shaft",
+                "collision_camera_044": "Metroid Caverns Hub",
+                "collision_camera_045": "Metroid Caverns Alpha Arena North East Access",
+                "collision_camera_046": "Bomb Chamber Access",
+                "collision_camera_047": "Inner Temple Save Station",
+                "collision_camera_048": "Inner Temple Upper Hallway",
+                "collision_camera_049": "Inner Temple Teleporter",
+                "collision_camera_050": "Ice Beam Chamber Access",
+                "collision_camera_051": "Transport Cache",
+                "collision_camera_052": "Harmonized Hallway",
+                "collision_camera_054": "Metroid Caverns Alpha Arena South West",
+                "collision_camera_055": "Chute Leech Cabin"
+            },
+            "s020_area2": {
+                "collision_camera_005": "Dam Exterior",
+                "collision_camera_006": "Arachnus Arena",
+                "collision_camera_007": "Fan Funnel",
+                "collision_camera_008": "Critter Playground",
+                "collision_camera_023": "Metroid Caverns Entrance",
+                "collision_camera_024": "Spike Ravine",
+                "collision_camera_025": "Metroid Caverns Ammo Recharge Station Access",
+                "collision_camera_026": "Metroid Caverns Maze",
+                "collision_camera_027": "Metroid Caverns Save Station",
+                "collision_camera_028": "Metroid Caverns Alpha Arena North West",
+                "collision_camera_029": "Metroid Caverns Lobby",
+                "collision_camera_030": "Metroid Caverns Alpha Arena South West",
+                "collision_camera_031": "Metroid Caverns Alpha Arena East Access",
+                "collision_camera_032": "Metroid Caverns Teleporter",
+                "collision_camera_033": "Exterior Alpha+ Arena",
+                "collision_camera_034": "Serene Shelter",
+                "collision_camera_035": "Metroid Caverns Alpha+ Arena",
+                "collision_camera_036": "Inner Alpha Arena",
+                "collision_camera_037": "Rock Icicle Corridor",
+                "collision_camera_038": "Maintenance Tunnel",
+                "collision_camera_039": "Metroid Caverns Ammo Recharge Station",
+                "collision_camera_040": "Metroid Caverns Alpha Arena East"
+            },
+            "s025_area2b": {
+                "collision_camera009": "Wave Beam & Transport to Dam Exterior West",
+                "collision_camera040": "Varia Suit Chamber",
+                "collision_camera011": "Varia Suit Chamber & Interior Intersection Terminal",
+                "collision_camera012": "Lava Generator",
+                "collision_camera013": "Crumble Cavern",
+                "collision_camera015": "Whimsical Waterwheels",
+                "collision_camera016": "Interior Teleporter",
+                "collision_camera017": "Fleech Fire Containment",
+                "collision_camera018": "Dam Basement",
+                "collision_camera019": "Gullugg Hideout",
+                "collision_camera021": "High Jump Boots Chamber",
+                "collision_camera022": "High Jump Boots Chamber Access",
+                "collision_camera035": "Wallfire Corridor",
+                "collision_camera036": "Teleporter Storage",
+                "collision_camera037": "Gamma Arena",
+                "collision_camera041": "Generator Access"
+            },
+            "s028_area2c": {
+                "collision_camera": "Transport to Areas 1 and 3",
+                "collision_camera_003": "Entryway Teleporter",
+                "collision_camera_004": "Lightning Armor & Transport to Dam Exterior East",
+                "collision_camera_005": "Transport Access",
+                "collision_camera_006": "Fleech Swarm Floodway",
+                "collision_camera_007": "Alpha+ Arena"
+            },
+            "s030_area3": {
+                "collision_camera_002": "Transport to Area 2",
+                "collision_camera_016": "Exterior Maze",
+                "collision_camera_022": "Grapple Beam Chamber",
+                "collision_camera_023": "Factory Exterior Teleporter Cave",
+                "collision_camera_030": "Factory Exterior",
+                "collision_camera_031": "Transport to Metroid Caverns West",
+                "collision_camera_032": "Transport to Area 4",
+                "collision_camera_033": "Entrance Maze",
+                "collision_camera_035": "Transport to Metroid Caverns North",
+                "collision_camera_036": "Beam Burst Chamber & Tsumuri Station",
+                "collision_camera_037": "Halzyn Hangout",
+                "collision_camera_038": "Gamma Arena",
+                "collision_camera_039": "Nook's Cranny",
+                "collision_camera_040": "Factory Exterior Access"
+            },
+            "s036_area3c": {
+                "collision_camera_011": "Security Site",
+                "collision_camera_013": "Gamma Arena South Access",
+                "collision_camera_014": "Paraby Periphery",
+                "collision_camera_015": "Fan Control",
+                "collision_camera_017": "Grapple Circuit",
+                "collision_camera_018": "Factory Intersection",
+                "collision_camera_019": "Factory Interior Teleporter",
+                "collision_camera_021": "Transport to Factory Exterior East",
+                "collision_camera_022": "Alpha Arena Access",
+                "collision_camera_023": "Gamma Arena & Transport to Metroid Caverns East",
+                "collision_camera_024": "Ramulken Residence",
+                "collision_camera_025": "Wallfire Watch",
+                "collision_camera_026": "Alpha Arena",
+                "collision_camera_027": "Gamma Arena South",
+                "collision_camera_028": "Dedicated Callisto Roost",
+                "collision_camera_029": "Factory Teleporter Access",
+                "collision_camera_030": "Gamma Arena Center Access"
+            },
+            "s033_area3b": {
+                "collision_camera_006": "Transport to Factory Exterior North",
+                "collision_camera_007": "Alpha+ Arena West",
+                "collision_camera_008": "Gamma Arena Center",
+                "collision_camera_009": "Gamma Arena South",
+                "collision_camera_010": "Save Station North",
+                "collision_camera_012": "Gravitt Garden",
+                "collision_camera_024": "Ascending Alleyway",
+                "collision_camera_025": "Ramulken Rollway",
+                "collision_camera_026": "Caverns Teleporter East",
+                "collision_camera_027": "Quarry Shaft",
+                "collision_camera_028": "Lonely Loop",
+                "collision_camera_031": "Quarry Tunnel",
+                "collision_camera_032": "Transport to Factory Interior South",
+                "collision_camera_033": "Gamma+ Arena South",
+                "collision_camera_034": "Gamma+ Arena South Access",
+                "collision_camera_035": "Waterfall Cavern",
+                "collision_camera_036": "Gamma+ Arena North",
+                "collision_camera_037": "Transport to Factory Exterior West",
+                "collision_camera_038": "Alpha+ Arena North",
+                "collision_camera_039": "Letum Shrine",
+                "collision_camera_040": "Caverns Teleporter West"
+            },
+            "s040_area4": {
+                "collision_camera_001": "Caves Intersection Terminal",
+                "collision_camera_003": "Spazer Beam Chamber",
+                "collision_camera_004": "Crumble Catwalk",
+                "collision_camera_005": "Lava Pond",
+                "collision_camera_006": "Transport to Area 3 and Crystal Mines",
+                "collision_camera_007": "Alpha+ Arena",
+                "collision_camera_010": "Transit Tunnel",
+                "collision_camera_011": "Fleech Swarm Cave",
+                "collision_camera_012": "Hostile Hangout",
+                "collision_camera_013": "Gamma Arena",
+                "collision_camera_014": "Gamma Arena Access South",
+                "collision_camera_015": "Outward Climb",
+                "collision_camera_016": "Amethyst Altars",
+                "collision_camera_018": "Gamma Arena Access North",
+                "collision_camera_019": "Alpha+ Arena Access",
+                "collision_camera_022": "Venomous Pond",
+                "collision_camera_023": "Transport to Area 5"
+            },
+            "s050_area5": {
+                "collision_camera_001": "Mines Intersection Terminal",
+                "collision_camera_002": "Super Missile Chamber",
+                "collision_camera_003": "Pink Crystal Preserve",
+                "collision_camera_005": "Transport to Central Caves",
+                "collision_camera_006": "Lava Reservoir",
+                "collision_camera_007": "Dual Pond Alcove",
+                "collision_camera_008": "Zeta Arena",
+                "collision_camera_015": "Gamma Arena",
+                "collision_camera_009": "Gawron Groove",
+                "collision_camera_017": "Basalt Basin",
+                "collision_camera_010": "Mines Entrance",
+                "collision_camera_011": "Tsumuri Tunnel",
+                "collision_camera_012": "Mines Teleporter",
+                "collision_camera_013": "Green Cystal Dugout",
+                "collision_camera_014": "Gemstone Gorge",
+                "collision_camera_AfterChase": "Space Jump Chamber",
+                "collision_camera_AfterChase_001": "Diggernaut Excavation Tunnels"
+            },
+            "s060_area6": {
+                "collision_camera_001": "Lobby Save Station",
+                "collision_camera_002": "Transport to Tower Interior East",
+                "collision_camera_004": "Transport to Areas 4 and 6",
+                "collision_camera_006": "Lobby Teleporter West",
+                "collision_camera_007": "J-Shape Tunnel",
+                "collision_camera_010": "Transport to Tower Interior West",
+                "collision_camera_011": "Lobby Teleporter East",
+                "collision_camera_012": "Alpha+ Arena",
+                "collision_camera_013": "Gamma+ Arena Access",
+                "collision_camera_014": "Phase Drift Chamber",
+                "collision_camera_015": "Meboid Millpond",
+                "collision_camera_016": "Gamma+ Arena",
+                "collision_camera_017": "Lobby Passageway"
+            },
+            "s065_area6b": {
+                "collision_camera_002": "Tower Exterior",
+                "collision_camera_004": "Overgrown Maze",
+                "collision_camera_005": "Screw Attack Chamber",
+                "collision_camera_006": "Zeta Arena Access",
+                "collision_camera_008": "Red Plant Maze",
+                "collision_camera_011": "Transport to Tower Interior West",
+                "collision_camera_012": "Zeta Arena",
+                "collision_camera_013": "Paraby Parlor",
+                "collision_camera_015": "Gamma Arena",
+                "collision_camera_016": "Screw Attack Chamber Access",
+                "collision_camera_014": "Gamma+ Arena & Access"
+            },
+            "s067_area6c": {
+                "collision_camera_002": "Transport to Tower Lobby East",
+                "collision_camera_003": "Interior Save Station",
+                "collision_camera_005": "Transport to Tower Exterior East",
+                "collision_camera_006": "Plasma Beam Chamber",
+                "collision_camera_007": "Grapple Shuffler",
+                "collision_camera_008": "Autrack Acropolis",
+                "collision_camera_009": "Gravity Suit Chamber",
+                "collision_camera_010": "Phase Drift Trial Reward Room",
+                "collision_camera_011": "Phase Drift Trial West",
+                "collision_camera_012": "Phase Drift Trial East",
+                "collision_camera_015": "Transport to Tower Lobby West",
+                "collision_camera_016": "Meboid Marina",
+                "collision_camera_017": "Zeta+ Arena Access",
+                "collision_camera_018": "Transport to Tower Exterior West",
+                "collision_camera_020": "Gravity Suit Chamber Access",
+                "collision_camera_021": "Phase Drift Trial Entrance",
+                "collision_camera_022": "Gamma+ Arena",
+                "collision_camera_023": "Interior Teleporter",
+                "collision_camera_025": "Zeta+ Arena",
+                "collision_camera_026": "Gamma+ Arena Access"
+            },
+            "s070_area7": {
+                "collision_camera_034": "Transport to Area 7",
+                "collision_camera_035": "Teleporter South",
+                "collision_camera_037": "Omega Arena",
+                "collision_camera_038": "Hideout Sprawl",
+                "collision_camera_039": "Teleporter North Access",
+                "collision_camera_040": "Crumbling Bridge",
+                "collision_camera_041": "Hideout Entrance",
+                "collision_camera_042": "Crumbling Stairwell",
+                "collision_camera_043": "Diggernaut Arena",
+                "collision_camera_044": "Swarm Square",
+                "collision_camera_045": "Electric Escalade",
+                "collision_camera_046": "Poisonous Tunnel",
+                "collision_camera_047": "Zeta Arena Access",
+                "collision_camera_048": "Zeta Arena",
+                "collision_camera_051": "Transport to Area 5",
+                "collision_camera_060": "Chozo Seal East",
+                "collision_camera_061": "Omega Arena Access",
+                "collision_camera_Hazard_End_A": "Chozo Seal West Intersection Terminal",
+                "collision_camera_Hazard_End_B": "Teleporter North"
+            },
+            "s090_area9": {
+                "collision_camera_005": "Laboratory Teleporter West",
+                "collision_camera_006": "Grapple Puzzle Madness",
+                "collision_camera_007": "Spider Boost Tunnel South",
+                "collision_camera_008": "Laboratory Teleporter East",
+                "collision_camera_009": "Omega+ Arena",
+                "collision_camera_010": "Robot Regime",
+                "collision_camera_011": "Transport to Area 6",
+                "collision_camera_012": "Omega Arena South Access",
+                "collision_camera_013": "Omega Arena South",
+                "collision_camera_014": "Omega Arena North",
+                "collision_camera_015": "Omega Arena North Access",
+                "collision_camera_016": "Wallfire Workstation",
+                "collision_camera_017": "Grapple Puzzle Foyer",
+                "collision_camera_018": "Robot Retreat",
+                "collision_camera_019": "Spider Boost Tunnel North",
+                "collision_camera_021": "Transport to Area 8"
+            },
+            "s100_area10": {
+                "collision_camera_008": "Metroid Nest Foyer & Hallway South",
+                "collision_camera_007": "Transport to Surface",
+                "collision_camera_009": "Amphitheater",
+                "collision_camera_010": "Nest Network",
+                "collision_camera_011": "Entrance Teleporter",
+                "collision_camera_012": "Nest Nodule",
+                "collision_camera_013": "Metroid Nest Small Shaft",
+                "collision_camera_014": "Metroid Nest Shaft East",
+                "collision_camera_015": "Metroid Nest Hallway North East",
+                "collision_camera_016": "Metroid Nest Hallway North West",
+                "collision_camera_017": "Metroid Nest Recharge Stations",
+                "collision_camera_018": "Metroid Nest Shaft West",
+                "collision_camera_019": "Queen Arena Access",
+                "collision_camera_021": "Transport to Area 7",
+                "collision_camera_020": "Queen Arena",
+                "collision_camera_022": "Hatchling Room",
+                "collision_camera_023": "Nest Vestibule",
+                "collision_camera_024": "Metroid Nest Teleporter"
+            },
+            "s110_surfaceb": {
+                "collision_camera_000": "Landing Site",
+                "collision_camera_017": "Transport to Area 8"
+            }
+        }
+    },
     "configuration_identifier": "$$$$$"
 }

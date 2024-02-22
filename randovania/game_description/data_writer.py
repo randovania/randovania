@@ -167,7 +167,11 @@ def write_resource_database(resource_database: ResourceDatabase) -> dict:
         "versions": write_array(resource_database.version, write_simple_resource),
         "misc": write_array(resource_database.misc, write_simple_resource),
         "requirement_template": {
-            name: write_requirement(requirement) for name, requirement in resource_database.requirement_template.items()
+            name: {
+                "display_name": requirement.display_name,
+                "requirement": write_requirement(requirement.requirement),
+            }
+            for name, requirement in resource_database.requirement_template.items()
         },
         "damage_reductions": [
             {

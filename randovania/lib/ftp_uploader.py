@@ -74,6 +74,7 @@ class FtpUploader:
         all_files = list(self.local_path.rglob("*"))
 
         with FTP() as ftp:
+            progress_update(f"Connecting via FTP to {self.ip}:{self.port}", -1)
             ftp.connect(self.ip, self.port)
             if self.auth is not None:
                 ftp.login(*self.auth)

@@ -1,5 +1,5 @@
 {
-    "schema_version": 22,
+    "schema_version": 23,
     "game": "prime2",
     "resource_database": {
         "items": {
@@ -1140,868 +1140,919 @@
         },
         "requirement_template": {
             "Use Screw Attack (Space Jump)": {
-                "type": "and",
-                "data": {
-                    "comment": null,
-                    "items": [
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "MorphBall",
-                                "amount": 1,
-                                "negate": false
+                "display_name": "Use Screw Attack (Space Jump)",
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "MorphBall",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "SpaceJump",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "ScrewAttack",
+                                    "amount": 1,
+                                    "negate": false
+                                }
                             }
-                        },
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "SpaceJump",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "ScrewAttack",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        }
-                    ]
+                        ]
+                    }
                 }
             },
             "Use Screw Attack (No Space Jump)": {
-                "type": "and",
-                "data": {
-                    "comment": null,
-                    "items": [
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "MorphBall",
-                                "amount": 1,
-                                "negate": false
+                "display_name": "Use Screw Attack (No Space Jump)",
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "MorphBall",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "ScrewAttack",
+                                    "amount": 1,
+                                    "negate": false
+                                }
                             }
-                        },
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "ScrewAttack",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        }
-                    ]
+                        ]
+                    }
                 }
             },
             "Shoot Dark Beam": {
-                "type": "and",
-                "data": {
-                    "comment": null,
-                    "items": [
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Dark",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Charge",
-                                            "amount": 1,
-                                            "negate": false
+                "display_name": "Shoot Dark Beam",
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Dark",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "or",
+                                "data": {
+                                    "comment": null,
+                                    "items": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "Charge",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "DarkAmmo",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
                                         }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "DarkAmmo",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                    ]
+                                }
                             }
-                        }
-                    ]
+                        ]
+                    }
                 }
             },
             "Shoot Light Beam": {
-                "type": "and",
-                "data": {
-                    "comment": null,
-                    "items": [
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Light",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Charge",
-                                            "amount": 1,
-                                            "negate": false
+                "display_name": "Shoot Light Beam",
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Light",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "or",
+                                "data": {
+                                    "comment": null,
+                                    "items": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "Charge",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "LightAmmo",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
                                         }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "LightAmmo",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                    ]
+                                }
                             }
-                        }
-                    ]
+                        ]
+                    }
                 }
             },
             "Shoot Annihilator Beam": {
-                "type": "and",
-                "data": {
-                    "comment": null,
-                    "items": [
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Annihilator",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Charge",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "DarkAmmo",
-                                                                    "amount": 1,
-                                                                    "negate": false
+                "display_name": "Shoot Annihilator Beam",
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Annihilator",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "and",
+                                "data": {
+                                    "comment": null,
+                                    "items": [
+                                        {
+                                            "type": "or",
+                                            "data": {
+                                                "comment": null,
+                                                "items": [
+                                                    {
+                                                        "type": "resource",
+                                                        "data": {
+                                                            "type": "items",
+                                                            "name": "Charge",
+                                                            "amount": 1,
+                                                            "negate": false
+                                                        }
+                                                    },
+                                                    {
+                                                        "type": "and",
+                                                        "data": {
+                                                            "comment": null,
+                                                            "items": [
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": "items",
+                                                                        "name": "DarkAmmo",
+                                                                        "amount": 1,
+                                                                        "negate": false
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": "items",
+                                                                        "name": "LightAmmo",
+                                                                        "amount": 1,
+                                                                        "negate": false
+                                                                    }
                                                                 }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "LightAmmo",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
+                                                            ]
+                                                        }
                                                     }
-                                                }
-                                            ]
+                                                ]
+                                            }
                                         }
-                                    }
-                                ]
+                                    ]
+                                }
                             }
-                        }
-                    ]
+                        ]
+                    }
                 }
             },
             "Shoot Darkburst": {
-                "type": "and",
-                "data": {
-                    "comment": null,
-                    "items": [
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Charge",
-                                "amount": 1,
-                                "negate": false
+                "display_name": "Shoot Darkburst",
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Charge",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Missile",
+                                    "amount": 5,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Dark",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "DarkAmmo",
+                                    "amount": 30,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Darkburst",
+                                    "amount": 1,
+                                    "negate": false
+                                }
                             }
-                        },
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Missile",
-                                "amount": 5,
-                                "negate": false
-                            }
-                        },
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Dark",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "DarkAmmo",
-                                "amount": 30,
-                                "negate": false
-                            }
-                        },
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Darkburst",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        }
-                    ]
+                        ]
+                    }
                 }
             },
             "Shoot Sunburst": {
-                "type": "and",
-                "data": {
-                    "comment": null,
-                    "items": [
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Charge",
-                                "amount": 1,
-                                "negate": false
+                "display_name": "Shoot Sunburst",
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Charge",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Missile",
+                                    "amount": 5,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Light",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "LightAmmo",
+                                    "amount": 30,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Sunburst",
+                                    "amount": 1,
+                                    "negate": false
+                                }
                             }
-                        },
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Missile",
-                                "amount": 5,
-                                "negate": false
-                            }
-                        },
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Light",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "LightAmmo",
-                                "amount": 30,
-                                "negate": false
-                            }
-                        },
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Sunburst",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        }
-                    ]
+                        ]
+                    }
                 }
             },
             "Shoot Sonic Boom": {
-                "type": "and",
-                "data": {
-                    "comment": null,
-                    "items": [
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Charge",
-                                "amount": 1,
-                                "negate": false
+                "display_name": "Shoot Sonic Boom",
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Charge",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Missile",
+                                    "amount": 5,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Annihilator",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "DarkAmmo",
+                                    "amount": 30,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "LightAmmo",
+                                    "amount": 30,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "SonicBoom",
+                                    "amount": 1,
+                                    "negate": false
+                                }
                             }
-                        },
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Missile",
-                                "amount": 5,
-                                "negate": false
-                            }
-                        },
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Annihilator",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "DarkAmmo",
-                                "amount": 30,
-                                "negate": false
-                            }
-                        },
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "LightAmmo",
-                                "amount": 30,
-                                "negate": false
-                            }
-                        },
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "SonicBoom",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        }
-                    ]
+                        ]
+                    }
                 }
             },
             "Activate Bomb Slot without Bombs (Space Jump)": {
-                "type": "and",
-                "data": {
-                    "comment": null,
-                    "items": [
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "MorphBall",
-                                "amount": 1,
-                                "negate": false
+                "display_name": "Activate Bomb Slot without Bombs (Space Jump)",
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "MorphBall",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "SpaceJump",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "or",
+                                "data": {
+                                    "comment": null,
+                                    "items": [
+                                        {
+                                            "type": "template",
+                                            "data": "Shoot Darkburst"
+                                        },
+                                        {
+                                            "type": "template",
+                                            "data": "Shoot Sonic Boom"
+                                        }
+                                    ]
+                                }
                             }
-                        },
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "SpaceJump",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Shoot Darkburst"
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Shoot Sonic Boom"
-                                    }
-                                ]
-                            }
-                        }
-                    ]
+                        ]
+                    }
                 }
             },
             "Activate Bomb Slot without Bombs (No Space Jump)": {
-                "type": "and",
-                "data": {
-                    "comment": null,
-                    "items": [
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "MorphBall",
-                                "amount": 1,
-                                "negate": false
+                "display_name": "Activate Bomb Slot without Bombs (No Space Jump)",
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "MorphBall",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "or",
+                                "data": {
+                                    "comment": null,
+                                    "items": [
+                                        {
+                                            "type": "template",
+                                            "data": "Shoot Darkburst"
+                                        },
+                                        {
+                                            "type": "template",
+                                            "data": "Shoot Sonic Boom"
+                                        }
+                                    ]
+                                }
                             }
-                        },
-                        {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Shoot Darkburst"
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Shoot Sonic Boom"
-                                    }
-                                ]
-                            }
-                        }
-                    ]
+                        ]
+                    }
                 }
             },
             "Activate Bomb Slot without Bombs (Instant Morph)": {
-                "type": "and",
-                "data": {
-                    "comment": null,
-                    "items": [
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "MorphBall",
-                                "amount": 1,
-                                "negate": false
+                "display_name": "Activate Bomb Slot without Bombs (Instant Morph)",
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "MorphBall",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "or",
+                                "data": {
+                                    "comment": null,
+                                    "items": [
+                                        {
+                                            "type": "template",
+                                            "data": "Shoot Darkburst"
+                                        },
+                                        {
+                                            "type": "template",
+                                            "data": "Shoot Sunburst"
+                                        },
+                                        {
+                                            "type": "template",
+                                            "data": "Shoot Sonic Boom"
+                                        }
+                                    ]
+                                }
                             }
-                        },
-                        {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Shoot Darkburst"
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Shoot Sunburst"
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Shoot Sonic Boom"
-                                    }
-                                ]
-                            }
-                        }
-                    ]
+                        ]
+                    }
                 }
             },
             "Activate Safe Zone": {
-                "type": "and",
-                "data": {
-                    "comment": null,
-                    "items": [
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "misc",
-                                "name": "SafeZone",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Power",
-                                            "amount": 1,
-                                            "negate": false
+                "display_name": "Activate Safe Zone",
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "misc",
+                                    "name": "SafeZone",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "or",
+                                "data": {
+                                    "comment": null,
+                                    "items": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "Power",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "template",
+                                            "data": "Shoot Light Beam"
+                                        },
+                                        {
+                                            "type": "template",
+                                            "data": "Shoot Annihilator Beam"
                                         }
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Shoot Light Beam"
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Shoot Annihilator Beam"
-                                    }
-                                ]
+                                    ]
+                                }
                             }
-                        }
-                    ]
+                        ]
+                    }
                 }
             },
             "Has Suit": {
-                "type": "or",
-                "data": {
-                    "comment": null,
-                    "items": [
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "DarkSuit",
-                                "amount": 1,
-                                "negate": false
+                "display_name": "Has Suit",
+                "requirement": {
+                    "type": "or",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "DarkSuit",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "LightSuit",
+                                    "amount": 1,
+                                    "negate": false
+                                }
                             }
-                        },
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "LightSuit",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        }
-                    ]
+                        ]
+                    }
                 }
             },
             "Kill Quad MB": {
-                "type": "and",
-                "data": {
-                    "comment": null,
-                    "items": [
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "MorphBall",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Boost",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "or",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Bombs",
-                                                                    "amount": 1,
-                                                                    "negate": false
+                "display_name": "Kill Quad MB",
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "MorphBall",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "or",
+                                "data": {
+                                    "comment": null,
+                                    "items": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "Boost",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "and",
+                                            "data": {
+                                                "comment": null,
+                                                "items": [
+                                                    {
+                                                        "type": "or",
+                                                        "data": {
+                                                            "comment": null,
+                                                            "items": [
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": "items",
+                                                                        "name": "Bombs",
+                                                                        "amount": 1,
+                                                                        "negate": false
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": "items",
+                                                                        "name": "PowerBomb",
+                                                                        "amount": 1,
+                                                                        "negate": false
+                                                                    }
                                                                 }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "PowerBomb",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
+                                                            ]
+                                                        }
+                                                    },
+                                                    {
+                                                        "type": "resource",
+                                                        "data": {
+                                                            "type": "tricks",
+                                                            "name": "Combat",
+                                                            "amount": 1,
+                                                            "negate": false
+                                                        }
                                                     }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "Combat",
-                                                        "amount": 1,
-                                                        "negate": false
+                                                ]
+                                            }
+                                        },
+                                        {
+                                            "type": "and",
+                                            "data": {
+                                                "comment": null,
+                                                "items": [
+                                                    {
+                                                        "type": "template",
+                                                        "data": "Use Screw Attack (Space Jump)"
+                                                    },
+                                                    {
+                                                        "type": "resource",
+                                                        "data": {
+                                                            "type": "tricks",
+                                                            "name": "Knowledge",
+                                                            "amount": 1,
+                                                            "negate": false
+                                                        }
                                                     }
-                                                }
-                                            ]
+                                                ]
+                                            }
                                         }
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "template",
-                                                    "data": "Use Screw Attack (Space Jump)"
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "Knowledge",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
+                                    ]
+                                }
                             }
-                        }
-                    ]
+                        ]
+                    }
                 }
             },
             "Shoot Supers": {
-                "type": "and",
-                "data": {
-                    "comment": null,
-                    "items": [
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Charge",
-                                "amount": 1,
-                                "negate": false
+                "display_name": "Shoot Supers",
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Charge",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Power",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Missile",
+                                    "amount": 5,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Supers",
+                                    "amount": 1,
+                                    "negate": false
+                                }
                             }
-                        },
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Power",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Missile",
-                                "amount": 5,
-                                "negate": false
-                            }
-                        },
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Supers",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        }
-                    ]
+                        ]
+                    }
                 }
             },
             "Destroy Underwater Seeker Locks": {
-                "type": "and",
-                "data": {
-                    "comment": null,
-                    "items": [
-                        {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Combat",
-                                            "amount": 1,
-                                            "negate": false
+                "display_name": "Destroy Underwater Seeker Locks",
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "or",
+                                "data": {
+                                    "comment": null,
+                                    "items": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "Combat",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "DarkVisor",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
                                         }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "DarkVisor",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                    ]
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "MissileLauncher",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Seekers",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Missile",
+                                    "amount": 5,
+                                    "negate": false
+                                }
                             }
-                        },
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "MissileLauncher",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Seekers",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Missile",
-                                "amount": 5,
-                                "negate": false
-                            }
-                        }
-                    ]
+                        ]
+                    }
                 }
             },
             "Destroy Seeker Locks": {
-                "type": "and",
-                "data": {
-                    "comment": null,
-                    "items": [
-                        {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "DarkVisor",
-                                            "amount": 1,
-                                            "negate": false
+                "display_name": "Destroy Seeker Locks",
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "or",
+                                "data": {
+                                    "comment": null,
+                                    "items": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "DarkVisor",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "Combat",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
                                         }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Combat",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        },
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "MissileLauncher",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Seekers",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Missile",
-                                            "amount": 5,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "template",
-                                                    "data": "Use Screw Attack (Space Jump)"
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Missile",
-                                                        "amount": 4,
-                                                        "negate": false
+                                    ]
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "MissileLauncher",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Seekers",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "or",
+                                "data": {
+                                    "comment": null,
+                                    "items": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "Missile",
+                                                "amount": 5,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "and",
+                                            "data": {
+                                                "comment": null,
+                                                "items": [
+                                                    {
+                                                        "type": "template",
+                                                        "data": "Use Screw Attack (Space Jump)"
+                                                    },
+                                                    {
+                                                        "type": "resource",
+                                                        "data": {
+                                                            "type": "items",
+                                                            "name": "Missile",
+                                                            "amount": 4,
+                                                            "negate": false
+                                                        }
+                                                    },
+                                                    {
+                                                        "type": "resource",
+                                                        "data": {
+                                                            "type": "tricks",
+                                                            "name": "Knowledge",
+                                                            "amount": 2,
+                                                            "negate": false
+                                                        }
                                                     }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "Knowledge",
-                                                        "amount": 2,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
+                                                ]
+                                            }
                                         }
-                                    }
-                                ]
+                                    ]
+                                }
                             }
-                        }
-                    ]
+                        ]
+                    }
                 }
             }
         },

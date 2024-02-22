@@ -8,8 +8,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [7.4.0] - 2024-03-??
 
 - Added: A warning will be shown when trying to generate a game where more items are in the pool than the maximum amount of items.
-- TODO: Fill.
-- Fixed: Changelog window properly displays images
+- Added: When a game is exported via ftp, a message is displayed indicating that an attempt is being made to connect to the ftp server instead of the patcher's misleading "Done" message.
+- Fixed: The collection text displayed when mixing Hide All model style with Random models and a cross-game multiworld is now always a generic message when your own pickup is disguised as a pickup of another game.
+- Fixed: In the Item Pool tab, selecting Shuffled now works properly for non-progressive entries with multiple copies and certain other items.
+- Fixed: Changelog window properly displays images.
+- Fixed: Cancelling connecting to the server is better handled now.
+
+### Resolver
+
+- Fixed: Some cases of resolver timeout.
+
 
 ### Cave Story
 
@@ -22,6 +30,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ##### Mimiga Village
 
 - Added: Health requirements for the Balrog 1 boss fight.
+
+### Metroid Dread
+
+#### Logic Database
+
+##### Ghavoran
+
+- Added: In Spin Boost Tower: Expert Speed Booster Conservation from Ledge Below PB Tank to Pickup (PB Tank), as well as a video for this trick.
 
 ### Metroid Prime
 

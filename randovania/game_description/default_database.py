@@ -6,7 +6,6 @@ from typing import TYPE_CHECKING
 from randovania.game_description import data_reader
 from randovania.game_description.pickup import pickup_database
 from randovania.games import default_data
-from randovania.games.game import RandovaniaGame
 from randovania.lib import json_lib
 
 if TYPE_CHECKING:
@@ -14,6 +13,7 @@ if TYPE_CHECKING:
 
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.resources.resource_database import ResourceDatabase
+    from randovania.games.game import RandovaniaGame
 
 
 def resource_database_for(game: RandovaniaGame) -> ResourceDatabase:
@@ -46,26 +46,3 @@ def pickup_database_for_game(game: RandovaniaGame) -> pickup_database.PickupData
 
 def write_pickup_database_for_game(pickup_db: pickup_database.PickupDatabase, game: RandovaniaGame) -> None:
     _write_pickup_database_in_path(pickup_db, game.data_path.joinpath("pickup_database"))
-
-
-@functools.lru_cache
-# TODO: this game specific function should be removed from here.
-def default_prime2_memo_data() -> dict:
-    memo_data = json_lib.read_dict(
-        RandovaniaGame.METROID_PRIME_ECHOES.data_path.joinpath("pickup_database", "memo_data.json")
-    )
-
-    temple_keys = ["Dark Agon Key", "Dark Torvus Key", "Ing Hive Key"]
-
-    for i in range(1, 4):
-        for temple_key in temple_keys:
-            memo_data[f"{temple_key} {i}"] = memo_data[temple_key]
-
-    for temple_key in temple_keys:
-        memo_data.pop(temple_key)
-
-    for i in range(1, 10):
-        memo_data[f"Sky Temple Key {i}"] = memo_data["Sky Temple Key"]
-    memo_data.pop("Sky Temple Key")
-
-    return memo_data

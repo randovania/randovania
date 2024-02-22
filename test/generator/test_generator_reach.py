@@ -134,8 +134,9 @@ _include_tricks_for_game = {
     RandovaniaGame.METROID_DREAD: {("Speedbooster", LayoutTrickLevel.BEGINNER)},
     # Same reasons as above
     RandovaniaGame.SUPER_METROID: {("Shinespark", LayoutTrickLevel.BEGINNER)},
-    # Same reasons as above
-    RandovaniaGame.METROID_SAMUS_RETURNS: {("Spiderspark", LayoutTrickLevel.BEGINNER)},
+    # Some items require Spider Boosting to reach in vanilla, but since it is never explained there,
+    # it has been made into a trick.
+    RandovaniaGame.METROID_SAMUS_RETURNS: {("Spider Boost", LayoutTrickLevel.BEGINNER)},
 }
 
 

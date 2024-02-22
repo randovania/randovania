@@ -36,7 +36,7 @@ from randovania.game_description.resources.damage_reduction import DamageReducti
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.location_category import LocationCategory
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.game_description.resources.resource_database import ResourceDatabase
+from randovania.game_description.resources.resource_database import NamedRequirementTemplate, ResourceDatabase
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.resources.search import MissingResource, find_resource_info_with_id
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
@@ -430,8 +430,14 @@ class RegionReader:
         return RegionList(read_array(data, self.read_region))
 
 
-def read_requirement_templates(data: dict, database: ResourceDatabase) -> dict[str, Requirement]:
-    return {name: read_requirement(item, database) for name, item in data.items()}
+def read_requirement_templates(data: dict, database: ResourceDatabase) -> dict[str, NamedRequirementTemplate]:
+    return {
+        name: NamedRequirementTemplate(
+            display_name=item["display_name"],
+            requirement=read_requirement(item["requirement"], database),
+        )
+        for name, item in data.items()
+    }
 
 
 def read_resource_database(game: RandovaniaGame, data: dict) -> ResourceDatabase:

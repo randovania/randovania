@@ -1,5 +1,5 @@
 {
-    "schema_version": 22,
+    "schema_version": 23,
     "game": "super_metroid",
     "resource_database": {
         "items": {
@@ -420,227 +420,248 @@
         },
         "requirement_template": {
             "G-Mode": {
-                "type": "and",
-                "data": {
-                    "comment": null,
-                    "items": [
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "X-Ray",
-                                "amount": 1,
-                                "negate": false
+                "display_name": "G-Mode",
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "X-Ray",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Reserves",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "misc",
+                                    "name": "DoorLockRando",
+                                    "amount": 1,
+                                    "negate": true
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "misc",
+                                    "name": "EntranceRando",
+                                    "amount": 1,
+                                    "negate": true
+                                }
                             }
-                        },
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Reserves",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "misc",
-                                "name": "DoorLockRando",
-                                "amount": 1,
-                                "negate": true
-                            }
-                        },
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "misc",
-                                "name": "EntranceRando",
-                                "amount": 1,
-                                "negate": true
-                            }
-                        }
-                    ]
+                        ]
+                    }
                 }
             },
             "G-Mode Bombs": {
-                "type": "and",
-                "data": {
-                    "comment": null,
-                    "items": [
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Bombs",
-                                "amount": 1,
-                                "negate": false
+                "display_name": "G-Mode Bombs",
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Bombs",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "template",
+                                "data": "G-Mode"
                             }
-                        },
-                        {
-                            "type": "template",
-                            "data": "G-Mode"
-                        }
-                    ]
+                        ]
+                    }
                 }
             },
             "G-Mode Movement": {
-                "type": "and",
-                "data": {
-                    "comment": null,
-                    "items": [
-                        {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Bombs",
-                                            "amount": 1,
-                                            "negate": false
+                "display_name": "G-Mode Movement",
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "or",
+                                "data": {
+                                    "comment": null,
+                                    "items": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "Bombs",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "SpringBall",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
                                         }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "SpringBall",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                    ]
+                                }
+                            },
+                            {
+                                "type": "template",
+                                "data": "G-Mode"
                             }
-                        },
-                        {
-                            "type": "template",
-                            "data": "G-Mode"
-                        }
-                    ]
+                        ]
+                    }
                 }
             },
             "Can Lay Bombs": {
-                "type": "and",
-                "data": {
-                    "comment": null,
-                    "items": [
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
+                "display_name": "Can Lay Bombs",
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Morph",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Bombs",
+                                    "amount": 1,
+                                    "negate": false
+                                }
                             }
-                        },
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Bombs",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        }
-                    ]
+                        ]
+                    }
                 }
             },
             "Can Lay Any Bombs": {
-                "type": "and",
-                "data": {
-                    "comment": null,
-                    "items": [
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Bombs",
-                                            "amount": 1,
-                                            "negate": false
+                "display_name": "Can Lay Any Bombs",
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Morph",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "or",
+                                "data": {
+                                    "comment": null,
+                                    "items": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "Bombs",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "PowerBomb",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
                                         }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "PowerBomb",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                    ]
+                                }
                             }
-                        }
-                    ]
+                        ]
+                    }
                 }
             },
             "Can Lay Power Bombs": {
-                "type": "and",
-                "data": {
-                    "comment": null,
-                    "items": [
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
+                "display_name": "Can Lay Power Bombs",
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Morph",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "PowerBomb",
+                                    "amount": 1,
+                                    "negate": false
+                                }
                             }
-                        },
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "PowerBomb",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        }
-                    ]
+                        ]
+                    }
                 }
             },
             "Can Use Spring Ball": {
-                "type": "and",
-                "data": {
-                    "comment": null,
-                    "items": [
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
+                "display_name": "Can Use Spring Ball",
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Morph",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "SpringBall",
+                                    "amount": 1,
+                                    "negate": false
+                                }
                             }
-                        },
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "SpringBall",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        }
-                    ]
+                        ]
+                    }
                 }
             }
         },
