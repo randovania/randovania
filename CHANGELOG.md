@@ -25,6 +25,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: The following sprites were added for Dread Multiworld: Energy Tanks, Missile Tanks, Missile Tank+, Power Bomb Launcher, Power Bomb Tank, Varia Suit
 - Changed: The following Multiworld sprites were changed in order to fit more with AM2R's art style: Dread's Energy Part, Dread's Wide Beam, Echoes' Amber Translator, Echoes' Cobalt Translator, Echoes' Dark Agon Key, Echoes' Darkburst, Echoes' Dark Torvus Key, Echoes' Emerald Translator, Echoes' Ing Hive Key, Echoes' Sky Temple Key, Echoes' Super Missiles, Echoes' Violet Translator
 - Fixed: Rare crash when receiving a flashlight/blindfold in a Multiworld session.
+- Fixed: AM2R Speed Booster Upgrades now show properly instead of using the default offworld model.
 
 ### Cave Story
 
