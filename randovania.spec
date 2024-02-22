@@ -45,6 +45,7 @@ a = Analysis(
     datas=datas,
     hiddenimports=[
         "unittest.mock",
+        "a126db1e0277f24232ac__mypyc",  # mypyc compiled file that shows up at root
     ],
     hookspath=[
         # https://github.com/pyinstaller/pyinstaller/issues/4040
