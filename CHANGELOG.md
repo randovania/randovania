@@ -33,6 +33,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Dread
 
+- Added: New Missile Launcher model for Prime, Echoes, and AM2R multiworld pickups
+- Added: New Super Missile Expansion model for AM2R multiworld pickups
+- Fixed: Text is patched in all languages, not just English. 
+
 #### Logic Database
 
 ##### Ghavoran
