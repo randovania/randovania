@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import os
+
 from mypyc.build import mypycify
 from setuptools import setup
 from setuptools.command.build_py import build_py
@@ -23,12 +25,18 @@ class BDistWheelCommand(bdist_wheel):
         super().run()
 
 
-setup(
-    ext_modules=mypycify(
+ext_modules = None
+
+if not bool(int(os.getenv("RANDOVANIA_SKIP_COMPILE", "0"))):
+    ext_modules = mypycify(
         [
             "randovania/game_description/requirements/",
         ]
-    ),
+    )
+
+
+setup(
+    ext_modules=ext_modules,
     cmdclass={
         "build_ui": build_ui,
         "build_py": BuildPyCommand,

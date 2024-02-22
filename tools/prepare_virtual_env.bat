@@ -26,6 +26,8 @@ python -c "import sys; assert sys.version_info[0:2] == (3, 11), 'Python 3.11 req
 python -c "import sys; assert sys.maxsize > 2**32, '64-bit python required'"
 if %errorlevel% neq 0 exit /b %errorlevel%
 
+set RANDOVANIA_SKIP_COMPILE=1
+
 python -m pip install --upgrade -r requirements-setuptools.txt
 python -m pip install pyqt-distutils pre-commit -e ".[gui]" -c requirements.txt
 pre-commit install
