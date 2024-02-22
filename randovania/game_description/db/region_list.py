@@ -198,11 +198,20 @@ class RegionList(NodeProvider):
         :param dock_weakness_database
         :return:
         """
+
+        from randovania.game_description.requirements.requirement_and import RequirementAnd
+        from randovania.game_description.requirements.requirement_or import RequirementOr
+
+        def flatten_to_set(requirement: Requirement) -> Requirement:
+            patched = requirement.patch_requirements(damage_multiplier, context)
+            return RequirementOr(
+                [RequirementAnd(alternative.values()) for alternative in patched.as_set(context).alternatives]
+            ).simplify()
+
         # Area Connections
         self._patched_node_connections = {
             node.node_index: {
-                target.node_index: value.patch_requirements(damage_multiplier, context).simplify()
-                for target, value in area.connections[node].items()
+                target.node_index: flatten_to_set(value) for target, value in area.connections[node].items()
             }
             for _, area, node in self.all_regions_areas_nodes
         }
@@ -223,15 +232,11 @@ class RegionList(NodeProvider):
 
         for weakness in sorted(dock_weakness_database.all_weaknesses, key=operator.attrgetter("weakness_index")):
             assert len(self._patches_dock_open_requirements) == weakness.weakness_index
-            self._patches_dock_open_requirements.append(
-                weakness.requirement.patch_requirements(damage_multiplier, context).simplify()
-            )
+            self._patches_dock_open_requirements.append(flatten_to_set(weakness.requirement))
             if weakness.lock is None:
                 self._patches_dock_lock_requirements.append(None)
             else:
-                self._patches_dock_lock_requirements.append(
-                    weakness.lock.requirement.patch_requirements(damage_multiplier, context).simplify()
-                )
+                self._patches_dock_lock_requirements.append(flatten_to_set(weakness.lock.requirement))
 
     def node_by_identifier(self, identifier: NodeIdentifier) -> Node:
         cache_result = self._identifier_to_node.get(identifier)
