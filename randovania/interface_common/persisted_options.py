@@ -195,6 +195,7 @@ _CONVERTER_FOR_VERSION = [
     _only_new_fields,  # added allow_crash_reporting
     _only_new_fields,  # added DebugConnectorBuilder's layout_uuid
     _only_new_fields,  # added Dread's music sliders
+    _only_new_fields,  # added Dread's "Access Permanently Closed" alt-shield
 ]
 _CURRENT_OPTIONS_FILE_VERSION = migration_lib.get_version(_CONVERTER_FOR_VERSION)
 
