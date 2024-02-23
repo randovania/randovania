@@ -26,6 +26,8 @@ from randovania.game_description.editor import Editor
 from randovania.game_description.requirements.array_base import RequirementArrayBase
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.requirement_or import RequirementOr
+from randovania.game_description.requirements.requirement_template import RequirementTemplate
+from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.resource_collection import ResourceCollection
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.games import default_data
@@ -46,12 +48,15 @@ if TYPE_CHECKING:
     from randovania.game_description.db.region import Region
     from randovania.game_description.db.region_list import RegionList
     from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.resources.resource_database import ResourceDatabase
     from randovania.game_description.resources.resource_info import ResourceInfo
 
 SHOW_REGION_MIN_MAX_SPINNER = False
 
 
-def _simplify_trivial_and_impossible(requirement: Requirement) -> Requirement:
+def _ui_patch_and_simplify(
+    requirement: Requirement, resources: ResourceCollection, db: ResourceDatabase
+) -> Requirement:
     if isinstance(requirement, RequirementArrayBase):
         items = list(requirement.items)
         if isinstance(requirement, RequirementOr):
@@ -61,11 +66,22 @@ def _simplify_trivial_and_impossible(requirement: Requirement) -> Requirement:
             remove = Requirement.trivial()
             solve = Requirement.impossible()
 
-        items = [_simplify_trivial_and_impossible(it) for it in items]
+        items = [_ui_patch_and_simplify(it, resources, db) for it in items]
         if solve in items:
             return solve
         items = [it for it in items if it != remove]
         return type(requirement)(items, comment=requirement.comment)
+
+    elif isinstance(requirement, ResourceRequirement):
+        return requirement.patch_requirements(resources, 1.0, db)
+
+    elif isinstance(requirement, RequirementTemplate):
+        result = requirement.template_requirement(db)
+        patched = _ui_patch_and_simplify(result, resources, db)
+        if result != patched:
+            return patched
+        else:
+            return requirement
     else:
         return requirement
 
@@ -544,9 +560,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         if self._collection_for_filtering is not None:
             db = self.game_description.resource_database
             before_count = sum(1 for _ in requirement.iterate_resource_requirements(db))
-            requirement = _simplify_trivial_and_impossible(
-                requirement.patch_requirements(self._collection_for_filtering, 1.0, db)
-            )
+            requirement = _ui_patch_and_simplify(requirement, self._collection_for_filtering, db)
             after_count = sum(1 for _ in requirement.iterate_resource_requirements(db))
 
             filtered_count_item = QtWidgets.QTreeWidgetItem(self.other_node_alternatives_contents)
