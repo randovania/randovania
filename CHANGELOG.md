@@ -33,7 +33,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Dread
 
-- Added: Access Permanently Closed doors can be used in Door Lock Randomizer. This includes new default and alternate textures in cosmetic options. 
+- Added: "Access Permanently Closed" doors can be used in Door Lock Randomizer. This includes new default and alternate textures in cosmetic options. 
 - Added: New Missile Launcher model for Prime, Echoes, and AM2R multiworld pickups.
 - Added: New Super Missile Expansion model for AM2R multiworld pickups.
 - Fixed: Wide Beam shields now require the Wide Beam to break, and cannot be cheesed with Wave or Plasma beam. 
