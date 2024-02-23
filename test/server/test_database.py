@@ -52,7 +52,7 @@ def test_multiplayer_session_create_session_entry(clean_database, has_descriptio
         game_details = GameDetails(
             seed_hash="55SQZAV4",
             spoiler=True,
-            word_hash="Screw Omega Mines",
+            word_hash="Screw Poison Eyon",
         )
         worlds.append(MultiplayerWorld(id=w1.uuid, name="Prime 1", preset_raw=w1.preset))
         worlds.append(MultiplayerWorld(id=w2.uuid, name="Prime 2", preset_raw=w2.preset))
