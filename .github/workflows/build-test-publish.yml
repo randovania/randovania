@@ -499,7 +499,7 @@ jobs:
           version: "v${{ steps.randovania_version.outputs.version }}"
 
       - name: Upload binaries to GitHub Release
-        uses: svenstaro/upload-release-action@2.7.0
+        uses: svenstaro/upload-release-action@2.9.0
         if: ${{ startsWith(github.ref, 'refs/tags/v') }}
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}

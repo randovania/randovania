@@ -9,11 +9,12 @@ from randovania.generator.pickup_pool import pool_creator
 from randovania.layout.base.available_locations import RandomizationMode
 from randovania.layout.base.damage_strictness import LayoutDamageStrictness
 from randovania.layout.base.pickup_model import PickupModelStyle
+from randovania.layout.base.standard_pickup_state import StandardPickupState, StandardPickupStateCase
 
 if TYPE_CHECKING:
-    from collections.abc import Iterable, Sequence
+    from collections.abc import Iterable
 
-    from randovania.game_description.pickup.standard_pickup import StandardPickupDefinition
+    from randovania.games.game import ProgressiveItemTuples
     from randovania.layout.base.ammo_pickup_configuration import AmmoPickupConfiguration
     from randovania.layout.base.base_configuration import BaseConfiguration
     from randovania.layout.base.standard_pickup_configuration import StandardPickupConfiguration
@@ -24,22 +25,47 @@ PresetDescription = tuple[str, list[str]]
 
 class GamePresetDescriber:
     def _calculate_pickup_pool(self, configuration: BaseConfiguration) -> list[str]:
-        expected_starting_count = self.expected_starting_item_count(configuration)
-        expected_shuffled_count = self.expected_shuffled_pickup_count(configuration)
+        pickup_config = configuration.standard_pickup_configuration
+
         shuffled_list = []
         starting_list = []
         is_vanilla_starting = True
         excluded_list = []
+        progressive_list = []
 
-        for standard_pickup, pickup_state in configuration.standard_pickup_configuration.pickups_state.items():
+        expected_case_override = {}
+
+        for progressive_item, tiers in self.progressive_items():
+            pickup = pickup_config.get_pickup_with_name(progressive_item)
+            if pickup.expected_case_for_describer != StandardPickupStateCase.SHUFFLED:
+                continue
+
+            if has_shuffled_item(pickup_config, progressive_item):
+                progressive_list.append(progressive_item)
+            else:
+                expected_case_override[progressive_item] = StandardPickupStateCase.MISSING
+                for tier in tiers:
+                    expected_case_override[tier] = StandardPickupStateCase.SHUFFLED
+
+        for standard_pickup, pickup_state in pickup_config.pickups_state.items():
             if standard_pickup.hide_from_gui:
                 continue
 
             starting_count = pickup_state.num_included_in_starting_pickups
             shuffled_count = pickup_state.num_shuffled_pickups + int(pickup_state.include_copy_in_original_location)
 
-            if starting_count != expected_starting_count[standard_pickup]:
-                if starting_count > 1:
+            # Get the case we should have
+            expected_state = StandardPickupState.from_case(
+                standard_pickup,
+                expected_case_override.get(standard_pickup.name, standard_pickup.expected_case_for_describer),
+                pickup_state.included_ammo,
+            )
+            expected_shuffled = expected_state.num_shuffled_pickups + int(
+                expected_state.include_copy_in_original_location
+            )
+
+            if starting_count != expected_state.num_included_in_starting_pickups:
+                if starting_count > 1 or expected_state.num_included_in_starting_pickups > 1:
                     starting_list.append(f"{starting_count}x {standard_pickup.name}")
                 elif starting_count == 1:
                     starting_list.append(standard_pickup.name)
@@ -48,8 +74,13 @@ class GamePresetDescriber:
                     if shuffled_count == 0:
                         excluded_list.append(standard_pickup.name)
 
-            if shuffled_count != expected_shuffled_count[standard_pickup]:
-                if shuffled_count > 1:
+            if shuffled_count != expected_shuffled:
+                if standard_pickup.name in progressive_list:
+                    # If the progressive shows up because of custom shuffled count,
+                    # no need to mention it as being enabled
+                    progressive_list.remove(standard_pickup.name)
+
+                if shuffled_count > 1 or expected_shuffled > 1:
                     shuffled_list.append(f"{shuffled_count}x {standard_pickup.name}")
                 elif shuffled_count == 1:
                     shuffled_list.append(standard_pickup.name)
@@ -68,6 +99,9 @@ class GamePresetDescriber:
 
         if shuffled_list:
             result.append("Shuffles " + ", ".join(shuffled_list))
+
+        if progressive_list:
+            result.append(", ".join(progressive_list))
 
         return result
 
@@ -147,21 +181,8 @@ class GamePresetDescriber:
 
         return template_strings
 
-    def expected_starting_item_count(self, configuration: BaseConfiguration) -> dict[StandardPickupDefinition, int]:
-        """Lists what are the expected starting item count.
-        The configuration so it can vary based on progressive settings, as example."""
-        return {
-            major: major.default_starting_count
-            for major in configuration.standard_pickup_configuration.pickups_state.keys()
-        }
-
-    def expected_shuffled_pickup_count(self, configuration: BaseConfiguration) -> dict[StandardPickupDefinition, int]:
-        """Lists what are the expected shuffled item count.
-        The configuration so it can vary based on progressive settings, as example."""
-        return {
-            major: major.default_shuffled_count
-            for major in configuration.standard_pickup_configuration.pickups_state.keys()
-        }
+    def progressive_items(self) -> ProgressiveItemTuples:
+        return ()
 
 
 def _require_majors_check(ammo_configuration: AmmoPickupConfiguration, ammo_names: list[str]) -> list[bool]:
@@ -226,22 +247,3 @@ def merge_categories(categories: Iterable[PresetDescription]) -> str:
         """<h4><span style="font-weight:600;">{}</span></h4><p>{}</p>""".format(category, "<br />".join(items))
         for category, items in categories
     )
-
-
-def handle_progressive_expected_counts(
-    counts: dict[StandardPickupDefinition, int],
-    configuration: StandardPickupConfiguration,
-    progressive: str,
-    non_progressive: Sequence[str],
-) -> None:
-    progressive_item = configuration.get_pickup_with_name(progressive)
-    non_progressive_items = [configuration.get_pickup_with_name(name) for name in non_progressive]
-
-    if has_shuffled_item(configuration, progressive):
-        counts[progressive_item] = len(non_progressive)
-        for p in non_progressive_items:
-            counts[p] = 0
-    else:
-        counts[progressive_item] = 0
-        for p in non_progressive_items:
-            counts[p] = 1

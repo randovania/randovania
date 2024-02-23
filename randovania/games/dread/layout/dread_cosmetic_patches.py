@@ -132,6 +132,7 @@ class DreadCosmeticPatches(BaseCosmeticPatches):
     alt_bomb: DreadShieldType = DreadShieldType.DEFAULT
     alt_cross_bomb: DreadShieldType = DreadShieldType.DEFAULT
     alt_power_bomb: DreadShieldType = DreadShieldType.ALTERNATE
+    alt_closed: DreadShieldType = DreadShieldType.DEFAULT
 
     @classmethod
     def default(cls) -> DreadCosmeticPatches:

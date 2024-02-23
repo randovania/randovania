@@ -67,6 +67,7 @@ class DreadCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_DreadCosmeticPatc
         self._persist_shield_type_update("alt_bomb", self.alt_bomb)
         self._persist_shield_type_update("alt_cross_bomb", self.alt_cross_bomb)
         self._persist_shield_type_update("alt_power_bomb", self.alt_power_bomb)
+        self._persist_shield_type_update("alt_closed", self.alt_closed)
 
     def on_new_cosmetic_patches(self, patches: DreadCosmeticPatches) -> None:
         self.show_boss_life.setChecked(patches.show_boss_lifebar)
@@ -87,6 +88,7 @@ class DreadCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_DreadCosmeticPatc
         self.alt_bomb.setChecked(patches.alt_bomb == DreadShieldType.ALTERNATE)
         self.alt_cross_bomb.setChecked(patches.alt_cross_bomb == DreadShieldType.ALTERNATE)
         self.alt_power_bomb.setChecked(patches.alt_power_bomb == DreadShieldType.ALTERNATE)
+        self.alt_closed.setChecked(patches.alt_closed == DreadShieldType.ALTERNATE)
 
     def _persist_shield_type_update(self, attribute_name: str, checkbox: QtWidgets.QCheckBox) -> None:
         def persist(value: bool) -> None:

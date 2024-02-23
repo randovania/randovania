@@ -457,7 +457,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         self.area_view_canvas.highlight_node(node)
 
         try:
-            msg = pretty_print.pretty_print_node_type(node, self.region_list)
+            msg = pretty_print.pretty_print_node_type(node, self.region_list, self.resource_database)
         except Exception as e:
             msg = f"Unable to describe node: {e}"
 

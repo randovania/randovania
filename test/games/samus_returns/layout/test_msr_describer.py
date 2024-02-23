@@ -57,7 +57,7 @@ def test_msr_format_params(artifacts):
         "Item Pool": [
             f"Size: {174+artifacts.required_artifacts} of 211",
             "Starts with Scan Pulse",
-            "Progressive Beam, Progressive Jump, Progressive Suit",
+            "Progressive Beam, Progressive Suit, Progressive Jump",
             "Energy Reserve Tank, Aeion Reserve Tank, Missile Reserve Tank",
         ],
         "Gameplay": ["Starts at Surface - East - Landing Site"],
