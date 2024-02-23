@@ -889,7 +889,7 @@ Extra - room_id: [30]
   * Extra - blockx: 15
   * Extra - blocky: 8
   > Door to Elevator to Restricted Zone
-      Morph Ball
+      Morph Ball and Can Bounce in Ball
 
 > Door to Ripper Maze Access; Heals? False
   * Layers: default
@@ -903,7 +903,11 @@ Extra - room_id: [30]
   * L0 Hatch to Elevator to Restricted Zone/Door to Ripper Maze
   * Extra - door_idx: (63,)
   > Pickup (Hidden Energy Tank)
-      Diffusion Missiles and Missiles and Morph Ball
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Diffusion Missiles and Missiles
+              Missiles ≥ 5 and Stand On Frozen Enemies (Beginner) and Can Freeze Enemies
   > Door to Ripper Maze Access
       Wall Jump (Beginner) or Can climb High Jump Wall
 
@@ -1436,11 +1440,20 @@ Extra - room_id: [51]
       Can climb High Jump Wall
   > Door to Animorphs Cache
       All of the following:
-          # TODO: comment which block is for which enemy. Also can probably kill both top enemy and pirate with charge beam
           Any of the following:
-              Can Use Power Bombs
+              # Yard (snail)
               Charge Beam and Wave Beam
-          Missiles or Screw Attack
+              Power Bombs ≥ 2 and Can Use Power Bombs
+          Any of the following:
+              # Gerubus
+              Screw Attack
+              Missiles ≥ 15 and 10 DMG Missiles
+              Missiles ≥ 5 and 45 DMG Missiles
+          Any of the following:
+              # Golden Zebesian
+              Charge Beam or Screw Attack
+              Missiles ≥ 15 and 10 DMG Missiles
+              Missiles ≥ 5 and 45 DMG Missiles
 
 ----------------
 Animorphs Cache
