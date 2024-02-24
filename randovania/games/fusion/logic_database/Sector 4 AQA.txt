@@ -443,6 +443,7 @@ Extra - room_id: [12]
           All of the following:
               Gravity Suit
               Space Jump or Speed Booster
+          # Stand on enemy - TODO: does this need gravity?
           High Jump and Stand On Frozen Enemies (Beginner) and Underwater Wall Jump (Advanced) and Can Freeze Enemies
 
 > Other to Aquarium Storage; Heals? False
@@ -542,6 +543,7 @@ Extra - room_id: [14]
   * L0 Hatch to Aquarium Tank/Door to Aquarium Shaft West
   * Extra - door_idx: (34,)
   > Door to Worst Room in the Game
+      # TODO: any enemies that you can freeze? Possible to do shinesparking from other rooms?
       Gravity Suit and Space Jump
   > Door to Cheddar Bay
       Trivial
@@ -593,7 +595,7 @@ Extra - room_id: [16]
   * Extra - door_idx: (36,)
   > Door to Aquarium Hub Access
       All of the following:
-          # High Jump would still require freezing enemies
+          # TODO: High Jump would still require freezing enemies?
           Gravity Suit
           Any of the following:
               Space Jump
@@ -683,6 +685,7 @@ Extra - room_id: [19]
   * L0 Hatch to Drain Pipe/Door to Aquarium Hub
   * Extra - door_idx: (90,)
   > Door to Aquarium Speedway
+      # TODO: was this the intended way to get this item, or should this be locked behind a tricked?
       Gravity Suit and Speed Booster and Disabled Door Lock Rando and Disabled Entrance Rando
   > Room Center
       Any of the following:
@@ -694,7 +697,7 @@ Extra - room_id: [19]
                   Can Use Springball
                   Gravity Suit and Can Use Bombs
               Any of the following:
-                  # To freeze the powamp
+                  # To freeze the powamp - TODO: can you hit this powamp diagonally via ice missiles?
                   Diffusion Missiles
                   Ice Beam and Wave Beam
 
@@ -713,6 +716,7 @@ Extra - room_id: [19]
       Gravity Suit and Screw Attack
   > Door to Drain Pipe
       Any of the following:
+          # TODO: comment this block more nicely pls
           All of the following:
               Can Freeze Enemies
               Any of the following:
@@ -922,7 +926,7 @@ Extra - room_id: [24]
   * Extra - blockx: 40
   * Extra - blocky: 7
   > Other to Security Bypass
-      Trivial
+      Morph Ball
 
 > Door to Security Access; Heals? False
   * Layers: default
@@ -948,6 +952,7 @@ Extra - room_id: [24]
   > Pickup (Power Bomb Tank)
       Morph Ball
   > Door to Security Access
+      # TODO: screw attack?
       Missiles and Can Use Any Bombs
 
 ----------------
@@ -1092,7 +1097,7 @@ Extra - room_id: [29]
   * Extra - door_idx: (61,)
   > Door to Entrance Hub
       Trivial
-  > Recharge Station
+  > Recharge Terminal
       Trivial
 
 > Door to Entrance Hub; Heals? False
@@ -1102,7 +1107,7 @@ Extra - room_id: [29]
   > Door to Entrance Save Room
       Trivial
 
-> Recharge Station; Heals? True
+> Recharge Terminal; Heals? True
   * Layers: default
   > Door to Entrance Save Room
       Trivial
@@ -1137,7 +1142,7 @@ Extra - room_id: [30]
   * Tunnel to Owtch Cache/Other to Breeding Tank Access
   * Extra - door_idx: (113,)
   > Other to Reservoir West
-      Morph Ball
+      Trivial
 
 ----------------
 Breeding Tank
@@ -1322,9 +1327,14 @@ Extra - room_id: [36]
       All of the following:
           Morph Ball
           Any of the following:
-              After Water Level Lowered or Damage Runs (Intermediate)
-              Gravity Suit and Damage Runs (Beginner)
+              # Navigate through water
+              After Water Level Lowered
+              Any of the following:
+                  # TODO: damage numbers
+                  Damage Runs (Intermediate)
+                  Gravity Suit and Damage Runs (Beginner)
           Any of the following:
+              # TODO: someone comment this, my 4am brain cannot comprehend. something geron related? why not use template?
               Wave Beam
               Missiles ≥ 3 and Super Missiles
               All of the following:
@@ -1339,9 +1349,14 @@ Extra - room_id: [36]
       All of the following:
           Morph Ball
           Any of the following:
-              After Water Level Lowered or Damage Runs (Intermediate)
-              Gravity Suit and Damage Runs (Beginner)
+              # Navigate water
+              After Water Level Lowered
+              Any of the following:
+                  # TODO: damage run numbers
+                  Damage Runs (Intermediate)
+                  Gravity Suit and Damage Runs (Beginner)
           Any of the following:
+              # Freeze Powamp
               Diffusion Missiles and Missiles
               Ice Beam and Wave Beam
 
@@ -1350,6 +1365,7 @@ Extra - room_id: [36]
   * L0 Hatch to Aquarium Hub/Door to Drain Pipe
   * Extra - door_idx: (91,)
   > Door to Aquarium Storage
+      # TODO: damage run health
       After Water Level Lowered or Damage Runs (Beginner)
 
 > Door to Aquarium Storage; Heals? False
@@ -1360,12 +1376,18 @@ Extra - room_id: [36]
       All of the following:
           Morph Ball
           Any of the following:
-              After Water Level Lowered or Damage Runs (Intermediate)
-              Gravity Suit and Damage Runs (Beginner)
+              # Navigate water
+              After Water Level Lowered
+              Any of the following:
+                  # TODO: damage run numbers
+                  Damage Runs (Intermediate)
+                  Gravity Suit and Damage Runs (Beginner)
           Any of the following:
+              # Freeze Powamp
               Diffusion Missiles and Missiles
               Ice Beam and Wave Beam
   > Door to Aquarium Hub
+      # TODO: damage run health
       After Water Level Lowered or Damage Runs (Beginner)
 
 ----------------
@@ -1431,9 +1453,11 @@ Extra - room_id: [38]
       Gravity Suit and Speed Booster and Disabled Door Lock Rando and Disabled Entrance Rando
   > After Kago
       All of the following:
+          # TODO: the other connection has knowledge. Should this one also have it?
           High Jump and Morph Ball and Underwater Wall Jump (Expert)
           Any of the following:
               Gravity Suit or Space Jump
+              # Shinespark
               Speed Booster and Disabled Door Lock Rando and Disabled Entrance Rando
               High Jump and Wall Jump (Beginner)
 
@@ -1612,7 +1636,7 @@ Extra - room_id: [45]
   * L0 Hatch to Connection to Sector 6 (NOC)/Door to Diffusion Connection Access
   * Extra - door_idx: (110,)
   > Other to Powamp Shaft
-      Morph Ball
+      Trivial
 
 > Other to Powamp Shaft; Heals? False
   * Layers: default
@@ -1640,6 +1664,7 @@ Extra - room_id: [46]
   * Tunnel to Breeding Tank Access/Other to Owtch Cache
   * Extra - door_idx: (114,)
   > Pickup (Underwater Missile Tank)
+      # TODO: is this not trivial???
       Morph Ball
 
 ----------------
