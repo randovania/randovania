@@ -241,11 +241,14 @@ Extra - room_id: [9]
       All of the following:
           Morph Ball
           Any of the following:
+              # TODO: activating the pillar without jump upgrades is difficult IIRC. Also if you only have HJ, you probably need WJ too?
               Can Activate Pillar or Can climb High Jump Wall
+              # TODO: which enemy do you freeze for this?
               Stand On Frozen Enemies (Beginner) and Wall Jump (Beginner) and Can Freeze Enemies
   > Door to Maintenance Annex
       Any of the following:
           Can Bounce in Ball and Can Use Any Bombs
+          # TODO: what is this for?
           Knowledge (Expert) and Normal Damage ≥ 88
 
 > Door to Maintenance Annex; Heals? False
@@ -320,6 +323,7 @@ Extra - room_id: [11]
   * L0 Hatch to Cultivation Station/Door to Puyo Corridor
   * Extra - door_idx: (24,)
   > Door to Central Shaft
+      # TODO: you can also use SJ and maybe HJ? Can also probably freeze the enemies. Also maybe JBJ
       Morph Ball and Can Activate Pillar
 
 > Door to Central Shaft; Heals? False
@@ -540,6 +544,8 @@ Extra - room_id: [18]
   * Layers: default
   * L0 Hatch to Zazabi Speedway/Door to Zazabi Arena
   * Extra - door_idx: (133,)
+  > Door to Zazabi Access
+      Impossible
   > Arena Floor
       Screw Attack
 
@@ -561,22 +567,25 @@ Extra - room_id: [18]
 > Arena Floor; Heals? False
   * Layers: default
   > Door to Zazabi Access
+      # TODO: is door not locked until you have killed zazabi?
       Can climb High Jump Wall
   > Door to Zazabi Speedway
       All of the following:
+          # TODO: is door not locked until you have killed zazabi?
           Screw Attack
           Any of the following:
               Space Jump
+              # TODO: does this rely on single walljumps with screw being a thing? if yes, should be gated behind the template.
               High Jump and Wall Jump (Advanced)
   > Event - Zazabi
       All of the following:
           All of the following:
               # Zazabi Requirements
-              # Weapon Requirements
+              # Weapon Requirements - TODO: the fact that zazabi has hardcoded 2 missiles per phase isn't exactly known and should be gated behind knowledge beginner. The other missile requirement should probably be around 30ish?
               Charge Beam or Missiles ≥ 10
               # Other
               Combat (Advanced) or Can Use Bombs
-          # Core-X Requirements
+          # Core-X Requirements - TODO: can you not refarm here?
           Missiles ≥ 5
           Any of the following:
               # Health Requirements
@@ -783,6 +792,7 @@ Extra - room_id: [24, 36]
           Morph Ball and After Nettori
           Any of the following:
               Space Jump
+              # Shinespark up - TODO: is shinesparking enough?
               Speed Booster and Shinespark Tricks (Beginner) and Disabled Door Lock Rando and Disabled Entrance Rando
               High Jump and Wall Jump (Intermediate)
 
@@ -807,6 +817,7 @@ Extra - room_id: [25]
   > Pickup (Missile Tank)
       All of the following:
           Can Use Any Bombs
+          # TODO: the HJ should be for spring ball i think? unless its meant for mid-air morph, which should be gated behind a trick
           Gravity Suit or High Jump or Wall Jump (Expert)
 
 ----------------
@@ -1207,6 +1218,7 @@ Extra - room_id: [42]
   > Door to Central Shaft
       All of the following:
           Morph Ball
+          # TODO: see other connection
           Gravity Suit or High Jump or Wall Jump (Advanced) or Can Activate Pillar
 
 > Door to Central Shaft; Heals? False
@@ -1216,10 +1228,12 @@ Extra - room_id: [42]
   > Pickup (Missile Tank)
       Any of the following:
           Can climb High Jump Wall
+          # TODO: which enemies do you stand on? the fishies?
           Stand On Frozen Enemies (Intermediate) and Can Freeze Enemies
   > Door to Oasis Storage
       All of the following:
           Morph Ball
+          # TODO: this block doesnt seem right at all. Why can you with gravity somehow surpass a ~10 tile high pillar?
           Gravity Suit or High Jump or Wall Jump (Expert) or Can Activate Pillar
 
 ----------------
@@ -1262,6 +1276,7 @@ Extra - room_id: [47]
   * Open Hatch to Collapsed Shaft/Door to Puyo Palace
   * Extra - door_idx: (109,)
   > Door to Central Shaft
+      # TODO: shinesparking?
       Can climb High Jump Wall
 
 > Door to Central Shaft; Heals? False
@@ -1269,8 +1284,10 @@ Extra - room_id: [47]
   * Open Hatch to Central Shaft/Door to Puyo Palace
   * Extra - door_idx: (110,)
   > Door to Collapsed Shaft
+      # TODO: shinesparking?
       Space Jump
   > Door to Nettori Save Room
+      # TODO: shinesparking?
       Space Jump
 
 > Door to Nettori Save Room; Heals? False
@@ -1351,6 +1368,7 @@ Extra - room_id: [50]
   > Door to Central Shaft
       Any of the following:
           Can Use Any Bombs
+          # Knowledge: You need to beforehand break the block with Screw Attack
           Morph Ball and Screw Attack and Knowledge (Intermediate)
 
 > Door to Central Shaft; Heals? False
@@ -1359,8 +1377,10 @@ Extra - room_id: [50]
   * Extra - door_idx: (114,)
   > Pickup (Power Bomb Tank)
       Any of the following:
+          # TODO: how do you do movement expert??
           Movement (Expert)
           Morph Ball and Can Freeze Enemies
+          # TODO: is this easier if you can kill the rippers?
           Space Jump and Movement (Advanced)
 
 ----------------
@@ -1498,6 +1518,7 @@ Extra - room_id: [56, 60]
   * Open Hatch to Overgrown Checkpoint/Door to Overgrown Hallway
   * Extra - door_idx: (137, 143)
   > Door to Overgrown Entrance
+      # TODO: these are not breakable by screw, right?
       Can Use Any Bombs
 
 ----------------
