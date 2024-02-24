@@ -5330,19 +5330,30 @@
                     "pickup_index": 83,
                     "location_category": "minor",
                     "connections": {
-                        "Past Pit": {
+                        "Other to Nightmare Arena": {
                             "type": "and",
                             "data": {
                                 "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Nightmare Hub East": {
+                            "type": "and",
+                            "data": {
+                                "comment": "2 Frame perfect spring ball jumps",
                                 "items": [
                                     {
                                         "type": "resource",
                                         "data": {
-                                            "type": "items",
-                                            "name": "MorphBall",
-                                            "amount": 1,
+                                            "type": "tricks",
+                                            "name": "Movement",
+                                            "amount": 5,
                                             "negate": false
                                         }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Can Bounce in Ball"
                                     }
                                 ]
                             }
@@ -5410,8 +5421,8 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Other to Nightmare Arena": {
-                            "type": "or",
+                        "Pickup (Energy Tank)": {
+                            "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": [
@@ -5423,56 +5434,56 @@
                                             "amount": 1,
                                             "negate": false
                                         }
-                                    }
-                                ]
-                            }
-                        },
-                        "Past Pit": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "tricks",
-                                            "name": "Movement",
-                                            "amount": 5,
-                                            "negate": false
-                                        }
                                     },
                                     {
-                                        "type": "template",
-                                        "data": "Can Use Bombs"
-                                    },
-                                    {
-                                        "type": "and",
+                                        "type": "or",
                                         "data": {
                                             "comment": null,
                                             "items": [
                                                 {
                                                     "type": "template",
-                                                    "data": "Can Use Power Bombs"
+                                                    "data": "Can Use Bombs"
                                                 },
                                                 {
-                                                    "type": "or",
+                                                    "type": "and",
                                                     "data": {
                                                         "comment": null,
                                                         "items": [
                                                             {
                                                                 "type": "template",
-                                                                "data": "Can Use Springball"
+                                                                "data": "Can Use Power Bombs"
                                                             },
                                                             {
-                                                                "type": "resource",
+                                                                "type": "or",
                                                                 "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "MidAirMorph",
-                                                                    "amount": 3,
-                                                                    "negate": false
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "MidAirMorph",
+                                                                                "amount": 3,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Can Use Springball"
+                                                                        }
+                                                                    ]
                                                                 }
                                                             }
                                                         ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Movement",
+                                                        "amount": 4,
+                                                        "negate": false
                                                     }
                                                 }
                                             ]
@@ -5480,25 +5491,8 @@
                                     }
                                 ]
                             }
-                        }
-                    }
-                },
-                "Past Pit": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 200.490573464006,
-                        "y": 88.96697760459716,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "connections": {
-                        "Pickup (Energy Tank)": {
+                        },
+                        "Other to Nightmare Arena": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -5513,15 +5507,6 @@
                                         }
                                     }
                                 ]
-                            }
-                        },
-                        "Other to Nightmare Arena": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "MorphBall",
-                                "amount": 1,
-                                "negate": false
                             }
                         }
                     }
