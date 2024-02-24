@@ -49,13 +49,6 @@
                                 "comment": null,
                                 "items": []
                             }
-                        },
-                        "Door to Kago Room": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
                         }
                     }
                 },
@@ -151,6 +144,13 @@
                             }
                         },
                         "Door to Security Corridor": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Kago Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -323,7 +323,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Entrance Recharge Room": {
+                        "Door to Data Hub Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1752,7 +1752,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "TODO: is this not possible to do without a JBJ? no spring ball? no double-bomb-jumps?",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -1776,12 +1776,29 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "resource",
+                                                    "type": "and",
                                                     "data": {
-                                                        "type": "items",
-                                                        "name": "ScrewAttack",
-                                                        "amount": 1,
-                                                        "negate": false
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "ScrewAttack",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Knowledge",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -2174,7 +2191,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "TODO: can you do this without *ANY* jump upgrades? Also how is this affected with the layer where the zori's are cocooned?",
                                             "items": [
                                                 {
                                                     "type": "template",
@@ -2464,7 +2481,7 @@
                         "area": "Reo Room",
                         "node": "Door to Central Shaft"
                     },
-                    "default_dock_weakness": "Open Hatch",
+                    "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -2691,7 +2708,7 @@
                         "Door to Central Shaft": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "TODO: damage reqs for this dessgeega?",
                                 "items": []
                             }
                         }
@@ -3723,7 +3740,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "TODO: can you do some movement with the shoot blocks?",
                                             "items": [
                                                 {
                                                     "type": "template",
@@ -4064,7 +4081,7 @@
                         "Event - Nettori": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "TODO: better fight reqs, especially ammo and health",
                                 "items": [
                                     {
                                         "type": "or",
@@ -4551,17 +4568,7 @@
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "MorphBall",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "items": []
                             }
                         }
                     }
@@ -4973,7 +4980,7 @@
                         "Door to Security Access (Upper)": {
                             "type": "or",
                             "data": {
-                                "comment": null,
+                                "comment": "TODO: afaik HJ+WJ also works?",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -4990,7 +4997,7 @@
                         "Door to Crumble City": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "TODO: can you also do this with HJ(+WJ)?",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -5249,42 +5256,7 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Can Use Any Bombs"
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "MorphBall",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "ScrewAttack",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "Knowledge",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
+                                        "data": "Can Break Single Bomb Blocks"
                                     }
                                 ]
                             }
@@ -5740,7 +5712,7 @@
                                                             {
                                                                 "type": "or",
                                                                 "data": {
-                                                                    "comment": null,
+                                                                    "comment": "TODO: instead of using HJ here, we should check the \"can springn jump\" template",
                                                                     "items": [
                                                                         {
                                                                             "type": "resource",
@@ -6097,7 +6069,7 @@
                         "Door to Overgrown Checkpoint": {
                             "type": "or",
                             "data": {
-                                "comment": null,
+                                "comment": "TODO: can you do this with HJ and some movement?",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -6132,7 +6104,7 @@
                         "Door to Nettori Save Room": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "TODO: can you do this with HJ + some movement?",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -6191,7 +6163,7 @@
                         "Door to Collapsed Shaft": {
                             "type": "or",
                             "data": {
-                                "comment": null,
+                                "comment": "TODO: can you freeze some enemies here maybe? also does WJ really work?",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -6306,12 +6278,12 @@
                         "Door to Kihunter Hallway": {
                             "type": "or",
                             "data": {
-                                "comment": null,
+                                "comment": "TODO: doesnt this walljump need HJ?",
                                 "items": [
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "TODO: are enemies always there? is there no event that makes the enemies gone/cocoons?",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -6588,8 +6560,8 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 343.8079844222495,
-                        "y": 113.617181730797,
+                        "x": 371.8544681546889,
+                        "y": 167.85806557108987,
                         "z": 0.0
                     },
                     "description": "",
@@ -6637,7 +6609,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "tricks",
-                                            "name": "Combat",
+                                            "name": "Movement",
                                             "amount": 3,
                                             "negate": false
                                         }
@@ -6645,7 +6617,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "TODO: can you really do this spark tho? AFAIk if you do it from the right side, you bonk and cant keep, if you do it from the left, you need screw anyway",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -6664,8 +6636,35 @@
                                                         "amount": 1,
                                                         "negate": false
                                                     }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "DoorLockRando",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "EntranceRando",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
                                                 }
                                             ]
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "ScrewAttack",
+                                            "amount": 1,
+                                            "negate": false
                                         }
                                     }
                                 ]
@@ -6850,7 +6849,39 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Save Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Save Station": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 167.35353535353536,
+                        "y": 73.98172198172199,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Data Hub": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -7437,7 +7468,7 @@
                         "Door to Zoro Zig-Zag": {
                             "type": "or",
                             "data": {
-                                "comment": null,
+                                "comment": "TODO: does WJ really work here?",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -7804,17 +7835,7 @@
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "MorphBall",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "items": []
                             }
                         }
                     }
@@ -8400,7 +8421,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "TODO: what are these for?",
                                             "items": [
                                                 {
                                                     "type": "template",
@@ -8515,7 +8536,7 @@
                         "Pickup (Energy Tank)": {
                             "type": "or",
                             "data": {
-                                "comment": null,
+                                "comment": "TODO: duplicated logic for both events. consolidate with a generic node",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -8570,7 +8591,7 @@
                                                             {
                                                                 "type": "and",
                                                                 "data": {
-                                                                    "comment": null,
+                                                                    "comment": "TODO: video for this?",
                                                                     "items": [
                                                                         {
                                                                             "type": "resource",

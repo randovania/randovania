@@ -8,8 +8,6 @@ Extra - room_id: [0]
   * Extra - door_idx: (1,)
   > Door to Data Hub Access
       Trivial
-  > Door to Kago Room
-      Trivial
 
 > Door to Data Hub Access; Heals? False
   * Layers: default
@@ -24,6 +22,8 @@ Extra - room_id: [0]
   > Door to Owtch Cache A
       Trivial
   > Door to Security Corridor
+      Trivial
+  > Door to Kago Room
       Trivial
   > Other to Entrance Hub Underside
       Can Use Any Bombs
@@ -53,7 +53,7 @@ Extra - room_id: [0]
   * Layers: default
   * L0 Hatch to Kago Room/Door to Entrance Hub
   * Extra - door_idx: (15,)
-  > Door to Entrance Recharge Room
+  > Door to Data Hub Access
       Trivial
 
 > Other to Entrance Hub Underside; Heals? False
@@ -306,8 +306,10 @@ Extra - room_id: [10]
       All of the following:
           Morph Ball
           Any of the following:
-              Power Bombs or Screw Attack
+              Power Bombs
+              # TODO: is this not possible to do without a JBJ? no spring ball? no double-bomb-jumps?
               Morph Ball Bombs and Jump Bombjump (Advanced)
+              Screw Attack and Knowledge (Beginner)
 
 ----------------
 Puyo Corridor
@@ -372,6 +374,7 @@ Extra - room_id: [13, 46]
       Any of the following:
           Space Jump
           High Jump and Wall Jump (Beginner)
+          # TODO: can you do this without *ANY* jump upgrades? Also how is this affected with the layer where the zori's are cocooned?
           Stand On Frozen Enemies (Beginner) and Can Freeze Enemies
           Jump Bombjump (Hypermode) and Wall Jump (Hypermode) and Can Use Bombs
 
@@ -412,7 +415,7 @@ Extra - room_id: [13, 46]
 
 > Door to Reo Room; Heals? False
   * Layers: default
-  * Open Hatch to Reo Room/Door to Central Shaft
+  * L0 Hatch to Reo Room/Door to Central Shaft
   * Extra - door_idx: (31,)
   > Beside Drop
       Can Use Any Bombs
@@ -639,6 +642,7 @@ Extra - room_id: [20, 34]
   > Door to Nettori Arena
       All of the following:
           Can Kill Eye Door
+          # TODO: can you do some movement with the shoot blocks?
           Wall Jump (Beginner) or Can climb High Jump Wall
 
 > Door to Shooting Gallery; Heals? False
@@ -700,6 +704,7 @@ Extra - room_id: [22, 51]
       After Nettori
   > Event - Nettori
       All of the following:
+          # TODO: better fight reqs, especially ammo and health
           Any of the following:
               # Statue Requirements
               All of the following:
@@ -749,7 +754,7 @@ Extra - room_id: [23]
   * L0 Hatch to Eastern Shaft/Door to Kihunter Hallway
   * Extra - door_idx: (52,)
   > Other to Entrance Hub
-      Morph Ball
+      Trivial
 
 > Other to Entrance Hub; Heals? False
   * Layers: default
@@ -813,8 +818,10 @@ Extra - room_id: [26]
   * L1 Hatch to Security Access/Door to Level 1 Security Room (Lower)
   * Extra - door_idx: (59,)
   > Door to Security Access (Upper)
+      # TODO: afaik HJ+WJ also works?
       Space Jump
   > Door to Crumble City
+      # TODO: can you also do this with HJ(+WJ)?
       Screw Attack and Space Jump
   > Event - L1 Locks
       Trivial
@@ -867,9 +874,7 @@ Extra - room_id: [27]
   * Tunnel to Entrance Hub/Other to Entrance Hub Underside
   * Extra - door_idx: (62,)
   > Pickup (Missile Tank)
-      Any of the following:
-          Can Use Any Bombs
-          Morph Ball and Screw Attack and Knowledge (Beginner)
+      Can Break Single Bomb Blocks
   > Door to Reo Room
       Trivial
 
@@ -958,6 +963,7 @@ Extra - room_id: [31, 7]
               Screw Attack and Knowledge (Beginner)
               All of the following:
                   Morph Ball Bombs
+                  # TODO: instead of using HJ here, we should check the "can springn jump" template
                   High Jump or Jump Bombjump (Advanced)
 
 > Door to Data Hub Access; Heals? False
@@ -1009,8 +1015,10 @@ Extra - room_id: [32, 35]
   * Open Hatch to Collapsed Shaft/Door to Eastern Shaft
   * Extra - door_idx: (71, 80)
   > Door to Overgrown Checkpoint
+      # TODO: can you do this with HJ and some movement?
       Space Jump or After Nettori or Wall Jump (Beginner)
   > Door to Nettori Save Room
+      # TODO: can you do this with HJ + some movement?
       Space Jump and After Nettori
 
 > Door to Overgrown Checkpoint; Heals? False
@@ -1018,6 +1026,7 @@ Extra - room_id: [32, 35]
   * Open Hatch to Overgrown Checkpoint/Door to Eastern Shaft
   * Extra - door_idx: (72, 81)
   > Door to Collapsed Shaft
+      # TODO: can you freeze some enemies here maybe? also does WJ really work?
       Space Jump or After Nettori or Wall Jump (Beginner)
 
 > Other to Hidden Recharge Room; Heals? False
@@ -1035,7 +1044,9 @@ Extra - room_id: [32, 35]
       Trivial
   > Door to Kihunter Hallway
       Any of the following:
+          # TODO: doesnt this walljump need HJ?
           Space Jump or Wall Jump (Intermediate)
+          # TODO: are enemies always there? is there no event that makes the enemies gone/cocoons?
           High Jump and Can Freeze Enemies
   > Door to Collapsed Shaft
       After Nettori
@@ -1076,8 +1087,9 @@ Extra - room_id: [33]
       Trivial
   > Door to Entrance Hub
       Any of the following:
-          High Jump or Space Jump or Combat (Advanced) or Can Freeze Enemies
-          Speed Booster and Shinespark Tricks (Beginner)
+          High Jump or Screw Attack or Space Jump or Movement (Advanced) or Can Freeze Enemies
+          # TODO: can you really do this spark tho? AFAIk if you do it from the right side, you bonk and cant keep, if you do it from the left, you need screw anyway
+          Speed Booster and Shinespark Tricks (Beginner) and Disabled Door Lock Rando and Disabled Entrance Rando
   > Door to Connection to Sector 1 (SRX)
       Screw Attack
 
@@ -1114,6 +1126,13 @@ Extra - room_id: [38]
   * Layers: default
   * L0 Hatch to Data Hub/Door to Data Save Room
   * Extra - door_idx: (87,)
+  > Save Station
+      Trivial
+
+> Save Station; Heals? False
+  * Layers: default
+  > Door to Data Hub
+      Trivial
 
 ----------------
 Owtch Office
@@ -1219,6 +1238,7 @@ Extra - room_id: [43]
   * L0 Hatch to Cultivation Station/Door to Maintenance Annex
   * Extra - door_idx: (99,)
   > Door to Zoro Zig-Zag
+      # TODO: does WJ really work here?
       Space Jump or Wall Jump (Beginner)
 
 ----------------
@@ -1278,7 +1298,7 @@ Extra - room_id: [48]
 > Recharge Terminal; Heals? True
   * Layers: default
   > Other to Eastern Shaft
-      Morph Ball
+      Trivial
 
 ----------------
 Nettori Save Room
@@ -1393,6 +1413,7 @@ Extra - room_id: [54]
   > Door to Level 1 Security Room
       All of the following:
           Space Jump or Wall Jump (Beginner)
+          # TODO: what are these for?
           Knowledge (Intermediate) or Movement (Intermediate) or Can Use Any Bombs
 
 > Pickup (Power Bomb Tank); Heals? False
@@ -1411,11 +1432,13 @@ Extra - room_id: [54]
   * Extra - door_idx: (132,)
   > Pickup (Energy Tank)
       Any of the following:
+          # TODO: duplicated logic for both events. consolidate with a generic node
           Space Jump
           All of the following:
               High Jump and Wall Jump (Advanced) and Can Screw Single Walljump
               Any of the following:
                   Movement (Hypermode)
+                  # TODO: video for this?
                   Speed Booster and Movement (Expert) and Shinespark Tricks (Expert)
   > Pickup (Power Bomb Tank)
       Any of the following:
