@@ -443,8 +443,11 @@ Extra - room_id: [12]
           All of the following:
               Gravity Suit
               Space Jump or Speed Booster
-          # Stand on enemy - TODO: does this need gravity?
-          High Jump and Stand On Frozen Enemies (Beginner) and Underwater Wall Jump (Advanced) and Can Freeze Enemies
+          All of the following:
+              High Jump and Stand On Frozen Enemies (Beginner) and Can Freeze Enemies
+              Any of the following:
+                  Underwater Wall Jump (Expert)
+                  Gravity Suit and Wall Jump (Intermediate)
 
 > Other to Aquarium Storage; Heals? False
   * Layers: default
@@ -498,14 +501,18 @@ Extra - room_id: [13]
   > Pickup (Hidden Missile Tank)
       Any of the following:
           Can Use Bombs
-          # Springball not required for tunnel access but inputs are tight
-          Can Use Power Bombs and Can Use Springball
+          All of the following:
+              # Springball not required for tunnel access but inputs are tight
+              Can Use Power Bombs
+              Mid-Air Morph (Expert) or Can Use Springball
   > Pickup (Missile Tank)
       All of the following:
           Missiles ≥ 2
           Any of the following:
               Can Use Bombs
-              Can Use Power Bombs and Can Use Springball
+              All of the following:
+                  Can Use Power Bombs
+                  Mid-Air Morph (Expert) or Can Use Springball
   > Other to Reservoir East
       Trivial
 
@@ -626,7 +633,7 @@ Extra - room_id: [17]
           Any of the following:
               Gravity Suit and Space Jump
               # Use frozen Zebesian to escape
-              Stand On Frozen Enemies (Intermediate) and Wall Jump (Intermediate) and Can Freeze Enemies
+              High Jump and Stand On Frozen Enemies (Intermediate) and Wall Jump (Intermediate) and Can Freeze Enemies
 
 > Door to Evir Shaft; Heals? False
   * Layers: default
@@ -685,7 +692,6 @@ Extra - room_id: [19]
   * L0 Hatch to Drain Pipe/Door to Aquarium Hub
   * Extra - door_idx: (90,)
   > Door to Aquarium Speedway
-      # TODO: was this the intended way to get this item, or should this be locked behind a tricked?
       Gravity Suit and Speed Booster and Disabled Door Lock Rando and Disabled Entrance Rando
   > Room Center
       Any of the following:
@@ -698,7 +704,7 @@ Extra - room_id: [19]
                   Gravity Suit and Can Use Bombs
               Any of the following:
                   # To freeze the powamp - TODO: can you hit this powamp diagonally via ice missiles?
-                  Diffusion Missiles
+                  Diffusion Missiles and Missiles
                   Ice Beam and Wave Beam
 
 > Door to Aquarium Save Room East; Heals? False
@@ -827,7 +833,9 @@ Extra - room_id: [22]
   * L0 Hatch to Pump Control Access/Door to Pump Control Save Room
   * Extra - door_idx: (47,)
   > Other to Breeding Tank Access
-      Morph Ball
+      All of the following:
+          Morph Ball
+          Mid-Air Morph (Beginner) or Can Bounce in Ball
   > Save Station
       Trivial
 
@@ -952,8 +960,11 @@ Extra - room_id: [24]
   > Pickup (Power Bomb Tank)
       Morph Ball
   > Door to Security Access
-      # TODO: screw attack?
-      Missiles and Can Use Any Bombs
+      All of the following:
+          Missiles
+          Any of the following:
+              Can Use Any Bombs
+              Gravity Suit and Screw Attack and Knowledge (Beginner)
 
 ----------------
 Security Access
@@ -994,9 +1005,11 @@ Extra - room_id: [25]
 > By Hole; Heals? False
   * Layers: default
   > Door to Cheddar Bay
-      All of the following:
-          Gravity Suit
-          Space Jump or Wall Jump (Intermediate)
+      Any of the following:
+          Underwater Wall Jump (Expert)
+          All of the following:
+              Gravity Suit
+              Space Jump or Wall Jump (Intermediate)
   > Door to Level 4 Security Room
       Trivial
   > Other to Sciser Sanctuary
@@ -1219,7 +1232,11 @@ Extra - room_id: [33]
   > Pickup (Missile Tank)
       Trivial
   > Door to Pump Control Access
-      Can Use Bombs or Can Use Springball
+      Any of the following:
+          Can Use Springball
+          All of the following:
+              Can Use Bombs
+              Gravity Suit or After Water Level Lowered
   > Behind Speed Blocks
       Any of the following:
           Can Use Springball
@@ -1256,8 +1273,14 @@ Extra - room_id: [34]
           Gravity Suit and Morph Ball and Screw Attack and Knowledge (Beginner)
   > Other to Cheddar Bay
       All of the following:
-          Gravity Suit
-          Screw Attack or Can Use Any Bombs
+          Any of the following:
+              Can Use Any Bombs
+              Gravity Suit and Screw Attack and Knowledge (Beginner)
+          Any of the following:
+              Underwater Wall Jump (Advanced)
+              All of the following:
+                  Gravity Suit
+                  High Jump or Wall Jump (Beginner)
 
 ----------------
 Powamp Shaft
@@ -1270,7 +1293,9 @@ Extra - room_id: [35]
   > Door to Aquarium Speedway
       Diffusion Missiles and Missiles and Morph Ball
   > Other to Diffusion Connection Access
-      Diffusion Missiles and Missiles and Morph Ball
+      All of the following:
+          Diffusion Missiles and Missiles and Morph Ball
+          Mid-Air Morph (Beginner) or Can Bounce in Ball
 
 > Door to Aquarium Speedway; Heals? False
   * Layers: default
@@ -1280,7 +1305,9 @@ Extra - room_id: [35]
       All of the following:
           Missiles and Morph Ball
           Any of the following:
-              Movement (Beginner) and Can Freeze Enemies
+              All of the following:
+                  Space Jump and Stand On Frozen Enemies (Beginner) and Can Freeze Enemies
+                  High Jump or Movement (Advanced)
               All of the following:
                   Gravity Suit
                   Any of the following:
@@ -1443,7 +1470,7 @@ Extra - room_id: [38]
           Gravity Suit
           Any of the following:
               Screw Attack
-              Speed Booster and Shinespark Tricks (Beginner)
+              Speed Booster and Shinespark Tricks (Beginner) and Disabled Door Lock Rando and Disabled Entrance Rando
 
 > Other to Aquarium Speedway; Heals? False
   * Layers: default
@@ -1453,13 +1480,15 @@ Extra - room_id: [38]
       Gravity Suit and Speed Booster and Disabled Door Lock Rando and Disabled Entrance Rando
   > After Kago
       All of the following:
-          # TODO: the other connection has knowledge. Should this one also have it?
-          High Jump and Morph Ball and Underwater Wall Jump (Expert)
+          High Jump and Morph Ball and Knowledge (Beginner)
           Any of the following:
               Gravity Suit or Space Jump
               # Shinespark
               Speed Booster and Disabled Door Lock Rando and Disabled Entrance Rando
               High Jump and Wall Jump (Beginner)
+          Any of the following:
+              Underwater Wall Jump (Expert)
+              Gravity Suit and Wall Jump (Intermediate)
 
 > After Kago; Heals? False
   * Layers: default
@@ -1581,7 +1610,7 @@ Extra - room_id: [42]
           # Serris Weapon Requirements
           Charge Beam or Missiles ≥ 10
           # Core-X Requirements
-          Missiles ≥ 5
+          Missiles
           Any of the following:
               # Health Requirements
               Combat (Expert) or Normal Damage ≥ 400
