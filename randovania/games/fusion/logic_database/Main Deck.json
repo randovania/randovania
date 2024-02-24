@@ -834,7 +834,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": "TODO: This seems hard to skip",
+                                            "comment": null,
                                             "items": [
                                                 {
                                                     "type": "template",
@@ -1057,8 +1057,8 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 148.91995947315095,
-                        "y": 83.7662951705505,
+                        "x": 153.10674239114607,
+                        "y": 82.56065239551481,
                         "z": 0.0
                     },
                     "description": "",
@@ -2220,27 +2220,6 @@
                                             "amount": 1,
                                             "negate": false
                                         }
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "template",
-                                                    "data": "Can climb High Jump Wall"
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "WallJump",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
                                     }
                                 ]
                             }
@@ -2319,12 +2298,46 @@
                                                     "data": "Can Freeze Enemies"
                                                 },
                                                 {
-                                                    "type": "resource",
+                                                    "type": "or",
                                                     "data": {
-                                                        "type": "items",
-                                                        "name": "HighJump",
-                                                        "amount": 1,
-                                                        "negate": false
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "HighJump",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": "https://discord.com/channels/119665192110915584/1205560315652349962/1210970374741823499",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "WallJump",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Movement",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -2426,25 +2439,8 @@
                                         }
                                     },
                                     {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "HighJump",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "template",
-                                                    "data": "Can Freeze Enemies"
-                                                }
-                                            ]
-                                        }
+                                        "type": "template",
+                                        "data": "Can Freeze Enemies"
                                     }
                                 ]
                             }
@@ -2491,7 +2487,7 @@
                         "Door to Habitation Deck (Middle)": {
                             "type": "and",
                             "data": {
-                                "comment": "TODO: spincancel",
+                                "comment": null,
                                 "items": [
                                     {
                                         "type": "resource",
@@ -2607,8 +2603,8 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 150.45997973657546,
-                        "y": 88.89969604863222,
+                        "x": 151.7786515217708,
+                        "y": 85.65953109072376,
                         "z": 0.0
                     },
                     "description": "",
@@ -2673,6 +2669,67 @@
                                             "name": "SpeedBooster",
                                             "amount": 1,
                                             "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Door to Restricted Corridor": {
+                            "type": "and",
+                            "data": {
+                                "comment": "You can diagonally spark into the corner and WJ/SJ to item then go back down, the reqs have to be here though",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "SpeedBooster",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "ShinesparkTrick",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Knowledge",
+                                            "amount": 4,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "SpaceJump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "WallJump",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -2746,7 +2803,7 @@
                         "Pickup (Power Bomb Tank)": {
                             "type": "or",
                             "data": {
-                                "comment": null,
+                                "comment": "Check the connection from item to restricted corridor for way to only go halfway up",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -2755,21 +2812,6 @@
                                             "name": "SpeedBooster",
                                             "amount": 1,
                                             "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": "TODO: you can diagonally shinespark into the corner, and then collect the item with SJ/WJ and then go back down.",
-                                            "items": [
-                                                {
-                                                    "type": "or",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": []
-                                                    }
-                                                }
-                                            ]
                                         }
                                     }
                                 ]
@@ -2898,7 +2940,7 @@
                         "Door to Habitation Storage": {
                             "type": "or",
                             "data": {
-                                "comment": "TODO: Add shinespark",
+                                "comment": null,
                                 "items": [
                                     {
                                         "type": "template",
@@ -2908,13 +2950,22 @@
                             }
                         },
                         "Other to Western Hub": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Can Use Any Bombs"
+                                        "data": "Can Break Single Bomb Blocks"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "MorphBall",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
                                     }
                                 ]
                             }
@@ -3037,21 +3088,6 @@
                                     {
                                         "type": "template",
                                         "data": "Can Use Power Bombs"
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": "TODO: is this guy permanently gone?",
-                                            "items": [
-                                                {
-                                                    "type": "or",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": []
-                                                    }
-                                                }
-                                            ]
-                                        }
                                     }
                                 ]
                             }
@@ -3198,28 +3234,8 @@
                                         }
                                     },
                                     {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": "TODO: can bounce in ball",
-                                            "items": [
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": []
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "MorphBall",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
+                                        "type": "template",
+                                        "data": "Can Bounce in Ball"
                                     }
                                 ]
                             }
@@ -3462,35 +3478,10 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Main Deck Save Room": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Missiles",
-                                            "amount": 3,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": "TODO: can kill with more than just missiles",
-                                            "items": [
-                                                {
-                                                    "type": "or",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": []
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
+                                "comment": "Geron no longer here",
+                                "items": []
                             }
                         }
                     }
@@ -3565,35 +3556,10 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Main Deck Recharge Room": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Missiles",
-                                            "amount": 3,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": "TODO: can kill with more than just missiels",
-                                            "items": [
-                                                {
-                                                    "type": "or",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": []
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
+                                "comment": "Geron no longer here",
+                                "items": []
                             }
                         },
                         "Door to Main Deck Navigation Room East": {
@@ -3748,21 +3714,6 @@
                                     {
                                         "type": "template",
                                         "data": "Can Freeze Enemies"
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": "TODO: can you do this with only HJ without freezing enemies?",
-                                            "items": [
-                                                {
-                                                    "type": "or",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": []
-                                                    }
-                                                }
-                                            ]
-                                        }
                                     }
                                 ]
                             }
@@ -3843,7 +3794,7 @@
                                                     "data": {
                                                         "type": "tricks",
                                                         "name": "ShinesparkTrick",
-                                                        "amount": 3,
+                                                        "amount": 2,
                                                         "negate": false
                                                     }
                                                 },
@@ -4956,8 +4907,8 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 149.82078853046593,
-                        "y": 90.93428912783753,
+                        "x": 151.33595456531236,
+                        "y": 87.8730158730159,
                         "z": 0.0
                     },
                     "description": "",
@@ -5076,8 +5027,8 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 154.56670043904086,
-                        "y": 72.4728132387707,
+                        "x": 151.33595456531236,
+                        "y": 72.82131935342946,
                         "z": 0.0
                     },
                     "description": "",
@@ -5307,16 +5258,11 @@
                         "Other to Crew Quarters East": {
                             "type": "or",
                             "data": {
-                                "comment": "TODO: proper geron reqs",
+                                "comment": null,
                                 "items": [
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Missiles",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
+                                        "type": "template",
+                                        "data": "Can Kill Geron"
                                     }
                                 ]
                             }
@@ -5395,16 +5341,11 @@
                         "Door to Crew Quarters East": {
                             "type": "or",
                             "data": {
-                                "comment": "TODO: proper geron reqs",
+                                "comment": null,
                                 "items": [
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Missiles",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
+                                        "type": "template",
+                                        "data": "Can Kill Geron"
                                     }
                                 ]
                             }
@@ -5444,16 +5385,11 @@
                         "Door to Crew Quarters West": {
                             "type": "or",
                             "data": {
-                                "comment": "TODO: proper geron reqs",
+                                "comment": null,
                                 "items": [
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Missiles",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
+                                        "type": "template",
+                                        "data": "Can Kill Geron"
                                     }
                                 ]
                             }
@@ -5567,7 +5503,7 @@
                     "pickup_index": 3,
                     "location_category": "minor",
                     "connections": {
-                        "Before Pit": {
+                        "Beside Door": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5741,8 +5677,8 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Before Pit": {
-                            "type": "and",
+                        "Beside Door": {
+                            "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
@@ -5807,61 +5743,6 @@
                     "location_category": "major",
                     "connections": {
                         "Arena": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Before Pit": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 935.0093979138696,
-                        "y": 393.6152019002376,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "connections": {
-                        "Pickup (Energy Tank)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Other to The Attic": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Missiles",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        },
-                        "Arena": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Beside Door": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5944,6 +5825,13 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
+                        "Pickup (Energy Tank)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Door to Crew Quarters East": {
                             "type": "or",
                             "data": {
@@ -5987,7 +5875,24 @@
                                 ]
                             }
                         },
-                        "Before Pit": {
+                        "Other to The Attic": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Missiles",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Arena": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6502,46 +6407,6 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {}
-                },
-                "to Sub-Zero Ventilation": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 40.0,
-                        "y": 168.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "door_idx": [
-                            106
-                        ]
-                    },
-                    "valid_starting_location": false,
-                    "connections": {}
-                },
-                "to Spitter Speedway": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 184.0,
-                        "y": 40.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "door_idx": [
-                            195
-                        ]
-                    },
-                    "valid_starting_location": false,
-                    "connections": {}
                 }
             }
         },
@@ -6684,26 +6549,6 @@
                             }
                         }
                     }
-                },
-                "to Sub-Zero Containment": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 424.0,
-                        "y": 184.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "door_idx": [
-                            196
-                        ]
-                    },
-                    "valid_starting_location": false,
-                    "connections": {}
                 }
             }
         },
@@ -6821,6 +6666,18 @@
                                             "amount": 1,
                                             "negate": false
                                         }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "Currently needs PBs for caccoon to disappear",
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Use Power Bombs"
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -6870,6 +6727,18 @@
                                             "name": "MorphBall",
                                             "amount": 1,
                                             "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "Currently needs PBs for caccoon to disappear",
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Use Power Bombs"
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -7000,6 +6869,115 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
+                        "Other to Silo Tunnel": {
+                            "type": "and",
+                            "data": {
+                                "comment": "Charge shinespark from Auxilary Power Station https://discord.com/channels/119665192110915584/1199873303892992020/1207854781406777405",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "SpeedBooster",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "HighJump",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": "TODO: tougher without charge",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "ChargeBeam",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "DoorLockRando",
+                                            "amount": 1,
+                                            "negate": true
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "EnemyRando",
+                                            "amount": 1,
+                                            "negate": true
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": "Get into tunnel",
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Bounce in Ball"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "MidAirMorph",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Movement",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "WaveBeam",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "ShinesparkTrick",
+                                            "amount": 4,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
                         "Door to Silo Save Room": {
                             "type": "and",
                             "data": {
@@ -7204,36 +7182,6 @@
                                             "name": "SpaceJump",
                                             "amount": 1,
                                             "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": "TODO: vines?",
-                                            "items": [
-                                                {
-                                                    "type": "or",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": []
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": "TODO: There's some weid cross room shinespark here: https://discord.com/channels/119665192110915584/1199873303892992020/1207854781406777405",
-                                            "items": [
-                                                {
-                                                    "type": "or",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": []
-                                                    }
-                                                }
-                                            ]
                                         }
                                     }
                                 ]
@@ -7564,6 +7512,15 @@
                                     {
                                         "type": "template",
                                         "data": "Can climb High Jump Wall"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "WallJump",
+                                            "amount": 3,
+                                            "negate": false
+                                        }
                                     }
                                 ]
                             }
@@ -8267,8 +8224,8 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 167.96685900281105,
-                        "y": 83.66444740346205,
+                        "x": 167.71574195427408,
+                        "y": 76.80559196155528,
                         "z": 0.0
                     },
                     "description": "",
@@ -8673,8 +8630,8 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 153.25723738626965,
-                        "y": 78.47366969947615,
+                        "x": 151.33595456531236,
+                        "y": 75.47750109218,
                         "z": 0.0
                     },
                     "description": "",
@@ -8882,8 +8839,8 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 150.74276261373038,
-                        "y": 85.17893575958092,
+                        "x": 152.66404543468764,
+                        "y": 84.33144022134849,
                         "z": 0.0
                     },
                     "description": "",
@@ -10107,8 +10064,8 @@
                     "node_type": "generic",
                     "heal": true,
                     "coordinates": {
-                        "x": 144.73596176821982,
-                        "y": 82.58064516129033,
+                        "x": 152.66404543468764,
+                        "y": 73.2640163098879,
                         "z": 0.0
                     },
                     "description": "",
