@@ -31,37 +31,36 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ##### Chozo Ruins
 
-- Changed: Vault: NSJ Bombless Wall Boost changed to Expert
-- Changed: Ruined: Nursery Bombless Standable Terrain NSJ adjusted to Advanced and w/ SJ adjusted to Intermediate
-- Changed: Hive Mecha: Fight Skip via Walkway Adjusted to Intermediate Movement
-- Added: Hive Mecha: Fight Skip NSJ Advanced Movement Bunny Hop
-- Added: Furnace: Spider Track Climb Trick Description
-- Changed: Furnace: "Under Spider Track" Node Renamed to "Next to Half-Pipe"
+- Changed: Vault: NSJ Bombless Wall Boost lowered to Expert
+- Changed: Ruined Nursery: bombless Standable Terrain NSJ lowered to Advanced and w/ SJ lowered to Intermediate
+- Changed: Hive Mecha: Fight skip via walkway lowered to Intermediate Movement
+- Added: Hive Mecha: Fight skip NSJ Advanced Movement bunny hop
+- Added: Furnace: Spider track climb trick description
 - Added: Furnace: Bombless Intermediate Movement to West Furnace Access 
-- Added: Burn Dome Access: Advanced Movement and Wallboost Bombless Escape 
-- Added: Hall of the Elders: Advanced Complex Bomb Jump Wave Slot Skip
+- Added: Burn Dome Access: Advanced Movement and Wallboost bombless escape 
+- Added: Hall of the Elders: Advanced Complex Bomb Jump wave slot skip
 
 ##### Phazon Mines
 
-- Added: Elite Research: Advanced IUJ Scanless Climb 
+- Added: Elite Research: Advanced IUJ scanless climb 
 - Added: Main Quarry: Advanced BSJ to Waste Disposal
-- Added: Metroid Quarantine B: Hypermode Single Room OOB NSJ Bombless
-- Added: Elevator Access A: Hypermode Bombless Spiderless Climb from Elevator A
+- Added: Metroid Quarantine B: Hypermode Single Room OOB NSJ bombless
+- Added: Elevator Access A: Hypermode bombless spiderless climb from Elevator A
 - Added: Elevator Access A: Expert Movement logic for climbing without Wave Beam
 - Changed: Phazon Processing Center: Item to Maintenance Tunnel L-Jump now has proper X-Ray logic
 - Changed: Phazon Processing Center: Item to Maitenance Tunnel Complex Bomb Jump has been properly replaced with Bomb Jump
 
 ##### Phendrana Drifts
 
-- Added: Frozen Pike NSJ Bombless Climb from Frost Cave Access now has proper Charge Beam, Scan Visor, and combat logic
-- Added: Hypermode Frozen Pike NSJ Bombless Climb from Bottom to Top
+- Added: Frozen Pike NSJ Bombless Climb from Frost Cave Access now has proper Charge Beam, Scan Visor, and Combat logic
+- Added: Hypermode Frozen Pike NSJ Bombless Climb from bottom to top
 - Added: Frozen Pike Hypermode BSJ to Transport Access
 - Added: Frozen Pike NSJ Hunter Cave to Frost Cave Intermediate Slope Jump
-- Changed: Transport Access Single Room OOB adjusted to expert and advanced
-- Added: Ice Ruins West Courtyard Entryway to Middle Platform NSJ Hypermode BSJ and NSJ damage boost
-- Added: Ice Ruins East Expert Single Room OOB Ice Item heist
-- Added: Ice Ruins East Advanced Single Room OOB and Hypermode Movement Spiderless Bombless Spider Track item
-- Added: Ruined Courtyard Advanced Movement Bunny Hop to Save Station A
+- Changed: Transport Access Single Room OOB lowered to expert and advanced tricks
+- Added: Ice Ruins West Courtyard Entryway to middle platform NSJ Hypermode BSJ and NSJ damage boost
+- Added: Ice Ruins East Expert Single Room OOB ice item heist
+- Added: Ice Ruins East Advanced Single Room OOB and Hypermode Movement spiderless bombless spider track item
+- Added: Ruined Courtyard Advanced Movement bunny hop to Save Station A
 
 ## [7.3.2] - 2024-02-??
 
