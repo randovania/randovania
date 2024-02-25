@@ -7,6 +7,7 @@ from typing import Self
 from frozendict import frozendict
 
 from randovania.bitpacking.json_dataclass import JsonDataclass
+from randovania.bitpacking.type_enforcement import DataclassPostInitTypeCheck
 from randovania.game_description.pickup.pickup_category import PickupCategory
 from randovania.game_description.resources.location_category import LocationCategory
 from randovania.game_description.resources.pickup_index import PickupIndex
@@ -17,7 +18,7 @@ EXCLUDE_DEFAULT = {"exclude_if_default": True}
 
 
 @dataclass(frozen=True)
-class StandardPickupDefinition(JsonDataclass):
+class StandardPickupDefinition(JsonDataclass, DataclassPostInitTypeCheck):
     game: RandovaniaGame = dataclasses.field(metadata={"init_from_extra": True})
     name: str = dataclasses.field(metadata={"init_from_extra": True})
     pickup_category: PickupCategory = dataclasses.field(metadata={"init_from_extra": True})
@@ -41,6 +42,7 @@ class StandardPickupDefinition(JsonDataclass):
     extra: frozendict = dataclasses.field(default_factory=frozendict, metadata=EXCLUDE_DEFAULT)
 
     def __post_init__(self) -> None:
+        super().__post_init__()
         if not self.progression and not self.ammo:
             raise ValueError(f"Standard Pickup {self.name} has no progression nor ammo.")
 
