@@ -106,8 +106,11 @@ Extra - room_id: [3]
   * Extra - door_idx: (84,)
   > Left Side
       Any of the following:
-          After Water Level Lowered or Damage Runs (Intermediate)
-          Gravity Suit and Damage Runs (Beginner)
+          After Water Level Lowered
+          Any of the following:
+              # TODO: damage values
+              Damage Runs (Intermediate)
+              Gravity Suit and Damage Runs (Beginner)
 
 > Left Side; Heals? False
   * Layers: default
@@ -116,17 +119,21 @@ Extra - room_id: [3]
   > Other to Drain Pipe
       Any of the following:
           After Water Level Lowered
+          # Gravity damage run
           Gravity Suit and Damage Runs (Beginner) and Electrified Water Damage ≥ 99
+          # Gravityless damage run
           Damage Runs (Intermediate) and Electrified Water Damage ≥ 299
   > Right Side
       All of the following:
           Morph Ball
           Any of the following:
+              # Freeze the Powamp
               Ice Beam and Wave Beam
               All of the following:
                   Missiles
                   Any of the following:
                       Diffusion Missiles
+                      # TODO: this only freezes the middle powamp. doesnt this thus also need lowered water/damage runs?
                       Ice Missiles and Movement (Advanced)
 
 > Right Side; Heals? False
@@ -137,15 +144,18 @@ Extra - room_id: [3]
       All of the following:
           Morph Ball
           Any of the following:
+              # Freeze the Powamp
               Ice Beam and Wave Beam
               All of the following:
                   Missiles
                   Any of the following:
                       Diffusion Missiles
+                      # TODO: this only freezes the bottom powamp. doesnt this thus also need lowered water/damage runs?
                       Ice Missiles and Movement (Advanced)
   > Before Data Room
       Any of the following:
           After Water Level Lowered
+          # TODO: what about gravity?
           Damage Runs (Beginner) and Electrified Water Damage ≥ 99
 
 > Before Data Room; Heals? False
@@ -154,6 +164,7 @@ Extra - room_id: [3]
       Trivial
   > Left Side
       All of the following:
+          # TODO: duplicated with right side -> left side?
           Morph Ball
           Any of the following:
               After Water Level Lowered
@@ -166,12 +177,15 @@ Extra - room_id: [3]
                   Ice Missiles or Movement (Advanced)
   > Right Side
       All of the following:
-          # If strictly on right side, space or wall jump required
-          Gravity Suit
+          # If strictly on right side, space or wall jump required -  TODO: does HJ *really* not work?
           Any of the following:
+              # Navigate through water
               After Water Level Lowered
               Damage Runs (Beginner) and Electrified Water Damage ≥ 99
-          Space Jump or Wall Jump (Intermediate)
+          All of the following:
+              # Item requirements
+              Gravity Suit
+              Space Jump or Wall Jump (Intermediate)
 
 ----------------
 Data Room
@@ -224,9 +238,11 @@ Extra - room_id: [6]
   * Extra - blocky: 29
   > Door to Sciser Stall
       All of the following:
+          # TODO: can you really hit that bomb block with only bombs?
           Can Use Any Bombs
           Any of the following:
               After Water Level Lowered or Damage Runs (Intermediate)
+              # TODO: damage values
               Gravity Suit and Damage Runs (Beginner)
 
 > Door to Sciser Stall; Heals? False
@@ -238,6 +254,7 @@ Extra - room_id: [6]
           Can Use Power Bombs
           Any of the following:
               After Water Level Lowered
+              # TODO: damage values
               Gravity Suit and Damage Runs (Beginner)
   > Room Center
       Can Use Any Bombs
@@ -258,6 +275,7 @@ Extra - room_id: [6]
           Speed Booster and Disabled Door Lock Rando and Disabled Entrance Rando
           Any of the following:
               After Water Level Lowered
+              # TODO: damage vlues
               Gravity Suit and Damage Runs (Beginner)
 
 > Other to Serris Escape; Heals? False
@@ -271,12 +289,16 @@ Extra - room_id: [6]
   * Layers: default
   > Door to Sciser Stall
       Any of the following:
+          # Destroy bonb blocks by standing off of crab - TODO: does this need JBJ/mid air morph?
           High Jump and Stand On Frozen Enemies (Beginner) and Can Freeze Enemies and Can Use Bombs
+          # Destroy bomb blocks with SJ - TODO: is the mid air morph tight here?
           Space Jump and Can Use Any Bombs
           All of the following:
+              # Speedboost through blocks
               Speed Booster
               Any of the following:
                   After Water Level Lowered
+                  # TODO: damage values
                   Gravity Suit and Damage Runs (Beginner)
   > Door to Skultera Sanctuary
       Trivial
@@ -285,6 +307,7 @@ Extra - room_id: [6]
           Speed Booster
           Any of the following:
               After Water Level Lowered
+              # TODO: damage values
               Gravity Suit and Damage Runs (Beginner)
   > Other to Serris Escape
       Can climb High Jump Wall
@@ -509,6 +532,7 @@ Extra - room_id: [13]
       All of the following:
           Missiles ≥ 2
           Any of the following:
+              # TODO: duplicated requirements, use a general node
               Can Use Bombs
               All of the following:
                   Can Use Power Bombs
@@ -743,9 +767,13 @@ Extra - room_id: [20]
   > Door to Pump Control Access
       All of the following:
           Gravity Suit and Morph Ball
-          After Water Level Lowered or Damage Runs (Beginner)
+          Any of the following:
+              After Water Level Lowered
+              # TODO: damage values
+              Damage Runs (Beginner)
           Any of the following:
               Can climb High Jump Wall
+              # Shinespark up
               Speed Booster and Shinespark Tricks (Beginner) and Disabled Door Lock Rando and Disabled Entrance Rando
   > Other to Waterway
       All of the following:
@@ -763,8 +791,12 @@ Extra - room_id: [20]
   * Extra - door_idx: (43,)
   > Door to Skultera Sanctuary
       All of the following:
+          # TODO: can you really do this without grav/HJ
           Morph Ball
-          After Water Level Lowered or Damage Runs (Beginner)
+          Any of the following:
+              After Water Level Lowered
+              # TODO: damage values
+              Damage Runs (Beginner)
   > Other to Breeding Tank Access
       Can Break Single Bomb Blocks
 
@@ -777,6 +809,7 @@ Extra - room_id: [20]
           Speed Booster and Disabled Door Lock Rando and Disabled Entrance Rando
           Any of the following:
               After Water Level Lowered
+              # TODO: damage requirements
               Gravity Suit and Damage Runs (Beginner)
 
 > Other to Breeding Tank Access; Heals? False
@@ -797,6 +830,7 @@ Extra - room_id: [21]
   * L0 Hatch to Reservoir West/Door to Pump Control Access
   * Extra - door_idx: (44,)
   > Door to Cargo Hold to Sector 5 (ARC)
+      # TODO: damage values
       After Water Level Lowered or Damage Runs (Beginner)
   > Door to Pump Control Save Room
       Morph Ball
@@ -808,6 +842,7 @@ Extra - room_id: [21]
   * L4 Hatch to Cargo Hold to Sector 5 (ARC)/Door to Pump Control Access
   * Extra - door_idx: (45,)
   > Door to Reservoir West
+      # TODO: damage values
       After Water Level Lowered or Damage Runs (Beginner)
 
 > Door to Pump Control Save Room; Heals? False
@@ -985,6 +1020,7 @@ Extra - room_id: [25]
   * Extra - door_idx: (51,)
   > By Hole
       All of the following:
+          # TODO: underwater WJs?
           Gravity Suit
           Space Jump or Wall Jump (Intermediate)
 
@@ -1016,6 +1052,7 @@ Extra - room_id: [25]
       All of the following:
           Morph Ball
           Any of the following:
+              # TODO: mid air morph?
               Movement (Intermediate) or Can Use Springball
               Gravity Suit and Can Use Bombs
 
@@ -1032,7 +1069,7 @@ Extra - room_id: [26]
 
 > Other to Security Bypass; Heals? False
   * Layers: default
-  * Tunnel to Security Bypass/Other to Level 4 Security Room
+  * Open Passage to Security Bypass/Other to Level 4 Security Room
   * Extra - door_idx: (98,)
   > Door to Security Access
       Trivial
@@ -1216,6 +1253,8 @@ Extra - room_id: [33]
 
 > Behind Speed Blocks; Heals? False
   * Layers: default
+  > Door to Pump Control Access
+      Impossible
   > Event - Pump Control Terminal
       Trivial
   > Next to Pickup
@@ -1235,6 +1274,7 @@ Extra - room_id: [33]
       Any of the following:
           Can Use Springball
           All of the following:
+              # TODO: see connection to before pump contorl
               Can Use Bombs
               Gravity Suit or After Water Level Lowered
   > Behind Speed Blocks
@@ -1242,7 +1282,7 @@ Extra - room_id: [33]
           Can Use Springball
           All of the following:
               Can Use Bombs
-              # Bombs assumes the water was lowered, grav required otherwise
+              # TODO: Bombs assumes the water was lowered, grav required otherwise
               Gravity Suit or After Water Level Lowered
 
 ----------------
@@ -1251,7 +1291,7 @@ Extra - map_name: Sector 434
 Extra - room_id: [34]
 > Other to Level 4 Security Room; Heals? False
   * Layers: default
-  * Tunnel to Level 4 Security Room/Other to Security Bypass
+  * Open Passage to Level 4 Security Room/Other to Security Bypass
   * Extra - door_idx: (72,)
 
 > Other to Cheddar Bay; Heals? False
@@ -1274,9 +1314,11 @@ Extra - room_id: [34]
   > Other to Cheddar Bay
       All of the following:
           Any of the following:
+              # Break bomb blocks - TODO: this seems off that you can do this with bombs only without any other tricks
               Can Use Any Bombs
               Gravity Suit and Screw Attack and Knowledge (Beginner)
           Any of the following:
+              # Get up to the higher level
               Underwater Wall Jump (Advanced)
               All of the following:
                   Gravity Suit
@@ -1295,6 +1337,7 @@ Extra - room_id: [35]
   > Other to Diffusion Connection Access
       All of the following:
           Diffusion Missiles and Missiles and Morph Ball
+          # Enter the tunnel
           Mid-Air Morph (Beginner) or Can Bounce in Ball
 
 > Door to Aquarium Speedway; Heals? False
@@ -1306,13 +1349,16 @@ Extra - room_id: [35]
           Missiles and Morph Ball
           Any of the following:
               All of the following:
+                  # Gravityless method - TODO: how does SJ help you here underwater?
                   Space Jump and Stand On Frozen Enemies (Beginner) and Can Freeze Enemies
                   High Jump or Movement (Advanced)
               All of the following:
+                  # Gravity method
                   Gravity Suit
                   Any of the following:
                       Space Jump
-                      Speed Booster and Disabled Door Lock Rando and Disabled Entrance Rando
+                      # Shinespark
+                      Speed Booster and Shinespark Tricks (Beginner) and Disabled Door Lock Rando and Disabled Entrance Rando
   > Door to Connection to Sector 2 (TRO)
       Gravity Suit and Screw Attack
 
@@ -1323,6 +1369,7 @@ Extra - room_id: [35]
   > Door to Aquarium Speedway
       All of the following:
           Gravity Suit and Screw Attack
+          # TODO: why advanced?
           Space Jump or Wall Jump (Advanced)
 
 > Other to Diffusion Connection Access; Heals? False
@@ -1530,6 +1577,7 @@ Extra - room_id: [40]
               All of the following:
                   Charge Beam
                   Missiles ≥ 2 or Wave Beam
+              # TODO: why do you  need missiles with screw?
               Gravity Suit and Missiles ≥ 2 and Screw Attack
           # To hurt the scisers in the enclosed area
           Wave Beam or Can Use Power Bombs
@@ -1607,7 +1655,7 @@ Extra - room_id: [42]
       After Serris
   > Event - Serris
       All of the following:
-          # Serris Weapon Requirements
+          # Serris Weapon Requirements - TODO: better missile reqs for serris
           Charge Beam or Missiles ≥ 10
           # Core-X Requirements
           Missiles
