@@ -405,7 +405,7 @@
                                 "items": []
                             }
                         },
-                        "Navigation Station": {
+                        "Navigation Terminal": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -453,12 +453,12 @@
                         }
                     }
                 },
-                "Navigation Station": {
+                "Navigation Terminal": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 152.69501600365797,
-                        "y": 82.98308184727938,
+                        "x": 152.7,
+                        "y": 82.98,
                         "z": 0.0
                     },
                     "description": "",
@@ -907,9 +907,9 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Data Checkpoint": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
-                                "comment": null,
+                                "comment": "TODO: damage run",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -926,7 +926,7 @@
                         "Door to Crow's Nest": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "TODO: damage run?",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -976,14 +976,22 @@
                         "Door to Data Checkpoint": {
                             "type": "and",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "comment": "TODO: this is trivial? Should need some jump upgrades + varia/damage runs",
+                                "items": [
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": []
+                                        }
+                                    }
+                                ]
                             }
                         },
                         "Door to Artic Underside": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "TODO: disabled door lock/Entrance rando, damage runs",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -1087,7 +1095,7 @@
                         "Door to Nightmare Training Grounds": {
                             "type": "or",
                             "data": {
-                                "comment": null,
+                                "comment": "TODO: varia/damage runs",
                                 "items": [
                                     {
                                         "type": "template",
@@ -1129,8 +1137,16 @@
                         "Door to Geron Checkpoint": {
                             "type": "and",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "comment": "TODO: needs varia or damage runs",
+                                "items": [
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": []
+                                        }
+                                    }
+                                ]
                             }
                         },
                         "Door to Ripper Road": {
@@ -1185,7 +1201,7 @@
                         "Door to Data Checkpoint": {
                             "type": "or",
                             "data": {
-                                "comment": null,
+                                "comment": "TODO: can kill PB geron",
                                 "items": [
                                     {
                                         "type": "template",
@@ -1230,7 +1246,7 @@
                         "Door to Geron Checkpoint": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "TODO: walljump? freezing enemies?",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -1293,10 +1309,20 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Nightmare Training Grounds": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "comment": "TODO: damage run",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "VariaSuit",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -1345,7 +1371,7 @@
                         "Door to Security Save Room": {
                             "type": "or",
                             "data": {
-                                "comment": null,
+                                "comment": "TODO: varia / damage runs",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -1394,8 +1420,16 @@
                         "Door to Arctic Containment": {
                             "type": "and",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "comment": "TODO: varia / damage runs",
+                                "items": [
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": []
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -1862,33 +1896,7 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Can Use Any Bombs"
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "ScrewAttack",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "Knowledge",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
+                                        "data": "Can Break Single Bomb Blocks"
                                     }
                                 ]
                             }
@@ -1939,14 +1947,22 @@
                         "Door to Groznyj Shaft": {
                             "type": "and",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "comment": "TODO: varia / damag erun",
+                                "items": [
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": []
+                                        }
+                                    }
+                                ]
                             }
                         },
                         "Door to Data Room": {
                             "type": "or",
                             "data": {
-                                "comment": null,
+                                "comment": "TODO: varia / damage run",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -1995,7 +2011,7 @@
                         "Door to Energy Tank Storage": {
                             "type": "or",
                             "data": {
-                                "comment": null,
+                                "comment": "TODO: varia / damage run",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -2009,7 +2025,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "TODO: is this really trivial? no tricks, no jump upgrades?",
                                             "items": [
                                                 {
                                                     "type": "template",
@@ -2024,7 +2040,7 @@
                         "Other to Transformation Trial": {
                             "type": "or",
                             "data": {
-                                "comment": null,
+                                "comment": "TODO: varia / damage runs",
                                 "items": [
                                     {
                                         "type": "template",
@@ -2068,8 +2084,16 @@
                         "Door to Groznyj Shaft": {
                             "type": "and",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "comment": "TODO: Varia / damag eruns",
+                                "items": [
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": []
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -2107,8 +2131,16 @@
                         "Door to Groznyj Shaft": {
                             "type": "and",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "comment": "TODO: varia / frozen",
+                                "items": [
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": []
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -4015,7 +4047,7 @@
                         "Door to Kago Speedway": {
                             "type": "or",
                             "data": {
-                                "comment": null,
+                                "comment": "TODO: is that kago ever there?",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -4032,7 +4064,7 @@
                         "Door to Groznyj Grad": {
                             "type": "or",
                             "data": {
-                                "comment": null,
+                                "comment": "TODO: is that kago ever there?",
                                 "items": [
                                     {
                                         "type": "template",
@@ -5068,7 +5100,7 @@
                                 "items": []
                             }
                         },
-                        "Recharge Station": {
+                        "Recharge Terminal": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5077,12 +5109,12 @@
                         }
                     }
                 },
-                "Recharge Station": {
+                "Recharge Terminal": {
                     "node_type": "generic",
                     "heal": true,
                     "coordinates": {
-                        "x": 151.652491998171,
-                        "y": 71.16780978509374,
+                        "x": 151.65,
+                        "y": 71.17,
                         "z": 0.0
                     },
                     "description": "",
@@ -5220,12 +5252,12 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "TODO: some way to get this with bombs and mid air morph / JBJ?",
                                             "items": [
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "TODO: is this meant for spring ball? if yes, use template",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -5729,7 +5761,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Destroy the bomb blocks - TODO: can you dome shenanigans with bombs only?",
                                             "items": [
                                                 {
                                                     "type": "template",
@@ -5767,7 +5799,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Get up - TODO: add WJ only without HJ",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -6320,7 +6352,7 @@
                         "Door to Kago Speedway": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "TODO: varia / damage runs?",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -6396,7 +6428,7 @@
                         "Door to Arctic Containment": {
                             "type": "and",
                             "data": {
-                                "comment": "Need to charge spark in other room",
+                                "comment": "Need to charge spark in other room - TODO: varia/damage runs",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -6478,7 +6510,7 @@
                         "Door to Security Shaft East": {
                             "type": "or",
                             "data": {
-                                "comment": null,
+                                "comment": "TODO: can you climb the PB tower trickless? can you lay the bomb in that spot trickless? Dont think so for both",
                                 "items": [
                                     {
                                         "type": "template",
@@ -6522,7 +6554,7 @@
                         "Door to Groznyj Shaft": {
                             "type": "or",
                             "data": {
-                                "comment": null,
+                                "comment": "TODO: can you climb the PB tower trickless? can you lay the bomb in that spot trickless? Dont think so for both",
                                 "items": [
                                     {
                                         "type": "template",
@@ -7459,7 +7491,7 @@
                         "Door to Zebesian Waters": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "TODO: can you not charge the speedboost in this room?",
                                 "items": [
                                     {
                                         "type": "resource",

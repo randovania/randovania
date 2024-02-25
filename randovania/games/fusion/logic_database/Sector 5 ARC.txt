@@ -71,7 +71,7 @@ Extra - room_id: [2]
   * Extra - door_idx: (6,)
   > Door to Elevator to Main Deck
       Trivial
-  > Navigation Station
+  > Navigation Terminal
       Trivial
 
 > Door to Elevator to Main Deck; Heals? False
@@ -81,7 +81,7 @@ Extra - room_id: [2]
   > Door to Entrance Save Room
       Trivial
 
-> Navigation Station; Heals? False
+> Navigation Terminal; Heals? False
   * Layers: default
   > Door to Entrance Save Room
       Trivial
@@ -168,8 +168,10 @@ Extra - room_id: [7, 15]
   * L0 Hatch to Nightmare Training Grounds/Door to Arctic Containment
   * Extra - door_idx: (14, 27)
   > Door to Data Checkpoint
+      # TODO: damage run
       Varia Suit
   > Door to Crow's Nest
+      # TODO: damage run?
       Varia Suit
 
 > Door to Geron Checkpoint; Heals? False
@@ -179,6 +181,7 @@ Extra - room_id: [7, 15]
   > Door to Data Checkpoint
       Trivial
   > Door to Artic Underside
+      # TODO: disabled door lock/Entrance rando, damage runs
       Speed Booster and Varia Suit
 
 > Door to Waver Ward; Heals? False
@@ -194,6 +197,7 @@ Extra - room_id: [7, 15]
   * Extra - door_idx: (30, 31)
   > Door to Nightmare Training Grounds
       Any of the following:
+          # TODO: varia/damage runs
           Wall Jump (Beginner) or Can climb High Jump Wall
           Stand On Frozen Enemies (Beginner) and Can Freeze Enemies
   > Door to Geron Checkpoint
@@ -206,6 +210,7 @@ Extra - room_id: [7, 15]
   * Open Hatch to Ripper Road/Door to Arctic Containment
   * Extra - door_idx: (56, 57)
   > Door to Data Checkpoint
+      # TODO: can kill PB geron
       Can Use Power Bombs
 
 > Door to Artic Underside; Heals? False
@@ -213,6 +218,7 @@ Extra - room_id: [7, 15]
   * L3 Hatch to Artic Underside/Door to Arctic Containment
   * Extra - door_idx: (99, 70)
   > Door to Geron Checkpoint
+      # TODO: walljump? freezing enemies?
       Morph Ball and Can climb High Jump Wall
   > Door to Waver Ward
       Can Use Any Bombs
@@ -222,7 +228,8 @@ Extra - room_id: [7, 15]
   * L3 Hatch to Crow's Nest/Door to Arctic Containment
   * Extra - door_idx: (53,)
   > Door to Nightmare Training Grounds
-      Trivial
+      # TODO: damage run
+      Varia Suit
 
 ----------------
 Geron Checkpoint
@@ -233,6 +240,7 @@ Extra - room_id: [8]
   * L0 Hatch to Arctic Containment/Door to Geron Checkpoint
   * Extra - door_idx: (36,)
   > Door to Security Save Room
+      # TODO: varia / damage runs
       Wave Beam
 
 > Door to Security Save Room; Heals? False
@@ -334,9 +342,7 @@ Extra - room_id: [12]
   * L0 Hatch to Frozen Tower/Door to Energy Tank Storage
   * Extra - door_idx: (23,)
   > Pickup (Hidden Energy Tank)
-      Any of the following:
-          Can Use Any Bombs
-          Screw Attack and Knowledge (Beginner)
+      Can Break Single Bomb Blocks
 
 ----------------
 Frozen Tower
@@ -349,6 +355,7 @@ Extra - room_id: [13]
   > Door to Groznyj Shaft
       Trivial
   > Door to Data Room
+      # TODO: varia / damage run
       Space Jump
 
 > Door to Groznyj Shaft; Heals? False
@@ -356,8 +363,13 @@ Extra - room_id: [13]
   * L3 Hatch to Groznyj Shaft/Door to Frozen Tower
   * Extra - door_idx: (49,)
   > Door to Energy Tank Storage
-      Space Jump or Can Freeze Enemies
+      Any of the following:
+          # TODO: varia / damage run
+          Space Jump
+          # TODO: is this really trivial? no tricks, no jump upgrades?
+          Can Freeze Enemies
   > Other to Transformation Trial
+      # TODO: varia / damage runs
       Can Bounce in Ball
 
 > Other to Transformation Trial; Heals? False
@@ -708,8 +720,10 @@ Extra - room_id: [24]
   > Door to Frozen Tower
       Trivial
   > Door to Kago Speedway
+      # TODO: is that kago ever there?
       Space Jump
   > Door to Groznyj Grad
+      # TODO: is that kago ever there?
       Can Use Power Bombs
 
 > Door to Kago Speedway; Heals? False
@@ -898,10 +912,10 @@ Extra - room_id: [32]
   * Extra - door_idx: (74,)
   > Door to Entrance Save Room
       Trivial
-  > Recharge Station
+  > Recharge Terminal
       Trivial
 
-> Recharge Station; Heals? True
+> Recharge Terminal; Heals? True
   * Layers: default
   > Door to Entrance Hub
       Trivial
@@ -933,8 +947,11 @@ Extra - room_id: [33]
   * Extra - door_idx: (82,)
   > Pickup (Hidden Missile Tank)
       Any of the following:
-          Can Use Power Bombs
-          High Jump and Can Use Bombs
+          Any of the following:
+              # TODO: some way to get this with bombs and mid air morph / JBJ?
+              Can Use Power Bombs
+              # TODO: is this meant for spring ball? if yes, use template
+              High Jump and Can Use Bombs
           Morph Ball and Screw Attack and Knowledge (Beginner)
   > Door to Nightmare Training Grounds
       Trivial
@@ -1023,9 +1040,11 @@ Extra - room_id: [36]
       All of the following:
           Morph Ball
           Any of the following:
+              # Destroy the bomb blocks - TODO: can you dome shenanigans with bombs only?
               Can Use Power Bombs
               Screw Attack and Knowledge (Beginner)
           Any of the following:
+              # Get up - TODO: add WJ only without HJ
               Space Jump
               # Possible to wall jump without high jump, but first jump through one tile gap is tricky
               High Jump and Wall Jump (Beginner)
@@ -1129,6 +1148,7 @@ Extra - room_id: [42]
   * L3 Hatch to Arctic Containment/Door to Artic Underside
   * Extra - door_idx: (100,)
   > Door to Kago Speedway
+      # TODO: varia / damage runs?
       Speed Booster and Shinespark Tricks (Expert) and Disabled Door Lock Rando and Disabled Entrance Rando
 
 > Door to Kago Speedway; Heals? False
@@ -1136,7 +1156,7 @@ Extra - room_id: [42]
   * L0 Hatch to Kago Speedway/Door to Artic Underside
   * Extra - door_idx: (101,)
   > Door to Arctic Containment
-      # Need to charge spark in other room
+      # Need to charge spark in other room - TODO: varia/damage runs
       Speed Booster and Disabled Door Lock Rando and Disabled Entrance Rando and Can Freeze Enemies
 
 ----------------
@@ -1148,6 +1168,7 @@ Extra - room_id: [43]
   * L0 Hatch to Groznyj Shaft/Door to Groznyj Grad
   * Extra - door_idx: (106,)
   > Door to Security Shaft East
+      # TODO: can you climb the PB tower trickless? can you lay the bomb in that spot trickless? Dont think so for both
       Can Use Any Bombs
 
 > Door to Security Shaft East; Heals? False
@@ -1155,6 +1176,7 @@ Extra - room_id: [43]
   * L0 Hatch to Security Shaft East/Door to Groznyj Grad
   * Extra - door_idx: (107,)
   > Door to Groznyj Shaft
+      # TODO: can you climb the PB tower trickless? can you lay the bomb in that spot trickless? Dont think so for both
       Can Use Any Bombs
 
 ----------------
@@ -1306,6 +1328,7 @@ Extra - room_id: [50]
   * Open Hatch to Cargo Hold to Sector 5 (ARC)/Other to Flooded Airlock to Sector 4 (AQA)
   * Extra - door_idx: (123,)
   > Door to Zebesian Waters
+      # TODO: can you not charge the speedboost in this room?
       Gravity Suit and Speed Booster and Disabled Door Lock Rando and Disabled Entrance Rando
 
 ----------------
