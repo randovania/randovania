@@ -523,13 +523,29 @@
                         "Door to Arctic Containment": {
                             "type": "and",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "comment": "TODO: really trivial???",
+                                "items": [
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": []
+                                        }
+                                    }
+                                ]
                             }
                         },
                         "Door to Entrance Hub": {
-                            "type": "template",
-                            "data": "Can climb High Jump Wall"
+                            "type": "or",
+                            "data": {
+                                "comment": "TODO: WJ off of door? shinespark? manipulate chute leeches?",
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can climb High Jump Wall"
+                                    }
+                                ]
+                            }
                         }
                     }
                 },
@@ -1478,8 +1494,16 @@
                         "Door to Level 3 Security Room": {
                             "type": "and",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "comment": "TODO: varia / damage reqs",
+                                "items": [
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": []
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -1517,7 +1541,7 @@
                         "Door to Security Save Room": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "TODO:  damage reqs",
                                 "items": [
                                     {
                                         "type": "or",
@@ -1757,7 +1781,7 @@
                         "Door to Groznyj Shaft": {
                             "type": "or",
                             "data": {
-                                "comment": null,
+                                "comment": "TODO: varia / damage reqs",
                                 "items": [
                                     {
                                         "type": "template",
@@ -1801,7 +1825,7 @@
                         "Door to Arctic Containment": {
                             "type": "or",
                             "data": {
-                                "comment": null,
+                                "comment": "TODO: varia / damage reqs",
                                 "items": [
                                     {
                                         "type": "template",
@@ -2181,7 +2205,7 @@
                         "Other to Flooded Tower": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "TODO: varia / damage runs",
                                 "items": []
                             }
                         }
@@ -2220,7 +2244,7 @@
                         "Pickup (Energy Tank)": {
                             "type": "or",
                             "data": {
-                                "comment": null,
+                                "comment": "TODO: varia / damage runs. Also doesnt this need bounce in ball?",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -2791,8 +2815,16 @@
                             }
                         },
                         "Door to Nightmare Recharge Room": {
-                            "type": "template",
-                            "data": "Can Use Power Bombs"
+                            "type": "or",
+                            "data": {
+                                "comment": "TODO: canyou not theoertically use bombs + SJ or something?",
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Use Power Bombs"
+                                    }
+                                ]
+                            }
                         }
                     }
                 },
@@ -2827,29 +2859,17 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Pickup (Hidden Power Bomb Tank)": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Can Use Bombs"
+                                        "data": "Can Use Any Bombs"
                                     },
                                     {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "template",
-                                                    "data": "Can Use Power Bombs"
-                                                },
-                                                {
-                                                    "type": "template",
-                                                    "data": "Can Use Springball"
-                                                }
-                                            ]
-                                        }
+                                        "type": "template",
+                                        "data": "Can Bounce in Ball"
                                     }
                                 ]
                             }
@@ -3107,7 +3127,7 @@
                         "Event - Nightmare": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "TODO: maybe HJ for this? i dont think you can reach the ladder otherwise",
                                 "items": [
                                     {
                                         "type": "or",
@@ -3573,8 +3593,16 @@
                         "Door to Groznyj Grad": {
                             "type": "and",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "comment": "TODO: varia / damage reqs",
+                                "items": [
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": []
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -3613,7 +3641,7 @@
                         "Door to Groznyj Grad": {
                             "type": "or",
                             "data": {
-                                "comment": null,
+                                "comment": "TODO: varia / damage reqs",
                                 "items": [
                                     {
                                         "type": "template",
@@ -3625,7 +3653,7 @@
                         "Door to Security Cache": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "TODO: varia / damage reqs",
                                 "items": [
                                     {
                                         "type": "template",
@@ -3634,7 +3662,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Get up",
                                             "items": [
                                                 {
                                                     "type": "and",
@@ -3692,8 +3720,16 @@
                         "Door to Kago Blockade": {
                             "type": "and",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "comment": "TODO: varia / damage reqs",
+                                "items": [
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": []
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -3731,7 +3767,7 @@
                         "Pickup (Power Bomb Tank)": {
                             "type": "or",
                             "data": {
-                                "comment": null,
+                                "comment": "TODO: varia / damage reqs",
                                 "items": [
                                     {
                                         "type": "template",
@@ -3743,7 +3779,7 @@
                         "Door to Level 3 Security Room": {
                             "type": "or",
                             "data": {
-                                "comment": null,
+                                "comment": "TODO: varia / damage reqs",
                                 "items": [
                                     {
                                         "type": "template",
@@ -3787,7 +3823,7 @@
                         "Door to Level 3 Security Room": {
                             "type": "or",
                             "data": {
-                                "comment": null,
+                                "comment": "TODO: varia / damage reqs",
                                 "items": [
                                     {
                                         "type": "template",
@@ -3831,8 +3867,16 @@
                         "Door to Level 3 Security Room": {
                             "type": "and",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "comment": "TODO: varia / damage reqs",
+                                "items": [
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": []
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -4287,7 +4331,7 @@
                         "Door to Arctic Containment": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "TODO: varia / damage runs",
                                 "items": []
                             }
                         }
@@ -4326,7 +4370,7 @@
                         "Pickup (Power Bomb Tank)": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "TODO: varia / damage reqs",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -4354,7 +4398,7 @@
                                                             {
                                                                 "type": "or",
                                                                 "data": {
-                                                                    "comment": null,
+                                                                    "comment": "TODO: this should be spring ball template?",
                                                                     "items": [
                                                                         {
                                                                             "type": "resource",
@@ -4383,7 +4427,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "Crumble jumps",
+                                                        "comment": "Crumble jumps - TODO: dont you need to kill the rippers for this?",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -5510,12 +5554,20 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "resource",
+                                                    "type": "and",
                                                     "data": {
-                                                        "type": "tricks",
-                                                        "name": "Movement",
-                                                        "amount": 4,
-                                                        "negate": false
+                                                        "comment": "Crumble block side - TODO: video? do you unmorph? spring ball jump?",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Movement",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -6173,8 +6225,16 @@
                         "Door to Save Room South": {
                             "type": "and",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "comment": "TODO: what about events? isntt here a case where kago is purple?",
+                                "items": [
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": []
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -6213,8 +6273,16 @@
                         "Door to Security Shaft East": {
                             "type": "and",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "comment": "TODO: what about events? isntt here a case where kago is purple?",
+                                "items": [
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": []
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -6915,7 +6983,7 @@
                         "Door to Flooded Airlock to Sector 4 (AQA)": {
                             "type": "or",
                             "data": {
-                                "comment": null,
+                                "comment": "TODO: grav + screw? Also damage seems loooow",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -6982,7 +7050,7 @@
                         "Door to Flooded Tower": {
                             "type": "or",
                             "data": {
-                                "comment": null,
+                                "comment": "TODO: grav + screw? Also damage seems loooow",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -7017,8 +7085,16 @@
                         "Door to Flooded Access": {
                             "type": "and",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "comment": "TODO: is this really trivial?",
+                                "items": [
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": []
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -7189,7 +7265,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Recharge Station": {
+                        "Recharge Terminal": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7198,12 +7274,12 @@
                         }
                     }
                 },
-                "Recharge Station": {
+                "Recharge Terminal": {
                     "node_type": "generic",
                     "heal": true,
                     "coordinates": {
-                        "x": 135.6671239140375,
-                        "y": 67.34522176497487,
+                        "x": 135.67,
+                        "y": 67.35,
                         "z": 0.0
                     },
                     "description": "",
@@ -7570,8 +7646,16 @@
                         "Other to Frozen Tower": {
                             "type": "and",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "comment": "TODO: varia / damage reqs",
+                                "items": [
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": []
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -7609,7 +7693,7 @@
                         "Pickup (Hidden Missile Tank)": {
                             "type": "or",
                             "data": {
-                                "comment": null,
+                                "comment": "TODO: varia / damage reqs",
                                 "items": [
                                     {
                                         "type": "and",
