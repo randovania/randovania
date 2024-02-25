@@ -9,9 +9,15 @@ from PySide6 import QtWidgets
 from randovania.game_description import data_reader, pretty_print
 from randovania.game_description.db.area_identifier import AreaIdentifier
 from randovania.game_description.db.node import NodeLocation
+from randovania.game_description.requirements.base import Requirement
+from randovania.game_description.requirements.requirement_and import RequirementAnd
+from randovania.game_description.requirements.requirement_or import RequirementOr
+from randovania.game_description.requirements.requirement_template import RequirementTemplate
+from randovania.game_description.requirements.resource_requirement import ResourceRequirement
+from randovania.game_description.resources.resource_collection import ResourceCollection
 from randovania.games import default_data
 from randovania.games.game import RandovaniaGame
-from randovania.gui.data_editor import DataEditorWindow
+from randovania.gui.data_editor import DataEditorWindow, _ui_patch_and_simplify
 
 
 def test_select_area_by_name(
@@ -172,3 +178,73 @@ def test_create_new_dock(skip_qtbot, tmp_path, blank_game_data):
     assert window.current_node is new_node
 
     assert target_area.node_with_name("Dock to Back-Only Lock Room") is not None
+
+
+def test_ui_patch_and_simplify_trivial_in_or(echoes_resource_database):
+    # Trivial in Or
+    assert (
+        _ui_patch_and_simplify(
+            RequirementOr(
+                [
+                    Requirement.trivial(),
+                    Requirement.impossible(),
+                ],
+                comment="COM",
+            ),
+            ResourceCollection(),
+            echoes_resource_database,
+        )
+        == Requirement.trivial()
+    )
+
+
+def test_ui_patch_and_simplify_impossible_in_and(echoes_resource_database):
+    # Impossible in And
+    assert (
+        _ui_patch_and_simplify(
+            RequirementAnd(
+                [
+                    Requirement.trivial(),
+                    Requirement.impossible(),
+                ],
+                comment="COM",
+            ),
+            ResourceCollection(),
+            echoes_resource_database,
+        )
+        == Requirement.impossible()
+    )
+
+
+def test_ui_patch_and_simplify_remove_present_resources(echoes_resource_database):
+    db = echoes_resource_database
+
+    # Remove present resources, plus trivial in And
+    col = ResourceCollection.with_database(db)
+    col.set_resource(db.get_item("Seekers"), 1)
+    assert _ui_patch_and_simplify(
+        RequirementAnd(
+            [
+                ResourceRequirement.simple(db.get_item("Seekers")),
+                ResourceRequirement.simple(db.get_item("ScrewAttack")),
+                Requirement.trivial(),
+            ],
+            comment="COM",
+        ),
+        col,
+        db,
+    ) == RequirementAnd([ResourceRequirement.simple(db.get_item("ScrewAttack"))])
+
+
+def test_ui_patch_and_simplify_template(echoes_resource_database):
+    db = echoes_resource_database
+
+    assert _ui_patch_and_simplify(
+        RequirementTemplate("Use Screw Attack (No Space Jump)"), ResourceCollection(), db
+    ) == RequirementTemplate("Use Screw Attack (No Space Jump)")
+
+    col = ResourceCollection.with_database(db)
+    col.set_resource(db.get_item("ScrewAttack"), 1)
+    assert _ui_patch_and_simplify(RequirementTemplate("Use Screw Attack (No Space Jump)"), col, db) == RequirementAnd(
+        [ResourceRequirement.simple(db.get_item("MorphBall"))]
+    )
