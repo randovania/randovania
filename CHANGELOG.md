@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: A warning will be shown when trying to generate a game where more items are in the pool than the maximum amount of items.
 - Added: When a game is exported via ftp, a message is displayed indicating that an attempt is being made to connect to the ftp server instead of the patcher's misleading "Done" message.
+- Fixed: Generating a game after customizing a preset will not completely freeze Randovania anymore.
 - Fixed: The collection text displayed when mixing Hide All model style with Random models and a cross-game multiworld is now always a generic message when your own pickup is disguised as a pickup of another game.
 - Fixed: In the Item Pool tab, selecting Shuffled now works properly for non-progressive entries with multiple copies and certain other items.
 - Fixed: Changelog window properly displays images.
@@ -40,12 +41,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Dread
 
-- Added: "Access Permanently Closed" doors can be used in Door Lock Randomizer. This includes new default and alternate textures in cosmetic options. 
+- Added: "Access Permanently Closed" doors can be used in Door Lock Randomizer. This includes new default and alternate textures in cosmetic options.
 - Added: New Missile Launcher model for Prime, Echoes, and AM2R multiworld pickups.
 - Added: New Super Missile Expansion model for AM2R multiworld pickups.
-- Fixed: Wide Beam shields now require the Wide Beam to break, and cannot be cheesed with Wave or Plasma beam. 
+- Fixed: Wide Beam shields now require the Wide Beam to break, and cannot be cheesed with Wave or Plasma beam.
 - Fixed: Saves from a different world in the same multiworld session are correctly handled as incompatible.
-- Fixed: Text is patched in all languages, not just English. 
+- Fixed: Text is patched in all languages, not just English.
 
 #### Logic Database
 
@@ -56,7 +57,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Metroid Prime
 
 - Added: New hash words
- 
+
 ## [7.3.2] - 2024-02-??
 
 - TODO: fill out or remove.
@@ -217,8 +218,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ##### Ferenia
 
-- Added: In Space Jump Room: Use Grapple Beam to jump out of water above Underwater Ledge Left, and use Single Wall Jump, Spin Boost or Flash Shift to reach Dock to Transport to Ghavoran. Video included. 
-- Changed: In Space Jump Room: Can traverse from Underwater Ledge Left to Dock to Transport to Ghavoran using Spider Magnet, with either Flash Shift and Wall Jump or Morph Ball and Single Wall Jump. 
+- Added: In Space Jump Room: Use Grapple Beam to jump out of water above Underwater Ledge Left, and use Single Wall Jump, Spin Boost or Flash Shift to reach Dock to Transport to Ghavoran. Video included.
+- Changed: In Space Jump Room: Can traverse from Underwater Ledge Left to Dock to Transport to Ghavoran using Spider Magnet, with either Flash Shift and Wall Jump or Morph Ball and Single Wall Jump.
 - Changed: In Space Jump Room: Added a video for reaching the Missile Tank with only Morph Ball and Bombs
 - Changed: In Space Jump Room: Added a video traversing from Underwater Bottom to Underwater Ledge Left with only Grapple Beam.
 
@@ -237,7 +238,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: If the user starts with random items, then an item collection screen will now be shown, telling the player which items they start with.
 - Added: Clearer GUI symbols, when expansions have been collected, but not their corresponding launcher.
 - Added: When softlock prevention is active, then the first two crumble blocks in Super Missile Chamber will be shoot blocks instead.
-- Changed: "Distribution Center - Energy Distribution Emergency Exit" has updated behavior when 'Softlock Prevention' is enabled. Before, only the bottom row of Speed Booster blocks were removed. Now, all of them have been removed, except for the leftmost pillar. 
+- Changed: "Distribution Center - Energy Distribution Emergency Exit" has updated behavior when 'Softlock Prevention' is enabled. Before, only the bottom row of Speed Booster blocks were removed. Now, all of them have been removed, except for the leftmost pillar.
 - Fixed: When spinjumping into a progressive Space Jump, the spinjump SFX is not being infinitely looped anymore.
 - Fixed: Entering "Hatchling Room Underside" will now show the Metroid scan notification only once.
 
@@ -351,7 +352,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: In Gravity Suit Tower: Getting from the Lower door to Ammo Station South to the Lower door to Gravity Suit Room is now locked behind Highly Dangerous Logic
 
 ##### Cataris
-- Added: In Underlava Puzzle Room 2: Use Speed Booster with at least one upgrade to shinespark through the speed blocks from the right. 
+- Added: In Underlava Puzzle Room 2: Use Speed Booster with at least one upgrade to shinespark through the speed blocks from the right.
 
 ##### Ferenia
 
@@ -433,11 +434,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - **Major** - Added: AM2R has been added with full single player support. Includes Door Lock Rando, some toggleable patches and more.
 - Changed: The Changelog window has received a slight overhaul. The date of each release is shown, hyperlinks are fixed, and patch notes are now accessed through a drop-down box (previously used vertical tabs).
-- Changed: Trick level sliders ignore mouse scroll inputs, preventing unintended preset changes. 
+- Changed: Trick level sliders ignore mouse scroll inputs, preventing unintended preset changes.
 - Changed: The Trick Details list in the menu bar no longer displays tricks that shouldn't be visible in the UI.
 - Changed: For Multiworld, sending collected locations to the server can no longer fail if there's an error encoding the inventory.
 - Changed: The directory layout has now changed, moving everything that isn't the executable to an `_internal` folder.
-- Changed: When verifying the installation, missing files and modified files are listed in the console and log. 
+- Changed: When verifying the installation, missing files and modified files are listed in the console and log.
 - Changed: An explicit error is now displayed when a preset has minimum random starting items higher than the maximum.
 - Fixed: Map tracker selects the correct start location if the preset has only one start location that is not the default.
 - Fixed: When verifying the installation, the title of the popup now properly says "Verifying installation".
@@ -464,7 +465,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Metroid Dread
 
 - Fixed: Custom shields now use the correct shader and texture effects and no longer a black background
-- Fixed: Issues with negative amount for ammo items. The current amount was set to a wrong value and you had to use a ammo refill station. This also caused issues with the auto tracker and multiworld. 
+- Fixed: Issues with negative amount for ammo items. The current amount was set to a wrong value and you had to use a ammo refill station. This also caused issues with the auto tracker and multiworld.
 
 #### Logic Database
 
@@ -520,7 +521,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Crash when exporting a seed with a blast shield in phazon infusion chamber and essence death teleporter
 - Fixed: [PAL/JP] Restored Missile and Charge shot stun in one hit on Ridley
 - Fixed: [PAL/JP] Restored Wavebuster cheese on Ridley
-- Fixed: When customizing cosmetic options, the labels are now properly updated. 
+- Fixed: When customizing cosmetic options, the labels are now properly updated.
 
 ### Metroid Prime 2: Echoes
 
