@@ -454,7 +454,7 @@
                     }
                 },
                 "Navigation Terminal": {
-                    "node_type": "generic",
+                    "node_type": "hint",
                     "heal": false,
                     "coordinates": {
                         "x": 152.7,
@@ -465,8 +465,18 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "hint_name": "Sector5Entrance"
+                    },
                     "valid_starting_location": false,
+                    "kind": "generic",
+                    "requirement_to_collect": {
+                        "type": "and",
+                        "data": {
+                            "comment": null,
+                            "items": []
+                        }
+                    },
                     "connections": {
                         "Door to Entrance Save Room": {
                             "type": "and",

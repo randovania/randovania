@@ -400,19 +400,29 @@
                     }
                 },
                 "Navigation Terminal": {
-                    "node_type": "generic",
+                    "node_type": "hint",
                     "heal": false,
                     "coordinates": {
-                        "x": 152.44096315636784,
-                        "y": 86.86510008703223,
+                        "x": 152.44,
+                        "y": 86.87,
                         "z": 0.0
                     },
                     "description": "",
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "hint_name": "Sector1Entrance"
+                    },
                     "valid_starting_location": false,
+                    "kind": "generic",
+                    "requirement_to_collect": {
+                        "type": "and",
+                        "data": {
+                            "comment": null,
+                            "items": []
+                        }
+                    },
                     "connections": {
                         "Door to Elevator to Main Deck": {
                             "type": "and",

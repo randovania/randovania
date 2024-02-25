@@ -305,7 +305,7 @@
                                 "items": []
                             }
                         },
-                        "Navigation Station": {
+                        "Navigation Terminal": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -353,20 +353,30 @@
                         }
                     }
                 },
-                "Navigation Station": {
-                    "node_type": "generic",
+                "Navigation Terminal": {
+                    "node_type": "hint",
                     "heal": false,
                     "coordinates": {
-                        "x": 153.71921124099657,
-                        "y": 84.62486716259298,
+                        "x": 153.72,
+                        "y": 84.62,
                         "z": 0.0
                     },
                     "description": "",
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "hint_name": "Sector4Entrance"
+                    },
                     "valid_starting_location": false,
+                    "kind": "generic",
+                    "requirement_to_collect": {
+                        "type": "and",
+                        "data": {
+                            "comment": null,
+                            "items": []
+                        }
+                    },
                     "connections": {
                         "Door to Elevator to Main Deck": {
                             "type": "and",
