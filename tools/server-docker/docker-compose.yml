@@ -37,7 +37,7 @@ services:
       labels:
         - traefik.enable=true
         - traefik.constraint-label=traefik-public
-        - traefik.http.routers.rdv_${SERVER_ENVIRONMENT}.rule=Host(`${DOMAIN}`) && PathPrefix(`/${PATH_PREFIX}`)
+        - traefik.http.routers.rdv_${SERVER_ENVIRONMENT}.rule=(Host(`${DOMAIN}`) && PathPrefix(`/${PATH_PREFIX}`)) || Host(`${DOMAIN2}`)
         - traefik.http.routers.rdv_${SERVER_ENVIRONMENT}.entrypoints=websecure
         - traefik.http.routers.rdv_${SERVER_ENVIRONMENT}.tls.certresolver=le
         - traefik.http.routers.rdv_${SERVER_ENVIRONMENT}.middlewares=rdv_${SERVER_ENVIRONMENT}_stripprefix
