@@ -540,11 +540,20 @@
                         "Door to Entrance Hub": {
                             "type": "or",
                             "data": {
-                                "comment": "TODO: WJ off of door? shinespark? manipulate chute leeches?",
+                                "comment": null,
                                 "items": [
                                     {
                                         "type": "template",
                                         "data": "Can climb High Jump Wall"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "WallJump",
+                                            "amount": 3,
+                                            "negate": false
+                                        }
                                     }
                                 ]
                             }
@@ -1011,7 +1020,7 @@
                         "Door to Artic Underside": {
                             "type": "and",
                             "data": {
-                                "comment": "TODO: disabled door lock/Entrance rando, damage runs",
+                                "comment": null,
                                 "items": [
                                     {
                                         "type": "resource",
@@ -1307,11 +1316,11 @@
                         "Door to Data Checkpoint": {
                             "type": "or",
                             "data": {
-                                "comment": "TODO: can kill PB geron",
+                                "comment": null,
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Can Use Power Bombs"
+                                        "data": "Can Kill PB Geron"
                                     }
                                 ]
                             }
@@ -4505,7 +4514,7 @@
                         "Door to Groznyj Grad": {
                             "type": "or",
                             "data": {
-                                "comment": "TODO: is that kago ever there?",
+                                "comment": null,
                                 "items": [
                                     {
                                         "type": "template",
@@ -5816,7 +5825,7 @@
                                     },
                                     {
                                         "type": "template",
-                                        "data": "Can Bounce in Ball"
+                                        "data": "Can Use Springball"
                                     }
                                 ]
                             }
@@ -5943,7 +5952,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "Crumble block side - TODO: video? do you unmorph? spring ball jump?",
+                                                        "comment": "Crumble block side",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -5953,6 +5962,10 @@
                                                                     "amount": 4,
                                                                     "negate": false
                                                                 }
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Use Springball"
                                                             }
                                                         ]
                                                     }
@@ -6283,10 +6296,30 @@
                                             "comment": "Get past pirates TODO",
                                             "items": [
                                                 {
-                                                    "type": "and",
+                                                    "type": "resource",
                                                     "data": {
-                                                        "comment": null,
-                                                        "items": []
+                                                        "type": "items",
+                                                        "name": "ChargeBeam",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Missiles",
+                                                        "amount": 10,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "ScrewAttack",
+                                                        "amount": 1,
+                                                        "negate": false
                                                     }
                                                 }
                                             ]

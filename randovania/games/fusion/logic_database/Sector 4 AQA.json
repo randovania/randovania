@@ -10640,7 +10640,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": "Serris Weapon Requirements - TODO: better missile reqs for serris",
+                                            "comment": "Serris Weapon Requirements",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -10658,6 +10658,27 @@
                                                         "name": "Missiles",
                                                         "amount": 10,
                                                         "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Missiles",
+                                                                    "amount": 5,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "20 DMG Missiles"
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
