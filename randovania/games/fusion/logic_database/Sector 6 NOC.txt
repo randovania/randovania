@@ -19,8 +19,7 @@ Extra - room_id: [0]
   > Door to Geron's Crossing
       Trivial
   > Door to Connection to Sector 4 (AQA)
-      # TODO: can you break the bomb blocks with screw?
-      Screw Attack and Can Use Any Bombs
+      Screw Attack and Can Break Single Bomb Blocks
 
 > Door to Geron's Crossing; Heals? False
   * Layers: default
@@ -41,8 +40,12 @@ Extra - room_id: [0]
   * L0 Hatch to Connection to Sector 4 (AQA)/Door to Entrance Hub
   * Extra - door_idx: (79,)
   > Door to Entrance Recharge Room
-      # TODO: Wall jump possible - also breaking the bomb blocks needs better logic, this is not trivial with only bombs
-      Screw Attack and Can Use Any Bombs and Can climb High Jump Wall
+      All of the following:
+          Any of the following:
+              Can Use Power Bombs
+              Screw Attack and Knowledge (Beginner)
+              Jump Bombjump (Expert) and Can Use Bombs
+          Wall Jump (Beginner) or Can climb High Jump Wall
 
 ----------------
 Entrance Save Room
@@ -106,13 +109,14 @@ Extra - room_id: [3]
   * Extra - door_idx: (7,)
   > Door to Nocturnal Access
       Any of the following:
-          # Bottom way - TODO: do you really need no jump upgrades?
           Can Kill Super Geron
+          Speed Booster and Shinespark Tricks (Advanced) and Disabled Door Lock Rando and Disabled Entrance Rando
           # Upper way
           Screw Attack
   > Other to Entrance Hub
-      # TODO: can you break this with screw too?
-      Can Use Any Bombs
+      Any of the following:
+          Can Break Single Bomb Blocks
+          Speed Booster and Knowledge (Intermediate) and Shinespark Tricks (Advanced) and Disabled Door Lock Rando and Disabled Entrance Rando
 
 > Door to Nocturnal Access; Heals? False
   * Layers: default
@@ -127,8 +131,7 @@ Extra - room_id: [3]
           # Upper way
           Screw Attack
   > Other to Vault
-      # TODO: can you break this with screw?
-      Can Use Any Bombs
+      Can Break Single Bomb Blocks
 
 > Other to Entrance Hub; Heals? False
   * Layers: default
@@ -144,7 +147,6 @@ Extra - room_id: [3]
   * Tunnel to Vault/Other to Geron's Crossing
   * Extra - door_idx: (75,)
   > Door to Nocturnal Access
-      # TODO: really no jump upgrades?
       Can Use Any Bombs
 
 ----------------
@@ -204,7 +206,6 @@ Extra - room_id: [5]
   * L0 Hatch to Nocturnal Playground/Door to Nocturnal Shaft
   * Extra - door_idx: (14,)
   > Door to Nocturnal Access
-      # TODO: No wall jumping required to navigate up? Probably needs boxes intact
       Movement (Beginner) or Can climb High Jump Wall
 
 > Door to Connection to Sector 5 (ARC); Heals? False
@@ -219,8 +220,9 @@ Extra - room_id: [5]
   * L0 Hatch to Pillar Puzzle/Door to Nocturnal Shaft
   * Extra - door_idx: (85,)
   > Door to Forbidden Entrance
-      # TODO: Adjacent room requires bombs to setup speed booster
-      Speed Booster
+      All of the following:
+          Speed Booster and Disabled Entrance Rando
+          Wave Beam or Can Use Bombs
 
 ----------------
 Missile Access
@@ -301,17 +303,13 @@ Extra - room_id: [9]
   * Layers: default
   * L0 Hatch to Nocturnal Playground/Door to Clogged Cavern
   * Extra - door_idx: (17,)
-  > Door to Shell Access
-      # TODO: this connection should be to menu corridor
-      Speed Booster
+  > Door to Menu Corridor
+      Speed Booster or Disabled Entrance Rando
 
 > Door to Shell Access; Heals? False
   * Layers: default
   * L0 Hatch to Shell Access/Door to Clogged Cavern
   * Extra - door_idx: (18,)
-  > Door to Nocturnal Playground
-      # TODO: this connection should be from menu corridor - also disabled door lock rando + entrance rando
-      Speed Booster and Shinespark Tricks (Intermediate)
   > Door to Menu Corridor
       Trivial
 
@@ -319,6 +317,8 @@ Extra - room_id: [9]
   * Layers: default
   * L0 Hatch to Menu Corridor/Door to Clogged Cavern
   * Extra - door_idx: (46,)
+  > Door to Nocturnal Playground
+      Speed Booster or Shinespark Tricks (Intermediate) or Disabled Door Lock Rando or Disabled Entrance Rando
   > Door to Shell Access
       Trivial
 
@@ -433,16 +433,17 @@ Extra - room_id: [13]
       After Varia Core-X
   > Event - Varia Core-X
       All of the following:
-          # TODO: missing missiles for core-x. Also maybe revise needed beams?
+          # Mega-X Requirements
+          Charge Beam
           All of the following:
-              # Weapon Requirements
-              Charge Beam
-              Plasma Beam or Wide Beam or Combat (Intermediate)
+              # Core-X Requirements
+              Missiles
+              Combat (Beginner) or 20 DMG Missiles
           Any of the following:
               # Health Requirements
-              Combat (Expert) or Normal Damage ≥ 600
-              Combat (Beginner) and Normal Damage ≥ 500
-              Combat (Intermediate) and Normal Damage ≥ 300
+              Combat (Expert) or Normal Damage ≥ 500
+              Combat (Beginner) and Normal Damage ≥ 400
+              Combat (Intermediate) and Normal Damage ≥ 200
               Combat (Advanced) and Normal Damage ≥ 100
 
 ----------------
@@ -465,9 +466,9 @@ Extra - room_id: [14]
   * Extra - door_idx: (28,)
   > Door to Forbidden Entrance
       Any of the following:
-          # TODO: freezing enemies?
           Space Jump
           High Jump and Wall Jump (Beginner)
+          Stand On Frozen Enemies (Beginner) and Can Freeze Enemies
 
 > Door to Spaceboost Alley; Heals? False
   * Layers: default
@@ -476,8 +477,7 @@ Extra - room_id: [14]
   > Door to Forbidden Entrance
       Any of the following:
           Morph Ball
-          # TODO: missing speedbosoter and door lock rando n stuff
-          Space Jump and Shinespark Tricks (Beginner)
+          Space Jump and Speed Booster and Shinespark Tricks (Beginner) and Disabled Door Lock Rando and Disabled Entrance Rando
 
 ----------------
 Zozoro Wine Cellar
@@ -496,8 +496,12 @@ Extra - room_id: [15]
   * Tunnel to Blue X Blockade/Other to Zozoro Wine Cellar
   * Extra - door_idx: (29,)
   > Pickup (Hidden Missile Tank)
-      # TODO: without jump upgrades?
-      Can Use Any Bombs
+      All of the following:
+          Can Use Any Bombs
+          Any of the following:
+              Can climb High Jump Wall
+              Stand On Frozen Enemies (Beginner) and Can Freeze Enemies
+              Jump Bombjump (Expert) and Can Use Bombs
 
 ----------------
 X-B.O.X. Arena
@@ -648,8 +652,9 @@ Extra - room_id: [18]
   * L0 Hatch to X-B.O.X. Arena/Door to X-B.O.X. Garage (Upper)
   * Extra - door_idx: (88,)
   > Pickup (Hidden Power Bomb Tank)
-      # TODO: can you ledge grab this?
-      Can Use Any Bombs
+      All of the following:
+          Can Use Any Bombs
+          Movement (Beginner) or Can Use Springball
   > Door to X-B.O.X. Arena (Lower)
       Screw Attack
 
@@ -687,8 +692,9 @@ Extra - room_id: [20]
   * L0 Hatch to Neglected Save Room/Door to Neglected Shaft
   * Extra - door_idx: (41,)
   > Door to Bull Bend
-      # TODO: Freezing an enemy is also an option
-      Space Jump
+      Any of the following:
+          Space Jump
+          Stand On Frozen Enemies (Beginner) and Can Freeze Enemies
   > Door to Checkpoint to Restricted Zone
       Trivial
 
@@ -697,8 +703,10 @@ Extra - room_id: [20]
   * L4 Hatch to Checkpoint to Restricted Zone/Door to Neglected Shaft
   * Extra - door_idx: (42,)
   > Door to Neglected Save Room
-      # TODO: A wall jump is required here even with high jump. Also is freezing an enemy an option?
-      Can climb High Jump Wall
+      Any of the following:
+          Space Jump
+          High Jump and Wall Jump (Beginner)
+          Stand On Frozen Enemies (Intermediate) and Can Freeze Enemies
 
 ----------------
 Neglected Save Room
@@ -817,8 +825,9 @@ Extra - room_id: [26]
   * L0 Hatch to Big Shell 1/Door to Shell Access
   * Extra - door_idx: (54,)
   > Door to Clogged Cavern
-      # TODO: High jump not required for this jump? WJ maybe?
-      Can Use Power Bombs and Can climb High Jump Wall
+      All of the following:
+          Can Use Power Bombs
+          Movement (Beginner) or Can climb High Jump Wall
 
 ----------------
 Big Shell 1
@@ -829,7 +838,6 @@ Extra - room_id: [27]
   * L0 Hatch to Shell Access/Door to Big Shell 1
   * Extra - door_idx: (55,)
   > Door to Big Shell 2
-      # TODO: are these blown up by default now or not?
       Can Use Power Bombs
 
 > Door to Big Shell 2; Heals? False
@@ -837,7 +845,6 @@ Extra - room_id: [27]
   * L0 Hatch to Big Shell 2/Door to Big Shell 1
   * Extra - door_idx: (56,)
   > Door to Shell Access
-      # TODO: are these blown up by default now or no?
       Space Jump and Can Use Power Bombs
 
 ----------------
@@ -923,8 +930,9 @@ Extra - room_id: [30]
   > Door to Varia Core-X Arena
       Trivial
   > Ledge
-      # TODO: Ledge is higher than a high jump reaches
-      Can climb High Jump Wall
+      Any of the following:
+          Space Jump
+          High Jump and Jump Bombjump (Expert) and Wall Jump (Beginner) and Can Use Bombs
 
 > Door to Twin Caverns East (Upper); Heals? False
   * Layers: default
@@ -938,8 +946,9 @@ Extra - room_id: [30]
 > Ledge; Heals? False
   * Layers: default
   > Pickup (Hidden Missile Tank)
-      # TODO: Collection is tricky without high jump
-      Morph Ball
+      All of the following:
+          Morph Ball
+          Movement (Beginner) or Can climb High Jump Wall
   > Door to Twin Caverns East (Lower)
       Trivial
 
@@ -1094,8 +1103,10 @@ Extra - room_id: [38]
   > Pickup (Energy Tank)
       All of the following:
           Speed Booster
-          # TODO: Wave beam could potentially make the room harder/impossible to complete. not sure if it matters?
-          Wave Beam or Can Use Bombs
+          Any of the following:
+              Wave Beam or Can Use Bombs
+              # Shinespark directly from adjacent room to the item
+              Screw Attack and Varia Suit and Shinespark Tricks (Expert) and Disabled Door Lock Rando and Disabled Entrance Rando and Can Use Power Bombs
 
 ----------------
 Spaceboost Alley
@@ -1137,11 +1148,7 @@ Extra - room_id: [39]
           Space Jump and Speed Booster
           High Jump or Movement (Intermediate)
   > Door to X-B.O.X. Access
-      Any of the following:
-          # TODO: WJ beginner???
-          Wall Jump (Beginner) or Can climb High Jump Wall
-          # TODO: this whole room is a shinespark puzzle anyway, so why not just say that leaving this is trickless? Especially since the logic to get the upper item also assumes that right now
-          Speed Booster and Shinespark Tricks (Beginner)
+      Trivial
 
 ----------------
 Menu Corridor

@@ -84,11 +84,11 @@
                         "Door to Connection to Sector 4 (AQA)": {
                             "type": "and",
                             "data": {
-                                "comment": "TODO: can you break the bomb blocks with screw?",
+                                "comment": null,
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Can Use Any Bombs"
+                                        "data": "Can Break Single Bomb Blocks"
                                     },
                                     {
                                         "type": "resource",
@@ -215,24 +215,87 @@
                         "Door to Entrance Recharge Room": {
                             "type": "and",
                             "data": {
-                                "comment": "TODO: Wall jump possible - also breaking the bomb blocks needs better logic, this is not trivial with only bombs",
+                                "comment": null,
                                 "items": [
                                     {
-                                        "type": "resource",
+                                        "type": "or",
                                         "data": {
-                                            "type": "items",
-                                            "name": "ScrewAttack",
-                                            "amount": 1,
-                                            "negate": false
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "ScrewAttack",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Knowledge",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Use Bombs"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "JBJ",
+                                                                    "amount": 4,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Use Power Bombs"
+                                                }
+                                            ]
                                         }
                                     },
                                     {
-                                        "type": "template",
-                                        "data": "Can Use Any Bombs"
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Can climb High Jump Wall"
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can climb High Jump Wall"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "WallJump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -536,13 +599,57 @@
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "and",
+                                        "type": "or",
                                         "data": {
-                                            "comment": "Bottom way - TODO: do you really need no jump upgrades?",
+                                            "comment": null,
                                             "items": [
                                                 {
                                                     "type": "template",
                                                     "data": "Can Kill Purple Geron"
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "SpeedBooster",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "ShinesparkTrick",
+                                                                    "amount": 3,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "misc",
+                                                                    "name": "DoorLockRando",
+                                                                    "amount": 1,
+                                                                    "negate": true
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "misc",
+                                                                    "name": "EntranceRando",
+                                                                    "amount": 1,
+                                                                    "negate": true
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
                                                 }
                                             ]
                                         }
@@ -570,11 +677,64 @@
                         "Other to Entrance Hub": {
                             "type": "or",
                             "data": {
-                                "comment": "TODO: can you break this with screw too?",
+                                "comment": null,
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Can Use Any Bombs"
+                                        "data": "Can Break Single Bomb Blocks"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "SpeedBooster",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "ShinesparkTrick",
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Knowledge",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "DoorLockRando",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "EntranceRando",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -672,11 +832,11 @@
                         "Other to Vault": {
                             "type": "or",
                             "data": {
-                                "comment": "TODO: can you break this with screw?",
+                                "comment": null,
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Can Use Any Bombs"
+                                        "data": "Can Break Single Bomb Blocks"
                                     }
                                 ]
                             }
@@ -781,7 +941,7 @@
                         "Door to Nocturnal Access": {
                             "type": "and",
                             "data": {
-                                "comment": "TODO: really no jump upgrades?",
+                                "comment": null,
                                 "items": [
                                     {
                                         "type": "template",
@@ -1126,7 +1286,7 @@
                         "Door to Nocturnal Access": {
                             "type": "or",
                             "data": {
-                                "comment": "TODO: No wall jumping required to navigate up? Probably needs boxes intact",
+                                "comment": null,
                                 "items": [
                                     {
                                         "type": "resource",
@@ -1226,9 +1386,9 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Forbidden Entrance": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
-                                "comment": "TODO: Adjacent room requires bombs to setup speed booster",
+                                "comment": null,
                                 "items": [
                                     {
                                         "type": "resource",
@@ -1237,6 +1397,36 @@
                                             "name": "SpeedBooster",
                                             "amount": 1,
                                             "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "WaveBeam",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Use Bombs"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "EntranceRando",
+                                            "amount": 1,
+                                            "negate": true
                                         }
                                     }
                                 ]
@@ -1727,10 +1917,10 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Shell Access": {
-                            "type": "and",
+                        "Door to Menu Corridor": {
+                            "type": "or",
                             "data": {
-                                "comment": "TODO: this connection should be to menu corridor",
+                                "comment": null,
                                 "items": [
                                     {
                                         "type": "resource",
@@ -1739,6 +1929,15 @@
                                             "name": "SpeedBooster",
                                             "amount": 1,
                                             "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "EntranceRando",
+                                            "amount": 1,
+                                            "negate": true
                                         }
                                     }
                                 ]
@@ -1776,32 +1975,6 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Nocturnal Playground": {
-                            "type": "and",
-                            "data": {
-                                "comment": "TODO: this connection should be from menu corridor - also disabled door lock rando + entrance rando",
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "SpeedBooster",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "tricks",
-                                            "name": "ShinesparkTrick",
-                                            "amount": 2,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        },
                         "Door to Menu Corridor": {
                             "type": "and",
                             "data": {
@@ -1841,6 +2014,50 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
+                        "Door to Nocturnal Playground": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "SpeedBooster",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "ShinesparkTrick",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "EntranceRando",
+                                            "amount": 1,
+                                            "negate": true
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "DoorLockRando",
+                                            "amount": 1,
+                                            "negate": true
+                                        }
+                                    }
+                                ]
+                            }
+                        },
                         "Door to Shell Access": {
                             "type": "and",
                             "data": {
@@ -2429,52 +2646,63 @@
                         "Event - Varia Core-X": {
                             "type": "and",
                             "data": {
-                                "comment": "TODO: missing missiles for core-x. Also maybe revise needed beams?",
+                                "comment": null,
                                 "items": [
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "Weapon Requirements",
+                                            "comment": null,
                                             "items": [
                                                 {
-                                                    "type": "resource",
+                                                    "type": "and",
                                                     "data": {
-                                                        "type": "items",
-                                                        "name": "ChargeBeam",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "or",
-                                                    "data": {
-                                                        "comment": null,
+                                                        "comment": "Mega-X Requirements",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "items",
-                                                                    "name": "WideBeam",
+                                                                    "name": "ChargeBeam",
                                                                     "amount": 1,
                                                                     "negate": false
                                                                 }
-                                                            },
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "Core-X Requirements",
+                                                        "items": [
                                                             {
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "items",
-                                                                    "name": "PlasmaBeam",
+                                                                    "name": "Missiles",
                                                                     "amount": 1,
                                                                     "negate": false
                                                                 }
                                                             },
                                                             {
-                                                                "type": "resource",
+                                                                "type": "or",
                                                                 "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Combat",
-                                                                    "amount": 2,
-                                                                    "negate": false
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "20 DMG Missiles"
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Combat",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
                                                                 }
                                                             }
                                                         ]
@@ -2493,7 +2721,7 @@
                                                     "data": {
                                                         "type": "damage",
                                                         "name": "NormalDamage",
-                                                        "amount": 600,
+                                                        "amount": 500,
                                                         "negate": false
                                                     }
                                                 },
@@ -2525,7 +2753,7 @@
                                                                 "data": {
                                                                     "type": "damage",
                                                                     "name": "NormalDamage",
-                                                                    "amount": 500,
+                                                                    "amount": 400,
                                                                     "negate": false
                                                                 }
                                                             }
@@ -2551,7 +2779,7 @@
                                                                 "data": {
                                                                     "type": "damage",
                                                                     "name": "NormalDamage",
-                                                                    "amount": 300,
+                                                                    "amount": 200,
                                                                     "negate": false
                                                                 }
                                                             }
@@ -2731,7 +2959,7 @@
                         "Door to Forbidden Entrance": {
                             "type": "or",
                             "data": {
-                                "comment": "TODO: freezing enemies?",
+                                "comment": null,
                                 "items": [
                                     {
                                         "type": "resource",
@@ -2764,6 +2992,27 @@
                                                         "amount": 1,
                                                         "negate": false
                                                     }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "StandOnFrozenEnemies",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Freeze Enemies"
                                                 }
                                             ]
                                         }
@@ -2820,7 +3069,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "TODO: missing speedbosoter and door lock rando n stuff",
+                                            "comment": null,
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -2838,6 +3087,33 @@
                                                         "name": "ShinesparkTrick",
                                                         "amount": 1,
                                                         "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "SpeedBooster",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "DoorLockRando",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "EntranceRando",
+                                                        "amount": 1,
+                                                        "negate": true
                                                     }
                                                 }
                                             ]
@@ -2924,13 +3200,67 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Pickup (Hidden Missile Tank)": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
-                                "comment": "TODO: without jump upgrades?",
+                                "comment": null,
                                 "items": [
                                     {
                                         "type": "template",
                                         "data": "Can Use Any Bombs"
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Freeze Enemies"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "StandOnFrozenEnemies",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can climb High Jump Wall"
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Use Bombs"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "JBJ",
+                                                                    "amount": 4,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -3994,13 +4324,34 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Pickup (Hidden Power Bomb Tank)": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
-                                "comment": "TODO: can you ledge grab this?",
+                                "comment": null,
                                 "items": [
                                     {
                                         "type": "template",
                                         "data": "Can Use Any Bombs"
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Use Springball"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Movement",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -4196,7 +4547,7 @@
                         "Door to Bull Bend": {
                             "type": "or",
                             "data": {
-                                "comment": "TODO: Freezing an enemy is also an option",
+                                "comment": null,
                                 "items": [
                                     {
                                         "type": "resource",
@@ -4205,6 +4556,27 @@
                                             "name": "SpaceJump",
                                             "amount": 1,
                                             "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Freeze Enemies"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "StandOnFrozenEnemies",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -4252,11 +4624,63 @@
                         "Door to Neglected Save Room": {
                             "type": "or",
                             "data": {
-                                "comment": "TODO: A wall jump is required here even with high jump. Also is freezing an enemy an option?",
+                                "comment": null,
                                 "items": [
                                     {
-                                        "type": "template",
-                                        "data": "Can climb High Jump Wall"
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "SpaceJump",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "HighJump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "WallJump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Freeze Enemies"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "StandOnFrozenEnemies",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -4835,15 +5259,32 @@
                         "Door to Clogged Cavern": {
                             "type": "and",
                             "data": {
-                                "comment": "TODO: High jump not required for this jump? WJ maybe?",
+                                "comment": null,
                                 "items": [
                                     {
                                         "type": "template",
                                         "data": "Can Use Power Bombs"
                                     },
                                     {
-                                        "type": "template",
-                                        "data": "Can climb High Jump Wall"
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can climb High Jump Wall"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Movement",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -4894,7 +5335,7 @@
                         "Door to Big Shell 2": {
                             "type": "or",
                             "data": {
-                                "comment": "TODO: are these blown up by default now or not?",
+                                "comment": null,
                                 "items": [
                                     {
                                         "type": "template",
@@ -4938,7 +5379,7 @@
                         "Door to Shell Access": {
                             "type": "and",
                             "data": {
-                                "comment": "TODO: are these blown up by default now or no?",
+                                "comment": null,
                                 "items": [
                                     {
                                         "type": "template",
@@ -5366,11 +5807,55 @@
                         "Ledge": {
                             "type": "or",
                             "data": {
-                                "comment": "TODO: Ledge is higher than a high jump reaches",
+                                "comment": null,
                                 "items": [
                                     {
-                                        "type": "template",
-                                        "data": "Can climb High Jump Wall"
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "SpaceJump",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "HighJump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Use Bombs"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "WallJump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "JBJ",
+                                                        "amount": 4,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -5439,9 +5924,9 @@
                     "valid_starting_location": false,
                     "connections": {
                         "Pickup (Hidden Missile Tank)": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
-                                "comment": "TODO: Collection is tricky without high jump",
+                                "comment": null,
                                 "items": [
                                     {
                                         "type": "resource",
@@ -5450,6 +5935,27 @@
                                             "name": "MorphBall",
                                             "amount": 1,
                                             "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can climb High Jump Wall"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Movement",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -6221,7 +6727,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": "TODO: Wave beam could potentially make the room harder/impossible to complete. not sure if it matters?",
+                                            "comment": null,
                                             "items": [
                                                 {
                                                     "type": "template",
@@ -6234,6 +6740,63 @@
                                                         "name": "WaveBeam",
                                                         "amount": 1,
                                                         "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "Shinespark directly from adjacent room to the item",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "ShinesparkTrick",
+                                                                    "amount": 4,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Use Power Bombs"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "ScrewAttack",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "misc",
+                                                                    "name": "DoorLockRando",
+                                                                    "amount": 1,
+                                                                    "negate": true
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "misc",
+                                                                    "name": "EntranceRando",
+                                                                    "amount": 1,
+                                                                    "negate": true
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "VariaSuit",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -6474,50 +7037,10 @@
                             }
                         },
                         "Door to X-B.O.X. Access": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
-                                "comment": "TODO: WJ beginner???",
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Can climb High Jump Wall"
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": "TODO: this whole room is a shinespark puzzle anyway, so why not just say that leaving this is trickless? Especially since the logic to get the upper item also assumes that right now",
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "SpeedBooster",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "ShinesparkTrick",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "tricks",
-                                            "name": "WallJump",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
