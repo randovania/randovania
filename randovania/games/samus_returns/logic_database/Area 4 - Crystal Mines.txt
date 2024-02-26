@@ -17,7 +17,7 @@ Extra - asset_id: collision_camera_001
   * Extra - actor_type: weightactivatedplatform
   > Save Station
       Trivial
-  > Door to Super Missile Chamber
+  > Door to Super Missile Chamber (Bottom)
       Trivial
   > Door to Lava Reservoir
       Trivial
@@ -34,7 +34,7 @@ Extra - asset_id: collision_camera_001
           Climb Rooms Vertically (No High Jump)
           Morph Ball and Unmorph Extend (Beginner)
           Stand on Frozen Enemy (Beginner) and Fully Freeze Enemy
-  > Door to Pink Crystal Vestibule
+  > Door to Gemstone Gorge
       Trivial
   > Door to Mines Teleporter
       Trivial
@@ -47,15 +47,15 @@ Extra - asset_id: collision_camera_001
   > Pickup (Super Missile Tank Bottom)
       Lay Any Bomb
 
-> Door to Pink Crystal Vestibule; Heals? False
+> Door to Gemstone Gorge; Heals? False
   * Layers: default
-  * Super Missile Door to Pink Crystal Vestibule/Door to Mines Intersection Terminal
+  * Super Missile Door to Gemstone Gorge/Door to Mines Intersection Terminal
   * Extra - actor_name: Door002
   * Extra - actor_type: doorpowerpower
   > Save Station
       Trivial
 
-> Door to Super Missile Chamber; Heals? False
+> Door to Super Missile Chamber (Bottom); Heals? False
   * Layers: default
   * Missile Door to Super Missile Chamber/Door to Mines Intersection Terminal (Bottom)
   * Extra - actor_name: Door004
@@ -63,12 +63,12 @@ Extra - asset_id: collision_camera_001
   > Energy Recharge Station
       Trivial
 
-> Door from Super Missile Chamber; Heals? False
+> Door to Super Missile Chamber (Top); Heals? False
   * Layers: default
-  * Access Closed to Super Missile Chamber/Door to Mines Intersection Terminal (Top)
+  * Super Missile Door to Super Missile Chamber/Door to Mines Intersection Terminal (Top)
   * Extra - actor_name: Door005
-  * Extra - actor_type: doorclosedpower
-  > Door to Super Missile Chamber
+  * Extra - actor_type: doorpowerpower
+  > Door to Super Missile Chamber (Bottom)
       Trivial
   > Next to Upper Pickup
       Trivial
@@ -135,9 +135,9 @@ Extra - asset_id: collision_camera_001
   > Door to Tsumuri Tunnel
       Trivial
 
-> Dock to Gamma Arena Access; Heals? False
+> Dock to Green Cystal Dugout; Heals? False
   * Layers: default
-  * Open Passage to Gamma Arena Access/Dock to Mines Intersection Terminal
+  * Open Passage to Green Cystal Dugout/Dock to Mines Intersection Terminal
   > Next to Upper Pickup
       Trivial
 
@@ -150,7 +150,7 @@ Extra - asset_id: collision_camera_001
           Power Bomb or Shoot Wave Beam
           Any of the following:
               Baby Metroid or Phase Drift
-              Spiderspark (Advanced) and Can Spiderspark
+              Spider Boost (Advanced) and Can Spider Boost
   > Door to Tsumuri Tunnel
       Morph Ball
 
@@ -160,7 +160,7 @@ Extra - asset_id: collision_camera_001
       All of the following:
           Super Missile
           Any of the following:
-              Spiderspark (Beginner) and Can Spiderspark
+              Spider Boost (Beginner) and Can Spider Boost
               All of the following:
                   Morph Ball
                   Any of the following:
@@ -175,9 +175,9 @@ Extra - asset_id: collision_camera_001
                       All of the following:
                           Simple IBJ
                           Spring Ball or Mid-Air Morph (Intermediate)
-  > Door to Super Missile Chamber
+  > Door to Super Missile Chamber (Top)
       Trivial
-  > Dock to Gamma Arena Access
+  > Dock to Green Cystal Dugout
       Any of the following:
           Super Jump (Intermediate) or Climb Rooms Vertically (High Jump)
           Morph Ball and Unmorph Extend (Beginner)
@@ -201,7 +201,7 @@ Extra - asset_id: collision_camera_002
 
 > Door to Mines Intersection Terminal (Bottom); Heals? False
   * Layers: default
-  * Missile Door to Mines Intersection Terminal/Door to Super Missile Chamber
+  * Missile Door to Mines Intersection Terminal/Door to Super Missile Chamber (Bottom)
   * Extra - actor_name: Door004
   * Extra - actor_type: doorpowerpower
   > Door to Mines Intersection Terminal (Top)
@@ -212,7 +212,7 @@ Extra - asset_id: collision_camera_002
 
 > Door to Mines Intersection Terminal (Top); Heals? False
   * Layers: default
-  * Super Missile Door to Mines Intersection Terminal/Door from Super Missile Chamber
+  * Super Missile Door to Mines Intersection Terminal/Door to Super Missile Chamber (Top)
   * Extra - actor_name: Door005
   * Extra - actor_type: doorclosedpower
   > Pickup (Super Missile)
@@ -227,7 +227,7 @@ Extra - asset_id: collision_camera_002
       Trivial
 
 ----------------
-Zeta Arena Access
+Pink Crystal Preserve
 Extra - total_boundings: {'x1': -8850.0, 'x2': -5000.0, 'y1': 2800.0, 'y2': 7200.0}
 Extra - polygon: [[-8850.0, 7200.0], [-8850.0, 2800.0], [-5000.0, 2800.0], [-5000.0, 7200.0]]
 Extra - asset_id: collision_camera_003
@@ -241,7 +241,7 @@ Extra - asset_id: collision_camera_003
 
 > Door to Zeta Arena; Heals? False
   * Layers: default
-  * Power Beam Door to Zeta Arena/Door to Zeta Arena Access
+  * Power Beam Door to Zeta Arena/Door to Pink Crystal Preserve
   * Extra - actor_name: Door009
   * Extra - actor_type: doorpowerpower
   > Room Bottom
@@ -249,19 +249,19 @@ Extra - asset_id: collision_camera_003
   > Start Point
       Trivial
 
-> Dock to Pink Crystal Vestibule; Heals? False
+> Dock to Gemstone Gorge; Heals? False
   * Layers: default
-  * Open Passage to Pink Crystal Vestibule/Dock to Zeta Arena Access
+  * Open Passage to Gemstone Gorge/Dock to Pink Crystal Preserve
   > Under Pickup
       Any of the following:
           High Jump Boots or Space Jump or Damage Boost (Intermediate)
           Charge Beam and Ice Beam and Stand on Frozen Enemy (Intermediate)
           Diagonal Bomb Jump (Beginner) and Lay Bomb
-          Spiderspark (Intermediate) and Can Spiderspark
+          Spider Boost (Intermediate) and Can Spider Boost
 
 > Tunnel to Zeta Arena; Heals? False
   * Layers: default
-  * Tunnel to Zeta Arena/Tunnel to Zeta Arena Access
+  * Tunnel to Zeta Arena/Tunnel to Pink Crystal Preserve
   > Room Bottom
       Trivial
 
@@ -275,22 +275,22 @@ Extra - asset_id: collision_camera_003
               Bomb or Spring Ball or Mid-Air Morph (Beginner)
           Morph Ball and Stand on Frozen Enemy (Beginner) and Unmorph Extend (Intermediate) and Fully Freeze Enemy
           Charge Beam and Ice Beam and Stand on Frozen Enemy (Intermediate)
-          Spiderspark (Intermediate) and Can Spiderspark
+          Spider Boost (Intermediate) and Can Spider Boost
   > Under Pickup
       Any of the following:
           Space Jump or Simple IBJ
-          Spiderspark (Intermediate) and Can Spiderspark
+          Spider Boost (Intermediate) and Can Spider Boost
 
 > Under Pickup; Heals? False
   * Layers: default
   > Pickup (Missile Tank)
       Any of the following:
           Space Jump or Simple IBJ
-          Spiderspark (Intermediate) and Can Spiderspark
-  > Dock to Pink Crystal Vestibule
+          Spider Boost (Intermediate) and Can Spider Boost
+  > Dock to Gemstone Gorge
       Any of the following:
           High Jump Boots or Space Jump or Simple IBJ
-          Spiderspark (Intermediate) and Can Spiderspark
+          Spider Boost (Intermediate) and Can Spider Boost
           Charge Beam and Ice Beam and Stand on Frozen Enemy (Intermediate)
           All of the following:
               Damage Boost (Expert)
@@ -307,13 +307,13 @@ Extra - asset_id: collision_camera_003
       Trivial
 
 ----------------
-Transport to Area 4 Central Caves
+Transport to Central Caves
 Extra - total_boundings: {'x1': -7800.0, 'x2': -4700.0, 'y1': -5200.0, 'y2': -3100.0}
 Extra - polygon: [[-7800.0, -3100.0], [-7800.0, -5200.0], [-4700.0, -5200.0], [-4700.0, -4200.0], [-5400.0, -4000.0], [-5400.0, -3100.0]]
 Extra - asset_id: collision_camera_005
 > Elevator to Area 4 - Central Caves; Heals? False; Spawn Point; Default Node
   * Layers: default
-  * Elevator to Transport to Areas 3 and 4 Crystal Mines/Elevator to Area 4 - Crystal Mines
+  * Elevator to Transport to Area 3 and Crystal Mines/Elevator to Area 4 - Crystal Mines
   * Extra - actor_name: LE_Platform_Elevator_FromArea04
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: ST_FromArea04
@@ -322,7 +322,7 @@ Extra - asset_id: collision_camera_005
 
 > Door to Mines Entrance; Heals? False
   * Layers: default
-  * Charge Beam Door to Mines Entrance/Door to Transport to Area 4 Central Caves
+  * Charge Beam Door to Mines Entrance/Door to Transport to Central Caves
   * Extra - actor_name: Door006
   * Extra - actor_type: doorpowerpower
   > Elevator to Area 4 - Central Caves
@@ -338,14 +338,14 @@ Extra - asset_id: collision_camera_006
   * Pickup 97; Category? Minor
   * Extra - actor_name: LE_Item_013
   * Extra - actor_type: item_missiletank
-  > Door to Pink Crystal Vestibule
+  > Door to Gemstone Gorge
       Trivial
   > Door to Mines Intersection Terminal
       Gravity Suit
 
-> Door to Pink Crystal Vestibule; Heals? False
+> Door to Gemstone Gorge; Heals? False
   * Layers: default
-  * Power Beam Door to Pink Crystal Vestibule/Door from Lava Reservoir
+  * Power Beam Door to Gemstone Gorge/Door from Lava Reservoir
   * Extra - actor_name: Door003
   * Extra - actor_type: doorclosedpower
   > Pickup (Missile Tank)
@@ -361,7 +361,7 @@ Extra - asset_id: collision_camera_006
           Gravity Suit
           Any of the following:
               Space Jump or Simple IBJ
-              Spiderspark (Intermediate) and Can Spiderspark
+              Spider Boost (Intermediate) and Can Spider Boost
 
 ----------------
 Dual Pond Alcove
@@ -376,22 +376,22 @@ Extra - asset_id: collision_camera_007
   > Tunnel to Mines Intersection Terminal
       Any of the following:
           Grapple Beam
-          Spiderspark (Beginner) and Can Spiderspark
+          Spider Boost (Beginner) and Can Spider Boost
 
 > Tunnel to Mines Intersection Terminal; Heals? False
   * Layers: default
   * Tunnel to Mines Intersection Terminal/Tunnel to Dual Pond Alcove
   > Pickup (Power Bomb Tank)
-      Power Bomb ≥ 2 and Spiderspark (Beginner) and Can Spiderspark
+      Power Bomb ≥ 2 and Spider Boost (Beginner) and Can Spider Boost
 
 ----------------
 Zeta Arena
 Extra - total_boundings: {'x1': -11400.0, 'x2': -8800.0, 'y1': 3800.0, 'y2': 5200.0}
 Extra - polygon: [[-11400.0, 5200.0], [-11400.0, 3800.0], [-8750.0, 3800.0], [-8750.0, 5200.0]]
 Extra - asset_id: collision_camera_008
-> Door to Zeta Arena Access; Heals? False
+> Door to Pink Crystal Preserve; Heals? False
   * Layers: default
-  * Power Beam Door to Zeta Arena Access/Door to Zeta Arena
+  * Power Beam Door to Pink Crystal Preserve/Door to Zeta Arena
   * Extra - actor_name: Door009
   * Extra - actor_type: doorpowerpower
   > Start Point
@@ -403,25 +403,25 @@ Extra - asset_id: collision_camera_008
   > Pickup (DNA)
       Trivial
 
-> Tunnel to Zeta Arena Access; Heals? False
+> Tunnel to Pink Crystal Preserve; Heals? False
   * Layers: default
-  * Tunnel to Zeta Arena Access/Tunnel to Zeta Arena
+  * Tunnel to Pink Crystal Preserve/Tunnel to Zeta Arena
   > Start Point
       Trivial
 
 > Start Point; Heals? False; Default Node
   * Layers: default
   * Extra - start_point_actor_name: ST_Zeta_001_Checkpoint
-  > Door to Zeta Arena Access
+  > Door to Pink Crystal Preserve
       Trivial
   > Event - Zeta Metroid
       Defeat Zeta Metroid
-  > Tunnel to Zeta Arena Access
+  > Tunnel to Pink Crystal Preserve
       All of the following:
           Morph Ball and Shoot Any Missile
           Any of the following:
               Space Jump or Single-wall Wall Jump (Advanced) or Simple IBJ
-              Spiderspark (Beginner) and Can Spiderspark
+              Spider Boost (Beginner) and Can Spider Boost
 
 > Pickup (DNA); Heals? False
   * Layers: default
@@ -433,12 +433,47 @@ Extra - asset_id: collision_camera_008
 
 ----------------
 Gamma Arena
-Extra - total_boundings: {'x1': 5500.0, 'x2': 18000.0, 'y1': 5900.0, 'y2': 11000.0}
-Extra - polygon: [[7500.0, 11000.0], [7500.0, 8600.0], [5500.0, 8600.0], [5500.0, 5900.0], [18000.0, 5900.0], [18000.0, 11000.0]]
-Extra - asset_id: collision_camera_009
-> Door to Gamma Arena Access; Heals? False
+Extra - total_boundings: {'x1': 14400.0, 'x2': 18000.0, 'y1': 8550.0, 'y2': 11000.0}
+Extra - polygon: [[14400.0, 11000.0], [14400.0, 8550.0], [18000.0, 8550.0], [18000.0, 11000.0]]
+Extra - asset_id: collision_camera_015
+> Tunnel to Gawron Groove; Heals? False
   * Layers: default
-  * Power Beam Door to Gamma Arena Access/Door to Gamma Arena
+  * Tunnel to Gawron Groove/Tunnel to Gamma Arena
+  > Start Point
+      Morph Ball and Varia Suit
+
+> Event - Gamma Metroid; Heals? False
+  * Layers: default
+  * Event Area 4 (Crystal Mines) - Gamma Metroid
+  > Pickup (DNA)
+      Trivial
+
+> Pickup (DNA); Heals? False
+  * Layers: default
+  * Pickup 198; Category? Minor
+  * Extra - pickup_type: metroid
+  * Extra - spawngroup: SG_Gamma_002_A
+  > Start Point
+      Trivial
+
+> Start Point; Heals? False; Default Node
+  * Layers: default
+  * Extra - start_point_actor_name: ST_Gamma_002A_Checkpoint
+  > Tunnel to Gawron Groove
+      All of the following:
+          Varia Suit and Lay Any Bomb
+          Single-wall Wall Jump (Beginner) or Climb Rooms Vertically (High Jump)
+  > Event - Gamma Metroid
+      Varia Suit and Defeat Gamma Metroid
+
+----------------
+Gawron Groove
+Extra - total_boundings: {'x1': 5500.0, 'x2': 14600.0, 'y1': 5900.0, 'y2': 11000.0}
+Extra - polygon: [[7500.0, 11000.0], [7500.0, 8600.0], [5500.0, 8600.0], [5500.0, 5900.0], [11600.0, 5900.0], [11600.0, 8350.0], [11800.0, 9300.0], [12850.0, 9300.0], [12850.0, 8350.0], [14600.0, 8350.0], [14600.0, 11000.0]]
+Extra - asset_id: collision_camera_009
+> Door to Green Cystal Dugout; Heals? False
+  * Layers: default
+  * Power Beam Door to Green Cystal Dugout/Door to Gawron Groove
   * Extra - actor_name: Door014
   * Extra - actor_type: doorpowerpower
   > Below Pickup
@@ -452,15 +487,9 @@ Extra - asset_id: collision_camera_009
   > Below Pickup
       Trivial
 
-> Event - Gamma Metroid; Heals? False
-  * Layers: default
-  * Event Area 4 (Crystal Mines) - Gamma Metroid
-  > Pickup (DNA)
-      Trivial
-
 > Below Pickup; Heals? False
   * Layers: default
-  > Door to Gamma Arena Access
+  > Door to Green Cystal Dugout
       Varia Suit
   > Pickup (Super Missile Tank)
       All of the following:
@@ -468,40 +497,62 @@ Extra - asset_id: collision_camera_009
           Any of the following:
               Super Jump (Intermediate) or Unmorph Extend (Intermediate) or Climb Rooms Vertically (High Jump)
               Charge Beam and Ice Beam and Stand on Frozen Enemy (Advanced)
-  > Inside Arena
+  > Tunnel to Gamma Arena
+      Morph Ball and Varia Suit and Climb Rooms Vertically (High Jump)
+  > Tunnel to Basalt Basin (Left)
       All of the following:
-          Morph Ball and Varia Suit
-          Any of the following:
-              Climb Rooms Vertically (High Jump)
-              All of the following:
-                  Super Missile
-                  Bomb or Power Bomb ≥ 3
+          Morph Ball
+          Bomb or Power Bomb ≥ 3
 
-> Pickup (DNA); Heals? False
+> Tunnel to Gamma Arena; Heals? False
   * Layers: default
-  * Pickup 198; Category? Minor
-  * Extra - pickup_type: metroid
-  * Extra - spawngroup: SG_Gamma_002_A
-  > Inside Arena
-      Trivial
-
-> Inside Arena; Heals? False
-  * Layers: default
-  > Event - Gamma Metroid
-      Varia Suit and Defeat Gamma Metroid
+  * Tunnel to Gamma Arena/Tunnel to Gawron Groove
   > Below Pickup
       All of the following:
-          Varia Suit and Lay Any Bomb
+          Varia Suit
           Single-wall Wall Jump (Beginner) or Climb Rooms Vertically (High Jump)
+  > Tunnel to Basalt Basin (Right)
+      All of the following:
+          Morph Ball and Super Missile
+          Bomb or Power Bomb ≥ 3
+
+> Tunnel to Basalt Basin (Left); Heals? False
+  * Layers: default
+  * Tunnel with Bomb Block to Basalt Basin/Tunnel to Gawron Groove (Left)
+  > Below Pickup
+      Morph Ball
+
+> Tunnel to Basalt Basin (Right); Heals? False
+  * Layers: default
+  * Tunnel with Bomb Block to Basalt Basin/Tunnel to Gawron Groove (Right)
+  > Tunnel to Gamma Arena
+      Lay Any Bomb
+
+----------------
+Basalt Basin
+Extra - total_boundings: {'x1': 11400.0, 'x2': 14700.0, 'y1': 6700.0, 'y2': 9300.0}
+Extra - polygon: [[13050.0, 8400.0], [13050.0, 9300.0], [11700.0, 9300.0], [11700.0, 8600.0], [11400.0, 8600.0], [11400.0, 6700.0], [14700.0, 6700.0], [14700.0, 8400.0]]
+Extra - asset_id: collision_camera_017
+> Tunnel to Gawron Groove (Left); Heals? False
+  * Layers: default
+  * Tunnel with Bomb Block to Gawron Groove/Tunnel to Basalt Basin (Left)
+  > Tunnel to Gawron Groove (Right)
+      Super Missile and Lay Any Bomb
+
+> Tunnel to Gawron Groove (Right); Heals? False
+  * Layers: default
+  * Tunnel with Bomb Block to Gawron Groove/Tunnel to Basalt Basin (Right)
+  > Tunnel to Gawron Groove (Left)
+      Lay Any Bomb
 
 ----------------
 Mines Entrance
 Extra - total_boundings: {'x1': -5500.0, 'x2': -3000.0, 'y1': -3700.0, 'y2': -1500.0}
 Extra - polygon: [[-5500.0, -1500.0], [-5500.0, -3700.0], [-3000.0, -3700.0], [-3000.0, -1500.0]]
 Extra - asset_id: collision_camera_010
-> Door to Transport to Area 4 Central Caves; Heals? False
+> Door to Transport to Central Caves; Heals? False
   * Layers: default
-  * Charge Beam Door to Transport to Area 4 Central Caves/Door to Mines Entrance
+  * Charge Beam Door to Transport to Central Caves/Door to Mines Entrance
   * Extra - actor_name: Door006
   * Extra - actor_type: doorpowerpower
   > Door to Diggernaut Excavation Tunnels
@@ -520,12 +571,12 @@ Extra - asset_id: collision_camera_010
   * Missile Door to Diggernaut Excavation Tunnels/Door to Mines Entrance
   * Extra - actor_name: Door013
   * Extra - actor_type: doorpowerpower
-  > Door to Transport to Area 4 Central Caves
+  > Door to Transport to Central Caves
       Trivial
   > Door to Tsumuri Tunnel
       Any of the following:
           Space Jump or Simple IBJ
-          Spiderspark (Intermediate) and Can Spiderspark
+          Spider Boost (Intermediate) and Can Spider Boost
 
 ----------------
 Tsumuri Tunnel
@@ -612,13 +663,13 @@ Extra - asset_id: collision_camera_012
       Trivial
 
 ----------------
-Gamma Arena Access
+Green Cystal Dugout
 Extra - total_boundings: {'x1': 2500.0, 'x2': 7600.0, 'y1': 8500.0, 'y2': 10200.0}
 Extra - polygon: [[2500.0, 10200.0], [2500.0, 8500.0], [7600.0, 8500.0], [7600.0, 10200.0]]
 Extra - asset_id: collision_camera_013
-> Door to Gamma Arena; Heals? False
+> Door to Gawron Groove; Heals? False
   * Layers: default
-  * Power Beam Door to Gamma Arena/Door to Gamma Arena Access
+  * Access Open to Gawron Groove/Door to Green Cystal Dugout
   * Extra - actor_name: Door014
   * Extra - actor_type: doorpowerpower
   > Dock to Mines Intersection Terminal
@@ -628,18 +679,18 @@ Extra - asset_id: collision_camera_013
 
 > Dock to Mines Intersection Terminal; Heals? False
   * Layers: default
-  * Open Passage to Mines Intersection Terminal/Dock to Gamma Arena Access
-  > Door to Gamma Arena
+  * Open Passage to Mines Intersection Terminal/Dock to Green Cystal Dugout
+  > Door to Gawron Groove
       Trivial
 
 > Start Point; Heals? False; Default Node
   * Layers: default
   * Extra - start_point_actor_name: ST_SG_Gamma_002
-  > Door to Gamma Arena
+  > Door to Gawron Groove
       Trivial
 
 ----------------
-Pink Crystal Vestibule
+Gemstone Gorge
 Extra - total_boundings: {'x1': -5100.0, 'x2': -2300.0, 'y1': 1700.0, 'y2': 6800.0}
 Extra - polygon: [[-5100.0, 6800.0], [-5100.0, 5300.0], [-4000.0, 5200.0], [-4000.0, 1700.0], [-2300.0, 1700.0], [-2300.0, 6800.0]]
 Extra - asset_id: collision_camera_014
@@ -653,7 +704,7 @@ Extra - asset_id: collision_camera_014
 
 > Door to Mines Intersection Terminal; Heals? False
   * Layers: default
-  * Super Missile Door to Mines Intersection Terminal/Door to Pink Crystal Vestibule
+  * Super Missile Door to Mines Intersection Terminal/Door to Gemstone Gorge
   * Extra - actor_name: Door002
   * Extra - actor_type: doorpowerpower
   > Pickup (Energy Tank)
@@ -666,23 +717,23 @@ Extra - asset_id: collision_camera_014
                   Any of the following:
                       Stand on Frozen Enemy (Advanced) and Fully Freeze Enemy
                       Spider Ball and Movement (Advanced)
-  > Dock to Zeta Arena Access
+  > Dock to Pink Crystal Preserve
       Any of the following:
           Simple IBJ
           Morph Ball and Space Jump
-          Spiderspark (Intermediate) and Can Spiderspark
+          Spider Boost (Intermediate) and Can Spider Boost
 
 > Door from Lava Reservoir; Heals? False
   * Layers: default
-  * Access Closed to Lava Reservoir/Door to Pink Crystal Vestibule
+  * Access Closed to Lava Reservoir/Door to Gemstone Gorge
   * Extra - actor_name: Door003
   * Extra - actor_type: doorclosedpower
-  > Dock to Zeta Arena Access
+  > Dock to Pink Crystal Preserve
       Trivial
 
-> Dock to Zeta Arena Access; Heals? False
+> Dock to Pink Crystal Preserve; Heals? False
   * Layers: default
-  * Open Passage to Zeta Arena Access/Dock to Pink Crystal Vestibule
+  * Open Passage to Pink Crystal Preserve/Dock to Gemstone Gorge
   > Door to Mines Intersection Terminal
       Morph Ball
   > Door from Lava Reservoir
@@ -746,7 +797,7 @@ Extra - asset_id: collision_camera_AfterChase
   > Door to Mines Intersection Terminal
       Any of the following:
           Space Jump or Simple IBJ
-          Spiderspark (Intermediate) and Can Spiderspark
+          Spider Boost (Intermediate) and Can Spider Boost
   > Tunnel to Diggernaut Excavation Tunnels (Top)
       Morph Ball and Super Missile
   > Under Grapple Block
@@ -760,7 +811,7 @@ Extra - asset_id: collision_camera_AfterChase
   > Bottom of Shaft
       Any of the following:
           Space Jump or Simple IBJ
-          Spiderspark (Intermediate) and Can Spiderspark
+          Spider Boost (Intermediate) and Can Spider Boost
   > Bottom Floor
       Trivial
 
@@ -774,7 +825,7 @@ Extra - asset_id: collision_camera_AfterChase
   > Under Grapple Block
       Any of the following:
           Space Jump or Simple IBJ
-          Spiderspark (Intermediate) and Can Spiderspark
+          Spider Boost (Intermediate) and Can Spider Boost
 
 ----------------
 Diggernaut Excavation Tunnels
@@ -868,10 +919,10 @@ Extra - asset_id: collision_camera_AfterChase_001
           Any of the following:
               Baby Metroid
               Phase Drift and Lay Any Bomb
-              Spiderspark (Intermediate) and Can Spiderspark
+              Spider Boost (Intermediate) and Can Spider Boost
   > Save Station
       Any of the following:
-          Spiderspark (Intermediate) and Can Spiderspark
+          Spider Boost (Intermediate) and Can Spider Boost
           Morph Ball and Space Jump
   > Tunnel to Space Jump Chamber (Top)
       Morph Ball and Super Missile

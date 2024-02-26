@@ -4,16 +4,14 @@ from collections import defaultdict
 from typing import TYPE_CHECKING
 
 from randovania.games.cave_story.layout.cs_configuration import CSConfiguration
-from randovania.games.game import RandovaniaGame
+from randovania.games.game import ProgressiveItemTuples, RandovaniaGame
 from randovania.layout.preset_describer import (
     GamePresetDescriber,
     fill_template_strings_from_tree,
-    handle_progressive_expected_counts,
     message_for_required_mains,
 )
 
 if TYPE_CHECKING:
-    from randovania.game_description.pickup.standard_pickup import StandardPickupDefinition
     from randovania.layout.base.base_configuration import BaseConfiguration
 
 
@@ -44,16 +42,10 @@ class CSPresetDescriber(GamePresetDescriber):
 
         return template_strings
 
-    def expected_shuffled_pickup_count(self, configuration: BaseConfiguration) -> dict[StandardPickupDefinition, int]:
-        count = super().expected_shuffled_pickup_count(configuration)
-        majors = configuration.standard_pickup_configuration
-
+    def progressive_items(self) -> ProgressiveItemTuples:
         from randovania.games.cave_story.pickup_database import progressive_items
 
-        for progressive_item_name, non_progressive_items in progressive_items.tuples():
-            handle_progressive_expected_counts(count, majors, progressive_item_name, non_progressive_items)
-
-        return count
+        return progressive_items.tuples()
 
 
 hash_items = {

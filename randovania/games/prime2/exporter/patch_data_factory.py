@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import dataclasses
+import functools
 import typing
 from random import Random
 from typing import TYPE_CHECKING
@@ -15,7 +16,6 @@ from randovania.game_description.db.area_identifier import AreaIdentifier
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.node import Node
 from randovania.game_description.db.node_identifier import NodeIdentifier
-from randovania.game_description.default_database import default_prime2_memo_data
 from randovania.game_description.pickup import pickup_category
 from randovania.game_description.pickup.pickup_entry import PickupEntry, PickupGeneratorParams, PickupModel
 from randovania.game_description.requirements.requirement_and import RequirementAnd
@@ -31,7 +31,7 @@ from randovania.games.prime2.patcher import echoes_items
 from randovania.generator.pickup_pool import pickup_creator
 from randovania.layout.exceptions import InvalidConfiguration
 from randovania.layout.lib.teleporters import TeleporterShuffleMode
-from randovania.lib import string_lib
+from randovania.lib import json_lib, string_lib
 from randovania.patching.prime import elevators
 
 if TYPE_CHECKING:
@@ -560,9 +560,9 @@ def _create_starting_popup(patches: GamePatches) -> list:
 
 def _simplified_memo_data() -> dict[str, str]:
     result = pickup_exporter.GenericAcquiredMemo()
-    result["Locked Power Bomb Expansion"] = (
-        "Power Bomb Expansion acquired, but the main Power Bomb is required to use it."
-    )
+    result[
+        "Locked Power Bomb Expansion"
+    ] = "Power Bomb Expansion acquired, but the main Power Bomb is required to use it."
     result["Locked Missile Expansion"] = "Missile Expansion acquired, but the Missile Launcher is required to use it."
     result["Locked Seeker Launcher"] = "Seeker Launcher acquired, but the Missile Launcher is required to use it."
     return result
@@ -1085,3 +1085,25 @@ def create_echoes_useless_pickup(resource_database: ResourceDatabase) -> PickupE
             preferred_location_category=LocationCategory.MAJOR,  # TODO
         ),
     )
+
+
+@functools.lru_cache
+def default_prime2_memo_data() -> dict:
+    memo_data = json_lib.read_dict(
+        RandovaniaGame.METROID_PRIME_ECHOES.data_path.joinpath("pickup_database", "memo_data.json")
+    )
+
+    temple_keys = ["Dark Agon Key", "Dark Torvus Key", "Ing Hive Key"]
+
+    for i in range(1, 4):
+        for temple_key in temple_keys:
+            memo_data[f"{temple_key} {i}"] = memo_data[temple_key]
+
+    for temple_key in temple_keys:
+        memo_data.pop(temple_key)
+
+    for i in range(1, 10):
+        memo_data[f"Sky Temple Key {i}"] = memo_data["Sky Temple Key"]
+    memo_data.pop("Sky Temple Key")
+
+    return memo_data

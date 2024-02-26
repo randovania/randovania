@@ -1057,7 +1057,7 @@
                 "total_boundings": {
                     "x1": 4550.0,
                     "x2": 10300.0,
-                    "y1": -7500.0,
+                    "y1": -8700.0,
                     "y2": -4000.0
                 },
                 "polygon": [
@@ -1067,11 +1067,11 @@
                     ],
                     [
                         4550.0,
-                        -7500.0
+                        -8700.0
                     ],
                     [
                         6500.0,
-                        -7500.0
+                        -8700.0
                     ],
                     [
                         6500.0,
@@ -1097,6 +1097,37 @@
                 "asset_id": "collision_camera_004"
             },
             "nodes": {
+                "Pickup (Missile Tank)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 5234.766288027157,
+                        "y": -7920.048309178745,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "LE_Item_005",
+                        "actor_type": "item_missiletank"
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 4,
+                    "location_category": "minor",
+                    "connections": {
+                        "Tunnel to Transport to Area 1": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
                 "Chozo Seal": {
                     "node_type": "hint",
                     "heal": false,
@@ -1423,69 +1454,6 @@
                             }
                         }
                     }
-                }
-            }
-        },
-        "Gravitt Grotto": {
-            "default_node": null,
-            "extra": {
-                "total_boundings": {
-                    "x1": 4550.0,
-                    "x2": 6500.0,
-                    "y1": -8700.0,
-                    "y2": -7500.0
-                },
-                "polygon": [
-                    [
-                        4550.0,
-                        -7500.0
-                    ],
-                    [
-                        4550.0,
-                        -8700.0
-                    ],
-                    [
-                        6500.0,
-                        -8700.0
-                    ],
-                    [
-                        6500.0,
-                        -7500.0
-                    ]
-                ],
-                "asset_id": "collision_camera_004"
-            },
-            "nodes": {
-                "Pickup (Missile Tank)": {
-                    "node_type": "pickup",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 5234.766288027157,
-                        "y": -7920.048309178745,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "LE_Item_005",
-                        "actor_type": "item_missiletank"
-                    },
-                    "valid_starting_location": false,
-                    "pickup_index": 4,
-                    "location_category": "minor",
-                    "connections": {
-                        "Tunnel to Transport to Area 1": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        }
-                    }
                 },
                 "Tunnel to Transport to Area 1": {
                     "node_type": "dock",
@@ -1505,7 +1473,7 @@
                     "default_connection": {
                         "region": "Surface - East",
                         "area": "Transport to Area 1",
-                        "node": "Tunnel to Gravitt Grotto"
+                        "node": "Tunnel to Chozo Seal"
                     },
                     "default_dock_weakness": "Tunnel",
                     "exclude_from_dock_rando": false,
@@ -1556,12 +1524,12 @@
                 "asset_id": "collision_camera_006"
             },
             "nodes": {
-                "Pickup (Missile Expansion)": {
+                "Pickup (Missile Tank)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": 9896.971307120086,
-                        "y": -9226.62061636557,
+                        "x": 9896.97,
+                        "y": -9226.62,
                         "z": 0.0
                     },
                     "description": "",
@@ -1606,7 +1574,7 @@
                     "dock_type": "elevator",
                     "default_connection": {
                         "region": "Area 1",
-                        "area": "Transport to Surface East and Area 2",
+                        "area": "Transport to Surface and Area 2",
                         "node": "Elevator to Surface - East"
                     },
                     "default_dock_weakness": "Elevator",
@@ -1707,12 +1675,12 @@
                         }
                     }
                 },
-                "Tunnel to Gravitt Grotto": {
+                "Tunnel to Chozo Seal": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 6420.173574211832,
-                        "y": -8402.320226709175,
+                        "x": 6420.17,
+                        "y": -8402.32,
                         "z": 0.0
                     },
                     "description": "",
@@ -1724,7 +1692,7 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Surface - East",
-                        "area": "Gravitt Grotto",
+                        "area": "Chozo Seal",
                         "node": "Tunnel to Transport to Area 1"
                     },
                     "default_dock_weakness": "Tunnel",
@@ -1814,7 +1782,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Pickup (Missile Expansion)": {
+                        "Pickup (Missile Tank)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1882,7 +1850,7 @@
                                 "items": []
                             }
                         },
-                        "Tunnel to Gravitt Grotto": {
+                        "Tunnel to Chozo Seal": {
                             "type": "template",
                             "data": "Lay Any Bomb"
                         },
@@ -2235,7 +2203,7 @@
                 }
             }
         },
-        "Alpha Arena Access": {
+        "Alpha Arena": {
             "default_node": "Save Station",
             "extra": {
                 "total_boundings": {
@@ -2270,16 +2238,16 @@
                         -10400.0
                     ],
                     [
-                        -4300.0,
+                        -1300.0,
                         -10400.0
                     ],
                     [
-                        -4300.0,
+                        -1300.0,
                         -8900.0
                     ],
                     [
                         -1000.0,
-                        -8900.0
+                        -8800.0
                     ]
                 ],
                 "asset_id": "collision_camera_010"
@@ -2342,6 +2310,13 @@
                                 "items": []
                             }
                         },
+                        "Dock to Moheek Market": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Tunnel to Energy Recharge Station Shaft": {
                             "type": "resource",
                             "data": {
@@ -2351,7 +2326,7 @@
                                 "negate": false
                             }
                         },
-                        "Tunnel to Alpha Arena": {
+                        "Inside Arena": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2370,13 +2345,6 @@
                                         }
                                     }
                                 ]
-                            }
-                        },
-                        "Dock to Moheek Market": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
                             }
                         }
                     }
@@ -2402,9 +2370,44 @@
                     "default_connection": {
                         "region": "Surface - East",
                         "area": "Chozo Cache West",
-                        "node": "Door to Alpha Arena Access"
+                        "node": "Door to Alpha Arena"
                     },
                     "default_dock_weakness": "Plasma Beam Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Save Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Dock to Moheek Market": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -5827.0144189991515,
+                        "y": -8905.822125287774,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "other",
+                    "default_connection": {
+                        "region": "Surface - East",
+                        "area": "Moheek Market",
+                        "node": "Dock to Alpha Arena"
+                    },
+                    "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -2437,7 +2440,7 @@
                     "default_connection": {
                         "region": "Surface - East",
                         "area": "Moheek Market",
-                        "node": "Tunnel to Alpha Arena Access"
+                        "node": "Tunnel to Alpha Arena"
                     },
                     "default_dock_weakness": "Tunnel",
                     "exclude_from_dock_rando": false,
@@ -2474,7 +2477,7 @@
                     "default_connection": {
                         "region": "Surface - East",
                         "area": "Energy Recharge Station Shaft",
-                        "node": "Tunnel to Alpha Arena Access"
+                        "node": "Tunnel to Alpha Arena"
                     },
                     "default_dock_weakness": "Tunnel",
                     "exclude_from_dock_rando": false,
@@ -2493,122 +2496,6 @@
                         }
                     }
                 },
-                "Tunnel to Alpha Arena": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -4407.994579945799,
-                        "y": -10305.487804878048,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "dock_type": "tunnel",
-                    "default_connection": {
-                        "region": "Surface - East",
-                        "area": "Alpha Arena",
-                        "node": "Tunnel to Alpha Arena Access"
-                    },
-                    "default_dock_weakness": "Tunnel",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {
-                        "Save Station": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Shoot Any Missile"
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        }
-                    }
-                },
-                "Dock to Moheek Market": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -5827.0144189991515,
-                        "y": -8905.822125287774,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "dock_type": "other",
-                    "default_connection": {
-                        "region": "Surface - East",
-                        "area": "Moheek Market",
-                        "node": "Dock to Alpha Arena Access"
-                    },
-                    "default_dock_weakness": "Open Passage",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {
-                        "Save Station": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "Alpha Arena": {
-            "default_node": "Start Point",
-            "extra": {
-                "total_boundings": {
-                    "x1": -4500.0,
-                    "x2": -1300.0,
-                    "y1": -10400.0,
-                    "y2": -9300.0
-                },
-                "polygon": [
-                    [
-                        -1300.0,
-                        -9300.0
-                    ],
-                    [
-                        -4500.0,
-                        -9300.0
-                    ],
-                    [
-                        -4500.0,
-                        -10400.0
-                    ],
-                    [
-                        -1300.0,
-                        -10400.0
-                    ]
-                ],
-                "asset_id": "collision_camera_010"
-            },
-            "nodes": {
                 "Door to Ammo Recharge Station": {
                     "node_type": "dock",
                     "heal": false,
@@ -2638,7 +2525,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Start Point": {
+                        "Inside Arena": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2672,7 +2559,7 @@
                         }
                     }
                 },
-                "Start Point": {
+                "Inside Arena": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
@@ -2689,18 +2576,7 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Ammo Recharge Station": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Event - Alpha Metroid": {
-                            "type": "template",
-                            "data": "Defeat Alpha Metroid"
-                        },
-                        "Tunnel to Alpha Arena Access": {
+                        "Save Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2720,6 +2596,17 @@
                                     }
                                 ]
                             }
+                        },
+                        "Door to Ammo Recharge Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Event - Alpha Metroid": {
+                            "type": "template",
+                            "data": "Defeat Alpha Metroid"
                         }
                     }
                 },
@@ -2743,42 +2630,7 @@
                     "pickup_index": 172,
                     "location_category": "minor",
                     "connections": {
-                        "Start Point": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Tunnel to Alpha Arena Access": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -4407.99,
-                        "y": -10305.49,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "dock_type": "tunnel",
-                    "default_connection": {
-                        "region": "Surface - East",
-                        "area": "Alpha Arena Access",
-                        "node": "Tunnel to Alpha Arena"
-                    },
-                    "default_dock_weakness": "Tunnel",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {
-                        "Start Point": {
+                        "Inside Arena": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2866,7 +2718,7 @@
                                 "items": []
                             }
                         },
-                        "Dock to Cavern Crossing": {
+                        "Dock to Cavern Cavity": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2988,7 +2840,7 @@
                         }
                     }
                 },
-                "Dock to Cavern Crossing": {
+                "Dock to Cavern Cavity": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3005,7 +2857,7 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Surface - East",
-                        "area": "Cavern Crossing",
+                        "area": "Cavern Cavity",
                         "node": "Dock to Scan Pulse Chamber"
                     },
                     "default_dock_weakness": "Open Passage",
@@ -3086,7 +2938,7 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Dock to Cavern Crossing": {
+                        "Dock to Cavern Cavity": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3152,7 +3004,7 @@
                                 "items": []
                             }
                         },
-                        "Dock to Cavern Crossing": {
+                        "Dock to Cavern Cavity": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3257,7 +3109,7 @@
                     "pickup_index": 7,
                     "location_category": "minor",
                     "connections": {
-                        "Door to Alpha Arena Access": {
+                        "Door to Alpha Arena": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3266,7 +3118,7 @@
                         }
                     }
                 },
-                "Door to Alpha Arena Access": {
+                "Door to Alpha Arena": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3286,10 +3138,10 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Surface - East",
-                        "area": "Alpha Arena Access",
+                        "area": "Alpha Arena",
                         "node": "Door to Chozo Cache West"
                     },
-                    "default_dock_weakness": "Plasma Beam Door",
+                    "default_dock_weakness": "Access Open",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -3336,7 +3188,7 @@
                 "asset_id": "collision_camera_013"
             },
             "nodes": {
-                "Tunnel to Alpha Arena Access": {
+                "Tunnel to Alpha Arena": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3353,7 +3205,7 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Surface - East",
-                        "area": "Alpha Arena Access",
+                        "area": "Alpha Arena",
                         "node": "Tunnel to Moheek Market"
                     },
                     "default_dock_weakness": "Tunnel",
@@ -3362,7 +3214,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Alpha Arena Access": {
+                        "Dock to Alpha Arena": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -3373,12 +3225,12 @@
                         }
                     }
                 },
-                "Dock to Alpha Arena Access": {
+                "Dock to Alpha Arena": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -5827.0144189991515,
-                        "y": -8905.822125287774,
+                        "x": -5827.01,
+                        "y": -8905.82,
                         "z": 0.0
                     },
                     "description": "",
@@ -3390,7 +3242,7 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Surface - East",
-                        "area": "Alpha Arena Access",
+                        "area": "Alpha Arena",
                         "node": "Dock to Moheek Market"
                     },
                     "default_dock_weakness": "Open Passage",
@@ -3399,7 +3251,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Tunnel to Alpha Arena Access": {
+                        "Tunnel to Alpha Arena": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -3412,7 +3264,7 @@
                 }
             }
         },
-        "Cavern Crossing": {
+        "Cavern Cavity": {
             "default_node": "Start Point",
             "extra": {
                 "total_boundings": {
@@ -3471,7 +3323,7 @@
                     "default_connection": {
                         "region": "Surface - East",
                         "area": "Energy Recharge Station Shaft",
-                        "node": "Door to Cavern Crossing"
+                        "node": "Door to Cavern Cavity"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -3664,7 +3516,7 @@
                     "default_connection": {
                         "region": "Surface - East",
                         "area": "Scan Pulse Chamber",
-                        "node": "Dock to Cavern Crossing"
+                        "node": "Dock to Cavern Cavity"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -3699,7 +3551,7 @@
                     "default_connection": {
                         "region": "Surface - East",
                         "area": "Cavern Alcove",
-                        "node": "Tunnel to Cavern Crossing"
+                        "node": "Tunnel to Cavern Cavity"
                     },
                     "default_dock_weakness": "Tunnel",
                     "exclude_from_dock_rando": false,
@@ -4498,13 +4350,13 @@
                                                         "items": [
                                                             {
                                                                 "type": "template",
-                                                                "data": "Can Spiderspark"
+                                                                "data": "Can Spider Boost"
                                                             },
                                                             {
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "tricks",
-                                                                    "name": "Spiderspark",
+                                                                    "name": "Spider Boost",
                                                                     "amount": 2,
                                                                     "negate": false
                                                                 }
@@ -4759,13 +4611,13 @@
                                                         "items": [
                                                             {
                                                                 "type": "template",
-                                                                "data": "Can Spiderspark"
+                                                                "data": "Can Spider Boost"
                                                             },
                                                             {
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "tricks",
-                                                                    "name": "Spiderspark",
+                                                                    "name": "Spider Boost",
                                                                     "amount": 2,
                                                                     "negate": false
                                                                 }
@@ -4866,13 +4718,13 @@
                                                         "items": [
                                                             {
                                                                 "type": "template",
-                                                                "data": "Can Spiderspark"
+                                                                "data": "Can Spider Boost"
                                                             },
                                                             {
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "tricks",
-                                                                    "name": "Spiderspark",
+                                                                    "name": "Spider Boost",
                                                                     "amount": 1,
                                                                     "negate": false
                                                                 }
@@ -5237,7 +5089,7 @@
                     "pickup_index": 9,
                     "location_category": "minor",
                     "connections": {
-                        "Tunnel to Cavern Crossing": {
+                        "Tunnel to Cavern Cavity": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -5248,7 +5100,7 @@
                         }
                     }
                 },
-                "Tunnel to Cavern Crossing": {
+                "Tunnel to Cavern Cavity": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5265,7 +5117,7 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Surface - East",
-                        "area": "Cavern Crossing",
+                        "area": "Cavern Cavity",
                         "node": "Tunnel to Cavern Alcove"
                     },
                     "default_dock_weakness": "Tunnel",
@@ -5382,7 +5234,7 @@
                                 ]
                             }
                         },
-                        "Tunnel to Alpha Arena Access": {
+                        "Tunnel to Alpha Arena": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -5393,7 +5245,7 @@
                         }
                     }
                 },
-                "Door to Cavern Crossing": {
+                "Door to Cavern Cavity": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5413,7 +5265,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Surface - East",
-                        "area": "Cavern Crossing",
+                        "area": "Cavern Cavity",
                         "node": "Door to Energy Recharge Station Shaft"
                     },
                     "default_dock_weakness": "Power Beam Door",
@@ -5467,7 +5319,7 @@
                                 "items": []
                             }
                         },
-                        "Door to Cavern Crossing": {
+                        "Door to Cavern Cavity": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5486,7 +5338,7 @@
                         }
                     }
                 },
-                "Tunnel to Alpha Arena Access": {
+                "Tunnel to Alpha Arena": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5503,7 +5355,7 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Surface - East",
-                        "area": "Alpha Arena Access",
+                        "area": "Alpha Arena",
                         "node": "Tunnel to Energy Recharge Station Shaft"
                     },
                     "default_dock_weakness": "Tunnel",
@@ -5540,7 +5392,7 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Cavern Crossing": {
+                        "Door to Cavern Cavity": {
                             "type": "and",
                             "data": {
                                 "comment": null,

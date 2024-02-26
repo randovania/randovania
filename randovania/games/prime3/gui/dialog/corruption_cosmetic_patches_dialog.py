@@ -43,7 +43,8 @@ class CorruptionCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_CorruptionCo
     def _persist_option_then_notify(self, attribute_name: str) -> Callable[[int], None]:
         def persist(value: int) -> None:
             self._cosmetic_patches = dataclasses.replace(
-                self._cosmetic_patches, **{attribute_name: bool(value)}  # type: ignore[arg-type]
+                self._cosmetic_patches,
+                **{attribute_name: bool(value)},  # type: ignore[arg-type]
             )
 
         return persist

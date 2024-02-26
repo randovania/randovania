@@ -72,6 +72,29 @@ def _migrate_v6(data: dict) -> dict:
     return data
 
 
+def _migrate_v7(data: dict) -> dict:
+    for pickup in data["standard_pickups"].values():
+        default_shuffled_count = pickup.pop("default_shuffled_count")
+        default_starting_count = pickup.pop("default_starting_count")
+
+        if default_starting_count > 0:
+            case = "starting_item"
+        elif default_shuffled_count > 0:
+            case = "shuffled"
+        else:
+            case = "missing"
+
+        pickup["expected_case_for_describer"] = case
+
+        if default_shuffled_count > 0 and default_shuffled_count != len(pickup["progression"]):
+            pickup["custom_count_for_shuffled_case"] = default_shuffled_count
+
+        if default_starting_count > 1:
+            pickup["custom_count_for_starting_case"] = default_starting_count
+
+    return data
+
+
 _MIGRATIONS = [
     None,
     _migrate_v2,
@@ -79,6 +102,7 @@ _MIGRATIONS = [
     _migrate_v4,
     _migrate_v5,
     _migrate_v6,
+    _migrate_v7,
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 

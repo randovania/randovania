@@ -8,8 +8,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [7.4.0] - 2024-03-??
 
 - Added: A warning will be shown when trying to generate a game where more items are in the pool than the maximum amount of items.
-- TODO: Fill.
-- Fixed: Changelog window properly displays images
+- Added: When a game is exported via ftp, a message is displayed indicating that an attempt is being made to connect to the ftp server instead of the patcher's misleading "Done" message.
+- Fixed: The collection text displayed when mixing Hide All model style with Random models and a cross-game multiworld is now always a generic message when your own pickup is disguised as a pickup of another game.
+- Fixed: In the Item Pool tab, selecting Shuffled now works properly for non-progressive entries with multiple copies and certain other items.
+- Fixed: Changelog window properly displays images.
+- Fixed: Cancelling connecting to the server is better handled now.
+
+### Resolver
+
+- Fixed: Some cases of resolver timeout.
+
 
 ### Cave Story
 
@@ -23,6 +31,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: Health requirements for the Balrog 1 boss fight.
 
+### Metroid Dread
+
+#### Logic Database
+
+##### Ghavoran
+
+- Added: In Spin Boost Tower: Expert Speed Booster Conservation from Ledge Below PB Tank to Pickup (PB Tank), as well as a video for this trick.
+
 ### Metroid Prime
 
 #### Logic Database
@@ -31,11 +47,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ##### Chozo Ruins
 
+<<<<<<< HEAD
 - Changed: Vault: NSJ Bombless Wall Boost lowered to Expert
 - Changed: Ruined Nursery: bombless Standable Terrain NSJ lowered to Advanced and w/ SJ lowered to Intermediate
 - Changed: Hive Mecha: Fight skip via walkway lowered to Intermediate Movement
 - Added: Hive Mecha: Fight skip NSJ Advanced Movement bunny hop
 - Added: Furnace: Spider track climb trick description
+=======
+- Changed: Vault: NSJ Bombless Wall Boost changed to Expert
+- Changed: Ruined: Nursery Bombless Standable Terrain NSJ adjusted to Advanced and w/ SJ adjusted to Intermediate
+- Changed: Hive Mecha: Fight Skip via Walkway Adjusted to Intermediate Movement
+- Added: Hive Mecha: Fight Skip NSJ Advanced Movement Bunny Hop
+- Added: Furnace: Comment explaining Spider Track Climb
+- Changed: Furnace: "Under Spider Track" Node Renamed to "Next to Half-Pipe"
+>>>>>>> 1af1d58142445ab29f3e326fc635c8bc1b106e9a
 - Added: Furnace: Bombless Intermediate Movement to West Furnace Access 
 - Added: Burn Dome Access: Advanced Movement and Wallboost bombless escape 
 - Added: Hall of the Elders: Advanced Complex Bomb Jump wave slot skip
@@ -48,7 +73,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Elevator Access A: Hypermode bombless spiderless climb from Elevator A
 - Added: Elevator Access A: Expert Movement logic for climbing without Wave Beam
 - Changed: Phazon Processing Center: Item to Maintenance Tunnel L-Jump now has proper X-Ray logic
-- Changed: Phazon Processing Center: Item to Maitenance Tunnel Complex Bomb Jump has been properly replaced with Bomb Jump
+- Changed: Phazon Processing Center: Item to Maintenance Tunnel Complex Bomb Jump has been properly replaced with Bomb Jump
 
 ##### Phendrana Drifts
 

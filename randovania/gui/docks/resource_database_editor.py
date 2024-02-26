@@ -11,6 +11,7 @@ from PySide6.QtCore import Qt
 
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
+from randovania.game_description.resources.resource_database import NamedRequirementTemplate
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
@@ -68,10 +69,10 @@ class ResourceDatabaseGenericModel(QtCore.QAbstractTableModel):
         return GENERIC_FIELDS
 
     def headerData(self, section: int, orientation: QtCore.Qt.Orientation, role: int = ...) -> typing.Any:
-        if role != Qt.DisplayRole:
+        if role != Qt.ItemDataRole.DisplayRole:
             return None
 
-        if orientation != Qt.Horizontal:
+        if orientation != Qt.Orientation.Horizontal:
             return section
 
         return self.all_columns()[section].display_name
@@ -86,7 +87,7 @@ class ResourceDatabaseGenericModel(QtCore.QAbstractTableModel):
         return len(self.all_columns())
 
     def data(self, index: QtCore.QModelIndex, role: int = ...) -> typing.Any:
-        if role not in {Qt.DisplayRole, Qt.EditRole}:
+        if role not in {Qt.ItemDataRole.DisplayRole, Qt.ItemDataRole.EditRole}:
             return None
 
         all_items = self._get_items()
@@ -95,7 +96,7 @@ class ResourceDatabaseGenericModel(QtCore.QAbstractTableModel):
             field = self.all_columns()[index.column()]
             return field.to_qt(getattr(resource, field.field_name))
 
-        elif role == Qt.DisplayRole:
+        elif role == Qt.ItemDataRole.DisplayRole:
             if index.column() == 0:
                 return "New..."
         else:
@@ -134,7 +135,7 @@ class ResourceDatabaseGenericModel(QtCore.QAbstractTableModel):
         self.endInsertRows()
         return True
 
-    def flags(self, index: QtCore.QModelIndex) -> QtCore.Qt.ItemFlags:
+    def flags(self, index: QtCore.QModelIndex) -> QtCore.Qt.ItemFlag:
         result = Qt.ItemFlag.ItemIsEnabled | Qt.ItemFlag.ItemIsSelectable
         if self.allow_edits:
             if index.row() == len(self._get_items()):
@@ -182,7 +183,9 @@ class TemplateEditor:
     root_item: QtWidgets.QTreeWidgetItem
     connections_item: QtWidgets.QTreeWidgetItem | None = None
 
-    def create_connections(self, tree: QtWidgets.QTreeWidget, requirement: Requirement):
+    def create_connections(
+        self, tree: QtWidgets.QTreeWidget, requirement: Requirement, resource_database: ResourceDatabase
+    ) -> None:
         if self.connections_item is not None:
             self.root_item.removeChild(self.connections_item)
 
@@ -190,6 +193,7 @@ class TemplateEditor:
             tree,
             self.root_item,
             requirement,
+            resource_database,
         )
 
 
@@ -250,12 +254,18 @@ class ResourceDatabaseEditor(QtWidgets.QDockWidget, Ui_ResourceDatabaseEditor):
         if not did_confirm or template_name == "":
             return
 
-        self.db.requirement_template[template_name] = Requirement.trivial()
+        self.db.requirement_template[template_name] = NamedRequirementTemplate(template_name, Requirement.trivial())
         self.create_template_editor(template_name).setExpanded(True)
 
-    def create_template_editor(self, name: str):
+    def create_template_editor(self, name: str) -> QtWidgets.QTreeWidgetItem:
+        template = self.db.requirement_template[name]
         item = QtWidgets.QTreeWidgetItem(self.tab_template)
-        item.setText(0, name)
+        item.setText(0, template.display_name)
+
+        rename_template_item = QtWidgets.QTreeWidgetItem(item)
+        rename_template_edit = QtWidgets.QLineEdit(template.display_name)
+        rename_template_edit.textChanged.connect(functools.partial(self.rename_template, name))
+        self.tab_template.setItemWidget(rename_template_item, 0, rename_template_edit)
 
         edit_template_item = QtWidgets.QTreeWidgetItem(item)
         edit_template_button = QtWidgets.QPushButton()
@@ -269,21 +279,33 @@ class ResourceDatabaseEditor(QtWidgets.QDockWidget, Ui_ResourceDatabaseEditor):
         )
         self.editor_for_template[name].create_connections(
             self.tab_template,
-            self.db.requirement_template[name],
+            template.requirement,
+            self.db,
         )
 
         return item
 
-    def edit_template(self, name: str):
-        requirement = self.db.requirement_template[name]
-        editor = ConnectionsEditor(self, self.db, requirement)
+    def rename_template(self, name: str, display_name: str) -> None:
+        self.db.requirement_template[name] = dataclasses.replace(
+            self.db.requirement_template[name], display_name=display_name
+        )
+        self.editor_for_template[name].root_item.setText(0, display_name)
+
+    def edit_template(self, name: str) -> None:
+        template = self.db.requirement_template[name]
+        editor = ConnectionsEditor(self, self.db, template.requirement)
         result = editor.exec_()
         if result == QtWidgets.QDialog.DialogCode.Accepted:
             final_req = editor.final_requirement
             if final_req is None:
                 return
-            self.db.requirement_template[name] = final_req
+
+            self.db.requirement_template[name] = dataclasses.replace(
+                self.db.requirement_template[name],
+                requirement=final_req,
+            )
             self.editor_for_template[name].create_connections(
                 self.tab_template,
-                self.db.requirement_template[name],
+                self.db.requirement_template[name].requirement,
+                self.db,
             )

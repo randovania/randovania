@@ -181,9 +181,17 @@ Extra - asset_id: collision_camera_003
 
 ----------------
 Chozo Seal
-Extra - total_boundings: {'x1': 4550.0, 'x2': 10300.0, 'y1': -7500.0, 'y2': -4000.0}
-Extra - polygon: [[4550.0, -4000.0], [4550.0, -7500.0], [6500.0, -7500.0], [6500.0, -7000.0], [10300.0, -6900.0], [10300.0, -4400.0], [6050.0, -4400.0], [5950.0, -4000.0]]
+Extra - total_boundings: {'x1': 4550.0, 'x2': 10300.0, 'y1': -8700.0, 'y2': -4000.0}
+Extra - polygon: [[4550.0, -4000.0], [4550.0, -8700.0], [6500.0, -8700.0], [6500.0, -7000.0], [10300.0, -6900.0], [10300.0, -4400.0], [6050.0, -4400.0], [5950.0, -4000.0]]
 Extra - asset_id: collision_camera_004
+> Pickup (Missile Tank); Heals? False
+  * Layers: default
+  * Pickup 4; Category? Minor
+  * Extra - actor_name: LE_Item_005
+  * Extra - actor_type: item_missiletank
+  > Tunnel to Transport to Area 1
+      Morph Ball
+
 > Chozo Seal; Heals? False; Default Node
   * Layers: default
   * Hint
@@ -237,22 +245,9 @@ Extra - asset_id: collision_camera_004
   > Door to Scan Pulse Chamber
       Morph Ball
 
-----------------
-Gravitt Grotto
-Extra - total_boundings: {'x1': 4550.0, 'x2': 6500.0, 'y1': -8700.0, 'y2': -7500.0}
-Extra - polygon: [[4550.0, -7500.0], [4550.0, -8700.0], [6500.0, -8700.0], [6500.0, -7500.0]]
-Extra - asset_id: collision_camera_004
-> Pickup (Missile Tank); Heals? False
-  * Layers: default
-  * Pickup 4; Category? Minor
-  * Extra - actor_name: LE_Item_005
-  * Extra - actor_type: item_missiletank
-  > Tunnel to Transport to Area 1
-      Morph Ball
-
 > Tunnel to Transport to Area 1; Heals? False
   * Layers: default
-  * Tunnel to Transport to Area 1/Tunnel to Gravitt Grotto
+  * Tunnel to Transport to Area 1/Tunnel to Chozo Seal
   > Pickup (Missile Tank)
       Morph Ball
 
@@ -261,7 +256,7 @@ Transport to Area 1
 Extra - total_boundings: {'x1': 6400.0, 'x2': 10700.0, 'y1': -10700.0, 'y2': -6800.0}
 Extra - polygon: [[6400.0, -6800.0], [6400.0, -10700.0], [10700.0, -10700.0], [10700.0, -6800.0]]
 Extra - asset_id: collision_camera_006
-> Pickup (Missile Expansion); Heals? False
+> Pickup (Missile Tank); Heals? False
   * Layers: default
   * Pickup 3; Category? Minor
   * Extra - actor_name: LE_Item_004
@@ -271,7 +266,7 @@ Extra - asset_id: collision_camera_006
 
 > Elevator to Area 1; Heals? False; Spawn Point; Default Node
   * Layers: default
-  * Elevator to Transport to Surface East and Area 2/Elevator to Surface - East
+  * Elevator to Transport to Surface and Area 2/Elevator to Surface - East
   * Extra - actor_name: LE_Platform_Elevator_FromArea01
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: ST_FromArea01
@@ -295,9 +290,9 @@ Extra - asset_id: collision_camera_006
   > Next to Teleporter
       Trivial
 
-> Tunnel to Gravitt Grotto; Heals? False
+> Tunnel to Chozo Seal; Heals? False
   * Layers: default
-  * Tunnel to Gravitt Grotto/Tunnel to Transport to Area 1
+  * Tunnel to Chozo Seal/Tunnel to Transport to Area 1
   > Next to Teleporter
       Lay Any Bomb
 
@@ -315,7 +310,7 @@ Extra - asset_id: collision_camera_006
 
 > Next to Teleporter; Heals? False
   * Layers: default
-  > Pickup (Missile Expansion)
+  > Pickup (Missile Tank)
       All of the following:
           Morph Ball
           Super Jump (Beginner) or Unmorph Extend (Beginner) or Climb Rooms Vertically (High Jump)
@@ -325,7 +320,7 @@ Extra - asset_id: collision_camera_006
       Trivial
   > Door to Chozo Seal
       Trivial
-  > Tunnel to Gravitt Grotto
+  > Tunnel to Chozo Seal
       Lay Any Bomb
   > Dock to Transport Cache
       Baby Metroid or Lay Power Bomb
@@ -393,9 +388,9 @@ Extra - asset_id: collision_camera_008
       Trivial
 
 ----------------
-Alpha Arena Access
+Alpha Arena
 Extra - total_boundings: {'x1': -5900.0, 'x2': -1000.0, 'y1': -10400.0, 'y2': -5900.0}
-Extra - polygon: [[-1000.0, -5900.0], [-3400.0, -5900.0], [-3400.0, -6700.0], [-3500.0, -7000.0], [-5900.0, -7000.0], [-5900.0, -10400.0], [-4300.0, -10400.0], [-4300.0, -8900.0], [-1000.0, -8900.0]]
+Extra - polygon: [[-1000.0, -5900.0], [-3400.0, -5900.0], [-3400.0, -6700.0], [-3500.0, -7000.0], [-5900.0, -7000.0], [-5900.0, -10400.0], [-1300.0, -10400.0], [-1300.0, -8900.0], [-1000.0, -8800.0]]
 Extra - asset_id: collision_camera_010
 > Pickup (Missile Tank); Heals? False
   * Layers: default
@@ -412,56 +407,45 @@ Extra - asset_id: collision_camera_010
   * Extra - start_point_actor_name: ST_SaveStation_002
   > Door to Chozo Cache West
       Trivial
-  > Tunnel to Energy Recharge Station Shaft
-      Morph Ball
-  > Tunnel to Alpha Arena
-      Morph Ball and Shoot Any Missile
   > Dock to Moheek Market
       Trivial
+  > Tunnel to Energy Recharge Station Shaft
+      Morph Ball
+  > Inside Arena
+      Morph Ball and Shoot Any Missile
 
 > Door to Chozo Cache West; Heals? False
   * Layers: default
-  * Plasma Beam Door to Chozo Cache West/Door to Alpha Arena Access
+  * Plasma Beam Door to Chozo Cache West/Door to Alpha Arena
   * Extra - actor_name: Door008
   * Extra - actor_type: doorpowerpower
   > Save Station
       Trivial
 
+> Dock to Moheek Market; Heals? False
+  * Layers: default
+  * Open Passage to Moheek Market/Dock to Alpha Arena
+  > Save Station
+      Trivial
+
 > Tunnel to Moheek Market; Heals? False
   * Layers: default
-  * Tunnel to Moheek Market/Tunnel to Alpha Arena Access
+  * Tunnel to Moheek Market/Tunnel to Alpha Arena
   > Pickup (Missile Tank)
       Morph Ball
 
 > Tunnel to Energy Recharge Station Shaft; Heals? False
   * Layers: default
-  * Tunnel to Energy Recharge Station Shaft/Tunnel to Alpha Arena Access
+  * Tunnel to Energy Recharge Station Shaft/Tunnel to Alpha Arena
   > Save Station
       Morph Ball
 
-> Tunnel to Alpha Arena; Heals? False
-  * Layers: default
-  * Tunnel to Alpha Arena/Tunnel to Alpha Arena Access
-  > Save Station
-      Morph Ball and Shoot Any Missile
-
-> Dock to Moheek Market; Heals? False
-  * Layers: default
-  * Open Passage to Moheek Market/Dock to Alpha Arena Access
-  > Save Station
-      Trivial
-
-----------------
-Alpha Arena
-Extra - total_boundings: {'x1': -4500.0, 'x2': -1300.0, 'y1': -10400.0, 'y2': -9300.0}
-Extra - polygon: [[-1300.0, -9300.0], [-4500.0, -9300.0], [-4500.0, -10400.0], [-1300.0, -10400.0]]
-Extra - asset_id: collision_camera_010
 > Door to Ammo Recharge Station; Heals? False
   * Layers: default
   * Power Beam Door to Ammo Recharge Station/Door to Alpha Arena
   * Extra - actor_name: Door013
   * Extra - actor_type: doorpowerpower
-  > Start Point
+  > Inside Arena
       Trivial
 
 > Event - Alpha Metroid; Heals? False
@@ -470,28 +454,22 @@ Extra - asset_id: collision_camera_010
   > Pickup (DNA)
       Trivial
 
-> Start Point; Heals? False; Default Node
+> Inside Arena; Heals? False
   * Layers: default
   * Extra - start_point_actor_name: ST_Alpha_001_Checkpoint
+  > Save Station
+      Morph Ball and Shoot Any Missile
   > Door to Ammo Recharge Station
       Trivial
   > Event - Alpha Metroid
       Defeat Alpha Metroid
-  > Tunnel to Alpha Arena Access
-      Morph Ball and Shoot Any Missile
 
 > Pickup (DNA); Heals? False
   * Layers: default
   * Pickup 172; Category? Minor
   * Extra - pickup_type: metroid
   * Extra - spawngroup: SG_Alpha_001
-  > Start Point
-      Trivial
-
-> Tunnel to Alpha Arena Access; Heals? False
-  * Layers: default
-  * Tunnel to Alpha Arena Access/Tunnel to Alpha Arena
-  > Start Point
+  > Inside Arena
       Trivial
 
 ----------------
@@ -506,7 +484,7 @@ Extra - asset_id: collision_camera_011
   * Extra - actor_type: powerup_scanningpulse
   > Door to Chozo Seal
       Trivial
-  > Dock to Cavern Crossing
+  > Dock to Cavern Cavity
       Trivial
 
 > Door to Chozo Seal; Heals? False
@@ -532,9 +510,9 @@ Extra - asset_id: collision_camera_011
   > Door to Chozo Seal
       Morph Ball
 
-> Dock to Cavern Crossing; Heals? False
+> Dock to Cavern Cavity; Heals? False
   * Layers: default
-  * Open Passage to Cavern Crossing/Dock to Scan Pulse Chamber
+  * Open Passage to Cavern Cavity/Dock to Scan Pulse Chamber
   > Pickup (Scan Pulse)
       Morph Ball
   > Start Point - Left of Statue
@@ -549,7 +527,7 @@ Extra - asset_id: collision_camera_011
 > Start Point - Left of Statue; Heals? False
   * Layers: default
   * Extra - start_point_actor_name: ST_CheckPoint_001
-  > Dock to Cavern Crossing
+  > Dock to Cavern Cavity
       Trivial
 
 > Start Point - Right of Statue; Heals? False; Default Node
@@ -564,7 +542,7 @@ Extra - asset_id: collision_camera_011
       Out of Bounds Movement (Beginner)
   > Door to Chozo Seal
       Trivial
-  > Dock to Cavern Crossing
+  > Dock to Cavern Cavity
       Trivial
   > Dock to Charge Beam Chamber Access
       # https://youtu.be/Wgw4WEGnvCQ
@@ -584,12 +562,12 @@ Extra - asset_id: collision_camera_012
   * Pickup 7; Category? Minor
   * Extra - actor_name: LE_Item_008
   * Extra - actor_type: item_supermissiletank
-  > Door to Alpha Arena Access
+  > Door to Alpha Arena
       Trivial
 
-> Door to Alpha Arena Access; Heals? False
+> Door to Alpha Arena; Heals? False
   * Layers: default
-  * Plasma Beam Door to Alpha Arena Access/Door to Chozo Cache West
+  * Access Open to Alpha Arena/Door to Chozo Cache West
   * Extra - actor_name: Door008
   * Extra - actor_type: doorpowerpower
   > Pickup (Super Missile Tank)
@@ -600,26 +578,26 @@ Moheek Market
 Extra - total_boundings: {'x1': -7100.0, 'x2': -5800.0, 'y1': -9900.0, 'y2': -8600.0}
 Extra - polygon: [[-7100.0, -8600.0], [-7100.0, -9900.0], [-5800.0, -9900.0], [-5800.0, -8600.0]]
 Extra - asset_id: collision_camera_013
-> Tunnel to Alpha Arena Access; Heals? False
+> Tunnel to Alpha Arena; Heals? False
   * Layers: default
-  * Tunnel to Alpha Arena Access/Tunnel to Moheek Market
-  > Dock to Alpha Arena Access
+  * Tunnel to Alpha Arena/Tunnel to Moheek Market
+  > Dock to Alpha Arena
       Morph Ball
 
-> Dock to Alpha Arena Access; Heals? False
+> Dock to Alpha Arena; Heals? False
   * Layers: default
-  * Open Passage to Alpha Arena Access/Dock to Moheek Market
-  > Tunnel to Alpha Arena Access
+  * Open Passage to Alpha Arena/Dock to Moheek Market
+  > Tunnel to Alpha Arena
       Morph Ball
 
 ----------------
-Cavern Crossing
+Cavern Cavity
 Extra - total_boundings: {'x1': -3800.0, 'x2': -1600.0, 'y1': -5900.0, 'y2': -3700.0}
 Extra - polygon: [[-3800.0, -3700.0], [-3800.0, -5900.0], [-1600.0, -5900.0], [-1600.0, -4500.0], [-2300.0, -4500.0], [-2300.0, -3700.0]]
 Extra - asset_id: collision_camera_014
 > Door to Energy Recharge Station Shaft; Heals? False
   * Layers: default
-  * Power Beam Door to Energy Recharge Station Shaft/Door to Cavern Crossing
+  * Power Beam Door to Energy Recharge Station Shaft/Door to Cavern Cavity
   * Extra - actor_name: Door009
   * Extra - actor_type: doorpowerpower
   > Dock to Scan Pulse Chamber
@@ -641,13 +619,13 @@ Extra - asset_id: collision_camera_014
 
 > Dock to Scan Pulse Chamber; Heals? False
   * Layers: default
-  * Open Passage to Scan Pulse Chamber/Dock to Cavern Crossing
+  * Open Passage to Scan Pulse Chamber/Dock to Cavern Cavity
   > Door to Energy Recharge Station Shaft
       Trivial
 
 > Tunnel to Cavern Alcove; Heals? False
   * Layers: default
-  * Tunnel to Cavern Alcove/Tunnel to Cavern Crossing
+  * Tunnel to Cavern Alcove/Tunnel to Cavern Cavity
   > Door to Energy Recharge Station Shaft
       Morph Ball
 
@@ -791,7 +769,7 @@ Extra - asset_id: collision_camera_018
           Morph Ball and Shoot Any Missile
           Any of the following:
               Grapple Beam or Phase Drift
-              Spiderspark (Intermediate) and Can Spiderspark
+              Spider Boost (Intermediate) and Can Spider Boost
               Bomb and Diagonal Bomb Jump (Intermediate)
 
 > Room Center; Heals? False
@@ -814,7 +792,7 @@ Extra - asset_id: collision_camera_018
           Morph Ball and Shoot Any Missile
           Any of the following:
               Phase Drift
-              Spiderspark (Intermediate) and Can Spiderspark
+              Spider Boost (Intermediate) and Can Spider Boost
               Bomb and Spider Ball and Diagonal Bomb Jump (Intermediate)
 
 > Below Right Crumble Blocks; Heals? False
@@ -824,7 +802,7 @@ Extra - asset_id: collision_camera_018
           Morph Ball
           Any of the following:
               Grapple Beam
-              Spiderspark (Beginner) and Can Spiderspark
+              Spider Boost (Beginner) and Can Spider Boost
   > Room Center
       Any of the following:
           Grapple Beam and Movement (Intermediate)
@@ -882,12 +860,12 @@ Extra - asset_id: collision_camera_021
   * Pickup 9; Category? Minor
   * Extra - actor_name: LE_Item_011
   * Extra - actor_type: item_missiletank
-  > Tunnel to Cavern Crossing
+  > Tunnel to Cavern Cavity
       Morph Ball
 
-> Tunnel to Cavern Crossing; Heals? False
+> Tunnel to Cavern Cavity; Heals? False
   * Layers: default
-  * Tunnel to Cavern Crossing/Tunnel to Cavern Alcove
+  * Tunnel to Cavern Cavity/Tunnel to Cavern Alcove
   > Pickup (Missile Tank)
       Morph Ball
 
@@ -904,12 +882,12 @@ Extra - asset_id: collision_camera_023
       All of the following:
           Morph Ball
           Super Jump (Beginner) or Unmorph Extend (Beginner) or Climb Rooms Vertically (High Jump)
-  > Tunnel to Alpha Arena Access
+  > Tunnel to Alpha Arena
       Morph Ball
 
-> Door to Cavern Crossing; Heals? False
+> Door to Cavern Cavity; Heals? False
   * Layers: default
-  * Power Beam Door to Cavern Crossing/Door to Energy Recharge Station Shaft
+  * Power Beam Door to Cavern Cavity/Door to Energy Recharge Station Shaft
   * Extra - actor_name: Door009
   * Extra - actor_type: doorpowerpower
   > Pickup (Missile Tank)
@@ -924,19 +902,19 @@ Extra - asset_id: collision_camera_023
   * Extra - actor_type: item_missiletank
   > Energy Recharge Station
       Trivial
-  > Door to Cavern Crossing
+  > Door to Cavern Cavity
       Morph Ball
 
-> Tunnel to Alpha Arena Access; Heals? False
+> Tunnel to Alpha Arena; Heals? False
   * Layers: default
-  * Tunnel to Alpha Arena Access/Tunnel to Energy Recharge Station Shaft
+  * Tunnel to Alpha Arena/Tunnel to Energy Recharge Station Shaft
   > Energy Recharge Station
       Morph Ball
 
 > Start Point; Heals? False; Default Node
   * Layers: default
   * Extra - start_point_actor_name: ST_Checkpoint_AmiiboUnlocked
-  > Door to Cavern Crossing
+  > Door to Cavern Cavity
       Trivial
 
 ----------------

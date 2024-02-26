@@ -457,7 +457,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         self.area_view_canvas.highlight_node(node)
 
         try:
-            msg = pretty_print.pretty_print_node_type(node, self.region_list)
+            msg = pretty_print.pretty_print_node_type(node, self.region_list, self.resource_database)
         except Exception as e:
             msg = f"Unable to describe node: {e}"
 
@@ -555,7 +555,10 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
             )
 
         create_tree_items_for_requirement(
-            self.other_node_alternatives_contents, self.other_node_alternatives_contents, requirement
+            self.other_node_alternatives_contents,
+            self.other_node_alternatives_contents,
+            requirement,
+            self.resource_database,
         )
 
     def _swap_selected_connection(self):

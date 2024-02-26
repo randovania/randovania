@@ -57,7 +57,7 @@ def test_msr_format_params(artifacts):
         "Item Pool": [
             f"Size: {174+artifacts.required_artifacts} of 211",
             "Starts with Scan Pulse",
-            "Progressive Beam, Progressive Jump, Progressive Suit",
+            "Progressive Beam, Progressive Suit, Progressive Jump",
             "Energy Reserve Tank, Aeion Reserve Tank, Missile Reserve Tank",
         ],
         "Gameplay": ["Starts at Surface - East - Landing Site"],
@@ -67,8 +67,9 @@ def test_msr_format_params(artifacts):
         ),
         "Game Changes": [
             "Missile needs Launcher, Super Missile needs Launcher, Power Bomb needs Launcher",
-            "Charge Door Buff, Beam Door Buff",
+            "Charge Door Buff, Beam Door Buff, Beam Burst Buff",
             "Open Area 3 Factory Interior East Shortcut, Remove Area Exit Grapple Blocks",
-            "Change Surface Scan Pulse Crumble Blocks, Change Area 1 Chozo Seal Crumble Blocks",
+            "Change Surface Cavern Cavity Crumble Blocks, Change Area 1 Transport to Surface and Area 2 Crumble Blocks",
         ],
+        "Hints": ["DNA Hints: Area and room"],
     }

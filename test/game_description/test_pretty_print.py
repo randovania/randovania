@@ -29,14 +29,15 @@ def test_pretty_print_requirement_array_one_item(mock_print_requirement: MagicMo
     mock_print_requirement.return_value = ["a", "b"]
 
     req = MagicMock()
+    db = MagicMock()
     array = RequirementAnd([req])
 
     # Run
-    result = list(pretty_print.pretty_print_requirement_array(array, 3))
+    result = list(pretty_print.pretty_print_requirement_array(array, db, 3))
 
     # Assert
     assert result == ["a", "b"]
-    mock_print_requirement.assert_called_once_with(req, 3)
+    mock_print_requirement.assert_called_once_with(req, db, 3)
 
 
 @patch("randovania.game_description.pretty_print.pretty_print_requirement")
@@ -51,7 +52,7 @@ def test_pretty_print_requirement_array_combinable(mock_print_requirement: Magic
     )
 
     # Run
-    result = list(pretty_print.pretty_print_requirement_array(array, 3))
+    result = list(pretty_print.pretty_print_requirement_array(array, echoes_resource_database, 3))
 
     # Assert
     assert result == [(3, "Power Beam and Shoot Sunburst")]
@@ -79,7 +80,7 @@ def test_pretty_print_requirement_array_one_row_and_nested_array(echoes_resource
     )
 
     # Run
-    result = list(pretty_print.pretty_print_requirement(req))
+    result = list(pretty_print.pretty_print_requirement(req, echoes_resource_database))
     lines = "\n".join("      {}{}".format("    " * level, text) for level, text in result)
     lines = f"\n{lines}\n"
 
