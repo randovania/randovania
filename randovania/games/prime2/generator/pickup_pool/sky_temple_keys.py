@@ -95,6 +95,6 @@ def create_sky_temple_key(
         offworld_models=frozendict({RandovaniaGame.AM2R: "sItemSkyTempleKeyEchoes"}),
         generator_params=PickupGeneratorParams(
             preferred_location_category=LocationCategory.MAJOR,
-            probability_offset=3,
+            probability_offset=3.0,
         ),
     )

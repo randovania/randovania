@@ -404,6 +404,7 @@ class DreadPatchDataFactory(PatchDataFactory):
                 "bomb": c.alt_bomb.value,
                 "cross_bomb": c.alt_cross_bomb.value,
                 "power_bomb": c.alt_power_bomb.value,
+                "closed": c.alt_closed.value,
             },
         }
 

@@ -55,7 +55,7 @@ def test_admin_player_kick_last(solo_two_world_session, flask_app, mocker, mock_
             "visibility": "visible",
             "users_list": [],
             "worlds": [],
-            "game_details": {"seed_hash": "55SQZAV4", "spoiler": True, "word_hash": "Screw Omega Mines"},
+            "game_details": {"seed_hash": "55SQZAV4", "spoiler": True, "word_hash": "Screw Poison Eyon"},
             "generation_in_progress": None,
             "allowed_games": ANY,
             "allow_coop": False,

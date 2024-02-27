@@ -10,7 +10,9 @@ from randovania.game_description.db.event_node import EventNode
 from randovania.game_description.db.node import Node, NodeContext
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.game_patches import GamePatches
+from randovania.game_description.requirements.array_base import RequirementArrayBase
 from randovania.game_description.requirements.base import Requirement
+from randovania.game_description.requirements.requirement_template import RequirementTemplate
 from randovania.game_description.resources.resource_collection import ResourceCollection
 from randovania.layout.base.base_configuration import BaseConfiguration
 
@@ -238,6 +240,31 @@ def find_invalid_strongly_connected_components(game: GameDescription) -> Iterato
         yield f"Unknown strongly connected component detected containing {len(names)} nodes:\n{names}"
 
 
+def find_recursive_templates(game: GameDescription) -> Iterator[str]:
+    db = game.resource_database
+
+    def recurse(last_name: str, req: Requirement, seen: list[str]) -> str | None:
+        if isinstance(req, RequirementArrayBase):
+            for it in req.items:
+                msg = recurse(last_name, it, seen)
+                if msg is not None:
+                    return msg
+        elif isinstance(req, RequirementTemplate):
+            new_seen = [*seen, req.template_name]
+
+            if req.template_name in seen:
+                return f"Loop detected: {new_seen}"
+
+            return recurse(req.template_name, db.requirement_template[req.template_name].requirement, new_seen)
+
+        return None
+
+    for root_template, template in db.requirement_template.items():
+        msg = recurse(root_template, template.requirement, [root_template])
+        if msg is not None:
+            yield f"Checking {root_template}: {msg}"
+
+
 def find_database_errors(game: GameDescription) -> list[str]:
     result = []
 
@@ -248,5 +275,6 @@ def find_database_errors(game: GameDescription) -> list[str]:
     for region in game.region_list.regions:
         result.extend(find_region_errors(game, region))
     result.extend(find_invalid_strongly_connected_components(game))
+    result.extend(find_recursive_templates(game))
 
     return result
