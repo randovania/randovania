@@ -80,9 +80,10 @@ Extra - asset_id: collision_camera_014
       Any of the following:
           Climb Rooms Vertically (No High Jump)
           All of the following:
+              # https://youtu.be/UiP-dMgejpQ
               High Jump Boots
               Any of the following:
-                  Super Jump (Advanced)
+                  Super Jump (Advanced) or Wall Jump (Intermediate)
                   Morph Ball and Unmorph Extend (Beginner)
 
 > Door to Gamma Arena & Transport to Metroid Caverns East; Heals? False
@@ -182,7 +183,7 @@ Extra - asset_id: collision_camera_018
   * Extra - actor_name: LE_Platform_EnergyCharge001
   * Extra - actor_type: weightactivatedplatform
   > Door to Transport to Factory Exterior East
-      Trivial
+      Wall Jump (Beginner) or Climb Rooms Vertically (No High Jump)
   > Door to Ramulken Residence
       Trivial
   > Door to Dedicated Callisto Roost
@@ -295,18 +296,23 @@ Extra - asset_id: collision_camera_022
   * Charge Beam Door to Paraby Periphery/Door to Alpha Arena Access
   * Extra - actor_name: Door009
   * Extra - actor_type: doorchargecharge
-  > Above Lava Pits
+  > Next to Lava Pits
       All of the following:
           Varia Suit
           Any of the following:
-              Grapple Beam or Gravity Suit or Space Jump
+              Gravity Suit
               Power Bomb ≥ 2 and Spider Boost (Intermediate) and Can Spider Boost
+              All of the following:
+                  Use Spider Ball
+                  Grapple Beam or Space Jump
 
 > Door to Alpha Arena; Heals? False
   * Layers: default
   * Power Beam Door to Alpha Arena/Door to Alpha Arena Access
   * Extra - actor_name: Door013
   * Extra - actor_type: doorpowerpower
+  > Start Point
+      Trivial
   > Above Lava Pits
       All of the following:
           Morph Ball and Varia Suit
@@ -315,29 +321,42 @@ Extra - asset_id: collision_camera_022
               All of the following:
                   High Jump Boots
                   Super Jump (Advanced) or Unmorph Extend (Beginner)
-  > Start Point
-      Trivial
 
-> Above Lava Pits; Heals? False
+> Next to Lava Pits; Heals? False
   * Layers: default
   > Door to Paraby Periphery
       All of the following:
           Varia Suit
           Any of the following:
-              Grapple Beam or Gravity Suit or Space Jump
+              Gravity Suit
               Power Bomb ≥ 2 and Spider Boost (Intermediate) and Can Spider Boost
+              All of the following:
+                  Use Spider Ball
+                  Grapple Beam or Space Jump
+  > Above Lava Pits
+      All of the following:
+          Varia Suit
+          Wall Jump (Beginner) or Climb Rooms Vertically (High Jump)
+
+> Start Point; Heals? False; Default Node
+  * Layers: default
+  * Extra - start_point_actor_name: ST_SG_Alpha_001
+  > Door to Alpha Arena
+      Varia Suit
+
+> Above Lava Pits; Heals? False
+  * Layers: default
   > Door to Alpha Arena
       All of the following:
           Morph Ball and Varia Suit
           Any of the following:
               Grapple Beam or Space Jump or Simple IBJ
               Spider Boost (Intermediate) and Can Spider Boost
-              Damage Boost (Intermediate) and Unmorph Extend (Intermediate)
-
-> Start Point; Heals? False; Default Node
-  * Layers: default
-  * Extra - start_point_actor_name: ST_SG_Alpha_001
-  > Door to Alpha Arena
+              # https://youtu.be/M9CyPEmsFEA
+              Damage Boost (Advanced) and Unmorph Extend (Intermediate)
+              # https://youtu.be/vzoAQD13e6k
+              Stand on Frozen Enemy (Intermediate) and Fully Freeze Enemy
+  > Next to Lava Pits
       Varia Suit
 
 ----------------
@@ -388,7 +407,9 @@ Extra - asset_id: collision_camera_023
       Any of the following:
           Grapple Beam or Gravity Suit or Space Jump
           Spider Boost (Intermediate) and Can Spider Boost
-          Underwater Bomb Jump (Intermediate) and Lay Bomb
+          # https://www.youtube.com/watch?v=vF1NJPSiTRE
+          Mid-Air Morph (Intermediate) and Underwater Bomb Jump (Intermediate) and Lay Bomb
+          High Jump Boots and Super Jump (Advanced)
   > Elevator to Area 3 - Metroid Caverns
       Morph Ball and After Area 3 (Factory Interior) - Gamma Arena & Transport to Metroid Caverns East Grapple Block
   > Save Station
@@ -436,13 +457,17 @@ Extra - asset_id: collision_camera_023
           Morph Ball
           Any of the following:
               Grapple Beam or Space Jump or Simple IBJ
-              Spider Boost (Intermediate) and Can Spider Boost
+              Spider Boost (Advanced) and Can Spider Boost
+              # https://youtu.be/RALmFmf_GhM
+              Single-wall Wall Jump (Intermediate) and Unmorph Extend (Advanced)
   > Tunnel to Gamma Arena Center Access (Top)
       All of the following:
           Morph Ball
           Any of the following:
               Grapple Beam or Space Jump or Simple IBJ
-              Spider Boost (Intermediate) and Can Spider Boost
+              Spider Boost (Advanced) and Can Spider Boost
+              # https://youtu.be/RALmFmf_GhM
+              Single-wall Wall Jump (Intermediate) and Unmorph Extend (Advanced)
   > Event - Gamma Metroid
       After Area 3 (Factory Interior) - Gamma Metroid Upper Awakened and Defeat Gamma Metroid
 
@@ -500,14 +525,21 @@ Extra - asset_id: collision_camera_025
   * Extra - actor_name: Door010
   * Extra - actor_type: doorpowerpower
   > Door to Fan Control
-      Any of the following:
-          Spider Boost (Intermediate) and Can Spider Boost
-          All of the following:
-              Morph Ball
-              Any of the following:
-                  Space Jump or Simple IBJ
-                  Stand on Frozen Enemy (Intermediate) and Fully Freeze Enemy
-                  High Jump Boots and Unmorph Extend (Intermediate)
+      All of the following:
+          Any of the following:
+              # Deal with the Wallfires
+              Lightning Armor or Missile ≥ 20 or Super Missile ≥ 2 or Dodge Enemies (Intermediate) or Defeat Gold Robots
+              Phase Drift and Dodge Enemies (Beginner)
+          Any of the following:
+              # Climbing the room
+              Spider Boost (Intermediate) and Can Spider Boost
+              All of the following:
+                  Morph Ball
+                  Any of the following:
+                      Space Jump or Simple IBJ
+                      # https://youtu.be/RyHEb6OY2sM
+                      Stand on Frozen Enemy (Intermediate) and Fully Freeze Enemy
+                      High Jump Boots and Unmorph Extend (Intermediate)
   > Door to Gamma Arena Center Access
       Trivial
 
@@ -673,13 +705,19 @@ Extra - asset_id: collision_camera_030
       Morph Ball
   > Start Point
       Trivial
+  > Event - Gamma Awakened (From Door)
+      Lay Power Bomb
 
 > Tunnel to Gamma Arena & Transport to Metroid Caverns East (Bottom); Heals? False
   * Layers: default
   * Tunnel to Gamma Arena & Transport to Metroid Caverns East/Tunnel to Gamma Arena Center Access (Bottom)
-  > Event - Gamma Awakened
+  > Event - Gamma Awakened (From Tunnel)
       All of the following:
-          Morph Ball and Climb Rooms Vertically (High Jump)
+          Morph Ball
+          Any of the following:
+              Climb Rooms Vertically (High Jump)
+              # https://youtu.be/UiP-dMgejpQ
+              Movement (Intermediate)
           Lightning Armor or Lay Any Bomb
 
 > Tunnel to Gamma Arena & Transport to Metroid Caverns East (Top); Heals? False
@@ -688,7 +726,7 @@ Extra - asset_id: collision_camera_030
   > Door to Wallfire Watch
       Morph Ball
 
-> Event - Gamma Awakened; Heals? False
+> Event - Gamma Awakened (From Tunnel); Heals? False
   * Layers: default
   * Event Area 3 (Factory Interior) - Gamma Metroid Upper Awakened
   > Tunnel to Gamma Arena & Transport to Metroid Caverns East (Bottom)
@@ -699,6 +737,12 @@ Extra - asset_id: collision_camera_030
 > Start Point; Heals? False; Default Node
   * Layers: default
   * Extra - start_point_actor_name: ST_SG_Gamma_006
+  > Door to Wallfire Watch
+      Trivial
+
+> Event - Gamma Awakened (From Door); Heals? False
+  * Layers: default
+  * Event Area 3 (Factory Interior) - Gamma Metroid Upper Awakened
   > Door to Wallfire Watch
       Trivial
 

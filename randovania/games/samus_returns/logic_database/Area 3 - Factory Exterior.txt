@@ -27,7 +27,7 @@ Extra - asset_id: collision_camera_002
 
 > Door to Beam Burst Chamber & Tsumuri Station; Heals? False
   * Layers: default
-  * Charge Beam Door to Beam Burst Chamber & Tsumuri Station/Door to Transport to Area 2
+  * Power Beam Door to Beam Burst Chamber & Tsumuri Station/Door to Transport to Area 2
   * Extra - actor_name: Door002
   * Extra - actor_type: doorpowerpower
   > Chozo Seal
@@ -35,17 +35,17 @@ Extra - asset_id: collision_camera_002
 
 > Door to Transport to Area 4 (Top); Heals? False
   * Layers: default
-  * Power Beam Door to Transport to Area 4/Door from Transport to Area 2
+  * Power Beam Door to Transport to Area 4/Door to Transport to Area 2 (Top)
   * Extra - actor_name: Door005
   * Extra - actor_type: doorpowerpower
   > Chozo Seal
       Trivial
-  > Door from Transport to Area 4
+  > Door to Transport to Area 4 (Middle Top)
       Trivial
 
-> Door from Transport to Area 4; Heals? False
+> Door to Transport to Area 4 (Middle Top); Heals? False
   * Layers: default
-  * Access Closed to Transport to Area 4/Door to Transport to Area 2 (Top)
+  * Power Beam Door to Transport to Area 4/Door to Transport to Area 2 (Middle Top)
   * Extra - actor_name: Door006
   * Extra - actor_type: doorpowerpower
   > Door to Transport to Area 4 (Top)
@@ -53,9 +53,9 @@ Extra - asset_id: collision_camera_002
   > Door to Entrance Maze (Top)
       Lay Any Bomb
 
-> Door to Transport to Area 4 (Middle); Heals? False
+> Door to Transport to Area 4 (Middle Bottom); Heals? False
   * Layers: default
-  * Power Beam Door to Transport to Area 4/Door to Transport to Area 2 (Middle)
+  * Power Beam Door to Transport to Area 4/Door to Transport to Area 2 (Middle Bottom)
   * Extra - actor_name: Door007
   * Extra - actor_type: doorpowerpower
   > Door to Entrance Maze (Top)
@@ -65,7 +65,7 @@ Extra - asset_id: collision_camera_002
 
 > Door to Transport to Area 4 (Bottom); Heals? False
   * Layers: default
-  * Charge Beam Door to Transport to Area 4/Door to Transport to Area 2 (Bottom)
+  * Power Beam Door to Transport to Area 4/Door to Transport to Area 2 (Bottom)
   * Extra - actor_name: Door008
   * Extra - actor_type: doorpowerpower
   > Door to Entrance Maze (Bottom)
@@ -76,9 +76,9 @@ Extra - asset_id: collision_camera_002
   * Power Beam Door to Entrance Maze/Door to Transport to Area 2 (Top)
   * Extra - actor_name: Door009
   * Extra - actor_type: doorpowerpower
-  > Door from Transport to Area 4
+  > Door to Transport to Area 4 (Middle Top)
       Lay Any Bomb
-  > Door to Transport to Area 4 (Middle)
+  > Door to Transport to Area 4 (Middle Bottom)
       Morph Ball and Movement (Beginner) and Shoot Any Missile
 
 > Door to Entrance Maze (Bottom); Heals? False
@@ -86,7 +86,7 @@ Extra - asset_id: collision_camera_002
   * Power Beam Door to Entrance Maze/Door to Transport to Area 2 (Bottom)
   * Extra - actor_name: Door010
   * Extra - actor_type: doorpowerpower
-  > Door to Transport to Area 4 (Middle)
+  > Door to Transport to Area 4 (Middle Bottom)
       Trivial
   > Door to Transport to Area 4 (Bottom)
       Trivial
@@ -103,14 +103,17 @@ Extra - asset_id: collision_camera_016
   * Extra - actor_type: item_powerbombtank
   > Tunnel to Factory Exterior (Top)
       All of the following:
-          Morph Ball
+          Baby Metroid and Morph Ball
           Any of the following:
-              Climb Rooms Vertically (No High Jump) and Lay Any Bomb
+              Spider Ball
               All of the following:
-                  Baby Metroid and Climb Rooms Vertically (High Jump)
-                  Phase Drift or Movement (Beginner)
+                  High Jump Boots or Space Jump
+                  Phase Drift or Movement (Intermediate)
   > Tunnel to Factory Exterior (Bottom)
       Lay Any Bomb
+  > Dock to Factory Exterior
+      # Softlock risk without Bombs https://youtu.be/NciAGjkvQMM
+      Phase Drift Clip (Advanced) and Can Phase Drift Clip
 
 > Tunnel to Factory Exterior (Top); Heals? False
   * Layers: default
@@ -122,13 +125,18 @@ Extra - asset_id: collision_camera_016
               All of the following:
                   Power Bomb and Climb Rooms Vertically (No High Jump)
                   Phase Drift or Movement (Beginner)
+                  Disabled Buff Beam Burst or Shoot Beam Burst
               All of the following:
-                  Baby Metroid
+                  Baby Metroid and Defeat Gold Robots
                   Phase Drift or Spider Ball or Movement (Beginner)
 
 > Tunnel to Factory Exterior (Bottom); Heals? False
   * Layers: default
   * Tunnel with Bomb Block to Factory Exterior/Tunnel to Exterior Maze (Bottom)
+
+> Dock to Factory Exterior; Heals? False
+  * Layers: default
+  * Open Passage to Factory Exterior/Dock from Exterior Maze
 
 ----------------
 Grapple Beam Chamber
@@ -246,7 +254,8 @@ Extra - asset_id: collision_camera_030
   > Save Station
       Any of the following:
           Space Jump or Simple IBJ
-          Spider Boost (Beginner) and Can Spider Boost
+          # Launch from second circle on floor from door
+          Spider Boost (Advanced) and Can Spider Boost
           Grapple Beam and Use Spider Ball
 
 > Door to Factory Exterior Access; Heals? False
@@ -280,7 +289,7 @@ Extra - asset_id: collision_camera_030
   * Open Passage to Factory Exterior Teleporter Cave/Dock to Factory Exterior
   > Pickup (Missile Tank Ceiling)
       Any of the following:
-          Spider Boost (Beginner) and Can Spider Boost
+          Spider Boost (Intermediate) and Can Spider Boost
           All of the following:
               Morph Ball
               Any of the following:
@@ -329,6 +338,12 @@ Extra - asset_id: collision_camera_030
   > Tunnel to Exterior Maze (Top)
       Morph Ball
 
+> Dock from Exterior Maze; Heals? False
+  * Layers: default
+  * Blocked Passage to Exterior Maze/Dock to Factory Exterior
+  > Door to Halzyn Hangout
+      Out of Bounds Movement (Beginner)
+
 ----------------
 Transport to Metroid Caverns West
 Extra - total_boundings: {'x1': -18100.0, 'x2': -16800.0, 'y1': 2020.9200439453125, 'y2': 2779.080078125}
@@ -371,7 +386,7 @@ Extra - asset_id: collision_camera_032
   * Pickup 56; Category? Minor
   * Extra - actor_name: LE_Item_002
   * Extra - actor_type: item_missiletank
-  > Door to Transport to Area 2 (Top)
+  > Door to Transport to Area 2 (Middle Top)
       Any of the following:
           Out of Bounds Movement (Intermediate)
           Morph Ball and After Area 3 (Factory Exterior) - Transport to Area 4 Grapple Block
@@ -385,43 +400,47 @@ Extra - asset_id: collision_camera_032
   > Door to Transport to Area 2 (Bottom)
       Trivial
 
-> Door from Transport to Area 2; Heals? False
+> Door to Transport to Area 2 (Top); Heals? False
   * Layers: default
-  * Access Closed to Transport to Area 2/Door to Transport to Area 4 (Top)
+  * Power Beam Door to Transport to Area 2/Door to Transport to Area 4 (Top)
   * Extra - actor_name: Door005
   * Extra - actor_type: doorpowerpower
   > Pickup (Missile Tank)
-      Charge Beam and Ice Beam and Ice Beam Clip (Beginner) and Out of Bounds Movement (Intermediate)
-  > Door to Transport to Area 2 (Top)
+      All of the following:
+          # https://youtu.be/j_W2WiQ7XK4
+          Charge Beam and Ice Beam and Ice Beam Clip (Beginner) and Out of Bounds Movement (Intermediate)
+          # Dealing with the Gravitts
+          Lightning Armor or Dodge Enemies (Advanced) or Defeat Non-Counterable Enemies
+  > Door to Transport to Area 2 (Middle Top)
       Morph Ball
 
-> Door to Transport to Area 2 (Top); Heals? False
+> Door to Transport to Area 2 (Middle Top); Heals? False
   * Layers: default
-  * Power Beam Door to Transport to Area 2/Door from Transport to Area 4
+  * Power Beam Door to Transport to Area 2/Door to Transport to Area 4 (Middle Top)
   * Extra - actor_name: Door006
   * Extra - actor_type: doorpowerpower
   > Pickup (Missile Tank)
       All of the following:
           Morph Ball and After Area 3 (Factory Exterior) - Transport to Area 4 Grapple Block
           Movement (Intermediate) or Climb Rooms Vertically (High Jump)
-  > Door from Transport to Area 2
+  > Door to Transport to Area 2 (Top)
       Morph Ball
-  > Door to Transport to Area 2 (Middle)
+  > Door to Transport to Area 2 (Middle Bottom)
       Morph Ball
   > Event - Grapple Block
       Grapple Beam and Morph Ball
 
-> Door to Transport to Area 2 (Middle); Heals? False
+> Door to Transport to Area 2 (Middle Bottom); Heals? False
   * Layers: default
-  * Power Beam Door to Transport to Area 2/Door to Transport to Area 4 (Middle)
+  * Power Beam Door to Transport to Area 2/Door to Transport to Area 4 (Middle Bottom)
   * Extra - actor_name: Door007
   * Extra - actor_type: doorpowerpower
-  > Door to Transport to Area 2 (Top)
+  > Door to Transport to Area 2 (Middle Top)
       Morph Ball
 
 > Door to Transport to Area 2 (Bottom); Heals? False
   * Layers: default
-  * Charge Beam Door to Transport to Area 2/Door to Transport to Area 4 (Bottom)
+  * Power Beam Door to Transport to Area 2/Door to Transport to Area 4 (Bottom)
   * Extra - actor_name: Door008
   * Extra - actor_type: doorpowerpower
   > Elevator to Area 4 - Central Caves
@@ -430,7 +449,7 @@ Extra - asset_id: collision_camera_032
 > Event - Grapple Block; Heals? False
   * Layers: default
   * Event Area 3 (Factory Exterior) - Transport to Area 4 Grapple Block
-  > Door to Transport to Area 2 (Top)
+  > Door to Transport to Area 2 (Middle Top)
       Trivial
 
 ----------------
@@ -565,9 +584,10 @@ Extra - asset_id: collision_camera_036
       Any of the following:
           Destroy Blob Throwers/Steel Orbs
           All of the following:
-              Phase Drift and Movement (Advanced)
+              # Jump over the Blob Throwers
+              Phase Drift and Dodge Enemies (Advanced)
               Any of the following:
-                  Damage Boost (Intermediate)
+                  Damage Boost (Intermediate) and Normal Damage ≥ 210
                   All of the following:
                       Morph Ball
                       Any of the following:
@@ -588,9 +608,10 @@ Extra - asset_id: collision_camera_036
       Any of the following:
           Destroy Blob Throwers/Steel Orbs
           All of the following:
-              Phase Drift and Movement (Advanced)
+              # Jump over the Blob Throwers
+              Phase Drift and Dodge Enemies (Advanced)
               Any of the following:
-                  Damage Boost (Intermediate)
+                  Damage Boost (Intermediate) and Normal Damage ≥ 210
                   All of the following:
                       Morph Ball
                       Any of the following:
@@ -598,15 +619,17 @@ Extra - asset_id: collision_camera_036
                           High Jump Boots and Spring Ball
   > Right of Statue
       Any of the following:
-          Knowledge (Beginner) and Lay Power Bomb
+          Knowledge (Beginner) and Disabled Buff Beam Burst and Lay Power Bomb
           All of the following:
               Lay Bomb
               Any of the following:
                   Shoot Beam Burst
                   All of the following:
-                      Phase Drift and Movement (Advanced)
+                      # Jump over the Blob Thrower
+                      Phase Drift and Dodge Enemies (Advanced)
                       Any of the following:
-                          Mid-Air Morph (Intermediate) or Damage Boost (Intermediate)
+                          Mid-Air Morph (Intermediate)
+                          Damage Boost (Intermediate) and Normal Damage ≥ 120
                           High Jump Boots and Spring Ball
   > Left of Statue
       All of the following:
@@ -624,16 +647,18 @@ Extra - asset_id: collision_camera_036
           Wall Jump (Intermediate) or Climb Rooms Vertically (No High Jump)
   > Top of Climb
       Any of the following:
+          Knowledge (Beginner) and Disabled Buff Beam Burst and Lay Power Bomb
           All of the following:
               Lay Bomb
               Any of the following:
                   Shoot Beam Burst
                   All of the following:
-                      Phase Drift and Movement (Advanced)
+                      # Jump over the Blob Thrower
+                      Phase Drift and Dodge Enemies (Advanced)
                       Any of the following:
-                          Mid-Air Morph (Intermediate) or Damage Boost (Intermediate)
+                          Mid-Air Morph (Intermediate)
+                          Damage Boost (Intermediate) and Normal Damage ≥ 120
                           High Jump Boots and Spring Ball
-          Knowledge (Beginner) and Lay Power Bomb
 
 > Left of Statue; Heals? False
   * Layers: default
@@ -659,11 +684,22 @@ Extra - asset_id: collision_camera_037
       Morph Ball or After Area 3 (Factory Exterior) - Halzyn Hangout Grapple Block
   > Pickup (Missile Tank)
       All of the following:
-          # TODO: Add methods without SJ (non-trickless)
           Morph Ball and Shoot Any Missile
           Any of the following:
-              Screw Attack and Space Jump
               All of the following:
+                  # With Screw Attack
+                  Screw Attack
+                  Any of the following:
+                      Space Jump
+                      All of the following:
+                          # https://youtu.be/ld64MsYKsLg
+                          Spider Ball and Mid-Air Morph (Intermediate)
+                          Any of the following:
+                              Wall Jump (Advanced)
+                              Bomb and Infinite Bomb Jump (Advanced)
+                      High Jump Boots and Single-wall Wall Jump (Intermediate)
+              All of the following:
+                  # Without Screw Attack https://youtu.be/rSi4mCNY1M0
                   Spider Ball and Out of Bounds Movement (Intermediate) and Spider Ball Clip (Intermediate)
                   Any of the following:
                       High Jump Boots and Spring Ball
@@ -680,9 +716,12 @@ Extra - asset_id: collision_camera_037
       Any of the following:
           Morph Ball and After Area 3 (Factory Exterior) - Halzyn Hangout Grapple Block and Climb Rooms Vertically (No High Jump)
           All of the following:
+              # Skipping the Grapple Block https://youtu.be/MJB5u6UWf_I
               Ice Beam Clip (Intermediate) and Out of Bounds Movement (Advanced) and Fully Freeze Enemy
               Any of the following:
-                  Space Jump or Single-wall Wall Jump (Expert)
+                  Space Jump
+                  # HJ needed to reach top section
+                  High Jump Boots and Single-wall Wall Jump (Expert) and Super Jump (Intermediate)
                   All of the following:
                       Lay Bomb
                       Any of the following:
@@ -732,7 +771,16 @@ Extra - asset_id: collision_camera_038
   * Extra - actor_name: Door015
   * Extra - actor_type: doorpowerpower
   > Event - Gamma Metroid
-      Climb Rooms Vertically (High Jump) and Defeat Gamma Metroid and Lay Any Bomb
+      All of the following:
+          Defeat Gamma Metroid
+          Any of the following:
+              Simple IBJ
+              All of the following:
+                  Lay Any Bomb
+                  Any of the following:
+                      High Jump Boots or Space Jump or Spider Ball
+                      # https://youtu.be/-QRvPeCbaOM
+                      Wall Jump (Intermediate)
   > Tunnel to Nook's Cranny
       Lay Any Bomb
 
@@ -816,7 +864,8 @@ Extra - asset_id: collision_camera_040
   > Right of Crumble Block
       Any of the following:
           High Jump Boots or Space Jump or Destroy Blob Throwers/Steel Orbs or Use Spider Ball
-          Phase Drift and Movement (Beginner)
+          # Jump over the Blob Thrower
+          Phase Drift and Dodge Enemies (Beginner)
           Infinite Bomb Jump (Intermediate) and Lay Bomb
           Morph Ball and Damage Boost (Intermediate) and Unmorph Extend (Advanced)
 
@@ -843,12 +892,19 @@ Extra - asset_id: collision_camera_040
   > Door to Transport to Metroid Caverns North
       Any of the following:
           Morph Ball and After Area 3 (Factory Exterior) - Factory Exterior Access Grapple Block Right
-          Ice Beam Clip (Intermediate) and Fully Freeze Enemy
+          All of the following:
+              Ice Beam
+              Any of the following:
+                  # https://youtu.be/SGxHj3du8xA
+                  Charge Beam and Ice Beam Clip (Intermediate)
+                  # https://youtu.be/rjBK83JL0XM
+                  Phase Drift and Ice Beam Clip (Advanced)
   > Door to Factory Exterior
       Any of the following:
           High Jump Boots or Space Jump or Damage Boost (Beginner) or Destroy Blob Throwers/Steel Orbs or Use Spider Ball
           Infinite Bomb Jump (Intermediate) and Lay Bomb
-          Phase Drift and Movement (Beginner)
+          # Jump over the Blob Thrower
+          Phase Drift and Dodge Enemies (Beginner)
   > Event - Grapple Block Right
       Grapple Beam and Morph Ball
 
