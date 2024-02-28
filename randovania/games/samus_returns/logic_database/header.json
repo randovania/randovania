@@ -1155,9 +1155,9 @@
                 "description": "By abusing how the Melee works, this trick can be used to freeze enemies for the full freeze timer without having Charge Beam.",
                 "extra": {}
             },
-            "WallShot": {
-                "long_name": "Shoot Through Walls",
-                "description": "By abusing Free Aim and firing a beam or Missile at the right time, it is possible to shoot through walls and hit things not normally reachable.",
+            "PreciseAiming": {
+                "long_name": "Precise Aiming",
+                "description": "With specific angles and movement, it is possible to shoot entities normally out of reach while in Free Aim. This can also allow for shooting Out of Bounds.",
                 "extra": {}
             },
             "MissilelessMetroids": {
@@ -4504,6 +4504,35 @@
                         ]
                     }
                 }
+            },
+            "Can Phase Drift Clip": {
+                "display_name": "Can Phase Drift Clip",
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Morph",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Phase",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            }
+                        ]
+                    }
+                }
             }
         },
         "damage_reductions": [
@@ -5279,7 +5308,7 @@
         "PhaseClip": [
             2
         ],
-        "WallShot": [
+        "PreciseAiming": [
             1
         ],
         "Dodge": [
