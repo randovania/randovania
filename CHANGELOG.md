@@ -63,6 +63,42 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Prime
 
+#### Logic Database
+
+- Added: 35 new Videos to the Database
+
+##### Chozo Ruins
+
+- Changed: Vault: NSJ Bombless Wall Boost lowered to Expert
+- Changed: Ruined Nursery: bombless Standable Terrain NSJ lowered to Advanced and w/ SJ lowered to Intermediate
+- Changed: Hive Mecha: Fight skip via walkway lowered to Intermediate Movement
+- Added: Hive Mecha: Fight skip NSJ Advanced Movement bunny hop
+- Added: Furnace: Spider track climb trick description
+- Added: Furnace: Bombless Intermediate Movement to West Furnace Access 
+- Added: Burn Dome Access: Advanced Movement and Wallboost bombless escape 
+- Added: Hall of the Elders: Advanced Complex Bomb Jump wave slot skip
+
+##### Phazon Mines
+
+- Added: Elite Research: Advanced IUJ scanless climb 
+- Added: Main Quarry: Advanced BSJ to Waste Disposal
+- Added: Metroid Quarantine B: Hypermode Single Room OOB NSJ bombless
+- Added: Elevator Access A: Hypermode bombless spiderless climb from Elevator A
+- Added: Elevator Access A: Expert Movement logic for climbing without Wave Beam
+- Changed: Phazon Processing Center: Item to Maintenance Tunnel L-Jump now has proper X-Ray logic
+- Changed: Phazon Processing Center: Item to Maintenance Tunnel Complex Bomb Jump has been properly replaced with Bomb Jump
+
+##### Phendrana Drifts
+
+- Added: Frozen Pike NSJ Bombless Climb from Frost Cave Access now has proper Charge Beam, Scan Visor, and Combat logic
+- Added: Hypermode Frozen Pike NSJ Bombless Climb from bottom to top
+- Added: Frozen Pike Hypermode BSJ to Transport Access
+- Added: Frozen Pike NSJ Hunter Cave to Frost Cave Intermediate Slope Jump
+- Changed: Transport Access Single Room OOB lowered to expert and advanced tricks
+- Added: Ice Ruins West Courtyard Entryway to middle platform NSJ Hypermode BSJ and NSJ damage boost
+- Added: Ice Ruins East Expert Single Room OOB ice item heist
+- Added: Ice Ruins East Advanced Single Room OOB and Hypermode Movement spiderless bombless spider track item
+- Added: Ruined Courtyard Advanced Movement bunny hop to Save Station A
 - Added: New hash words
 
 ## [7.3.2] - 2024-02-??
