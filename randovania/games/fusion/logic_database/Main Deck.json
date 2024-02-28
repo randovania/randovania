@@ -6907,7 +6907,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": "TODO: tougher without charge",
+                                            "comment": "Without Charge Beam, the shot to open the gate must be precisely timed.  With Charge Beam, just let go of beam while in the transition.",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -6915,6 +6915,15 @@
                                                         "type": "items",
                                                         "name": "ChargeBeam",
                                                         "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Movement",
+                                                        "amount": 3,
                                                         "negate": false
                                                     }
                                                 }
