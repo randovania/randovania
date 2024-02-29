@@ -69,7 +69,25 @@
     </widget>
    </item>
    <item row="0" column="0" colspan="2">
-    <widget class="QLabel" name="description_label">
+    <widget class="QLabel" name="select_label">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>20</height>
+      </size>
+     </property>
+     <property name="baseSize">
+      <size>
+       <width>0</width>
+       <height>70</height>
+      </size>
+     </property>
      <property name="text">
       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Select your preferred version of Cave Story:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
@@ -82,6 +100,12 @@
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
       <widget class="QRadioButton" name="freeware_radio">
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>20</height>
+        </size>
+       </property>
        <property name="text">
         <string>Freeware</string>
        </property>
@@ -89,12 +113,46 @@
      </item>
      <item>
       <widget class="QRadioButton" name="tweaked_radio">
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>20</height>
+        </size>
+       </property>
        <property name="text">
         <string>Tweaked</string>
        </property>
       </widget>
      </item>
     </layout>
+   </item>
+   <item row="2" column="0" colspan="3">
+    <widget class="QLabel" name="description_label">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>75</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>480</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="wordWrap">
+      <bool>true</bool>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>

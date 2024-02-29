@@ -36,6 +36,8 @@ class CSGameExportDialog(GameExportDialog, Ui_CSGameExportDialog):
 
         # Output
         self.output_file_button.clicked.connect(self._on_output_file_button)
+        self.tweaked_radio.clicked.connect(self._on_platform_radio_clicked)
+        self.freeware_radio.clicked.connect(self._on_platform_radio_clicked)
 
         # Target Platform
         if per_game.platform is CSPlatform.FREEWARE:
@@ -78,6 +80,20 @@ class CSGameExportDialog(GameExportDialog, Ui_CSGameExportDialog):
         output_file = prompt_for_output_directory(self, "Cave Story Randomizer", self.output_file_edit)
         if output_file is not None:
             self.output_file_edit.setText(str(output_file))
+
+    def _on_platform_radio_clicked(self):
+        if self.freeware_radio.isChecked():
+            self.description_label.setText(
+                "The original release of Cave Story. Compatible with Windows and Linux via Wine."
+            )
+        else:
+            self.description_label.setText(
+                """A reverse-engineeered port, with several QoL changes. \
+                Has native controller support, in-game remapping and runs on widescreen. \
+                Compatible with Windows and Linux."""
+            )
+
+        self.description_label.update()
 
     def get_game_export_params(self) -> GameExportParams:
         spoiler_output = spoiler_path_for_directory(self.auto_save_spoiler, self.output_file)
