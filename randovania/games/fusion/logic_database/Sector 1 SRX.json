@@ -782,15 +782,6 @@
                                                                                 "amount": 3,
                                                                                 "negate": false
                                                                             }
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "WallJump",
-                                                                                "amount": 2,
-                                                                                "negate": false
-                                                                            }
                                                                         }
                                                                     ]
                                                                 }
@@ -2591,10 +2582,6 @@
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "template",
-                                        "data": "Can Kill Geron"
-                                    },
-                                    {
                                         "type": "resource",
                                         "data": {
                                             "type": "items",
@@ -2712,6 +2699,53 @@
                                                         "name": "Missiles",
                                                         "amount": 1,
                                                         "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Missiles",
+                                            "amount": 5,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "ScrewAttack",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Knowledge",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": "Add SSWJ",
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can climb High Jump Wall"
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
