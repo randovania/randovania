@@ -1,13 +1,12 @@
 from __future__ import annotations
 
 import dataclasses
+from pathlib import Path
 from typing import TYPE_CHECKING
 
 from randovania.exporter.game_exporter import GameExporter, GameExportParams
 
 if TYPE_CHECKING:
-    from pathlib import Path
-
     from randovania.lib import status_update_lib
 
 
@@ -33,6 +32,12 @@ class BlankGameExporter(GameExporter):
         Checks if export_game can be aborted
         """
         return False
+
+    def export_params_type(self) -> type[GameExportParams]:
+        """
+        Returns the type of the GameExportParams expected by this exporter.
+        """
+        return BlankGameExportParams
 
     def _do_export_game(
         self,
