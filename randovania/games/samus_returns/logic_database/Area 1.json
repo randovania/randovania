@@ -9,7 +9,7 @@
         "scenario_id": "s010_area1"
     },
     "areas": {
-        "Chozo Seal": {
+        "Transport to Surface and Area 2": {
             "default_node": "Elevator to Surface - East",
             "extra": {
                 "total_boundings": {
@@ -113,7 +113,7 @@
                                 "items": []
                             }
                         },
-                        "Door to Entrance Shaft": {
+                        "Door to Moheek Mount": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -397,7 +397,7 @@
                     "dock_type": "elevator",
                     "default_connection": {
                         "region": "Area 2 - Dam Entryway",
-                        "area": "Chozo Seal",
+                        "area": "Transport to Areas 1 and 3",
                         "node": "Elevator to Area 1"
                     },
                     "default_dock_weakness": "Elevator",
@@ -468,7 +468,7 @@
                         }
                     }
                 },
-                "Door to Entrance Shaft": {
+                "Door to Moheek Mount": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -488,8 +488,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 1",
-                        "area": "Entrance Shaft",
-                        "node": "Door to Chozo Seal"
+                        "area": "Moheek Mount",
+                        "node": "Door to Transport to Surface and Area 2"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -506,7 +506,7 @@
                         }
                     }
                 },
-                "Door to Chozo Seal Storage": {
+                "Door to Transport Cache": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -526,8 +526,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 1",
-                        "area": "Chozo Seal Storage",
-                        "node": "Door to Chozo Seal"
+                        "area": "Transport Cache",
+                        "node": "Door to Transport to Surface and Area 2"
                     },
                     "default_dock_weakness": "Wave Beam Door",
                     "exclude_from_dock_rando": false,
@@ -713,7 +713,7 @@
                                 ]
                             }
                         },
-                        "Door to Chozo Seal Storage": {
+                        "Door to Transport Cache": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -836,7 +836,7 @@
                 }
             }
         },
-        "Entrance Shaft": {
+        "Moheek Mount": {
             "default_node": null,
             "extra": {
                 "total_boundings": {
@@ -866,7 +866,7 @@
                 "asset_id": "collision_camera_003"
             },
             "nodes": {
-                "Door to Chozo Seal": {
+                "Door to Transport to Surface and Area 2": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -886,8 +886,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 1",
-                        "area": "Chozo Seal",
-                        "node": "Door to Entrance Shaft"
+                        "area": "Transport to Surface and Area 2",
+                        "node": "Door to Moheek Mount"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -895,7 +895,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Lava Shortcut": {
+                        "Door to Magma Pool": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -904,7 +904,7 @@
                         }
                     }
                 },
-                "Door to Lava Shortcut": {
+                "Door to Magma Pool": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -924,8 +924,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 1",
-                        "area": "Lava Shortcut",
-                        "node": "Door to Entrance Shaft"
+                        "area": "Magma Pool",
+                        "node": "Door to Moheek Mount"
                     },
                     "default_dock_weakness": "Charge Beam Door",
                     "exclude_from_dock_rando": false,
@@ -933,14 +933,14 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Chozo Seal": {
+                        "Door to Transport to Surface and Area 2": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Dock to Entrance Pathway": {
+                        "Dock to Harmonized Hallway": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -949,7 +949,7 @@
                         }
                     }
                 },
-                "Dock to Entrance Pathway": {
+                "Dock to Harmonized Hallway": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -966,8 +966,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Area 1",
-                        "area": "Entrance Pathway",
-                        "node": "Dock to Entrance Shaft"
+                        "area": "Harmonized Hallway",
+                        "node": "Dock to Moheek Mount"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -975,7 +975,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Lava Shortcut": {
+                        "Door to Magma Pool": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -986,7 +986,7 @@
                 }
             }
         },
-        "Shaft West": {
+        "Gullugg Gangway": {
             "default_node": null,
             "extra": {
                 "total_boundings": {
@@ -1016,7 +1016,7 @@
                 "asset_id": "collision_camera_005"
             },
             "nodes": {
-                "Door to Lava Shortcut": {
+                "Door to Magma Pool": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1036,8 +1036,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 1",
-                        "area": "Lava Shortcut",
-                        "node": "Door to Shaft West"
+                        "area": "Magma Pool",
+                        "node": "Door to Gullugg Gangway"
                     },
                     "default_dock_weakness": "Charge Beam Door",
                     "exclude_from_dock_rando": false,
@@ -1045,28 +1045,28 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door from One-Way Puzzle": {
+                        "Door from Water Maze": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Dock to Entrance Pathway": {
+                        "Dock to Harmonized Hallway": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Dock to Outer Hub Access": {
+                        "Dock to Chute Leech Cabin": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Dock to One-Way Puzzle": {
+                        "Dock to Water Maze": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1075,7 +1075,7 @@
                         }
                     }
                 },
-                "Door from One-Way Puzzle": {
+                "Door from Water Maze": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1095,8 +1095,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 1",
-                        "area": "One-Way Puzzle",
-                        "node": "Door to Shaft West"
+                        "area": "Water Maze",
+                        "node": "Door to Gullugg Gangway"
                     },
                     "default_dock_weakness": "Access Closed",
                     "exclude_from_dock_rando": false,
@@ -1104,7 +1104,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Lava Shortcut": {
+                        "Door to Magma Pool": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1113,7 +1113,7 @@
                         }
                     }
                 },
-                "Dock to Entrance Pathway": {
+                "Dock to Harmonized Hallway": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1130,8 +1130,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Area 1",
-                        "area": "Entrance Pathway",
-                        "node": "Dock to Shaft West"
+                        "area": "Harmonized Hallway",
+                        "node": "Dock to Gullugg Gangway"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -1139,7 +1139,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Lava Shortcut": {
+                        "Door to Magma Pool": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1148,7 +1148,7 @@
                         }
                     }
                 },
-                "Dock to Outer Hub Access": {
+                "Dock to Chute Leech Cabin": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1165,8 +1165,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Area 1",
-                        "area": "Outer Hub Access",
-                        "node": "Dock to Shaft West"
+                        "area": "Chute Leech Cabin",
+                        "node": "Dock to Gullugg Gangway"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -1174,7 +1174,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Lava Shortcut": {
+                        "Door to Magma Pool": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1183,7 +1183,7 @@
                         }
                     }
                 },
-                "Dock to One-Way Puzzle": {
+                "Dock to Water Maze": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1200,8 +1200,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Area 1",
-                        "area": "One-Way Puzzle",
-                        "node": "Dock to Shaft West"
+                        "area": "Water Maze",
+                        "node": "Dock to Gullugg Gangway"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -1209,7 +1209,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Lava Shortcut": {
+                        "Door to Magma Pool": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3096,7 +3096,7 @@
                         }
                     }
                 },
-                "Dock to Outer Hub Access": {
+                "Dock to Chute Leech Cabin": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3113,7 +3113,7 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Area 1",
-                        "area": "Outer Hub Access",
+                        "area": "Chute Leech Cabin",
                         "node": "Dock to Temple Exterior"
                     },
                     "default_dock_weakness": "Open Passage",
@@ -3266,7 +3266,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Outer Hub Access": {
+                        "Dock to Chute Leech Cabin": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3412,7 +3412,7 @@
                 }
             }
         },
-        "Alpha Shaft Left": {
+        "Metroid Caverns Lobby": {
             "default_node": "Start Point",
             "extra": {
                 "total_boundings": {
@@ -3450,7 +3450,7 @@
                 "asset_id": "collision_camera_023"
             },
             "nodes": {
-                "Door to Alpha Arena South": {
+                "Door to Metroid Caverns Alpha Arena South East": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3470,8 +3470,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 1",
-                        "area": "Alpha Arena South",
-                        "node": "Door to Alpha Shaft Left"
+                        "area": "Metroid Caverns Alpha Arena South East",
+                        "node": "Door to Metroid Caverns Lobby"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -3479,7 +3479,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Alpha Arena West Access": {
+                        "Dock to Metroid Caverns Alpha Arena South West Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3495,7 +3495,7 @@
                         }
                     }
                 },
-                "Dock to Alpha Shaft Right": {
+                "Dock to Metroid Caverns Hub": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3512,8 +3512,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Area 1",
-                        "area": "Alpha Shaft Right",
-                        "node": "Dock to Alpha Shaft Left"
+                        "area": "Metroid Caverns Hub",
+                        "node": "Dock to Metroid Caverns Lobby"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -3521,7 +3521,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Tunnel to Energy Recharge Room": {
+                        "Tunnel to Metroid Caverns Energy Recharge Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3542,7 +3542,7 @@
                                 ]
                             }
                         },
-                        "Dock to Alpha Arena West Access": {
+                        "Dock to Metroid Caverns Alpha Arena South West Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3551,7 +3551,7 @@
                         }
                     }
                 },
-                "Tunnel to Energy Recharge Room": {
+                "Tunnel to Metroid Caverns Energy Recharge Station": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3568,8 +3568,8 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Area 1",
-                        "area": "Energy Recharge Room",
-                        "node": "Tunnel to Alpha Shaft Left"
+                        "area": "Metroid Caverns Energy Recharge Station",
+                        "node": "Tunnel to Metroid Caverns Lobby"
                     },
                     "default_dock_weakness": "Tunnel with Bomb Block",
                     "exclude_from_dock_rando": false,
@@ -3577,7 +3577,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Alpha Arena West Access": {
+                        "Dock to Metroid Caverns Alpha Arena South West Access": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -3588,7 +3588,7 @@
                         }
                     }
                 },
-                "Dock to Alpha Arena West Access": {
+                "Dock to Metroid Caverns Alpha Arena South West Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3605,8 +3605,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Area 1",
-                        "area": "Alpha Arena West Access",
-                        "node": "Dock to Alpha Shaft Left"
+                        "area": "Metroid Caverns Alpha Arena South West Access",
+                        "node": "Dock to Metroid Caverns Lobby"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -3614,14 +3614,14 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Alpha Arena South": {
+                        "Door to Metroid Caverns Alpha Arena South East": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Dock to Alpha Shaft Right": {
+                        "Dock to Metroid Caverns Hub": {
                             "type": "template",
                             "data": "Lay Any Bomb"
                         }
@@ -3644,7 +3644,7 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Alpha Arena South": {
+                        "Door to Metroid Caverns Alpha Arena South East": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3655,7 +3655,7 @@
                 }
             }
         },
-        "Alpha Arena West Access": {
+        "Metroid Caverns Alpha Arena South West Access": {
             "default_node": "Second Pillar",
             "extra": {
                 "total_boundings": {
@@ -3685,7 +3685,7 @@
                 "asset_id": "collision_camera_024"
             },
             "nodes": {
-                "Dock to Alpha Shaft Left": {
+                "Dock to Metroid Caverns Lobby": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3702,8 +3702,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Area 1",
-                        "area": "Alpha Shaft Left",
-                        "node": "Dock to Alpha Arena West Access"
+                        "area": "Metroid Caverns Lobby",
+                        "node": "Dock to Metroid Caverns Alpha Arena South West Access"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -3845,13 +3845,13 @@
                                             "items": [
                                                 {
                                                     "type": "template",
-                                                    "data": "Can Spiderspark"
+                                                    "data": "Can Spider Boost"
                                                 },
                                                 {
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "tricks",
-                                                        "name": "Spiderspark",
+                                                        "name": "Spider Boost",
                                                         "amount": 1,
                                                         "negate": false
                                                     }
@@ -3873,7 +3873,7 @@
                         }
                     }
                 },
-                "Tunnel to Alpha Arena West (Top)": {
+                "Tunnel to Metroid Caverns Alpha Arena South West (Top)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3890,8 +3890,8 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Area 1",
-                        "area": "Alpha Arena West",
-                        "node": "Tunnel to Alpha Arena West Access (Top)"
+                        "area": "Metroid Caverns Alpha Arena South West",
+                        "node": "Tunnel to Metroid Caverns Alpha Arena South West Access (Top)"
                     },
                     "default_dock_weakness": "Tunnel",
                     "exclude_from_dock_rando": false,
@@ -3900,7 +3900,7 @@
                     "override_default_lock_requirement": null,
                     "connections": {}
                 },
-                "Tunnel to Alpha Arena West (Bottom)": {
+                "Tunnel to Metroid Caverns Alpha Arena South West (Bottom)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3917,8 +3917,8 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Area 1",
-                        "area": "Alpha Arena West",
-                        "node": "Tunnel to Alpha Arena West Access (Bottom)"
+                        "area": "Metroid Caverns Alpha Arena South West",
+                        "node": "Tunnel to Metroid Caverns Alpha Arena South West Access (Bottom)"
                     },
                     "default_dock_weakness": "Tunnel with Bomb Block",
                     "exclude_from_dock_rando": false,
@@ -3952,14 +3952,14 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Dock to Alpha Shaft Left": {
+                        "Dock to Metroid Caverns Lobby": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Tunnel to Alpha Arena West (Top)": {
+                        "Tunnel to Metroid Caverns Alpha Arena South West (Top)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4050,13 +4050,13 @@
                                                         "items": [
                                                             {
                                                                 "type": "template",
-                                                                "data": "Can Spiderspark"
+                                                                "data": "Can Spider Boost"
                                                             },
                                                             {
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "tricks",
-                                                                    "name": "Spiderspark",
+                                                                    "name": "Spider Boost",
                                                                     "amount": 3,
                                                                     "negate": false
                                                                 }
@@ -4074,7 +4074,7 @@
                 }
             }
         },
-        "Alpha Arena South": {
+        "Metroid Caverns Alpha Arena South East": {
             "default_node": "Room Center",
             "extra": {
                 "total_boundings": {
@@ -4104,7 +4104,7 @@
                 "asset_id": "collision_camera_025"
             },
             "nodes": {
-                "Door to Alpha Shaft Left": {
+                "Door to Metroid Caverns Lobby": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4124,8 +4124,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 1",
-                        "area": "Alpha Shaft Left",
-                        "node": "Door to Alpha Arena South"
+                        "area": "Metroid Caverns Lobby",
+                        "node": "Door to Metroid Caverns Alpha Arena South East"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -4184,7 +4184,7 @@
                     "pickup_index": 174,
                     "location_category": "minor",
                     "connections": {
-                        "Door to Alpha Shaft Left": {
+                        "Door to Metroid Caverns Lobby": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4195,7 +4195,7 @@
                 }
             }
         },
-        "Alpha Arena East": {
+        "Metroid Caverns Alpha Arena North East": {
             "default_node": "Room Center",
             "extra": {
                 "total_boundings": {
@@ -4225,7 +4225,7 @@
                 "asset_id": "collision_camera_027"
             },
             "nodes": {
-                "Door to Alpha Arena East Access": {
+                "Door to Metroid Caverns Alpha Arena North East Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4245,8 +4245,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 1",
-                        "area": "Alpha Arena East Access",
-                        "node": "Door to Alpha Arena East"
+                        "area": "Metroid Caverns Alpha Arena North East Access",
+                        "node": "Door to Metroid Caverns Alpha Arena North East"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -4305,7 +4305,7 @@
                     "pickup_index": 175,
                     "location_category": "minor",
                     "connections": {
-                        "Door to Alpha Arena East Access": {
+                        "Door to Metroid Caverns Alpha Arena North East Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4316,7 +4316,7 @@
                 }
             }
         },
-        "One-Way Puzzle": {
+        "Water Maze": {
             "default_node": null,
             "extra": {
                 "total_boundings": {
@@ -4346,12 +4346,12 @@
                 "asset_id": "collision_camera_028"
             },
             "nodes": {
-                "Pickup (Missile Tank)": {
+                "Pickup (Aeion Tank)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": -4564.349142368491,
-                        "y": 2537.1944739638684,
+                        "x": -4564.35,
+                        "y": 2537.19,
                         "z": 0.0
                     },
                     "description": "",
@@ -4375,7 +4375,7 @@
                         }
                     }
                 },
-                "Door to Shaft West": {
+                "Door to Gullugg Gangway": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4395,8 +4395,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 1",
-                        "area": "Shaft West",
-                        "node": "Door from One-Way Puzzle"
+                        "area": "Gullugg Gangway",
+                        "node": "Door from Water Maze"
                     },
                     "default_dock_weakness": "Plasma Beam Door",
                     "exclude_from_dock_rando": false,
@@ -4462,7 +4462,7 @@
                         }
                     }
                 },
-                "Dock to Shaft West": {
+                "Dock to Gullugg Gangway": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4479,8 +4479,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Area 1",
-                        "area": "Shaft West",
-                        "node": "Dock to One-Way Puzzle"
+                        "area": "Gullugg Gangway",
+                        "node": "Dock to Water Maze"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -4488,7 +4488,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Shaft West": {
+                        "Door to Gullugg Gangway": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4531,7 +4531,7 @@
                                 ]
                             }
                         },
-                        "Dock to Save Station South": {
+                        "Dock to Metroid Caverns Save Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4540,7 +4540,7 @@
                         }
                     }
                 },
-                "Dock to Save Station South": {
+                "Dock to Metroid Caverns Save Station": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4557,8 +4557,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Area 1",
-                        "area": "Save Station South",
-                        "node": "Dock to One-Way Puzzle (Top)"
+                        "area": "Metroid Caverns Save Station",
+                        "node": "Dock to Water Maze (Top)"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -4566,7 +4566,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Shaft West": {
+                        "Dock to Gullugg Gangway": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4575,7 +4575,7 @@
                         }
                     }
                 },
-                "Tunnel to Save Station South": {
+                "Tunnel to Metroid Caverns Save Station": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4592,8 +4592,8 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Area 1",
-                        "area": "Save Station South",
-                        "node": "Tunnel to One-Way Puzzle"
+                        "area": "Metroid Caverns Save Station",
+                        "node": "Tunnel to Water Maze"
                     },
                     "default_dock_weakness": "Tunnel",
                     "exclude_from_dock_rando": false,
@@ -4626,7 +4626,7 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "event_name": "Area 1 - One-Way Puzzle Grapple Block",
+                    "event_name": "Area 1 - Water Maze Grapple Block",
                     "connections": {
                         "Next to Pickup": {
                             "type": "and",
@@ -4652,14 +4652,14 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Pickup (Missile Tank)": {
+                        "Pickup (Aeion Tank)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Door to Shaft West": {
+                        "Door to Gullugg Gangway": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4680,7 +4680,7 @@
                                 ]
                             }
                         },
-                        "Tunnel to Save Station South": {
+                        "Tunnel to Metroid Caverns Save Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4689,7 +4689,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "events",
-                                            "name": "Area 1 - One-Way Puzzle Grapple Block",
+                                            "name": "Area 1 - Water Maze Grapple Block",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -4717,7 +4717,7 @@
                         }
                     }
                 },
-                "Dock from Save Station South": {
+                "Dock from Metroid Caverns Save Station": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4734,8 +4734,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Area 1",
-                        "area": "Save Station South",
-                        "node": "Dock to One-Way Puzzle (OoB)"
+                        "area": "Metroid Caverns Save Station",
+                        "node": "Dock to Water Maze (OoB)"
                     },
                     "default_dock_weakness": "Blocked Passage",
                     "exclude_from_dock_rando": false,
@@ -4945,7 +4945,7 @@
                 }
             }
         },
-        "Energy Recharge Room": {
+        "Metroid Caverns Energy Recharge Station": {
             "default_node": null,
             "extra": {
                 "total_boundings": {
@@ -4993,13 +4993,13 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Tunnel to Alpha Shaft Left": {
+                        "Tunnel to Metroid Caverns Lobby": {
                             "type": "template",
                             "data": "Lay Any Bomb"
                         }
                     }
                 },
-                "Tunnel to Alpha Shaft Left": {
+                "Tunnel to Metroid Caverns Lobby": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5016,8 +5016,8 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Area 1",
-                        "area": "Alpha Shaft Left",
-                        "node": "Tunnel to Energy Recharge Room"
+                        "area": "Metroid Caverns Lobby",
+                        "node": "Tunnel to Metroid Caverns Energy Recharge Station"
                     },
                     "default_dock_weakness": "Tunnel with Bomb Block",
                     "exclude_from_dock_rando": false,
@@ -5038,7 +5038,7 @@
                 }
             }
         },
-        "Lava Shortcut": {
+        "Magma Pool": {
             "default_node": null,
             "extra": {
                 "total_boundings": {
@@ -5088,7 +5088,7 @@
                     "pickup_index": 15,
                     "location_category": "minor",
                     "connections": {
-                        "Door to Entrance Shaft": {
+                        "Door to Moheek Mount": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5097,7 +5097,7 @@
                         }
                     }
                 },
-                "Door to Entrance Shaft": {
+                "Door to Moheek Mount": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5117,8 +5117,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 1",
-                        "area": "Entrance Shaft",
-                        "node": "Door to Lava Shortcut"
+                        "area": "Moheek Mount",
+                        "node": "Door to Magma Pool"
                     },
                     "default_dock_weakness": "Charge Beam Door",
                     "exclude_from_dock_rando": false,
@@ -5210,7 +5210,7 @@
                                 ]
                             }
                         },
-                        "Door to Shaft West": {
+                        "Door to Gullugg Gangway": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -5264,7 +5264,7 @@
                         }
                     }
                 },
-                "Door to Shaft West": {
+                "Door to Gullugg Gangway": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5284,8 +5284,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 1",
-                        "area": "Shaft West",
-                        "node": "Door to Lava Shortcut"
+                        "area": "Gullugg Gangway",
+                        "node": "Door to Magma Pool"
                     },
                     "default_dock_weakness": "Charge Beam Door",
                     "exclude_from_dock_rando": false,
@@ -5293,7 +5293,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Entrance Shaft": {
+                        "Door to Moheek Mount": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -5489,13 +5489,13 @@
                                                         "items": [
                                                             {
                                                                 "type": "template",
-                                                                "data": "Can Spiderspark"
+                                                                "data": "Can Spider Boost"
                                                             },
                                                             {
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "tricks",
-                                                                    "name": "Spiderspark",
+                                                                    "name": "Spider Boost",
                                                                     "amount": 2,
                                                                     "negate": false
                                                                 }
@@ -5531,7 +5531,7 @@
                     "pickup_index": 30,
                     "location_category": "minor",
                     "connections": {
-                        "Door to Shaft West": {
+                        "Door to Gullugg Gangway": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5789,7 +5789,7 @@
                         }
                     }
                 },
-                "Tunnel to Alpha Shaft Right": {
+                "Tunnel to Metroid Caverns Hub": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5806,7 +5806,7 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Area 1",
-                        "area": "Alpha Shaft Right",
+                        "area": "Metroid Caverns Hub",
                         "node": "Tunnel to Inner Temple West Hall"
                     },
                     "default_dock_weakness": "Tunnel",
@@ -5859,7 +5859,7 @@
                                 "items": []
                             }
                         },
-                        "Tunnel to Alpha Shaft Right": {
+                        "Tunnel to Metroid Caverns Hub": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5945,7 +5945,7 @@
                 }
             }
         },
-        "Save Station South": {
+        "Metroid Caverns Save Station": {
             "default_node": "Save Station",
             "extra": {
                 "total_boundings": {
@@ -5995,11 +5995,11 @@
                     "pickup_index": 19,
                     "location_category": "minor",
                     "connections": {
-                        "Dock to Alpha Shaft Right": {
+                        "Dock to Metroid Caverns Hub": {
                             "type": "template",
                             "data": "Lay Any Bomb"
                         },
-                        "Tunnel to Alpha Shaft Right": {
+                        "Tunnel to Metroid Caverns Hub": {
                             "type": "template",
                             "data": "Lay Power Bomb"
                         }
@@ -6024,14 +6024,14 @@
                     },
                     "valid_starting_location": true,
                     "connections": {
-                        "Dock to One-Way Puzzle (Top)": {
+                        "Dock to Water Maze (Top)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Tunnel to One-Way Puzzle": {
+                        "Tunnel to Water Maze": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6049,7 +6049,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "events",
-                                            "name": "Area 1 - One-Way Puzzle Grapple Block",
+                                            "name": "Area 1 - Water Maze Grapple Block",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -6083,14 +6083,14 @@
                                 ]
                             }
                         },
-                        "Dock to Alpha Shaft Right": {
+                        "Dock to Metroid Caverns Hub": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Dock to One-Way Puzzle (OoB)": {
+                        "Dock to Water Maze (OoB)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6204,7 +6204,7 @@
                         }
                     }
                 },
-                "Dock to One-Way Puzzle (Top)": {
+                "Dock to Water Maze (Top)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6221,8 +6221,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Area 1",
-                        "area": "One-Way Puzzle",
-                        "node": "Dock to Save Station South"
+                        "area": "Water Maze",
+                        "node": "Dock to Metroid Caverns Save Station"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -6239,7 +6239,7 @@
                         }
                     }
                 },
-                "Tunnel to One-Way Puzzle": {
+                "Tunnel to Water Maze": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6256,8 +6256,8 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Area 1",
-                        "area": "One-Way Puzzle",
-                        "node": "Tunnel to Save Station South"
+                        "area": "Water Maze",
+                        "node": "Tunnel to Metroid Caverns Save Station"
                     },
                     "default_dock_weakness": "Tunnel",
                     "exclude_from_dock_rando": false,
@@ -6276,7 +6276,7 @@
                         }
                     }
                 },
-                "Dock to Alpha Shaft Right": {
+                "Dock to Metroid Caverns Hub": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6293,8 +6293,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Area 1",
-                        "area": "Alpha Shaft Right",
-                        "node": "Dock to Save Station South"
+                        "area": "Metroid Caverns Hub",
+                        "node": "Dock to Metroid Caverns Save Station"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -6315,7 +6315,7 @@
                         }
                     }
                 },
-                "Tunnel to Alpha Shaft Right": {
+                "Tunnel to Metroid Caverns Hub": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6332,8 +6332,8 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Area 1",
-                        "area": "Alpha Shaft Right",
-                        "node": "Tunnel to Save Station South"
+                        "area": "Metroid Caverns Hub",
+                        "node": "Tunnel to Metroid Caverns Save Station"
                     },
                     "default_dock_weakness": "Tunnel",
                     "exclude_from_dock_rando": false,
@@ -6352,7 +6352,7 @@
                         }
                     }
                 },
-                "Dock to One-Way Puzzle (OoB)": {
+                "Dock to Water Maze (OoB)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6369,8 +6369,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Area 1",
-                        "area": "One-Way Puzzle",
-                        "node": "Dock from Save Station South"
+                        "area": "Water Maze",
+                        "node": "Dock from Metroid Caverns Save Station"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -6864,7 +6864,7 @@
                 }
             }
         },
-        "Alpha Shaft Right": {
+        "Metroid Caverns Hub": {
             "default_node": null,
             "extra": {
                 "total_boundings": {
@@ -6894,7 +6894,7 @@
                 "asset_id": "collision_camera_044"
             },
             "nodes": {
-                "Dock to Save Station South": {
+                "Dock to Metroid Caverns Save Station": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6911,8 +6911,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Area 1",
-                        "area": "Save Station South",
-                        "node": "Dock to Alpha Shaft Right"
+                        "area": "Metroid Caverns Save Station",
+                        "node": "Dock to Metroid Caverns Hub"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -6920,7 +6920,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Tunnel to Save Station South": {
+                        "Tunnel to Metroid Caverns Save Station": {
                             "type": "template",
                             "data": "Lay Any Bomb"
                         },
@@ -6933,7 +6933,7 @@
                                 "negate": false
                             }
                         },
-                        "Dock to Alpha Arena East Access": {
+                        "Dock to Metroid Caverns Alpha Arena North East Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6942,7 +6942,7 @@
                         }
                     }
                 },
-                "Tunnel to Save Station South": {
+                "Tunnel to Metroid Caverns Save Station": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6959,8 +6959,8 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Area 1",
-                        "area": "Save Station South",
-                        "node": "Tunnel to Alpha Shaft Right"
+                        "area": "Metroid Caverns Save Station",
+                        "node": "Tunnel to Metroid Caverns Hub"
                     },
                     "default_dock_weakness": "Tunnel",
                     "exclude_from_dock_rando": false,
@@ -6968,7 +6968,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Save Station South": {
+                        "Dock to Metroid Caverns Save Station": {
                             "type": "template",
                             "data": "Lay Power Bomb"
                         }
@@ -6992,7 +6992,7 @@
                     "default_connection": {
                         "region": "Area 1",
                         "area": "Inner Temple West Hall",
-                        "node": "Tunnel to Alpha Shaft Right"
+                        "node": "Tunnel to Metroid Caverns Hub"
                     },
                     "default_dock_weakness": "Tunnel",
                     "exclude_from_dock_rando": false,
@@ -7000,7 +7000,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Save Station South": {
+                        "Dock to Metroid Caverns Save Station": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -7011,7 +7011,7 @@
                         }
                     }
                 },
-                "Dock to Alpha Shaft Left": {
+                "Dock to Metroid Caverns Lobby": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7028,8 +7028,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Area 1",
-                        "area": "Alpha Shaft Left",
-                        "node": "Dock to Alpha Shaft Right"
+                        "area": "Metroid Caverns Lobby",
+                        "node": "Dock to Metroid Caverns Hub"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -7037,7 +7037,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Alpha Arena East Access": {
+                        "Dock to Metroid Caverns Alpha Arena North East Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7046,7 +7046,7 @@
                         }
                     }
                 },
-                "Dock to Alpha Arena East Access": {
+                "Dock to Metroid Caverns Alpha Arena North East Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7063,8 +7063,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Area 1",
-                        "area": "Alpha Arena East Access",
-                        "node": "Dock to Alpha Shaft Right"
+                        "area": "Metroid Caverns Alpha Arena North East Access",
+                        "node": "Dock to Metroid Caverns Hub"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -7072,14 +7072,14 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Save Station South": {
+                        "Dock to Metroid Caverns Save Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Dock to Alpha Shaft Left": {
+                        "Dock to Metroid Caverns Lobby": {
                             "type": "template",
                             "data": "Lay Any Bomb"
                         }
@@ -7087,7 +7087,7 @@
                 }
             }
         },
-        "Alpha Arena East Access": {
+        "Metroid Caverns Alpha Arena North East Access": {
             "default_node": "Start Point",
             "extra": {
                 "total_boundings": {
@@ -7117,7 +7117,7 @@
                 "asset_id": "collision_camera_045"
             },
             "nodes": {
-                "Door to Alpha Arena East": {
+                "Door to Metroid Caverns Alpha Arena North East": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7137,8 +7137,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 1",
-                        "area": "Alpha Arena East",
-                        "node": "Door to Alpha Arena East Access"
+                        "area": "Metroid Caverns Alpha Arena North East",
+                        "node": "Door to Metroid Caverns Alpha Arena North East Access"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -7146,7 +7146,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Alpha Shaft Right": {
+                        "Dock to Metroid Caverns Hub": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7162,7 +7162,7 @@
                         }
                     }
                 },
-                "Dock to Alpha Shaft Right": {
+                "Dock to Metroid Caverns Hub": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7179,8 +7179,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Area 1",
-                        "area": "Alpha Shaft Right",
-                        "node": "Dock to Alpha Arena East Access"
+                        "area": "Metroid Caverns Hub",
+                        "node": "Dock to Metroid Caverns Alpha Arena North East Access"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -7188,7 +7188,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Alpha Arena East": {
+                        "Door to Metroid Caverns Alpha Arena North East": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7214,7 +7214,7 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Alpha Arena East": {
+                        "Door to Metroid Caverns Alpha Arena North East": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7971,13 +7971,13 @@
                                             "items": [
                                                 {
                                                     "type": "template",
-                                                    "data": "Can Spiderspark"
+                                                    "data": "Can Spider Boost"
                                                 },
                                                 {
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "tricks",
-                                                        "name": "Spiderspark",
+                                                        "name": "Spider Boost",
                                                         "amount": 2,
                                                         "negate": false
                                                     }
@@ -8062,7 +8062,7 @@
                 }
             }
         },
-        "Chozo Seal Storage": {
+        "Transport Cache": {
             "default_node": null,
             "extra": {
                 "total_boundings": {
@@ -8112,7 +8112,7 @@
                     "pickup_index": 16,
                     "location_category": "minor",
                     "connections": {
-                        "Door to Chozo Seal": {
+                        "Door to Transport to Surface and Area 2": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -8123,7 +8123,7 @@
                         }
                     }
                 },
-                "Door to Chozo Seal": {
+                "Door to Transport to Surface and Area 2": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8143,8 +8143,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 1",
-                        "area": "Chozo Seal",
-                        "node": "Door to Chozo Seal Storage"
+                        "area": "Transport to Surface and Area 2",
+                        "node": "Door to Transport Cache"
                     },
                     "default_dock_weakness": "Wave Beam Door",
                     "exclude_from_dock_rando": false,
@@ -8160,7 +8160,7 @@
                 }
             }
         },
-        "Entrance Pathway": {
+        "Harmonized Hallway": {
             "default_node": null,
             "extra": {
                 "total_boundings": {
@@ -8190,7 +8190,7 @@
                 "asset_id": "collision_camera_052"
             },
             "nodes": {
-                "Dock to Entrance Shaft": {
+                "Dock to Moheek Mount": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8207,8 +8207,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Area 1",
-                        "area": "Entrance Shaft",
-                        "node": "Dock to Entrance Pathway"
+                        "area": "Moheek Mount",
+                        "node": "Dock to Harmonized Hallway"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -8216,7 +8216,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Shaft West": {
+                        "Dock to Gullugg Gangway": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8225,7 +8225,7 @@
                         }
                     }
                 },
-                "Dock to Shaft West": {
+                "Dock to Gullugg Gangway": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8242,8 +8242,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Area 1",
-                        "area": "Shaft West",
-                        "node": "Dock to Entrance Pathway"
+                        "area": "Gullugg Gangway",
+                        "node": "Dock to Harmonized Hallway"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -8251,7 +8251,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Entrance Shaft": {
+                        "Dock to Moheek Mount": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8262,7 +8262,7 @@
                 }
             }
         },
-        "Alpha Arena West": {
+        "Metroid Caverns Alpha Arena South West": {
             "default_node": "Room Center",
             "extra": {
                 "total_boundings": {
@@ -8292,7 +8292,7 @@
                 "asset_id": "collision_camera_054"
             },
             "nodes": {
-                "Tunnel to Alpha Arena West Access (Top)": {
+                "Tunnel to Metroid Caverns Alpha Arena South West Access (Top)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8309,8 +8309,8 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Area 1",
-                        "area": "Alpha Arena West Access",
-                        "node": "Tunnel to Alpha Arena West (Top)"
+                        "area": "Metroid Caverns Alpha Arena South West Access",
+                        "node": "Tunnel to Metroid Caverns Alpha Arena South West (Top)"
                     },
                     "default_dock_weakness": "Tunnel",
                     "exclude_from_dock_rando": false,
@@ -8329,7 +8329,7 @@
                         }
                     }
                 },
-                "Tunnel to Alpha Arena West Access (Bottom)": {
+                "Tunnel to Metroid Caverns Alpha Arena South West Access (Bottom)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8346,8 +8346,8 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Area 1",
-                        "area": "Alpha Arena West Access",
-                        "node": "Tunnel to Alpha Arena West (Bottom)"
+                        "area": "Metroid Caverns Alpha Arena South West Access",
+                        "node": "Tunnel to Metroid Caverns Alpha Arena South West (Bottom)"
                     },
                     "default_dock_weakness": "Tunnel with Bomb Block",
                     "exclude_from_dock_rando": false,
@@ -8398,7 +8398,7 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Tunnel to Alpha Arena West Access (Bottom)": {
+                        "Tunnel to Metroid Caverns Alpha Arena South West Access (Bottom)": {
                             "type": "template",
                             "data": "Lay Any Bomb"
                         },
@@ -8439,7 +8439,7 @@
                 }
             }
         },
-        "Outer Hub Access": {
+        "Chute Leech Cabin": {
             "default_node": null,
             "extra": {
                 "total_boundings": {
@@ -8469,7 +8469,7 @@
                 "asset_id": "collision_camera_055"
             },
             "nodes": {
-                "Dock to Shaft West": {
+                "Dock to Gullugg Gangway": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8486,8 +8486,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Area 1",
-                        "area": "Shaft West",
-                        "node": "Dock to Outer Hub Access"
+                        "area": "Gullugg Gangway",
+                        "node": "Dock to Chute Leech Cabin"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -8522,7 +8522,7 @@
                     "default_connection": {
                         "region": "Area 1",
                         "area": "Temple Exterior",
-                        "node": "Dock to Outer Hub Access"
+                        "node": "Dock to Chute Leech Cabin"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -8530,7 +8530,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Shaft West": {
+                        "Dock to Gullugg Gangway": {
                             "type": "and",
                             "data": {
                                 "comment": null,

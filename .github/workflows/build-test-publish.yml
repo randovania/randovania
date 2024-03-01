@@ -405,7 +405,7 @@ jobs:
 
       -
         name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3.0.0
+        uses: docker/setup-buildx-action@v3.1.0
 
       - name: Should Push
         id: decide_push
@@ -499,7 +499,7 @@ jobs:
           version: "v${{ steps.randovania_version.outputs.version }}"
 
       - name: Upload binaries to GitHub Release
-        uses: svenstaro/upload-release-action@2.7.0
+        uses: svenstaro/upload-release-action@2.9.0
         if: ${{ startsWith(github.ref, 'refs/tags/v') }}
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}

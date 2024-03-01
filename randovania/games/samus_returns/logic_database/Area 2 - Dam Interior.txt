@@ -1,5 +1,5 @@
 ----------------
-Main Hub
+Wave Beam & Transport to Dam Exterior West
 Extra - total_boundings: {'x1': -10700.0, 'x2': -3300.0, 'y1': -1500.0, 'y2': 2400.0}
 Extra - polygon: [[-8400.0, 2400.0], [-8400.0, 1000.0], [-10700.0, 1000.0], [-10700.0, -1300.0], [-8500.0, -1300.0], [-7500.0, -1500.0], [-5700.0, -1500.0], [-5700.0, -100.0], [-5200.0, 0.0], [-3300.0, 0.0], [-3300.0, 2400.0]]
 Extra - asset_id: collision_camera009
@@ -8,12 +8,12 @@ Extra - asset_id: collision_camera009
   * Pickup 46; Category? Major
   * Extra - actor_name: LE_PowerUp_WaveBeam
   * Extra - actor_type: itemsphere_wavebeam
-  > Door to Varia Suit Room (Middle)
+  > Door to Interior Intersection Terminal (Middle)
       Trivial
 
 > Elevator to Area 2 - Dam Exterior; Heals? False; Spawn Point; Default Node
   * Layers: default
-  * Elevator to Outer Hub/Elevator to Area 2 - Dam Interior
+  * Elevator to Dam Exterior/Elevator to Area 2 - Dam Interior
   * Extra - actor_name: LE_Platform_Elevator_FromArea02A
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: ST_FromArea02A
@@ -28,17 +28,17 @@ Extra - asset_id: collision_camera009
   > Elevator to Area 2 - Dam Exterior
       Any of the following:
           High Jump Boots or Space Jump or Super Jump (Intermediate) or Simple IBJ
-          Spiderspark (Intermediate) and Can Spiderspark
+          Spider Boost (Intermediate) and Can Spider Boost
           Stand on Frozen Enemy (Intermediate) and Fully Freeze Enemy
           Morph Ball and Unmorph Extend (Beginner)
           Phase Drift and Mid-Air Morph (Intermediate) and Use Spider Ball
-  > Door to Fiery Path
+  > Door to Lava Generator
       Trivial
-  > Door to Fiery Balcony
+  > Door to Generator Access
       Trivial
-  > Door to Varia Suit Room (Bottom)
+  > Door to Interior Intersection Terminal (Bottom)
       Morph Ball
-  > Door to Varia Suit Room (Top)
+  > Door to Interior Intersection Terminal (Top)
       All of the following:
           Morph Ball
           Any of the following:
@@ -47,45 +47,45 @@ Extra - asset_id: collision_camera009
                   Lightning Armor
                   Single-wall Wall Jump (Intermediate) or Climb Rooms Vertically (High Jump)
 
-> Door to Fiery Path; Heals? False
+> Door to Lava Generator; Heals? False
   * Layers: default
-  * Charge Beam Door to Fiery Path/Door to Main Hub
+  * Charge Beam Door to Lava Generator/Door to Wave Beam & Transport to Dam Exterior West
   * Extra - actor_name: Door002
   * Extra - actor_type: doorchargecharge
   > Save Station
       Trivial
 
-> Door to Fiery Balcony; Heals? False
+> Door to Generator Access; Heals? False
   * Layers: default
-  * Charge Beam Door to Fiery Balcony/Door to Main Hub
+  * Charge Beam Door to Generator Access/Door to Wave Beam & Transport to Dam Exterior West
   * Extra - actor_name: Door003
   * Extra - actor_type: doorchargecharge
   > Save Station
       Trivial
-  > Door to Wallfire Path
+  > Door to Wallfire Corridor
       Morph Ball
 
-> Door to Wallfire Path; Heals? False
+> Door to Wallfire Corridor; Heals? False
   * Layers: default
-  * Power Beam Door to Wallfire Path/Door to Main Hub
+  * Power Beam Door to Wallfire Corridor/Door to Wave Beam & Transport to Dam Exterior West
   * Extra - actor_name: Door005
   * Extra - actor_type: doorpowerpower
-  > Door to Fiery Balcony
+  > Door to Generator Access
       Morph Ball
 
-> Door to Varia Suit Room (Bottom); Heals? False
+> Door to Interior Intersection Terminal (Bottom); Heals? False
   * Layers: default
-  * Wave Beam Door to Varia Suit Room/Door to Main Hub (Bottom)
+  * Wave Beam Door to Interior Intersection Terminal/Door to Wave Beam & Transport to Dam Exterior West (Bottom)
   * Extra - actor_name: Door008
   * Extra - actor_type: doorpowerpower
   > Save Station
       Morph Ball
-  > Door to Varia Suit Room (Middle)
+  > Door to Interior Intersection Terminal (Middle)
       Morph Ball and Melee Clip (Intermediate)
 
-> Door to Varia Suit Room (Middle); Heals? False
+> Door to Interior Intersection Terminal (Middle); Heals? False
   * Layers: default
-  * Missile Door to Varia Suit Room/Door to Main Hub (Middle)
+  * Missile Door to Interior Intersection Terminal/Door to Wave Beam & Transport to Dam Exterior West (Middle)
   * Extra - actor_name: Door009
   * Extra - actor_type: doorpowerpower
   > Pickup (Wave Beam)
@@ -93,9 +93,9 @@ Extra - asset_id: collision_camera009
   > Next to Pickup
       Trivial
 
-> Door to Varia Suit Room (Top); Heals? False
+> Door to Interior Intersection Terminal (Top); Heals? False
   * Layers: default
-  * Wave Beam Door to Varia Suit Room/Door to Main Hub (Top)
+  * Wave Beam Door to Interior Intersection Terminal/Door to Wave Beam & Transport to Dam Exterior West (Top)
   * Extra - actor_name: Door019
   * Extra - actor_type: doorpowerpower
   > Save Station
@@ -104,31 +104,84 @@ Extra - asset_id: collision_camera009
 > Next to Pickup; Heals? False
   * Layers: default
   * Extra - start_point_actor_name: ST_CheckPoint_003
-  > Door to Varia Suit Room (Middle)
+  > Door to Interior Intersection Terminal (Middle)
       Trivial
 
 ----------------
-Varia Suit Room
-Extra - total_boundings: {'x1': -4200.0, 'x2': 1000.0, 'y1': -4600.0, 'y2': 2400.0}
-Extra - polygon: [[-3400.0, 2400.0], [-3400.0, 350.0], [-4200.0, 100.0], [-4200.0, -1600.0], [-3800.0, -1600.0], [-3200.0, -2000.0], [-3200.0, -4000.0], [-1850.0, -4100.0], [-1850.0, -4600.0], [1000.0, -4600.0], [1000.0, -3000.0], [100.0, -3000.0], [-200.0, -2900.0], [-200.0, 2400.0]]
-Extra - asset_id: collision_camera011
+Varia Suit Chamber
+Extra - total_boundings: {'x1': -4200.0, 'x2': -1550.0, 'y1': -1700.0, 'y2': -100.0}
+Extra - polygon: [[-1550.0, -100.0], [-4200.0, -100.0], [-4200.0, -1700.0], [-1550.0, -1700.0]]
+Extra - asset_id: collision_camera040
 > Pickup (Varia Suit); Heals? False
   * Layers: default
   * Pickup 45; Category? Major
   * Extra - actor_name: LE_PowerUp_VariaSuite
   * Extra - actor_type: itemsphere_variasuit
-  > Door to Wallfire Path
+  > Door to Wallfire Corridor
       Trivial
 
+> Door to Generator Access; Heals? False
+  * Layers: default
+  * Charge Beam Door to Generator Access/Door to Varia Suit Chamber
+  * Extra - actor_name: Door004
+  * Extra - actor_type: doorchargecharge
+  > Door to Wallfire Corridor
+      Trivial
+
+> Door to Wallfire Corridor; Heals? False
+  * Layers: default
+  * Missile Door to Wallfire Corridor/Door to Varia Suit Chamber
+  * Extra - actor_name: Door006
+  * Extra - actor_type: doorpowerpower
+  > Pickup (Varia Suit)
+      Trivial
+  > Door to Generator Access
+      Trivial
+  > Start Point
+      Trivial
+  > Dock to Interior Intersection Terminal
+      Screw Attack
+
+> Pickup (Super Missile Tank); Heals? False
+  * Layers: default
+  * Pickup 48; Category? Minor
+  * Extra - actor_name: HP_Item_002
+  * Extra - actor_type: item_supermissiletank
+  > Dock to Interior Intersection Terminal
+      Screw Attack
+
+> Start Point; Heals? False; Default Node
+  * Layers: default
+  * Extra - start_point_actor_name: ST_CheckPoint_004
+  > Door to Wallfire Corridor
+      Trivial
+
+> Dock to Interior Intersection Terminal; Heals? False
+  * Layers: default
+  * Open Passage to Interior Intersection Terminal/Dock to Varia Suit Chamber (Blocks)
+  > Door to Wallfire Corridor
+      Screw Attack
+  > Pickup (Super Missile Tank)
+      Lay Any Bomb
+
+> Dock from Interior Intersection Terminal; Heals? False
+  * Layers: default
+  * Blocked Passage to Interior Intersection Terminal/Dock to Varia Suit Chamber (OoB)
+  > Door to Wallfire Corridor
+      Trivial
+
+----------------
+Interior Intersection Terminal
+Extra - total_boundings: {'x1': -3400.0, 'x2': 1000.0, 'y1': -4600.0, 'y2': 2400.0}
+Extra - polygon: [[-3400.0, 2400.0], [-3400.0, -4000.0], [-1850.0, -4100.0], [-1850.0, -4600.0], [1000.0, -4600.0], [1000.0, -3000.0], [100.0, -3000.0], [-200.0, -2900.0], [-200.0, 2400.0]]
+Extra - asset_id: collision_camera011
 > Ammo Recharge Station; Heals? False
   * Layers: default
   * Extra - actor_name: LE_Platform_AmmoCharge
   * Extra - actor_type: weightactivatedplatform
-  > Pickup (Varia Suit)
-      Spider Ball Clip (Advanced) and Use Spider Ball
-  > Door to Main Hub (Bottom)
+  > Door to Wave Beam & Transport to Dam Exterior West (Bottom)
       Trivial
-  > Door to Main Hub (Middle)
+  > Door to Wave Beam & Transport to Dam Exterior West (Middle)
       Trivial
   > Top of Morph Ball Shaft
       All of the following:
@@ -139,48 +192,28 @@ Extra - asset_id: collision_camera011
               # Dealing with the Gravitt
               Lightning Armor or Bomb or Power Bomb or Combat (Beginner) or Shoot Any Missile
               Damage Boost (Beginner) and Normal Damage ≥ 30
+  > Dock to Varia Suit Chamber (OoB)
+      Spider Ball Clip (Advanced) and Use Spider Ball
 
-> Door to Fiery Balcony; Heals? False
+> Door to Wave Beam & Transport to Dam Exterior West (Bottom); Heals? False
   * Layers: default
-  * Charge Beam Door to Fiery Balcony/Door to Varia Suit Room
-  * Extra - actor_name: Door004
-  * Extra - actor_type: doorchargecharge
-  > Door to Wallfire Path
-      Trivial
-
-> Door to Wallfire Path; Heals? False
-  * Layers: default
-  * Missile Door to Wallfire Path/Door to Varia Suit Room
-  * Extra - actor_name: Door006
-  * Extra - actor_type: doorpowerpower
-  > Pickup (Varia Suit)
-      Trivial
-  > Door to Fiery Balcony
-      Trivial
-  > Inside Shortcut
-      Screw Attack
-  > Start Point
-      Trivial
-
-> Door to Main Hub (Bottom); Heals? False
-  * Layers: default
-  * Wave Beam Door to Main Hub/Door to Varia Suit Room (Bottom)
+  * Wave Beam Door to Wave Beam & Transport to Dam Exterior West/Door to Interior Intersection Terminal (Bottom)
   * Extra - actor_name: Door008
   * Extra - actor_type: doorclosedpower
   > Ammo Recharge Station
       Trivial
 
-> Door to Main Hub (Middle); Heals? False
+> Door to Wave Beam & Transport to Dam Exterior West (Middle); Heals? False
   * Layers: default
-  * Missile Door to Main Hub/Door to Varia Suit Room (Middle)
+  * Missile Door to Wave Beam & Transport to Dam Exterior West/Door to Interior Intersection Terminal (Middle)
   * Extra - actor_name: Door009
   * Extra - actor_type: doorpowerpower
   > Ammo Recharge Station
       Trivial
 
-> Door to Teleporter Shaft Access; Heals? False
+> Door to Whimsical Waterwheels; Heals? False
   * Layers: default
-  * Power Beam Door to Teleporter Shaft Access/Door to Varia Suit Room
+  * Access Open to Whimsical Waterwheels/Door to Interior Intersection Terminal
   * Extra - actor_name: Door012
   * Extra - actor_type: doorpowerpower
   > Right Shaft
@@ -190,7 +223,7 @@ Extra - asset_id: collision_camera011
 
 > Door to Gamma Arena; Heals? False
   * Layers: default
-  * Power Beam Door to Gamma Arena/Door to Varia Suit Room
+  * Access Open to Gamma Arena/Door to Interior Intersection Terminal
   * Extra - actor_name: Door018
   * Extra - actor_type: doorpowerpower
   > Bottom of Morph Ball Shaft
@@ -203,32 +236,13 @@ Extra - asset_id: collision_camera011
                   Phase Drift and Lay Bomb
                   Spring Ball or Mid-Air Morph (Intermediate)
 
-> Door to Main Hub (Top); Heals? False
+> Door to Wave Beam & Transport to Dam Exterior West (Top); Heals? False
   * Layers: default
-  * Wave Beam Door to Main Hub/Door to Varia Suit Room (Top)
+  * Wave Beam Door to Wave Beam & Transport to Dam Exterior West/Door to Interior Intersection Terminal (Top)
   * Extra - actor_name: Door019
   * Extra - actor_type: doorpowerpower
   > Right Shaft
       Trivial
-
-> Pickup (Super Missile Tank); Heals? False
-  * Layers: default
-  * Pickup 48; Category? Minor
-  * Extra - actor_name: HP_Item_002
-  * Extra - actor_type: item_supermissiletank
-  > Inside Shortcut
-      Trivial
-
-> Inside Shortcut; Heals? False
-  * Layers: default
-  > Door to Wallfire Path
-      Screw Attack
-  > Pickup (Super Missile Tank)
-      Lay Any Bomb
-  > Bottom of Morph Ball Shaft
-      Screw Attack
-  > Right Shaft
-      Screw Attack
 
 > Bottom of Morph Ball Shaft; Heals? False
   * Layers: default
@@ -241,34 +255,40 @@ Extra - asset_id: collision_camera011
   * Layers: default
   > Ammo Recharge Station
       Morph Ball
-  > Inside Shortcut
-      Screw Attack
   > Bottom of Morph Ball Shaft
       Trivial
+  > Dock to Varia Suit Chamber (Blocks)
+      Screw Attack
 
 > Right Shaft; Heals? False
   * Layers: default
-  > Door to Teleporter Shaft Access
+  > Door to Whimsical Waterwheels
       Trivial
-  > Door to Main Hub (Top)
+  > Door to Wave Beam & Transport to Dam Exterior West (Top)
       Trivial
-  > Inside Shortcut
+  > Dock to Varia Suit Chamber (Blocks)
       Screw Attack
 
-> Start Point; Heals? False; Default Node
+> Dock to Varia Suit Chamber (Blocks); Heals? False
   * Layers: default
-  * Extra - start_point_actor_name: ST_CheckPoint_004
-  > Door to Wallfire Path
-      Trivial
+  * Open Passage to Varia Suit Chamber/Dock to Interior Intersection Terminal
+  > Bottom of Morph Ball Shaft
+      Screw Attack
+  > Right Shaft
+      Screw Attack
+
+> Dock to Varia Suit Chamber (OoB); Heals? False
+  * Layers: default
+  * Open Passage to Varia Suit Chamber/Dock from Interior Intersection Terminal
 
 ----------------
-Fiery Path
+Lava Generator
 Extra - total_boundings: {'x1': -13000.0, 'x2': -5700.0, 'y1': -4600.0, 'y2': -200.0}
 Extra - polygon: [[-5700.0, -1500.0], [-7100.0, -1500.0], [-8700.0, -1000.0], [-9700.0, -1000.0], [-10600.0, -900.0], [-10600.0, -200.0], [-13000.0, -200.0], [-13000.0, -3300.0], [-10100.0, -3300.0], [-8500.0, -4600.0], [-5750.0, -4600.0], [-5750.0, -3400.0], [-5700.0, -3200.0]]
 Extra - asset_id: collision_camera012
-> Door to Main Hub; Heals? False
+> Door to Wave Beam & Transport to Dam Exterior West; Heals? False
   * Layers: default
-  * Charge Beam Door to Main Hub/Door to Fiery Path
+  * Charge Beam Door to Wave Beam & Transport to Dam Exterior West/Door to Lava Generator
   * Extra - actor_name: Door002
   * Extra - actor_type: doorchargecharge
   > Under Pickup
@@ -276,7 +296,7 @@ Extra - asset_id: collision_camera012
 
 > Door to Gamma Arena; Heals? False
   * Layers: default
-  * Charge Beam Door to Gamma Arena/Door to Fiery Path
+  * Charge Beam Door to Gamma Arena/Door to Lava Generator
   * Extra - actor_name: Door010
   * Extra - actor_type: doorchargecharge
   > Under Pickup
@@ -284,17 +304,17 @@ Extra - asset_id: collision_camera012
   > Start Point
       Trivial
 
-> Door to Fiery Storage; Heals? False
+> Door to Crumble Cavern; Heals? False
   * Layers: default
-  * Power Bomb Door to Fiery Storage/Door to Fiery Path
+  * Power Bomb Door to Crumble Cavern/Door to Lava Generator
   * Extra - actor_name: Door015
   * Extra - actor_type: doorpowerpower
   > Under Pickup
       Varia Suit
 
-> Door to Fiery Balcony; Heals? False
+> Door to Generator Access; Heals? False
   * Layers: default
-  * Power Beam Door to Fiery Balcony/Door to Fiery Path
+  * Power Beam Door to Generator Access/Door to Lava Generator
   * Extra - actor_name: Door020
   * Extra - actor_type: doorpowerpower
   > Under Pickup
@@ -310,13 +330,13 @@ Extra - asset_id: collision_camera012
 
 > Under Pickup; Heals? False
   * Layers: default
-  > Door to Main Hub
+  > Door to Wave Beam & Transport to Dam Exterior West
       Varia Suit
   > Door to Gamma Arena
       Varia Suit
-  > Door to Fiery Storage
+  > Door to Crumble Cavern
       Varia Suit
-  > Door to Fiery Balcony
+  > Door to Generator Access
       Varia Suit
   > Pickup (Missile Tank)
       All of the following:
@@ -329,7 +349,7 @@ Extra - asset_id: collision_camera012
                       Spider Ball
                       All of the following:
                           Mid-Air Morph (Intermediate)
-                          High Jump Boots or Space Jump or Walljump (Beginner)
+                          High Jump Boots or Space Jump or Wall Jump (Beginner)
                   Missile ≥ 6 or Plasma Beam or Super Missile ≥ 2 or Screw Attack or Shoot Beam Burst
 
 > Start Point; Heals? False; Default Node
@@ -339,7 +359,7 @@ Extra - asset_id: collision_camera012
       Varia Suit
 
 ----------------
-Fiery Storage
+Crumble Cavern
 Extra - total_boundings: {'x1': -5850.0, 'x2': -2700.0, 'y1': -4002.070068359375, 'y2': -2800.0}
 Extra - polygon: [[-5850.0, -2800.0], [-5850.0, -4002.070068359375], [-2700.0, -4002.070068359375], [-2700.0, -2800.0]]
 Extra - asset_id: collision_camera013
@@ -348,12 +368,12 @@ Extra - asset_id: collision_camera013
   * Pickup 43; Category? Minor
   * Extra - actor_name: LE_Item_006
   * Extra - actor_type: item_powerbombtank
-  > Door to Fiery Path
+  > Door to Lava Generator
       Morph Ball and Varia Suit
 
-> Door to Fiery Path; Heals? False
+> Door to Lava Generator; Heals? False
   * Layers: default
-  * Power Bomb Door to Fiery Path/Door to Fiery Storage
+  * Power Bomb Door to Lava Generator/Door to Crumble Cavern
   * Extra - actor_name: Door015
   * Extra - actor_type: doorpowerpower
   > Pickup (Power Bomb Tank)
@@ -362,102 +382,102 @@ Extra - asset_id: collision_camera013
           Any of the following:
               Phase Drift
               All of the following:
-                  Spiderspark (Advanced) and Can Spiderspark
+                  Spider Boost (Advanced) and Can Spider Boost
                   Any of the following:
-                      Walljump (Expert)
+                      Wall Jump (Expert)
                       Bomb and Movement (Intermediate)
-                      Power Bomb ≥ 2 and Movement (Expert) and Lay Power Bomb
+                      Power Bomb ≥ 3 and Movement (Expert)
 
 ----------------
-Teleporter Shaft Access
+Whimsical Waterwheels
 Extra - total_boundings: {'x1': -1700.0, 'x2': 3100.0, 'y1': -3100.0, 'y2': -1700.0}
 Extra - polygon: [[-300.0, -1700.0], [-300.0, -2339.639892578125], [-1700.0, -2339.639892578125], [-1700.0, -3100.0], [3100.0, -3100.0], [3100.0, -1700.0]]
 Extra - asset_id: collision_camera015
-> Door to Varia Suit Room; Heals? False
+> Door to Interior Intersection Terminal; Heals? False
   * Layers: default
-  * Power Beam Door to Varia Suit Room/Door to Teleporter Shaft Access
+  * Access Open to Interior Intersection Terminal/Door to Whimsical Waterwheels
   * Extra - actor_name: Door012
   * Extra - actor_type: doorpowerpower
-  > Tunnel to Teleporter Shaft
+  > Tunnel to Interior Teleporter
       Morph Ball
   > Energy Recharge Station
       Lay Any Bomb
 
-> Tunnel to Teleporter Shaft; Heals? False
+> Tunnel to Interior Teleporter; Heals? False
   * Layers: default
-  * Tunnel to Teleporter Shaft/Tunnel to Teleporter Shaft Access
-  > Door to Varia Suit Room
+  * Tunnel to Interior Teleporter/Tunnel to Whimsical Waterwheels
+  > Door to Interior Intersection Terminal
       Morph Ball
 
 > Energy Recharge Station; Heals? True
   * Layers: default
   * Extra - actor_name: LE_Platform_EnergyCharge
   * Extra - actor_type: weightactivatedplatform
-  > Door to Varia Suit Room
+  > Door to Interior Intersection Terminal
       Lay Any Bomb
 
 ----------------
-Teleporter Shaft
+Interior Teleporter
 Extra - total_boundings: {'x1': 2200.0, 'x2': 4700.0, 'y1': -6800.0, 'y2': -1600.0}
 Extra - polygon: [[3000.0, -1600.0], [3000.0, -5200.0], [2200.0, -5200.0], [2200.0, -6800.0], [4700.0, -6800.0], [4700.0, -1600.0]]
 Extra - asset_id: collision_camera016
 > Teleporter; Heals? False; Default Node
   * Layers: default
-  * Teleporter Network (Unlocked by After Area 2 (Dam Interior) - Teleporter Unlocked)
+  * Teleporter Network (Unlocked by After Area 2 (Dam Interior) - Interior Teleporter Unlocked)
   * Extra - actor_name: LE_Platform_Teleporter_02_04
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: ST_Teleporter_02_04
   > Next to Teleporter
       Trivial
 
-> Door to Horseshoe Path; Heals? False
+> Door to Fleech Fire Containment; Heals? False
   * Layers: default
-  * Wave Beam Door to Horseshoe Path/Door to Teleporter Shaft
+  * Wave Beam Door to Fleech Fire Containment/Door to Interior Teleporter
   * Extra - actor_name: Door016
   * Extra - actor_type: doorpowerpower
   > Under Teleporter
       Trivial
 
-> Door to Fan Tunnel; Heals? False
+> Door to Teleporter Storage; Heals? False
   * Layers: default
-  * Plasma Beam Door to Fan Tunnel/Door to Teleporter Shaft
+  * Plasma Beam Door to Teleporter Storage/Door to Interior Teleporter
   * Extra - actor_name: Door017
   * Extra - actor_type: doorpowerpower
   > Under Teleporter
       Trivial
 
-> Tunnel to High Jump Shaft; Heals? False
+> Tunnel to High Jump Boots Chamber Access; Heals? False
   * Layers: default
-  * Tunnel to High Jump Shaft/Tunnel to Teleporter Shaft
+  * Tunnel to High Jump Boots Chamber Access/Tunnel to Interior Teleporter
   > Under Teleporter
       Morph Ball
 
-> Tunnel to Teleporter Shaft Access; Heals? False
+> Tunnel to Whimsical Waterwheels; Heals? False
   * Layers: default
-  * Tunnel to Teleporter Shaft Access/Tunnel to Teleporter Shaft
+  * Tunnel to Whimsical Waterwheels/Tunnel to Interior Teleporter
   > Under Teleporter
       Morph Ball
 
 > Under Teleporter; Heals? False
   * Layers: default
-  > Door to Horseshoe Path
+  > Door to Fleech Fire Containment
       Trivial
-  > Door to Fan Tunnel
+  > Door to Teleporter Storage
       Trivial
-  > Tunnel to High Jump Shaft
+  > Tunnel to High Jump Boots Chamber Access
       Morph Ball
-  > Tunnel to Teleporter Shaft Access
+  > Tunnel to Whimsical Waterwheels
       Morph Ball
   > Next to Teleporter
       All of the following:
           Morph Ball
           Any of the following:
               High Jump Boots or Space Jump or Unmorph Extend (Beginner) or Simple IBJ
-              Spiderspark (Intermediate) and Can Spiderspark
+              Spider Boost (Intermediate) and Can Spider Boost
 
 > Event - Teleporter Unlocked; Heals? False
   * Layers: default
-  * Event Area 2 (Dam Interior) - Teleporter Unlocked
+  * Event Area 2 (Dam Interior) - Interior Teleporter Unlocked
   > Next to Teleporter
       Trivial
 
@@ -471,32 +491,32 @@ Extra - asset_id: collision_camera016
       Trivial
 
 ----------------
-Horseshoe Path
+Fleech Fire Containment
 Extra - total_boundings: {'x1': -4000.0, 'x2': 2300.0, 'y1': -8100.0, 'y2': -5400.0}
 Extra - polygon: [[-4000.0, -5400.0], [-4000.0, -8100.0], [-1700.0, -8100.0], [-1700.0, -7100.0], [-400.0, -6200.0], [2300.0, -6200.0], [2300.0, -5400.0]]
 Extra - asset_id: collision_camera017
-> Door to High Jump Storage; Heals? False
+> Door to Dam Basement; Heals? False
   * Layers: default
-  * Power Beam Door to High Jump Storage/Door to Horseshoe Path
+  * Power Beam Door to Dam Basement/Door to Fleech Fire Containment
   * Extra - actor_name: Door014
   * Extra - actor_type: doorpowerpower
-  > Door to Teleporter Shaft
+  > Door to Interior Teleporter
       All of the following:
           Morph Ball
           Any of the following:
-              High Jump Boots or Gravity Suit or Space Jump or Spider Ball or Walljump (Beginner)
+              High Jump Boots or Gravity Suit or Space Jump or Spider Ball or Wall Jump (Beginner)
               Bomb and Mid-Air Morph (Intermediate) and Infinite Bomb Jump (Intermediate)
 
-> Door to Teleporter Shaft; Heals? False
+> Door to Interior Teleporter; Heals? False
   * Layers: default
-  * Wave Beam Door to Teleporter Shaft/Door to Horseshoe Path
+  * Wave Beam Door to Interior Teleporter/Door to Fleech Fire Containment
   * Extra - actor_name: Door016
   * Extra - actor_type: doorpowerpower
-  > Door to High Jump Storage
+  > Door to Dam Basement
       Morph Ball and Fleechswarm Protection
 
 ----------------
-High Jump Storage
+Dam Basement
 Extra - total_boundings: {'x1': -1800.0, 'x2': 300.0, 'y1': -8100.0, 'y2': -7100.0}
 Extra - polygon: [[-1800.0, -7100.0], [-1800.0, -8100.0], [300.0, -8100.0], [300.0, -7100.0]]
 Extra - asset_id: collision_camera018
@@ -505,7 +525,7 @@ Extra - asset_id: collision_camera018
   * Pickup 40; Category? Major
   * Extra - actor_name: LE_Item_001
   * Extra - actor_type: item_energytank
-  > Door to Horseshoe Path
+  > Door to Fleech Fire Containment
       Trivial
 
 > Pickup (Missile Tank); Heals? False
@@ -513,47 +533,47 @@ Extra - asset_id: collision_camera018
   * Pickup 41; Category? Minor
   * Extra - actor_name: LE_Item_002
   * Extra - actor_type: item_missiletank
-  > Tunnel to High Jump Secret
+  > Tunnel to Gullugg Hideout
       Morph Ball
 
-> Door to Horseshoe Path; Heals? False
+> Door to Fleech Fire Containment; Heals? False
   * Layers: default
-  * Power Beam Door to Horseshoe Path/Door to High Jump Storage
+  * Power Beam Door to Fleech Fire Containment/Door to Dam Basement
   * Extra - actor_name: Door014
   * Extra - actor_type: doorpowerpower
   > Pickup (Energy Tank)
       Trivial
 
-> Tunnel to High Jump Secret; Heals? False
+> Tunnel to Gullugg Hideout; Heals? False
   * Layers: default
-  * Tunnel to High Jump Secret/Tunnel to High Jump Storage
+  * Tunnel to Gullugg Hideout/Tunnel to Dam Basement
   > Pickup (Missile Tank)
       Morph Ball
 
 ----------------
-High Jump Secret
+Gullugg Hideout
 Extra - total_boundings: {'x1': 200.0, 'x2': 2300.0, 'y1': -8400.0, 'y2': -7100.0}
 Extra - polygon: [[200.0, -7100.0], [200.0, -8400.0], [2300.0, -8400.0], [2300.0, -7100.0]]
 Extra - asset_id: collision_camera019
-> Tunnel to High Jump Storage; Heals? False
+> Tunnel to Dam Basement; Heals? False
   * Layers: default
-  * Tunnel to High Jump Storage/Tunnel to High Jump Secret
-  > Tunnel to High Jump Room
+  * Tunnel to Dam Basement/Tunnel to Gullugg Hideout
+  > Tunnel to High Jump Boots Chamber
       Lay Any Bomb
 
-> Tunnel to High Jump Room; Heals? False
+> Tunnel to High Jump Boots Chamber; Heals? False
   * Layers: default
-  * Tunnel with Bomb Block to High Jump Room/Tunnel to High Jump Secret
-  > Tunnel to High Jump Storage
+  * Tunnel with Bomb Block to High Jump Boots Chamber/Tunnel to Gullugg Hideout
+  > Tunnel to Dam Basement
       All of the following:
           Morph Ball
           Any of the following:
-              High Jump Boots or Space Jump or Infinite Bomb Jump (Beginner) or Unmorph Extend (Intermediate) or Walljump (Intermediate)
+              High Jump Boots or Space Jump or Infinite Bomb Jump (Beginner) or Unmorph Extend (Intermediate) or Wall Jump (Intermediate)
               Stand on Frozen Enemy (Beginner) and Fully Freeze Enemy
-              Spiderspark (Intermediate) and Can Spiderspark
+              Spider Boost (Intermediate) and Can Spider Boost
 
 ----------------
-High Jump Room
+High Jump Boots Chamber
 Extra - total_boundings: {'x1': 2200.0, 'x2': 4700.0, 'y1': -8960.0, 'y2': -7100.0}
 Extra - polygon: [[2200.0, -7100.0], [2200.0, -8960.0], [4700.0, -8960.0], [4700.0, -7100.0]]
 Extra - asset_id: collision_camera021
@@ -565,17 +585,17 @@ Extra - asset_id: collision_camera021
   > Room Center
       Trivial
 
-> Door to High Jump Shaft; Heals? False
+> Door to High Jump Boots Chamber Access; Heals? False
   * Layers: default
-  * Missile Door to High Jump Shaft/Door to High Jump Room
+  * Missile Door to High Jump Boots Chamber Access/Door to High Jump Boots Chamber
   * Extra - actor_name: Door013
   * Extra - actor_type: doorpowerpower
   > Room Center
       Trivial
 
-> Tunnel to High Jump Secret; Heals? False
+> Tunnel to Gullugg Hideout; Heals? False
   * Layers: default
-  * Tunnel with Bomb Block to High Jump Secret/Tunnel to High Jump Room
+  * Tunnel with Bomb Block to Gullugg Hideout/Tunnel to High Jump Boots Chamber
   > Room Center
       Lay Any Bomb
 
@@ -584,65 +604,65 @@ Extra - asset_id: collision_camera021
   * Extra - start_point_actor_name: ST_CheckPoint_002
   > Pickup (High Jump Boots)
       Trivial
-  > Door to High Jump Shaft
+  > Door to High Jump Boots Chamber Access
       Trivial
-  > Tunnel to High Jump Secret
+  > Tunnel to Gullugg Hideout
       Lay Any Bomb
 
 ----------------
-High Jump Shaft
+High Jump Boots Chamber Access
 Extra - total_boundings: {'x1': 4600.0, 'x2': 6100.0, 'y1': -8200.0, 'y2': -3900.0}
 Extra - polygon: [[4600.0, -3900.0], [4600.0, -8200.0], [6100.0, -8200.0], [6100.0, -3900.0]]
 Extra - asset_id: collision_camera022
-> Door to High Jump Room; Heals? False
+> Door to High Jump Boots Chamber; Heals? False
   * Layers: default
-  * Missile Door to High Jump Room/Door to High Jump Shaft
+  * Missile Door to High Jump Boots Chamber/Door to High Jump Boots Chamber Access
   * Extra - actor_name: Door013
   * Extra - actor_type: doorpowerpower
-  > Tunnel to Teleporter Shaft
+  > Tunnel to Interior Teleporter
       All of the following:
           Morph Ball
           Any of the following:
               Space Jump
-              Spiderspark (Intermediate) and Can Spiderspark
+              Spider Boost (Intermediate) and Can Spider Boost
               All of the following:
                   Spider Ball
-                  High Jump Boots or Walljump (Intermediate)
+                  High Jump Boots or Wall Jump (Intermediate)
               Bomb and Infinite Bomb Jump (Intermediate)
               All of the following:
                   Unmorph Extend (Intermediate)
-                  High Jump Boots or Walljump (Intermediate)
+                  High Jump Boots or Wall Jump (Intermediate)
               High Jump Boots and Super Jump (Intermediate)
 
-> Tunnel to Teleporter Shaft; Heals? False
+> Tunnel to Interior Teleporter; Heals? False
   * Layers: default
-  * Tunnel to Teleporter Shaft/Tunnel to High Jump Shaft
-  > Door to High Jump Room
+  * Tunnel to Interior Teleporter/Tunnel to High Jump Boots Chamber Access
+  > Door to High Jump Boots Chamber
       Morph Ball
 
 ----------------
-Wallfire Path
+Wallfire Corridor
 Extra - total_boundings: {'x1': -5800.0, 'x2': -4100.0, 'y1': -800.0, 'y2': -41.720699310302734}
 Extra - polygon: [[-5800.0, -41.720699310302734], [-5800.0, -800.0], [-4100.0, -800.0], [-4100.0, -41.720699310302734]]
 Extra - asset_id: collision_camera035
-> Door to Main Hub; Heals? False
+> Door to Wave Beam & Transport to Dam Exterior West; Heals? False
   * Layers: default
-  * Power Beam Door to Main Hub/Door to Wallfire Path
+  * Power Beam Door to Wave Beam & Transport to Dam Exterior West/Door to Wallfire Corridor
   * Extra - actor_name: Door005
   * Extra - actor_type: doorpowerpower
-  > Door to Varia Suit Room
+  > Door to Varia Suit Chamber
       Trivial
 
-> Door to Varia Suit Room; Heals? False
+> Door to Varia Suit Chamber; Heals? False
   * Layers: default
-  * Missile Door to Varia Suit Room/Door to Wallfire Path
+  * Missile Door to Varia Suit Chamber/Door to Wallfire Corridor
   * Extra - actor_name: Door006
   * Extra - actor_type: doorpowerpower
-  > Door to Main Hub
+  > Door to Wave Beam & Transport to Dam Exterior West
       Trivial
 
 ----------------
-Fan Tunnel
+Teleporter Storage
 Extra - total_boundings: {'x1': -100.0, 'x2': 2300.0, 'y1': -7000.0, 'y2': -6200.0}
 Extra - polygon: [[-100.0, -6200.0], [-100.0, -7000.0], [2300.0, -7000.0], [2300.0, -6200.0]]
 Extra - asset_id: collision_camera036
@@ -651,12 +671,12 @@ Extra - asset_id: collision_camera036
   * Pickup 42; Category? Minor
   * Extra - actor_name: LE_Item_005
   * Extra - actor_type: item_senergytank
-  > Door to Teleporter Shaft
+  > Door to Interior Teleporter
       Lay Any Bomb
 
-> Door to Teleporter Shaft; Heals? False
+> Door to Interior Teleporter; Heals? False
   * Layers: default
-  * Plasma Beam Door to Teleporter Shaft/Door to Fan Tunnel
+  * Plasma Beam Door to Interior Teleporter/Door to Teleporter Storage
   * Extra - actor_name: Door017
   * Extra - actor_type: doorpowerpower
   > Pickup (Aeion Tank)
@@ -669,17 +689,17 @@ Gamma Arena
 Extra - total_boundings: {'x1': -5850.0, 'x2': -1750.0, 'y1': -5100.0, 'y2': -3900.0}
 Extra - polygon: [[-1750.0, -3900.0], [-5850.0, -3900.0], [-5850.0, -5100.0], [-1750.0, -5100.0]]
 Extra - asset_id: collision_camera037
-> Door to Fiery Path; Heals? False
+> Door to Lava Generator; Heals? False
   * Layers: default
-  * Charge Beam Door to Fiery Path/Door to Gamma Arena
+  * Charge Beam Door to Lava Generator/Door to Gamma Arena
   * Extra - actor_name: Door010
   * Extra - actor_type: doorchargecharge
   > Room Center
       Trivial
 
-> Door to Varia Suit Room; Heals? False
+> Door to Interior Intersection Terminal; Heals? False
   * Layers: default
-  * Power Beam Door to Varia Suit Room/Door to Gamma Arena
+  * Power Beam Door to Interior Intersection Terminal/Door to Gamma Arena
   * Extra - actor_name: Door018
   * Extra - actor_type: doorpowerpower
   > Room Center
@@ -694,9 +714,9 @@ Extra - asset_id: collision_camera037
 > Room Center; Heals? False; Default Node
   * Layers: default
   * Extra - start_point_actor_name: ST_Gamma_001_Checkpoint
-  > Door to Fiery Path
+  > Door to Lava Generator
       Trivial
-  > Door to Varia Suit Room
+  > Door to Interior Intersection Terminal
       Trivial
   > Event - Gamma Metroid
       Defeat Gamma Metroid
@@ -710,33 +730,33 @@ Extra - asset_id: collision_camera037
       Trivial
 
 ----------------
-Fiery Balcony
+Generator Access
 Extra - total_boundings: {'x1': -5800.0, 'x2': -4100.0, 'y1': -2800.0, 'y2': -800.0}
 Extra - polygon: [[-5800.0, -800.0], [-5800.0, -2800.0], [-4100.0, -2800.0], [-4100.0, -800.0]]
 Extra - asset_id: collision_camera041
-> Door to Main Hub; Heals? False
+> Door to Wave Beam & Transport to Dam Exterior West; Heals? False
   * Layers: default
-  * Charge Beam Door to Main Hub/Door to Fiery Balcony
+  * Charge Beam Door to Wave Beam & Transport to Dam Exterior West/Door to Generator Access
   * Extra - actor_name: Door003
   * Extra - actor_type: doorchargecharge
-  > Door to Varia Suit Room
+  > Door to Varia Suit Chamber
       Screw Attack and Varia Suit
-  > Door to Fiery Path
+  > Door to Lava Generator
       Morph Ball and Varia Suit
 
-> Door to Varia Suit Room; Heals? False
+> Door to Varia Suit Chamber; Heals? False
   * Layers: default
-  * Charge Beam Door to Varia Suit Room/Door to Fiery Balcony
+  * Charge Beam Door to Varia Suit Chamber/Door to Generator Access
   * Extra - actor_name: Door004
   * Extra - actor_type: doorchargecharge
-  > Door to Main Hub
+  > Door to Wave Beam & Transport to Dam Exterior West
       Screw Attack and Varia Suit
 
-> Door to Fiery Path; Heals? False
+> Door to Lava Generator; Heals? False
   * Layers: default
-  * Power Beam Door to Fiery Path/Door to Fiery Balcony
+  * Power Beam Door to Lava Generator/Door to Generator Access
   * Extra - actor_name: Door020
   * Extra - actor_type: doorpowerpower
-  > Door to Main Hub
+  > Door to Wave Beam & Transport to Dam Exterior West
       Morph Ball and Varia Suit
 

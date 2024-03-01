@@ -96,7 +96,10 @@ class PrimeBootstrap(MetroidBootstrap):
 
         suits = [db.get_item_by_name("Varia Suit")]
         if not configuration.legacy_mode:
-            requirement_template["Heat-Resisting Suit"] = ResourceRequirement.simple(db.get_item_by_name("Varia Suit"))
+            requirement_template["Heat-Resisting Suit"] = dataclasses.replace(
+                requirement_template["Heat-Resisting Suit"],
+                requirement=ResourceRequirement.simple(db.get_item_by_name("Varia Suit")),
+            )
         else:
             suits.extend([db.get_item_by_name("Gravity Suit"), db.get_item_by_name("Phazon Suit")])
 

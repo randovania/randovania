@@ -11,6 +11,7 @@ if TYPE_CHECKING:
 def msr_preset_tabs(editor: PresetEditor, window_manager: WindowManager) -> list[type[PresetTab]]:
     from randovania.games.samus_returns.gui.preset_settings.msr_aeion_tab import PresetMSRAeion
     from randovania.games.samus_returns.gui.preset_settings.msr_goal_tab import PresetMSRGoal
+    from randovania.games.samus_returns.gui.preset_settings.msr_hints_tab import PresetMSRHints
     from randovania.games.samus_returns.gui.preset_settings.msr_patches_tab import PresetMSRPatches
     from randovania.games.samus_returns.gui.preset_settings.msr_reserves_tab import PresetMSRReserves
     from randovania.gui.preset_settings.generation_tab import PresetGeneration
@@ -22,9 +23,10 @@ def msr_preset_tabs(editor: PresetEditor, window_manager: WindowManager) -> list
     return [
         PresetTrickLevel,
         PresetGeneration,
+        PresetMSRGoal,
+        PresetMSRHints,
         PresetMetroidStartingArea,
         PresetLocationPool,
-        PresetMSRGoal,
         MetroidPresetItemPool,
         PresetMSRAeion,
         PresetMSRReserves,

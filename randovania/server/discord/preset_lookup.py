@@ -343,7 +343,7 @@ class PermalinkLookupCog(RandovaniaCog):
                     description=str(e.source),
                 )
             ]
-        except asyncio.TimeoutError:
+        except TimeoutError:
             content = "Timeout after "
         except Exception as e:
             return await response.edit_original_response(

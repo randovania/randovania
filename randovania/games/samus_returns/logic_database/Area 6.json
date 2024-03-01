@@ -152,7 +152,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "events",
-                                            "name": "Area 6 - Transport to Area 7 Grapple Block Top",
+                                            "name": "Area 6 - Transport to Area 7 Grapple Block Pull",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -202,7 +202,7 @@
                     },
                     "valid_starting_location": true,
                     "connections": {
-                        "Door to Crumble Steps": {
+                        "Door to Crumbling Stairwell": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -249,7 +249,7 @@
                         }
                     }
                 },
-                "Door to Crumble Steps": {
+                "Door to Crumbling Stairwell": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -269,7 +269,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 6",
-                        "area": "Crumble Steps",
+                        "area": "Crumbling Stairwell",
                         "node": "Door to Transport to Area 7"
                     },
                     "default_dock_weakness": "Power Beam Door",
@@ -287,7 +287,7 @@
                         }
                     }
                 },
-                "Door to Diggernaut Hallway": {
+                "Door to Swarm Square": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -307,7 +307,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 6",
-                        "area": "Diggernaut Hallway",
+                        "area": "Swarm Square",
                         "node": "Door to Transport to Area 7"
                     },
                     "default_dock_weakness": "Power Beam Door",
@@ -486,7 +486,7 @@
                     "valid_starting_location": false,
                     "event_name": "Area 6 - Transport to Area 7 Grapple Block Top",
                     "connections": {
-                        "Door to Diggernaut Hallway": {
+                        "Door to Swarm Square": {
                             "type": "template",
                             "data": "Lay Any Bomb"
                         }
@@ -592,7 +592,7 @@
                                 ]
                             }
                         },
-                        "Door to Diggernaut Hallway": {
+                        "Door to Swarm Square": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1174,7 +1174,7 @@
                     "valid_starting_location": false,
                     "event_name": "Area 6 - Transport to Area 7 Grapple Block Pull",
                     "connections": {
-                        "Door to Diggernaut Hallway": {
+                        "Door to Swarm Square": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1185,7 +1185,7 @@
                 }
             }
         },
-        "Teleporter Room South": {
+        "Teleporter South": {
             "default_node": "Teleporter",
             "extra": {
                 "total_boundings": {
@@ -1251,7 +1251,7 @@
                         }
                     },
                     "connections": {
-                        "Door to Crumble Steps": {
+                        "Door to Crumbling Stairwell": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1260,7 +1260,7 @@
                         }
                     }
                 },
-                "Door from Chozo Seal West": {
+                "Door from Chozo Seal West Intersection Terminal": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1280,8 +1280,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 6",
-                        "area": "Chozo Seal West",
-                        "node": "Door to Teleporter Room South"
+                        "area": "Chozo Seal West Intersection Terminal",
+                        "node": "Door to Teleporter South"
                     },
                     "default_dock_weakness": "Access Closed",
                     "exclude_from_dock_rando": false,
@@ -1289,7 +1289,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Crumble Steps": {
+                        "Door to Crumbling Stairwell": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1298,7 +1298,7 @@
                         }
                     }
                 },
-                "Door to Crumble Steps": {
+                "Door to Crumbling Stairwell": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1318,8 +1318,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 6",
-                        "area": "Crumble Steps",
-                        "node": "Door from Teleporter Room South"
+                        "area": "Crumbling Stairwell",
+                        "node": "Door from Teleporter South"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -1334,7 +1334,7 @@
                                 "items": []
                             }
                         },
-                        "Door from Chozo Seal West": {
+                        "Door from Chozo Seal West Intersection Terminal": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1366,7 +1366,7 @@
                     "valid_starting_location": false,
                     "event_name": "Area 6 Teleporter Lower",
                     "connections": {
-                        "Door to Crumble Steps": {
+                        "Door to Crumbling Stairwell": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1490,7 +1490,7 @@
                         }
                     }
                 },
-                "Door to Red Plant Tunnel": {
+                "Door to Poisonous Tunnel": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1510,7 +1510,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 6",
-                        "area": "Red Plant Tunnel",
+                        "area": "Poisonous Tunnel",
                         "node": "Door to Omega Arena"
                     },
                     "default_dock_weakness": "Power Beam Door",
@@ -1702,7 +1702,7 @@
                                 ]
                             }
                         },
-                        "Door to Red Plant Tunnel": {
+                        "Door to Poisonous Tunnel": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -1808,7 +1808,7 @@
                 }
             }
         },
-        "Stolen Power Bomb Room": {
+        "Hideout Sprawl": {
             "default_node": null,
             "extra": {
                 "total_boundings": {
@@ -1900,7 +1900,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "events",
-                                            "name": "Area 6 - Stolen Power Bomb Room Grapple Block",
+                                            "name": "Area 6 - Hideout Sprawl Grapple Block",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -2042,7 +2042,7 @@
                     "default_connection": {
                         "region": "Area 6",
                         "area": "Omega Arena Access",
-                        "node": "Door to Stolen Power Bomb Room (Bottom)"
+                        "node": "Door to Hideout Sprawl (Bottom)"
                     },
                     "default_dock_weakness": "Power Bomb Door",
                     "exclude_from_dock_rando": false,
@@ -2068,7 +2068,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "events",
-                                            "name": "Area 6 - Stolen Power Bomb Room Grapple Block",
+                                            "name": "Area 6 - Hideout Sprawl Grapple Block",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -2163,7 +2163,7 @@
                     "default_connection": {
                         "region": "Area 6",
                         "area": "Omega Arena Access",
-                        "node": "Door to Stolen Power Bomb Room (Top)"
+                        "node": "Door to Hideout Sprawl (Top)"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -2216,7 +2216,7 @@
                         }
                     }
                 },
-                "Door to Stolen Access": {
+                "Door to Hideout Entrance": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2236,8 +2236,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 6",
-                        "area": "Stolen Access",
-                        "node": "Door to Stolen Power Bomb Room"
+                        "area": "Hideout Entrance",
+                        "node": "Door to Hideout Sprawl"
                     },
                     "default_dock_weakness": "Missile Door",
                     "exclude_from_dock_rando": false,
@@ -2265,7 +2265,7 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "event_name": "Area 6 - Stolen Power Bomb Room Grapple Block",
+                    "event_name": "Area 6 - Hideout Sprawl Grapple Block",
                     "connections": {
                         "Door to Omega Arena Access (Bottom)": {
                             "type": "or",
@@ -2494,7 +2494,7 @@
                                     },
                                     {
                                         "type": "template",
-                                        "data": "Can Spiderspark"
+                                        "data": "Can Spider Boost"
                                     },
                                     {
                                         "type": "resource",
@@ -2518,7 +2518,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "tricks",
-                                            "name": "Spiderspark",
+                                            "name": "Spider Boost",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -2651,7 +2651,7 @@
                                 ]
                             }
                         },
-                        "Door to Stolen Access": {
+                        "Door to Hideout Entrance": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2662,7 +2662,7 @@
                 }
             }
         },
-        "Connecting Shaft": {
+        "Teleporter North Access": {
             "default_node": null,
             "extra": {
                 "total_boundings": {
@@ -2692,7 +2692,7 @@
                 "asset_id": "collision_camera_039"
             },
             "nodes": {
-                "Door to Red Plant Tunnel": {
+                "Door to Poisonous Tunnel": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2712,8 +2712,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 6",
-                        "area": "Red Plant Tunnel",
-                        "node": "Door to Connecting Shaft"
+                        "area": "Poisonous Tunnel",
+                        "node": "Door to Teleporter North Access"
                     },
                     "default_dock_weakness": "Charge Beam Door",
                     "exclude_from_dock_rando": false,
@@ -2721,7 +2721,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Teleporter Room North": {
+                        "Door to Teleporter North": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2730,7 +2730,7 @@
                         }
                     }
                 },
-                "Door to Teleporter Room North": {
+                "Door to Teleporter North": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2750,8 +2750,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 6",
-                        "area": "Teleporter Room North",
-                        "node": "Door to Connecting Shaft"
+                        "area": "Teleporter North",
+                        "node": "Door to Teleporter North Access"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -2759,7 +2759,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Red Plant Tunnel": {
+                        "Door to Poisonous Tunnel": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -2789,7 +2789,7 @@
                                 ]
                             }
                         },
-                        "Tunnel to Red Plant Tunnel": {
+                        "Tunnel to Poisonous Tunnel": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2807,7 +2807,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "events",
-                                            "name": "Area 6 - Red Plant Tunnel Grapple Block",
+                                            "name": "Area 6 - Poisonous Tunnel Grapple Block",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -2865,7 +2865,7 @@
                         }
                     }
                 },
-                "Tunnel to Red Plant Tunnel": {
+                "Tunnel to Poisonous Tunnel": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2882,8 +2882,8 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Area 6",
-                        "area": "Red Plant Tunnel",
-                        "node": "Tunnel to Connecting Shaft"
+                        "area": "Poisonous Tunnel",
+                        "node": "Tunnel to Teleporter North Access"
                     },
                     "default_dock_weakness": "Tunnel",
                     "exclude_from_dock_rando": false,
@@ -2891,7 +2891,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Teleporter Room North": {
+                        "Door to Teleporter North": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -2904,7 +2904,7 @@
                 }
             }
         },
-        "Crumble Bridge": {
+        "Crumbling Bridge": {
             "default_node": null,
             "extra": {
                 "total_boundings": {
@@ -2985,7 +2985,7 @@
                     "default_connection": {
                         "region": "Area 6",
                         "area": "Chozo Seal East",
-                        "node": "Door to Crumble Bridge"
+                        "node": "Door to Crumbling Bridge"
                     },
                     "default_dock_weakness": "Charge Beam Door",
                     "exclude_from_dock_rando": false,
@@ -3014,13 +3014,13 @@
                                             "items": [
                                                 {
                                                     "type": "template",
-                                                    "data": "Can Spiderspark"
+                                                    "data": "Can Spider Boost"
                                                 },
                                                 {
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "tricks",
-                                                        "name": "Spiderspark",
+                                                        "name": "Spider Boost",
                                                         "amount": 2,
                                                         "negate": false
                                                     }
@@ -3183,7 +3183,7 @@
                     "default_connection": {
                         "region": "Area 6",
                         "area": "Zeta Arena",
-                        "node": "Door to Crumble Bridge"
+                        "node": "Door to Crumbling Bridge"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -3470,13 +3470,13 @@
                                             "items": [
                                                 {
                                                     "type": "template",
-                                                    "data": "Can Spiderspark"
+                                                    "data": "Can Spider Boost"
                                                 },
                                                 {
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "tricks",
-                                                        "name": "Spiderspark",
+                                                        "name": "Spider Boost",
                                                         "amount": 2,
                                                         "negate": false
                                                     }
@@ -3547,7 +3547,7 @@
                 }
             }
         },
-        "Stolen Access": {
+        "Hideout Entrance": {
             "default_node": "Start Point",
             "extra": {
                 "total_boundings": {
@@ -3589,7 +3589,7 @@
                 "asset_id": "collision_camera_041"
             },
             "nodes": {
-                "Door to Teleporter Room North": {
+                "Door to Teleporter North": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3609,8 +3609,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 6",
-                        "area": "Teleporter Room North",
-                        "node": "Door to Stolen Access"
+                        "area": "Teleporter North",
+                        "node": "Door to Hideout Entrance"
                     },
                     "default_dock_weakness": "Charge Beam Door",
                     "exclude_from_dock_rando": false,
@@ -3618,7 +3618,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Stolen Power Bomb Room": {
+                        "Door to Hideout Sprawl": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -3760,7 +3760,7 @@
                         }
                     }
                 },
-                "Door to Stolen Power Bomb Room": {
+                "Door to Hideout Sprawl": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3780,8 +3780,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 6",
-                        "area": "Stolen Power Bomb Room",
-                        "node": "Door to Stolen Access"
+                        "area": "Hideout Sprawl",
+                        "node": "Door to Hideout Entrance"
                     },
                     "default_dock_weakness": "Missile Door",
                     "exclude_from_dock_rando": false,
@@ -3789,7 +3789,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Teleporter Room North": {
+                        "Door to Teleporter North": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -3888,7 +3888,7 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Stolen Power Bomb Room": {
+                        "Door to Hideout Sprawl": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3899,7 +3899,7 @@
                 }
             }
         },
-        "Crumble Steps": {
+        "Crumbling Stairwell": {
             "default_node": null,
             "extra": {
                 "total_boundings": {
@@ -3929,7 +3929,7 @@
                 "asset_id": "collision_camera_042"
             },
             "nodes": {
-                "Door from Teleporter Room South": {
+                "Door from Teleporter South": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3949,8 +3949,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 6",
-                        "area": "Teleporter Room South",
-                        "node": "Door to Crumble Steps"
+                        "area": "Teleporter South",
+                        "node": "Door to Crumbling Stairwell"
                     },
                     "default_dock_weakness": "Access Closed",
                     "exclude_from_dock_rando": false,
@@ -3958,7 +3958,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Chozo Seal West": {
+                        "Door to Chozo Seal West Intersection Terminal": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4124,7 +4124,7 @@
                         }
                     }
                 },
-                "Door to Chozo Seal West": {
+                "Door to Chozo Seal West Intersection Terminal": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4144,8 +4144,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 6",
-                        "area": "Chozo Seal West",
-                        "node": "Door from Crumble Steps"
+                        "area": "Chozo Seal West Intersection Terminal",
+                        "node": "Door from Crumbling Stairwell"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -4175,7 +4175,7 @@
                     "default_connection": {
                         "region": "Area 6",
                         "area": "Transport to Area 7",
-                        "node": "Door to Crumble Steps"
+                        "node": "Door to Crumbling Stairwell"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -4183,7 +4183,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door from Teleporter Room South": {
+                        "Door from Teleporter South": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4212,7 +4212,7 @@
                     "pickup_index": 141,
                     "location_category": "minor",
                     "connections": {
-                        "Door from Teleporter Room South": {
+                        "Door from Teleporter South": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -4294,13 +4294,13 @@
                                             "items": [
                                                 {
                                                     "type": "template",
-                                                    "data": "Can Spiderspark"
+                                                    "data": "Can Spider Boost"
                                                 },
                                                 {
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "tricks",
-                                                        "name": "Spiderspark",
+                                                        "name": "Spider Boost",
                                                         "amount": 2,
                                                         "negate": false
                                                     }
@@ -4337,7 +4337,7 @@
                                 ]
                             }
                         },
-                        "Door to Chozo Seal West": {
+                        "Door to Chozo Seal West Intersection Terminal": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4407,7 +4407,7 @@
                         }
                     }
                 },
-                "Door to Diggernaut Shaft": {
+                "Door to Electric Escalade": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4427,7 +4427,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 6",
-                        "area": "Diggernaut Shaft",
+                        "area": "Electric Escalade",
                         "node": "Door to Diggernaut Arena"
                     },
                     "default_dock_weakness": "Power Beam Door",
@@ -4474,7 +4474,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Diggernaut Shaft": {
+                        "Door to Electric Escalade": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4772,7 +4772,7 @@
                 }
             }
         },
-        "Diggernaut Hallway": {
+        "Swarm Square": {
             "default_node": null,
             "extra": {
                 "total_boundings": {
@@ -4823,7 +4823,7 @@
                     "default_connection": {
                         "region": "Area 6",
                         "area": "Transport to Area 7",
-                        "node": "Door to Diggernaut Hallway"
+                        "node": "Door to Swarm Square"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -4831,7 +4831,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Diggernaut Shaft": {
+                        "Door to Electric Escalade": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4880,7 +4880,7 @@
                         }
                     }
                 },
-                "Door to Diggernaut Shaft": {
+                "Door to Electric Escalade": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4900,8 +4900,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 6",
-                        "area": "Diggernaut Shaft",
-                        "node": "Door to Diggernaut Hallway"
+                        "area": "Electric Escalade",
+                        "node": "Door to Swarm Square"
                     },
                     "default_dock_weakness": "Power Bomb Door",
                     "exclude_from_dock_rando": false,
@@ -4960,7 +4960,7 @@
                 }
             }
         },
-        "Diggernaut Shaft": {
+        "Electric Escalade": {
             "default_node": null,
             "extra": {
                 "total_boundings": {
@@ -5049,13 +5049,13 @@
                                             "items": [
                                                 {
                                                     "type": "template",
-                                                    "data": "Can Spiderspark"
+                                                    "data": "Can Spider Boost"
                                                 },
                                                 {
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "tricks",
-                                                        "name": "Spiderspark",
+                                                        "name": "Spider Boost",
                                                         "amount": 1,
                                                         "negate": false
                                                     }
@@ -5233,7 +5233,7 @@
                         }
                     }
                 },
-                "Door to Diggernaut Hallway": {
+                "Door to Swarm Square": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5253,8 +5253,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 6",
-                        "area": "Diggernaut Hallway",
-                        "node": "Door to Diggernaut Shaft"
+                        "area": "Swarm Square",
+                        "node": "Door to Electric Escalade"
                     },
                     "default_dock_weakness": "Power Bomb Door",
                     "exclude_from_dock_rando": false,
@@ -5292,7 +5292,7 @@
                     "default_connection": {
                         "region": "Area 6",
                         "area": "Diggernaut Arena",
-                        "node": "Door to Diggernaut Shaft"
+                        "node": "Door to Electric Escalade"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -5331,7 +5331,7 @@
                                 "items": []
                             }
                         },
-                        "Door to Diggernaut Hallway": {
+                        "Door to Swarm Square": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5342,7 +5342,7 @@
                 }
             }
         },
-        "Red Plant Tunnel": {
+        "Poisonous Tunnel": {
             "default_node": null,
             "extra": {
                 "total_boundings": {
@@ -5401,7 +5401,7 @@
                         }
                     }
                 },
-                "Door to Connecting Shaft": {
+                "Door to Teleporter North Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5421,8 +5421,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 6",
-                        "area": "Connecting Shaft",
-                        "node": "Door to Red Plant Tunnel"
+                        "area": "Teleporter North Access",
+                        "node": "Door to Poisonous Tunnel"
                     },
                     "default_dock_weakness": "Charge Beam Door",
                     "exclude_from_dock_rando": false,
@@ -5460,7 +5460,7 @@
                     "default_connection": {
                         "region": "Area 6",
                         "area": "Omega Arena",
-                        "node": "Door to Red Plant Tunnel"
+                        "node": "Door to Poisonous Tunnel"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -5468,7 +5468,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Connecting Shaft": {
+                        "Door to Teleporter North Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5515,7 +5515,7 @@
                         }
                     }
                 },
-                "Tunnel to Connecting Shaft": {
+                "Tunnel to Teleporter North Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5532,8 +5532,8 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Area 6",
-                        "area": "Connecting Shaft",
-                        "node": "Tunnel to Red Plant Tunnel"
+                        "area": "Teleporter North Access",
+                        "node": "Tunnel to Poisonous Tunnel"
                     },
                     "default_dock_weakness": "Tunnel",
                     "exclude_from_dock_rando": false,
@@ -5566,7 +5566,7 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "event_name": "Area 6 - Red Plant Tunnel Grapple Block",
+                    "event_name": "Area 6 - Poisonous Tunnel Grapple Block",
                     "connections": {
                         "Next to Pickup": {
                             "type": "and",
@@ -5637,7 +5637,7 @@
                                 ]
                             }
                         },
-                        "Tunnel to Connecting Shaft": {
+                        "Tunnel to Teleporter North Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5655,7 +5655,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "events",
-                                            "name": "Area 6 - Red Plant Tunnel Grapple Block",
+                                            "name": "Area 6 - Poisonous Tunnel Grapple Block",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -5949,7 +5949,7 @@
                         }
                     }
                 },
-                "Door to Crumble Bridge": {
+                "Door to Crumbling Bridge": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5969,7 +5969,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 6",
-                        "area": "Crumble Bridge",
+                        "area": "Crumbling Bridge",
                         "node": "Door to Zeta Arena"
                     },
                     "default_dock_weakness": "Power Beam Door",
@@ -6071,7 +6071,7 @@
                                 "items": []
                             }
                         },
-                        "Door to Crumble Bridge": {
+                        "Door to Crumbling Bridge": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6157,7 +6157,7 @@
                 }
             }
         },
-        "Transport to Area 5 Tower Lobby": {
+        "Transport to Area 5": {
             "default_node": "Elevator to Area 5 - Tower Lobby",
             "extra": {
                 "total_boundings": {
@@ -6268,7 +6268,7 @@
                     "dock_type": "elevator",
                     "default_connection": {
                         "region": "Area 5 - Tower Lobby",
-                        "area": "Chozo Seal",
+                        "area": "Transport to Areas 4 and 6",
                         "node": "Elevator to Area 6"
                     },
                     "default_dock_weakness": "Elevator",
@@ -6660,7 +6660,7 @@
                                 ]
                             }
                         },
-                        "Door to Chozo Seal West (Bottom)": {
+                        "Door to Chozo Seal West Intersection Terminal (Bottom)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6752,7 +6752,7 @@
                         }
                     }
                 },
-                "Door to Chozo Seal West (Top)": {
+                "Door to Chozo Seal West Intersection Terminal (Top)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6772,8 +6772,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 6",
-                        "area": "Chozo Seal West",
-                        "node": "Door to Transport to Area 5 Tower Lobby (Top)"
+                        "area": "Chozo Seal West Intersection Terminal",
+                        "node": "Door to Transport to Area 5 (Top)"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -6781,7 +6781,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Chozo Seal West (Bottom)": {
+                        "Door to Chozo Seal West Intersection Terminal (Bottom)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6799,7 +6799,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "events",
-                                            "name": "Area 6 - Transport to Area 5 Tower Lobby Grapple Block",
+                                            "name": "Area 6 - Transport to Area 5 Grapple Block",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -6818,7 +6818,7 @@
                         }
                     }
                 },
-                "Door to Chozo Seal West (Bottom)": {
+                "Door to Chozo Seal West Intersection Terminal (Bottom)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6838,8 +6838,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 6",
-                        "area": "Chozo Seal West",
-                        "node": "Door to Transport to Area 5 Tower Lobby (Bottom)"
+                        "area": "Chozo Seal West Intersection Terminal",
+                        "node": "Door to Transport to Area 5 (Bottom)"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -6908,7 +6908,7 @@
                                 ]
                             }
                         },
-                        "Door to Chozo Seal West (Top)": {
+                        "Door to Chozo Seal West Intersection Terminal (Top)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6926,7 +6926,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "events",
-                                            "name": "Area 6 - Transport to Area 5 Tower Lobby Grapple Block",
+                                            "name": "Area 6 - Transport to Area 5 Grapple Block",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -6950,9 +6950,9 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "event_name": "Area 6 - Transport to Area 5 Tower Lobby Grapple Block",
+                    "event_name": "Area 6 - Transport to Area 5 Grapple Block",
                     "connections": {
-                        "Door to Chozo Seal West (Top)": {
+                        "Door to Chozo Seal West Intersection Terminal (Top)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7060,7 +7060,7 @@
                         }
                     }
                 },
-                "Door to Crumble Bridge": {
+                "Door to Crumbling Bridge": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7080,7 +7080,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 6",
-                        "area": "Crumble Bridge",
+                        "area": "Crumbling Bridge",
                         "node": "Door to Chozo Seal East"
                     },
                     "default_dock_weakness": "Charge Beam Door",
@@ -7125,7 +7125,7 @@
                         }
                     },
                     "connections": {
-                        "Tunnel to Chozo Seal West": {
+                        "Tunnel to Chozo Seal West Intersection Terminal": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7359,7 +7359,7 @@
                         }
                     }
                 },
-                "Tunnel to Chozo Seal West": {
+                "Tunnel to Chozo Seal West Intersection Terminal": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7376,7 +7376,7 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Area 6",
-                        "area": "Chozo Seal West",
+                        "area": "Chozo Seal West Intersection Terminal",
                         "node": "Tunnel to Chozo Seal East"
                     },
                     "default_dock_weakness": "Tunnel",
@@ -7495,7 +7495,7 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "tricks",
-                                                        "name": "WallShot",
+                                                        "name": "PreciseAiming",
                                                         "amount": 1,
                                                         "negate": false
                                                     }
@@ -7524,7 +7524,7 @@
                     "valid_starting_location": false,
                     "event_name": "Area 6 - Chozo Seal East Grapple Block",
                     "connections": {
-                        "Tunnel to Chozo Seal West": {
+                        "Tunnel to Chozo Seal West Intersection Terminal": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7704,7 +7704,7 @@
                                 ]
                             }
                         },
-                        "Door to Crumble Bridge": {
+                        "Door to Crumbling Bridge": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -7993,7 +7993,7 @@
                 "asset_id": "collision_camera_061"
             },
             "nodes": {
-                "Door to Stolen Power Bomb Room (Bottom)": {
+                "Door to Hideout Sprawl (Bottom)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8013,7 +8013,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 6",
-                        "area": "Stolen Power Bomb Room",
+                        "area": "Hideout Sprawl",
                         "node": "Door to Omega Arena Access (Bottom)"
                     },
                     "default_dock_weakness": "Power Bomb Door",
@@ -8022,7 +8022,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Stolen Power Bomb Room (Top)": {
+                        "Door to Hideout Sprawl (Top)": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -8112,7 +8112,7 @@
                         }
                     }
                 },
-                "Door to Stolen Power Bomb Room (Top)": {
+                "Door to Hideout Sprawl (Top)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8132,7 +8132,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 6",
-                        "area": "Stolen Power Bomb Room",
+                        "area": "Hideout Sprawl",
                         "node": "Door to Omega Arena Access (Top)"
                     },
                     "default_dock_weakness": "Power Beam Door",
@@ -8141,7 +8141,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Stolen Power Bomb Room (Bottom)": {
+                        "Door to Hideout Sprawl (Bottom)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8179,7 +8179,7 @@
                 }
             }
         },
-        "Chozo Seal West": {
+        "Chozo Seal West Intersection Terminal": {
             "default_node": "Save Station",
             "extra": {
                 "total_boundings": {
@@ -8628,14 +8628,14 @@
                         }
                     },
                     "connections": {
-                        "Door to Teleporter Room North": {
+                        "Door to Teleporter North": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Door to Transport to Area 5 Tower Lobby (Top)": {
+                        "Door to Transport to Area 5 (Top)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8714,7 +8714,7 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Door from Crumble Steps": {
+                        "Door from Crumbling Stairwell": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8818,7 +8818,7 @@
                                 ]
                             }
                         },
-                        "Door to Transport to Area 5 Tower Lobby (Top)": {
+                        "Door to Transport to Area 5 (Top)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8900,7 +8900,7 @@
                                 ]
                             }
                         },
-                        "Door to Transport to Area 5 Tower Lobby (Bottom)": {
+                        "Door to Transport to Area 5 (Bottom)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -9050,7 +9050,7 @@
                         }
                     }
                 },
-                "Door to Teleporter Room South": {
+                "Door to Teleporter South": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -9070,8 +9070,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 6",
-                        "area": "Teleporter Room South",
-                        "node": "Door from Chozo Seal West"
+                        "area": "Teleporter South",
+                        "node": "Door from Chozo Seal West Intersection Terminal"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -9088,7 +9088,7 @@
                         }
                     }
                 },
-                "Door from Crumble Steps": {
+                "Door from Crumbling Stairwell": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -9108,8 +9108,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 6",
-                        "area": "Crumble Steps",
-                        "node": "Door to Chozo Seal West"
+                        "area": "Crumbling Stairwell",
+                        "node": "Door to Chozo Seal West Intersection Terminal"
                     },
                     "default_dock_weakness": "Access Closed",
                     "exclude_from_dock_rando": false,
@@ -9126,7 +9126,7 @@
                         }
                     }
                 },
-                "Door to Teleporter Room North": {
+                "Door to Teleporter North": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -9146,8 +9146,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 6",
-                        "area": "Teleporter Room North",
-                        "node": "Door to Chozo Seal West"
+                        "area": "Teleporter North",
+                        "node": "Door to Chozo Seal West Intersection Terminal"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -9164,7 +9164,7 @@
                         }
                     }
                 },
-                "Door to Transport to Area 5 Tower Lobby (Top)": {
+                "Door to Transport to Area 5 (Top)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -9184,8 +9184,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 6",
-                        "area": "Transport to Area 5 Tower Lobby",
-                        "node": "Door to Chozo Seal West (Top)"
+                        "area": "Transport to Area 5",
+                        "node": "Door to Chozo Seal West Intersection Terminal (Top)"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -9280,7 +9280,7 @@
                         }
                     }
                 },
-                "Door to Transport to Area 5 Tower Lobby (Bottom)": {
+                "Door to Transport to Area 5 (Bottom)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -9300,8 +9300,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 6",
-                        "area": "Transport to Area 5 Tower Lobby",
-                        "node": "Door to Chozo Seal West (Bottom)"
+                        "area": "Transport to Area 5",
+                        "node": "Door to Chozo Seal West Intersection Terminal (Bottom)"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -9336,7 +9336,7 @@
                     "default_connection": {
                         "region": "Area 6",
                         "area": "Chozo Seal East",
-                        "node": "Tunnel to Chozo Seal West"
+                        "node": "Tunnel to Chozo Seal West Intersection Terminal"
                     },
                     "default_dock_weakness": "Tunnel",
                     "exclude_from_dock_rando": false,
@@ -9694,7 +9694,7 @@
                                 ]
                             }
                         },
-                        "Door to Teleporter Room South": {
+                        "Door to Teleporter South": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -9754,7 +9754,7 @@
                 }
             }
         },
-        "Teleporter Room North": {
+        "Teleporter North": {
             "default_node": "Save Station",
             "extra": {
                 "total_boundings": {
@@ -9854,7 +9854,7 @@
                                 "items": []
                             }
                         },
-                        "Door to Stolen Access": {
+                        "Door to Hideout Entrance": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -9875,7 +9875,7 @@
                                 ]
                             }
                         },
-                        "Door to Chozo Seal West": {
+                        "Door to Chozo Seal West Intersection Terminal": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -9981,7 +9981,7 @@
                         }
                     }
                 },
-                "Door to Connecting Shaft": {
+                "Door to Teleporter North Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -10001,8 +10001,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 6",
-                        "area": "Connecting Shaft",
-                        "node": "Door to Teleporter Room North"
+                        "area": "Teleporter North Access",
+                        "node": "Door to Teleporter North"
                     },
                     "default_dock_weakness": "Access Locked",
                     "exclude_from_dock_rando": false,
@@ -10010,7 +10010,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Stolen Access": {
+                        "Door to Hideout Entrance": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -10028,7 +10028,7 @@
                         }
                     }
                 },
-                "Door to Stolen Access": {
+                "Door to Hideout Entrance": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -10048,8 +10048,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 6",
-                        "area": "Stolen Access",
-                        "node": "Door to Teleporter Room North"
+                        "area": "Hideout Entrance",
+                        "node": "Door to Teleporter North"
                     },
                     "default_dock_weakness": "Charge Beam Door",
                     "exclude_from_dock_rando": false,
@@ -10064,7 +10064,7 @@
                                 "items": []
                             }
                         },
-                        "Door to Connecting Shaft": {
+                        "Door to Teleporter North Access": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -10082,7 +10082,7 @@
                         }
                     }
                 },
-                "Door to Chozo Seal West": {
+                "Door to Chozo Seal West Intersection Terminal": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -10102,8 +10102,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 6",
-                        "area": "Chozo Seal West",
-                        "node": "Door to Teleporter Room North"
+                        "area": "Chozo Seal West Intersection Terminal",
+                        "node": "Door to Teleporter North"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,

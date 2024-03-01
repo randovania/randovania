@@ -176,6 +176,7 @@ class SelectPresetWidget(QtWidgets.QWidget, Ui_SelectPresetWidget):
         editor.on_changed = lambda: self._logic_settings_window.on_preset_changed(editor.create_custom_preset_with())
 
         result = await async_dialog.execute_dialog(self._logic_settings_window)
+        self._logic_settings_window.deleteLater()
         self._logic_settings_window = None
 
         if result == QtWidgets.QDialog.DialogCode.Accepted:

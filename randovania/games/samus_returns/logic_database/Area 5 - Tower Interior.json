@@ -9,7 +9,7 @@
         "scenario_id": "s067_area6c"
     },
     "areas": {
-        "Transport to Area 5 Tower Lobby (East)": {
+        "Transport to Tower Lobby East": {
             "default_node": "Elevator to Area 5 - Tower Lobby",
             "extra": {
                 "total_boundings": {
@@ -80,7 +80,7 @@
                     "dock_type": "elevator",
                     "default_connection": {
                         "region": "Area 5 - Tower Lobby",
-                        "area": "Transport to Area 5 Tower Interior (East)",
+                        "area": "Transport to Tower Interior East",
                         "node": "Elevator to Area 5 - Tower Interior"
                     },
                     "default_dock_weakness": "Elevator",
@@ -89,7 +89,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Transport to Area 5 Tower Exterior (East)": {
+                        "Door to Transport to Tower Exterior East": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -98,7 +98,7 @@
                                 "negate": false
                             }
                         },
-                        "Door to Transport Connector": {
+                        "Door to Interior Save Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -107,7 +107,7 @@
                         }
                     }
                 },
-                "Door to Transport to Area 5 Tower Exterior (East)": {
+                "Door to Transport to Tower Exterior East": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -127,8 +127,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 5 - Tower Interior",
-                        "area": "Transport to Area 5 Tower Exterior (East)",
-                        "node": "Door to Transport to Area 5 Tower Lobby (East)"
+                        "area": "Transport to Tower Exterior East",
+                        "node": "Door to Transport to Tower Lobby East"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -147,7 +147,7 @@
                         }
                     }
                 },
-                "Door to Transport Connector": {
+                "Door to Interior Save Station": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -167,8 +167,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 5 - Tower Interior",
-                        "area": "Transport Connector",
-                        "node": "Door to Transport to Area 5 Tower Lobby (East)"
+                        "area": "Interior Save Station",
+                        "node": "Door to Transport to Tower Lobby East"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -187,7 +187,7 @@
                 }
             }
         },
-        "Transport Connector": {
+        "Interior Save Station": {
             "default_node": "Save Station",
             "extra": {
                 "total_boundings": {
@@ -274,7 +274,7 @@
                     },
                     "valid_starting_location": true,
                     "connections": {
-                        "Door to Transport to Area 5 Tower Lobby (East)": {
+                        "Door to Transport to Tower Lobby East": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -283,7 +283,7 @@
                                 "negate": false
                             }
                         },
-                        "Door to Transport to Area 5 Tower Lobby (West)": {
+                        "Door to Transport to Tower Lobby West": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -315,7 +315,7 @@
                         }
                     }
                 },
-                "Door to Transport to Area 5 Tower Lobby (East)": {
+                "Door to Transport to Tower Lobby East": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -335,8 +335,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 5 - Tower Interior",
-                        "area": "Transport to Area 5 Tower Lobby (East)",
-                        "node": "Door to Transport Connector"
+                        "area": "Transport to Tower Lobby East",
+                        "node": "Door to Interior Save Station"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -355,7 +355,7 @@
                         }
                     }
                 },
-                "Door to Transport to Area 5 Tower Lobby (West)": {
+                "Door to Transport to Tower Lobby West": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -375,8 +375,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 5 - Tower Interior",
-                        "area": "Transport to Area 5 Tower Lobby (West)",
-                        "node": "Door to Transport Connector"
+                        "area": "Transport to Tower Lobby West",
+                        "node": "Door to Interior Save Station"
                     },
                     "default_dock_weakness": "Plasma Beam Door",
                     "exclude_from_dock_rando": false,
@@ -413,7 +413,7 @@
                     "default_connection": {
                         "region": "Area 5 - Tower Interior",
                         "area": "Gamma+ Arena Access",
-                        "node": "Tunnel to Transport Connector"
+                        "node": "Tunnel to Interior Save Station"
                     },
                     "default_dock_weakness": "Tunnel",
                     "exclude_from_dock_rando": false,
@@ -481,7 +481,7 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "event_name": "Area 5 (Tower Interior) - Transport Connector Grapple Block",
+                    "event_name": "Area 5 (Tower Interior) - Interior Save Station Grapple Block",
                     "connections": {
                         "Left of Grapple Block": {
                             "type": "and",
@@ -537,7 +537,7 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "events",
-                                                        "name": "Area 5 (Tower Interior) - Transport Connector Grapple Block",
+                                                        "name": "Area 5 (Tower Interior) - Interior Save Station Grapple Block",
                                                         "amount": 1,
                                                         "negate": false
                                                     }
@@ -658,7 +658,7 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "events",
-                                                        "name": "Area 5 (Tower Interior) - Transport Connector Grapple Block",
+                                                        "name": "Area 5 (Tower Interior) - Interior Save Station Grapple Block",
                                                         "amount": 1,
                                                         "negate": false
                                                     }
@@ -772,13 +772,13 @@
                                                         "items": [
                                                             {
                                                                 "type": "template",
-                                                                "data": "Can Spiderspark"
+                                                                "data": "Can Spider Boost"
                                                             },
                                                             {
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "tricks",
-                                                                    "name": "Spiderspark",
+                                                                    "name": "Spider Boost",
                                                                     "amount": 2,
                                                                     "negate": false
                                                                 }
@@ -865,7 +865,7 @@
                         "Right of Water": {
                             "type": "or",
                             "data": {
-                                "comment": null,
+                                "comment": "TODO: Add Gravityless methods",
                                 "items": [
                                     {
                                         "type": "template",
@@ -934,7 +934,7 @@
                 }
             }
         },
-        "Transport to Area 5 Tower Exterior (East)": {
+        "Transport to Tower Exterior East": {
             "default_node": "Elevator to Area 5 - Tower Exterior",
             "extra": {
                 "total_boundings": {
@@ -993,7 +993,7 @@
                     "dock_type": "elevator",
                     "default_connection": {
                         "region": "Area 5 - Tower Exterior",
-                        "area": "Tower",
+                        "area": "Tower Exterior",
                         "node": "Elevator to Area 5 - Tower Interior"
                     },
                     "default_dock_weakness": "Elevator",
@@ -1002,7 +1002,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Transport to Area 5 Tower Lobby (East)": {
+                        "Door to Transport to Tower Lobby East": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1016,7 +1016,7 @@
                                 "items": []
                             }
                         },
-                        "Door to Water Drop": {
+                        "Door to Meboid Marina": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1025,7 +1025,7 @@
                         }
                     }
                 },
-                "Door to Transport to Area 5 Tower Lobby (East)": {
+                "Door to Transport to Tower Lobby East": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1045,8 +1045,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 5 - Tower Interior",
-                        "area": "Transport to Area 5 Tower Lobby (East)",
-                        "node": "Door to Transport to Area 5 Tower Exterior (East)"
+                        "area": "Transport to Tower Lobby East",
+                        "node": "Door to Transport to Tower Exterior East"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -1098,7 +1098,7 @@
                     "default_connection": {
                         "region": "Area 5 - Tower Interior",
                         "area": "Grapple Shuffler",
-                        "node": "Door to Transport to Area 5 Tower Exterior (East)"
+                        "node": "Door to Transport to Tower Exterior East"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -1115,7 +1115,7 @@
                         }
                     }
                 },
-                "Door to Water Drop": {
+                "Door to Meboid Marina": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1135,8 +1135,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 5 - Tower Interior",
-                        "area": "Water Drop",
-                        "node": "Door to Transport to Area 5 Tower Exterior (East)"
+                        "area": "Meboid Marina",
+                        "node": "Door to Transport to Tower Exterior East"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -1155,7 +1155,7 @@
                 }
             }
         },
-        "Plasma Beam Room": {
+        "Plasma Beam Chamber": {
             "default_node": "Next to Pickup",
             "extra": {
                 "total_boundings": {
@@ -1214,7 +1214,7 @@
                         }
                     }
                 },
-                "Door to Autrack Tower": {
+                "Door to Autrack Acropolis": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1234,8 +1234,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 5 - Tower Interior",
-                        "area": "Autrack Tower",
-                        "node": "Door to Plasma Beam Room"
+                        "area": "Autrack Acropolis",
+                        "node": "Door to Plasma Beam Chamber"
                     },
                     "default_dock_weakness": "Plasma Beam Door",
                     "exclude_from_dock_rando": false,
@@ -1273,7 +1273,7 @@
                     "default_connection": {
                         "region": "Area 5 - Tower Interior",
                         "area": "Grapple Shuffler",
-                        "node": "Door to Plasma Beam Room"
+                        "node": "Door to Plasma Beam Chamber"
                     },
                     "default_dock_weakness": "Missile Door",
                     "exclude_from_dock_rando": false,
@@ -1314,7 +1314,7 @@
                                 "items": []
                             }
                         },
-                        "Door to Autrack Tower": {
+                        "Door to Autrack Acropolis": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1362,7 +1362,7 @@
                 "asset_id": "collision_camera_007"
             },
             "nodes": {
-                "Door to Transport to Area 5 Tower Exterior (East)": {
+                "Door to Transport to Tower Exterior East": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1382,7 +1382,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 5 - Tower Interior",
-                        "area": "Transport to Area 5 Tower Exterior (East)",
+                        "area": "Transport to Tower Exterior East",
                         "node": "Door to Grapple Shuffler"
                     },
                     "default_dock_weakness": "Power Beam Door",
@@ -1391,7 +1391,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Teleporter Room (Top)": {
+                        "Door to Interior Teleporter (Top)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1400,7 +1400,7 @@
                         }
                     }
                 },
-                "Door to Plasma Beam Room": {
+                "Door to Plasma Beam Chamber": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1420,7 +1420,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 5 - Tower Interior",
-                        "area": "Plasma Beam Room",
+                        "area": "Plasma Beam Chamber",
                         "node": "Door to Grapple Shuffler"
                     },
                     "default_dock_weakness": "Missile Door",
@@ -1429,7 +1429,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Teleporter Room (Bottom)": {
+                        "Door to Interior Teleporter (Bottom)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1496,7 +1496,7 @@
                         }
                     }
                 },
-                "Door to Teleporter Room (Bottom)": {
+                "Door to Interior Teleporter (Bottom)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1516,7 +1516,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 5 - Tower Interior",
-                        "area": "Teleporter Room",
+                        "area": "Interior Teleporter",
                         "node": "Door to Grapple Shuffler (Bottom)"
                     },
                     "default_dock_weakness": "Power Beam Door",
@@ -1525,7 +1525,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Plasma Beam Room": {
+                        "Door to Plasma Beam Chamber": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1653,7 +1653,7 @@
                         }
                     }
                 },
-                "Door to Teleporter Room (Top)": {
+                "Door to Interior Teleporter (Top)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1673,7 +1673,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 5 - Tower Interior",
-                        "area": "Teleporter Room",
+                        "area": "Interior Teleporter",
                         "node": "Door to Grapple Shuffler (Top)"
                     },
                     "default_dock_weakness": "Power Beam Door",
@@ -1682,7 +1682,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Transport to Area 5 Tower Exterior (East)": {
+                        "Door to Transport to Tower Exterior East": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1711,7 +1711,7 @@
                     "pickup_index": 127,
                     "location_category": "minor",
                     "connections": {
-                        "Door to Plasma Beam Room": {
+                        "Door to Plasma Beam Chamber": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1909,7 +1909,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Teleporter Room (Bottom)": {
+                        "Door to Interior Teleporter (Bottom)": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -1924,17 +1924,8 @@
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
                                         "type": "template",
-                                        "data": "Shoot Any Missile"
+                                        "data": "Lay Any Bomb"
                                     },
                                     {
                                         "type": "resource",
@@ -1975,13 +1966,13 @@
                                                         "items": [
                                                             {
                                                                 "type": "template",
-                                                                "data": "Can Spiderspark"
+                                                                "data": "Can Spider Boost"
                                                             },
                                                             {
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "tricks",
-                                                                    "name": "Spiderspark",
+                                                                    "name": "Spider Boost",
                                                                     "amount": 2,
                                                                     "negate": false
                                                                 }
@@ -2008,7 +1999,7 @@
                 }
             }
         },
-        "Autrack Tower": {
+        "Autrack Acropolis": {
             "default_node": null,
             "extra": {
                 "total_boundings": {
@@ -2062,7 +2053,7 @@
                         }
                     }
                 },
-                "Door to Teleporter Room": {
+                "Door to Interior Teleporter": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2082,8 +2073,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 5 - Tower Interior",
-                        "area": "Teleporter Room",
-                        "node": "Door to Autrack Tower"
+                        "area": "Interior Teleporter",
+                        "node": "Door to Autrack Acropolis"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -2097,7 +2088,7 @@
                         }
                     }
                 },
-                "Door to Plasma Beam Room": {
+                "Door to Plasma Beam Chamber": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2117,8 +2108,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 5 - Tower Interior",
-                        "area": "Plasma Beam Room",
-                        "node": "Door to Autrack Tower"
+                        "area": "Plasma Beam Chamber",
+                        "node": "Door to Autrack Acropolis"
                     },
                     "default_dock_weakness": "Plasma Beam Door",
                     "exclude_from_dock_rando": false,
@@ -2126,7 +2117,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Teleporter Room": {
+                        "Door to Interior Teleporter": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2135,7 +2126,7 @@
                         }
                     }
                 },
-                "Tunnel to Transport to Area 5 Tower Exterior (West)": {
+                "Tunnel to Transport to Tower Exterior West": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2152,8 +2143,8 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Area 5 - Tower Interior",
-                        "area": "Transport to Area 5 Tower Exterior (West)",
-                        "node": "Tunnel to Autrack Tower"
+                        "area": "Transport to Tower Exterior West",
+                        "node": "Tunnel to Autrack Acropolis"
                     },
                     "default_dock_weakness": "Tunnel",
                     "exclude_from_dock_rando": false,
@@ -2196,7 +2187,7 @@
                                 "negate": false
                             }
                         },
-                        "Tunnel to Transport to Area 5 Tower Exterior (West)": {
+                        "Tunnel to Transport to Tower Exterior West": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2355,7 +2346,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Teleporter Room": {
+                        "Door to Interior Teleporter": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2401,7 +2392,7 @@
                 }
             }
         },
-        "Gravity Suit Room": {
+        "Gravity Suit Chamber": {
             "default_node": "Next to Pickup",
             "extra": {
                 "total_boundings": {
@@ -2460,7 +2451,7 @@
                         }
                     }
                 },
-                "Door to Underwater Path (Bottom)": {
+                "Door to Gravity Suit Chamber Access (Bottom)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2480,8 +2471,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 5 - Tower Interior",
-                        "area": "Underwater Path",
-                        "node": "Door to Gravity Suit Room (Bottom)"
+                        "area": "Gravity Suit Chamber Access",
+                        "node": "Door to Gravity Suit Chamber (Bottom)"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -2489,7 +2480,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Underwater Path (Middle)": {
+                        "Door to Gravity Suit Chamber Access (Middle)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2498,7 +2489,7 @@
                         }
                     }
                 },
-                "Door to Underwater Path (Middle)": {
+                "Door to Gravity Suit Chamber Access (Middle)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2518,8 +2509,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 5 - Tower Interior",
-                        "area": "Underwater Path",
-                        "node": "Door to Gravity Suit Room (Middle)"
+                        "area": "Gravity Suit Chamber Access",
+                        "node": "Door to Gravity Suit Chamber (Middle)"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -2527,7 +2518,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Underwater Path (Bottom)": {
+                        "Door to Gravity Suit Chamber Access (Bottom)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2536,7 +2527,7 @@
                         }
                     }
                 },
-                "Door to Underwater Path (Top)": {
+                "Door to Gravity Suit Chamber Access (Top)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2556,8 +2547,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 5 - Tower Interior",
-                        "area": "Underwater Path",
-                        "node": "Door to Gravity Suit Room (Top)"
+                        "area": "Gravity Suit Chamber Access",
+                        "node": "Door to Gravity Suit Chamber (Top)"
                     },
                     "default_dock_weakness": "Missile Door",
                     "exclude_from_dock_rando": false,
@@ -2598,7 +2589,7 @@
                                 "items": []
                             }
                         },
-                        "Door to Underwater Path (Middle)": {
+                        "Door to Gravity Suit Chamber Access (Middle)": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -2607,7 +2598,7 @@
                                 "negate": false
                             }
                         },
-                        "Door to Underwater Path (Top)": {
+                        "Door to Gravity Suit Chamber Access (Top)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2618,7 +2609,7 @@
                 }
             }
         },
-        "Upper Path Storage": {
+        "Phase Drift Trial Reward Room": {
             "default_node": null,
             "extra": {
                 "total_boundings": {
@@ -2668,7 +2659,7 @@
                     "pickup_index": 119,
                     "location_category": "minor",
                     "connections": {
-                        "Door to Upper Path Left": {
+                        "Door to Phase Drift Trial West": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2677,7 +2668,7 @@
                         }
                     }
                 },
-                "Door to Upper Path Left": {
+                "Door to Phase Drift Trial West": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2697,8 +2688,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 5 - Tower Interior",
-                        "area": "Upper Path Left",
-                        "node": "Door to Upper Path Storage"
+                        "area": "Phase Drift Trial West",
+                        "node": "Door to Phase Drift Trial Reward Room"
                     },
                     "default_dock_weakness": "Power Bomb Door",
                     "exclude_from_dock_rando": false,
@@ -2717,7 +2708,7 @@
                 }
             }
         },
-        "Upper Path Left": {
+        "Phase Drift Trial West": {
             "default_node": null,
             "extra": {
                 "total_boundings": {
@@ -2767,7 +2758,7 @@
                     "pickup_index": 120,
                     "location_category": "minor",
                     "connections": {
-                        "Door to Upper Path Storage": {
+                        "Door to Phase Drift Trial Reward Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2776,7 +2767,7 @@
                         }
                     }
                 },
-                "Door to Upper Path Right": {
+                "Door to Phase Drift Trial East": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2796,8 +2787,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 5 - Tower Interior",
-                        "area": "Upper Path Right",
-                        "node": "Door to Upper Path Left"
+                        "area": "Phase Drift Trial East",
+                        "node": "Door to Phase Drift Trial West"
                     },
                     "default_dock_weakness": "Super Missile Door",
                     "exclude_from_dock_rando": false,
@@ -2805,7 +2796,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Upper Path Storage": {
+                        "Door to Phase Drift Trial Reward Room": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -2835,7 +2826,7 @@
                         }
                     }
                 },
-                "Door to Upper Path Storage": {
+                "Door to Phase Drift Trial Reward Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2855,8 +2846,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 5 - Tower Interior",
-                        "area": "Upper Path Storage",
-                        "node": "Door to Upper Path Left"
+                        "area": "Phase Drift Trial Reward Room",
+                        "node": "Door to Phase Drift Trial West"
                     },
                     "default_dock_weakness": "Power Bomb Door",
                     "exclude_from_dock_rando": false,
@@ -2871,7 +2862,7 @@
                                 "items": []
                             }
                         },
-                        "Door to Upper Path Right": {
+                        "Door to Phase Drift Trial East": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -2921,7 +2912,7 @@
                     "pickup_index": 128,
                     "location_category": "minor",
                     "connections": {
-                        "Dock to Transport to Area 5 Tower Exterior (West)": {
+                        "Dock to Transport to Tower Exterior West": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2930,7 +2921,7 @@
                         }
                     }
                 },
-                "Dock to Transport to Area 5 Tower Exterior (West)": {
+                "Dock to Transport to Tower Exterior West": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2947,8 +2938,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Area 5 - Tower Interior",
-                        "area": "Transport to Area 5 Tower Exterior (West)",
-                        "node": "Dock to Upper Path Left"
+                        "area": "Transport to Tower Exterior West",
+                        "node": "Dock to Phase Drift Trial West"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -3069,7 +3060,7 @@
                 }
             }
         },
-        "Upper Path Right": {
+        "Phase Drift Trial East": {
             "default_node": null,
             "extra": {
                 "total_boundings": {
@@ -3099,7 +3090,7 @@
                 "asset_id": "collision_camera_012"
             },
             "nodes": {
-                "Door to Side Path": {
+                "Door to Phase Drift Trial Entrance": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3119,8 +3110,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 5 - Tower Interior",
-                        "area": "Side Path",
-                        "node": "Door to Upper Path Right"
+                        "area": "Phase Drift Trial Entrance",
+                        "node": "Door to Phase Drift Trial East"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -3128,7 +3119,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Upper Path Left": {
+                        "Door to Phase Drift Trial West": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -3149,7 +3140,7 @@
                                 ]
                             }
                         },
-                        "Dock to Transport to Area 5 Tower Exterior (West)": {
+                        "Dock to Transport to Tower Exterior West": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3158,7 +3149,7 @@
                         }
                     }
                 },
-                "Door to Upper Path Left": {
+                "Door to Phase Drift Trial West": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3178,8 +3169,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 5 - Tower Interior",
-                        "area": "Upper Path Left",
-                        "node": "Door to Upper Path Right"
+                        "area": "Phase Drift Trial West",
+                        "node": "Door to Phase Drift Trial East"
                     },
                     "default_dock_weakness": "Super Missile Door",
                     "exclude_from_dock_rando": false,
@@ -3187,7 +3178,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Side Path": {
+                        "Door to Phase Drift Trial Entrance": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -3208,7 +3199,7 @@
                                 ]
                             }
                         },
-                        "Dock to Transport to Area 5 Tower Exterior (West)": {
+                        "Dock to Transport to Tower Exterior West": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3217,7 +3208,7 @@
                         }
                     }
                 },
-                "Dock to Transport to Area 5 Tower Exterior (West)": {
+                "Dock to Transport to Tower Exterior West": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3234,8 +3225,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Area 5 - Tower Interior",
-                        "area": "Transport to Area 5 Tower Exterior (West)",
-                        "node": "Dock to Upper Path Right"
+                        "area": "Transport to Tower Exterior West",
+                        "node": "Dock to Phase Drift Trial East"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -3246,7 +3237,7 @@
                 }
             }
         },
-        "Transport to Area 5 Tower Lobby (West)": {
+        "Transport to Tower Lobby West": {
             "default_node": "Elevator to Area 5 - Tower Lobby",
             "extra": {
                 "total_boundings": {
@@ -3297,7 +3288,7 @@
                     "dock_type": "elevator",
                     "default_connection": {
                         "region": "Area 5 - Tower Lobby",
-                        "area": "Transport to Area 5 Tower Interior (West)",
+                        "area": "Transport to Tower Interior West",
                         "node": "Elevator to Area 5 - Tower Interior"
                     },
                     "default_dock_weakness": "Elevator",
@@ -3306,7 +3297,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Transport Connector": {
+                        "Door to Interior Save Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3315,7 +3306,7 @@
                         }
                     }
                 },
-                "Door to Transport Connector": {
+                "Door to Interior Save Station": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3335,8 +3326,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 5 - Tower Interior",
-                        "area": "Transport Connector",
-                        "node": "Door to Transport to Area 5 Tower Lobby (West)"
+                        "area": "Interior Save Station",
+                        "node": "Door to Transport to Tower Lobby West"
                     },
                     "default_dock_weakness": "Plasma Beam Door",
                     "exclude_from_dock_rando": false,
@@ -3355,7 +3346,7 @@
                 }
             }
         },
-        "Water Drop": {
+        "Meboid Marina": {
             "default_node": null,
             "extra": {
                 "total_boundings": {
@@ -3406,7 +3397,7 @@
                     "default_connection": {
                         "region": "Area 5 - Tower Interior",
                         "area": "Zeta+ Arena Access",
-                        "node": "Door to Water Drop"
+                        "node": "Door to Meboid Marina"
                     },
                     "default_dock_weakness": "Plasma Beam Door",
                     "exclude_from_dock_rando": false,
@@ -3414,7 +3405,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Transport to Area 5 Tower Exterior (East)": {
+                        "Door to Transport to Tower Exterior East": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -3521,7 +3512,7 @@
                         }
                     }
                 },
-                "Door to Transport to Area 5 Tower Exterior (East)": {
+                "Door to Transport to Tower Exterior East": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3541,8 +3532,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 5 - Tower Interior",
-                        "area": "Transport to Area 5 Tower Exterior (East)",
-                        "node": "Door to Water Drop"
+                        "area": "Transport to Tower Exterior East",
+                        "node": "Door to Meboid Marina"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -3763,7 +3754,7 @@
                         }
                     }
                 },
-                "Door to Water Drop": {
+                "Door to Meboid Marina": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3783,7 +3774,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 5 - Tower Interior",
-                        "area": "Water Drop",
+                        "area": "Meboid Marina",
                         "node": "Door to Zeta+ Arena Access"
                     },
                     "default_dock_weakness": "Plasma Beam Door",
@@ -4307,7 +4298,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Water Drop": {
+                        "Door to Meboid Marina": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4524,14 +4515,14 @@
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "tricks",
-                                                                    "name": "Spiderspark",
+                                                                    "name": "Spider Boost",
                                                                     "amount": 1,
                                                                     "negate": false
                                                                 }
                                                             },
                                                             {
                                                                 "type": "template",
-                                                                "data": "Can Spiderspark"
+                                                                "data": "Can Spider Boost"
                                                             }
                                                         ]
                                                     }
@@ -4707,7 +4698,7 @@
                 }
             }
         },
-        "Transport to Area 5 Tower Exterior (West)": {
+        "Transport to Tower Exterior West": {
             "default_node": "Elevator to Area 5 - Tower Exterior",
             "extra": {
                 "total_boundings": {
@@ -4766,7 +4757,7 @@
                     "dock_type": "elevator",
                     "default_connection": {
                         "region": "Area 5 - Tower Exterior",
-                        "area": "Transport to Area 5 Tower Interior",
+                        "area": "Transport to Tower Interior West",
                         "node": "Elevator to Area 5 - Tower Interior"
                     },
                     "default_dock_weakness": "Elevator",
@@ -4775,7 +4766,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Underwater Path": {
+                        "Door to Gravity Suit Chamber Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4784,7 +4775,7 @@
                         }
                     }
                 },
-                "Door to Underwater Path": {
+                "Door to Gravity Suit Chamber Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4804,8 +4795,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 5 - Tower Interior",
-                        "area": "Underwater Path",
-                        "node": "Door to Transport to Area 5 Tower Exterior (West)"
+                        "area": "Gravity Suit Chamber Access",
+                        "node": "Door to Transport to Tower Exterior West"
                     },
                     "default_dock_weakness": "Spazer Beam Door",
                     "exclude_from_dock_rando": false,
@@ -4820,11 +4811,11 @@
                                 "items": []
                             }
                         },
-                        "Tunnel to Autrack Tower": {
+                        "Tunnel to Autrack Acropolis": {
                             "type": "template",
                             "data": "Lay Any Bomb"
                         },
-                        "Tunnel to Side Path": {
+                        "Tunnel to Phase Drift Trial Entrance": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4864,7 +4855,7 @@
                         }
                     }
                 },
-                "Tunnel to Autrack Tower": {
+                "Tunnel to Autrack Acropolis": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4881,8 +4872,8 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Area 5 - Tower Interior",
-                        "area": "Autrack Tower",
-                        "node": "Tunnel to Transport to Area 5 Tower Exterior (West)"
+                        "area": "Autrack Acropolis",
+                        "node": "Tunnel to Transport to Tower Exterior West"
                     },
                     "default_dock_weakness": "Tunnel",
                     "exclude_from_dock_rando": false,
@@ -4890,13 +4881,13 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Underwater Path": {
+                        "Door to Gravity Suit Chamber Access": {
                             "type": "template",
                             "data": "Lay Any Bomb"
                         }
                     }
                 },
-                "Tunnel to Side Path": {
+                "Tunnel to Phase Drift Trial Entrance": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4913,8 +4904,8 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Area 5 - Tower Interior",
-                        "area": "Side Path",
-                        "node": "Tunnel to Transport to Area 5 Tower Exterior (West)"
+                        "area": "Phase Drift Trial Entrance",
+                        "node": "Tunnel to Transport to Tower Exterior West"
                     },
                     "default_dock_weakness": "Tunnel",
                     "exclude_from_dock_rando": false,
@@ -4922,7 +4913,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Underwater Path": {
+                        "Door to Gravity Suit Chamber Access": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -4933,7 +4924,7 @@
                         }
                     }
                 },
-                "Dock to Upper Path Left": {
+                "Dock to Phase Drift Trial West": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4950,8 +4941,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Area 5 - Tower Interior",
-                        "area": "Upper Path Left",
-                        "node": "Dock to Transport to Area 5 Tower Exterior (West)"
+                        "area": "Phase Drift Trial West",
+                        "node": "Dock to Transport to Tower Exterior West"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -4959,7 +4950,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Underwater Path": {
+                        "Door to Gravity Suit Chamber Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4968,7 +4959,7 @@
                         }
                     }
                 },
-                "Dock to Upper Path Right": {
+                "Dock to Phase Drift Trial East": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4985,8 +4976,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Area 5 - Tower Interior",
-                        "area": "Upper Path Right",
-                        "node": "Dock to Transport to Area 5 Tower Exterior (West)"
+                        "area": "Phase Drift Trial East",
+                        "node": "Dock to Transport to Tower Exterior West"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -4994,7 +4985,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Underwater Path": {
+                        "Door to Gravity Suit Chamber Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5005,7 +4996,7 @@
                 }
             }
         },
-        "Underwater Path": {
+        "Gravity Suit Chamber Access": {
             "default_node": null,
             "extra": {
                 "total_boundings": {
@@ -5035,7 +5026,7 @@
                 "asset_id": "collision_camera_020"
             },
             "nodes": {
-                "Door to Gravity Suit Room (Bottom)": {
+                "Door to Gravity Suit Chamber (Bottom)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5055,8 +5046,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 5 - Tower Interior",
-                        "area": "Gravity Suit Room",
-                        "node": "Door to Underwater Path (Bottom)"
+                        "area": "Gravity Suit Chamber",
+                        "node": "Door to Gravity Suit Chamber Access (Bottom)"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -5064,7 +5055,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Transport to Area 5 Tower Exterior (West)": {
+                        "Door to Transport to Tower Exterior West": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -5092,7 +5083,7 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Can Spiderspark"
+                                        "data": "Can Spider Boost"
                                     },
                                     {
                                         "type": "resource",
@@ -5107,7 +5098,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "tricks",
-                                            "name": "Spiderspark",
+                                            "name": "Spider Boost",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -5222,7 +5213,7 @@
                         }
                     }
                 },
-                "Door to Gravity Suit Room (Middle)": {
+                "Door to Gravity Suit Chamber (Middle)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5242,8 +5233,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 5 - Tower Interior",
-                        "area": "Gravity Suit Room",
-                        "node": "Door to Underwater Path (Middle)"
+                        "area": "Gravity Suit Chamber",
+                        "node": "Door to Gravity Suit Chamber Access (Middle)"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -5251,7 +5242,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Gravity Suit Room (Top)": {
+                        "Door to Gravity Suit Chamber (Top)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5260,7 +5251,7 @@
                         }
                     }
                 },
-                "Door to Gravity Suit Room (Top)": {
+                "Door to Gravity Suit Chamber (Top)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5280,8 +5271,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 5 - Tower Interior",
-                        "area": "Gravity Suit Room",
-                        "node": "Door to Underwater Path (Top)"
+                        "area": "Gravity Suit Chamber",
+                        "node": "Door to Gravity Suit Chamber Access (Top)"
                     },
                     "default_dock_weakness": "Missile Door",
                     "exclude_from_dock_rando": false,
@@ -5289,7 +5280,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Gravity Suit Room (Middle)": {
+                        "Door to Gravity Suit Chamber (Middle)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5298,7 +5289,7 @@
                         }
                     }
                 },
-                "Door to Transport to Area 5 Tower Exterior (West)": {
+                "Door to Transport to Tower Exterior West": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5318,8 +5309,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 5 - Tower Interior",
-                        "area": "Transport to Area 5 Tower Exterior (West)",
-                        "node": "Door to Underwater Path"
+                        "area": "Transport to Tower Exterior West",
+                        "node": "Door to Gravity Suit Chamber Access"
                     },
                     "default_dock_weakness": "Spazer Beam Door",
                     "exclude_from_dock_rando": false,
@@ -5327,7 +5318,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Gravity Suit Room (Bottom)": {
+                        "Door to Gravity Suit Chamber (Bottom)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5356,7 +5347,7 @@
                     "pickup_index": 126,
                     "location_category": "minor",
                     "connections": {
-                        "Door to Gravity Suit Room (Bottom)": {
+                        "Door to Gravity Suit Chamber (Bottom)": {
                             "type": "template",
                             "data": "Lay Any Bomb"
                         }
@@ -5445,7 +5436,7 @@
                 }
             }
         },
-        "Side Path": {
+        "Phase Drift Trial Entrance": {
             "default_node": null,
             "extra": {
                 "total_boundings": {
@@ -5475,7 +5466,7 @@
                 "asset_id": "collision_camera_021"
             },
             "nodes": {
-                "Door to Upper Path Right": {
+                "Door to Phase Drift Trial East": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5495,8 +5486,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 5 - Tower Interior",
-                        "area": "Upper Path Right",
-                        "node": "Door to Side Path"
+                        "area": "Phase Drift Trial East",
+                        "node": "Door to Phase Drift Trial Entrance"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -5504,7 +5495,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Tunnel to Transport to Area 5 Tower Exterior (West)": {
+                        "Tunnel to Transport to Tower Exterior West": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -5515,7 +5506,7 @@
                         }
                     }
                 },
-                "Tunnel to Transport to Area 5 Tower Exterior (West)": {
+                "Tunnel to Transport to Tower Exterior West": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5532,8 +5523,8 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Area 5 - Tower Interior",
-                        "area": "Transport to Area 5 Tower Exterior (West)",
-                        "node": "Tunnel to Side Path"
+                        "area": "Transport to Tower Exterior West",
+                        "node": "Tunnel to Phase Drift Trial Entrance"
                     },
                     "default_dock_weakness": "Tunnel",
                     "exclude_from_dock_rando": false,
@@ -5541,7 +5532,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Upper Path Right": {
+                        "Door to Phase Drift Trial East": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5734,13 +5725,13 @@
                                                         "items": [
                                                             {
                                                                 "type": "template",
-                                                                "data": "Can Spiderspark"
+                                                                "data": "Can Spider Boost"
                                                             },
                                                             {
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "tricks",
-                                                                    "name": "Spiderspark",
+                                                                    "name": "Spider Boost",
                                                                     "amount": 2,
                                                                     "negate": false
                                                                 }
@@ -5749,8 +5740,25 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "template",
-                                                    "data": "Simple IBJ"
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Lay Bomb"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "IBJ",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
                                                 }
                                             ]
                                         }
@@ -5787,12 +5795,59 @@
                             }
                         },
                         "Inside Arena": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "items",
-                                "name": "Varia",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Varia",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Climb Rooms Vertically (High Jump)"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Walljump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "SWJ",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "SuperJump",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -5828,7 +5883,7 @@
                 }
             }
         },
-        "Teleporter Room": {
+        "Interior Teleporter": {
             "default_node": "Teleporter",
             "extra": {
                 "total_boundings": {
@@ -5932,7 +5987,7 @@
                         }
                     }
                 },
-                "Door to Autrack Tower": {
+                "Door to Autrack Acropolis": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5952,8 +6007,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 5 - Tower Interior",
-                        "area": "Autrack Tower",
-                        "node": "Door to Teleporter Room"
+                        "area": "Autrack Acropolis",
+                        "node": "Door to Interior Teleporter"
                     },
                     "default_dock_weakness": "Access Locked",
                     "exclude_from_dock_rando": false,
@@ -5991,7 +6046,7 @@
                     "default_connection": {
                         "region": "Area 5 - Tower Interior",
                         "area": "Grapple Shuffler",
-                        "node": "Door to Teleporter Room (Bottom)"
+                        "node": "Door to Interior Teleporter (Bottom)"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -6025,7 +6080,7 @@
                                 ]
                             }
                         },
-                        "Door to Autrack Tower": {
+                        "Door to Autrack Acropolis": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6111,7 +6166,7 @@
                     "default_connection": {
                         "region": "Area 5 - Tower Interior",
                         "area": "Grapple Shuffler",
-                        "node": "Door to Teleporter Room (Top)"
+                        "node": "Door to Interior Teleporter (Top)"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -6316,13 +6371,13 @@
                                             "items": [
                                                 {
                                                     "type": "template",
-                                                    "data": "Can Spiderspark"
+                                                    "data": "Can Spider Boost"
                                                 },
                                                 {
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "tricks",
-                                                        "name": "Spiderspark",
+                                                        "name": "Spider Boost",
                                                         "amount": 2,
                                                         "negate": false
                                                     }
@@ -6459,7 +6514,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Tunnel to Transport Connector": {
+                        "Tunnel to Interior Save Station": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -6471,14 +6526,14 @@
                                             "items": [
                                                 {
                                                     "type": "template",
-                                                    "data": "Can Spiderspark"
+                                                    "data": "Can Spider Boost"
                                                 },
                                                 {
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "tricks",
-                                                        "name": "Spiderspark",
-                                                        "amount": 1,
+                                                        "name": "Spider Boost",
+                                                        "amount": 2,
                                                         "negate": false
                                                     }
                                                 }
@@ -6533,7 +6588,7 @@
                         }
                     }
                 },
-                "Tunnel to Transport Connector": {
+                "Tunnel to Interior Save Station": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6550,7 +6605,7 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Area 5 - Tower Interior",
-                        "area": "Transport Connector",
+                        "area": "Interior Save Station",
                         "node": "Tunnel to Gamma+ Arena Access"
                     },
                     "default_dock_weakness": "Tunnel",
@@ -6571,13 +6626,13 @@
                                             "items": [
                                                 {
                                                     "type": "template",
-                                                    "data": "Can Spiderspark"
+                                                    "data": "Can Spider Boost"
                                                 },
                                                 {
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "tricks",
-                                                        "name": "Spiderspark",
+                                                        "name": "Spider Boost",
                                                         "amount": 2,
                                                         "negate": false
                                                     }

@@ -9,7 +9,7 @@
         "scenario_id": "s100_area10"
     },
     "areas": {
-        "Larva Access": {
+        "Metroid Nest Foyer": {
             "default_node": "Start Point",
             "extra": {
                 "total_boundings": {
@@ -36,10 +36,10 @@
                         11200.0
                     ]
                 ],
-                "asset_id": "collision_camera_007"
+                "asset_id": "collision_camera_008"
             },
             "nodes": {
-                "Door to Larva Hallway 1": {
+                "Door to Metroid Nest Hallway South": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -59,8 +59,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 8",
-                        "area": "Larva Hallway 1",
-                        "node": "Door to Larva Access"
+                        "area": "Metroid Nest Hallway South",
+                        "node": "Door to Metroid Nest Foyer"
                     },
                     "default_dock_weakness": "Access Locked",
                     "exclude_from_dock_rando": false,
@@ -68,7 +68,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Tunnel to Teleporter Shaft North": {
+                        "Tunnel to Metroid Nest Teleporter": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -152,7 +152,7 @@
                         }
                     }
                 },
-                "Tunnel to Teleporter Shaft North": {
+                "Tunnel to Metroid Nest Teleporter": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -169,8 +169,8 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Area 8",
-                        "area": "Teleporter Shaft North",
-                        "node": "Tunnel to Larva Access"
+                        "area": "Metroid Nest Teleporter",
+                        "node": "Tunnel to Metroid Nest Foyer"
                     },
                     "default_dock_weakness": "Tunnel",
                     "exclude_from_dock_rando": false,
@@ -178,7 +178,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Larva Hallway 1": {
+                        "Door to Metroid Nest Hallway South": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -189,7 +189,7 @@
                         }
                     }
                 },
-                "Tunnel to Larva Hallway 1": {
+                "Tunnel to Metroid Nest Hallway South": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -206,8 +206,8 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Area 8",
-                        "area": "Larva Hallway 1",
-                        "node": "Tunnel to Larva Access"
+                        "area": "Metroid Nest Hallway South",
+                        "node": "Tunnel to Metroid Nest Foyer"
                     },
                     "default_dock_weakness": "Tunnel",
                     "exclude_from_dock_rando": false,
@@ -233,7 +233,7 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Larva Hallway 1": {
+                        "Door to Metroid Nest Hallway South": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -242,7 +242,7 @@
                                 "negate": false
                             }
                         },
-                        "Tunnel to Larva Hallway 1": {
+                        "Tunnel to Metroid Nest Hallway South": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -255,7 +255,7 @@
                 }
             }
         },
-        "Transport to Surface West": {
+        "Transport to Surface": {
             "default_node": "Elevator to Surface - West",
             "extra": {
                 "total_boundings": {
@@ -302,7 +302,7 @@
                         27400.0
                     ]
                 ],
-                "asset_id": "collision_camera_008_A"
+                "asset_id": "collision_camera_007"
             },
             "nodes": {
                 "Pickup (Missile Tank)": {
@@ -412,13 +412,13 @@
                                             "items": [
                                                 {
                                                     "type": "template",
-                                                    "data": "Can Spiderspark"
+                                                    "data": "Can Spider Boost"
                                                 },
                                                 {
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "tricks",
-                                                        "name": "Spiderspark",
+                                                        "name": "Spider Boost",
                                                         "amount": 1,
                                                         "negate": false
                                                     }
@@ -535,7 +535,7 @@
                     },
                     "valid_starting_location": true,
                     "connections": {
-                        "Dock to Queen Arena": {
+                        "Dock to Hatchling Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -721,13 +721,13 @@
                                                                                 "items": [
                                                                                     {
                                                                                         "type": "template",
-                                                                                        "data": "Can Spiderspark"
+                                                                                        "data": "Can Spider Boost"
                                                                                     },
                                                                                     {
                                                                                         "type": "resource",
                                                                                         "data": {
                                                                                             "type": "tricks",
-                                                                                            "name": "Spiderspark",
+                                                                                            "name": "Spider Boost",
                                                                                             "amount": 2,
                                                                                             "negate": false
                                                                                         }
@@ -770,7 +770,7 @@
                         }
                     }
                 },
-                "Dock to Queen Arena": {
+                "Dock to Hatchling Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -787,8 +787,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Area 8",
-                        "area": "Queen Arena",
-                        "node": "Dock to Transport to Surface West"
+                        "area": "Hatchling Room",
+                        "node": "Dock to Transport to Surface"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -1029,7 +1029,7 @@
                 }
             }
         },
-        "Larva Hallway 1": {
+        "Metroid Nest Hallway South": {
             "default_node": "Room Center",
             "extra": {
                 "total_boundings": {
@@ -1056,10 +1056,10 @@
                         10500.0
                     ]
                 ],
-                "asset_id": "collision_camera_008_B"
+                "asset_id": "collision_camera_008"
             },
             "nodes": {
-                "Door to Larva Access": {
+                "Door to Metroid Nest Foyer": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1079,8 +1079,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 8",
-                        "area": "Larva Access",
-                        "node": "Door to Larva Hallway 1"
+                        "area": "Metroid Nest Foyer",
+                        "node": "Door to Metroid Nest Hallway South"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -1097,7 +1097,7 @@
                         }
                     }
                 },
-                "Door to Larva Shaft 1": {
+                "Door to Metroid Nest Small Shaft": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1117,8 +1117,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 8",
-                        "area": "Larva Shaft 1",
-                        "node": "Door to Larva Hallway 1"
+                        "area": "Metroid Nest Small Shaft",
+                        "node": "Door to Metroid Nest Hallway South"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -1135,7 +1135,7 @@
                         }
                     }
                 },
-                "Tunnel to Larva Access": {
+                "Tunnel to Metroid Nest Foyer": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1152,8 +1152,8 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Area 8",
-                        "area": "Larva Access",
-                        "node": "Tunnel to Larva Hallway 1"
+                        "area": "Metroid Nest Foyer",
+                        "node": "Tunnel to Metroid Nest Hallway South"
                     },
                     "default_dock_weakness": "Tunnel",
                     "exclude_from_dock_rando": false,
@@ -1189,7 +1189,7 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Larva Access": {
+                        "Door to Metroid Nest Foyer": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
@@ -1198,7 +1198,7 @@
                                 "negate": false
                             }
                         },
-                        "Door to Larva Shaft 1": {
+                        "Door to Metroid Nest Small Shaft": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
@@ -1240,7 +1240,7 @@
                 }
             }
         },
-        "Central Chamber": {
+        "Amphitheater": {
             "default_node": "Save Station",
             "extra": {
                 "total_boundings": {
@@ -1557,13 +1557,13 @@
                                             "items": [
                                                 {
                                                     "type": "template",
-                                                    "data": "Can Spiderspark"
+                                                    "data": "Can Spider Boost"
                                                 },
                                                 {
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "tricks",
-                                                        "name": "Spiderspark",
+                                                        "name": "Spider Boost",
                                                         "amount": 2,
                                                         "negate": false
                                                     }
@@ -1700,13 +1700,13 @@
                                                         "items": [
                                                             {
                                                                 "type": "template",
-                                                                "data": "Can Spiderspark"
+                                                                "data": "Can Spider Boost"
                                                             },
                                                             {
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "tricks",
-                                                                    "name": "Spiderspark",
+                                                                    "name": "Spider Boost",
                                                                     "amount": 2,
                                                                     "negate": false
                                                                 }
@@ -1768,7 +1768,7 @@
                     },
                     "valid_starting_location": true,
                     "connections": {
-                        "Door to Central Chamber Access": {
+                        "Door to Nest Network": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1879,7 +1879,7 @@
                         }
                     }
                 },
-                "Door to Central Chamber Access": {
+                "Door to Nest Network": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1899,8 +1899,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 8",
-                        "area": "Central Chamber Access",
-                        "node": "Door to Central Chamber"
+                        "area": "Nest Network",
+                        "node": "Door to Amphitheater"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -1917,7 +1917,7 @@
                         }
                     }
                 },
-                "Door to Teleporter Shaft North": {
+                "Door to Metroid Nest Teleporter": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1937,8 +1937,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 8",
-                        "area": "Teleporter Shaft North",
-                        "node": "Door to Central Chamber"
+                        "area": "Metroid Nest Teleporter",
+                        "node": "Door to Amphitheater"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -2046,7 +2046,7 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "event_name": "Area 8 - Central Chamber Grapple Block Top",
+                    "event_name": "Area 8 - Amphitheater Grapple Block Top",
                     "connections": {
                         "Above Top Pickup": {
                             "type": "and",
@@ -2071,7 +2071,7 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "event_name": "Area 8 - Central Chamber Grapple Block Bottom",
+                    "event_name": "Area 8 - Amphitheater Grapple Block Bottom",
                     "connections": {
                         "Next to Bottom Grapple Block": {
                             "type": "and",
@@ -2152,7 +2152,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "events",
-                                            "name": "Area 8 - Central Chamber Grapple Block Bottom",
+                                            "name": "Area 8 - Amphitheater Grapple Block Bottom",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -2607,7 +2607,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "events",
-                                            "name": "Area 8 - Central Chamber Grapple Block Bottom",
+                                            "name": "Area 8 - Amphitheater Grapple Block Bottom",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -2688,7 +2688,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "events",
-                                            "name": "Area 8 - Central Chamber Grapple Block Top",
+                                            "name": "Area 8 - Amphitheater Grapple Block Top",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -2696,7 +2696,7 @@
                                 ]
                             }
                         },
-                        "Door to Teleporter Shaft North": {
+                        "Door to Metroid Nest Teleporter": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2854,13 +2854,13 @@
                                                         "items": [
                                                             {
                                                                 "type": "template",
-                                                                "data": "Can Spiderspark"
+                                                                "data": "Can Spider Boost"
                                                             },
                                                             {
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "tricks",
-                                                                    "name": "Spiderspark",
+                                                                    "name": "Spider Boost",
                                                                     "amount": 2,
                                                                     "negate": false
                                                                 }
@@ -3067,13 +3067,13 @@
                                                         "items": [
                                                             {
                                                                 "type": "template",
-                                                                "data": "Can Spiderspark"
+                                                                "data": "Can Spider Boost"
                                                             },
                                                             {
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "tricks",
-                                                                    "name": "Spiderspark",
+                                                                    "name": "Spider Boost",
                                                                     "amount": 3,
                                                                     "negate": false
                                                                 }
@@ -3273,13 +3273,13 @@
                                                         "items": [
                                                             {
                                                                 "type": "template",
-                                                                "data": "Can Spiderspark"
+                                                                "data": "Can Spider Boost"
                                                             },
                                                             {
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "tricks",
-                                                                    "name": "Spiderspark",
+                                                                    "name": "Spider Boost",
                                                                     "amount": 3,
                                                                     "negate": false
                                                                 }
@@ -3467,7 +3467,7 @@
                 }
             }
         },
-        "Central Chamber Access": {
+        "Nest Network": {
             "default_node": null,
             "extra": {
                 "total_boundings": {
@@ -3529,7 +3529,7 @@
                     "pickup_index": 160,
                     "location_category": "minor",
                     "connections": {
-                        "Door to Shaft East (Bottom)": {
+                        "Door to Nest Nodule (Bottom)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3557,13 +3557,13 @@
                                             "items": [
                                                 {
                                                     "type": "template",
-                                                    "data": "Can Spiderspark"
+                                                    "data": "Can Spider Boost"
                                                 },
                                                 {
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "tricks",
-                                                        "name": "Spiderspark",
+                                                        "name": "Spider Boost",
                                                         "amount": 1,
                                                         "negate": false
                                                     }
@@ -3596,7 +3596,7 @@
                     "pickup_index": 163,
                     "location_category": "minor",
                     "connections": {
-                        "Door to Central Chamber": {
+                        "Door to Amphitheater": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -3607,7 +3607,7 @@
                         }
                     }
                 },
-                "Door to Teleporter Shaft South": {
+                "Door to Entrance Teleporter": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3627,8 +3627,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 8",
-                        "area": "Teleporter Shaft South",
-                        "node": "Door to Central Chamber Access"
+                        "area": "Entrance Teleporter",
+                        "node": "Door to Nest Network"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -3636,7 +3636,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Shaft East (Bottom)": {
+                        "Door to Nest Nodule (Bottom)": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -3677,7 +3677,7 @@
                         }
                     }
                 },
-                "Door to Shaft East (Bottom)": {
+                "Door to Nest Nodule (Bottom)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3697,8 +3697,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 8",
-                        "area": "Shaft East",
-                        "node": "Door to Central Chamber Access (Bottom)"
+                        "area": "Nest Nodule",
+                        "node": "Door to Nest Network (Bottom)"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -3706,7 +3706,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Teleporter Shaft South": {
+                        "Door to Entrance Teleporter": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -3747,7 +3747,7 @@
                         }
                     }
                 },
-                "Door to Shaft East (Top)": {
+                "Door to Nest Nodule (Top)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3767,8 +3767,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 8",
-                        "area": "Shaft East",
-                        "node": "Door to Central Chamber Access (Top)"
+                        "area": "Nest Nodule",
+                        "node": "Door to Nest Network (Top)"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -3776,14 +3776,14 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Shaft East (Bottom)": {
+                        "Door to Nest Nodule (Bottom)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Dock to Shaft East": {
+                        "Dock to Nest Nodule": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -3867,7 +3867,7 @@
                         }
                     }
                 },
-                "Door to Central Chamber": {
+                "Door to Amphitheater": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3887,8 +3887,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 8",
-                        "area": "Central Chamber",
-                        "node": "Door to Central Chamber Access"
+                        "area": "Amphitheater",
+                        "node": "Door to Nest Network"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -3962,7 +3962,7 @@
                         }
                     }
                 },
-                "Dock to Shaft East": {
+                "Dock to Nest Nodule": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3979,8 +3979,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Area 8",
-                        "area": "Shaft East",
-                        "node": "Dock to Central Chamber Access"
+                        "area": "Nest Nodule",
+                        "node": "Dock to Nest Network"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -3988,7 +3988,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Shaft East (Bottom)": {
+                        "Door to Nest Nodule (Bottom)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3997,7 +3997,7 @@
                         }
                     }
                 },
-                "Tunnel to Teleporter Shaft South": {
+                "Tunnel to Entrance Teleporter": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4014,8 +4014,8 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Area 8",
-                        "area": "Teleporter Shaft South",
-                        "node": "Tunnel to Central Chamber Access"
+                        "area": "Entrance Teleporter",
+                        "node": "Tunnel to Nest Network"
                     },
                     "default_dock_weakness": "Tunnel",
                     "exclude_from_dock_rando": false,
@@ -4048,7 +4048,7 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "event_name": "Area 8 - Central Chamber Access Grapple Block",
+                    "event_name": "Area 8 - Nest Network Grapple Block",
                     "connections": {
                         "Above Grapple Block": {
                             "type": "and",
@@ -4095,13 +4095,13 @@
                                             "items": [
                                                 {
                                                     "type": "template",
-                                                    "data": "Can Spiderspark"
+                                                    "data": "Can Spider Boost"
                                                 },
                                                 {
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "tricks",
-                                                        "name": "Spiderspark",
+                                                        "name": "Spider Boost",
                                                         "amount": 1,
                                                         "negate": false
                                                     }
@@ -4112,7 +4112,7 @@
                                 ]
                             }
                         },
-                        "Door to Teleporter Shaft South": {
+                        "Door to Entrance Teleporter": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -4121,7 +4121,7 @@
                                 "negate": false
                             }
                         },
-                        "Tunnel to Teleporter Shaft South": {
+                        "Tunnel to Entrance Teleporter": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4139,7 +4139,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "events",
-                                            "name": "Area 8 - Central Chamber Access Grapple Block",
+                                            "name": "Area 8 - Nest Network Grapple Block",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -4228,7 +4228,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Shaft East (Top)": {
+                        "Door to Nest Nodule (Top)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4301,7 +4301,7 @@
                                 ]
                             }
                         },
-                        "Door to Central Chamber": {
+                        "Door to Amphitheater": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -4486,7 +4486,7 @@
                 }
             }
         },
-        "Teleporter Shaft South": {
+        "Entrance Teleporter": {
             "default_node": "Teleporter",
             "extra": {
                 "total_boundings": {
@@ -4536,7 +4536,7 @@
                     "pickup_index": 161,
                     "location_category": "minor",
                     "connections": {
-                        "Door to Entrance Hallway": {
+                        "Door to Nest Vestibule": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4664,7 +4664,7 @@
                         }
                     },
                     "connections": {
-                        "Door to Entrance Hallway": {
+                        "Door to Nest Vestibule": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4673,7 +4673,7 @@
                         }
                     }
                 },
-                "Door to Entrance Hallway": {
+                "Door to Nest Vestibule": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4693,8 +4693,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 8",
-                        "area": "Entrance Hallway",
-                        "node": "Door to Teleporter Shaft South"
+                        "area": "Nest Vestibule",
+                        "node": "Door to Entrance Teleporter"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -4787,7 +4787,7 @@
                                 "items": []
                             }
                         },
-                        "Door to Central Chamber Access": {
+                        "Door to Nest Network": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4904,7 +4904,7 @@
                         }
                     }
                 },
-                "Door to Central Chamber Access": {
+                "Door to Nest Network": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4924,8 +4924,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 8",
-                        "area": "Central Chamber Access",
-                        "node": "Door to Teleporter Shaft South"
+                        "area": "Nest Network",
+                        "node": "Door to Entrance Teleporter"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -4933,7 +4933,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Entrance Hallway": {
+                        "Door to Nest Vestibule": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -4942,7 +4942,7 @@
                                 "negate": false
                             }
                         },
-                        "Tunnel to Central Chamber Access": {
+                        "Tunnel to Nest Network": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4960,7 +4960,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "events",
-                                            "name": "Area 8 - Central Chamber Access Grapple Block",
+                                            "name": "Area 8 - Nest Network Grapple Block",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -5047,7 +5047,7 @@
                         }
                     }
                 },
-                "Tunnel to Central Chamber Access": {
+                "Tunnel to Nest Network": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5064,8 +5064,8 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Area 8",
-                        "area": "Central Chamber Access",
-                        "node": "Tunnel to Teleporter Shaft South"
+                        "area": "Nest Network",
+                        "node": "Tunnel to Entrance Teleporter"
                     },
                     "default_dock_weakness": "Tunnel",
                     "exclude_from_dock_rando": false,
@@ -5073,7 +5073,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Central Chamber Access": {
+                        "Door to Nest Network": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5164,7 +5164,7 @@
                     "valid_starting_location": false,
                     "event_name": "Area 8 Teleporter Lower",
                     "connections": {
-                        "Door to Entrance Hallway": {
+                        "Door to Nest Vestibule": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5175,7 +5175,7 @@
                 }
             }
         },
-        "Shaft East": {
+        "Nest Nodule": {
             "default_node": null,
             "extra": {
                 "total_boundings": {
@@ -5225,7 +5225,7 @@
                     "pickup_index": 155,
                     "location_category": "minor",
                     "connections": {
-                        "Door to Central Chamber Access (Top)": {
+                        "Door to Nest Network (Top)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5254,7 +5254,7 @@
                     "pickup_index": 162,
                     "location_category": "minor",
                     "connections": {
-                        "Dock to Central Chamber Access": {
+                        "Dock to Nest Network": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5263,7 +5263,7 @@
                         }
                     }
                 },
-                "Door to Central Chamber Access (Bottom)": {
+                "Door to Nest Network (Bottom)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5283,8 +5283,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 8",
-                        "area": "Central Chamber Access",
-                        "node": "Door to Shaft East (Bottom)"
+                        "area": "Nest Network",
+                        "node": "Door to Nest Nodule (Bottom)"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -5292,7 +5292,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Central Chamber Access (Top)": {
+                        "Door to Nest Network (Top)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5353,7 +5353,7 @@
                         }
                     }
                 },
-                "Door to Central Chamber Access (Top)": {
+                "Door to Nest Network (Top)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5373,8 +5373,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 8",
-                        "area": "Central Chamber Access",
-                        "node": "Door to Shaft East (Top)"
+                        "area": "Nest Network",
+                        "node": "Door to Nest Nodule (Top)"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -5510,7 +5510,7 @@
                                 ]
                             }
                         },
-                        "Door to Central Chamber Access (Bottom)": {
+                        "Door to Nest Network (Bottom)": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -5542,7 +5542,7 @@
                         }
                     }
                 },
-                "Dock to Central Chamber Access": {
+                "Dock to Nest Network": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5559,8 +5559,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Area 8",
-                        "area": "Central Chamber Access",
-                        "node": "Dock to Shaft East"
+                        "area": "Nest Network",
+                        "node": "Dock to Nest Nodule"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -5577,7 +5577,7 @@
                                 "negate": false
                             }
                         },
-                        "Door to Central Chamber Access (Bottom)": {
+                        "Door to Nest Network (Bottom)": {
                             "type": "template",
                             "data": "Lay Any Bomb"
                         }
@@ -5585,7 +5585,7 @@
                 }
             }
         },
-        "Larva Shaft 1": {
+        "Metroid Nest Small Shaft": {
             "default_node": "Room Center",
             "extra": {
                 "total_boundings": {
@@ -5615,7 +5615,7 @@
                 "asset_id": "collision_camera_013"
             },
             "nodes": {
-                "Door to Larva Hallway 1": {
+                "Door to Metroid Nest Hallway South": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5635,8 +5635,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 8",
-                        "area": "Larva Hallway 1",
-                        "node": "Door to Larva Shaft 1"
+                        "area": "Metroid Nest Hallway South",
+                        "node": "Door to Metroid Nest Small Shaft"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -5653,7 +5653,7 @@
                         }
                     }
                 },
-                "Door to Larva Shaft 2": {
+                "Door to Metroid Nest Shaft East": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5673,8 +5673,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 8",
-                        "area": "Larva Shaft 2",
-                        "node": "Door to Larva Shaft 1"
+                        "area": "Metroid Nest Shaft East",
+                        "node": "Door to Metroid Nest Small Shaft"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -5733,7 +5733,7 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Larva Hallway 1": {
+                        "Door to Metroid Nest Hallway South": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
@@ -5742,7 +5742,7 @@
                                 "negate": false
                             }
                         },
-                        "Door to Larva Shaft 2": {
+                        "Door to Metroid Nest Shaft East": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
@@ -5759,7 +5759,7 @@
                 }
             }
         },
-        "Larva Shaft 2": {
+        "Metroid Nest Shaft East": {
             "default_node": "Room Top",
             "extra": {
                 "total_boundings": {
@@ -5789,7 +5789,7 @@
                 "asset_id": "collision_camera_014"
             },
             "nodes": {
-                "Door to Larva Shaft 1": {
+                "Door to Metroid Nest Small Shaft": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5809,8 +5809,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 8",
-                        "area": "Larva Shaft 1",
-                        "node": "Door to Larva Shaft 2"
+                        "area": "Metroid Nest Small Shaft",
+                        "node": "Door to Metroid Nest Shaft East"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -5827,7 +5827,7 @@
                         }
                     }
                 },
-                "Door to Larva Hallway 2": {
+                "Door to Metroid Nest Hallway North East": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5847,8 +5847,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 8",
-                        "area": "Larva Hallway 2",
-                        "node": "Door to Larva Shaft 2"
+                        "area": "Metroid Nest Hallway North East",
+                        "node": "Door to Metroid Nest Shaft East"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -5882,7 +5882,7 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Larva Hallway 2": {
+                        "Door to Metroid Nest Hallway North East": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5988,7 +5988,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Larva Shaft 1": {
+                        "Door to Metroid Nest Small Shaft": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6031,7 +6031,7 @@
                 }
             }
         },
-        "Larva Hallway 2": {
+        "Metroid Nest Hallway North East": {
             "default_node": "Room Center",
             "extra": {
                 "total_boundings": {
@@ -6061,7 +6061,7 @@
                 "asset_id": "collision_camera_015"
             },
             "nodes": {
-                "Door to Larva Shaft 2": {
+                "Door to Metroid Nest Shaft East": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6081,8 +6081,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 8",
-                        "area": "Larva Shaft 2",
-                        "node": "Door to Larva Hallway 2"
+                        "area": "Metroid Nest Shaft East",
+                        "node": "Door to Metroid Nest Hallway North East"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -6099,7 +6099,7 @@
                         }
                     }
                 },
-                "Door to Larva Recharge Stations": {
+                "Door to Metroid Nest Recharge Stations": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6119,8 +6119,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 8",
-                        "area": "Larva Recharge Stations",
-                        "node": "Door to Larva Hallway 2"
+                        "area": "Metroid Nest Recharge Stations",
+                        "node": "Door to Metroid Nest Hallway North East"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -6154,7 +6154,7 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Larva Shaft 2": {
+                        "Door to Metroid Nest Shaft East": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6180,7 +6180,7 @@
                                 ]
                             }
                         },
-                        "Door to Larva Recharge Stations": {
+                        "Door to Metroid Nest Recharge Stations": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6268,7 +6268,7 @@
                 }
             }
         },
-        "Larva Hallway 3": {
+        "Metroid Nest Hallway North West": {
             "default_node": "Room Center",
             "extra": {
                 "total_boundings": {
@@ -6298,7 +6298,7 @@
                 "asset_id": "collision_camera_016"
             },
             "nodes": {
-                "Door to Larva Recharge Stations": {
+                "Door to Metroid Nest Recharge Stations": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6318,8 +6318,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 8",
-                        "area": "Larva Recharge Stations",
-                        "node": "Door to Larva Hallway 3"
+                        "area": "Metroid Nest Recharge Stations",
+                        "node": "Door to Metroid Nest Hallway North West"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -6336,7 +6336,7 @@
                         }
                     }
                 },
-                "Door to Larva Shaft 3": {
+                "Door to Metroid Nest Shaft West": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6356,8 +6356,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 8",
-                        "area": "Larva Shaft 3",
-                        "node": "Door to Larva Hallway 3"
+                        "area": "Metroid Nest Shaft West",
+                        "node": "Door to Metroid Nest Hallway North West"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -6416,7 +6416,7 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Larva Recharge Stations": {
+                        "Door to Metroid Nest Recharge Stations": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
@@ -6425,7 +6425,7 @@
                                 "negate": false
                             }
                         },
-                        "Door to Larva Shaft 3": {
+                        "Door to Metroid Nest Shaft West": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
@@ -6442,7 +6442,7 @@
                 }
             }
         },
-        "Larva Recharge Stations": {
+        "Metroid Nest Recharge Stations": {
             "default_node": null,
             "extra": {
                 "total_boundings": {
@@ -6497,7 +6497,7 @@
                                 "items": []
                             }
                         },
-                        "Door to Larva Hallway 3": {
+                        "Door to Metroid Nest Hallway North West": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6531,7 +6531,7 @@
                                 "items": []
                             }
                         },
-                        "Door to Larva Hallway 2": {
+                        "Door to Metroid Nest Hallway North East": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6540,7 +6540,7 @@
                         }
                     }
                 },
-                "Door to Larva Hallway 2": {
+                "Door to Metroid Nest Hallway North East": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6560,8 +6560,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 8",
-                        "area": "Larva Hallway 2",
-                        "node": "Door to Larva Recharge Stations"
+                        "area": "Metroid Nest Hallway North East",
+                        "node": "Door to Metroid Nest Recharge Stations"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -6578,7 +6578,7 @@
                         }
                     }
                 },
-                "Door to Larva Hallway 3": {
+                "Door to Metroid Nest Hallway North West": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6598,8 +6598,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 8",
-                        "area": "Larva Hallway 3",
-                        "node": "Door to Larva Recharge Stations"
+                        "area": "Metroid Nest Hallway North West",
+                        "node": "Door to Metroid Nest Recharge Stations"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -6618,7 +6618,7 @@
                 }
             }
         },
-        "Larva Shaft 3": {
+        "Metroid Nest Shaft West": {
             "default_node": null,
             "extra": {
                 "total_boundings": {
@@ -6648,7 +6648,7 @@
                 "asset_id": "collision_camera_018"
             },
             "nodes": {
-                "Door to Larva Hallway 3": {
+                "Door to Metroid Nest Hallway North West": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6668,8 +6668,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 8",
-                        "area": "Larva Hallway 3",
-                        "node": "Door to Larva Shaft 3"
+                        "area": "Metroid Nest Hallway North West",
+                        "node": "Door to Metroid Nest Shaft West"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -6686,7 +6686,7 @@
                         }
                     }
                 },
-                "Door to Queen Access Path": {
+                "Door to Queen Arena Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6706,8 +6706,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 8",
-                        "area": "Queen Access Path",
-                        "node": "Door to Larva Shaft 3"
+                        "area": "Queen Arena Access",
+                        "node": "Door to Metroid Nest Shaft West"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -6843,7 +6843,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Larva Hallway 3": {
+                        "Door to Metroid Nest Hallway North West": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6943,7 +6943,7 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Queen Access Path": {
+                        "Door to Queen Arena Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7016,7 +7016,7 @@
                 }
             }
         },
-        "Queen Access Path": {
+        "Queen Arena Access": {
             "default_node": "Save Station",
             "extra": {
                 "total_boundings": {
@@ -7065,7 +7065,7 @@
                     },
                     "valid_starting_location": true,
                     "connections": {
-                        "Door to Larva Shaft 3": {
+                        "Door to Metroid Nest Shaft West": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -7104,13 +7104,13 @@
                                             "items": [
                                                 {
                                                     "type": "template",
-                                                    "data": "Can Spiderspark"
+                                                    "data": "Can Spider Boost"
                                                 },
                                                 {
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "tricks",
-                                                        "name": "Spiderspark",
+                                                        "name": "Spider Boost",
                                                         "amount": 2,
                                                         "negate": false
                                                     }
@@ -7177,7 +7177,7 @@
                         }
                     }
                 },
-                "Door to Larva Shaft 3": {
+                "Door to Metroid Nest Shaft West": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7197,8 +7197,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 8",
-                        "area": "Larva Shaft 3",
-                        "node": "Door to Queen Access Path"
+                        "area": "Metroid Nest Shaft West",
+                        "node": "Door to Queen Arena Access"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -7286,7 +7286,7 @@
                     "default_connection": {
                         "region": "Area 8",
                         "area": "Queen Arena",
-                        "node": "Dock to Queen Access Path"
+                        "node": "Dock to Queen Arena Access"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -7313,7 +7313,7 @@
                     "default_connection": {
                         "region": "Area 8",
                         "area": "Queen Arena",
-                        "node": "Tunnel to Queen Access Path"
+                        "node": "Tunnel to Queen Arena Access"
                     },
                     "default_dock_weakness": "Tunnel",
                     "exclude_from_dock_rando": false,
@@ -7469,13 +7469,13 @@
                                                             },
                                                             {
                                                                 "type": "template",
-                                                                "data": "Can Spiderspark"
+                                                                "data": "Can Spider Boost"
                                                             },
                                                             {
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "tricks",
-                                                                    "name": "Spiderspark",
+                                                                    "name": "Spider Boost",
                                                                     "amount": 3,
                                                                     "negate": false
                                                                 }
@@ -7608,7 +7608,7 @@
                                 ]
                             }
                         },
-                        "Door to Entrance Hallway": {
+                        "Door to Nest Vestibule": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7617,7 +7617,7 @@
                         }
                     }
                 },
-                "Door to Entrance Hallway": {
+                "Door to Nest Vestibule": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7637,7 +7637,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 8",
-                        "area": "Entrance Hallway",
+                        "area": "Nest Vestibule",
                         "node": "Door to Transport to Area 7"
                     },
                     "default_dock_weakness": "Power Beam Door",
@@ -7661,14 +7661,14 @@
             "default_node": null,
             "extra": {
                 "total_boundings": {
-                    "x1": -7000.0,
+                    "x1": -2600.0,
                     "x2": 1600.0,
                     "y1": 11100.0,
                     "y2": 12500.0
                 },
                 "polygon": [
                     [
-                        -7000.0,
+                        -2600.0,
                         11100.0
                     ],
                     [
@@ -7680,14 +7680,14 @@
                         12500.0
                     ],
                     [
-                        -7000.0,
+                        -2600.0,
                         12500.0
                     ]
                 ],
-                "asset_id": "collision_camera_022"
+                "asset_id": "collision_camera_020"
             },
             "nodes": {
-                "Dock to Queen Access Path": {
+                "Dock to Queen Arena Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7704,7 +7704,7 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Area 8",
-                        "area": "Queen Access Path",
+                        "area": "Queen Arena Access",
                         "node": "Dock to Queen Arena"
                     },
                     "default_dock_weakness": "Open Passage",
@@ -7713,32 +7713,6 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Room Center": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "Queen Metroid",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "misc",
-                                            "name": "ReverseArea8",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        },
                         "Before Queen": {
                             "type": "and",
                             "data": {
@@ -7836,10 +7810,53 @@
                                     }
                                 ]
                             }
+                        },
+                        "Dock to Hatchling Room": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Queen Metroid",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "Queen Metroid",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "ReverseArea8",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
                         }
                     }
                 },
-                "Tunnel to Queen Access Path": {
+                "Tunnel to Queen Arena Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7856,7 +7873,7 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Area 8",
-                        "area": "Queen Access Path",
+                        "area": "Queen Arena Access",
                         "node": "Tunnel to Queen Arena"
                     },
                     "default_dock_weakness": "Tunnel with Bomb Block",
@@ -7865,89 +7882,6 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {}
-                },
-                "Dock to Transport to Surface West": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -6949.8465316144875,
-                        "y": 11441.76094010348,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "dock_type": "other",
-                    "default_connection": {
-                        "region": "Area 8",
-                        "area": "Transport to Surface West",
-                        "node": "Dock to Queen Arena"
-                    },
-                    "default_dock_weakness": "Open Passage",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {
-                        "Room Center": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "Queen Metroid",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "misc",
-                                            "name": "ReverseArea8",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        }
-                    }
-                },
-                "Pickup (Baby Metroid)": {
-                    "node_type": "pickup",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -5033.65,
-                        "y": 11271.82,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "LE_Baby_Hatchling",
-                        "actor_type": "ITEM_BABY_HATCHLING"
-                    },
-                    "valid_starting_location": false,
-                    "pickup_index": 171,
-                    "location_category": "major",
-                    "connections": {
-                        "Room Center": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
                 },
                 "Event - Queen Metroid": {
                     "node_type": "event",
@@ -7965,72 +7899,11 @@
                     "valid_starting_location": false,
                     "event_name": "Queen Metroid",
                     "connections": {
-                        "Room Center": {
+                        "Dock to Hatchling Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
-                            }
-                        }
-                    }
-                },
-                "Room Center": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -3279.96,
-                        "y": 11340.86,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "connections": {
-                        "Tunnel to Queen Access Path": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Screw",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Space",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        },
-                        "Dock to Transport to Surface West": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Baby",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        "Pickup (Baby Metroid)": {
-                            "type": "resource",
-                            "data": {
-                                "type": "events",
-                                "name": "Queen Metroid",
-                                "amount": 1,
-                                "negate": false
                             }
                         }
                     }
@@ -8389,13 +8262,13 @@
                                                         "items": [
                                                             {
                                                                 "type": "template",
-                                                                "data": "Can Spiderspark"
+                                                                "data": "Can Spider Boost"
                                                             },
                                                             {
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "tricks",
-                                                                    "name": "Spiderspark",
+                                                                    "name": "Spider Boost",
                                                                     "amount": 2,
                                                                     "negate": false
                                                                 }
@@ -8419,10 +8292,256 @@
                             }
                         }
                     }
+                },
+                "Dock to Hatchling Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -2563.45,
+                        "y": 11558.23,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "other",
+                    "default_connection": {
+                        "region": "Area 8",
+                        "area": "Hatchling Room",
+                        "node": "Dock to Queen Arena"
+                    },
+                    "default_dock_weakness": "Open Passage",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Tunnel to Queen Arena Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Screw",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Space",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 }
             }
         },
-        "Entrance Hallway": {
+        "Hatchling Room": {
+            "default_node": null,
+            "extra": {
+                "total_boundings": {
+                    "x1": -7000.0,
+                    "x2": -2500.0,
+                    "y1": 11100.0,
+                    "y2": 12200.0
+                },
+                "polygon": [
+                    [
+                        -7000.0,
+                        11100.0
+                    ],
+                    [
+                        -2500.0,
+                        11100.0
+                    ],
+                    [
+                        -2500.0,
+                        12200.0
+                    ],
+                    [
+                        -7000.0,
+                        12200.0
+                    ]
+                ],
+                "asset_id": "collision_camera_022"
+            },
+            "nodes": {
+                "Dock to Queen Arena": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -2539.1566265060246,
+                        "y": 11523.493975903615,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "other",
+                    "default_connection": {
+                        "region": "Area 8",
+                        "area": "Queen Arena",
+                        "node": "Dock to Hatchling Room"
+                    },
+                    "default_dock_weakness": "Open Passage",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Room Center": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Dock to Transport to Surface": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -6949.8465316144875,
+                        "y": 11441.76094010348,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "other",
+                    "default_connection": {
+                        "region": "Area 8",
+                        "area": "Transport to Surface",
+                        "node": "Dock to Hatchling Room"
+                    },
+                    "default_dock_weakness": "Open Passage",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Room Center": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Baby Metroid)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -5033.65,
+                        "y": 11271.82,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "LE_Baby_Hatchling",
+                        "actor_type": "ITEM_BABY_HATCHLING"
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 171,
+                    "location_category": "major",
+                    "connections": {
+                        "Room Center": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Room Center": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -4693.43891402715,
+                        "y": 11273.868778280543,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Dock to Queen Arena": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Queen Metroid",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "ReverseArea8",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Dock to Transport to Surface": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Baby",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Pickup (Baby Metroid)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "Queen Metroid",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Nest Vestibule": {
             "default_node": null,
             "extra": {
                 "total_boundings": {
@@ -8502,7 +8621,7 @@
                     "default_connection": {
                         "region": "Area 8",
                         "area": "Transport to Area 7",
-                        "node": "Door to Entrance Hallway"
+                        "node": "Door to Nest Vestibule"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -8551,7 +8670,7 @@
                         }
                     }
                 },
-                "Door to Teleporter Shaft South": {
+                "Door to Entrance Teleporter": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8571,8 +8690,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 8",
-                        "area": "Teleporter Shaft South",
-                        "node": "Door to Entrance Hallway"
+                        "area": "Entrance Teleporter",
+                        "node": "Door to Nest Vestibule"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -8770,7 +8889,7 @@
                                 ]
                             }
                         },
-                        "Door to Teleporter Shaft South": {
+                        "Door to Entrance Teleporter": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -8838,7 +8957,7 @@
                 }
             }
         },
-        "Teleporter Shaft North": {
+        "Metroid Nest Teleporter": {
             "default_node": "Save Station",
             "extra": {
                 "total_boundings": {
@@ -8899,14 +9018,14 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Central Chamber": {
+                        "Door to Amphitheater": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Tunnel to Larva Access": {
+                        "Tunnel to Metroid Nest Foyer": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8991,7 +9110,7 @@
                         }
                     },
                     "connections": {
-                        "Door to Central Chamber": {
+                        "Door to Amphitheater": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -9002,7 +9121,7 @@
                         }
                     }
                 },
-                "Door to Central Chamber": {
+                "Door to Amphitheater": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -9022,8 +9141,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 8",
-                        "area": "Central Chamber",
-                        "node": "Door to Teleporter Shaft North"
+                        "area": "Amphitheater",
+                        "node": "Door to Metroid Nest Teleporter"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -9056,7 +9175,7 @@
                         }
                     }
                 },
-                "Tunnel to Larva Access": {
+                "Tunnel to Metroid Nest Foyer": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -9073,8 +9192,8 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Area 8",
-                        "area": "Larva Access",
-                        "node": "Tunnel to Teleporter Shaft North"
+                        "area": "Metroid Nest Foyer",
+                        "node": "Tunnel to Metroid Nest Teleporter"
                     },
                     "default_dock_weakness": "Tunnel",
                     "exclude_from_dock_rando": false,
@@ -9109,7 +9228,7 @@
                     "valid_starting_location": false,
                     "event_name": "Area 8 Teleporter Upper",
                     "connections": {
-                        "Door to Central Chamber": {
+                        "Door to Amphitheater": {
                             "type": "and",
                             "data": {
                                 "comment": null,

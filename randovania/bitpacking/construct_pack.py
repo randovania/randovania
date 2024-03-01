@@ -27,9 +27,11 @@ JsonValue = str | int | float | list["JsonValue"] | dict[str, "JsonValue"]
 @typing.runtime_checkable
 class JsonEncodable(typing.Protocol):
     @classmethod
-    def from_json(cls, value: JsonValue) -> typing.Self: ...
+    def from_json(cls, value: JsonValue) -> typing.Self:
+        ...
 
-    def as_json(self) -> JsonValue: ...
+    def as_json(self) -> JsonValue:
+        ...
 
 
 class DictAdapter(construct.Adapter):

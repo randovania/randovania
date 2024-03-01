@@ -9,7 +9,7 @@
         "scenario_id": "s020_area2"
     },
     "areas": {
-        "Outer Hub": {
+        "Dam Exterior": {
             "default_node": "Elevator to Area 2 - Dam Entryway",
             "extra": {
                 "total_boundings": {
@@ -193,7 +193,7 @@
                     "dock_type": "elevator",
                     "default_connection": {
                         "region": "Area 2 - Dam Interior",
-                        "area": "Main Hub",
+                        "area": "Wave Beam & Transport to Dam Exterior West",
                         "node": "Elevator to Area 2 - Dam Exterior"
                     },
                     "default_dock_weakness": "Elevator",
@@ -209,7 +209,7 @@
                                 "items": []
                             }
                         },
-                        "Door to Outer Hub Shaft (Bottom)": {
+                        "Door to Metroid Caverns Entrance (Bottom)": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -230,14 +230,14 @@
                                 ]
                             }
                         },
-                        "Door to Outer Hub Shaft (Top)": {
+                        "Door to Metroid Caverns Entrance (Top)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Door to Rock Icicle Path": {
+                        "Door to Rock Icicle Corridor": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -274,7 +274,7 @@
                     "dock_type": "elevator",
                     "default_connection": {
                         "region": "Area 2 - Dam Entryway",
-                        "area": "Transport to Area 2 Dam Exterior",
+                        "area": "Lightning Armor & Transport to Dam Exterior East",
                         "node": "Elevator to Area 2 - Dam Exterior"
                     },
                     "default_dock_weakness": "Elevator",
@@ -321,13 +321,13 @@
                                             "items": [
                                                 {
                                                     "type": "template",
-                                                    "data": "Can Spiderspark"
+                                                    "data": "Can Spider Boost"
                                                 },
                                                 {
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "tricks",
-                                                        "name": "Spiderspark",
+                                                        "name": "Spider Boost",
                                                         "amount": 2,
                                                         "negate": false
                                                     }
@@ -366,14 +366,14 @@
                                 "items": []
                             }
                         },
-                        "Door to Split Pathways": {
+                        "Door to Critter Playground": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Tunnel to Split Pathways": {
+                        "Tunnel to Critter Playground": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -412,13 +412,13 @@
                                                         "items": [
                                                             {
                                                                 "type": "template",
-                                                                "data": "Can Spiderspark"
+                                                                "data": "Can Spider Boost"
                                                             },
                                                             {
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "tricks",
-                                                                    "name": "Spiderspark",
+                                                                    "name": "Spider Boost",
                                                                     "amount": 2,
                                                                     "negate": false
                                                                 }
@@ -453,7 +453,7 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Rock Icicle Path": {
+                        "Door to Rock Icicle Corridor": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -512,7 +512,7 @@
                         "type": "resource",
                         "data": {
                             "type": "events",
-                            "name": "Area 2 Dam Exterior Teleporter Upper",
+                            "name": "Area 2 (Dam Exterior) Dam Exterior Teleporter",
                             "amount": 1,
                             "negate": false
                         }
@@ -556,7 +556,7 @@
                     "default_connection": {
                         "region": "Area 2 - Dam Exterior",
                         "area": "Arachnus Arena",
-                        "node": "Door from Outer Hub"
+                        "node": "Door from Dam Exterior"
                     },
                     "default_dock_weakness": "Missile Door",
                     "exclude_from_dock_rando": false,
@@ -594,7 +594,7 @@
                         }
                     }
                 },
-                "Door to Outer Hub Shaft (Bottom)": {
+                "Door to Metroid Caverns Entrance (Bottom)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -614,8 +614,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 2 - Dam Exterior",
-                        "area": "Outer Hub Shaft",
-                        "node": "Door to Outer Hub (Bottom)"
+                        "area": "Metroid Caverns Entrance",
+                        "node": "Door to Dam Exterior (Bottom)"
                     },
                     "default_dock_weakness": "Access Locked",
                     "exclude_from_dock_rando": false,
@@ -646,7 +646,7 @@
                         }
                     }
                 },
-                "Door to Outer Hub Shaft (Top)": {
+                "Door to Metroid Caverns Entrance (Top)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -666,8 +666,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 2 - Dam Exterior",
-                        "area": "Outer Hub Shaft",
-                        "node": "Door to Outer Hub (Top)"
+                        "area": "Metroid Caverns Entrance",
+                        "node": "Door to Dam Exterior (Top)"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -684,7 +684,7 @@
                         }
                     }
                 },
-                "Door to Rock Icicle Path": {
+                "Door to Rock Icicle Corridor": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -704,8 +704,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 2 - Dam Exterior",
-                        "area": "Rock Icicle Path",
-                        "node": "Door to Outer Hub"
+                        "area": "Rock Icicle Corridor",
+                        "node": "Door to Dam Exterior"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -727,7 +727,7 @@
                                 "items": []
                             }
                         },
-                        "Door to Alpha+ Arena North": {
+                        "Door to Exterior Alpha+ Arena": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -750,14 +750,14 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "tricks",
-                                                        "name": "Spiderspark",
+                                                        "name": "Spider Boost",
                                                         "amount": 2,
                                                         "negate": false
                                                     }
                                                 },
                                                 {
                                                     "type": "template",
-                                                    "data": "Can Spiderspark"
+                                                    "data": "Can Spider Boost"
                                                 }
                                             ]
                                         }
@@ -796,7 +796,7 @@
                         }
                     }
                 },
-                "Door from Arachnus Exit": {
+                "Door from Maintenance Tunnel": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -816,8 +816,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 2 - Dam Exterior",
-                        "area": "Arachnus Exit",
-                        "node": "Door to Outer Hub"
+                        "area": "Maintenance Tunnel",
+                        "node": "Door to Dam Exterior"
                     },
                     "default_dock_weakness": "Access Closed",
                     "exclude_from_dock_rando": false,
@@ -834,7 +834,7 @@
                         }
                     }
                 },
-                "Door to Split Pathways": {
+                "Door to Critter Playground": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -854,8 +854,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 2 - Dam Exterior",
-                        "area": "Split Pathways",
-                        "node": "Door to Outer Hub"
+                        "area": "Critter Playground",
+                        "node": "Door to Dam Exterior"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -872,7 +872,7 @@
                         }
                     }
                 },
-                "Door to Alpha+ Arena North": {
+                "Door to Exterior Alpha+ Arena": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -892,8 +892,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 2 - Dam Exterior",
-                        "area": "Alpha+ Arena North",
-                        "node": "Door to Outer Hub"
+                        "area": "Exterior Alpha+ Arena",
+                        "node": "Door to Dam Exterior"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -901,7 +901,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Rock Icicle Path": {
+                        "Door to Rock Icicle Corridor": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -931,7 +931,7 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "event_name": "Area 2 Dam Exterior Teleporter Upper",
+                    "event_name": "Area 2 (Dam Exterior) Dam Exterior Teleporter",
                     "connections": {
                         "Elevator to Area 2 - Dam Interior": {
                             "type": "and",
@@ -942,7 +942,7 @@
                         }
                     }
                 },
-                "Tunnel to Split Pathways": {
+                "Tunnel to Critter Playground": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -959,8 +959,8 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Area 2 - Dam Exterior",
-                        "area": "Split Pathways",
-                        "node": "Tunnel to Outer Hub"
+                        "area": "Critter Playground",
+                        "node": "Tunnel to Dam Exterior"
                     },
                     "default_dock_weakness": "Tunnel",
                     "exclude_from_dock_rando": false,
@@ -1008,7 +1008,7 @@
                                 "items": []
                             }
                         },
-                        "Door to Rock Icicle Path": {
+                        "Door to Rock Icicle Corridor": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1034,7 +1034,7 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Alpha+ Arena North": {
+                        "Door to Exterior Alpha+ Arena": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1130,7 +1130,7 @@
                         }
                     }
                 },
-                "Door from Outer Hub": {
+                "Door from Dam Exterior": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1150,7 +1150,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 2 - Dam Exterior",
-                        "area": "Outer Hub",
+                        "area": "Dam Exterior",
                         "node": "Door to Arachnus Arena"
                     },
                     "default_dock_weakness": "Access Closed",
@@ -1168,7 +1168,7 @@
                         }
                     }
                 },
-                "Tunnel to Spring Ball Tutorial": {
+                "Tunnel to Fan Funnel": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1185,7 +1185,7 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Area 2 - Dam Exterior",
-                        "area": "Spring Ball Tutorial",
+                        "area": "Fan Funnel",
                         "node": "Tunnel to Arachnus Arena"
                     },
                     "default_dock_weakness": "Tunnel with Bomb Block",
@@ -1245,14 +1245,14 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Door from Outer Hub": {
+                        "Door from Dam Exterior": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Tunnel to Spring Ball Tutorial": {
+                        "Tunnel to Fan Funnel": {
                             "type": "template",
                             "data": "Lay Any Bomb"
                         },
@@ -1396,7 +1396,7 @@
                 }
             }
         },
-        "Spring Ball Tutorial": {
+        "Fan Funnel": {
             "default_node": null,
             "extra": {
                 "total_boundings": {
@@ -1444,7 +1444,7 @@
                     "default_connection": {
                         "region": "Area 2 - Dam Exterior",
                         "area": "Arachnus Arena",
-                        "node": "Tunnel to Spring Ball Tutorial"
+                        "node": "Tunnel to Fan Funnel"
                     },
                     "default_dock_weakness": "Tunnel with Bomb Block",
                     "exclude_from_dock_rando": false,
@@ -1452,7 +1452,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Tunnel to Arachnus Exit": {
+                        "Tunnel to Maintenance Tunnel": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -1487,7 +1487,7 @@
                         }
                     }
                 },
-                "Tunnel to Arachnus Exit": {
+                "Tunnel to Maintenance Tunnel": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1504,8 +1504,8 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Area 2 - Dam Exterior",
-                        "area": "Arachnus Exit",
-                        "node": "Tunnel to Spring Ball Tutorial"
+                        "area": "Maintenance Tunnel",
+                        "node": "Tunnel to Fan Funnel"
                     },
                     "default_dock_weakness": "Tunnel with Bomb Block",
                     "exclude_from_dock_rando": false,
@@ -1521,7 +1521,7 @@
                 }
             }
         },
-        "Split Pathways": {
+        "Critter Playground": {
             "default_node": "Start Point",
             "extra": {
                 "total_boundings": {
@@ -1579,7 +1579,7 @@
                     "pickup_index": 35,
                     "location_category": "minor",
                     "connections": {
-                        "Tunnel to Outer Hub": {
+                        "Tunnel to Dam Exterior": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -1599,7 +1599,7 @@
                         }
                     }
                 },
-                "Door to Outer Hub": {
+                "Door to Dam Exterior": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1619,8 +1619,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 2 - Dam Exterior",
-                        "area": "Outer Hub",
-                        "node": "Door to Split Pathways"
+                        "area": "Dam Exterior",
+                        "node": "Door to Critter Playground"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -1639,7 +1639,7 @@
                         }
                     }
                 },
-                "Door to Alpha Arena North": {
+                "Door to Inner Alpha Arena": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1659,8 +1659,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 2 - Dam Exterior",
-                        "area": "Alpha Arena North",
-                        "node": "Door to Split Pathways"
+                        "area": "Inner Alpha Arena",
+                        "node": "Door to Critter Playground"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -1668,7 +1668,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Rock Icicle Path": {
+                        "Door to Rock Icicle Corridor": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1684,7 +1684,7 @@
                         }
                     }
                 },
-                "Door to Rock Icicle Path": {
+                "Door to Rock Icicle Corridor": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1704,8 +1704,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 2 - Dam Exterior",
-                        "area": "Rock Icicle Path",
-                        "node": "Door to Split Pathways"
+                        "area": "Rock Icicle Corridor",
+                        "node": "Door to Critter Playground"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -1739,7 +1739,7 @@
                                 ]
                             }
                         },
-                        "Door to Alpha Arena North": {
+                        "Door to Inner Alpha Arena": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1755,7 +1755,7 @@
                         }
                     }
                 },
-                "Tunnel to Outer Hub": {
+                "Tunnel to Dam Exterior": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1772,8 +1772,8 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Area 2 - Dam Exterior",
-                        "area": "Outer Hub",
-                        "node": "Tunnel to Split Pathways"
+                        "area": "Dam Exterior",
+                        "node": "Tunnel to Critter Playground"
                     },
                     "default_dock_weakness": "Tunnel",
                     "exclude_from_dock_rando": false,
@@ -1908,14 +1908,14 @@
                                 ]
                             }
                         },
-                        "Door to Outer Hub": {
+                        "Door to Dam Exterior": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Door to Rock Icicle Path": {
+                        "Door to Rock Icicle Corridor": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -1976,7 +1976,7 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Alpha Arena North": {
+                        "Door to Inner Alpha Arena": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1987,7 +1987,7 @@
                 }
             }
         },
-        "Outer Hub Shaft": {
+        "Metroid Caverns Entrance": {
             "default_node": null,
             "extra": {
                 "total_boundings": {
@@ -2017,7 +2017,7 @@
                 "asset_id": "collision_camera_023"
             },
             "nodes": {
-                "Door to Outer Hub (Bottom)": {
+                "Door to Dam Exterior (Bottom)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2037,8 +2037,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 2 - Dam Exterior",
-                        "area": "Outer Hub",
-                        "node": "Door to Outer Hub Shaft (Bottom)"
+                        "area": "Dam Exterior",
+                        "node": "Door to Metroid Caverns Entrance (Bottom)"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -2046,7 +2046,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Alpha Shaft": {
+                        "Door to Metroid Caverns Save Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2055,7 +2055,7 @@
                         }
                     }
                 },
-                "Door to Outer Hub (Top)": {
+                "Door to Dam Exterior (Top)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2075,8 +2075,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 2 - Dam Exterior",
-                        "area": "Outer Hub",
-                        "node": "Door to Outer Hub Shaft (Top)"
+                        "area": "Dam Exterior",
+                        "node": "Door to Metroid Caverns Entrance (Top)"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -2084,7 +2084,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Alpha Shaft": {
+                        "Door to Metroid Caverns Save Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2093,7 +2093,7 @@
                         }
                     }
                 },
-                "Door to Alpha Shaft": {
+                "Door to Metroid Caverns Save Station": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2113,8 +2113,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 2 - Dam Exterior",
-                        "area": "Alpha Shaft",
-                        "node": "Door to Outer Hub Shaft"
+                        "area": "Metroid Caverns Save Station",
+                        "node": "Door to Metroid Caverns Entrance"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -2122,21 +2122,21 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Outer Hub (Bottom)": {
+                        "Door to Dam Exterior (Bottom)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Door to Outer Hub (Top)": {
+                        "Door to Dam Exterior (Top)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Door to Ammo Station Access": {
+                        "Door to Metroid Caverns Ammo Recharge Station Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2207,7 +2207,7 @@
                                 ]
                             }
                         },
-                        "Tunnel to Grapple Gap (Bottom)": {
+                        "Tunnel to Spike Ravine (Bottom)": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -2216,13 +2216,13 @@
                                 "negate": false
                             }
                         },
-                        "Tunnel to Grapple Gap (Top)": {
+                        "Tunnel to Spike Ravine (Top)": {
                             "type": "template",
                             "data": "Lay Any Bomb"
                         }
                     }
                 },
-                "Door to Ammo Station Access": {
+                "Door to Metroid Caverns Ammo Recharge Station Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2242,8 +2242,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 2 - Dam Exterior",
-                        "area": "Ammo Station Access",
-                        "node": "Door to Outer Hub Shaft"
+                        "area": "Metroid Caverns Ammo Recharge Station Access",
+                        "node": "Door to Metroid Caverns Entrance"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -2251,7 +2251,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Alpha Shaft": {
+                        "Door to Metroid Caverns Save Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2280,7 +2280,7 @@
                     "pickup_index": 39,
                     "location_category": "minor",
                     "connections": {
-                        "Door to Alpha Shaft": {
+                        "Door to Metroid Caverns Save Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2289,7 +2289,7 @@
                         }
                     }
                 },
-                "Tunnel to Grapple Gap (Bottom)": {
+                "Tunnel to Spike Ravine (Bottom)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2306,8 +2306,8 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Area 2 - Dam Exterior",
-                        "area": "Grapple Gap",
-                        "node": "Tunnel to Outer Hub Shaft (Bottom)"
+                        "area": "Spike Ravine",
+                        "node": "Tunnel to Metroid Caverns Entrance (Bottom)"
                     },
                     "default_dock_weakness": "Tunnel",
                     "exclude_from_dock_rando": false,
@@ -2315,7 +2315,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Alpha Shaft": {
+                        "Door to Metroid Caverns Save Station": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -2326,7 +2326,7 @@
                         }
                     }
                 },
-                "Tunnel to Grapple Gap (Top)": {
+                "Tunnel to Spike Ravine (Top)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2343,8 +2343,8 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Area 2 - Dam Exterior",
-                        "area": "Grapple Gap",
-                        "node": "Tunnel to Outer Hub Shaft (Top)"
+                        "area": "Spike Ravine",
+                        "node": "Tunnel to Metroid Caverns Entrance (Top)"
                     },
                     "default_dock_weakness": "Tunnel with Bomb Block",
                     "exclude_from_dock_rando": false,
@@ -2352,7 +2352,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Alpha Shaft": {
+                        "Door to Metroid Caverns Save Station": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -2365,7 +2365,7 @@
                 }
             }
         },
-        "Grapple Gap": {
+        "Spike Ravine": {
             "default_node": null,
             "extra": {
                 "total_boundings": {
@@ -2415,7 +2415,7 @@
                     "pickup_index": 32,
                     "location_category": "minor",
                     "connections": {
-                        "Tunnel to Outer Hub Shaft (Bottom)": {
+                        "Tunnel to Metroid Caverns Entrance (Bottom)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2424,7 +2424,7 @@
                         }
                     }
                 },
-                "Tunnel to Outer Hub Shaft (Bottom)": {
+                "Tunnel to Metroid Caverns Entrance (Bottom)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2441,8 +2441,8 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Area 2 - Dam Exterior",
-                        "area": "Outer Hub Shaft",
-                        "node": "Tunnel to Grapple Gap (Bottom)"
+                        "area": "Metroid Caverns Entrance",
+                        "node": "Tunnel to Spike Ravine (Bottom)"
                     },
                     "default_dock_weakness": "Tunnel",
                     "exclude_from_dock_rando": false,
@@ -2497,13 +2497,13 @@
                                             "items": [
                                                 {
                                                     "type": "template",
-                                                    "data": "Can Spiderspark"
+                                                    "data": "Can Spider Boost"
                                                 },
                                                 {
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "tricks",
-                                                        "name": "Spiderspark",
+                                                        "name": "Spider Boost",
                                                         "amount": 1,
                                                         "negate": false
                                                     }
@@ -2518,7 +2518,7 @@
                                 ]
                             }
                         },
-                        "Tunnel to Outer Hub Shaft (Top)": {
+                        "Tunnel to Metroid Caverns Entrance (Top)": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -2541,7 +2541,7 @@
                         }
                     }
                 },
-                "Tunnel to Outer Hub Shaft (Top)": {
+                "Tunnel to Metroid Caverns Entrance (Top)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2558,8 +2558,8 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Area 2 - Dam Exterior",
-                        "area": "Outer Hub Shaft",
-                        "node": "Tunnel to Grapple Gap (Top)"
+                        "area": "Metroid Caverns Entrance",
+                        "node": "Tunnel to Spike Ravine (Top)"
                     },
                     "default_dock_weakness": "Tunnel with Bomb Block",
                     "exclude_from_dock_rando": false,
@@ -2671,7 +2671,7 @@
                                 ]
                             }
                         },
-                        "Tunnel to Outer Hub Shaft (Bottom)": {
+                        "Tunnel to Metroid Caverns Entrance (Bottom)": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -2684,7 +2684,7 @@
                 }
             }
         },
-        "Ammo Station Access": {
+        "Metroid Caverns Ammo Recharge Station Access": {
             "default_node": null,
             "extra": {
                 "total_boundings": {
@@ -2714,7 +2714,7 @@
                 "asset_id": "collision_camera_025"
             },
             "nodes": {
-                "Door to Outer Hub Shaft": {
+                "Door to Metroid Caverns Entrance": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2734,8 +2734,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 2 - Dam Exterior",
-                        "area": "Outer Hub Shaft",
-                        "node": "Door to Ammo Station Access"
+                        "area": "Metroid Caverns Entrance",
+                        "node": "Door to Metroid Caverns Ammo Recharge Station Access"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -2743,7 +2743,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Ammo Recharge Station": {
+                        "Door to Metroid Caverns Ammo Recharge Station": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -2754,7 +2754,7 @@
                         }
                     }
                 },
-                "Door to Ammo Recharge Station": {
+                "Door to Metroid Caverns Ammo Recharge Station": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2774,8 +2774,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 2 - Dam Exterior",
-                        "area": "Ammo Recharge Station",
-                        "node": "Door to Ammo Station Access"
+                        "area": "Metroid Caverns Ammo Recharge Station",
+                        "node": "Door to Metroid Caverns Ammo Recharge Station Access"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -2783,7 +2783,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Outer Hub Shaft": {
+                        "Door to Metroid Caverns Entrance": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -2796,7 +2796,7 @@
                 }
             }
         },
-        "Glow Fly Tunnel": {
+        "Metroid Caverns Maze": {
             "default_node": null,
             "extra": {
                 "total_boundings": {
@@ -2846,13 +2846,13 @@
                     "pickup_index": 36,
                     "location_category": "minor",
                     "connections": {
-                        "Tunnel to Alpha Shaft": {
+                        "Tunnel to Metroid Caverns Save Station": {
                             "type": "template",
                             "data": "Lay Any Bomb"
                         }
                     }
                 },
-                "Tunnel to Alpha Shaft": {
+                "Tunnel to Metroid Caverns Save Station": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2869,8 +2869,8 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Area 2 - Dam Exterior",
-                        "area": "Alpha Shaft",
-                        "node": "Tunnel to Glow Fly Tunnel"
+                        "area": "Metroid Caverns Save Station",
+                        "node": "Tunnel to Metroid Caverns Maze"
                     },
                     "default_dock_weakness": "Tunnel with Bomb Block",
                     "exclude_from_dock_rando": false,
@@ -2886,7 +2886,7 @@
                 }
             }
         },
-        "Alpha Shaft": {
+        "Metroid Caverns Save Station": {
             "default_node": "Save Station",
             "extra": {
                 "total_boundings": {
@@ -2934,7 +2934,7 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Alpha Arena West": {
+                        "Door to Metroid Caverns Alpha Arena North West": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2962,7 +2962,7 @@
                     },
                     "valid_starting_location": true,
                     "connections": {
-                        "Door to Alpha Arena West": {
+                        "Door to Metroid Caverns Alpha Arena North West": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2971,7 +2971,7 @@
                         }
                     }
                 },
-                "Door to Outer Hub Shaft": {
+                "Door to Metroid Caverns Entrance": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2991,8 +2991,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 2 - Dam Exterior",
-                        "area": "Outer Hub Shaft",
-                        "node": "Door to Alpha Shaft"
+                        "area": "Metroid Caverns Entrance",
+                        "node": "Door to Metroid Caverns Save Station"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -3000,7 +3000,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Alpha Arena West": {
+                        "Door to Metroid Caverns Alpha Arena North West": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3009,7 +3009,7 @@
                         }
                     }
                 },
-                "Door to Alpha Arena West": {
+                "Door to Metroid Caverns Alpha Arena North West": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3029,8 +3029,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 2 - Dam Exterior",
-                        "area": "Alpha Arena West",
-                        "node": "Door to Alpha Shaft"
+                        "area": "Metroid Caverns Alpha Arena North West",
+                        "node": "Door to Metroid Caverns Save Station"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -3052,27 +3052,27 @@
                                 "items": []
                             }
                         },
-                        "Door to Outer Hub Shaft": {
+                        "Door to Metroid Caverns Entrance": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Dock to Alpha Arena South Access": {
+                        "Dock to Metroid Caverns Alpha Arena East Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Tunnel to Glow Fly Tunnel": {
+                        "Tunnel to Metroid Caverns Maze": {
                             "type": "template",
                             "data": "Lay Any Bomb"
                         }
                     }
                 },
-                "Dock to Alpha Arena South Access": {
+                "Dock to Metroid Caverns Alpha Arena East Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3089,8 +3089,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Area 2 - Dam Exterior",
-                        "area": "Alpha Arena South Access",
-                        "node": "Dock to Alpha Shaft"
+                        "area": "Metroid Caverns Alpha Arena East Access",
+                        "node": "Dock to Metroid Caverns Save Station"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -3098,7 +3098,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Alpha Arena West": {
+                        "Door to Metroid Caverns Alpha Arena North West": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3107,7 +3107,7 @@
                         }
                     }
                 },
-                "Tunnel to Glow Fly Tunnel": {
+                "Tunnel to Metroid Caverns Maze": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3124,8 +3124,8 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Area 2 - Dam Exterior",
-                        "area": "Glow Fly Tunnel",
-                        "node": "Tunnel to Alpha Shaft"
+                        "area": "Metroid Caverns Maze",
+                        "node": "Tunnel to Metroid Caverns Save Station"
                     },
                     "default_dock_weakness": "Tunnel with Bomb Block",
                     "exclude_from_dock_rando": false,
@@ -3133,7 +3133,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Alpha Arena West": {
+                        "Door to Metroid Caverns Alpha Arena North West": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3144,7 +3144,7 @@
                 }
             }
         },
-        "Alpha Arena West": {
+        "Metroid Caverns Alpha Arena North West": {
             "default_node": "Room Center",
             "extra": {
                 "total_boundings": {
@@ -3174,7 +3174,7 @@
                 "asset_id": "collision_camera_028"
             },
             "nodes": {
-                "Door to Hot Split": {
+                "Door to Metroid Caverns Lobby": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3194,8 +3194,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 2 - Dam Exterior",
-                        "area": "Hot Split",
-                        "node": "Door to Alpha Arena West"
+                        "area": "Metroid Caverns Lobby",
+                        "node": "Door to Metroid Caverns Alpha Arena North West"
                     },
                     "default_dock_weakness": "Charge Beam Door",
                     "exclude_from_dock_rando": false,
@@ -3212,7 +3212,7 @@
                         }
                     }
                 },
-                "Door to Alpha Shaft": {
+                "Door to Metroid Caverns Save Station": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3232,8 +3232,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 2 - Dam Exterior",
-                        "area": "Alpha Shaft",
-                        "node": "Door to Alpha Arena West"
+                        "area": "Metroid Caverns Save Station",
+                        "node": "Door to Metroid Caverns Alpha Arena North West"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -3292,7 +3292,7 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Hot Split": {
+                        "Door to Metroid Caverns Lobby": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -3403,7 +3403,7 @@
                                 ]
                             }
                         },
-                        "Door to Alpha Shaft": {
+                        "Door to Metroid Caverns Save Station": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -3551,7 +3551,7 @@
                 }
             }
         },
-        "Hot Split": {
+        "Metroid Caverns Lobby": {
             "default_node": "Start Point",
             "extra": {
                 "total_boundings": {
@@ -3581,7 +3581,7 @@
                 "asset_id": "collision_camera_029"
             },
             "nodes": {
-                "Door to Alpha Arena West": {
+                "Door to Metroid Caverns Alpha Arena North West": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3601,8 +3601,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 2 - Dam Exterior",
-                        "area": "Alpha Arena West",
-                        "node": "Door to Hot Split"
+                        "area": "Metroid Caverns Alpha Arena North West",
+                        "node": "Door to Metroid Caverns Lobby"
                     },
                     "default_dock_weakness": "Charge Beam Door",
                     "exclude_from_dock_rando": false,
@@ -3610,7 +3610,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Alpha Arena Heated": {
+                        "Door to Metroid Caverns Alpha Arena South West": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -3619,7 +3619,7 @@
                                 "negate": false
                             }
                         },
-                        "Door to Fiery Crossing": {
+                        "Door to Metroid Caverns Teleporter": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -3630,7 +3630,7 @@
                         }
                     }
                 },
-                "Door to Alpha Arena Heated": {
+                "Door to Metroid Caverns Alpha Arena South West": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3650,8 +3650,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 2 - Dam Exterior",
-                        "area": "Alpha Arena Heated",
-                        "node": "Door to Hot Split"
+                        "area": "Metroid Caverns Alpha Arena South West",
+                        "node": "Door to Metroid Caverns Lobby"
                     },
                     "default_dock_weakness": "Wave Beam Door",
                     "exclude_from_dock_rando": false,
@@ -3659,7 +3659,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Alpha Arena West": {
+                        "Door to Metroid Caverns Alpha Arena North West": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -3677,7 +3677,7 @@
                         }
                     }
                 },
-                "Door to Fiery Crossing": {
+                "Door to Metroid Caverns Teleporter": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3697,8 +3697,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 2 - Dam Exterior",
-                        "area": "Fiery Crossing",
-                        "node": "Door to Hot Split"
+                        "area": "Metroid Caverns Teleporter",
+                        "node": "Door to Metroid Caverns Lobby"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -3706,7 +3706,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Alpha Arena West": {
+                        "Door to Metroid Caverns Alpha Arena North West": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -3734,7 +3734,7 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Alpha Arena Heated": {
+                        "Door to Metroid Caverns Alpha Arena South West": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -3747,7 +3747,7 @@
                 }
             }
         },
-        "Alpha Arena Heated": {
+        "Metroid Caverns Alpha Arena South West": {
             "default_node": "Start Point",
             "extra": {
                 "total_boundings": {
@@ -3777,7 +3777,7 @@
                 "asset_id": "collision_camera_030"
             },
             "nodes": {
-                "Door to Hot Split": {
+                "Door to Metroid Caverns Lobby": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3797,8 +3797,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 2 - Dam Exterior",
-                        "area": "Hot Split",
-                        "node": "Door to Alpha Arena Heated"
+                        "area": "Metroid Caverns Lobby",
+                        "node": "Door to Metroid Caverns Alpha Arena South West"
                     },
                     "default_dock_weakness": "Wave Beam Door",
                     "exclude_from_dock_rando": false,
@@ -3921,7 +3921,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Hot Split": {
+                        "Door to Metroid Caverns Lobby": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -3955,7 +3955,7 @@
                 }
             }
         },
-        "Alpha Arena South Access": {
+        "Metroid Caverns Alpha Arena East Access": {
             "default_node": "Start Point",
             "extra": {
                 "total_boundings": {
@@ -3985,7 +3985,7 @@
                 "asset_id": "collision_camera_031"
             },
             "nodes": {
-                "Tunnel to Alpha Arena South": {
+                "Tunnel to Metroid Caverns Alpha Arena East": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4002,8 +4002,8 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Area 2 - Dam Exterior",
-                        "area": "Alpha Arena South",
-                        "node": "Tunnel to Alpha Arena South Access"
+                        "area": "Metroid Caverns Alpha Arena East",
+                        "node": "Tunnel to Metroid Caverns Alpha Arena East Access"
                     },
                     "default_dock_weakness": "Tunnel with Bomb Block",
                     "exclude_from_dock_rando": false,
@@ -4011,7 +4011,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Alpha Shaft": {
+                        "Dock to Metroid Caverns Save Station": {
                             "type": "template",
                             "data": "Lay Any Bomb"
                         },
@@ -4026,7 +4026,7 @@
                         }
                     }
                 },
-                "Dock to Alpha Shaft": {
+                "Dock to Metroid Caverns Save Station": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4043,8 +4043,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Area 2 - Dam Exterior",
-                        "area": "Alpha Shaft",
-                        "node": "Dock to Alpha Arena South Access"
+                        "area": "Metroid Caverns Save Station",
+                        "node": "Dock to Metroid Caverns Alpha Arena East Access"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -4052,7 +4052,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Tunnel to Alpha Arena South": {
+                        "Tunnel to Metroid Caverns Alpha Arena East": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -4121,7 +4121,7 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Tunnel to Alpha Arena South": {
+                        "Tunnel to Metroid Caverns Alpha Arena East": {
                             "type": "template",
                             "data": "Lay Any Bomb"
                         }
@@ -4129,7 +4129,7 @@
                 }
             }
         },
-        "Fiery Crossing": {
+        "Metroid Caverns Teleporter": {
             "default_node": "Teleporter",
             "extra": {
                 "total_boundings": {
@@ -4197,7 +4197,7 @@
                         "type": "resource",
                         "data": {
                             "type": "events",
-                            "name": "Area 2 Dam Exterior Teleporter Heat",
+                            "name": "Area 2 (Dam Exterior) Metroid Caverns Teleporter",
                             "amount": 1,
                             "negate": false
                         }
@@ -4222,7 +4222,7 @@
                         }
                     }
                 },
-                "Door to Hot Split": {
+                "Door to Metroid Caverns Lobby": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4242,8 +4242,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 2 - Dam Exterior",
-                        "area": "Hot Split",
-                        "node": "Door to Fiery Crossing"
+                        "area": "Metroid Caverns Lobby",
+                        "node": "Door to Metroid Caverns Teleporter"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -4262,7 +4262,7 @@
                         }
                     }
                 },
-                "Door to Alpha+ Arena Heated": {
+                "Door to Metroid Caverns Alpha+ Arena": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4282,8 +4282,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 2 - Dam Exterior",
-                        "area": "Alpha+ Arena Heated",
-                        "node": "Door to Fiery Crossing"
+                        "area": "Metroid Caverns Alpha+ Arena",
+                        "node": "Door to Metroid Caverns Teleporter"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -4404,7 +4404,7 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "event_name": "Area 2 Dam Exterior Teleporter Heat",
+                    "event_name": "Area 2 (Dam Exterior) Metroid Caverns Teleporter",
                     "connections": {
                         "Below Pickup": {
                             "type": "and",
@@ -4439,7 +4439,7 @@
                                 "negate": false
                             }
                         },
-                        "Door to Hot Split": {
+                        "Door to Metroid Caverns Lobby": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -4593,7 +4593,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Alpha+ Arena Heated": {
+                        "Door to Metroid Caverns Alpha+ Arena": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4693,7 +4693,7 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Alpha+ Arena Heated": {
+                        "Door to Metroid Caverns Alpha+ Arena": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -4706,7 +4706,7 @@
                 }
             }
         },
-        "Alpha+ Arena North": {
+        "Exterior Alpha+ Arena": {
             "default_node": "Room Center",
             "extra": {
                 "total_boundings": {
@@ -4736,7 +4736,7 @@
                 "asset_id": "collision_camera_033"
             },
             "nodes": {
-                "Door to Alpha+ Storage": {
+                "Door to Serene Shelter": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4756,8 +4756,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 2 - Dam Exterior",
-                        "area": "Alpha+ Storage",
-                        "node": "Door to Alpha+ Arena North"
+                        "area": "Serene Shelter",
+                        "node": "Door to Exterior Alpha+ Arena"
                     },
                     "default_dock_weakness": "Super Missile Door",
                     "exclude_from_dock_rando": false,
@@ -4774,7 +4774,7 @@
                         }
                     }
                 },
-                "Door to Outer Hub": {
+                "Door to Dam Exterior": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4794,8 +4794,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 2 - Dam Exterior",
-                        "area": "Outer Hub",
-                        "node": "Door to Alpha+ Arena North"
+                        "area": "Dam Exterior",
+                        "node": "Door to Exterior Alpha+ Arena"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -4854,14 +4854,14 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Alpha+ Storage": {
+                        "Door to Serene Shelter": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Door to Outer Hub": {
+                        "Door to Dam Exterior": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4905,7 +4905,7 @@
                 }
             }
         },
-        "Alpha+ Storage": {
+        "Serene Shelter": {
             "default_node": null,
             "extra": {
                 "total_boundings": {
@@ -4955,7 +4955,7 @@
                     "pickup_index": 33,
                     "location_category": "minor",
                     "connections": {
-                        "Door to Alpha+ Arena North": {
+                        "Door to Exterior Alpha+ Arena": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4964,7 +4964,7 @@
                         }
                     }
                 },
-                "Door to Alpha+ Arena North": {
+                "Door to Exterior Alpha+ Arena": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4984,8 +4984,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 2 - Dam Exterior",
-                        "area": "Alpha+ Arena North",
-                        "node": "Door to Alpha+ Storage"
+                        "area": "Exterior Alpha+ Arena",
+                        "node": "Door to Serene Shelter"
                     },
                     "default_dock_weakness": "Super Missile Door",
                     "exclude_from_dock_rando": false,
@@ -5076,7 +5076,7 @@
                 }
             }
         },
-        "Alpha+ Arena Heated": {
+        "Metroid Caverns Alpha+ Arena": {
             "default_node": "Room Center",
             "extra": {
                 "total_boundings": {
@@ -5106,7 +5106,7 @@
                 "asset_id": "collision_camera_035"
             },
             "nodes": {
-                "Door to Fiery Crossing": {
+                "Door to Metroid Caverns Teleporter": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5126,8 +5126,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 2 - Dam Exterior",
-                        "area": "Fiery Crossing",
-                        "node": "Door to Alpha+ Arena Heated"
+                        "area": "Metroid Caverns Teleporter",
+                        "node": "Door to Metroid Caverns Alpha+ Arena"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -5188,7 +5188,7 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Fiery Crossing": {
+                        "Door to Metroid Caverns Teleporter": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -5251,7 +5251,7 @@
                 }
             }
         },
-        "Alpha Arena North": {
+        "Inner Alpha Arena": {
             "default_node": "Room Center",
             "extra": {
                 "total_boundings": {
@@ -5281,7 +5281,7 @@
                 "asset_id": "collision_camera_036"
             },
             "nodes": {
-                "Door to Split Pathways": {
+                "Door to Critter Playground": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5301,8 +5301,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 2 - Dam Exterior",
-                        "area": "Split Pathways",
-                        "node": "Door to Alpha Arena North"
+                        "area": "Critter Playground",
+                        "node": "Door to Inner Alpha Arena"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -5361,7 +5361,7 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Split Pathways": {
+                        "Door to Critter Playground": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5405,7 +5405,7 @@
                 }
             }
         },
-        "Rock Icicle Path": {
+        "Rock Icicle Corridor": {
             "default_node": null,
             "extra": {
                 "total_boundings": {
@@ -5435,7 +5435,7 @@
                 "asset_id": "collision_camera_037"
             },
             "nodes": {
-                "Door to Outer Hub": {
+                "Door to Dam Exterior": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5455,8 +5455,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 2 - Dam Exterior",
-                        "area": "Outer Hub",
-                        "node": "Door to Rock Icicle Path"
+                        "area": "Dam Exterior",
+                        "node": "Door to Rock Icicle Corridor"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -5464,7 +5464,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Split Pathways": {
+                        "Door to Critter Playground": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5473,7 +5473,7 @@
                         }
                     }
                 },
-                "Door to Split Pathways": {
+                "Door to Critter Playground": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5493,8 +5493,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 2 - Dam Exterior",
-                        "area": "Split Pathways",
-                        "node": "Door to Rock Icicle Path"
+                        "area": "Critter Playground",
+                        "node": "Door to Rock Icicle Corridor"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -5502,7 +5502,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Outer Hub": {
+                        "Door to Dam Exterior": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5513,7 +5513,7 @@
                 }
             }
         },
-        "Arachnus Exit": {
+        "Maintenance Tunnel": {
             "default_node": null,
             "extra": {
                 "total_boundings": {
@@ -5543,7 +5543,7 @@
                 "asset_id": "collision_camera_038"
             },
             "nodes": {
-                "Door to Outer Hub": {
+                "Door to Dam Exterior": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5563,8 +5563,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 2 - Dam Exterior",
-                        "area": "Outer Hub",
-                        "node": "Door from Arachnus Exit"
+                        "area": "Dam Exterior",
+                        "node": "Door from Maintenance Tunnel"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -5572,13 +5572,13 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Tunnel to Spring Ball Tutorial": {
+                        "Tunnel to Fan Funnel": {
                             "type": "template",
                             "data": "Lay Any Bomb"
                         }
                     }
                 },
-                "Tunnel to Spring Ball Tutorial": {
+                "Tunnel to Fan Funnel": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5595,8 +5595,8 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Area 2 - Dam Exterior",
-                        "area": "Spring Ball Tutorial",
-                        "node": "Tunnel to Arachnus Exit"
+                        "area": "Fan Funnel",
+                        "node": "Tunnel to Maintenance Tunnel"
                     },
                     "default_dock_weakness": "Tunnel with Bomb Block",
                     "exclude_from_dock_rando": false,
@@ -5604,7 +5604,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Outer Hub": {
+                        "Door to Dam Exterior": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -5617,7 +5617,7 @@
                 }
             }
         },
-        "Ammo Recharge Station": {
+        "Metroid Caverns Ammo Recharge Station": {
             "default_node": null,
             "extra": {
                 "total_boundings": {
@@ -5647,7 +5647,7 @@
                 "asset_id": "collision_camera_039"
             },
             "nodes": {
-                "Ammo Recharge Station": {
+                "Metroid Caverns Ammo Recharge Station": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
@@ -5665,7 +5665,7 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Ammo Station Access": {
+                        "Door to Metroid Caverns Ammo Recharge Station Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5674,7 +5674,7 @@
                         }
                     }
                 },
-                "Door to Ammo Station Access": {
+                "Door to Metroid Caverns Ammo Recharge Station Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5694,8 +5694,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 2 - Dam Exterior",
-                        "area": "Ammo Station Access",
-                        "node": "Door to Ammo Recharge Station"
+                        "area": "Metroid Caverns Ammo Recharge Station Access",
+                        "node": "Door to Metroid Caverns Ammo Recharge Station"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -5703,7 +5703,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Ammo Recharge Station": {
+                        "Metroid Caverns Ammo Recharge Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5714,7 +5714,7 @@
                 }
             }
         },
-        "Alpha Arena South": {
+        "Metroid Caverns Alpha Arena East": {
             "default_node": "Room Center",
             "extra": {
                 "total_boundings": {
@@ -5744,7 +5744,7 @@
                 "asset_id": "collision_camera_040"
             },
             "nodes": {
-                "Tunnel to Alpha Arena South Access": {
+                "Tunnel to Metroid Caverns Alpha Arena East Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5761,8 +5761,8 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Area 2 - Dam Exterior",
-                        "area": "Alpha Arena South Access",
-                        "node": "Tunnel to Alpha Arena South"
+                        "area": "Metroid Caverns Alpha Arena East Access",
+                        "node": "Tunnel to Metroid Caverns Alpha Arena East"
                     },
                     "default_dock_weakness": "Tunnel with Bomb Block",
                     "exclude_from_dock_rando": false,
@@ -5835,7 +5835,7 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Tunnel to Alpha Arena South Access": {
+                        "Tunnel to Metroid Caverns Alpha Arena East Access": {
                             "type": "or",
                             "data": {
                                 "comment": null,

@@ -64,8 +64,8 @@ class PickupModel(JsonDataclass):
 @dataclass(frozen=True)
 class PickupGeneratorParams:
     preferred_location_category: LocationCategory
-    probability_offset: float = 0
-    probability_multiplier: float = 1
+    probability_offset: float = 0.0
+    probability_multiplier: float = 1.0
     required_progression: int = 0
 
 
