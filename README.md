@@ -48,41 +48,10 @@ So have fun and start randomizing.
 
 # Installation
 
-## Windows
-
 In the [releases page](https://github.com/randovania/randovania/releases), we have zip files
 with everything ready to use. Just extract and run!
 
-## Linux
-
-### Running (in-source)
-
-1. Clone this repository (downloading the source zip is not supported and will not work)
-2. Open a terminal in the repository root
-3. Fetch the tags from the repo:
-
-   `$ git fetch --tags`
-4. Checkout the latest tag (replace v4.0.1 with the latest release version):
-
-   `$ git checkout v4.0.1`
-5. Prepare the virtual environment and install dependencies:
-   
-   `$ tools/prepare_virtual_env.sh`
-6. Run the program from source:
-
-   `$ tools/start_client.sh`
-
-### Running Natively and Multiworld
-
-1. Activate the virtual environment and generate the necessary configuration.json, as well as build a native application:
-
-   ```console
-   $ . venv/bin/activate
-   (venv) $ export PRODUCTION=true
-   (venv) $ python tools/create_release.py
-   ```
-2. Navigate into the build/randovania directory
-3. Install the generated randovania.pkg or run the generated executable
+For Linux users, we recommend using our [Flatpak](https://flathub.org/apps/io.github.randovania.Randovania) instead.
 
 <!-- Begin COMMUNITY -->
 
@@ -184,7 +153,20 @@ Linux Flatpak build contributed by [Ethan Lee](https://flibitijibibo.com/).
 * The AM2R Morph Ball and Power Grip sprites were made by ShirtyScarab554 licensed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
 
 ## Multiworld
-Server and logic written by Henrique, including Dolphin and Nintendont integrations. These were based on [Dolphin Memory Engine](https://github.com/aldelaro5/Dolphin-memory-engine) and Pwootage's Nintendont fork, respectively. In-game message alert initially written by [encounter](https://github.com/encounter).
+Server and logic written by [Henrique "Darkszero" Gemignani](https://github.com/henriquegemignani/).
+
+### Primes
+Dolphin and Nintendont integrations written by [Henrique "Darkszero" Gemignani](https://github.com/henriquegemignani/). These were based on [Dolphin Memory Engine](https://github.com/aldelaro5/Dolphin-memory-engine) and Pwootage's Nintendont fork, respectively. In-game message alert initially written by [encounter](https://github.com/encounter).
+
+### Cave Story
+Cave Story Doukutsu and CSE2 Tweaked integations written by [duncathan_salt](https://twitter.com/duncathan_salt), [periwinkle](https://github.com/periwinkle9) and [ikuyo](https://github.com/calvarado194).
+
+### Metroid Dread
+Integration written by [Thanatos](https://github.com/ThanatosGit) and [Henrique "Darkszero" Gemignani](https://github.com/henriquegemignani/).  
+The "unplug" icon is by tezar tantular from [Noun Project](https://thenounproject.com/browse/icons/term/unplug/) (licensed under [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/)).
+
+### Another Metroid 2 Remake
+Integration written by [Miepee](https://github.com/Miepee). Offworld sprites are licensed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) and are made by [AbyssalCreature](https://github.com/AbyssalCreature), ShirtyScarab554 and [many others](https://github.com/randovania/YAMS/blob/main/YAMS-LIB/sprites/Attribution.md).
 
 <!-- End CREDITS -->
 

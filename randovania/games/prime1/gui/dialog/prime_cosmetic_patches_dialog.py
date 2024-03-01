@@ -207,13 +207,15 @@ class PrimeCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_PrimeCosmeticPatc
 
     def _on_slider_update(self, slider: QtWidgets.QSlider, field_name: str, _: None) -> None:
         self.preferences = dataclasses.replace(
-            self.preferences, **{field_name: slider.value()}  # type: ignore[arg-type]
+            self.preferences,
+            **{field_name: slider.value()},  # type: ignore[arg-type]
         )
         getattr(self, f"{field_name}_label_updater")(slider)
 
     def _on_check_update(self, check: QtWidgets.QCheckBox, field_name: str, _: None) -> None:
         self.preferences = dataclasses.replace(
-            self.preferences, **{field_name: check.isChecked()}  # type: ignore[arg-type]
+            self.preferences,
+            **{field_name: check.isChecked()},  # type: ignore[arg-type]
         )
 
     def reset(self) -> None:

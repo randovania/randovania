@@ -90,6 +90,16 @@ def _test_preset(rdvgame_file: Path, expected_results_file: Path, mocker):
         new_callable=PropertyMock,
         return_value=b"\x00\x00\x00\x00\x00",
     )
+    mocker.patch(
+        "randovania.layout.layout_description.LayoutDescription.shareable_word_hash",
+        new_callable=PropertyMock,
+        return_value="Words Hash",
+    )
+    mocker.patch(
+        "randovania.layout.layout_description.LayoutDescription.shareable_hash",
+        new_callable=PropertyMock,
+        return_value="$$$$$",
+    )
 
     # Run
     data = PrimePatchDataFactory(description, players_config, cosmetic_patches).create_data()
@@ -124,6 +134,18 @@ def _test_preset(rdvgame_file: Path, expected_results_file: Path, mocker):
     ],
 )
 def test_create_patch_data(test_files_dir, rdvgame_filename, expected_results_filename, mocker):
+    # Setup
     rdvgame = test_files_dir.joinpath("log_files", rdvgame_filename)
     expected_results = test_files_dir.joinpath(expected_results_filename)
+    mocker.patch(
+        "randovania.layout.layout_description.LayoutDescription.shareable_word_hash",
+        new_callable=PropertyMock,
+        return_value="Words Hash",
+    )
+    mocker.patch(
+        "randovania.layout.layout_description.LayoutDescription.shareable_hash",
+        new_callable=PropertyMock,
+        return_value="$$$$$",
+    )
+
     _test_preset(rdvgame, expected_results, mocker)

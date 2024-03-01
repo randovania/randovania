@@ -144,6 +144,11 @@ ConstructDockWeakness = Struct(
     lock=OptionalValue(ConstructDockLock),
 )
 
+ConstructNamedTemplate = Struct(
+    display_name=String,
+    requirement=ConstructRequirement,
+)
+
 ConstructResourceDatabase = Struct(
     items=ConstructDict(ConstructItemResourceInfo),
     events=ConstructDict(ConstructResourceInfo),
@@ -151,7 +156,7 @@ ConstructResourceDatabase = Struct(
     damage=ConstructDict(ConstructResourceInfo),
     versions=ConstructDict(ConstructResourceInfo),
     misc=ConstructDict(ConstructResourceInfo),
-    requirement_template=ConstructDict(ConstructRequirement),
+    requirement_template=ConstructDict(ConstructNamedTemplate),
     damage_reductions=PrefixedArray(VarInt, ConstructDamageReductions),
     energy_tank_item_index=String,
 )

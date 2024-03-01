@@ -55,7 +55,7 @@ def test_admin_player_kick_last(solo_two_world_session, flask_app, mocker, mock_
             "visibility": "visible",
             "users_list": [],
             "worlds": [],
-            "game_details": {"seed_hash": "55SQZAV4", "spoiler": True, "word_hash": "Screw Omega Mines"},
+            "game_details": {"seed_hash": "55SQZAV4", "spoiler": True, "word_hash": "Screw Poison Eyon"},
             "generation_in_progress": None,
             "allowed_games": ANY,
             "allow_coop": False,
@@ -127,7 +127,11 @@ def test_admin_player_create_world_for(
 ):
     user1 = database.User.create(id=1234, name="The Name")
     session = database.MultiplayerSession.create(
-        id=1, name="Debug", state=MultiplayerSessionVisibility.VISIBLE, creator=user1
+        id=1,
+        name="Debug",
+        state=MultiplayerSessionVisibility.VISIBLE,
+        creator=user1,
+        dev_features=RandovaniaGame.BLANK.value,
     )
     database.MultiplayerMembership.create(user=user1, session=session, admin=True)
     sa = MagicMock()
@@ -285,7 +289,11 @@ def test_admin_session_create_world(
 ):
     user1 = database.User.create(id=1234, name="The Name")
     session = database.MultiplayerSession.create(
-        id=1, name="Debug", state=MultiplayerSessionVisibility.VISIBLE, creator=user1
+        id=1,
+        name="Debug",
+        state=MultiplayerSessionVisibility.VISIBLE,
+        creator=user1,
+        dev_features=RandovaniaGame.BLANK.value,
     )
     database.MultiplayerMembership.create(user=user1, session=session, admin=True)
     sa = MagicMock()
@@ -319,6 +327,13 @@ def test_admin_session_create_world_bad(
 
     old_world = database.World.create(session=session, name="New World", preset="{}")
 
+    allowed_games = [RandovaniaGame.BLANK]
+    mocker.patch(
+        "randovania.server.database.MultiplayerSession.allowed_games",
+        return_value=allowed_games,
+        new_callable=PropertyMock,
+    )
+
     preset = preset_manager.default_preset
     if reason == "bad_name":
         new_name = "New####,World"
@@ -329,7 +344,7 @@ def test_admin_session_create_world_bad(
     else:
         new_name = "New World"
         match = "Blank Development Game not allowed"
-        mocker.patch("randovania.server.database.MultiplayerSession.allowed_games").return_value = []
+        allowed_games.clear()
 
     # Run
     with flask_app.test_request_context(), pytest.raises(error.InvalidActionError, match=match):

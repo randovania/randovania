@@ -81,7 +81,7 @@ class AM2RRemoteConnector(RemoteConnector):
         """
 
         # Dont update on pause screens/transitions
-        ignore_rooms = ("rm_transition", "rm_subscreen", "rm_loading")
+        ignore_rooms = ("rm_transition", "rm_subscreen", "rm_loading", "itemroom")
         if state_or_region in ignore_rooms:
             return
 

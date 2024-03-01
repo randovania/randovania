@@ -57,6 +57,7 @@ class MSRBootstrap(MetroidBootstrap):
             "charge_door_buff": "ChargeDoorBuff",
             "beam_door_buff": "BeamDoorBuff",
             "nerf_super_missiles": "NerfSupers",
+            "beam_burst_buff": "BeamBurstBuff",
             "surface_crumbles": "SurfaceCrumbles",
             "area1_crumbles": "Area1Crumbles",
             "reverse_area8": "ReverseArea8",
@@ -82,17 +83,20 @@ class MSRBootstrap(MetroidBootstrap):
 
         if configuration.elevator_grapple_blocks:
             for name in [
-                "Area 4 (Central Caves) - Transport Area Grapple Block Pull Right",
-                "Area 5 (Tower Lobby) - Chozo Seal Grapple Block Bottom",
+                "Area 4 (Central Caves) - Transport to Area 3 and Crystal Mines Grapple Block Pull Right",
+                "Area 5 (Tower Lobby) - Transport to Areas 4 and 6 Grapple Block Bottom",
                 "Area 6 - Transport to Area 7 Grapple Block Pull",
                 "Area 7 - Transport to Area 8 Grapple Block",
             ]:
                 yield resource_database.get_event(name), 1
 
         if configuration.area3_interior_shortcut_no_grapple:
-            yield resource_database.get_event(
-                "Area 3 (Factory Interior) - Transport to Area 3 Metroid Caverns Grapple Block"
-            ), 1
+            yield (
+                resource_database.get_event(
+                    "Area 3 (Factory Interior) - Gamma Arena & Transport to Metroid Caverns East Grapple Block"
+                ),
+                1,
+            )
 
     def assign_pool_results(self, rng: Random, patches: GamePatches, pool_results: PoolResults) -> GamePatches:
         assert isinstance(patches.configuration, MSRConfiguration)

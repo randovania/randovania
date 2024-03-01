@@ -9,7 +9,7 @@
         "scenario_id": "s065_area6b"
     },
     "areas": {
-        "Tower": {
+        "Tower Exterior": {
             "default_node": "Elevator to Area 5 - Tower Interior",
             "extra": {
                 "total_boundings": {
@@ -167,7 +167,7 @@
                     "pickup_index": 111,
                     "location_category": "minor",
                     "connections": {
-                        "Door to Dangerous Hallway": {
+                        "Door to Overgrown Maze": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -238,7 +238,7 @@
                                 "negate": false
                             }
                         },
-                        "Door to Transport to Area 5 Tower Interior": {
+                        "Door to Transport to Tower Interior West": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -318,7 +318,7 @@
                     "dock_type": "elevator",
                     "default_connection": {
                         "region": "Area 5 - Tower Interior",
-                        "area": "Transport to Area 5 Tower Exterior (East)",
+                        "area": "Transport to Tower Exterior East",
                         "node": "Elevator to Area 5 - Tower Exterior"
                     },
                     "default_dock_weakness": "Elevator",
@@ -542,7 +542,7 @@
                     "default_connection": {
                         "region": "Area 5 - Tower Exterior",
                         "area": "Zeta Arena Access",
-                        "node": "Door to Tower"
+                        "node": "Door to Tower Exterior"
                     },
                     "default_dock_weakness": "Plasma Beam Door",
                     "exclude_from_dock_rando": false,
@@ -550,7 +550,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Poison Plants Hallway": {
+                        "Door to Red Plant Maze": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -559,7 +559,7 @@
                         }
                     }
                 },
-                "Door to Dangerous Hallway": {
+                "Door to Overgrown Maze": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -579,8 +579,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 5 - Tower Exterior",
-                        "area": "Dangerous Hallway",
-                        "node": "Door to Tower"
+                        "area": "Overgrown Maze",
+                        "node": "Door to Tower Exterior"
                     },
                     "default_dock_weakness": "Super Missile Door",
                     "exclude_from_dock_rando": false,
@@ -682,10 +682,79 @@
                                     }
                                 ]
                             }
+                        },
+                        "Top of Tower Right Side": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Boots",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Space",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "DBoost",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Destroy Blob Throwers/Steel Orbs"
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Simple IBJ"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Phase",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Movement",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
                         }
                     }
                 },
-                "Door to Poison Plants Hallway": {
+                "Door to Red Plant Maze": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -705,8 +774,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 5 - Tower Exterior",
-                        "area": "Poison Plants Hallway",
-                        "node": "Door to Tower"
+                        "area": "Red Plant Maze",
+                        "node": "Door to Tower Exterior"
                     },
                     "default_dock_weakness": "Power Bomb Door",
                     "exclude_from_dock_rando": false,
@@ -760,13 +829,13 @@
                                 ]
                             }
                         },
-                        "Top of Tower Right Side": {
+                        "Upper Right Ledge": {
                             "type": "template",
                             "data": "Climb Rooms Vertically (No High Jump)"
                         }
                     }
                 },
-                "Door to Transport to Area 5 Tower Interior": {
+                "Door to Transport to Tower Interior West": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -786,8 +855,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 5 - Tower Exterior",
-                        "area": "Transport to Area 5 Tower Interior",
-                        "node": "Door to Tower"
+                        "area": "Transport to Tower Interior West",
+                        "node": "Door to Tower Exterior"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -802,7 +871,7 @@
                                 "items": []
                             }
                         },
-                        "Tunnel to Dangerous Hallway": {
+                        "Tunnel to Overgrown Maze": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -908,7 +977,7 @@
                     "default_connection": {
                         "region": "Area 5 - Tower Exterior",
                         "area": "Gamma+ Arena Access",
-                        "node": "Door to Tower"
+                        "node": "Door to Tower Exterior"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -916,7 +985,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Top of Tower Right Side": {
+                        "Upper Right Ledge": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -975,13 +1044,13 @@
                                                         "items": [
                                                             {
                                                                 "type": "template",
-                                                                "data": "Can Spiderspark"
+                                                                "data": "Can Spider Boost"
                                                             },
                                                             {
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "tricks",
-                                                                    "name": "Spiderspark",
+                                                                    "name": "Spider Boost",
                                                                     "amount": 2,
                                                                     "negate": false
                                                                 }
@@ -1075,7 +1144,7 @@
                     "default_connection": {
                         "region": "Area 5 - Tower Exterior",
                         "area": "Gamma Arena",
-                        "node": "Door to Tower"
+                        "node": "Door to Tower Exterior"
                     },
                     "default_dock_weakness": "Charge Beam Door",
                     "exclude_from_dock_rando": false,
@@ -1112,7 +1181,7 @@
                     "pickup_index": 118,
                     "location_category": "minor",
                     "connections": {
-                        "Door to Dangerous Hallway": {
+                        "Door to Overgrown Maze": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -1185,7 +1254,7 @@
                         }
                     }
                 },
-                "Tunnel to Dangerous Hallway": {
+                "Tunnel to Overgrown Maze": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1202,8 +1271,8 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Area 5 - Tower Exterior",
-                        "area": "Dangerous Hallway",
-                        "node": "Tunnel to Tower"
+                        "area": "Overgrown Maze",
+                        "node": "Tunnel to Tower Exterior"
                     },
                     "default_dock_weakness": "Tunnel",
                     "exclude_from_dock_rando": false,
@@ -1274,12 +1343,12 @@
                         }
                     }
                 },
-                "Top of Tower Right Side": {
+                "Upper Right Ledge": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 3791.798941798941,
-                        "y": 7057.420005039053,
+                        "x": 3791.8,
+                        "y": 7057.42,
                         "z": 0.0
                     },
                     "description": "",
@@ -1289,95 +1358,17 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Dangerous Hallway": {
-                            "type": "or",
+                        "Door to Overgrown Maze": {
+                            "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Boots",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Space",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
                                         "type": "template",
-                                        "data": "Simple IBJ"
+                                        "data": "Use Spider Ball"
                                     },
                                     {
-                                        "type": "template",
-                                        "data": "Destroy Blob Throwers/Steel Orbs"
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "template",
-                                                    "data": "Use Spider Ball"
-                                                },
-                                                {
-                                                    "type": "or",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Bomb",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Spring",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "AirMorph",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "tricks",
-                                            "name": "DBoost",
-                                            "amount": 2,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "and",
+                                        "type": "or",
                                         "data": {
                                             "comment": null,
                                             "items": [
@@ -1385,7 +1376,16 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "items",
-                                                        "name": "Phase",
+                                                        "name": "Bomb",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Spring",
                                                         "amount": 1,
                                                         "negate": false
                                                     }
@@ -1394,8 +1394,8 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "tricks",
-                                                        "name": "Movement",
-                                                        "amount": 2,
+                                                        "name": "AirMorph",
+                                                        "amount": 1,
                                                         "negate": false
                                                     }
                                                 }
@@ -1405,7 +1405,7 @@
                                 ]
                             }
                         },
-                        "Door to Poison Plants Hallway": {
+                        "Door to Red Plant Maze": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1471,13 +1471,13 @@
                                                         "items": [
                                                             {
                                                                 "type": "template",
-                                                                "data": "Can Spiderspark"
+                                                                "data": "Can Spider Boost"
                                                             },
                                                             {
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "tricks",
-                                                                    "name": "Spiderspark",
+                                                                    "name": "Spider Boost",
                                                                     "amount": 2,
                                                                     "negate": false
                                                                 }
@@ -1547,6 +1547,13 @@
                                     }
                                 ]
                             }
+                        },
+                        "Top of Tower Right Side": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -1565,7 +1572,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Transport to Area 5 Tower Interior": {
+                        "Door to Transport to Tower Interior West": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -1712,7 +1719,7 @@
                                 "items": []
                             }
                         },
-                        "Door to Dangerous Hallway": {
+                        "Door to Overgrown Maze": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -1750,7 +1757,7 @@
                                 ]
                             }
                         },
-                        "Door to Transport to Area 5 Tower Interior": {
+                        "Door to Transport to Tower Interior West": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2050,10 +2057,103 @@
                             }
                         }
                     }
+                },
+                "Top of Tower Right Side": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 2996.72,
+                        "y": 5792.22,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Overgrown Maze": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Boots",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Space",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "DBoost",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Destroy Blob Throwers/Steel Orbs"
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Simple IBJ"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Phase",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Movement",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Door to Red Plant Maze": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
-        "Dangerous Hallway": {
+        "Overgrown Maze": {
             "default_node": null,
             "extra": {
                 "total_boundings": {
@@ -2118,13 +2218,13 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Can Spiderspark"
+                                        "data": "Can Spider Boost"
                                     },
                                     {
                                         "type": "resource",
                                         "data": {
                                             "type": "tricks",
-                                            "name": "Spiderspark",
+                                            "name": "Spider Boost",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -2132,7 +2232,7 @@
                                 ]
                             }
                         },
-                        "Door to Tower": {
+                        "Door to Tower Exterior": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -2144,13 +2244,13 @@
                                             "items": [
                                                 {
                                                     "type": "template",
-                                                    "data": "Can Spiderspark"
+                                                    "data": "Can Spider Boost"
                                                 },
                                                 {
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "tricks",
-                                                        "name": "Spiderspark",
+                                                        "name": "Spider Boost",
                                                         "amount": 1,
                                                         "negate": false
                                                     }
@@ -2268,13 +2368,13 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Can Spiderspark"
+                                        "data": "Can Spider Boost"
                                     },
                                     {
                                         "type": "resource",
                                         "data": {
                                             "type": "tricks",
-                                            "name": "Spiderspark",
+                                            "name": "Spider Boost",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -2282,7 +2382,7 @@
                                 ]
                             }
                         },
-                        "Tunnel to Tower": {
+                        "Tunnel to Tower Exterior": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -2293,7 +2393,7 @@
                         }
                     }
                 },
-                "Door to Tower": {
+                "Door to Tower Exterior": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2313,8 +2413,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 5 - Tower Exterior",
-                        "area": "Tower",
-                        "node": "Door to Dangerous Hallway"
+                        "area": "Tower Exterior",
+                        "node": "Door to Overgrown Maze"
                     },
                     "default_dock_weakness": "Super Missile Door",
                     "exclude_from_dock_rando": false,
@@ -2334,13 +2434,13 @@
                                             "items": [
                                                 {
                                                     "type": "template",
-                                                    "data": "Can Spiderspark"
+                                                    "data": "Can Spider Boost"
                                                 },
                                                 {
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "tricks",
-                                                        "name": "Spiderspark",
+                                                        "name": "Spider Boost",
                                                         "amount": 1,
                                                         "negate": false
                                                     }
@@ -2388,7 +2488,7 @@
                         }
                     }
                 },
-                "Tunnel to Tower": {
+                "Tunnel to Tower Exterior": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2405,8 +2505,8 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Area 5 - Tower Exterior",
-                        "area": "Tower",
-                        "node": "Tunnel to Dangerous Hallway"
+                        "area": "Tower Exterior",
+                        "node": "Tunnel to Overgrown Maze"
                     },
                     "default_dock_weakness": "Tunnel",
                     "exclude_from_dock_rando": false,
@@ -2522,7 +2622,7 @@
                 }
             }
         },
-        "Screw Attack Room": {
+        "Screw Attack Chamber": {
             "default_node": "Next to Pickup",
             "extra": {
                 "total_boundings": {
@@ -2581,7 +2681,7 @@
                         }
                     }
                 },
-                "Door from Water Path": {
+                "Door from Screw Attack Chamber Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2601,8 +2701,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 5 - Tower Exterior",
-                        "area": "Water Path",
-                        "node": "Door to Screw Attack Room"
+                        "area": "Screw Attack Chamber Access",
+                        "node": "Door to Screw Attack Chamber"
                     },
                     "default_dock_weakness": "Access Closed",
                     "exclude_from_dock_rando": false,
@@ -2619,7 +2719,7 @@
                         }
                     }
                 },
-                "Dock to Water Path": {
+                "Dock to Screw Attack Chamber Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2636,8 +2736,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Area 5 - Tower Exterior",
-                        "area": "Water Path",
-                        "node": "Dock to Screw Attack Room"
+                        "area": "Screw Attack Chamber Access",
+                        "node": "Dock to Screw Attack Chamber"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -2678,14 +2778,14 @@
                                 "items": []
                             }
                         },
-                        "Door from Water Path": {
+                        "Door from Screw Attack Chamber Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Dock to Water Path": {
+                        "Dock to Screw Attack Chamber Access": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -2736,7 +2836,7 @@
                 "asset_id": "collision_camera_006"
             },
             "nodes": {
-                "Door to Tower": {
+                "Door to Tower Exterior": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2756,7 +2856,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 5 - Tower Exterior",
-                        "area": "Tower",
+                        "area": "Tower Exterior",
                         "node": "Door to Zeta Arena Access"
                     },
                     "default_dock_weakness": "Plasma Beam Door",
@@ -2774,7 +2874,7 @@
                                 "negate": false
                             }
                         },
-                        "Tunnel to Water Path Access": {
+                        "Tunnel to Paraby Parlor": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2847,7 +2947,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Tower": {
+                        "Door to Tower Exterior": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -2928,7 +3028,7 @@
                         }
                     }
                 },
-                "Tunnel to Water Path Access": {
+                "Tunnel to Paraby Parlor": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2945,7 +3045,7 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Area 5 - Tower Exterior",
-                        "area": "Water Path Access",
+                        "area": "Paraby Parlor",
                         "node": "Tunnel to Zeta Arena Access"
                     },
                     "default_dock_weakness": "Tunnel with Bomb Block",
@@ -2954,7 +3054,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Tower": {
+                        "Door to Tower Exterior": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -2993,7 +3093,7 @@
                 }
             }
         },
-        "Poison Plants Hallway": {
+        "Red Plant Maze": {
             "default_node": null,
             "extra": {
                 "total_boundings": {
@@ -3043,7 +3143,7 @@
                     "pickup_index": 112,
                     "location_category": "minor",
                     "connections": {
-                        "Door to Tower": {
+                        "Door to Tower Exterior": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3097,7 +3197,7 @@
                         }
                     }
                 },
-                "Door to Tower": {
+                "Door to Tower Exterior": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3117,8 +3217,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 5 - Tower Exterior",
-                        "area": "Tower",
-                        "node": "Door to Poison Plants Hallway"
+                        "area": "Tower Exterior",
+                        "node": "Door to Red Plant Maze"
                     },
                     "default_dock_weakness": "Power Bomb Door",
                     "exclude_from_dock_rando": false,
@@ -3185,7 +3285,7 @@
                 }
             }
         },
-        "Transport to Area 5 Tower Interior": {
+        "Transport to Tower Interior West": {
             "default_node": "Elevator to Area 5 - Tower Interior",
             "extra": {
                 "total_boundings": {
@@ -3236,7 +3336,7 @@
                     "dock_type": "elevator",
                     "default_connection": {
                         "region": "Area 5 - Tower Interior",
-                        "area": "Transport to Area 5 Tower Exterior (West)",
+                        "area": "Transport to Tower Exterior West",
                         "node": "Elevator to Area 5 - Tower Exterior"
                     },
                     "default_dock_weakness": "Elevator",
@@ -3245,7 +3345,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Tower": {
+                        "Door to Tower Exterior": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3254,7 +3354,7 @@
                         }
                     }
                 },
-                "Door to Tower": {
+                "Door to Tower Exterior": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3274,8 +3374,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 5 - Tower Exterior",
-                        "area": "Tower",
-                        "node": "Door to Transport to Area 5 Tower Interior"
+                        "area": "Tower Exterior",
+                        "node": "Door to Transport to Tower Interior West"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -3447,13 +3547,13 @@
                                             "items": [
                                                 {
                                                     "type": "template",
-                                                    "data": "Can Spiderspark"
+                                                    "data": "Can Spider Boost"
                                                 },
                                                 {
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "tricks",
-                                                        "name": "Spiderspark",
+                                                        "name": "Spider Boost",
                                                         "amount": 2,
                                                         "negate": false
                                                     }
@@ -3527,7 +3627,7 @@
                 }
             }
         },
-        "Water Path Access": {
+        "Paraby Parlor": {
             "default_node": null,
             "extra": {
                 "total_boundings": {
@@ -3557,7 +3657,7 @@
                 "asset_id": "collision_camera_013"
             },
             "nodes": {
-                "Door to Water Path": {
+                "Door to Screw Attack Chamber Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3577,8 +3677,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 5 - Tower Exterior",
-                        "area": "Water Path",
-                        "node": "Door to Water Path Access"
+                        "area": "Screw Attack Chamber Access",
+                        "node": "Door to Paraby Parlor"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -3644,7 +3744,7 @@
                     "default_connection": {
                         "region": "Area 5 - Tower Exterior",
                         "area": "Zeta Arena Access",
-                        "node": "Tunnel to Water Path Access"
+                        "node": "Tunnel to Paraby Parlor"
                     },
                     "default_dock_weakness": "Tunnel with Bomb Block",
                     "exclude_from_dock_rando": false,
@@ -3652,7 +3752,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Water Path": {
+                        "Door to Screw Attack Chamber Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3809,7 +3909,7 @@
                         }
                     }
                 },
-                "Door to Tower": {
+                "Door to Tower Exterior": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3829,7 +3929,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 5 - Tower Exterior",
-                        "area": "Tower",
+                        "area": "Tower Exterior",
                         "node": "Door to Gamma Arena"
                     },
                     "default_dock_weakness": "Charge Beam Door",
@@ -4353,7 +4453,7 @@
                                 ]
                             }
                         },
-                        "Door to Tower": {
+                        "Door to Tower Exterior": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -4507,7 +4607,7 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Tower": {
+                        "Door to Tower Exterior": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4655,7 +4755,7 @@
                 }
             }
         },
-        "Water Path": {
+        "Screw Attack Chamber Access": {
             "default_node": null,
             "extra": {
                 "total_boundings": {
@@ -4685,7 +4785,7 @@
                 "asset_id": "collision_camera_016"
             },
             "nodes": {
-                "Door to Screw Attack Room": {
+                "Door to Screw Attack Chamber": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4705,8 +4805,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 5 - Tower Exterior",
-                        "area": "Screw Attack Room",
-                        "node": "Door from Water Path"
+                        "area": "Screw Attack Chamber",
+                        "node": "Door from Screw Attack Chamber Access"
                     },
                     "default_dock_weakness": "Missile Door",
                     "exclude_from_dock_rando": false,
@@ -4714,14 +4814,14 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Water Path Access": {
+                        "Door to Paraby Parlor": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Dock to Screw Attack Room": {
+                        "Dock to Screw Attack Chamber": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -4732,7 +4832,7 @@
                         }
                     }
                 },
-                "Door to Water Path Access": {
+                "Door to Paraby Parlor": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4752,8 +4852,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 5 - Tower Exterior",
-                        "area": "Water Path Access",
-                        "node": "Door to Water Path"
+                        "area": "Paraby Parlor",
+                        "node": "Door to Screw Attack Chamber Access"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -4761,7 +4861,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Screw Attack Room": {
+                        "Door to Screw Attack Chamber": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -4773,13 +4873,13 @@
                                             "items": [
                                                 {
                                                     "type": "template",
-                                                    "data": "Can Spiderspark"
+                                                    "data": "Can Spider Boost"
                                                 },
                                                 {
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "tricks",
-                                                        "name": "Spiderspark",
+                                                        "name": "Spider Boost",
                                                         "amount": 2,
                                                         "negate": false
                                                     }
@@ -4851,7 +4951,7 @@
                         }
                     }
                 },
-                "Dock to Screw Attack Room": {
+                "Dock to Screw Attack Chamber": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4868,8 +4968,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Area 5 - Tower Exterior",
-                        "area": "Screw Attack Room",
-                        "node": "Dock to Water Path"
+                        "area": "Screw Attack Chamber",
+                        "node": "Dock to Screw Attack Chamber Access"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -4877,7 +4977,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Screw Attack Room": {
+                        "Door to Screw Attack Chamber": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4984,10 +5084,10 @@
                         7900.0
                     ]
                 ],
-                "asset_id": "collision_camera_017"
+                "asset_id": "collision_camera_014"
             },
             "nodes": {
-                "Door to Tower": {
+                "Door to Tower Exterior": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5007,7 +5107,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 5 - Tower Exterior",
-                        "area": "Tower",
+                        "area": "Tower Exterior",
                         "node": "Door to Gamma+ Arena Access"
                     },
                     "default_dock_weakness": "Power Beam Door",
@@ -5060,13 +5160,13 @@
                                                         "items": [
                                                             {
                                                                 "type": "template",
-                                                                "data": "Can Spiderspark"
+                                                                "data": "Can Spider Boost"
                                                             },
                                                             {
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "tricks",
-                                                                    "name": "Spiderspark",
+                                                                    "name": "Spider Boost",
                                                                     "amount": 2,
                                                                     "negate": false
                                                                 }
@@ -5111,7 +5211,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Tower": {
+                        "Door to Tower Exterior": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5155,13 +5255,13 @@
                                                         "items": [
                                                             {
                                                                 "type": "template",
-                                                                "data": "Can Spiderspark"
+                                                                "data": "Can Spider Boost"
                                                             },
                                                             {
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "tricks",
-                                                                    "name": "Spiderspark",
+                                                                    "name": "Spider Boost",
                                                                     "amount": 2,
                                                                     "negate": false
                                                                 }
@@ -5241,7 +5341,7 @@
                         7900.0
                     ]
                 ],
-                "asset_id": "collision_camera_018"
+                "asset_id": "collision_camera_014"
             },
             "nodes": {
                 "Door to Gamma+ Arena Access": {
@@ -5321,13 +5421,13 @@
                                                         "items": [
                                                             {
                                                                 "type": "template",
-                                                                "data": "Can Spiderspark"
+                                                                "data": "Can Spider Boost"
                                                             },
                                                             {
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "tricks",
-                                                                    "name": "Spiderspark",
+                                                                    "name": "Spider Boost",
                                                                     "amount": 2,
                                                                     "negate": false
                                                                 }
@@ -5490,13 +5590,13 @@
                                                         "items": [
                                                             {
                                                                 "type": "template",
-                                                                "data": "Can Spiderspark"
+                                                                "data": "Can Spider Boost"
                                                             },
                                                             {
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "tricks",
-                                                                    "name": "Spiderspark",
+                                                                    "name": "Spider Boost",
                                                                     "amount": 2,
                                                                     "negate": false
                                                                 }

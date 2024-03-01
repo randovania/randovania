@@ -29,7 +29,6 @@ JOKE_HINTS = [
     "The Light Suit is fully resistant to the effects of Dark Aether.",
     "Your current Chozo Battle Suit version is SA1-4468-VM6-P.",
     "May the Light of Aether shine upon you!",
-    "Bored? Solve this: (11! - (-5*cos(pi)*10!) + (-1/(-10^-6)) - (((27^4)*7-7)/4) - (1.801665E6))",
     "Imagining this hint is left as an exercise to the player.",
     "I would tell you a hint, but Aran out of them.",
     "Humans will get mad when noticing that they're breathing manually. The Ing don't have such weaknesses!",

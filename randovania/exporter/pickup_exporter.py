@@ -150,6 +150,10 @@ def _calculate_collection_text(
     """
 
     if model_style == PickupModelStyle.HIDE_ALL:
+        # TODO: this might not be correct, in case of custom offworld models for the pickups?
+        if visual_pickup.model.game != pickup.model.game:
+            memo_data = GenericAcquiredMemo()
+
         hud_text = _get_all_hud_text(_conditional_resources_for_pickup(visual_pickup), memo_data)
         num_conditional = len(_conditional_resources_for_pickup(pickup))
         if len(hud_text) == num_conditional:

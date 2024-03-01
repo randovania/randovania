@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import asyncio
 from unittest.mock import AsyncMock, MagicMock, call
 
 import pytest
@@ -177,7 +176,7 @@ async def test_send_requests_to_socket_timeout(executor: NintendontExecutor, use
 
     socket = AsyncMock()
     socket.writer.write = MagicMock()
-    socket.writer.drain.side_effect = asyncio.TimeoutError() if use_timeout else OSError("test-exp")
+    socket.writer.drain.side_effect = TimeoutError() if use_timeout else OSError("test-exp")
     executor._socket = socket
     reqs = [RequestBatch()]
     if use_timeout:

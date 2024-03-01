@@ -41,12 +41,10 @@ def test_create_pickup_for(echoes_resource_database, generic_pickup_category):
         model_name="SuperModel",
         offworld_models=frozendict({}),
         progression=("DarkVisor", "MorphBall", "Bombs"),
-        default_starting_count=0,
-        default_shuffled_count=1,
         ammo=("EnergyTank", "DarkAmmo"),
         must_be_starting=False,
         original_location=None,
-        probability_offset=5,
+        probability_offset=5.0,
         preferred_location_category=LocationCategory.MAJOR,
     )
     state = StandardPickupState(
@@ -79,7 +77,7 @@ def test_create_pickup_for(echoes_resource_database, generic_pickup_category):
         respects_lock=False,
         generator_params=PickupGeneratorParams(
             preferred_location_category=LocationCategory.MAJOR,
-            probability_offset=5,
+            probability_offset=5.0,
         ),
     )
 
@@ -231,8 +229,8 @@ def test_create_ammo_expansion(requires_main_item: bool, echoes_pickup_database,
         ),
         generator_params=PickupGeneratorParams(
             preferred_location_category=LocationCategory.MINOR,
-            probability_offset=0,
-            probability_multiplier=2,
+            probability_offset=0.0,
+            probability_multiplier=2.0,
         ),
     )
 

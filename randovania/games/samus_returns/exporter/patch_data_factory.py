@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 from randovania.exporter import item_names, pickup_exporter
-from randovania.exporter.hints import credits_spoiler
+from randovania.exporter.hints import credits_spoiler, guaranteed_item_hint
 from randovania.exporter.hints.hint_exporter import HintExporter
 from randovania.exporter.patch_data_factory import PatchDataFactory
 from randovania.game_description.assignment import PickupTarget
@@ -12,18 +12,23 @@ from randovania.game_description.pickup.pickup_entry import PickupModel
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.games.game import RandovaniaGame
 from randovania.games.samus_returns.exporter.hint_namer import MSRHintNamer
+from randovania.games.samus_returns.exporter.joke_hints import JOKE_HINTS
+from randovania.games.samus_returns.layout.hint_configuration import ItemHintMode
 from randovania.generator.pickup_pool import pickup_creator
 
 if TYPE_CHECKING:
     from collections.abc import Iterator
+    from random import Random
 
     from randovania.exporter.pickup_exporter import ExportedPickupDetails
+    from randovania.game_description.db.area import Area
     from randovania.game_description.db.node import Node
     from randovania.game_description.db.node_identifier import NodeIdentifier
     from randovania.game_description.pickup.pickup_entry import ConditionalResources, PickupEntry
     from randovania.game_description.resources.resource_collection import ResourceCollection
     from randovania.game_description.resources.resource_info import ResourceInfo
     from randovania.games.samus_returns.layout.msr_configuration import MSRConfiguration
+    from randovania.games.samus_returns.layout.msr_cosmetic_patches import MSRCosmeticPatches
 
 _ALTERNATIVE_MODELS = {
     PickupModel(RandovaniaGame.METROID_SAMUS_RETURNS, "Nothing"): ["itemsphere"],
@@ -98,6 +103,7 @@ def get_resources_for_details(
 
 
 class MSRPatchDataFactory(PatchDataFactory):
+    cosmetic_patches: MSRCosmeticPatches
     configuration: MSRConfiguration
 
     def __init__(self, *args, **kwargs):
@@ -204,11 +210,11 @@ class MSRPatchDataFactory(PatchDataFactory):
 
         return details
 
-    def _encode_hints(self) -> list[dict]:
+    def _encode_hints(self, rng: Random) -> list[dict]:
         namer = MSRHintNamer(self.description.all_patches, self.players_config)
         exporter = HintExporter(namer, self.rng, ["A joke hint."])
 
-        return [
+        hints = [
             {
                 "accesspoint_actor": self._teleporter_ref_for(logbook_node),
                 "text": exporter.create_message_for_hint(
@@ -221,6 +227,50 @@ class MSRPatchDataFactory(PatchDataFactory):
             for logbook_node in self.game.region_list.iterate_nodes()
             if isinstance(logbook_node, HintNode)
         ]
+
+        artifacts = [self.game.resource_database.get_item(f"Metroid DNA {i + 1}") for i in range(39)]
+        dna_hint_mapping = {}
+        hint_config = self.configuration.hints
+        if hint_config.artifacts != ItemHintMode.DISABLED:
+            dna_hint_mapping = guaranteed_item_hint.create_guaranteed_hints_for_resources(
+                self.description.all_patches,
+                self.players_config,
+                MSRHintNamer(self.description.all_patches, self.players_config),
+                hint_config.artifacts == ItemHintMode.HIDE_AREA,
+                artifacts,
+                False,
+            )
+        else:
+            dna_hint_mapping = {k: f"{k.long_name} is hidden somewhere on SR388." for k in artifacts}
+
+        # Shuffle DNA hints
+        hint_texts = list(dna_hint_mapping.values())
+        rng.shuffle(hint_texts)
+        dna_hint_mapping = dict(zip(artifacts, hint_texts))
+
+        dud_hint = "This Chozo Seal did not give any useful DNA hints."
+        actor_to_amount_map = [
+            ("s010_area1", "LE_RandoDNA", 0, 4),
+            ("s020_area2", "LE_RandoDNA", 4, 9),
+            ("s033_area3b", "LE_RandoDNA", 9, 15),
+            ("s050_area5", "LE_RandoDNA", 15, 19),
+            ("s065_area6b", "LE_RandoDNA", 19, 25),
+            ("s070_area7", "LE_RandoDNA_001", 25, 28),
+            ("s070_area7", "LE_RandoDNA_002", 28, 31),
+            ("s090_area9", "LE_RandoDNA", 31, 34),
+            ("s100_area10", "LE_RandoDNA", 34, 39),
+        ]
+
+        for scenario, actor, start, end in actor_to_amount_map:
+            shuffled_hints = list(dna_hint_mapping.values())[start:end]
+            shuffled_hints = [hint for hint in shuffled_hints if "Hunter already started with" not in hint]
+            if not shuffled_hints:
+                shuffled_hints = [rng.choice(JOKE_HINTS + [dud_hint])]
+            hints.append(
+                {"accesspoint_actor": {"scenario": scenario, "actor": actor}, "text": "\n".join(shuffled_hints) + "\n"}
+            )
+
+        return hints
 
     def _node_for(self, identifier: NodeIdentifier) -> Node:
         return self.game.region_list.node_by_identifier(identifier)
@@ -240,6 +290,58 @@ class MSRPatchDataFactory(PatchDataFactory):
 
         text["GUI_SAMUS_DATA_TITLE"] = "<version>"
 
+        location_text = ""
+        if self.configuration.artifacts.prefer_anywhere:
+            location_text = "at any location"
+        else:
+            restricted_text = []
+            if self.configuration.artifacts.prefer_metroids:
+                restricted_text.append("on Standard Metroids")
+            if self.configuration.artifacts.prefer_stronger_metroids:
+                restricted_text.append("on Stronger Metroids")
+            if self.configuration.artifacts.prefer_bosses:
+                restricted_text.append("on Bosses")
+            location_text = "{}{}{}".format(
+                ", ".join(restricted_text[:-1]), " and " if len(restricted_text) > 1 else "", restricted_text[-1]
+            )
+
+        # Intro Text
+        text[
+            "GUI_CUTSCENE_OPENING_1"
+        ] = "Welcome to the Metroid: Samus Returns Randomizer!|Here are some useful tips to help you on your journey."
+        text["GUI_CUTSCENE_OPENING_2"] = (
+            "All of the hazardous liquid has been drained. You can thus freely explore the planet.|"
+            "Metroids now also drop items."
+        )
+        text["GUI_CUTSCENE_OPENING_3"] = (
+            "In this randomizer, you need to collect all Metroid DNA, find the Baby, "
+            "and then fight Proteus Ridley at your ship to leave the planet."
+        )
+        text["GUI_CUTSCENE_OPENING_4"] = (
+            f"With your current configuration, you need to find {self.configuration.artifacts.required_artifacts} DNA. "
+            f"It can be found {location_text}."
+        )
+        text["GUI_CUTSCENE_OPENING_5"] = (
+            "You may freely travel between Surface and Area 8.|"
+            "Once you have collected all the required DNA, "
+            "going from Area 8 to Surface will force a confrontation with Proteus Ridley."
+        )
+        text["GUI_CUTSCENE_OPENING_6"] = (
+            "All the Chozo Seals have been repurposed to give hints on the region where a specific item is located.|"
+            "Additionally, more distinct Chozo Seals have been placed that give hints on DNA locations."
+        )
+        text[
+            "GUI_CUTSCENE_OPENING_7"
+        ] = "If you're interested in knowing more on how the DNA Seals work, you can check the Hint page in Randovania."
+        text["GUI_CUTSCENE_OPENING_8"] = (
+            "Some other helpful tips:|You can warp to your starting location by cancelling the save at a Save Station.|"
+            "Scan Pulse can be used to reveal more of your map."
+        )
+        text[
+            "GUI_CUTSCENE_OPENING_9"
+        ] = "If you still have more questions, check out the FAQ and Differences pages in Randovania."
+        text["GUI_CUTSCENE_OPENING_10"] = "Good luck and have fun!"
+
         return text
 
     def _credits_spoiler(self) -> dict[str, str]:
@@ -249,6 +351,63 @@ class MSRPatchDataFactory(PatchDataFactory):
             self.players_config,
             MSRHintNamer(self.description.all_patches, self.players_config),
         )
+
+    def _static_room_name_fixes(self, scenario_name: str, area: Area) -> tuple[str, str]:
+        # static fixes for some rooms
+        cc_name = area.extra["asset_id"]
+        if scenario_name == "s025_area2b":
+            if cc_name == "collision_camera011":
+                return cc_name, "Varia Suit Chamber & Interior Intersection Terminal"
+
+        if scenario_name == "s065_area6b":
+            if cc_name == "collision_camera_014":
+                return cc_name, "Gamma+ Arena & Access"
+
+        if scenario_name == "s100_area10":
+            if cc_name == "collision_camera_008":
+                return cc_name, "Metroid Nest Foyer & Hallway South"
+
+        return cc_name, area.name
+
+    def _build_area_name_dict(self) -> dict[str, dict[str, str]]:
+        # generate a 2D dictionary of (scenario, collision camera) => room name
+        all_dict: dict = {}
+        for region in self.game.region_list.regions:
+            scenario = region.extra["scenario_id"]
+            region_dict: dict = {}
+
+            for area in region.areas:
+                cc_name, area_name = self._static_room_name_fixes(scenario, area)
+                region_dict[cc_name] = area_name
+            all_dict[scenario] = region_dict
+
+        return all_dict
+
+    def _create_cosmetics(self) -> dict:
+        c = self.cosmetic_patches
+        cosmetic_patches: dict = {}
+        # Game needs each color component in [0-1] range
+        if self.cosmetic_patches.use_laser_color:
+            cosmetic_patches["laser_locked_color"] = [x / 255 for x in c.laser_locked_color]
+            cosmetic_patches["laser_unlocked_color"] = [x / 255 for x in c.laser_unlocked_color]
+
+        if self.cosmetic_patches.use_grapple_laser_color:
+            cosmetic_patches["grapple_laser_locked_color"] = [x / 255 for x in c.grapple_laser_locked_color]
+            cosmetic_patches["grapple_laser_unlocked_color"] = [x / 255 for x in c.grapple_laser_unlocked_color]
+
+        if self.cosmetic_patches.use_energy_tank_color:
+            cosmetic_patches["energy_tank_color"] = [x / 255 for x in c.energy_tank_color]
+
+        if self.cosmetic_patches.use_aeion_bar_color:
+            cosmetic_patches["aeion_bar_color"] = [x / 255 for x in c.aeion_bar_color]
+
+        if self.cosmetic_patches.use_ammo_hud_color:
+            cosmetic_patches["ammo_hud_color"] = [x / 255 for x in c.ammo_hud_color]
+
+        cosmetic_patches["enable_room_name_display"] = c.show_room_names.value
+        cosmetic_patches["camera_names_dict"] = self._build_area_name_dict()
+
+        return cosmetic_patches
 
     def create_data(self) -> dict:
         starting_location = self._start_point_ref_for(self._node_for(self.patches.starting_location))
@@ -289,6 +448,7 @@ class MSRPatchDataFactory(PatchDataFactory):
             "game_patches": {
                 "charge_door_buff": self.configuration.charge_door_buff,
                 "beam_door_buff": self.configuration.beam_door_buff,
+                "beam_burst_buff": self.configuration.beam_burst_buff,
                 "nerf_super_missiles": self.configuration.nerf_super_missiles,
                 "remove_elevator_grapple_blocks": self.configuration.elevator_grapple_blocks,
                 "remove_grapple_block_area3_interior_shortcut": self.configuration.area3_interior_shortcut_no_grapple,
@@ -298,7 +458,8 @@ class MSRPatchDataFactory(PatchDataFactory):
             },
             "text_patches": self._static_text_changes(),
             "spoiler_log": self._credits_spoiler() if self.description.has_spoiler else {},
-            "hints": self._encode_hints(),
+            "hints": self._encode_hints(self.rng),
+            "cosmetic_patches": self._create_cosmetics(),
             "configuration_identifier": self.description.shareable_hash,
         }
 
@@ -311,9 +472,9 @@ class MSRAcquiredMemo(dict):
     def with_expansion_text(cls) -> MSRAcquiredMemo:
         result = cls()
         result["Missile Tank"] = "Missile Tank acquired.\nMissile capacity increased by {Missile}."
-        result["Super Missile Tank"] = (
-            "Super Missile Tank acquired.\nSuper Missile capacity increased by {Super Missile}."
-        )
+        result[
+            "Super Missile Tank"
+        ] = "Super Missile Tank acquired.\nSuper Missile capacity increased by {Super Missile}."
         result["Power Bomb Tank"] = "Power Bomb Tank acquired.\nPower Bomb capacity increased by {Power Bomb}."
         result["Energy Tank"] = "Energy Tank acquired.\nEnergy capacity increased by 100."
         result["Aeion Tank"] = "Aeion Tank acquired.\nAeion Gauge expanded."

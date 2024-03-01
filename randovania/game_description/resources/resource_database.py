@@ -34,6 +34,12 @@ _ALL_TYPES = (
 
 
 @dataclasses.dataclass(frozen=True)
+class NamedRequirementTemplate:
+    display_name: str
+    requirement: Requirement
+
+
+@dataclasses.dataclass(frozen=True)
 class ResourceDatabase:
     game_enum: RandovaniaGame
     item: list[ItemResourceInfo]
@@ -42,7 +48,7 @@ class ResourceDatabase:
     damage: list[SimpleResourceInfo]
     version: list[SimpleResourceInfo]
     misc: list[SimpleResourceInfo]
-    requirement_template: dict[str, Requirement]
+    requirement_template: dict[str, NamedRequirementTemplate]
     damage_reductions: dict[SimpleResourceInfo, list[DamageReduction]]
     energy_tank_item: ItemResourceInfo
     base_damage_reduction: Callable[[ResourceDatabase, ResourceCollection], float] = default_base_damage_reduction

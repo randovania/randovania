@@ -35,11 +35,11 @@ class DreadBasePatchesFactory(BasePatchesFactory):
         rsb = game.resource_database
 
         requirement_for_type = {
-            "POWERBEAM": rsb.requirement_template["Shoot Beam"],
-            "BOMB": rsb.requirement_template["Lay Bomb"],
-            "MISSILE": rsb.requirement_template["Shoot Missile"],
-            "SUPERMISSILE": rsb.requirement_template["Shoot Super Missile"],
-            "POWERBOMB": rsb.requirement_template["Lay Power Bomb"],
+            "POWERBEAM": rsb.requirement_template["Shoot Beam"].requirement,
+            "BOMB": rsb.requirement_template["Lay Bomb"].requirement,
+            "MISSILE": rsb.requirement_template["Shoot Missile"].requirement,
+            "SUPERMISSILE": rsb.requirement_template["Shoot Super Missile"].requirement,
+            "POWERBOMB": rsb.requirement_template["Lay Power Bomb"].requirement,
             "SCREWATTACK": ResourceRequirement.simple(rsb.get_item("Screw")),
             "WEIGHT": Requirement.impossible(),
             "SPEEDBOOST": ResourceRequirement.simple(rsb.get_item("Speed")),

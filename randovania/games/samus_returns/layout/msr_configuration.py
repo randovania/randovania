@@ -5,6 +5,7 @@ import dataclasses
 from randovania.bitpacking.bitpacking import BitPackDataclass
 from randovania.bitpacking.json_dataclass import JsonDataclass
 from randovania.games.game import RandovaniaGame
+from randovania.games.samus_returns.layout.hint_configuration import HintConfiguration
 from randovania.layout.base.base_configuration import BaseConfiguration
 
 
@@ -30,12 +31,14 @@ class MSRConfiguration(BaseConfiguration):
     area3_interior_shortcut_no_grapple: bool
     charge_door_buff: bool
     beam_door_buff: bool
+    beam_burst_buff: bool
     nerf_super_missiles: bool
     surface_crumbles: bool
     area1_crumbles: bool
     reverse_area8: bool
     allow_highly_dangerous_logic: bool
     artifacts: MSRArtifactConfig
+    hints: HintConfiguration
 
     @classmethod
     def game_enum(cls) -> RandovaniaGame:

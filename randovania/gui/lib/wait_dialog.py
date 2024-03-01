@@ -12,10 +12,10 @@ if TYPE_CHECKING:
 
 async def cancellable_wait(parent: QtWidgets.QWidget | None, task: asyncio.Task, title: str, message: str):
     message_box = QtWidgets.QMessageBox(
-        QtWidgets.QMessageBox.NoIcon,
+        QtWidgets.QMessageBox.Icon.NoIcon,
         title,
         message,
-        QtWidgets.QMessageBox.Cancel,
+        QtWidgets.QMessageBox.StandardButton.Cancel,
         parent,
     )
     common_qt_lib.set_default_window_icon(message_box)

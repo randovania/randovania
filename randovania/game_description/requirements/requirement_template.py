@@ -27,7 +27,7 @@ class RequirementTemplate(Requirement):
         return RequirementTemplate, (self.template_name,)
 
     def template_requirement(self, database: ResourceDatabase) -> Requirement:
-        return database.requirement_template[self.template_name]
+        return database.requirement_template[self.template_name].requirement
 
     def damage(self, current_resources: ResourceCollection, database: ResourceDatabase) -> int:
         return self.template_requirement(database).damage(current_resources, database)
@@ -38,12 +38,7 @@ class RequirementTemplate(Requirement):
     def patch_requirements(
         self, static_resources: ResourceCollection, damage_multiplier: float, database: ResourceDatabase
     ) -> Requirement:
-        template = self.template_requirement(database)
-        result = template.patch_requirements(static_resources, damage_multiplier, database)
-        if result != template:
-            return result
-        else:
-            return self
+        return self.template_requirement(database).patch_requirements(static_resources, damage_multiplier, database)
 
     def simplify(self, keep_comments: bool = False) -> Requirement:
         return self

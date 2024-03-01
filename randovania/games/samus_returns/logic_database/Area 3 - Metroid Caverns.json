@@ -9,7 +9,7 @@
         "scenario_id": "s033_area3b"
     },
     "areas": {
-        "Transport to Area 3 Factory Exterior (Upper)": {
+        "Transport to Factory Exterior North": {
             "default_node": "Elevator to Area 3 - Factory Exterior",
             "extra": {
                 "total_boundings": {
@@ -84,7 +84,7 @@
                     "dock_type": "elevator",
                     "default_connection": {
                         "region": "Area 3 - Factory Exterior",
-                        "area": "Transport to Area 3 Metroid Caverns (Upper)",
+                        "area": "Transport to Metroid Caverns North",
                         "node": "Elevator to Area 3 - Metroid Caverns"
                     },
                     "default_dock_weakness": "Elevator",
@@ -121,7 +121,7 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Gamma Arena North": {
+                        "Door to Gamma Arena Center": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -172,14 +172,14 @@
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "tricks",
-                                                                    "name": "Spiderspark",
+                                                                    "name": "Spider Boost",
                                                                     "amount": 2,
                                                                     "negate": false
                                                                 }
                                                             },
                                                             {
                                                                 "type": "template",
-                                                                "data": "Can Spiderspark"
+                                                                "data": "Can Spider Boost"
                                                             }
                                                         ]
                                                     }
@@ -252,7 +252,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "https://youtu.be/jDjWVgkmRpQ",
                                                         "items": [
                                                             {
                                                                 "type": "template",
@@ -278,7 +278,7 @@
                         }
                     }
                 },
-                "Door to Gamma Arena North": {
+                "Door to Gamma Arena Center": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -298,8 +298,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 3 - Metroid Caverns",
-                        "area": "Gamma Arena North",
-                        "node": "Door to Transport to Area 3 Factory Exterior (Upper)"
+                        "area": "Gamma Arena Center",
+                        "node": "Door to Transport to Factory Exterior North"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -348,7 +348,7 @@
                     "default_connection": {
                         "region": "Area 3 - Metroid Caverns",
                         "area": "Gamma Arena South",
-                        "node": "Door to Transport to Area 3 Factory Exterior (Upper)"
+                        "node": "Door to Transport to Factory Exterior North"
                     },
                     "default_dock_weakness": "Access Locked",
                     "exclude_from_dock_rando": false,
@@ -386,7 +386,7 @@
                     "default_connection": {
                         "region": "Area 3 - Metroid Caverns",
                         "area": "Alpha+ Arena West",
-                        "node": "Door to Transport to Area 3 Factory Exterior (Upper)"
+                        "node": "Door to Transport to Factory Exterior North"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -415,7 +415,7 @@
                                 ]
                             }
                         },
-                        "Door to Gamma Arena North": {
+                        "Door to Gamma Arena Center": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -444,7 +444,7 @@
                     "pickup_index": 70,
                     "location_category": "minor",
                     "connections": {
-                        "Door to Gamma Arena North": {
+                        "Door to Gamma Arena Center": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -471,7 +471,7 @@
                     "default_connection": {
                         "region": "Area 3 - Metroid Caverns",
                         "area": "Gamma Arena South",
-                        "node": "Tunnel to Transport to Area 3 Factory Exterior (Upper)"
+                        "node": "Tunnel to Transport to Factory Exterior North"
                     },
                     "default_dock_weakness": "Tunnel",
                     "exclude_from_dock_rando": false,
@@ -591,7 +591,7 @@
                 "asset_id": "collision_camera_007"
             },
             "nodes": {
-                "Door to Transport to Area 3 Factory Exterior (Upper)": {
+                "Door to Transport to Factory Exterior North": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -611,7 +611,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 3 - Metroid Caverns",
-                        "area": "Transport to Area 3 Factory Exterior (Upper)",
+                        "area": "Transport to Factory Exterior North",
                         "node": "Door to Alpha+ Arena West"
                     },
                     "default_dock_weakness": "Power Beam Door",
@@ -629,7 +629,7 @@
                         }
                     }
                 },
-                "Door to Transport to Area 3 Factory Exterior (Lower)": {
+                "Door to Transport to Factory Exterior West": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -649,7 +649,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 3 - Metroid Caverns",
-                        "area": "Transport to Area 3 Factory Exterior (Lower)",
+                        "area": "Transport to Factory Exterior West",
                         "node": "Door to Alpha+ Arena West"
                     },
                     "default_dock_weakness": "Power Beam Door",
@@ -709,14 +709,14 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Transport to Area 3 Factory Exterior (Upper)": {
+                        "Door to Transport to Factory Exterior North": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Door to Transport to Area 3 Factory Exterior (Lower)": {
+                        "Door to Transport to Factory Exterior West": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -760,7 +760,7 @@
                 }
             }
         },
-        "Gamma Arena North": {
+        "Gamma Arena Center": {
             "default_node": "Start Point (Inside Arena)",
             "extra": {
                 "total_boundings": {
@@ -790,7 +790,7 @@
                 "asset_id": "collision_camera_008"
             },
             "nodes": {
-                "Door to Transport to Area 3 Factory Exterior (Upper)": {
+                "Door to Transport to Factory Exterior North": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -810,8 +810,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 3 - Metroid Caverns",
-                        "area": "Transport to Area 3 Factory Exterior (Upper)",
-                        "node": "Door to Gamma Arena North"
+                        "area": "Transport to Factory Exterior North",
+                        "node": "Door to Gamma Arena Center"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -828,7 +828,7 @@
                         }
                     }
                 },
-                "Door to Teleporter Access": {
+                "Door to Letum Shrine": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -848,8 +848,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 3 - Metroid Caverns",
-                        "area": "Teleporter Access",
-                        "node": "Door to Gamma Arena North"
+                        "area": "Letum Shrine",
+                        "node": "Door to Gamma Arena Center"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -908,7 +908,7 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Transport to Area 3 Factory Exterior (Upper)": {
+                        "Door to Transport to Factory Exterior North": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -934,42 +934,8 @@
                                         }
                                     },
                                     {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "template",
-                                                    "data": "Shoot Beam Burst"
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Knowledge",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "PBAmmo",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                }
-                                            ]
-                                        }
+                                        "type": "template",
+                                        "data": "Destroy Blob Throwers/Steel Orbs"
                                     }
                                 ]
                             }
@@ -993,7 +959,7 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Teleporter Access": {
+                        "Door to Letum Shrine": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1015,42 +981,8 @@
                                         }
                                     },
                                     {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "template",
-                                                    "data": "Shoot Beam Burst"
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "PBAmmo",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Knowledge",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                }
-                                            ]
-                                        }
+                                        "type": "template",
+                                        "data": "Destroy Blob Throwers/Steel Orbs"
                                     }
                                 ]
                             }
@@ -1230,7 +1162,7 @@
                         }
                     }
                 },
-                "Door to Transport to Area 3 Factory Exterior (Upper)": {
+                "Door to Transport to Factory Exterior North": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1250,7 +1182,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 3 - Metroid Caverns",
-                        "area": "Transport to Area 3 Factory Exterior (Upper)",
+                        "area": "Transport to Factory Exterior North",
                         "node": "Door to Gamma Arena South"
                     },
                     "default_dock_weakness": "Power Beam Door",
@@ -1259,7 +1191,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Outside Arena": {
+                        "Right of Tunnels": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -1270,7 +1202,7 @@
                         }
                     }
                 },
-                "Door to Shaft West": {
+                "Door to Ramulken Rollway": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1290,7 +1222,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 3 - Metroid Caverns",
-                        "area": "Shaft West",
+                        "area": "Ramulken Rollway",
                         "node": "Door to Gamma Arena South"
                     },
                     "default_dock_weakness": "Wave Beam Door",
@@ -1308,7 +1240,7 @@
                         }
                     }
                 },
-                "Tunnel to Transport to Area 3 Factory Exterior (Upper)": {
+                "Tunnel to Transport to Factory Exterior North": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1325,7 +1257,7 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Area 3 - Metroid Caverns",
-                        "area": "Transport to Area 3 Factory Exterior (Upper)",
+                        "area": "Transport to Factory Exterior North",
                         "node": "Tunnel to Gamma Arena South"
                     },
                     "default_dock_weakness": "Tunnel",
@@ -1385,7 +1317,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Tunnel to Transport to Area 3 Factory Exterior (Upper)": {
+                        "Tunnel to Transport to Factory Exterior North": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1425,14 +1357,14 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "tricks",
-                                                        "name": "Spiderspark",
+                                                        "name": "Spider Boost",
                                                         "amount": 2,
                                                         "negate": false
                                                     }
                                                 },
                                                 {
                                                     "type": "template",
-                                                    "data": "Can Spiderspark"
+                                                    "data": "Can Spider Boost"
                                                 }
                                             ]
                                         }
@@ -1597,12 +1529,101 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "resource",
+                                                    "type": "and",
                                                     "data": {
-                                                        "type": "tricks",
-                                                        "name": "Movement",
-                                                        "amount": 3,
-                                                        "negate": false
+                                                        "comment": "https://youtu.be/FGtnq3_1ECc",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "PreciseAiming",
+                                                                    "amount": 3,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "https://youtu.be/uS3bJrchBzY",
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Spider Boost"
+                                                            },
+                                                            {
+                                                                "type": "or",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Spring",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "AirMorph",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "or",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Spider Boost",
+                                                                                "amount": 4,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "and",
+                                                                            "data": {
+                                                                                "comment": null,
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "items",
+                                                                                            "name": "Gravity",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "Spider Boost",
+                                                                                            "amount": 3,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -1688,7 +1709,7 @@
                                                     "data": {
                                                         "type": "tricks",
                                                         "name": "OoB",
-                                                        "amount": 2,
+                                                        "amount": 3,
                                                         "negate": false
                                                     }
                                                 },
@@ -1698,30 +1719,76 @@
                                                         "comment": null,
                                                         "items": [
                                                             {
-                                                                "type": "resource",
+                                                                "type": "and",
                                                                 "data": {
-                                                                    "type": "items",
-                                                                    "name": "Boots",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Space",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Walljump",
-                                                                    "amount": 1,
-                                                                    "negate": false
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Gravity",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Lay Any Bomb"
+                                                                        },
+                                                                        {
+                                                                            "type": "or",
+                                                                            "data": {
+                                                                                "comment": null,
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "items",
+                                                                                            "name": "Boots",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "items",
+                                                                                            "name": "Space",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "SuperJump",
+                                                                                            "amount": 3,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "and",
+                                                                                        "data": {
+                                                                                            "comment": "https://youtu.be/D7HtfaVof1s",
+                                                                                            "items": [
+                                                                                                {
+                                                                                                    "type": "resource",
+                                                                                                    "data": {
+                                                                                                        "type": "tricks",
+                                                                                                        "name": "Walljump",
+                                                                                                        "amount": 2,
+                                                                                                        "negate": false
+                                                                                                    }
+                                                                                                }
+                                                                                            ]
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        }
+                                                                    ]
                                                                 }
                                                             },
                                                             {
@@ -1731,30 +1798,64 @@
                                                                     "items": [
                                                                         {
                                                                             "type": "template",
-                                                                            "data": "Simple IBJ"
+                                                                            "data": "Lay Bomb"
                                                                         },
                                                                         {
                                                                             "type": "resource",
                                                                             "data": {
                                                                                 "type": "tricks",
                                                                                 "name": "AirMorph",
-                                                                                "amount": 2,
+                                                                                "amount": 3,
                                                                                 "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "or",
+                                                                            "data": {
+                                                                                "comment": "https://youtu.be/Y3upUucT0L0",
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "UBJ",
+                                                                                            "amount": 3,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "and",
+                                                                                        "data": {
+                                                                                            "comment": "https://youtu.be/SjhO_4CmYJI",
+                                                                                            "items": [
+                                                                                                {
+                                                                                                    "type": "resource",
+                                                                                                    "data": {
+                                                                                                        "type": "items",
+                                                                                                        "name": "Gravity",
+                                                                                                        "amount": 1,
+                                                                                                        "negate": false
+                                                                                                    }
+                                                                                                },
+                                                                                                {
+                                                                                                    "type": "resource",
+                                                                                                    "data": {
+                                                                                                        "type": "tricks",
+                                                                                                        "name": "IBJ",
+                                                                                                        "amount": 2,
+                                                                                                        "negate": false
+                                                                                                    }
+                                                                                                }
+                                                                                            ]
+                                                                                        }
+                                                                                    }
+                                                                                ]
                                                                             }
                                                                         }
                                                                     ]
                                                                 }
                                                             }
                                                         ]
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Gravity",
-                                                        "amount": 1,
-                                                        "negate": false
                                                     }
                                                 }
                                             ]
@@ -1767,7 +1868,7 @@
                             "type": "template",
                             "data": "Lay Any Bomb"
                         },
-                        "Outside Arena": {
+                        "Right of Tunnels": {
                             "type": "template",
                             "data": "Lay Any Bomb"
                         }
@@ -1817,29 +1918,23 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Transport to Area 3 Factory Exterior (Upper)": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        "Door to Shaft West": {
+                        "Door to Ramulken Rollway": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Left of Fan": {
-                            "type": "template",
-                            "data": "Lay Power Bomb"
-                        },
                         "Inside Arena": {
                             "type": "template",
                             "data": "Lay Any Bomb"
+                        },
+                        "Right of Tunnels": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -1871,10 +1966,79 @@
                             }
                         }
                     }
+                },
+                "Right of Tunnels": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -5796.432344185153,
+                        "y": -6651.767021991742,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Transport to Factory Exterior North": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Left of Fan": {
+                            "type": "template",
+                            "data": "Lay Power Bomb"
+                        },
+                        "Outside Arena": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Climb Rooms Vertically (High Jump)"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Walljump",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "SuperJump",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Gravity",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 }
             }
         },
-        "Save Station Hallway": {
+        "Save Station North": {
             "default_node": "Save Station",
             "extra": {
                 "total_boundings": {
@@ -1922,7 +2086,7 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Upper Shaft": {
+                        "Door to Gravitt Garden": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1950,7 +2114,7 @@
                     },
                     "valid_starting_location": true,
                     "connections": {
-                        "Door to Upper Shaft": {
+                        "Door to Gravitt Garden": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1959,7 +2123,7 @@
                         }
                     }
                 },
-                "Door to Upper Shaft": {
+                "Door to Gravitt Garden": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1979,8 +2143,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 3 - Metroid Caverns",
-                        "area": "Upper Shaft",
-                        "node": "Door to Save Station Hallway"
+                        "area": "Gravitt Garden",
+                        "node": "Door to Save Station North"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -2002,7 +2166,7 @@
                                 "items": []
                             }
                         },
-                        "Door to Diggernaut Tunnel": {
+                        "Door to Quarry Tunnel": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2011,7 +2175,7 @@
                         }
                     }
                 },
-                "Door to Diggernaut Tunnel": {
+                "Door to Quarry Tunnel": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2031,8 +2195,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 3 - Metroid Caverns",
-                        "area": "Diggernaut Tunnel",
-                        "node": "Door to Save Station Hallway"
+                        "area": "Quarry Tunnel",
+                        "node": "Door to Save Station North"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -2040,7 +2204,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Upper Shaft": {
+                        "Door to Gravitt Garden": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2051,7 +2215,7 @@
                 }
             }
         },
-        "Upper Shaft": {
+        "Gravitt Garden": {
             "default_node": "Start Point",
             "extra": {
                 "total_boundings": {
@@ -2097,7 +2261,7 @@
                 "asset_id": "collision_camera_012"
             },
             "nodes": {
-                "Door to Save Station Hallway": {
+                "Door to Save Station North": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2117,8 +2281,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 3 - Metroid Caverns",
-                        "area": "Save Station Hallway",
-                        "node": "Door to Upper Shaft"
+                        "area": "Save Station North",
+                        "node": "Door to Gravitt Garden"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -2126,7 +2290,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Alpha+ Arena East": {
+                        "Door to Alpha+ Arena North": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -2156,7 +2320,7 @@
                         }
                     }
                 },
-                "Door to Alpha+ Arena East": {
+                "Door to Alpha+ Arena North": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2176,8 +2340,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 3 - Metroid Caverns",
-                        "area": "Alpha+ Arena East",
-                        "node": "Door to Upper Shaft"
+                        "area": "Alpha+ Arena North",
+                        "node": "Door to Gravitt Garden"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -2185,7 +2349,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Save Station Hallway": {
+                        "Door to Save Station North": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2230,7 +2394,7 @@
                         }
                     }
                 },
-                "Tunnel to Teleporter Access": {
+                "Tunnel to Letum Shrine": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2247,8 +2411,8 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Area 3 - Metroid Caverns",
-                        "area": "Teleporter Access",
-                        "node": "Tunnel to Upper Shaft"
+                        "area": "Letum Shrine",
+                        "node": "Tunnel to Gravitt Garden"
                     },
                     "default_dock_weakness": "Tunnel",
                     "exclude_from_dock_rando": false,
@@ -2282,7 +2446,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Save Station Hallway": {
+                        "Door to Save Station North": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -2303,13 +2467,13 @@
                                             "items": [
                                                 {
                                                     "type": "template",
-                                                    "data": "Can Spiderspark"
+                                                    "data": "Can Spider Boost"
                                                 },
                                                 {
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "tricks",
-                                                        "name": "Spiderspark",
+                                                        "name": "Spider Boost",
                                                         "amount": 2,
                                                         "negate": false
                                                     }
@@ -2350,19 +2514,58 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Freeze the Drivel",
                                             "items": [
-                                                {
-                                                    "type": "template",
-                                                    "data": "Fully Freeze Enemy"
-                                                },
                                                 {
                                                     "type": "resource",
                                                     "data": {
-                                                        "type": "tricks",
-                                                        "name": "FrozenEnemy",
-                                                        "amount": 2,
+                                                        "type": "items",
+                                                        "name": "Ice",
+                                                        "amount": 1,
                                                         "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "FrozenEnemy",
+                                                                    "amount": 3,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Charge",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "FrozenEnemy",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -2392,7 +2595,7 @@
                                 ]
                             }
                         },
-                        "Tunnel to Teleporter Access": {
+                        "Tunnel to Letum Shrine": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2410,7 +2613,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "events",
-                                            "name": "Area 3 (Metroid Caverns) - Upper Shaft Access Grapple Block",
+                                            "name": "Area 3 (Metroid Caverns) - Letum Shrine Grapple Block",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -2437,7 +2640,7 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Alpha+ Arena East": {
+                        "Door to Alpha+ Arena North": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2448,7 +2651,7 @@
                 }
             }
         },
-        "Mid-Shaft Shortcut": {
+        "Ascending Alleyway": {
             "default_node": null,
             "extra": {
                 "total_boundings": {
@@ -2498,7 +2701,7 @@
                     "pickup_index": 69,
                     "location_category": "minor",
                     "connections": {
-                        "Tunnel to Shaft West": {
+                        "Tunnel to Ramulken Rollway": {
                             "type": "template",
                             "data": "Lay Any Bomb"
                         },
@@ -2521,54 +2724,12 @@
                                         }
                                     },
                                     {
-                                        "type": "or",
+                                        "type": "resource",
                                         "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Grapple",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Space",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Spiderspark",
-                                                                    "amount": 2,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "template",
-                                                                "data": "Can Spiderspark"
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "type": "template",
-                                                    "data": "Simple IBJ"
-                                                }
-                                            ]
+                                            "type": "items",
+                                            "name": "Grapple",
+                                            "amount": 1,
+                                            "negate": false
                                         }
                                     }
                                 ]
@@ -2576,7 +2737,7 @@
                         }
                     }
                 },
-                "Tunnel to Shaft West": {
+                "Tunnel to Ramulken Rollway": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2593,8 +2754,8 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Area 3 - Metroid Caverns",
-                        "area": "Shaft West",
-                        "node": "Tunnel to Mid-Shaft Shortcut"
+                        "area": "Ramulken Rollway",
+                        "node": "Tunnel to Ascending Alleyway"
                     },
                     "default_dock_weakness": "Tunnel with Bomb Block",
                     "exclude_from_dock_rando": false,
@@ -2652,14 +2813,14 @@
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "tricks",
-                                                                    "name": "Spiderspark",
+                                                                    "name": "Spider Boost",
                                                                     "amount": 2,
                                                                     "negate": false
                                                                 }
                                                             },
                                                             {
                                                                 "type": "template",
-                                                                "data": "Can Spiderspark"
+                                                                "data": "Can Spider Boost"
                                                             }
                                                         ]
                                                     }
@@ -2676,7 +2837,7 @@
                         }
                     }
                 },
-                "Tunnel to Shaft East": {
+                "Tunnel to Quarry Shaft": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2693,8 +2854,8 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Area 3 - Metroid Caverns",
-                        "area": "Shaft East",
-                        "node": "Tunnel to Mid-Shaft Shortcut"
+                        "area": "Quarry Shaft",
+                        "node": "Tunnel to Ascending Alleyway"
                     },
                     "default_dock_weakness": "Tunnel",
                     "exclude_from_dock_rando": false,
@@ -2762,7 +2923,7 @@
                                 "negate": false
                             }
                         },
-                        "Tunnel to Shaft East": {
+                        "Tunnel to Quarry Shaft": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2801,7 +2962,7 @@
                 }
             }
         },
-        "Shaft West": {
+        "Ramulken Rollway": {
             "default_node": null,
             "extra": {
                 "total_boundings": {
@@ -2867,7 +3028,7 @@
                     "pickup_index": 66,
                     "location_category": "minor",
                     "connections": {
-                        "Door to Central Shaft": {
+                        "Door to Caverns Teleporter East": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2942,7 +3103,7 @@
                                                     "data": {
                                                         "type": "tricks",
                                                         "name": "Movement",
-                                                        "amount": 1,
+                                                        "amount": 2,
                                                         "negate": false
                                                     }
                                                 }
@@ -2975,7 +3136,7 @@
                     "default_connection": {
                         "region": "Area 3 - Metroid Caverns",
                         "area": "Gamma Arena South",
-                        "node": "Door to Shaft West"
+                        "node": "Door to Ramulken Rollway"
                     },
                     "default_dock_weakness": "Wave Beam Door",
                     "exclude_from_dock_rando": false,
@@ -2983,14 +3144,14 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Central Shaft": {
+                        "Door to Caverns Teleporter East": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Tunnel to Mid-Shaft Shortcut": {
+                        "Tunnel to Ascending Alleyway": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3022,14 +3183,14 @@
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "tricks",
-                                                                    "name": "Spiderspark",
+                                                                    "name": "Spider Boost",
                                                                     "amount": 2,
                                                                     "negate": false
                                                                 }
                                                             },
                                                             {
                                                                 "type": "template",
-                                                                "data": "Can Spiderspark"
+                                                                "data": "Can Spider Boost"
                                                             }
                                                         ]
                                                     }
@@ -3089,7 +3250,7 @@
                         }
                     }
                 },
-                "Door to Central Shaft": {
+                "Door to Caverns Teleporter East": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3109,8 +3270,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 3 - Metroid Caverns",
-                        "area": "Central Shaft",
-                        "node": "Door to Shaft West"
+                        "area": "Caverns Teleporter East",
+                        "node": "Door to Ramulken Rollway"
                     },
                     "default_dock_weakness": "Charge Beam Door",
                     "exclude_from_dock_rando": false,
@@ -3170,7 +3331,7 @@
                                                                             "data": {
                                                                                 "type": "tricks",
                                                                                 "name": "Movement",
-                                                                                "amount": 1,
+                                                                                "amount": 2,
                                                                                 "negate": false
                                                                             }
                                                                         },
@@ -3279,13 +3440,13 @@
                                                                                 "items": [
                                                                                     {
                                                                                         "type": "template",
-                                                                                        "data": "Can Spiderspark"
+                                                                                        "data": "Can Spider Boost"
                                                                                     },
                                                                                     {
                                                                                         "type": "resource",
                                                                                         "data": {
                                                                                             "type": "tricks",
-                                                                                            "name": "Spiderspark",
+                                                                                            "name": "Spider Boost",
                                                                                             "amount": 1,
                                                                                             "negate": false
                                                                                         }
@@ -3296,7 +3457,7 @@
                                                                         {
                                                                             "type": "and",
                                                                             "data": {
-                                                                                "comment": null,
+                                                                                "comment": "https://youtu.be/DujhE75I-oA",
                                                                                 "items": [
                                                                                     {
                                                                                         "type": "resource",
@@ -3340,7 +3501,7 @@
                         }
                     }
                 },
-                "Tunnel to Mid-Shaft Shortcut": {
+                "Tunnel to Ascending Alleyway": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3357,8 +3518,8 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Area 3 - Metroid Caverns",
-                        "area": "Mid-Shaft Shortcut",
-                        "node": "Tunnel to Shaft West"
+                        "area": "Ascending Alleyway",
+                        "node": "Tunnel to Ramulken Rollway"
                     },
                     "default_dock_weakness": "Tunnel with Bomb Block",
                     "exclude_from_dock_rando": false,
@@ -3379,7 +3540,7 @@
                 }
             }
         },
-        "Central Shaft": {
+        "Caverns Teleporter East": {
             "default_node": "Save Station",
             "extra": {
                 "total_boundings": {
@@ -3473,7 +3634,7 @@
                     "pickup_index": 67,
                     "location_category": "minor",
                     "connections": {
-                        "Door to Shaft West": {
+                        "Door to Ramulken Rollway": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3501,14 +3662,14 @@
                     },
                     "valid_starting_location": true,
                     "connections": {
-                        "Door to Shaft East": {
+                        "Door to Quarry Shaft": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Door to Gamma+ Arena South Access": {
+                        "Door to Waterfall Cavern": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3583,7 +3744,7 @@
                         }
                     }
                 },
-                "Door to Shaft West": {
+                "Door to Ramulken Rollway": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3603,8 +3764,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 3 - Metroid Caverns",
-                        "area": "Shaft West",
-                        "node": "Door to Central Shaft"
+                        "area": "Ramulken Rollway",
+                        "node": "Door to Caverns Teleporter East"
                     },
                     "default_dock_weakness": "Charge Beam Door",
                     "exclude_from_dock_rando": false,
@@ -3627,42 +3788,8 @@
                                         }
                                     },
                                     {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "template",
-                                                    "data": "Shoot Beam Burst"
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "PBAmmo",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Knowledge",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                }
-                                            ]
-                                        }
+                                        "type": "template",
+                                        "data": "Destroy Blob Throwers/Steel Orbs"
                                     },
                                     {
                                         "type": "or",
@@ -3670,34 +3797,35 @@
                                             "comment": null,
                                             "items": [
                                                 {
-                                                    "type": "or",
+                                                    "type": "resource",
                                                     "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Space",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Boots",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "template",
-                                                                "data": "Simple IBJ"
-                                                            }
-                                                        ]
+                                                        "type": "items",
+                                                        "name": "Grapple",
+                                                        "amount": 1,
+                                                        "negate": false
                                                     }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Boots",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Space",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Simple IBJ"
                                                 },
                                                 {
                                                     "type": "and",
@@ -3706,27 +3834,18 @@
                                                         "items": [
                                                             {
                                                                 "type": "template",
-                                                                "data": "Can Spiderspark"
+                                                                "data": "Can Spider Boost"
                                                             },
                                                             {
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "tricks",
-                                                                    "name": "Spiderspark",
+                                                                    "name": "Spider Boost",
                                                                     "amount": 2,
                                                                     "negate": false
                                                                 }
                                                             }
                                                         ]
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Grapple",
-                                                        "amount": 1,
-                                                        "negate": false
                                                     }
                                                 }
                                             ]
@@ -3744,7 +3863,7 @@
                         }
                     }
                 },
-                "Door to Shaft East": {
+                "Door to Quarry Shaft": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3764,8 +3883,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 3 - Metroid Caverns",
-                        "area": "Shaft East",
-                        "node": "Door to Central Shaft"
+                        "area": "Quarry Shaft",
+                        "node": "Door to Caverns Teleporter East"
                     },
                     "default_dock_weakness": "Charge Beam Door",
                     "exclude_from_dock_rando": false,
@@ -3782,7 +3901,7 @@
                         }
                     }
                 },
-                "Door to Gamma+ Arena South Access": {
+                "Door to Waterfall Cavern": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3802,8 +3921,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 3 - Metroid Caverns",
-                        "area": "Gamma+ Arena South Access",
-                        "node": "Door to Central Shaft"
+                        "area": "Waterfall Cavern",
+                        "node": "Door to Caverns Teleporter East"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -3874,7 +3993,7 @@
                                 "items": []
                             }
                         },
-                        "Door to Shaft West": {
+                        "Door to Ramulken Rollway": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -3895,19 +4014,45 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "https://youtu.be/6knVhkzcL9Q",
                                             "items": [
                                                 {
                                                     "type": "template",
                                                     "data": "Fully Freeze Enemy"
                                                 },
                                                 {
-                                                    "type": "resource",
+                                                    "type": "or",
                                                     "data": {
-                                                        "type": "tricks",
-                                                        "name": "Walljump",
-                                                        "amount": 1,
-                                                        "negate": false
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Boots",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Walljump",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "FrozenEnemy",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -3927,7 +4072,7 @@
                 }
             }
         },
-        "Shaft East": {
+        "Quarry Shaft": {
             "default_node": null,
             "extra": {
                 "total_boundings": {
@@ -3985,7 +4130,7 @@
                     "pickup_index": 68,
                     "location_category": "minor",
                     "connections": {
-                        "Door to Side Passage": {
+                        "Door to Lonely Loop": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3994,7 +4139,7 @@
                         }
                     }
                 },
-                "Door to Central Shaft": {
+                "Door to Caverns Teleporter East": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4014,8 +4159,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 3 - Metroid Caverns",
-                        "area": "Central Shaft",
-                        "node": "Door to Shaft East"
+                        "area": "Caverns Teleporter East",
+                        "node": "Door to Quarry Shaft"
                     },
                     "default_dock_weakness": "Charge Beam Door",
                     "exclude_from_dock_rando": false,
@@ -4023,16 +4168,71 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Transport to Area 3 Factory Interior": {
-                            "type": "resource",
+                        "Door to Transport to Factory Interior South": {
+                            "type": "and",
                             "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Climb Rooms Vertically (High Jump)"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Walljump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "SuperJump",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "UnmorphExtend",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
                             }
                         },
-                        "Tunnel to Side Passage": {
+                        "Tunnel to Lonely Loop": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4076,7 +4276,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "https://youtu.be/KHAZvT3Q-t0",
                                                         "items": [
                                                             {
                                                                 "type": "template",
@@ -4102,7 +4302,7 @@
                         }
                     }
                 },
-                "Door to Side Passage": {
+                "Door to Lonely Loop": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4122,8 +4322,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 3 - Metroid Caverns",
-                        "area": "Side Passage",
-                        "node": "Door to Shaft East"
+                        "area": "Lonely Loop",
+                        "node": "Door to Quarry Shaft"
                     },
                     "default_dock_weakness": "Spazer Beam Door",
                     "exclude_from_dock_rando": false,
@@ -4140,7 +4340,7 @@
                         }
                     }
                 },
-                "Door to Transport to Area 3 Factory Interior": {
+                "Door to Transport to Factory Interior South": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4160,8 +4360,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 3 - Metroid Caverns",
-                        "area": "Transport to Area 3 Factory Interior",
-                        "node": "Door to Shaft East"
+                        "area": "Transport to Factory Interior South",
+                        "node": "Door to Quarry Shaft"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -4169,7 +4369,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Central Shaft": {
+                        "Door to Caverns Teleporter East": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -4178,7 +4378,7 @@
                                 "negate": false
                             }
                         },
-                        "Tunnel to Mid-Shaft Shortcut": {
+                        "Tunnel to Ascending Alleyway": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4206,7 +4406,7 @@
                         }
                     }
                 },
-                "Tunnel to Mid-Shaft Shortcut": {
+                "Tunnel to Ascending Alleyway": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4223,8 +4423,8 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Area 3 - Metroid Caverns",
-                        "area": "Mid-Shaft Shortcut",
-                        "node": "Tunnel to Shaft East"
+                        "area": "Ascending Alleyway",
+                        "node": "Tunnel to Quarry Shaft"
                     },
                     "default_dock_weakness": "Tunnel",
                     "exclude_from_dock_rando": false,
@@ -4232,7 +4432,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Transport to Area 3 Factory Interior": {
+                        "Door to Transport to Factory Interior South": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4272,7 +4472,7 @@
                         }
                     }
                 },
-                "Tunnel to Side Passage": {
+                "Tunnel to Lonely Loop": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4289,8 +4489,8 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Area 3 - Metroid Caverns",
-                        "area": "Side Passage",
-                        "node": "Tunnel to Shaft East"
+                        "area": "Lonely Loop",
+                        "node": "Tunnel to Quarry Shaft"
                     },
                     "default_dock_weakness": "Tunnel",
                     "exclude_from_dock_rando": false,
@@ -4298,7 +4498,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Central Shaft": {
+                        "Door to Caverns Teleporter East": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -4311,7 +4511,7 @@
                 }
             }
         },
-        "Side Passage": {
+        "Lonely Loop": {
             "default_node": null,
             "extra": {
                 "total_boundings": {
@@ -4349,7 +4549,7 @@
                 "asset_id": "collision_camera_028"
             },
             "nodes": {
-                "Door to Shaft East": {
+                "Door to Quarry Shaft": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4369,8 +4569,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 3 - Metroid Caverns",
-                        "area": "Shaft East",
-                        "node": "Door to Side Passage"
+                        "area": "Quarry Shaft",
+                        "node": "Door to Lonely Loop"
                     },
                     "default_dock_weakness": "Spazer Beam Door",
                     "exclude_from_dock_rando": false,
@@ -4378,7 +4578,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Tunnel to Shaft East": {
+                        "Tunnel to Quarry Shaft": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -4389,7 +4589,7 @@
                         }
                     }
                 },
-                "Tunnel to Shaft East": {
+                "Tunnel to Quarry Shaft": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4406,8 +4606,8 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Area 3 - Metroid Caverns",
-                        "area": "Shaft East",
-                        "node": "Tunnel to Side Passage"
+                        "area": "Quarry Shaft",
+                        "node": "Tunnel to Lonely Loop"
                     },
                     "default_dock_weakness": "Tunnel",
                     "exclude_from_dock_rando": false,
@@ -4415,7 +4615,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Shaft East": {
+                        "Door to Quarry Shaft": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4540,7 +4740,7 @@
                 }
             }
         },
-        "Diggernaut Tunnel": {
+        "Quarry Tunnel": {
             "default_node": null,
             "extra": {
                 "total_boundings": {
@@ -4570,7 +4770,7 @@
                 "asset_id": "collision_camera_031"
             },
             "nodes": {
-                "Door to Save Station Hallway": {
+                "Door to Save Station North": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4590,8 +4790,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 3 - Metroid Caverns",
-                        "area": "Save Station Hallway",
-                        "node": "Door to Diggernaut Tunnel"
+                        "area": "Save Station North",
+                        "node": "Door to Quarry Tunnel"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -4599,7 +4799,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Transport to Area 3 Factory Interior": {
+                        "Door to Transport to Factory Interior South": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
@@ -4619,7 +4819,7 @@
                         }
                     }
                 },
-                "Door to Transport to Area 3 Factory Interior": {
+                "Door to Transport to Factory Interior South": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4639,8 +4839,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 3 - Metroid Caverns",
-                        "area": "Transport to Area 3 Factory Interior",
-                        "node": "Door to Diggernaut Tunnel"
+                        "area": "Transport to Factory Interior South",
+                        "node": "Door to Quarry Tunnel"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -4648,7 +4848,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Save Station Hallway": {
+                        "Door to Save Station North": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
@@ -4675,7 +4875,7 @@
                     "valid_starting_location": false,
                     "event_name": "Area 3 (Metroid Caverns) - Diggernaut Awakened",
                     "connections": {
-                        "Door to Save Station Hallway": {
+                        "Door to Save Station North": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4686,7 +4886,7 @@
                 }
             }
         },
-        "Transport to Area 3 Factory Interior": {
+        "Transport to Factory Interior South": {
             "default_node": "Elevator to Area 3 - Factory Interior",
             "extra": {
                 "total_boundings": {
@@ -4737,7 +4937,7 @@
                     "dock_type": "elevator",
                     "default_connection": {
                         "region": "Area 3 - Factory Interior",
-                        "area": "Transport to Area 3 Metroid Caverns",
+                        "area": "Gamma Arena & Transport to Metroid Caverns East",
                         "node": "Elevator to Area 3 - Metroid Caverns"
                     },
                     "default_dock_weakness": "Elevator",
@@ -4746,7 +4946,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Shaft East": {
+                        "Door to Quarry Shaft": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4797,7 +4997,7 @@
                         }
                     }
                 },
-                "Door to Diggernaut Tunnel": {
+                "Door to Quarry Tunnel": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4817,8 +5017,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 3 - Metroid Caverns",
-                        "area": "Diggernaut Tunnel",
-                        "node": "Door to Transport to Area 3 Factory Interior"
+                        "area": "Quarry Tunnel",
+                        "node": "Door to Transport to Factory Interior South"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -4826,7 +5026,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Shaft East": {
+                        "Door to Quarry Shaft": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4835,7 +5035,7 @@
                         }
                     }
                 },
-                "Door to Shaft East": {
+                "Door to Quarry Shaft": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4855,8 +5055,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 3 - Metroid Caverns",
-                        "area": "Shaft East",
-                        "node": "Door to Transport to Area 3 Factory Interior"
+                        "area": "Quarry Shaft",
+                        "node": "Door to Transport to Factory Interior South"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -4885,14 +5085,14 @@
                                             "items": [
                                                 {
                                                     "type": "template",
-                                                    "data": "Can Spiderspark"
+                                                    "data": "Can Spider Boost"
                                                 },
                                                 {
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "tricks",
-                                                        "name": "Spiderspark",
-                                                        "amount": 2,
+                                                        "name": "Spider Boost",
+                                                        "amount": 1,
                                                         "negate": false
                                                     }
                                                 }
@@ -4922,7 +5122,7 @@
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "events",
-                                                                    "name": "Area 3 (Metroid Caverns) - Transport to Area 3 Metroid Caverns Grapple Block",
+                                                                    "name": "Area 3 (Metroid Caverns) - Transport to Metroid Caverns East Grapple Block",
                                                                     "amount": 1,
                                                                     "negate": false
                                                                 }
@@ -4930,25 +5130,11 @@
                                                             {
                                                                 "type": "and",
                                                                 "data": {
-                                                                    "comment": null,
+                                                                    "comment": "https://youtu.be/RJkXLo_UohI",
                                                                     "items": [
                                                                         {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "items",
-                                                                                "name": "Ice",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "items",
-                                                                                "name": "Charge",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
+                                                                            "type": "template",
+                                                                            "data": "Fully Freeze Enemy"
                                                                         },
                                                                         {
                                                                             "type": "resource",
@@ -4980,7 +5166,7 @@
                                 ]
                             }
                         },
-                        "Door to Diggernaut Tunnel": {
+                        "Door to Quarry Tunnel": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5032,7 +5218,7 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "event_name": "Area 3 (Metroid Caverns) - Transport to Area 3 Metroid Caverns Grapple Block",
+                    "event_name": "Area 3 (Metroid Caverns) - Transport to Metroid Caverns East Grapple Block",
                     "connections": {
                         "Elevator to Area 3 - Factory Interior": {
                             "type": "and",
@@ -5050,7 +5236,7 @@
             "extra": {
                 "total_boundings": {
                     "x1": -5700.0,
-                    "x2": 2500.0,
+                    "x2": -2050.0,
                     "y1": -18800.0,
                     "y2": -15500.0
                 },
@@ -5064,76 +5250,17 @@
                         -18800.0
                     ],
                     [
-                        2500.0,
+                        -2050.0,
                         -18800.0
                     ],
                     [
-                        2500.0,
-                        -16700.0
-                    ],
-                    [
-                        700.0,
-                        -16700.0
-                    ],
-                    [
-                        700.0,
+                        -2050.0,
                         -15000.0
                     ]
                 ],
-                "asset_id": "collision_camera_034"
+                "asset_id": "collision_camera_033"
             },
             "nodes": {
-                "Door to Gamma+ Arena South Access": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 657.1219199413754,
-                        "y": -15591.421635980581,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "Door014",
-                        "actor_type": "doorpowerpower"
-                    },
-                    "valid_starting_location": false,
-                    "dock_type": "door",
-                    "default_connection": {
-                        "region": "Area 3 - Metroid Caverns",
-                        "area": "Gamma+ Arena South Access",
-                        "node": "Door to Gamma+ Arena South"
-                    },
-                    "default_dock_weakness": "Power Beam Door",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {
-                        "Event - Gamma Metoid+": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Defeat Gamma Metroid+"
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Lay Any Bomb"
-                                    }
-                                ]
-                            }
-                        },
-                        "Start Point": {
-                            "type": "template",
-                            "data": "Lay Any Bomb"
-                        }
-                    }
-                },
                 "Event - Gamma Metoid+": {
                     "node_type": "event",
                     "heal": false,
@@ -5176,7 +5303,7 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Gamma+ Arena South Access": {
+                        "Tunnel to Gamma+ Arena South Access": {
                             "type": "template",
                             "data": "Lay Any Bomb"
                         }
@@ -5202,15 +5329,171 @@
                     "pickup_index": 193,
                     "location_category": "major",
                     "connections": {
-                        "Door to Gamma+ Arena South Access": {
+                        "Tunnel to Gamma+ Arena South Access": {
                             "type": "template",
                             "data": "Lay Any Bomb"
+                        }
+                    }
+                },
+                "Tunnel to Gamma+ Arena South Access": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -2084.71,
+                        "y": -18251.58,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "tunnel",
+                    "default_connection": {
+                        "region": "Area 3 - Metroid Caverns",
+                        "area": "Gamma+ Arena South Access",
+                        "node": "Tunnel to Gamma+ Arena South"
+                    },
+                    "default_dock_weakness": "Tunnel with Bomb Block",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Event - Gamma Metoid+": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Lay Any Bomb"
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Defeat Gamma Metroid+"
+                                    }
+                                ]
+                            }
                         }
                     }
                 }
             }
         },
         "Gamma+ Arena South Access": {
+            "default_node": "Start Point",
+            "extra": {
+                "total_boundings": {
+                    "x1": -2150.0,
+                    "x2": 2500.0,
+                    "y1": -18800.0,
+                    "y2": -15500.0
+                },
+                "polygon": [
+                    [
+                        -2150.0,
+                        -15000.0
+                    ],
+                    [
+                        -2150.0,
+                        -18800.0
+                    ],
+                    [
+                        2500.0,
+                        -18800.0
+                    ],
+                    [
+                        2500.0,
+                        -16700.0
+                    ],
+                    [
+                        700.0,
+                        -16700.0
+                    ],
+                    [
+                        700.0,
+                        -15000.0
+                    ]
+                ],
+                "asset_id": "collision_camera_034"
+            },
+            "nodes": {
+                "Door to Waterfall Cavern": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 657.1219199413754,
+                        "y": -15591.421635980581,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "Door014",
+                        "actor_type": "doorpowerpower"
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Area 3 - Metroid Caverns",
+                        "area": "Waterfall Cavern",
+                        "node": "Door to Gamma+ Arena South Access"
+                    },
+                    "default_dock_weakness": "Power Beam Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Tunnel to Gamma+ Arena South": {
+                            "type": "template",
+                            "data": "Lay Any Bomb"
+                        }
+                    }
+                },
+                "Tunnel to Gamma+ Arena South": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -2084.71,
+                        "y": -18251.58,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "tunnel",
+                    "default_connection": {
+                        "region": "Area 3 - Metroid Caverns",
+                        "area": "Gamma+ Arena South",
+                        "node": "Tunnel to Gamma+ Arena South Access"
+                    },
+                    "default_dock_weakness": "Tunnel with Bomb Block",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Waterfall Cavern": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Waterfall Cavern": {
             "default_node": "Start Point",
             "extra": {
                 "total_boundings": {
@@ -5240,7 +5523,7 @@
                 "asset_id": "collision_camera_035"
             },
             "nodes": {
-                "Door to Central Shaft": {
+                "Door to Caverns Teleporter East": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5260,8 +5543,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 3 - Metroid Caverns",
-                        "area": "Central Shaft",
-                        "node": "Door to Gamma+ Arena South Access"
+                        "area": "Caverns Teleporter East",
+                        "node": "Door to Waterfall Cavern"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -5269,7 +5552,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Gamma+ Arena South": {
+                        "Door to Gamma+ Arena South Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5278,7 +5561,7 @@
                         }
                     }
                 },
-                "Door to Gamma+ Arena South": {
+                "Door to Gamma+ Arena South Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5298,8 +5581,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 3 - Metroid Caverns",
-                        "area": "Gamma+ Arena South",
-                        "node": "Door to Gamma+ Arena South Access"
+                        "area": "Gamma+ Arena South Access",
+                        "node": "Door to Waterfall Cavern"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -5307,7 +5590,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Central Shaft": {
+                        "Door to Caverns Teleporter East": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5340,7 +5623,7 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Gamma+ Arena South": {
+                        "Door to Gamma+ Arena South Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5351,7 +5634,7 @@
                 }
             }
         },
-        "Gamma+ Arena Heat": {
+        "Gamma+ Arena North": {
             "default_node": "Start Point (Left)",
             "extra": {
                 "total_boundings": {
@@ -5381,7 +5664,7 @@
                 "asset_id": "collision_camera_036"
             },
             "nodes": {
-                "Door to Alpha+ Arena East": {
+                "Door to Alpha+ Arena North": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5401,8 +5684,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 3 - Metroid Caverns",
-                        "area": "Alpha+ Arena East",
-                        "node": "Door to Gamma+ Arena Heat"
+                        "area": "Alpha+ Arena North",
+                        "node": "Door to Gamma+ Arena North"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -5539,7 +5822,7 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Alpha+ Arena East": {
+                        "Door to Alpha+ Arena North": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5626,7 +5909,7 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Alpha+ Arena East": {
+                        "Door to Alpha+ Arena North": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -5668,7 +5951,7 @@
                 }
             }
         },
-        "Transport to Area 3 Factory Exterior (Lower)": {
+        "Transport to Factory Exterior West": {
             "default_node": "Elevator to Area 3 - Factory Exterior",
             "extra": {
                 "total_boundings": {
@@ -5719,7 +6002,7 @@
                     "dock_type": "elevator",
                     "default_connection": {
                         "region": "Area 3 - Factory Exterior",
-                        "area": "Transport to Area 3 Metroid Caverns (Lower)",
+                        "area": "Transport to Metroid Caverns West",
                         "node": "Elevator to Area 3 - Metroid Caverns"
                     },
                     "default_dock_weakness": "Elevator",
@@ -5758,7 +6041,7 @@
                     "default_connection": {
                         "region": "Area 3 - Metroid Caverns",
                         "area": "Alpha+ Arena West",
-                        "node": "Door to Transport to Area 3 Factory Exterior (Lower)"
+                        "node": "Door to Transport to Factory Exterior West"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -5777,7 +6060,7 @@
                 }
             }
         },
-        "Alpha+ Arena East": {
+        "Alpha+ Arena North": {
             "default_node": "Start Point (Inside Arena)",
             "extra": {
                 "total_boundings": {
@@ -5807,7 +6090,7 @@
                 "asset_id": "collision_camera_038"
             },
             "nodes": {
-                "Door to Gamma+ Arena Heat": {
+                "Door to Gamma+ Arena North": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5827,8 +6110,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 3 - Metroid Caverns",
-                        "area": "Gamma+ Arena Heat",
-                        "node": "Door to Alpha+ Arena East"
+                        "area": "Gamma+ Arena North",
+                        "node": "Door to Alpha+ Arena North"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -5859,7 +6142,7 @@
                         }
                     }
                 },
-                "Door to Upper Shaft": {
+                "Door to Gravitt Garden": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5879,8 +6162,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 3 - Metroid Caverns",
-                        "area": "Upper Shaft",
-                        "node": "Door to Alpha+ Arena East"
+                        "area": "Gravitt Garden",
+                        "node": "Door to Alpha+ Arena North"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -5939,7 +6222,7 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Upper Shaft": {
+                        "Door to Gravitt Garden": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5973,7 +6256,7 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Gamma+ Arena Heat": {
+                        "Door to Gamma+ Arena North": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -6019,7 +6302,7 @@
                 }
             }
         },
-        "Teleporter Access": {
+        "Letum Shrine": {
             "default_node": null,
             "extra": {
                 "total_boundings": {
@@ -6049,7 +6332,7 @@
                 "asset_id": "collision_camera_039"
             },
             "nodes": {
-                "Door to Gamma Arena North": {
+                "Door to Gamma Arena Center": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6069,8 +6352,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 3 - Metroid Caverns",
-                        "area": "Gamma Arena North",
-                        "node": "Door to Teleporter Access"
+                        "area": "Gamma Arena Center",
+                        "node": "Door to Letum Shrine"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -6078,14 +6361,14 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Teleporter Room": {
+                        "Door to Caverns Teleporter West": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Tunnel to Upper Shaft": {
+                        "Tunnel to Gravitt Garden": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6103,7 +6386,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "events",
-                                            "name": "Area 3 (Metroid Caverns) - Upper Shaft Access Grapple Block",
+                                            "name": "Area 3 (Metroid Caverns) - Letum Shrine Grapple Block",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -6122,7 +6405,7 @@
                         }
                     }
                 },
-                "Door to Teleporter Room": {
+                "Door to Caverns Teleporter West": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6142,8 +6425,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 3 - Metroid Caverns",
-                        "area": "Teleporter Room",
-                        "node": "Door to Teleporter Access"
+                        "area": "Caverns Teleporter West",
+                        "node": "Door to Letum Shrine"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -6151,7 +6434,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Gamma Arena North": {
+                        "Door to Gamma Arena Center": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6160,7 +6443,7 @@
                         }
                     }
                 },
-                "Tunnel to Upper Shaft": {
+                "Tunnel to Gravitt Garden": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6177,8 +6460,8 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Area 3 - Metroid Caverns",
-                        "area": "Upper Shaft",
-                        "node": "Tunnel to Teleporter Access"
+                        "area": "Gravitt Garden",
+                        "node": "Tunnel to Letum Shrine"
                     },
                     "default_dock_weakness": "Tunnel",
                     "exclude_from_dock_rando": false,
@@ -6186,7 +6469,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Gamma Arena North": {
+                        "Door to Gamma Arena Center": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -6211,9 +6494,9 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "event_name": "Area 3 (Metroid Caverns) - Upper Shaft Access Grapple Block",
+                    "event_name": "Area 3 (Metroid Caverns) - Letum Shrine Grapple Block",
                     "connections": {
-                        "Door to Gamma Arena North": {
+                        "Door to Gamma Arena Center": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6224,7 +6507,7 @@
                 }
             }
         },
-        "Teleporter Room": {
+        "Caverns Teleporter West": {
             "default_node": null,
             "extra": {
                 "total_boundings": {
@@ -6290,7 +6573,7 @@
                         }
                     },
                     "connections": {
-                        "Door to Teleporter Access": {
+                        "Door to Letum Shrine": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -6301,7 +6584,7 @@
                         }
                     }
                 },
-                "Door to Teleporter Access": {
+                "Door to Letum Shrine": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6321,8 +6604,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Area 3 - Metroid Caverns",
-                        "area": "Teleporter Access",
-                        "node": "Door to Teleporter Room"
+                        "area": "Letum Shrine",
+                        "node": "Door to Caverns Teleporter West"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
@@ -6364,7 +6647,7 @@
                     "valid_starting_location": false,
                     "event_name": "Area 3 Metroid Caverns Teleporter Upper",
                     "connections": {
-                        "Door to Teleporter Access": {
+                        "Door to Letum Shrine": {
                             "type": "and",
                             "data": {
                                 "comment": null,

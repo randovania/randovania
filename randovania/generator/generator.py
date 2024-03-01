@@ -301,7 +301,7 @@ async def generate_and_validate_description(
         )
         try:
             final_state_by_resolve = await asyncio.wait_for(final_state_async, timeout)
-        except asyncio.TimeoutError as e:
+        except TimeoutError as e:
             raise ImpossibleForSolver(
                 "Timeout reached when validating possibility", generator_params=generator_params, layout=result
             ) from e
