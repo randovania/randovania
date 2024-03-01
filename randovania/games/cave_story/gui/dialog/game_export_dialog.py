@@ -88,9 +88,11 @@ class CSGameExportDialog(GameExportDialog, Ui_CSGameExportDialog):
             )
         else:
             self.description_label.setText(
-                """A reverse-engineeered port, with several QoL changes. \
-                Has native controller support, in-game remapping and runs on widescreen. \
-                Compatible with Windows and Linux."""
+                """A community port with several improvements, \
+                such as widescreen, native controller support and in-game remapping. \
+                Compatible with Windows and Linux.
+
+                Click <a href=\"https://oneninefour.cl/tweaked/\">here</a> for more details."""
             )
 
         self.description_label.update()
