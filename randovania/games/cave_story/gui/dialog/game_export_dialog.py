@@ -88,7 +88,7 @@ class CSGameExportDialog(GameExportDialog, Ui_CSGameExportDialog):
             self.description_label.setText(
                 "The original release of Cave Story. Compatible with Windows and Linux via Wine."
             )
-        else:
+        elif self.tweaked_radio.isChecked():
             self.description_label.setText(
                 """A community port with several improvements, \
                 such as widescreen, native controller support and in-game remapping. \
