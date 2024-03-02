@@ -1,0 +1,187 @@
+----------------
+Entrance shaft
+Extra - map_name: Tourian/x40_y75
+> Teleporter to Brinstar; Heals? True
+  * Layers: default
+  * Teleporter to Transport to Tourian/Teleporter to Tourian; Excluded from Dock Lock Rando
+  * Extra - object_id: 100022
+  > Door to Lava passage
+      Get rid of Larva Metroid
+
+> Door to Lava passage; Heals? False
+  * Layers: default
+  * 10 Missiles Door to Lava passage/Door to Entrance shaft
+  > Teleporter to Brinstar
+      Get rid of Larva Metroid
+
+----------------
+Lava passage
+Extra - map_name: Tourian/x96_y97
+> Door to Entrance shaft; Heals? False
+  * Layers: default
+  * 10 Missiles Door to Entrance shaft/Door to Lava passage
+  > Door to Ledged shaft
+      Get rid of Larva Metroid
+
+> Door to Ledged shaft; Heals? False
+  * Layers: default
+  * Missile Door to Ledged shaft/Door to Lava passage
+  > Door to Entrance shaft
+      Get rid of Larva Metroid
+
+----------------
+Ledged shaft
+Extra - map_name: Tourian/x152_y127
+> Door to Lava passage; Heals? False
+  * Layers: default
+  * Missile Door to Lava passage/Door to Ledged shaft
+  > Door to Rinka hall
+      Get rid of Larva Metroid
+
+> Door to Rinka hall; Heals? False
+  * Layers: default
+  * Missile Door to Rinka hall/Door to Ledged shaft
+  > Door to Lava passage
+      Get rid of Larva Metroid
+
+----------------
+Rinka hall
+Extra - map_name: Tourian/x104_y157
+> Door to Ledged shaft; Heals? False
+  * Layers: default
+  * Missile Door to Ledged shaft/Door to Rinka hall
+  > Door to Zebesian Command Center
+      Get rid of Larva Metroid
+
+> Door to Zebesian Command Center; Heals? False
+  * Layers: default
+  * Normal Door to Zebesian Command Center/Door to Rinka hall
+  > Door to Ledged shaft
+      Get rid of Larva Metroid
+
+----------------
+Zebesian Command Center
+Extra - map_name: Tourian/x40_y157
+> Door to Rinka hall; Heals? False
+  * Layers: default
+  * Normal Door to Rinka hall/Door to Zebesian Command Center
+  > Gate 1
+      Trivial
+
+> Event - Gate 1; Heals? False
+  * Layers: default
+  * Event MB Gate 1 Destroyed
+  > Gate 1
+      Trivial
+
+> Event - Gate 2; Heals? False
+  * Layers: default
+  * Event MB Gate 2 Destroyed
+  > Gate 2
+      Trivial
+
+> Event - Gate 3; Heals? False
+  * Layers: default
+  * Event MB Gate 3 Destroyed
+  > Gate 3
+      Trivial
+
+> Event - Gate 4; Heals? False
+  * Layers: default
+  * Event MB Gate 4 Destroyed
+  > Gate 4
+      Trivial
+
+> Event - Gate 5; Heals? False
+  * Layers: default
+  * Event MB Gate 5 Destroyed
+  > Gate 5
+      Trivial
+
+> Event - Mother Brain; Heals? False
+  * Layers: default
+  * Event Mother Brain Boss Killed
+  > Mother Brain
+      Trivial
+
+> Dock to Escape shaft; Heals? False
+  * Layers: default
+  * Open Passage to Escape shaft/Door to Zebesian Command Center
+  > Mother Brain
+      After Mother Brain Boss Killed
+
+> Gate 1; Heals? False
+  * Layers: default
+  > Door to Rinka hall
+      Trivial
+  > Event - Gate 1
+      Missiles ≥ 10
+  > Gate 2
+      After MB Gate 1 Destroyed
+
+> Gate 5; Heals? False
+  * Layers: default
+  > Event - Gate 5
+      Missiles ≥ 10
+  > Mother Brain
+      After MB Gate 5 Destroyed
+  > Gate 4
+      Trivial
+
+> Mother Brain; Heals? False
+  * Layers: default
+  > Event - Mother Brain
+      Missiles ≥ 33
+  > Dock to Escape shaft
+      After Mother Brain Boss Killed
+  > Gate 5
+      Trivial
+
+> Gate 2; Heals? False
+  * Layers: default
+  > Event - Gate 2
+      Missiles ≥ 10
+  > Gate 1
+      Trivial
+  > Gate 3
+      After MB Gate 2 Destroyed
+
+> Gate 3; Heals? False
+  * Layers: default
+  > Event - Gate 3
+      Missiles ≥ 10
+  > Gate 2
+      Trivial
+  > Gate 4
+      After MB Gate 3 Destroyed
+
+> Gate 4; Heals? False
+  * Layers: default
+  > Event - Gate 4
+      Missiles ≥ 10
+  > Gate 5
+      After MB Gate 4 Destroyed
+  > Gate 3
+      Trivial
+
+----------------
+Escape shaft
+Extra - map_name: Tourian/x8_y97
+> Door to Zebesian Command Center; Heals? False
+  * Layers: default
+  * Normal Door to Zebesian Command Center/Dock to Escape shaft
+  > Teleporter to Escape shaft
+      Trivial
+
+> Teleporter to Escape shaft; Heals? False
+  * Layers: default
+  * Teleporter to Escape shaft/Event - End Game
+  > Door to Zebesian Command Center
+      Trivial
+
+> Event - End Game; Heals? False
+  * Layers: default
+  * Event Credits
+  > Teleporter to Escape shaft
+      Trivial
+
