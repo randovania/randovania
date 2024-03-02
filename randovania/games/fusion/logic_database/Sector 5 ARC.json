@@ -1552,6 +1552,10 @@
                                                 }
                                             ]
                                         }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Can Kill PB Geron"
                                     }
                                 ]
                             }
@@ -1589,7 +1593,7 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Arctic Containment": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
                                 "comment": "TODO: varia / damage runs",
                                 "items": [
@@ -1601,6 +1605,10 @@
                                             "amount": 1,
                                             "negate": false
                                         }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Can Kill PB Geron"
                                     }
                                 ]
                             }
@@ -2060,7 +2068,7 @@
                     },
                     "valid_starting_location": false,
                     "pickup_index": 75,
-                    "location_category": "minor",
+                    "location_category": "major",
                     "connections": {
                         "Door to Frozen Tower": {
                             "type": "or",
@@ -2442,7 +2450,7 @@
                     },
                     "valid_starting_location": false,
                     "pickup_index": 76,
-                    "location_category": "minor",
+                    "location_category": "major",
                     "connections": {
                         "Other to Flooded Tower": {
                             "type": "and",
@@ -5808,7 +5816,7 @@
                     },
                     "valid_starting_location": false,
                     "pickup_index": 83,
-                    "location_category": "minor",
+                    "location_category": "major",
                     "connections": {
                         "Other to Nightmare Arena": {
                             "type": "and",
