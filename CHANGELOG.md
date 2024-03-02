@@ -28,6 +28,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: AM2R Speed Booster Upgrades now show properly instead of using the default offworld model.
 
 ### Cave Story
+- **Major** - Cave Story: Tweaked is now supported as an export platform and included with Randovania.
 
 #### Logic Database
 
