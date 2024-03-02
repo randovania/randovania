@@ -45,6 +45,8 @@ class CSGameExportDialog(GameExportDialog, Ui_CSGameExportDialog):
         else:
             self.tweaked_radio.setChecked(True)
 
+        self._on_platform_radio_clicked()
+
         if per_game.output_directory is not None:
             output_path = per_game.output_directory
             self.output_file_edit.setText(str(output_path))
