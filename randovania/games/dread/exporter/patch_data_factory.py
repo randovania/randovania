@@ -507,6 +507,7 @@ class DreadPatchDataFactory(PatchDataFactory):
             if (
                 isinstance(node, DockNode)
                 and node.dock_type in self.game.dock_weakness_database.all_teleporter_dock_types
+                or node.dock_type.extra.get("is_teleportal", False)
             )
         ]
         return {
