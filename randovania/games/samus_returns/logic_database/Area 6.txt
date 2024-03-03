@@ -337,7 +337,6 @@ Extra - asset_id: collision_camera_038
               Super Jump (Intermediate) or Climb Rooms Vertically (High Jump)
               Charge Beam and Ice Beam and Stand on Frozen Enemy (Intermediate)
               Morph Ball and Unmorph Extend (Beginner)
-          Combat (Beginner) or Normal Damage ≥ 199
   > Door to Hideout Entrance
       Trivial
 
@@ -870,11 +869,8 @@ Extra - asset_id: collision_camera_051
   * Extra - start_point_actor_name: ST_FromArea06
   > Save Station
       All of the following:
-          Any of the following:
-              # Energy Requirements
-              Lightning Armor or Combat (Advanced) or Normal Damage ≥ 299
-              Combat (Beginner) and Normal Damage ≥ 199
-              Combat (Intermediate) and Normal Damage ≥ 99
+          # Energy Requirements
+          Lightning Armor or Combat (Beginner) or Normal Damage ≥ 99
           Any of the following:
               # Movement Requirements
               High Jump Boots or Space Jump or Use Spider Ball
@@ -888,11 +884,8 @@ Extra - asset_id: collision_camera_051
   * Extra - start_point_actor_name: ST_SaveStation001
   > Elevator to Area 5 - Tower Lobby
       All of the following:
-          Any of the following:
-              # Energy Requirements
-              Lightning Armor or Combat (Advanced) or Normal Damage ≥ 299
-              Combat (Beginner) and Normal Damage ≥ 199
-              Combat (Intermediate) and Normal Damage ≥ 99
+          # Energy Requirements
+          Lightning Armor or Combat (Beginner) or Normal Damage ≥ 99
           Any of the following:
               # Movement Requirements
               High Jump Boots or Space Jump or Use Spider Ball
@@ -900,10 +893,8 @@ Extra - asset_id: collision_camera_051
               Diagonal Bomb Jump (Intermediate) and Lay Bomb
   > Door to Chozo Seal West Intersection Terminal (Bottom)
       All of the following:
-          Any of the following:
-              # Energy Requirements
-              Lightning Armor or Combat (Intermediate) or Normal Damage ≥ 199
-              Combat (Beginner) and Normal Damage ≥ 99
+          # Energy Requirements
+          Lightning Armor or Combat (Beginner) or Normal Damage ≥ 30
           # Movement Requirements
           Wall Jump (Beginner) or Climb Rooms Vertically (High Jump)
 
@@ -923,9 +914,8 @@ Extra - asset_id: collision_camera_051
   * Extra - actor_name: Door020
   * Extra - actor_type: doorpowerpower
   > Save Station
-      Any of the following:
-          Lightning Armor or Combat (Intermediate) or Normal Damage ≥ 199
-          Combat (Beginner) and Normal Damage ≥ 99
+      # Energy Requirements
+      Lightning Armor or Combat (Intermediate) or Normal Damage ≥ 30
   > Door to Chozo Seal West Intersection Terminal (Top)
       Morph Ball and After Area 6 - Transport to Area 5 Grapple Block
 
@@ -972,15 +962,12 @@ Extra - asset_id: collision_camera_060
           Any of the following:
               Space Jump or Spider Ball
               All of the following:
-                  # Reach the tunnel
+                  # Reach the Tunnel
                   High Jump Boots or Super Jump (Intermediate) or Unmorph Extend (Beginner) or Simple IBJ
                   Any of the following:
-                      # Cross the poison plants gap
+                      # Cross the lower poison plants
                       Lightning Armor
                       Charge Beam and Ice Beam and Stand on Frozen Enemy (Intermediate)
-          Any of the following:
-              Combat (Intermediate) or Normal Damage ≥ 199
-              Combat (Beginner) and Normal Damage ≥ 99
 
 > Tunnel to Chozo Seal West Intersection Terminal; Heals? False
   * Layers: default
@@ -989,7 +976,7 @@ Extra - asset_id: collision_camera_060
       All of the following:
           Morph Ball and After Area 6 - Chozo Seal East Grapple Block
           # Dealing with the Gullugg
-          Lightning Armor or Power Bomb or Wave Beam or Movement (Intermediate)
+          Lightning Armor or Power Bomb or Wave Beam or Combat (Intermediate)
   > Event - Grapple Block
       All of the following:
           Grapple Beam and Morph Ball and Shoot Any Missile
@@ -1027,9 +1014,6 @@ Extra - asset_id: collision_camera_060
           Any of the following:
               Lightning Armor or Space Jump or Spider Ball
               Charge Beam and Ice Beam and Stand on Frozen Enemy (Intermediate)
-          Any of the following:
-              Combat (Intermediate) or Normal Damage ≥ 199
-              Combat (Beginner) and Normal Damage ≥ 99
 
 ----------------
 Omega Arena Access
@@ -1079,11 +1063,18 @@ Extra - asset_id: collision_camera_Hazard_End_A
   * Extra - actor_name: LE_Item_007
   * Extra - actor_type: item_missiletank
   > Save Station
-      All of the following:
-          Morph Ball
-          Any of the following:
-              Lightning Armor or Screw Attack or Movement (Intermediate) or Normal Damage ≥ 100 or Defeat Non-Counterable Enemies
-              Spider Ball and Movement (Beginner)
+      Any of the following:
+          All of the following:
+              # Avoid the crumble blocks
+              Lay Bomb
+              Phase Drift or Spider Ball or Movement (Intermediate)
+          All of the following:
+              # Take the crumble block exit
+              Morph Ball
+              Any of the following:
+                  # Dealing with the Gravitt and Glow Fly
+                  Lightning Armor or Spider Ball or Combat (Intermediate) or Defeat Non-Counterable Enemies
+                  Combat (Beginner) and Normal Damage ≥ 45
 
 > Pickup (Super Missile Tank); Heals? False
   * Layers: default
@@ -1116,9 +1107,7 @@ Extra - asset_id: collision_camera_Hazard_End_A
   > Door to Transport to Area 5 (Top)
       Trivial
   > Tunnel to Chozo Seal East
-      All of the following:
-          Morph Ball
-          Lightning Armor or Movement (Intermediate) or Normal Damage ≥ 150
+      Morph Ball
 
 > Ammo Recharge Station; Heals? False
   * Layers: default
@@ -1136,7 +1125,7 @@ Extra - asset_id: collision_camera_Hazard_End_A
   * Extra - actor_name: LE_Platform_EnergyCharge
   * Extra - actor_type: weightactivatedplatform
   > Save Station
-      Lightning Armor or Movement (Beginner) or Normal Damage ≥ 100
+      Trivial
   > Door to Transport to Area 5 (Top)
       All of the following:
           Morph Ball
@@ -1153,13 +1142,15 @@ Extra - asset_id: collision_camera_Hazard_End_A
   > Pickup (Missile Tank Save)
       All of the following:
           Lay Any Bomb
+          # Avoid the crumble blocks
           Phase Drift or Spider Ball or Movement (Intermediate)
   > Energy Recharge Station
-      Lightning Armor or Movement (Beginner) or Normal Damage ≥ 100
+      Trivial
   > Next to Bottom Puzzle
       Any of the following:
-          Destroy Blob Throwers/Steel Orbs
-          Spider Ball and Movement (Beginner)
+          # Bypassing the Gravitt
+          Lightning Armor or Combat (Intermediate) or Defeat Non-Counterable Enemies or Use Spider Ball
+          Combat (Beginner) and Normal Damage ≥ 45
 
 > Door to Teleporter South; Heals? False
   * Layers: default
@@ -1211,7 +1202,7 @@ Extra - asset_id: collision_camera_Hazard_End_A
   * Layers: default
   * Tunnel to Chozo Seal East/Tunnel to Chozo Seal West Intersection Terminal
   > Chozo Seal
-      Wall Jump (Beginner) or Climb Rooms Vertically (No High Jump)
+      Morph Ball
 
 > Next to Bottom Puzzle; Heals? False
   * Layers: default
@@ -1233,13 +1224,10 @@ Extra - asset_id: collision_camera_Hazard_End_A
   > Ammo Recharge Station
       Trivial
   > Save Station
-      All of the following:
-          Any of the following:
-              Super Jump (Advanced) or Climb Rooms Vertically (High Jump)
-              Morph Ball and Unmorph Extend (Beginner)
-          Any of the following:
-              Destroy Blob Throwers/Steel Orbs
-              Movement (Beginner) and Use Spider Ball
+      Any of the following:
+          # Dealing with the Gravitt
+          Lightning Armor or Combat (Intermediate) or Defeat Non-Counterable Enemies or Use Spider Ball
+          Combat (Beginner) and Normal Damage ≥ 45
   > Door to Teleporter South
       Any of the following:
           Movement (Intermediate) or Super Jump (Advanced) or Climb Rooms Vertically (High Jump)
@@ -1261,8 +1249,9 @@ Extra - asset_id: collision_camera_Hazard_End_B
       Wall Jump (Beginner) or Climb Rooms Vertically (High Jump)
   > Door to Chozo Seal West Intersection Terminal
       Any of the following:
-          Plasma Beam or Normal Damage ≥ 199
-          Combat (Beginner) and Normal Damage ≥ 99
+          # Energy Requirements
+          Lightning Armor or Normal Damage ≥ 150
+          Combat (Beginner) and Normal Damage ≥ 70
   > Event - Teleporter Unlocked
       Trivial
 
@@ -1300,8 +1289,9 @@ Extra - asset_id: collision_camera_Hazard_End_B
   * Extra - actor_type: doorpowerpower
   > Save Station
       Any of the following:
-          Plasma Beam or Normal Damage ≥ 199
-          Combat (Beginner) and Normal Damage ≥ 99
+          # Energy Requirements
+          Lightning Armor or Normal Damage ≥ 150
+          Combat (Beginner) and Normal Damage ≥ 70
 
 > Event - Teleporter Unlocked; Heals? False
   * Layers: default
