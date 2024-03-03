@@ -507,8 +507,9 @@ Extra - room_id: [12]
   * L0 Hatch to Sova Suite/Door to Lava Maze
   * Extra - door_idx: (25,)
   > Door to Lava Reservoirs
-      # TODO: Add damage reqs
-      Varia Suit
+      Any of the following:
+          Varia Suit
+          Damage Runs (Intermediate) and Heat Damage ≥ 15
 
 ----------------
 Sova Suite
@@ -519,16 +520,18 @@ Extra - room_id: [13]
   * L0 Hatch to Lava Maze/Door to Sova Suite
   * Extra - door_idx: (26,)
   > Door to Pyrochamber Access
-      # TODO: add damage reqs
-      Varia Suit
+      Any of the following:
+          Varia Suit
+          Damage Runs (Intermediate) and Heat Damage ≥ 10
 
 > Door to Pyrochamber Access; Heals? False
   * Layers: default
   * L0 Hatch to Pyrochamber Access/Door to Sova Suite
   * Extra - door_idx: (27,)
   > Door to Lava Maze
-      # TODO: add damage reqs
-      Varia Suit
+      Any of the following:
+          Varia Suit
+          Damage Runs (Intermediate) and Heat Damage ≥ 10
 
 ----------------
 Pyrochamber Access
@@ -587,16 +590,20 @@ Extra - room_id: [16]
   * L0 Hatch to Pyrochamber/Door to Boiler Access
   * Extra - door_idx: (32,)
   > Door to Main Boiler
-      # TODO: add damage reqs?
-      Varia Suit
+      Any of the following:
+          Varia Suit
+          # Clean leap across
+          Damage Runs (Intermediate) and Heat Damage ≥ 20
 
 > Door to Main Boiler; Heals? False
   * Layers: default
   * L0 Hatch to Main Boiler/Door to Boiler Access
   * Extra - door_idx: (33,)
   > Door to Pyrochamber
-      # TODO: Add damage reqs?
-      Varia Suit
+      Any of the following:
+          Varia Suit
+          # Clean leap across
+          Damage Runs (Intermediate) and Heat Damage ≥ 20
 
 ----------------
 Main Boiler
@@ -645,14 +652,20 @@ Extra - room_id: [19]
   * L0 Hatch to Processing Access/Door to Sova Processing (Lower)
   * Extra - door_idx: (40,)
   > Beside Lava
-      Varia Suit and Wave Beam
+      All of the following:
+          Wave Beam
+          Any of the following:
+              Varia Suit
+              Damage Runs (Beginner) and Heat Damage ≥ 5
 
 > Door to Processing Access (Upper); Heals? False
   * Layers: default
   * L0 Hatch to Processing Access/Door to Sova Processing (Upper)
   * Extra - door_idx: (75,)
   > Beside Lava
-      Varia Suit
+      Any of the following:
+          Varia Suit
+          Damage Runs (Beginner) and Heat Damage ≥ 5
 
 > Door to Garbage Chute; Heals? False
   * Layers: default
@@ -661,8 +674,12 @@ Extra - room_id: [19]
   > Beside Lava
       All of the following:
           Gravity Suit and Screw Attack
-          # Heat Run Logic
-          Varia Suit
+          Any of the following:
+              # Heat Run logic (need Gravity to do Screw Attack in the lava)
+              # Gravity - Lava and Heat Damage
+              Damage Runs (Intermediate) and Lava Damage ≥ 110
+              # Varia and Gravity - No Damage
+              Varia Suit
 
 > Beside Pickups; Heals? False
   * Layers: default
@@ -676,18 +693,29 @@ Extra - room_id: [19]
 > Beside Lava; Heals? False
   * Layers: default
   > Door to Processing Access (Lower)
-      Varia Suit
+      Any of the following:
+          Varia Suit
+          Damage Runs (Beginner) and Heat Damage ≥ 5
   > Door to Processing Access (Upper)
-      Varia Suit
+      Any of the following:
+          Varia Suit
+          Damage Runs (Beginner) and Heat Damage ≥ 5
   > Door to Garbage Chute
       All of the following:
           Gravity Suit and Screw Attack
-          # Heat Run logic
-          Varia Suit
+          Any of the following:
+              # Heat Run logic (need Gravity to do Screw Attack in the lava)
+              # Gravity - Lava and Heat Damage
+              Damage Runs (Intermediate) and Lava Damage ≥ 110
+              # Varia and Gravity - No Damage
+              Varia Suit
   > Beside Pickups
       All of the following:
-          Morph Ball and Varia Suit
+          Morph Ball
           Space Jump or Movement (Expert) or Can Freeze Enemies
+          Any of the following:
+              Varia Suit
+              Damage Runs (Intermediate) and Heat Damage ≥ 85
 
 ----------------
 Elevator to Main Deck
@@ -1136,7 +1164,11 @@ Extra - room_id: [35]
   * Extra - blockx: 4
   * Extra - blocky: 27
   > Beside Pickup
-      Screw Attack
+      All of the following:
+          Screw Attack
+          Any of the following:
+              Varia Suit
+              Damage Runs (Beginner) and Heat Damage ≥ 40
 
 > Pickup (Power Bomb Tank in Shaft); Heals? False
   * Layers: default
@@ -1146,17 +1178,26 @@ Extra - room_id: [35]
   * Extra - blockx: 15
   * Extra - blocky: 86
   > Door to Sova Processing
-      Trivial
+      Any of the following:
+          Varia Suit
+          Damage Runs (Intermediate) and Lava Damage ≥ 45
   > Beside Pickup
-      Speed Booster
+      All of the following:
+          Speed Booster
+          Any of the following:
+              Varia Suit
+              Damage Runs (Beginner) and Heat Damage ≥ 40
 
 > Door to Sova Processing; Heals? False
   * Layers: default
   * L0 Hatch to Sova Processing/Door to Garbage Chute
   * Extra - door_idx: (79,)
   > Pickup (Power Bomb Tank in Shaft)
-      # TODO: Heat DMG
-      Gravity Suit and Screw Attack and Speed Booster and Disabled Door Lock Rando and Disabled Entrance Rando
+      All of the following:
+          Gravity Suit and Screw Attack and Speed Booster and Disabled Door Lock Rando and Disabled Entrance Rando
+          Any of the following:
+              Varia Suit
+              Damage Runs (Intermediate) and Lava Damage ≥ 75
 
 > Door to Chute Access; Heals? False
   * Layers: default
@@ -1166,11 +1207,19 @@ Extra - room_id: [35]
 > Beside Pickup; Heals? False
   * Layers: default
   > Pickup (Power Bomb Tank in Cave)
-      Screw Attack
+      All of the following:
+          Screw Attack
+          Any of the following:
+              Varia Suit
+              Damage Runs (Beginner) and Heat Damage ≥ 40
   > Pickup (Power Bomb Tank in Shaft)
-      Trivial
+      Any of the following:
+          Varia Suit
+          Damage Runs (Beginner) and Heat Damage ≥ 40
   > Door to Chute Access
-      Speed Booster
+      Any of the following:
+          Varia Suit
+          Damage Runs (Beginner) and Heat Damage ≥ 30
 
 ----------------
 Chute Access
