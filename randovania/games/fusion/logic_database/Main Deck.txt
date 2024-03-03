@@ -497,9 +497,18 @@ Extra - room_id: [18]
   > Door to Main Deck Navigation Room West
       Trivial
   > Door to Habitation Storage
-      Can Use Power Bombs
+      After Main Deck PB Geron
   > Other to Western Hub
       Morph Ball and Can Break Single Bomb Blocks
+  > Event - Central Hub PB Geron
+      Any of the following:
+          Can Kill PB Geron
+          All of the following:
+              # https://www.youtube.com/watch?v=EiFFpvNaT_A
+              Speed Booster and Knowledge (Intermediate) and Disabled Door Lock Rando and Disabled Entrance Rando
+              Any of the following:
+                  Shinespark Tricks (Hypermode)
+                  Shinespark Tricks (Expert) and Can climb High Jump Wall
 
 > Door to Hornoad Hallway; Heals? False
   * Layers: default
@@ -520,7 +529,9 @@ Extra - room_id: [18]
   * L2 Hatch to Habitation Storage/Door to Central Hub
   * Extra - door_idx: (132,)
   > Door to Station Entrance
-      Can Use Power Bombs
+      After Main Deck PB Geron
+  > Event - Central Hub PB Geron
+      Can Kill PB Geron
 
 > Other to Western Hub; Heals? False
   * Layers: default
@@ -528,6 +539,12 @@ Extra - room_id: [18]
   * Extra - door_idx: (203,)
   > Door to Station Entrance
       Can Use Any Bombs
+
+> Event - Central Hub PB Geron; Heals? False
+  * Layers: default
+  * Event Main Deck PB Geron
+  > Door to Habitation Storage
+      Trivial
 
 ----------------
 Western Hub
@@ -1238,14 +1255,6 @@ Extra - room_id: [49, 59]
   * Layers: default
   * Open Hatch to Reactor Checkpoint/Door to Central Reactor Core
   * Extra - door_idx: (124, 137)
-  > Other to Silo Tunnel
-      All of the following:
-          # Charge shinespark from Auxilary Power Station https://discord.com/channels/119665192110915584/1199873303892992020/1207854781406777405
-          High Jump and Speed Booster and Wave Beam and Shinespark Tricks (Expert) and Disabled Door Lock Rando and Disabled Enemy Rando
-          # Without Charge Beam, the shot to open the gate must be precisely timed.  With Charge Beam, just let go of beam while in the transition.
-          Charge Beam or Movement (Advanced)
-          # Get into tunnel
-          Mid-Air Morph (Intermediate) or Movement (Intermediate) or Can Bounce in Ball
   > Door to Reactor Save Room
       Trivial
 
@@ -1254,7 +1263,7 @@ Extra - room_id: [49, 59]
   * Tunnel to Silo Tunnel/Other to Central Reactor Core
   * Extra - door_idx: (125, 135)
   > Door to Reactor Save Room
-      Trivial
+      After Nettori or Can Use Any Bombs
 
 > Door to Reactor Save Room; Heals? False
   * Layers: default
@@ -1263,7 +1272,10 @@ Extra - room_id: [49, 59]
   > Door to Silo Access
       Any of the following:
           Space Jump
-          Speed Booster and Shinespark Tricks (Beginner) and Disabled Door Lock Rando and Disabled Entrance Rando
+          All of the following:
+              Speed Booster and Shinespark Tricks (Beginner) and Disabled Door Lock Rando and Disabled Entrance Rando
+              # Needed to break the vines
+              Wave Beam or Wide Beam
   > Door to Silo Scaffolding A
       Wall Jump (Beginner) or Can climb High Jump Wall
   > Door to Reactor Checkpoint
