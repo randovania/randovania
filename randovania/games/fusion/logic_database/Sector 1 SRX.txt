@@ -295,12 +295,25 @@ Extra - room_id: [9]
   > Door to Checkpoint
       After Stabilizer 5 Online
   > Event - Stabilizer 5 Online
-      All of the following:
-          # TODO: redo this. If using charge, you dont need to damage boost. You do need it for Missiles tho. But you dont for screw/PBs. Also add way to only kill with 1 missile.
-          Charge Beam or Can Kill Missile Geron
-          Any of the following:
+      Any of the following:
+          # Charge Beam can kill the Geron because the beam cannon can be stuck inside the shell and fire past it without touching the shell
+          Charge Beam and Knowledge (Intermediate)
+          All of the following:
+              # Vanilla - Morph Ball to cross to the other side of the tunnel and use Missiles or Charge Beam
               Morph Ball
-              Damage Boosts (Beginner) and Normal Damage ≥ 20
+              Charge Beam or Missiles
+          All of the following:
+              Any of the following:
+                  # Missiles can be used to damage the Geron from the wrong side, but only by getting too close
+                  All of the following:
+                      Knowledge (Intermediate) and Normal Damage ≥ 30
+                      Any of the following:
+                          Damage Boosts (Intermediate) and 10 DMG Missiles
+                          Damage Boosts (Beginner) and 30 DMG Missiles
+              All of the following:
+                  # Alternate methods of defeating the Geron
+                  Knowledge (Beginner)
+                  Screw Attack or Can Use Power Bombs
 
 > Event - Stabilizer 5 Online; Heals? False
   * Layers: default
@@ -471,7 +484,7 @@ Extra - room_id: [15]
           All of the following:
               # Shinespark from Screw Shaft - https://youtu.be/IP4zjb-1kP4
               Speed Booster and Knowledge (Beginner) and Shinespark Tricks (Advanced) and Disabled Door Lock Rando
-              High Jump or Space Jump or Wall Jump (Advanced)
+              Wall Jump (Advanced) or Can climb High Jump Wall
           # Farm X to kill with only 1 Missile
           Missiles and Combat (Beginner)
           All of the following:
@@ -899,7 +912,7 @@ Extra - room_id: [27]
 > Arena; Heals? False
   * Layers: default
   > Door to Ridley Arena Access
-      # TODO: can this be done with single wall jump?
+      # Space Jump is required to leave because the exit creates an overhang
       Space Jump and After Neo-Ridley
   > Event - Neo-Ridley
       All of the following:
@@ -1184,7 +1197,7 @@ Extra - room_id: [37]
   * L0 Hatch to Sciser Playground/Door to Charge Core Arena Access
   * Extra - door_idx: (25,)
   > Door to Hornoad Housing
-      Morph Ball
+      Morph Ball or Can Break Single Bomb Blocks
 
 > Door to Hornoad Housing; Heals? False
   * Layers: default
@@ -1193,8 +1206,15 @@ Extra - room_id: [37]
   > Door to Charge Core Arena
       Can Kill Eye Door
   > Other to Watering Hole
-      # TODO: can apparently break with speedbooster?
-      Can Use Any Bombs
+      Any of the following:
+          Can Use Any Bombs
+          All of the following:
+              # Speed Boosting from Hornoad Housing
+              Speed Booster and Disabled Door Lock Rando and Disabled Entrance Rando
+              # Need Any Beam except Normal to kill the Hornoads fast enough
+              Have Any Beam Upgrade
+              # Knowledge because breaking Bomb Blocks with Speed Booster is a bit obscure
+              Knowledge (Intermediate)
 
 > Door to Charge Core Arena; Heals? False
   * Layers: default
@@ -1208,7 +1228,6 @@ Extra - room_id: [37]
   * Open Passage to Watering Hole/Other to Charge Core Arena Access
   * Extra - door_idx: (100,)
   > Door to Hornoad Housing
-      # TODO: can apparently break with speedbooster?
       Can Use Any Bombs
 
 ----------------
@@ -1316,23 +1335,32 @@ Extra - room_id: [40]
 > Arena; Heals? False
   * Layers: default
   > Pickup (Energy Tank)
-      All of the following:
-          # TODO: shinesparking from above! this is HJ, further below is a video HLess https://discord.com/channels/119665192110915584/1205560315652349962/1212051660436672573
-          Speed Booster and Disabled Door Lock Rando and Disabled Entrance Rando and Can Kill Eye Door
-          Any of the following:
-              # Pre-Fight, with Hi-Jump
-              High Jump and Shinespark Tricks (Intermediate)
-              # After Fight, Trickless
-              High Jump and After Charge Core-X
-              # No Hi-Jump
-              Shinespark Tricks (Advanced)
+      Any of the following:
+          All of the following:
+              # Vanilla Method - Shinespark from Hornoad Housing -> Access
+              Speed Booster and Disabled Door Lock Rando and Disabled Entrance Rando and Can Kill Eye Door
+              Any of the following:
+                  # Pre-Fight, with Hi-Jump
+                  High Jump and Shinespark Tricks (Intermediate)
+                  # After Fight, Trickless
+                  High Jump and After Charge Core-X
+                  # No Hi-Jump
+                  Shinespark Tricks (Advanced)
+              # Any Beam except Normal required to defeat the Hornoads fast enough
+              Have Any Beam Upgrade
+          All of the following:
+              # Alternate - Shinespark from Central Stabilizer -> Escape (Morph Ball is not required for this): https://discord.com/channels/119665192110915584/1205560315652349962/1212051660436672573
+              Speed Booster and Disabled Door Lock Rando and Disabled Entrance Rando
+              # The timing is very tight for the last spark keep
+              Shinespark Tricks (Expert)
+              # High Jump-less is even harder
+              High Jump or Shinespark Tricks (Hypermode)
   > Door to Charge Core Arena Access
       After Charge Core-X
   > Door to Charge Core Escape
       After Charge Core-X
   > Event - Charge Core-X
       All of the following:
-          # TODO: do we want to require farming for this? the other bosses dont have it...
           Missiles
           Any of the following:
               # Health requirements
