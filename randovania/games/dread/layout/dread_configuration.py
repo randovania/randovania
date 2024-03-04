@@ -59,7 +59,6 @@ class DreadConfiguration(BaseConfiguration):
     raven_beak_damage_table_handling: DreadRavenBeakDamageMode
     allow_highly_dangerous_logic: bool
     nerf_power_bombs: bool
-    warp_to_start: bool
     april_fools_hints: bool
     artifacts: DreadArtifactConfig
     constant_heat_damage: int | None = dataclasses.field(metadata={"min": 0, "max": 1000, "precision": 1})

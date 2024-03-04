@@ -537,7 +537,6 @@ class DreadPatchDataFactory(PatchDataFactory):
                 "remove_grapple_block_path_to_itorash": self.configuration.hanubia_easier_path_to_itorash,
                 "default_x_released": self.configuration.x_starts_released,
                 "nerf_power_bombs": self.configuration.nerf_power_bombs,
-                "warp_to_start": self.configuration.warp_to_start,
             },
             "show_shields_on_minimap": not self.configuration.dock_rando.is_enabled(),
             "door_patches": self._door_patches(),
