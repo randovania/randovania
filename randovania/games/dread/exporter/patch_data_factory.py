@@ -139,6 +139,7 @@ class DreadPatchDataFactory(PatchDataFactory):
         if node in self.new_spawn_points:
             return self.new_spawn_points[node]["new_actor"]["actor"]
         else:
+            assert node.location is not None
             area = self.game.region_list.area_by_area_location(node.identifier.area_identifier)
             collision_camera_name = area.extra["asset_id"]
             new_spawnpoint_name = f"{self.spawnpoint_name_prefix}{len(self.new_spawn_points):03d}"
