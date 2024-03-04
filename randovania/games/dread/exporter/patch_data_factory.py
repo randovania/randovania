@@ -520,7 +520,7 @@ class DreadPatchDataFactory(PatchDataFactory):
             ],
             "elevators": teleporters if self.configuration.teleporters.mode != TeleporterShuffleMode.VANILLA else [],
             "hints": self._encode_hints(),
-            "text_patches": self._static_text_changes(),
+            "text_patches": dict(sorted(self._static_text_changes().items())),
             "spoiler_log": self._credits_spoiler(),
             "cosmetic_patches": self._cosmetic_patch_data(),
             "energy_per_tank": energy_per_tank,
