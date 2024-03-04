@@ -71,6 +71,12 @@ def test_layout_patch_data_export(
     assert data == json_lib.read_path(data_path)
 
 
+def _get_world_count(file_path: Path) -> int:
+    # Across all rdvgame file versions, this field has always existed and been an array.
+    data = json_lib.read_dict(file_path)
+    return len(data["info"]["presets"])
+
+
 def pytest_generate_tests(metafunc: _pytest.python.Metafunc) -> None:
     log_dir = Path(__file__).parents[1].joinpath("test_files", "log_files")
 
@@ -98,9 +104,9 @@ def pytest_generate_tests(metafunc: _pytest.python.Metafunc) -> None:
         "samus_returns/starter_preset.rdvgame",  # starter preset
         "samus_returns/start_inventory.rdvgame",  # test for starting inventory and export ids
     ]
-    layouts = {layout_name: LayoutDescription.from_file(log_dir.joinpath(layout_name)) for layout_name in layout_names}
+    layouts = {layout_name: _get_world_count(log_dir.joinpath(layout_name)) for layout_name in layout_names}
 
     metafunc.parametrize(
         ["layout_name", "world_index"],
-        [(layout_name, world) for layout_name, layout in layouts.items() for world in range(layout.world_count)],
+        [(layout_name, world) for layout_name, world_count in layouts.items() for world in range(world_count)],
     )
