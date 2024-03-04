@@ -457,7 +457,7 @@ class MSRPatchDataFactory(PatchDataFactory):
                 "patch_area1_crumbles": self.configuration.area1_crumbles,
                 "reverse_area8": self.configuration.reverse_area8,
             },
-            "text_patches": self._static_text_changes(),
+            "text_patches": dict(sorted(self._static_text_changes().items())),
             "spoiler_log": self._credits_spoiler() if self.description.has_spoiler else {},
             "hints": self._encode_hints(self.rng),
             "cosmetic_patches": self._create_cosmetics(),

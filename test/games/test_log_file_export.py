@@ -90,6 +90,9 @@ def pytest_generate_tests(metafunc: _pytest.python.Metafunc) -> None:
         "dread/dread_dread_multiworld.rdvgame",  # dread-dread multi
         "dread/elevator_rando.rdvgame",  # elevator_rando multi
         "dread/custom_start.rdvgame",  # crazy settings
+        # Samus Returns
+        "samus_returns/starter_preset.rdvgame",  # starter preset
+        "samus_returns/start_inventory.rdvgame",  # test for starting inventory and export ids
     ]
     layouts = {layout_name: LayoutDescription.from_file(log_dir.joinpath(layout_name)) for layout_name in layout_names}
 
