@@ -70,8 +70,16 @@ def pytest_generate_tests(metafunc: _pytest.python.Metafunc) -> None:
     log_dir = Path(__file__).parents[1].joinpath("test_files", "log_files")
 
     layout_names = [
+        # Cross Game Multis
         "all_game_multi.rdvgame",
         "cs_echoes_multi_1.rdvgame",
+        "dread_prime1_multiworld.rdvgame",  # dread-prime1 multi
+        # Dread
+        "dread/starter_preset.rdvgame",  # starter preset
+        "dread/crazy_settings.rdvgame",  # crazy settings
+        "dread/dread_dread_multiworld.rdvgame",  # dread-dread multi
+        "dread/elevator_rando.rdvgame",  # elevator_rando multi
+        "dread/custom_start.rdvgame",  # crazy settings
     ]
     layouts = {layout_name: LayoutDescription.from_file(log_dir.joinpath(layout_name)) for layout_name in layout_names}
 

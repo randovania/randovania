@@ -135,28 +135,19 @@ class DreadPatchDataFactory(PatchDataFactory):
     def _key_error_for_node(self, node: Node, err: KeyError):
         return KeyError(f"{self.game.region_list.node_name(node, with_region=True)} has no extra {err}")
 
-    def _key_error_for_start_node(self, node: Node):
-        return KeyError(
-            f"{self.game.region_list.node_name(node, with_region=True)} has neither a "
-            "start_point_actor_name nor the area has a collision_camera_name for a custom start point"
-        )
-
     def _get_or_create_spawn_point(self, node: Node, level_name: str):
         if node in self.new_spawn_points:
             return self.new_spawn_points[node]["new_actor"]["actor"]
         else:
-            try:
-                area = self.game.region_list.area_by_area_location(node.identifier.area_identifier)
-                collision_camera_name = area.extra["asset_id"]
-                new_spawnpoint_name = f"{self.spawnpoint_name_prefix}{len(self.new_spawn_points):03d}"
-                self.new_spawn_points[node] = {
-                    "new_actor": {"actor": new_spawnpoint_name, "scenario": level_name},
-                    "location": {"x": node.location.x, "y": node.location.y, "z": node.location.z},
-                    "collision_camera_name": collision_camera_name,
-                }
-                return new_spawnpoint_name
-            except KeyError:
-                raise self._key_error_for_start_node(node)
+            area = self.game.region_list.area_by_area_location(node.identifier.area_identifier)
+            collision_camera_name = area.extra["asset_id"]
+            new_spawnpoint_name = f"{self.spawnpoint_name_prefix}{len(self.new_spawn_points):03d}"
+            self.new_spawn_points[node] = {
+                "new_actor": {"actor": new_spawnpoint_name, "scenario": level_name},
+                "location": {"x": node.location.x, "y": node.location.y, "z": node.location.z},
+                "collision_camera_name": collision_camera_name,
+            }
+            return new_spawnpoint_name
 
     def _start_point_ref_for(self, node: Node) -> dict:
         region = self.game.region_list.nodes_to_region(node)
