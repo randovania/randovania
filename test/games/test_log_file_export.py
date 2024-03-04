@@ -74,6 +74,11 @@ def pytest_generate_tests(metafunc: _pytest.python.Metafunc) -> None:
         "all_game_multi.rdvgame",
         "cs_echoes_multi_1.rdvgame",
         "dread_prime1_multiworld.rdvgame",  # dread-prime1 multi
+        # AM2R
+        "am2r/starter_preset.rdvgame",  # starter preset
+        "am2r/door_lock.rdvgame",  # starter preset+door lock rando
+        "am2r/progressive_items.rdvgame",  # Starter preset+progressive items
+        "am2r/starting_items.rdvgame",  # Starter preset + random starting items
         # Dread
         "dread/starter_preset.rdvgame",  # starter preset
         "dread/crazy_settings.rdvgame",  # crazy settings
