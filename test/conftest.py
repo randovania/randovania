@@ -383,6 +383,11 @@ def empty_patches(default_blank_configuration, blank_game_description) -> GamePa
 @pytest.fixture()
 def _mock_seed_hash(mocker: pytest_mock.MockerFixture):
     mocker.patch(
+        "randovania.layout.layout_description.LayoutDescription.shareable_hash_bytes",
+        new_callable=PropertyMock,
+        return_value=b"\x00\x00\x00\x00\x00",
+    )
+    mocker.patch(
         "randovania.layout.layout_description.LayoutDescription.shareable_word_hash",
         new_callable=PropertyMock,
         return_value="Some Words",
