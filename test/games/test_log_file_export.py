@@ -103,6 +103,8 @@ def pytest_generate_tests(metafunc: _pytest.python.Metafunc) -> None:
         # Samus Returns
         "samus_returns/starter_preset.rdvgame",  # starter preset
         "samus_returns/start_inventory.rdvgame",  # test for starting inventory and export ids
+        # Super Metroid
+        "sdm_test_game.rdvgame",
     ]
     layouts = {layout_name: _get_world_count(log_dir.joinpath(layout_name)) for layout_name in layout_names}
 
