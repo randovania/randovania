@@ -2,7 +2,8 @@ from __future__ import annotations
 
 import typing
 from pathlib import Path
-from unittest.mock import PropertyMock
+
+import pytest
 
 import randovania
 from randovania.interface_common.players_configuration import PlayersConfiguration
@@ -11,29 +12,34 @@ from randovania.lib import json_lib
 
 if typing.TYPE_CHECKING:
     import _pytest.python
-    import pytest
-    import pytest_mock
     from conftest import TestFilesDir
 
+    from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
 
+
+def _update_committed(data_path: Path, cosmetic_path: Path, data: dict, cosmetic_patches: BaseCosmeticPatches) -> None:
+    """
+    Updates the files that are used as reference value for later runs. Make sure to always keep this call commented out.
+    """
+    json_lib.write_path(data_path, data)
+
+    if cosmetic_patches != type(cosmetic_patches)():
+        # If not the default
+        json_lib.write_path(cosmetic_path, cosmetic_patches.as_json)
+    else:
+        cosmetic_path.unlink(missing_ok=True)
+
+    raise NotImplementedError("This function should not be called in normal execution.")
+
+
+@pytest.mark.usefixtures("_mock_seed_hash")
 def test_layout_patch_data_export(
     monkeypatch: pytest.MonkeyPatch,
-    mocker: pytest_mock.MockerFixture,
     test_files_dir: TestFilesDir,
     layout_name: str,
     world_index: int,
 ) -> None:
     monkeypatch.setattr(randovania, "VERSION", "1.2.3")
-    mocker.patch(
-        "randovania.layout.layout_description.LayoutDescription.shareable_word_hash",
-        new_callable=PropertyMock,
-        return_value="Some Words",
-    )
-    mocker.patch(
-        "randovania.layout.layout_description.LayoutDescription.shareable_hash",
-        new_callable=PropertyMock,
-        return_value="XXXXXXXX",
-    )
 
     layout = LayoutDescription.from_file(test_files_dir.joinpath("log_files", layout_name))
     game_enum = layout.get_preset(world_index).game
@@ -60,8 +66,7 @@ def test_layout_patch_data_export(
 
     data = factory.create_data()
 
-    # json_lib.write_path(data_path, data); assert False
-    # json_lib.write_path(cosmetic_path, cosmetic_patches.as_json); assert False
+    # _update_committed(data_path, cosmetic_path, data, cosmetic_patches)
 
     assert data == json_lib.read_path(data_path)
 

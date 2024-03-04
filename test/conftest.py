@@ -385,12 +385,12 @@ def _mock_seed_hash(mocker: pytest_mock.MockerFixture):
     mocker.patch(
         "randovania.layout.layout_description.LayoutDescription.shareable_word_hash",
         new_callable=PropertyMock,
-        return_value="Words Hash",
+        return_value="Some Words",
     )
     mocker.patch(
         "randovania.layout.layout_description.LayoutDescription.shareable_hash",
         new_callable=PropertyMock,
-        return_value="$$$$$",
+        return_value="XXXXXXXX",
     )
 
 

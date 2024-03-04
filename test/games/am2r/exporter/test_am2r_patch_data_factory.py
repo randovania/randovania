@@ -40,7 +40,7 @@ def test_construct_music_shuffle_dict_full() -> None:
     assert len(music_dict) == 48
 
 
-@pytest.mark.usefixtures("mock_seed_hash")
+@pytest.mark.usefixtures("_mock_seed_hash")
 @pytest.mark.parametrize(
     ("rdvgame_filename", "expected_results_filename", "num_of_players"),
     [
@@ -88,7 +88,7 @@ def test_create_pickups_dict_shiny(test_files_dir, rdvgame_filename, expected_re
     expected_results_path = test_files_dir.joinpath("patcher_data", "am2r", expected_results_filename)
 
     # Uncomment to easily view diff of failed test
-    # json_lib.write_path(expected_results_path, pickups_dict)
+    # json_lib.write_path(expected_results_path, pickups_dict); assert False
 
     expected_data = json_lib.read_path(expected_results_path)
 
