@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import argparse
 from unittest.mock import ANY, MagicMock, patch
 
 import pytest
@@ -54,7 +55,9 @@ def test_parse_args_invalid(args):
 
 def test_run_args_with_func():
     # Setup
-    args = MagicMock()
+    args = argparse.ArgumentParser()
+    args.configuration = None
+    args.func = MagicMock()
 
     # Run
     cli._run_args(MagicMock(), args)
@@ -66,7 +69,8 @@ def test_run_args_with_func():
 def test_run_args_without_func():
     # Setup
     parser = MagicMock()
-    args = MagicMock()
+    args = argparse.ArgumentParser()
+    args.configuration = None
     args.func = None
 
     # Run

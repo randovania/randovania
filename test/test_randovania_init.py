@@ -1,16 +1,24 @@
 from __future__ import annotations
 
-from pathlib import Path
+from typing import TYPE_CHECKING
 
 import pytest
 
 import randovania
 
+if TYPE_CHECKING:
+    from pathlib import Path
 
-def test_get_configuration_default_missing(tmpdir, mocker):
+    import pytest_mock
+    from _pytest.monkeypatch import MonkeyPatch
+
+
+def test_get_configuration_default_missing(
+    tmp_path: Path, mocker: pytest_mock.MockerFixture, monkeypatch: MonkeyPatch
+) -> None:
     # Setup
-    randovania.CONFIGURATION_FILE_PATH = None
-    mocker.patch("randovania._get_default_configuration_path", return_value=Path(tmpdir).joinpath("missing.json"))
+    monkeypatch.setattr(randovania, "CONFIGURATION_FILE_PATH", None)
+    mocker.patch("randovania._get_default_configuration_path", return_value=tmp_path.joinpath("missing.json"))
 
     # Run
     config = randovania.get_configuration()
@@ -23,14 +31,16 @@ def test_get_configuration_default_missing(tmpdir, mocker):
 
 
 @pytest.mark.parametrize("from_configured", [False, True])
-def test_get_configuration_file(tmpdir, mocker, from_configured):
+def test_get_configuration_file(
+    tmp_path: Path, monkeypatch: MonkeyPatch, mocker: pytest_mock.MockerFixture, from_configured: bool
+) -> None:
     # Setup
-    mocker.patch("randovania._get_default_configuration_path", return_value=Path(tmpdir).joinpath("provided.json"))
+    mocker.patch("randovania._get_default_configuration_path", return_value=tmp_path.joinpath("provided.json"))
     if from_configured:
-        Path(tmpdir).joinpath("configuration.json").write_text('{"foo": 5}')
-        randovania.CONFIGURATION_FILE_PATH = Path(tmpdir).joinpath("configuration.json")
+        tmp_path.joinpath("configuration.json").write_text('{"foo": 5}')
+        monkeypatch.setattr(randovania, "CONFIGURATION_FILE_PATH", tmp_path.joinpath("configuration.json"))
     else:
-        Path(tmpdir).joinpath("provided.json").write_text('{"foo": 5}')
+        tmp_path.joinpath("provided.json").write_text('{"foo": 5}')
 
     # Run
     config = randovania.get_configuration()
@@ -41,9 +51,9 @@ def test_get_configuration_file(tmpdir, mocker, from_configured):
     }
 
 
-def test_get_invalid_configuration_file(tmpdir):
+def test_get_invalid_configuration_file(tmp_path: Path, monkeypatch: MonkeyPatch) -> None:
     # Setup
-    randovania.CONFIGURATION_FILE_PATH = Path(tmpdir).joinpath("configuration.json")
+    monkeypatch.setattr(randovania, "CONFIGURATION_FILE_PATH", tmp_path.joinpath("configuration.json"))
 
     # Run
     with pytest.raises(FileNotFoundError):
