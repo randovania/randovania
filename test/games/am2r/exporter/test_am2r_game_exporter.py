@@ -61,7 +61,7 @@ def test_do_export_game(test_files_dir, mocker, patch_data_name: str, tmp_path):
     done = mocker.patch("concurrent.futures.Future.done", side_effect=[False, True])
     result = mocker.patch("concurrent.futures.Future.result")
 
-    patch_data = test_files_dir.read_json("patcher_data", "am2r", f"{patch_data_name}.json")
+    patch_data = test_files_dir.read_json("patcher_data", "am2r", "am2r", patch_data_name, "world_1.json")
 
     exporter = AM2RGameExporter()
     export_params = AM2RGameExportParams(
@@ -101,7 +101,7 @@ def test_run_patcher(test_files_dir, mocker, patch_data_name: str, tmp_path):
     mocker.patch("am2r_yams.load_wrapper", side_effect=mocked_load_wrapper)
 
     receiving_pipe, output_pipe = multiprocessing.Pipe(True)
-    patch_data = test_files_dir.read_json("patcher_data", "am2r", f"{patch_data_name}.json")
+    patch_data = test_files_dir.read_json("patcher_data", "am2r", "am2r", patch_data_name, "world_1.json")
 
     export_params = AM2RGameExportParams(
         spoiler_output=None,
