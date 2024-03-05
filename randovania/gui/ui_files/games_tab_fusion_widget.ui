@@ -30,7 +30,7 @@
       <item>
        <widget class="QLabel" name="intro_label">
         <property name="text">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;justify&quot;&gt;Explore the B.S.L Station while gearing up to fight the SA-X before destroying the station.&lt;/p&gt;&lt;p align=&quot;justify&quot;&gt;What blocks you from triggering end game.&lt;/p&gt;&lt;p align=&quot;justify&quot;&gt;Anything about hints, nav rooms?&lt;/p&gt;&lt;p align=&quot;justify&quot;&gt;For more details, checkout the (FAQ) and (Differences) tabs.&lt;/p&gt;&lt;p align=&quot;justify&quot;&gt;To get started, use the Quick Generate button to generate a game using the default settings.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;justify&quot;&gt;Explore the B.S.L Station, round up the escaped hatchling Metroids, all while gearing up to fight the SA-X before destroying the station.&lt;/p&gt;&lt;p align=&quot;justify&quot;&gt;The Operations Controls will only be unlocked once the Metroids are collected.&lt;/p&gt;&lt;p align=&quot;justify&quot;&gt;To aid Samus on her journey, ADAM now provides hints at the Navigation Stations, this is explained furthr on the Hints Tabs.&lt;/p&gt;&lt;p align=&quot;justify&quot;&gt;For more details, checkout the &lt;a href=&quot;tab://FAQ&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;FAQ&lt;/span&gt;&lt;/a&gt; and &lt;a href=&quot;tab://Differences&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;Differences&lt;/span&gt;&lt;/a&gt; tabs.&lt;/p&gt;&lt;p align=&quot;justify&quot;&gt;To get started, use the Quick Generate button to generate a game using the default settings.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="wordWrap">
          <bool>true</bool>
@@ -117,7 +117,462 @@
     </item>
    </layout>
   </widget>
-    <widget class="QWidget" name="hint_item_names_tab">
+  <widget class="QWidget" name="differences_tab">
+   <attribute name="title">
+    <string>Differences</string>
+   </attribute>
+   <layout class="QVBoxLayout" name="verticalLayout_2">
+    <item>
+     <widget class="QScrollArea" name="differences_scroll_area">
+      <property name="widgetResizable">
+       <bool>true</bool>
+      </property>
+      <widget class="QWidget" name="differences_scroll_contents">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>463</width>
+         <height>414</height>
+        </rect>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout">
+        <item>
+         <widget class="QLabel" name="differences_label">
+          <property name="text">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Randovania and the MARS patcher make some changes to the original game in order to improve the game experience or to simply fix bugs in the original game.&lt;br/&gt;Many changes are optional and can be disabled in the options Randovania provides, but the following are &lt;span style=&quot; font-weight:600;&quot;&gt;always&lt;/span&gt; there:&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;An option has been added to the pause menu that allows loading your last save from your starting location.&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;An option has been added to cycle the maps by pressing select.&lt;/li&gt;&lt;/ul&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;The Security Rooms are now shuffleable item locations.&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Hints have been placed TODO&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Main Deck Maintenance Shaft now has a connection between Crew Quarters East/West&lt;/li&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Sector 5 will always remain in it's unbroken state, some rooms have been modified to account for this.&lt;/li&gt;&lt;/ul&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;The upper right door in S5 Arctic Containment is now a Yellow Door.&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Sector 6 Varia Core-X always spawns regardless of having Charge Beam or not.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+          </property>
+          <property name="wordWrap">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="hints_tab">
+   <attribute name="title">
+    <string>Hints</string>
+   </attribute>
+   <layout class="QVBoxLayout" name="hints_tab_layout_4">
+    <property name="spacing">
+     <number>0</number>
+    </property>
+    <property name="leftMargin">
+     <number>0</number>
+    </property>
+    <property name="topMargin">
+     <number>0</number>
+    </property>
+    <property name="rightMargin">
+     <number>0</number>
+    </property>
+    <property name="bottomMargin">
+     <number>0</number>
+    </property>
+    <item>
+     <widget class="QScrollArea" name="hints_scroll_area">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="widgetResizable">
+       <bool>true</bool>
+      </property>
+      <widget class="QWidget" name="hints_scroll_area_contents">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>675</width>
+         <height>445</height>
+        </rect>
+       </property>
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <layout class="QVBoxLayout" name="hints_scroll_layout_4">
+        <property name="spacing">
+         <number>6</number>
+        </property>
+        <property name="topMargin">
+         <number>6</number>
+        </property>
+        <property name="rightMargin">
+         <number>6</number>
+        </property>
+        <property name="bottomMargin">
+         <number>6</number>
+        </property>
+        <item>
+         <widget class="QLabel" name="hints_label">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="text">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;In Metroid Fusion, you can find hints for the following resources: &lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Keys&lt;/span&gt;: The Restricted Area Navigation Room hints where all your keys are. TODO&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Major Items&lt;/span&gt;: All other Navigation Rooms provide a hint to a major item with varying degress of precision as described below:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+          <property name="textFormat">
+           <enum>Qt::MarkdownText</enum>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+          </property>
+          <property name="wordWrap">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QTableWidget" name="tableWidget">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>660</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="sizeAdjustPolicy">
+           <enum>QAbstractScrollArea::AdjustToContentsOnFirstShow</enum>
+          </property>
+          <property name="autoScroll">
+           <bool>true</bool>
+          </property>
+          <property name="rowCount">
+           <number>11</number>
+          </property>
+          <property name="columnCount">
+           <number>3</number>
+          </property>
+          <attribute name="horizontalHeaderVisible">
+           <bool>true</bool>
+          </attribute>
+          <attribute name="horizontalHeaderCascadingSectionResizes">
+           <bool>false</bool>
+          </attribute>
+          <attribute name="horizontalHeaderMinimumSectionSize">
+           <number>30</number>
+          </attribute>
+          <attribute name="horizontalHeaderDefaultSectionSize">
+           <number>220</number>
+          </attribute>
+          <attribute name="verticalHeaderVisible">
+           <bool>false</bool>
+          </attribute>
+          <attribute name="verticalHeaderDefaultSectionSize">
+           <number>30</number>
+          </attribute>
+          <row>
+           <property name="text">
+            <string>New Row</string>
+           </property>
+          </row>
+          <row>
+           <property name="text">
+            <string>New Row</string>
+           </property>
+          </row>
+          <row>
+           <property name="text">
+            <string>New Row</string>
+           </property>
+          </row>
+          <row>
+           <property name="text">
+            <string>New Row</string>
+           </property>
+          </row>
+          <row>
+           <property name="text">
+            <string>New Row</string>
+           </property>
+          </row>
+          <row>
+           <property name="text">
+            <string>New Row</string>
+           </property>
+          </row>
+          <row>
+           <property name="text">
+            <string>New Row</string>
+           </property>
+          </row>
+          <row>
+           <property name="text">
+            <string>New Row</string>
+           </property>
+          </row>
+          <row>
+           <property name="text">
+            <string>New Row</string>
+           </property>
+          </row>
+          <row>
+           <property name="text">
+            <string>New Row</string>
+           </property>
+          </row>
+          <row>
+           <property name="text">
+            <string>New Row</string>
+           </property>
+          </row>
+          <column>
+           <property name="text">
+            <string>Region</string>
+           </property>
+           <property name="font">
+            <font>
+             <bold>true</bold>
+            </font>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Area</string>
+           </property>
+           <property name="font">
+            <font>
+             <bold>true</bold>
+            </font>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Hint Precision</string>
+           </property>
+           <property name="font">
+            <font>
+             <bold>true</bold>
+            </font>
+           </property>
+          </column>
+          <item row="0" column="0">
+           <property name="text">
+            <string>Main Deck</string>
+           </property>
+          </item>
+          <item row="0" column="1">
+           <property name="text">
+            <string>Auxiliary Navigation Room</string>
+           </property>
+          </item>
+          <item row="0" column="2">
+           <property name="text">
+            <string>Precise Item, Broad Location</string>
+           </property>
+          </item>
+          <item row="1" column="0">
+           <property name="text">
+            <string>Main Deck</string>
+           </property>
+          </item>
+          <item row="1" column="1">
+           <property name="text">
+            <string>Main Deck Navigation Room East</string>
+           </property>
+          </item>
+          <item row="1" column="2">
+           <property name="text">
+            <string>Broad Item, Broad Location</string>
+           </property>
+          </item>
+          <item row="2" column="0">
+           <property name="text">
+            <string>Main Deck</string>
+           </property>
+          </item>
+          <item row="2" column="1">
+           <property name="text">
+            <string>Main Deck Navigation Room West</string>
+           </property>
+          </item>
+          <item row="2" column="2">
+           <property name="text">
+            <string>Broad Item, Broad Location</string>
+           </property>
+          </item>
+          <item row="3" column="0">
+           <property name="text">
+            <string>Main Deck</string>
+           </property>
+          </item>
+          <item row="3" column="1">
+           <property name="text">
+            <string>Operations Deck Navigation Room</string>
+           </property>
+          </item>
+          <item row="3" column="2">
+           <property name="text">
+            <string>Broad Item, Broad Location</string>
+           </property>
+          </item>
+          <item row="4" column="0">
+           <property name="text">
+            <string>Main Deck</string>
+           </property>
+          </item>
+          <item row="4" column="1">
+           <property name="text">
+            <string>Restricted Navigation Room</string>
+           </property>
+          </item>
+          <item row="4" column="2">
+           <property name="text">
+            <string>Precise Item, Precise Location</string>
+           </property>
+          </item>
+          <item row="5" column="0">
+           <property name="text">
+            <string>Sector 1 (SRX)</string>
+           </property>
+          </item>
+          <item row="5" column="1">
+           <property name="text">
+            <string>Entrance Navigation Room</string>
+           </property>
+          </item>
+          <item row="5" column="2">
+           <property name="text">
+            <string>Broad Item, Broad Location</string>
+           </property>
+          </item>
+          <item row="6" column="0">
+           <property name="text">
+            <string>Sector 2 (TRO)</string>
+           </property>
+          </item>
+          <item row="6" column="1">
+           <property name="text">
+            <string>Entrance Navigation Room</string>
+           </property>
+          </item>
+          <item row="6" column="2">
+           <property name="text">
+            <string>Broad Item, Broad Location</string>
+           </property>
+          </item>
+          <item row="7" column="0">
+           <property name="text">
+            <string>Sector 3 (PYR)</string>
+           </property>
+          </item>
+          <item row="7" column="1">
+           <property name="text">
+            <string>Entrance Navigation Room</string>
+           </property>
+          </item>
+          <item row="7" column="2">
+           <property name="text">
+            <string>Broad Item, Broad Location</string>
+           </property>
+          </item>
+          <item row="8" column="0">
+           <property name="text">
+            <string>Sector 4 (AQA)</string>
+           </property>
+          </item>
+          <item row="8" column="1">
+           <property name="text">
+            <string>Entrance Navigation Room</string>
+           </property>
+          </item>
+          <item row="8" column="2">
+           <property name="text">
+            <string>Broad Item, Broad Location</string>
+           </property>
+          </item>
+          <item row="9" column="0">
+           <property name="text">
+            <string>Sector 5 (ARC)</string>
+           </property>
+          </item>
+          <item row="9" column="1">
+           <property name="text">
+            <string>Entrance Navigation Room</string>
+           </property>
+          </item>
+          <item row="9" column="2">
+           <property name="text">
+            <string>Broad Item, Broad Location</string>
+           </property>
+          </item>
+          <item row="10" column="0">
+           <property name="text">
+            <string>Sector 6 (NOC)</string>
+           </property>
+          </item>
+          <item row="10" column="1">
+           <property name="text">
+            <string>Entrance Navigation Room</string>
+           </property>
+          </item>
+          <item row="10" column="2">
+           <property name="text">
+            <string>Broad Item, Broad Location</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+        <item>
+         <widget class="Line" name="line">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="label">
+          <property name="text">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+          </property>
+          <property name="wordWrap">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="verticalSpacer">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="hint_item_names_tab">
    <attribute name="title">
     <string>Hint Item Names</string>
    </attribute>
@@ -150,8 +605,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>99</width>
-         <height>462</height>
+         <width>495</width>
+         <height>361</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="hint_item_names_scroll_layout_4">

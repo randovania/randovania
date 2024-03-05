@@ -62,7 +62,22 @@ game_data: game.GameData = game.GameData(
     presets=[
         {"path": "starter_preset.rdvpreset"},
     ],
-    faq=[],
+    faq=[
+        (
+            "What patcher does Randovania use?",
+            "Randovania supports the open source patcher MARS (Metroid Advance Randomizer System).",
+        ),
+        (
+            "Which versions of Fusion are supported?",
+            "Only the USA version of Fusion is supported with no current plans to support additional versions.",
+        ),
+        (
+            "I saved in a place I can't get out of, am I softlocked?",
+            "You can use the warp to start function in the pause menu by pressing L and confirming. "
+            "This will place you back at your start location with everything collected since your last save. "
+            "Please note: this is NEVER logical.",
+        ),
+    ],
     layout=game.GameLayout(
         configuration=layout.FusionConfiguration,
         cosmetic_patches=layout.FusionCosmeticPatches,
