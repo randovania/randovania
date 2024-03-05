@@ -657,7 +657,7 @@ Extra - room_id: [20, 34]
   * Open Hatch to Eastern Shaft/Door to Nettori Access
   * Extra - door_idx: (46, 76)
   > Door to Shooting Gallery
-      Trivial
+      Can Kill Tough Beam-Weak Enemy
   > Door to Nettori Arena
       All of the following:
           Can Kill Eye Door
@@ -668,7 +668,7 @@ Extra - room_id: [20, 34]
   * L0 Hatch to Shooting Gallery/Door to Nettori Access
   * Extra - door_idx: (47, 75)
   > Door to Eastern Shaft
-      Trivial
+      Can Kill Tough Beam-Weak Enemy
 
 > Door to Nettori Arena; Heals? False
   * Layers: default
@@ -771,14 +771,14 @@ Extra - room_id: [23]
   * L0 Hatch to Eastern Shaft/Door to Kihunter Hallway
   * Extra - door_idx: (52,)
   > Other to Entrance Hub
-      Trivial
+      Space Jump or Can Kill Tough Beam-Weak Enemy
 
 > Other to Entrance Hub; Heals? False
   * Layers: default
   * Tunnel to Entrance Hub/Other to Kihunter Hallway
   * Extra - door_idx: (53,)
   > Door to Eastern Shaft
-      Trivial
+      Space Jump or Can Kill Tough Beam-Weak Enemy
 
 ----------------
 Overgrown Entrance
@@ -1029,7 +1029,7 @@ Extra - room_id: [32, 35]
   > Other to Hidden Recharge Room
       Morph Ball
   > Door to Nettori Save Room
-      Trivial
+      Can Kill Tough Beam-Weak Enemy
 
 > Door to Collapsed Shaft; Heals? False
   * Layers: default
@@ -1070,13 +1070,17 @@ Extra - room_id: [32, 35]
   > Door to Nettori Access
       Trivial
   > Door to Kihunter Hallway
-      Any of the following:
-          Space Jump
-          All of the following:
-              High Jump
-              Any of the following:
-                  Wall Jump (Intermediate)
-                  Stand On Frozen Enemies (Intermediate) and Can Freeze Enemies
+      All of the following:
+          Any of the following:
+              # Movement Requirements
+              Space Jump
+              All of the following:
+                  High Jump
+                  Any of the following:
+                      Wall Jump (Beginner)
+                      Stand On Frozen Enemies (Beginner) and Can Freeze Enemies
+          # Weapon Requirements
+          Can Kill Tough Beam-Weak Enemy
   > Door to Collapsed Shaft
       After Nettori
 

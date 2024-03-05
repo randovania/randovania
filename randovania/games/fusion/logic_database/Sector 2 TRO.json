@@ -3817,7 +3817,12 @@
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Kill Tough Beam-Weak Enemy"
+                                    }
+                                ]
                             }
                         },
                         "Door to Nettori Arena": {
@@ -3890,7 +3895,12 @@
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Kill Tough Beam-Weak Enemy"
+                                    }
+                                ]
                             }
                         }
                     }
@@ -4657,10 +4667,24 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Other to Entrance Hub": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Kill Tough Beam-Weak Enemy"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "SpaceJump",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -4696,10 +4720,24 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Eastern Shaft": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Kill Tough Beam-Weak Enemy"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "SpaceJump",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -6156,7 +6194,12 @@
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Kill Tough Beam-Weak Enemy"
+                                    }
+                                ]
                             }
                         }
                     }
@@ -6487,57 +6530,74 @@
                             }
                         },
                         "Door to Kihunter Hallway": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "and",
+                                        "type": "or",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Movement Requirements",
                                             "items": [
                                                 {
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "items",
-                                                        "name": "HighJump",
+                                                        "name": "SpaceJump",
                                                         "amount": 1,
                                                         "negate": false
                                                     }
                                                 },
                                                 {
-                                                    "type": "or",
+                                                    "type": "and",
                                                     "data": {
                                                         "comment": null,
                                                         "items": [
                                                             {
-                                                                "type": "and",
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "HighJump",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "or",
                                                                 "data": {
                                                                     "comment": null,
                                                                     "items": [
                                                                         {
-                                                                            "type": "template",
-                                                                            "data": "Can Freeze Enemies"
-                                                                        },
-                                                                        {
                                                                             "type": "resource",
                                                                             "data": {
                                                                                 "type": "tricks",
-                                                                                "name": "StandOnFrozenEnemies",
-                                                                                "amount": 2,
+                                                                                "name": "WallJump",
+                                                                                "amount": 1,
                                                                                 "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "and",
+                                                                            "data": {
+                                                                                "comment": null,
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "template",
+                                                                                        "data": "Can Freeze Enemies"
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "StandOnFrozenEnemies",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
                                                                             }
                                                                         }
                                                                     ]
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "WallJump",
-                                                                    "amount": 2,
-                                                                    "negate": false
                                                                 }
                                                             }
                                                         ]
@@ -6547,12 +6607,15 @@
                                         }
                                     },
                                     {
-                                        "type": "resource",
+                                        "type": "or",
                                         "data": {
-                                            "type": "items",
-                                            "name": "SpaceJump",
-                                            "amount": 1,
-                                            "negate": false
+                                            "comment": "Weapon Requirements",
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Kill Tough Beam-Weak Enemy"
+                                                }
+                                            ]
                                         }
                                     }
                                 ]

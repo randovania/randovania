@@ -1401,6 +1401,110 @@
                         ]
                     }
                 }
+            },
+            "Can Kill Tough Beam-Weak Enemy": {
+                "display_name": "Can Kill Tough Beam-Weak Enemy",
+                "requirement": {
+                    "type": "or",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "template",
+                                "data": "Have Any Beam Upgrade"
+                            },
+                            {
+                                "type": "template",
+                                "data": "Can Use Power Bombs"
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "tricks",
+                                    "name": "Combat",
+                                    "amount": 2,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Missiles",
+                                    "amount": 5,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "ScrewAttack",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "template",
+                                "data": "Can Freeze Enemies"
+                            }
+                        ]
+                    }
+                }
+            },
+            "Can Kill Tough Beam-Resistant Enemy": {
+                "display_name": "Can Kill Tough Beam-Resistant Enemy",
+                "requirement": {
+                    "type": "or",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "and",
+                                "data": {
+                                    "comment": null,
+                                    "items": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "ChargeBeam",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "template",
+                                            "data": "Have Any Beam Upgrade"
+                                        }
+                                    ]
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Missiles",
+                                    "amount": 10,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "ScrewAttack",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "template",
+                                "data": "Can Use Power Bombs"
+                            }
+                        ]
+                    }
+                }
             }
         },
         "damage_reductions": [],

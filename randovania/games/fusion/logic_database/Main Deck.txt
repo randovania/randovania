@@ -1294,19 +1294,17 @@ Extra - room_id: [50]
   * Extra - room: 50
   * Extra - blockx: 54
   * Extra - blocky: 8
-  > Door to Central Reactor Core
-      Trivial
   > Other to Silo Scaffolding B
+      Trivial
+  > Beside Pickup
       Trivial
 
 > Door to Central Reactor Core; Heals? False
   * Layers: default
   * Open Hatch to Central Reactor Core/Door to Silo Scaffolding A
   * Extra - door_idx: (114,)
-  > Pickup (Energy Tank)
-      Trivial
-  > Other to Silo Scaffolding B
-      Movement (Intermediate)
+  > Beside Pickup
+      Space Jump or Combat (Intermediate) or Can Kill Tough Beam-Resistant Enemy
 
 > Other to Silo Scaffolding B; Heals? False
   * Layers: default
@@ -1314,7 +1312,16 @@ Extra - room_id: [50]
   * Extra - door_idx: (115,)
   > Pickup (Energy Tank)
       Trivial
+  > Beside Pickup
+      Movement (Intermediate)
+
+> Beside Pickup; Heals? False
+  * Layers: default
+  > Pickup (Energy Tank)
+      Trivial
   > Door to Central Reactor Core
+      Space Jump or Combat (Intermediate) or Can Kill Tough Beam-Resistant Enemy
+  > Other to Silo Scaffolding B
       Movement (Intermediate)
 
 ----------------
@@ -1336,7 +1343,9 @@ Extra - room_id: [51]
   * Open Passage to Silo Scaffolding A/Other to Silo Scaffolding B
   * Extra - door_idx: (116,)
   > Beside Pickup
-      Trivial
+      Any of the following:
+          Combat (Advanced) or Can Kill Tough Beam-Resistant Enemy
+          Damage Boosts (Intermediate) and Normal Damage ≥ 195
 
 > Door to Yakuza Arena; Heals? False
   * Layers: default
@@ -1348,7 +1357,11 @@ Extra - room_id: [51]
   > Pickup (Missile Tank)
       Morph Ball
   > Other to Silo Scaffolding A
-      Wall Jump (Advanced) or Can climb High Jump Wall
+      All of the following:
+          Wall Jump (Advanced) or Can climb High Jump Wall
+          Any of the following:
+              Combat (Advanced) or Can Kill Tough Beam-Resistant Enemy
+              Damage Boosts (Intermediate) and Normal Damage ≥ 195
   > Door to Yakuza Arena
       All of the following:
           Morph Ball and Can Kill Eye Door
@@ -1356,6 +1369,9 @@ Extra - room_id: [51]
               # Destroy shot block before eye door
               Wave Beam or Can Use Any Bombs
               Diffusion Missiles and Missiles
+          Any of the following:
+              Combat (Advanced) or Can Kill Tough Beam-Resistant Enemy
+              Damage Boosts (Intermediate) and Normal Damage ≥ 95
 
 ----------------
 Reactor Checkpoint
