@@ -99,8 +99,9 @@ Extra - room_id: [3]
   * L0 Hatch to Entrance Hub/Door to Yameba Corridor
   * Extra - door_idx: (9,)
   > Door to Atmospheric Stabilizer Northwest
+      After Sector 1 Yameba Corridor Missile Geron
+  > Event - Missile Geron
       Any of the following:
-          # TODO: make this an event
           Can Kill Missile Geron
           Speed Booster and Knowledge (Beginner)
 
@@ -109,7 +110,17 @@ Extra - room_id: [3]
   * L0 Hatch to Atmospheric Stabilizer Northwest/Door to Yameba Corridor
   * Extra - door_idx: (10,)
   > Door to Entrance Hub
+      After Sector 1 Yameba Corridor Missile Geron
+  > Event - Missile Geron
       Can Kill Missile Geron
+
+> Event - Missile Geron; Heals? False
+  * Layers: default
+  * Event Sector 1 Yameba Corridor Missile Geron
+  > Door to Entrance Hub
+      Trivial
+  > Door to Atmospheric Stabilizer Northwest
+      Trivial
 
 ----------------
 Atmospheric Stabilizer Northwest
@@ -332,7 +343,9 @@ Extra - room_id: [10]
   > Door to Charge Core Arena
       Trivial
   > Other to Crab Rave
-      Missiles and Morph Ball
+      Morph Ball and After Sector 1 Charge Core Escape Missile Block
+  > Event - Missile Block
+      Missiles
 
 > Door to Charge Core Arena; Heals? False
   * Layers: default
@@ -346,7 +359,15 @@ Extra - room_id: [10]
   * Tunnel to Crab Rave/Other to Charge Core Escape
   * Extra - door_idx: (92,)
   > Door to Atmospheric Stabilizer Central
+      Morph Ball and After Sector 1 Charge Core Escape Missile Block
+
+> Event - Missile Block; Heals? False
+  * Layers: default
+  * Event Sector 1 Charge Core Escape Missile Block
+  > Door to Atmospheric Stabilizer Central
       Trivial
+  > Other to Crab Rave
+      Morph Ball
 
 ----------------
 Entrance Recharge Room
@@ -997,32 +1018,40 @@ Extra - room_id: [30]
   * Extra - room: 30
   * Extra - blockx: 15
   * Extra - blocky: 8
-  > Door to Elevator to Restricted Zone
-      Morph Ball and Can Bounce in Ball
+  > Top of Shaft
+      Can Bounce in Ball
 
 > Door to Ripper Maze Access; Heals? False
   * Layers: default
   * L0 Hatch to Ripper Maze Access/Door to Ripper Maze
   * Extra - door_idx: (62,)
-  > Door to Elevator to Restricted Zone
+  > Top of Shaft
       All of the following:
-          Wall Jump (Beginner) or Can climb High Jump Wall
-          Charge Beam or Missiles ≥ 10 or Screw Attack or Normal Damage ≥ 75
+          Charge Beam or Missiles ≥ 10 or Screw Attack or Combat (Intermediate) or Can Freeze Enemies
+          Any of the following:
+              Space Jump
+              Stand On Frozen Enemies (Beginner) and Wall Jump (Beginner) and Can Freeze Enemies
 
 > Door to Elevator to Restricted Zone; Heals? False
   * Layers: default
   * L0 Hatch to Elevator to Restricted Zone/Door to Ripper Maze
   * Extra - door_idx: (63,)
+  > Top of Shaft
+      Wall Jump (Beginner) or Can climb High Jump Wall
+
+> Top of Shaft; Heals? False
+  * Layers: default
   > Pickup (Hidden Energy Tank)
       All of the following:
           Morph Ball
           Any of the following:
               Diffusion Missiles and Missiles
-              # TODO: isnt this possible with SJ and maybe WJ too?
-              Missiles ≥ 5 and Stand On Frozen Enemies (Beginner) and Can Freeze Enemies
+              # Diagonal Missile shot at the third Missile Block when standing close to the wall can hit it (may not even have to freeze the enemy)
+              Missiles ≥ 3 and Knowledge (Beginner) and Stand On Frozen Enemies (Beginner) and Can Freeze Enemies
   > Door to Ripper Maze Access
-      # TODO: duplicated requirements, make a general node for top of left shaft. Also get proper damage values and fint hitless strat
-      Charge Beam or Missiles ≥ 10 or Screw Attack or Wall Jump (Beginner) or Normal Damage ≥ 75 or Can climb High Jump Wall
+      Charge Beam or Missiles ≥ 10 or Screw Attack or Combat (Intermediate) or Can Freeze Enemies
+  > Door to Elevator to Restricted Zone
+      Trivial
 
 ----------------
 Elevator to Restricted Zone
@@ -1128,9 +1157,11 @@ Extra - room_id: [34]
   * Extra - door_idx: (74,)
   > Other to Wall Jump Tutorial
       All of the following:
-          Morph Ball
+          Morph Ball and After Sector 1 Save Room East Shot Block
           Mid-Air Morph (Beginner) or Can Bounce in Ball
   > Save Station
+      Trivial
+  > Event - Shot Block
       Trivial
 
 > Other to Wall Jump Tutorial; Heals? False
@@ -1138,7 +1169,7 @@ Extra - room_id: [34]
   * Tunnel to Wall Jump Tutorial/Other to Save Room East
   * Extra - door_idx: (108,)
   > Door to Short Shaft
-      Disabled Entrance Rando or Can Use Any Bombs
+      After Sector 1 Save Room East Shot Block
 
 > Save Station; Heals? False; Spawn Point
   * Layers: default
@@ -1146,6 +1177,14 @@ Extra - room_id: [34]
   * Extra - Y: 10
   > Door to Short Shaft
       Trivial
+
+> Event - Shot Block; Heals? False
+  * Layers: default
+  * Event Sector 1 Save Room East Shot Block
+  > Door to Short Shaft
+      Trivial
+  > Other to Wall Jump Tutorial
+      Mid-Air Morph (Beginner) or Can Bounce in Ball
 
 ----------------
 South Shaft
@@ -1163,8 +1202,15 @@ Extra - room_id: [35]
   * L0 Hatch to Atmospheric Stabilizer Southeast/Door to South Shaft
   * Extra - door_idx: (73,)
   > Door to Short Shaft
-      # Deal with the Pirates
-      Charge Beam or Missiles ≥ 10 or Screw Attack or Combat (Intermediate) or Normal Damage ≥ 80 or Can Freeze Enemies or Can Use Power Bombs
+      Any of the following:
+          # Deal with the Pirates
+          Charge Beam or Missiles ≥ 10 or Combat (Intermediate) or Can Freeze Enemies or Can Use Power Bombs
+          All of the following:
+              Screw Attack
+              # Screw Attack to defeat the Pirates can also (accidentally) destroy the platforms, unless cancelling spins
+              Space Jump or Movement (Beginner)
+          # Shinespark from Atmospheric Stabilizer Room
+          Speed Booster and Disabled Door Lock Rando and Disabled Entrance Rando
 
 ----------------
 Tourian Entrance
