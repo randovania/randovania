@@ -48,7 +48,13 @@ Extra - asset_id: collision_camera
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: ST_ChozoUnlockAreaDNA_Checkpoint
   > Pickup (Missile Tank)
-      Lightning Armor and Lay Any Bomb
+      Any of the following:
+          Lightning Armor and Morph Ball
+          All of the following:
+              Damage Runs (Intermediate)
+              Any of the following:
+                  Hazard Damage ≥ 270 and Lay Bomb
+                  Hazard Damage ≥ 190 and Lay Power Bomb
   > Elevator to Area 3 - Factory Exterior
       Morph Ball
   > Save Station
@@ -60,7 +66,10 @@ Extra - asset_id: collision_camera
           Lay Power Bomb
           All of the following:
               Lay Bomb
-              Baby Metroid or Melee Clip (Beginner)
+              Any of the following:
+                  Baby Metroid
+                  # Clip to the left of the Chozo Seal
+                  Melee Clip (Beginner) and Out of Bounds Movement (Beginner)
 
 > Door to Entryway Teleporter (Top); Heals? False
   * Layers: default
@@ -84,7 +93,7 @@ Extra - asset_id: collision_camera
   * Extra - actor_name: HiddenPowerup001
   * Extra - actor_type: item_powerbombtank
   > Chozo Seal
-      Lay Any Bomb
+      Trivial
 
 ----------------
 Entryway Teleporter
@@ -125,8 +134,11 @@ Extra - asset_id: collision_camera_003
       Morph Ball
   > Below Teleporter
       Any of the following:
-          Climb Rooms Vertically (High Jump)
-          Stand on Frozen Enemy (Beginner) and Fully Freeze Enemy
+          Super Jump (Intermediate) or Climb Rooms Vertically (High Jump)
+          All of the following:
+              # Freeze the Moheek
+              Ice Beam and Stand on Frozen Enemy (Beginner)
+              Charge Beam or Freeze Enemy with Melee (Beginner)
           Morph Ball and Unmorph Extend (Beginner)
 
 > Door to Alpha+ Arena; Heals? False
@@ -218,7 +230,11 @@ Extra - asset_id: collision_camera_004
   * Layers: default
   * Extra - start_point_actor_name: ST_CheckPoint_002
   > Pickup (Missile Tank)
-      Lightning Armor and Morph Ball
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Lightning Armor
+              Damage Runs (Intermediate) and Hazard Damage ≥ 250
   > Door to Transport Access (Bottom)
       Morph Ball
   > Event - Unlock Door
@@ -252,12 +268,17 @@ Extra - asset_id: collision_camera_005
           All of the following:
               Any of the following:
                   Lightning Armor
-                  Movement (Advanced) and Normal Damage ≥ 150
-              High Jump Boots or Space Jump or Super Jump (Intermediate) or Wall Jump (Beginner)
+                  Damage Runs (Intermediate) and Hazard Damage ≥ 99
+              High Jump Boots or Space Jump or Super Jump (Intermediate) or Wall Jump (Beginner) or Simple IBJ
   > Dock to Fleech Swarm Floodway
       Any of the following:
-          Single-wall Wall Jump (Intermediate) or Climb Rooms Vertically (High Jump)
-          Lightning Armor and Wall Jump (Beginner)
+          Single-wall Wall Jump (Beginner) or Climb Rooms Vertically (No High Jump)
+          All of the following:
+              Wall Jump (Beginner)
+              Lightning Armor or Hazard Damage ≥ 35
+          All of the following:
+              Unmorph Extend (Beginner)
+              High Jump Boots or Super Jump (Intermediate)
 
 > Door to Lightning Armor & Transport to Dam Exterior East (Top); Heals? False
   * Layers: default
@@ -273,17 +294,30 @@ Extra - asset_id: collision_camera_005
   > Door to Lightning Armor & Transport to Dam Exterior East (Bottom)
       Any of the following:
           Lightning Armor or Use Spider Ball
-          Movement (Intermediate) and Normal Damage ≥ 99
+          Damage Runs (Intermediate) and Hazard Damage ≥ 80
   > Door to Lightning Armor & Transport to Dam Exterior East (Top)
       Any of the following:
           After Area 2 (Dam Entryway) - Transport to Dam Exterior Unlock Door
           Disabled Door Type Randomizer and Enabled Door Lock Randomizer
+  > Dock to Fleech Swarm Floodway
+      Any of the following:
+          Lightning Armor or Use Spider Ball
+          Damage Runs (Intermediate) and Hazard Damage ≥ 80
 
 > Dock to Fleech Swarm Floodway; Heals? False
   * Layers: default
   * Open Passage to Fleech Swarm Floodway/Dock to Transport Access
   > Door to Lightning Armor & Transport to Dam Exterior East (Bottom)
       Trivial
+  > Dock to Alpha+ Arena
+      Any of the following:
+          Use Spider Ball
+          All of the following:
+              # Crossing the gap
+              Movement (Intermediate)
+              Any of the following:
+                  Lightning Armor
+                  Damage Runs (Intermediate) and Hazard Damage ≥ 85
 
 ----------------
 Fleech Swarm Floodway
@@ -296,13 +330,21 @@ Extra - asset_id: collision_camera_006
   * Extra - actor_name: LE_Item_001
   * Extra - actor_type: item_missiletank
   > Dock to Transport Access
-      Morph Ball and Fleechswarm Protection
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Fleechswarm Protection
+              Damage Runs (Intermediate) and Hazard Damage ≥ 85
 
 > Dock to Transport Access; Heals? False
   * Layers: default
   * Open Passage to Transport Access/Dock to Fleech Swarm Floodway
   > Pickup (Missile Tank)
-      Morph Ball and Fleechswarm Protection
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Fleechswarm Protection
+              Damage Runs (Intermediate) and Hazard Damage ≥ 75
 
 ----------------
 Alpha+ Arena
