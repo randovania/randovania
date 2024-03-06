@@ -9,6 +9,7 @@ from PySide6.QtWidgets import QComboBox, QDialog, QGroupBox, QHBoxLayout, QLineE
 
 from randovania.game_description.requirements.array_base import RequirementArrayBase
 from randovania.game_description.requirements.base import Requirement
+from randovania.game_description.requirements.node_requirement import NodeRequirement
 from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.game_description.requirements.requirement_or import RequirementOr
 from randovania.game_description.requirements.requirement_template import RequirementTemplate
@@ -18,10 +19,12 @@ from randovania.gui.generated.connections_editor_ui import Ui_ConnectionEditor
 from randovania.gui.lib import signal_handling
 from randovania.gui.lib.common_qt_lib import set_default_window_icon
 from randovania.gui.lib.scroll_protected import ScrollProtectedComboBox
+from randovania.gui.widgets.node_selector_widget import NodeSelectorWidget
 from randovania.layout.base.trick_level import LayoutTrickLevel
 from randovania.lib.enum_lib import iterate_enum
 
 if typing.TYPE_CHECKING:
+    from randovania.game_description.db.region_list import RegionList
     from randovania.game_description.resources.resource_database import NamedRequirementTemplate, ResourceDatabase
     from randovania.game_description.resources.resource_info import ResourceInfo
 
@@ -92,7 +95,22 @@ def _create_default_template_requirement(resource_database: ResourceDatabase) ->
     return RequirementTemplate(template_name)
 
 
-class ResourceRequirementEditor:
+def _create_default_node_requirement(region_list: RegionList) -> NodeRequirement:
+    for node in region_list.all_nodes:
+        return NodeRequirement(node.identifier)
+    raise RuntimeError("No nodes?!")
+
+
+class BaseEditor:
+    def deleteLater(self):
+        raise NotImplementedError
+
+    @property
+    def current_requirement(self) -> Requirement:
+        raise NotImplementedError
+
+
+class ResourceRequirementEditor(BaseEditor):
     def __init__(
         self,
         parent: QWidget,
@@ -181,7 +199,7 @@ class ResourceRequirementEditor:
         yield self.amount_combo
 
     @property
-    def current_requirement(self) -> ResourceRequirement:
+    def current_requirement(self) -> Requirement:
         resource_type = self.resource_type
 
         # Quantity
@@ -203,17 +221,19 @@ class ResourceRequirementEditor:
         return ResourceRequirement.create(self.resource_name_combo.currentData(), quantity, negate)
 
 
-class ArrayRequirementEditor:
+class ArrayRequirementEditor(BaseEditor):
     def __init__(
         self,
         parent: QWidget,
         parent_layout: QVBoxLayout,
         line_layout: QHBoxLayout,
         resource_database: ResourceDatabase,
+        region_list: RegionList,
         requirement: RequirementArrayBase,
     ):
         self._editors = []
         self.resource_database = resource_database
+        self.region_list = region_list
         self._array_type = type(requirement)
 
         # the parent is added to a layout which is added to parent_layout, so we
@@ -246,7 +266,9 @@ class ArrayRequirementEditor:
             self._editors.remove(nested_editor)
             nested_editor.deleteLater()
 
-        nested_editor = RequirementEditor(self.group_box, self.item_layout, self.resource_database, on_remove=on_remove)
+        nested_editor = RequirementEditor(
+            self.group_box, self.item_layout, self.resource_database, self.region_list, on_remove=on_remove
+        )
         nested_editor.create_specialized_editor(item)
         self._editors.append(nested_editor)
 
@@ -275,7 +297,7 @@ class ArrayRequirementEditor:
         )
 
 
-class TemplateRequirementEditor:
+class TemplateRequirementEditor(BaseEditor):
     def __init__(
         self,
         parent: QWidget,
@@ -308,15 +330,45 @@ class TemplateRequirementEditor:
         return RequirementTemplate(self.template_name_combo.currentData())
 
 
+class NodeRequirementEditor(BaseEditor):
+    def __init__(
+        self,
+        parent: QWidget,
+        layout: QHBoxLayout,
+        region_list: RegionList,
+        item: NodeRequirement,
+    ):
+        self.parent = parent
+        self.layout = layout
+        self.selector = NodeSelectorWidget(region_list)
+        self.selector.select_by_identifier(item.node_identifier)
+
+        self.layout.addWidget(self.selector)
+
+    def deleteLater(self):
+        self.selector.deleteLater()
+
+    @property
+    def current_requirement(self) -> NodeRequirement:
+        return NodeRequirement(self.selector.selected_node().identifier)
+
+
 class RequirementEditor:
-    _editor: None | ResourceRequirementEditor | ArrayRequirementEditor | TemplateRequirementEditor
+    _editor: None | BaseEditor
 
     def __init__(
-        self, parent: QWidget, parent_layout: QVBoxLayout, resource_database: ResourceDatabase, *, on_remove=None
+        self,
+        parent: QWidget,
+        parent_layout: QVBoxLayout,
+        resource_database: ResourceDatabase,
+        region_list: RegionList,
+        *,
+        on_remove=None,
     ):
         self.parent = parent
         self.parent_layout = parent_layout
         self.resource_database = resource_database
+        self.region_list = region_list
         self._editor = None
         self._last_resource = None
         self._last_items = ()
@@ -339,6 +391,7 @@ class RequirementEditor:
         self.requirement_type_combo.addItem("Resource", ResourceRequirement)
         self.requirement_type_combo.addItem("Or", RequirementOr)
         self.requirement_type_combo.addItem("And", RequirementAnd)
+        self.requirement_type_combo.addItem("Node", NodeRequirement)
         if resource_database.requirement_template:
             self.requirement_type_combo.addItem("Template", RequirementTemplate)
         self.requirement_type_combo.setMaximumWidth(75)
@@ -357,11 +410,14 @@ class RequirementEditor:
 
         elif isinstance(requirement, RequirementArrayBase):
             self._editor = ArrayRequirementEditor(
-                self.parent, self.parent_layout, self.line_layout, self.resource_database, requirement
+                self.parent, self.parent_layout, self.line_layout, self.resource_database, self.region_list, requirement
             )
 
         elif isinstance(requirement, RequirementTemplate):
             self._editor = TemplateRequirementEditor(self.parent, self.line_layout, self.resource_database, requirement)
+
+        elif isinstance(requirement, NodeRequirement):
+            self._editor = NodeRequirementEditor(self.parent, self.line_layout, self.region_list, requirement)
 
         else:
             raise RuntimeError(f"Unknown requirement type: {type(requirement)} - {requirement}")
@@ -380,6 +436,9 @@ class RequirementEditor:
         elif isinstance(current_requirement, RequirementTemplate):
             pass
 
+        elif isinstance(current_requirement, NodeRequirement):
+            pass
+
         else:
             raise RuntimeError(f"Unknown requirement type: {type(current_requirement)} - {current_requirement}")
 
@@ -389,8 +448,12 @@ class RequirementEditor:
                 new_requirement = _create_default_resource_requirement(self.resource_database)
             else:
                 new_requirement = self._last_resource
+
         elif new_class == RequirementTemplate:
             new_requirement = _create_default_template_requirement(self.resource_database)
+
+        elif new_class == NodeRequirement:
+            new_requirement = _create_default_node_requirement(self.region_list)
         else:
             new_requirement = new_class(self._last_items, self._last_comment)
 
@@ -415,17 +478,20 @@ class ConnectionsEditor(QDialog, Ui_ConnectionEditor):
     resource_database: ResourceDatabase
     _elements: list[QWidget]
 
-    def __init__(self, parent: QWidget, resource_database: ResourceDatabase, requirement: Requirement):
+    def __init__(
+        self, parent: QWidget, resource_database: ResourceDatabase, region_list: RegionList, requirement: Requirement
+    ):
         super().__init__(parent)
         self.setupUi(self)
         set_default_window_icon(self)
 
         self.parent = parent
         self.resource_database = resource_database
+        self.region_list = region_list
 
         self.contents_layout.setAlignment(Qt.AlignTop)
 
-        self._root_editor = RequirementEditor(self, self.contents_layout, resource_database)
+        self._root_editor = RequirementEditor(self, self.contents_layout, resource_database, region_list)
         self._root_editor.create_specialized_editor(requirement)
 
     def deleteLater(self):

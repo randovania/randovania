@@ -7,10 +7,12 @@ from randovania.game_description.resources.resource_type import ResourceType
 from randovania.gui.dialog import connections_editor
 
 
-def test_build_no_changes(skip_qtbot, echoes_resource_database):
+def test_build_no_changes(skip_qtbot, echoes_game_description):
+    gd = echoes_game_description
+
     # Setup
     def mk_req(name: str):
-        return ResourceRequirement.with_data(echoes_resource_database, ResourceType.ITEM, name, 1, False)
+        return ResourceRequirement.with_data(gd.resource_database, ResourceType.ITEM, name, 1, False)
 
     requirement = RequirementOr(
         [
@@ -25,7 +27,7 @@ def test_build_no_changes(skip_qtbot, echoes_resource_database):
     )
 
     # Run
-    editor = connections_editor.ConnectionsEditor(None, echoes_resource_database, requirement)
+    editor = connections_editor.ConnectionsEditor(None, gd.resource_database, gd.region_list, requirement)
     skip_qtbot.addWidget(editor)
     result = editor.final_requirement
 

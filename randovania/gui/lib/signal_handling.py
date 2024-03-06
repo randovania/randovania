@@ -35,3 +35,15 @@ def set_combo_with_value(combo: QtWidgets.QComboBox, value):
     :return:
     """
     combo.setCurrentIndex(combo.findData(value))
+
+
+def refresh_if_needed(combo: QtWidgets.QComboBox, func) -> None:
+    if combo.currentIndex() == 0:
+        func(0)
+
+
+def clear_without_notify(combo: QtWidgets.QComboBox) -> None:
+    """Clears the given QComboBox, while blocking any signals from being emitted."""
+    old_blocking = combo.blockSignals(True)
+    combo.clear()
+    combo.blockSignals(old_blocking)
