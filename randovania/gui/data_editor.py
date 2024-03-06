@@ -593,7 +593,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         assert target_node is not None
 
         requirement = self.current_area.connections[from_node].get(target_node, Requirement.impossible())
-        editor = ConnectionsEditor(self, self.resource_database, requirement)
+        editor = ConnectionsEditor(self, self.resource_database, self.region_list, requirement)
         if await self._execute_edit_dialog(editor):
             self.editor.edit_connections(self.current_area, from_node, target_node, editor.final_requirement)
             self.update_connections()

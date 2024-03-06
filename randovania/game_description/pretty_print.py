@@ -12,6 +12,7 @@ from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.db.teleporter_network_node import TeleporterNetworkNode
 from randovania.game_description.requirements.array_base import RequirementArrayBase
 from randovania.game_description.requirements.base import Requirement
+from randovania.game_description.requirements.node_requirement import NodeRequirement
 from randovania.game_description.requirements.requirement_or import RequirementOr
 from randovania.game_description.requirements.requirement_template import RequirementTemplate
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
@@ -51,11 +52,15 @@ def pretty_print_requirement_array(
         return
 
     resource_requirements = [item for item in requirement.items if isinstance(item, ResourceRequirement)]
+    node_requirements = [item for item in requirement.items if isinstance(item, NodeRequirement)]
     template_requirements = [item for item in requirement.items if isinstance(item, RequirementTemplate)]
     other_requirements = [item for item in requirement.items if isinstance(item, RequirementArrayBase)]
-    assert len(resource_requirements) + len(template_requirements) + len(other_requirements) == len(requirement.items)
+    assert (
+        len(resource_requirements) + len(node_requirements) + len(template_requirements) + len(other_requirements)
+    ) == len(requirement.items)
 
     pretty_resources = [pretty_print_resource_requirement(item) for item in sorted(resource_requirements)]
+    pretty_resources.extend(requirement.node_identifier.as_string for requirement in node_requirements)
     sorted_templates = sorted(get_template_name(db, item) for item in template_requirements)
 
     if isinstance(requirement, RequirementOr):
@@ -94,6 +99,9 @@ def pretty_print_requirement(
 
     elif isinstance(requirement, RequirementTemplate):
         yield level, get_template_name(db, requirement)
+
+    elif isinstance(requirement, NodeRequirement):
+        yield level, requirement.node_identifier.as_string
     else:
         raise RuntimeError(f"Unknown requirement type: {type(requirement)} - {requirement}")
 
