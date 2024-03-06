@@ -441,8 +441,8 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "tricks",
-                                            "name": "Movement",
-                                            "amount": 1,
+                                            "name": "PreciseAiming",
+                                            "amount": 2,
                                             "negate": false
                                         }
                                     }
@@ -3015,6 +3015,15 @@
                                         }
                                     }
                                 ]
+                            }
+                        },
+                        "Door to Transport to Area 2 (Bottom)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -6116,6 +6125,15 @@
                                                         "amount": 3,
                                                         "negate": false
                                                     }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "damage",
+                                                        "name": "Damage",
+                                                        "amount": 120,
+                                                        "negate": false
+                                                    }
                                                 }
                                             ]
                                         }
@@ -6389,12 +6407,29 @@
                                         }
                                     },
                                     {
-                                        "type": "resource",
+                                        "type": "and",
                                         "data": {
-                                            "type": "tricks",
-                                            "name": "DBoost",
-                                            "amount": 1,
-                                            "negate": false
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "DBoost",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "damage",
+                                                        "name": "Damage",
+                                                        "amount": 120,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     },
                                     {
