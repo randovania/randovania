@@ -65,7 +65,9 @@ game_data: game.GameData = game.GameData(
     faq=[
         (
             "What patcher does Randovania use?",
-            "Randovania supports the open source patcher MARS (Metroid Advance Randomizer System).",
+            "Randovania supports the open source patcher MARS (Metroid Advance Randomizer System). "
+            "This is a new patcher built from scratch and is unrelated to other Fusion Randomizers. "
+            "Any differences between vanilla or any other Randomizers are covered under the differences tab.",
         ),
         (
             "Which versions of Fusion are supported?",
@@ -73,9 +75,9 @@ game_data: game.GameData = game.GameData(
         ),
         (
             "I saved in a place I can't get out of, am I softlocked?",
-            "You can use the warp to start function in the pause menu by pressing L and confirming. "
+            'You can use the "Warp to Start" function in the pause menu by pressing L and confirming. '
             "This will place you back at your start location with everything collected since your last save. "
-            "Please note: this is NEVER logical.",
+            "Please note that this is never logical.",
         ),
     ],
     layout=game.GameLayout(

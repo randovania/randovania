@@ -5,6 +5,7 @@ from randovania.games.game import RandovaniaGame
 
 
 class FusionPatchDataFactory(PatchDataFactory):
+    # TODO
     def game_enum(self) -> RandovaniaGame:
         return RandovaniaGame.FUSION
 

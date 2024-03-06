@@ -12,3 +12,4 @@ if TYPE_CHECKING:
 
 def pool_creator(results: PoolResults, configuration: BaseConfiguration, game: GameDescription) -> None:
     assert isinstance(configuration, FusionConfiguration)
+    # TODO

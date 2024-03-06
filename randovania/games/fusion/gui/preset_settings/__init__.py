@@ -24,7 +24,7 @@ def preset_tabs(editor: PresetEditor, window_manager: WindowManager) -> list[typ
         PresetLocationPool,
         MetroidPresetItemPool,
         PresetPatcherEnergy,
-        PresetFusionPatches,
-        # PresetDockRando, TODO: implementation to come later
         PresetStartingArea,
+        # PresetDockRando, TODO: implementation to come later
+        PresetFusionPatches,
     ]

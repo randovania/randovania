@@ -10,7 +10,7 @@ Extra - room_id: [0, 63]
       Trivial
   > Event - Omega Metroid
       All of the following:
-          After Navigation Controls
+          After Navigation Controls Activated
           # Weapon Requirements
           Wide Beam or Combat (Intermediate)
           Any of the following:
@@ -29,7 +29,7 @@ Extra - room_id: [0, 63]
 
 > Event - Omega Metroid; Heals? False
   * Layers: default
-  * Event Omega Metroid
+  * Event Boss Omega Metroid Defeated
   > Event - Victory
       Trivial
 
@@ -41,7 +41,7 @@ Extra - room_id: [0, 63]
 
 > Event - L0; Heals? False
   * Layers: default
-  * Event Level 0 Locks
+  * Event Level 0 Locks Released
   > Ship
       Trivial
 
@@ -315,7 +315,7 @@ Extra - room_id: [13, 74, 85]
 
 > Event - SA-X; Heals? False
   * Layers: default
-  * Event SA-X
+  * Event Boss SA-X Defeated
   > Before Operations Room
       Trivial
 
@@ -324,7 +324,7 @@ Extra - room_id: [13, 74, 85]
   > Door to Elevator to Crew Quarters
       Trivial
   > Door to Operations Room
-      After SA-X
+      After Boss SA-X Defeated
   > Event - SA-X
       All of the following:
           All of the following:
@@ -497,7 +497,7 @@ Extra - room_id: [18]
   > Door to Main Deck Navigation Room West
       Trivial
   > Door to Habitation Storage
-      After Main Deck PB Geron
+      After Main Deck Power Bomb Geron Destroyed
   > Other to Western Hub
       Morph Ball and Can Break Single Bomb Blocks
   > Event - Central Hub PB Geron
@@ -529,7 +529,7 @@ Extra - room_id: [18]
   * L2 Hatch to Habitation Storage/Door to Central Hub
   * Extra - door_idx: (132,)
   > Door to Station Entrance
-      After Main Deck PB Geron
+      After Main Deck Power Bomb Geron Destroyed
   > Event - Central Hub PB Geron
       Can Kill PB Geron
 
@@ -542,7 +542,7 @@ Extra - room_id: [18]
 
 > Event - Central Hub PB Geron; Heals? False
   * Layers: default
-  * Event Main Deck PB Geron
+  * Event Main Deck Power Bomb Geron Destroyed
   > Door to Habitation Storage
       Trivial
 
@@ -1032,7 +1032,7 @@ Extra - room_id: [38]
 
 > Event - Arachnus; Heals? False
   * Layers: default
-  * Event Arachnus
+  * Event Boss Arachnus Defeated
   > Pickup (Morph Ball)
       Trivial
 
@@ -1058,7 +1058,7 @@ Extra - room_id: [38]
   > Pickup (Energy Tank)
       Trivial
   > Door to Crew Quarters East
-      After Arachnus
+      After Boss Arachnus Defeated
   > Other to Maintenance Corridor
       Morph Ball and Screw Attack
   > Other to The Attic
@@ -1263,7 +1263,7 @@ Extra - room_id: [49, 59]
   * Tunnel to Silo Tunnel/Other to Central Reactor Core
   * Extra - door_idx: (125, 135)
   > Door to Reactor Save Room
-      After Nettori or Can Use Any Bombs
+      After Boss Nettori Defeated or Can Use Any Bombs
 
 > Door to Reactor Save Room; Heals? False
   * Layers: default
@@ -1368,7 +1368,7 @@ Extra - room_id: [51]
           Any of the following:
               # Destroy shot block before eye door
               Wave Beam or Can Use Any Bombs
-              Diffusion Missiles and Missiles
+              Diffusion Missile Data and Missiles
           Any of the following:
               Combat (Advanced) or Can Kill Tough Beam-Resistant Enemy
               Damage Boosts (Intermediate) and Normal Damage ≥ 95
@@ -1413,7 +1413,7 @@ Extra - room_id: [54]
 
 > Event - Reactor Control; Heals? False
   * Layers: default
-  * Event Reactor Control
+  * Event Reactor Controls Activated
   > Door to Auxiliary Navigation Room
       Trivial
 
@@ -1428,7 +1428,7 @@ Extra - room_id: [55, 68]
   > Area Transition to Sector 2 (TRO)
       All of the following:
           Morph Ball
-          After Nettori or Can Use Any Bombs
+          After Boss Nettori Defeated or Can Use Any Bombs
 
 > Area Transition to Sector 2 (TRO); Heals? False
   * Layers: default
@@ -1437,7 +1437,7 @@ Extra - room_id: [55, 68]
   > Other to Central Reactor Core
       All of the following:
           Morph Ball
-          After Nettori or Can Use Any Bombs
+          After Boss Nettori Defeated or Can Use Any Bombs
 
 ----------------
 Auxiliary Navigation Room
@@ -1695,7 +1695,7 @@ Extra - room_id: [69]
   > Door to Habitation Deck Entrance (Middle)
       Trivial
   > Other to Habitation Maintenance (Upper)
-      After Animals
+      After Animals Released
   > Above Pickup
       Trivial
 
@@ -1711,13 +1711,13 @@ Extra - room_id: [69]
   * Open Passage to Habitation Maintenance/Other to Habitation Deck (Upper)
   * Extra - door_idx: (163,)
   > Door to Habitation Deck Entrance (Upper)
-      After Animals
+      After Animals Released
   > Event - Save the Animals
       Trivial
 
 > Event - Save the Animals; Heals? False
   * Layers: default
-  * Event Animals
+  * Event Animals Released
   > Other to Habitation Maintenance (Upper)
       Trivial
 
@@ -1896,7 +1896,7 @@ Extra - room_id: [82]
 
 > Event - Flight Controls; Heals? False
   * Layers: default
-  * Event Navigation Controls
+  * Event Navigation Controls Activated
   > Door to Operations Deck
       Trivial
 
@@ -1941,7 +1941,7 @@ Extra - room_id: [86]
 
 > Event - Yakuza; Heals? False
   * Layers: default
-  * Event Yakuza
+  * Event Boss Yakuza Defeated
   > Pickup (Space Jump)
       Trivial
 
@@ -1957,7 +1957,7 @@ Extra - room_id: [86]
 > Arena; Heals? False
   * Layers: default
   > Door to Silo Scaffolding B
-      Space Jump and After Yakuza
+      Space Jump and After Boss Yakuza Defeated
   > Other to Auxiliary Power Station
       Space Jump
   > Event - Yakuza

@@ -99,7 +99,7 @@ Extra - room_id: [3]
   * L0 Hatch to Entrance Hub/Door to Yameba Corridor
   * Extra - door_idx: (9,)
   > Door to Atmospheric Stabilizer Northwest
-      After Sector 1 Yameba Corridor Missile Geron
+      After Sector 1 Yameba Corridor Missile Geron Destroyed
   > Event - Missile Geron
       Any of the following:
           Can Kill Missile Geron
@@ -110,13 +110,13 @@ Extra - room_id: [3]
   * L0 Hatch to Atmospheric Stabilizer Northwest/Door to Yameba Corridor
   * Extra - door_idx: (10,)
   > Door to Entrance Hub
-      After Sector 1 Yameba Corridor Missile Geron
+      After Sector 1 Yameba Corridor Missile Geron Destroyed
   > Event - Missile Geron
       Can Kill Missile Geron
 
 > Event - Missile Geron; Heals? False
   * Layers: default
-  * Event Sector 1 Yameba Corridor Missile Geron
+  * Event Sector 1 Yameba Corridor Missile Geron Destroyed
   > Door to Entrance Hub
       Trivial
   > Door to Atmospheric Stabilizer Northwest
@@ -142,16 +142,16 @@ Extra - room_id: [4]
 
 > Event - Stabilizer 1 Online; Heals? False
   * Layers: default
-  * Event Stabilizer 1 Online
+  * Event Stabilizer 1 Restored
   > Room Center
       Trivial
 
 > Room Center; Heals? False
   * Layers: default
   > Door to Yameba Corridor
-      After Stabilizer 1 Online
+      After Stabilizer 1 Restored
   > Door to Hornoad Hole
-      After Stabilizer 1 Online
+      After Stabilizer 1 Restored
   > Event - Stabilizer 1 Online
       Any of the following:
           Charge Beam or Can Kill Missile Geron
@@ -302,9 +302,9 @@ Extra - room_id: [9]
 > Room Center; Heals? False
   * Layers: default
   > Door to Charge Core Escape
-      After Stabilizer 5 Online
+      After Stabilizer 5 Restored
   > Door to Checkpoint
-      After Stabilizer 5 Online
+      After Stabilizer 5 Restored
   > Event - Stabilizer 5 Online
       Any of the following:
           # Charge Beam can kill the Geron because the beam cannon can be stuck inside the shell and fire past it without touching the shell
@@ -328,7 +328,7 @@ Extra - room_id: [9]
 
 > Event - Stabilizer 5 Online; Heals? False
   * Layers: default
-  * Event Stabilizer 5 Online
+  * Event Stabilizer 5 Restored
   > Room Center
       Trivial
 
@@ -343,7 +343,7 @@ Extra - room_id: [10]
   > Door to Charge Core Arena
       Trivial
   > Other to Crab Rave
-      Morph Ball and After Sector 1 Charge Core Escape Missile Block
+      Morph Ball and After Sector 1 Charge Core Escape Missile Block Destroyed
   > Event - Missile Block
       Missiles
 
@@ -359,11 +359,11 @@ Extra - room_id: [10]
   * Tunnel to Crab Rave/Other to Charge Core Escape
   * Extra - door_idx: (92,)
   > Door to Atmospheric Stabilizer Central
-      Morph Ball and After Sector 1 Charge Core Escape Missile Block
+      Morph Ball and After Sector 1 Charge Core Escape Missile Block Destroyed
 
 > Event - Missile Block; Heals? False
   * Layers: default
-  * Event Sector 1 Charge Core Escape Missile Block
+  * Event Sector 1 Charge Core Escape Missile Block Destroyed
   > Door to Atmospheric Stabilizer Central
       Trivial
   > Other to Crab Rave
@@ -433,9 +433,9 @@ Extra - room_id: [13]
 > Room Center; Heals? False
   * Layers: default
   > Door to Moto Manor
-      After Stabilizer 3 Online
+      After Stabilizer 3 Restored
   > Door to Sciser Puddle
-      After Stabilizer 3 Online
+      After Stabilizer 3 Restored
   > Event - Stabilizer 3 Online
       Any of the following:
           Charge Beam or Can Kill Missile Geron
@@ -444,7 +444,7 @@ Extra - room_id: [13]
 
 > Event - Stabilizer 3 Online; Heals? False
   * Layers: default
-  * Event Stabilizer 3 Online
+  * Event Stabilizer 3 Restored
   > Room Center
       Trivial
 
@@ -494,11 +494,11 @@ Extra - room_id: [15]
 > Room Center; Heals? False
   * Layers: default
   > Door to Sciser Storage
-      After Stabilizer 4 Online
+      After Stabilizer 4 Restored
   > Door to Screw Shaft
-      After Stabilizer 4 Online
+      After Stabilizer 4 Restored
   > Door to South Shaft
-      After Stabilizer 4 Online
+      After Stabilizer 4 Restored
   > Event - Stabilizer 4 Online
       Any of the following:
           Charge Beam or Missiles ≥ 5
@@ -517,7 +517,7 @@ Extra - room_id: [15]
 
 > Event - Stabilizer 4 Online; Heals? False
   * Layers: default
-  * Event Stabilizer 4 Online
+  * Event Stabilizer 4 Restored
   > Room Center
       Trivial
 
@@ -732,7 +732,7 @@ Extra - room_id: [21]
           Any of the following:
               # Destroy Missile Blocks
               Missiles ≥ 3
-              Diffusion Missiles and Missiles
+              Diffusion Missile Data and Missiles
 
 > Door to Ripper Maze Access; Heals? False
   * Layers: default
@@ -771,7 +771,7 @@ Extra - room_id: [21]
           Any of the following:
               # Destroy Missile Blocks
               Missiles ≥ 3
-              Diffusion Missiles and Missiles
+              Diffusion Missile Data and Missiles
   > Door to Ripper Maze Access
       Trivial
 
@@ -919,7 +919,7 @@ Extra - room_id: [27]
 
 > Event - Neo-Ridley; Heals? False
   * Layers: default
-  * Event Neo-Ridley
+  * Event Boss Ridley Deafeated
   > Pickup (Screw Attack)
       Trivial
 
@@ -936,7 +936,7 @@ Extra - room_id: [27]
   * Layers: default
   > Door to Ridley Arena Access
       All of the following:
-          After Neo-Ridley
+          After Boss Ridley Deafeated
           Any of the following:
               Space Jump
               # Can leave with single wall jumping, but currently this is never in logic - https://youtu.be/trYxYGq7PMs
@@ -1045,7 +1045,7 @@ Extra - room_id: [30]
       All of the following:
           Morph Ball
           Any of the following:
-              Diffusion Missiles and Missiles
+              Diffusion Missile Data and Missiles
               # Diagonal Missile shot at the third Missile Block when standing close to the wall can hit it (may not even have to freeze the enemy)
               Missiles ≥ 3 and Knowledge (Beginner) and Stand On Frozen Enemies (Beginner) and Can Freeze Enemies
   > Door to Ripper Maze Access
@@ -1085,7 +1085,7 @@ Extra - room_id: [32]
 > Room Center; Heals? False
   * Layers: default
   > Door to Shaft North
-      After Stabilizer 2 Online
+      After Stabilizer 2 Restored
   > Event - Stabilizer 2 Online
       Any of the following:
           Charge Beam or Can Kill Missile Geron
@@ -1102,7 +1102,7 @@ Extra - room_id: [32]
 
 > Event - Stabilizer 2 Online; Heals? False
   * Layers: default
-  * Event Stabilizer 2 Online
+  * Event Stabilizer 2 Restored
   > Room Center
       Trivial
 
@@ -1157,7 +1157,7 @@ Extra - room_id: [34]
   * Extra - door_idx: (74,)
   > Other to Wall Jump Tutorial
       All of the following:
-          Morph Ball and After Sector 1 Save Room East Shot Block
+          Morph Ball and After Sector 1 Save Room East Shot Block Destroyed
           Mid-Air Morph (Beginner) or Can Bounce in Ball
   > Save Station
       Trivial
@@ -1169,7 +1169,7 @@ Extra - room_id: [34]
   * Tunnel to Wall Jump Tutorial/Other to Save Room East
   * Extra - door_idx: (108,)
   > Door to Short Shaft
-      After Sector 1 Save Room East Shot Block
+      After Sector 1 Save Room East Shot Block Destroyed
 
 > Save Station; Heals? False; Spawn Point
   * Layers: default
@@ -1180,7 +1180,7 @@ Extra - room_id: [34]
 
 > Event - Shot Block; Heals? False
   * Layers: default
-  * Event Sector 1 Save Room East Shot Block
+  * Event Sector 1 Save Room East Shot Block Destroyed
   > Door to Short Shaft
       Trivial
   > Other to Wall Jump Tutorial
@@ -1371,7 +1371,7 @@ Extra - room_id: [40]
 
 > Event - Charge Core-X; Heals? False
   * Layers: default
-  * Event Charge Core-X
+  * Event Boss Charge Core-X Defeated
   > Pickup (Charge Beam)
       Trivial
 
@@ -1395,7 +1395,7 @@ Extra - room_id: [40]
                   # Pre-Fight, with Hi-Jump
                   High Jump and Shinespark Tricks (Intermediate)
                   # After Fight, Trickless
-                  High Jump and After Charge Core-X
+                  High Jump and After Boss Charge Core-X Defeated
                   # No Hi-Jump
                   Shinespark Tricks (Advanced)
               # Any Beam except Normal required to defeat the Hornoads fast enough
@@ -1408,9 +1408,9 @@ Extra - room_id: [40]
               # High Jump-less is even harder
               High Jump or Shinespark Tricks (Hypermode)
   > Door to Charge Core Arena Access
-      After Charge Core-X
+      After Boss Charge Core-X Defeated
   > Door to Charge Core Escape
-      After Charge Core-X
+      After Boss Charge Core-X Defeated
   > Event - Charge Core-X
       All of the following:
           Missiles
