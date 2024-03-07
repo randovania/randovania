@@ -24,17 +24,11 @@
     "pickups": [
         {
             "pickup_type": "actor",
-            "caption": "Energy Part acquired.\nEnergy capacity increased by 25.",
+            "caption": "Morph Ball acquired.",
             "resources": [
                 [
                     {
-                        "item_id": "ITEM_WEAPON_CHARGE_BEAM",
-                        "quantity": 1
-                    }
-                ],
-                [
-                    {
-                        "item_id": "ITEM_WEAPON_DIFFUSION_BEAM",
+                        "item_id": "ITEM_MORPH_BALL",
                         "quantity": 1
                     }
                 ]
@@ -45,10 +39,10 @@
                 "actor": "ItemSphere_ChargeBeam"
             },
             "model": [
-                "item_energyfragment"
+                "powerup_morphball"
             ],
             "map_icon": {
-                "icon_id": "item_energyfragment",
+                "icon_id": "powerup_morphball",
                 "original_actor": {
                     "scenario": "s010_cave",
                     "layer": "default",
@@ -58,7 +52,7 @@
         },
         {
             "pickup_type": "actor",
-            "caption": "Sent Missile Expansion to World 2!",
+            "caption": "Sent Power Bomb to World 2!",
             "resources": [
                 [
                     {
@@ -73,90 +67,12 @@
                 "actor": "Item_MissileTank011"
             },
             "model": [
-                "item_missiletank"
+                "powerup_powerbomb"
             ],
             "map_icon": {
                 "custom_icon": {
-                    "label": "WORLD 2'S MISSILE EXPANSION",
-                    "base_icon": "item_missiletank"
-                }
-            }
-        },
-        {
-            "pickup_type": "actor",
-            "caption": "Sent Small Life Capsule to World 3!",
-            "resources": [
-                [
-                    {
-                        "item_id": "ITEM_NONE",
-                        "quantity": 0
-                    }
-                ]
-            ],
-            "pickup_actor": {
-                "scenario": "s010_cave",
-                "layer": "default",
-                "actor": "Item_MissileTank012"
-            },
-            "model": [
-                "itemsphere"
-            ],
-            "map_icon": {
-                "custom_icon": {
-                    "label": "WORLD 3'S SMALL LIFE CAPSULE",
-                    "base_icon": "unknown"
-                }
-            }
-        },
-        {
-            "pickup_type": "actor",
-            "caption": "Sent Metroid DNA 3 to World 5!",
-            "resources": [
-                [
-                    {
-                        "item_id": "ITEM_NONE",
-                        "quantity": 0
-                    }
-                ]
-            ],
-            "pickup_actor": {
-                "scenario": "s010_cave",
-                "layer": "default",
-                "actor": "Item_EnergyTank001"
-            },
-            "model": [
-                "DNA_3"
-            ],
-            "map_icon": {
-                "custom_icon": {
-                    "label": "WORLD 5'S METROID DNA 3",
-                    "base_icon": "DNA_3"
-                }
-            }
-        },
-        {
-            "pickup_type": "actor",
-            "caption": "Sent Dark Torvus Key 3 to World 7!",
-            "resources": [
-                [
-                    {
-                        "item_id": "ITEM_NONE",
-                        "quantity": 0
-                    }
-                ]
-            ],
-            "pickup_actor": {
-                "scenario": "s010_cave",
-                "layer": "default",
-                "actor": "Item_MissileTank001"
-            },
-            "model": [
-                "itemsphere"
-            ],
-            "map_icon": {
-                "custom_icon": {
-                    "label": "WORLD 7'S DARK TORVUS KEY 3",
-                    "base_icon": "unknown"
+                    "label": "WORLD 2'S POWER BOMB",
+                    "base_icon": "powerup_powerbomb"
                 }
             }
         },
@@ -174,7 +90,7 @@
             "pickup_actor": {
                 "scenario": "s010_cave",
                 "layer": "default",
-                "actor": "Item_MissileTank002"
+                "actor": "Item_MissileTank012"
             },
             "model": [
                 "item_missiletank"
@@ -185,7 +101,7 @@
         },
         {
             "pickup_type": "actor",
-            "caption": "Missile Tank acquired.\nMissile capacity increased by 2.",
+            "caption": "Main Power Bomb acquired.",
             "resources": [
                 [
                     {
@@ -194,6 +110,80 @@
                     },
                     {
                         "item_id": "ITEM_WEAPON_POWER_BOMB_MAX",
+                        "quantity": 2
+                    }
+                ]
+            ],
+            "pickup_actor": {
+                "scenario": "s010_cave",
+                "layer": "default",
+                "actor": "Item_EnergyTank001"
+            },
+            "model": [
+                "powerup_powerbomb"
+            ],
+            "map_icon": {
+                "icon_id": "powerup_powerbomb"
+            }
+        },
+        {
+            "pickup_type": "actor",
+            "caption": "Sent Progressive Beam to World 2!",
+            "resources": [
+                [
+                    {
+                        "item_id": "ITEM_NONE",
+                        "quantity": 0
+                    }
+                ]
+            ],
+            "pickup_actor": {
+                "scenario": "s010_cave",
+                "layer": "default",
+                "actor": "Item_MissileTank001"
+            },
+            "model": [
+                "powerup_widebeam",
+                "powerup_plasmabeam",
+                "powerup_wavebeam"
+            ],
+            "map_icon": {
+                "custom_icon": {
+                    "label": "WORLD 2'S PROGRESSIVE BEAM",
+                    "base_icon": "PROGRESSIVE_BEAM"
+                }
+            }
+        },
+        {
+            "pickup_type": "actor",
+            "caption": "Power Bomb Tank acquired.\nPower Bomb capacity increased by 1.",
+            "resources": [
+                [
+                    {
+                        "item_id": "ITEM_WEAPON_POWER_BOMB_MAX",
+                        "quantity": 1
+                    }
+                ]
+            ],
+            "pickup_actor": {
+                "scenario": "s010_cave",
+                "layer": "default",
+                "actor": "Item_MissileTank002"
+            },
+            "model": [
+                "item_powerbombtank"
+            ],
+            "map_icon": {
+                "icon_id": "item_powerbombtank"
+            }
+        },
+        {
+            "pickup_type": "actor",
+            "caption": "Missile Tank acquired.\nMissile capacity increased by 2.",
+            "resources": [
+                [
+                    {
+                        "item_id": "ITEM_WEAPON_MISSILE_MAX",
                         "quantity": 2
                     }
                 ]
@@ -212,12 +202,12 @@
         },
         {
             "pickup_type": "actor",
-            "caption": "Screw Attack acquired.",
+            "caption": "Missile+ Tank acquired.\nMissile capacity increased by 10.",
             "resources": [
                 [
                     {
                         "item_id": "ITEM_WEAPON_MISSILE_MAX",
-                        "quantity": 2
+                        "quantity": 10
                     }
                 ]
             ],
@@ -227,15 +217,15 @@
                 "actor": "Item_MissileTank003"
             },
             "model": [
-                "powerup_screwattack"
+                "item_missiletankplus"
             ],
             "map_icon": {
-                "icon_id": "powerup_screwattack"
+                "icon_id": "item_missiletankplus"
             }
         },
         {
             "pickup_type": "actor",
-            "caption": "Sent Spider Ball to World 7!",
+            "caption": "Sent Power Bomb Tank to World 2!",
             "resources": [
                 [
                     {
@@ -250,23 +240,23 @@
                 "actor": "Item_MissileTank004"
             },
             "model": [
-                "poweurp_spidermagnet"
+                "item_powerbombtank"
             ],
             "map_icon": {
                 "custom_icon": {
-                    "label": "WORLD 7'S SPIDER BALL",
-                    "base_icon": "poweurp_spidermagnet"
+                    "label": "WORLD 2'S POWER BOMB TANK",
+                    "base_icon": "item_powerbombtank"
                 }
             }
         },
         {
             "pickup_type": "actor",
-            "caption": "Sent Missile Tank to World 3!",
+            "caption": "Power Bomb Tank acquired.\nPower Bomb capacity increased by 1.",
             "resources": [
                 [
                     {
-                        "item_id": "ITEM_NONE",
-                        "quantity": 0
+                        "item_id": "ITEM_WEAPON_POWER_BOMB_MAX",
+                        "quantity": 1
                     }
                 ]
             ],
@@ -276,18 +266,15 @@
                 "actor": "Item_MissileTank005"
             },
             "model": [
-                "item_missiletank"
+                "item_powerbombtank"
             ],
             "map_icon": {
-                "custom_icon": {
-                    "label": "WORLD 3'S MISSILE TANK",
-                    "base_icon": "item_missiletank"
-                }
+                "icon_id": "item_powerbombtank"
             }
         },
         {
             "pickup_type": "actor",
-            "caption": "Sent Power Bomb Tank to World 5!",
+            "caption": "Sent Missile Tank to World 2!",
             "resources": [
                 [
                     {
@@ -302,260 +289,12 @@
                 "actor": "Item_MissileTank006"
             },
             "model": [
-                "item_powerbombtank"
-            ],
-            "map_icon": {
-                "custom_icon": {
-                    "label": "WORLD 5'S POWER BOMB TANK",
-                    "base_icon": "item_powerbombtank"
-                }
-            }
-        },
-        {
-            "pickup_type": "actor",
-            "caption": "Energy Part acquired.\nEnergy capacity increased by 25.",
-            "resources": [
-                [
-                    {
-                        "item_id": "ITEM_WEAPON_MISSILE_MAX",
-                        "quantity": 2
-                    }
-                ]
-            ],
-            "pickup_actor": {
-                "scenario": "s010_cave",
-                "layer": "default",
-                "actor": "Item_MissileTank007"
-            },
-            "model": [
-                "item_energyfragment"
-            ],
-            "map_icon": {
-                "icon_id": "item_energyfragment"
-            }
-        },
-        {
-            "pickup_type": "actor",
-            "caption": "Sent Sky Temple Key 1 to World 4!",
-            "resources": [
-                [
-                    {
-                        "item_id": "ITEM_NONE",
-                        "quantity": 0
-                    }
-                ]
-            ],
-            "pickup_actor": {
-                "scenario": "s010_cave",
-                "layer": "default",
-                "actor": "Item_MissileTank003_1"
-            },
-            "model": [
-                "itemsphere"
-            ],
-            "map_icon": {
-                "custom_icon": {
-                    "label": "WORLD 4'S SKY TEMPLE KEY 1",
-                    "base_icon": "unknown"
-                }
-            }
-        },
-        {
-            "pickup_type": "actor",
-            "caption": "Sky Temple Key 7 acquired!",
-            "resources": [
-                [
-                    {
-                        "item_id": "ITEM_WEAPON_MISSILE_MAX",
-                        "quantity": 2
-                    }
-                ]
-            ],
-            "pickup_actor": {
-                "scenario": "s010_cave",
-                "layer": "default",
-                "actor": "Item_MissileTank009"
-            },
-            "model": [
-                "offworld"
-            ],
-            "map_icon": {
-                "icon_id": "offworld"
-            }
-        },
-        {
-            "pickup_type": "actor",
-            "caption": "Little Man acquired!",
-            "resources": [
-                [
-                    {
-                        "item_id": "ITEM_WEAPON_MISSILE_MAX",
-                        "quantity": 2
-                    }
-                ]
-            ],
-            "pickup_actor": {
-                "scenario": "s010_cave",
-                "layer": "default",
-                "actor": "item_energytank_000"
-            },
-            "model": [
-                "offworld"
-            ],
-            "map_icon": {
-                "icon_id": "offworld"
-            }
-        },
-        {
-            "pickup_type": "actor",
-            "caption": "Sent Missile Tank to World 4!",
-            "resources": [
-                [
-                    {
-                        "item_id": "ITEM_NONE",
-                        "quantity": 0
-                    }
-                ]
-            ],
-            "pickup_actor": {
-                "scenario": "s010_cave",
-                "layer": "default",
-                "actor": "item_missiletankplus_000"
-            },
-            "model": [
                 "item_missiletank"
             ],
             "map_icon": {
                 "custom_icon": {
-                    "label": "WORLD 4'S MISSILE TANK",
+                    "label": "WORLD 2'S MISSILE TANK",
                     "base_icon": "item_missiletank"
-                }
-            }
-        },
-        {
-            "pickup_type": "actor",
-            "caption": "Sent Charcoal to World 2!",
-            "resources": [
-                [
-                    {
-                        "item_id": "ITEM_NONE",
-                        "quantity": 0
-                    }
-                ]
-            ],
-            "pickup_actor": {
-                "scenario": "s010_cave",
-                "layer": "default",
-                "actor": "item_energyfragment_001"
-            },
-            "model": [
-                "itemsphere"
-            ],
-            "map_icon": {
-                "custom_icon": {
-                    "label": "WORLD 2'S CHARCOAL",
-                    "base_icon": "unknown"
-                }
-            }
-        },
-        {
-            "pickup_type": "actor",
-            "caption": "Sent Power Bomb Tank to World 7!",
-            "resources": [
-                [
-                    {
-                        "item_id": "ITEM_NONE",
-                        "quantity": 0
-                    }
-                ]
-            ],
-            "pickup_actor": {
-                "scenario": "s010_cave",
-                "layer": "default",
-                "actor": "item_missiletank_001"
-            },
-            "model": [
-                "item_powerbombtank"
-            ],
-            "map_icon": {
-                "custom_icon": {
-                    "label": "WORLD 7'S POWER BOMB TANK",
-                    "base_icon": "item_powerbombtank"
-                }
-            }
-        },
-        {
-            "pickup_type": "actor",
-            "caption": "Sky Temple Key 9 acquired!",
-            "resources": [
-                [
-                    {
-                        "item_id": "ITEM_WEAPON_SUPER_MISSILE",
-                        "quantity": 1
-                    }
-                ]
-            ],
-            "pickup_actor": {
-                "scenario": "s010_cave",
-                "layer": "default",
-                "actor": "item_energyfragment_000"
-            },
-            "model": [
-                "offworld"
-            ],
-            "map_icon": {
-                "icon_id": "offworld"
-            }
-        },
-        {
-            "pickup_type": "actor",
-            "caption": "Sent Missile Expansion to World 3!",
-            "resources": [
-                [
-                    {
-                        "item_id": "ITEM_NONE",
-                        "quantity": 0
-                    }
-                ]
-            ],
-            "pickup_actor": {
-                "scenario": "s010_cave",
-                "layer": "default",
-                "actor": "item_powerbombtank_000"
-            },
-            "model": [
-                "item_missiletank"
-            ],
-            "map_icon": {
-                "custom_icon": {
-                    "label": "WORLD 3'S MISSILE EXPANSION",
-                    "base_icon": "item_missiletank"
-                }
-            }
-        },
-        {
-            "pickup_type": "actor",
-            "caption": "Sent Power Bomb Expansion to World 7!",
-            "resources": [
-                [
-                    {
-                        "item_id": "ITEM_NONE",
-                        "quantity": 0
-                    }
-                ]
-            ],
-            "pickup_actor": {
-                "scenario": "s010_cave",
-                "layer": "default",
-                "actor": "item_missiletank_003"
-            },
-            "model": [
-                "item_powerbombtank"
-            ],
-            "map_icon": {
-                "custom_icon": {
-                    "label": "WORLD 7'S POWER BOMB EXPANSION",
-                    "base_icon": "item_powerbombtank"
                 }
             }
         },
@@ -573,7 +312,7 @@
             "pickup_actor": {
                 "scenario": "s010_cave",
                 "layer": "default",
-                "actor": "item_missiletank_004"
+                "actor": "Item_MissileTank007"
             },
             "model": [
                 "item_missiletank"
@@ -587,12 +326,263 @@
         },
         {
             "pickup_type": "actor",
-            "caption": "Sent Progressive Spin to World 6!",
+            "caption": "Sent Morph Ball to World 2!",
             "resources": [
                 [
                     {
                         "item_id": "ITEM_NONE",
                         "quantity": 0
+                    }
+                ]
+            ],
+            "pickup_actor": {
+                "scenario": "s010_cave",
+                "layer": "default",
+                "actor": "Item_MissileTank003_1"
+            },
+            "model": [
+                "powerup_morphball"
+            ],
+            "map_icon": {
+                "custom_icon": {
+                    "label": "WORLD 2'S MORPH BALL",
+                    "base_icon": "powerup_morphball"
+                }
+            }
+        },
+        {
+            "pickup_type": "actor",
+            "caption": "Sent Spider Magnet to World 2!",
+            "resources": [
+                [
+                    {
+                        "item_id": "ITEM_NONE",
+                        "quantity": 0
+                    }
+                ]
+            ],
+            "pickup_actor": {
+                "scenario": "s010_cave",
+                "layer": "default",
+                "actor": "Item_MissileTank009"
+            },
+            "model": [
+                "powerup_spidermagnet"
+            ],
+            "map_icon": {
+                "custom_icon": {
+                    "label": "WORLD 2'S SPIDER MAGNET",
+                    "base_icon": "powerup_spidermagnet"
+                }
+            }
+        },
+        {
+            "pickup_type": "actor",
+            "caption": "Missile Tank acquired.\nMissile capacity increased by 2.",
+            "resources": [
+                [
+                    {
+                        "item_id": "ITEM_WEAPON_MISSILE_MAX",
+                        "quantity": 2
+                    }
+                ]
+            ],
+            "pickup_actor": {
+                "scenario": "s010_cave",
+                "layer": "default",
+                "actor": "item_energytank_000"
+            },
+            "model": [
+                "item_missiletank"
+            ],
+            "map_icon": {
+                "icon_id": "item_missiletank"
+            }
+        },
+        {
+            "pickup_type": "actor",
+            "caption": "Missile+ Tank acquired.\nMissile capacity increased by 10.",
+            "resources": [
+                [
+                    {
+                        "item_id": "ITEM_WEAPON_MISSILE_MAX",
+                        "quantity": 10
+                    }
+                ]
+            ],
+            "pickup_actor": {
+                "scenario": "s010_cave",
+                "layer": "default",
+                "actor": "item_missiletankplus_000"
+            },
+            "model": [
+                "item_missiletankplus"
+            ],
+            "map_icon": {
+                "icon_id": "item_missiletankplus"
+            }
+        },
+        {
+            "pickup_type": "actor",
+            "caption": "Sent Energy Tank to World 2!",
+            "resources": [
+                [
+                    {
+                        "item_id": "ITEM_NONE",
+                        "quantity": 0
+                    }
+                ]
+            ],
+            "pickup_actor": {
+                "scenario": "s010_cave",
+                "layer": "default",
+                "actor": "item_energyfragment_001"
+            },
+            "model": [
+                "item_energytank"
+            ],
+            "map_icon": {
+                "custom_icon": {
+                    "label": "WORLD 2'S ENERGY TANK",
+                    "base_icon": "item_energytank"
+                }
+            }
+        },
+        {
+            "pickup_type": "actor",
+            "caption": "Missile+ Tank acquired.\nMissile capacity increased by 10.",
+            "resources": [
+                [
+                    {
+                        "item_id": "ITEM_WEAPON_MISSILE_MAX",
+                        "quantity": 10
+                    }
+                ]
+            ],
+            "pickup_actor": {
+                "scenario": "s010_cave",
+                "layer": "default",
+                "actor": "item_missiletank_001"
+            },
+            "model": [
+                "item_missiletankplus"
+            ],
+            "map_icon": {
+                "icon_id": "item_missiletankplus"
+            }
+        },
+        {
+            "pickup_type": "actor",
+            "caption": "Missile Tank acquired.\nMissile capacity increased by 2.",
+            "resources": [
+                [
+                    {
+                        "item_id": "ITEM_WEAPON_MISSILE_MAX",
+                        "quantity": 2
+                    }
+                ]
+            ],
+            "pickup_actor": {
+                "scenario": "s010_cave",
+                "layer": "default",
+                "actor": "item_energyfragment_000"
+            },
+            "model": [
+                "item_missiletank"
+            ],
+            "map_icon": {
+                "icon_id": "item_missiletank"
+            }
+        },
+        {
+            "pickup_type": "actor",
+            "caption": "Sent Missile+ Tank to World 2!",
+            "resources": [
+                [
+                    {
+                        "item_id": "ITEM_NONE",
+                        "quantity": 0
+                    }
+                ]
+            ],
+            "pickup_actor": {
+                "scenario": "s010_cave",
+                "layer": "default",
+                "actor": "item_powerbombtank_000"
+            },
+            "model": [
+                "item_missiletankplus"
+            ],
+            "map_icon": {
+                "custom_icon": {
+                    "label": "WORLD 2'S MISSILE+ TANK",
+                    "base_icon": "item_missiletankplus"
+                }
+            }
+        },
+        {
+            "pickup_type": "actor",
+            "caption": "Sent Missile Tank to World 2!",
+            "resources": [
+                [
+                    {
+                        "item_id": "ITEM_NONE",
+                        "quantity": 0
+                    }
+                ]
+            ],
+            "pickup_actor": {
+                "scenario": "s010_cave",
+                "layer": "default",
+                "actor": "item_missiletank_003"
+            },
+            "model": [
+                "item_missiletank"
+            ],
+            "map_icon": {
+                "custom_icon": {
+                    "label": "WORLD 2'S MISSILE TANK",
+                    "base_icon": "item_missiletank"
+                }
+            }
+        },
+        {
+            "pickup_type": "actor",
+            "caption": "Missile Tank acquired.\nMissile capacity increased by 2.",
+            "resources": [
+                [
+                    {
+                        "item_id": "ITEM_WEAPON_MISSILE_MAX",
+                        "quantity": 2
+                    }
+                ]
+            ],
+            "pickup_actor": {
+                "scenario": "s010_cave",
+                "layer": "default",
+                "actor": "item_missiletank_004"
+            },
+            "model": [
+                "item_missiletank"
+            ],
+            "map_icon": {
+                "icon_id": "item_missiletank"
+            }
+        },
+        {
+            "pickup_type": "actor",
+            "caption": "Progressive Bomb acquired.",
+            "resources": [
+                [
+                    {
+                        "item_id": "ITEM_WEAPON_BOMB",
+                        "quantity": 1
+                    }
+                ],
+                [
+                    {
+                        "item_id": "ITEM_WEAPON_LINE_BOMB",
+                        "quantity": 1
                     }
                 ]
             ],
@@ -602,24 +592,21 @@
                 "actor": "Item_MissileTank010"
             },
             "model": [
-                "powerup_doublejump",
-                "powerup_spacejump"
+                "powerup_bomb",
+                "powerup_crossbomb"
             ],
             "map_icon": {
-                "custom_icon": {
-                    "label": "WORLD 6'S PROGRESSIVE SPIN",
-                    "base_icon": "PROGRESSIVE_SPIN"
-                }
+                "icon_id": "PROGRESSIVE_BOMB"
             }
         },
         {
             "pickup_type": "actor",
-            "caption": "Artifact of Strength acquired!",
+            "caption": "Missile+ Tank acquired.\nMissile capacity increased by 10.",
             "resources": [
                 [
                     {
-                        "item_id": "ITEM_ENERGY_TANKS",
-                        "quantity": 1
+                        "item_id": "ITEM_WEAPON_MISSILE_MAX",
+                        "quantity": 10
                     }
                 ]
             ],
@@ -629,10 +616,10 @@
                 "actor": "IT_VARIA_GEN_001"
             },
             "model": [
-                "offworld"
+                "item_missiletankplus"
             ],
             "map_icon": {
-                "icon_id": "offworld",
+                "icon_id": "item_missiletankplus",
                 "original_actor": {
                     "scenario": "s010_cave",
                     "layer": "default",
@@ -642,12 +629,12 @@
         },
         {
             "pickup_type": "actor",
-            "caption": "Sent Missile Tank to World 3!",
+            "caption": "Missile Tank acquired.\nMissile capacity increased by 2.",
             "resources": [
                 [
                     {
-                        "item_id": "ITEM_NONE",
-                        "quantity": 0
+                        "item_id": "ITEM_WEAPON_MISSILE_MAX",
+                        "quantity": 2
                     }
                 ]
             ],
@@ -660,15 +647,12 @@
                 "item_missiletank"
             ],
             "map_icon": {
-                "custom_icon": {
-                    "label": "WORLD 3'S MISSILE TANK",
-                    "base_icon": "item_missiletank"
-                }
+                "icon_id": "item_missiletank"
             }
         },
         {
             "pickup_type": "actor",
-            "caption": "Sent Missile Expansion to World 4!",
+            "caption": "Sent Missile Tank to World 2!",
             "resources": [
                 [
                     {
@@ -687,7 +671,7 @@
             ],
             "map_icon": {
                 "custom_icon": {
-                    "label": "WORLD 4'S MISSILE EXPANSION",
+                    "label": "WORLD 2'S MISSILE TANK",
                     "base_icon": "item_missiletank"
                 },
                 "original_actor": {
@@ -699,12 +683,12 @@
         },
         {
             "pickup_type": "actor",
-            "caption": "Sent Power Bomb Tank to World 7!",
+            "caption": "Missile Tank acquired.\nMissile capacity increased by 2.",
             "resources": [
                 [
                     {
-                        "item_id": "ITEM_NONE",
-                        "quantity": 0
+                        "item_id": "ITEM_WEAPON_MISSILE_MAX",
+                        "quantity": 2
                     }
                 ]
             ],
@@ -714,18 +698,15 @@
                 "actor": "Item_MissileTank014"
             },
             "model": [
-                "item_powerbombtank"
+                "item_missiletank"
             ],
             "map_icon": {
-                "custom_icon": {
-                    "label": "WORLD 7'S POWER BOMB TANK",
-                    "base_icon": "item_powerbombtank"
-                }
+                "icon_id": "item_missiletank"
             }
         },
         {
             "pickup_type": "actor",
-            "caption": "Sent Power Bomb Tank to World 7!",
+            "caption": "Sent Missile Tank to World 2!",
             "resources": [
                 [
                     {
@@ -740,12 +721,12 @@
                 "actor": "ItemSphere_ScrewAttack"
             },
             "model": [
-                "item_powerbombtank"
+                "item_missiletank"
             ],
             "map_icon": {
                 "custom_icon": {
-                    "label": "WORLD 7'S POWER BOMB TANK",
-                    "base_icon": "item_powerbombtank"
+                    "label": "WORLD 2'S MISSILE TANK",
+                    "base_icon": "item_missiletank"
                 },
                 "original_actor": {
                     "scenario": "s010_cave",
@@ -756,7 +737,7 @@
         },
         {
             "pickup_type": "actor",
-            "caption": "Sent Progressive Suit to World 7!",
+            "caption": "Sent Energy Part to World 2!",
             "resources": [
                 [
                     {
@@ -771,19 +752,18 @@
                 "actor": "Item_MissileTank015"
             },
             "model": [
-                "powerup_variasuit",
-                "powerup_gravitysuit"
+                "item_energyfragment"
             ],
             "map_icon": {
                 "custom_icon": {
-                    "label": "WORLD 7'S PROGRESSIVE SUIT",
-                    "base_icon": "PROGRESSIVE_SUIT"
+                    "label": "WORLD 2'S ENERGY PART",
+                    "base_icon": "item_energyfragment"
                 }
             }
         },
         {
             "pickup_type": "actor",
-            "caption": "Sent Energy Tank to World 4!",
+            "caption": "Sent Progressive Spin to World 2!",
             "resources": [
                 [
                     {
@@ -798,18 +778,19 @@
                 "actor": "Item_MissileTank016"
             },
             "model": [
-                "item_energytank"
+                "powerup_doublejump",
+                "powerup_spacejump"
             ],
             "map_icon": {
                 "custom_icon": {
-                    "label": "WORLD 4'S ENERGY TANK",
-                    "base_icon": "item_energytank"
+                    "label": "WORLD 2'S PROGRESSIVE SPIN",
+                    "base_icon": "PROGRESSIVE_SPIN"
                 }
             }
         },
         {
             "pickup_type": "actor",
-            "caption": "Sky Temple Key 5 acquired!",
+            "caption": "Power Bomb Tank acquired.\nPower Bomb capacity increased by 1.",
             "resources": [
                 [
                     {
@@ -824,20 +805,20 @@
                 "actor": "item_missiletankplus_001"
             },
             "model": [
-                "offworld"
+                "item_powerbombtank"
             ],
             "map_icon": {
-                "icon_id": "offworld"
+                "icon_id": "item_powerbombtank"
             }
         },
         {
             "pickup_type": "actor",
-            "caption": "Sent Missile Expansion to World 4!",
+            "caption": "Missile Tank acquired.\nMissile capacity increased by 2.",
             "resources": [
                 [
                     {
-                        "item_id": "ITEM_NONE",
-                        "quantity": 0
+                        "item_id": "ITEM_WEAPON_MISSILE_MAX",
+                        "quantity": 2
                     }
                 ]
             ],
@@ -850,15 +831,12 @@
                 "item_missiletank"
             ],
             "map_icon": {
-                "custom_icon": {
-                    "label": "WORLD 4'S MISSILE EXPANSION",
-                    "base_icon": "item_missiletank"
-                }
+                "icon_id": "item_missiletank"
             }
         },
         {
             "pickup_type": "actor",
-            "caption": "Sent Missile Tank to World 4!",
+            "caption": "Sent Missile Tank to World 2!",
             "resources": [
                 [
                     {
@@ -877,502 +855,7 @@
             ],
             "map_icon": {
                 "custom_icon": {
-                    "label": "WORLD 4'S MISSILE TANK",
-                    "base_icon": "item_missiletank"
-                }
-            }
-        },
-        {
-            "pickup_type": "actor",
-            "caption": "Sent Sky Temple Key 1 to World 4!",
-            "resources": [
-                [
-                    {
-                        "item_id": "ITEM_NONE",
-                        "quantity": 0
-                    }
-                ]
-            ],
-            "pickup_actor": {
-                "scenario": "s020_magma",
-                "layer": "default",
-                "actor": "item_powerbombtank_002"
-            },
-            "model": [
-                "itemsphere"
-            ],
-            "map_icon": {
-                "custom_icon": {
-                    "label": "WORLD 4'S SKY TEMPLE KEY 1",
-                    "base_icon": "unknown"
-                }
-            }
-        },
-        {
-            "pickup_type": "actor",
-            "caption": "Sent Missile Expansion to World 7!",
-            "resources": [
-                [
-                    {
-                        "item_id": "ITEM_NONE",
-                        "quantity": 0
-                    }
-                ]
-            ],
-            "pickup_actor": {
-                "scenario": "s020_magma",
-                "layer": "default",
-                "actor": "item_missiletank_012"
-            },
-            "model": [
-                "item_missiletank"
-            ],
-            "map_icon": {
-                "custom_icon": {
-                    "label": "WORLD 7'S MISSILE EXPANSION",
-                    "base_icon": "item_missiletank"
-                }
-            }
-        },
-        {
-            "pickup_type": "actor",
-            "caption": "Sent Dark Ammo Expansion to World 3!",
-            "resources": [
-                [
-                    {
-                        "item_id": "ITEM_NONE",
-                        "quantity": 0
-                    }
-                ]
-            ],
-            "pickup_actor": {
-                "scenario": "s020_magma",
-                "layer": "default",
-                "actor": "itemsphere_diffusionbeam"
-            },
-            "model": [
-                "itemsphere"
-            ],
-            "map_icon": {
-                "custom_icon": {
-                    "label": "WORLD 3'S DARK AMMO EXPANSION",
-                    "base_icon": "unknown"
-                },
-                "original_actor": {
-                    "scenario": "s020_magma",
-                    "layer": "default",
-                    "actor": "powerup_diffusionbeam"
-                }
-            }
-        },
-        {
-            "pickup_type": "actor",
-            "caption": "Missile Tank acquired.\nMissile capacity increased by 2.",
-            "resources": [
-                [
-                    {
-                        "item_id": "ITEM_WEAPON_BOMB",
-                        "quantity": 1
-                    }
-                ],
-                [
-                    {
-                        "item_id": "ITEM_WEAPON_LINE_BOMB",
-                        "quantity": 1
-                    }
-                ]
-            ],
-            "pickup_actor": {
-                "scenario": "s020_magma",
-                "layer": "default",
-                "actor": "item_missiletank"
-            },
-            "model": [
-                "item_missiletank"
-            ],
-            "map_icon": {
-                "icon_id": "item_missiletank"
-            }
-        },
-        {
-            "pickup_type": "actor",
-            "caption": "Sent Missile Tank to World 7!",
-            "resources": [
-                [
-                    {
-                        "item_id": "ITEM_NONE",
-                        "quantity": 0
-                    }
-                ]
-            ],
-            "pickup_actor": {
-                "scenario": "s020_magma",
-                "layer": "default",
-                "actor": "item_missiletank_008"
-            },
-            "model": [
-                "item_missiletank"
-            ],
-            "map_icon": {
-                "custom_icon": {
-                    "label": "WORLD 7'S MISSILE TANK",
-                    "base_icon": "item_missiletank"
-                }
-            }
-        },
-        {
-            "pickup_type": "actor",
-            "caption": "Sent Sky Temple Key 3 to World 2!",
-            "resources": [
-                [
-                    {
-                        "item_id": "ITEM_NONE",
-                        "quantity": 0
-                    }
-                ]
-            ],
-            "pickup_actor": {
-                "scenario": "s020_magma",
-                "layer": "default",
-                "actor": "item_missiletank_001"
-            },
-            "model": [
-                "itemsphere"
-            ],
-            "map_icon": {
-                "custom_icon": {
-                    "label": "WORLD 2'S SKY TEMPLE KEY 3",
-                    "base_icon": "unknown"
-                }
-            }
-        },
-        {
-            "pickup_type": "actor",
-            "caption": "Sent Ice Missile to World 2!",
-            "resources": [
-                [
-                    {
-                        "item_id": "ITEM_NONE",
-                        "quantity": 0
-                    }
-                ]
-            ],
-            "pickup_actor": {
-                "scenario": "s020_magma",
-                "layer": "default",
-                "actor": "item_missiletank_003"
-            },
-            "model": [
-                "powerup_icemissile"
-            ],
-            "map_icon": {
-                "custom_icon": {
-                    "label": "WORLD 2'S ICE MISSILE",
-                    "base_icon": "powerup_icemissile"
-                }
-            }
-        },
-        {
-            "pickup_type": "actor",
-            "caption": "Sent Screw Attack to World 4!",
-            "resources": [
-                [
-                    {
-                        "item_id": "ITEM_NONE",
-                        "quantity": 0
-                    }
-                ]
-            ],
-            "pickup_actor": {
-                "scenario": "s020_magma",
-                "layer": "default",
-                "actor": "item_missiletank_004"
-            },
-            "model": [
-                "powerup_screwattack"
-            ],
-            "map_icon": {
-                "custom_icon": {
-                    "label": "WORLD 4'S SCREW ATTACK",
-                    "base_icon": "powerup_screwattack"
-                }
-            }
-        },
-        {
-            "pickup_type": "actor",
-            "caption": "Sent Energy Tank to World 1!",
-            "resources": [
-                [
-                    {
-                        "item_id": "ITEM_NONE",
-                        "quantity": 0
-                    }
-                ]
-            ],
-            "pickup_actor": {
-                "scenario": "s020_magma",
-                "layer": "default",
-                "actor": "item_missiletank_005"
-            },
-            "model": [
-                "item_energytank"
-            ],
-            "map_icon": {
-                "custom_icon": {
-                    "label": "WORLD 1'S ENERGY TANK",
-                    "base_icon": "item_energytank"
-                }
-            }
-        },
-        {
-            "pickup_type": "actor",
-            "caption": "Sent Progressive Bomb to World 2!",
-            "resources": [
-                [
-                    {
-                        "item_id": "ITEM_NONE",
-                        "quantity": 0
-                    }
-                ]
-            ],
-            "pickup_actor": {
-                "scenario": "s020_magma",
-                "layer": "default",
-                "actor": "item_energyfragment_001"
-            },
-            "model": [
-                "powerup_bomb",
-                "powerup_crossbomb"
-            ],
-            "map_icon": {
-                "custom_icon": {
-                    "label": "WORLD 2'S PROGRESSIVE BOMB",
-                    "base_icon": "PROGRESSIVE_BOMB"
-                }
-            }
-        },
-        {
-            "pickup_type": "actor",
-            "caption": "Missile Tank acquired.\nMissile capacity increased by 2.",
-            "resources": [
-                [
-                    {
-                        "item_id": "ITEM_WEAPON_WIDE_BEAM",
-                        "quantity": 1
-                    }
-                ]
-            ],
-            "pickup_actor": {
-                "scenario": "s020_magma",
-                "layer": "default",
-                "actor": "item_missiletank_007"
-            },
-            "model": [
-                "item_missiletank"
-            ],
-            "map_icon": {
-                "icon_id": "item_missiletank"
-            }
-        },
-        {
-            "pickup_type": "actor",
-            "caption": "Sent Missile Expansion to World 3!",
-            "resources": [
-                [
-                    {
-                        "item_id": "ITEM_NONE",
-                        "quantity": 0
-                    }
-                ]
-            ],
-            "pickup_actor": {
-                "scenario": "s020_magma",
-                "layer": "default",
-                "actor": "item_energyfragment_000"
-            },
-            "model": [
-                "item_missiletank"
-            ],
-            "map_icon": {
-                "custom_icon": {
-                    "label": "WORLD 3'S MISSILE EXPANSION",
-                    "base_icon": "item_missiletank"
-                }
-            }
-        },
-        {
-            "pickup_type": "actor",
-            "caption": "Sent Missile Tank to World 1!",
-            "resources": [
-                [
-                    {
-                        "item_id": "ITEM_NONE",
-                        "quantity": 0
-                    }
-                ]
-            ],
-            "pickup_actor": {
-                "scenario": "s020_magma",
-                "layer": "default",
-                "actor": "item_missiletank_009"
-            },
-            "model": [
-                "item_missiletank"
-            ],
-            "map_icon": {
-                "custom_icon": {
-                    "label": "WORLD 1'S MISSILE TANK",
-                    "base_icon": "item_missiletank"
-                }
-            }
-        },
-        {
-            "pickup_type": "actor",
-            "caption": "Locked Missile Expansion acquired!",
-            "resources": [
-                [
-                    {
-                        "item_id": "ITEM_LIFE_SHARDS",
-                        "quantity": 1
-                    }
-                ]
-            ],
-            "pickup_actor": {
-                "scenario": "s020_magma",
-                "layer": "default",
-                "actor": "item_missiletank_010"
-            },
-            "model": [
-                "item_missiletank"
-            ],
-            "map_icon": {
-                "icon_id": "item_missiletank"
-            }
-        },
-        {
-            "pickup_type": "actor",
-            "caption": "Sent Progressive Charge Beam to World 4!",
-            "resources": [
-                [
-                    {
-                        "item_id": "ITEM_NONE",
-                        "quantity": 0
-                    }
-                ]
-            ],
-            "pickup_actor": {
-                "scenario": "s020_magma",
-                "layer": "default",
-                "actor": "item_missiletank_011"
-            },
-            "model": [
-                "powerup_chargebeam",
-                "powerup_diffusionbeam"
-            ],
-            "map_icon": {
-                "custom_icon": {
-                    "label": "WORLD 4'S PROGRESSIVE CHARGE BEAM",
-                    "base_icon": "PROGRESSIVE_CHARGE"
-                }
-            }
-        },
-        {
-            "pickup_type": "actor",
-            "caption": "Sent Metroid DNA 1 to World 4!",
-            "resources": [
-                [
-                    {
-                        "item_id": "ITEM_NONE",
-                        "quantity": 0
-                    }
-                ]
-            ],
-            "pickup_actor": {
-                "scenario": "s020_magma",
-                "layer": "default",
-                "actor": "item_powerbombtank_000"
-            },
-            "model": [
-                "DNA_1"
-            ],
-            "map_icon": {
-                "custom_icon": {
-                    "label": "WORLD 4'S METROID DNA 1",
-                    "base_icon": "DNA_1"
-                }
-            }
-        },
-        {
-            "pickup_type": "actor",
-            "caption": "Dark Torvus Key 3 acquired!",
-            "resources": [
-                [
-                    {
-                        "item_id": "ITEM_SCREW_ATTACK",
-                        "quantity": 1
-                    }
-                ]
-            ],
-            "pickup_actor": {
-                "scenario": "s020_magma",
-                "layer": "default",
-                "actor": "item_energytank_000"
-            },
-            "model": [
-                "offworld"
-            ],
-            "map_icon": {
-                "icon_id": "offworld"
-            }
-        },
-        {
-            "pickup_type": "actor",
-            "caption": "Sent Charge Beam to World 4!",
-            "resources": [
-                [
-                    {
-                        "item_id": "ITEM_NONE",
-                        "quantity": 0
-                    }
-                ]
-            ],
-            "pickup_actor": {
-                "scenario": "s020_magma",
-                "layer": "default",
-                "actor": "item_missiletankplus_000"
-            },
-            "model": [
-                "powerup_chargebeam"
-            ],
-            "map_icon": {
-                "custom_icon": {
-                    "label": "WORLD 4'S CHARGE BEAM",
-                    "base_icon": "powerup_chargebeam"
-                }
-            }
-        },
-        {
-            "pickup_type": "actor",
-            "caption": "Sent Missile Expansion to World 4!",
-            "resources": [
-                [
-                    {
-                        "item_id": "ITEM_NONE",
-                        "quantity": 0
-                    }
-                ]
-            ],
-            "pickup_actor": {
-                "scenario": "s020_magma",
-                "layer": "default",
-                "actor": "item_powerbombtank_001"
-            },
-            "model": [
-                "item_missiletank"
-            ],
-            "map_icon": {
-                "custom_icon": {
-                    "label": "WORLD 4'S MISSILE EXPANSION",
+                    "label": "WORLD 2'S MISSILE TANK",
                     "base_icon": "item_missiletank"
                 }
             }
@@ -1391,7 +874,7 @@
             "pickup_actor": {
                 "scenario": "s020_magma",
                 "layer": "default",
-                "actor": "item_missiletank_002"
+                "actor": "item_powerbombtank_002"
             },
             "model": [
                 "item_missiletank"
@@ -1405,7 +888,479 @@
         },
         {
             "pickup_type": "actor",
-            "caption": "Sent Nemesis to World 4!",
+            "caption": "Sent Missile Tank to World 2!",
+            "resources": [
+                [
+                    {
+                        "item_id": "ITEM_NONE",
+                        "quantity": 0
+                    }
+                ]
+            ],
+            "pickup_actor": {
+                "scenario": "s020_magma",
+                "layer": "default",
+                "actor": "item_missiletank_012"
+            },
+            "model": [
+                "item_missiletank"
+            ],
+            "map_icon": {
+                "custom_icon": {
+                    "label": "WORLD 2'S MISSILE TANK",
+                    "base_icon": "item_missiletank"
+                }
+            }
+        },
+        {
+            "pickup_type": "actor",
+            "caption": "Sent Missile Tank to World 2!",
+            "resources": [
+                [
+                    {
+                        "item_id": "ITEM_NONE",
+                        "quantity": 0
+                    }
+                ]
+            ],
+            "pickup_actor": {
+                "scenario": "s020_magma",
+                "layer": "default",
+                "actor": "itemsphere_diffusionbeam"
+            },
+            "model": [
+                "item_missiletank"
+            ],
+            "map_icon": {
+                "custom_icon": {
+                    "label": "WORLD 2'S MISSILE TANK",
+                    "base_icon": "item_missiletank"
+                },
+                "original_actor": {
+                    "scenario": "s020_magma",
+                    "layer": "default",
+                    "actor": "powerup_diffusionbeam"
+                }
+            }
+        },
+        {
+            "pickup_type": "actor",
+            "caption": "Speed Booster acquired.",
+            "resources": [
+                [
+                    {
+                        "item_id": "ITEM_SPEED_BOOSTER",
+                        "quantity": 1
+                    }
+                ]
+            ],
+            "pickup_actor": {
+                "scenario": "s020_magma",
+                "layer": "default",
+                "actor": "item_missiletank"
+            },
+            "model": [
+                "powerup_speedbooster"
+            ],
+            "map_icon": {
+                "icon_id": "powerup_speedbooster"
+            }
+        },
+        {
+            "pickup_type": "actor",
+            "caption": "Phantom Cloak acquired.",
+            "resources": [
+                [
+                    {
+                        "item_id": "ITEM_OPTIC_CAMOUFLAGE",
+                        "quantity": 1
+                    }
+                ]
+            ],
+            "pickup_actor": {
+                "scenario": "s020_magma",
+                "layer": "default",
+                "actor": "item_missiletank_008"
+            },
+            "model": [
+                "powerup_opticcamo"
+            ],
+            "map_icon": {
+                "icon_id": "powerup_opticcamo"
+            }
+        },
+        {
+            "pickup_type": "actor",
+            "caption": "Missile+ Tank acquired.\nMissile capacity increased by 10.",
+            "resources": [
+                [
+                    {
+                        "item_id": "ITEM_WEAPON_MISSILE_MAX",
+                        "quantity": 10
+                    }
+                ]
+            ],
+            "pickup_actor": {
+                "scenario": "s020_magma",
+                "layer": "default",
+                "actor": "item_missiletank_001"
+            },
+            "model": [
+                "item_missiletankplus"
+            ],
+            "map_icon": {
+                "icon_id": "item_missiletankplus"
+            }
+        },
+        {
+            "pickup_type": "actor",
+            "caption": "Missile+ Tank acquired.\nMissile capacity increased by 10.",
+            "resources": [
+                [
+                    {
+                        "item_id": "ITEM_WEAPON_MISSILE_MAX",
+                        "quantity": 10
+                    }
+                ]
+            ],
+            "pickup_actor": {
+                "scenario": "s020_magma",
+                "layer": "default",
+                "actor": "item_missiletank_003"
+            },
+            "model": [
+                "item_missiletankplus"
+            ],
+            "map_icon": {
+                "icon_id": "item_missiletankplus"
+            }
+        },
+        {
+            "pickup_type": "actor",
+            "caption": "Sent Missile Tank to World 2!",
+            "resources": [
+                [
+                    {
+                        "item_id": "ITEM_NONE",
+                        "quantity": 0
+                    }
+                ]
+            ],
+            "pickup_actor": {
+                "scenario": "s020_magma",
+                "layer": "default",
+                "actor": "item_missiletank_004"
+            },
+            "model": [
+                "item_missiletank"
+            ],
+            "map_icon": {
+                "custom_icon": {
+                    "label": "WORLD 2'S MISSILE TANK",
+                    "base_icon": "item_missiletank"
+                }
+            }
+        },
+        {
+            "pickup_type": "actor",
+            "caption": "Sent Power Bomb Tank to World 2!",
+            "resources": [
+                [
+                    {
+                        "item_id": "ITEM_NONE",
+                        "quantity": 0
+                    }
+                ]
+            ],
+            "pickup_actor": {
+                "scenario": "s020_magma",
+                "layer": "default",
+                "actor": "item_missiletank_005"
+            },
+            "model": [
+                "item_powerbombtank"
+            ],
+            "map_icon": {
+                "custom_icon": {
+                    "label": "WORLD 2'S POWER BOMB TANK",
+                    "base_icon": "item_powerbombtank"
+                }
+            }
+        },
+        {
+            "pickup_type": "actor",
+            "caption": "Sent Missile Tank to World 2!",
+            "resources": [
+                [
+                    {
+                        "item_id": "ITEM_NONE",
+                        "quantity": 0
+                    }
+                ]
+            ],
+            "pickup_actor": {
+                "scenario": "s020_magma",
+                "layer": "default",
+                "actor": "item_energyfragment_001"
+            },
+            "model": [
+                "item_missiletank"
+            ],
+            "map_icon": {
+                "custom_icon": {
+                    "label": "WORLD 2'S MISSILE TANK",
+                    "base_icon": "item_missiletank"
+                }
+            }
+        },
+        {
+            "pickup_type": "actor",
+            "caption": "Sent Missile Tank to World 2!",
+            "resources": [
+                [
+                    {
+                        "item_id": "ITEM_NONE",
+                        "quantity": 0
+                    }
+                ]
+            ],
+            "pickup_actor": {
+                "scenario": "s020_magma",
+                "layer": "default",
+                "actor": "item_missiletank_007"
+            },
+            "model": [
+                "item_missiletank"
+            ],
+            "map_icon": {
+                "custom_icon": {
+                    "label": "WORLD 2'S MISSILE TANK",
+                    "base_icon": "item_missiletank"
+                }
+            }
+        },
+        {
+            "pickup_type": "actor",
+            "caption": "Sent Missile Tank to World 2!",
+            "resources": [
+                [
+                    {
+                        "item_id": "ITEM_NONE",
+                        "quantity": 0
+                    }
+                ]
+            ],
+            "pickup_actor": {
+                "scenario": "s020_magma",
+                "layer": "default",
+                "actor": "item_energyfragment_000"
+            },
+            "model": [
+                "item_missiletank"
+            ],
+            "map_icon": {
+                "custom_icon": {
+                    "label": "WORLD 2'S MISSILE TANK",
+                    "base_icon": "item_missiletank"
+                }
+            }
+        },
+        {
+            "pickup_type": "actor",
+            "caption": "Sent Missile Tank to World 2!",
+            "resources": [
+                [
+                    {
+                        "item_id": "ITEM_NONE",
+                        "quantity": 0
+                    }
+                ]
+            ],
+            "pickup_actor": {
+                "scenario": "s020_magma",
+                "layer": "default",
+                "actor": "item_missiletank_009"
+            },
+            "model": [
+                "item_missiletank"
+            ],
+            "map_icon": {
+                "custom_icon": {
+                    "label": "WORLD 2'S MISSILE TANK",
+                    "base_icon": "item_missiletank"
+                }
+            }
+        },
+        {
+            "pickup_type": "actor",
+            "caption": "Sent Missile Tank to World 2!",
+            "resources": [
+                [
+                    {
+                        "item_id": "ITEM_NONE",
+                        "quantity": 0
+                    }
+                ]
+            ],
+            "pickup_actor": {
+                "scenario": "s020_magma",
+                "layer": "default",
+                "actor": "item_missiletank_010"
+            },
+            "model": [
+                "item_missiletank"
+            ],
+            "map_icon": {
+                "custom_icon": {
+                    "label": "WORLD 2'S MISSILE TANK",
+                    "base_icon": "item_missiletank"
+                }
+            }
+        },
+        {
+            "pickup_type": "actor",
+            "caption": "Energy Part acquired.\nEnergy capacity increased by 25.",
+            "resources": [
+                [
+                    {
+                        "item_id": "ITEM_LIFE_SHARDS",
+                        "quantity": 1
+                    }
+                ]
+            ],
+            "pickup_actor": {
+                "scenario": "s020_magma",
+                "layer": "default",
+                "actor": "item_missiletank_011"
+            },
+            "model": [
+                "item_energyfragment"
+            ],
+            "map_icon": {
+                "icon_id": "item_energyfragment"
+            }
+        },
+        {
+            "pickup_type": "actor",
+            "caption": "Power Bomb Tank acquired.\nPower Bomb capacity increased by 1.",
+            "resources": [
+                [
+                    {
+                        "item_id": "ITEM_WEAPON_POWER_BOMB_MAX",
+                        "quantity": 1
+                    }
+                ]
+            ],
+            "pickup_actor": {
+                "scenario": "s020_magma",
+                "layer": "default",
+                "actor": "item_powerbombtank_000"
+            },
+            "model": [
+                "item_powerbombtank"
+            ],
+            "map_icon": {
+                "icon_id": "item_powerbombtank"
+            }
+        },
+        {
+            "pickup_type": "actor",
+            "caption": "Energy Tank acquired.\nEnergy capacity increased by 100.",
+            "resources": [
+                [
+                    {
+                        "item_id": "ITEM_ENERGY_TANKS",
+                        "quantity": 1
+                    }
+                ]
+            ],
+            "pickup_actor": {
+                "scenario": "s020_magma",
+                "layer": "default",
+                "actor": "item_energytank_000"
+            },
+            "model": [
+                "item_energytank"
+            ],
+            "map_icon": {
+                "icon_id": "item_energytank"
+            }
+        },
+        {
+            "pickup_type": "actor",
+            "caption": "Sent Missile Tank to World 2!",
+            "resources": [
+                [
+                    {
+                        "item_id": "ITEM_NONE",
+                        "quantity": 0
+                    }
+                ]
+            ],
+            "pickup_actor": {
+                "scenario": "s020_magma",
+                "layer": "default",
+                "actor": "item_missiletankplus_000"
+            },
+            "model": [
+                "item_missiletank"
+            ],
+            "map_icon": {
+                "custom_icon": {
+                    "label": "WORLD 2'S MISSILE TANK",
+                    "base_icon": "item_missiletank"
+                }
+            }
+        },
+        {
+            "pickup_type": "actor",
+            "caption": "Missile Tank acquired.\nMissile capacity increased by 2.",
+            "resources": [
+                [
+                    {
+                        "item_id": "ITEM_WEAPON_MISSILE_MAX",
+                        "quantity": 2
+                    }
+                ]
+            ],
+            "pickup_actor": {
+                "scenario": "s020_magma",
+                "layer": "default",
+                "actor": "item_powerbombtank_001"
+            },
+            "model": [
+                "item_missiletank"
+            ],
+            "map_icon": {
+                "icon_id": "item_missiletank"
+            }
+        },
+        {
+            "pickup_type": "actor",
+            "caption": "Missile Tank acquired.\nMissile capacity increased by 2.",
+            "resources": [
+                [
+                    {
+                        "item_id": "ITEM_WEAPON_MISSILE_MAX",
+                        "quantity": 2
+                    }
+                ]
+            ],
+            "pickup_actor": {
+                "scenario": "s020_magma",
+                "layer": "default",
+                "actor": "item_missiletank_002"
+            },
+            "model": [
+                "item_missiletank"
+            ],
+            "map_icon": {
+                "icon_id": "item_missiletank"
+            }
+        },
+        {
+            "pickup_type": "actor",
+            "caption": "Sent Missile Tank to World 2!",
             "resources": [
                 [
                     {
@@ -1420,23 +1375,23 @@
                 "actor": "item_missiletank_006"
             },
             "model": [
-                "itemsphere"
+                "item_missiletank"
             ],
             "map_icon": {
                 "custom_icon": {
-                    "label": "WORLD 4'S NEMESIS",
-                    "base_icon": "unknown"
+                    "label": "WORLD 2'S MISSILE TANK",
+                    "base_icon": "item_missiletank"
                 }
             }
         },
         {
             "pickup_type": "actor",
-            "caption": "Sent Missile Expansion to World 1!",
+            "caption": "Missile Tank acquired.\nMissile capacity increased by 2.",
             "resources": [
                 [
                     {
-                        "item_id": "ITEM_NONE",
-                        "quantity": 0
+                        "item_id": "ITEM_WEAPON_MISSILE_MAX",
+                        "quantity": 2
                     }
                 ]
             ],
@@ -1449,15 +1404,12 @@
                 "item_missiletank"
             ],
             "map_icon": {
-                "custom_icon": {
-                    "label": "WORLD 1'S MISSILE EXPANSION",
-                    "base_icon": "item_missiletank"
-                }
+                "icon_id": "item_missiletank"
             }
         },
         {
             "pickup_type": "actor",
-            "caption": "Sent Energy Part to World 6!",
+            "caption": "Sent Power Bomb Tank to World 2!",
             "resources": [
                 [
                     {
@@ -1472,23 +1424,23 @@
                 "actor": "item_missiletank_004"
             },
             "model": [
-                "item_energyfragment"
+                "item_powerbombtank"
             ],
             "map_icon": {
                 "custom_icon": {
-                    "label": "WORLD 6'S ENERGY PART",
-                    "base_icon": "item_energyfragment"
+                    "label": "WORLD 2'S POWER BOMB TANK",
+                    "base_icon": "item_powerbombtank"
                 }
             }
         },
         {
             "pickup_type": "actor",
-            "caption": "Sent Missile Expansion to World 3!",
+            "caption": "Missile Tank acquired.\nMissile capacity increased by 2.",
             "resources": [
                 [
                     {
-                        "item_id": "ITEM_NONE",
-                        "quantity": 0
+                        "item_id": "ITEM_WEAPON_MISSILE_MAX",
+                        "quantity": 2
                     }
                 ]
             ],
@@ -1501,15 +1453,12 @@
                 "item_missiletank"
             ],
             "map_icon": {
-                "custom_icon": {
-                    "label": "WORLD 3'S MISSILE EXPANSION",
-                    "base_icon": "item_missiletank"
-                }
+                "icon_id": "item_missiletank"
             }
         },
         {
             "pickup_type": "actor",
-            "caption": "Sent Ing Hive Key 2 to World 2!",
+            "caption": "Sent Missile Tank to World 2!",
             "resources": [
                 [
                     {
@@ -1524,12 +1473,12 @@
                 "actor": "itemsphere_widebeam"
             },
             "model": [
-                "itemsphere"
+                "item_missiletank"
             ],
             "map_icon": {
                 "custom_icon": {
-                    "label": "WORLD 2'S ING HIVE KEY 2",
-                    "base_icon": "unknown"
+                    "label": "WORLD 2'S MISSILE TANK",
+                    "base_icon": "item_missiletank"
                 },
                 "original_actor": {
                     "scenario": "s030_baselab",
@@ -1540,7 +1489,7 @@
         },
         {
             "pickup_type": "actor",
-            "caption": "Sent Energy Tank to World 1!",
+            "caption": "Sent Missile Tank to World 2!",
             "resources": [
                 [
                     {
@@ -1555,12 +1504,12 @@
                 "actor": "itemsphere_bomb"
             },
             "model": [
-                "item_energytank"
+                "item_missiletank"
             ],
             "map_icon": {
                 "custom_icon": {
-                    "label": "WORLD 1'S ENERGY TANK",
-                    "base_icon": "item_energytank"
+                    "label": "WORLD 2'S MISSILE TANK",
+                    "base_icon": "item_missiletank"
                 },
                 "original_actor": {
                     "scenario": "s030_baselab",
@@ -1597,12 +1546,12 @@
         },
         {
             "pickup_type": "actor",
-            "caption": "Missile Expansion acquired!",
+            "caption": "Storm Missile acquired.",
             "resources": [
                 [
                     {
-                        "item_id": "ITEM_WEAPON_MISSILE_MAX",
-                        "quantity": 2
+                        "item_id": "ITEM_MULTILOCKON",
+                        "quantity": 1
                     }
                 ]
             ],
@@ -1612,15 +1561,15 @@
                 "actor": "item_missiletank_000"
             },
             "model": [
-                "item_missiletank"
+                "powerup_stormmissile"
             ],
             "map_icon": {
-                "icon_id": "item_missiletank"
+                "icon_id": "powerup_stormmissile"
             }
         },
         {
             "pickup_type": "actor",
-            "caption": "Sent Explosive to World 1!",
+            "caption": "Sent Missile Tank to World 2!",
             "resources": [
                 [
                     {
@@ -1635,18 +1584,18 @@
                 "actor": "item_powerbombtank_000"
             },
             "model": [
-                "itemsphere"
+                "item_missiletank"
             ],
             "map_icon": {
                 "custom_icon": {
-                    "label": "WORLD 1'S EXPLOSIVE",
-                    "base_icon": "unknown"
+                    "label": "WORLD 2'S MISSILE TANK",
+                    "base_icon": "item_missiletank"
                 }
             }
         },
         {
             "pickup_type": "actor",
-            "caption": "Sent Missile+ Tank to World 7!",
+            "caption": "Sent Flash Shift to World 2!",
             "resources": [
                 [
                     {
@@ -1661,18 +1610,18 @@
                 "actor": "item_missiletank_003"
             },
             "model": [
-                "item_missiletankplus"
+                "powerup_ghostaura"
             ],
             "map_icon": {
                 "custom_icon": {
-                    "label": "WORLD 7'S MISSILE+ TANK",
-                    "base_icon": "item_missiletankplus"
+                    "label": "WORLD 2'S FLASH SHIFT",
+                    "base_icon": "powerup_ghostaura"
                 }
             }
         },
         {
             "pickup_type": "actor",
-            "caption": "Sent Missile Tank to World 6!",
+            "caption": "Sent Missile Tank to World 2!",
             "resources": [
                 [
                     {
@@ -1691,19 +1640,19 @@
             ],
             "map_icon": {
                 "custom_icon": {
-                    "label": "WORLD 6'S MISSILE TANK",
+                    "label": "WORLD 2'S MISSILE TANK",
                     "base_icon": "item_missiletank"
                 }
             }
         },
         {
             "pickup_type": "actor",
-            "caption": "Sent Energy Tank to World 7!",
+            "caption": "Missile Tank acquired.\nMissile capacity increased by 2.",
             "resources": [
                 [
                     {
-                        "item_id": "ITEM_NONE",
-                        "quantity": 0
+                        "item_id": "ITEM_WEAPON_MISSILE_MAX",
+                        "quantity": 2
                     }
                 ]
             ],
@@ -1713,23 +1662,20 @@
                 "actor": "item_energyfragment_001"
             },
             "model": [
-                "item_energytank"
+                "item_missiletank"
             ],
             "map_icon": {
-                "custom_icon": {
-                    "label": "WORLD 7'S ENERGY TANK",
-                    "base_icon": "item_energytank"
-                }
+                "icon_id": "item_missiletank"
             }
         },
         {
             "pickup_type": "actor",
-            "caption": "Sent Missile Tank to World 7!",
+            "caption": "Missile Tank acquired.\nMissile capacity increased by 2.",
             "resources": [
                 [
                     {
-                        "item_id": "ITEM_NONE",
-                        "quantity": 0
+                        "item_id": "ITEM_WEAPON_MISSILE_MAX",
+                        "quantity": 2
                     }
                 ]
             ],
@@ -1742,15 +1688,12 @@
                 "item_missiletank"
             ],
             "map_icon": {
-                "custom_icon": {
-                    "label": "WORLD 7'S MISSILE TANK",
-                    "base_icon": "item_missiletank"
-                }
+                "icon_id": "item_missiletank"
             }
         },
         {
             "pickup_type": "actor",
-            "caption": "Sent Missile Tank to World 3!",
+            "caption": "Sent Missile Tank to World 2!",
             "resources": [
                 [
                     {
@@ -1769,14 +1712,14 @@
             ],
             "map_icon": {
                 "custom_icon": {
-                    "label": "WORLD 3'S MISSILE TANK",
+                    "label": "WORLD 2'S MISSILE TANK",
                     "base_icon": "item_missiletank"
                 }
             }
         },
         {
             "pickup_type": "actor",
-            "caption": "Sent Energy Tank to World 2!",
+            "caption": "Sent Power Bomb Tank to World 2!",
             "resources": [
                 [
                     {
@@ -1791,18 +1734,18 @@
                 "actor": "item_missiletank_008"
             },
             "model": [
-                "item_energytank"
+                "item_powerbombtank"
             ],
             "map_icon": {
                 "custom_icon": {
-                    "label": "WORLD 2'S ENERGY TANK",
-                    "base_icon": "item_energytank"
+                    "label": "WORLD 2'S POWER BOMB TANK",
+                    "base_icon": "item_powerbombtank"
                 }
             }
         },
         {
             "pickup_type": "actor",
-            "caption": "Sent Missile Tank to World 3!",
+            "caption": "Sent Energy Part to World 2!",
             "resources": [
                 [
                     {
@@ -1817,23 +1760,23 @@
                 "actor": "item_missiletankplus_000"
             },
             "model": [
-                "item_missiletank"
+                "item_energyfragment"
             ],
             "map_icon": {
                 "custom_icon": {
-                    "label": "WORLD 3'S MISSILE TANK",
-                    "base_icon": "item_missiletank"
+                    "label": "WORLD 2'S ENERGY PART",
+                    "base_icon": "item_energyfragment"
                 }
             }
         },
         {
             "pickup_type": "actor",
-            "caption": "Energy Tank acquired!",
+            "caption": "Sent Missile+ Tank to World 2!",
             "resources": [
                 [
                     {
-                        "item_id": "ITEM_WEAPON_MISSILE_MAX",
-                        "quantity": 2
+                        "item_id": "ITEM_NONE",
+                        "quantity": 0
                     }
                 ]
             ],
@@ -1843,15 +1786,18 @@
                 "actor": "item_missiletank_010"
             },
             "model": [
-                "item_energytank"
+                "item_missiletankplus"
             ],
             "map_icon": {
-                "icon_id": "item_energytank"
+                "custom_icon": {
+                    "label": "WORLD 2'S MISSILE+ TANK",
+                    "base_icon": "item_missiletankplus"
+                }
             }
         },
         {
             "pickup_type": "actor",
-            "caption": "Sent Morph Ball to World 3!",
+            "caption": "Sent Missile Tank to World 2!",
             "resources": [
                 [
                     {
@@ -1866,18 +1812,18 @@
                 "actor": "item_energyfragment_002"
             },
             "model": [
-                "powerup_morphball"
+                "item_missiletank"
             ],
             "map_icon": {
                 "custom_icon": {
-                    "label": "WORLD 3'S MORPH BALL",
-                    "base_icon": "powerup_morphball"
+                    "label": "WORLD 2'S MISSILE TANK",
+                    "base_icon": "item_missiletank"
                 }
             }
         },
         {
             "pickup_type": "actor",
-            "caption": "Sent Metroid DNA 2 to World 2!",
+            "caption": "Sent Energy Part to World 2!",
             "resources": [
                 [
                     {
@@ -1892,18 +1838,18 @@
                 "actor": "item_energytank"
             },
             "model": [
-                "DNA_2"
+                "item_energyfragment"
             ],
             "map_icon": {
                 "custom_icon": {
-                    "label": "WORLD 2'S METROID DNA 2",
-                    "base_icon": "DNA_2"
+                    "label": "WORLD 2'S ENERGY PART",
+                    "base_icon": "item_energyfragment"
                 }
             }
         },
         {
             "pickup_type": "actor",
-            "caption": "Sent Energy Tank to World 3!",
+            "caption": "Sent Missile Tank to World 2!",
             "resources": [
                 [
                     {
@@ -1918,12 +1864,12 @@
                 "actor": "item_energyfragment_003"
             },
             "model": [
-                "item_energytank"
+                "item_missiletank"
             ],
             "map_icon": {
                 "custom_icon": {
-                    "label": "WORLD 3'S ENERGY TANK",
-                    "base_icon": "item_energytank"
+                    "label": "WORLD 2'S MISSILE TANK",
+                    "base_icon": "item_missiletank"
                 }
             }
         },
@@ -1952,7 +1898,7 @@
         },
         {
             "pickup_type": "actor",
-            "caption": "Sent Super Missile to World 4!",
+            "caption": "Sent Energy Part to World 2!",
             "resources": [
                 [
                     {
@@ -1967,23 +1913,23 @@
                 "actor": "item_missiletank_001"
             },
             "model": [
-                "powerup_supermissile"
+                "item_energyfragment"
             ],
             "map_icon": {
                 "custom_icon": {
-                    "label": "WORLD 4'S SUPER MISSILE",
-                    "base_icon": "powerup_supermissile"
+                    "label": "WORLD 2'S ENERGY PART",
+                    "base_icon": "item_energyfragment"
                 }
             }
         },
         {
             "pickup_type": "actor",
-            "caption": "Sent Plasma Beam to World 7!",
+            "caption": "Missile Tank acquired.\nMissile capacity increased by 2.",
             "resources": [
                 [
                     {
-                        "item_id": "ITEM_NONE",
-                        "quantity": 0
+                        "item_id": "ITEM_WEAPON_MISSILE_MAX",
+                        "quantity": 2
                     }
                 ]
             ],
@@ -1993,23 +1939,20 @@
                 "actor": "item_missiletank_005"
             },
             "model": [
-                "powerup_plasmabeam"
+                "item_missiletank"
             ],
             "map_icon": {
-                "custom_icon": {
-                    "label": "WORLD 7'S PLASMA BEAM",
-                    "base_icon": "powerup_plasmabeam"
-                }
+                "icon_id": "item_missiletank"
             }
         },
         {
             "pickup_type": "actor",
-            "caption": "Sent Ma Pignon to World 1!",
+            "caption": "Energy Part acquired.\nEnergy capacity increased by 25.",
             "resources": [
                 [
                     {
-                        "item_id": "ITEM_NONE",
-                        "quantity": 0
+                        "item_id": "ITEM_LIFE_SHARDS",
+                        "quantity": 1
                     }
                 ]
             ],
@@ -2019,18 +1962,15 @@
                 "actor": "item_missiletank_006"
             },
             "model": [
-                "itemsphere"
+                "item_energyfragment"
             ],
             "map_icon": {
-                "custom_icon": {
-                    "label": "WORLD 1'S MA PIGNON",
-                    "base_icon": "unknown"
-                }
+                "icon_id": "item_energyfragment"
             }
         },
         {
             "pickup_type": "actor",
-            "caption": "Sent Missile Expansion to World 7!",
+            "caption": "Sent Missile Tank to World 2!",
             "resources": [
                 [
                     {
@@ -2049,14 +1989,14 @@
             ],
             "map_icon": {
                 "custom_icon": {
-                    "label": "WORLD 7'S MISSILE EXPANSION",
+                    "label": "WORLD 2'S MISSILE TANK",
                     "base_icon": "item_missiletank"
                 }
             }
         },
         {
             "pickup_type": "actor",
-            "caption": "Sent Energy Tank to World 6!",
+            "caption": "Sent Energy Part to World 2!",
             "resources": [
                 [
                     {
@@ -2071,23 +2011,23 @@
                 "actor": "powerup_ghostaura"
             },
             "model": [
-                "item_energytank"
+                "item_energyfragment"
             ],
             "map_icon": {
                 "custom_icon": {
-                    "label": "WORLD 6'S ENERGY TANK",
-                    "base_icon": "item_energytank"
+                    "label": "WORLD 2'S ENERGY PART",
+                    "base_icon": "item_energyfragment"
                 }
             }
         },
         {
             "pickup_type": "actor",
-            "caption": "Sent Explosive to World 1!",
+            "caption": "Missile Tank acquired.\nMissile capacity increased by 2.",
             "resources": [
                 [
                     {
-                        "item_id": "ITEM_NONE",
-                        "quantity": 0
+                        "item_id": "ITEM_WEAPON_MISSILE_MAX",
+                        "quantity": 2
                     }
                 ]
             ],
@@ -2097,13 +2037,10 @@
                 "actor": "itemsphere_gravitysuit"
             },
             "model": [
-                "itemsphere"
+                "item_missiletank"
             ],
             "map_icon": {
-                "custom_icon": {
-                    "label": "WORLD 1'S EXPLOSIVE",
-                    "base_icon": "unknown"
-                },
+                "icon_id": "item_missiletank",
                 "original_actor": {
                     "scenario": "s040_aqua",
                     "layer": "default",
@@ -2113,12 +2050,12 @@
         },
         {
             "pickup_type": "actor",
-            "caption": "Sent Dark Ammo Expansion to World 4!",
+            "caption": "Power Bomb Tank acquired.\nPower Bomb capacity increased by 1.",
             "resources": [
                 [
                     {
-                        "item_id": "ITEM_NONE",
-                        "quantity": 0
+                        "item_id": "ITEM_WEAPON_POWER_BOMB_MAX",
+                        "quantity": 1
                     }
                 ]
             ],
@@ -2128,23 +2065,26 @@
                 "actor": "item_missiletank_000"
             },
             "model": [
-                "itemsphere"
+                "item_powerbombtank"
             ],
             "map_icon": {
-                "custom_icon": {
-                    "label": "WORLD 4'S DARK AMMO EXPANSION",
-                    "base_icon": "unknown"
-                }
+                "icon_id": "item_powerbombtank"
             }
         },
         {
             "pickup_type": "actor",
-            "caption": "Sent Power Bomb to World 2!",
+            "caption": "Progressive Charge Beam acquired.",
             "resources": [
                 [
                     {
-                        "item_id": "ITEM_NONE",
-                        "quantity": 0
+                        "item_id": "ITEM_WEAPON_CHARGE_BEAM",
+                        "quantity": 1
+                    }
+                ],
+                [
+                    {
+                        "item_id": "ITEM_WEAPON_DIFFUSION_BEAM",
+                        "quantity": 1
                     }
                 ]
             ],
@@ -2154,18 +2094,16 @@
                 "actor": "item_missiletank_001"
             },
             "model": [
-                "powerup_powerbomb"
+                "powerup_chargebeam",
+                "powerup_diffusionbeam"
             ],
             "map_icon": {
-                "custom_icon": {
-                    "label": "WORLD 2'S POWER BOMB",
-                    "base_icon": "powerup_powerbomb"
-                }
+                "icon_id": "PROGRESSIVE_CHARGE"
             }
         },
         {
             "pickup_type": "actor",
-            "caption": "Sent Ing Hive Key 1 to World 1!",
+            "caption": "Sent Progressive Missile to World 2!",
             "resources": [
                 [
                     {
@@ -2180,23 +2118,24 @@
                 "actor": "item_energytank_000"
             },
             "model": [
-                "itemsphere"
+                "powerup_supermissile",
+                "powerup_icemissile"
             ],
             "map_icon": {
                 "custom_icon": {
-                    "label": "WORLD 1'S ING HIVE KEY 1",
-                    "base_icon": "unknown"
+                    "label": "WORLD 2'S PROGRESSIVE MISSILE",
+                    "base_icon": "PROGRESSIVE_MISSILE"
                 }
             }
         },
         {
             "pickup_type": "actor",
-            "caption": "Sent Power Bomb Expansion to World 3!",
+            "caption": "Missile Tank acquired.\nMissile capacity increased by 2.",
             "resources": [
                 [
                     {
-                        "item_id": "ITEM_NONE",
-                        "quantity": 0
+                        "item_id": "ITEM_WEAPON_MISSILE_MAX",
+                        "quantity": 2
                     }
                 ]
             ],
@@ -2206,18 +2145,15 @@
                 "actor": "item_missiletank_003"
             },
             "model": [
-                "item_powerbombtank"
+                "item_missiletank"
             ],
             "map_icon": {
-                "custom_icon": {
-                    "label": "WORLD 3'S POWER BOMB EXPANSION",
-                    "base_icon": "item_powerbombtank"
-                }
+                "icon_id": "item_missiletank"
             }
         },
         {
             "pickup_type": "actor",
-            "caption": "Sent Missile Expansion to World 6!",
+            "caption": "Sent Screw Attack to World 2!",
             "resources": [
                 [
                     {
@@ -2232,18 +2168,18 @@
                 "actor": "item_missiletank_005"
             },
             "model": [
-                "item_missiletank"
+                "powerup_screwattack"
             ],
             "map_icon": {
                 "custom_icon": {
-                    "label": "WORLD 6'S MISSILE EXPANSION",
-                    "base_icon": "item_missiletank"
+                    "label": "WORLD 2'S SCREW ATTACK",
+                    "base_icon": "powerup_screwattack"
                 }
             }
         },
         {
             "pickup_type": "actor",
-            "caption": "Sent Wide Beam to World 7!",
+            "caption": "Sent Power Bomb Tank to World 2!",
             "resources": [
                 [
                     {
@@ -2258,18 +2194,18 @@
                 "actor": "item_powerbombtank_000"
             },
             "model": [
-                "powerup_widebeam"
+                "item_powerbombtank"
             ],
             "map_icon": {
                 "custom_icon": {
-                    "label": "WORLD 7'S WIDE BEAM",
-                    "base_icon": "powerup_widebeam"
+                    "label": "WORLD 2'S POWER BOMB TANK",
+                    "base_icon": "item_powerbombtank"
                 }
             }
         },
         {
             "pickup_type": "actor",
-            "caption": "Sent Missile Expansion to World 3!",
+            "caption": "Sent Missile+ Tank to World 2!",
             "resources": [
                 [
                     {
@@ -2284,23 +2220,23 @@
                 "actor": "item_energyfragment_002"
             },
             "model": [
-                "item_missiletank"
+                "item_missiletankplus"
             ],
             "map_icon": {
                 "custom_icon": {
-                    "label": "WORLD 3'S MISSILE EXPANSION",
-                    "base_icon": "item_missiletank"
+                    "label": "WORLD 2'S MISSILE+ TANK",
+                    "base_icon": "item_missiletankplus"
                 }
             }
         },
         {
             "pickup_type": "actor",
-            "caption": "Sent Missile Expansion to World 3!",
+            "caption": "Missile Tank acquired.\nMissile capacity increased by 2.",
             "resources": [
                 [
                     {
-                        "item_id": "ITEM_NONE",
-                        "quantity": 0
+                        "item_id": "ITEM_WEAPON_MISSILE_MAX",
+                        "quantity": 2
                     }
                 ]
             ],
@@ -2313,15 +2249,12 @@
                 "item_missiletank"
             ],
             "map_icon": {
-                "custom_icon": {
-                    "label": "WORLD 3'S MISSILE EXPANSION",
-                    "base_icon": "item_missiletank"
-                }
+                "icon_id": "item_missiletank"
             }
         },
         {
             "pickup_type": "actor",
-            "caption": "Sent Snake to World 3!",
+            "caption": "Sent Missile+ Tank to World 2!",
             "resources": [
                 [
                     {
@@ -2336,23 +2269,23 @@
                 "actor": "item_missiletankplus"
             },
             "model": [
-                "itemsphere"
+                "item_missiletankplus"
             ],
             "map_icon": {
                 "custom_icon": {
-                    "label": "WORLD 3'S SNAKE",
-                    "base_icon": "unknown"
+                    "label": "WORLD 2'S MISSILE+ TANK",
+                    "base_icon": "item_missiletankplus"
                 }
             }
         },
         {
             "pickup_type": "actor",
-            "caption": "Sent Missile Tank to World 2!",
+            "caption": "Missile Tank acquired.\nMissile capacity increased by 2.",
             "resources": [
                 [
                     {
-                        "item_id": "ITEM_NONE",
-                        "quantity": 0
+                        "item_id": "ITEM_WEAPON_MISSILE_MAX",
+                        "quantity": 2
                     }
                 ]
             ],
@@ -2365,15 +2298,35 @@
                 "item_missiletank"
             ],
             "map_icon": {
-                "custom_icon": {
-                    "label": "WORLD 2'S MISSILE TANK",
-                    "base_icon": "item_missiletank"
-                }
+                "icon_id": "item_missiletank"
             }
         },
         {
             "pickup_type": "actor",
-            "caption": "Wavebuster acquired!",
+            "caption": "Screw Attack acquired.",
+            "resources": [
+                [
+                    {
+                        "item_id": "ITEM_SCREW_ATTACK",
+                        "quantity": 1
+                    }
+                ]
+            ],
+            "pickup_actor": {
+                "scenario": "s040_aqua",
+                "layer": "default",
+                "actor": "item_energyfragment_000"
+            },
+            "model": [
+                "powerup_screwattack"
+            ],
+            "map_icon": {
+                "icon_id": "powerup_screwattack"
+            }
+        },
+        {
+            "pickup_type": "actor",
+            "caption": "Missile Tank acquired.\nMissile capacity increased by 2.",
             "resources": [
                 [
                     {
@@ -2385,49 +2338,23 @@
             "pickup_actor": {
                 "scenario": "s040_aqua",
                 "layer": "default",
-                "actor": "item_energyfragment_000"
-            },
-            "model": [
-                "offworld"
-            ],
-            "map_icon": {
-                "icon_id": "offworld"
-            }
-        },
-        {
-            "pickup_type": "actor",
-            "caption": "Sent Dark Agon Key 3 to World 7!",
-            "resources": [
-                [
-                    {
-                        "item_id": "ITEM_NONE",
-                        "quantity": 0
-                    }
-                ]
-            ],
-            "pickup_actor": {
-                "scenario": "s040_aqua",
-                "layer": "default",
                 "actor": "item_missiletankplus_000"
             },
             "model": [
-                "itemsphere"
+                "item_missiletank"
             ],
             "map_icon": {
-                "custom_icon": {
-                    "label": "WORLD 7'S DARK AGON KEY 3",
-                    "base_icon": "unknown"
-                }
+                "icon_id": "item_missiletank"
             }
         },
         {
             "pickup_type": "actor",
-            "caption": "Sent Missile Tank to World 1!",
+            "caption": "Missile Tank acquired.\nMissile capacity increased by 2.",
             "resources": [
                 [
                     {
-                        "item_id": "ITEM_NONE",
-                        "quantity": 0
+                        "item_id": "ITEM_WEAPON_MISSILE_MAX",
+                        "quantity": 2
                     }
                 ]
             ],
@@ -2440,15 +2367,12 @@
                 "item_missiletank"
             ],
             "map_icon": {
-                "custom_icon": {
-                    "label": "WORLD 1'S MISSILE TANK",
-                    "base_icon": "item_missiletank"
-                }
+                "icon_id": "item_missiletank"
             }
         },
         {
             "pickup_type": "actor",
-            "caption": "Sent Missile Expansion to World 2!",
+            "caption": "Sent Progressive Spin to World 2!",
             "resources": [
                 [
                     {
@@ -2463,18 +2387,19 @@
                 "actor": "item_missiletank_004"
             },
             "model": [
-                "item_missiletank"
+                "powerup_doublejump",
+                "powerup_spacejump"
             ],
             "map_icon": {
                 "custom_icon": {
-                    "label": "WORLD 2'S MISSILE EXPANSION",
-                    "base_icon": "item_missiletank"
+                    "label": "WORLD 2'S PROGRESSIVE SPIN",
+                    "base_icon": "PROGRESSIVE_SPIN"
                 }
             }
         },
         {
             "pickup_type": "actor",
-            "caption": "Sent Missile Tank to World 6!",
+            "caption": "Sent Missile Tank to World 2!",
             "resources": [
                 [
                     {
@@ -2493,19 +2418,19 @@
             ],
             "map_icon": {
                 "custom_icon": {
-                    "label": "WORLD 6'S MISSILE TANK",
+                    "label": "WORLD 2'S MISSILE TANK",
                     "base_icon": "item_missiletank"
                 }
             }
         },
         {
             "pickup_type": "actor",
-            "caption": "Sent Sunburst to World 2!",
+            "caption": "Missile+ Tank acquired.\nMissile capacity increased by 10.",
             "resources": [
                 [
                     {
-                        "item_id": "ITEM_NONE",
-                        "quantity": 0
+                        "item_id": "ITEM_WEAPON_MISSILE_MAX",
+                        "quantity": 10
                     }
                 ]
             ],
@@ -2515,18 +2440,15 @@
                 "actor": "item_energytank"
             },
             "model": [
-                "itemsphere"
+                "item_missiletankplus"
             ],
             "map_icon": {
-                "custom_icon": {
-                    "label": "WORLD 2'S SUNBURST",
-                    "base_icon": "unknown"
-                }
+                "icon_id": "item_missiletankplus"
             }
         },
         {
             "pickup_type": "actor",
-            "caption": "Sent Missile Expansion to World 4!",
+            "caption": "Sent Power Bomb Tank to World 2!",
             "resources": [
                 [
                     {
@@ -2541,18 +2463,18 @@
                 "actor": "item_powerbombtank_000"
             },
             "model": [
-                "item_missiletank"
+                "item_powerbombtank"
             ],
             "map_icon": {
                 "custom_icon": {
-                    "label": "WORLD 4'S MISSILE EXPANSION",
-                    "base_icon": "item_missiletank"
+                    "label": "WORLD 2'S POWER BOMB TANK",
+                    "base_icon": "item_powerbombtank"
                 }
             }
         },
         {
             "pickup_type": "actor",
-            "caption": "Power Bomb Expansion acquired!",
+            "caption": "Energy Part acquired.\nEnergy capacity increased by 25.",
             "resources": [
                 [
                     {
@@ -2567,15 +2489,15 @@
                 "actor": "item_missiletank_000"
             },
             "model": [
-                "item_powerbombtank"
+                "item_energyfragment"
             ],
             "map_icon": {
-                "icon_id": "item_powerbombtank"
+                "icon_id": "item_energyfragment"
             }
         },
         {
             "pickup_type": "actor",
-            "caption": "Sent Cure-All to World 2!",
+            "caption": "Sent Grapple Beam to World 2!",
             "resources": [
                 [
                     {
@@ -2590,23 +2512,23 @@
                 "actor": "item_missiletank_005"
             },
             "model": [
-                "itemsphere"
+                "powerup_grapplebeam"
             ],
             "map_icon": {
                 "custom_icon": {
-                    "label": "WORLD 2'S CURE-ALL",
-                    "base_icon": "unknown"
+                    "label": "WORLD 2'S GRAPPLE BEAM",
+                    "base_icon": "powerup_grapplebeam"
                 }
             }
         },
         {
             "pickup_type": "actor",
-            "caption": "Missile Expansion acquired!",
+            "caption": "Power Bomb Tank acquired.\nPower Bomb capacity increased by 1.",
             "resources": [
                 [
                     {
-                        "item_id": "ITEM_WEAPON_MISSILE_MAX",
-                        "quantity": 2
+                        "item_id": "ITEM_WEAPON_POWER_BOMB_MAX",
+                        "quantity": 1
                     }
                 ]
             ],
@@ -2616,15 +2538,15 @@
                 "actor": "item_missiletank_001"
             },
             "model": [
-                "item_missiletank"
+                "item_powerbombtank"
             ],
             "map_icon": {
-                "icon_id": "item_missiletank"
+                "icon_id": "item_powerbombtank"
             }
         },
         {
             "pickup_type": "actor",
-            "caption": "Sent Missile Expansion to World 4!",
+            "caption": "Sent Missile Tank to World 2!",
             "resources": [
                 [
                     {
@@ -2643,7 +2565,7 @@
             ],
             "map_icon": {
                 "custom_icon": {
-                    "label": "WORLD 4'S MISSILE EXPANSION",
+                    "label": "WORLD 2'S MISSILE TANK",
                     "base_icon": "item_missiletank"
                 },
                 "original_actor": {
@@ -2655,12 +2577,12 @@
         },
         {
             "pickup_type": "actor",
-            "caption": "Sent Energy Tank to World 4!",
+            "caption": "Missile Tank acquired.\nMissile capacity increased by 2.",
             "resources": [
                 [
                     {
-                        "item_id": "ITEM_NONE",
-                        "quantity": 0
+                        "item_id": "ITEM_WEAPON_MISSILE_MAX",
+                        "quantity": 2
                     }
                 ]
             ],
@@ -2670,18 +2592,15 @@
                 "actor": "item_missiletank_002"
             },
             "model": [
-                "item_energytank"
+                "item_missiletank"
             ],
             "map_icon": {
-                "custom_icon": {
-                    "label": "WORLD 4'S ENERGY TANK",
-                    "base_icon": "item_energytank"
-                }
+                "icon_id": "item_missiletank"
             }
         },
         {
             "pickup_type": "actor",
-            "caption": "Sent Annihilator Beam to World 2!",
+            "caption": "Sent Energy Tank to World 2!",
             "resources": [
                 [
                     {
@@ -2696,18 +2615,18 @@
                 "actor": "item_missiletankplus_000"
             },
             "model": [
-                "itemsphere"
+                "item_energytank"
             ],
             "map_icon": {
                 "custom_icon": {
-                    "label": "WORLD 2'S ANNIHILATOR BEAM",
-                    "base_icon": "unknown"
+                    "label": "WORLD 2'S ENERGY TANK",
+                    "base_icon": "item_energytank"
                 }
             }
         },
         {
             "pickup_type": "actor",
-            "caption": "Sent Missile Tank to World 4!",
+            "caption": "Sent Missile Tank to World 2!",
             "resources": [
                 [
                     {
@@ -2726,19 +2645,19 @@
             ],
             "map_icon": {
                 "custom_icon": {
-                    "label": "WORLD 4'S MISSILE TANK",
+                    "label": "WORLD 2'S MISSILE TANK",
                     "base_icon": "item_missiletank"
                 }
             }
         },
         {
             "pickup_type": "actor",
-            "caption": "Sent Sprinkler to World 1!",
+            "caption": "Missile Tank acquired.\nMissile capacity increased by 2.",
             "resources": [
                 [
                     {
-                        "item_id": "ITEM_NONE",
-                        "quantity": 0
+                        "item_id": "ITEM_WEAPON_MISSILE_MAX",
+                        "quantity": 2
                     }
                 ]
             ],
@@ -2748,13 +2667,10 @@
                 "actor": "itemsphere_doublejump"
             },
             "model": [
-                "itemsphere"
+                "item_missiletank"
             ],
             "map_icon": {
-                "custom_icon": {
-                    "label": "WORLD 1'S SPRINKLER",
-                    "base_icon": "unknown"
-                },
+                "icon_id": "item_missiletank",
                 "original_actor": {
                     "scenario": "s050_forest",
                     "layer": "default",
@@ -2764,12 +2680,12 @@
         },
         {
             "pickup_type": "actor",
-            "caption": "Sent Artifact of Lifegiver to World 3!",
+            "caption": "Missile Tank acquired.\nMissile capacity increased by 2.",
             "resources": [
                 [
                     {
-                        "item_id": "ITEM_NONE",
-                        "quantity": 0
+                        "item_id": "ITEM_WEAPON_MISSILE_MAX",
+                        "quantity": 2
                     }
                 ]
             ],
@@ -2779,18 +2695,15 @@
                 "actor": "item_energyfragment_000"
             },
             "model": [
-                "itemsphere"
+                "item_missiletank"
             ],
             "map_icon": {
-                "custom_icon": {
-                    "label": "WORLD 3'S ARTIFACT OF LIFEGIVER",
-                    "base_icon": "unknown"
-                }
+                "icon_id": "item_missiletank"
             }
         },
         {
             "pickup_type": "actor",
-            "caption": "Sent Missile Expansion to World 2!",
+            "caption": "Sent Speed Booster to World 2!",
             "resources": [
                 [
                     {
@@ -2805,23 +2718,23 @@
                 "actor": "item_missiletank_006"
             },
             "model": [
-                "item_missiletank"
+                "powerup_speedbooster"
             ],
             "map_icon": {
                 "custom_icon": {
-                    "label": "WORLD 2'S MISSILE EXPANSION",
-                    "base_icon": "item_missiletank"
+                    "label": "WORLD 2'S SPEED BOOSTER",
+                    "base_icon": "powerup_speedbooster"
                 }
             }
         },
         {
             "pickup_type": "actor",
-            "caption": "Sent Gravity Suit to World 7!",
+            "caption": "Power Bomb Tank acquired.\nPower Bomb capacity increased by 1.",
             "resources": [
                 [
                     {
-                        "item_id": "ITEM_NONE",
-                        "quantity": 0
+                        "item_id": "ITEM_WEAPON_POWER_BOMB_MAX",
+                        "quantity": 1
                     }
                 ]
             ],
@@ -2831,18 +2744,15 @@
                 "actor": "item_missiletank_007"
             },
             "model": [
-                "powerup_gravitysuit"
+                "item_powerbombtank"
             ],
             "map_icon": {
-                "custom_icon": {
-                    "label": "WORLD 7'S GRAVITY SUIT",
-                    "base_icon": "powerup_gravitysuit"
-                }
+                "icon_id": "item_powerbombtank"
             }
         },
         {
             "pickup_type": "actor",
-            "caption": "Sent Sonic Boom to World 2!",
+            "caption": "Sent Missile Tank to World 2!",
             "resources": [
                 [
                     {
@@ -2857,18 +2767,18 @@
                 "actor": "item_missiletank_003"
             },
             "model": [
-                "itemsphere"
+                "item_missiletank"
             ],
             "map_icon": {
                 "custom_icon": {
-                    "label": "WORLD 2'S SONIC BOOM",
-                    "base_icon": "unknown"
+                    "label": "WORLD 2'S MISSILE TANK",
+                    "base_icon": "item_missiletank"
                 }
             }
         },
         {
             "pickup_type": "actor",
-            "caption": "Sent Phazon Suit to World 3!",
+            "caption": "Sent Power Bomb Tank to World 2!",
             "resources": [
                 [
                     {
@@ -2883,23 +2793,23 @@
                 "actor": "item_energytank_000"
             },
             "model": [
-                "powerup_variasuit"
+                "item_powerbombtank"
             ],
             "map_icon": {
                 "custom_icon": {
-                    "label": "WORLD 3'S PHAZON SUIT",
-                    "base_icon": "powerup_variasuit"
+                    "label": "WORLD 2'S POWER BOMB TANK",
+                    "base_icon": "item_powerbombtank"
                 }
             }
         },
         {
             "pickup_type": "actor",
-            "caption": "Varia Suit acquired!",
+            "caption": "Sent Progressive Missile to World 2!",
             "resources": [
                 [
                     {
                         "item_id": "ITEM_NONE",
-                        "quantity": 1
+                        "quantity": 0
                     }
                 ]
             ],
@@ -2909,15 +2819,19 @@
                 "actor": "powerup_sonar"
             },
             "model": [
-                "powerup_variasuit"
+                "powerup_supermissile",
+                "powerup_icemissile"
             ],
             "map_icon": {
-                "icon_id": "powerup_variasuit"
+                "custom_icon": {
+                    "label": "WORLD 2'S PROGRESSIVE MISSILE",
+                    "base_icon": "PROGRESSIVE_MISSILE"
+                }
             }
         },
         {
             "pickup_type": "actor",
-            "caption": "Sent Large Life Capsule to World 4!",
+            "caption": "Sent Missile Tank to World 2!",
             "resources": [
                 [
                     {
@@ -2932,23 +2846,23 @@
                 "actor": "item_missiletank_009"
             },
             "model": [
-                "itemsphere"
+                "item_missiletank"
             ],
             "map_icon": {
                 "custom_icon": {
-                    "label": "WORLD 4'S LARGE LIFE CAPSULE",
-                    "base_icon": "unknown"
+                    "label": "WORLD 2'S MISSILE TANK",
+                    "base_icon": "item_missiletank"
                 }
             }
         },
         {
             "pickup_type": "actor",
-            "caption": "Sent Missile Expansion to World 1!",
+            "caption": "Missile Tank acquired.\nMissile capacity increased by 2.",
             "resources": [
                 [
                     {
-                        "item_id": "ITEM_NONE",
-                        "quantity": 0
+                        "item_id": "ITEM_WEAPON_MISSILE_MAX",
+                        "quantity": 2
                     }
                 ]
             ],
@@ -2961,20 +2875,29 @@
                 "item_missiletank"
             ],
             "map_icon": {
-                "custom_icon": {
-                    "label": "WORLD 1'S MISSILE EXPANSION",
-                    "base_icon": "item_missiletank"
-                }
+                "icon_id": "item_missiletank"
             }
         },
         {
             "pickup_type": "actor",
-            "caption": "Sent Ice Spreader to World 7!",
+            "caption": "Progressive Beam acquired.",
             "resources": [
                 [
                     {
-                        "item_id": "ITEM_NONE",
-                        "quantity": 0
+                        "item_id": "ITEM_WEAPON_WIDE_BEAM",
+                        "quantity": 1
+                    }
+                ],
+                [
+                    {
+                        "item_id": "ITEM_WEAPON_PLASMA_BEAM",
+                        "quantity": 1
+                    }
+                ],
+                [
+                    {
+                        "item_id": "ITEM_WEAPON_WAVE_BEAM",
+                        "quantity": 1
                     }
                 ]
             ],
@@ -2984,18 +2907,17 @@
                 "actor": "item_missiletank"
             },
             "model": [
-                "itemsphere"
+                "powerup_widebeam",
+                "powerup_plasmabeam",
+                "powerup_wavebeam"
             ],
             "map_icon": {
-                "custom_icon": {
-                    "label": "WORLD 7'S ICE SPREADER",
-                    "base_icon": "unknown"
-                }
+                "icon_id": "PROGRESSIVE_BEAM"
             }
         },
         {
             "pickup_type": "actor",
-            "caption": "Sent Missile+ Tank to World 1!",
+            "caption": "Sent Missile Tank to World 2!",
             "resources": [
                 [
                     {
@@ -3010,23 +2932,23 @@
                 "actor": "item_energytank_000"
             },
             "model": [
-                "item_missiletankplus"
+                "item_missiletank"
             ],
             "map_icon": {
                 "custom_icon": {
-                    "label": "WORLD 1'S MISSILE+ TANK",
-                    "base_icon": "item_missiletankplus"
+                    "label": "WORLD 2'S MISSILE TANK",
+                    "base_icon": "item_missiletank"
                 }
             }
         },
         {
             "pickup_type": "actor",
-            "caption": "Sent Energy Part to World 3!",
+            "caption": "Missile Tank acquired.\nMissile capacity increased by 2.",
             "resources": [
                 [
                     {
-                        "item_id": "ITEM_NONE",
-                        "quantity": 0
+                        "item_id": "ITEM_WEAPON_MISSILE_MAX",
+                        "quantity": 2
                     }
                 ]
             ],
@@ -3036,13 +2958,10 @@
                 "actor": "itemsphere_plasmabeam_000"
             },
             "model": [
-                "item_energyfragment"
+                "item_missiletank"
             ],
             "map_icon": {
-                "custom_icon": {
-                    "label": "WORLD 3'S ENERGY PART",
-                    "base_icon": "item_energyfragment"
-                },
+                "icon_id": "item_missiletank",
                 "original_actor": {
                     "scenario": "s060_quarantine",
                     "layer": "default",
@@ -3052,12 +2971,12 @@
         },
         {
             "pickup_type": "actor",
-            "caption": "Sent Thermal Visor to World 3!",
+            "caption": "Energy Tank acquired.\nEnergy capacity increased by 100.",
             "resources": [
                 [
                     {
-                        "item_id": "ITEM_NONE",
-                        "quantity": 0
+                        "item_id": "ITEM_ENERGY_TANKS",
+                        "quantity": 1
                     }
                 ]
             ],
@@ -3067,18 +2986,15 @@
                 "actor": "item_powerbombtank_000"
             },
             "model": [
-                "itemsphere"
+                "item_energytank"
             ],
             "map_icon": {
-                "custom_icon": {
-                    "label": "WORLD 3'S THERMAL VISOR",
-                    "base_icon": "unknown"
-                }
+                "icon_id": "item_energytank"
             }
         },
         {
             "pickup_type": "actor",
-            "caption": "Missile Expansion acquired!",
+            "caption": "Missile Tank acquired.\nMissile capacity increased by 2.",
             "resources": [
                 [
                     {
@@ -3101,12 +3017,12 @@
         },
         {
             "pickup_type": "actor",
-            "caption": "Dark Ammo Expansion acquired!",
+            "caption": "Sent Missile Tank to World 2!",
             "resources": [
                 [
                     {
-                        "item_id": "ITEM_WEAPON_MISSILE_MAX",
-                        "quantity": 2
+                        "item_id": "ITEM_NONE",
+                        "quantity": 0
                     }
                 ]
             ],
@@ -3116,20 +3032,23 @@
                 "actor": "item_missiletank_000"
             },
             "model": [
-                "offworld"
+                "item_missiletank"
             ],
             "map_icon": {
-                "icon_id": "offworld"
+                "custom_icon": {
+                    "label": "WORLD 2'S MISSILE TANK",
+                    "base_icon": "item_missiletank"
+                }
             }
         },
         {
             "pickup_type": "actor",
-            "caption": "Locked Missile Expansion acquired!",
+            "caption": "Sent Missile Tank to World 2!",
             "resources": [
                 [
                     {
-                        "item_id": "ITEM_LIFE_SHARDS",
-                        "quantity": 1
+                        "item_id": "ITEM_NONE",
+                        "quantity": 0
                     }
                 ]
             ],
@@ -3142,7 +3061,10 @@
                 "item_missiletank"
             ],
             "map_icon": {
-                "icon_id": "item_missiletank",
+                "custom_icon": {
+                    "label": "WORLD 2'S MISSILE TANK",
+                    "base_icon": "item_missiletank"
+                },
                 "original_actor": {
                     "scenario": "s070_basesanc",
                     "layer": "default",
@@ -3152,7 +3074,7 @@
         },
         {
             "pickup_type": "actor",
-            "caption": "Missile Expansion acquired!",
+            "caption": "Missile Tank acquired.\nMissile capacity increased by 2.",
             "resources": [
                 [
                     {
@@ -3175,12 +3097,12 @@
         },
         {
             "pickup_type": "actor",
-            "caption": "Sent Energy Tank to World 4!",
+            "caption": "Missile+ Tank acquired.\nMissile capacity increased by 10.",
             "resources": [
                 [
                     {
-                        "item_id": "ITEM_NONE",
-                        "quantity": 0
+                        "item_id": "ITEM_WEAPON_MISSILE_MAX",
+                        "quantity": 10
                     }
                 ]
             ],
@@ -3190,23 +3112,20 @@
                 "actor": "item_missiletank_000"
             },
             "model": [
-                "item_energytank"
+                "item_missiletankplus"
             ],
             "map_icon": {
-                "custom_icon": {
-                    "label": "WORLD 4'S ENERGY TANK",
-                    "base_icon": "item_energytank"
-                }
+                "icon_id": "item_missiletankplus"
             }
         },
         {
             "pickup_type": "actor",
-            "caption": "Sent Missile Expansion to World 2!",
+            "caption": "Missile Tank acquired.\nMissile capacity increased by 2.",
             "resources": [
                 [
                     {
-                        "item_id": "ITEM_NONE",
-                        "quantity": 0
+                        "item_id": "ITEM_WEAPON_MISSILE_MAX",
+                        "quantity": 2
                     }
                 ]
             ],
@@ -3219,15 +3138,12 @@
                 "item_missiletank"
             ],
             "map_icon": {
-                "custom_icon": {
-                    "label": "WORLD 2'S MISSILE EXPANSION",
-                    "base_icon": "item_missiletank"
-                }
+                "icon_id": "item_missiletank"
             }
         },
         {
             "pickup_type": "actor",
-            "caption": "Sent Light Beam to World 3!",
+            "caption": "Sent Power Bomb Tank to World 2!",
             "resources": [
                 [
                     {
@@ -3242,23 +3158,23 @@
                 "actor": "item_energyfragment_002"
             },
             "model": [
-                "itemsphere"
+                "item_powerbombtank"
             ],
             "map_icon": {
                 "custom_icon": {
-                    "label": "WORLD 3'S LIGHT BEAM",
-                    "base_icon": "unknown"
+                    "label": "WORLD 2'S POWER BOMB TANK",
+                    "base_icon": "item_powerbombtank"
                 }
             }
         },
         {
             "pickup_type": "actor",
-            "caption": "Sent Energy Part to World 6!",
+            "caption": "Missile Tank acquired.\nMissile capacity increased by 2.",
             "resources": [
                 [
                     {
-                        "item_id": "ITEM_NONE",
-                        "quantity": 0
+                        "item_id": "ITEM_WEAPON_MISSILE_MAX",
+                        "quantity": 2
                     }
                 ]
             ],
@@ -3268,23 +3184,20 @@
                 "actor": "item_energyfragment_001"
             },
             "model": [
-                "item_energyfragment"
+                "item_missiletank"
             ],
             "map_icon": {
-                "custom_icon": {
-                    "label": "WORLD 6'S ENERGY PART",
-                    "base_icon": "item_energyfragment"
-                }
+                "icon_id": "item_missiletank"
             }
         },
         {
             "pickup_type": "actor",
-            "caption": "Sent Sky Temple Key 9 to World 7!",
+            "caption": "Energy Tank acquired.\nEnergy capacity increased by 100.",
             "resources": [
                 [
                     {
-                        "item_id": "ITEM_NONE",
-                        "quantity": 0
+                        "item_id": "ITEM_ENERGY_TANKS",
+                        "quantity": 1
                     }
                 ]
             ],
@@ -3294,18 +3207,15 @@
                 "actor": "item_missiletank_003"
             },
             "model": [
-                "itemsphere"
+                "item_energytank"
             ],
             "map_icon": {
-                "custom_icon": {
-                    "label": "WORLD 7'S SKY TEMPLE KEY 9",
-                    "base_icon": "unknown"
-                }
+                "icon_id": "item_energytank"
             }
         },
         {
             "pickup_type": "actor",
-            "caption": "Sent Missile Expansion to World 3!",
+            "caption": "Sent Missile Tank to World 2!",
             "resources": [
                 [
                     {
@@ -3324,19 +3234,19 @@
             ],
             "map_icon": {
                 "custom_icon": {
-                    "label": "WORLD 3'S MISSILE EXPANSION",
+                    "label": "WORLD 2'S MISSILE TANK",
                     "base_icon": "item_missiletank"
                 }
             }
         },
         {
             "pickup_type": "actor",
-            "caption": "Sent Missile Tank to World 4!",
+            "caption": "Energy Part acquired.\nEnergy capacity increased by 25.",
             "resources": [
                 [
                     {
-                        "item_id": "ITEM_NONE",
-                        "quantity": 0
+                        "item_id": "ITEM_LIFE_SHARDS",
+                        "quantity": 1
                     }
                 ]
             ],
@@ -3346,18 +3256,15 @@
                 "actor": "item_powerbombtank_000"
             },
             "model": [
-                "item_missiletank"
+                "item_energyfragment"
             ],
             "map_icon": {
-                "custom_icon": {
-                    "label": "WORLD 4'S MISSILE TANK",
-                    "base_icon": "item_missiletank"
-                }
+                "icon_id": "item_energyfragment"
             }
         },
         {
             "pickup_type": "actor",
-            "caption": "Sent Missile Tank to World 7!",
+            "caption": "Sent Energy Part to World 2!",
             "resources": [
                 [
                     {
@@ -3372,18 +3279,18 @@
                 "actor": "item_missiletankplus_001"
             },
             "model": [
-                "item_missiletank"
+                "item_energyfragment"
             ],
             "map_icon": {
                 "custom_icon": {
-                    "label": "WORLD 7'S MISSILE TANK",
-                    "base_icon": "item_missiletank"
+                    "label": "WORLD 2'S ENERGY PART",
+                    "base_icon": "item_energyfragment"
                 }
             }
         },
         {
             "pickup_type": "actor",
-            "caption": "Sent Light Ammo Expansion to World 2!",
+            "caption": "Sent Energy Part to World 2!",
             "resources": [
                 [
                     {
@@ -3398,23 +3305,23 @@
                 "actor": "item_missiletank_002"
             },
             "model": [
-                "itemsphere"
+                "item_energyfragment"
             ],
             "map_icon": {
                 "custom_icon": {
-                    "label": "WORLD 2'S LIGHT AMMO EXPANSION",
-                    "base_icon": "unknown"
+                    "label": "WORLD 2'S ENERGY PART",
+                    "base_icon": "item_energyfragment"
                 }
             }
         },
         {
             "pickup_type": "actor",
-            "caption": "Energy Tank acquired!",
+            "caption": "Missile Tank acquired.\nMissile capacity increased by 2.",
             "resources": [
                 [
                     {
                         "item_id": "ITEM_WEAPON_MISSILE_MAX",
-                        "quantity": 10
+                        "quantity": 2
                     }
                 ]
             ],
@@ -3424,15 +3331,15 @@
                 "actor": "item_missiletankplus_000"
             },
             "model": [
-                "item_energytank"
+                "item_missiletank"
             ],
             "map_icon": {
-                "icon_id": "item_energytank"
+                "icon_id": "item_missiletank"
             }
         },
         {
             "pickup_type": "actor",
-            "caption": "Sent Large Life Capsule to World 6!",
+            "caption": "Sent Missile Tank to World 2!",
             "resources": [
                 [
                     {
@@ -3447,18 +3354,18 @@
                 "actor": "item_energyfragment_000"
             },
             "model": [
-                "itemsphere"
+                "item_missiletank"
             ],
             "map_icon": {
                 "custom_icon": {
-                    "label": "WORLD 6'S LARGE LIFE CAPSULE",
-                    "base_icon": "unknown"
+                    "label": "WORLD 2'S MISSILE TANK",
+                    "base_icon": "item_missiletank"
                 }
             }
         },
         {
             "pickup_type": "actor",
-            "caption": "Sent Missile Tank to World 7!",
+            "caption": "Sent Energy Part to World 2!",
             "resources": [
                 [
                     {
@@ -3473,18 +3380,18 @@
                 "actor": "item_missiletank_005"
             },
             "model": [
-                "item_missiletank"
+                "item_energyfragment"
             ],
             "map_icon": {
                 "custom_icon": {
-                    "label": "WORLD 7'S MISSILE TANK",
-                    "base_icon": "item_missiletank"
+                    "label": "WORLD 2'S ENERGY PART",
+                    "base_icon": "item_energyfragment"
                 }
             }
         },
         {
             "pickup_type": "actor",
-            "caption": "Sent Missile Expansion to World 2!",
+            "caption": "Sent Progressive Bomb to World 2!",
             "resources": [
                 [
                     {
@@ -3499,23 +3406,24 @@
                 "actor": "item_energyfragment"
             },
             "model": [
-                "item_missiletank"
+                "powerup_bomb",
+                "powerup_crossbomb"
             ],
             "map_icon": {
                 "custom_icon": {
-                    "label": "WORLD 2'S MISSILE EXPANSION",
-                    "base_icon": "item_missiletank"
+                    "label": "WORLD 2'S PROGRESSIVE BOMB",
+                    "base_icon": "PROGRESSIVE_BOMB"
                 }
             }
         },
         {
             "pickup_type": "actor",
-            "caption": "Sent Curly's Panties to World 3!",
+            "caption": "Missile+ Tank acquired.\nMissile capacity increased by 10.",
             "resources": [
                 [
                     {
-                        "item_id": "ITEM_NONE",
-                        "quantity": 0
+                        "item_id": "ITEM_WEAPON_MISSILE_MAX",
+                        "quantity": 10
                     }
                 ]
             ],
@@ -3525,23 +3433,20 @@
                 "actor": "item_missiletank_000"
             },
             "model": [
-                "itemsphere"
+                "item_missiletankplus"
             ],
             "map_icon": {
-                "custom_icon": {
-                    "label": "WORLD 3'S CURLY'S PANTIES",
-                    "base_icon": "unknown"
-                }
+                "icon_id": "item_missiletankplus"
             }
         },
         {
             "pickup_type": "actor",
-            "caption": "Sent Missile+ Tank to World 7!",
+            "caption": "Missile Tank acquired.\nMissile capacity increased by 2.",
             "resources": [
                 [
                     {
-                        "item_id": "ITEM_NONE",
-                        "quantity": 0
+                        "item_id": "ITEM_WEAPON_MISSILE_MAX",
+                        "quantity": 2
                     }
                 ]
             ],
@@ -3551,23 +3456,20 @@
                 "actor": "item_powerbombtank_000"
             },
             "model": [
-                "item_missiletankplus"
+                "item_missiletank"
             ],
             "map_icon": {
-                "custom_icon": {
-                    "label": "WORLD 7'S MISSILE+ TANK",
-                    "base_icon": "item_missiletankplus"
-                }
+                "icon_id": "item_missiletank"
             }
         },
         {
             "pickup_type": "actor",
-            "caption": "Sent Gravity Boost to World 4!",
+            "caption": "Power Bomb Tank acquired.\nPower Bomb capacity increased by 1.",
             "resources": [
                 [
                     {
-                        "item_id": "ITEM_NONE",
-                        "quantity": 0
+                        "item_id": "ITEM_WEAPON_POWER_BOMB_MAX",
+                        "quantity": 1
                     }
                 ]
             ],
@@ -3577,18 +3479,15 @@
                 "actor": "item_missiletank"
             },
             "model": [
-                "powerup_gravitysuit"
+                "item_powerbombtank"
             ],
             "map_icon": {
-                "custom_icon": {
-                    "label": "WORLD 4'S GRAVITY BOOST",
-                    "base_icon": "powerup_gravitysuit"
-                }
+                "icon_id": "item_powerbombtank"
             }
         },
         {
             "pickup_type": "emmi",
-            "caption": "Missile Tank acquired.\nMissile capacity increased by 2.",
+            "caption": "Metroid DNA 1 acquired.",
             "resources": [
                 [
                     {
@@ -3607,12 +3506,12 @@
         },
         {
             "pickup_type": "corpius",
-            "caption": "ID Card acquired!",
+            "caption": "Sent Power Bomb Tank to World 2!",
             "resources": [
                 [
                     {
-                        "item_id": "ITEM_RANDO_ARTIFACT_2",
-                        "quantity": 1
+                        "item_id": "ITEM_NONE",
+                        "quantity": 0
                     }
                 ]
             ],
@@ -3626,7 +3525,7 @@
         },
         {
             "pickup_type": "emmi",
-            "caption": "Sent Echo Visor to World 2!",
+            "caption": "Sent Missile Tank to World 2!",
             "resources": [
                 [
                     {
@@ -3645,7 +3544,7 @@
         },
         {
             "pickup_type": "cutscene",
-            "caption": "Sent Sky Temple Key 6 to World 4!",
+            "caption": "Sent Missile Tank to World 2!",
             "resources": [
                 [
                     {
@@ -3662,7 +3561,7 @@
         },
         {
             "pickup_type": "cutscene",
-            "caption": "Sent Dark Torvus Key 2 to World 1!",
+            "caption": "Sent Energy Part to World 2!",
             "resources": [
                 [
                     {
@@ -3679,11 +3578,11 @@
         },
         {
             "pickup_type": "corex",
-            "caption": "Weapon acquired!",
+            "caption": "Power Bomb Tank acquired.\nPower Bomb capacity increased by 1.",
             "resources": [
                 [
                     {
-                        "item_id": "ITEM_RANDO_ARTIFACT_3",
+                        "item_id": "ITEM_WEAPON_POWER_BOMB_MAX",
                         "quantity": 1
                     }
                 ]
@@ -3698,7 +3597,7 @@
         },
         {
             "pickup_type": "emmi",
-            "caption": "Sent Light Ammo Expansion to World 2!",
+            "caption": "Sent Phantom Cloak to World 2!",
             "resources": [
                 [
                     {
@@ -3717,12 +3616,24 @@
         },
         {
             "pickup_type": "emmi",
-            "caption": "Sent Missile Expansion to World 7!",
+            "caption": "Progressive Beam acquired.",
             "resources": [
                 [
                     {
-                        "item_id": "ITEM_NONE",
-                        "quantity": 0
+                        "item_id": "ITEM_WEAPON_WIDE_BEAM",
+                        "quantity": 1
+                    }
+                ],
+                [
+                    {
+                        "item_id": "ITEM_WEAPON_PLASMA_BEAM",
+                        "quantity": 1
+                    }
+                ],
+                [
+                    {
+                        "item_id": "ITEM_WEAPON_WAVE_BEAM",
+                        "quantity": 1
                     }
                 ]
             ],
@@ -3736,12 +3647,12 @@
         },
         {
             "pickup_type": "corex",
-            "caption": "Sent Power Bomb Expansion to World 4!",
+            "caption": "Metroid DNA 3 acquired.",
             "resources": [
                 [
                     {
-                        "item_id": "ITEM_NONE",
-                        "quantity": 0
+                        "item_id": "ITEM_RANDO_ARTIFACT_3",
+                        "quantity": 1
                     }
                 ]
             ],
@@ -3755,7 +3666,7 @@
         },
         {
             "pickup_type": "emmi",
-            "caption": "Locked Power Bomb Expansion acquired!",
+            "caption": "Missile Tank acquired.\nMissile capacity increased by 2.",
             "resources": [
                 [
                     {
@@ -3774,12 +3685,12 @@
         },
         {
             "pickup_type": "emmi",
-            "caption": "Sent Missile Tank to World 3!",
+            "caption": "Metroid DNA 2 acquired.",
             "resources": [
                 [
                     {
-                        "item_id": "ITEM_NONE",
-                        "quantity": 0
+                        "item_id": "ITEM_RANDO_ARTIFACT_2",
+                        "quantity": 1
                     }
                 ]
             ],
@@ -3793,12 +3704,12 @@
         },
         {
             "pickup_type": "cutscene",
-            "caption": "Sent Energy Part to World 6!",
+            "caption": "Missile Tank acquired.\nMissile capacity increased by 2.",
             "resources": [
                 [
                     {
-                        "item_id": "ITEM_NONE",
-                        "quantity": 0
+                        "item_id": "ITEM_WEAPON_MISSILE_MAX",
+                        "quantity": 2
                     }
                 ]
             ],
@@ -3818,7 +3729,7 @@
                 "actor": "PRP_CV_AccessPoint002"
             },
             "hint_id": "CAVE_2",
-            "text": "{c3}World 4{c0}'s {c1}Progressive Spin{c0} can be found in {c5}Artaria{c0}."
+            "text": "{c3}World 2{c0}'s {c1}Speed Booster{c0} can be found in {c5}Ghavoran{c0}."
         },
         {
             "accesspoint_actor": {
@@ -3827,7 +3738,7 @@
                 "actor": "PRP_CV_AccessPoint001"
             },
             "hint_id": "CAVE_1",
-            "text": "{c3}World 8{c0}'s {c1}Power Bomb{c0} can be found in {c5}Artaria{c0}."
+            "text": "{c3}World 2{c0}'s {c1}Power Bomb{c0} can be found in {c5}Artaria{c0}."
         },
         {
             "accesspoint_actor": {
@@ -3836,7 +3747,7 @@
                 "actor": "accesspoint"
             },
             "hint_id": "MAGMA_1",
-            "text": "{c3}World 7{c0}'s {c1}Screw Attack{c0} can be found in {c5}Ghavoran{c0}."
+            "text": "{c3}World 2{c0}'s {c1}Spider Magnet{c0} can be found in {c5}Artaria{c0}."
         },
         {
             "accesspoint_actor": {
@@ -3845,7 +3756,7 @@
                 "actor": "accesspoint_000"
             },
             "hint_id": "MAGMA_2",
-            "text": "{c3}World 2{c0}'s {c1}Charge Beam{c0} can be found in {c5}Dairon{c0}."
+            "text": "{c3}World 1{c0}'s {c1}Progressive Beam{c0} can be found in {c5}Ghavoran{c0}."
         },
         {
             "accesspoint_actor": {
@@ -3854,7 +3765,7 @@
                 "actor": "accesspoint_000"
             },
             "hint_id": "LAB_1",
-            "text": "{c3}World 6{c0}'s {c1}Phazon Suit{c0} can be found in {c5}Dairon{c0}."
+            "text": "{c3}World 2{c0}'s {c1}Progressive Bomb{c0} can be found in {c5}Ferenia{c0}."
         },
         {
             "accesspoint_actor": {
@@ -3863,7 +3774,7 @@
                 "actor": "accesspoint_001"
             },
             "hint_id": "LAB_2",
-            "text": "{c4}A joke hint.{c0}"
+            "text": "{c3}World 1{c0}'s {c1}Storm Missile{c0} can be found in {c5}Dairon{c0}."
         },
         {
             "accesspoint_actor": {
@@ -3872,7 +3783,7 @@
                 "actor": "accesspoint_000"
             },
             "hint_id": "AQUA_1",
-            "text": "{c3}World 1{c0}'s {c1}ID Card{c0} can be found in {c5}Dairon{c0}."
+            "text": "{c3}World 1{c0}'s {c1}Phantom Cloak{c0} can be found in {c5}Cataris{c0}."
         },
         {
             "accesspoint_actor": {
@@ -3881,7 +3792,7 @@
                 "actor": "accesspoint_001"
             },
             "hint_id": "AQUA_2",
-            "text": "{c3}World 4{c0}'s {c1}Plasma Beam{c0} can be found in {c5}Ferenia{c0}."
+            "text": "{c3}World 1{c0}'s {c1}Progressive Bomb{c0} can be found in {c5}Artaria{c0}."
         },
         {
             "accesspoint_actor": {
@@ -3890,7 +3801,7 @@
                 "actor": "accesspoint_000"
             },
             "hint_id": "SANC_1",
-            "text": "{c3}World 1{c0}'s {c1}Charcoal{c0} can be found in {c5}Ghavoran{c0}."
+            "text": "{c3}World 2{c0}'s {c1}Phantom Cloak{c0} can be found in {c5}Ferenia{c0}."
         },
         {
             "accesspoint_actor": {
@@ -3899,7 +3810,7 @@
                 "actor": "accesspoint_000"
             },
             "hint_id": "FOREST_1",
-            "text": "{c3}World 7{c0}'s {c1}Spider Ball{c0} can be found in {c5}Ghavoran{c0}."
+            "text": "{c3}World 2{c0}'s {c1}Grapple Beam{c0} can be found in {c5}Ghavoran{c0}."
         },
         {
             "accesspoint_actor": {
@@ -3908,7 +3819,7 @@
                 "actor": "accesspoint_000"
             },
             "hint_id": "SHIP_1",
-            "text": "{c3}World 4{c0}'s {c1}Ice Missile{c0} can be found in {c5}Ghavoran{c0}."
+            "text": "{c3}World 2{c0}'s {c1}Progressive Missile{c0} can be found in {c5}Burenia{c0}."
         }
     ],
     "text_patches": {
@@ -3921,27 +3832,24 @@
         "GUI_WARNING_NOT_RANDO_GAME_2": "You must start a New Game from a blank save slot. Returning to title screen."
     },
     "spoiler_log": {
-        "Wide Beam": "{c3}World 8{c0}'s Cataris - Double Obsydomithon Room",
-        "Plasma Beam": "{c3}World 6{c0}'s Phendrana Drifts - Storage Cave",
-        "Wave Beam": "{c3}World 2{c0}'s Phendrana Drifts - Observatory",
-        "Progressive Charge Beam": "{c3}World 1{c0}'s Egg Corridor - Egg Corridor\n{c3}World 8{c0}'s Artaria - Charge Beam Room",
-        "Grapple Beam": "{c3}World 4{c0}'s Dairon - Shinespark Tutorial",
-        "Super Missile": "{c3}World 8{c0}'s Artaria - Speed Hallway",
-        "Ice Missile": "{c3}World 1{c0}'s Mimiga Village - Yamashita Farm",
-        "Storm Missile": "{c3}World 4{c0}'s Ghavoran - Super Missile Room Access",
-        "Phantom Cloak": "{c3}World 7{c0}'s Agon Wastes - Sand Cache",
-        "Flash Shift": "{c3}World 7{c0}'s Temple Grounds - Transport to Agon Wastes",
-        "Progressive Suit": "{c3}World 4{c0}'s Burenia - Main Hub Tower Top\n{c3}World 6{c0}'s Phendrana Drifts - Phendrana Shorelines",
-        "Morph Ball": "{c3}World 1{c0}'s Grasstown - Grasstown",
-        "Progressive Bomb": "{c3}World 3{c0}'s Agon Wastes - Agon Temple\n{c3}World 8{c0}'s Cataris - Transport to Artaria",
-        "Power Bomb": "{c3}World 8{c0}'s Artaria - Invisible Corpius Room",
-        "Spider Magnet": "{c3}World 3{c0}'s Temple Grounds - GFMC Compound",
-        "Speed Booster": "{c3}World 2{c0}'s Phendrana Drifts - Research Lab Aether",
-        "Progressive Spin": "{c3}World 1{c0}'s Plantation - Plantation\n{c3}World 2{c0}'s Chozo Ruins - Sunchamber",
-        "Screw Attack": "{c3}World 8{c0}'s Cataris - Thermal Device Room North",
-        "Metroid DNA 1": "{c3}World 8{c0}'s Hanubia - Orange EMMI Introduction",
-        "Metroid DNA 2": "{c3}World 8{c0}'s Artaria - Corpius Arena",
-        "Metroid DNA 3": "{c3}World 8{c0}'s Ferenia - Escue Arena"
+        "Progressive Beam": "{c3}World 1{c0}'s Cataris - Central Unit Access\n{c3}World 1{c0}'s Ghavoran - Golzuna Tower\n{c3}World 2{c0}'s Cataris - Lava Button East Access",
+        "Progressive Charge Beam": "{c3}World 1{c0}'s Burenia - Burenia Hub to Dairon\n{c3}World 2{c0}'s Artaria - Melee Tutorial Room",
+        "Grapple Beam": "{c3}World 2{c0}'s Burenia - Gravity Suit Tower",
+        "Progressive Missile": "{c3}World 2{c0}'s Burenia - Transport to Artaria\n{c3}World 2{c0}'s Ferenia - Total Recharge Station",
+        "Storm Missile": "{c3}World 1{c0}'s Dairon - Teleport to Artaria",
+        "Phantom Cloak": "{c3}World 1{c0}'s Cataris - Above Z-57 Fight",
+        "Flash Shift": "{c3}World 2{c0}'s Artaria - Speed Hallway",
+        "Progressive Suit": "{c3}World 2{c0}'s Cataris - Teleport to Artaria (Red)\n{c3}World 2{c0}'s Cataris - Thermal Device Room North",
+        "Morph Ball": "{c3}World 1{c0}'s Artaria - Charge Beam Room",
+        "Progressive Bomb": "{c3}World 1{c0}'s Artaria - Energy Recharge Station South\n{c3}World 2{c0}'s Ghavoran - Pulse Radar Room",
+        "Power Bomb": "{c3}World 1{c0}'s Artaria - Charge Tutorial",
+        "Spider Magnet": "{c3}World 2{c0}'s Dairon - Freezer",
+        "Speed Booster": "{c3}World 1{c0}'s Cataris - Transport to Artaria",
+        "Progressive Spin": "{c3}World 2{c0}'s Artaria - Melee Tutorial Room\n{c3}World 2{c0}'s Dairon - Transport to Artaria",
+        "Screw Attack": "{c3}World 1{c0}'s Burenia - Burenia Hub to Dairon",
+        "Metroid DNA 1": "{c3}World 1{c0}'s Hanubia - Orange EMMI Introduction",
+        "Metroid DNA 2": "{c3}World 1{c0}'s Dairon - Central Unit Access",
+        "Metroid DNA 3": "{c3}World 1{c0}'s Ghavoran - Golzuna Arena"
     },
     "cosmetic_patches": {
         "config": {
@@ -4336,7 +4244,7 @@
         "remove_grapple_blocks_hanubia_shortcut": true,
         "remove_grapple_block_path_to_itorash": true,
         "default_x_released": false,
-        "nerf_power_bombs": true,
+        "nerf_power_bombs": false,
         "warp_to_start": true
     },
     "show_shields_on_minimap": true,
@@ -4372,7 +4280,7 @@
     "objective": {
         "required_artifacts": 3,
         "hints": [
-            "{c1}Metroid DNA 1{c0} is guarded by {c3}World 8{c0}'s {c2}E.M.M.I.-07PB{c0}.|{c1}Metroid DNA 2{c0} is guarded by {c3}World 8{c0}'s {c2}Corpius{c0}.|{c1}Metroid DNA 3{c0} is guarded by {c3}World 8{c0}'s {c2}Escue{c0}."
+            "{c1}Metroid DNA 1{c0} is guarded by {c3}World 1{c0}'s {c2}E.M.M.I.-07PB{c0}.|{c1}Metroid DNA 2{c0} is guarded by {c3}World 1{c0}'s {c2}E.M.M.I.-04SB{c0}.|{c1}Metroid DNA 3{c0} is guarded by {c3}World 1{c0}'s {c2}Golzuna{c0}."
         ]
     },
     "layout_uuid": "00000000-0000-1111-0000-000000000000"

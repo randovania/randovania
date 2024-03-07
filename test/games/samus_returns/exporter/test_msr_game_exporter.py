@@ -28,7 +28,9 @@ def test_export_game(test_files_dir, mocker, patch_data_name: str, tmp_path):
         "open_samus_returns_rando.patch_with_status_update", side_effect=validate_schema
     )
 
-    patch_data = test_files_dir.read_json("patcher_data", "samus_returns", f"{patch_data_name}.json")
+    patch_data = test_files_dir.read_json(
+        "patcher_data", "samus_returns", "samus_returns", patch_data_name, "world_1.json"
+    )
 
     exporter = MSRGameExporter()
     export_params = MSRGameExportParams(
