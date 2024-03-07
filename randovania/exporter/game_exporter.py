@@ -1,16 +1,10 @@
-from __future__ import annotations
-
 import dataclasses
-from typing import TYPE_CHECKING
+from pathlib import Path
 
 import sentry_sdk
 
 from randovania import monitoring
-
-if TYPE_CHECKING:
-    from pathlib import Path
-
-    from randovania.lib import status_update_lib
+from randovania.lib import status_update_lib
 
 
 @dataclasses.dataclass(frozen=True)
@@ -30,6 +24,12 @@ class GameExporter:
     def export_can_be_aborted(self) -> bool:
         """
         Checks if export_game can be aborted
+        """
+        raise NotImplementedError
+
+    def export_params_type(self) -> type[GameExportParams]:
+        """
+        Returns the type of the GameExportParams expected by this exporter.
         """
         raise NotImplementedError
 

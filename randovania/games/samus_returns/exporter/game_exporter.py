@@ -2,16 +2,13 @@ from __future__ import annotations
 
 import dataclasses
 import shutil
+from collections.abc import Callable
 from enum import Enum
-from typing import TYPE_CHECKING
+from pathlib import Path
 
 from randovania import monitoring
 from randovania.exporter.game_exporter import GameExporter, GameExportParams
 from randovania.lib import json_lib, status_update_lib
-
-if TYPE_CHECKING:
-    from collections.abc import Callable
-    from pathlib import Path
 
 
 class MSRModPlatform(Enum):
@@ -50,6 +47,12 @@ class MSRGameExporter(GameExporter):
         Checks if export_game can be aborted
         """
         return False
+
+    def export_params_type(self) -> type[GameExportParams]:
+        """
+        Returns the type of the GameExportParams expected by this exporter.
+        """
+        return MSRGameExportParams
 
     def _before_export(self) -> None:
         assert not self._busy
