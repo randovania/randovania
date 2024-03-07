@@ -67,7 +67,7 @@ game_data: game.GameData = game.GameData(
             "What patcher does Randovania use?",
             "Randovania supports the open source patcher MARS (Metroid Advance Randomizer System). "
             "This is a new patcher built from scratch and is unrelated to other Fusion Randomizers. "
-            "Any differences between vanilla or any other Randomizers are covered under the differences tab.",
+            "Any differences from the vanilla game are covered under the differences tab.",
         ),
         (
             "Which versions of Fusion are supported?",
