@@ -254,11 +254,12 @@ class MSRPatchDataFactory(PatchDataFactory):
             ("s020_area2", "LE_RandoDNA", 4, 9),
             ("s033_area3b", "LE_RandoDNA", 9, 15),
             ("s050_area5", "LE_RandoDNA", 15, 19),
-            ("s065_area6b", "LE_RandoDNA", 19, 25),
-            ("s070_area7", "LE_RandoDNA_001", 25, 28),
-            ("s070_area7", "LE_RandoDNA_002", 28, 31),
-            ("s090_area9", "LE_RandoDNA", 31, 34),
-            ("s100_area10", "LE_RandoDNA", 34, 39),
+            ("s065_area6b", "LE_RandoDNA", 19, 24),
+            ("s070_area7", "LE_RandoDNA_001", 24, 27),
+            ("s070_area7", "LE_RandoDNA_002", 27, 30),
+            ("s090_area9", "LE_RandoDNA", 30, 33),
+            ("s100_area10", "LE_RandoDNA", 33, 38),
+            ("s110_surfaceb", "LE_RandoDNA", 38, 39),
         ]
 
         for scenario, actor, start, end in actor_to_amount_map:
