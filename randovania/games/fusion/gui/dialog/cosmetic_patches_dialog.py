@@ -12,6 +12,7 @@ if TYPE_CHECKING:
     from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
 
 
+# TODO
 class FusionCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_FusionCosmeticPatchesDialog):
     _cosmetic_patches: FusionCosmeticPatches
 

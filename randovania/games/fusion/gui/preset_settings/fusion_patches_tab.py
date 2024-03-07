@@ -14,6 +14,7 @@ if TYPE_CHECKING:
     from randovania.layout.preset import Preset
 
 
+# TODO
 class PresetFusionPatches(PresetTab):
     def __init__(self, editor: PresetEditor, game_description: GameDescription, window_manager: WindowManager):
         super().__init__(editor, game_description, window_manager)

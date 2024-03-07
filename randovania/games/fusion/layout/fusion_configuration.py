@@ -6,6 +6,7 @@ from randovania.games.game import RandovaniaGame
 from randovania.layout.base.base_configuration import BaseConfiguration
 
 
+# TODO
 @dataclasses.dataclass(frozen=True)
 class FusionConfiguration(BaseConfiguration):
     # These fields aren't necessary for a new game: they're here to have example/test features
