@@ -71,9 +71,10 @@ async def test_on_database_world_selected():
 
     ctx = AsyncMock()
     ctx.response = MagicMock(spec=discord.InteractionResponse)
-    item._selected_values = [f"{RandovaniaGame.METROID_PRIME_CORRUPTION.value}_world_1"]
+    ctx.data = {"values": [f"{RandovaniaGame.METROID_PRIME_CORRUPTION.value}_world_1"]}
 
     # Run
+    item.refresh_state(ctx)
     await item.callback(ctx)
 
     # Assert
@@ -109,9 +110,10 @@ async def test_on_database_area_selected(tmp_path, echoes_game_description, mock
 
     ctx = AsyncMock()
     ctx.response = AsyncMock(spec=discord.InteractionResponse)
-    item._selected_values = ["area_1"]
+    ctx.data = {"values": ["area_1"]}
 
     # Run
+    item.refresh_state(ctx)
     await item.callback(ctx)
 
     # Assert
@@ -145,11 +147,12 @@ async def test_on_area_node_selection(echoes_game_description, mocker):
 
     ctx = AsyncMock()
     ctx.response = AsyncMock(spec=discord.InteractionResponse)
-    item._selected_values = [area.nodes[0].name, area.nodes[2].name]
+    ctx.data = {"values": [area.nodes[0].name, area.nodes[2].name]}
 
     original_response = ctx.original_response.return_value
 
     # Run
+    item.refresh_state(ctx)
     await item.callback(ctx)
 
     # Assert
