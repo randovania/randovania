@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
+from randovania.cli.commands import benchmark
 from randovania.cli.commands.new_game import add_create_databases, add_new_game_command
 from randovania.cli.commands.refresh_presets import add_refresh_presets_command
 from randovania.cli.commands.render_regions import render_regions_graph
@@ -26,3 +27,15 @@ def create_subparsers(sub_parsers):
             raise SystemExit(1)
 
     parser.set_defaults(func=check_command)
+
+    benchmark_parser = sub_parsers.add_parser(
+        "benchmark", help="Actions for benchmarking Randovania in a consistent way."
+    )
+    benchmark.add_commands(benchmark_parser.add_subparsers(dest="command"))
+
+    def bench_check_command(args):
+        if args.command is None:
+            benchmark_parser.print_help()
+            raise SystemExit(1)
+
+    benchmark_parser.set_defaults(func=bench_check_command)
