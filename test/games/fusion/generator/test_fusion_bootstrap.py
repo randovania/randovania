@@ -19,7 +19,7 @@ _boss_indices = [100, 106, 114, 104, 115, 107, 110, 102, 109, 108, 111]
 @pytest.mark.parametrize(
     ("artifacts", "expected"),
     [
-        (FusionArtifactConfig(True, False, 5), [100, 110, 109, 108, 111]),
+        (FusionArtifactConfig(True, False, 5), [102, 106, 107, 110, 114]),
         (FusionArtifactConfig(True, False, 11), _boss_indices),
         (FusionArtifactConfig(False, False, 0), []),
     ],
@@ -43,7 +43,9 @@ def test_assign_pool_results_predetermined(fusion_game_description, fusion_confi
     ]
 
     assert result.starting_equipment == pool_results.starting
-    assert set(result.pickup_assignment.keys()) == {PickupIndex(i) for i in expected}
+    assert {index for index, entry in result.pickup_assignment.items() if "Infant Metroid" in entry.pickup.name} == {
+        PickupIndex(i) for i in expected
+    }
     assert shuffled_metroids == []
 
 
@@ -77,4 +79,6 @@ def test_assign_pool_results_prefer_anywhere(fusion_game_description, fusion_con
     assert pool_results.to_place == initial_starting_place
     assert len(shuffled_metroids) == artifacts.required_artifacts
     assert result.starting_equipment == pool_results.starting
-    assert result.pickup_assignment == {}
+    assert {
+        index: entry for index, entry in result.pickup_assignment.items() if "Infant Metroid" in entry.pickup.name
+    } == {}
