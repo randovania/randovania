@@ -9,6 +9,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: Command line arguments for exporting games. These commands are intended for advanced uses only.
 
+### Metroid Dread
+
+#### Logic Database
+
+##### Elun
+
+- Changed: Releasing the X without Bombs or Cross Bombs now requires Knowledge (Beginner).
+
 ## [7.4.0] - 2024-03-??
 
 - Added: A warning will be shown when trying to generate a game where more items are in the pool than the maximum amount of items.
