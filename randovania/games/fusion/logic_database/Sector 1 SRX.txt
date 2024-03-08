@@ -1,0 +1,1677 @@
+----------------
+Entrance Hub
+Extra - map_name: Sector 10
+Extra - room_id: [0]
+> Door to Lava Lake Annex; Heals? False
+  * Layers: default
+  * L1 Hatch to Lava Lake Annex/Door to Entrance Hub
+  * Extra - door_idx: (1,)
+  > Door to Entrance Recharge Room
+      Trivial
+
+> Door to Entrance Recharge Room; Heals? False
+  * Layers: default
+  * L0 Hatch to Entrance Recharge Room/Door to Entrance Hub
+  * Extra - door_idx: (2,)
+  > Door to Lava Lake Annex
+      Trivial
+  > Door to Yameba Corridor
+      Trivial
+  > Door to Antechamber
+      Trivial
+
+> Door to Yameba Corridor; Heals? False
+  * Layers: default
+  * L0 Hatch to Yameba Corridor/Door to Entrance Hub
+  * Extra - door_idx: (3,)
+  > Door to Entrance Recharge Room
+      Trivial
+
+> Door to Antechamber; Heals? False
+  * Layers: default
+  * L2 Hatch to Antechamber/Door to Entrance Hub
+  * Extra - door_idx: (76,)
+  > Door to Entrance Recharge Room
+      Trivial
+
+----------------
+Entrance Save Room
+Extra - map_name: Sector 11
+Extra - room_id: [1]
+> Door to Entrance Recharge Room; Heals? False
+  * Layers: default
+  * L0 Hatch to Entrance Recharge Room/Door to Entrance Save Room
+  * Extra - door_idx: (4,)
+  > Door to Entrance Navigation Room
+      Trivial
+
+> Door to Entrance Navigation Room; Heals? False
+  * Layers: default
+  * L0 Hatch to Entrance Navigation Room/Door to Entrance Save Room
+  * Extra - door_idx: (5,)
+  > Door to Entrance Recharge Room
+      Trivial
+  > Save Station
+      Trivial
+
+> Save Station; Heals? False; Spawn Point
+  * Layers: default
+  * Extra - X: 9
+  * Extra - Y: 10
+  > Door to Entrance Navigation Room
+      Trivial
+
+----------------
+Entrance Navigation Room
+Extra - map_name: Sector 12
+Extra - room_id: [2]
+> Door to Entrance Save Room; Heals? False
+  * Layers: default
+  * Open Hatch to Entrance Save Room/Door to Entrance Navigation Room
+  * Extra - door_idx: (6,)
+  > Door to Elevator to Main Deck
+      Trivial
+
+> Door to Elevator to Main Deck; Heals? False
+  * Layers: default
+  * Open Hatch to Elevator to Main Deck/Door to Entrance Navigation Room
+  * Extra - door_idx: (87,)
+  > Door to Entrance Save Room
+      Trivial
+  > Navigation Terminal
+      Trivial
+
+> Navigation Terminal; Heals? False
+  * Layers: default
+  * Hint
+  * Extra - hint_name: Sector1Entrance
+  * Extra - location_precision: REGION_ONLY
+  * Extra - item_precision: PRECISE_CATEGORY
+  > Door to Elevator to Main Deck
+      Trivial
+
+----------------
+Yameba Corridor
+Extra - map_name: Sector 13
+Extra - room_id: [3]
+> Door to Entrance Hub; Heals? False
+  * Layers: default
+  * L0 Hatch to Entrance Hub/Door to Yameba Corridor
+  * Extra - door_idx: (9,)
+  > Door to Atmospheric Stabilizer Northwest
+      After Sector 1 Yameba Corridor Missile Geron Destroyed
+  > Event - Missile Geron
+      Any of the following:
+          Can Kill Missile Geron
+          Speed Booster and Knowledge (Beginner)
+
+> Door to Atmospheric Stabilizer Northwest; Heals? False
+  * Layers: default
+  * L0 Hatch to Atmospheric Stabilizer Northwest/Door to Yameba Corridor
+  * Extra - door_idx: (10,)
+  > Door to Entrance Hub
+      After Sector 1 Yameba Corridor Missile Geron Destroyed
+  > Event - Missile Geron
+      Can Kill Missile Geron
+
+> Event - Missile Geron; Heals? False
+  * Layers: default
+  * Event Sector 1 Yameba Corridor Missile Geron Destroyed
+  > Door to Entrance Hub
+      Trivial
+  > Door to Atmospheric Stabilizer Northwest
+      Trivial
+
+----------------
+Atmospheric Stabilizer Northwest
+Extra - map_name: Sector 14
+Extra - room_id: [4]
+> Door to Yameba Corridor; Heals? False
+  * Layers: default
+  * L0 Hatch to Yameba Corridor/Door to Atmospheric Stabilizer Northwest
+  * Extra - door_idx: (11,)
+  > Room Center
+      Trivial
+
+> Door to Hornoad Hole; Heals? False
+  * Layers: default
+  * L0 Hatch to Hornoad Hole/Door to Atmospheric Stabilizer Northwest
+  * Extra - door_idx: (12,)
+  > Room Center
+      Trivial
+
+> Event - Stabilizer 1 Online; Heals? False
+  * Layers: default
+  * Event Stabilizer 1 Restored
+  > Room Center
+      Trivial
+
+> Room Center; Heals? False
+  * Layers: default
+  > Door to Yameba Corridor
+      After Stabilizer 1 Restored
+  > Door to Hornoad Hole
+      After Stabilizer 1 Restored
+  > Event - Stabilizer 1 Online
+      Any of the following:
+          Charge Beam or Can Kill Missile Geron
+          All of the following:
+              # Kill with Shinespark from Yameba Corridor - https://www.youtube.com/watch?v=MIwjinIyBn4
+              Speed Booster and Knowledge (Beginner) and Disabled Door Lock Rando and Disabled Entrance Rando
+              Any of the following:
+                  # With HJ
+                  High Jump and Shinespark Tricks (Intermediate)
+                  # HJ-less
+                  Shinespark Tricks (Advanced)
+          # Farm X to kill with only 1 Missile
+          Missiles and Combat (Beginner)
+
+----------------
+Hornoad Hole
+Extra - map_name: Sector 15
+Extra - room_id: [5]
+> Pickup (Energy Tank); Heals? False
+  * Layers: default
+  * Pickup 13; Category? Major
+  * Extra - area: 1
+  * Extra - room: 5
+  * Extra - blockx: 27
+  * Extra - blocky: 10
+  > Door to Atmospheric Stabilizer Northwest
+      Morph Ball
+
+> Door to Atmospheric Stabilizer Northwest; Heals? False
+  * Layers: default
+  * L0 Hatch to Atmospheric Stabilizer Northwest/Door to Hornoad Hole
+  * Extra - door_idx: (13,)
+  > Pickup (Energy Tank)
+      Morph Ball
+  > Door to Shaft North
+      Trivial
+
+> Door to Shaft North; Heals? False
+  * Layers: default
+  * L0 Hatch to Shaft North/Door to Hornoad Hole
+  * Extra - door_idx: (14,)
+  > Door to Atmospheric Stabilizer Northwest
+      Trivial
+
+----------------
+Shaft North
+Extra - map_name: Sector 16
+Extra - room_id: [6]
+> Door to Hornoad Hole; Heals? False
+  * Layers: default
+  * L0 Hatch to Hornoad Hole/Door to Shaft North
+  * Extra - door_idx: (15,)
+  > Door to Atmospheric Stabilizer Northeast
+      Trivial
+  > Door to Moto Motorway
+      Trivial
+  > Door to Short Shaft
+      Trivial
+
+> Door to Atmospheric Stabilizer Northeast; Heals? False
+  * Layers: default
+  * L0 Hatch to Atmospheric Stabilizer Northeast/Door to Shaft North
+  * Extra - door_idx: (16,)
+  > Door to Hornoad Hole
+      Trivial
+
+> Door to Moto Motorway; Heals? False
+  * Layers: default
+  * L0 Hatch to Moto Motorway/Door to Shaft North
+  * Extra - door_idx: (17,)
+  > Door to Hornoad Hole
+      Trivial
+
+> Door to Short Shaft; Heals? False
+  * Layers: default
+  * L0 Hatch to Short Shaft/Door to Shaft North
+  * Extra - door_idx: (18,)
+  > Door to Hornoad Hole
+      Trivial
+
+----------------
+Moto Motorway
+Extra - map_name: Sector 17
+Extra - room_id: [7]
+> Door to Shaft North; Heals? False
+  * Layers: default
+  * L0 Hatch to Shaft North/Door to Moto Motorway
+  * Extra - door_idx: (19,)
+  > Door to Zebesian Tower
+      Trivial
+
+> Door to Zebesian Tower; Heals? False
+  * Layers: default
+  * L0 Hatch to Zebesian Tower/Door to Moto Motorway
+  * Extra - door_idx: (20,)
+  > Door to Shaft North
+      Trivial
+
+----------------
+Zebesian Tower
+Extra - map_name: Sector 18
+Extra - room_id: [8]
+> Door to Moto Motorway; Heals? False
+  * Layers: default
+  * L0 Hatch to Moto Motorway/Door to Zebesian Tower
+  * Extra - door_idx: (21,)
+  > Door to Sciser Puddle
+      Trivial
+  > Door to Lava Lake
+      Trivial
+
+> Door to Sciser Puddle; Heals? False
+  * Layers: default
+  * L0 Hatch to Sciser Puddle/Door to Zebesian Tower
+  * Extra - door_idx: (31,)
+  > Door to Moto Motorway
+      # Deal with the Pirates
+      Charge Beam or Missiles ≥ 10 or Screw Attack or Combat (Advanced) or Normal Damage ≥ 84 or Can Freeze Enemies or Can Use Power Bombs
+
+> Door to Lava Lake; Heals? False
+  * Layers: default
+  * L0 Hatch to Lava Lake/Door to Zebesian Tower
+  * Extra - door_idx: (44,)
+  > Door to Moto Motorway
+      Trivial
+
+----------------
+Atmospheric Stabilizer Central
+Extra - map_name: Sector 19
+Extra - room_id: [9]
+> Door to Charge Core Escape; Heals? False
+  * Layers: default
+  * L0 Hatch to Charge Core Escape/Door to Atmospheric Stabilizer Central
+  * Extra - door_idx: (23,)
+  > Room Center
+      Trivial
+
+> Door to Checkpoint; Heals? False
+  * Layers: default
+  * L0 Hatch to Checkpoint/Door to Atmospheric Stabilizer Central
+  * Extra - door_idx: (88,)
+  > Room Center
+      Trivial
+  > Event - Stabilizer 5 Online
+      # Kill with Shinespark from Checkpoint - https://discord.com/channels/119665192110915584/1205560315652349962/1212050030995836948
+      Speed Booster and Wave Beam and Knowledge (Beginner) and Shinespark Tricks (Intermediate) and Disabled Door Lock Rando and Disabled Entrance Rando
+
+> Room Center; Heals? False
+  * Layers: default
+  > Door to Charge Core Escape
+      After Stabilizer 5 Restored
+  > Door to Checkpoint
+      After Stabilizer 5 Restored
+  > Event - Stabilizer 5 Online
+      Any of the following:
+          # Charge Beam can kill the Geron because the beam cannon can be stuck inside the shell and fire past it without touching the shell
+          Charge Beam and Knowledge (Intermediate)
+          All of the following:
+              # Vanilla - Morph Ball to cross to the other side of the tunnel and use Missiles or Charge Beam
+              Morph Ball
+              Charge Beam or Missiles
+          All of the following:
+              Any of the following:
+                  # Missiles can be used to damage the Geron from the wrong side, but only by getting too close
+                  All of the following:
+                      Knowledge (Intermediate) and Normal Damage ≥ 30
+                      Any of the following:
+                          Damage Boosts (Intermediate) and 10 DMG Missiles
+                          Damage Boosts (Beginner) and 30 DMG Missiles
+              All of the following:
+                  # Alternate methods of defeating the Geron
+                  Knowledge (Beginner)
+                  Screw Attack or Can Use Power Bombs
+
+> Event - Stabilizer 5 Online; Heals? False
+  * Layers: default
+  * Event Stabilizer 5 Restored
+  > Room Center
+      Trivial
+
+----------------
+Charge Core Escape
+Extra - map_name: Sector 110
+Extra - room_id: [10]
+> Door to Atmospheric Stabilizer Central; Heals? False
+  * Layers: default
+  * L0 Hatch to Atmospheric Stabilizer Central/Door to Charge Core Escape
+  * Extra - door_idx: (24,)
+  > Door to Charge Core Arena
+      Trivial
+  > Other to Crab Rave
+      Morph Ball and After Sector 1 Charge Core Escape Missile Block Destroyed
+  > Event - Missile Block
+      Missiles
+
+> Door to Charge Core Arena; Heals? False
+  * Layers: default
+  * L0 Hatch to Charge Core Arena/Door to Charge Core Escape
+  * Extra - door_idx: (84,)
+  > Door to Atmospheric Stabilizer Central
+      Trivial
+
+> Other to Crab Rave; Heals? False
+  * Layers: default
+  * Tunnel to Crab Rave/Other to Charge Core Escape
+  * Extra - door_idx: (92,)
+  > Door to Atmospheric Stabilizer Central
+      Morph Ball and After Sector 1 Charge Core Escape Missile Block Destroyed
+
+> Event - Missile Block; Heals? False
+  * Layers: default
+  * Event Sector 1 Charge Core Escape Missile Block Destroyed
+  > Door to Atmospheric Stabilizer Central
+      Trivial
+  > Other to Crab Rave
+      Morph Ball
+
+----------------
+Entrance Recharge Room
+Extra - map_name: Sector 111
+Extra - room_id: [11]
+> Door to Entrance Hub; Heals? False
+  * Layers: default
+  * L0 Hatch to Entrance Hub/Door to Entrance Recharge Room
+  * Extra - door_idx: (78,)
+  > Door to Entrance Save Room
+      Trivial
+
+> Door to Entrance Save Room; Heals? False
+  * Layers: default
+  * L0 Hatch to Entrance Save Room/Door to Entrance Recharge Room
+  * Extra - door_idx: (90,)
+  > Door to Entrance Hub
+      Trivial
+  > Recharge Terminal
+      Trivial
+
+> Recharge Terminal; Heals? True
+  * Layers: default
+  > Door to Entrance Save Room
+      Trivial
+
+----------------
+Moto Manor
+Extra - map_name: Sector 112
+Extra - room_id: [12]
+> Door to Atmospheric Stabilizer Southwest; Heals? False
+  * Layers: default
+  * L0 Hatch to Atmospheric Stabilizer Southwest/Door to Moto Manor
+  * Extra - door_idx: (27,)
+  > Door to Screw Shaft
+      Trivial
+
+> Door to Screw Shaft; Heals? False
+  * Layers: default
+  * L0 Hatch to Screw Shaft/Door to Moto Manor
+  * Extra - door_idx: (28,)
+  > Door to Atmospheric Stabilizer Southwest
+      Trivial
+
+----------------
+Atmospheric Stabilizer Southwest
+Extra - map_name: Sector 113
+Extra - room_id: [13]
+> Door to Moto Manor; Heals? False
+  * Layers: default
+  * L0 Hatch to Moto Manor/Door to Atmospheric Stabilizer Southwest
+  * Extra - door_idx: (29,)
+  > Room Center
+      Trivial
+
+> Door to Sciser Puddle; Heals? False
+  * Layers: default
+  * L0 Hatch to Sciser Puddle/Door to Atmospheric Stabilizer Southwest
+  * Extra - door_idx: (30,)
+  > Room Center
+      Trivial
+
+> Room Center; Heals? False
+  * Layers: default
+  > Door to Moto Manor
+      After Stabilizer 3 Restored
+  > Door to Sciser Puddle
+      After Stabilizer 3 Restored
+  > Event - Stabilizer 3 Online
+      Any of the following:
+          Charge Beam or Can Kill Missile Geron
+          # Farm X with 1 Missile
+          Missiles and Combat (Beginner)
+
+> Event - Stabilizer 3 Online; Heals? False
+  * Layers: default
+  * Event Stabilizer 3 Restored
+  > Room Center
+      Trivial
+
+----------------
+Checkpoint
+Extra - map_name: Sector 114
+Extra - room_id: [14]
+> Door to Short Shaft; Heals? False
+  * Layers: default
+  * L0 Hatch to Short Shaft/Door to Checkpoint
+  * Extra - door_idx: (22,)
+  > Door to Atmospheric Stabilizer Central
+      Wave Beam
+
+> Door to Atmospheric Stabilizer Central; Heals? False
+  * Layers: default
+  * L0 Hatch to Atmospheric Stabilizer Central/Door to Checkpoint
+  * Extra - door_idx: (89,)
+  > Door to Short Shaft
+      Trivial
+
+----------------
+Atmospheric Stabilizer Southeast
+Extra - map_name: Sector 115
+Extra - room_id: [15]
+> Door to Sciser Storage; Heals? False
+  * Layers: default
+  * L0 Hatch to Sciser Storage/Door to Atmospheric Stabilizer Southeast
+  * Extra - door_idx: (32,)
+  > Room Center
+      Trivial
+
+> Door to Screw Shaft; Heals? False
+  * Layers: default
+  * L0 Hatch to Screw Shaft/Door to Atmospheric Stabilizer Southeast
+  * Extra - door_idx: (33,)
+  > Room Center
+      Trivial
+
+> Door to South Shaft; Heals? False
+  * Layers: default
+  * L0 Hatch to South Shaft/Door to Atmospheric Stabilizer Southeast
+  * Extra - door_idx: (75,)
+  > Room Center
+      Trivial
+
+> Room Center; Heals? False
+  * Layers: default
+  > Door to Sciser Storage
+      After Stabilizer 4 Restored
+  > Door to Screw Shaft
+      After Stabilizer 4 Restored
+  > Door to South Shaft
+      After Stabilizer 4 Restored
+  > Event - Stabilizer 4 Online
+      Any of the following:
+          Charge Beam or Missiles ≥ 5
+          All of the following:
+              # Shinespark from Screw Shaft - https://youtu.be/IP4zjb-1kP4
+              Speed Booster and Knowledge (Beginner) and Shinespark Tricks (Advanced) and Disabled Door Lock Rando
+              Any of the following:
+                  Wall Jump (Advanced) or Can Climb High Jump Wall
+                  # Possible without wall jumps or jump upgrades - https://youtu.be/WsY4pSmBAyo
+                  Shinespark Tricks (Expert)
+          # Farm X to kill with only 1 Missile
+          Missiles and Combat (Beginner)
+          All of the following:
+              Screw Attack and Knowledge (Beginner)
+              Can Climb High Jump Wall or Can Single Walljump
+
+> Event - Stabilizer 4 Online; Heals? False
+  * Layers: default
+  * Event Stabilizer 4 Restored
+  > Room Center
+      Trivial
+
+----------------
+Screw Shaft
+Extra - map_name: Sector 116
+Extra - room_id: [16]
+> Door to Atmospheric Stabilizer Southeast; Heals? False
+  * Layers: default
+  * L0 Hatch to Atmospheric Stabilizer Southeast/Door to Screw Shaft
+  * Extra - door_idx: (34,)
+  > Door to Moto Manor
+      Trivial
+
+> Door to Tourian Entrance; Heals? False
+  * Layers: default
+  * L0 Hatch to Tourian Entrance/Door to Screw Shaft
+  * Extra - door_idx: (35,)
+  > Door to Moto Manor
+      All of the following:
+          Screw Attack
+          Any of the following:
+              # Get up
+              Space Jump
+              All of the following:
+                  # Jump on frozen Space Pirates TODO: someone please get a video of this. Also, how much harder is this with Diffusion, worth splitting out from template?
+                  Can Freeze Enemies
+                  Any of the following:
+                      # HJ method. Some RNG involved due to pirates moving.
+                      High Jump and Stand On Frozen Enemies (Advanced)
+                      # Walljump method. Heavy RNG involved due to pirates jumping
+                      Stand On Frozen Enemies (Hypermode) and Wall Jump (Beginner)
+
+> Door to Moto Manor; Heals? False
+  * Layers: default
+  * L0 Hatch to Moto Manor/Door to Screw Shaft
+  * Extra - door_idx: (94,)
+  > Door to Atmospheric Stabilizer Southeast
+      Trivial
+  > Door to Tourian Entrance
+      Screw Attack
+
+----------------
+Lava Lake
+Extra - map_name: Sector 117
+Extra - room_id: [17]
+> Pickup (Missile Tank on Cliffside); Heals? False
+  * Layers: default
+  * Pickup 14; Category? Minor
+  * Extra - area: 1
+  * Extra - room: 17
+  * Extra - blockx: 8
+  * Extra - blocky: 6
+  > Door to Lava Lake Annex
+      Any of the following:
+          Gravity Suit and Varia Suit
+          Damage Runs (Intermediate) and Lava Damage ≥ 70
+  > Door to Zebesian Tower
+      Any of the following:
+          Space Jump
+          Gravity Suit and Varia Suit
+          Damage Runs (Intermediate) and Lava Damage ≥ 100
+
+> Pickup (Missile Tank in Lava); Heals? False
+  * Layers: default
+  * Pickup 16; Category? Minor
+  * Extra - area: 1
+  * Extra - room: 17
+  * Extra - blockx: 44
+  * Extra - blocky: 19
+  > Door to Zebesian Tower
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Gravity Suit and Varia Suit
+              Damage Runs (Intermediate) and Lava Damage ≥ 100
+
+> Door to Lava Lake Annex; Heals? False
+  * Layers: default
+  * L2 Hatch to Lava Lake Annex/Door to Lava Lake
+  * Extra - door_idx: (36,)
+  > Door to Zebesian Tower
+      Any of the following:
+          Gravity Suit and Varia Suit
+          Damage Runs (Intermediate) and Lava Damage ≥ 150
+
+> Door to Zebesian Tower; Heals? False
+  * Layers: default
+  * L0 Hatch to Zebesian Tower/Door to Lava Lake
+  * Extra - door_idx: (37,)
+  > Pickup (Missile Tank on Cliffside)
+      Any of the following:
+          Space Jump
+          # Shinespark across from Moto Motorway - https://www.youtube.com/watch?v=HyXBjdbLfDs
+          Speed Booster and Shinespark Tricks (Beginner) and Disabled Door Lock Rando and Disabled Entrance Rando
+  > Pickup (Missile Tank in Lava)
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Gravity Suit and Varia Suit
+              Damage Runs (Intermediate) and Lava Damage ≥ 100
+  > Door to Lava Lake Annex
+      Any of the following:
+          Gravity Suit and Varia Suit
+          Damage Runs (Intermediate) and Lava Damage ≥ 150
+  > Pickup (Missile Tank on Platform)
+      Trivial
+
+> Pickup (Missile Tank on Platform); Heals? False
+  * Layers: default
+  * Pickup 101; Category? Minor
+  * Extra - area: 1
+  * Extra - room: 17
+  * Extra - blockx: 25
+  * Extra - blocky: 8
+  > Door to Zebesian Tower
+      Trivial
+
+----------------
+Tourian Shaft East
+Extra - map_name: Sector 118
+Extra - room_id: [18]
+> Door to Tourian Central Checkpoint; Heals? False
+  * Layers: default
+  * L0 Hatch to Tourian Central Checkpoint/Door to Tourian Shaft East
+  * Extra - door_idx: (38,)
+  > Door to Tourian Entrance
+      Morph Ball and Screw Attack
+
+> Door to Tourian Entrance; Heals? False
+  * Layers: default
+  * L0 Hatch to Tourian Entrance/Door to Tourian Shaft East
+  * Extra - door_idx: (39,)
+  > Door to Tourian Central Checkpoint
+      All of the following:
+          Morph Ball and Screw Attack
+          Space Jump or Wall Jump (Beginner)
+
+----------------
+Tourian Save Room East
+Extra - map_name: Sector 119
+Extra - room_id: [19]
+> Door to Tourian Central Hub; Heals? False
+  * Layers: default
+  * L0 Hatch to Tourian Central Hub/Door to Tourian Save Room East
+  * Extra - door_idx: (40,)
+  > Save Station
+      Trivial
+
+> Save Station; Heals? False; Spawn Point
+  * Layers: default
+  * Extra - X: 10
+  * Extra - Y: 10
+  > Door to Tourian Central Hub
+      Trivial
+
+----------------
+Lava Lake Annex
+Extra - map_name: Sector 120
+Extra - room_id: [20]
+> Door to Entrance Hub; Heals? False
+  * Layers: default
+  * L1 Hatch to Entrance Hub/Door to Lava Lake Annex
+  * Extra - door_idx: (42,)
+  > Door to Lava Lake
+      Any of the following:
+          Gravity Suit and Varia Suit
+          Damage Runs (Intermediate) and Lava Damage ≥ 25
+  > Door to Connection to Sector 3 (PYR)
+      Morph Ball and Screw Attack
+
+> Door to Lava Lake; Heals? False
+  * Layers: default
+  * L2 Hatch to Lava Lake/Door to Lava Lake Annex
+  * Extra - door_idx: (43,)
+  > Door to Entrance Hub
+      Any of the following:
+          Gravity Suit and Varia Suit
+          Damage Runs (Intermediate) and Lava Damage ≥ 50
+
+> Door to Connection to Sector 3 (PYR); Heals? False
+  * Layers: default
+  * L0 Hatch to Connection to Sector 3 (PYR)/Door to Lava Lake Annex
+  * Extra - door_idx: (106,)
+  > Door to Entrance Hub
+      Morph Ball and Screw Attack
+
+----------------
+Tourian Central Hub
+Extra - map_name: Sector 121
+Extra - room_id: [21]
+> Door to Gold Pirate Crossing; Heals? False
+  * Layers: default
+  * Open Hatch to Gold Pirate Crossing/Door to Tourian Central Hub
+  * Extra - door_idx: (45,)
+  > Left Ladder
+      Can Use Any Bombs
+
+> Door to Tourian Central Checkpoint; Heals? False
+  * Layers: default
+  * L0 Hatch to Tourian Central Checkpoint/Door to Tourian Central Hub
+  * Extra - door_idx: (46,)
+  > Left Ladder
+      All of the following:
+          Morph Ball
+          Any of the following:
+              # Destroy Missile Blocks
+              Missiles ≥ 3
+              Diffusion Missile Data and Missiles
+
+> Door to Ripper Maze Access; Heals? False
+  * Layers: default
+  * L0 Hatch to Ripper Maze Access/Door to Tourian Central Hub
+  * Extra - door_idx: (47,)
+  > Door to Tourian Save Room East
+      Trivial
+  > Other to Animorphs
+      Trivial
+  > Left Ladder
+      Any of the following:
+          Space Jump or Wall Jump (Intermediate)
+          High Jump and Wall Jump (Beginner)
+
+> Door to Tourian Save Room East; Heals? False
+  * Layers: default
+  * L0 Hatch to Tourian Save Room East/Door to Tourian Central Hub
+  * Extra - door_idx: (95,)
+  > Door to Ripper Maze Access
+      Trivial
+
+> Other to Animorphs; Heals? False
+  * Layers: default
+  * Open Passage to Animorphs/Other to Tourian Central Hub
+  * Extra - door_idx: (110,)
+  > Door to Ripper Maze Access
+      Trivial
+
+> Left Ladder; Heals? False
+  * Layers: default
+  > Door to Gold Pirate Crossing
+      Can Use Any Bombs
+  > Door to Tourian Central Checkpoint
+      All of the following:
+          Morph Ball
+          Any of the following:
+              # Destroy Missile Blocks
+              Missiles ≥ 3
+              Diffusion Missile Data and Missiles
+  > Door to Ripper Maze Access
+      Trivial
+
+----------------
+Gold Pirate Crossing
+Extra - map_name: Sector 122
+Extra - room_id: [22]
+> Door to Tourian Central Hub; Heals? False
+  * Layers: default
+  * Open Hatch to Tourian Central Hub/Door to Gold Pirate Crossing
+  * Extra - door_idx: (48,)
+  > Door to Tourian Hub West
+      All of the following:
+          Any of the following:
+              # Kill Genesis (60 HP)
+              Wave Beam
+              # Power Bombs do 50 damage
+              Power Bombs ≥ 2 and Can Use Power Bombs
+          Any of the following:
+              # Kill Gold Zebesians (135 HP x2)
+              Charge Beam or Screw Attack
+              Missiles ≥ 30 and 20 DMG Missiles
+              Missiles ≥ 10 and 45 DMG Missiles
+          # Get past Bomb Blocks
+          Can Use Any Bombs
+
+> Door to Tourian Hub West; Heals? False
+  * Layers: default
+  * L0 Hatch to Tourian Hub West/Door to Gold Pirate Crossing
+  * Extra - door_idx: (49,)
+  > Door to Tourian Central Hub
+      All of the following:
+          Any of the following:
+              # Kill Genesis (60 HP)
+              Wave Beam
+              # Power Bombs do 50 damage
+              Power Bombs ≥ 2 and Can Use Power Bombs
+          Any of the following:
+              # Kill Gold Zebesians (135 HP x2)
+              Charge Beam or Screw Attack
+              Missiles ≥ 30 and 20 DMG Missiles
+              Missiles ≥ 10 and 45 DMG Missiles
+          # Get past Bomb Blocks
+          Can Use Any Bombs
+
+----------------
+Tourian Hub West
+Extra - map_name: Sector 123
+Extra - room_id: [23]
+> Door to Gold Pirate Crossing; Heals? False
+  * Layers: default
+  * L0 Hatch to Gold Pirate Crossing/Door to Tourian Hub West
+  * Extra - door_idx: (50,)
+  > Door to Tourian Save Room West
+      Trivial
+  > Door to Ridley Arena Access
+      Trivial
+
+> Door to Tourian Save Room West; Heals? False
+  * Layers: default
+  * L0 Hatch to Tourian Save Room West/Door to Tourian Hub West
+  * Extra - door_idx: (51,)
+  > Door to Gold Pirate Crossing
+      Trivial
+
+> Door to Genesis Habitation; Heals? False
+  * Layers: default
+  * L0 Hatch to Genesis Habitation/Door to Tourian Hub West
+  * Extra - door_idx: (52,)
+  > Door to Ridley Arena Access
+      Trivial
+
+> Door to Ridley Arena Access; Heals? False
+  * Layers: default
+  * L0 Hatch to Ridley Arena Access/Door to Tourian Hub West
+  * Extra - door_idx: (53,)
+  > Door to Gold Pirate Crossing
+      Space Jump or Wall Jump (Beginner)
+  > Door to Genesis Habitation
+      Trivial
+
+----------------
+Tourian Save Room West
+Extra - map_name: Sector 124
+Extra - room_id: [24]
+> Door to Tourian Hub West; Heals? False
+  * Layers: default
+  * L0 Hatch to Tourian Hub West/Door to Tourian Save Room West
+  * Extra - door_idx: (54,)
+  > Save Station
+      Trivial
+
+> Save Station; Heals? False; Spawn Point
+  * Layers: default
+  * Extra - X: 8
+  * Extra - Y: 10
+  > Door to Tourian Hub West
+      Trivial
+
+----------------
+Genesis Habitation
+Extra - map_name: Sector 125
+Extra - room_id: [25]
+> Door to Tourian Hub West; Heals? False
+  * Layers: default
+  * L0 Hatch to Tourian Hub West/Door to Genesis Habitation
+  * Extra - door_idx: (55,)
+
+----------------
+Ridley Arena Access
+Extra - map_name: Sector 126
+Extra - room_id: [26]
+> Door to Tourian Hub West; Heals? False
+  * Layers: default
+  * L0 Hatch to Tourian Hub West/Door to Ridley Arena Access
+  * Extra - door_idx: (56,)
+  > Door to Ridley Arena
+      All of the following:
+          Can Kill Eye Door
+          Any of the following:
+              Screw Attack or Can Freeze Enemies
+              # DMG boost - TODO: this damage value is wrong, get proper values
+              Normal Damage ≥ 50
+
+> Door to Ridley Arena; Heals? False
+  * Layers: default
+  * L0 Hatch to Ridley Arena/Door to Ridley Arena Access
+  * Extra - door_idx: (57,)
+  > Door to Tourian Hub West
+      Any of the following:
+          Screw Attack or Can Freeze Enemies
+          # DMG Boost - TODO: this damage value is wrong, get proper values
+          Normal Damage ≥ 50
+
+----------------
+Ridley Arena
+Extra - map_name: Sector 127
+Extra - room_id: [27]
+> Door to Ridley Arena Access; Heals? False
+  * Layers: default
+  * L0 Hatch to Ridley Arena Access/Door to Ridley Arena
+  * Extra - door_idx: (58,)
+  > Arena
+      Trivial
+
+> Event - Neo-Ridley; Heals? False
+  * Layers: default
+  * Event Boss Ridley Deafeated
+  > Pickup (Screw Attack)
+      Trivial
+
+> Pickup (Screw Attack); Heals? False
+  * Layers: default
+  * Pickup 104; Category? Major
+  * Extra - area: 1
+  * Extra - room: 27
+  * Extra - source: Ridley
+  > Arena
+      Trivial
+
+> Arena; Heals? False
+  * Layers: default
+  > Door to Ridley Arena Access
+      All of the following:
+          After Boss Ridley Deafeated
+          Any of the following:
+              Space Jump
+              # Can leave with single wall jumping, but currently this is never in logic - https://youtu.be/trYxYGq7PMs
+              Wall Jump (Advanced) and Can Single Walljump
+  > Event - Neo-Ridley
+      All of the following:
+          Any of the following:
+              # Ridley Requirements
+              All of the following:
+                  Charge Beam
+                  Any of the following:
+                      Combat (Expert)
+                      All of the following:
+                          Wide Beam
+                          Plasma Beam or Combat (Advanced)
+              Missiles ≥ 150 and Combat (Beginner) and 45 DMG Missiles
+              Missiles ≥ 200 and Combat (Intermediate) and 30 DMG Missiles
+              Missiles ≥ 250 and Combat (Advanced) and 20 DMG Missiles
+          All of the following:
+              # Core-X Requirements
+              Missiles
+              Any of the following:
+                  Combat (Advanced) or 45 DMG Missiles
+                  Combat (Beginner) and 20 DMG Missiles
+          Any of the following:
+              # Health Requirements
+              Combat (Hypermode) or Normal Damage ≥ 1000
+              Combat (Beginner) and Normal Damage ≥ 800
+              Combat (Intermediate) and Normal Damage ≥ 600
+              Combat (Advanced) and Normal Damage ≥ 200
+              Combat (Expert) and Normal Damage ≥ 100
+          # Arena Requirements
+          Space Jump or Combat (Expert)
+
+----------------
+Tourian Central Checkpoint
+Extra - map_name: Sector 128
+Extra - room_id: [28]
+> Door to Tourian Shaft East; Heals? False
+  * Layers: default
+  * L0 Hatch to Tourian Shaft East/Door to Tourian Central Checkpoint
+  * Extra - door_idx: (41,)
+  > Door to Tourian Central Hub
+      Trivial
+
+> Door to Tourian Central Hub; Heals? False
+  * Layers: default
+  * L0 Hatch to Tourian Central Hub/Door to Tourian Central Checkpoint
+  * Extra - door_idx: (59,)
+  > Door to Tourian Shaft East
+      Wave Beam
+
+----------------
+Ripper Maze Access
+Extra - map_name: Sector 129
+Extra - room_id: [29]
+> Door to Tourian Central Hub; Heals? False
+  * Layers: default
+  * L0 Hatch to Tourian Central Hub/Door to Ripper Maze Access
+  * Extra - door_idx: (60,)
+  > Door to Ripper Maze
+      Trivial
+
+> Door to Ripper Maze; Heals? False
+  * Layers: default
+  * L0 Hatch to Ripper Maze/Door to Ripper Maze Access
+  * Extra - door_idx: (61,)
+  > Door to Tourian Central Hub
+      Trivial
+
+----------------
+Ripper Maze
+Extra - map_name: Sector 130
+Extra - room_id: [30]
+> Pickup (Hidden Energy Tank); Heals? False
+  * Layers: default
+  * Pickup 17; Category? Major
+  * Extra - area: 1
+  * Extra - room: 30
+  * Extra - blockx: 15
+  * Extra - blocky: 8
+  > Top of Shaft
+      Can Bounce in Ball
+
+> Door to Ripper Maze Access; Heals? False
+  * Layers: default
+  * L0 Hatch to Ripper Maze Access/Door to Ripper Maze
+  * Extra - door_idx: (62,)
+  > Top of Shaft
+      All of the following:
+          Charge Beam or Missiles ≥ 10 or Screw Attack or Combat (Intermediate) or Can Freeze Enemies
+          Any of the following:
+              Space Jump
+              Stand On Frozen Enemies (Beginner) and Wall Jump (Beginner) and Can Freeze Enemies
+
+> Door to Elevator to Restricted Zone; Heals? False
+  * Layers: default
+  * L0 Hatch to Elevator to Restricted Zone/Door to Ripper Maze
+  * Extra - door_idx: (63,)
+  > Top of Shaft
+      Wall Jump (Beginner) or Can Climb High Jump Wall
+
+> Top of Shaft; Heals? False
+  * Layers: default
+  > Pickup (Hidden Energy Tank)
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Diffusion Missile Data and Missiles
+              # Diagonal Missile shot at the third Missile Block when standing close to the wall can hit it (may not even have to freeze the enemy)
+              Missiles ≥ 3 and Knowledge (Beginner) and Stand On Frozen Enemies (Beginner) and Can Freeze Enemies
+  > Door to Ripper Maze Access
+      Charge Beam or Missiles ≥ 10 or Screw Attack or Combat (Intermediate) or Can Freeze Enemies
+  > Door to Elevator to Restricted Zone
+      Trivial
+
+----------------
+Elevator to Restricted Zone
+Extra - map_name: Sector 131
+Extra - room_id: [31]
+> Door to Ripper Maze; Heals? False
+  * Layers: default
+  * L0 Hatch to Ripper Maze/Door to Elevator to Restricted Zone
+  * Extra - door_idx: (64,)
+  > Elevator to Elevator to Sector 1 (TRN)
+      Trivial
+
+> Elevator to Elevator to Sector 1 (TRN); Heals? False
+  * Layers: default
+  * Elevator to Elevator to Sector 1 (TRN)/Elevator to Elevator to Restricted Zone
+  * Extra - door_idx: (65,)
+  > Door to Ripper Maze
+      Trivial
+
+----------------
+Atmospheric Stabilizer Northeast
+Extra - map_name: Sector 132
+Extra - room_id: [32]
+> Door to Shaft North; Heals? False
+  * Layers: default
+  * L0 Hatch to Shaft North/Door to Atmospheric Stabilizer Northeast
+  * Extra - door_idx: (66,)
+  > Room Center
+      Trivial
+
+> Room Center; Heals? False
+  * Layers: default
+  > Door to Shaft North
+      After Stabilizer 2 Restored
+  > Event - Stabilizer 2 Online
+      Any of the following:
+          Charge Beam or Can Kill Missile Geron
+          All of the following:
+              # Shinespark from Moto Motorway - https://youtu.be/uppVC5hM3t0
+              Speed Booster and Knowledge (Beginner) and Disabled Door Lock Rando and Disabled Entrance Rando
+              Any of the following:
+                  # HJ-less
+                  Shinespark Tricks (Expert)
+                  # With HJ
+                  High Jump and Shinespark Tricks (Advanced)
+          # Farm X with 1 Missile
+          Missiles and Combat (Beginner)
+
+> Event - Stabilizer 2 Online; Heals? False
+  * Layers: default
+  * Event Stabilizer 2 Restored
+  > Room Center
+      Trivial
+
+----------------
+Short Shaft
+Extra - map_name: Sector 133
+Extra - room_id: [33]
+> Door to Shaft North; Heals? False
+  * Layers: default
+  * L0 Hatch to Shaft North/Door to Short Shaft
+  * Extra - door_idx: (67,)
+  > Door to Save Room East
+      Trivial
+  > Door to Checkpoint
+      Trivial
+
+> Door to Save Room East; Heals? False
+  * Layers: default
+  * L0 Hatch to Save Room East/Door to Short Shaft
+  * Extra - door_idx: (68,)
+  > Door to Shaft North
+      Trivial
+
+> Door to Checkpoint; Heals? False
+  * Layers: default
+  * L0 Hatch to Checkpoint/Door to Short Shaft
+  * Extra - door_idx: (69,)
+  > Door to Shaft North
+      Trivial
+
+> Door to Sciser Playground; Heals? False
+  * Layers: default
+  * L0 Hatch to Sciser Playground/Door to Short Shaft
+  * Extra - door_idx: (70,)
+  > Door to South Shaft
+      Wave Beam
+
+> Door to South Shaft; Heals? False
+  * Layers: default
+  * L0 Hatch to South Shaft/Door to Short Shaft
+  * Extra - door_idx: (71,)
+  > Door to Sciser Playground
+      Trivial
+
+----------------
+Save Room East
+Extra - map_name: Sector 134
+Extra - room_id: [34]
+> Door to Short Shaft; Heals? False
+  * Layers: default
+  * L0 Hatch to Short Shaft/Door to Save Room East
+  * Extra - door_idx: (74,)
+  > Other to Wall Jump Tutorial
+      All of the following:
+          Morph Ball and After Sector 1 Save Room East Shot Block Destroyed
+          Mid-Air Morph (Beginner) or Can Bounce in Ball
+  > Save Station
+      Trivial
+  > Event - Shot Block
+      Trivial
+
+> Other to Wall Jump Tutorial; Heals? False
+  * Layers: default
+  * Tunnel to Wall Jump Tutorial/Other to Save Room East
+  * Extra - door_idx: (108,)
+  > Door to Short Shaft
+      After Sector 1 Save Room East Shot Block Destroyed
+
+> Save Station; Heals? False; Spawn Point
+  * Layers: default
+  * Extra - X: 10
+  * Extra - Y: 10
+  > Door to Short Shaft
+      Trivial
+
+> Event - Shot Block; Heals? False
+  * Layers: default
+  * Event Sector 1 Save Room East Shot Block Destroyed
+  > Door to Short Shaft
+      Trivial
+  > Other to Wall Jump Tutorial
+      Mid-Air Morph (Beginner) or Can Bounce in Ball
+
+----------------
+South Shaft
+Extra - map_name: Sector 135
+Extra - room_id: [35]
+> Door to Short Shaft; Heals? False
+  * Layers: default
+  * L0 Hatch to Short Shaft/Door to South Shaft
+  * Extra - door_idx: (72,)
+  > Door to Atmospheric Stabilizer Southeast
+      Trivial
+
+> Door to Atmospheric Stabilizer Southeast; Heals? False
+  * Layers: default
+  * L0 Hatch to Atmospheric Stabilizer Southeast/Door to South Shaft
+  * Extra - door_idx: (73,)
+  > Door to Short Shaft
+      Any of the following:
+          # Deal with the Pirates
+          Charge Beam or Missiles ≥ 10 or Combat (Intermediate) or Can Freeze Enemies or Can Use Power Bombs
+          All of the following:
+              Screw Attack
+              # Screw Attack to defeat the Pirates can also (accidentally) destroy the platforms, unless cancelling spins
+              Space Jump or Movement (Beginner)
+          # Shinespark from Atmospheric Stabilizer Room
+          Speed Booster and Disabled Door Lock Rando and Disabled Entrance Rando
+
+----------------
+Tourian Entrance
+Extra - map_name: Sector 136
+Extra - room_id: [36]
+> Door to Screw Shaft; Heals? False
+  * Layers: default
+  * L0 Hatch to Screw Shaft/Door to Tourian Entrance
+  * Extra - door_idx: (7,)
+  > Door to Tourian Shaft East
+      All of the following:
+          Morph Ball and Screw Attack and Can Bounce in Ball
+          Any of the following:
+              # Get past Rippers - TODO: health for damage runs
+              Space Jump or Damage Runs (Intermediate)
+              Stand On Frozen Enemies (Advanced) and Can Freeze Enemies
+
+> Door to Tourian Shaft East; Heals? False
+  * Layers: default
+  * L0 Hatch to Tourian Shaft East/Door to Tourian Entrance
+  * Extra - door_idx: (8,)
+  > Door to Screw Shaft
+      All of the following:
+          Morph Ball and Screw Attack and Wave Beam
+          Any of the following:
+              # Get past Rippers - TODO: health for damage runs
+              Space Jump or Damage Runs (Intermediate)
+              Stand On Frozen Enemies (Advanced) and Can Freeze Enemies
+
+----------------
+Charge Core Arena Access
+Extra - map_name: Sector 137
+Extra - room_id: [37]
+> Door to Sciser Playground; Heals? False
+  * Layers: default
+  * L0 Hatch to Sciser Playground/Door to Charge Core Arena Access
+  * Extra - door_idx: (25,)
+  > Door to Hornoad Housing
+      Morph Ball or Can Break Single Bomb Blocks
+
+> Door to Hornoad Housing; Heals? False
+  * Layers: default
+  * L0 Hatch to Hornoad Housing/Door to Charge Core Arena Access
+  * Extra - door_idx: (77,)
+  > Door to Charge Core Arena
+      Can Kill Eye Door
+  > Other to Watering Hole
+      Any of the following:
+          Can Use Any Bombs
+          All of the following:
+              # Speed Boosting from Hornoad Housing
+              Speed Booster and Disabled Door Lock Rando and Disabled Entrance Rando
+              # Need Any Beam except Normal to kill the Hornoads fast enough
+              Have Any Beam Upgrade
+              # Knowledge because breaking Bomb Blocks with Speed Booster is a bit obscure
+              Knowledge (Intermediate)
+
+> Door to Charge Core Arena; Heals? False
+  * Layers: default
+  * L0 Hatch to Charge Core Arena/Door to Charge Core Arena Access
+  * Extra - door_idx: (83,)
+  > Door to Hornoad Housing
+      Trivial
+
+> Other to Watering Hole; Heals? False
+  * Layers: default
+  * Open Passage to Watering Hole/Other to Charge Core Arena Access
+  * Extra - door_idx: (100,)
+  > Door to Hornoad Housing
+      Can Use Any Bombs
+
+----------------
+Sciser Playground
+Extra - map_name: Sector 138
+Extra - room_id: [38]
+> Door to Charge Core Arena Access; Heals? False
+  * Layers: default
+  * L0 Hatch to Charge Core Arena Access/Door to Sciser Playground
+  * Extra - door_idx: (79,)
+  > Door to Short Shaft
+      Morph Ball
+
+> Door to Short Shaft; Heals? False
+  * Layers: default
+  * L0 Hatch to Short Shaft/Door to Sciser Playground
+  * Extra - door_idx: (80,)
+  > Door to Charge Core Arena Access
+      Morph Ball
+
+----------------
+Antechamber
+Extra - map_name: Sector 139
+Extra - room_id: [39]
+> Pickup (Power Bomb Tank); Heals? False
+  * Layers: default
+  * Pickup 18; Category? Minor
+  * Extra - area: 1
+  * Extra - room: 39
+  * Extra - blockx: 4
+  * Extra - blocky: 6
+  > Top of Room
+      Trivial
+
+> Door to Entrance Hub; Heals? False
+  * Layers: default
+  * L2 Hatch to Entrance Hub/Door to Antechamber
+  * Extra - door_idx: (81,)
+  > Top of Room
+      All of the following:
+          Screw Attack
+          Any of the following:
+              Space Jump
+              High Jump and Wall Jump (Beginner)
+
+> Door to Connection to Sector 2 (TRO); Heals? False
+  * Layers: default
+  * L0 Hatch to Connection to Sector 2 (TRO)/Door to Antechamber
+  * Extra - door_idx: (102,)
+  > Top of Room
+      Can Bounce in Ball
+
+> Top of Room; Heals? False
+  * Layers: default
+  > Pickup (Power Bomb Tank)
+      Trivial
+  > Door to Entrance Hub
+      Screw Attack
+  > Door to Connection to Sector 2 (TRO)
+      Morph Ball
+
+----------------
+Charge Core Arena
+Extra - map_name: Sector 140
+Extra - room_id: [40]
+> Pickup (Energy Tank); Heals? False
+  * Layers: default
+  * Pickup 19; Category? Major
+  * Extra - area: 1
+  * Extra - room: 40
+  * Extra - blockx: 12
+  * Extra - blocky: 8
+  > Arena
+      Trivial
+
+> Door to Charge Core Arena Access; Heals? False
+  * Layers: default
+  * L0 Hatch to Charge Core Arena Access/Door to Charge Core Arena
+  * Extra - door_idx: (82,)
+  > Arena
+      Trivial
+
+> Door to Charge Core Escape; Heals? False
+  * Layers: default
+  * L0 Hatch to Charge Core Escape/Door to Charge Core Arena
+  * Extra - door_idx: (85,)
+  > Arena
+      Trivial
+
+> Event - Charge Core-X; Heals? False
+  * Layers: default
+  * Event Boss Charge Core-X Defeated
+  > Pickup (Charge Beam)
+      Trivial
+
+> Pickup (Charge Beam); Heals? False
+  * Layers: default
+  * Pickup 114; Category? Major
+  * Extra - area: 1
+  * Extra - room: 40
+  * Extra - source: ChargeCoreX
+  > Arena
+      Trivial
+
+> Arena; Heals? False
+  * Layers: default
+  > Pickup (Energy Tank)
+      Any of the following:
+          All of the following:
+              # Vanilla Method - Shinespark from Hornoad Housing -> Access
+              Speed Booster and Disabled Door Lock Rando and Disabled Entrance Rando and Can Kill Eye Door
+              Any of the following:
+                  # Pre-Fight, with Hi-Jump
+                  High Jump and Shinespark Tricks (Intermediate)
+                  # After Fight, Trickless
+                  High Jump and After Boss Charge Core-X Defeated
+                  # No Hi-Jump
+                  Shinespark Tricks (Advanced)
+              # Any Beam except Normal required to defeat the Hornoads fast enough
+              Have Any Beam Upgrade
+          All of the following:
+              # Alternate - Shinespark from Central Stabilizer -> Escape (Morph Ball is not required for this): https://discord.com/channels/119665192110915584/1205560315652349962/1212051660436672573
+              Speed Booster and Disabled Door Lock Rando and Disabled Entrance Rando
+              # The timing is very tight for the last spark keep
+              Shinespark Tricks (Expert)
+              # High Jump-less is even harder
+              High Jump or Shinespark Tricks (Hypermode)
+  > Door to Charge Core Arena Access
+      After Boss Charge Core-X Defeated
+  > Door to Charge Core Escape
+      After Boss Charge Core-X Defeated
+  > Event - Charge Core-X
+      All of the following:
+          Missiles
+          Any of the following:
+              # Health requirements
+              Combat (Advanced) or Normal Damage ≥ 200
+              Combat (Beginner) and Normal Damage ≥ 125
+              Combat (Intermediate) and Normal Damage ≥ 75
+
+----------------
+Elevator to Main Deck
+Extra - map_name: Sector 141
+Extra - room_id: [41]
+> Elevator to Main Deck; Heals? False
+  * Layers: default
+  * Elevator to Elevator to Sector 1 (SRX)/Elevator to Sector 1 (SRX)
+  * Extra - door_idx: (0,)
+  > Door to Entrance Navigation Room
+      Trivial
+
+> Door to Entrance Navigation Room; Heals? False
+  * Layers: default
+  * L0 Hatch to Entrance Navigation Room/Door to Elevator to Main Deck
+  * Extra - door_idx: (86,)
+  > Elevator to Main Deck
+      Trivial
+
+----------------
+Central Save Room
+Extra - map_name: Sector 142
+Extra - room_id: [42]
+> Door to Hornoad Housing; Heals? False
+  * Layers: default
+  * L0 Hatch to Hornoad Housing/Door to Central Save Room
+  * Extra - door_idx: (91,)
+  > Save Station
+      Trivial
+
+> Save Station; Heals? False; Spawn Point
+  * Layers: default
+  * Extra - X: 8
+  * Extra - Y: 10
+  > Door to Hornoad Housing
+      Trivial
+
+----------------
+Crab Rave
+Extra - map_name: Sector 143
+Extra - room_id: [43]
+> Pickup (Missile Tank); Heals? False
+  * Layers: default
+  * Pickup 20; Category? Minor
+  * Extra - area: 1
+  * Extra - room: 43
+  * Extra - blockx: 13
+  * Extra - blocky: 11
+  > Other to Charge Core Escape
+      Trivial
+
+> Other to Charge Core Escape; Heals? False
+  * Layers: default
+  * Tunnel to Charge Core Escape/Other to Crab Rave
+  * Extra - door_idx: (93,)
+  > Pickup (Missile Tank)
+      Trivial
+
+----------------
+Sciser Storage
+Extra - map_name: Sector 144
+Extra - room_id: [44]
+> Pickup (Missile Tank); Heals? False
+  * Layers: default
+  * Pickup 21; Category? Minor
+  * Extra - area: 1
+  * Extra - room: 44
+  * Extra - blockx: 4
+  * Extra - blocky: 8
+  > Door to Atmospheric Stabilizer Southeast
+      Trivial
+
+> Door to Atmospheric Stabilizer Southeast; Heals? False
+  * Layers: default
+  * L0 Hatch to Atmospheric Stabilizer Southeast/Door to Sciser Storage
+  * Extra - door_idx: (26,)
+  > Pickup (Missile Tank)
+      Trivial
+
+----------------
+Sciser Puddle
+Extra - map_name: Sector 145
+Extra - room_id: [45]
+> Door to Zebesian Tower; Heals? False
+  * Layers: default
+  * L0 Hatch to Zebesian Tower/Door to Sciser Puddle
+  * Extra - door_idx: (96,)
+  > Door to Atmospheric Stabilizer Southwest
+      Trivial
+
+> Door to Atmospheric Stabilizer Southwest; Heals? False
+  * Layers: default
+  * L0 Hatch to Atmospheric Stabilizer Southwest/Door to Sciser Puddle
+  * Extra - door_idx: (97,)
+  > Door to Zebesian Tower
+      Trivial
+
+----------------
+Hornoad Housing
+Extra - map_name: Sector 146
+Extra - room_id: [46]
+> Door to Central Save Room; Heals? False
+  * Layers: default
+  * L0 Hatch to Central Save Room/Door to Hornoad Housing
+  * Extra - door_idx: (98,)
+  > Door to Charge Core Arena Access
+      Trivial
+
+> Door to Charge Core Arena Access; Heals? False
+  * Layers: default
+  * L0 Hatch to Charge Core Arena Access/Door to Hornoad Housing
+  * Extra - door_idx: (99,)
+  > Door to Central Save Room
+      Trivial
+
+----------------
+Watering Hole
+Extra - map_name: Sector 147
+Extra - room_id: [47]
+> Pickup (Hidden Power Bomb Tank); Heals? False
+  * Layers: default
+  * Pickup 22; Category? Minor
+  * Extra - area: 1
+  * Extra - room: 47
+  * Extra - blockx: 10
+  * Extra - blocky: 2
+  > Other to Charge Core Arena Access
+      Trivial
+
+> Other to Charge Core Arena Access; Heals? False
+  * Layers: default
+  * Open Passage to Charge Core Arena Access/Other to Watering Hole
+  * Extra - door_idx: (101,)
+  > Pickup (Hidden Power Bomb Tank)
+      All of the following:
+          Morph Ball and Speed Booster and Disabled Door Lock Rando and Disabled Entrance Rando and Can Bounce in Ball
+          # A way to execute the Shinespark
+          Gravity Suit or Shinespark Tricks (Expert)
+          Any of the following:
+              # A way to pass by the Sciser
+              Charge Beam or Missiles or Plasma Beam or Wave Beam or Shinespark Tricks (Advanced)
+              Gravity Suit and Screw Attack
+
+----------------
+Connection to Sector 2 (TRO)
+Extra - map_name: Sector 148
+Extra - room_id: [48]
+> Door to Antechamber; Heals? False
+  * Layers: default
+  * L0 Hatch to Antechamber/Door to Connection to Sector 2 (TRO)
+  * Extra - door_idx: (103,)
+  > Area Transition to Sector 2 (TRO)
+      Trivial
+
+> Area Transition to Sector 2 (TRO); Heals? False
+  * Layers: default
+  * Open Passage to Connection to Sector 1 (SRX)/Area Transition to Sector 1 (SRX)
+  * Extra - door_idx: (104,)
+  > Door to Antechamber
+      Trivial
+
+----------------
+Connection to Sector 3 (PYR)
+Extra - map_name: Sector 149
+Extra - room_id: [49]
+> Door to Lava Lake Annex; Heals? False
+  * Layers: default
+  * L0 Hatch to Lava Lake Annex/Door to Connection to Sector 3 (PYR)
+  * Extra - door_idx: (105,)
+  > Area Transition to Sector 3 (PYR)
+      Trivial
+
+> Area Transition to Sector 3 (PYR); Heals? False
+  * Layers: default
+  * Open Passage to Connection to Sector 1 (SRX)/Area Transition to Sector 1 (SRX)
+  * Extra - door_idx: (107,)
+  > Door to Lava Lake Annex
+      Trivial
+
+----------------
+Wall Jump Tutorial
+Extra - map_name: Sector 150
+Extra - room_id: [50]
+> Pickup (Missile Tank); Heals? False
+  * Layers: default
+  * Pickup 23; Category? Minor
+  * Extra - area: 1
+  * Extra - room: 50
+  * Extra - blockx: 6
+  * Extra - blocky: 8
+  > Other to Save Room East
+      Trivial
+
+> Other to Save Room East; Heals? False
+  * Layers: default
+  * Tunnel to Save Room East/Other to Wall Jump Tutorial
+  * Extra - door_idx: (109,)
+  > Pickup (Missile Tank)
+      Trivial
+
+----------------
+Animorphs
+Extra - map_name: Sector 151
+Extra - room_id: [51]
+> Other to Tourian Central Hub; Heals? False
+  * Layers: default
+  * Open Passage to Tourian Central Hub/Other to Animorphs
+  * Extra - door_idx: (111,)
+  > Room Center
+      Trivial
+
+> Door to Animorphs Cache; Heals? False
+  * Layers: default
+  * L0 Hatch to Animorphs Cache/Door to Animorphs
+  * Extra - door_idx: (112,)
+  > Room Center
+      Trivial
+
+> Room Center; Heals? False
+  * Layers: default
+  > Other to Tourian Central Hub
+      Any of the following:
+          Space Jump
+          High Jump and Wall Jump (Beginner)
+  > Door to Animorphs Cache
+      All of the following:
+          Any of the following:
+              # Yard (snail)
+              Charge Beam and Wave Beam
+              Power Bombs ≥ 2 and Can Use Power Bombs
+          Any of the following:
+              # Gerubus
+              Screw Attack
+              Missiles ≥ 15 and 10 DMG Missiles
+              Missiles ≥ 5 and 45 DMG Missiles
+          Any of the following:
+              # Golden Zebesian
+              Charge Beam or Screw Attack
+              Missiles ≥ 15 and 10 DMG Missiles
+              Missiles ≥ 5 and 45 DMG Missiles
+
+----------------
+Animorphs Cache
+Extra - map_name: Sector 152
+Extra - room_id: [52]
+> Pickup (Power Bomb Tank); Heals? False
+  * Layers: default
+  * Pickup 24; Category? Minor
+  * Extra - area: 1
+  * Extra - room: 51
+  * Extra - blockx: 13
+  * Extra - blocky: 7
+  > Door to Animorphs
+      Trivial
+
+> Door to Animorphs; Heals? False
+  * Layers: default
+  * L0 Hatch to Animorphs/Door to Animorphs Cache
+  * Extra - door_idx: (113,)
+  > Pickup (Power Bomb Tank)
+      Trivial
+

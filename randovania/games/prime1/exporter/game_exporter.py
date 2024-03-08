@@ -4,6 +4,7 @@ import copy
 import dataclasses
 import json
 import os
+from pathlib import Path
 from textwrap import wrap
 from typing import TYPE_CHECKING
 
@@ -17,8 +18,6 @@ from randovania.lib.status_update_lib import DynamicSplitProgressUpdate
 from randovania.patching.patchers.exceptions import UnableToExportError
 
 if TYPE_CHECKING:
-    from pathlib import Path
-
     from randovania.game_description.db.dock import DockType
     from randovania.game_description.db.region import Region
     from randovania.lib import status_update_lib
@@ -149,6 +148,12 @@ class PrimeGameExporter(GameExporter):
         Checks if patch_game can be aborted
         """
         return False
+
+    def export_params_type(self) -> type[GameExportParams]:
+        """
+        Returns the type of the GameExportParams expected by this exporter.
+        """
+        return PrimeGameExportParams
 
     @monitoring.trace_function
     def make_room_rando_maps(self, directory: Path, base_filename: str, level_data: dict):

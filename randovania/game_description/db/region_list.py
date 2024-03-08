@@ -8,6 +8,7 @@ import typing
 from randovania.game_description.db.node import Node, NodeContext, NodeIndex
 from randovania.game_description.db.node_provider import NodeProvider
 from randovania.game_description.db.pickup_node import PickupNode
+from randovania.game_description.db.teleporter_network_node import TeleporterNetworkNode
 
 if typing.TYPE_CHECKING:
     from collections.abc import Iterable, Iterator
@@ -41,6 +42,7 @@ class RegionList(NodeProvider):
     _patched_node_connections: dict[NodeIndex, dict[NodeIndex, Requirement]] | None
     _patches_dock_open_requirements: list[Requirement] | None
     _patches_dock_lock_requirements: list[Requirement | None] | None
+    _teleporter_network_cache: dict[str, list[TeleporterNetworkNode]]
 
     def __deepcopy__(self, memodict: dict) -> RegionList:
         return RegionList(
@@ -77,6 +79,7 @@ class RegionList(NodeProvider):
     def invalidate_node_cache(self) -> None:
         self._nodes = None
         self._identifier_to_node = {}
+        self._teleporter_network_cache = {}
 
     def _iterate_over_nodes(self) -> Iterator[Node]:
         for region in self.regions:
@@ -291,6 +294,17 @@ class RegionList(NodeProvider):
             return result
         assert weakness.lock is not None
         return weakness.lock.requirement
+
+    def nodes_in_network(self, network_name: str) -> list[TeleporterNetworkNode]:
+        network = self._teleporter_network_cache.get(network_name)
+        if network is None:
+            network = [
+                node
+                for node in self.iterate_nodes()
+                if isinstance(node, TeleporterNetworkNode) and node.network == network_name
+            ]
+            self._teleporter_network_cache[network_name] = network
+        return network
 
 
 def _calculate_nodes_to_area_region(regions: Iterable[Region]) -> tuple[dict[NodeIndex, Area], dict[NodeIndex, Region]]:

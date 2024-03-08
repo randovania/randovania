@@ -26,7 +26,7 @@ def _print_version(args):
 
 
 def _create_parser():
-    parser = argparse.ArgumentParser()
+    parser = argparse.ArgumentParser(prog="randovania")
 
     create_subparsers(parser.add_subparsers(dest="game"))
     parser.add_argument("--version", action="store_const", const=_print_version, dest="func")

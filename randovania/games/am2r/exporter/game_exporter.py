@@ -4,6 +4,7 @@ import dataclasses
 import multiprocessing
 import subprocess
 from concurrent.futures import ProcessPoolExecutor
+from pathlib import Path
 from typing import TYPE_CHECKING, Any
 
 import randovania
@@ -12,7 +13,6 @@ from randovania.patching.patchers.exceptions import UnableToExportError
 
 if TYPE_CHECKING:
     from multiprocessing.connection import Connection
-    from pathlib import Path
 
     from randovania.lib import status_update_lib
 
@@ -39,6 +39,12 @@ class AM2RGameExporter(GameExporter):
         Checks if export_game can be aborted
         """
         return False
+
+    def export_params_type(self) -> type[GameExportParams]:
+        """
+        Returns the type of the GameExportParams expected by this exporter.
+        """
+        return AM2RGameExportParams
 
     def _do_export_game(
         self,
