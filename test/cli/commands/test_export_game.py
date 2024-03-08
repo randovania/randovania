@@ -1,7 +1,6 @@
 from pathlib import Path
 from unittest.mock import MagicMock
 
-import pytest
 from caver.patcher import CSPlatform
 
 from randovania.cli.commands import export_game
@@ -9,15 +8,8 @@ from randovania.games.cave_story.exporter.game_exporter import CSGameExportParam
 from randovania.games.dread.exporter.game_exporter import DreadGameExportParams, DreadModPlatform
 from randovania.games.game import RandovaniaGame
 
-game_ignore_list = [
-    RandovaniaGame.FUSION,
-]
-
 
 def test_add_parser_arguments_for(game_enum: RandovaniaGame) -> None:
-    if game_enum in game_ignore_list:
-        pytest.skip(f"{game_enum} is ignored for this test.")
-
     parser = MagicMock()
 
     export_game._add_parser_arguments_for(parser, game_enum.exporter.export_params_type())
