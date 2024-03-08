@@ -10,6 +10,7 @@ if TYPE_CHECKING:
     from randovania.lib import status_update_lib
 
 
+# TODO, also be sure to remove the skipped test in test_export_game.py
 @dataclasses.dataclass(frozen=True)
 class FusionGameExportParams(GameExportParams):
     input_path: Path
