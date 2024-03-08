@@ -10,7 +10,7 @@ if TYPE_CHECKING:
     from randovania.lib import status_update_lib
 
 
-# TODO, also be sure to remove the skipped test in test_export_game.py
+# TODO
 @dataclasses.dataclass(frozen=True)
 class FusionGameExportParams(GameExportParams):
     input_path: Path
@@ -33,6 +33,12 @@ class FusionGameExporter(GameExporter):
         Checks if export_game can be aborted
         """
         return False
+
+    def export_params_type(self) -> type[GameExportParams]:
+        """
+        Returns the type of the GameExportParams expected by this exporter.
+        """
+        return FusionGameExportParams
 
     def _do_export_game(
         self,
