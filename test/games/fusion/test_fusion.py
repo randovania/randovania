@@ -40,7 +40,7 @@ def test_all_tricks_should_have_proper_requirements():
     rl = game.region_list
     db = game.resource_database
     expected_dict: dict[Any, Any] = {}
-    database_dict = {}
+    database_dict: dict[Any, Any] = {}
     for i in range(len(resource_list)):
         database_dict[resource_list[i]] = []
         expected_dict[resource_list[i]] = []

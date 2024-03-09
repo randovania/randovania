@@ -33,6 +33,7 @@ def test_preferred_bosses(
     tab = PresetFusionGoal(editor := PresetEditor(preset, options), fusion_game_description, MagicMock())
     skip_qtbot.addWidget(tab)
     tab.on_preset_changed(preset)
+    assert isinstance(editor.configuration, FusionConfiguration)
 
     assert tab.metroid_slider.isEnabled()
     assert tab.metroid_slider.value() > 0
