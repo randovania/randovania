@@ -226,7 +226,15 @@ the `prepare_virtual_env` scripts.
 
 Suggested IDE: [PyCharm Community](https://www.jetbrains.com/pycharm/download/)
 
-_*If using Visual Studio Code, make sure to set `"qtForPython.uic.liveExecution.enabled": false` when using the QT extension._
+## Visual Studio Code
+
+Clone this repository and open the folder in Visual Studio Code. It suggest several useful plugins for developing which you should download and install.
+
+If your python is setup properly, you can use the `Create venv with all exporters` task by pressing CTRL+SHIFT+P, type in `Task` to find + select `Tasks: Run task` and then select the task. It will create the venv with all requirements for you.
+
+There is also a task defined to run all tests. To run individual tests you can utilise the `Testing` section of Visual Studio Code. You can simply run or run + debug a test there.
+
+To start randovania you can press CTRL+F5. If you only press F5, randovania will start with a debugger. Be aware that starting with a debugger makes the application much slower.
 
 # Documentation
 
