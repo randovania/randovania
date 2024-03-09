@@ -205,6 +205,11 @@ def msr_game_description() -> GameDescription:
 
 
 @pytest.fixture(scope="session")
+def fusion_game_description() -> GameDescription:
+    return default_database.game_description_for(RandovaniaGame.FUSION)
+
+
+@pytest.fixture(scope="session")
 def randomizer_data() -> dict:
     return decode_randomizer_data()
 
