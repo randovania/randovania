@@ -21,9 +21,9 @@ def all_metroid_locations(game: GameDescription, config: FusionArtifactConfig) -
     locations = []
     for node in game.region_list.all_nodes:
         if isinstance(node, PickupNode):
-            name = node.pickup_index
+            index = node.pickup_index.index
             # Pickups guarded by bosses
-            if config.prefer_bosses and str(name) in _boss_items:
+            if config.prefer_bosses and index in _boss_indices:
                 locations.append(node)
 
     return locations
@@ -56,16 +56,4 @@ class FusionBootstrap(MetroidBootstrap):
         return super().assign_pool_results(rng, patches, pool_results)
 
 
-_boss_items = [
-    "PickupIndex 100",
-    "PickupIndex 106",
-    "PickupIndex 114",
-    "PickupIndex 104",
-    "PickupIndex 115",
-    "PickupIndex 107",
-    "PickupIndex 110",
-    "PickupIndex 102",
-    "PickupIndex 109",
-    "PickupIndex 108",
-    "PickupIndex 111",
-]
+_boss_indices = [100, 106, 114, 104, 115, 107, 110, 102, 109, 108, 111]
