@@ -14,9 +14,36 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Logic Database
 
+- Added: New trick, Cross Bomb Launch.
+
+##### Burenia
+
+- Added: Crossing the gap in Underneath Drogyga with Cross Bomb Launch (Advanced).
+- Added: Reaching the Missile Tank Pickup in Main Hub Tower Top using Cross Bomb Launch (Intermediate).
+- Changed: Using Cross Bombs to reach the item next to the fan in Burenia Hub to Dairon now Requires Cross Bomb Launch (Beginner) instead of Movement (Beginner).
+
+##### Cataris
+
+- Added: Reaching the Pickup in EMMI Zone Item Tunnel using Cross Bomb Launch (Advanced).
+
+##### Dairon
+
+- Added: Getting across the right gap in Early Grapple Room with Cross Bomb Launch (Beginner).
+
 ##### Elun
 
 - Changed: Releasing the X without Bombs or Cross Bombs now requires Knowledge (Beginner).
+- Changed: Getting through the fan in Fan Room using Cross Bombs now additionally requires Cross Bomb Launch (Beginner).
+
+##### Ferenia
+
+- Changed: Using Cross Bombs to get through the fan in Fan Room now additionally requires Cross Bomb Launch (Beginner).
+- Changed: Getting across the water in EMMI Zone Exit East with Cross Bombs now additionally requires Cross Bomb Launch (Advanced).
+
+##### Ghavoran
+
+- Added: Cross Bomb Launch (Advanced) to get to the Save Station Door in Golzuna Tower from the Missile Tank Pickup.
+- Changed: Using Cross Bomb to get the Missile Tank Pickup in Golzuna Tower now requires Cross Bomb Launch (Beginner).
 
 ## [7.4.0] - 2024-03-08
 
