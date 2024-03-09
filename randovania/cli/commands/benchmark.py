@@ -107,13 +107,28 @@ class Report:
     fixes: int = 0
 
 
+def print_report(header: str, reports: dict[RandovaniaGame, Report]) -> None:
+    print("{:>30} |{:>6} |{:>9} |{:>9} |{:>9} |{:>9}".format(header, "Fixes", "Failures", "Mean", "Stdev", "Median"))
+    for game, report in reports.items():
+        mean = 0
+        stdev = 0
+        median = 0
+        if report.times:
+            mean = statistics.mean(report.times)
+            stdev = statistics.stdev(report.times)
+            median = statistics.median(report.times)
+
+        name = game.long_name
+        print(f"{name:>30} |{report.fixes:> 6} |{report.failures:> 9} |{mean: 9.3f} |{stdev: 9.3f} |{median: 9.3f}")
+
+
 def compare_reports(
     parameters: list[GeneratorParameters], reference: list[float | None], results: list[float | None]
 ) -> None:
-    game_report: dict[RandovaniaGame, Report] = collections.defaultdict(Report)
+    difference_report: dict[RandovaniaGame, Report] = collections.defaultdict(Report)
 
     for param, reference_dt, result_dt in zip(parameters, reference, results, strict=True):
-        report = game_report[param.get_preset(0).game]
+        report = difference_report[param.get_preset(0).game]
         if result_dt is None:
             if reference_dt is None:
                 pass
@@ -125,16 +140,7 @@ def compare_reports(
         else:
             report.times.append(result_dt - reference_dt)
 
-    for game, report in game_report.items():
-        print(f"\n## Results for {game.long_name}:\n" f"Fixes: {report.fixes}\n" f"New Failures: {report.failures}")
-
-        if report.times:
-            print(
-                "> Time difference. Negative is faster.\n"
-                f"Mean: {statistics.mean(report.times):.3f} seconds\n"
-                f"stdev: {statistics.stdev(report.times):.3f} seconds\n"
-                f"Median: {statistics.median(report.times):.3f} seconds"
-            )
+    print_report("Difference", difference_report)
 
 
 def run_logic(args: argparse.Namespace) -> None:
@@ -180,16 +186,7 @@ def run_logic(args: argparse.Namespace) -> None:
         else:
             report.times.append(dt)
 
-    for game, report in game_report.items():
-        print(f"\n## Results for {game.long_name}:\n" f"Failures: {report.failures}")
-
-        if report.times:
-            print(
-                "> Time:\n"
-                f"Mean: {statistics.mean(report.times):.3f} seconds\n"
-                f"stdev: {statistics.stdev(report.times):.3f} seconds\n"
-                f"Median: {statistics.median(report.times):.3f} seconds"
-            )
+    print_report("Results", game_report)
 
 
 def repeat_logic(args: argparse.Namespace) -> None:
