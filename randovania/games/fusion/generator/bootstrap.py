@@ -17,7 +17,7 @@ if TYPE_CHECKING:
     from randovania.generator.pickup_pool import PoolResults
 
 
-def all_metroid_locations(game: GameDescription, config: FusionArtifactConfig):
+def all_metroid_locations(game: GameDescription, config: FusionArtifactConfig) -> list[PickupNode]:
     locations = []
     for node in game.region_list.all_nodes:
         if isinstance(node, PickupNode):

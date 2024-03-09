@@ -38,11 +38,11 @@ class PresetFusionGoal(PresetTab, Ui_PresetFusionGoal):
     def uses_patches_tab(cls) -> bool:
         return False
 
-    def _update_slider_max(self):
+    def _update_slider_max(self) -> None:
         self.metroid_slider.setMaximum(self.num_preferred_locations)
         self.metroid_slider.setEnabled(self.num_preferred_locations > 0)
 
-    def _edit_config(self, call: Callable[[FusionArtifactConfig], FusionArtifactConfig]):
+    def _edit_config(self, call: Callable[[FusionArtifactConfig], FusionArtifactConfig]) -> None:
         config = self._editor.configuration
         assert isinstance(config, FusionConfiguration)
 
@@ -79,22 +79,22 @@ class PresetFusionGoal(PresetTab, Ui_PresetFusionGoal):
         self._edit_config(edit)
         self._update_slider_max()
 
-    def _on_prefer_bosses(self, value: bool):
-        def edit(config: FusionArtifactConfig):
+    def _on_prefer_bosses(self, value: bool) -> None:
+        def edit(config: FusionArtifactConfig) -> FusionArtifactConfig:
             return dataclasses.replace(config, prefer_bosses=value)
 
         self._edit_config(edit)
         self._update_slider_max()
 
-    def _on_metroid_slider_changed(self):
+    def _on_metroid_slider_changed(self) -> None:
         self.metroid_slider_label.setText(f"{self.metroid_slider.value()} Infant Metroids")
 
-        def edit(config: FusionArtifactConfig):
+        def edit(config: FusionArtifactConfig) -> FusionArtifactConfig:
             return dataclasses.replace(config, required_artifacts=self.metroid_slider.value())
 
         self._edit_config(edit)
 
-    def on_preset_changed(self, preset: Preset):
+    def on_preset_changed(self, preset: Preset) -> None:
         assert isinstance(preset.configuration, FusionConfiguration)
         artifacts = preset.configuration.artifacts
         self.free_placement_radiobutton.setChecked(artifacts.prefer_anywhere)

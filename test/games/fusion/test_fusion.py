@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from typing import Any
+
 from randovania.game_description import default_database
 from randovania.game_description.requirements.requirement_template import RequirementTemplate
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
@@ -37,7 +39,7 @@ def test_all_tricks_should_have_proper_requirements():
     game = default_database.game_description_for(RandovaniaGame.FUSION)
     rl = game.region_list
     db = game.resource_database
-    expected_dict = {}
+    expected_dict: dict[Any, Any] = {}
     database_dict = {}
     for i in range(len(resource_list)):
         database_dict[resource_list[i]] = []
