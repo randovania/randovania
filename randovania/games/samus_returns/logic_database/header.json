@@ -1169,6 +1169,11 @@
                 "long_name": "Dodge Enemies",
                 "description": "Movement required to avoid fighting enemies in the way of Samus.",
                 "extra": {}
+            },
+            "HazardRun": {
+                "long_name": "Hazard Runs",
+                "description": "Purposefully tanking damage from hazards to bypass requirements. Hazards include Acid, Fleech Swarm, and Red Plants.",
+                "extra": {}
             }
         },
         "damage": {
@@ -1184,8 +1189,12 @@
                 "long_name": "Lava Damage",
                 "extra": {}
             },
-            "Acid": {
-                "long_name": "Acid Damage",
+            "Hazard": {
+                "long_name": "Hazard Damage",
+                "extra": {}
+            },
+            "FleechSwarm": {
+                "long_name": "Fleech Swarm Damage",
                 "extra": {}
             }
         },
@@ -4576,7 +4585,7 @@
                 ]
             },
             {
-                "name": "Acid",
+                "name": "Hazard",
                 "reductions": [
                     {
                         "name": "Varia",
@@ -4585,6 +4594,19 @@
                     {
                         "name": "Gravity",
                         "multiplier": 0.5
+                    }
+                ]
+            },
+            {
+                "name": "FleechSwarm",
+                "reductions": [
+                    {
+                        "name": "Varia",
+                        "multiplier": 0.75
+                    },
+                    {
+                        "name": "Gravity",
+                        "multiplier": 0.0
                     }
                 ]
             }
