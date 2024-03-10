@@ -41,7 +41,7 @@ class PresetFusionPatches(PresetTab, Ui_PresetFusionPatches):
         return True
 
     def _add_persist_option(self, check: QtWidgets.QCheckBox, attribute_name: str) -> None:
-        def persist(value: bool):
+        def persist(value: bool) -> None:
             with self._editor as editor:
                 editor.set_configuration_field(attribute_name, value)
 
