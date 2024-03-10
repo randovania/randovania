@@ -110,9 +110,9 @@ class Report:
 def print_report(header: str, reports: dict[RandovaniaGame, Report]) -> None:
     print("{:>30} |{:>6} |{:>9} |{:>9} |{:>9} |{:>9}".format(header, "Fixes", "Failures", "Mean", "Stdev", "Median"))
     for game, report in reports.items():
-        mean = 0
-        stdev = 0
-        median = 0
+        mean = 0.0
+        stdev = 0.0
+        median = 0.0
         if report.times:
             mean = statistics.mean(report.times)
             stdev = statistics.stdev(report.times)
