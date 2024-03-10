@@ -17,22 +17,12 @@
         {
             "label": "Build UI",
             "type": "shell",
-            "windows": {
-                "command": "${workspaceFolder}/venv/Scripts/Activate.ps1 ; python ${workspaceFolder}/setup.py build_ui"
-            },
-            "linux": {
-                "command": "${workspaceFolder}/venv/Scripts/activate ; python ${workspaceFolder}/setup.py build_ui"
-            }
+            "command": "${command:python.interpreterPath} ${workspaceFolder}/setup.py build_ui"
         },
         {
             "label": "Run all tests on all cores",
             "type": "shell",
-            "windows": {
-                "command": "${workspaceFolder}/venv/Scripts/Activate.ps1 ; python -m pytest -n auto ${workspaceFolder}/test"
-            },
-            "linux": {
-                "command": "${workspaceFolder}/venv/Scripts/activate ;  python -m pytest -n auto ${workspaceFolder}/test"
-            }
+            "command": "${command:python.interpreterPath} -m pytest -n auto ${workspaceFolder}/test"
         }
     ]
 }
