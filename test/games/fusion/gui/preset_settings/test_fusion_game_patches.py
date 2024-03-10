@@ -7,7 +7,7 @@ from unittest.mock import MagicMock
 from PySide6 import QtCore
 
 from randovania.game_description import default_database
-from randovania.games.fusion.gui.preset_settings.fusion_patches_tab import PresetFusionPatches
+from randovania.games.fusion.gui.preset_settings.fusion_patches_tab import _FIELDS, PresetFusionPatches
 from randovania.games.fusion.layout.fusion_configuration import FusionConfiguration
 from randovania.games.game import RandovaniaGame
 from randovania.interface_common.preset_editor import PresetEditor
@@ -24,11 +24,25 @@ def test_on_preset_changed(skip_qtbot, preset_manager):
     window = PresetFusionPatches(editor, default_database.game_description_for(game), MagicMock())
     skip_qtbot.addWidget(window)
 
-    # Run
+    # Run enabling all checkboxes
     window.on_preset_changed(editor.create_custom_preset_with())
-    skip_qtbot.mouseClick(window.instant_transitions_check, QtCore.Qt.MouseButton.LeftButton)
+    for f in _FIELDS:
+        checkbox = f + "_check"
+        skip_qtbot.mouseClick(getattr(window, checkbox), QtCore.Qt.MouseButton.LeftButton)
 
     # Assert
-    final_preset = editor.create_custom_preset_with()
-    assert isinstance(final_preset.configuration, FusionConfiguration)
-    assert final_preset.configuration.instant_transitions is True
+    all_enabled_preset = editor.create_custom_preset_with()
+    assert isinstance(all_enabled_preset.configuration, FusionConfiguration)
+    for f in _FIELDS:
+        assert getattr(all_enabled_preset.configuration, f) is True
+
+    # Run disabling all checkboxes
+    for f in _FIELDS:
+        checkbox = f + "_check"
+        skip_qtbot.mouseClick(getattr(window, checkbox), QtCore.Qt.MouseButton.LeftButton)
+
+    # Assert
+    all_disabled_preset = editor.create_custom_preset_with()
+    assert isinstance(all_disabled_preset.configuration, FusionConfiguration)
+    for f in _FIELDS:
+        assert getattr(all_disabled_preset.configuration, f) is False
