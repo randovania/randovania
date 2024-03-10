@@ -17,10 +17,9 @@ Extra - asset_id: collision_camera_001
               Phase Drift or After Area 5 (Tower Lobby) - Lobby Save Station Grapple Block
               Spider Boost (Intermediate) and Can Spider Boost
               All of the following:
-                  Bomb
-                  Any of the following:
-                      Phase Drift Skip (Hypermode)
-                      Space Jump and Phase Drift Skip (Expert)
+                  # https://youtu.be/QN5_-f6IIEs?t=20
+                  Bomb and Phase Drift Skip (Expert)
+                  Lightning Armor or Normal Damage ≥ 20
               Before Area 5 (Tower Lobby) - Lobby Save Station Grapple Block and Melee Clip (Beginner)
   > Tunnel to J-Shape Tunnel
       Lay Any Bomb
@@ -48,11 +47,12 @@ Extra - asset_id: collision_camera_001
           Any of the following:
               Phase Drift or After Area 5 (Tower Lobby) - Lobby Save Station Grapple Block
               All of the following:
-                  Bomb
-                  Any of the following:
-                      Phase Drift Skip (Hypermode)
-                      Space Jump and Phase Drift Skip (Expert)
-              Melee Clip (Advanced) and Out of Bounds Movement (Intermediate) and Fully Freeze Enemy
+                  # https://youtu.be/QN5_-f6IIEs?t=14
+                  Bomb and Phase Drift Skip (Expert)
+                  Lightning Armor or Normal Damage ≥ 20
+              # https://youtu.be/QN5_-f6IIEs
+              Ice Beam and Freeze Enemy with Melee (Intermediate) and Stand on Frozen Enemy (Beginner) and Melee Clip (Advanced) and Out of Bounds Movement (Intermediate)
+              # Boost from the Crumble blocks
               Spider Boost (Advanced) and Can Spider Boost
   > Dock to Phase Drift Chamber
       Morph Ball
@@ -65,12 +65,18 @@ Extra - asset_id: collision_camera_001
 
 > Dock to Phase Drift Chamber; Heals? False
   * Layers: default
-  * Open Passage to Phase Drift Chamber/Dock to Lobby Save Station
+  * Open Passage to Phase Drift Chamber/Dock to Lobby Save Station (Left)
 
 > Event - Grapple Block; Heals? False
   * Layers: default
   * Event Area 5 (Tower Lobby) - Lobby Save Station Grapple Block
   > Save Station
+      Trivial
+
+> Dock from Phase Drift Chamber; Heals? False
+  * Layers: default
+  * Blocked Passage to Phase Drift Chamber/Dock to Lobby Save Station (Right)
+  > Door to Meboid Millpond
       Trivial
 
 ----------------
@@ -84,39 +90,73 @@ Extra - asset_id: collision_camera_002
   * Extra - actor_name: LE_Platform_Elevator_FromArea06C_01
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: ST_FromArea06C_01
-  > Door to Lobby Teleporter West
+  > Door to Lobby Save Station
+      Lightning Armor or Phase Drift or Dodge Enemies (Advanced)
+  > Top of Room
       Any of the following:
+          # Deal with the top Wallfire
           Space Jump or Lay Power Bomb or Use Spider Ball
           All of the following:
-              High Jump Boots
-              Phase Drift or Shoot Beam Burst
-  > Door to Lobby Save Station
-      Lightning Armor or Phase Drift or Movement (Advanced)
+              Any of the following:
+                  # Jump from next to the Wallfire
+                  High Jump Boots
+                  Morph Ball and Unmorph Extend (Advanced)
+              Any of the following:
+                  Shoot Beam Burst
+                  Phase Drift and Dodge Enemies (Advanced)
 
 > Door to Lobby Teleporter West; Heals? False
   * Layers: default
   * Access Locked to Lobby Teleporter West/Door to Transport to Tower Interior East
   * Extra - actor_name: Door015
   * Extra - actor_type: doorpowerclosed
-  > Elevator to Area 5 - Tower Interior
-      Phase Drift or Space Jump or Defeat Non-Counterable Enemies or Use Spider Ball
   > Door to Lobby Save Station
-      Trivial
+      Lightning Armor or Phase Drift or Dodge Enemies (Advanced)
+  > Top of Room
+      Any of the following:
+          # Deal with the top Wallfire
+          Phase Drift or Space Jump or Defeat Non-Counterable Enemies or Use Spider Ball
+          # Land next to the Wallfire
+          Lightning Armor and Movement (Intermediate)
 
 > Door to Lobby Save Station; Heals? False
   * Layers: default
   * Power Beam Door to Lobby Save Station/Door to Transport to Tower Interior East
   * Extra - actor_name: Door016
   * Extra - actor_type: doorpowerpower
+  > Top of Room
+      Any of the following:
+          All of the following:
+              Any of the following:
+                  # Defeat the Wallfires
+                  Shoot Beam Burst
+                  Morph Ball and Power Beam ≥ 3
+              # Climb the room
+              Space Jump or Use Spider Ball
+          All of the following:
+              Space Jump
+              Any of the following:
+                  Phase Drift
+                  # Grab the ledges to avoid getting hit
+                  Dodge Enemies (Advanced) and Phase Drift Skip (Advanced)
+          All of the following:
+              # https://youtu.be/q5720PA4DrE?t=68
+              Mid-Air Morph (Advanced) and Single-wall Wall Jump (Expert)
+              Any of the following:
+                  # Avoiding the Wallfires
+                  Phase Drift and Dodge Enemies (Advanced)
+                  Dodge Enemies (Expert) and Phase Drift Skip (Hypermode)
+              Any of the following:
+                  # Climbing the room
+                  Use Spider Ball
+                  Diagonal Bomb Jump (Advanced) and Infinite Bomb Jump (Advanced) and Lay Bomb
+
+> Top of Room; Heals? False
+  * Layers: default
   > Elevator to Area 5 - Tower Interior
-      Any of the following:
-          Spider Boost (Intermediate) and Can Spider Boost
-          Phase Drift and Space Jump
+      Trivial
   > Door to Lobby Teleporter West
-      Any of the following:
-          Phase Drift and Space Jump
-          Spider Boost (Intermediate) and Can Spider Boost
-          Spider Ball and Infinite Bomb Jump (Advanced) and Movement (Expert) and Phase Drift Skip (Hypermode) and Lay Bomb
+      Trivial
 
 ----------------
 Transport to Areas 4 and 6
@@ -128,27 +168,36 @@ Extra - asset_id: collision_camera_004
   * Pickup 102; Category? Minor
   * Extra - actor_name: LE_Item_002
   * Extra - actor_type: item_supermissiletank
-  > Below Chozo Seal
-      Morph Ball and Damage Boost (Beginner)
-  > Above Center Tunnel
-      Spider Boost (Intermediate) and Can Spider Boost
-  > Ledge Under Left Pickup
+  > Ammo Recharge Station
       Screw Attack
+  > Chozo Seal
+      All of the following:
+          Morph Ball and Damage Boost (Beginner)
+          Lightning Armor or Normal Damage ≥ 35
+  > Above Center Tunnel
+      Spider Boost (Beginner) and Can Spider Boost
 
 > Ammo Recharge Station; Heals? False
   * Layers: default
   * Extra - actor_name: LE_Platform_AmmoRecharge_001
   * Extra - actor_type: weightactivatedplatform
-  > Below Chozo Seal
+  > Pickup (Super Missile Tank)
+      All of the following:
+          Morph Ball and Screw Attack
+          # Dealing with the crumble blocks
+          Phase Drift or Movement (Beginner)
+          Any of the following:
+              # Reaching the ledge
+              Single-wall Wall Jump (Beginner) or Climb Rooms Vertically (No High Jump)
+              # Freeze the Gullugg
+              Stand on Frozen Enemy (Beginner) and Wall Jump (Beginner) and Fully Freeze Enemy
+  > Chozo Seal
       Any of the following:
           Climb Rooms Vertically (No High Jump)
-          Stand on Frozen Enemy (Beginner) and Movement (Advanced) and Fully Freeze Enemy
+          # Freeze the Moto
+          High Jump Boots ≥ 3 and Freeze Enemy with Melee (Beginner) and Stand on Frozen Enemy (Intermediate)
   > Below Center Tunnel
       Morph Ball and After Area 5 (Tower Lobby) - Transport to Areas 4 and 6 Grapple Block Middle
-  > Ledge Under Left Pickup
-      Any of the following:
-          Single-wall Wall Jump (Beginner) or Climb Rooms Vertically (No High Jump)
-          Stand on Frozen Enemy (Beginner) and Fully Freeze Enemy
 
 > Chozo Seal; Heals? False
   * Layers: default
@@ -156,14 +205,22 @@ Extra - asset_id: collision_camera_004
   * Extra - actor_name: LE_ChozoUnlockAreaDNA
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: ST_ChozoUnlockAreaDNA_Checkpoint
+  > Ammo Recharge Station
+      Trivial
   > Elevator to Area 4 - Central Caves
       Any of the following:
           Super Jump (Intermediate) or Climb Rooms Vertically (High Jump)
           Morph Ball and Unmorph Extend (Beginner)
   > Save Station
       Trivial
-  > Below Chozo Seal
-      Trivial
+  > Pickup (Power Bomb Tank)
+      Baby Metroid and Lay Any Bomb
+  > Above Center Tunnel
+      Any of the following:
+          Lightning Armor
+          Hazard Runs (Beginner) and Hazard Damage ≥ 90
+  > Bottom of Right Shaft
+      Morph Ball
 
 > Elevator to Area 4 - Central Caves; Heals? False; Spawn Point; Default Node
   * Layers: default
@@ -192,13 +249,15 @@ Extra - asset_id: collision_camera_004
       Trivial
   > Dock to Lobby Passageway
       Trivial
+  > Tunnel to Lobby Passageway
+      Morph Ball
 
 > Pickup (Power Bomb Tank); Heals? False
   * Layers: default
   * Pickup 109; Category? Minor
   * Extra - actor_name: HiddenPowerup002
   * Extra - actor_type: item_powerbombtank
-  > Below Chozo Seal
+  > Chozo Seal
       Baby Metroid
   > Next to Top Grapple Block
       Morph Ball
@@ -212,30 +271,18 @@ Extra - asset_id: collision_camera_004
 > Tunnel to Lobby Passageway; Heals? False
   * Layers: default
   * Tunnel to Lobby Passageway/Tunnel to Transport to Areas 4 and 6
-  > Below Chozo Seal
-      Morph Ball
-
-> Below Chozo Seal; Heals? False
-  * Layers: default
-  > Chozo Seal
-      Trivial
-  > Pickup (Power Bomb Tank)
-      Baby Metroid and Lay Any Bomb
-  > Tunnel to Lobby Passageway
-      Morph Ball
-  > Above Center Tunnel
-      Lightning Armor
-  > Bottom of Right Shaft
+  > Save Station
       Morph Ball
 
 > Above Center Tunnel; Heals? False
   * Layers: default
   > Pickup (Super Missile Tank)
-      Spider Boost (Intermediate) and Can Spider Boost
-  > Below Chozo Seal
+      Spider Boost (Beginner) and Can Spider Boost
+  > Chozo Seal
       Any of the following:
           Lightning Armor
           Morph Ball and Screw Attack
+          Hazard Runs (Beginner) and Hazard Damage ≥ 90
   > Below Center Tunnel
       Screw Attack
   > Next to Top Grapple Block
@@ -270,22 +317,23 @@ Extra - asset_id: collision_camera_004
           Screw Attack
           Any of the following:
               High Jump Boots or Space Jump or Wall Jump (Intermediate)
+              # Freeze the Gullugg
               Stand on Frozen Enemy (Beginner) and Fully Freeze Enemy
   > Event - Grapple Block Middle
       Grapple Beam
   > Event - Grapple Block Bottom
       Grapple Beam and Super Missile and Lay Any Bomb
   > Bottom of Right Shaft
-      Climb Rooms Vertically (High Jump)
+      Any of the following:
+          Climb Rooms Vertically (High Jump)
+          Morph Ball and Super Jump (Intermediate) and Unmorph Extend (Beginner)
 
 > Bottom of Right Shaft; Heals? False
   * Layers: default
+  > Chozo Seal
+      Morph Ball
   > Pickup (Power Bomb Tank)
-      All of the following:
-          After Area 5 (Tower Lobby) - Transport to Areas 4 and 6 Grapple Block Top
-          Any of the following:
-              Spider Boost (Intermediate) and Can Spider Boost
-              Infinite Bomb Jump (Expert) and Lay Bomb
+      Power Bomb ≥ 2 and After Area 5 (Tower Lobby) - Transport to Areas 4 and 6 Grapple Block Top and Spider Boost (Beginner) and Can Spider Boost
   > Below Center Tunnel
       Morph Ball
 
@@ -293,23 +341,15 @@ Extra - asset_id: collision_camera_004
   * Layers: default
   > Pickup (Power Bomb Tank)
       All of the following:
-          Before Area 5 (Tower Lobby) - Transport to Areas 4 and 6 Grapple Block Top and Infinite Bomb Jump (Intermediate) and Lay Bomb
-          Spring Ball or Mid-Air Morph (Beginner)
+          # https://youtu.be/Wa2r5d4QaeY
+          Infinite Bomb Jump (Advanced) and Lay Bomb
+          Spring Ball or Mid-Air Morph (Intermediate)
   > Above Center Tunnel
       Lay Power Bomb
   > Event - Grapple Block Top
       Grapple Beam
   > Bottom of Right Shaft
       Morph Ball and After Area 5 (Tower Lobby) - Transport to Areas 4 and 6 Grapple Block Top
-
-> Ledge Under Left Pickup; Heals? False
-  * Layers: default
-  > Pickup (Super Missile Tank)
-      All of the following:
-          Morph Ball and Screw Attack
-          Phase Drift or Movement (Beginner)
-  > Ammo Recharge Station
-      Morph Ball
 
 ----------------
 Lobby Teleporter West
@@ -331,10 +371,12 @@ Extra - asset_id: collision_camera_006
   * Extra - actor_type: item_powerbombtank
   > Door to Transport to Tower Interior East
       Trivial
-  > Next to Teleporter
+  > Top Platform
       All of the following:
-          Lightning Armor
           Baby Metroid or Lay Power Bomb
+          Any of the following:
+              Lightning Armor
+              Hazard Runs (Advanced) and Hazard Damage ≥ 215
 
 > Teleporter; Heals? False; Default Node
   * Layers: default
@@ -358,7 +400,7 @@ Extra - asset_id: collision_camera_006
   * Access Locked to Transport to Tower Interior West/Door to Lobby Teleporter West
   * Extra - actor_name: Door017
   * Extra - actor_type: doorpowerclosed
-  > Next to Teleporter
+  > Top Platform
       Trivial
 
 > Door to Gamma+ Arena Access; Heals? False
@@ -394,8 +436,14 @@ Extra - asset_id: collision_camera_006
           Screw Attack
           Any of the following:
               Use Spider Ball
-              Gravity Suit and Climb Rooms Vertically (High Jump)
-              Underwater Bomb Jump (Intermediate) and Lay Bomb
+              All of the following:
+                  Gravity Suit
+                  Space Jump or Simple IBJ
+              All of the following:
+                  Lay Bomb
+                  Any of the following:
+                      Underwater Bomb Jump (Advanced)
+                      High Jump Boots and Underwater Bomb Jump (Intermediate)
 
 > Event - Grapple Block; Heals? False
   * Layers: default
@@ -421,6 +469,17 @@ Extra - asset_id: collision_camera_006
       Trivial
   > Next to Left Pool
       Morph Ball
+  > Top Platform
+      All of the following:
+          Any of the following:
+              # Height Requirements
+              Super Jump (Intermediate) or Climb Rooms Vertically (High Jump)
+              Morph Ball and Unmorph Extend (Intermediate)
+              Ice Beam and Freeze Enemy with Melee (Beginner) and Stand on Frozen Enemy (Beginner)
+          Any of the following:
+              # Deal with the Wallfire
+              Missile ≥ 10 or Super Missile ≥ 2 or Defeat Gold Robots
+              Lightning Armor and Dodge Enemies (Beginner)
 
 > Event - Teleporter Unlocked; Heals? False
   * Layers: default
@@ -432,19 +491,70 @@ Extra - asset_id: collision_camera_006
   * Layers: default
   > Door to Gamma+ Arena Access
       Any of the following:
+          # Launch at the water surface
           Spider Boost (Intermediate) and Can Spider Boost
           All of the following:
               Gravity Suit
               Space Jump or Simple IBJ
-          Underwater Bomb Jump (Beginner) and Lay Bomb
+          Underwater Bomb Jump (Intermediate) and Simple IBJ
   > Tunnel to J-Shape Tunnel (Top)
       Lay Any Bomb
   > Next to Grapple Block
-      Gravity Suit and Screw Attack and Space Jump
+      Any of the following:
+          All of the following:
+              Gravity Suit and Screw Attack
+              Any of the following:
+                  Space Jump
+                  # https://youtu.be/6bqa76pcjMQ
+                  Bomb and Infinite Bomb Jump (Advanced) and Movement (Intermediate) and Spider Boost (Intermediate) and Can Spider Boost
+          All of the following:
+              Charge Beam and Ice Beam and Morph Ball and Stand on Frozen Enemy (Advanced) and Melee Clip (Advanced)
+              Any of the following:
+                  All of the following:
+                      Gravity Suit
+                      Any of the following:
+                          # https://youtu.be/jGgq1W3Rt3w?t=19
+                          Space Jump and Out of Bounds Movement (Intermediate)
+                          All of the following:
+                              Out of Bounds Movement (Advanced)
+                              Any of the following:
+                                  # https://youtu.be/jGgq1W3Rt3w
+                                  High Jump Boots
+                                  # https://youtu.be/jGgq1W3Rt3w?t=35
+                                  Bomb and Mid-Air Morph (Intermediate) and Infinite Bomb Jump (Advanced)
+                  All of the following:
+                      # https://youtu.be/jGgq1W3Rt3w?t=49
+                      Spider Ball and Out of Bounds Movement (Advanced) and Lay Bomb
+                      Any of the following:
+                          # https://youtu.be/jGgq1W3Rt3w?t=80
+                          Underwater Bomb Jump (Expert)
+                          # https://youtu.be/jGgq1W3Rt3w?t=70
+                          High Jump Boots and Underwater Bomb Jump (Advanced)
   > Next to Teleporter
       All of the following:
           Morph Ball
-          Super Jump (Intermediate) or Unmorph Extend (Beginner) or Climb Rooms Vertically (High Jump)
+          # Climb the room
+          Super Jump (Intermediate) or Unmorph Extend (Intermediate) or Climb Rooms Vertically (High Jump)
+          Any of the following:
+              # Deal with the Wallfire
+              Missile ≥ 10 or Super Missile ≥ 2 or Dodge Enemies (Intermediate) or Defeat Gold Robots
+              Lightning Armor and Dodge Enemies (Beginner)
+
+> Top Platform; Heals? False
+  * Layers: default
+  > Pickup (Power Bomb Tank)
+      All of the following:
+          Baby Metroid or Lay Power Bomb
+          Any of the following:
+              Lightning Armor
+              Hazard Runs (Advanced) and Hazard Damage ≥ 215
+  > Door to Transport to Tower Interior West
+      Any of the following:
+          Climb Rooms Vertically (No High Jump)
+          # Freeze the Ramulken
+          High Jump Boots and Ice Beam and Freeze Enemy with Melee (Intermediate) and Stand on Frozen Enemy (Intermediate) and Single-wall Wall Jump (Beginner) and Super Jump (Intermediate)
+  > Next to Teleporter
+      Trivial
 
 ----------------
 J-Shape Tunnel
@@ -472,9 +582,13 @@ Extra - asset_id: collision_camera_007
 > Top of Tunnel; Heals? False
   * Layers: default
   > Tunnel to Lobby Save Station
-      Spider Ball or Movement (Beginner) or Simple IBJ
+      All of the following:
+          Lay Any Bomb
+          Space Jump or Spider Ball or Movement (Beginner)
   > Tunnel to Lobby Teleporter West (Top)
-      Trivial
+      All of the following:
+          Lay Any Bomb
+          Space Jump or Spider Ball or Movement (Beginner)
   > Tunnel to Lobby Teleporter West (Bottom)
       After Area 5 (Tower Lobby) - Lobby Teleporter West Grapple Block
 
@@ -528,7 +642,18 @@ Extra - asset_id: collision_camera_011
   * Extra - actor_name: Door001
   * Extra - actor_type: doorpowerpower
   > Next to Teleporter
-      Morph Ball and Fleechswarm Protection
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Fleechswarm Protection
+              All of the following:
+                  Hazard Runs (Advanced)
+                  Any of the following:
+                      All of the following:
+                          Fleech Swarm Damage ≥ 150
+                          # Defeating the Ramulkens
+                          Plasma Beam or Super Missile ≥ 2 or Lay Power Bomb or Shoot Beam Burst
+                      Spider Boost (Advanced) and Fleech Swarm Damage ≥ 95 and Can Spider Boost
 
 > Door to Alpha+ Arena; Heals? False
   * Layers: default
@@ -565,9 +690,21 @@ Extra - asset_id: collision_camera_011
   > Door to Lobby Passageway
       All of the following:
           Morph Ball
-          Melee Clip (Beginner) or Fleechswarm Protection
+          Any of the following:
+              Melee Clip (Beginner) or Fleechswarm Protection
+              Hazard Runs (Beginner) and Fleech Swarm Damage ≥ 95
   > Door to Alpha+ Arena
-      Trivial
+      Any of the following:
+          Super Jump (Intermediate) or Wall Jump (Beginner) or Climb Rooms Vertically (High Jump)
+          Morph Ball and Unmorph Extend (Intermediate)
+          All of the following:
+              # Freeze the Gullugg
+              Ice Beam
+              Any of the following:
+                  Stand on Frozen Enemy (Advanced)
+                  All of the following:
+                      Stand on Frozen Enemy (Beginner)
+                      Charge Beam or Phase Drift or Freeze Enemy with Melee (Beginner)
   > Event - Teleporter Unlocked
       Trivial
   > Next to Pickup
@@ -575,9 +712,7 @@ Extra - asset_id: collision_camera_011
           Lay Power Bomb
           All of the following:
               Lay Bomb
-              Any of the following:
-                  Spider Ball or Mid-Air Morph (Beginner) or Simple IBJ
-                  High Jump Boots and Spring Ball
+              High Jump Boots or Spider Ball or Mid-Air Morph (Beginner) or Simple IBJ
 
 > Next to Pickup; Heals? False
   * Layers: default
@@ -591,10 +726,16 @@ Extra - asset_id: collision_camera_011
       All of the following:
           Lay Any Bomb
           Any of the following:
-              High Jump Boots or Gravity Suit or Space Jump or Spider Ball
+              Gravity Suit or Space Jump or Spider Ball or Super Jump (Beginner)
+              High Jump Boots and Unmorph Extend (Intermediate)
               All of the following:
-                  Simple IBJ
-                  Spring Ball or Mid-Air Morph (Beginner)
+                  Lay Bomb
+                  Any of the following:
+                      # Bomb Jump from water
+                      Infinite Bomb Jump (Intermediate)
+                      All of the following:
+                          Infinite Bomb Jump (Beginner)
+                          Spring Ball or Mid-Air Morph (Beginner)
 
 > Start Point; Heals? False; Spawn Point; Default Node
   * Layers: default
@@ -687,7 +828,7 @@ Extra - asset_id: collision_camera_014
   > Left of Crumble Blocks
       Trivial
   > Left of Statue
-      Morph Ball
+      Trivial
 
 > Pickup (Super Missile Tank); Heals? False
   * Layers: default
@@ -700,10 +841,12 @@ Extra - asset_id: collision_camera_014
       All of the following:
           Morph Ball
           Any of the following:
-              Phase Drift or Phase Drift Skip (Expert)
+              Phase Drift
+              # https://youtu.be/zyXVR-Rcrtc
+              Bomb and Phase Drift Skip (Advanced)
               Spider Boost (Intermediate) and Can Spider Boost
 
-> Dock to Lobby Save Station; Heals? False
+> Dock to Lobby Save Station (Left); Heals? False
   * Layers: default
   * Open Passage to Lobby Save Station/Dock to Phase Drift Chamber
   > Left of Statue
@@ -728,7 +871,10 @@ Extra - asset_id: collision_camera_014
       Any of the following:
           All of the following:
               Lay Any Bomb
-              Phase Drift or Phase Drift Skip (Intermediate)
+              Any of the following:
+                  Phase Drift
+                  # https://youtu.be/312Gn1Hh-Eo
+                  Phase Drift Skip (Intermediate)
           Spider Boost (Intermediate) and Can Spider Boost
   > Tunnel to Meboid Millpond (Top)
       Lay Any Bomb
@@ -739,7 +885,17 @@ Extra - asset_id: collision_camera_014
   * Layers: default
   * Extra - start_point_actor_name: ST_DEBUG_Bestowal
   > Pickup (Phase Drift)
-      Morph Ball
+      Any of the following:
+          Morph Ball
+          # https://youtu.be/P18XiY9K36o
+          Corner Clip (Intermediate) and Out of Bounds Movement (Intermediate)
+  > Dock to Lobby Save Station (Right)
+      # https://youtu.be/P18XiY9K36o
+      Corner Clip (Intermediate) and Out of Bounds Movement (Intermediate)
+
+> Dock to Lobby Save Station (Right); Heals? False
+  * Layers: default
+  * Open Passage to Lobby Save Station/Dock from Phase Drift Chamber
 
 ----------------
 Meboid Millpond
@@ -793,13 +949,27 @@ Extra - asset_id: collision_camera_015
               Morph Ball
               Any of the following:
                   All of the following:
-                      Gravity Suit and Damage Boost (Intermediate) and Wall Jump (Intermediate)
-                      High Jump Boots or Simple IBJ
+                      Gravity Suit
+                      Any of the following:
+                          High Jump Boots or Super Jump (Intermediate) or Simple IBJ
+                          All of the following:
+                              # https://youtu.be/Hs03y1Ufes8?t=7
+                              Damage Boost (Advanced)
+                              Lightning Armor or Normal Damage ≥ 15
+                              Unmorph Extend (Advanced) or Wall Jump (Intermediate)
+                  # https://youtu.be/Hs03y1Ufes8
                   Bomb and Underwater Bomb Jump (Intermediate)
   > Door to Lobby Save Station
       Any of the following:
-          High Jump Boots or Gravity Suit or Use Spider Ball
-          Ice Beam and Stand on Frozen Enemy (Beginner)
+          High Jump Boots or Gravity Suit or Super Jump (Beginner) or Use Spider Ball
+          All of the following:
+              # Freeze the Moheek
+              Ice Beam
+              Any of the following:
+                  Stand on Frozen Enemy (Intermediate)
+                  All of the following:
+                      Stand on Frozen Enemy (Beginner)
+                      Charge Beam or Phase Drift or Freeze Enemy with Melee (Beginner)
           Underwater Bomb Jump (Beginner) and Lay Bomb
   > Door to Alpha+ Arena
       Trivial
@@ -831,7 +1001,9 @@ Extra - asset_id: collision_camera_016
           Lay Power Bomb
           All of the following:
               Lay Bomb
-              Spider Ball or Spring Ball or Mid-Air Morph (Beginner)
+              Any of the following:
+                  Spider Ball or Mid-Air Morph (Beginner) or Infinite Bomb Jump (Beginner)
+                  High Jump Boots and Spring Ball
   > Event - Gamma Metroid+
       Defeat Gamma Metroid+
 
@@ -854,7 +1026,18 @@ Extra - asset_id: collision_camera_017
   * Extra - actor_name: Door001
   * Extra - actor_type: doorpowerpower
   > Room Center
-      Trivial
+      All of the following:
+          # Deal with the Wallfire
+          Lightning Armor or Missile ≥ 10 or Super Missile ≥ 2 or Combat (Intermediate) or Defeat Gold Robots
+          Any of the following:
+              # Reach the intersection
+              Wall Jump (Beginner) or Climb Rooms Vertically (High Jump)
+              All of the following:
+                  Super Jump (Intermediate)
+                  Any of the following:
+                      # Freeze the Ramulken
+                      Ice Beam and Freeze Enemy with Melee (Beginner)
+                      Morph Ball and Unmorph Extend (Intermediate)
 
 > Tunnel to Lobby Teleporter East; Heals? False
   * Layers: default
@@ -881,7 +1064,8 @@ Extra - asset_id: collision_camera_017
   > Tunnel to Lobby Teleporter East
       Morph Ball and After Area 5 (Tower Lobby) - Lobby Teleporter East Grapple Block
   > Dock to Transport to Areas 4 and 6
-      Trivial
+      # Deal with the Wallfire
+      Lightning Armor or Missile ≥ 10 or Super Missile ≥ 2 or Combat (Intermediate) or Defeat Gold Robots
   > Tunnel to Transport to Areas 4 and 6
       Morph Ball
 
