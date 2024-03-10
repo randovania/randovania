@@ -18,6 +18,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed: Releasing the X without Bombs or Cross Bombs now requires Knowledge (Beginner).
 
+### Metroid Prime 2: Echoes
+
+- Added: Updated A-Kul's scan with the 2023 CGC Tournament winners.
+
 ## [7.4.0] - 2024-03-08
 
 - Added: A warning will be shown when trying to generate a game where more items are in the pool than the maximum amount of items.
