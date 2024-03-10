@@ -4,7 +4,7 @@ import dataclasses
 import uuid
 from unittest.mock import MagicMock
 
-from PySide6 import QtCore, QtWidgets
+from PySide6 import QtWidgets
 
 from randovania.game_description import default_database
 from randovania.games.fusion.gui.preset_settings.fusion_patches_tab import _FIELDS, PresetFusionPatches
@@ -25,11 +25,12 @@ def test_on_preset_changed(skip_qtbot, preset_manager):
     skip_qtbot.addWidget(window)
 
     checkboxes = window.findChildren(QtWidgets.QCheckBox)
+    assert len(checkboxes) == len(_FIELDS)
 
     # Run enabling all checkboxes
     window.on_preset_changed(editor.create_custom_preset_with())
-    for idx, f in enumerate(_FIELDS):
-        skip_qtbot.mouseClick(getattr(window, checkboxes[idx].objectName()), QtCore.Qt.MouseButton.LeftButton)
+    for f in _FIELDS:
+        getattr(window, f + "_check").setChecked(True)
 
     # Assert
     all_enabled_preset = editor.create_custom_preset_with()
@@ -38,8 +39,8 @@ def test_on_preset_changed(skip_qtbot, preset_manager):
         assert getattr(all_enabled_preset.configuration, f) is True
 
     # Run disabling all checkboxes
-    for idx, f in enumerate(_FIELDS):
-        skip_qtbot.mouseClick(getattr(window, checkboxes[idx].objectName()), QtCore.Qt.MouseButton.LeftButton)
+    for f in _FIELDS:
+        getattr(window, f + "_check").setChecked(False)
 
     # Assert
     all_disabled_preset = editor.create_custom_preset_with()
