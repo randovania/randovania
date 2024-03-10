@@ -62,6 +62,8 @@ class PresetTeleportersPrime1(PresetTeleporterTab, Ui_PresetTeleportersPrime1, N
     ):
         super().__init__(editor, game_description, window_manager)
         signal_handling.on_checked(self.skip_final_bosses_check, self._update_require_final_bosses)
+        signal_handling.on_checked(self.allow_dead_ends_check, self._update_allow_dead_ends)
+        self.excluded_regions_spin.valueChanged.connect(self._on_excluded_regions_changed)
 
     def setup_ui(self):
         self.setupUi(self)
@@ -122,6 +124,20 @@ class PresetTeleportersPrime1(PresetTeleporterTab, Ui_PresetTeleportersPrime1, N
                 skip_final_bosses=checked,
             )
 
+    def _on_excluded_regions_changed(self):
+        with self._editor as editor:
+            editor.layout_configuration_teleporters = dataclasses.replace(
+                editor.layout_configuration_teleporters,
+                num_excluded_regions=self.excluded_regions_spin.value(),
+            )
+
+    def _update_allow_dead_ends(self, checked: bool):
+        with self._editor as editor:
+            editor.layout_configuration_teleporters = dataclasses.replace(
+                editor.layout_configuration_teleporters,
+                allow_dead_ends=checked,
+            )
+
     def on_preset_changed(self, preset: Preset):
         config: PrimeConfiguration = preset.configuration
         config_teleporters: PrimeTrilogyTeleporterConfiguration = config.teleporters
@@ -180,6 +196,17 @@ class PresetTeleportersPrime1(PresetTeleporterTab, Ui_PresetTeleportersPrime1, N
         self.teleporters_target_group.setVisible(config_teleporters.has_shuffled_target)
         self.teleporters_target_group.setEnabled(config_teleporters.has_shuffled_target)
         self.skip_final_bosses_check.setChecked(config_teleporters.skip_final_bosses)
+
+        self.excluded_regions_group.setVisible(config_teleporters.mode != TeleporterShuffleMode.VANILLA)
+
+        self.allow_dead_ends_group.setVisible(
+            config_teleporters.mode
+            in [
+                TeleporterShuffleMode.TWO_WAY_RANDOMIZED,
+                TeleporterShuffleMode.TWO_WAY_UNCHECKED,
+            ]
+        )
+
         self.update_node_list(
             config_teleporters.excluded_targets.locations,
             True,
