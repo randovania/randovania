@@ -26,7 +26,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ##### Torvus Bog
 
-- Added: The reverse air underwater in Training Chamber now as a method with and without Space Jump (Advanced and Expert respectively). This can be used to get to the bomb slot as well as the door to Fortress Transport Access.
+- Added: The reverse air underwater in Training Chamber now has a method with and without Space Jump (Advanced and Expert respectively). This can be used to get to the bomb slot as well as the door to Fortress Transport Access.
 
 ## [7.4.0] - 2024-03-08
 
