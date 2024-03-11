@@ -22,6 +22,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: Updated A-Kul's scan with the 2023 CGC Tournament winners.
 
+#### Logic Database
+
+##### Torvus Bog
+
+- Added: The reverse air underwater in Training Chamber now as a method with and without Space Jump (Advanced and Expert respectively). This can be used to get to the bomb slot as well as the door to Fortress Transport Access.
+
 ## [7.4.0] - 2024-03-08
 
 - Added: A warning will be shown when trying to generate a game where more items are in the pool than the maximum amount of items.
