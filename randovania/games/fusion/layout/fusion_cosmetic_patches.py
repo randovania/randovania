@@ -9,7 +9,7 @@ from randovania.lib import enum_lib
 
 
 class ColorSpace(Enum):
-    """Types of Color Spaces used by the palette shuffler"""
+    """Types of Color Spaces used by the palette randomizer"""
 
     long_name: str
 
@@ -29,9 +29,17 @@ enum_lib.add_long_name(
 @dataclasses.dataclass(frozen=True)
 class FusionCosmeticPatches(BaseCosmeticPatches):
     enable_suit_palette: bool = False
+    suit_hue_min: int = 0
+    suit_hue_max: int = 360
     enable_beam_palette: bool = False
+    beam_hue_min: int = 0
+    beam_hue_max: int = 360
     enable_enemy_palette: bool = False
+    enemy_hue_min: int = 0
+    enemy_hue_max: int = 360
     enable_tileset_palette: bool = False
+    tileset_hue_min: int = 0
+    tileset_hue_max: int = 360
     color_space: ColorSpace = ColorSpace.Oklab
 
     @classmethod

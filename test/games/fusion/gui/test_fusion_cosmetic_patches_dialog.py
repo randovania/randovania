@@ -55,11 +55,12 @@ def test_color_space(skip_qtbot):
 
     dialog = FusionCosmeticPatchesDialog(None, cosmetic_patches)
     skip_qtbot.addWidget(dialog)
-
-    skip_qtbot.keyClicks(dialog.color_space_combo, "HSV")
-
+    # Run
+    dialog.color_space_combo.setCurrentIndex(1)
+    # Assert
     assert dialog.cosmetic_patches == FusionCosmeticPatches(color_space=ColorSpace.HSV)
 
-    skip_qtbot.keyClicks(dialog.color_space_combo, "Oklab")
-
+    # Run
+    dialog.color_space_combo.setCurrentIndex(0)
+    # Assert
     assert dialog.cosmetic_patches == FusionCosmeticPatches(color_space=ColorSpace.Oklab)
