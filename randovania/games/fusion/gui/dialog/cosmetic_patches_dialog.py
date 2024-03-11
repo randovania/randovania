@@ -33,7 +33,13 @@ class FusionCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_FusionCosmeticPa
     def connect_signals(self) -> None:
         super().connect_signals()
 
-        self._persist_check_field(self.suit_palette_check, "enabled")
+        # Checkboxes for enabling Pallete Rando
+        self._persist_check_field(self.suit_palette_check, "enable_suit_palette")
+        self._persist_check_field(self.beam_palette_check, "enable_beam_palette")
+        self._persist_check_field(self.enemy_palette_check, "enable_enemy_palette")
+        self._persist_check_field(self.tileset_palette_check, "enable_tileset_palette")
+
+        # Combobox for Color Space
         self.color_space_combo.currentIndexChanged.connect(self._on_color_space_update)
 
     def _on_color_space_update(self) -> None:
@@ -42,10 +48,10 @@ class FusionCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_FusionCosmeticPa
         )
 
     def on_new_cosmetic_patches(self, patches: FusionCosmeticPatches) -> None:
-        self.suit_palette_check.setChecked(patches.suit_shuffle.enabled)
-        self.beam_palette_check.setChecked(patches.beam_shuffle.enabled)
-        self.enemy_palette_check.setChecked(patches.enemy_shuffle.enabled)
-        self.tileset_palette_check.setChecked(patches.tileset_shuffle.enabled)
+        self.suit_palette_check.setChecked(patches.enable_suit_palette)
+        self.beam_palette_check.setChecked(patches.enable_beam_palette)
+        self.enemy_palette_check.setChecked(patches.enable_enemy_palette)
+        self.tileset_palette_check.setChecked(patches.enable_tileset_palette)
         set_combo_with_value(self.color_space_combo, patches.color_space)
 
     @property
