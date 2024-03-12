@@ -57,12 +57,8 @@ def test_change_music_option(skip_qtbot, music_start_value: bool, option_to_clic
 
     dialog = FusionCosmeticPatchesDialog(None, cosmetic_patches)
     skip_qtbot.addWidget(dialog)
-    str_to_option_map = {
-        "stereo_option": dialog.stereo_option,
-        "mono_option": dialog.mono_option,
-    }
-    radio_button = str_to_option_map[option_to_click]
 
+    radio_button = getattr(dialog, option_to_click)
     skip_qtbot.mouseClick(radio_button, QtCore.Qt.MouseButton.LeftButton)
 
     assert dialog.cosmetic_patches == FusionCosmeticPatches(stereo_default=music_end_value)
