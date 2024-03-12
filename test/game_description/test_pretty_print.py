@@ -80,7 +80,7 @@ def test_pretty_print_requirement_array_one_row_and_nested_array(echoes_resource
     )
 
     # Run
-    result = list(pretty_print.pretty_print_requirement(req, echoes_resource_database))
+    result = list(pretty_print.pretty_format_requirement(req, echoes_resource_database))
     lines = "\n".join("      {}{}".format("    " * level, text) for level, text in result)
     lines = f"\n{lines}\n"
 
