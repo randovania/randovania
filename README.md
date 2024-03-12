@@ -34,16 +34,16 @@ without any unintended tricks or glitches. Its features include:
 * Randomizing what can be found in each pickup location. Weapons, keys, and more can end up in
   completely new places.
 
-* Use multiworld sessions to shuffle items between multiple separate games, alone or with friends.
-  All multiworld games are compatible with each other - mix and match as you like!
+* Use Multiworld sessions to shuffle items between multiple separate games, alone or with friends.
+  All Multiworld games are compatible with each other - mix and match as you like!
 
 * Randomize how areas connect to each other, or what resources are required to travel between areas.
-  Both options are highly customizable. 
+  These options are highly customizable, letting you limit or unleash the chaos.
 
 * Randomize your starting equipment and location. Feeling brave? You can even shuffle items
   you normally start with.
 
-So have fun and start randomizing.
+Have fun and start randomizing!
 
 <!-- End WELCOME -->
 
