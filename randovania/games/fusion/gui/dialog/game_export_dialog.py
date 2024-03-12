@@ -7,6 +7,7 @@ from randovania.games.fusion.exporter.game_exporter import FusionGameExportParam
 from randovania.games.fusion.exporter.options import FusionPerGameOptions
 from randovania.games.game import RandovaniaGame
 from randovania.gui.dialog.game_export_dialog import GameExportDialog, spoiler_path_for
+from randovania.gui.generated.fusion_game_export_dialog_ui import Ui_FusionGameExportDialog
 
 if TYPE_CHECKING:
     from pathlib import Path
@@ -15,7 +16,7 @@ if TYPE_CHECKING:
 
 
 # TODO
-class FusionGameExportDialog(GameExportDialog):
+class FusionGameExportDialog(GameExportDialog, Ui_FusionGameExportDialog):
     """A window for asking the user for what is needed to export this specific game.
 
     The provided implementation assumes you need an ISO/ROM file, and produces a new ISO/ROM file."""
