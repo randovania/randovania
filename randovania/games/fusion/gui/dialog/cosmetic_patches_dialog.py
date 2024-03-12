@@ -38,7 +38,6 @@ class FusionCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_FusionCosmeticPa
         self._persist_check_field(self.beam_palette_check, "enable_beam_palette")
         self._persist_check_field(self.enemy_palette_check, "enable_enemy_palette")
         self._persist_check_field(self.tileset_palette_check, "enable_tileset_palette")
-
         # Combobox for Color Space
         self.color_space_combo.currentIndexChanged.connect(self._on_color_space_update)
 
