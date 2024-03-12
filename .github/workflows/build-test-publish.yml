@@ -72,7 +72,7 @@ jobs:
           fetch-depth: 0
 
       - name: Workaround for worktree config
-        run: git config --unset-all extensions.worktreeConfig
+        run: git config --unset-all extensions.worktreeConfig || true
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -303,7 +303,7 @@ jobs:
           fetch-depth: 0
 
       - name: Workaround for worktree config
-        run: git config --unset-all extensions.worktreeConfig
+        run: git config --unset-all extensions.worktreeConfig || true
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -332,7 +332,7 @@ jobs:
           fetch-depth: 0
 
       - name: Workaround for worktree config
-        run: git config --unset-all extensions.worktreeConfig
+        run: git config --unset-all extensions.worktreeConfig || true
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -379,7 +379,7 @@ jobs:
           fetch-depth: 0
 
       - name: Workaround for worktree config
-        run: git config --unset-all extensions.worktreeConfig
+        run: git config --unset-all extensions.worktreeConfig || true
 
       -
         name: Prepare
