@@ -17,14 +17,14 @@ from randovania.games.fusion.layout.fusion_cosmetic_patches import ColorSpace, F
     ],
 )
 def test_enable_palette(skip_qtbot, field_name: str, widget_field: str) -> None:
-    cosmetic_patches = FusionCosmeticPatches(**{field_name: False})
+    cosmetic_patches = FusionCosmeticPatches(**{field_name: False})  # type: ignore[arg-type]
 
     dialog = FusionCosmeticPatchesDialog(None, cosmetic_patches)
     skip_qtbot.addWidget(dialog)
     # Run
     skip_qtbot.mouseClick(getattr(dialog, widget_field), QtCore.Qt.MouseButton.LeftButton)
     # Assert
-    assert dialog.cosmetic_patches == FusionCosmeticPatches(**{field_name: True})
+    assert dialog.cosmetic_patches == FusionCosmeticPatches(**{field_name: True})  # type: ignore[arg-type]
 
 
 def test_color_space(skip_qtbot):
