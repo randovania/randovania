@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>FusionCosmeticPatchesDialog</class>
- <widget class="QDialog" name="BlankCosmeticPatchesDialog">
+ <widget class="QDialog" name="FusionCosmeticPatchesDialog">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -44,12 +44,191 @@
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>0</y>
-        <width>376</width>
-        <height>195</height>
+        <y>-200</y>
+        <width>362</width>
+        <height>406</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout">
+       <item>
+        <widget class="QGroupBox" name="palette_box">
+         <property name="title">
+          <string>Palette Shuffle</string>
+         </property>
+         <layout class="QVBoxLayout" name="palette_layout">
+          <item>
+           <layout class="QHBoxLayout" name="suit_color_layout">
+            <property name="spacing">
+             <number>6</number>
+            </property>
+            <item>
+             <widget class="QCheckBox" name="suit_palette_check">
+              <property name="text">
+               <string>Randomize Suit Pallete</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="beam_color_layout">
+            <property name="spacing">
+             <number>6</number>
+            </property>
+            <item>
+             <widget class="QCheckBox" name="beam_palette_check">
+              <property name="text">
+               <string>Randomize Beam Pallete</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="enemy_color_layout">
+            <property name="spacing">
+             <number>6</number>
+            </property>
+            <item>
+             <widget class="QCheckBox" name="enemy_palette_check">
+              <property name="text">
+               <string>Randomize Enemy Pallete</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="tileset_color_layout">
+            <property name="spacing">
+             <number>6</number>
+            </property>
+            <item>
+             <widget class="QCheckBox" name="tileset_palette_check">
+              <property name="text">
+               <string>Randomize Tileset Pallete</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QGridLayout" name="color_space_layout">
+            <item row="0" column="1">
+             <widget class="QComboBox" name="color_space_combo"/>
+            </item>
+            <item row="0" column="0">
+             <widget class="QLabel" name="color_space_label">
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>20</height>
+               </size>
+              </property>
+              <property name="text">
+               <string>Color Space</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="audio_box">
+         <property name="title">
+          <string>Audio Options</string>
+         </property>
+         <layout class="QVBoxLayout" name="audio_layout">
+          <item>
+           <widget class="QLabel" name="default_audio_label">
+            <property name="text">
+             <string>Default Audio Settings:</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="stereo_layout">
+            <property name="spacing">
+             <number>6</number>
+            </property>
+            <item>
+             <widget class="QRadioButton" name="mono_option">
+              <property name="text">
+               <string>Mono</string>
+              </property>
+              <property name="checked">
+               <bool>false</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QRadioButton" name="stereo_option">
+              <property name="text">
+               <string>Stereo</string>
+              </property>
+              <property name="checked">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <spacer name="verticalSpacer">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Minimum</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>10</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QLabel" name="audio_volume_label">
+            <property name="text">
+             <string>Audio Volume Settings:</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="volume_layout">
+            <property name="spacing">
+             <number>6</number>
+            </property>
+            <item>
+             <widget class="QCheckBox" name="disable_music_check">
+              <property name="text">
+               <string>Mute Music</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="music_layout">
+            <property name="spacing">
+             <number>6</number>
+            </property>
+            <item>
+             <widget class="QCheckBox" name="disable_sfx_check">
+              <property name="text">
+               <string>Mute Sound Effects</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+       </item>
        <item>
         <spacer name="verticalSpacer">
          <property name="orientation">
