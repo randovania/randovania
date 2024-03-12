@@ -136,6 +136,77 @@
         </widget>
        </item>
        <item>
+        <widget class="QGroupBox" name="audio_box">
+         <property name="title">
+          <string>Audio Options</string>
+         </property>
+         <layout class="QVBoxLayout" name="audio_layout">
+         <item>
+          <widget class="QLabel" name="custom_dna_rotation_label">
+           <property name="text">
+            <string>Default Audio Settings:</string>
+           </property>
+          </widget>
+         </item>
+          <item>
+           <layout class="QHBoxLayout" name="music_layout">
+            <property name="spacing">
+             <number>6</number>
+            </property>
+            <item>
+             <widget class="QRadioButton" name="mono_option">
+              <property name="text">
+               <string>Mono</string>
+              </property>
+              <property name="checked">
+               <bool>false</bool>
+              </property>
+             </widget>
+             </item>
+             <item>
+             <widget class="QRadioButton" name="stereo_option">
+              <property name="text">
+               <string>Stereo</string>
+              </property>
+              <property name="checked">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="music_layout">
+            <property name="spacing">
+             <number>6</number>
+            </property>
+            <item>
+             <widget class="QCheckBox" name="disable_music_check">
+              <property name="text">
+               <string>Disable Music</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="music_layout">
+            <property name="spacing">
+             <number>6</number>
+            </property>
+            <item>
+             <widget class="QCheckBox" name="disable_sfx_check">
+              <property name="text">
+               <string>Disable Sound Effects</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
         <spacer name="verticalSpacer">
          <property name="orientation">
           <enum>Qt::Vertical</enum>

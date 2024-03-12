@@ -14,9 +14,11 @@ from randovania.games.fusion.layout.fusion_cosmetic_patches import ColorSpace, F
         ("enable_beam_palette", "beam_palette_check"),
         ("enable_enemy_palette", "enemy_palette_check"),
         ("enable_tileset_palette", "tileset_palette_check"),
+        ("disable_music", "disable_music_check"),
+        ("disable_sfx", "disable_sfx_check"),
     ],
 )
-def test_enable_palette(skip_qtbot, field_name: str, widget_field: str) -> None:
+def test_enable_checkboxes(skip_qtbot, field_name: str, widget_field: str) -> None:
     cosmetic_patches = FusionCosmeticPatches(**{field_name: False})  # type: ignore[arg-type]
 
     dialog = FusionCosmeticPatchesDialog(None, cosmetic_patches)
@@ -41,3 +43,26 @@ def test_color_space(skip_qtbot):
     dialog.color_space_combo.setCurrentIndex(0)
     # Assert
     assert dialog.cosmetic_patches == FusionCosmeticPatches(color_space=ColorSpace.Oklab)
+
+
+@pytest.mark.parametrize(
+    ("music_start_value", "option_to_click", "music_end_value"),
+    [
+        (False, "stereo_option", True),
+        (True, "mono_option", False),
+    ],
+)
+def test_change_music_option(skip_qtbot, music_start_value: bool, option_to_click: str, music_end_value: bool) -> None:
+    cosmetic_patches = FusionCosmeticPatches(stereo_default=music_start_value)
+
+    dialog = FusionCosmeticPatchesDialog(None, cosmetic_patches)
+    skip_qtbot.addWidget(dialog)
+    str_to_option_map = {
+        "stereo_option": dialog.stereo_option,
+        "mono_option": dialog.mono_option,
+    }
+    radio_button = str_to_option_map[option_to_click]
+
+    skip_qtbot.mouseClick(radio_button, QtCore.Qt.MouseButton.LeftButton)
+
+    assert dialog.cosmetic_patches == FusionCosmeticPatches(stereo_default=music_end_value)

@@ -28,6 +28,7 @@ enum_lib.add_long_name(
 
 @dataclasses.dataclass(frozen=True)
 class FusionCosmeticPatches(BaseCosmeticPatches):
+    # Palette Rando
     enable_suit_palette: bool = False
     suit_hue_min: int = 0
     suit_hue_max: int = 360
@@ -41,6 +42,10 @@ class FusionCosmeticPatches(BaseCosmeticPatches):
     tileset_hue_min: int = 0
     tileset_hue_max: int = 360
     color_space: ColorSpace = ColorSpace.Oklab
+    # Audio Options
+    stereo_default: bool = True
+    disable_music: bool = False
+    disable_sfx: bool = False
 
     @classmethod
     def default(cls) -> FusionCosmeticPatches:
