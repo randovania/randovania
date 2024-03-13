@@ -57,7 +57,7 @@ def artifact_pool(game: GameDescription, config: FusionArtifactConfig) -> PoolRe
         raise InvalidConfiguration("More Infant Metroids than allowed!")
 
     keys: list[PickupEntry] = [create_fusion_artifact(i, game.resource_database) for i in range(20)]
-    keys_to_shuffle = keys[: config.required_artifacts]
-    starting_keys = keys[config.required_artifacts :]
+    keys_to_shuffle = keys[: config.placed_artifacts]
+    starting_keys = keys[config.placed_artifacts :]
 
     return PoolResults(keys_to_shuffle, {}, starting_keys)
