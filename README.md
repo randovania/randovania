@@ -181,7 +181,7 @@ Integration written by [Miepee](https://github.com/Miepee). Offworld sprites are
 ## Setup
 
 Getting started:
-   1. Clone this repository. You will also need to pull the tags after, which you can do via `git pull --tags`. (downloading the zip is *not* supported and will not work)
+   1. Clone this repository. (downloading the zip is *not* supported and will not work)
    2. Open a terminal in the repository root
    3. Run the following file:
       1. Windows: `tools/prepare_virtual_env.bat`
