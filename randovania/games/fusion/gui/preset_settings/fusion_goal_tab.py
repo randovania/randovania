@@ -88,7 +88,7 @@ class PresetFusionGoal(PresetTab, Ui_PresetFusionGoal):
         self._update_slider_max()
 
     def _on_required_slider_changed(self) -> None:
-        self.required_slider_label.setText(f"{self.required_slider.value()} Infant Metroids")
+        self.required_slider_label.setText(f"{self.required_slider.value()} Metroids Required")
 
         def edit(config: FusionArtifactConfig) -> FusionArtifactConfig:
             return dataclasses.replace(config, required_artifacts=self.required_slider.value())
@@ -96,7 +96,7 @@ class PresetFusionGoal(PresetTab, Ui_PresetFusionGoal):
         self._edit_config(edit)
 
     def _on_placed_slider_changed(self) -> None:
-        self.placed_slider_label.setText(f"{self.placed_slider.value()} Infant Metroids")
+        self.placed_slider_label.setText(f"{self.placed_slider.value()} Metroids in Pool")
         self.required_slider.setMaximum(self.placed_slider.value())
         self.required_slider.setEnabled(self.placed_slider.value() > 0)
 
