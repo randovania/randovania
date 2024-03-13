@@ -1,8 +1,9 @@
 from __future__ import annotations
 
 import datetime
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
+import yaml
 from htmlmin import minify
 
 from randovania.game_description import default_database
@@ -281,6 +282,57 @@ def generate_region_html(name: str, areas: dict[str, dict[str, dict[str, list[tu
 
 def filename_friendly_game_name(game: RandovaniaGame):
     return "".join(x for x in game.long_name if x.isalnum() or x in [" "])
+
+
+def export_as_yaml(game: RandovaniaGame, out_dir: Path, as_frontmatter: bool):
+    def add_entry(arr: list, key: str, value: Any):
+        arr.append({"key": key, "value": value})
+
+    regions = collect_game_info(game)
+
+    output = []
+    for region, areas in sorted(regions.items()):
+        sorted_region = []
+        add_entry(output, region, sorted_region)
+        for area, nodes in sorted(areas.items()):
+            sorted_area = []
+            add_entry(sorted_region, area, sorted_area)
+            all_area_vids = set()
+            for node, connections in sorted(nodes.items()):
+                sorted_node = []
+
+                for connection, videos in sorted(connections.items()):
+                    sorted_vids = []
+
+                    for video in sorted(videos, key=lambda x: x[2]):
+                        if video in all_area_vids:
+                            continue
+                        all_area_vids.add(video)
+
+                        yt_id, start_time, highest_diff = video
+                        sorted_vids.append(
+                            {
+                                "video_id": yt_id,
+                                "start_time": start_time,
+                                "difficulty": LayoutTrickLevel.from_number(highest_diff).long_name,
+                            }
+                        )
+
+                    if sorted_vids:
+                        add_entry(sorted_node, connection, sorted_vids)
+
+                if sorted_node:
+                    add_entry(sorted_area, node, sorted_node)
+
+    output = {"regions": output}
+
+    yaml_body = yaml.dump(output)
+    if as_frontmatter:
+        yaml_body = f"---\n{yaml_body}\n---"
+
+    fmt = "md" if as_frontmatter else "yml"
+
+    out_dir.joinpath(f"{game.value}.{fmt}").write_text(yaml_body)
 
 
 def export_videos(game: RandovaniaGame, out_dir: Path):

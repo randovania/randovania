@@ -124,6 +124,47 @@ def create_export_videos_command(sub_parsers):
     parser.set_defaults(func=export_videos_command_logic)
 
 
+def export_videos_yaml_command_logic(args):
+    from randovania.cli.commands.export_db_videos import export_as_yaml
+
+    games = []
+
+    if args.game is not None:
+        games.append(RandovaniaGame(args.game))
+    else:
+        games = list(RandovaniaGame)
+
+    for game in games:
+        export_as_yaml(game, args.output_dir, args.as_frontmatter)
+
+
+def create_export_videos_yaml_command(sub_parsers):
+    parser: ArgumentParser = sub_parsers.add_parser(
+        "export-videos-yaml",
+        help="Export the video database in YAML format.",
+        formatter_class=argparse.MetavarTypeHelpFormatter,
+    )
+    parser.add_argument(
+        "--output-dir",
+        type=Path,
+        default="exported_videos",
+        help="Folder to write yaml file to.",
+    )
+    parser.add_argument(
+        "--game",
+        type=str,
+        default=None,
+        help="Game to export videos for.",
+    )
+    parser.add_argument(
+        "--as-frontmatter",
+        action="store_true",
+        default=False,
+        help="Saves the file as a .md file with frontmatter for use with Jekyll.",
+    )
+    parser.set_defaults(func=export_videos_yaml_command_logic)
+
+
 def view_area_command_logic(args):
     from randovania.game_description import pretty_print
 
@@ -480,6 +521,7 @@ def create_subparsers(sub_parsers):
     list_paths_with_resource_command(sub_parsers)
     pickups_per_area_command(sub_parsers)
     create_export_videos_command(sub_parsers)
+    create_export_videos_yaml_command(sub_parsers)
     uncommented_trick_usages_command(sub_parsers)
 
     def check_command(args):
