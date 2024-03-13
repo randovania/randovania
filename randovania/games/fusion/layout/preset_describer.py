@@ -18,7 +18,7 @@ def describe_artifacts(artifacts: FusionArtifactConfig) -> list[dict[str, bool]]
     if has_artifacts and artifacts.prefer_anywhere:
         return [
             {
-                f"{artifacts.required_artifacts} of f{artifacts.placed_artifacts} Metroids Required": True,
+                f"{artifacts.required_artifacts} of {artifacts.placed_artifacts} Metroids Required": True,
             },
             {
                 "Place anywhere": artifacts.prefer_anywhere,
@@ -27,7 +27,7 @@ def describe_artifacts(artifacts: FusionArtifactConfig) -> list[dict[str, bool]]
     elif has_artifacts:
         return [
             {
-                f"{artifacts.required_artifacts} of f{artifacts.placed_artifacts} Metroids Required": True,
+                f"{artifacts.required_artifacts} of {artifacts.placed_artifacts} Metroids Required": True,
             },
             {
                 "Prefers major bosses": artifacts.prefer_bosses,

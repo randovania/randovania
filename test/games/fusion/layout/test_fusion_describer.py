@@ -15,9 +15,9 @@ from randovania.interface_common.preset_manager import PresetManager
 @pytest.mark.parametrize(
     ("artifacts"),
     [
-        FusionArtifactConfig(True, True, 10, 15),
-        FusionArtifactConfig(True, False, 11, 11),
-        FusionArtifactConfig(False, True, 20, 20),
+        FusionArtifactConfig(True, True, 1, 1),
+        FusionArtifactConfig(True, False, 3, 5),
+        FusionArtifactConfig(False, True, 12, 15),
         FusionArtifactConfig(False, False, 0, 0),
     ],
 )
@@ -47,7 +47,7 @@ def test_fusion_format_params(artifacts):
         ],
         "Gameplay": ["Starts at Main Deck - Docking Bay Hangar"],
         "Goal": (
-            [f"{artifacts.required_artifacts} Metroid DNA", metroids_where]
+            [f"{artifacts.required_artifacts} of {artifacts.placed_artifacts} Metroids Required", metroids_where]
             if artifacts.required_artifacts
             else [metroids_where]
         ),
