@@ -1,0 +1,56 @@
+from __future__ import annotations
+
+import dataclasses
+
+import pytest
+
+from randovania.games.fusion.layout.fusion_configuration import (
+    FusionArtifactConfig,
+    FusionConfiguration,
+)
+from randovania.games.game import RandovaniaGame
+from randovania.interface_common.preset_manager import PresetManager
+
+
+@pytest.mark.parametrize(
+    ("artifacts"),
+    [
+        FusionArtifactConfig(True, True, 10, 15),
+        FusionArtifactConfig(True, False, 11, 11),
+        FusionArtifactConfig(False, True, 20, 20),
+        FusionArtifactConfig(False, False, 0, 0),
+    ],
+)
+def test_fusion_format_params(artifacts):
+    # Setup
+    preset = PresetManager(None).default_preset_for_game(RandovaniaGame.FUSION).get_preset()
+    assert isinstance(preset.configuration, FusionConfiguration)
+    configuration = dataclasses.replace(
+        preset.configuration,
+        artifacts=artifacts,
+    )
+
+    # Run
+    result = RandovaniaGame.FUSION.data.layout.preset_describer.format_params(configuration)
+
+    if artifacts.prefer_anywhere:
+        metroids_where = "Place anywhere"
+    elif artifacts.prefer_bosses:
+        metroids_where = "Prefers major bosses"
+    else:
+        metroids_where = "Kill the SA-X"
+
+    # Assert
+    assert dict(result) == {
+        "Game Changes": [
+            "Missiles need Main Data, Power Bombs need Main Data",
+        ],
+        "Gameplay": ["Starts at Main Deck - Docking Bay Hangar"],
+        "Goal": (
+            [f"{artifacts.required_artifacts} Metroid DNA", metroids_where]
+            if artifacts.required_artifacts
+            else [metroids_where]
+        ),
+        "Item Pool": [f"Size: {115+artifacts.placed_artifacts} of 120", "Vanilla starting items"],
+        "Logic Settings": ["All tricks disabled"],
+    }
