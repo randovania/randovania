@@ -5,7 +5,11 @@ from typing import TYPE_CHECKING
 from randovania.cli.commands.new_game import add_create_databases, add_new_game_command
 from randovania.cli.commands.refresh_presets import add_refresh_presets_command
 from randovania.cli.commands.render_regions import render_regions_graph
-from randovania.cli.commands.website import create_export_videos_yaml_command, create_readme_sections_command
+from randovania.cli.commands.website import (
+    create_export_videos_yaml_command,
+    create_extract_game_data_command,
+    create_readme_sections_command,
+)
 
 if TYPE_CHECKING:
     from argparse import ArgumentParser
@@ -22,6 +26,7 @@ def create_subparsers(sub_parsers):
     render_regions_graph(sub_parsers)
     create_export_videos_yaml_command(sub_parsers)
     create_readme_sections_command(sub_parsers)
+    create_extract_game_data_command(sub_parsers)
 
     def check_command(args):
         if args.command is None:
