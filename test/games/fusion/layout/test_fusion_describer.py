@@ -34,9 +34,9 @@ def test_fusion_format_params(artifacts):
     result = RandovaniaGame.FUSION.data.layout.preset_describer.format_params(configuration)
 
     if artifacts.prefer_anywhere:
-        metroids_where = "Place anywhere"
+        metroids_where = "Place at any item location"
     elif artifacts.prefer_bosses:
-        metroids_where = "Prefers major bosses"
+        metroids_where = "Place on major bosses"
     else:
         metroids_where = "Kill the SA-X"
 

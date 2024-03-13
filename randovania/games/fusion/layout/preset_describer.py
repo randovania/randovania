@@ -20,7 +20,7 @@ def describe_artifacts(artifacts: FusionArtifactConfig) -> list[dict[str, bool]]
                 f"{artifacts.required_artifacts} of {artifacts.placed_artifacts} Metroids Required": True,
             },
             {
-                "Place anywhere": artifacts.prefer_anywhere,
+                "Place at any item location": artifacts.prefer_anywhere,
             },
         ]
     elif has_artifacts:
@@ -29,7 +29,7 @@ def describe_artifacts(artifacts: FusionArtifactConfig) -> list[dict[str, bool]]
                 f"{artifacts.required_artifacts} of {artifacts.placed_artifacts} Metroids Required": True,
             },
             {
-                "Prefers major bosses": artifacts.prefer_bosses,
+                "Place on major bosses": artifacts.prefer_bosses,
             },
         ]
     else:
@@ -49,7 +49,7 @@ class FusionPresetDescriber(GamePresetDescriber):
             "Game Changes": [
                 {f"Energy per Tank: {configuration.energy_per_tank}": configuration.energy_per_tank != 100},
                 {
-                    "Enable Instant Hatch Transitions": configuration.instant_transitions,
+                    "Instant Hatch Transitions": configuration.instant_transitions,
                 },
             ],
             "Goal": describe_artifacts(configuration.artifacts),
