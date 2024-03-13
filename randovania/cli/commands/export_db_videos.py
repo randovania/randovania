@@ -3,8 +3,8 @@ from __future__ import annotations
 import datetime
 from typing import TYPE_CHECKING, Any
 
-import yaml
 from htmlmin import minify
+from ruamel.yaml import YAML
 
 from randovania.game_description import default_database
 from randovania.game_description.requirements.array_base import RequirementArrayBase
@@ -20,6 +20,8 @@ if TYPE_CHECKING:
 
     from randovania.game_description.requirements.base import Requirement
     from randovania.games.game import RandovaniaGame
+
+# ruff: noqa: E731
 
 # (tab title, page title, time)
 HTML_HEADER_FORMAT = """
@@ -326,13 +328,15 @@ def export_as_yaml(game: RandovaniaGame, out_dir: Path, as_frontmatter: bool):
 
     output = {"regions": output}
 
-    yaml_body = yaml.dump(output)
+    tr = lambda s: s
+    fmt = "yml"
     if as_frontmatter:
-        yaml_body = f"---\n{yaml_body}\n---"
+        tr = lambda s: f"---\n{s}\n---"
+        fmt = "yml"
 
-    fmt = "md" if as_frontmatter else "yml"
-
-    out_dir.joinpath(f"{game.value}.{fmt}").write_text(yaml_body)
+    yaml = YAML(typ="safe")
+    with out_dir.joinpath(f"{game.value}.{fmt}").open("w") as out_file:
+        yaml.dump(output, out_file, transform=tr)
 
 
 def export_videos(game: RandovaniaGame, out_dir: Path):

@@ -5,7 +5,7 @@ import shutil
 from argparse import ArgumentParser
 from pathlib import Path
 
-import yaml
+from ruamel.yaml import YAML
 
 from randovania import get_readme_section
 from randovania.games.game import RandovaniaGame
@@ -102,10 +102,10 @@ def extract_game_data(game: RandovaniaGame, games_dir: Path, covers_dir: Path):
         "faq": [{"question": question, "answer": answer} for question, answer in data.faq],
     }
 
-    yaml_body = yaml.dump(output)
-    md_body = f"---\n{yaml_body}\n---"
-
-    games_dir.joinpath(f"{game.value}.md").write_text(md_body)
+    yaml = YAML()
+    yaml.allow_unicode = False
+    with games_dir.joinpath(f"{game.value}.md").open("w") as out_file:
+        yaml.dump(output, out_file, transform=lambda s: f"---\n{s}\n---")
 
 
 def extract_game_data_logic(args):
