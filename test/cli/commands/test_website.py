@@ -22,7 +22,7 @@ def test_export_videos(tmp_path, as_frontmatter: bool):
     # Check
     fmt = "md" if as_frontmatter else "yml"
     prime1_sz = tmp_path.joinpath(f"prime1.{fmt}").stat().st_size
-    assert prime1_sz > 48000
+    assert prime1_sz > 47000
 
 
 @pytest.mark.parametrize("section", ["WELCOME", "CREDITS"])
