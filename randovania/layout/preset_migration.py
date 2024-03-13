@@ -1160,6 +1160,15 @@ def _migrate_v84(preset: dict) -> dict:
 
     return preset
 
+def _migrate_v85(preset: dict) -> dict:
+    if preset["game"] == "prime1":
+        state = preset["configuration"]["ammo_pickup_configuration"]["pickups_state"]
+        item_list = [("Health Refill", 20), ("Missile Refill", 5), ("Power Bomb Refill", 1)]
+        for item_name, count in item_list:
+            state[item_name] = {"ammo_count": [count], "pickup_count": 0, "requires_main_item": False}
+
+    return preset
+
 
 _MIGRATIONS = [
     _migrate_v1,  # v1.1.1-247-gaf9e4a69
@@ -1246,6 +1255,7 @@ _MIGRATIONS = [
     _migrate_v82,
     _migrate_v83,
     _migrate_v84,
+    _migrate_v85,
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 

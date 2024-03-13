@@ -110,6 +110,7 @@ def prime1_pickup_details_to_patcher(
     collection_text = detail.collection_text[0]
     pickup_type = "Nothing"
     count = 0
+    max_count = 0
 
     if detail.other_player:
         pickup_type = "Unknown Item 1"
@@ -118,8 +119,9 @@ def prime1_pickup_details_to_patcher(
         for resource, quantity in detail.conditional_resources[0].resources:
             if resource.extra["item_id"] >= 1000:
                 continue
-            pickup_type = resource.long_name
+            pickup_type = resource.extra.get("pickup_type", resource.long_name)
             count = quantity
+            max_count = resource.extra.get("max_increase", count)
             break
 
     if (
@@ -140,7 +142,7 @@ def prime1_pickup_details_to_patcher(
         "scanText": f"{name}. {detail.description}".strip(),
         "hudmemoText": collection_text,
         "currIncrease": count,
-        "maxIncrease": count,
+        "maxIncrease": max_count,
         "respawn": False,
         "showIcon": pickup_markers,
     }
