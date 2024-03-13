@@ -42,9 +42,7 @@ def test_fusion_format_params(artifacts):
 
     # Assert
     assert dict(result) == {
-        "Game Changes": [
-            "Missiles need Main Data, Power Bombs need Main Data",
-        ],
+        "Game Changes": [],
         "Gameplay": ["Starts at Main Deck - Docking Bay Hangar"],
         "Goal": (
             [f"{artifacts.required_artifacts} of {artifacts.placed_artifacts} Metroids Required", metroids_where]

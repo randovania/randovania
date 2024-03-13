@@ -6,7 +6,6 @@ from randovania.games.fusion.layout.fusion_configuration import FusionArtifactCo
 from randovania.layout.preset_describer import (
     GamePresetDescriber,
     fill_template_strings_from_tree,
-    message_for_required_mains,
 )
 
 if TYPE_CHECKING:
@@ -48,13 +47,6 @@ class FusionPresetDescriber(GamePresetDescriber):
 
         extra_message_tree = {
             "Game Changes": [
-                message_for_required_mains(
-                    configuration.ammo_pickup_configuration,
-                    {
-                        "Missiles need Main Data": "Missile Tank",
-                        "Power Bombs need Main Data": "Power Bomb Tank",
-                    },
-                ),
                 {f"Energy per Tank: {configuration.energy_per_tank}": configuration.energy_per_tank != 100},
                 {
                     "Enable Instant Hatch Transitions": configuration.instant_transitions,
