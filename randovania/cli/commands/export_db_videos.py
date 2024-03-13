@@ -331,8 +331,8 @@ def export_as_yaml(game: RandovaniaGame, out_dir: Path, as_frontmatter: bool):
     tr = lambda s: s
     fmt = "yml"
     if as_frontmatter:
-        tr = lambda s: f"---\n{s}\n---"
-        fmt = "yml"
+        tr = lambda s: f"---\n{s}---\n"
+        fmt = "md"
 
     yaml = YAML(typ="safe")
     with out_dir.joinpath(f"{game.value}.{fmt}").open("w") as out_file:

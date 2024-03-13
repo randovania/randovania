@@ -98,16 +98,10 @@ class GameGenerator:
 
 @dataclass(frozen=True)
 class GameWebInfo:
-    what_can_randomize: Iterable[str] = (
-        "Everything",
-        "Nothing",
-    )
+    what_can_randomize: Iterable[str] = ()
     """What can be randomized?"""
 
-    need_to_play: Iterable[str] = (
-        "A Nintendo Virtual Boy",
-        "Your original Virtual Boy Game Cartridge",
-    )
+    need_to_play: Iterable[str] = ()
     """What do you need to play?"""
 
 

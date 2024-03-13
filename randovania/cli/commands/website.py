@@ -105,7 +105,7 @@ def extract_game_data(game: RandovaniaGame, games_dir: Path, covers_dir: Path):
     yaml = YAML()
     yaml.allow_unicode = False
     with games_dir.joinpath(f"{game.value}.md").open("w") as out_file:
-        yaml.dump(output, out_file, transform=lambda s: f"---\n{s}\n---")
+        yaml.dump(output, out_file, transform=lambda s: f"---\n{s}---\n")
 
 
 def extract_game_data_logic(args):
