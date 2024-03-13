@@ -5,12 +5,12 @@ import dataclasses
 import logging
 import re
 import struct
-from asyncio import StreamReader, StreamWriter
 from enum import IntEnum
 from typing import TYPE_CHECKING, Any
 
 from PySide6.QtCore import QObject, Signal
 
+from randovania.game_connection.executor.common_socket_holder import CommonSocketHolder
 from randovania.game_description import default_database
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.games.game import RandovaniaGame
@@ -26,10 +26,7 @@ class DreadLuaException(Exception):
 
 
 @dataclasses.dataclass()
-class DreadSocketHolder:
-    reader: StreamReader
-    writer: StreamWriter
-    api_version: int
+class DreadSocketHolder(CommonSocketHolder):
     buffer_size: int
     request_number: int
 
@@ -199,9 +196,9 @@ class DreadExecutor:
             return None
 
         except (
+            TimeoutError,
             OSError,
             AttributeError,
-            asyncio.TimeoutError,
             struct.error,
             UnicodeError,
             RuntimeError,
@@ -302,7 +299,7 @@ class DreadExecutor:
                 await asyncio.sleep(2)
                 self._socket.writer.write(self._build_packet(PacketType.PACKET_KEEP_ALIVE, None))
                 await asyncio.wait_for(self._socket.writer.drain(), timeout=30)
-            except (OSError, asyncio.TimeoutError, AttributeError) as e:
+            except (TimeoutError, OSError, AttributeError) as e:
                 self.logger.warning(
                     "Unable to send keep-alive packet to %s:%d: %s (%s)", self._ip, self._port, e, type(e)
                 )
@@ -341,7 +338,7 @@ class DreadExecutor:
         while self.is_connected():
             try:
                 await self._read_response()
-            except (OSError, asyncio.TimeoutError, AttributeError, DreadLuaException) as e:
+            except (TimeoutError, OSError, AttributeError, DreadLuaException) as e:
                 self.logger.warning(
                     f"Connection lost. Unable to send packet to {self._ip}:{self._port}: {e} ({type(e)})"
                 )

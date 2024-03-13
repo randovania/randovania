@@ -32,7 +32,8 @@ class BaseCosmeticPatchesDialog(QtWidgets.QDialog):
     def _persist_check_field(self, check: QtWidgets.QCheckBox, attribute_name: str) -> None:
         def persist_field(value: bool) -> None:
             self._cosmetic_patches = dataclasses.replace(
-                self._cosmetic_patches, **{attribute_name: value}  # type: ignore[arg-type]
+                self._cosmetic_patches,
+                **{attribute_name: value},  # type: ignore[arg-type]
             )
 
         signal_handling.on_checked(check, persist_field)

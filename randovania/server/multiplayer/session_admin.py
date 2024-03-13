@@ -108,6 +108,9 @@ def _create_world(
     _verify_not_in_generation(session)
     preset = _get_preset(preset_bytes)
 
+    if preset.game not in session.allowed_games:
+        raise error.InvalidActionError(f"{preset.game.long_name} not allowed.")
+
     if WORLD_NAME_RE.match(name) is None:
         raise error.InvalidActionError("Invalid world name")
 
@@ -248,6 +251,8 @@ def _change_layout_description(sa: ServerApp, session: MultiplayerSession, descr
             )
         except InvalidLayoutDescription as e:
             raise error.InvalidActionError(f"Invalid layout: {e}") from e
+        except ValueError as e:
+            raise error.InvalidActionError("Presets do not match layout") from e
 
     with database.db.atomic():
         if worlds_to_update:

@@ -1,0 +1,917 @@
+----------------
+Transport to Area 2
+Extra - total_boundings: {'x1': -26400.0, 'x2': -20400.0, 'y1': -1800.0, 'y2': 4400.0}
+Extra - polygon: [[-26400.0, 4400.0], [-26400.0, 2700.0], [-24500.0, 2700.0], [-23000.0, 2350.0], [-23000.0, -1800.0], [-21200.0, -1800.0], [-21200.0, 1700.0], [-20400.0, 2000.0], [-20400.0, 3600.0], [-20500.0, 3600.0], [-21800.0, 3800.0], [-24200.0, 3800.0], [-24200.0, 4400.0]]
+Extra - asset_id: collision_camera_002
+> Chozo Seal; Heals? False
+  * Layers: default
+  * Hint
+  * Extra - actor_name: LE_ChozoUnlockAreaDNA
+  * Extra - actor_type: weightactivatedplatform
+  * Extra - start_point_actor_name: ST_ChozoUnlockAreaDNA_Checkpoint
+  > Elevator to Area 2 - Dam Entryway
+      Trivial
+  > Door to Beam Burst Chamber & Tsumuri Station
+      Trivial
+  > Door to Transport to Area 4 (Top)
+      Trivial
+
+> Elevator to Area 2 - Dam Entryway; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Elevator to Transport to Areas 1 and 3/Elevator to Area 3 - Factory Exterior
+  * Extra - actor_name: LE_Platform_Elevator_FromArea02
+  * Extra - actor_type: weightactivatedplatform
+  * Extra - start_point_actor_name: ST_FromArea02
+  > Chozo Seal
+      Trivial
+
+> Door to Beam Burst Chamber & Tsumuri Station; Heals? False
+  * Layers: default
+  * Power Beam Door to Beam Burst Chamber & Tsumuri Station/Door to Transport to Area 2
+  * Extra - actor_name: Door002
+  * Extra - actor_type: doorpowerpower
+  > Chozo Seal
+      Trivial
+
+> Door to Transport to Area 4 (Top); Heals? False
+  * Layers: default
+  * Power Beam Door to Transport to Area 4/Door to Transport to Area 2 (Top)
+  * Extra - actor_name: Door005
+  * Extra - actor_type: doorpowerpower
+  > Chozo Seal
+      Trivial
+  > Door to Transport to Area 4 (Middle Top)
+      Trivial
+
+> Door to Transport to Area 4 (Middle Top); Heals? False
+  * Layers: default
+  * Power Beam Door to Transport to Area 4/Door to Transport to Area 2 (Middle Top)
+  * Extra - actor_name: Door006
+  * Extra - actor_type: doorpowerpower
+  > Door to Transport to Area 4 (Top)
+      Trivial
+  > Door to Entrance Maze (Top)
+      Lay Any Bomb
+
+> Door to Transport to Area 4 (Middle Bottom); Heals? False
+  * Layers: default
+  * Power Beam Door to Transport to Area 4/Door to Transport to Area 2 (Middle Bottom)
+  * Extra - actor_name: Door007
+  * Extra - actor_type: doorpowerpower
+  > Door to Entrance Maze (Top)
+      Morph Ball and Shoot Any Missile
+  > Door to Entrance Maze (Bottom)
+      Trivial
+
+> Door to Transport to Area 4 (Bottom); Heals? False
+  * Layers: default
+  * Power Beam Door to Transport to Area 4/Door to Transport to Area 2 (Bottom)
+  * Extra - actor_name: Door008
+  * Extra - actor_type: doorpowerpower
+  > Door to Entrance Maze (Bottom)
+      Trivial
+
+> Door to Entrance Maze (Top); Heals? False
+  * Layers: default
+  * Power Beam Door to Entrance Maze/Door to Transport to Area 2 (Top)
+  * Extra - actor_name: Door009
+  * Extra - actor_type: doorpowerpower
+  > Door to Transport to Area 4 (Middle Top)
+      Lay Any Bomb
+  > Door to Transport to Area 4 (Middle Bottom)
+      Morph Ball and Precise Aiming (Intermediate) and Shoot Any Missile
+
+> Door to Entrance Maze (Bottom); Heals? False
+  * Layers: default
+  * Power Beam Door to Entrance Maze/Door to Transport to Area 2 (Bottom)
+  * Extra - actor_name: Door010
+  * Extra - actor_type: doorpowerpower
+  > Door to Transport to Area 4 (Middle Bottom)
+      Trivial
+  > Door to Transport to Area 4 (Bottom)
+      Trivial
+
+----------------
+Exterior Maze
+Extra - total_boundings: {'x1': 6600.0, 'x2': 9900.0, 'y1': 11000.0, 'y2': 12800.0}
+Extra - polygon: [[6600.0, 12800.0], [6600.0, 11000.0], [9900.0, 11000.0], [9900.0, 12800.0]]
+Extra - asset_id: collision_camera_016
+> Pickup (Power Bomb Tank); Heals? False
+  * Layers: default
+  * Pickup 58; Category? Minor
+  * Extra - actor_name: LE_Item_004
+  * Extra - actor_type: item_powerbombtank
+  > Tunnel to Factory Exterior (Top)
+      All of the following:
+          Baby Metroid and Morph Ball
+          Any of the following:
+              Spider Ball
+              All of the following:
+                  High Jump Boots or Space Jump
+                  Phase Drift or Movement (Intermediate)
+  > Tunnel to Factory Exterior (Bottom)
+      Lay Any Bomb
+  > Dock to Factory Exterior
+      # Softlock risk without Bombs https://youtu.be/NciAGjkvQMM
+      Phase Drift Clip (Advanced) and Can Phase Drift Clip
+
+> Tunnel to Factory Exterior (Top); Heals? False
+  * Layers: default
+  * Tunnel to Factory Exterior/Tunnel to Exterior Maze (Top)
+  > Pickup (Power Bomb Tank)
+      All of the following:
+          Morph Ball
+          Any of the following:
+              All of the following:
+                  Power Bomb and Climb Rooms Vertically (No High Jump)
+                  Phase Drift or Movement (Beginner)
+                  Disabled Buff Beam Burst or Shoot Beam Burst
+              All of the following:
+                  Baby Metroid and Defeat Gold Robots
+                  Phase Drift or Spider Ball or Movement (Beginner)
+
+> Tunnel to Factory Exterior (Bottom); Heals? False
+  * Layers: default
+  * Tunnel with Bomb Block to Factory Exterior/Tunnel to Exterior Maze (Bottom)
+
+> Dock to Factory Exterior; Heals? False
+  * Layers: default
+  * Open Passage to Factory Exterior/Dock from Exterior Maze
+
+----------------
+Grapple Beam Chamber
+Extra - total_boundings: {'x1': -2400.0, 'x2': 1800.0, 'y1': 10800.0, 'y2': 13700.0}
+Extra - polygon: [[-2400.0, 13700.0], [-2400.0, 10800.0], [1800.0, 10800.0], [1800.0, 12300.0], [1200.0, 12400.0], [1200.0, 13700.0]]
+Extra - asset_id: collision_camera_022
+> Pickup (Grapple Beam); Heals? False
+  * Layers: default
+  * Pickup 60; Category? Major
+  * Extra - actor_name: LE_PowerUp_GrappleBeam
+  * Extra - actor_type: itemsphere_grapplebeam
+  > Start Point
+      Trivial
+
+> Door to Factory Exterior; Heals? False
+  * Layers: default
+  * Missile Door to Factory Exterior/Door to Grapple Beam Chamber
+  * Extra - actor_name: Door003
+  * Extra - actor_type: doorpowerpower
+  > Start Point
+      Morph Ball
+
+> Start Point; Heals? False; Default Node
+  * Layers: default
+  * Extra - start_point_actor_name: ST_CheckPoint_003
+  > Pickup (Grapple Beam)
+      Trivial
+  > Door to Factory Exterior
+      Grapple Beam and Morph Ball
+
+----------------
+Factory Exterior Teleporter Cave
+Extra - total_boundings: {'x1': -7800.0, 'x2': -4400.0, 'y1': 8400.0, 'y2': 10300.0}
+Extra - polygon: [[-7800.0, 10300.0], [-7800.0, 8400.0], [-5250.0, 8400.0], [-5250.0, 9150.0], [-4400.0, 9150.0], [-4400.0, 10300.0]]
+Extra - asset_id: collision_camera_023
+> Teleporter; Heals? False; Default Node
+  * Layers: default
+  * Teleporter Network (Unlocked by After Area 3 (Factory Exterior) - Teleporter Unlocked (West))
+  * Extra - actor_name: LE_Platform_Teleporter_03A_001
+  * Extra - actor_type: weightactivatedplatform
+  * Extra - start_point_actor_name: ST_Teleporter_03A_001
+  > Dock to Factory Exterior
+      Trivial
+
+> Dock to Factory Exterior; Heals? False
+  * Layers: default
+  * Open Passage to Factory Exterior/Dock to Factory Exterior Teleporter Cave
+  > Teleporter
+      Trivial
+  > Event - Teleporter Unlocked
+      Trivial
+
+> Event - Teleporter Unlocked; Heals? False
+  * Layers: default
+  * Event Area 3 (Factory Exterior) - Teleporter Unlocked (West)
+  > Dock to Factory Exterior
+      Trivial
+
+----------------
+Factory Exterior
+Extra - total_boundings: {'x1': -6600.0, 'x2': 11900.0, 'y1': 6900.0, 'y2': 19100.0}
+Extra - polygon: [[-6600.0, 10600.0], [-4500.0, 10100.0], [-4500.0, 9400.0], [-2100.0, 9400.0], [-2100.0, 13500.0], [-1300.0, 13800.0], [300.0, 13800.0], [1100.0, 13600.0], [1100.0, 12900.0], [5000.0, 12900.0], [7100.0, 15500.0], [9200.0, 15500.0], [9700.0, 15200.0], [9700.0, 6900.0], [11500.0, 6900.0], [11500.0, 7794.0400390625], [11900.0, 8700.0], [11900.0, 12500.0], [11300.0, 12600.0], [11300.0, 19100.0], [-6600.0, 19100.0]]
+Extra - asset_id: collision_camera_030
+> Pickup (Missile Tank Ceiling); Heals? False
+  * Layers: default
+  * Pickup 57; Category? Minor
+  * Extra - actor_name: LE_Item_003
+  * Extra - actor_type: item_missiletank
+  > Above Grapple Beam Chamber
+      Trivial
+
+> Pickup (Missile Tank Shaft); Heals? False
+  * Layers: default
+  * Pickup 59; Category? Minor
+  * Extra - actor_name: LE_Item_005
+  * Extra - actor_type: item_missiletank
+  > Below Crumble Blocks
+      Trivial
+
+> Elevator to Area 3 - Factory Interior; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Elevator to Transport to Factory Exterior East/Elevator to Area 3 - Factory Exterior
+  * Extra - actor_name: LE_Platform_Elevator_FromArea03C
+  * Extra - actor_type: weightactivatedplatform
+  * Extra - start_point_actor_name: ST_FromArea03C
+  > Save Station
+      Trivial
+  > Below Crumble Blocks
+      Trivial
+
+> Save Station; Heals? False
+  * Layers: default
+  * Extra - actor_name: LE_Platform_SaveStation_002
+  * Extra - actor_type: weightactivatedplatform
+  * Extra - start_point_actor_name: ST_SaveStation_002
+  > Elevator to Area 3 - Factory Interior
+      Trivial
+  > Above Grapple Beam Chamber
+      Trivial
+
+> Teleporter; Heals? False
+  * Layers: default
+  * Teleporter Network (Unlocked by After Area 3 (Factory Exterior) - Teleporter Unlocked (East))
+  * Extra - actor_name: LE_Platform_Teleporter_03A_002
+  * Extra - actor_type: weightactivatedplatform
+  * Extra - start_point_actor_name: ST_Teleporter_03A_002
+  > Door to Halzyn Hangout
+      Trivial
+
+> Door to Grapple Beam Chamber; Heals? False
+  * Layers: default
+  * Missile Door to Grapple Beam Chamber/Door to Factory Exterior
+  * Extra - actor_name: Door003
+  * Extra - actor_type: doorpowerpower
+  > Save Station
+      Any of the following:
+          Space Jump or Simple IBJ
+          # Launch from second circle on floor from door
+          Spider Boost (Advanced) and Can Spider Boost
+          Grapple Beam and Use Spider Ball
+
+> Door to Factory Exterior Access; Heals? False
+  * Layers: default
+  * Power Beam Door to Factory Exterior Access/Door to Factory Exterior
+  * Extra - actor_name: Door016
+  * Extra - actor_type: doorpowerpower
+  > Dock to Factory Exterior Teleporter Cave
+      Trivial
+  > Above Grapple Beam Chamber
+      Any of the following:
+          Super Jump (Intermediate) or Climb Rooms Vertically (High Jump)
+          Morph Ball and Unmorph Extend (Intermediate)
+
+> Door to Halzyn Hangout; Heals? False
+  * Layers: default
+  * Power Beam Door to Halzyn Hangout/Door to Factory Exterior
+  * Extra - actor_name: Door017
+  * Extra - actor_type: doorpowerpower
+  > Teleporter
+      Trivial
+  > Event - Teleporter Unlocked
+      Trivial
+  > Below Crumble Blocks
+      Any of the following:
+          Super Jump (Intermediate) or Wall Jump (Beginner) or Climb Rooms Vertically (High Jump)
+          Morph Ball and Unmorph Extend (Beginner)
+
+> Dock to Factory Exterior Teleporter Cave; Heals? False
+  * Layers: default
+  * Open Passage to Factory Exterior Teleporter Cave/Dock to Factory Exterior
+  > Pickup (Missile Tank Ceiling)
+      Any of the following:
+          Spider Boost (Intermediate) and Can Spider Boost
+          All of the following:
+              Morph Ball
+              Any of the following:
+                  Space Jump
+                  Bomb and Infinite Bomb Jump (Intermediate)
+  > Door to Factory Exterior Access
+      Any of the following:
+          Single-wall Wall Jump (Intermediate) or Super Jump (Intermediate) or Climb Rooms Vertically (High Jump)
+          Morph Ball and Unmorph Extend (Intermediate)
+
+> Tunnel to Exterior Maze (Top); Heals? False
+  * Layers: default
+  * Tunnel to Exterior Maze/Tunnel to Factory Exterior (Top)
+  > Below Crumble Blocks
+      Morph Ball
+
+> Event - Teleporter Unlocked; Heals? False
+  * Layers: default
+  * Event Area 3 (Factory Exterior) - Teleporter Unlocked (East)
+  > Door to Halzyn Hangout
+      Trivial
+
+> Above Grapple Beam Chamber; Heals? False
+  * Layers: default
+  > Door to Grapple Beam Chamber
+      Trivial
+  > Door to Factory Exterior Access
+      Trivial
+
+> Tunnel to Exterior Maze (Bottom); Heals? False
+  * Layers: default
+  * Tunnel with Bomb Block to Exterior Maze/Tunnel to Factory Exterior (Bottom)
+  > Below Crumble Blocks
+      Trivial
+
+> Below Crumble Blocks; Heals? False
+  * Layers: default
+  > Pickup (Missile Tank Shaft)
+      Morph Ball
+  > Elevator to Area 3 - Factory Interior
+      Any of the following:
+          Climb Rooms Vertically (High Jump)
+          Charge Beam and Ice Beam and Morph Ball and Stand on Frozen Enemy (Beginner) and Unmorph Extend (Advanced)
+  > Door to Halzyn Hangout
+      Trivial
+  > Tunnel to Exterior Maze (Top)
+      Morph Ball
+
+> Dock from Exterior Maze; Heals? False
+  * Layers: default
+  * Blocked Passage to Exterior Maze/Dock to Factory Exterior
+  > Door to Halzyn Hangout
+      Out of Bounds Movement (Beginner)
+
+----------------
+Transport to Metroid Caverns West
+Extra - total_boundings: {'x1': -18100.0, 'x2': -16800.0, 'y1': 2020.9200439453125, 'y2': 2779.080078125}
+Extra - polygon: [[-18100.0, 2779.080078125], [-18100.0, 2020.9200439453125], [-16800.0, 2020.9200439453125], [-16800.0, 2779.080078125]]
+Extra - asset_id: collision_camera_031
+> Elevator to Area 3 - Metroid Caverns; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Elevator to Transport to Factory Exterior West/Elevator to Area 3 - Factory Exterior
+  * Extra - actor_name: LE_Platform_Elevator_FromArea03B_02
+  * Extra - actor_type: weightactivatedplatform
+  * Extra - start_point_actor_name: ST_FromArea03B_02
+  > Door to Beam Burst Chamber & Tsumuri Station
+      Trivial
+  > Pickup (Missile Tank)
+      Morph Ball and Shoot Any Missile
+
+> Door to Beam Burst Chamber & Tsumuri Station; Heals? False
+  * Layers: default
+  * Power Beam Door to Beam Burst Chamber & Tsumuri Station/Door to Transport to Metroid Caverns West
+  * Extra - actor_name: Door004
+  * Extra - actor_type: doorclosedpower
+  > Elevator to Area 3 - Metroid Caverns
+      Trivial
+
+> Pickup (Missile Tank); Heals? False
+  * Layers: default
+  * Pickup 62; Category? Minor
+  * Extra - actor_name: HP_ChozoHologram_002
+  * Extra - actor_type: item_missiletank
+  > Elevator to Area 3 - Metroid Caverns
+      Trivial
+
+----------------
+Transport to Area 4
+Extra - total_boundings: {'x1': -26100.0, 'x2': -22900.0, 'y1': -2000.0, 'y2': 2100.0}
+Extra - polygon: [[-26100.0, 2100.0], [-26100.0, -999.9979858398438], [-25550.0, -1100.0], [-25550.0, -2000.0], [-22900.0, -2000.0], [-22900.0, 2100.0]]
+Extra - asset_id: collision_camera_032
+> Pickup (Missile Tank); Heals? False
+  * Layers: default
+  * Pickup 56; Category? Minor
+  * Extra - actor_name: LE_Item_002
+  * Extra - actor_type: item_missiletank
+  > Door to Transport to Area 2 (Middle Top)
+      Any of the following:
+          Out of Bounds Movement (Intermediate)
+          Morph Ball and After Area 3 (Factory Exterior) - Transport to Area 4 Grapple Block
+
+> Elevator to Area 4 - Central Caves; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Elevator to Transport to Area 3 and Crystal Mines/Elevator to Area 3 - Factory Exterior
+  * Extra - actor_name: LE_Platform_Elevator_FromArea04
+  * Extra - actor_type: weightactivatedplatform
+  * Extra - start_point_actor_name: ST_FromArea04
+  > Door to Transport to Area 2 (Bottom)
+      Trivial
+
+> Door to Transport to Area 2 (Top); Heals? False
+  * Layers: default
+  * Power Beam Door to Transport to Area 2/Door to Transport to Area 4 (Top)
+  * Extra - actor_name: Door005
+  * Extra - actor_type: doorpowerpower
+  > Pickup (Missile Tank)
+      All of the following:
+          # https://youtu.be/j_W2WiQ7XK4
+          Charge Beam and Ice Beam and Ice Beam Clip (Beginner) and Out of Bounds Movement (Intermediate)
+          # Dealing with the Gravitts
+          Lightning Armor or Dodge Enemies (Advanced) or Defeat Non-Counterable Enemies
+  > Door to Transport to Area 2 (Middle Top)
+      Morph Ball
+
+> Door to Transport to Area 2 (Middle Top); Heals? False
+  * Layers: default
+  * Power Beam Door to Transport to Area 2/Door to Transport to Area 4 (Middle Top)
+  * Extra - actor_name: Door006
+  * Extra - actor_type: doorpowerpower
+  > Pickup (Missile Tank)
+      All of the following:
+          Morph Ball and After Area 3 (Factory Exterior) - Transport to Area 4 Grapple Block
+          Movement (Intermediate) or Climb Rooms Vertically (High Jump)
+  > Door to Transport to Area 2 (Top)
+      Morph Ball
+  > Door to Transport to Area 2 (Middle Bottom)
+      Morph Ball
+  > Event - Grapple Block
+      Grapple Beam and Morph Ball
+
+> Door to Transport to Area 2 (Middle Bottom); Heals? False
+  * Layers: default
+  * Power Beam Door to Transport to Area 2/Door to Transport to Area 4 (Middle Bottom)
+  * Extra - actor_name: Door007
+  * Extra - actor_type: doorpowerpower
+  > Door to Transport to Area 2 (Middle Top)
+      Morph Ball
+
+> Door to Transport to Area 2 (Bottom); Heals? False
+  * Layers: default
+  * Power Beam Door to Transport to Area 2/Door to Transport to Area 4 (Bottom)
+  * Extra - actor_name: Door008
+  * Extra - actor_type: doorpowerpower
+  > Elevator to Area 4 - Central Caves
+      Trivial
+
+> Event - Grapple Block; Heals? False
+  * Layers: default
+  * Event Area 3 (Factory Exterior) - Transport to Area 4 Grapple Block
+  > Door to Transport to Area 2 (Middle Top)
+      Trivial
+
+----------------
+Entrance Maze
+Extra - total_boundings: {'x1': -21300.0, 'x2': -17200.0, 'y1': -1700.0, 'y2': 600.0}
+Extra - polygon: [[-21300.0, 600.0], [-21300.0, -1700.0], [-17200.0, -1700.0], [-17200.0, 600.0]]
+Extra - asset_id: collision_camera_033
+> Pickup (Missile Tank); Heals? False
+  * Layers: default
+  * Pickup 55; Category? Minor
+  * Extra - actor_name: LE_Item_001
+  * Extra - actor_type: item_missiletank
+  > Door to Transport to Area 2 (Bottom)
+      Morph Ball
+
+> Door to Transport to Area 2 (Top); Heals? False
+  * Layers: default
+  * Power Beam Door to Transport to Area 2/Door to Entrance Maze (Top)
+  * Extra - actor_name: Door009
+  * Extra - actor_type: doorpowerpower
+  > Pickup (Missile Tank)
+      All of the following:
+          Morph Ball
+          Phase Drift or Spider Ball or Movement (Beginner)
+  > Door to Transport to Area 2 (Bottom)
+      Morph Ball
+
+> Door to Transport to Area 2 (Bottom); Heals? False
+  * Layers: default
+  * Power Beam Door to Transport to Area 2/Door to Entrance Maze (Bottom)
+  * Extra - actor_name: Door010
+  * Extra - actor_type: doorpowerpower
+
+----------------
+Transport to Metroid Caverns North
+Extra - total_boundings: {'x1': -11800.0, 'x2': -8300.0, 'y1': 8000.0, 'y2': 10200.0}
+Extra - polygon: [[-11800.0, 10200.0], [-11800.0, 8000.0], [-8300.0, 8000.0], [-8300.0, 10200.0]]
+Extra - asset_id: collision_camera_035
+> Ammo Recharge Station; Heals? False
+  * Layers: default
+  * Extra - actor_name: LE_Platform_AmmoCharge
+  * Extra - actor_type: weightactivatedplatform
+  > Elevator to Area 3 - Metroid Caverns
+      Lay Any Bomb
+  > Door to Factory Exterior Access
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Power Bomb or Plasma Beam or Spider Ball or Shoot Beam Burst
+              All of the following:
+                  Damage Boost (Beginner) and Normal Damage ≥ 30
+                  Phase Drift or Normal Damage ≥ 40
+
+> Elevator to Area 3 - Metroid Caverns; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Elevator to Transport to Factory Exterior North/Elevator to Area 3 - Factory Exterior
+  * Extra - actor_name: LE_Platform_Elevator_FromArea03B_01
+  * Extra - actor_type: weightactivatedplatform
+  * Extra - start_point_actor_name: ST_FromArea03B_01
+  > Ammo Recharge Station
+      Lay Any Bomb
+  > Door to Beam Burst Chamber & Tsumuri Station
+      Trivial
+  > Door to Factory Exterior Access
+      Morph Ball and Destroy Blob Throwers/Steel Orbs
+
+> Door to Beam Burst Chamber & Tsumuri Station; Heals? False
+  * Layers: default
+  * Power Beam Door to Beam Burst Chamber & Tsumuri Station/Door to Transport to Metroid Caverns North
+  * Extra - actor_name: Door013
+  * Extra - actor_type: doorpowerpower
+  > Elevator to Area 3 - Metroid Caverns
+      Trivial
+
+> Door to Factory Exterior Access; Heals? False
+  * Layers: default
+  * Power Beam Door to Factory Exterior Access/Door to Transport to Metroid Caverns North
+  * Extra - actor_name: Door014
+  * Extra - actor_type: doorpowerpower
+  > Ammo Recharge Station
+      Morph Ball
+  > Elevator to Area 3 - Metroid Caverns
+      Morph Ball and Destroy Blob Throwers/Steel Orbs
+
+----------------
+Beam Burst Chamber & Tsumuri Station
+Extra - total_boundings: {'x1': -20500.0, 'x2': -11700.0, 'y1': 2000.0, 'y2': 9800.0}
+Extra - polygon: [[-11700.0, 8600.0], [-13700.0, 8600.0], [-14100.0, 8650.0], [-14250.0, 8900.0], [-14250.0, 9800.0], [-20500.0, 9800.0], [-20500.0, 2000.0], [-18000.0, 2000.0], [-18000.0, 7100.0], [-17500.0, 7300.0], [-17400.0, 7300.0], [-16100.0, 7700.0], [-11700.0, 7700.0]]
+Extra - asset_id: collision_camera_036
+> Pickup (Beam Burst); Heals? False
+  * Layers: default
+  * Pickup 61; Category? Major
+  * Extra - actor_name: LE_SpecialAbility_EnergyWave
+  * Extra - actor_type: powerup_energywave
+  > Right of Statue
+      Morph Ball
+  > Left of Statue
+      Morph Ball
+
+> Save Station; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Extra - actor_name: LE_Platform_SaveStation_001
+  * Extra - actor_type: weightactivatedplatform
+  * Extra - start_point_actor_name: ST_SaveStation001
+  > Door to Transport to Area 2
+      Trivial
+
+> Door to Transport to Area 2; Heals? False
+  * Layers: default
+  * Power Beam Door to Transport to Area 2/Door to Beam Burst Chamber & Tsumuri Station
+  * Extra - actor_name: Door002
+  * Extra - actor_type: doorpowerpower
+  > Save Station
+      Trivial
+  > Door to Transport to Metroid Caverns West
+      Trivial
+  > Top of Climb
+      Trivial
+
+> Door to Transport to Metroid Caverns West; Heals? False
+  * Layers: default
+  * Access Locked to Transport to Metroid Caverns West/Door to Beam Burst Chamber & Tsumuri Station
+  * Extra - actor_name: Door004
+  * Extra - actor_type: doorclosedpower
+  > Door to Transport to Area 2
+      Trivial
+
+> Door to Transport to Metroid Caverns North; Heals? False
+  * Layers: default
+  * Power Beam Door to Transport to Metroid Caverns North/Door to Beam Burst Chamber & Tsumuri Station
+  * Extra - actor_name: Door013
+  * Extra - actor_type: doorpowerpower
+  > Top of Climb
+      Any of the following:
+          Destroy Blob Throwers/Steel Orbs
+          All of the following:
+              # Jump over the Blob Throwers
+              Phase Drift and Dodge Enemies (Advanced)
+              Any of the following:
+                  Damage Boost (Intermediate) and Normal Damage ≥ 210
+                  All of the following:
+                      Morph Ball
+                      Any of the following:
+                          # Mid-Air Morph https://youtu.be/xxEfdZqBydI
+                          Mid-Air Morph (Intermediate)
+                          High Jump Boots and Spring Ball
+
+> Tunnel to Factory Exterior Access; Heals? False
+  * Layers: default
+  * Tunnel to Factory Exterior Access/Tunnel to Beam Burst Chamber & Tsumuri Station
+  > Right of Statue
+      Morph Ball
+
+> Top of Climb; Heals? False
+  * Layers: default
+  > Door to Transport to Area 2
+      Trivial
+  > Door to Transport to Metroid Caverns North
+      Any of the following:
+          Destroy Blob Throwers/Steel Orbs
+          All of the following:
+              # Jump over the Blob Throwers
+              Phase Drift and Dodge Enemies (Advanced)
+              Any of the following:
+                  Damage Boost (Intermediate) and Normal Damage ≥ 210
+                  All of the following:
+                      Morph Ball
+                      Any of the following:
+                          # Mid-Air Morph https://youtu.be/xxEfdZqBydI
+                          Mid-Air Morph (Intermediate)
+                          High Jump Boots and Spring Ball
+  > Right of Statue
+      Any of the following:
+          Knowledge (Beginner) and Disabled Buff Beam Burst and Lay Power Bomb
+          All of the following:
+              Lay Bomb
+              Any of the following:
+                  Shoot Beam Burst
+                  All of the following:
+                      # Jump over the Blob Thrower
+                      Phase Drift and Dodge Enemies (Advanced)
+                      Any of the following:
+                          # Mid-Air Morph https://youtu.be/xxEfdZqBydI
+                          Mid-Air Morph (Intermediate)
+                          Damage Boost (Intermediate) and Normal Damage ≥ 120
+                          High Jump Boots and Spring Ball
+  > Left of Statue
+      All of the following:
+          Morph Ball
+          Lightning Armor or Spider Ball
+
+> Right of Statue; Heals? False
+  * Layers: default
+  * Extra - start_point_actor_name: ST_CheckPoint_001
+  > Pickup (Beam Burst)
+      Morph Ball
+  > Tunnel to Factory Exterior Access
+      All of the following:
+          Morph Ball and After Area 3 (Factory Exterior) - Factory Exterior Access Grapple Block Left
+          Wall Jump (Intermediate) or Climb Rooms Vertically (No High Jump)
+  > Top of Climb
+      Any of the following:
+          Knowledge (Beginner) and Disabled Buff Beam Burst and Lay Power Bomb
+          All of the following:
+              Lay Bomb
+              Any of the following:
+                  Shoot Beam Burst
+                  All of the following:
+                      # Jump over the Blob Thrower
+                      Phase Drift and Dodge Enemies (Advanced)
+                      Any of the following:
+                          # Mid-Air Morph https://youtu.be/xxEfdZqBydI
+                          Mid-Air Morph (Intermediate)
+                          Damage Boost (Intermediate) and Normal Damage ≥ 120
+                          High Jump Boots and Spring Ball
+
+> Left of Statue; Heals? False
+  * Layers: default
+  * Extra - start_point_actor_name: ST_DEBUG_Bestowal
+  > Pickup (Beam Burst)
+      Morph Ball
+  > Top of Climb
+      All of the following:
+          Morph Ball
+          Lightning Armor or Spider Ball
+
+----------------
+Halzyn Hangout
+Extra - total_boundings: {'x1': 11400.0, 'x2': 15100.0, 'y1': 6900.0, 'y2': 14900.0}
+Extra - polygon: [[15000.0, 6900.0], [15000.0, 10200.0], [15100.0, 10700.0], [15100.0, 14100.0], [14800.0, 14200.0], [14800.0, 14900.0], [12800.0, 14900.0], [12800.0, 9800.0], [11400.0, 8200.0], [11400.0, 6900.0]]
+Extra - asset_id: collision_camera_037
+> Door to Gamma Arena; Heals? False
+  * Layers: default
+  * Power Beam Door to Gamma Arena/Door to Halzyn Hangout
+  * Extra - actor_name: Door015
+  * Extra - actor_type: doorpowerpower
+  > Door to Factory Exterior
+      Morph Ball or After Area 3 (Factory Exterior) - Halzyn Hangout Grapple Block
+  > Pickup (Missile Tank)
+      All of the following:
+          Morph Ball and Shoot Any Missile
+          Any of the following:
+              All of the following:
+                  # With Screw Attack
+                  Screw Attack
+                  Any of the following:
+                      Space Jump
+                      All of the following:
+                          # https://youtu.be/ld64MsYKsLg
+                          Spider Ball and Mid-Air Morph (Intermediate)
+                          Any of the following:
+                              Wall Jump (Advanced)
+                              Bomb and Infinite Bomb Jump (Advanced)
+                      High Jump Boots and Single-wall Wall Jump (Intermediate)
+              All of the following:
+                  # Without Screw Attack https://youtu.be/rSi4mCNY1M0
+                  Spider Ball and Out of Bounds Movement (Intermediate) and Spider Ball Clip (Intermediate)
+                  Any of the following:
+                      High Jump Boots and Spring Ball
+                      Bomb and Infinite Bomb Jump (Intermediate)
+  > Start Point
+      Trivial
+
+> Door to Factory Exterior; Heals? False
+  * Layers: default
+  * Power Beam Door to Factory Exterior/Door to Halzyn Hangout
+  * Extra - actor_name: Door017
+  * Extra - actor_type: doorpowerpower
+  > Door to Gamma Arena
+      Any of the following:
+          Morph Ball and After Area 3 (Factory Exterior) - Halzyn Hangout Grapple Block and Climb Rooms Vertically (No High Jump)
+          All of the following:
+              # Skipping the Grapple Block https://youtu.be/MJB5u6UWf_I
+              Ice Beam Clip (Intermediate) and Out of Bounds Movement (Advanced) and Fully Freeze Enemy
+              Any of the following:
+                  Space Jump
+                  # HJ needed to reach top section
+                  High Jump Boots and Single-wall Wall Jump (Expert) and Super Jump (Intermediate)
+                  All of the following:
+                      Lay Bomb
+                      Any of the following:
+                          Infinite Bomb Jump (Advanced)
+                          Spider Ball and Infinite Bomb Jump (Intermediate)
+  > Pickup (Power Bomb Tank)
+      Lightning Armor and Lay Power Bomb
+  > Event - Grapple Block
+      Grapple Beam
+
+> Pickup (Missile Tank); Heals? False
+  * Layers: default
+  * Pickup 63; Category? Minor
+  * Extra - actor_name: HiddenPowerup001
+  * Extra - actor_type: item_missiletank
+  > Door to Gamma Arena
+      Screw Attack or Out of Bounds Movement (Intermediate)
+
+> Pickup (Power Bomb Tank); Heals? False
+  * Layers: default
+  * Pickup 64; Category? Minor
+  * Extra - actor_name: HiddenPowerup002
+  * Extra - actor_type: item_powerbombtank
+  > Door to Factory Exterior
+      Lightning Armor and Morph Ball
+
+> Event - Grapple Block; Heals? False
+  * Layers: default
+  * Event Area 3 (Factory Exterior) - Halzyn Hangout Grapple Block
+  > Door to Factory Exterior
+      Trivial
+
+> Start Point; Heals? False; Default Node
+  * Layers: default
+  * Extra - start_point_actor_name: ST_SG_Gamma_005
+  > Door to Gamma Arena
+      Trivial
+
+----------------
+Gamma Arena
+Extra - total_boundings: {'x1': 12200.0, 'x2': 20200.0, 'y1': 12000.0, 'y2': 17300.0}
+Extra - polygon: [[12200.0, 17300.0], [12200.0, 13900.0], [15000.0, 13400.0], [15000.0, 12600.0], [16800.0, 12600.0], [16800.0, 14000.0], [20550.0, 14000.0], [20550.0, 17300.0]]
+Extra - asset_id: collision_camera_038
+> Door to Halzyn Hangout; Heals? False
+  * Layers: default
+  * Power Beam Door to Halzyn Hangout/Door to Gamma Arena
+  * Extra - actor_name: Door015
+  * Extra - actor_type: doorpowerpower
+  > Event - Gamma Metroid
+      All of the following:
+          Defeat Gamma Metroid
+          Any of the following:
+              Simple IBJ
+              All of the following:
+                  Lay Any Bomb
+                  Any of the following:
+                      High Jump Boots or Space Jump or Spider Ball
+                      # https://youtu.be/-QRvPeCbaOM
+                      Wall Jump (Intermediate)
+  > Tunnel to Nook's Cranny
+      Lay Any Bomb
+
+> Event - Gamma Metroid; Heals? False
+  * Layers: default
+  * Event Area 3 (Factory Exterior) - Gamma Metroid
+  > Pickup (DNA)
+      Trivial
+
+> Pickup (DNA); Heals? False
+  * Layers: default
+  * Pickup 194; Category? Minor
+  * Extra - pickup_type: metroid
+  * Extra - spawngroup: SG_Gamma_005_C
+  > Door to Halzyn Hangout
+      Lay Any Bomb
+
+> Tunnel to Nook's Cranny; Heals? False
+  * Layers: default
+  * Tunnel with Bomb Block to Nook's Cranny/Tunnel to Gamma Arena
+  > Door to Halzyn Hangout
+      Morph Ball
+
+----------------
+Nook's Cranny
+Extra - total_boundings: {'x1': 16600.0, 'x2': 19900.0, 'y1': 12200.0, 'y2': 14000.0}
+Extra - polygon: [[16500.0, 14000.0], [16500.0, 12200.0], [19900.0, 12200.0], [19900.0, 14000.0]]
+Extra - asset_id: collision_camera_039
+> Start Point; Heals? False; Spawn Point
+  * Layers: default
+  * Extra - start_point_actor_name: ST_Gamma_005B_Checkpoint
+  > Tunnel to Gamma Arena
+      Any of the following:
+          All of the following:
+              Lay Power Bomb
+              High Jump Boots or Space Jump or Spider Ball
+          All of the following:
+              Lay Bomb
+              Any of the following:
+                  Spider Ball or Infinite Bomb Jump (Beginner)
+                  All of the following:
+                      Mid-Air Morph (Beginner)
+                      High Jump Boots or Space Jump
+
+> Tunnel to Gamma Arena; Heals? False
+  * Layers: default
+  * Tunnel with Bomb Block to Gamma Arena/Tunnel to Nook's Cranny
+  > Start Point
+      Morph Ball
+
+----------------
+Factory Exterior Access
+Extra - total_boundings: {'x1': -15000.0, 'x2': -6500.0, 'y1': 9400.0, 'y2': 12600.0}
+Extra - polygon: [[-15000.0, 12600.0], [-15000.0, 9400.0], [-11700.0, 9400.0], [-11700.0, 10600.0], [-10000.0, 11200.0], [-6500.0, 11200.0], [-6500.0, 12600.0]]
+Extra - asset_id: collision_camera_040
+> Door to Transport to Metroid Caverns North; Heals? False
+  * Layers: default
+  * Power Beam Door to Transport to Metroid Caverns North/Door to Factory Exterior Access
+  * Extra - actor_name: Door014
+  * Extra - actor_type: doorpowerpower
+  > Tunnel to Beam Burst Chamber & Tsumuri Station
+      Morph Ball and After Area 3 (Factory Exterior) - Factory Exterior Access Grapple Block Left
+  > Event - Grapple Block Left
+      Grapple Beam
+  > Right of Crumble Block
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Space Jump or Spider Ball
+              Bomb and Infinite Bomb Jump (Intermediate)
+              All of the following:
+                  # Destroying the Autrack
+                  Missile ≥ 20 or Power Bomb or Super Missile ≥ 4 or Screw Attack
+                  High Jump Boots or Unmorph Extend (Intermediate) or Wall Jump (Intermediate) or Simple IBJ
+
+> Door to Factory Exterior; Heals? False
+  * Layers: default
+  * Power Beam Door to Factory Exterior/Door to Factory Exterior Access
+  * Extra - actor_name: Door016
+  * Extra - actor_type: doorpowerpower
+  > Right of Crumble Block
+      Any of the following:
+          High Jump Boots or Space Jump or Destroy Blob Throwers/Steel Orbs or Use Spider Ball
+          # Jump over the Blob Thrower
+          Phase Drift and Dodge Enemies (Beginner)
+          Infinite Bomb Jump (Intermediate) and Lay Bomb
+          Morph Ball and Damage Boost (Intermediate) and Unmorph Extend (Advanced) and Normal Damage ≥ 120
+
+> Tunnel to Beam Burst Chamber & Tsumuri Station; Heals? False
+  * Layers: default
+  * Tunnel to Beam Burst Chamber & Tsumuri Station/Tunnel to Factory Exterior Access
+  > Door to Transport to Metroid Caverns North
+      Morph Ball
+
+> Event - Grapple Block Left; Heals? False
+  * Layers: default
+  * Event Area 3 (Factory Exterior) - Factory Exterior Access Grapple Block Left
+  > Door to Transport to Metroid Caverns North
+      Trivial
+
+> Event - Grapple Block Right; Heals? False
+  * Layers: default
+  * Event Area 3 (Factory Exterior) - Factory Exterior Access Grapple Block Right
+  > Right of Crumble Block
+      Morph Ball
+
+> Right of Crumble Block; Heals? False
+  * Layers: default
+  > Door to Transport to Metroid Caverns North
+      Any of the following:
+          Morph Ball and After Area 3 (Factory Exterior) - Factory Exterior Access Grapple Block Right
+          All of the following:
+              Ice Beam
+              Any of the following:
+                  # https://youtu.be/SGxHj3du8xA
+                  Charge Beam and Ice Beam Clip (Intermediate)
+                  # https://youtu.be/rjBK83JL0XM
+                  Phase Drift and Ice Beam Clip (Advanced)
+  > Door to Factory Exterior
+      Any of the following:
+          High Jump Boots or Space Jump or Destroy Blob Throwers/Steel Orbs or Use Spider Ball
+          Infinite Bomb Jump (Intermediate) and Lay Bomb
+          Damage Boost (Beginner) and Normal Damage ≥ 120
+          # Jump over the Blob Thrower
+          Phase Drift and Dodge Enemies (Beginner)
+  > Event - Grapple Block Right
+      Grapple Beam and Morph Ball
+

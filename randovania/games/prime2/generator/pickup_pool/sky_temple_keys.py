@@ -2,10 +2,13 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
+from frozendict import frozendict
+
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.pickup import pickup_category
 from randovania.game_description.pickup.pickup_entry import PickupEntry, PickupGeneratorParams, PickupModel
 from randovania.game_description.resources.location_category import LocationCategory
+from randovania.games.game import RandovaniaGame
 from randovania.games.prime2.layout.echoes_configuration import LayoutSkyTempleKeyMode
 from randovania.games.prime2.patcher import echoes_items
 from randovania.generator.pickup_pool import PoolResults
@@ -89,8 +92,9 @@ def create_sky_temple_key(
         ),
         pickup_category=SKY_TEMPLE_KEY_CATEGORY,
         broad_category=pickup_category.GENERIC_KEY_CATEGORY,
+        offworld_models=frozendict({RandovaniaGame.AM2R: "sItemSkyTempleKeyEchoes"}),
         generator_params=PickupGeneratorParams(
             preferred_location_category=LocationCategory.MAJOR,
-            probability_offset=3,
+            probability_offset=3.0,
         ),
     )

@@ -49,6 +49,7 @@ class RemoteConnector(QtCore.QObject):
     PlayerLocationChanged = QtCore.Signal(PlayerLocationEvent)
     PickupIndexCollected = QtCore.Signal(PickupIndex)
     InventoryUpdated = QtCore.Signal(Inventory)
+    # TODO: Finished signal is never used. Remove it everywhere?
     Finished = QtCore.Signal()
 
     @property

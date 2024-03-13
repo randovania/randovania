@@ -20,6 +20,7 @@ _FIELDS = [
     "area3_interior_shortcut_no_grapple",
     "charge_door_buff",
     "beam_door_buff",
+    "beam_burst_buff",
     "nerf_super_missiles",
     "surface_crumbles",
     "area1_crumbles",
@@ -31,10 +32,6 @@ class PresetMSRPatches(PresetTab, Ui_PresetMSRPatches):
     def __init__(self, editor: PresetEditor, game_description: GameDescription, window_manager: WindowManager):
         super().__init__(editor, game_description, window_manager)
         self.setupUi(self)
-
-        # Hides this option until shuffled Missile Launcher is possible
-        for widget in [self.nerf_super_missiles_check, self.nerf_super_missiles_label]:
-            widget.setVisible(False)
 
         # Signals
         for f in _FIELDS:

@@ -4,6 +4,8 @@ import dataclasses
 from pathlib import Path
 from typing import TYPE_CHECKING
 
+from caver.patcher import CSPlatform
+
 from randovania.games.cave_story.exporter.game_exporter import CSGameExportParams
 from randovania.games.cave_story.exporter.options import CSPerGameOptions
 from randovania.games.game import RandovaniaGame
@@ -34,6 +36,16 @@ class CSGameExportDialog(GameExportDialog, Ui_CSGameExportDialog):
 
         # Output
         self.output_file_button.clicked.connect(self._on_output_file_button)
+        self.tweaked_radio.clicked.connect(self._on_platform_radio_clicked)
+        self.freeware_radio.clicked.connect(self._on_platform_radio_clicked)
+
+        # Target Platform
+        if per_game.platform is CSPlatform.FREEWARE:
+            self.freeware_radio.setChecked(True)
+        else:
+            self.tweaked_radio.setChecked(True)
+
+        self._on_platform_radio_clicked()
 
         if per_game.output_directory is not None:
             output_path = per_game.output_directory
@@ -47,15 +59,19 @@ class CSGameExportDialog(GameExportDialog, Ui_CSGameExportDialog):
         )
 
     def update_per_game_options(self, per_game: CSPerGameOptions) -> CSPerGameOptions:
-        return dataclasses.replace(
-            per_game,
-            output_directory=self.output_file,
-        )
+        return dataclasses.replace(per_game, output_directory=self.output_file, platform=self.target_platform)
 
     # Getters
     @property
     def output_file(self) -> Path:
         return Path(self.output_file_edit.text())
+
+    @property
+    def target_platform(self) -> CSPlatform:
+        if self.freeware_radio.isChecked():
+            return CSPlatform.FREEWARE
+        else:
+            return CSPlatform.TWEAKED
 
     @property
     def auto_save_spoiler(self) -> bool:
@@ -67,10 +83,25 @@ class CSGameExportDialog(GameExportDialog, Ui_CSGameExportDialog):
         if output_file is not None:
             self.output_file_edit.setText(str(output_file))
 
+    def _on_platform_radio_clicked(self):
+        if self.freeware_radio.isChecked():
+            self.description_label.setText(
+                "The original release of Cave Story. Compatible with Windows and Linux via Wine."
+            )
+        elif self.tweaked_radio.isChecked():
+            self.description_label.setText(
+                """A community port with several improvements, \
+                such as widescreen, native controller support and in-game remapping. \
+                Compatible with Windows and Linux.
+
+                Click <a href=\"https://oneninefour.cl/tweaked/\">here</a> for more details."""
+            )
+
+        self.description_label.update()
+
     def get_game_export_params(self) -> GameExportParams:
         spoiler_output = spoiler_path_for_directory(self.auto_save_spoiler, self.output_file)
 
         return CSGameExportParams(
-            spoiler_output=spoiler_output,
-            output_path=self.output_file,
+            spoiler_output=spoiler_output, output_path=self.output_file, platform=self.target_platform
         )

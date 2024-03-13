@@ -1,5 +1,5 @@
 from random import Random
-from unittest.mock import MagicMock, PropertyMock
+from unittest.mock import MagicMock
 
 import pytest
 
@@ -40,45 +40,7 @@ def test_construct_music_shuffle_dict_full() -> None:
     assert len(music_dict) == 48
 
 
-@pytest.mark.parametrize(
-    ("rdvgame_filename", "expected_results_filename", "num_of_players"),
-    [
-        ("starter_preset.rdvgame", "starter_preset.json", 1),  # starter preset
-        ("door_lock.rdvgame", "door_lock.json", 1),  # starter preset+door lock rando
-        ("progressive_items.rdvgame", "progressive_items.json", 1),  # Starter preset+progressive items
-    ],
-)
-def test_create_patch_data(test_files_dir, rdvgame_filename, expected_results_filename, num_of_players, mocker):
-    # Setup
-    rdvgame = test_files_dir.joinpath("log_files", "am2r", rdvgame_filename)
-    players_config = PlayersConfiguration(0, {i: f"Player {i + 1}" for i in range(num_of_players)})
-    description = LayoutDescription.from_file(rdvgame)
-    cosmetic_patches = AM2RCosmeticPatches()
-    mocker.patch(
-        "randovania.layout.layout_description.LayoutDescription.shareable_word_hash",
-        new_callable=PropertyMock,
-        return_value="Words Hash",
-    )
-    mocker.patch(
-        "randovania.layout.layout_description.LayoutDescription.shareable_hash",
-        new_callable=PropertyMock,
-        return_value="$$$$$",
-    )
-
-    # Run
-    data = AM2RPatchDataFactory(description, players_config, cosmetic_patches).create_data()
-
-    # Expected Result
-    expected_results_path = test_files_dir.joinpath("patcher_data", "am2r", expected_results_filename)
-
-    # Uncomment to easily view diff of failed test
-    # json_lib.write_path(expected_results_path, data)
-
-    expected_data = json_lib.read_path(expected_results_path)
-
-    assert data == expected_data
-
-
+@pytest.mark.usefixtures("_mock_seed_hash")
 @pytest.mark.parametrize(
     ("rdvgame_filename", "expected_results_filename", "num_of_players"),
     [
@@ -91,16 +53,6 @@ def test_create_pickups_dict_shiny(test_files_dir, rdvgame_filename, expected_re
     players_config = PlayersConfiguration(0, {i: f"Player {i + 1}" for i in range(num_of_players)})
     description = LayoutDescription.from_file(rdvgame)
     cosmetic_patches = AM2RCosmeticPatches()
-    mocker.patch(
-        "randovania.layout.layout_description.LayoutDescription.shareable_word_hash",
-        new_callable=PropertyMock,
-        return_value="Words Hash",
-    )
-    mocker.patch(
-        "randovania.layout.layout_description.LayoutDescription.shareable_hash",
-        new_callable=PropertyMock,
-        return_value="$$$$$",
-    )
     mocker.patch("random.Random.randint", new_callable=MagicMock, return_value=0)
 
     data = AM2RPatchDataFactory(description, players_config, cosmetic_patches)
@@ -111,9 +63,10 @@ def test_create_pickups_dict_shiny(test_files_dir, rdvgame_filename, expected_re
         pickup_creator.create_nothing_pickup(db.resource_database, "sItemNothing"), data.players_config.player_index
     )
 
-    item_data = data._get_item_data()
+    text_data = data._get_text_data()
+    model_data = data._get_model_data()
     memo_data = {}
-    for key, value in item_data.items():
+    for key, value in text_data.items():
         memo_data[key] = value["text_desc"]
     memo_data["Energy Tank"] = memo_data["Energy Tank"].format(Energy=data.patches.configuration.energy_per_tank)
 
@@ -129,13 +82,13 @@ def test_create_pickups_dict_shiny(test_files_dir, rdvgame_filename, expected_re
     )
 
     # Run
-    pickups_dict = data._create_pickups_dict(pickup_list, item_data, data.rng)
+    pickups_dict = data._create_pickups_dict(pickup_list, text_data, model_data, data.rng)
 
     # Expected Result
     expected_results_path = test_files_dir.joinpath("patcher_data", "am2r", expected_results_filename)
 
     # Uncomment to easily view diff of failed test
-    # json_lib.write_path(expected_results_path, pickups_dict)
+    # json_lib.write_path(expected_results_path, pickups_dict); assert False
 
     expected_data = json_lib.read_path(expected_results_path)
 

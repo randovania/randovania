@@ -1,4 +1,5 @@
 """Classes that describes the raw data of a game db."""
+
 from __future__ import annotations
 
 import collections

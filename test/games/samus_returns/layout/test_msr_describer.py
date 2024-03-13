@@ -13,48 +13,63 @@ from randovania.interface_common.preset_manager import PresetManager
 
 
 @pytest.mark.parametrize(
-    ("has_artifacts"),
+    ("artifacts"),
     [
-        (False),
-        (True),
+        MSRArtifactConfig(True, True, True, False, 5),
+        MSRArtifactConfig(True, True, False, False, 39),
+        MSRArtifactConfig(False, False, True, False, 4),
+        MSRArtifactConfig(False, False, False, False, 0),
+        MSRArtifactConfig(False, False, False, True, 2),
+        MSRArtifactConfig(False, False, True, True, 10),
+        MSRArtifactConfig(True, True, False, True, 30),
     ],
 )
-def test_msr_format_params(has_artifacts: bool):
+def test_msr_format_params(artifacts):
     # Setup
     preset = PresetManager(None).default_preset_for_game(RandovaniaGame.METROID_SAMUS_RETURNS).get_preset()
     assert isinstance(preset.configuration, MSRConfiguration)
     configuration = dataclasses.replace(
         preset.configuration,
-        artifacts=MSRArtifactConfig(
-            prefer_metroids=True,
-            prefer_stronger_metroids=True,
-            prefer_bosses=False,
-            required_artifacts=20 if has_artifacts else 0,
-        ),
+        artifacts=artifacts,
     )
 
     # Run
     result = RandovaniaGame.METROID_SAMUS_RETURNS.data.layout.preset_describer.format_params(configuration)
 
+    if artifacts.prefer_anywhere:
+        dna_where = "Place anywhere"
+    elif artifacts.prefer_metroids and artifacts.prefer_stronger_metroids and artifacts.prefer_bosses:
+        dna_where = "Prefers Standard Metroids, Prefers Stronger Metroids, Prefers Bosses"
+    elif artifacts.prefer_metroids and artifacts.prefer_stronger_metroids:
+        dna_where = "Prefers Standard Metroids, Prefers Stronger Metroids"
+    elif artifacts.prefer_metroids:
+        dna_where = "Prefers Standard Metroids"
+    elif artifacts.prefer_stronger_metroids:
+        dna_where = "Prefers Stronger Metroids"
+    elif artifacts.prefer_bosses:
+        dna_where = "Prefers Bosses"
+    else:
+        dna_where = "Defeat Proteus Ridley"
+
     # Assert
     assert dict(result) == {
         "Logic Settings": ["All tricks disabled"],
         "Item Pool": [
-            "Size: 194 of 211" if has_artifacts else "Size: 174 of 211",
+            f"Size: {174+artifacts.required_artifacts} of 211",
             "Starts with Scan Pulse",
-            "Progressive Beam, Progressive Jump, Progressive Suit",
+            "Progressive Beam, Progressive Suit, Progressive Jump",
             "Energy Reserve Tank, Aeion Reserve Tank, Missile Reserve Tank",
         ],
         "Gameplay": ["Starts at Surface - East - Landing Site"],
         "Difficulty": [],
-        "Goal": ["20 Metroid DNA", "Prefers Standard Metroids, Prefers Stronger Metroids"]
-        if has_artifacts
-        else ["Defeat Ridley"],
+        "Goal": (
+            [f"{artifacts.required_artifacts} Metroid DNA", dna_where] if artifacts.required_artifacts else [dna_where]
+        ),
         "Game Changes": [
-            "Super Missile needs Launcher, Power Bomb needs Main",
-            "Charge Door Buff, Beam Door Buff",
-            "Open Area 3 Interior East Shortcut, "
-            "Remove Area Exit Path Grapple Blocks, Remove Surface Scan Pulse Crumble Blocks, "
-            "Remove Area 1 Chozo Seal Crumble Blocks",
+            "Missile needs Launcher, Super Missile needs Launcher, Power Bomb needs Launcher",
+            "Charge Door Buff, Beam Door Buff, Beam Burst Buff",
+            "Open Area 3 Factory Interior East Shortcut, Remove Area Exit Grapple Blocks",
+            "Change Surface Cavern Cavity Crumble Blocks, Change Area 1 Transport to Surface and Area 2 Crumble Blocks",
         ],
+        "Hints": ["DNA Hints: Area and room"],
     }

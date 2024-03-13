@@ -14,14 +14,7 @@
    <string>Game Patching</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="6" column="2">
-    <widget class="QPushButton" name="cancel_button">
-     <property name="text">
-      <string>Cancel</string>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="2">
+   <item row="4" column="2">
     <widget class="QPushButton" name="output_file_button">
      <property name="maximumSize">
       <size>
@@ -35,37 +28,20 @@
     </widget>
    </item>
    <item row="6" column="0">
-    <widget class="QPushButton" name="accept_button">
-     <property name="text">
-      <string>Accept</string>
-     </property>
-    </widget>
-   </item>
-   <item row="5" column="0">
     <widget class="QCheckBox" name="auto_save_spoiler_check">
      <property name="text">
       <string>Include a spoiler log on same directory</string>
      </property>
     </widget>
    </item>
-   <item row="0" column="0" colspan="3">
-    <widget class="QLabel" name="description_label">
+   <item row="7" column="2">
+    <widget class="QPushButton" name="cancel_button">
      <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;A copy of Cave Story is included, so no input is needed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-     </property>
-     <property name="wordWrap">
-      <bool>true</bool>
+      <string>Cancel</string>
      </property>
     </widget>
    </item>
    <item row="3" column="0" colspan="2">
-    <widget class="QLineEdit" name="output_file_edit">
-     <property name="placeholderText">
-      <string>Path where to place randomized game</string>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="0" colspan="2">
     <widget class="QLabel" name="output_file_label">
      <property name="maximumSize">
       <size>
@@ -75,6 +51,112 @@
      </property>
      <property name="text">
       <string>Output Path</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="0" colspan="2">
+    <widget class="QLineEdit" name="output_file_edit">
+     <property name="placeholderText">
+      <string>Path where to place randomized game</string>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="0">
+    <widget class="QPushButton" name="accept_button">
+     <property name="text">
+      <string>Accept</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0" colspan="2">
+    <widget class="QLabel" name="select_label">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>20</height>
+      </size>
+     </property>
+     <property name="baseSize">
+      <size>
+       <width>0</width>
+       <height>70</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Select your preferred version of Cave Story:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+     <property name="wordWrap">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0" colspan="3">
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QRadioButton" name="freeware_radio">
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>20</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>Freeware</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QRadioButton" name="tweaked_radio">
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>20</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>Tweaked</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="2" column="0" colspan="3">
+    <widget class="QLabel" name="description_label">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>75</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>480</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="textFormat">
+      <enum>Qt::RichText</enum>
+     </property>
+     <property name="wordWrap">
+      <bool>true</bool>
+     </property>
+     <property name="openExternalLinks">
+      <bool>true</bool>
      </property>
     </widget>
    </item>

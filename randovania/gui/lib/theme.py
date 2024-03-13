@@ -42,6 +42,13 @@ def set_dark_theme(active: bool, compact: bool = False, *, app: QtWidgets.QAppli
     if active:
         new_palette.setColor(QtGui.QPalette.Link, Qt.cyan)
         new_palette.setColor(QtGui.QPalette.LinkVisited, Qt.cyan)
+        style += """
+    QToolTip {
+        background-color: black;
+        color: white;
+        border: black solid 1px
+    }
+        """
     else:
         new_palette.setColor(QtGui.QPalette.Link, Qt.blue)
 

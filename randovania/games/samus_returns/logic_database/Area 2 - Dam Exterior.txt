@@ -1,0 +1,1034 @@
+----------------
+Dam Exterior
+Extra - total_boundings: {'x1': -13000.0, 'x2': 8800.0, 'y1': -900.0, 'y2': 8500.0}
+Extra - polygon: [[-7700.0, 8500.0], [-7700.0, 5500.0], [-8400.0, 5300.0], [-13000.0, 5300.0], [-13000.0, -200.0], [-10600.0, -200.0], [-10600.0, 1400.0], [-10100.0, 1600.0], [-8150.0, 1900.0], [-8150.0, 2600.0], [-7500.0, 2600.0], [-4700.0, 2600.0], [-4100.0, 2600.0], [-4100.0, 5700.0], [-3500.0, 5800.0], [-1300.0, 5800.0], [-1000.0, 5600.0], [-1000.0, 4800.0], [750.0, 4800.0], [750.0, 6400.0], [1600.0, 6400.0], [1600.0, 5500.0], [2200.0, 5200.0], [2200.0, 500.0], [2600.0, 300.0], [2600.0, -900.0], [6300.0, -900.0], [8200.0, 0.0], [8800.0, 0.0], [8800.0, 8500.0]]
+Extra - asset_id: collision_camera_005
+> Pickup (Missile Tank); Heals? False
+  * Layers: default
+  * Pickup 34; Category? Minor
+  * Extra - actor_name: LE_Item_004
+  * Extra - actor_type: item_missiletank
+  > Elevator to Area 2 - Dam Entryway
+      Trivial
+
+> Elevator to Area 2 - Dam Interior; Heals? False
+  * Layers: default
+  * Elevator to Wave Beam & Transport to Dam Exterior West/Elevator to Area 2 - Dam Exterior
+  * Extra - actor_name: LE_Platform_Elevator_FromArea02B
+  * Extra - actor_type: weightactivatedplatform
+  * Extra - start_point_actor_name: ST_FromArea02B
+  > Teleporter
+      Trivial
+  > Door to Metroid Caverns Entrance (Bottom)
+      Baby Metroid or Lay Any Bomb
+  > Door to Metroid Caverns Entrance (Top)
+      Trivial
+  > Door to Rock Icicle Corridor
+      Trivial
+  > Event - Teleporter Unlocked
+      Trivial
+
+> Elevator to Area 2 - Dam Entryway; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Elevator to Lightning Armor & Transport to Dam Exterior East/Elevator to Area 2 - Dam Exterior
+  * Extra - actor_name: LE_Platform_Elevator_FromArea02C
+  * Extra - actor_type: weightactivatedplatform
+  * Extra - start_point_actor_name: ST_FromArea02C
+  > Pickup (Missile Tank)
+      Any of the following:
+          Morph Ball and Space Jump
+          Spider Boost (Intermediate) and Can Spider Boost
+          Infinite Bomb Jump (Intermediate) and Lay Bomb
+  > Save Station Right
+      Trivial
+  > Door to Critter Playground
+      Trivial
+  > Tunnel to Critter Playground
+      Morph Ball
+  > Top of Wall
+      Any of the following:
+          Space Jump or Simple IBJ
+          Spider Boost (Intermediate) and Can Spider Boost
+
+> Save Station Left; Heals? False
+  * Layers: default
+  * Extra - actor_name: LE_Platform_SaveStation001
+  * Extra - actor_type: weightactivatedplatform
+  * Extra - start_point_actor_name: ST_SaveStation001
+  > Door to Rock Icicle Corridor
+      Trivial
+
+> Save Station Right; Heals? False
+  * Layers: default
+  * Extra - actor_name: LE_Platform_SaveStation002
+  * Extra - actor_type: weightactivatedplatform
+  * Extra - start_point_actor_name: ST_SaveStation002
+  > Elevator to Area 2 - Dam Entryway
+      Trivial
+
+> Teleporter; Heals? False
+  * Layers: default
+  * Teleporter Network (Unlocked by After Area 2 (Dam Exterior) - Dam Exterior Teleporter Unlocked)
+  * Extra - actor_name: LE_Platform_Teleporter_02_02
+  * Extra - actor_type: weightactivatedplatform
+  * Extra - start_point_actor_name: ST_Teleporter_02_02
+  > Elevator to Area 2 - Dam Interior
+      Trivial
+
+> Door to Arachnus Arena; Heals? False
+  * Layers: default
+  * Missile Door to Arachnus Arena/Door from Dam Exterior
+  * Extra - actor_name: Door004
+  * Extra - actor_type: doorclosedpower
+  > Top of Wall
+      Single-wall Wall Jump (Intermediate) or Climb Rooms Vertically (No High Jump)
+  > Start Point (Bottom)
+      Trivial
+
+> Door to Metroid Caverns Entrance (Bottom); Heals? False
+  * Layers: default
+  * Access Locked to Metroid Caverns Entrance/Door to Dam Exterior (Bottom)
+  * Extra - actor_name: Door006
+  * Extra - actor_type: doorpowerclosed
+  > Elevator to Area 2 - Dam Interior
+      Baby Metroid or Lay Any Bomb
+
+> Door to Metroid Caverns Entrance (Top); Heals? False
+  * Layers: default
+  * Power Beam Door to Metroid Caverns Entrance/Door to Dam Exterior (Top)
+  * Extra - actor_name: Door007
+  * Extra - actor_type: doorpowerpower
+  > Elevator to Area 2 - Dam Interior
+      Trivial
+
+> Door to Rock Icicle Corridor; Heals? False
+  * Layers: default
+  * Power Beam Door to Rock Icicle Corridor/Door to Dam Exterior
+  * Extra - actor_name: Door013
+  * Extra - actor_type: doorpowerpower
+  > Elevator to Area 2 - Dam Interior
+      Trivial
+  > Save Station Left
+      Trivial
+  > Door to Exterior Alpha+ Arena
+      Any of the following:
+          Space Jump or Simple IBJ
+          Spider Boost (Intermediate) and Can Spider Boost
+          Lightning Armor and Use Spider Ball
+  > Top of Wall
+      Climb Rooms Vertically (No High Jump)
+
+> Door from Maintenance Tunnel; Heals? False
+  * Layers: default
+  * Access Closed to Maintenance Tunnel/Door to Dam Exterior
+  * Extra - actor_name: Door014
+  * Extra - actor_type: doorclosedpower
+  > Door to Arachnus Arena
+      Trivial
+
+> Door to Critter Playground; Heals? False
+  * Layers: default
+  * Power Beam Door to Critter Playground/Door to Dam Exterior
+  * Extra - actor_name: Door015
+  * Extra - actor_type: doorpowerpower
+  > Elevator to Area 2 - Dam Entryway
+      Trivial
+
+> Door to Exterior Alpha+ Arena; Heals? False
+  * Layers: default
+  * Power Beam Door to Exterior Alpha+ Arena/Door to Dam Exterior
+  * Extra - actor_name: Door020
+  * Extra - actor_type: doorpowerpower
+  > Door to Rock Icicle Corridor
+      Trivial
+  > Start Point (Top)
+      Trivial
+
+> Event - Teleporter Unlocked; Heals? False
+  * Layers: default
+  * Event Area 2 (Dam Exterior) - Dam Exterior Teleporter Unlocked
+  > Elevator to Area 2 - Dam Interior
+      Trivial
+
+> Tunnel to Critter Playground; Heals? False
+  * Layers: default
+  * Tunnel to Critter Playground/Tunnel to Dam Exterior
+  > Elevator to Area 2 - Dam Entryway
+      Morph Ball
+
+> Top of Wall; Heals? False
+  * Layers: default
+  > Elevator to Area 2 - Dam Entryway
+      Trivial
+  > Door to Arachnus Arena
+      Trivial
+  > Door to Rock Icicle Corridor
+      Trivial
+
+> Start Point (Top); Heals? False
+  * Layers: default
+  * Extra - start_point_actor_name: ST_SG_Alpha_001
+  > Door to Exterior Alpha+ Arena
+      Trivial
+
+> Start Point (Bottom); Heals? False
+  * Layers: default
+  * Extra - start_point_actor_name: ST_SG_Arachnus
+  > Door to Arachnus Arena
+      Trivial
+
+----------------
+Arachnus Arena
+Extra - total_boundings: {'x1': -3100.0, 'x2': -900.0, 'y1': 4500.0, 'y2': 5600.0}
+Extra - polygon: [[-3100.0, 5600.0], [-3100.0, 4500.0], [-850.0, 4500.0], [-850.0, 5600.0]]
+Extra - asset_id: collision_camera_006
+> Pickup (Spring Ball); Heals? False
+  * Layers: default
+  * Pickup 37; Category? Major
+  * Extra - actor_name: LE_PowerUp_Springball
+  * Extra - actor_type: powerup_springball
+  > Room Center
+      Trivial
+
+> Door from Dam Exterior; Heals? False
+  * Layers: default
+  * Access Closed to Dam Exterior/Door to Arachnus Arena
+  * Extra - actor_name: Door004
+  * Extra - actor_type: doorclosedpower
+  > Room Center
+      Trivial
+
+> Tunnel to Fan Funnel; Heals? False
+  * Layers: default
+  * Tunnel with Bomb Block to Fan Funnel/Tunnel to Arachnus Arena
+  > Room Center
+      Trivial
+
+> Event - Arachnus; Heals? False
+  * Layers: default
+  * Event Area 2 (Dam Exterior) - Arachnus
+  > Pickup (Spring Ball)
+      Trivial
+
+> Room Center; Heals? False; Default Node
+  * Layers: default
+  * Extra - start_point_actor_name: ST_CheckPoint_007
+  > Door from Dam Exterior
+      Trivial
+  > Tunnel to Fan Funnel
+      Lay Any Bomb
+  > Event - Arachnus
+      All of the following:
+          Any of the following:
+              # Energy
+              Combat (Intermediate) or Normal Damage ≥ 199
+              Combat (Beginner) and Normal Damage ≥ 99
+          Any of the following:
+              # Damage
+              Combat (Intermediate)
+              All of the following:
+                  Lay Bomb
+                  Missile ≥ 30 or Super Missile ≥ 7
+              Combat (Beginner) and Lay Power Bomb
+
+----------------
+Fan Funnel
+Extra - total_boundings: {'x1': -1000.0, 'x2': 700.0, 'y1': 3900.0, 'y2': 4900.0}
+Extra - polygon: [[-1000.0, 4900.0], [-1000.0, 3900.0], [700.0, 3900.0], [700.0, 4900.0]]
+Extra - asset_id: collision_camera_007
+> Tunnel to Arachnus Arena; Heals? False
+  * Layers: default
+  * Tunnel with Bomb Block to Arachnus Arena/Tunnel to Fan Funnel
+  > Tunnel to Maintenance Tunnel
+      Any of the following:
+          Lay Power Bomb
+          Spring Ball and Lay Bomb
+
+> Tunnel to Maintenance Tunnel; Heals? False
+  * Layers: default
+  * Tunnel with Bomb Block to Maintenance Tunnel/Tunnel to Fan Funnel
+  > Tunnel to Arachnus Arena
+      Lay Any Bomb
+
+----------------
+Critter Playground
+Extra - total_boundings: {'x1': -1850.0, 'x2': 2700.0, 'y1': -900.0, 'y2': 3800.0}
+Extra - polygon: [[-1850.0, 3800.0], [-1850.0, -900.0], [2700.0, -900.0], [2700.0, 300.0], [2300.0, 500.0], [2300.0, 3800.0]]
+Extra - asset_id: collision_camera_008
+> Pickup (Missile Tank); Heals? False
+  * Layers: default
+  * Pickup 35; Category? Minor
+  * Extra - actor_name: LE_Item_005
+  * Extra - actor_type: item_missiletank
+  > Tunnel to Dam Exterior
+      Morph Ball
+  > Below Baby Blocks
+      Baby Metroid
+
+> Door to Dam Exterior; Heals? False
+  * Layers: default
+  * Power Beam Door to Dam Exterior/Door to Critter Playground
+  * Extra - actor_name: Door015
+  * Extra - actor_type: doorpowerpower
+  > Below Baby Blocks
+      Morph Ball
+
+> Door to Inner Alpha Arena; Heals? False
+  * Layers: default
+  * Power Beam Door to Inner Alpha Arena/Door to Critter Playground
+  * Extra - actor_name: Door017
+  * Extra - actor_type: doorpowerpower
+  > Door to Rock Icicle Corridor
+      Trivial
+  > Start Point
+      Trivial
+
+> Door to Rock Icicle Corridor; Heals? False
+  * Layers: default
+  * Power Beam Door to Rock Icicle Corridor/Door to Critter Playground
+  * Extra - actor_name: Door018
+  * Extra - actor_type: doorpowerpower
+  > Pickup (Missile Tank)
+      Baby Metroid and Movement (Beginner)
+  > Door to Inner Alpha Arena
+      Trivial
+  > Below Baby Blocks
+      Trivial
+
+> Tunnel to Dam Exterior; Heals? False
+  * Layers: default
+  * Tunnel to Dam Exterior/Tunnel to Critter Playground
+  > Pickup (Missile Tank)
+      Lay Any Bomb
+
+> Below Baby Blocks; Heals? False
+  * Layers: default
+  > Pickup (Missile Tank)
+      All of the following:
+          Baby Metroid
+          Any of the following:
+              All of the following:
+                  Morph Ball
+                  Any of the following:
+                      Spider Ball
+                      Bomb and Infinite Bomb Jump (Intermediate)
+              Stand on Frozen Enemy (Beginner) and Fully Freeze Enemy
+  > Door to Dam Exterior
+      Trivial
+  > Door to Rock Icicle Corridor
+      Any of the following:
+          Single-wall Wall Jump (Beginner) or Climb Rooms Vertically (No High Jump)
+          Stand on Frozen Enemy (Beginner) and Fully Freeze Enemy
+
+> Start Point; Heals? False; Default Node
+  * Layers: default
+  * Extra - start_point_actor_name: ST_SG_Alpha_006
+  > Door to Inner Alpha Arena
+      Trivial
+
+----------------
+Metroid Caverns Entrance
+Extra - total_boundings: {'x1': -14800.0, 'x2': -12900.0, 'y1': -5000.0, 'y2': 3500.0}
+Extra - polygon: [[-14800.0, 3500.0], [-14800.0, -5000.0], [-12900.0, -5000.0], [-12900.0, 3500.0]]
+Extra - asset_id: collision_camera_023
+> Door to Dam Exterior (Bottom); Heals? False
+  * Layers: default
+  * Power Beam Door to Dam Exterior/Door to Metroid Caverns Entrance (Bottom)
+  * Extra - actor_name: Door006
+  * Extra - actor_type: doorpowerclosed
+  > Door to Metroid Caverns Save Station
+      Trivial
+
+> Door to Dam Exterior (Top); Heals? False
+  * Layers: default
+  * Power Beam Door to Dam Exterior/Door to Metroid Caverns Entrance (Top)
+  * Extra - actor_name: Door007
+  * Extra - actor_type: doorpowerpower
+  > Door to Metroid Caverns Save Station
+      Trivial
+
+> Door to Metroid Caverns Save Station; Heals? False
+  * Layers: default
+  * Power Beam Door to Metroid Caverns Save Station/Door to Metroid Caverns Entrance
+  * Extra - actor_name: Door008
+  * Extra - actor_type: doorpowerpower
+  > Door to Dam Exterior (Bottom)
+      Trivial
+  > Door to Dam Exterior (Top)
+      Trivial
+  > Door to Metroid Caverns Ammo Recharge Station Access
+      Trivial
+  > Pickup (Super Missile Tank)
+      All of the following:
+          Lay Any Bomb
+          Baby Metroid or Super Missile
+          Phase Drift or Spider Ball
+  > Tunnel to Spike Ravine (Bottom)
+      Morph Ball
+  > Tunnel to Spike Ravine (Top)
+      Lay Any Bomb
+
+> Door to Metroid Caverns Ammo Recharge Station Access; Heals? False
+  * Layers: default
+  * Power Beam Door to Metroid Caverns Ammo Recharge Station Access/Door to Metroid Caverns Entrance
+  * Extra - actor_name: Door016
+  * Extra - actor_type: doorpowerpower
+  > Door to Metroid Caverns Save Station
+      Trivial
+
+> Pickup (Super Missile Tank); Heals? False
+  * Layers: default
+  * Pickup 39; Category? Minor
+  * Extra - actor_name: HiddenPowerup002
+  * Extra - actor_type: item_supermissiletank
+  > Door to Metroid Caverns Save Station
+      Trivial
+
+> Tunnel to Spike Ravine (Bottom); Heals? False
+  * Layers: default
+  * Tunnel to Spike Ravine/Tunnel to Metroid Caverns Entrance (Bottom)
+  > Door to Metroid Caverns Save Station
+      Morph Ball
+
+> Tunnel to Spike Ravine (Top); Heals? False
+  * Layers: default
+  * Tunnel with Bomb Block to Spike Ravine/Tunnel to Metroid Caverns Entrance (Top)
+  > Door to Metroid Caverns Save Station
+      Morph Ball
+
+----------------
+Spike Ravine
+Extra - total_boundings: {'x1': -16000.0, 'x2': -14700.0, 'y1': -4000.0, 'y2': -2200.0}
+Extra - polygon: [[-16000.0, -2200.0], [-16000.0, -4000.0], [-14700.0, -4000.0], [-14700.0, -2200.0]]
+Extra - asset_id: collision_camera_024
+> Pickup (Aeion Tank); Heals? False
+  * Layers: default
+  * Pickup 32; Category? Minor
+  * Extra - actor_name: LE_Item_001
+  * Extra - actor_type: item_senergytank
+  > Tunnel to Metroid Caverns Entrance (Bottom)
+      Trivial
+
+> Tunnel to Metroid Caverns Entrance (Bottom); Heals? False
+  * Layers: default
+  * Tunnel to Metroid Caverns Entrance/Tunnel to Spike Ravine (Bottom)
+  > Pickup (Aeion Tank)
+      Any of the following:
+          Simple IBJ
+          Morph Ball and Space Jump and Movement (Intermediate)
+          Spider Boost (Beginner) and Can Spider Boost
+  > Tunnel to Metroid Caverns Entrance (Top)
+      Single-wall Wall Jump (Beginner) or Climb Rooms Vertically (No High Jump)
+
+> Tunnel to Metroid Caverns Entrance (Top); Heals? False
+  * Layers: default
+  * Tunnel with Bomb Block to Metroid Caverns Entrance/Tunnel to Spike Ravine (Top)
+  > Pickup (Aeion Tank)
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Grapple Beam
+              All of the following:
+                  # https://www.youtube.com/watch?v=rfZa-HK-3mE
+                  Mid-Air Morph (Intermediate) and Damage Boost (Advanced) and Movement (Advanced) and Wall Jump (Advanced)
+                  Lightning Armor or Normal Damage ≥ 70
+  > Tunnel to Metroid Caverns Entrance (Bottom)
+      Morph Ball
+
+----------------
+Metroid Caverns Ammo Recharge Station Access
+Extra - total_boundings: {'x1': -16000.0, 'x2': -14700.0, 'y1': 1542.68994140625, 'y2': 2300.0}
+Extra - polygon: [[-16000.0, 2300.0], [-16000.0, 1542.68994140625], [-14700.0, 1542.68994140625], [-14700.0, 2300.0]]
+Extra - asset_id: collision_camera_025
+> Door to Metroid Caverns Entrance; Heals? False
+  * Layers: default
+  * Power Beam Door to Metroid Caverns Entrance/Door to Metroid Caverns Ammo Recharge Station Access
+  * Extra - actor_name: Door016
+  * Extra - actor_type: doorpowerpower
+  > Door to Metroid Caverns Ammo Recharge Station
+      Varia Suit
+
+> Door to Metroid Caverns Ammo Recharge Station; Heals? False
+  * Layers: default
+  * Power Beam Door to Metroid Caverns Ammo Recharge Station/Door to Metroid Caverns Ammo Recharge Station Access
+  * Extra - actor_name: Door019
+  * Extra - actor_type: doorpowerpower
+  > Door to Metroid Caverns Entrance
+      Varia Suit
+
+----------------
+Metroid Caverns Maze
+Extra - total_boundings: {'x1': -11200.0, 'x2': -8600.0, 'y1': -5100.0, 'y2': -3500.0}
+Extra - polygon: [[-11200.0, -3500.0], [-11200.0, -5100.0], [-8600.0, -5100.0], [-8600.0, -3500.0]]
+Extra - asset_id: collision_camera_026
+> Pickup (Missile Tank); Heals? False
+  * Layers: default
+  * Pickup 36; Category? Minor
+  * Extra - actor_name: LE_Item_006
+  * Extra - actor_type: item_missiletank
+  > Tunnel to Metroid Caverns Save Station
+      Lay Any Bomb
+
+> Tunnel to Metroid Caverns Save Station; Heals? False
+  * Layers: default
+  * Tunnel with Bomb Block to Metroid Caverns Save Station/Tunnel to Metroid Caverns Maze
+  > Pickup (Missile Tank)
+      Lay Any Bomb
+
+----------------
+Metroid Caverns Save Station
+Extra - total_boundings: {'x1': -13000.0, 'x2': -11000.0, 'y1': -6300.0, 'y2': -3700.0}
+Extra - polygon: [[-13000.0, -3700.0], [-13000.0, -6300.0], [-11000.0, -6300.0], [-11000.0, -3700.0]]
+Extra - asset_id: collision_camera_027
+> Energy Recharge Station; Heals? True
+  * Layers: default
+  * Extra - actor_name: LE_Platform_EnergyCharge001
+  * Extra - actor_type: weightactivatedplatform
+  > Door to Metroid Caverns Alpha Arena North West
+      Trivial
+
+> Save Station; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Extra - actor_name: LE_Platform_SaveStation003
+  * Extra - actor_type: weightactivatedplatform
+  * Extra - start_point_actor_name: ST_SaveStation003
+  > Door to Metroid Caverns Alpha Arena North West
+      Trivial
+
+> Door to Metroid Caverns Entrance; Heals? False
+  * Layers: default
+  * Power Beam Door to Metroid Caverns Entrance/Door to Metroid Caverns Save Station
+  * Extra - actor_name: Door008
+  * Extra - actor_type: doorpowerpower
+  > Door to Metroid Caverns Alpha Arena North West
+      Trivial
+
+> Door to Metroid Caverns Alpha Arena North West; Heals? False
+  * Layers: default
+  * Power Beam Door to Metroid Caverns Alpha Arena North West/Door to Metroid Caverns Save Station
+  * Extra - actor_name: Door021
+  * Extra - actor_type: doorpowerpower
+  > Energy Recharge Station
+      Trivial
+  > Save Station
+      Trivial
+  > Door to Metroid Caverns Entrance
+      Trivial
+  > Dock to Metroid Caverns Alpha Arena East Access
+      Trivial
+  > Tunnel to Metroid Caverns Maze
+      Lay Any Bomb
+
+> Dock to Metroid Caverns Alpha Arena East Access; Heals? False
+  * Layers: default
+  * Open Passage to Metroid Caverns Alpha Arena East Access/Dock to Metroid Caverns Save Station
+  > Door to Metroid Caverns Alpha Arena North West
+      Trivial
+
+> Tunnel to Metroid Caverns Maze; Heals? False
+  * Layers: default
+  * Tunnel with Bomb Block to Metroid Caverns Maze/Tunnel to Metroid Caverns Save Station
+  > Door to Metroid Caverns Alpha Arena North West
+      Trivial
+
+----------------
+Metroid Caverns Alpha Arena North West
+Extra - total_boundings: {'x1': -18600.0, 'x2': -12900.0, 'y1': -6800.0, 'y2': -5300.0}
+Extra - polygon: [[-18600.0, -5300.0], [-18600.0, -6800.0], [-12900.0, -6800.0], [-12900.0, -5300.0]]
+Extra - asset_id: collision_camera_028
+> Door to Metroid Caverns Lobby; Heals? False
+  * Layers: default
+  * Charge Beam Door to Metroid Caverns Lobby/Door to Metroid Caverns Alpha Arena North West
+  * Extra - actor_name: Door009
+  * Extra - actor_type: doorchargecharge
+  > Room Center
+      Trivial
+
+> Door to Metroid Caverns Save Station; Heals? False
+  * Layers: default
+  * Power Beam Door to Metroid Caverns Save Station/Door to Metroid Caverns Alpha Arena North West
+  * Extra - actor_name: Door021
+  * Extra - actor_type: doorpowerpower
+  > Room Center
+      Trivial
+
+> Event - Alpha Metroid; Heals? False
+  * Layers: default
+  * Event Area 2 (Dam Exterior) - Alpha Metroid West
+  > Pickup (DNA)
+      Trivial
+
+> Room Center; Heals? False; Default Node
+  * Layers: default
+  * Extra - start_point_actor_name: ST_Alpha_003_Checkpoint
+  > Door to Metroid Caverns Lobby
+      Any of the following:
+          High Jump Boots or Gravity Suit or Space Jump or Use Spider Ball
+          All of the following:
+              Lay Bomb
+              Any of the following:
+                  Diagonal Bomb Jump (Beginner)
+                  All of the following:
+                      Infinite Bomb Jump (Beginner)
+                      Spring Ball or Mid-Air Morph (Intermediate)
+  > Door to Metroid Caverns Save Station
+      Any of the following:
+          High Jump Boots or Gravity Suit or Space Jump or Use Spider Ball
+          All of the following:
+              Lay Bomb
+              Any of the following:
+                  Diagonal Bomb Jump (Beginner)
+                  All of the following:
+                      Infinite Bomb Jump (Beginner)
+                      Spring Ball or Mid-Air Morph (Intermediate)
+  > Event - Alpha Metroid
+      Defeat Alpha Metroid
+
+> Pickup (DNA); Heals? False
+  * Layers: default
+  * Pickup 179; Category? Minor
+  * Extra - pickup_type: metroid
+  * Extra - spawngroup: SG_Alpha_003
+  > Room Center
+      Trivial
+
+----------------
+Metroid Caverns Lobby
+Extra - total_boundings: {'x1': -21850.0, 'x2': -18500.0, 'y1': -8100.0, 'y2': -5400.0}
+Extra - polygon: [[-21850.0, -5400.0], [-21850.0, -8100.0], [-18500.0, -8100.0], [-18500.0, -5400.0]]
+Extra - asset_id: collision_camera_029
+> Door to Metroid Caverns Alpha Arena North West; Heals? False
+  * Layers: default
+  * Charge Beam Door to Metroid Caverns Alpha Arena North West/Door to Metroid Caverns Lobby
+  * Extra - actor_name: Door009
+  * Extra - actor_type: doorchargecharge
+  > Door to Metroid Caverns Alpha Arena South West
+      Varia Suit
+  > Door to Metroid Caverns Teleporter
+      Varia Suit
+
+> Door to Metroid Caverns Alpha Arena South West; Heals? False
+  * Layers: default
+  * Wave Beam Door to Metroid Caverns Alpha Arena South West/Door to Metroid Caverns Lobby
+  * Extra - actor_name: Door010
+  * Extra - actor_type: doorpowerpower
+  > Door to Metroid Caverns Alpha Arena North West
+      Varia Suit
+  > Start Point
+      Trivial
+
+> Door to Metroid Caverns Teleporter; Heals? False
+  * Layers: default
+  * Power Beam Door to Metroid Caverns Teleporter/Door to Metroid Caverns Lobby
+  * Extra - actor_name: Door011
+  * Extra - actor_type: doorpowerpower
+  > Door to Metroid Caverns Alpha Arena North West
+      Varia Suit
+
+> Start Point; Heals? False; Default Node
+  * Layers: default
+  * Extra - start_point_actor_name: ST_SG_Alpha_004
+  > Door to Metroid Caverns Alpha Arena South West
+      Varia Suit
+
+----------------
+Metroid Caverns Alpha Arena South West
+Extra - total_boundings: {'x1': -25900.0, 'x2': -21750.0, 'y1': -8400.0, 'y2': -6100.0}
+Extra - polygon: [[-25900.0, -6100.0], [-25900.0, -8400.0], [-21750.0, -8400.0], [-21750.0, -6100.0]]
+Extra - asset_id: collision_camera_030
+> Door to Metroid Caverns Lobby; Heals? False
+  * Layers: default
+  * Wave Beam Door to Metroid Caverns Lobby/Door to Metroid Caverns Alpha Arena South West
+  * Extra - actor_name: Door010
+  * Extra - actor_type: doorpowerpower
+  > Room Bottom
+      Varia Suit
+
+> Event - Alpha Metroid; Heals? False
+  * Layers: default
+  * Event Area 2 (Dam Exterior) - Alpha Metroid Heat
+  > Start Point
+      Trivial
+  > Pickup (DNA)
+      Trivial
+
+> Start Point; Heals? False; Default Node
+  * Layers: default
+  * Extra - start_point_actor_name: ST_Alpha_004_Checkpoint
+  > Room Bottom
+      Varia Suit
+
+> Pickup (DNA); Heals? False
+  * Layers: default
+  * Pickup 180; Category? Minor
+  * Extra - pickup_type: metroid
+  * Extra - spawngroup: SG_Alpha_004
+  > Room Bottom
+      Trivial
+
+> Room Bottom; Heals? False
+  * Layers: default
+  > Door to Metroid Caverns Lobby
+      Varia Suit
+  > Event - Alpha Metroid
+      Varia Suit and Defeat Alpha Metroid
+
+----------------
+Metroid Caverns Alpha Arena East Access
+Extra - total_boundings: {'x1': -11200.0, 'x2': -7400.0, 'y1': -6500.0, 'y2': -5100.0}
+Extra - polygon: [[-11200.0, -5100.0], [-11200.0, -6500.0], [-7400.0, -6500.0], [-7400.0, -5100.0]]
+Extra - asset_id: collision_camera_031
+> Tunnel to Metroid Caverns Alpha Arena East; Heals? False
+  * Layers: default
+  * Tunnel with Bomb Block to Metroid Caverns Alpha Arena East/Tunnel to Metroid Caverns Alpha Arena East Access
+  > Dock to Metroid Caverns Save Station
+      Lay Any Bomb
+  > Start Point
+      Morph Ball
+
+> Dock to Metroid Caverns Save Station; Heals? False
+  * Layers: default
+  * Open Passage to Metroid Caverns Save Station/Dock to Metroid Caverns Alpha Arena East Access
+  > Tunnel to Metroid Caverns Alpha Arena East
+      Any of the following:
+          Lay Power Bomb
+          All of the following:
+              Lay Bomb
+              Spring Ball or Movement (Intermediate)
+
+> Start Point; Heals? False; Default Node
+  * Layers: default
+  * Extra - start_point_actor_name: ST_SG_Alpha_007
+  > Tunnel to Metroid Caverns Alpha Arena East
+      Lay Any Bomb
+
+----------------
+Metroid Caverns Teleporter
+Extra - total_boundings: {'x1': -18600.0, 'x2': -7600.0, 'y1': -8600.0, 'y2': -7000.0}
+Extra - polygon: [[-18600.0, -7000.0], [-18600.0, -8200.0], [-15600.0, -8200.0], [-14300.0, -8600.0], [-12000.0, -8600.0], [-11400.0, -8500.0], [-7600.0, -8500.0], [-7600.0, -7000.0]]
+Extra - asset_id: collision_camera_032
+> Teleporter; Heals? False; Default Node
+  * Layers: default
+  * Teleporter Network (Unlocked by After Area 2 (Dam Exterior) - Metroid Caverns Teleporter Unlocked)
+  * Extra - actor_name: LE_Platform_Teleporter_02_03
+  * Extra - actor_type: weightactivatedplatform
+  * Extra - start_point_actor_name: ST_Teleporter_02_03
+  > Below Pickup
+      Varia Suit
+
+> Door to Metroid Caverns Lobby; Heals? False
+  * Layers: default
+  * Power Beam Door to Metroid Caverns Lobby/Door to Metroid Caverns Teleporter
+  * Extra - actor_name: Door011
+  * Extra - actor_type: doorpowerpower
+  > Below Pickup
+      Varia Suit
+
+> Door to Metroid Caverns Alpha+ Arena; Heals? False
+  * Layers: default
+  * Power Beam Door to Metroid Caverns Alpha+ Arena/Door to Metroid Caverns Teleporter
+  * Extra - actor_name: Door022
+  * Extra - actor_type: doorpowerpower
+  > Right of Missile Block
+      All of the following:
+          Varia Suit
+          Gravity Suit or Ice Beam or Morph Ball or Space Jump
+  > Start Point
+      Trivial
+
+> Pickup (Missile Tank); Heals? False
+  * Layers: default
+  * Pickup 38; Category? Minor
+  * Extra - actor_name: HiddenPowerup001
+  * Extra - actor_type: item_missiletank
+  > Below Pickup
+      Trivial
+
+> Event - Teleporter Unlocked; Heals? False
+  * Layers: default
+  * Event Area 2 (Dam Exterior) - Metroid Caverns Teleporter Unlocked
+  > Below Pickup
+      Trivial
+
+> Below Pickup; Heals? False
+  * Layers: default
+  > Teleporter
+      Varia Suit
+  > Door to Metroid Caverns Lobby
+      Varia Suit
+  > Pickup (Missile Tank)
+      All of the following:
+          Varia Suit
+          Any of the following:
+              Knowledge (Beginner) and Lay Power Bomb
+              Lay Bomb and Shoot Beam Burst
+  > Event - Teleporter Unlocked
+      Trivial
+  > Right of Missile Block
+      All of the following:
+          Shoot Any Missile
+          Any of the following:
+              High Jump Boots or Space Jump
+              Mid-Air Morph (Intermediate) and Lay Bomb
+
+> Right of Missile Block; Heals? False
+  * Layers: default
+  > Door to Metroid Caverns Alpha+ Arena
+      All of the following:
+          Varia Suit
+          Any of the following:
+              Gravity Suit or Ice Beam or Space Jump or Use Spider Ball
+              Diagonal Bomb Jump (Intermediate) and Lay Bomb
+  > Below Pickup
+      Shoot Any Missile
+
+> Start Point; Heals? False
+  * Layers: default
+  * Extra - start_point_actor_name: ST_SG_Alpha_005
+  > Door to Metroid Caverns Alpha+ Arena
+      Varia Suit
+
+----------------
+Exterior Alpha+ Arena
+Extra - total_boundings: {'x1': -11450.0, 'x2': -7600.0, 'y1': 5500.0, 'y2': 8000.0}
+Extra - polygon: [[-11450.0, 8000.0], [-11450.0, 5500.0], [-7600.0, 5500.0], [-7600.0, 8000.0]]
+Extra - asset_id: collision_camera_033
+> Door to Serene Shelter; Heals? False
+  * Layers: default
+  * Super Missile Door to Serene Shelter/Door to Exterior Alpha+ Arena
+  * Extra - actor_name: Door012
+  * Extra - actor_type: doorpowerpower
+  > Room Center
+      Trivial
+
+> Door to Dam Exterior; Heals? False
+  * Layers: default
+  * Power Beam Door to Dam Exterior/Door to Exterior Alpha+ Arena
+  * Extra - actor_name: Door020
+  * Extra - actor_type: doorpowerpower
+  > Room Center
+      Trivial
+
+> Event - Alpha Metroid+; Heals? False
+  * Layers: default
+  * Event Area 2 (Dam Exterior) - Alpha Metroid+ North
+  > Pickup (DNA)
+      Trivial
+
+> Room Center; Heals? False; Default Node
+  * Layers: default
+  * Extra - start_point_actor_name: ST_Alpha_001_Checkpoint
+  > Door to Serene Shelter
+      Trivial
+  > Door to Dam Exterior
+      Trivial
+  > Event - Alpha Metroid+
+      Defeat Alpha Metroid+
+
+> Pickup (DNA); Heals? False
+  * Layers: default
+  * Pickup 177; Category? Major
+  * Extra - pickup_type: metroid
+  * Extra - spawngroup: SG_Alpha_001
+  > Room Center
+      Trivial
+
+----------------
+Serene Shelter
+Extra - total_boundings: {'x1': -14400.0, 'x2': -11350.0, 'y1': 5500.0, 'y2': 7800.0}
+Extra - polygon: [[-14400.0, 7800.0], [-14400.0, 5500.0], [-11350.0, 5500.0], [-11350.0, 7800.0]]
+Extra - asset_id: collision_camera_034
+> Pickup (Super Missile Tank); Heals? False
+  * Layers: default
+  * Pickup 33; Category? Minor
+  * Extra - actor_name: LE_Item_003
+  * Extra - actor_type: item_supermissiletank
+  > Door to Exterior Alpha+ Arena
+      Trivial
+
+> Door to Exterior Alpha+ Arena; Heals? False
+  * Layers: default
+  * Super Missile Door to Exterior Alpha+ Arena/Door to Serene Shelter
+  * Extra - actor_name: Door012
+  * Extra - actor_type: doorpowerpower
+  > Pickup (Super Missile Tank)
+      All of the following:
+          # Reaching the pickup
+          Wall Jump (Beginner) or Climb Rooms Vertically (No High Jump)
+          Any of the following:
+              # Collecting the pickup
+              Lay Bomb
+              All of the following:
+                  Lay Power Bomb
+                  Phase Drift or Space Jump
+
+----------------
+Metroid Caverns Alpha+ Arena
+Extra - total_boundings: {'x1': -7700.0, 'x2': -4200.0, 'y1': -8400.0, 'y2': -7100.0}
+Extra - polygon: [[-7700.0, -7100.0], [-7700.0, -8400.0], [-4200.0, -8400.0], [-4200.0, -7100.0]]
+Extra - asset_id: collision_camera_035
+> Door to Metroid Caverns Teleporter; Heals? False
+  * Layers: default
+  * Power Beam Door to Metroid Caverns Teleporter/Door to Metroid Caverns Alpha+ Arena
+  * Extra - actor_name: Door022
+  * Extra - actor_type: doorpowerpower
+  > Room Center
+      Varia Suit
+
+> Event - Alpha Metroid+; Heals? False
+  * Layers: default
+  * Event Area 2 (Dam Exterior) - Alpha Metroid+ Heat
+  > Pickup (DNA)
+      Trivial
+
+> Room Center; Heals? False; Default Node
+  * Layers: default
+  * Extra - start_point_actor_name: ST_Alpha_005_Checkpoint
+  > Door to Metroid Caverns Teleporter
+      Varia Suit
+  > Event - Alpha Metroid+
+      Varia Suit and Defeat Alpha Metroid+
+
+> Pickup (DNA); Heals? False
+  * Layers: default
+  * Pickup 181; Category? Major
+  * Extra - pickup_type: metroid
+  * Extra - spawngroup: SG_Alpha_005
+  > Room Center
+      Trivial
+
+----------------
+Inner Alpha Arena
+Extra - total_boundings: {'x1': -4100.0, 'x2': -1750.0, 'y1': 3100.0, 'y2': 4200.0}
+Extra - polygon: [[-4100.0, 4200.0], [-4100.0, 3100.0], [-1750.0, 3100.0], [-1750.0, 4200.0]]
+Extra - asset_id: collision_camera_036
+> Door to Critter Playground; Heals? False
+  * Layers: default
+  * Power Beam Door to Critter Playground/Door to Inner Alpha Arena
+  * Extra - actor_name: Door017
+  * Extra - actor_type: doorpowerpower
+  > Room Center
+      Trivial
+
+> Event - Alpha Metroid; Heals? False
+  * Layers: default
+  * Event Area 2 (Dam Exterior) - Alpha Metroid North
+  > Pickup (DNA)
+      Trivial
+
+> Room Center; Heals? False; Default Node
+  * Layers: default
+  * Extra - start_point_actor_name: ST_Alpha_006_Checkpoint
+  > Door to Critter Playground
+      Trivial
+  > Event - Alpha Metroid
+      Defeat Alpha Metroid
+
+> Pickup (DNA); Heals? False
+  * Layers: default
+  * Pickup 182; Category? Minor
+  * Extra - pickup_type: metroid
+  * Extra - spawngroup: SG_Alpha_006
+  > Room Center
+      Trivial
+
+----------------
+Rock Icicle Corridor
+Extra - total_boundings: {'x1': -4200.0, 'x2': -1750.0, 'y1': 2342.35009765625, 'y2': 3100.0}
+Extra - polygon: [[-4200.0, 3100.0], [-4200.0, 2342.35009765625], [-1750.0, 2342.35009765625], [-1750.0, 3100.0]]
+Extra - asset_id: collision_camera_037
+> Door to Dam Exterior; Heals? False
+  * Layers: default
+  * Power Beam Door to Dam Exterior/Door to Rock Icicle Corridor
+  * Extra - actor_name: Door013
+  * Extra - actor_type: doorpowerpower
+  > Door to Critter Playground
+      Trivial
+
+> Door to Critter Playground; Heals? False
+  * Layers: default
+  * Power Beam Door to Critter Playground/Door to Rock Icicle Corridor
+  * Extra - actor_name: Door018
+  * Extra - actor_type: doorpowerpower
+  > Door to Dam Exterior
+      Trivial
+
+----------------
+Maintenance Tunnel
+Extra - total_boundings: {'x1': 580.0, 'x2': 1900.0, 'y1': 4102.5, 'y2': 5400.0}
+Extra - polygon: [[580.0, 5400.0], [580.0, 4102.5], [1900.0, 4102.5], [1900.0, 5400.0]]
+Extra - asset_id: collision_camera_038
+> Door to Dam Exterior; Heals? False
+  * Layers: default
+  * Power Beam Door to Dam Exterior/Door from Maintenance Tunnel
+  * Extra - actor_name: Door014
+  * Extra - actor_type: doorclosedpower
+  > Tunnel to Fan Funnel
+      Lay Any Bomb
+
+> Tunnel to Fan Funnel; Heals? False
+  * Layers: default
+  * Tunnel with Bomb Block to Fan Funnel/Tunnel to Maintenance Tunnel
+  > Door to Dam Exterior
+      Morph Ball
+
+----------------
+Metroid Caverns Ammo Recharge Station
+Extra - total_boundings: {'x1': -17200.0, 'x2': -15900.0, 'y1': 1542.68994140625, 'y2': 2300.0}
+Extra - polygon: [[-17200.0, 2300.0], [-17200.0, 1542.68994140625], [-15900.0, 1542.68994140625], [-15900.0, 2300.0]]
+Extra - asset_id: collision_camera_039
+> Metroid Caverns Ammo Recharge Station; Heals? False
+  * Layers: default
+  * Extra - actor_name: LE_Platform_AmmoCharge001
+  * Extra - actor_type: weightactivatedplatform
+  > Door to Metroid Caverns Ammo Recharge Station Access
+      Trivial
+
+> Door to Metroid Caverns Ammo Recharge Station Access; Heals? False
+  * Layers: default
+  * Power Beam Door to Metroid Caverns Ammo Recharge Station Access/Door to Metroid Caverns Ammo Recharge Station
+  * Extra - actor_name: Door019
+  * Extra - actor_type: doorpowerpower
+  > Metroid Caverns Ammo Recharge Station
+      Trivial
+
+----------------
+Metroid Caverns Alpha Arena East
+Extra - total_boundings: {'x1': -7500.0, 'x2': -4300.0, 'y1': -6700.0, 'y2': -5400.0}
+Extra - polygon: [[-7500.0, -5400.0], [-7500.0, -6700.0], [-4300.0, -6700.0], [-4300.0, -5400.0]]
+Extra - asset_id: collision_camera_040
+> Tunnel to Metroid Caverns Alpha Arena East Access; Heals? False
+  * Layers: default
+  * Tunnel with Bomb Block to Metroid Caverns Alpha Arena East Access/Tunnel to Metroid Caverns Alpha Arena East
+  > Room Center
+      Morph Ball and Defeat Alpha Metroid
+
+> Event - Alpha Metroid; Heals? False
+  * Layers: default
+  * Event Area 2 (Dam Exterior) - Alpha Metroid South
+  > Pickup (DNA)
+      Trivial
+
+> Room Center; Heals? False; Default Node
+  * Layers: default
+  * Extra - start_point_actor_name: ST_Alpha_007_Checkpoint
+  > Tunnel to Metroid Caverns Alpha Arena East Access
+      Any of the following:
+          Simple IBJ
+          Spider Ball and Lay Any Bomb
+          All of the following:
+              Any of the following:
+                  Lay Power Bomb
+                  Mid-Air Morph (Beginner) and Lay Bomb
+              High Jump Boots or Space Jump or Single-wall Wall Jump (Beginner) or Unmorph Extend (Beginner)
+  > Event - Alpha Metroid
+      Defeat Alpha Metroid
+
+> Pickup (DNA); Heals? False
+  * Layers: default
+  * Pickup 183; Category? Minor
+  * Extra - pickup_type: metroid
+  * Extra - spawngroup: SG_Alpha_007
+  > Room Center
+      Trivial
+

@@ -135,28 +135,20 @@ class DreadPatchDataFactory(PatchDataFactory):
     def _key_error_for_node(self, node: Node, err: KeyError):
         return KeyError(f"{self.game.region_list.node_name(node, with_region=True)} has no extra {err}")
 
-    def _key_error_for_start_node(self, node: Node):
-        return KeyError(
-            f"{self.game.region_list.node_name(node, with_region=True)} has neither a "
-            "start_point_actor_name nor the area has a collision_camera_name for a custom start point"
-        )
-
     def _get_or_create_spawn_point(self, node: Node, level_name: str):
         if node in self.new_spawn_points:
             return self.new_spawn_points[node]["new_actor"]["actor"]
         else:
-            try:
-                area = self.game.region_list.area_by_area_location(node.identifier.area_identifier)
-                collision_camera_name = area.extra["asset_id"]
-                new_spawnpoint_name = f"{self.spawnpoint_name_prefix}{len(self.new_spawn_points):03d}"
-                self.new_spawn_points[node] = {
-                    "new_actor": {"actor": new_spawnpoint_name, "scenario": level_name},
-                    "location": {"x": node.location.x, "y": node.location.y, "z": node.location.z},
-                    "collision_camera_name": collision_camera_name,
-                }
-                return new_spawnpoint_name
-            except KeyError:
-                raise self._key_error_for_start_node(node)
+            assert node.location is not None
+            area = self.game.region_list.area_by_area_location(node.identifier.area_identifier)
+            collision_camera_name = area.extra["asset_id"]
+            new_spawnpoint_name = f"{self.spawnpoint_name_prefix}{len(self.new_spawn_points):03d}"
+            self.new_spawn_points[node] = {
+                "new_actor": {"actor": new_spawnpoint_name, "scenario": level_name},
+                "location": {"x": node.location.x, "y": node.location.y, "z": node.location.z},
+                "collision_camera_name": collision_camera_name,
+            }
+            return new_spawnpoint_name
 
     def _start_point_ref_for(self, node: Node) -> dict:
         region = self.game.region_list.nodes_to_region(node)
@@ -383,7 +375,12 @@ class DreadPatchDataFactory(PatchDataFactory):
                     "bShowEnemyLife": c.show_enemy_life,
                     "bShowEnemyDamage": c.show_enemy_damage,
                     "bShowPlayerDamage": c.show_player_damage,
-                }
+                },
+                "SoundSystemATK": {
+                    "fMusicVolume": c.music_volume / 100,
+                    "fSfxVolume": c.sfx_volume / 100,
+                    "fEnvironmentStreamsVolume": c.ambience_volume / 100,
+                },
             },
             "lua": {
                 "custom_init": {
@@ -399,6 +396,7 @@ class DreadPatchDataFactory(PatchDataFactory):
                 "bomb": c.alt_bomb.value,
                 "cross_bomb": c.alt_cross_bomb.value,
                 "power_bomb": c.alt_power_bomb.value,
+                "closed": c.alt_closed.value,
             },
         }
 
@@ -501,6 +499,7 @@ class DreadPatchDataFactory(PatchDataFactory):
             if (
                 isinstance(node, DockNode)
                 and node.dock_type in self.game.dock_weakness_database.all_teleporter_dock_types
+                or node.dock_type.extra.get("is_teleportal", False)
             )
         ]
         return {
@@ -513,7 +512,7 @@ class DreadPatchDataFactory(PatchDataFactory):
             ],
             "elevators": teleporters if self.configuration.teleporters.mode != TeleporterShuffleMode.VANILLA else [],
             "hints": self._encode_hints(),
-            "text_patches": self._static_text_changes(),
+            "text_patches": dict(sorted(self._static_text_changes().items())),
             "spoiler_log": self._credits_spoiler(),
             "cosmetic_patches": self._cosmetic_patch_data(),
             "energy_per_tank": energy_per_tank,
@@ -530,6 +529,7 @@ class DreadPatchDataFactory(PatchDataFactory):
                 "remove_grapple_block_path_to_itorash": self.configuration.hanubia_easier_path_to_itorash,
                 "default_x_released": self.configuration.x_starts_released,
                 "nerf_power_bombs": self.configuration.nerf_power_bombs,
+                "warp_to_start": self.configuration.warp_to_start,
             },
             "show_shields_on_minimap": not self.configuration.dock_rando.is_enabled(),
             "door_patches": self._door_patches(),

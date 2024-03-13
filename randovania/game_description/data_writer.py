@@ -167,7 +167,11 @@ def write_resource_database(resource_database: ResourceDatabase) -> dict:
         "versions": write_array(resource_database.version, write_simple_resource),
         "misc": write_array(resource_database.misc, write_simple_resource),
         "requirement_template": {
-            name: write_requirement(requirement) for name, requirement in resource_database.requirement_template.items()
+            name: {
+                "display_name": requirement.display_name,
+                "requirement": write_requirement(requirement.requirement),
+            }
+            for name, requirement in resource_database.requirement_template.items()
         },
         "damage_reductions": [
             {
@@ -410,8 +414,13 @@ def write_minimal_logic_db(db: MinimalLogicData | None) -> dict | None:
     }
 
 
-def write_used_trick_levels(game: GameDescription) -> dict[str, list[int]]:
-    return {trick.short_name: sorted(levels) for trick, levels in game.get_used_trick_levels(ignore_cache=True).items()}
+def write_used_trick_levels(game: GameDescription) -> dict[str, list[int]] | None:
+    try:
+        return {
+            trick.short_name: sorted(levels) for trick, levels in game.get_used_trick_levels(ignore_cache=True).items()
+        }
+    except (RecursionError, KeyError):
+        return None
 
 
 def write_game_description(game: GameDescription) -> dict:

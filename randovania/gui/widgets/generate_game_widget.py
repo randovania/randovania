@@ -34,7 +34,7 @@ class RetryGeneration(Exception):
     pass
 
 
-def persist_layout(history_dir: Path, description: LayoutDescription):
+def persist_layout(history_dir: Path, description: LayoutDescription) -> None:
     history_dir.mkdir(parents=True, exist_ok=True)
 
     games = "-".join(sorted(game.short_name for game in description.all_games))
@@ -52,7 +52,7 @@ class GenerateGameWidget(QtWidgets.QWidget, Ui_GenerateGameWidget):
     _options: Options
     game: RandovaniaGame
 
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__()
         self.setupUi(self)
         self.failure_handler = GenerationFailureHandler(self)
@@ -63,7 +63,7 @@ class GenerateGameWidget(QtWidgets.QWidget, Ui_GenerateGameWidget):
         window_manager: WindowManager,
         background_task: BackgroundTaskMixin,
         options: Options,
-    ):
+    ) -> None:
         self._window_manager = window_manager
         self._background_task = background_task
         self._options = options
@@ -83,7 +83,7 @@ class GenerateGameWidget(QtWidgets.QWidget, Ui_GenerateGameWidget):
         self.create_generate_race_button.clicked.connect(self.generate_new_layout_race)
         self.select_preset_widget.CanGenerate.connect(self._on_can_generate)
 
-    def enable_buttons_with_background_tasks(self, value: bool):
+    def enable_buttons_with_background_tasks(self, value: bool) -> None:
         self.create_generate_button.setEnabled(value)
         self.create_generate_race_button.setEnabled(value)
 
@@ -97,18 +97,18 @@ class GenerateGameWidget(QtWidgets.QWidget, Ui_GenerateGameWidget):
     # Generate seed
 
     @asyncSlot()
-    async def generate_new_layout_regular(self):
+    async def generate_new_layout_regular(self) -> None:
         return await self.generate_new_layout(spoiler=True)
 
     @asyncSlot()
-    async def generate_new_layout_no_retry(self):
+    async def generate_new_layout_no_retry(self) -> None:
         return await self.generate_new_layout(spoiler=True, retries=0)
 
     @asyncSlot()
-    async def generate_new_layout_race(self):
+    async def generate_new_layout_race(self) -> None:
         return await self.generate_new_layout(spoiler=False)
 
-    async def generate_new_layout(self, spoiler: bool, retries: int | None = None):
+    async def generate_new_layout(self, spoiler: bool, retries: int | None = None) -> None:
         preset = self.preset
         num_players = self.num_players_spin_box.value()
 
@@ -150,8 +150,8 @@ class GenerateGameWidget(QtWidgets.QWidget, Ui_GenerateGameWidget):
             except RetryGeneration:
                 pass
 
-    async def generate_layout_from_permalink(self, permalink: Permalink, retries: int | None = None):
-        def work(progress_update: ProgressUpdateCallable):
+    async def generate_layout_from_permalink(self, permalink: Permalink, retries: int | None = None) -> None:
+        def work(progress_update: ProgressUpdateCallable) -> LayoutDescription:
             return generator_frontend.generate_layout(
                 progress_update=progress_update, parameters=permalink.parameters, options=self._options, retries=retries
             )
@@ -194,9 +194,13 @@ class GenerateGameWidget(QtWidgets.QWidget, Ui_GenerateGameWidget):
         persist_layout(self._options.game_history_path, layout)
         self._window_manager.open_game_details(layout)
 
-    def on_options_changed(self, options: Options):
+    def on_options_changed(self, options: Options) -> None:
         self.select_preset_widget.on_options_changed(options)
 
-    def _on_can_generate(self, can_generate: bool):
-        for btn in [self.create_generate_button, self.create_generate_race_button]:
+    def _on_can_generate(self, can_generate: bool) -> None:
+        for btn in [
+            self.create_generate_button,
+            self.create_generate_race_button,
+            self.create_generate_no_retry_button,
+        ]:
             btn.setEnabled(can_generate)

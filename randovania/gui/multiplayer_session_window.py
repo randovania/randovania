@@ -50,6 +50,7 @@ if TYPE_CHECKING:
     from randovania.gui.lib.window_manager import WindowManager
     from randovania.gui.preset_settings.customize_preset_dialog import CustomizePresetDialog
     from randovania.interface_common.options import Options
+    from randovania.layout.preset import Preset
     from randovania.lib.status_update_lib import ProgressUpdateCallable
 
 logger = logging.getLogger(__name__)
@@ -778,6 +779,16 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
 
         return True
 
+    def _check_for_unsupported_games(self, presets: list[Preset]) -> list[str]:
+        unsupported_games = sorted(
+            {preset.game.data.long_name for preset in presets if preset.game not in self._session.allowed_games}
+        )
+        return unsupported_games
+
+    async def _show_dialog_for_unsupported_games(self, unsupported_games: list[str]) -> None:
+        unsupported_games_str = ", ".join(unsupported_games)
+        await async_dialog.warning(self, "Invalid layout", f"Unsupported games: {unsupported_games_str}")
+
     @asyncSlot()
     @handle_network_errors
     async def import_permalink(self):
@@ -787,6 +798,11 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
             return
 
         permalink = dialog.get_permalink_from_field()
+        unsupported_games = self._check_for_unsupported_games(permalink.parameters.presets)
+        if unsupported_games:
+            await self._show_dialog_for_unsupported_games(unsupported_games)
+            return
+
         if await self._should_overwrite_presets(permalink.parameters, permalink_source=True):
             await self.generate_game_with_permalink(permalink, retries=None)
 
@@ -795,6 +811,11 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
     async def import_layout(self):
         layout = await layout_loader.prompt_and_load_layout_description(self)
         if layout is None:
+            return
+
+        unsupported_games = self._check_for_unsupported_games(list(layout.all_presets))
+        if unsupported_games:
+            await self._show_dialog_for_unsupported_games(unsupported_games)
             return
 
         if await self._should_overwrite_presets(layout.generator_parameters, permalink_source=False):

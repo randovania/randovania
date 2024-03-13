@@ -62,11 +62,11 @@ game_data: game.GameData = game.GameData(
             "in randomizer."
             "\n\n"
             "Key features supported by Randovania include, but are not limited to, full item logic, toggleable tricks "
-            "and difficulties, Door Lock Rando, and Multiworld support (WIP). "
+            "and difficulties, Door Lock Rando, and Multiworld support."
             "\n\n"
             "All Metroids now also drop items. This can include progression, expansions, or DNA. DNA are like keys and "
             "are used to enter the path to the Queen. The amount of DNA is configurable and a hint system has been "
-            "implemented, which means it's not necessary anymore to fight all the Metroids. ",
+            "implemented, which means it's not necessary anymore to fight all the Metroids.",
         ),
         (
             "Which versions of AM2R are supported?",
@@ -106,7 +106,7 @@ game_data: game.GameData = game.GameData(
             "Where can I find the Hints?",
             "There are eight hints in total, and the map will show "
             "an 'H' icon on places where hints exist. They can can be found in:\n\n"
-            "- Main Caves - Research Site Access\n"
+            "- Main Caves - Research Site Elevator\n"
             "- Golden Temple - Breeding Grounds Hub\n"
             "- Hydro Station - Breeding Grounds Lobby\n"
             "- Industrial Complex - Breeding Grounds Fly Stadium\n"
@@ -144,4 +144,5 @@ game_data: game.GameData = game.GameData(
     patch_data_factory=_patch_data_factory,
     exporter=_exporter,
     multiple_start_nodes_per_area=False,
+    defaults_available_in_game_sessions=True,
 )

@@ -8,6 +8,7 @@ from randovania.game_description.db.dock_lock_node import DockLockNode
 from randovania.game_description.db.event_node import EventNode
 from randovania.game_description.db.event_pickup import EventPickupNode
 from randovania.game_description.db.pickup_node import PickupNode
+from randovania.game_description.db.resource_node import ResourceNode
 from randovania.game_description.requirements.requirement_list import RequirementList
 from randovania.game_description.requirements.requirement_set import RequirementSet
 from randovania.game_description.resources.resource_type import ResourceType
@@ -18,7 +19,6 @@ from randovania.resolver.resolver_reach import ResolverReach
 if TYPE_CHECKING:
     from collections.abc import Callable, Iterable
 
-    from randovania.game_description.db.resource_node import ResourceNode
     from randovania.game_description.game_patches import GamePatches
     from randovania.game_description.resources.resource_info import ResourceInfo
     from randovania.layout.base.base_configuration import BaseConfiguration
@@ -28,6 +28,7 @@ if TYPE_CHECKING:
 def _simplify_requirement_list(
     self: RequirementList,
     state: State,
+    node_resources: list[ResourceInfo],
 ) -> RequirementList | None:
     items = []
     damage_reqs = []
@@ -41,6 +42,8 @@ def _simplify_requirement_list(
                 damage_reqs.append(item)
                 current_energy -= item_damage
             continue
+        elif item.negate and item.resource in node_resources:
+            return None
         if item_damage:
             are_damage_reqs_satisfied = False
             damage_reqs.append(item)
@@ -51,14 +54,18 @@ def _simplify_requirement_list(
     if not are_damage_reqs_satisfied:
         items.extend(damage_reqs)
 
+    if not items:
+        return None
+
     return RequirementList(items)
 
 
 def _simplify_additional_requirement_set(
     alternatives: Iterable[RequirementList],
     state: State,
+    node_resources: list[ResourceInfo],
 ) -> RequirementSet:
-    new_alternatives = [_simplify_requirement_list(alternative, state) for alternative in alternatives]
+    new_alternatives = [_simplify_requirement_list(alternative, state, node_resources) for alternative in alternatives]
     return RequirementSet(
         alternative
         for alternative in new_alternatives
@@ -161,8 +168,10 @@ async def _inner_advance_depth(
                 if new_result[0] is None:
                     additional = logic.get_additional_requirements(action).alternatives
 
+                    resources = [x for x, _ in action.resource_gain_on_collect(potential_state.node_context())]
+
                     logic.set_additional_requirements(
-                        state.node, _simplify_additional_requirement_set(additional, state)
+                        state.node, _simplify_additional_requirement_set(additional, state, resources)
                     )
                     logic.log_rollback(state, True, True, logic.get_additional_requirements(state.node))
 
@@ -232,7 +241,14 @@ async def _inner_advance_depth(
 
         additional_requirements = additional_requirements.union(additional)
 
-    logic.set_additional_requirements(state.node, _simplify_additional_requirement_set(additional_requirements, state))
+    resources = (
+        [x for x, _ in state.node.resource_gain_on_collect(state.node_context())]
+        if isinstance(state.node, ResourceNode)
+        else []
+    )
+    logic.set_additional_requirements(
+        state.node, _simplify_additional_requirement_set(additional_requirements, state, resources)
+    )
     logic.log_rollback(state, has_action, False, logic.get_additional_requirements(state.node))
 
     return None, has_action

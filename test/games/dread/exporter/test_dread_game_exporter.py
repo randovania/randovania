@@ -21,7 +21,7 @@ def test_export_game(test_files_dir, mocker, patch_data_name: str, tmp_path):
 
     mock_patch: MagicMock = mocker.patch("open_dread_rando.patch_with_status_update", side_effect=validate_schema)
 
-    patch_data = test_files_dir.read_json("patcher_data", "dread", f"{patch_data_name}.json")
+    patch_data = test_files_dir.read_json("patcher_data", "dread", "dread", patch_data_name, "world_1.json")
 
     exporter = DreadGameExporter()
     export_params = DreadGameExportParams(

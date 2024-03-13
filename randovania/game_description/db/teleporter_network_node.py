@@ -14,12 +14,6 @@ if typing.TYPE_CHECKING:
     from randovania.game_description.resources.resource_info import ResourceGain
 
 
-def _all_nodes_in_network(context: NodeContext, network_name: str) -> typing.Iterator[TeleporterNetworkNode]:
-    for node in context.node_provider.iterate_nodes():
-        if isinstance(node, TeleporterNetworkNode) and node.network == network_name:
-            yield node
-
-
 @dataclasses.dataclass(frozen=True, slots=True)
 class TeleporterNetworkNode(ResourceNode):
     """
@@ -65,16 +59,16 @@ class TeleporterNetworkNode(ResourceNode):
         current_resources = context.current_resources
         return all(
             context.has_resource(node.resource(context))
-            for node in _all_nodes_in_network(context, self.network)
+            for node in context.node_provider.nodes_in_network(self.network)
             if node.is_unlocked.satisfied(current_resources, 0, context.database)
         )
 
     def resource_gain_on_collect(self, context: NodeContext) -> ResourceGain:
-        for node in _all_nodes_in_network(context, self.network):
+        for node in context.node_provider.nodes_in_network(self.network):
             if node.is_unlocked.satisfied(context.current_resources, 0, context.database):
                 yield node.resource(context), 1
 
     def connections_from(self, context: NodeContext) -> typing.Iterator[tuple[Node, Requirement]]:
-        for node in _all_nodes_in_network(context, self.network):
+        for node in context.node_provider.nodes_in_network(self.network):
             if node != self:
                 yield node, node.is_unlocked

@@ -23,9 +23,9 @@
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>-144</y>
+        <y>-326</y>
         <width>384</width>
-        <height>462</height>
+        <height>644</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout">
@@ -134,6 +134,99 @@
             </item>
            </layout>
           </item>
+          <item>
+           <widget class="QLabel" name="music_title_label">
+            <property name="text">
+             <string>Music Volume:</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="music_group">
+            <item>
+             <widget class="QSlider" name="music_slider">
+              <property name="maximum">
+               <number>100</number>
+              </property>
+              <property name="sliderPosition">
+               <number>100</number>
+              </property>
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="music_label">
+              <property name="text">
+               <string>100%</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="QLabel" name="sfx_title_label">
+            <property name="text">
+             <string>SFX Volume:</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="sfx_group">
+            <item>
+             <widget class="QSlider" name="sfx_slider">
+              <property name="maximum">
+               <number>100</number>
+              </property>
+              <property name="sliderPosition">
+               <number>100</number>
+              </property>
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="sfx_label">
+              <property name="text">
+               <string>100%</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="QLabel" name="ambience_title_label">
+            <property name="text">
+             <string>Background Ambience Volume:</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="ambience_group">
+            <item>
+             <widget class="QSlider" name="ambience_slider">
+              <property name="maximum">
+               <number>100</number>
+              </property>
+              <property name="sliderPosition">
+               <number>100</number>
+              </property>
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="ambience_label">
+              <property name="text">
+               <string>100%</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
          </layout>
         </widget>
        </item>
@@ -182,6 +275,13 @@
            <widget class="QCheckBox" name="alt_power_bomb">
             <property name="text">
              <string>Alternate Power Bomb shield texture</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="alt_closed">
+            <property name="text">
+             <string>Alternate &quot;Access Permanently Closed&quot; shield texture</string>
             </property>
            </widget>
           </item>

@@ -18,35 +18,41 @@ Extra - asset_id: collision_camera_034
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: ST_FromArea09
   > Before Diggernaut Area
-      Morph Ball and After Area 6 - Transport to Area 7 Grapple Block Top
+      All of the following:
+          Morph Ball and After Area 6 - Transport to Area 7 Grapple Block Pull
+          Plasma Beam or Defeat Non-Counterable Enemies
 
 > Save Station; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Extra - actor_name: LE_Platform_SaveStation004
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: ST_SaveStation004
-  > Door to Crumble Steps
+  > Door to Crumbling Stairwell
       Trivial
   > Before Diggernaut Area
-      Morph Ball
+      All of the following:
+          Morph Ball
+          Spider Ball or Defeat Non-Counterable Enemies
 
-> Door to Crumble Steps; Heals? False
+> Door to Crumbling Stairwell; Heals? False
   * Layers: default
-  * Power Beam Door to Crumble Steps/Door to Transport to Area 7
+  * Power Beam Door to Crumbling Stairwell/Door to Transport to Area 7
   * Extra - actor_name: Door004
   * Extra - actor_type: doorpowerpower
   > Save Station
       Trivial
 
-> Door to Diggernaut Hallway; Heals? False
+> Door to Swarm Square; Heals? False
   * Layers: default
-  * Power Beam Door to Diggernaut Hallway/Door to Transport to Area 7
+  * Power Beam Door to Swarm Square/Door to Transport to Area 7
   * Extra - actor_name: Door016
   * Extra - actor_type: doorpowerpower
   > Event - Grapple Block Top
       Grapple Beam and Lay Any Bomb
   > Before Diggernaut Area
-      After Area 6 - Transport to Area 7 Grapple Block Top and Lay Any Bomb
+      All of the following:
+          After Area 6 - Transport to Area 7 Grapple Block Top and Lay Any Bomb
+          Lightning Armor or Defeat Non-Counterable Enemies
   > Event - Grapple Block Pull
       Grapple Beam
 
@@ -56,26 +62,36 @@ Extra - asset_id: collision_camera_034
   * Extra - actor_name: DoorManicMinerBot
   * Extra - actor_type: doorclosedcharge
   > Before Diggernaut Area
-      Lay Any Bomb
+      All of the following:
+          Lay Any Bomb
+          Plasma Beam or Combat (Intermediate) or Defeat Non-Counterable Enemies
   > Start Point
       Trivial
 
 > Event - Grapple Block Top; Heals? False
   * Layers: default
   * Event Area 6 - Transport to Area 7 Grapple Block Top
-  > Door to Diggernaut Hallway
+  > Door to Swarm Square
       Lay Any Bomb
 
 > Before Diggernaut Area; Heals? False
   * Layers: default
   > Elevator to Area 7
-      Morph Ball and After Area 6 - Transport to Area 7 Grapple Block Pull
+      All of the following:
+          Morph Ball and After Area 6 - Transport to Area 7 Grapple Block Pull
+          Plasma Beam or Defeat Non-Counterable Enemies
   > Save Station
-      Morph Ball
-  > Door to Diggernaut Hallway
-      After Area 6 - Transport to Area 7 Grapple Block Top and Lay Any Bomb
+      All of the following:
+          Morph Ball
+          Spider Ball or Defeat Non-Counterable Enemies
+  > Door to Swarm Square
+      All of the following:
+          After Area 6 - Transport to Area 7 Grapple Block Top and Lay Any Bomb
+          Lightning Armor or Defeat Non-Counterable Enemies
   > Door to Diggernaut Arena
-      Lay Any Bomb
+      All of the following:
+          Lay Any Bomb
+          Plasma Beam or Combat (Intermediate) or Defeat Non-Counterable Enemies
   > Above Pickup
       All of the following:
           Morph Ball
@@ -101,13 +117,13 @@ Extra - asset_id: collision_camera_034
       All of the following:
           Grapple Beam and Morph Ball
           Any of the following:
-              Super Jump (Intermediate) or Unmorph Extend (Beginner) or Climb Rooms Vertically (High Jump)
+              Super Jump (Intermediate) or Unmorph Extend (Beginner) or Climb Rooms Vertically (No High Jump)
               Charge Beam and Ice Beam and Stand on Frozen Enemy (Intermediate)
           Any of the following:
+              Power Bomb ≥ 2
               All of the following:
                   Bomb and Shoot Any Missile
                   Phase Drift or Spider Ball
-              Power Bomb ≥ 2 and Lay Power Bomb
 
 > Event - Grapple Blocks Bottom; Heals? False
   * Layers: default
@@ -132,11 +148,11 @@ Extra - asset_id: collision_camera_034
 > Event - Grapple Block Pull; Heals? False
   * Layers: default
   * Event Area 6 - Transport to Area 7 Grapple Block Pull
-  > Door to Diggernaut Hallway
+  > Door to Swarm Square
       Trivial
 
 ----------------
-Teleporter Room South
+Teleporter South
 Extra - total_boundings: {'x1': -6100.0, 'x2': -3500.0, 'y1': -8400.0, 'y2': -7641.5400390625}
 Extra - polygon: [[-6100.0, -7641.5400390625], [-6100.0, -8400.0], [-3500.0, -8400.0], [-3500.0, -7641.5400390625]]
 Extra - asset_id: collision_camera_035
@@ -146,25 +162,25 @@ Extra - asset_id: collision_camera_035
   * Extra - actor_name: LE_Platform_Teleporter_07_01
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: ST_Teleporter_07_01
-  > Door to Crumble Steps
+  > Door to Crumbling Stairwell
       Trivial
 
-> Door from Chozo Seal West; Heals? False
+> Door from Chozo Seal West Intersection Terminal; Heals? False
   * Layers: default
-  * Access Closed to Chozo Seal West/Door to Teleporter Room South
+  * Access Closed to Chozo Seal West Intersection Terminal/Door to Teleporter South
   * Extra - actor_name: Door001
   * Extra - actor_type: doorclosedpower
-  > Door to Crumble Steps
+  > Door to Crumbling Stairwell
       Trivial
 
-> Door to Crumble Steps; Heals? False
+> Door to Crumbling Stairwell; Heals? False
   * Layers: default
-  * Power Beam Door to Crumble Steps/Door from Teleporter Room South
+  * Power Beam Door to Crumbling Stairwell/Door from Teleporter South
   * Extra - actor_name: Door002
   * Extra - actor_type: doorclosedpower
   > Teleporter
-      After Area 6 - Teleporter Unlocked (Lower)
-  > Door from Chozo Seal West
+      Trivial
+  > Door from Chozo Seal West Intersection Terminal
       Trivial
   > Event - Teleporter Unlocked
       Trivial
@@ -172,7 +188,7 @@ Extra - asset_id: collision_camera_035
 > Event - Teleporter Unlocked; Heals? False
   * Layers: default
   * Event Area 6 - Teleporter Unlocked (Lower)
-  > Door to Crumble Steps
+  > Door to Crumbling Stairwell
       Trivial
 
 ----------------
@@ -186,15 +202,19 @@ Extra - asset_id: collision_camera_037
   * Extra - actor_name: Door015
   * Extra - actor_type: doorpowerpower
   > Room Center
-      Trivial
+      Any of the following:
+          Space Jump or After Area 6 - Omega Metroid
+          Morph Ball and Movement (Intermediate)
 
-> Door to Red Plant Tunnel; Heals? False
+> Door to Poisonous Tunnel; Heals? False
   * Layers: default
-  * Power Beam Door to Red Plant Tunnel/Door to Omega Arena
+  * Power Beam Door to Poisonous Tunnel/Door to Omega Arena
   * Extra - actor_name: Door023
   * Extra - actor_type: doorpowerpower
   > Room Center
-      Trivial
+      Any of the following:
+          Space Jump or After Area 6 - Omega Metroid
+          Morph Ball and Movement (Intermediate)
 
 > Dock to Omega Arena Access; Heals? False
   * Layers: default
@@ -212,9 +232,13 @@ Extra - asset_id: collision_camera_037
   * Layers: default
   * Extra - start_point_actor_name: ST_Omega_001_Checkpoint
   > Door to Zeta Arena Access
-      Trivial
-  > Door to Red Plant Tunnel
-      Trivial
+      Any of the following:
+          Space Jump or After Area 6 - Omega Metroid
+          Morph Ball and Movement (Intermediate)
+  > Door to Poisonous Tunnel
+      Any of the following:
+          Space Jump or After Area 6 - Omega Metroid
+          Morph Ball and Movement (Intermediate)
   > Event - Omega Metroid
       After Area 6 - Zeta Metroid and Defeat Omega Metroid
 
@@ -227,7 +251,7 @@ Extra - asset_id: collision_camera_037
       Trivial
 
 ----------------
-Stolen Power Bomb Room
+Hideout Sprawl
 Extra - total_boundings: {'x1': -11800.0, 'x2': -1900.0, 'y1': 6500.0, 'y2': 11400.0}
 Extra - polygon: [[-11800.0, 11400.0], [-11800.0, 7800.0], [-8000.0, 7800.0], [-8000.0, 6500.0], [-5300.0, 6500.0], [-5300.0, 7737.7001953125], [-4300.0, 8200.0], [-4200.0, 8800.0], [-1900.0, 8800.0], [-1900.0, 11400.0]]
 Extra - asset_id: collision_camera_038
@@ -237,7 +261,7 @@ Extra - asset_id: collision_camera_038
   * Extra - actor_name: LE_Item_008
   * Extra - actor_type: item_powerbombtank
   > Door to Omega Arena Access (Bottom)
-      Morph Ball and After Area 6 - Stolen Power Bomb Room Grapple Block
+      Morph Ball and After Area 6 - Hideout Sprawl Grapple Block
   > Middle Level
       Trivial
 
@@ -250,34 +274,36 @@ Extra - asset_id: collision_camera_038
       All of the following:
           Grapple Beam and Morph Ball
           Any of the following:
-              High Jump Boots or Gravity Suit
+              High Jump Boots or Gravity Suit or Spider Ball
               Underwater Bomb Jump (Beginner) and Lay Bomb
 
 > Door to Omega Arena Access (Bottom); Heals? False
   * Layers: default
-  * Power Bomb Door to Omega Arena Access/Door to Stolen Power Bomb Room (Bottom)
+  * Power Bomb Door to Omega Arena Access/Door to Hideout Sprawl (Bottom)
   * Extra - actor_name: Door007
   * Extra - actor_type: doorpowerpower
   > Pickup (Power Bomb Tank)
-      Morph Ball and After Area 6 - Stolen Power Bomb Room Grapple Block
+      Morph Ball and After Area 6 - Hideout Sprawl Grapple Block
   > Event - Grapple Block
       All of the following:
           Grapple Beam
           Any of the following:
               Lay Any Bomb
-              Morph Ball and Screw Attack and Shoot Super Missile
+              Morph Ball and Super Missile and Screw Attack
 
 > Door to Omega Arena Access (Top); Heals? False
   * Layers: default
-  * Power Beam Door to Omega Arena Access/Door to Stolen Power Bomb Room (Top)
+  * Power Beam Door to Omega Arena Access/Door to Hideout Sprawl (Top)
   * Extra - actor_name: Door008
   * Extra - actor_type: doorpowerpower
   > Middle Level
-      Screw Attack
+      All of the following:
+          Screw Attack
+          Combat (Beginner) or Normal Damage ≥ 199
 
-> Door to Stolen Access; Heals? False
+> Door to Hideout Entrance; Heals? False
   * Layers: default
-  * Missile Door to Stolen Access/Door to Stolen Power Bomb Room
+  * Missile Door to Hideout Entrance/Door to Hideout Sprawl
   * Extra - actor_name: Door012
   * Extra - actor_type: doorpowerpower
   > Middle Level
@@ -285,11 +311,11 @@ Extra - asset_id: collision_camera_038
 
 > Event - Grapple Block; Heals? False
   * Layers: default
-  * Event Area 6 - Stolen Power Bomb Room Grapple Block
+  * Event Area 6 - Hideout Sprawl Grapple Block
   > Door to Omega Arena Access (Bottom)
       Any of the following:
           Lay Any Bomb
-          Morph Ball and Screw Attack and Shoot Super Missile
+          Morph Ball and Super Missile and Screw Attack
 
 > Middle Level; Heals? False
   * Layers: default
@@ -303,7 +329,7 @@ Extra - asset_id: collision_camera_038
               High Jump Boots or Space Jump or Single-wall Wall Jump (Advanced)
               Bomb and Infinite Bomb Jump (Advanced)
   > Pickup (Super Missile Tank)
-      Grapple Beam and Power Bomb ≥ 2 and Screw Attack and Can Spiderspark
+      Grapple Beam and Power Bomb ≥ 2 and Screw Attack and Spider Boost (Beginner) and Can Spider Boost
   > Door to Omega Arena Access (Top)
       All of the following:
           Screw Attack
@@ -311,42 +337,42 @@ Extra - asset_id: collision_camera_038
               Super Jump (Intermediate) or Climb Rooms Vertically (High Jump)
               Charge Beam and Ice Beam and Stand on Frozen Enemy (Intermediate)
               Morph Ball and Unmorph Extend (Beginner)
-  > Door to Stolen Access
+  > Door to Hideout Entrance
       Trivial
 
 ----------------
-Connecting Shaft
+Teleporter North Access
 Extra - total_boundings: {'x1': -6000.0, 'x2': -4400.0, 'y1': 4800.0, 'y2': 7700.0}
 Extra - polygon: [[-6000.0, 7700.0], [-6000.0, 4800.0], [-4400.0, 4800.0], [-4400.0, 7700.0]]
 Extra - asset_id: collision_camera_039
-> Door to Red Plant Tunnel; Heals? False
+> Door to Poisonous Tunnel; Heals? False
   * Layers: default
-  * Charge Beam Door to Red Plant Tunnel/Door to Connecting Shaft
+  * Charge Beam Door to Poisonous Tunnel/Door to Teleporter North Access
   * Extra - actor_name: Door006
   * Extra - actor_type: doorchargecharge
-  > Door to Teleporter Room North
+  > Door to Teleporter North
       Trivial
 
-> Door to Teleporter Room North; Heals? False
+> Door to Teleporter North; Heals? False
   * Layers: default
-  * Power Beam Door to Teleporter Room North/Door to Connecting Shaft
+  * Power Beam Door to Teleporter North/Door to Teleporter North Access
   * Extra - actor_name: Door009
   * Extra - actor_type: doorclosedpower
-  > Door to Red Plant Tunnel
-      Single-wall Wall Jump (Beginner) or Walljump (Beginner) or Climb Rooms Vertically (No High Jump)
-  > Tunnel to Red Plant Tunnel
+  > Door to Poisonous Tunnel
+      Single-wall Wall Jump (Beginner) or Wall Jump (Beginner) or Climb Rooms Vertically (No High Jump)
+  > Tunnel to Poisonous Tunnel
       All of the following:
-          Morph Ball and After Area 6 - Red Plant Tunnel Grapple Block
-          Single-wall Wall Jump (Beginner) or Super Jump (Intermediate) or Unmorph Extend (Beginner) or Walljump (Beginner) or Climb Rooms Vertically (High Jump)
+          Morph Ball and After Area 6 - Poisonous Tunnel Grapple Block
+          Single-wall Wall Jump (Beginner) or Super Jump (Intermediate) or Unmorph Extend (Beginner) or Wall Jump (Beginner) or Climb Rooms Vertically (High Jump)
 
-> Tunnel to Red Plant Tunnel; Heals? False
+> Tunnel to Poisonous Tunnel; Heals? False
   * Layers: default
-  * Tunnel to Red Plant Tunnel/Tunnel to Connecting Shaft
-  > Door to Teleporter Room North
+  * Tunnel to Poisonous Tunnel/Tunnel to Teleporter North Access
+  > Door to Teleporter North
       Morph Ball
 
 ----------------
-Crumble Bridge
+Crumbling Bridge
 Extra - total_boundings: {'x1': 6550.0, 'x2': 9900.0, 'y1': 4900.0, 'y2': 8000.0}
 Extra - polygon: [[6550.0, 8000.0], [6550.0, 4900.0], [9900.0, 4900.0], [9900.0, 8000.0]]
 Extra - asset_id: collision_camera_040
@@ -362,14 +388,14 @@ Extra - asset_id: collision_camera_040
 
 > Door to Chozo Seal East; Heals? False
   * Layers: default
-  * Charge Beam Door to Chozo Seal East/Door to Crumble Bridge
+  * Charge Beam Door to Chozo Seal East/Door to Crumbling Bridge
   * Extra - actor_name: Door011
   * Extra - actor_type: doorchargecharge
   > Under Bridge
       Morph Ball
   > Left of Bridge
       Any of the following:
-          Spiderspark (Beginner) and Can Spiderspark
+          Spider Boost (Intermediate) and Can Spider Boost
           All of the following:
               Morph Ball
               Any of the following:
@@ -384,11 +410,11 @@ Extra - asset_id: collision_camera_040
 
 > Door to Zeta Arena; Heals? False
   * Layers: default
-  * Power Beam Door to Zeta Arena/Door to Crumble Bridge
+  * Power Beam Door to Zeta Arena/Door to Crumbling Bridge
   * Extra - actor_name: Door022
   * Extra - actor_type: doorpowerpower
   > Left of Bridge
-      Trivial
+      Morph Ball
   > Out of Bounds
       Charge Beam and Ice Beam and Ice Beam Clip (Intermediate) and Out of Bounds Movement (Intermediate)
 
@@ -421,11 +447,11 @@ Extra - asset_id: collision_camera_040
   > Door to Chozo Seal East
       Any of the following:
           Morph Ball and Phase Drift
-          Spiderspark (Beginner) and Can Spiderspark
+          Spider Boost (Intermediate) and Can Spider Boost
   > Door to Zeta Arena
-      Trivial
+      Morph Ball
   > Under Bridge
-      Trivial
+      Morph Ball
 
 > Out of Bounds; Heals? False
   * Layers: default
@@ -437,58 +463,63 @@ Extra - asset_id: collision_camera_040
       Trivial
 
 ----------------
-Stolen Access
+Hideout Entrance
 Extra - total_boundings: {'x1': -11600.0, 'x2': -7900.0, 'y1': 4900.0, 'y2': 7400.0}
 Extra - polygon: [[-11600.0, 7400.0], [-11600.0, 4900.0], [-9100.0, 4900.0], [-9100.0, 6200.0], [-8800.0, 6200.0], [-7900.0, 6200.0], [-7900.0, 7400.0]]
 Extra - asset_id: collision_camera_041
-> Door to Teleporter Room North; Heals? False
+> Door to Teleporter North; Heals? False
   * Layers: default
-  * Charge Beam Door to Teleporter Room North/Door to Stolen Access
+  * Charge Beam Door to Teleporter North/Door to Hideout Entrance
   * Extra - actor_name: Door010
   * Extra - actor_type: doorpowerpower
-  > Door to Stolen Power Bomb Room
+  > Door to Hideout Sprawl
       Any of the following:
           All of the following:
               Screw Attack
               Any of the following:
                   Space Jump
-                  Spider Ball and Movement (Intermediate) and Walljump (Intermediate)
+                  Spider Ball and Movement (Intermediate) and Wall Jump (Intermediate)
           Space Jump and Lay Power Bomb
           Spider Ball and Lay Any Bomb
           Infinite Bomb Jump (Intermediate) and Lay Bomb
 
-> Door to Stolen Power Bomb Room; Heals? False
+> Door to Hideout Sprawl; Heals? False
   * Layers: default
-  * Missile Door to Stolen Power Bomb Room/Door to Stolen Access
+  * Missile Door to Hideout Sprawl/Door to Hideout Entrance
   * Extra - actor_name: Door012
   * Extra - actor_type: doorpowerpower
-  > Door to Teleporter Room North
-      Screw Attack or Lay Any Bomb
+  > Door to Teleporter North
+      Any of the following:
+          Screw Attack
+          All of the following:
+              Lay Any Bomb
+              Lightning Armor or Screw Attack or Combat (Beginner) or Normal Damage ≥ 199
   > Start Point
       Trivial
 
 > Start Point; Heals? False; Default Node
   * Layers: default
   * Extra - start_point_actor_name: ST_DEBUG_ManicMinerAbsorption
-  > Door to Stolen Power Bomb Room
+  > Door to Hideout Sprawl
       Trivial
 
 ----------------
-Crumble Steps
+Crumbling Stairwell
 Extra - total_boundings: {'x1': -8500.0, 'x2': -6000.0, 'y1': -9800.0, 'y2': -6100.0}
 Extra - polygon: [[-8500.0, -6100.0], [-8500.0, -9800.0], [-6000.0, -9800.0], [-6000.0, -6100.0]]
 Extra - asset_id: collision_camera_042
-> Door from Teleporter Room South; Heals? False
+> Door from Teleporter South; Heals? False
   * Layers: default
-  * Access Closed to Teleporter Room South/Door to Crumble Steps
+  * Access Closed to Teleporter South/Door to Crumbling Stairwell
   * Extra - actor_name: Door002
   * Extra - actor_type: doorclosedpower
-  > Door to Chozo Seal West
+  > Door to Chozo Seal West Intersection Terminal
       Trivial
   > Door to Transport to Area 7
       Any of the following:
-          Space Jump
-          High Jump Boots and Phase Drift
+          All of the following:
+              Space Jump
+              Phase Drift or Screw Attack
           Spider Ball and Diagonal Bomb Jump (Intermediate) and Lay Bomb
   > Pickup (Missile Tank)
       Any of the following:
@@ -497,18 +528,18 @@ Extra - asset_id: collision_camera_042
               Spider Ball or Movement (Intermediate)
           Movement (Beginner) and Lay Power Bomb
 
-> Door to Chozo Seal West; Heals? False
+> Door to Chozo Seal West Intersection Terminal; Heals? False
   * Layers: default
-  * Power Beam Door to Chozo Seal West/Door from Crumble Steps
+  * Power Beam Door to Chozo Seal West Intersection Terminal/Door from Crumbling Stairwell
   * Extra - actor_name: Door003
   * Extra - actor_type: doorpowerclosed
 
 > Door to Transport to Area 7; Heals? False
   * Layers: default
-  * Power Beam Door to Transport to Area 7/Door to Crumble Steps
+  * Power Beam Door to Transport to Area 7/Door to Crumbling Stairwell
   * Extra - actor_name: Door004
   * Extra - actor_type: doorpowerpower
-  > Door from Teleporter Room South
+  > Door from Teleporter South
       Trivial
 
 > Pickup (Missile Tank); Heals? False
@@ -516,14 +547,14 @@ Extra - asset_id: collision_camera_042
   * Pickup 141; Category? Minor
   * Extra - actor_name: LE_Item_015
   * Extra - actor_type: item_missiletank
-  > Door from Teleporter Room South
+  > Door from Teleporter South
       Any of the following:
           Phase Drift
           Bomb and Spider Ball and Diagonal Bomb Jump (Beginner)
           Spring Ball and Phase Drift Skip (Advanced)
-          Spiderspark (Beginner) and Can Spiderspark
-          Phase Drift Skip (Intermediate) and Walljump (Intermediate)
-  > Door to Chozo Seal West
+          Spider Boost (Intermediate) and Can Spider Boost
+          Phase Drift Skip (Intermediate) and Wall Jump (Intermediate)
+  > Door to Chozo Seal West Intersection Terminal
       Trivial
 
 ----------------
@@ -539,9 +570,9 @@ Extra - asset_id: collision_camera_043
   > Door from Transport to Area 7
       Trivial
 
-> Door to Diggernaut Shaft; Heals? False
+> Door to Electric Escalade; Heals? False
   * Layers: default
-  * Power Beam Door to Diggernaut Shaft/Door to Diggernaut Arena
+  * Power Beam Door to Electric Escalade/Door to Diggernaut Arena
   * Extra - actor_name: Door024
   * Extra - actor_type: doorpowerpower
   > Door from Transport to Area 7
@@ -552,7 +583,7 @@ Extra - asset_id: collision_camera_043
   * Access Closed to Transport to Area 7/Door to Diggernaut Arena
   * Extra - actor_name: DoorManicMinerBot
   * Extra - actor_type: doorclosedcharge
-  > Door to Diggernaut Shaft
+  > Door to Electric Escalade
       After Area 6 - Diggernaut and Lay Power Bomb
   > Before Diggernaut
       All of the following:
@@ -580,30 +611,30 @@ Extra - asset_id: collision_camera_043
 
 > Before Diggernaut; Heals? False; Default Node
   * Layers: default
-  * Extra - start_point_actor_name: ST_Checkpoin_009
+  * Extra - start_point_actor_name: ST_Checkpoint_009
   > Door from Transport to Area 7
       Trivial
   > Event - Diggernaut
       Trivial
 
 ----------------
-Diggernaut Hallway
+Swarm Square
 Extra - total_boundings: {'x1': -21150.0, 'x2': -16300.0, 'y1': -5000.0, 'y2': -4000.0}
 Extra - polygon: [[-21150.0, -4000.0], [-21150.0, -5000.0], [-16300.0, -5000.0], [-16300.0, -4000.0]]
 Extra - asset_id: collision_camera_044
 > Door to Transport to Area 7; Heals? False
   * Layers: default
-  * Power Beam Door to Transport to Area 7/Door to Diggernaut Hallway
+  * Power Beam Door to Transport to Area 7/Door to Swarm Square
   * Extra - actor_name: Door016
   * Extra - actor_type: doorpowerpower
-  > Door to Diggernaut Shaft
+  > Door to Electric Escalade
       All of the following:
           Lay Power Bomb
           Lightning Armor or Space Jump or Spider Ball
 
-> Door to Diggernaut Shaft; Heals? False
+> Door to Electric Escalade; Heals? False
   * Layers: default
-  * Power Bomb Door to Diggernaut Shaft/Door to Diggernaut Hallway
+  * Power Bomb Door to Electric Escalade/Door to Swarm Square
   * Extra - actor_name: Door017
   * Extra - actor_type: doorpowerpower
   > Door to Transport to Area 7
@@ -612,7 +643,7 @@ Extra - asset_id: collision_camera_044
           Lightning Armor or Space Jump or Spider Ball
 
 ----------------
-Diggernaut Shaft
+Electric Escalade
 Extra - total_boundings: {'x1': -22350.0, 'x2': -21050.0, 'y1': -7800.0, 'y2': -3400.0}
 Extra - polygon: [[-22350.0, -3400.0], [-22350.0, -7800.0], [-21050.0, -7800.0], [-21050.0, -3400.0]]
 Extra - asset_id: collision_camera_045
@@ -630,22 +661,25 @@ Extra - asset_id: collision_camera_045
   * Extra - actor_type: weightactivatedplatform
   > Pickup (Power Bomb Tank)
       Any of the following:
-          Can Spiderspark
+          Spider Boost (Beginner) and Can Spider Boost
           Infinite Bomb Jump (Expert) and Lay Bomb
   > Door to Diggernaut Arena
       Trivial
   > Top Platform
       Any of the following:
-          Space Jump or Single-wall Wall Jump (Expert)
+          Single-wall Wall Jump (Expert)
+          All of the following:
+              Space Jump
+              Screw Attack or Movement (Beginner)
           All of the following:
               Morph Ball
               Any of the following:
-                  Spider Ball
+                  Spider Ball and Movement (Beginner)
                   Bomb and Infinite Bomb Jump (Expert)
 
-> Door to Diggernaut Hallway; Heals? False
+> Door to Swarm Square; Heals? False
   * Layers: default
-  * Power Bomb Door to Diggernaut Hallway/Door to Diggernaut Shaft
+  * Power Bomb Door to Swarm Square/Door to Electric Escalade
   * Extra - actor_name: Door017
   * Extra - actor_type: doorpowerpower
   > Top Platform
@@ -653,7 +687,7 @@ Extra - asset_id: collision_camera_045
 
 > Door to Diggernaut Arena; Heals? False
   * Layers: default
-  * Power Beam Door to Diggernaut Arena/Door to Diggernaut Shaft
+  * Power Beam Door to Diggernaut Arena/Door to Electric Escalade
   * Extra - actor_name: Door024
   * Extra - actor_type: doorpowerpower
   > Ammo Recharge Station
@@ -663,11 +697,11 @@ Extra - asset_id: collision_camera_045
   * Layers: default
   > Ammo Recharge Station
       Trivial
-  > Door to Diggernaut Hallway
+  > Door to Swarm Square
       Trivial
 
 ----------------
-Red Plant Tunnel
+Poisonous Tunnel
 Extra - total_boundings: {'x1': -4500.0, 'x2': -1950.0, 'y1': 5600.0, 'y2': 8000.0}
 Extra - polygon: [[-4500.0, 8000.0], [-4500.0, 5600.0], [-1950.0, 5600.0], [-1950.0, 8000.0]]
 Extra - asset_id: collision_camera_046
@@ -679,9 +713,9 @@ Extra - asset_id: collision_camera_046
   > Next to Pickup
       Trivial
 
-> Door to Connecting Shaft; Heals? False
+> Door to Teleporter North Access; Heals? False
   * Layers: default
-  * Charge Beam Door to Connecting Shaft/Door to Red Plant Tunnel
+  * Charge Beam Door to Teleporter North Access/Door to Poisonous Tunnel
   * Extra - actor_name: Door006
   * Extra - actor_type: doorchargecharge
   > Door to Omega Arena
@@ -689,25 +723,25 @@ Extra - asset_id: collision_camera_046
 
 > Door to Omega Arena; Heals? False
   * Layers: default
-  * Power Beam Door to Omega Arena/Door to Red Plant Tunnel
+  * Power Beam Door to Omega Arena/Door to Poisonous Tunnel
   * Extra - actor_name: Door023
   * Extra - actor_type: doorpowerpower
-  > Door to Connecting Shaft
+  > Door to Teleporter North Access
       Trivial
   > Next to Pickup
       All of the following:
           Lay Any Bomb
           Lightning Armor or Spider Ball
 
-> Tunnel to Connecting Shaft; Heals? False
+> Tunnel to Teleporter North Access; Heals? False
   * Layers: default
-  * Tunnel to Connecting Shaft/Tunnel to Red Plant Tunnel
+  * Tunnel to Teleporter North Access/Tunnel to Poisonous Tunnel
   > Next to Pickup
       Morph Ball
 
 > Event - Grapple Block; Heals? False
   * Layers: default
-  * Event Area 6 - Red Plant Tunnel Grapple Block
+  * Event Area 6 - Poisonous Tunnel Grapple Block
   > Next to Pickup
       Trivial
 
@@ -719,8 +753,8 @@ Extra - asset_id: collision_camera_046
       All of the following:
           Lay Any Bomb
           Lightning Armor or Spider Ball
-  > Tunnel to Connecting Shaft
-      Morph Ball and After Area 6 - Red Plant Tunnel Grapple Block
+  > Tunnel to Teleporter North Access
+      Morph Ball and After Area 6 - Poisonous Tunnel Grapple Block
   > Event - Grapple Block
       Grapple Beam
 
@@ -780,9 +814,9 @@ Extra - asset_id: collision_camera_048
   > Room Center
       Trivial
 
-> Door to Crumble Bridge; Heals? False
+> Door to Crumbling Bridge; Heals? False
   * Layers: default
-  * Power Beam Door to Crumble Bridge/Door to Zeta Arena
+  * Power Beam Door to Crumbling Bridge/Door to Zeta Arena
   * Extra - actor_name: Door022
   * Extra - actor_type: doorpowerpower
   > Room Center
@@ -805,7 +839,7 @@ Extra - asset_id: collision_camera_048
   * Extra - start_point_actor_name: ST_Zeta_001_Checkpoint
   > Door to Zeta Arena Access
       Trivial
-  > Door to Crumble Bridge
+  > Door to Crumbling Bridge
       Trivial
   > Tunnel to Zeta Arena Access
       All of the following:
@@ -823,59 +857,72 @@ Extra - asset_id: collision_camera_048
       Trivial
 
 ----------------
-Transport to Area 5 Entrance
+Transport to Area 5
 Extra - total_boundings: {'x1': -1200.0, 'x2': 19450.0, 'y1': -4400.0, 'y2': 900.0}
 Extra - polygon: [[-1200.0, 900.0], [-1200.0, -1900.0], [2700.0, -1900.0], [3900.0, -2900.0], [8900.0, -2900.0], [11100.0, -2300.0], [13800.0, -2300.0], [14700.0, -2500.0], [14700.0, -4400.0], [19450.0, -4400.0], [19450.0, -2800.0], [17600.0, -2800.0], [17600.0, -200.0], [8300.0, -200.0], [7900.0, -500.0], [1400.0, -500.0], [1200.0, -400.0], [1100.0, -200.0], [1100.0, 900.0]]
 Extra - asset_id: collision_camera_051
-> Elevator to Area 5 - Entrance; Heals? False; Spawn Point; Default Node
+> Elevator to Area 5 - Tower Lobby; Heals? False; Spawn Point; Default Node
   * Layers: default
-  * Elevator to Chozo Seal/Elevator to Area 6
+  * Elevator to Transport to Areas 4 and 6/Elevator to Area 6
   * Extra - actor_name: LE_Platform_Elevator_FromArea06
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: ST_FromArea06
   > Save Station
-      Any of the following:
-          High Jump Boots or Space Jump or Use Spider Ball
-          Charge Beam and Ice Beam and Stand on Frozen Enemy (Intermediate)
-          Diagonal Bomb Jump (Beginner) and Simple IBJ
+      All of the following:
+          # Energy Requirements
+          Lightning Armor or Combat (Beginner) or Normal Damage ≥ 99
+          Any of the following:
+              # Movement Requirements
+              High Jump Boots or Space Jump or Use Spider Ball
+              Charge Beam and Ice Beam and Stand on Frozen Enemy (Advanced)
+              Diagonal Bomb Jump (Intermediate) and Lay Bomb
 
 > Save Station; Heals? False
   * Layers: default
   * Extra - actor_name: LE_Platform_SaveStation001
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: ST_SaveStation001
-  > Elevator to Area 5 - Entrance
-      Any of the following:
-          High Jump Boots or Space Jump or Use Spider Ball
-          Charge Beam and Ice Beam and Stand on Frozen Enemy (Intermediate)
-          Diagonal Bomb Jump (Beginner) and Lay Bomb
-  > Door to Chozo Seal West (Bottom)
-      Trivial
+  > Elevator to Area 5 - Tower Lobby
+      All of the following:
+          # Energy Requirements
+          Lightning Armor or Combat (Beginner) or Normal Damage ≥ 99
+          Any of the following:
+              # Movement Requirements
+              High Jump Boots or Space Jump or Use Spider Ball
+              Charge Beam and Ice Beam and Stand on Frozen Enemy (Advanced)
+              Diagonal Bomb Jump (Intermediate) and Lay Bomb
+  > Door to Chozo Seal West Intersection Terminal (Bottom)
+      All of the following:
+          # Energy Requirements
+          Lightning Armor or Combat (Beginner) or Normal Damage ≥ 30
+          # Movement Requirements
+          Wall Jump (Beginner) or Climb Rooms Vertically (High Jump)
 
-> Door to Chozo Seal West (Top); Heals? False
+> Door to Chozo Seal West Intersection Terminal (Top); Heals? False
   * Layers: default
-  * Power Beam Door to Chozo Seal West/Door to Transport to Area 5 Entrance (Top)
+  * Power Beam Door to Chozo Seal West Intersection Terminal/Door to Transport to Area 5 (Top)
   * Extra - actor_name: Door019
   * Extra - actor_type: doorpowerpower
-  > Door to Chozo Seal West (Bottom)
-      Morph Ball and After Area 6 - Transport to Area 5 Entrance Grapple Block
+  > Door to Chozo Seal West Intersection Terminal (Bottom)
+      Morph Ball and After Area 6 - Transport to Area 5 Grapple Block
   > Event - Grapple Block
       Grapple Beam
 
-> Door to Chozo Seal West (Bottom); Heals? False
+> Door to Chozo Seal West Intersection Terminal (Bottom); Heals? False
   * Layers: default
-  * Power Beam Door to Chozo Seal West/Door to Transport to Area 5 Entrance (Bottom)
+  * Power Beam Door to Chozo Seal West Intersection Terminal/Door to Transport to Area 5 (Bottom)
   * Extra - actor_name: Door020
   * Extra - actor_type: doorpowerpower
   > Save Station
-      Trivial
-  > Door to Chozo Seal West (Top)
-      Morph Ball and After Area 6 - Transport to Area 5 Entrance Grapple Block
+      # Energy Requirements
+      Lightning Armor or Combat (Intermediate) or Normal Damage ≥ 30
+  > Door to Chozo Seal West Intersection Terminal (Top)
+      Morph Ball and After Area 6 - Transport to Area 5 Grapple Block
 
 > Event - Grapple Block; Heals? False
   * Layers: default
-  * Event Area 6 - Transport to Area 5 Entrance Grapple Block
-  > Door to Chozo Seal West (Top)
+  * Event Area 6 - Transport to Area 5 Grapple Block
+  > Door to Chozo Seal West Intersection Terminal (Top)
       Trivial
 
 ----------------
@@ -891,9 +938,9 @@ Extra - asset_id: collision_camera_060
   > Next to Pickup Puzzle
       Baby Metroid or Lay Any Bomb
 
-> Door to Crumble Bridge; Heals? False
+> Door to Crumbling Bridge; Heals? False
   * Layers: default
-  * Charge Beam Door to Crumble Bridge/Door to Chozo Seal East
+  * Charge Beam Door to Crumbling Bridge/Door to Chozo Seal East
   * Extra - actor_name: Door011
   * Extra - actor_type: doorchargecharge
   > Next to Pickup Puzzle
@@ -905,33 +952,40 @@ Extra - asset_id: collision_camera_060
   * Extra - actor_name: LE_ChozoUnlockAreaDNA_002
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: ST_ChozoUnlockAreaDNA_Checkpoint_002
-  > Tunnel to Chozo Seal West
-      After Area 6 - Chozo Seal East Grapple Block and Climb Rooms Vertically (No High Jump)
+  > Tunnel to Chozo Seal West Intersection Terminal
+      All of the following:
+          After Area 6 - Chozo Seal East Grapple Block
+          Wall Jump (Beginner) or Climb Rooms Vertically (No High Jump)
   > Next to Pickup Puzzle
       All of the following:
           Morph Ball
           Any of the following:
               Space Jump or Spider Ball
               All of the following:
+                  # Reach the Tunnel
                   High Jump Boots or Super Jump (Intermediate) or Unmorph Extend (Beginner) or Simple IBJ
                   Any of the following:
+                      # Cross the lower poison plants
                       Lightning Armor
                       Charge Beam and Ice Beam and Stand on Frozen Enemy (Intermediate)
 
-> Tunnel to Chozo Seal West; Heals? False
+> Tunnel to Chozo Seal West Intersection Terminal; Heals? False
   * Layers: default
-  * Tunnel to Chozo Seal West/Tunnel to Chozo Seal East
+  * Tunnel to Chozo Seal West Intersection Terminal/Tunnel to Chozo Seal East
   > Chozo Seal
-      Morph Ball and After Area 6 - Chozo Seal East Grapple Block
+      All of the following:
+          Morph Ball and After Area 6 - Chozo Seal East Grapple Block
+          # Dealing with the Gullugg
+          Lightning Armor or Power Bomb or Wave Beam or Combat (Intermediate)
   > Event - Grapple Block
       All of the following:
           Grapple Beam and Morph Ball and Shoot Any Missile
-          Shoot Through Walls (Beginner) or Lay Any Bomb
+          Precise Aiming (Beginner) or Lay Any Bomb
 
 > Event - Grapple Block; Heals? False
   * Layers: default
   * Event Area 6 - Chozo Seal East Grapple Block
-  > Tunnel to Chozo Seal West
+  > Tunnel to Chozo Seal West Intersection Terminal
       All of the following:
           Morph Ball
           Lay Any Bomb or Shoot Any Missile
@@ -943,15 +997,17 @@ Extra - asset_id: collision_camera_060
           Ice Beam and Ice Beam Clip (Intermediate)
           All of the following:
               Grapple Beam and Morph Ball
-              Any of the following:
-                  Bomb
-                  Power Bomb ≥ 3 and Lay Power Bomb
+              Bomb or Power Bomb ≥ 3
               Baby Metroid or Phase Drift or Spider Ball or Movement (Beginner)
-  > Door to Crumble Bridge
+  > Door to Crumbling Bridge
       Any of the following:
-          Single-wall Wall Jump (Intermediate) or Climb Rooms Vertically (High Jump)
+          Single-wall Wall Jump (Intermediate) or Climb Rooms Vertically (No High Jump)
           Ice Beam and Stand on Frozen Enemy (Beginner)
-          Morph Ball and Unmorph Extend (Intermediate) and Walljump (Beginner)
+          All of the following:
+              Wall Jump (Beginner)
+              Any of the following:
+                  High Jump Boots or Super Jump (Intermediate)
+                  Morph Ball and Unmorph Extend (Intermediate)
   > Chozo Seal
       All of the following:
           Morph Ball
@@ -964,24 +1020,24 @@ Omega Arena Access
 Extra - total_boundings: {'x1': -2000.0, 'x2': 900.0, 'y1': 8500.0, 'y2': 11000.0}
 Extra - polygon: [[-2000.0, 11000.0], [-2000.0, 8500.0], [900.0, 8500.0], [900.0, 11000.0]]
 Extra - asset_id: collision_camera_061
-> Door to Stolen Power Bomb Room (Bottom); Heals? False
+> Door to Hideout Sprawl (Bottom); Heals? False
   * Layers: default
-  * Power Bomb Door to Stolen Power Bomb Room/Door to Omega Arena Access (Bottom)
+  * Power Bomb Door to Hideout Sprawl/Door to Omega Arena Access (Bottom)
   * Extra - actor_name: Door007
   * Extra - actor_type: doorpowerpower
-  > Door to Stolen Power Bomb Room (Top)
+  > Door to Hideout Sprawl (Top)
       Any of the following:
           Climb Rooms Vertically (High Jump)
           Ice Beam and Morph Ball and Stand on Frozen Enemy (Beginner) and Super Jump (Intermediate) and Unmorph Extend (Beginner)
   > Dock to Omega Arena
       Trivial
 
-> Door to Stolen Power Bomb Room (Top); Heals? False
+> Door to Hideout Sprawl (Top); Heals? False
   * Layers: default
-  * Power Beam Door to Stolen Power Bomb Room/Door to Omega Arena Access (Top)
+  * Power Beam Door to Hideout Sprawl/Door to Omega Arena Access (Top)
   * Extra - actor_name: Door008
   * Extra - actor_type: doorpowerpower
-  > Door to Stolen Power Bomb Room (Bottom)
+  > Door to Hideout Sprawl (Bottom)
       Trivial
 
 > Dock to Omega Arena; Heals? False
@@ -989,7 +1045,7 @@ Extra - asset_id: collision_camera_061
   * Open Passage to Omega Arena/Dock to Omega Arena Access
 
 ----------------
-Chozo Seal West
+Chozo Seal West Intersection Terminal
 Extra - total_boundings: {'x1': -7700.0, 'x2': 2200.0, 'y1': -10900.0, 'y2': 4200.0}
 Extra - polygon: [[-4800.0, 3200.0], [-4800.0, -100.0], [-7700.0, -1300.0], [-7700.0, -6900.0], [-3600.0, -7000.0], [-3600.0, -8100.0], [-4150.0, -8300.0], [-6100.0, -8300.0], [-6100.0, -10900.0], [2200.0, -10900.0], [2200.0, -4300.0], [-1100.0, -4100.0], [-1100.0, 1400.0], [-400.0, 1400.0], [500.0, 1000.0], [500.0, -500.0], [2000.0, -500.0], [2000.0, 4200.0], [-1200.0, 4200.0], [-1200.0, 3400.0]]
 Extra - asset_id: collision_camera_Hazard_End_A
@@ -1007,7 +1063,18 @@ Extra - asset_id: collision_camera_Hazard_End_A
   * Extra - actor_name: LE_Item_007
   * Extra - actor_type: item_missiletank
   > Save Station
-      Morph Ball
+      Any of the following:
+          All of the following:
+              # Avoid the crumble blocks
+              Lay Bomb
+              Phase Drift or Spider Ball or Movement (Intermediate)
+          All of the following:
+              # Take the crumble block exit
+              Morph Ball
+              Any of the following:
+                  # Dealing with the Gravitt and Glow Fly
+                  Lightning Armor or Spider Ball or Combat (Intermediate) or Defeat Non-Counterable Enemies
+                  Combat (Beginner) and Normal Damage ≥ 45
 
 > Pickup (Super Missile Tank); Heals? False
   * Layers: default
@@ -1015,9 +1082,19 @@ Extra - asset_id: collision_camera_Hazard_End_A
   * Extra - actor_name: LE_Item_013
   * Extra - actor_type: item_supermissiletank
   > Next to Bottom Puzzle
-      Any of the following:
-          Bomb
-          Power Bomb ≥ 3 and Lay Power Bomb
+      All of the following:
+          Morph Ball
+          Bomb or Power Bomb ≥ 3
+          Any of the following:
+              # Escaping from the item
+              All of the following:
+                  Shoot Any Missile
+                  Phase Drift or Movement (Intermediate)
+              All of the following:
+                  Screw Attack
+                  Any of the following:
+                      High Jump Boots or Space Jump or Wall Jump (Beginner)
+                      Super Jump (Intermediate) and Unmorph Extend (Beginner)
 
 > Chozo Seal; Heals? False
   * Layers: default
@@ -1025,9 +1102,9 @@ Extra - asset_id: collision_camera_Hazard_End_A
   * Extra - actor_name: LE_ChozoUnlockAreaDNA_001
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: ST_ChozoUnlockAreaDNA_Checkpoint_001
-  > Door to Teleporter Room North
+  > Door to Teleporter North
       Trivial
-  > Door to Transport to Area 5 Entrance (Top)
+  > Door to Transport to Area 5 (Top)
       Trivial
   > Tunnel to Chozo Seal East
       Morph Ball
@@ -1036,6 +1113,8 @@ Extra - asset_id: collision_camera_Hazard_End_A
   * Layers: default
   * Extra - actor_name: LE_Platform_AmmoCharge_001
   * Extra - actor_type: weightactivatedplatform
+  > Door from Crumbling Stairwell
+      Trivial
   > Next to Bottom Puzzle
       Any of the following:
           Single-wall Wall Jump (Beginner) or Climb Rooms Vertically (High Jump)
@@ -1047,9 +1126,12 @@ Extra - asset_id: collision_camera_Hazard_End_A
   * Extra - actor_type: weightactivatedplatform
   > Save Station
       Trivial
-  > Door to Transport to Area 5 Entrance (Top)
-      Power Bomb ≥ 2 or Lay Bomb or Lay Power Bomb
-  > Door to Transport to Area 5 Entrance (Bottom)
+  > Door to Transport to Area 5 (Top)
+      All of the following:
+          Morph Ball
+          Bomb or Power Bomb ≥ 2
+          Lightning Armor or Phase Drift or Movement (Intermediate) or Defeat Non-Counterable Enemies
+  > Door to Transport to Area 5 (Bottom)
       Trivial
 
 > Save Station; Heals? False; Spawn Point; Default Node
@@ -1060,53 +1142,57 @@ Extra - asset_id: collision_camera_Hazard_End_A
   > Pickup (Missile Tank Save)
       All of the following:
           Lay Any Bomb
+          # Avoid the crumble blocks
           Phase Drift or Spider Ball or Movement (Intermediate)
   > Energy Recharge Station
       Trivial
   > Next to Bottom Puzzle
-      Trivial
+      Any of the following:
+          # Bypassing the Gravitt
+          Lightning Armor or Combat (Intermediate) or Defeat Non-Counterable Enemies or Use Spider Ball
+          Combat (Beginner) and Normal Damage ≥ 45
 
-> Door to Teleporter Room South; Heals? False
+> Door to Teleporter South; Heals? False
   * Layers: default
-  * Power Beam Door to Teleporter Room South/Door from Chozo Seal West
+  * Power Beam Door to Teleporter South/Door from Chozo Seal West Intersection Terminal
   * Extra - actor_name: Door001
   * Extra - actor_type: doorclosedpower
   > Ammo Recharge Station
       Trivial
 
-> Door from Crumble Steps; Heals? False
+> Door from Crumbling Stairwell; Heals? False
   * Layers: default
-  * Access Closed to Crumble Steps/Door to Chozo Seal West
+  * Access Closed to Crumbling Stairwell/Door to Chozo Seal West Intersection Terminal
   * Extra - actor_name: Door003
   * Extra - actor_type: doorpowerclosed
   > Ammo Recharge Station
       Trivial
 
-> Door to Teleporter Room North; Heals? False
+> Door to Teleporter North; Heals? False
   * Layers: default
-  * Power Beam Door to Teleporter Room North/Door to Chozo Seal West
+  * Power Beam Door to Teleporter North/Door to Chozo Seal West Intersection Terminal
   * Extra - actor_name: Door018
   * Extra - actor_type: doorpowerpower
   > Chozo Seal
       Trivial
 
-> Door to Transport to Area 5 Entrance (Top); Heals? False
+> Door to Transport to Area 5 (Top); Heals? False
   * Layers: default
-  * Power Beam Door to Transport to Area 5 Entrance/Door to Chozo Seal West (Top)
+  * Power Beam Door to Transport to Area 5/Door to Chozo Seal West Intersection Terminal (Top)
   * Extra - actor_name: Door019
   * Extra - actor_type: doorpowerpower
   > Chozo Seal
       Any of the following:
           Climb Rooms Vertically (No High Jump)
-          Stand on Frozen Enemy (Intermediate) and Walljump (Beginner) and Fully Freeze Enemy
+          Stand on Frozen Enemy (Intermediate) and Wall Jump (Beginner) and Fully Freeze Enemy
   > Energy Recharge Station
       All of the following:
-          Lay Bomb
-          Power Bomb ≥ 2 or Lay Power Bomb
+          Morph Ball
+          Bomb or Power Bomb ≥ 2
 
-> Door to Transport to Area 5 Entrance (Bottom); Heals? False
+> Door to Transport to Area 5 (Bottom); Heals? False
   * Layers: default
-  * Power Beam Door to Transport to Area 5 Entrance/Door to Chozo Seal West (Bottom)
+  * Power Beam Door to Transport to Area 5/Door to Chozo Seal West Intersection Terminal (Bottom)
   * Extra - actor_name: Door020
   * Extra - actor_type: doorpowerpower
   > Energy Recharge Station
@@ -1114,7 +1200,7 @@ Extra - asset_id: collision_camera_Hazard_End_A
 
 > Tunnel to Chozo Seal East; Heals? False
   * Layers: default
-  * Tunnel to Chozo Seal East/Tunnel to Chozo Seal West
+  * Tunnel to Chozo Seal East/Tunnel to Chozo Seal West Intersection Terminal
   > Chozo Seal
       Morph Ball
 
@@ -1129,19 +1215,26 @@ Extra - asset_id: collision_camera_Hazard_End_A
               Space Jump and Mid-Air Morph (Beginner)
   > Pickup (Super Missile Tank)
       All of the following:
-          Grapple Beam and Morph Ball and Screw Attack and Lay Power Bomb and Shoot Any Missile
-          Movement (Intermediate) or Super Jump (Advanced) or Unmorph Extend (Beginner) or Climb Rooms Vertically (High Jump)
+          # Completing the puzzle
+          Grapple Beam and Morph Ball and Power Bomb ≥ 3 and Screw Attack and Shoot Any Missile
+          # Traversing the crumble blocks
           Phase Drift or Spider Ball or Movement (Beginner)
-          Bomb or Power Bomb ≥ 3
+          # Traversing the Screw Attack blocks
+          High Jump Boots or Space Jump or Super Jump (Advanced) or Unmorph Extend (Intermediate) or Wall Jump (Beginner)
   > Ammo Recharge Station
       Trivial
   > Save Station
-      Trivial
-  > Door to Teleporter Room South
-      Trivial
+      Any of the following:
+          # Dealing with the Gravitt
+          Lightning Armor or Combat (Intermediate) or Defeat Non-Counterable Enemies or Use Spider Ball
+          Combat (Beginner) and Normal Damage ≥ 45
+  > Door to Teleporter South
+      Any of the following:
+          Movement (Intermediate) or Super Jump (Advanced) or Climb Rooms Vertically (High Jump)
+          Morph Ball and Unmorph Extend (Beginner)
 
 ----------------
-Teleporter Room North
+Teleporter North
 Extra - total_boundings: {'x1': -9200.0, 'x2': -1100.0, 'y1': 1800.0, 'y2': 6500.0}
 Extra - polygon: [[-9200.0, 6500.0], [-9200.0, 4300.0], [-8500.0, 4200.0], [-8500.0, 1800.0], [-2100.0, 1800.0], [-2100.0, 3000.0], [-1300.0, 3200.0], [-1100.0, 3200.0], [-1100.0, 4200.0], [-4300.0, 4200.0], [-4700.0, 4400.0], [-5100.0, 4400.0], [-5700.0, 4500.0], [-5900.0, 5200.0], [-5900.0, 6500.0]]
 Extra - asset_id: collision_camera_Hazard_End_B
@@ -1151,11 +1244,14 @@ Extra - asset_id: collision_camera_Hazard_End_B
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: ST_SaveStation005
   > Teleporter
-      After Area 6 - Teleporter Unlocked (Upper)
-  > Door to Stolen Access
       Trivial
-  > Door to Chozo Seal West
-      Trivial
+  > Door to Hideout Entrance
+      Wall Jump (Beginner) or Climb Rooms Vertically (High Jump)
+  > Door to Chozo Seal West Intersection Terminal
+      Any of the following:
+          # Energy Requirements
+          Lightning Armor or Normal Damage ≥ 150
+          Combat (Beginner) and Normal Damage ≥ 70
   > Event - Teleporter Unlocked
       Trivial
 
@@ -1168,31 +1264,34 @@ Extra - asset_id: collision_camera_Hazard_End_B
   > Save Station
       Trivial
 
-> Door to Connecting Shaft; Heals? False
+> Door to Teleporter North Access; Heals? False
   * Layers: default
-  * Access Locked to Connecting Shaft/Door to Teleporter Room North
+  * Access Locked to Teleporter North Access/Door to Teleporter North
   * Extra - actor_name: Door009
   * Extra - actor_type: doorclosedpower
-  > Door to Stolen Access
-      Trivial
+  > Door to Hideout Entrance
+      Defeat Non-Counterable Enemies or Use Spider Ball
 
-> Door to Stolen Access; Heals? False
+> Door to Hideout Entrance; Heals? False
   * Layers: default
-  * Charge Beam Door to Stolen Access/Door to Teleporter Room North
+  * Charge Beam Door to Hideout Entrance/Door to Teleporter North
   * Extra - actor_name: Door010
   * Extra - actor_type: doorpowerpower
   > Save Station
       Trivial
-  > Door to Connecting Shaft
-      Trivial
+  > Door to Teleporter North Access
+      Defeat Non-Counterable Enemies or Use Spider Ball
 
-> Door to Chozo Seal West; Heals? False
+> Door to Chozo Seal West Intersection Terminal; Heals? False
   * Layers: default
-  * Power Beam Door to Chozo Seal West/Door to Teleporter Room North
+  * Power Beam Door to Chozo Seal West Intersection Terminal/Door to Teleporter North
   * Extra - actor_name: Door018
   * Extra - actor_type: doorpowerpower
   > Save Station
-      Trivial
+      Any of the following:
+          # Energy Requirements
+          Lightning Armor or Normal Damage ≥ 150
+          Combat (Beginner) and Normal Damage ≥ 70
 
 > Event - Teleporter Unlocked; Heals? False
   * Layers: default

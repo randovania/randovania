@@ -1,11 +1,17 @@
 from __future__ import annotations
 
+import dataclasses
 from typing import TYPE_CHECKING
 
 from randovania.exporter.game_exporter import GameExporter, GameExportParams
 
 if TYPE_CHECKING:
     from randovania.lib import status_update_lib
+
+
+@dataclasses.dataclass(frozen=True)
+class CorruptionGameExportParams(GameExportParams):
+    pass
 
 
 class CorruptionGameExporter(GameExporter):
@@ -24,6 +30,12 @@ class CorruptionGameExporter(GameExporter):
         Checks if export_game can be aborted
         """
         return False
+
+    def export_params_type(self) -> type[GameExportParams]:
+        """
+        Returns the type of the GameExportParams expected by this exporter.
+        """
+        return CorruptionGameExportParams
 
     def _do_export_game(
         self,

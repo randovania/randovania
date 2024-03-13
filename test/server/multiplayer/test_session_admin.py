@@ -16,6 +16,7 @@ from randovania.games.game import RandovaniaGame
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
 from randovania.games.prime2.layout.echoes_cosmetic_patches import EchoesCosmeticPatches
 from randovania.interface_common.players_configuration import PlayersConfiguration
+from randovania.layout.layout_description import InvalidLayoutDescription
 from randovania.network_common import error
 from randovania.network_common.admin_actions import SessionAdminGlobalAction, SessionAdminUserAction
 from randovania.network_common.multiplayer_session import GameDetails
@@ -54,7 +55,7 @@ def test_admin_player_kick_last(solo_two_world_session, flask_app, mocker, mock_
             "visibility": "visible",
             "users_list": [],
             "worlds": [],
-            "game_details": {"seed_hash": "55SQZAV4", "spoiler": True, "word_hash": "Screw Omega Mines"},
+            "game_details": {"seed_hash": "55SQZAV4", "spoiler": True, "word_hash": "Screw Poison Eyon"},
             "generation_in_progress": None,
             "allowed_games": ANY,
             "allow_coop": False,
@@ -126,7 +127,11 @@ def test_admin_player_create_world_for(
 ):
     user1 = database.User.create(id=1234, name="The Name")
     session = database.MultiplayerSession.create(
-        id=1, name="Debug", state=MultiplayerSessionVisibility.VISIBLE, creator=user1
+        id=1,
+        name="Debug",
+        state=MultiplayerSessionVisibility.VISIBLE,
+        creator=user1,
+        dev_features=RandovaniaGame.BLANK.value,
     )
     database.MultiplayerMembership.create(user=user1, session=session, admin=True)
     sa = MagicMock()
@@ -284,7 +289,11 @@ def test_admin_session_create_world(
 ):
     user1 = database.User.create(id=1234, name="The Name")
     session = database.MultiplayerSession.create(
-        id=1, name="Debug", state=MultiplayerSessionVisibility.VISIBLE, creator=user1
+        id=1,
+        name="Debug",
+        state=MultiplayerSessionVisibility.VISIBLE,
+        creator=user1,
+        dev_features=RandovaniaGame.BLANK.value,
     )
     database.MultiplayerMembership.create(user=user1, session=session, admin=True)
     sa = MagicMock()
@@ -304,9 +313,9 @@ def test_admin_session_create_world(
     mock_audit.assert_called_once_with(sa, session, "Created new world New World")
 
 
-@pytest.mark.parametrize("reason", ["bad_name", "already_exists"])
+@pytest.mark.parametrize("reason", ["bad_name", "already_exists", "wrong_preset"])
 def test_admin_session_create_world_bad(
-    mock_emit_session_update: MagicMock, mock_audit, clean_database, flask_app, preset_manager, reason
+    mock_emit_session_update: MagicMock, mock_audit, clean_database, flask_app, preset_manager, reason, mocker
 ):
     user1 = database.User.create(id=1234, name="The Name")
     session = database.MultiplayerSession.create(
@@ -318,18 +327,28 @@ def test_admin_session_create_world_bad(
 
     old_world = database.World.create(session=session, name="New World", preset="{}")
 
+    allowed_games = [RandovaniaGame.BLANK]
+    mocker.patch(
+        "randovania.server.database.MultiplayerSession.allowed_games",
+        return_value=allowed_games,
+        new_callable=PropertyMock,
+    )
+
+    preset = preset_manager.default_preset
     if reason == "bad_name":
         new_name = "New####,World"
         match = "Invalid world name"
-    else:
+    elif reason == "already_exists":
         new_name = "New World"
         match = "World name already exists"
+    else:
+        new_name = "New World"
+        match = "Blank Development Game not allowed"
+        allowed_games.clear()
 
     # Run
     with flask_app.test_request_context(), pytest.raises(error.InvalidActionError, match=match):
-        session_admin.admin_session(
-            sa, 1, SessionAdminGlobalAction.CREATE_WORLD.value, new_name, preset_manager.default_preset.as_bytes()
-        )
+        session_admin.admin_session(sa, 1, SessionAdminGlobalAction.CREATE_WORLD.value, new_name, preset.as_bytes())
 
     # Assert
     mock_emit_session_update.assert_not_called()
@@ -671,6 +690,34 @@ def test_admin_session_change_layout_description_invalid(
     assert database.MultiplayerSession.get_by_id(1).layout_description_json is None
 
 
+@pytest.mark.parametrize("reason", ["layout", "preset"])
+def test_admin_session_change_layout_description_invalid_layout(
+    mock_emit_session_update: MagicMock, clean_database, flask_app, mocker, reason
+):
+    user1 = database.User.create(id=1234, name="The Name")
+    session = database.MultiplayerSession.create(
+        id=1,
+        name="Debug",
+        state=MultiplayerSessionVisibility.VISIBLE,
+        creator=user1,
+        generation_in_progress=user1,
+    )
+    database.MultiplayerMembership.create(user=user1, session=session, admin=True)
+    sa = MagicMock()
+    sa.get_current_user.return_value = user1
+
+    from_bytes = mocker.patch("randovania.layout.layout_description.LayoutDescription.from_bytes")
+    if reason == "layout":
+        expected_message = "Invalid layout: "
+        from_bytes.side_effect = InvalidLayoutDescription()
+    else:
+        expected_message = "Presets do not match layout"
+        from_bytes.side_effect = ValueError()
+    # Run
+    with pytest.raises(error.InvalidActionError, match=expected_message), flask_app.test_request_context():
+        session_admin._change_layout_description(sa, session, b"layout_description_json")
+
+
 def test_admin_session_download_layout_description(
     flask_app, solo_two_world_session, mock_emit_session_update, mock_audit
 ):
@@ -867,9 +914,10 @@ def test_verify_no_layout_description(clean_database, flask_app):
     user1 = database.User.create(id=1234, name="The Name")
     session = database.MultiplayerSession.create(id=1, name="Debug", creator=user1, layout_description_json="{}")
 
-    with pytest.raises(
-        error.InvalidActionError, match="Session has a generated game"
-    ), flask_app.test_request_context():
+    with (
+        pytest.raises(error.InvalidActionError, match="Session has a generated game"),
+        flask_app.test_request_context(),
+    ):
         session_admin._verify_no_layout_description(session)
 
 

@@ -88,7 +88,7 @@ Templates
       All of the following:
           # TODO: Not enough space for Speed Booster without short charges - account for this
           # Requirement for destroying the shell
-          Missiles or Shoot Charge Beam
+          Shoot Charge Beam or Shoot Missile
           Any of the following:
               # Requirement for destroying the core
               Shoot Beam
@@ -378,9 +378,6 @@ Templates
 * Lay Normal Bomb:
       Bomb and Morph Ball
 
-* Push Wide Beam Block with Wave Beam:
-      Wave Beam and Shoot Charge Beam
-
 * Shoot Super Ice Missile:
       All of the following:
           Ice Missile and Shoot Missile
@@ -436,6 +433,7 @@ Dock Weaknesses
 
 
   * Access Permanently Closed
+      Extra - type: closed
       Open:
           Impossible
       No lock
@@ -594,6 +592,7 @@ Dock Weaknesses
           Wave Beam Door
           Wide Beam Door
       Change to:
+          Access Permanently Closed
           Bomb Door
           Charge Beam Door
           Cross Bomb Door
@@ -689,6 +688,7 @@ Dock Weaknesses
 
 
 > Teleporter
+* Extra - is_teleportal: True
 * Extra - ignore_for_hints: True
   * Teleporter
       Open:

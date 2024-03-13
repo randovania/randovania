@@ -1,5 +1,5 @@
 ----------------
-Chozo Seal
+Transport to Surface and Area 2
 Extra - total_boundings: {'x1': -20550.0, 'x2': -10700.0, 'y1': -4600.0, 'y2': 6000.0}
 Extra - polygon: [[-15300.0, 700.0], [-14900.0, -500.0], [-14900.0, -4600.0], [-11200.0, -4600.0], [-11200.0, -3600.0], [-12000.0, -3500.0], [-12000.0, -2000.0], [-10700.0, -1800.0], [-10700.0, 2100.030029296875], [-17900.0, 2100.0], [-18200.0, 2400.0], [-18200.0, 6000.0], [-20550.0, 6000.0], [-20550.0, 700.0]]
 Extra - asset_id: collision_camera_000
@@ -9,26 +9,30 @@ Extra - asset_id: collision_camera_000
   * Extra - actor_name: LE_ChozoUnlockAreaDNA
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: ST_ChozoUnlockAreaDNA_Checkpoint
-  > Save Station
-      Trivial
-  > Door to Entrance Shaft
-      Trivial
-  > Left of Crumble Bridge
+  > Elevator to Area 2 - Dam Entryway
       Any of the following:
+          # https://youtu.be/KKtoy5mbY64
+          Ice Beam Clip (Intermediate) and Out of Bounds Movement (Intermediate) and Fully Freeze Enemy
           All of the following:
               Morph Ball
               Any of the following:
-                  Spider Ball or Phase Drift Skip (Advanced) or Enabled Remove Area 1 Crumble Blocks
+                  # https://youtu.be/NzXfFnGwZkc
+                  Melee Clip (Intermediate)
                   All of the following:
-                      Phase Drift
                       Any of the following:
-                          Spring Ball
-                          Bomb and Diagonal Bomb Jump (Beginner)
-          Charge Beam and Ice Beam and Ice Beam Clip (Beginner)
-  > Above Bottom Elevator
-      Any of the following:
-          Morph Ball and Melee Clip (Intermediate)
-          Ice Beam and Ice Beam Clip (Intermediate)
+                          # Dealing with the crumbles
+                          Spider Ball or Enabled Remove Area 1 Crumble Blocks
+                          # https://youtu.be/eVkMBrWB0Wk
+                          Phase Drift Skip (Advanced)
+                      Any of the following:
+                          # Reaching the elevator
+                          Power Bomb or Screw Attack
+                          # Break the shot blocks by using Free Aim while crouching
+                          Shoot Any Missile
+  > Save Station
+      Trivial
+  > Door to Moheek Mount
+      Trivial
 
 > Elevator to Surface - East; Heals? False; Spawn Point; Default Node
   * Layers: default
@@ -39,14 +43,29 @@ Extra - asset_id: collision_camera_000
   > Save Station
       Trivial
 
-> Elevator to Area 2 - Entrance; Heals? False
+> Elevator to Area 2 - Dam Entryway; Heals? False
   * Layers: default
-  * Elevator to Chozo Seal/Elevator to Area 1
+  * Elevator to Transport to Areas 1 and 3/Elevator to Area 1
   * Extra - actor_name: LE_Platform_Elevator_FromArea02
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: ST_FromArea02
-  > Above Bottom Elevator
-      Morph Ball or Screw Attack
+  > Chozo Seal
+      Any of the following:
+          # https://youtu.be/HdZfUSnqxrE
+          Screw Attack and Ice Beam Clip (Intermediate) and Fully Freeze Enemy
+          All of the following:
+              Morph Ball
+              Screw Attack or Lay Any Bomb or Shoot Any Missile
+  > Door to Transport Cache
+      All of the following:
+          Morph Ball
+          Any of the following:
+              High Jump Boots or Space Jump or Single-wall Wall Jump (Intermediate) or Super Jump (Intermediate) or Unmorph Extend (Beginner) or Simple IBJ
+              All of the following:
+                  # Freeze a Hornoad
+                  Ice Beam and Stand on Frozen Enemy (Beginner)
+                  Charge Beam or Freeze Enemy with Melee (Beginner)
+              Spider Boost (Intermediate) and Can Spider Boost
 
 > Save Station; Heals? False
   * Layers: default
@@ -57,124 +76,98 @@ Extra - asset_id: collision_camera_000
   > Elevator to Surface - East
       Trivial
 
-> Door to Entrance Shaft; Heals? False
+> Door to Moheek Mount; Heals? False
   * Layers: default
-  * Power Beam Door to Entrance Shaft/Door to Chozo Seal
+  * Power Beam Door to Moheek Mount/Door to Transport to Surface and Area 2
   * Extra - actor_name: Door002
   * Extra - actor_type: doorpowerpower
   > Chozo Seal
       Trivial
 
-> Door to Chozo Seal Storage; Heals? False
+> Door to Transport Cache; Heals? False
   * Layers: default
-  * Wave Beam Door to Chozo Seal Storage/Door to Chozo Seal
+  * Wave Beam Door to Transport Cache/Door to Transport to Surface and Area 2
   * Extra - actor_name: Door008
   * Extra - actor_type: doorpowerpower
-  > Above Bottom Elevator
-      Trivial
-
-> Left of Crumble Bridge; Heals? False
-  * Layers: default
-  > Chozo Seal
-      Any of the following:
-          Morph Ball
-          Ice Beam and Ice Beam Clip (Beginner)
-  > Above Bottom Elevator
-      Any of the following:
-          Screw Attack or Lay Power Bomb
-          Morph Ball and Shoot Any Missile
-          Ice Beam and Ice Beam Clip (Intermediate)
-
-> Above Bottom Elevator; Heals? False
-  * Layers: default
-  > Elevator to Area 2 - Entrance
+  > Elevator to Area 2 - Dam Entryway
       Morph Ball or Screw Attack
-  > Door to Chozo Seal Storage
-      Any of the following:
-          Single-wall Wall Jump (Intermediate) or Super Jump (Intermediate) or Climb Rooms Vertically (High Jump)
-          Morph Ball and Unmorph Extend (Beginner)
-          Stand on Frozen Enemy (Beginner) and Fully Freeze Enemy
-  > Left of Crumble Bridge
-      Any of the following:
-          Screw Attack or Lay Any Bomb
-          Morph Ball and Shoot Any Missile
 
 ----------------
-Entrance Shaft
+Moheek Mount
 Extra - total_boundings: {'x1': -10800.0, 'x2': -9500.0, 'y1': 1100.0, 'y2': 5100.0}
 Extra - polygon: [[-9500.0, 1100.0], [-9500.0, 5100.0], [-10800.0, 5100.0], [-10800.0, 1100.0]]
 Extra - asset_id: collision_camera_003
-> Door to Chozo Seal; Heals? False
+> Door to Transport to Surface and Area 2; Heals? False
   * Layers: default
-  * Power Beam Door to Chozo Seal/Door to Entrance Shaft
+  * Power Beam Door to Transport to Surface and Area 2/Door to Moheek Mount
   * Extra - actor_name: Door002
   * Extra - actor_type: doorpowerpower
-  > Door to Lava Shortcut
+  > Door to Magma Pool
       Trivial
 
-> Door to Lava Shortcut; Heals? False
+> Door to Magma Pool; Heals? False
   * Layers: default
-  * Charge Beam Door to Lava Shortcut/Door to Entrance Shaft
+  * Charge Beam Door to Magma Pool/Door to Moheek Mount
   * Extra - actor_name: Door009
   * Extra - actor_type: doorchargecharge
-  > Door to Chozo Seal
+  > Door to Transport to Surface and Area 2
       Trivial
-  > Dock to Entrance Pathway
+  > Dock to Harmonized Hallway
       Trivial
 
-> Dock to Entrance Pathway; Heals? False
+> Dock to Harmonized Hallway; Heals? False
   * Layers: default
-  * Open Passage to Entrance Pathway/Dock to Entrance Shaft
-  > Door to Lava Shortcut
+  * Open Passage to Harmonized Hallway/Dock to Moheek Mount
+  > Door to Magma Pool
       Trivial
 
 ----------------
-Shaft West
+Gullugg Gangway
 Extra - total_boundings: {'x1': -7202.06005859375, 'x2': -5400.0, 'y1': 2400.0, 'y2': 8300.0}
 Extra - polygon: [[-5400.0, 8300.0], [-7200.0, 8300.0], [-7202.06005859375, 2400.0], [-5400.0, 2400.0]]
 Extra - asset_id: collision_camera_005
-> Door to Lava Shortcut; Heals? False
+> Door to Magma Pool; Heals? False
   * Layers: default
-  * Charge Beam Door to Lava Shortcut/Door to Shaft West
+  * Charge Beam Door to Magma Pool/Door to Gullugg Gangway
   * Extra - actor_name: Door010
   * Extra - actor_type: doorchargecharge
-  > Door from One-Way Puzzle
+  > Door from Water Maze
       Trivial
-  > Dock to Entrance Pathway
+  > Dock to Harmonized Hallway
       Trivial
-  > Dock to Outer Hub Access
+  > Dock to Chute Leech Cabin
       Trivial
-  > Dock to One-Way Puzzle
+  > Dock to Water Maze
       Trivial
 
-> Door from One-Way Puzzle; Heals? False
+> Door from Water Maze; Heals? False
   * Layers: default
-  * Access Closed to One-Way Puzzle/Door to Shaft West
+  * Access Closed to Water Maze/Door to Gullugg Gangway
   * Extra - actor_name: Door011
   * Extra - actor_type: doorclosedpower
-  > Door to Lava Shortcut
+  > Door to Magma Pool
       Trivial
 
-> Dock to Entrance Pathway; Heals? False
+> Dock to Harmonized Hallway; Heals? False
   * Layers: default
-  * Open Passage to Entrance Pathway/Dock to Shaft West
-  > Door to Lava Shortcut
+  * Open Passage to Harmonized Hallway/Dock to Gullugg Gangway
+  > Door to Magma Pool
       Trivial
 
-> Dock to Outer Hub Access; Heals? False
+> Dock to Chute Leech Cabin; Heals? False
   * Layers: default
-  * Open Passage to Outer Hub Access/Dock to Shaft West
-  > Door to Lava Shortcut
+  * Open Passage to Chute Leech Cabin/Dock to Gullugg Gangway
+  > Door to Magma Pool
       Trivial
 
-> Dock to One-Way Puzzle; Heals? False
+> Dock to Water Maze; Heals? False
   * Layers: default
-  * Open Passage to One-Way Puzzle/Dock to Shaft West
-  > Door to Lava Shortcut
+  * Open Passage to Water Maze/Dock to Gullugg Gangway
+  > Door to Magma Pool
       Trivial
 
 ----------------
-Bomb Room
+Bomb Chamber
 Extra - total_boundings: {'x1': -2500.0, 'x2': 0.0, 'y1': 4100.0, 'y2': 5700.0}
 Extra - polygon: [[0.0, 4100.0], [0.0, 5700.0], [-2500.0, 5700.0], [-2500.0, 4100.0]]
 Extra - asset_id: collision_camera_008
@@ -183,7 +176,7 @@ Extra - asset_id: collision_camera_008
   * Pickup 18; Category? Minor
   * Extra - actor_name: LE_Item_005
   * Extra - actor_type: item_missiletank
-  > Tunnel to Bomb Access
+  > Tunnel to Bomb Chamber Access
       Lay Any Bomb
 
 > Pickup (Bomb); Heals? False
@@ -194,17 +187,17 @@ Extra - asset_id: collision_camera_008
   > Room Center
       Trivial
 
-> Door to Bomb Access; Heals? False
+> Door to Bomb Chamber Access; Heals? False
   * Layers: default
-  * Missile Door to Bomb Access/Door to Bomb Room
+  * Missile Door to Bomb Chamber Access/Door to Bomb Chamber
   * Extra - actor_name: Door004
   * Extra - actor_type: doorpowerpower
   > Room Center
       Trivial
 
-> Tunnel to Bomb Access; Heals? False
+> Tunnel to Bomb Chamber Access; Heals? False
   * Layers: default
-  * Tunnel with Bomb Block to Bomb Access/Tunnel to Bomb Room
+  * Tunnel with Bomb Block to Bomb Chamber Access/Tunnel to Bomb Chamber
   > Pickup (Missile Tank)
       Lay Any Bomb
   > Room Center
@@ -215,63 +208,64 @@ Extra - asset_id: collision_camera_008
   * Extra - start_point_actor_name: ST_CheckPoint_005
   > Pickup (Bomb)
       Trivial
-  > Door to Bomb Access
+  > Door to Bomb Chamber Access
       Trivial
-  > Tunnel to Bomb Access
+  > Tunnel to Bomb Chamber Access
       Lay Any Bomb
 
 ----------------
-Shaft East
+Inner Temple East Hall
 Extra - total_boundings: {'x1': 7800.0, 'x2': 9300.0, 'y1': 2800.0, 'y2': 10300.0}
 Extra - polygon: [[9300.0, 2800.0], [9300.0, 10300.0], [7800.0, 10300.0], [7800.0, 2800.0]]
 Extra - asset_id: collision_camera_012
-> Door to Spider Ball Balcony; Heals? False
+> Door to Destroyed Armory; Heals? False
   * Layers: default
-  * Charge Beam Door to Spider Ball Balcony/Door to Shaft East
+  * Charge Beam Door to Destroyed Armory/Door to Inner Temple East Hall
   * Extra - actor_name: Door005
   * Extra - actor_type: doorchargecharge
-  > Dock to Teleporter Room
+  > Dock to Inner Temple Teleporter
       Trivial
-  > Dock to Ice Beam Tutorial
+  > Dock to Ice Beam Chamber Access
       Trivial
 
-> Door to Outer Hub; Heals? False
+> Door to Temple Exterior; Heals? False
   * Layers: default
-  * Power Beam Door to Outer Hub/Door to Shaft East
+  * Power Beam Door to Temple Exterior/Door to Inner Temple East Hall
   * Extra - actor_name: Door012
   * Extra - actor_type: doorpowerpower
-  > Door to Inner Room
+  > Door to Inner Temple Upper Hallway
       Single-wall Wall Jump (Beginner) or Climb Rooms Vertically (High Jump)
-  > Dock to Teleporter Room
+  > Dock to Inner Temple Teleporter
       Trivial
 
-> Door to Inner Room; Heals? False
+> Door to Inner Temple Upper Hallway; Heals? False
   * Layers: default
-  * Power Beam Door to Inner Room/Door to Shaft East
+  * Power Beam Door to Inner Temple Upper Hallway/Door to Inner Temple East Hall
   * Extra - actor_name: Door013
   * Extra - actor_type: doorclosedpower
-  > Door to Outer Hub
+  > Door to Temple Exterior
       Trivial
 
-> Dock to Teleporter Room; Heals? False
+> Dock to Inner Temple Teleporter; Heals? False
   * Layers: default
-  * Open Passage to Teleporter Room/Dock to Shaft East
-  > Door to Spider Ball Balcony
+  * Open Passage to Inner Temple Teleporter/Dock to Inner Temple East Hall
+  > Door to Destroyed Armory
       Trivial
-  > Door to Outer Hub
+  > Door to Temple Exterior
       Any of the following:
           # SWJ: https://youtu.be/n_gpWjN5Px0
           Ice Beam or Single-wall Wall Jump (Intermediate) or Climb Rooms Vertically (No High Jump)
+          # Jump as late as possible from the ledge
           High Jump Boots and Movement (Beginner)
 
-> Dock to Ice Beam Tutorial; Heals? False
+> Dock to Ice Beam Chamber Access; Heals? False
   * Layers: default
-  * Open Passage to Ice Beam Tutorial/Dock to Shaft East
-  > Door to Spider Ball Balcony
+  * Open Passage to Ice Beam Chamber Access/Dock to Inner Temple East Hall
+  > Door to Destroyed Armory
       Trivial
 
 ----------------
-Spider Ball Balcony
+Destroyed Armory
 Extra - total_boundings: {'x1': 9200.0, 'x2': 13400.0, 'y1': 3902.47998046875, 'y2': 5400.0}
 Extra - polygon: [[13400.0, 3902.47998046875], [13400.0, 5400.0], [9200.0, 5400.0], [9200.0, 3902.47998046875]]
 Extra - asset_id: collision_camera_014
@@ -280,12 +274,12 @@ Extra - asset_id: collision_camera_014
   * Pickup 21; Category? Minor
   * Extra - actor_name: LE_Item_011
   * Extra - actor_type: item_senergytank
-  > Door to Shaft East
+  > Door to Inner Temple East Hall
       Trivial
 
-> Door to Shaft East; Heals? False
+> Door to Inner Temple East Hall; Heals? False
   * Layers: default
-  * Charge Beam Door to Shaft East/Door to Spider Ball Balcony
+  * Charge Beam Door to Inner Temple East Hall/Door to Destroyed Armory
   * Extra - actor_name: Door005
   * Extra - actor_type: doorchargecharge
   > Pickup (Aeion Tank)
@@ -295,17 +289,17 @@ Extra - asset_id: collision_camera_014
               Ice Beam or Space Jump or Simple IBJ
               Spider Ball and Lay Any Bomb
               High Jump Boots and Gravity Suit
-  > Tunnel to Spider Ball Room
+  > Tunnel to Spider Ball Chamber
       Lay Any Bomb
 
-> Tunnel to Spider Ball Room; Heals? False
+> Tunnel to Spider Ball Chamber; Heals? False
   * Layers: default
-  * Tunnel with Bomb Block to Spider Ball Room/Tunnel to Spider Ball Balcony
-  > Door to Shaft East
+  * Tunnel with Bomb Block to Spider Ball Chamber/Tunnel to Destroyed Armory
+  > Door to Inner Temple East Hall
       Trivial
 
 ----------------
-Spider Ball Room
+Spider Ball Chamber
 Extra - total_boundings: {'x1': 11850.0, 'x2': 14900.0, 'y1': 4100.0, 'y2': 8500.0}
 Extra - polygon: [[14900.0, 8500.0], [11850.0, 8500.0], [11850.0, 6200.0], [13300.0, 5400.0], [13300.0, 4100.0], [14900.0, 4100.0]]
 Extra - asset_id: collision_camera_016
@@ -314,7 +308,7 @@ Extra - asset_id: collision_camera_016
   * Pickup 22; Category? Minor
   * Extra - actor_name: LE_Item_013
   * Extra - actor_type: item_missiletank
-  > Tunnel to Spider Ball Balcony
+  > Tunnel to Destroyed Armory
       Lay Any Bomb
 
 > Pickup (Spider Ball); Heals? False
@@ -325,42 +319,42 @@ Extra - asset_id: collision_camera_016
   > Room Bottom
       Trivial
 
-> Door to Outer Hub; Heals? False
+> Door to Temple Exterior; Heals? False
   * Layers: default
-  * Power Beam Door to Outer Hub/Door to Spider Ball Room
+  * Power Beam Door to Temple Exterior/Door to Spider Ball Chamber
   * Extra - actor_name: Door017
   * Extra - actor_type: doorclosedpower
   > Pickup (Missile Tank)
-      # Melee Clip + Out Of bounds movement: https://youtu.be/qAbaEaatlEU (Will re-record with inputs at later date)
+      # https://youtu.be/sneRCyFDt-Q
       Morph Ball and Melee Clip (Beginner) and Out of Bounds Movement (Beginner)
   > Room Bottom
       Morph Ball
 
-> Tunnel to Spider Ball Balcony; Heals? False
+> Tunnel to Destroyed Armory; Heals? False
   * Layers: default
-  * Tunnel with Bomb Block to Spider Ball Balcony/Tunnel to Spider Ball Room
+  * Tunnel with Bomb Block to Destroyed Armory/Tunnel to Spider Ball Chamber
   > Pickup (Missile Tank)
       Lay Any Bomb
 
-> Tunnel to Outer Hub; Heals? False
+> Tunnel to Temple Exterior; Heals? False
   * Layers: default
-  * Tunnel to Outer Hub/Tunnel to Spider Ball Room
-  > Door to Outer Hub
-      Trivial
+  * Tunnel to Temple Exterior/Tunnel to Spider Ball Chamber
+  > Door to Temple Exterior
+      Enabled Door Type Randomizer or Disabled Door Lock Randomizer
 
 > Room Bottom; Heals? False; Default Node
   * Layers: default
   * Extra - start_point_actor_name: ST_Checkpoint_007
   > Pickup (Spider Ball)
       Morph Ball
-  > Door to Outer Hub
+  > Door to Temple Exterior
       Any of the following:
           Climb Rooms Vertically (No High Jump)
-          # Video with inputs: https://www.youtube.com/watch?v=QmXq9hl-oB4
+          # https://youtu.be/QmXq9hl-oB4?t=80
           Morph Ball and Melee Clip (Advanced) and Single-wall Wall Jump (Advanced)
 
 ----------------
-Alpha Arena North
+Exterior Alpha Arena
 Extra - total_boundings: {'x1': 11870.0, 'x2': 15700.0, 'y1': 8800.0, 'y2': 10900.0}
 Extra - polygon: [[15700.0, 8800.0], [15700.0, 10900.0], [11870.0, 10900.0], [11870.0, 8800.0]]
 Extra - asset_id: collision_camera_017
@@ -372,23 +366,23 @@ Extra - asset_id: collision_camera_017
   > Above Arena
       Trivial
 
-> Door to Outer Hub; Heals? False
+> Door to Temple Exterior; Heals? False
   * Layers: default
-  * Power Beam Door to Outer Hub/Door to Alpha Arena North
+  * Power Beam Door to Temple Exterior/Door to Exterior Alpha Arena
   * Extra - actor_name: Door016
   * Extra - actor_type: doorpowerpower
   > Inside Arena
       Trivial
 
-> Tunnel to Outer Hub; Heals? False
+> Tunnel to Temple Exterior; Heals? False
   * Layers: default
-  * Tunnel to Outer Hub/Tunnel to Alpha Arena North
+  * Tunnel to Temple Exterior/Tunnel to Exterior Alpha Arena
   > Above Arena
       Morph Ball
 
 > Event - Alpha Metroid; Heals? False
   * Layers: default
-  * Event Area 1 - Alpha Metroid North
+  * Event Area 1 - Exterior Alpha Metroid
   > Pickup (DNA)
       Trivial
 
@@ -397,7 +391,7 @@ Extra - asset_id: collision_camera_017
   * Extra - start_point_actor_name: ST_SG_Alpha_004B
   > Pickup (Energy Tank)
       Trivial
-  > Tunnel to Outer Hub
+  > Tunnel to Temple Exterior
       Morph Ball
   > Inside Arena
       Lay Any Bomb
@@ -405,7 +399,7 @@ Extra - asset_id: collision_camera_017
 > Inside Arena; Heals? False; Default Node
   * Layers: default
   * Extra - start_point_actor_name: ST_Alpha_004_Checkpoint
-  > Door to Outer Hub
+  > Door to Temple Exterior
       Trivial
   > Event - Alpha Metroid
       Defeat Alpha Metroid
@@ -423,7 +417,7 @@ Extra - asset_id: collision_camera_017
       Trivial
 
 ----------------
-Outer Hub
+Temple Exterior
 Extra - total_boundings: {'x1': -2600.0, 'x2': 11950.0, 'y1': 7600.0, 'y2': 14000.0}
 Extra - polygon: [[11950.0, 7600.0], [11950.0, 13100.0], [9400.0, 13100.0], [8000.0, 14000.0], [3100.0, 14000.0], [1900.0, 13100.0], [-2600.0, 13100.0], [-2600.0, 7600.0], [1400.0, 7600.0], [1400.0, 8700.0], [2800.0, 9300.0], [3400.0, 9300.0], [3400.0, 10400.0], [3800.0, 10600.0], [9100.0, 10600.0], [9200.0, 10500.0], [9200.0, 7600.0]]
 Extra - asset_id: collision_camera_018
@@ -448,9 +442,11 @@ Extra - asset_id: collision_camera_018
   * Extra - actor_name: LE_AmmoRecharge_Platform
   * Extra - actor_type: weightactivatedplatform
   > Pickup (Missile Tank Puzzle)
-      Missile and Lay Any Bomb
+      Lay Any Bomb and Shoot Any Missile
   > Energy Recharge Station
       Trivial
+  > Above Wall
+      Morph Ball
 
 > Energy Recharge Station; Heals? True
   * Layers: default
@@ -458,8 +454,6 @@ Extra - asset_id: collision_camera_018
   * Extra - actor_type: weightactivatedplatform
   > Ammo Recharge Station
       Trivial
-  > Above Wall
-      Morph Ball
 
 > Save Station; Heals? False; Spawn Point; Default Node
   * Layers: default
@@ -468,43 +462,49 @@ Extra - asset_id: collision_camera_018
   * Extra - start_point_actor_name: ST_SaveStation004
   > Pickup (Missile Tank Crevice)
       Morph Ball and Climb Rooms Vertically (High Jump)
-  > Door to Shaft East
+  > Door to Inner Temple East Hall
       Trivial
-  > Door to Alpha Arena North
+  > Door to Exterior Alpha Arena
       Any of the following:
           Climb Rooms Vertically (No High Jump)
-          # TODO: Record video
-          High Jump Boots and Morph Ball and Super Jump (Advanced) and Unmorph Extend (Advanced)
-  > Door to Spider Ball Room
+          # https://youtu.be/r8Pb-3bIPGc
+          High Jump Boots and Morph Ball and Super Jump (Expert) and Unmorph Extend (Advanced)
+  > Door to Spider Ball Chamber
       Trivial
-  > Tunnel to Spider Ball Room
+  > Tunnel to Spider Ball Chamber
       Morph Ball
   > Above Wall
       Climb Rooms Vertically (No High Jump)
 
-> Door to Shaft East; Heals? False
+> Door to Inner Temple East Hall; Heals? False
   * Layers: default
-  * Power Beam Door to Shaft East/Door to Outer Hub
+  * Power Beam Door to Inner Temple East Hall/Door to Temple Exterior
   * Extra - actor_name: Door012
   * Extra - actor_type: doorpowerpower
   > Save Station
       Trivial
 
-> Door to Alpha Arena North; Heals? False
+> Door to Exterior Alpha Arena; Heals? False
   * Layers: default
-  * Power Beam Door to Alpha Arena North/Door to Outer Hub
+  * Power Beam Door to Exterior Alpha Arena/Door to Temple Exterior
   * Extra - actor_name: Door016
   * Extra - actor_type: doorpowerpower
   > Save Station
       Trivial
-  > Tunnel to Alpha Arena North
-      Morph Ball and Melee Clip (Beginner) and Climb Rooms Vertically (No High Jump)
+  > Tunnel to Exterior Alpha Arena
+      All of the following:
+          Morph Ball and Melee Clip (Beginner)
+          Any of the following:
+              Climb Rooms Vertically (No High Jump)
+              All of the following:
+                  High Jump Boots
+                  Single-wall Wall Jump (Beginner) or Super Jump (Intermediate) or Unmorph Extend (Beginner)
   > Start Point
       Trivial
 
-> Door to Spider Ball Room; Heals? False
+> Door to Spider Ball Chamber; Heals? False
   * Layers: default
-  * Access Locked to Spider Ball Room/Door to Outer Hub
+  * Access Locked to Spider Ball Chamber/Door to Temple Exterior
   * Extra - actor_name: Door017
   * Extra - actor_type: doorclosedpower
   > Save Station
@@ -518,41 +518,41 @@ Extra - asset_id: collision_camera_018
   > Above Wall
       Trivial
 
-> Dock to Outer Hub Access; Heals? False
+> Dock to Chute Leech Cabin; Heals? False
   * Layers: default
-  * Open Passage to Outer Hub Access/Dock to Outer Hub
-  > Dock to Save Station North
+  * Open Passage to Chute Leech Cabin/Dock to Temple Exterior
+  > Dock to Inner Temple Save Station
       Trivial
 
-> Tunnel to Spider Ball Room; Heals? False
+> Tunnel to Spider Ball Chamber; Heals? False
   * Layers: default
-  * Tunnel to Spider Ball Room/Tunnel to Outer Hub
+  * Tunnel to Spider Ball Chamber/Tunnel to Temple Exterior
   > Save Station
       Morph Ball
 
-> Tunnel to Alpha Arena North; Heals? False
+> Tunnel to Exterior Alpha Arena; Heals? False
   * Layers: default
-  * Tunnel to Alpha Arena North/Tunnel to Outer Hub
-  > Door to Alpha Arena North
+  * Tunnel to Exterior Alpha Arena/Tunnel to Temple Exterior
+  > Door to Exterior Alpha Arena
       Morph Ball
 
-> Tunnel to Inner Shaft; Heals? False
+> Tunnel to Inner Temple Ventilation Shaft; Heals? False
   * Layers: default
-  * Tunnel with Bomb Block to Inner Shaft/Tunnel to Outer Hub
+  * Tunnel with Bomb Block to Inner Temple Ventilation Shaft/Tunnel to Temple Exterior
   > 2nd Level
       Trivial
 
-> Dock to Save Station North; Heals? False
+> Dock to Inner Temple Save Station; Heals? False
   * Layers: default
-  * Open Passage to Save Station North/Dock to Outer Hub
-  > Dock to Outer Hub Access
+  * Open Passage to Inner Temple Save Station/Dock to Temple Exterior
+  > Dock to Chute Leech Cabin
       Trivial
   > 2nd Level
       Movement (Beginner) or Climb Rooms Vertically (High Jump)
 
 > Above Wall; Heals? False
   * Layers: default
-  > Energy Recharge Station
+  > Ammo Recharge Station
       Morph Ball and Climb Rooms Vertically (No High Jump)
   > Save Station
       Trivial
@@ -563,9 +563,9 @@ Extra - asset_id: collision_camera_018
 
 > 2nd Level; Heals? False
   * Layers: default
-  > Tunnel to Inner Shaft
+  > Tunnel to Inner Temple Ventilation Shaft
       Lay Any Bomb
-  > Dock to Save Station North
+  > Dock to Inner Temple Save Station
       Trivial
   > Above Wall
       Climb Rooms Vertically (No High Jump)
@@ -573,103 +573,114 @@ Extra - asset_id: collision_camera_018
 > Start Point; Heals? False
   * Layers: default
   * Extra - start_point_actor_name: ST_SG_Alpha_004
-  > Door to Alpha Arena North
+  > Door to Exterior Alpha Arena
       Trivial
 
 ----------------
-Alpha Shaft Left
+Metroid Caverns Lobby
 Extra - total_boundings: {'x1': -300.00201416015625, 'x2': 1400.0, 'y1': -1100.0, 'y2': 2000.0}
 Extra - polygon: [[1200.0, -1100.0], [1200.0, 500.0], [1400.0, 600.0], [1400.0, 2000.0], [-300.00201416015625, 2000.0], [-299.99798583984375, -1100.0]]
 Extra - asset_id: collision_camera_023
-> Door to Alpha Arena South; Heals? False
+> Door to Metroid Caverns Alpha Arena South East; Heals? False
   * Layers: default
-  * Power Beam Door to Alpha Arena South/Door to Alpha Shaft Left
+  * Power Beam Door to Metroid Caverns Alpha Arena South East/Door to Metroid Caverns Lobby
   * Extra - actor_name: Door014
   * Extra - actor_type: doorpowerpower
-  > Dock to Alpha Arena West Access
+  > Dock to Metroid Caverns Alpha Arena South West Access
       Trivial
   > Start Point
       Trivial
 
-> Dock to Alpha Shaft Right; Heals? False
+> Dock to Metroid Caverns Hub; Heals? False
   * Layers: default
-  * Open Passage to Alpha Shaft Right/Dock to Alpha Shaft Left
-  > Tunnel to Energy Recharge Room
-      Spider Ball and Lay Any Bomb
-  > Dock to Alpha Arena West Access
+  * Open Passage to Metroid Caverns Hub/Dock to Metroid Caverns Lobby
+  > Tunnel to Metroid Caverns Energy Recharge Station
+      All of the following:
+          Lay Any Bomb
+          Space Jump or Spider Ball or Movement (Beginner)
+  > Dock to Metroid Caverns Alpha Arena South West Access
       Trivial
 
-> Tunnel to Energy Recharge Room; Heals? False
+> Tunnel to Metroid Caverns Energy Recharge Station; Heals? False
   * Layers: default
-  * Tunnel with Bomb Block to Energy Recharge Room/Tunnel to Alpha Shaft Left
-  > Dock to Alpha Arena West Access
+  * Tunnel with Bomb Block to Metroid Caverns Energy Recharge Station/Tunnel to Metroid Caverns Lobby
+  > Dock to Metroid Caverns Alpha Arena South West Access
       Morph Ball
 
-> Dock to Alpha Arena West Access; Heals? False
+> Dock to Metroid Caverns Alpha Arena South West Access; Heals? False
   * Layers: default
-  * Open Passage to Alpha Arena West Access/Dock to Alpha Shaft Left
-  > Door to Alpha Arena South
+  * Open Passage to Metroid Caverns Alpha Arena South West Access/Dock to Metroid Caverns Lobby
+  > Door to Metroid Caverns Alpha Arena South East
       Trivial
-  > Dock to Alpha Shaft Right
+  > Dock to Metroid Caverns Hub
       Lay Any Bomb
 
 > Start Point; Heals? False; Default Node
   * Layers: default
   * Extra - start_point_actor_name: ST_SG_Alpha_002
-  > Door to Alpha Arena South
+  > Door to Metroid Caverns Alpha Arena South East
       Trivial
 
 ----------------
-Alpha Arena West Access
+Metroid Caverns Alpha Arena South West Access
 Extra - total_boundings: {'x1': -4000.0, 'x2': -200.0, 'y1': -1100.0, 'y2': 600.0}
 Extra - polygon: [[-200.0, -1100.0], [-200.0, 600.0], [-4000.0, 600.0], [-4000.0, -1100.0]]
 Extra - asset_id: collision_camera_024
-> Dock to Alpha Shaft Left; Heals? False
+> Dock to Metroid Caverns Lobby; Heals? False
   * Layers: default
-  * Open Passage to Alpha Shaft Left/Dock to Alpha Arena West Access
-  > Second Pillar
+  * Open Passage to Metroid Caverns Lobby/Dock to Metroid Caverns Alpha Arena South West Access
+  > Left Pillar
       Any of the following:
-          High Jump Boots or Gravity Suit or Ice Beam or Space Jump
+          Gravity Suit or Ice Beam or Space Jump or Super Jump (Intermediate) or Unmorph Extend (Intermediate)
           All of the following:
-              Bomb and Damage Boost (Beginner)
+              Lay Bomb
               Any of the following:
                   Diagonal Bomb Jump (Intermediate)
-                  Spring Ball and Mid-Air Morph (Intermediate) and Infinite Bomb Jump (Intermediate)
-          Power Bomb ≥ 2 and Spiderspark (Beginner) and Can Spiderspark
+                  All of the following:
+                      Infinite Bomb Jump (Intermediate)
+                      Spring Ball or Mid-Air Morph (Intermediate)
+          # Launch diagonally twice
+          Power Bomb ≥ 2 and Spider Boost (Intermediate) and Can Spider Boost
+          # https://youtu.be/o9YeN0y5DeA
+          Damage Boost (Intermediate) and Normal Damage ≥ 50
 
-> Tunnel to Alpha Arena West (Top); Heals? False
+> Tunnel to Metroid Caverns Alpha Arena South West (Top); Heals? False
   * Layers: default
-  * Tunnel to Alpha Arena West/Tunnel to Alpha Arena West Access (Top)
+  * Tunnel to Metroid Caverns Alpha Arena South West/Tunnel to Metroid Caverns Alpha Arena South West Access (Top)
 
-> Tunnel to Alpha Arena West (Bottom); Heals? False
+> Tunnel to Metroid Caverns Alpha Arena South West (Bottom); Heals? False
   * Layers: default
-  * Tunnel with Bomb Block to Alpha Arena West/Tunnel to Alpha Arena West Access (Bottom)
-  > Second Pillar
+  * Tunnel with Bomb Block to Metroid Caverns Alpha Arena South West/Tunnel to Metroid Caverns Alpha Arena South West Access (Bottom)
+  > Left Pillar
       Trivial
 
-> Second Pillar; Heals? False; Default Node
+> Left Pillar; Heals? False; Default Node
   * Layers: default
   * Extra - start_point_actor_name: ST_SG_Alpha_001
-  > Dock to Alpha Shaft Left
+  > Dock to Metroid Caverns Lobby
       Trivial
-  > Tunnel to Alpha Arena West (Top)
+  > Tunnel to Metroid Caverns Alpha Arena South West (Top)
       All of the following:
           Shoot Any Missile
           Any of the following:
               Ice Beam or Space Jump
               All of the following:
-                  Bomb and Infinite Bomb Jump (Intermediate)
+                  # https://youtu.be/HWWMrswtNFg
+                  Infinite Bomb Jump (Intermediate) and Lay Bomb
                   Spring Ball or Mid-Air Morph (Intermediate)
-              Spiderspark (Beginner) and Can Spiderspark
+              # https://youtu.be/HWWMrswtNFg?t=18
+              Spider Boost (Advanced) and Can Spider Boost
+              # https://youtu.be/HWWMrswtNFg?t=28
+              Unmorph Extend (Advanced)
 
 ----------------
-Alpha Arena South
+Metroid Caverns Alpha Arena South East
 Extra - total_boundings: {'x1': 1100.0, 'x2': 3800.0, 'y1': -1100.0, 'y2': 400.0}
 Extra - polygon: [[3800.0, -1100.0], [3800.0, 400.0], [1100.0, 400.0], [1100.0, -1100.0]]
 Extra - asset_id: collision_camera_025
-> Door to Alpha Shaft Left; Heals? False
+> Door to Metroid Caverns Lobby; Heals? False
   * Layers: default
-  * Power Beam Door to Alpha Shaft Left/Door to Alpha Arena South
+  * Power Beam Door to Metroid Caverns Lobby/Door to Metroid Caverns Alpha Arena South East
   * Extra - actor_name: Door014
   * Extra - actor_type: doorpowerpower
   > Event - Alpha Metroid
@@ -677,7 +688,7 @@ Extra - asset_id: collision_camera_025
 
 > Event - Alpha Metroid; Heals? False
   * Layers: default
-  * Event Area 1 - Alpha Metroid South
+  * Event Area 1 - Metroid Caverns Alpha Metroid South East
   > Pickup (DNA)
       Trivial
 
@@ -686,17 +697,17 @@ Extra - asset_id: collision_camera_025
   * Pickup 174; Category? Minor
   * Extra - pickup_type: metroid
   * Extra - spawngroup: SG_Alpha_002
-  > Door to Alpha Shaft Left
+  > Door to Metroid Caverns Lobby
       Trivial
 
 ----------------
-Alpha Arena East
+Metroid Caverns Alpha Arena North East
 Extra - total_boundings: {'x1': 7500.0, 'x2': 10206.7001953125, 'y1': 700.0, 'y2': 2100.0}
 Extra - polygon: [[10206.7001953125, 700.0], [10206.7001953125, 2100.0], [7500.0, 2100.0], [7500.0, 700.0]]
 Extra - asset_id: collision_camera_027
-> Door to Alpha Arena East Access; Heals? False
+> Door to Metroid Caverns Alpha Arena North East Access; Heals? False
   * Layers: default
-  * Power Beam Door to Alpha Arena East Access/Door to Alpha Arena East
+  * Power Beam Door to Metroid Caverns Alpha Arena North East Access/Door to Metroid Caverns Alpha Arena North East
   * Extra - actor_name: Door015
   * Extra - actor_type: doorpowerpower
   > Event - Alpha Metroid
@@ -704,7 +715,7 @@ Extra - asset_id: collision_camera_027
 
 > Event - Alpha Metroid; Heals? False
   * Layers: default
-  * Event Area 1 - Alpha Metroid East
+  * Event Area 1 - Metroid Caverns Alpha Metroid North East
   > Pickup (DNA)
       Trivial
 
@@ -713,15 +724,15 @@ Extra - asset_id: collision_camera_027
   * Pickup 175; Category? Minor
   * Extra - pickup_type: metroid
   * Extra - spawngroup: SG_Alpha_003
-  > Door to Alpha Arena East Access
+  > Door to Metroid Caverns Alpha Arena North East Access
       Trivial
 
 ----------------
-One-Way Puzzle
+Water Maze
 Extra - total_boundings: {'x1': -5498.08984375, 'x2': -4198.08984375, 'y1': 1600.0, 'y2': 3400.0}
 Extra - polygon: [[-4198.08984375, 1600.0], [-4198.08984375, 3400.0], [-5498.08984375, 3400.0], [-5498.08984375, 1600.0]]
 Extra - asset_id: collision_camera_028
-> Pickup (Missile Tank); Heals? False
+> Pickup (Aeion Tank); Heals? False
   * Layers: default
   * Pickup 17; Category? Minor
   * Extra - actor_name: LE_Item_004
@@ -729,61 +740,97 @@ Extra - asset_id: collision_camera_028
   > Next to Pickup
       Trivial
 
-> Door to Shaft West; Heals? False
+> Door to Gullugg Gangway; Heals? False
   * Layers: default
-  * Plasma Beam Door to Shaft West/Door from One-Way Puzzle
+  * Plasma Beam Door to Gullugg Gangway/Door from Water Maze
   * Extra - actor_name: Door011
   * Extra - actor_type: doorclosedpower
   > Next to Pickup
       All of the following:
-          Gravity Suit and Morph Ball and Shoot Any Missile
-          Baby Metroid or Phase Drift
+          Morph Ball and Shoot Any Missile
+          Any of the following:
+              All of the following:
+                  # With Gravity Suit
+                  Gravity Suit
+                  Any of the following:
+                      Baby Metroid or Phase Drift
+                      # https://youtu.be/GHRfKKATcNU
+                      Precise Aiming (Beginner)
+              All of the following:
+                  # Without Gravity Suit
+                  Any of the following:
+                      All of the following:
+                          Can Spider Boost
+                          Any of the following:
+                              # https://youtu.be/GHRfKKATcNU?t=19
+                              Precise Aiming (Intermediate) and Spider Boost (Intermediate)
+                              # https://youtu.be/2uAFWMA8Vco
+                              Baby Metroid and Mid-Air Morph (Intermediate) and Spider Boost (Advanced) and Super Jump (Advanced)
+                      All of the following:
+                          Phase Drift or Precise Aiming (Intermediate)
+                          Any of the following:
+                              # Precise Aiming https://youtu.be/GHRfKKATcNU?t=11
+                              Bomb and Underwater Bomb Jump (Beginner)
+                              All of the following:
+                                  High Jump Boots
+                                  # Precise Aiming https://youtu.be/GHRfKKATcNU?t=43
+                                  Super Jump (Intermediate) or Unmorph Extend (Beginner)
+                      All of the following:
+                          Spider Ball
+                          Any of the following:
+                              Phase Drift
+                              All of the following:
+                                  Precise Aiming (Intermediate)
+                                  # https://youtu.be/GHRfKKATcNU?t=27
+                                  Mid-Air Morph (Intermediate) or Movement (Advanced)
 
-> Dock to Shaft West; Heals? False
+> Dock to Gullugg Gangway; Heals? False
   * Layers: default
-  * Open Passage to Shaft West/Dock to One-Way Puzzle
-  > Door to Shaft West
-      Plasma Beam
-  > Dock to Save Station South
+  * Open Passage to Gullugg Gangway/Dock to Water Maze
+  > Door to Gullugg Gangway
+      All of the following:
+          Plasma Beam
+          Enabled Door Type Randomizer or Disabled Door Lock Randomizer
+  > Dock to Metroid Caverns Save Station
       Trivial
 
-> Dock to Save Station South; Heals? False
+> Dock to Metroid Caverns Save Station; Heals? False
   * Layers: default
-  * Open Passage to Save Station South/Dock to One-Way Puzzle (Top)
-  > Dock to Shaft West
+  * Open Passage to Metroid Caverns Save Station/Dock to Water Maze (Top)
+  > Dock to Gullugg Gangway
       Trivial
 
-> Tunnel to Save Station South; Heals? False
+> Tunnel to Metroid Caverns Save Station; Heals? False
   * Layers: default
-  * Tunnel to Save Station South/Tunnel to One-Way Puzzle
+  * Tunnel to Metroid Caverns Save Station/Tunnel to Water Maze
   > Next to Pickup
       Morph Ball
 
 > Event - Grapple Block; Heals? False
   * Layers: default
-  * Event Area 1 - One-Way Puzzle Grapple Block
+  * Event Area 1 - Water Maze Grapple Block
   > Next to Pickup
       Trivial
 
 > Next to Pickup; Heals? False
   * Layers: default
-  > Pickup (Missile Tank)
+  > Pickup (Aeion Tank)
       Trivial
-  > Door to Shaft West
+  > Door to Gullugg Gangway
       Morph Ball and Shoot Any Missile
-  > Tunnel to Save Station South
-      Morph Ball and After Area 1 - One-Way Puzzle Grapple Block
+  > Tunnel to Metroid Caverns Save Station
+      Morph Ball and After Area 1 - Water Maze Grapple Block
   > Event - Grapple Block
       Grapple Beam
 
-> Dock from Save Station South; Heals? False
+> Dock from Metroid Caverns Save Station; Heals? False
   * Layers: default
-  * Blocked Passage to Save Station South/Dock to One-Way Puzzle (OoB)
+  * Blocked Passage to Metroid Caverns Save Station/Dock to Water Maze (OoB)
   > Next to Pickup
       Trivial
 
 ----------------
-Ice Beam Room
+Ice Beam Chamber
 Extra - total_boundings: {'x1': 3800.0, 'x2': 6000.0, 'y1': 2400.0, 'y2': 4100.0}
 Extra - polygon: [[6000.0, 2400.0], [6000.0, 4100.0], [3800.0, 4100.0], [3800.0, 2400.0]]
 Extra - asset_id: collision_camera_030
@@ -795,9 +842,9 @@ Extra - asset_id: collision_camera_030
   > Room Center
       Trivial
 
-> Door to Ice Beam Tutorial; Heals? False
+> Door to Ice Beam Chamber Access; Heals? False
   * Layers: default
-  * Missile Door to Ice Beam Tutorial/Door to Ice Beam Room
+  * Missile Door to Ice Beam Chamber Access/Door to Ice Beam Chamber
   * Extra - actor_name: Door003
   * Extra - actor_type: doorpowerpower
   > Room Center
@@ -816,13 +863,13 @@ Extra - asset_id: collision_camera_030
   * Extra - start_point_actor_name: ST_CheckPoint_006
   > Pickup (Ice Beam)
       Trivial
-  > Door to Ice Beam Tutorial
+  > Door to Ice Beam Chamber Access
       Trivial
   > Pickup (Super Missile Tank)
       Baby Metroid and Morph Ball and Shoot Any Missile
 
 ----------------
-Energy Recharge Room
+Metroid Caverns Energy Recharge Station
 Extra - total_boundings: {'x1': -1500.0, 'x2': -200.0, 'y1': 1241.27001953125, 'y2': 2000.0}
 Extra - polygon: [[-200.0, 1241.27001953125], [-200.0, 2000.0], [-1500.0, 2000.0], [-1500.0, 1241.27001953125]]
 Extra - asset_id: collision_camera_031
@@ -830,17 +877,17 @@ Extra - asset_id: collision_camera_031
   * Layers: default
   * Extra - actor_name: LE_EnergyCharge001_Platform
   * Extra - actor_type: weightactivatedplatform
-  > Tunnel to Alpha Shaft Left
+  > Tunnel to Metroid Caverns Lobby
       Lay Any Bomb
 
-> Tunnel to Alpha Shaft Left; Heals? False
+> Tunnel to Metroid Caverns Lobby; Heals? False
   * Layers: default
-  * Tunnel with Bomb Block to Alpha Shaft Left/Tunnel to Energy Recharge Room
+  * Tunnel with Bomb Block to Metroid Caverns Lobby/Tunnel to Metroid Caverns Energy Recharge Station
   > Energy Recharge Station
       Morph Ball
 
 ----------------
-Lava Shortcut
+Magma Pool
 Extra - total_boundings: {'x1': -9600.0, 'x2': -7100.0, 'y1': 700.0, 'y2': 3700.0}
 Extra - polygon: [[-7100.0, 700.0], [-7100.0, 3700.0], [-9600.0, 3700.0], [-9600.0, 700.0]]
 Extra - asset_id: collision_camera_033
@@ -849,12 +896,12 @@ Extra - asset_id: collision_camera_033
   * Pickup 15; Category? Minor
   * Extra - actor_name: LE_Item_001
   * Extra - actor_type: item_missiletank
-  > Door to Entrance Shaft
+  > Door to Moheek Mount
       Trivial
 
-> Door to Entrance Shaft; Heals? False
+> Door to Moheek Mount; Heals? False
   * Layers: default
-  * Charge Beam Door to Entrance Shaft/Door to Lava Shortcut
+  * Charge Beam Door to Moheek Mount/Door to Magma Pool
   * Extra - actor_name: Door009
   * Extra - actor_type: doorchargecharge
   > Pickup (Missile Tank)
@@ -864,87 +911,101 @@ Extra - asset_id: collision_camera_033
               Space Jump or Use Spider Ball
           All of the following:
               Gravity Suit
-              Walljump (Beginner) or Simple IBJ
-  > Door to Shaft West
+              Wall Jump (Beginner) or Simple IBJ
+  > Door to Gullugg Gangway
       Any of the following:
           Gravity Suit
-          Morph Ball and Spider Ball and Varia Suit
+          Varia Suit and Use Spider Ball
 
-> Door to Shaft West; Heals? False
+> Door to Gullugg Gangway; Heals? False
   * Layers: default
-  * Charge Beam Door to Shaft West/Door to Lava Shortcut
+  * Charge Beam Door to Gullugg Gangway/Door to Magma Pool
   * Extra - actor_name: Door010
   * Extra - actor_type: doorchargecharge
-  > Door to Entrance Shaft
+  > Door to Moheek Mount
       Any of the following:
           Gravity Suit
-          Morph Ball and Spider Ball and Varia Suit
+          Varia Suit and Use Spider Ball
   > Pickup (Super Missile Tank)
       All of the following:
-          Gravity Suit and Morph Ball and Shoot Super Missile
+          Gravity Suit and Morph Ball and Super Missile
           Any of the following:
-              Space Jump or Can Spiderspark or Simple IBJ
+              Space Jump or Simple IBJ
               All of the following:
-                  Walljump (Beginner)
-                  High Jump Boots or Damage Boost (Intermediate)
-              High Jump Boots and Spider Ball and Spring Ball and Mid-Air Morph (Beginner)
+                  Wall Jump (Intermediate)
+                  Any of the following:
+                      # Avoid the spikes
+                      High Jump Boots or Super Jump (Intermediate)
+                      # https://youtu.be/41wPJZOtWfg
+                      Damage Boost (Intermediate) and Normal Damage ≥ 10
+              All of the following:
+                  Spider Ball
+                  Spring Ball or Mid-Air Morph (Beginner)
+                  # Get enough height to use Spider Ball
+                  High Jump Boots or Super Jump (Intermediate)
+              Spider Boost (Intermediate) and Can Spider Boost
 
 > Pickup (Super Missile Tank); Heals? False
   * Layers: default
   * Pickup 30; Category? Minor
   * Extra - actor_name: HiddenPowerup002
   * Extra - actor_type: item_supermissiletank
-  > Door to Shaft West
+  > Door to Gullugg Gangway
       Trivial
 
 ----------------
-Central Shaft
+Inner Temple West Hall
 Extra - total_boundings: {'x1': 2400.0, 'x2': 3900.0, 'y1': 2000.0, 'y2': 8600.0}
 Extra - polygon: [[2500.0, 8600.0], [2500.0, 3700.0], [2400.0, 3000.0], [2400.0, 2000.0], [3900.0, 2000.0], [3900.0, 8600.0]]
 Extra - asset_id: collision_camera_035
-> Door to Teleporter Access; Heals? False
+> Door to Inner Temple Teleporter Access; Heals? False
   * Layers: default
-  * Power Beam Door to Teleporter Access/Door to Central Shaft
+  * Power Beam Door to Inner Temple Teleporter Access/Door to Inner Temple West Hall
   * Extra - actor_name: Door006
   * Extra - actor_type: doorpowerpower
-  > Dock to Bomb Access
+  > Dock to Bomb Chamber Access
       Trivial
-  > Dock to Save Station North
+  > Dock to Inner Temple Save Station
       Any of the following:
           Climb Rooms Vertically (No High Jump)
           All of the following:
               Phase Drift
               Any of the following:
+                  High Jump Boots
                   Stand on Frozen Enemy (Intermediate) and Fully Freeze Enemy
                   # Unmorph extend: Need to test its difficulty without HJ but its trivial with it. Will record video when i do so.
                   Movement (Advanced) and Unmorph Extend (Advanced)
+                  # Wall Jumps: https://youtu.be/365gGTEEtYg
+                  Movement (Intermediate) and Wall Jump (Intermediate)
           # SWJ + UE: https://youtu.be/sBO8Pew_ijQ
           Single-wall Wall Jump (Advanced) and Unmorph Extend (Intermediate)
+          # High Wall Jump: https://www.youtube.com/watch?v=U2rVU-4bxUA
+          High Jump Boots and Wall Jump (Intermediate)
 
-> Tunnel to Alpha Shaft Right; Heals? False
+> Tunnel to Metroid Caverns Hub; Heals? False
   * Layers: default
-  * Tunnel to Alpha Shaft Right/Tunnel to Central Shaft
-  > Dock to Bomb Access
+  * Tunnel to Metroid Caverns Hub/Tunnel to Inner Temple West Hall
+  > Dock to Bomb Chamber Access
       Morph Ball
 
-> Dock to Bomb Access; Heals? False
+> Dock to Bomb Chamber Access; Heals? False
   * Layers: default
-  * Open Passage to Bomb Access/Dock to Central Shaft
-  > Door to Teleporter Access
+  * Open Passage to Bomb Chamber Access/Dock to Inner Temple West Hall
+  > Door to Inner Temple Teleporter Access
       Trivial
-  > Tunnel to Alpha Shaft Right
+  > Tunnel to Metroid Caverns Hub
       All of the following:
           Morph Ball
           Melee Clip (Beginner) or Single-wall Wall Jump (Intermediate) or Climb Rooms Vertically (High Jump)
 
-> Dock to Save Station North; Heals? False
+> Dock to Inner Temple Save Station; Heals? False
   * Layers: default
-  * Open Passage to Save Station North/Dock to Central Shaft
-  > Door to Teleporter Access
+  * Open Passage to Inner Temple Save Station/Dock to Inner Temple West Hall
+  > Door to Inner Temple Teleporter Access
       Trivial
 
 ----------------
-Save Station South
+Metroid Caverns Save Station
 Extra - total_boundings: {'x1': -4300.0, 'x2': 1400.0, 'y1': 1900.0, 'y2': 3800.0}
 Extra - polygon: [[1400.0, 1900.0], [1400.0, 3800.0], [-4300.0, 3800.0], [-4300.0, 1900.0]]
 Extra - asset_id: collision_camera_041
@@ -953,9 +1014,9 @@ Extra - asset_id: collision_camera_041
   * Pickup 19; Category? Minor
   * Extra - actor_name: LE_Item_006
   * Extra - actor_type: item_missiletank
-  > Dock to Alpha Shaft Right
+  > Dock to Metroid Caverns Hub
       Lay Any Bomb
-  > Tunnel to Alpha Shaft Right
+  > Tunnel to Metroid Caverns Hub
       Lay Power Bomb
 
 > Save Station; Heals? False; Spawn Point; Default Node
@@ -963,16 +1024,17 @@ Extra - asset_id: collision_camera_041
   * Extra - actor_name: LE_Platform_SaveStation001
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: ST_SaveStation001
-  > Dock to One-Way Puzzle (Top)
+  > Dock to Water Maze (Top)
       Trivial
-  > Tunnel to One-Way Puzzle
+  > Tunnel to Water Maze
       All of the following:
-          Morph Ball and After Area 1 - One-Way Puzzle Grapple Block
+          Morph Ball and After Area 1 - Water Maze Grapple Block
           Gravity Suit or Spider Ball
-  > Dock to Alpha Shaft Right
+  > Dock to Metroid Caverns Hub
       Trivial
-  > Dock to One-Way Puzzle (OoB)
+  > Dock to Water Maze (OoB)
       All of the following:
+          # https://youtu.be/quVim9n0C80
           Morph Ball and Out of Bounds Movement (Intermediate)
           Any of the following:
               # To clip Out of Bounds
@@ -983,77 +1045,78 @@ Extra - asset_id: collision_camera_041
               Gravity Suit
               Bomb and Underwater Bomb Jump (Expert)
 
-> Dock to One-Way Puzzle (Top); Heals? False
+> Dock to Water Maze (Top); Heals? False
   * Layers: default
-  * Open Passage to One-Way Puzzle/Dock to Save Station South
+  * Open Passage to Water Maze/Dock to Metroid Caverns Save Station
   > Save Station
       Trivial
 
-> Tunnel to One-Way Puzzle; Heals? False
+> Tunnel to Water Maze; Heals? False
   * Layers: default
-  * Tunnel to One-Way Puzzle/Tunnel to Save Station South
+  * Tunnel to Water Maze/Tunnel to Metroid Caverns Save Station
   > Save Station
       Morph Ball
 
-> Dock to Alpha Shaft Right; Heals? False
+> Dock to Metroid Caverns Hub; Heals? False
   * Layers: default
-  * Open Passage to Alpha Shaft Right/Dock to Save Station South
+  * Open Passage to Metroid Caverns Hub/Dock to Metroid Caverns Save Station
   > Pickup (Missile Tank)
       Lay Power Bomb
   > Save Station
       Trivial
 
-> Tunnel to Alpha Shaft Right; Heals? False
+> Tunnel to Metroid Caverns Hub; Heals? False
   * Layers: default
-  * Tunnel to Alpha Shaft Right/Tunnel to Save Station South
+  * Tunnel to Metroid Caverns Hub/Tunnel to Metroid Caverns Save Station
   > Pickup (Missile Tank)
       Morph Ball
 
-> Dock to One-Way Puzzle (OoB); Heals? False
+> Dock to Water Maze (OoB); Heals? False
   * Layers: default
-  * Open Passage to One-Way Puzzle/Dock from Save Station South
+  * Open Passage to Water Maze/Dock from Metroid Caverns Save Station
 
 ----------------
-Teleporter Access
+Inner Temple Teleporter Access
 Extra - total_boundings: {'x1': 3800.0, 'x2': 6000.0, 'y1': 5700.0, 'y2': 7000.0}
 Extra - polygon: [[6000.0, 5700.0], [6000.0, 7000.0], [3800.0, 7000.0], [3800.0, 5700.0]]
 Extra - asset_id: collision_camera_042
-> Door to Central Shaft; Heals? False
+> Door to Inner Temple West Hall; Heals? False
   * Layers: default
-  * Power Beam Door to Central Shaft/Door to Teleporter Access
+  * Power Beam Door to Inner Temple West Hall/Door to Inner Temple Teleporter Access
   * Extra - actor_name: Door006
   * Extra - actor_type: doorpowerpower
   > Room Center
       Trivial
 
-> Dock to Inner Shaft; Heals? False
+> Dock to Inner Temple Ventilation Shaft; Heals? False
   * Layers: default
-  * Open Passage to Inner Shaft/Dock to Teleporter Access
+  * Open Passage to Inner Temple Ventilation Shaft/Dock to Inner Temple Teleporter Access
   > Room Center
       Trivial
 
-> Tunnel to Teleporter Room; Heals? False
+> Tunnel to Inner Temple Teleporter; Heals? False
   * Layers: default
-  * Tunnel with Bomb Block to Teleporter Room/Tunnel to Teleporter Access
+  * Tunnel with Bomb Block to Inner Temple Teleporter/Tunnel to Inner Temple Teleporter Access
   > Room Center
       Morph Ball
 
-> Room Center; Heals? False; Default Node
+> Dock to Inner Temple Teleporter; Heals? False
+  * Layers: default
+  * Open Passage to Inner Temple Teleporter/Dock from Inner Temple Teleporter Access
+
+> Room Center; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Extra - start_point_actor_name: ST_DEBUG_CutsceneTeleport
-  > Door to Central Shaft
+  > Door to Inner Temple West Hall
       Trivial
-  > Tunnel to Teleporter Room
+  > Tunnel to Inner Temple Teleporter
       Lay Any Bomb
-  > Dock to Teleporter Room
-      Morph Ball and Melee Clip (Intermediate) and Fully Freeze Enemy
-
-> Dock to Teleporter Room; Heals? False
-  * Layers: default
-  * Open Passage to Teleporter Room/Dock from Teleporter Access
+  > Dock to Inner Temple Teleporter
+      # https://youtu.be/FrVzIPVMaBw
+      Morph Ball and Melee Clip (Intermediate) and Out of Bounds Movement (Beginner) and Fully Freeze Enemy
 
 ----------------
-Inner Shaft
+Inner Temple Ventilation Shaft
 Extra - total_boundings: {'x1': 3300.0, 'x2': 5100.0, 'y1': 6900.0, 'y2': 9500.0}
 Extra - polygon: [[5100.0, 6900.0], [5100.0, 9500.0], [3300.0, 9500.0], [3300.0, 8800.0], [3800.0, 8600.0], [3800.0, 6900.0]]
 Extra - asset_id: collision_camera_043
@@ -1062,132 +1125,138 @@ Extra - asset_id: collision_camera_043
   * Pickup 24; Category? Minor
   * Extra - actor_name: LE_Item_016
   * Extra - actor_type: item_missiletank
-  > Door to Inner Room
-      Walljump (Intermediate) or Climb Rooms Vertically (No High Jump)
-  > Dock to Teleporter Access
+  > Door to Inner Temple Upper Hallway
+      Any of the following:
+          Space Jump or Use Spider Ball
+          # https://youtu.be/r2NzrPS3zw0?t=5
+          Wall Jump (Intermediate)
+  > Dock to Inner Temple Teleporter Access
       Trivial
 
-> Door to Inner Room; Heals? False
+> Door to Inner Temple Upper Hallway; Heals? False
   * Layers: default
-  * Spazer Beam Door to Inner Room/Door to Inner Shaft
+  * Spazer Beam Door to Inner Temple Upper Hallway/Door to Inner Temple Ventilation Shaft
   * Extra - actor_name: Door007
   * Extra - actor_type: doorpowerpower
   > Pickup (Missile Tank)
-      Space Jump or Walljump (Advanced) or Use Spider Ball
-  > Dock to Teleporter Access
+      Any of the following:
+          Space Jump or Use Spider Ball
+          # https://youtu.be/r2NzrPS3zw0
+          Wall Jump (Advanced)
+  > Dock to Inner Temple Teleporter Access
       Trivial
 
-> Dock to Teleporter Access; Heals? False
+> Dock to Inner Temple Teleporter Access; Heals? False
   * Layers: default
-  * Open Passage to Teleporter Access/Dock to Inner Shaft
+  * Open Passage to Inner Temple Teleporter Access/Dock to Inner Temple Ventilation Shaft
 
-> Tunnel to Outer Hub; Heals? False
+> Tunnel to Temple Exterior; Heals? False
   * Layers: default
-  * Tunnel with Bomb Block to Outer Hub/Tunnel to Inner Shaft
-  > Tunnel to Inner Room
+  * Tunnel with Bomb Block to Temple Exterior/Tunnel to Inner Temple Ventilation Shaft
+  > Tunnel to Inner Temple Upper Hallway
       Morph Ball
 
-> Tunnel to Inner Room; Heals? False
+> Tunnel to Inner Temple Upper Hallway; Heals? False
   * Layers: default
-  * Tunnel to Inner Room/Tunnel to Inner Shaft
-  > Tunnel to Outer Hub
+  * Tunnel to Inner Temple Upper Hallway/Tunnel to Inner Temple Ventilation Shaft
+  > Tunnel to Temple Exterior
       Lay Any Bomb
 
 ----------------
-Alpha Shaft Right
+Metroid Caverns Hub
 Extra - total_boundings: {'x1': 1300.0, 'x2': 2600.0, 'y1': 700.0, 'y2': 3700.0}
 Extra - polygon: [[2600.0, 700.0], [2600.0, 3700.0], [1300.0, 3700.0], [1300.0, 700.0]]
 Extra - asset_id: collision_camera_044
-> Dock to Save Station South; Heals? False
+> Dock to Metroid Caverns Save Station; Heals? False
   * Layers: default
-  * Open Passage to Save Station South/Dock to Alpha Shaft Right
-  > Tunnel to Save Station South
+  * Open Passage to Metroid Caverns Save Station/Dock to Metroid Caverns Hub
+  > Tunnel to Metroid Caverns Save Station
       Lay Any Bomb
-  > Tunnel to Central Shaft
+  > Tunnel to Inner Temple West Hall
       Morph Ball
-  > Dock to Alpha Arena East Access
+  > Dock to Metroid Caverns Alpha Arena North East Access
       Trivial
 
-> Tunnel to Save Station South; Heals? False
+> Tunnel to Metroid Caverns Save Station; Heals? False
   * Layers: default
-  * Tunnel to Save Station South/Tunnel to Alpha Shaft Right
-  > Dock to Save Station South
+  * Tunnel to Metroid Caverns Save Station/Tunnel to Metroid Caverns Hub
+  > Dock to Metroid Caverns Save Station
       Lay Power Bomb
 
-> Tunnel to Central Shaft; Heals? False
+> Tunnel to Inner Temple West Hall; Heals? False
   * Layers: default
-  * Tunnel to Central Shaft/Tunnel to Alpha Shaft Right
-  > Dock to Save Station South
+  * Tunnel to Inner Temple West Hall/Tunnel to Metroid Caverns Hub
+  > Dock to Metroid Caverns Save Station
       Morph Ball
 
-> Dock to Alpha Shaft Left; Heals? False
+> Dock to Metroid Caverns Lobby; Heals? False
   * Layers: default
-  * Open Passage to Alpha Shaft Left/Dock to Alpha Shaft Right
-  > Dock to Alpha Arena East Access
+  * Open Passage to Metroid Caverns Lobby/Dock to Metroid Caverns Hub
+  > Dock to Metroid Caverns Alpha Arena North East Access
       Trivial
 
-> Dock to Alpha Arena East Access; Heals? False
+> Dock to Metroid Caverns Alpha Arena North East Access; Heals? False
   * Layers: default
-  * Open Passage to Alpha Arena East Access/Dock to Alpha Shaft Right
-  > Dock to Save Station South
+  * Open Passage to Metroid Caverns Alpha Arena North East Access/Dock to Metroid Caverns Hub
+  > Dock to Metroid Caverns Save Station
       Trivial
-  > Dock to Alpha Shaft Left
+  > Dock to Metroid Caverns Lobby
       Lay Any Bomb
 
 ----------------
-Alpha Arena East Access
+Metroid Caverns Alpha Arena North East Access
 Extra - total_boundings: {'x1': 2500.0, 'x2': 7600.0, 'y1': 700.0, 'y2': 2100.0}
 Extra - polygon: [[7600.0, 700.0], [7600.0, 2100.0], [2500.0, 2100.0], [2500.0, 700.0]]
 Extra - asset_id: collision_camera_045
-> Door to Alpha Arena East; Heals? False
+> Door to Metroid Caverns Alpha Arena North East; Heals? False
   * Layers: default
-  * Power Beam Door to Alpha Arena East/Door to Alpha Arena East Access
+  * Power Beam Door to Metroid Caverns Alpha Arena North East/Door to Metroid Caverns Alpha Arena North East Access
   * Extra - actor_name: Door015
   * Extra - actor_type: doorpowerpower
-  > Dock to Alpha Shaft Right
+  > Dock to Metroid Caverns Hub
       Trivial
   > Start Point
       Trivial
 
-> Dock to Alpha Shaft Right; Heals? False
+> Dock to Metroid Caverns Hub; Heals? False
   * Layers: default
-  * Open Passage to Alpha Shaft Right/Dock to Alpha Arena East Access
-  > Door to Alpha Arena East
+  * Open Passage to Metroid Caverns Hub/Dock to Metroid Caverns Alpha Arena North East Access
+  > Door to Metroid Caverns Alpha Arena North East
       Trivial
 
 > Start Point; Heals? False; Default Node
   * Layers: default
   * Extra - start_point_actor_name: ST_SG_Alpha_003
-  > Door to Alpha Arena East
+  > Door to Metroid Caverns Alpha Arena North East
       Trivial
 
 ----------------
-Bomb Access
+Bomb Chamber Access
 Extra - total_boundings: {'x1': -100.0, 'x2': 2600.0, 'y1': 4200.0, 'y2': 5400.0}
 Extra - polygon: [[2600.0, 4200.0], [2600.0, 5400.0], [-100.0, 5400.0], [-100.0, 4200.0]]
 Extra - asset_id: collision_camera_046
-> Door to Bomb Room; Heals? False
+> Door to Bomb Chamber; Heals? False
   * Layers: default
-  * Missile Door to Bomb Room/Door to Bomb Access
+  * Missile Door to Bomb Chamber/Door to Bomb Chamber Access
   * Extra - actor_name: Door004
   * Extra - actor_type: doorpowerpower
 
-> Dock to Central Shaft; Heals? False
+> Dock to Inner Temple West Hall; Heals? False
   * Layers: default
-  * Open Passage to Central Shaft/Dock to Bomb Access
-  > Door to Bomb Room
+  * Open Passage to Inner Temple West Hall/Dock to Bomb Chamber Access
+  > Door to Bomb Chamber
       Trivial
-  > Tunnel to Bomb Room
+  > Tunnel to Bomb Chamber
       Lay Any Bomb
 
-> Tunnel to Bomb Room; Heals? False
+> Tunnel to Bomb Chamber; Heals? False
   * Layers: default
-  * Tunnel with Bomb Block to Bomb Room/Tunnel to Bomb Access
-  > Dock to Central Shaft
+  * Tunnel with Bomb Block to Bomb Chamber/Tunnel to Bomb Chamber Access
+  > Dock to Inner Temple West Hall
       Morph Ball
 
 ----------------
-Save Station North
+Inner Temple Save Station
 Extra - total_boundings: {'x1': 1300.0, 'x2': 2600.0, 'y1': 7500.0, 'y2': 8500.0}
 Extra - polygon: [[2600.0, 7500.0], [2600.0, 8500.0], [1300.0, 8500.0], [1300.0, 7500.0]]
 Extra - asset_id: collision_camera_047
@@ -1196,117 +1265,118 @@ Extra - asset_id: collision_camera_047
   * Extra - actor_name: LE_Platform_SaveStation
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: ST_SaveStation
-  > Dock to Central Shaft
+  > Dock to Inner Temple West Hall
       Trivial
-  > Dock to Outer Hub
+  > Dock to Temple Exterior
       Trivial
 
-> Dock to Central Shaft; Heals? False
+> Dock to Inner Temple West Hall; Heals? False
   * Layers: default
-  * Open Passage to Central Shaft/Dock to Save Station North
+  * Open Passage to Inner Temple West Hall/Dock to Inner Temple Save Station
   > Save Station
       Trivial
 
-> Dock to Outer Hub; Heals? False
+> Dock to Temple Exterior; Heals? False
   * Layers: default
-  * Open Passage to Outer Hub/Dock to Save Station North
+  * Open Passage to Temple Exterior/Dock to Inner Temple Save Station
   > Save Station
       Trivial
 
 ----------------
-Inner Room
+Inner Temple Upper Hallway
 Extra - total_boundings: {'x1': 5000.0, 'x2': 7900.0, 'y1': 8700.0, 'y2': 10100.0}
 Extra - polygon: [[7900.0, 10100.0], [5000.0, 10100.0], [5000.0, 8700.0], [7900.0, 8700.0]]
 Extra - asset_id: collision_camera_048
-> Door to Inner Shaft; Heals? False
+> Door to Inner Temple Ventilation Shaft; Heals? False
   * Layers: default
-  * Spazer Beam Door to Inner Shaft/Door to Inner Room
+  * Spazer Beam Door to Inner Temple Ventilation Shaft/Door to Inner Temple Upper Hallway
   * Extra - actor_name: Door007
   * Extra - actor_type: doorpowerpower
-  > Door to Shaft East
+  > Door to Inner Temple East Hall
       Trivial
-  > Tunnel to Inner Shaft
+  > Tunnel to Inner Temple Ventilation Shaft
       Morph Ball
 
-> Door to Shaft East; Heals? False
+> Door to Inner Temple East Hall; Heals? False
   * Layers: default
-  * Access Locked to Shaft East/Door to Inner Room
+  * Access Locked to Inner Temple East Hall/Door to Inner Temple Upper Hallway
   * Extra - actor_name: Door013
   * Extra - actor_type: doorclosedpower
-  > Door to Inner Shaft
+  > Door to Inner Temple Ventilation Shaft
       Trivial
 
-> Tunnel to Inner Shaft; Heals? False
+> Tunnel to Inner Temple Ventilation Shaft; Heals? False
   * Layers: default
-  * Tunnel to Inner Shaft/Tunnel to Inner Room
-  > Door to Inner Shaft
+  * Tunnel to Inner Temple Ventilation Shaft/Tunnel to Inner Temple Upper Hallway
+  > Door to Inner Temple Ventilation Shaft
       Morph Ball
 
 ----------------
-Teleporter Room
+Inner Temple Teleporter
 Extra - total_boundings: {'x1': 5900.0, 'x2': 7900.0, 'y1': 5700.0, 'y2': 7100.0}
 Extra - polygon: [[7900.0, 7100.0], [5900.0, 7100.0], [5900.0, 5700.0], [7900.0, 5700.0]]
 Extra - asset_id: collision_camera_049
 > Teleporter; Heals? False; Default Node
   * Layers: default
-  * Teleporter Network (Unlocked by After Area 1 - Teleporter Unlocked)
+  * Teleporter Network (Unlocked by After Area 1 - Inner Temple Teleporter Unlocked)
   * Extra - actor_name: LE_Platform_Teleporter_01_01
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: ST_Teleporter_01_01
-  > Dock to Shaft East
+  > Dock to Inner Temple East Hall
       Trivial
 
-> Tunnel to Teleporter Access; Heals? False
+> Tunnel to Inner Temple Teleporter Access; Heals? False
   * Layers: default
-  * Tunnel with Bomb Block to Teleporter Access/Tunnel to Teleporter Room
-  > Dock to Shaft East
+  * Tunnel with Bomb Block to Inner Temple Teleporter Access/Tunnel to Inner Temple Teleporter
+  > Dock to Inner Temple East Hall
       Lay Any Bomb
 
-> Dock to Shaft East; Heals? False
+> Dock to Inner Temple East Hall; Heals? False
   * Layers: default
-  * Open Passage to Shaft East/Dock to Teleporter Room
+  * Open Passage to Inner Temple East Hall/Dock to Inner Temple Teleporter
   > Teleporter
       Trivial
-  > Tunnel to Teleporter Access
+  > Tunnel to Inner Temple Teleporter Access
       Lay Any Bomb
   > Event - Teleporter Unlocked
       Trivial
 
 > Event - Teleporter Unlocked; Heals? False
   * Layers: default
-  * Event Area 1 - Teleporter Unlocked
-  > Dock to Shaft East
+  * Event Area 1 - Inner Temple Teleporter Unlocked
+  > Dock to Inner Temple East Hall
       Trivial
 
-> Dock from Teleporter Access; Heals? False
+> Dock from Inner Temple Teleporter Access; Heals? False
   * Layers: default
-  * Blocked Passage to Teleporter Access/Dock to Teleporter Room
-  > Dock to Shaft East
+  * Blocked Passage to Inner Temple Teleporter Access/Dock to Inner Temple Teleporter
+  > Dock to Inner Temple East Hall
       Trivial
 
 ----------------
-Ice Beam Tutorial
+Ice Beam Chamber Access
 Extra - total_boundings: {'x1': 5900.0, 'x2': 8000.0, 'y1': 2300.0, 'y2': 3800.0}
 Extra - polygon: [[8000.0, 3800.0], [5900.0, 3800.0], [5900.0, 2300.0], [8000.0, 2300.0]]
 Extra - asset_id: collision_camera_050
-> Door to Ice Beam Room; Heals? False
+> Door to Ice Beam Chamber; Heals? False
   * Layers: default
-  * Missile Door to Ice Beam Room/Door to Ice Beam Tutorial
+  * Missile Door to Ice Beam Chamber/Door to Ice Beam Chamber Access
   * Extra - actor_name: Door003
   * Extra - actor_type: doorpowerpower
-  > Dock to Shaft East
+  > Dock to Inner Temple East Hall
       Any of the following:
-          High Jump Boots or Ice Beam or Space Jump or Damage Boost (Intermediate) or Can Spiderspark or Simple IBJ
+          High Jump Boots or Ice Beam or Space Jump or Damage Boost (Intermediate) or Super Jump (Intermediate) or Simple IBJ
+          Spider Boost (Intermediate) and Can Spider Boost
           Morph Ball and Unmorph Extend (Beginner)
 
-> Dock to Shaft East; Heals? False
+> Dock to Inner Temple East Hall; Heals? False
   * Layers: default
-  * Open Passage to Shaft East/Dock to Ice Beam Tutorial
-  > Door to Ice Beam Room
+  * Open Passage to Inner Temple East Hall/Dock to Ice Beam Chamber Access
+  > Door to Ice Beam Chamber
       Trivial
 
 ----------------
-Chozo Seal Storage
+Transport Cache
 Extra - total_boundings: {'x1': -12100.0, 'x2': -10800.0, 'y1': -2814.06005859375, 'y2': -2055.330078125}
 Extra - polygon: [[-10800.0, -2814.06005859375], [-10800.0, -2055.330078125], [-12100.0, -2055.330078125], [-12100.0, -2814.06005859375]]
 Extra - asset_id: collision_camera_051
@@ -1315,59 +1385,59 @@ Extra - asset_id: collision_camera_051
   * Pickup 16; Category? Minor
   * Extra - actor_name: LE_Item_003
   * Extra - actor_type: item_missiletank
-  > Door to Chozo Seal
+  > Door to Transport to Surface and Area 2
       Morph Ball
 
-> Door to Chozo Seal; Heals? False
+> Door to Transport to Surface and Area 2; Heals? False
   * Layers: default
-  * Wave Beam Door to Chozo Seal/Door to Chozo Seal Storage
+  * Wave Beam Door to Transport to Surface and Area 2/Door to Transport Cache
   * Extra - actor_name: Door008
   * Extra - actor_type: doorpowerpower
   > Pickup (Missile Tank)
       Lay Any Bomb
 
 ----------------
-Entrance Pathway
+Harmonized Hallway
 Extra - total_boundings: {'x1': -9600.0, 'x2': -7100.0, 'y1': 4265.7900390625, 'y2': 5024.52001953125}
 Extra - polygon: [[-7100.0, 4265.7900390625], [-7100.0, 5024.52001953125], [-9600.0, 5024.52001953125], [-9600.0, 4265.7900390625]]
 Extra - asset_id: collision_camera_052
-> Dock to Entrance Shaft; Heals? False
+> Dock to Moheek Mount; Heals? False
   * Layers: default
-  * Open Passage to Entrance Shaft/Dock to Entrance Pathway
-  > Dock to Shaft West
+  * Open Passage to Moheek Mount/Dock to Harmonized Hallway
+  > Dock to Gullugg Gangway
       Trivial
 
-> Dock to Shaft West; Heals? False
+> Dock to Gullugg Gangway; Heals? False
   * Layers: default
-  * Open Passage to Shaft West/Dock to Entrance Pathway
-  > Dock to Entrance Shaft
+  * Open Passage to Gullugg Gangway/Dock to Harmonized Hallway
+  > Dock to Moheek Mount
       Trivial
 
 ----------------
-Alpha Arena West
+Metroid Caverns Alpha Arena South West
 Extra - total_boundings: {'x1': -7200.0, 'x2': -3900.0, 'y1': -1100.0, 'y2': 600.0}
 Extra - polygon: [[-3900.0, -1100.0], [-3900.0, 600.0], [-7200.0, 600.0], [-7200.0, -1100.0]]
 Extra - asset_id: collision_camera_054
-> Tunnel to Alpha Arena West Access (Top); Heals? False
+> Tunnel to Metroid Caverns Alpha Arena South West Access (Top); Heals? False
   * Layers: default
-  * Tunnel to Alpha Arena West Access/Tunnel to Alpha Arena West (Top)
+  * Tunnel to Metroid Caverns Alpha Arena South West Access/Tunnel to Metroid Caverns Alpha Arena South West (Top)
   > Room Center
       Morph Ball
 
-> Tunnel to Alpha Arena West Access (Bottom); Heals? False
+> Tunnel to Metroid Caverns Alpha Arena South West Access (Bottom); Heals? False
   * Layers: default
-  * Tunnel with Bomb Block to Alpha Arena West Access/Tunnel to Alpha Arena West (Bottom)
+  * Tunnel with Bomb Block to Metroid Caverns Alpha Arena South West Access/Tunnel to Metroid Caverns Alpha Arena South West (Bottom)
 
 > Event - Alpha Metroid; Heals? False
   * Layers: default
-  * Event Area 1 - Alpha Metroid West
+  * Event Area 1 - Metroid Caverns Alpha Metroid South West
   > Pickup (DNA)
       Trivial
 
 > Room Center; Heals? False; Default Node
   * Layers: default
   * Extra - start_point_actor_name: ST_Alpha_001_Checkpoint
-  > Tunnel to Alpha Arena West Access (Bottom)
+  > Tunnel to Metroid Caverns Alpha Arena South West Access (Bottom)
       Lay Any Bomb
   > Event - Alpha Metroid
       Defeat Alpha Metroid
@@ -1381,19 +1451,19 @@ Extra - asset_id: collision_camera_054
       Trivial
 
 ----------------
-Outer Hub Access
+Chute Leech Cabin
 Extra - total_boundings: {'x1': -5500.0, 'x2': -2500.0, 'y1': 7200.0, 'y2': 8500.0}
 Extra - polygon: [[-2500.0, 7200.0], [-2500.0, 8500.0], [-5500.0, 8500.0], [-5500.0, 7200.0]]
 Extra - asset_id: collision_camera_055
-> Dock to Shaft West; Heals? False
+> Dock to Gullugg Gangway; Heals? False
   * Layers: default
-  * Open Passage to Shaft West/Dock to Outer Hub Access
-  > Dock to Outer Hub
+  * Open Passage to Gullugg Gangway/Dock to Chute Leech Cabin
+  > Dock to Temple Exterior
       Trivial
 
-> Dock to Outer Hub; Heals? False
+> Dock to Temple Exterior; Heals? False
   * Layers: default
-  * Open Passage to Outer Hub/Dock to Outer Hub Access
-  > Dock to Shaft West
+  * Open Passage to Temple Exterior/Dock to Chute Leech Cabin
+  > Dock to Gullugg Gangway
       Trivial
 

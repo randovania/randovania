@@ -67,6 +67,15 @@ class LayoutWithPlayers(typing.NamedTuple):
     players: list[str] | None
 
 
+class GameQtElements(typing.NamedTuple):
+    logo: QtWidgets.QLabel
+    on_hover_effect: QtWidgets.QGraphicsColorizeEffect | None
+    multi_banner: QtWidgets.QLabel
+    color_effect: QtWidgets.QGraphicsColorizeEffect
+    multi_icon: QtWidgets.QLabel
+    tile: QtWidgets.QStackedWidget
+
+
 class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
     options_changed_signal = Signal()
     _is_preview_mode: bool = False
@@ -78,7 +87,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
     _map_tracker: QtWidgets.QWidget
     _preset_manager: PresetManager
     _multiworld_client: MultiworldClient
-    _play_game_logos: dict[RandovaniaGame, QtWidgets.QLabel]
+    _play_game_elements: dict[RandovaniaGame, GameQtElements]
     about_window: QtWidgets.QMainWindow | None = None
     dependencies_window: QtWidgets.QMainWindow | None = None
     reporting_widget: QtWidgets.QWidget | None = None
@@ -134,7 +143,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         self._preset_manager = preset_manager
         self.network_client = network_client
         self._multiworld_client = multiworld_client
-        self._play_game_logos = {}
+        self._play_game_elements = {}
         self.opened_session_windows = {}
 
         if preview:
@@ -177,10 +186,17 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         self.play_flow_layout.setSpacing(15)
         self.play_flow_layout.setAlignment(Qt.AlignHCenter)
 
+        banner_img_path = randovania.get_data_path().joinpath("gui_assets", "common", "banner.png")
+        multiworld_img_path = randovania.get_data_path().joinpath("gui_assets", "common", "multiworld.png")
+        bannerSize = 40
+
         for game in RandovaniaGame.sorted_all_games():
             # Play game buttons
+            pack_tile = QtWidgets.QStackedWidget(self.game_list_contents)
+            pack_tile.setFixedSize(150, 200)
+
             image_path = game.data_path.joinpath("assets", "cover.png")
-            logo = ClickableLabel(self.game_list_contents)
+            logo = ClickableLabel(pack_tile)
             logo.setPixmap(QtGui.QPixmap(os.fspath(image_path)))
             logo.setFrameStyle(QtWidgets.QFrame.Panel | QtWidgets.QFrame.Plain)
             logo.setScaledContents(True)
@@ -190,18 +206,49 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
             logo.clicked.connect(partial(self._select_game, game))
             logo.setVisible(game.data.development_state.can_view())
 
-            def highlight_logo(label: ClickableLabel, active: bool):
-                if active:
-                    label.new_effect = QtWidgets.QGraphicsColorizeEffect()
-                    label.new_effect.setStrength(0.5)
-                    label.setGraphicsEffect(label.new_effect)
-                else:
-                    label.setGraphicsEffect(None)
+            on_hover_effect = QtWidgets.QGraphicsColorizeEffect()
+            on_hover_effect.setStrength(0.5)
+            logo.setGraphicsEffect(on_hover_effect)
 
-            logo.entered.connect(partial(highlight_logo, logo, True))
-            logo.left.connect(partial(highlight_logo, logo, False))
-            self.play_flow_layout.addWidget(logo)
-            self._play_game_logos[game] = logo
+            multi_banner = QtWidgets.QLabel(pack_tile)
+            color_effect = QtWidgets.QGraphicsColorizeEffect(multi_banner)
+            multi_icon = QtWidgets.QLabel(pack_tile)
+
+            if game.data.defaults_available_in_game_sessions:
+                multi_banner.setPixmap(QtGui.QPixmap(os.fspath(banner_img_path)))
+                multi_banner.setScaledContents(True)
+                multi_banner.setFixedSize(bannerSize, bannerSize)
+                multi_banner.setGraphicsEffect(color_effect)
+                multi_banner.move(0, 2)
+
+                color_effect.setStrength(0.5)
+
+                multi_icon.setPixmap(QtGui.QPixmap(os.fspath(multiworld_img_path)))
+                multi_icon.setScaledContents(True)
+                multi_icon.setFixedSize(int(bannerSize / 2), int(bannerSize / 2))
+                multi_icon.move(int(bannerSize / 4), int(2 + bannerSize / 4))
+                multi_icon.setToolTip(game.short_name + " is multiworld compatible.")
+                multi_icon.setAccessibleName(game.long_name + " multiworld compatibility indicator")
+
+            def highlight_logo(
+                label_effect: QtWidgets.QGraphicsColorizeEffect,
+                multi_banner_effect: QtWidgets.QGraphicsColorizeEffect,
+                active: bool,
+            ) -> None:
+                label_effect.setEnabled(active)
+                if active:
+                    multi_banner_effect.setColor(QtGui.QColor(50, 250, 52))
+                else:
+                    multi_banner_effect.setColor(QtGui.QColor(70, 200, 80))
+
+            highlight_logo(on_hover_effect, color_effect, False)
+
+            logo.entered.connect(partial(highlight_logo, on_hover_effect, color_effect, True))
+            logo.left.connect(partial(highlight_logo, on_hover_effect, color_effect, False))
+            self.play_flow_layout.addWidget(pack_tile)
+            self._play_game_elements[game] = GameQtElements(
+                logo, on_hover_effect, multi_banner, color_effect, multi_icon, pack_tile
+            )
 
             # Sub-Menu in Open Menu
             game_menu = QtWidgets.QMenu(self.menu_open)
@@ -235,6 +282,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         self.menu_action_timeout_generation_after_a_time_limit.triggered.connect(self._on_generate_time_limit_change)
         self.menu_action_generate_in_another_process.triggered.connect(self._on_generate_in_another_process_change)
         self.menu_action_dark_mode.triggered.connect(self._on_menu_action_dark_mode)
+        self.menu_action_show_multiworld_banner.triggered.connect(self._on_menu_action_show_multiworld_banner)
         self.menu_action_experimental_settings.triggered.connect(self._on_menu_action_experimental_settings)
         self.menu_action_open_auto_tracker.triggered.connect(self._open_auto_tracker)
         self.menu_action_previously_generated_games.triggered.connect(self._on_menu_action_previously_generated_games)
@@ -292,9 +340,11 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         self.InitPostShowSignal.emit()
 
     # Per-Game elements
-    def refresh_game_list(self):
-        for game, logo in self._play_game_logos.items():
-            logo.setVisible(game.data.development_state.can_view())
+    def refresh_game_list(self) -> None:
+        for game, game_elements in self._play_game_elements.items():
+            game_elements.tile.setVisible(game.data.development_state.can_view())
+            game_elements.multi_banner.setVisible(self._options.show_multiworld_banner)
+            game_elements.multi_icon.setVisible(self._options.show_multiworld_banner)
 
         for game_menu in self.game_menus:
             self.menu_open.removeAction(game_menu.menuAction())
@@ -512,9 +562,11 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         )
         self.menu_action_generate_in_another_process.setChecked(self._options.advanced_generate_in_another_process)
         self.menu_action_dark_mode.setChecked(self._options.dark_mode)
+        self.menu_action_show_multiworld_banner.setChecked(self._options.show_multiworld_banner)
         self.menu_action_experimental_settings.setChecked(self._options.experimental_settings)
 
         self.tab_game_details.on_options_changed(self._options)
+        self.refresh_game_list()
         theme.set_dark_theme(self._options.dark_mode)
 
         self.network_client.allow_reporting_username = self._options.use_user_for_crash_reporting
@@ -679,6 +731,10 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
     def _on_menu_action_dark_mode(self):
         with self._options as options:
             options.dark_mode = self.menu_action_dark_mode.isChecked()
+
+    def _on_menu_action_show_multiworld_banner(self) -> None:
+        with self._options as options:
+            options.show_multiworld_banner = self.menu_action_show_multiworld_banner.isChecked()
 
     def _on_menu_action_experimental_settings(self):
         with self._options as options:

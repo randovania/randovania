@@ -1,5 +1,5 @@
 {
-    "schema_version": 7,
+    "schema_version": 8,
     "pickup_categories": {
         "visor": {
             "long_name": "Visors",
@@ -120,14 +120,14 @@
             "broad_category": "hud",
             "model_name": "ScanVisor INCOMPLETE",
             "offworld_models": {
+                "am2r": "sItemCombatVisorPrime",
                 "prime1": "Combat Visor"
             },
             "progression": [
                 "Combat"
             ],
-            "default_shuffled_count": 0,
-            "default_starting_count": 1,
             "preferred_location_category": "major",
+            "expected_case_for_describer": "starting_item",
             "additional_resources": {
                 "Percent": 1
             }
@@ -137,14 +137,14 @@
             "broad_category": "hud",
             "model_name": "ScanVisor INCOMPLETE",
             "offworld_models": {
+                "am2r": "sItemScanVisorPrime",
                 "prime1": "Scan Visor"
             },
             "progression": [
                 "Scan"
             ],
-            "default_shuffled_count": 0,
-            "default_starting_count": 1,
             "preferred_location_category": "major",
+            "expected_case_for_describer": "starting_item",
             "additional_resources": {
                 "Percent": 1
             }
@@ -153,13 +153,14 @@
             "pickup_category": "visor",
             "broad_category": "hud",
             "model_name": "DarkVisor",
-            "offworld_models": {},
+            "offworld_models": {
+                "am2r": "sItemDarkVisorEchoes"
+            },
             "progression": [
                 "DarkVisor"
             ],
-            "default_shuffled_count": 1,
-            "default_starting_count": 0,
             "preferred_location_category": "major",
+            "expected_case_for_describer": "shuffled",
             "additional_resources": {
                 "Percent": 1
             },
@@ -169,13 +170,14 @@
             "pickup_category": "visor",
             "broad_category": "hud",
             "model_name": "EchoVisor",
-            "offworld_models": {},
+            "offworld_models": {
+                "am2r": "sItemEchoVisorEchoes"
+            },
             "progression": [
                 "Echo"
             ],
-            "default_shuffled_count": 1,
-            "default_starting_count": 0,
             "preferred_location_category": "major",
+            "expected_case_for_describer": "shuffled",
             "additional_resources": {
                 "Percent": 1
             },
@@ -186,16 +188,15 @@
             "broad_category": "life_support",
             "model_name": "VariaSuit INCOMPLETE",
             "offworld_models": {
-                "am2r": "sItemVariaSuit",
+                "am2r": "sItemVariaSuitPrime",
                 "prime1": "Varia Suit",
                 "dread": "powerup_variasuit"
             },
             "progression": [
                 "Varia"
             ],
-            "default_shuffled_count": 0,
-            "default_starting_count": 1,
             "preferred_location_category": "major",
+            "expected_case_for_describer": "starting_item",
             "additional_resources": {
                 "Percent": 1
             },
@@ -207,16 +208,15 @@
             "broad_category": "life_support",
             "model_name": "DarkSuit",
             "offworld_models": {
-                "am2r": "sItemVariaSuit",
+                "am2r": "sItemDarkSuitEchoes",
                 "prime1": "Varia Suit",
                 "dread": "powerup_variasuit"
             },
             "progression": [
                 "DarkSuit"
             ],
-            "default_shuffled_count": 0,
-            "default_starting_count": 0,
             "preferred_location_category": "major",
+            "expected_case_for_describer": "missing",
             "additional_resources": {
                 "Percent": 1
             },
@@ -227,28 +227,27 @@
             "broad_category": "life_support",
             "model_name": "LightSuit",
             "offworld_models": {
-                "am2r": "sItemVariaSuit",
+                "am2r": "sItemLightSuitEchoes",
                 "prime1": "Varia Suit",
                 "dread": "powerup_variasuit"
             },
             "progression": [
                 "LightSuit"
             ],
-            "default_shuffled_count": 0,
-            "default_starting_count": 0,
             "preferred_location_category": "major",
+            "expected_case_for_describer": "missing",
             "additional_resources": {
                 "Percent": 1
             },
             "original_location": 24,
-            "probability_offset": -1
+            "probability_offset": -1.0
         },
         "Progressive Suit": {
             "pickup_category": "suit",
             "broad_category": "life_support",
             "model_name": "VariaSuit INCOMPLETE",
             "offworld_models": {
-                "am2r": "sItemVariaSuit",
+                "am2r": "sItemProgressiveSuitEchoes",
                 "prime1": "Varia Suit",
                 "dread": "powerup_variasuit"
             },
@@ -256,9 +255,8 @@
                 "DarkSuit",
                 "LightSuit"
             ],
-            "default_shuffled_count": 2,
-            "default_starting_count": 0,
             "preferred_location_category": "major",
+            "expected_case_for_describer": "shuffled",
             "additional_resources": {
                 "Percent": 1
             }
@@ -271,9 +269,8 @@
             "progression": [
                 "DoubleDamage"
             ],
-            "default_shuffled_count": 0,
-            "default_starting_count": 0,
             "preferred_location_category": "major",
+            "expected_case_for_describer": "missing",
             "additional_resources": {
                 "Percent": 1
             },
@@ -284,14 +281,14 @@
             "broad_category": "beam_related",
             "model_name": "CoinChest",
             "offworld_models": {
+                "am2r": "sItemPowerBeamPrime",
                 "prime1": "Power Beam"
             },
             "progression": [
                 "Power"
             ],
-            "default_shuffled_count": 0,
-            "default_starting_count": 1,
             "preferred_location_category": "major",
+            "expected_case_for_describer": "starting_item",
             "additional_resources": {
                 "Percent": 1
             },
@@ -309,9 +306,8 @@
             "progression": [
                 "Charge"
             ],
-            "default_shuffled_count": 0,
-            "default_starting_count": 1,
             "preferred_location_category": "major",
+            "expected_case_for_describer": "starting_item",
             "additional_resources": {
                 "Percent": 1
             }
@@ -320,13 +316,14 @@
             "pickup_category": "beam",
             "broad_category": "beam_related",
             "model_name": "DarkBeam",
-            "offworld_models": {},
+            "offworld_models": {
+                "am2r": "sItemDarkBeamEchoes"
+            },
             "progression": [
                 "Dark"
             ],
-            "default_shuffled_count": 1,
-            "default_starting_count": 0,
             "preferred_location_category": "major",
+            "expected_case_for_describer": "shuffled",
             "ammo": [
                 "DarkAmmo"
             ],
@@ -339,13 +336,14 @@
             "pickup_category": "beam",
             "broad_category": "beam_related",
             "model_name": "LightBeam",
-            "offworld_models": {},
+            "offworld_models": {
+                "am2r": "sItemLightBeamEchoes"
+            },
             "progression": [
                 "Light"
             ],
-            "default_shuffled_count": 1,
-            "default_starting_count": 0,
             "preferred_location_category": "major",
+            "expected_case_for_describer": "shuffled",
             "ammo": [
                 "LightAmmo"
             ],
@@ -358,13 +356,14 @@
             "pickup_category": "beam",
             "broad_category": "beam_related",
             "model_name": "AnnihilatorBeam",
-            "offworld_models": {},
+            "offworld_models": {
+                "am2r": "sItemAnnihilatorEchoes"
+            },
             "progression": [
                 "Annihilator"
             ],
-            "default_shuffled_count": 1,
-            "default_starting_count": 0,
             "preferred_location_category": "major",
+            "expected_case_for_describer": "shuffled",
             "ammo": [
                 "DarkAmmo",
                 "LightAmmo"
@@ -382,9 +381,8 @@
             "progression": [
                 "UnlimitedBeamAmmo"
             ],
-            "default_shuffled_count": 0,
-            "default_starting_count": 0,
             "preferred_location_category": "major",
+            "expected_case_for_describer": "missing",
             "additional_resources": {
                 "Percent": 1
             },
@@ -395,16 +393,15 @@
             "broad_category": "morph_ball_related",
             "model_name": "CoinChest",
             "offworld_models": {
-                "am2r": "sItemMorphBall",
+                "am2r": "sItemMorphBallPrime",
                 "prime1": "Morph Ball",
                 "dread": "powerup_morphball"
             },
             "progression": [
                 "MorphBall"
             ],
-            "default_shuffled_count": 0,
-            "default_starting_count": 1,
             "preferred_location_category": "major",
+            "expected_case_for_describer": "starting_item",
             "additional_resources": {
                 "Percent": 1
             },
@@ -422,9 +419,8 @@
             "progression": [
                 "Bombs"
             ],
-            "default_shuffled_count": 1,
-            "default_starting_count": 0,
             "preferred_location_category": "major",
+            "expected_case_for_describer": "shuffled",
             "additional_resources": {
                 "Percent": 1
             },
@@ -435,16 +431,15 @@
             "broad_category": "morph_ball_related",
             "model_name": "BoostBall",
             "offworld_models": {
-                "am2r": "sItemSpeedBooster",
+                "am2r": "sItemBoostBallPrime",
                 "prime1": "Boost Ball",
                 "dread": "powerup_speedbooster"
             },
             "progression": [
                 "Boost"
             ],
-            "default_shuffled_count": 1,
-            "default_starting_count": 0,
             "preferred_location_category": "major",
+            "expected_case_for_describer": "shuffled",
             "additional_resources": {
                 "Percent": 1
             },
@@ -462,9 +457,8 @@
             "progression": [
                 "Spider"
             ],
-            "default_shuffled_count": 1,
-            "default_starting_count": 0,
             "preferred_location_category": "major",
+            "expected_case_for_describer": "shuffled",
             "additional_resources": {
                 "Percent": 1
             },
@@ -475,14 +469,14 @@
             "broad_category": "morph_ball_related",
             "model_name": "PowerBomb",
             "offworld_models": {
-                "am2r": "sItemPBombLauncher",
+                "am2r": "sItemPowerBombLauncherEchoes",
                 "prime1": "Power Bomb",
                 "dread": "powerup_powerbomb"
             },
             "progression": [],
-            "default_shuffled_count": 1,
-            "default_starting_count": 0,
             "preferred_location_category": "major",
+            "expected_case_for_describer": "shuffled",
+            "custom_count_for_shuffled_case": 1,
             "ammo": [
                 "PowerBomb"
             ],
@@ -498,16 +492,15 @@
             "broad_category": "morph_ball_related",
             "model_name": "BoostBall",
             "offworld_models": {
-                "am2r": "sItemSpeedBooster",
+                "am2r": "sItemCannonBallEchoes",
                 "prime1": "Boost Ball",
                 "dread": "powerup_speedbooster"
             },
             "progression": [
                 "CannonBall"
             ],
-            "default_shuffled_count": 0,
-            "default_starting_count": 0,
             "preferred_location_category": "major",
+            "expected_case_for_describer": "missing",
             "additional_resources": {
                 "Percent": 1
             },
@@ -525,9 +518,8 @@
             "progression": [
                 "SpaceJump"
             ],
-            "default_shuffled_count": 1,
-            "default_starting_count": 0,
             "preferred_location_category": "major",
+            "expected_case_for_describer": "shuffled",
             "additional_resources": {
                 "Percent": 1
             },
@@ -538,15 +530,14 @@
             "broad_category": "movement",
             "model_name": "GravityBoost",
             "offworld_models": {
-                "am2r": "sItemGravitySuit",
+                "am2r": "sItemGravitySuitPrime",
                 "dread": "powerup_gravitysuit"
             },
             "progression": [
                 "Gravity"
             ],
-            "default_shuffled_count": 1,
-            "default_starting_count": 0,
             "preferred_location_category": "major",
+            "expected_case_for_describer": "shuffled",
             "additional_resources": {
                 "Percent": 1
             },
@@ -557,15 +548,15 @@
             "broad_category": "movement",
             "model_name": "GrappleBeam",
             "offworld_models": {
+                "am2r": "sItemGrappleBeamPrime",
                 "prime1": "Grapple Beam",
                 "dread": "powerup_grapplebeam"
             },
             "progression": [
                 "Grapple"
             ],
-            "default_shuffled_count": 1,
-            "default_starting_count": 0,
             "preferred_location_category": "major",
+            "expected_case_for_describer": "shuffled",
             "additional_resources": {
                 "Percent": 1
             },
@@ -576,15 +567,14 @@
             "broad_category": "movement",
             "model_name": "ScrewAttack",
             "offworld_models": {
-                "am2r": "sItemScrewAttack",
+                "am2r": "sItemScrewAttackEchoes",
                 "dread": "powerup_screwattack"
             },
             "progression": [
                 "ScrewAttack"
             ],
-            "default_shuffled_count": 1,
-            "default_starting_count": 0,
             "preferred_location_category": "major",
+            "expected_case_for_describer": "shuffled",
             "additional_resources": {
                 "Percent": 1
             },
@@ -595,6 +585,7 @@
             "broad_category": "movement",
             "model_name": "GrappleBeam",
             "offworld_models": {
+                "am2r": "sItemGrappleBeamPrime",
                 "prime1": "Grapple Beam",
                 "dread": "powerup_grapplebeam"
             },
@@ -602,9 +593,8 @@
                 "Grapple",
                 "ScrewAttack"
             ],
-            "default_shuffled_count": 2,
-            "default_starting_count": 0,
             "preferred_location_category": "major",
+            "expected_case_for_describer": "missing",
             "additional_resources": {
                 "Percent": 1
             },
@@ -617,14 +607,13 @@
             "offworld_models": {
                 "am2r": "sItemMissileLauncher",
                 "prime1": "Missile",
-                "dread": "powerup_icemissile"
+                "dread": "powerup_missile"
             },
             "progression": [
                 "MissileLauncher"
             ],
-            "default_shuffled_count": 1,
-            "default_starting_count": 0,
             "preferred_location_category": "major",
+            "expected_case_for_describer": "shuffled",
             "ammo": [
                 "Missile"
             ],
@@ -639,14 +628,14 @@
             "broad_category": "missile_related",
             "model_name": "SeekerLauncher",
             "offworld_models": {
+                "am2r": "sItemSeekerMissileEchoes",
                 "dread": "powerup_stormmissile"
             },
             "progression": [
                 "Seekers"
             ],
-            "default_shuffled_count": 1,
-            "default_starting_count": 0,
             "preferred_location_category": "major",
+            "expected_case_for_describer": "shuffled",
             "ammo": [
                 "Missile"
             ],
@@ -663,9 +652,8 @@
             "progression": [
                 "UnlimitedMissiles"
             ],
-            "default_shuffled_count": 0,
-            "default_starting_count": 0,
             "preferred_location_category": "major",
+            "expected_case_for_describer": "missing",
             "additional_resources": {
                 "Percent": 1
             },
@@ -676,16 +664,15 @@
             "broad_category": "beam_related",
             "model_name": "SuperMissile",
             "offworld_models": {
-                "am2r": "sItemSMissileLauncher",
+                "am2r": "sItemSuperMissileEchoes",
                 "prime1": "Super Missile",
                 "dread": "powerup_supermissile"
             },
             "progression": [
                 "Supers"
             ],
-            "default_shuffled_count": 1,
-            "default_starting_count": 0,
             "preferred_location_category": "major",
+            "expected_case_for_describer": "shuffled",
             "additional_resources": {
                 "Percent": 1
             },
@@ -699,9 +686,8 @@
             "progression": [
                 "Sunburst"
             ],
-            "default_shuffled_count": 1,
-            "default_starting_count": 0,
             "preferred_location_category": "major",
+            "expected_case_for_describer": "shuffled",
             "additional_resources": {
                 "Percent": 1
             },
@@ -711,13 +697,14 @@
             "pickup_category": "charge_combo",
             "broad_category": "beam_related",
             "model_name": "Darkburst",
-            "offworld_models": {},
+            "offworld_models": {
+                "am2r": "sItemDarkburstEchoes"
+            },
             "progression": [
                 "Darkburst"
             ],
-            "default_shuffled_count": 1,
-            "default_starting_count": 0,
             "preferred_location_category": "major",
+            "expected_case_for_describer": "shuffled",
             "additional_resources": {
                 "Percent": 1
             },
@@ -727,13 +714,14 @@
             "pickup_category": "charge_combo",
             "broad_category": "beam_related",
             "model_name": "SonicBoom",
-            "offworld_models": {},
+            "offworld_models": {
+                "am2r": "sItemSonicBoomEchoes"
+            },
             "progression": [
                 "SonicBoom"
             ],
-            "default_shuffled_count": 1,
-            "default_starting_count": 0,
             "preferred_location_category": "major",
+            "expected_case_for_describer": "shuffled",
             "additional_resources": {
                 "Percent": 1
             },
@@ -743,13 +731,14 @@
             "pickup_category": "translator",
             "broad_category": "hud",
             "model_name": "VioletTranslator",
-            "offworld_models": {},
+            "offworld_models": {
+                "am2r": "sItemVioletEchoes"
+            },
             "progression": [
                 "Violet"
             ],
-            "default_shuffled_count": 1,
-            "default_starting_count": 0,
             "preferred_location_category": "major",
+            "expected_case_for_describer": "shuffled",
             "additional_resources": {
                 "Percent": 1
             },
@@ -759,13 +748,14 @@
             "pickup_category": "translator",
             "broad_category": "hud",
             "model_name": "AmberTranslator",
-            "offworld_models": {},
+            "offworld_models": {
+                "am2r": "sItemAmberEchoes"
+            },
             "progression": [
                 "Amber"
             ],
-            "default_shuffled_count": 1,
-            "default_starting_count": 0,
             "preferred_location_category": "major",
+            "expected_case_for_describer": "shuffled",
             "additional_resources": {
                 "Percent": 1
             },
@@ -775,13 +765,14 @@
             "pickup_category": "translator",
             "broad_category": "hud",
             "model_name": "EmeraldTranslator",
-            "offworld_models": {},
+            "offworld_models": {
+                "am2r": "sItemEmeraldEchoes"
+            },
             "progression": [
                 "Emerald"
             ],
-            "default_shuffled_count": 1,
-            "default_starting_count": 0,
             "preferred_location_category": "major",
+            "expected_case_for_describer": "shuffled",
             "additional_resources": {
                 "Percent": 1
             },
@@ -791,13 +782,14 @@
             "pickup_category": "translator",
             "broad_category": "hud",
             "model_name": "CobaltTranslator",
-            "offworld_models": {},
+            "offworld_models": {
+                "am2r": "sItemCobaltEchoes"
+            },
             "progression": [
                 "Cobalt"
             ],
-            "default_shuffled_count": 1,
-            "default_starting_count": 0,
             "preferred_location_category": "major",
+            "expected_case_for_describer": "shuffled",
             "additional_resources": {
                 "Percent": 1
             },
@@ -815,14 +807,14 @@
             "progression": [
                 "EnergyTank"
             ],
-            "default_shuffled_count": 14,
-            "default_starting_count": 0,
             "preferred_location_category": "major",
+            "expected_case_for_describer": "shuffled",
+            "custom_count_for_shuffled_case": 14,
             "additional_resources": {
                 "Percent": 1
             },
-            "probability_offset": 1,
-            "probability_multiplier": 2
+            "probability_offset": 1.0,
+            "probability_multiplier": 2.0
         }
     },
     "ammo_pickups": {
@@ -867,7 +859,9 @@
         "Dark Ammo Expansion": {
             "broad_category": "beam_related",
             "model_name": "DarkBeamAmmoExpansion",
-            "offworld_models": {},
+            "offworld_models": {
+                "am2r": "sItemDarkAmmoEchoes"
+            },
             "items": [
                 "DarkAmmo"
             ],
@@ -880,7 +874,9 @@
         "Light Ammo Expansion": {
             "broad_category": "beam_related",
             "model_name": "LightBeamAmmoExpansion",
-            "offworld_models": {},
+            "offworld_models": {
+                "am2r": "sItemLightAmmoEchoes"
+            },
             "items": [
                 "LightAmmo"
             ],
@@ -893,7 +889,9 @@
         "Beam Ammo Expansion": {
             "broad_category": "beam_related",
             "model_name": "BeamAmmoExpansion",
-            "offworld_models": {},
+            "offworld_models": {
+                "am2r": "sItemBeamAmmoEchoes"
+            },
             "items": [
                 "DarkAmmo",
                 "LightAmmo"

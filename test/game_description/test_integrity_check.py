@@ -41,7 +41,27 @@ def test_invalid_db():
             "damage": {},
             "versions": {},
             "misc": {},
-            "requirement_template": {},
+            "requirement_template": {
+                "A": {
+                    "type": "and",
+                    "data": {
+                        "comment": None,
+                        "items": [
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "LightAmmo",
+                                    "amount": 5,
+                                    "negate": False,
+                                },
+                            },
+                            {"type": "template", "data": "B"},
+                        ],
+                    },
+                },
+                "B": {"type": "template", "data": "A"},
+            },
             "damage_reductions": [],
             "energy_tank_item_index": "LightAmmo",
             "item_percentage_index": "Power",
@@ -383,4 +403,6 @@ def test_invalid_db():
         "['World/Area 1/Door to Area 2 (Generic)']",
         "Unknown strongly connected component detected containing 1 nodes:\n['World/Area 2/Door to Area 1']",
         "Unknown strongly connected component detected containing 1 nodes:\n['World/Area 1/Door to Area 2 (Dock)']",
+        "Checking A: Loop detected: ['A', 'B', 'A']",
+        "Checking B: Loop detected: ['B', 'A', 'B']",
     ]

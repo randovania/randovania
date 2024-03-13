@@ -3596,19 +3596,62 @@
                                     {
                                         "type": "resource",
                                         "data": {
-                                            "type": "items",
-                                            "name": "Speed",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
                                             "type": "tricks",
                                             "name": "Walljump",
                                             "amount": 3,
                                             "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Speed",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "DoorLocks",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Morph",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "SWJ",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -3728,6 +3771,15 @@
                             "data": {
                                 "comment": null,
                                 "items": []
+                            }
+                        },
+                        "Door to EMMI Zone First Entrance": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Speed",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -11278,13 +11330,8 @@
                                                                 "data": "Shoot Beam"
                                                             },
                                                             {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "MissileAmmo",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
+                                                                "type": "template",
+                                                                "data": "Shoot Missile"
                                                             },
                                                             {
                                                                 "type": "resource",
@@ -11455,6 +11502,10 @@
                                                                         }
                                                                     ]
                                                                 }
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Shoot Missile"
                                                             }
                                                         ]
                                                     }
@@ -16801,12 +16852,10 @@
                             }
                         },
                         "Tunnel to Central Unit": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "events",
-                                "name": "ArtariaCU",
-                                "amount": 1,
-                                "negate": true
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -22215,8 +22264,25 @@
                             }
                         },
                         "Event - EMMI Wide Beam Block": {
-                            "type": "template",
-                            "data": "Push Wide Beam Block with Wave Beam"
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Push Wide Beam Block"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Wave",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
                         }
                     }
                 },

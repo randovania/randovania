@@ -25,7 +25,7 @@ def cs_executor():
     executor = CSExecutor("localhost")
     writer = MagicMock()
     writer.drain = AsyncMock()
-    executor._socket = CSSocketHolder(_get_reader(b""), writer)
+    executor._socket = CSSocketHolder(_get_reader(b""), writer, 1)
     executor.server_info = MagicMock()
     executor.server_info.offsets = defaultdict(lambda: 0)
     return executor

@@ -7,9 +7,7 @@ from randovania.layout.layout_description import LayoutDescription
 
 
 def test_search_pickup(skip_qtbot, test_files_dir):
-    layout = LayoutDescription.from_file(
-        test_files_dir.joinpath("log_files", "dread", "dread_prime1_multiworld.rdvgame")
-    )
+    layout = LayoutDescription.from_file(test_files_dir.joinpath("log_files", "dread_prime1_multiworld.rdvgame"))
 
     root = QtWidgets.QWidget()
     skip_qtbot.addWidget(root)

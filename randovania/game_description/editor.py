@@ -66,9 +66,11 @@ class Editor:
                 "Given {} does does not belong to {}{}".format(
                     old_node.name,
                     area.name,
-                    ", but the area contains a node with that name."
-                    if area.node_with_name(old_node.name) is not None
-                    else ".",
+                    (
+                        ", but the area contains a node with that name."
+                        if area.node_with_name(old_node.name) is not None
+                        else "."
+                    ),
                 )
             )
 

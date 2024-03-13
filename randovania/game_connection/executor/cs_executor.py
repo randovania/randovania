@@ -3,7 +3,7 @@ import dataclasses
 import json
 import logging
 import struct
-from asyncio import StreamReader, StreamWriter
+from asyncio import StreamReader
 from collections.abc import Collection
 from enum import IntEnum
 from typing import Self
@@ -13,6 +13,7 @@ from tsc_utils.flags import Address, flag_to_address
 from tsc_utils.numbers import TscInput, tsc_value_to_num
 
 from randovania.bitpacking.json_dataclass import JsonDataclass
+from randovania.game_connection.executor.common_socket_holder import CommonSocketHolder
 from randovania.lib import enum_lib
 
 
@@ -74,9 +75,8 @@ class CSServerInfo(JsonDataclass):
 
 
 @dataclasses.dataclass()
-class CSSocketHolder:
-    reader: StreamReader
-    writer: StreamWriter
+class CSSocketHolder(CommonSocketHolder):
+    pass
 
 
 @dataclasses.dataclass(frozen=True)
@@ -161,7 +161,7 @@ class CSExecutor:
 
             self.logger.debug("Connecting to %s:%d.", self._ip, self._port)
             reader, writer = await asyncio.open_connection(self._ip, self._port)
-            self._socket = CSSocketHolder(reader, writer)
+            self._socket = CSSocketHolder(reader, writer, 0)
 
             self.logger.debug("Connection open. Requesting API details...")
             server_info = await self.get_server_info()
@@ -179,9 +179,9 @@ class CSExecutor:
             return None
 
         except (
+            TimeoutError,
             OSError,
             AttributeError,
-            asyncio.TimeoutError,
             struct.error,
             UnicodeError,
             RuntimeError,
@@ -206,15 +206,7 @@ class CSExecutor:
     async def _send_request(self, packet: Packet) -> Packet:
         try:
             return await self._internal_send_request(packet)
-        except (
-            OSError,
-            AttributeError,
-            asyncio.TimeoutError,
-            struct.error,
-            UnicodeError,
-            RuntimeError,
-            ValueError,
-        ):
+        except (TimeoutError, OSError, AttributeError, struct.error, UnicodeError, RuntimeError, ValueError):
             self.disconnect()
             raise
         except TSCError as e:

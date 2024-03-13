@@ -82,8 +82,9 @@
                     ],
                     "extra": {
                         "instance_id": 109738,
-                        "source_x": 1280,
-                        "source_y": 160
+                        "facing": "left",
+                        "x": 1280,
+                        "y": 160
                     },
                     "valid_starting_location": false,
                     "dock_type": "horizontal_dock",
@@ -476,7 +477,12 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 110049,
+                        "facing": "right",
+                        "x": 3200,
+                        "y": 1360
+                    },
                     "valid_starting_location": false,
                     "dock_type": "horizontal_dock",
                     "default_connection": {
@@ -511,7 +517,12 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 110050,
+                        "facing": "left",
+                        "x": 960,
+                        "y": 1360
+                    },
                     "valid_starting_location": false,
                     "dock_type": "horizontal_dock",
                     "default_connection": {
@@ -574,7 +585,12 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 110051,
+                        "facing": "left",
+                        "x": 1600,
+                        "y": 912
+                    },
                     "valid_starting_location": false,
                     "dock_type": "horizontal_dock",
                     "default_connection": {
@@ -1689,7 +1705,12 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 110172,
+                        "facing": "right",
+                        "x": 0,
+                        "y": 160
+                    },
                     "valid_starting_location": false,
                     "dock_type": "horizontal_dock",
                     "default_connection": {
@@ -1724,7 +1745,12 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 110173,
+                        "facing": "left",
+                        "x": 320,
+                        "y": 160
+                    },
                     "valid_starting_location": false,
                     "dock_type": "horizontal_dock",
                     "default_connection": {
@@ -1758,7 +1784,8 @@
                         "x": 32,
                         "y": 21
                     }
-                ]
+                ],
+                "unlocked_save_station": true
             },
             "nodes": {
                 "Save Station": {
@@ -1806,7 +1833,12 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 110200,
+                        "facing": "right",
+                        "x": 0,
+                        "y": 160
+                    },
                     "valid_starting_location": false,
                     "dock_type": "horizontal_dock",
                     "default_connection": {
@@ -1841,7 +1873,12 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 110201,
+                        "facing": "left",
+                        "x": 320,
+                        "y": 160
+                    },
                     "valid_starting_location": false,
                     "dock_type": "horizontal_dock",
                     "default_connection": {
@@ -1906,7 +1943,12 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 110263,
+                        "facing": "right",
+                        "x": 0,
+                        "y": 160
+                    },
                     "valid_starting_location": false,
                     "dock_type": "horizontal_dock",
                     "default_connection": {
@@ -1951,7 +1993,12 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 110264,
+                        "facing": "left",
+                        "x": 1600,
+                        "y": 160
+                    },
                     "valid_starting_location": false,
                     "dock_type": "horizontal_dock",
                     "default_connection": {
@@ -2316,7 +2363,8 @@
                         "x": 36,
                         "y": 18
                     }
-                ]
+                ],
+                "unlocked_save_station": true
             },
             "nodes": {
                 "Vertical Dock to Hydro Station Exterior": {
@@ -2481,7 +2529,8 @@
                     "default_dock_weakness": "Missile Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [
-                        "Hydro Station Water Turbine"
+                        "Hydro Station Water Turbine",
+                        "Research Site Open Hatch"
                     ],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
@@ -2577,7 +2626,8 @@
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [
-                        "Hydro Station Water Turbine"
+                        "Hydro Station Water Turbine",
+                        "Research Site Open Hatch"
                     ],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
@@ -2593,8 +2643,51 @@
                                             "comment": "Item requirements",
                                             "items": [
                                                 {
-                                                    "type": "template",
-                                                    "data": "Can Use Bombs"
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Use Bombs"
+                                                            },
+                                                            {
+                                                                "type": "or",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Space Jump",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Hi-Jump",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Combat",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
                                                 },
                                                 {
                                                     "type": "and",
@@ -2635,7 +2728,7 @@
                                                     "data": {
                                                         "type": "tricks",
                                                         "name": "Combat",
-                                                        "amount": 2,
+                                                        "amount": 3,
                                                         "negate": false
                                                     }
                                                 },
@@ -2644,8 +2737,60 @@
                                                     "data": {
                                                         "type": "damage",
                                                         "name": "Damage",
-                                                        "amount": 130,
+                                                        "amount": 200,
                                                         "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Combat",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "Damage",
+                                                                    "amount": 150,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Combat",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "Damage",
+                                                                    "amount": 100,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -2795,7 +2940,12 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 110489,
+                        "facing": "right",
+                        "x": 0,
+                        "y": 192
+                    },
                     "valid_starting_location": false,
                     "dock_type": "horizontal_dock",
                     "default_connection": {
@@ -3758,7 +3908,12 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 110796,
+                        "facing": "left",
+                        "x": 320,
+                        "y": 448
+                    },
                     "valid_starting_location": false,
                     "dock_type": "horizontal_dock",
                     "default_connection": {
@@ -4129,7 +4284,12 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 110869,
+                        "facing": "right",
+                        "x": 0,
+                        "y": 208
+                    },
                     "valid_starting_location": false,
                     "dock_type": "horizontal_dock",
                     "default_connection": {
@@ -4506,7 +4666,12 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 110877,
+                        "facing": "right",
+                        "x": 960,
+                        "y": 144
+                    },
                     "valid_starting_location": false,
                     "dock_type": "horizontal_dock",
                     "default_connection": {
@@ -4840,7 +5005,12 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 111054,
+                        "facing": "left",
+                        "x": 1280,
+                        "y": 160
+                    },
                     "valid_starting_location": false,
                     "dock_type": "horizontal_dock",
                     "default_connection": {
@@ -5212,7 +5382,12 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 111183,
+                        "facing": "right",
+                        "x": 0,
+                        "y": 160
+                    },
                     "valid_starting_location": false,
                     "dock_type": "horizontal_dock",
                     "default_connection": {
@@ -5247,7 +5422,12 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 111186,
+                        "facing": "left",
+                        "x": 320,
+                        "y": 400
+                    },
                     "valid_starting_location": false,
                     "dock_type": "horizontal_dock",
                     "default_connection": {
@@ -5282,7 +5462,12 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 111187,
+                        "facing": "right",
+                        "x": 0,
+                        "y": 640
+                    },
                     "valid_starting_location": false,
                     "dock_type": "horizontal_dock",
                     "default_connection": {
@@ -5317,7 +5502,12 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 111194,
+                        "facing": "right",
+                        "x": 0,
+                        "y": 384
+                    },
                     "valid_starting_location": false,
                     "dock_type": "horizontal_dock",
                     "default_connection": {
@@ -5610,7 +5800,12 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 111242,
+                        "facing": "right",
+                        "x": 0,
+                        "y": 160
+                    },
                     "valid_starting_location": false,
                     "dock_type": "horizontal_dock",
                     "default_connection": {
@@ -5802,7 +5997,12 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 111532,
+                        "facing": "right",
+                        "x": 0,
+                        "y": 160
+                    },
                     "valid_starting_location": false,
                     "dock_type": "horizontal_dock",
                     "default_connection": {
@@ -6103,7 +6303,12 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 111580,
+                        "facing": "left",
+                        "x": 320,
+                        "y": 160
+                    },
                     "valid_starting_location": false,
                     "dock_type": "horizontal_dock",
                     "default_connection": {
@@ -6138,7 +6343,12 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 111581,
+                        "facing": "left",
+                        "x": 320,
+                        "y": 400
+                    },
                     "valid_starting_location": false,
                     "dock_type": "horizontal_dock",
                     "default_connection": {
@@ -6200,7 +6410,12 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 111649,
+                        "facing": "right",
+                        "x": 0,
+                        "y": 160
+                    },
                     "valid_starting_location": false,
                     "dock_type": "horizontal_dock",
                     "default_connection": {
@@ -6560,7 +6775,12 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 111667,
+                        "facing": "right",
+                        "x": 0,
+                        "y": 144
+                    },
                     "valid_starting_location": false,
                     "dock_type": "horizontal_dock",
                     "default_connection": {
@@ -6595,7 +6815,12 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 111668,
+                        "facing": "left",
+                        "x": 640,
+                        "y": 144
+                    },
                     "valid_starting_location": false,
                     "dock_type": "horizontal_dock",
                     "default_connection": {
@@ -7721,7 +7946,7 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "items",
-                                                        "name": "Missile Launcher",
+                                                        "name": "Missiles",
                                                         "amount": 20,
                                                         "negate": false
                                                     }
@@ -7754,7 +7979,8 @@
                         "x": 27,
                         "y": 22
                     }
-                ]
+                ],
+                "unlocked_save_station": true
             },
             "nodes": {
                 "Save Station": {
@@ -7852,7 +8078,12 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 111840,
+                        "facing": "right",
+                        "x": 0,
+                        "y": 128
+                    },
                     "valid_starting_location": false,
                     "dock_type": "horizontal_dock",
                     "default_connection": {
@@ -7913,7 +8144,12 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 112031,
+                        "facing": "left",
+                        "x": 320,
+                        "y": 128
+                    },
                     "valid_starting_location": false,
                     "dock_type": "horizontal_dock",
                     "default_connection": {
@@ -7948,7 +8184,12 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 112032,
+                        "facing": "left",
+                        "x": 320,
+                        "y": 624
+                    },
                     "valid_starting_location": false,
                     "dock_type": "horizontal_dock",
                     "default_connection": {
@@ -8081,7 +8322,12 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 112033,
+                        "facing": "right",
+                        "x": 0,
+                        "y": 864
+                    },
                     "valid_starting_location": false,
                     "dock_type": "horizontal_dock",
                     "default_connection": {
@@ -8377,7 +8623,12 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 112388,
+                        "facing": "right",
+                        "x": 0,
+                        "y": 144
+                    },
                     "valid_starting_location": false,
                     "dock_type": "horizontal_dock",
                     "default_connection": {
@@ -8572,7 +8823,12 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 112629,
+                        "facing": "left",
+                        "x": 640,
+                        "y": 144
+                    },
                     "valid_starting_location": false,
                     "dock_type": "horizontal_dock",
                     "default_connection": {
@@ -8647,7 +8903,12 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 112631,
+                        "facing": "right",
+                        "x": 0,
+                        "y": 144
+                    },
                     "valid_starting_location": false,
                     "dock_type": "horizontal_dock",
                     "default_connection": {
@@ -8876,7 +9137,12 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 113031,
+                        "facing": "left",
+                        "x": 1600,
+                        "y": 624
+                    },
                     "valid_starting_location": false,
                     "dock_type": "horizontal_dock",
                     "default_connection": {
@@ -10378,12 +10644,20 @@
                                             "comment": "Get charge",
                                             "items": [
                                                 {
-                                                    "type": "resource",
+                                                    "type": "and",
                                                     "data": {
-                                                        "type": "tricks",
-                                                        "name": "Knowledge",
-                                                        "amount": 2,
-                                                        "negate": false
+                                                        "comment": "https://youtu.be/VLu8ujljuGg",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Knowledge",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 },
                                                 {

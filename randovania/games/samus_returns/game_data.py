@@ -21,7 +21,7 @@ def _gui() -> game.GameGui:
         cosmetic_dialog=gui.MSRCosmeticPatchesDialog,
         export_dialog=gui.MSRGameExportDialog,
         progressive_item_gui_tuples=progressive_items.tuples(),
-        spoiler_visualizer=(),
+        spoiler_visualizer=(gui.MSRHintDetailsTab,),
     )
 
 
@@ -59,6 +59,13 @@ game_data: game.GameData = game.GameData(
     ],
     faq=[
         (
+            "What are the icons on the bottom of the HUD?",
+            "These elements are present in the vanilla game, but they have been slightly revamped. "
+            "From left to right, the HUD shows the amount of DNA you currently have, the amount of DNA "
+            "collected per area out of how many in that area, "
+            "and the amount of Metroids that are still alive. ",
+        ),
+        (
             "Do I still need to beat Metroids and collect DNA to progress areas?",
             "No you do not. All the hazardous liquid has already been drained. "
             "Metroids can now drop any item in the game as well as DNA.",
@@ -85,7 +92,10 @@ game_data: game.GameData = game.GameData(
             "Are there any hints?",
             "All Chozo Seals have been repurposed to provide a hint to "
             "an item somewhere in the world. The region the item is located "
-            "will be specified.",
+            "will be specified."
+            "\n\n"
+            "New seals have been added in all areas except Surface which hint at the location "
+            "of DNA. See the `Hints` tab for more information.",
         ),
         (
             "Why is this pickup not animating?",
@@ -95,6 +105,23 @@ game_data: game.GameData = game.GameData(
         (
             "I collected Beam Burst, but I cannot use it.",
             "Beam Burst requires at least the Wave Beam to function.",
+        ),
+        (
+            "What are Reserve Tanks?",
+            "Reserve Tanks are items that restore a certain ammo type when depleted. "
+            "In vanilla, these tanks can be unlocked by using certain amiibo, "
+            "but in the randomizer, this has been changed to make them be actual pickups."
+            "\n\n"
+            "By default, the Energy Reserve Tank restores 299 Energy, the Aeion Reserve Tank "
+            "restores 500 Aeion, and the Missile Reserve Tank restores 30 Missiles or "
+            "10 Super Missiles. Note that when the Missile Reserve Tank is depeleted, "
+            "it only restores whatever ammo was last used, and not both.",
+        ),
+        (
+            "I collected the Missile Reserve Tank, but I cannot see nor use it.",
+            "Due to limitations, the Missile Reserve Tank will remain deactivated "
+            "until the Missile Launcher is in your inventory. This prevents a bug where "
+            "the reserve will activate even if you have no usable Missiles.",
         ),
     ],
     layout=game.GameLayout(

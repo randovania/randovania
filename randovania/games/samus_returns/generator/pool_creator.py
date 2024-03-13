@@ -45,15 +45,16 @@ def pool_creator(results: PoolResults, configuration: BaseConfiguration, game: G
 def artifact_pool(game: GameDescription, config: MSRArtifactConfig) -> PoolResults:
     # Check whether we have valid artifact requirements in configuration
     max_artifacts = 0
-    if config.prefer_metroids:
-        max_artifacts += 25
-    if config.prefer_stronger_metroids:
-        max_artifacts += 14
-    if config.prefer_bosses:
-        if max_artifacts <= 35:
-            max_artifacts += 4
-    if not config.prefer_metroids and not config.prefer_stronger_metroids and not config.prefer_bosses:
+    if config.prefer_anywhere:
         max_artifacts = 39
+    elif config.prefer_metroids and config.prefer_stronger_metroids:
+        max_artifacts = 39
+    elif config.prefer_metroids:
+        max_artifacts = 25
+    elif config.prefer_stronger_metroids:
+        max_artifacts = 14
+    elif config.prefer_bosses and max_artifacts < 36:
+        max_artifacts += 4
     if config.required_artifacts > max_artifacts:
         raise InvalidConfiguration("More Metroid DNA than allowed!")
 

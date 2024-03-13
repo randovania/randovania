@@ -1,9 +1,10 @@
 from __future__ import annotations
 
+import typing
 from random import Random
 from typing import TYPE_CHECKING
 
-from randovania.exporter import pickup_exporter
+from randovania.exporter import item_names, pickup_exporter
 from randovania.exporter.hints import credits_spoiler, guaranteed_item_hint
 from randovania.exporter.patch_data_factory import PatchDataFactory
 from randovania.game_description.assignment import PickupTarget
@@ -17,6 +18,7 @@ from randovania.lib import json_lib, random_lib
 
 if TYPE_CHECKING:
     from randovania.exporter.pickup_exporter import ExportedPickupDetails
+    from randovania.game_description.game_patches import GamePatches
     from randovania.games.am2r.layout.am2r_configuration import AM2RConfiguration
 
 
@@ -126,7 +128,9 @@ class AM2RPatchDataFactory(PatchDataFactory):
         ("Nothing", "sItemNothing", "Nothing acquired"): ("sItemShinyNothing", "Shiny Nothing acquired"),
     }
 
-    def _create_pickups_dict(self, pickup_list: list[ExportedPickupDetails], item_info: dict, rng: Random) -> dict:
+    def _create_pickups_dict(
+        self, pickup_list: list[ExportedPickupDetails], text_data: dict, model_data: dict[str, int], rng: Random
+    ) -> dict:
         pickup_map_dict = {}
         for pickup in pickup_list:
             quantity = pickup.conditional_resources[0].resources[0][1] if not pickup.other_player else 0
@@ -145,14 +149,14 @@ class AM2RPatchDataFactory(PatchDataFactory):
             pickup_map_dict[object_name] = {
                 "sprite_details": {
                     "name": pickup.model.name,
-                    "speed": item_info[pickup.original_pickup.name]["sprite_speed"],
+                    "speed": model_data.get(pickup.model.name, 0.2),
                 },
                 "item_effect": pickup.original_pickup.name if not pickup.other_player else "Nothing",
                 "quantity": quantity,
                 "text": {
-                    "header": item_info[pickup.name]["text_header"]
-                    if not self.players_config.is_multiworld
-                    else pickup.name,
+                    "header": (
+                        text_data[pickup.name]["text_header"] if not self.players_config.is_multiworld else pickup.name
+                    ),
                     "description": pickup.collection_text[text_index],
                 },
             }
@@ -178,6 +182,28 @@ class AM2RPatchDataFactory(PatchDataFactory):
             for area in region.areas
         }
 
+    def _create_starting_popup(self, patches: GamePatches) -> dict | None:
+        extra_items = item_names.additional_starting_equipment(patches.configuration, patches.game, patches)
+        if extra_items:
+            i = 0
+            items_with_length = [""]
+            # Go through the items, so that we can wrap them
+            for item in extra_items:
+                if len(items_with_length[i] + item) < 60:
+                    if items_with_length[i] != "":
+                        items_with_length[i] = items_with_length[i] + ", " + item
+                    else:
+                        items_with_length[i] = item
+                else:
+                    i += 1
+                    items_with_length.append(item)
+            return {
+                "header": "Extra starting items:",
+                "description": "#".join(items_with_length),  # A '#' is a newline character in GameMaker
+            }
+        else:
+            return None
+
     def _create_starting_items_dict(self) -> dict:
         starting_resources = self.patches.starting_resources()
         return {resource.long_name: quantity for resource, quantity in starting_resources.as_resource_gain()}
@@ -188,14 +214,17 @@ class AM2RPatchDataFactory(PatchDataFactory):
         }
 
     def _create_hash_dict(self) -> dict:
-        return {
+        return_dict: dict = {
+            "contains_spoiler": self.description.has_spoiler,
             "word_hash": self.description.shareable_word_hash,
             "hash": self.description.shareable_hash,
             "session_uuid": str(self.players_config.get_own_uuid()),
+            "starting_memo": self._create_starting_popup(self.patches),
         }
+        return return_dict
 
     def _create_game_patches(
-        self, config: AM2RConfiguration, pickup_list: list[ExportedPickupDetails], item_info: dict, rng: Random
+        self, config: AM2RConfiguration, pickup_list: list[ExportedPickupDetails], text_data: dict, rng: Random
     ) -> dict:
         def get_locked_ammo_text(ammo_item: str) -> str:
             text = "MISSING TEXT, PLEASE REPORT THIS!"
@@ -226,15 +255,15 @@ class AM2RPatchDataFactory(PatchDataFactory):
             "screw_blocks": config.screw_blocks,
             "sabre_designed_skippy": rng.randint(0, self._EASTER_EGG_SHINY) == 0,
             "locked_missile_text": {
-                "header": item_info["Locked Missile Expansion"]["text_header"],
+                "header": text_data["Locked Missile Expansion"]["text_header"],
                 "description": missile_text,
             },
             "locked_super_text": {
-                "header": item_info["Locked Super Missile Expansion"]["text_header"],
+                "header": text_data["Locked Super Missile Expansion"]["text_header"],
                 "description": super_text,
             },
             "locked_pb_text": {
-                "header": item_info["Locked Power Bomb Expansion"]["text_header"],
+                "header": text_data["Locked Power Bomb Expansion"]["text_header"],
                 "description": pb_text,
             },
         }
@@ -254,7 +283,9 @@ class AM2RPatchDataFactory(PatchDataFactory):
 
     def _create_door_locks(self) -> dict:
         return {
-            str(node.extra["instance_id"]): {"lock": weakness.long_name}
+            str(node.extra["instance_id"]): {
+                "lock": weakness.long_name if weakness.long_name != "Normal Door (Forced)" else "Normal Door"
+            }
             for node, weakness in self.patches.all_dock_weaknesses()
         }
 
@@ -325,17 +356,25 @@ class AM2RPatchDataFactory(PatchDataFactory):
             "music_shuffle": _construct_music_shuffle_dict(c.music, Random(seed_number)),
         }
 
-    def _get_item_data(self):
-        item_data = json_lib.read_path(RandovaniaGame.AM2R.data_path.joinpath("pickup_database", "item_data.json"))
+    def _get_text_data(self) -> dict:
+        text_data: dict = typing.cast(
+            dict, json_lib.read_path(RandovaniaGame.AM2R.data_path.joinpath("pickup_database", "text_data.json"))
+        )
 
         for i in range(1, 47):
-            item_data[f"Metroid DNA {i}"] = item_data["Metroid DNA"]
+            text_data[f"Metroid DNA {i}"] = text_data["Metroid DNA"]
 
-        item_data["Missiles"] = item_data["Missile Expansion"]
-        item_data["Super Missiles"] = item_data["Super Missile Expansion"]
-        item_data["Power Bombs"] = item_data["Power Bomb Expansion"]
-        item_data["EnergyTransferModule"] = item_data["Nothing"]
-        return item_data
+        text_data["Missiles"] = text_data["Missile Expansion"]
+        text_data["Super Missiles"] = text_data["Super Missile Expansion"]
+        text_data["Power Bombs"] = text_data["Power Bomb Expansion"]
+        text_data["EnergyTransferModule"] = text_data["Nothing"]
+        return text_data
+
+    def _get_model_data(self) -> dict[str, int]:
+        return typing.cast(
+            dict[str, int],
+            json_lib.read_path(RandovaniaGame.AM2R.data_path.joinpath("pickup_database", "model_data.json")),
+        )
 
     def game_enum(self) -> RandovaniaGame:
         return RandovaniaGame.AM2R
@@ -347,6 +386,8 @@ class AM2RPatchDataFactory(PatchDataFactory):
             self.description.all_patches,
             self.players_config,
             AM2RHintNamer(self.description.all_patches, self.players_config),
+            "{}",
+            False,
         )
         # am2r credits uses the following syntax:
         # * indicates a header
@@ -370,8 +411,9 @@ class AM2RPatchDataFactory(PatchDataFactory):
             pickup_creator.create_nothing_pickup(db.resource_database, "sItemNothing"), self.players_config.player_index
         )
 
-        item_data = self._get_item_data()
-        memo_data = {key: value["text_desc"] for key, value in item_data.items()}
+        text_data = self._get_text_data()
+        model_data = self._get_model_data()
+        memo_data = {key: value["text_desc"] for key, value in text_data.items()}
         memo_data["Energy Tank"] = memo_data["Energy Tank"].format(Energy=self.configuration.energy_per_tank)
 
         pickup_list = pickup_exporter.export_all_indices(
@@ -389,9 +431,9 @@ class AM2RPatchDataFactory(PatchDataFactory):
             "configuration_identifier": self._create_hash_dict(),
             "starting_items": self._create_starting_items_dict(),
             "starting_location": self._create_starting_location(),
-            "pickups": self._create_pickups_dict(pickup_list, item_data, self.rng),
+            "pickups": self._create_pickups_dict(pickup_list, text_data, model_data, self.rng),
             "rooms": self._create_room_dict(),
-            "game_patches": self._create_game_patches(self.configuration, pickup_list, item_data, self.rng),
+            "game_patches": self._create_game_patches(self.configuration, pickup_list, text_data, self.rng),
             "door_locks": self._create_door_locks(),
             "hints": self._create_hints(self.rng),
             "cosmetics": self._create_cosmetics(self.description.get_seed_for_player(self.players_config.player_index)),

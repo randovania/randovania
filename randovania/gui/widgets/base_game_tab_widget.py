@@ -59,15 +59,16 @@ class BaseGameTabWidget(QtWidgets.QTabWidget):
 
         self.tab_generate_game.setup_ui(game, window_manager, background_task, options)
         self._update_quick_generate_text()
+        self.tab_generate_game.select_preset_widget.CanGenerate.connect(self._on_can_generate)
 
-    def setup_ui(self):
+    def setup_ui(self) -> None:
         raise NotImplementedError
 
     @classmethod
     def game(cls) -> RandovaniaGame:
         raise NotImplementedError
 
-    def _on_intro_label_link_clicked(self, link: str):
+    def _on_intro_label_link_clicked(self, link: str) -> None:
         if (info := re.match(r"^tab://(.+)$", link)) is not None:
             target_tab_name = info.group(1)
             for i in range(self.count()):
@@ -75,21 +76,24 @@ class BaseGameTabWidget(QtWidgets.QTabWidget):
                     self.setCurrentIndex(i)
                     return
 
-    def _update_quick_generate_text(self):
+    def _update_quick_generate_text(self) -> None:
         preset_name = self.tab_generate_game.preset.name
         text = f"Quick Generate ({preset_name})"
         self.quick_generate_button.setText(text)
 
-    def _return_to_list(self):
+    def _return_to_list(self) -> None:
         self._window_manager.set_games_selector_visible(True)
 
-    def on_options_changed(self, options: Options):
+    def on_options_changed(self, options: Options) -> None:
         self.tab_generate_game.on_options_changed(options)
         self._update_quick_generate_text()
 
     @asyncSlot()
-    async def on_quick_generate(self):
+    async def on_quick_generate(self) -> None:
         await self.tab_generate_game.generate_new_layout(spoiler=True)
 
-    def enable_buttons_with_background_tasks(self, value: bool):
+    def enable_buttons_with_background_tasks(self, value: bool) -> None:
         self.quick_generate_button.setEnabled(value)
+
+    def _on_can_generate(self, can_generate: bool) -> None:
+        self.quick_generate_button.setEnabled(can_generate)

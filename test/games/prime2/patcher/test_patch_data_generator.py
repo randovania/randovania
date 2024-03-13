@@ -9,12 +9,11 @@ import pytest
 from frozendict import frozendict
 
 import randovania
+import randovania.games.prime2.exporter.patch_data_factory
 from randovania.exporter import pickup_exporter
-from randovania.game_description import default_database
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.node_identifier import NodeIdentifier
-from randovania.game_description.default_database import default_prime2_memo_data
 from randovania.game_description.pickup.pickup_entry import ConditionalResources, PickupModel
 from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
@@ -33,6 +32,7 @@ from randovania.layout.base.standard_pickup_state import StandardPickupState
 from randovania.layout.exceptions import InvalidConfiguration
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.lib.teleporters import TeleporterShuffleMode
+from randovania.lib import json_lib
 
 if TYPE_CHECKING:
     from randovania.game_description.db.node import Node
@@ -511,7 +511,7 @@ def test_pickup_data_for_pb_expansion_locked(
             "Power Bomb Expansion acquired!",
         ]
     else:
-        memo = default_database.default_prime2_memo_data()
+        memo = patch_data_factory.default_prime2_memo_data()
         hud_text = [
             "Power Bomb Expansion acquired! \n"
             "Without the main Power Bomb item, you are still unable to release Power Bombs.",
@@ -578,7 +578,7 @@ def test_create_pickup_all_from_pool(echoes_game_description, default_echoes_con
     if disable_hud_popup:
         memo_data = patch_data_factory._simplified_memo_data()
     else:
-        memo_data = default_prime2_memo_data()
+        memo_data = patch_data_factory.default_prime2_memo_data()
     creator = pickup_exporter.PickupExporterSolo(memo_data, RandovaniaGame.METROID_PRIME_ECHOES)
 
     for item in item_pool.to_place:
@@ -691,64 +691,40 @@ def test_create_string_patches(
     assert result == expected_result
 
 
-@pytest.mark.parametrize("use_new_patcher", [False, True])
-def test_generate_patcher_data(test_files_dir, use_new_patcher):
+@pytest.mark.parametrize(
+    ("rdvgame_filename", "expected_results_filename", "use_new_patcher"),
+    [
+        ("seed_a.rdvgame", "seed_a_old_patcher.json", False),
+        ("seed_a.rdvgame", "seed_a_new_patcher.json", True),
+        ("prime2_no_pbs.rdvgame", "prime2_no_pbs_old_patcher.json", False),
+        ("prime2_no_pbs.rdvgame", "prime2_no_pbs_new_patcher.json", True),
+    ],
+)
+def test_generate_patcher_data(
+    test_files_dir, rdvgame_filename, expected_results_filename, use_new_patcher, monkeypatch, mocker
+):
     # Setup
-    description = LayoutDescription.from_file(test_files_dir.joinpath("log_files", "seed_a.rdvgame"))
+    description = LayoutDescription.from_file(test_files_dir.joinpath("log_files", rdvgame_filename))
     player_index = 0
     preset = description.get_preset(player_index)
     cosmetic_patches = EchoesCosmeticPatches()
     assert isinstance(preset.configuration, EchoesConfiguration)
     configuration = dataclasses.replace(preset.configuration, use_new_patcher=use_new_patcher)
     description.generator_parameters.presets[player_index] = dataclasses.replace(preset, configuration=configuration)
+    monkeypatch.setattr(randovania, "VERSION", "Test Version")
 
     # Run
-    result = patch_data_factory.generate_patcher_data(
+    factory = patch_data_factory.EchoesPatchDataFactory(
         description, PlayersConfiguration(player_index, {0: "you"}), cosmetic_patches
     )
+    result = factory.create_data()
 
     # Assert
-    assert isinstance(result["spawn_point"], dict)
+    expected_results_path = test_files_dir.joinpath("patcher_data", "prime2", expected_results_filename)
 
-    assert isinstance(result["pickups"], list)
-    assert len(result["pickups"]) == 119
+    # Uncomment to easily view diff of failed test
+    # json_lib.write_path(expected_results_path, result)
 
-    assert isinstance(result["elevators"], list)
-    num_claris_elevators = len(result["elevators"])
-    num_opr_elevators = sum(
-        len([area for area in world["areas"].values() if area["elevators"]])
-        for world in result.get("new_patcher", {"worlds": {}})["worlds"].values()
-    )
-    if use_new_patcher:
-        assert num_claris_elevators == 0
-        assert num_opr_elevators == 22
-    else:
-        assert num_claris_elevators == 22
-        assert num_opr_elevators == 0
+    expected_result = json_lib.read_path(expected_results_path)
 
-    assert isinstance(result["translator_gates"], list)
-    assert len(result["translator_gates"]) == 17
-
-    assert isinstance(result["string_patches"], list)
-    assert len(result["string_patches"]) == 43 if use_new_patcher else 61
-
-    assert result["specific_patches"] == {
-        "hive_chamber_b_post_state": True,
-        "intro_in_post_state": True,
-        "warp_to_start": preset.configuration.warp_to_start,
-        "credits_length": 75 if cosmetic_patches.speed_up_credits else 259,
-        "disable_hud_popup": cosmetic_patches.disable_hud_popup,
-        "pickup_map_icons": cosmetic_patches.pickup_markers,
-        "full_map_at_start": cosmetic_patches.open_map,
-        "dark_world_varia_suit_damage": preset.configuration.varia_suit_damage,
-        "dark_world_dark_suit_damage": preset.configuration.dark_suit_damage,
-        "always_up_gfmc_compound": True,
-        "always_up_torvus_temple": True,
-        "always_up_great_temple": False,
-        "hud_color": None,
-    }
-    # TODO: check all fields?
-    assert result["dol_patches"]["default_items"] == {
-        "visor": "Combat Visor",
-        "beam": "Power Beam",
-    }
+    assert result == expected_result

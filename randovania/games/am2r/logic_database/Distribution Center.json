@@ -38,8 +38,9 @@
                     ],
                     "extra": {
                         "instance_id": 131683,
-                        "source_x": 0,
-                        "source_y": 128
+                        "facing": "right",
+                        "x": 0,
+                        "y": 128
                     },
                     "valid_starting_location": false,
                     "dock_type": "horizontal_dock",
@@ -635,7 +636,7 @@
                                         "data": {
                                             "type": "tricks",
                                             "name": "Shinesparking",
-                                            "amount": 1,
+                                            "amount": 2,
                                             "negate": false
                                         }
                                     }
@@ -1412,7 +1413,8 @@
                         "x": 60,
                         "y": 47
                     }
-                ]
+                ],
+                "unlocked_save_station": true
             },
             "nodes": {
                 "Save Station": {
@@ -2199,32 +2201,6 @@
                                             "amount": 1,
                                             "negate": false
                                         }
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "misc",
-                                                        "name": "SoftlockPrevention",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Morph Ball",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
                                     }
                                 ]
                             }
@@ -2275,7 +2251,16 @@
                                     },
                                     {
                                         "type": "template",
-                                        "data": "Hijump Tunnel Climb"
+                                        "data": "Hijump Wall"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Speed Booster",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
                                     }
                                 ]
                             }
@@ -6397,7 +6382,8 @@
                         "x": 70,
                         "y": 43
                     }
-                ]
+                ],
+                "unlocked_save_station": true
             },
             "nodes": {
                 "Save Station": {
@@ -6895,7 +6881,7 @@
                                                     "data": {
                                                         "type": "tricks",
                                                         "name": "Shinesparking",
-                                                        "amount": 1,
+                                                        "amount": 2,
                                                         "negate": false
                                                     }
                                                 },
@@ -6948,7 +6934,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "HJ + CBJ",
+                                            "comment": "HJ + CBJ https://youtu.be/yDjHOQ-aG1w?si=PpW01Hv6797Savpq&t=9",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -7099,7 +7085,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "HJ + CBJ",
+                                            "comment": "HJ + CBJ https://youtu.be/yDjHOQ-aG1w?si=zPe36NJtWJCEMhPd",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -8381,7 +8367,8 @@
                         "x": 68,
                         "y": 48
                     }
-                ]
+                ],
+                "unlocked_save_station": true
             },
             "nodes": {
                 "Door to Facility Storage Intersection East": {
@@ -9596,7 +9583,8 @@
                     "incompatible_dock_weaknesses": [
                         "Spider Ball Door",
                         "Screw Attack Door",
-                        "Hydro Station Water Turbine"
+                        "Hydro Station Water Turbine",
+                        "Research Site Open Hatch"
                     ],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
@@ -9745,7 +9733,8 @@
                     "incompatible_dock_weaknesses": [
                         "Spider Ball Door",
                         "Screw Attack Door",
-                        "Hydro Station Water Turbine"
+                        "Hydro Station Water Turbine",
+                        "Research Site Open Hatch"
                     ],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
@@ -9791,7 +9780,8 @@
                     "incompatible_dock_weaknesses": [
                         "Spider Ball Door",
                         "Screw Attack Door",
-                        "Hydro Station Water Turbine"
+                        "Hydro Station Water Turbine",
+                        "Research Site Open Hatch"
                     ],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
@@ -9958,32 +9948,6 @@
                             "data": {
                                 "comment": null,
                                 "items": [
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": "Path requirements",
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "events",
-                                                        "name": "A5IceItem",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "events",
-                                                        "name": "BossSerris",
-                                                        "amount": 1,
-                                                        "negate": true
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    },
                                     {
                                         "type": "or",
                                         "data": {
@@ -10222,7 +10186,8 @@
                     "incompatible_dock_weaknesses": [
                         "Spider Ball Door",
                         "Screw Attack Door",
-                        "Hydro Station Water Turbine"
+                        "Hydro Station Water Turbine",
+                        "Research Site Open Hatch"
                     ],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
@@ -11968,7 +11933,12 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "facing": "left",
+                        "instance_id": 136064,
+                        "x": 1280,
+                        "y": 304
+                    },
                     "valid_starting_location": false,
                     "dock_type": "horizontal_dock",
                     "default_connection": {
@@ -12432,7 +12402,12 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "facing": "right",
+                        "instance_id": 136099,
+                        "x": 0,
+                        "y": 144
+                    },
                     "valid_starting_location": false,
                     "dock_type": "horizontal_dock",
                     "default_connection": {

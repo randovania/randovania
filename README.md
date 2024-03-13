@@ -48,41 +48,10 @@ So have fun and start randomizing.
 
 # Installation
 
-## Windows
-
 In the [releases page](https://github.com/randovania/randovania/releases), we have zip files
 with everything ready to use. Just extract and run!
 
-## Linux
-
-### Running (in-source)
-
-1. Clone this repository (downloading the source zip is not supported and will not work)
-2. Open a terminal in the repository root
-3. Fetch the tags from the repo:
-
-   `$ git fetch --tags`
-4. Checkout the latest tag (replace v4.0.1 with the latest release version):
-
-   `$ git checkout v4.0.1`
-5. Prepare the virtual environment and install dependencies:
-
-   `$ tools/prepare_virtual_env.sh`
-6. Run the program from source:
-
-   `$ tools/start_client.sh`
-
-### Running Natively and Multiworld
-
-1. Activate the virtual environment and generate the necessary configuration.json, as well as build a native application:
-
-   ```console
-   $ . venv/bin/activate
-   (venv) $ export PRODUCTION=true
-   (venv) $ python tools/create_release.py
-   ```
-2. Navigate into the build/randovania directory
-3. Install the generated randovania.pkg or run the generated executable
+For Linux users, we recommend using our [Flatpak](https://flathub.org/apps/io.github.randovania.Randovania) instead.
 
 <!-- Begin COMMUNITY -->
 
@@ -199,14 +168,13 @@ The "unplug" icon is by tezar tantular from [Noun Project](https://thenounprojec
 ### Another Metroid 2 Remake
 Integration written by [Miepee](https://github.com/Miepee). Offworld sprites are licensed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) and are made by [AbyssalCreature](https://github.com/AbyssalCreature), ShirtyScarab554 and [many others](https://github.com/randovania/YAMS/blob/main/YAMS-LIB/sprites/Attribution.md).
 
-
 <!-- End CREDITS -->
 
 # Developer Help
 
 ## Dependencies
 
-* [Python 3.11 64-bit](https://www.python.org/ftp/python/3.11.0/python-3.11.0rc1-amd64.exe)
+* [Python 3.12 64-bit](https://www.python.org/ftp/python/3.12.1/python-3.12.1-amd64.exe)
 * [Git](https://git-scm.com/downloads)
 
 ## Setup
@@ -218,6 +186,7 @@ Getting started:
       1. Windows: `tools/prepare_virtual_env.bat`
       2. Linux/macOS: `tools/prepare_virtual_env.sh`
    4. You should see "Setup finished successfully." visible when the command finishes.
+   5. For certain use cases, such as exporting games or running tests, additional setup is needed.
 
 In order to start Randovania, open:
    1. Windows: `tools/start_client.bat`
@@ -229,6 +198,11 @@ In order to update your repository:
    3. Re-run the steps from "Getting Started", starting at step 2.
       1. In case of unexpected errors, delete the `venv` in the root of the repository and start again.
    4. Open Randovania normally.
+
+In order to be able to export games:
+   1. Run both "Getting started" and "Start Randovania" steps.
+   2. Activate the virtual env. Check start_client.bat/sh for details.
+   3. Run `python -m pip install -r requirements.txt`.
 
 In order to run the tests:
    1. Run both "Getting started" and "Start Randovania" steps.

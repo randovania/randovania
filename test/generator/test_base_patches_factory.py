@@ -15,6 +15,7 @@ from randovania.game_description.resources.search import find_resource_info_with
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime2.layout.translator_configuration import LayoutTranslatorRequirement
 from randovania.generator import base_patches_factory
+from randovania.layout.exceptions import InvalidConfiguration
 from randovania.layout.lib.teleporters import TeleporterShuffleMode
 
 if TYPE_CHECKING:
@@ -423,6 +424,10 @@ def test_create_base_patches(mocker):
         "randovania.generator.base_patches_factory.BasePatchesFactory.starting_location_for_configuration",
         autospec=True,
     )
+    mock_check_item_pool: MagicMock = mocker.patch(
+        "randovania.generator.base_patches_factory.BasePatchesFactory.check_item_pool",
+        autospec=True,
+    )
 
     patches = [
         mock_create_from_game.return_value,
@@ -430,6 +435,7 @@ def test_create_base_patches(mocker):
     patches.append(patches[-1].assign_dock_connections.return_value)
     patches.append(patches[-1].assign_node_configuration.return_value)
     patches.append(patches[-1].assign_starting_location.return_value)
+    patches.append(patches[-1].check_item_pool.return_value)
 
     factory = base_patches_factory.BasePatchesFactory()
 
@@ -455,4 +461,25 @@ def test_create_base_patches(mocker):
     mock_starting_location_for_config.assert_called_once_with(factory, layout_configuration, game, rng)
     patches[2].assign_starting_location.assert_called_once_with(mock_starting_location_for_config.return_value)
 
+    # Item Pool
+    mock_check_item_pool.assert_called_once_with(factory, layout_configuration)
+
     assert result is patches[3]
+
+
+@pytest.mark.parametrize(
+    ("items", "max_items", "fail"),
+    [(0, 0, False), (10, 10, False), (9, 10, False), (1, 0, True), (11, 10, True), (0, -1, True)],
+)
+def test_check_item_pool_ok(mocker, items, max_items, fail):
+    mocker.patch("randovania.generator.pickup_pool.pool_creator.calculate_pool_pickup_count")
+    mocker.patch(
+        "randovania.generator.pickup_pool.pool_creator.get_total_pickup_count", return_value=(items, max_items)
+    )
+    base_patches = base_patches_factory.BasePatchesFactory()
+
+    if fail:
+        with pytest.raises(InvalidConfiguration):
+            base_patches.check_item_pool(MagicMock())
+    else:
+        base_patches.check_item_pool(MagicMock())

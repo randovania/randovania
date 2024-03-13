@@ -129,6 +129,7 @@ _SERIALIZER_FOR_FIELD = {
     "advanced_generate_in_another_process": Serializer(identity, bool),
     "auto_save_spoiler": Serializer(identity, bool),
     "dark_mode": Serializer(identity, bool),
+    "show_multiworld_banner": Serializer(identity, bool),
     "experimental_settings": Serializer(identity, bool),
     "allow_crash_reporting": Serializer(identity, bool),
     "use_user_for_crash_reporting": Serializer(identity, bool),
@@ -197,6 +198,7 @@ class Options:
     _advanced_generate_in_another_process: bool | None = None
     _auto_save_spoiler: bool | None = None
     _dark_mode: bool | None = None
+    _show_multiworld_banner: bool | None = None
     _experimental_settings: bool | None = None
     _allow_crash_reporting: bool | None = None
     _use_user_for_crash_reporting: bool | None = None
@@ -403,6 +405,14 @@ class Options:
     @dark_mode.setter
     def dark_mode(self, value: bool):
         self._edit_field("dark_mode", value)
+
+    @property
+    def show_multiworld_banner(self) -> bool:
+        return _return_with_default(self._show_multiworld_banner, lambda: False)
+
+    @show_multiworld_banner.setter
+    def show_multiworld_banner(self, value: bool) -> None:
+        self._edit_field("show_multiworld_banner", value)
 
     @property
     def experimental_settings(self) -> bool:

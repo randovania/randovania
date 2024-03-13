@@ -12,8 +12,9 @@ Extra - minimap_data: [{'x': 41, 'y': 21}, {'x': 42, 'y': 21}, {'x': 43, 'y': 21
   * Layers: default
   * 4-Tiles High Dock to Grave Grotto/Horizontal Dock to Hydro Station
   * Extra - instance_id: 109738
-  * Extra - source_x: 1280
-  * Extra - source_y: 160
+  * Extra - facing: left
+  * Extra - x: 1280
+  * Extra - y: 160
   > Horizontal Dock to Hydro Station Exterior
       Morph Ball
   > Event - Alpha
@@ -53,12 +54,20 @@ Extra - minimap_data: [{'x': 29, 'y': 18}, {'x': 29, 'y': 19}, {'x': 29, 'y': 20
 > Horizontal Dock to Broken Save Station; Heals? False
   * Layers: default
   * 4-Tiles High Dock to Broken Save Station/Horizontal Dock to Hydro Station Exterior
+  * Extra - instance_id: 110049
+  * Extra - facing: right
+  * Extra - x: 3200
+  * Extra - y: 1360
   > Horizontal Dock to Hydro Station Entrance
       Trivial
 
 > Horizontal Dock to Inner Save Station; Heals? False
   * Layers: default
   * 4-Tiles High Dock to Inner Save Station/Horizontal Dock to Hydro Station Exterior
+  * Extra - instance_id: 110050
+  * Extra - facing: left
+  * Extra - x: 960
+  * Extra - y: 1360
   > Door to Water Turbine Station
       Trivial
   > Horizontal Dock to Breeding Grounds Entrance (Bottom)
@@ -69,6 +78,10 @@ Extra - minimap_data: [{'x': 29, 'y': 18}, {'x': 29, 'y': 19}, {'x': 29, 'y': 20
 > Horizontal Dock to Inner Alpha Nest North; Heals? False
   * Layers: default
   * 4-Tiles High Dock to Inner Alpha Nest North/Horizontal Dock to Hydro Station Exterior
+  * Extra - instance_id: 110051
+  * Extra - facing: left
+  * Extra - x: 1600
+  * Extra - y: 912
   > Middle Left
       Morph Ball
 
@@ -219,12 +232,20 @@ Extra - minimap_data: [{'x': 38, 'y': 21}]
 > Horizontal Dock to Autrack Corridor; Heals? False
   * Layers: default
   * 4-Tiles High Dock to Autrack Corridor/Horizontal Dock to Broken Save Station
+  * Extra - instance_id: 110172
+  * Extra - facing: right
+  * Extra - x: 0
+  * Extra - y: 160
   > Horizontal Dock to Hydro Station Exterior
       Trivial
 
 > Horizontal Dock to Hydro Station Exterior; Heals? False
   * Layers: default
   * 4-Tiles High Dock to Hydro Station Exterior/Horizontal Dock to Broken Save Station
+  * Extra - instance_id: 110173
+  * Extra - facing: left
+  * Extra - x: 320
+  * Extra - y: 160
   > Horizontal Dock to Autrack Corridor
       Trivial
 
@@ -232,6 +253,7 @@ Extra - minimap_data: [{'x': 38, 'y': 21}]
 Inner Save Station
 Extra - map_name: rm_a2a01A
 Extra - minimap_data: [{'x': 32, 'y': 21}]
+Extra - unlocked_save_station: True
 > Save Station; Heals? True; Spawn Point; Default Node
   * Layers: default
   * Extra - save_room: 6
@@ -243,12 +265,20 @@ Extra - minimap_data: [{'x': 32, 'y': 21}]
 > Horizontal Dock to Hydro Station Exterior; Heals? False
   * Layers: default
   * 4-Tiles High Dock to Hydro Station Exterior/Horizontal Dock to Inner Save Station
+  * Extra - instance_id: 110200
+  * Extra - facing: right
+  * Extra - x: 0
+  * Extra - y: 160
   > Save Station
       Trivial
 
 > Horizontal Dock to Autrack Corridor; Heals? False
   * Layers: default
   * 4-Tiles High Dock to Autrack Corridor/Horizontal Dock to Inner Save Station
+  * Extra - instance_id: 110201
+  * Extra - facing: left
+  * Extra - x: 320
+  * Extra - y: 160
   > Save Station
       Trivial
 
@@ -259,12 +289,20 @@ Extra - minimap_data: [{'x': 33, 'y': 21}, {'x': 34, 'y': 21}, {'x': 35, 'y': 21
 > Horizontal Dock to Inner Save Station; Heals? False
   * Layers: default
   * 4-Tiles High Dock to Inner Save Station/Horizontal Dock to Autrack Corridor
+  * Extra - instance_id: 110263
+  * Extra - facing: right
+  * Extra - x: 0
+  * Extra - y: 160
   > Horizontal Dock to Broken Save Station
       Morph Ball
 
 > Horizontal Dock to Broken Save Station; Heals? False
   * Layers: default
   * 4-Tiles High Dock to Broken Save Station/Horizontal Dock to Autrack Corridor
+  * Extra - instance_id: 110264
+  * Extra - facing: left
+  * Extra - x: 1600
+  * Extra - y: 160
   > Horizontal Dock to Inner Save Station
       Morph Ball
 
@@ -310,6 +348,7 @@ Extra - minimap_data: []
 Arachnus Save Station
 Extra - map_name: rm_a2a03
 Extra - minimap_data: [{'x': 35, 'y': 18}, {'x': 36, 'y': 18}]
+Extra - unlocked_save_station: True
 > Vertical Dock to Hydro Station Exterior; Heals? False
   * Layers: default
   * 2-Tiles Wide Dock to Hydro Station Exterior/Vertical Dock to Arachnus Save Station
@@ -334,7 +373,7 @@ Extra - minimap_data: [{'x': 35, 'y': 18}, {'x': 36, 'y': 18}]
 
 > Door to Arachnus Arena; Heals? False
   * Layers: default
-  * Missile Door to Arachnus Arena/Door to Arachnus Save Station; Dock Lock Rando incompatible with: Hydro Station Water Turbine
+  * Missile Door to Arachnus Arena/Door to Arachnus Save Station; Dock Lock Rando incompatible with: Hydro Station Water Turbine, Research Site Open Hatch
   * Extra - instance_id: 110421
   > Save Station
       All of the following:
@@ -349,16 +388,21 @@ Extra - map_name: rm_a2a04
 Extra - minimap_data: [{'x': 34, 'y': 18}]
 > Door to Arachnus Save Station; Heals? False
   * Layers: default
-  * Normal Door to Arachnus Save Station/Door to Arachnus Arena; Dock Lock Rando incompatible with: Hydro Station Water Turbine
+  * Normal Door to Arachnus Save Station/Door to Arachnus Arena; Dock Lock Rando incompatible with: Hydro Station Water Turbine, Research Site Open Hatch
   * Extra - instance_id: 110437
   > Event - Arachnus
       All of the following:
           Any of the following:
               # Item requirements
-              Can Use Bombs
+              All of the following:
+                  Can Use Bombs
+                  Hi-Jump Boots or Space Jump or Combat (Beginner)
               Morph Ball and Power Bombs ≥ 3
-          # Energy requirements
-          Combat (Intermediate) or Normal Damage ≥ 130
+          Any of the following:
+              # Energy requirements
+              Combat (Advanced) or Normal Damage ≥ 200
+              Combat (Beginner) and Normal Damage ≥ 150
+              Combat (Intermediate) and Normal Damage ≥ 100
           # Fusion Mode requirements
           Missiles or Super Missiles or Disabled Fusion Mode
   > Pickup (Spring Ball)
@@ -384,6 +428,10 @@ Extra - minimap_data: [{'x': 34, 'y': 19}, {'x': 35, 'y': 19}, {'x': 36, 'y': 19
 > Horizontal Dock to Hydro Station Exterior; Heals? False
   * Layers: default
   * 4-Tiles High Dock to Hydro Station Exterior/Horizontal Dock to Inner Alpha Nest North
+  * Extra - instance_id: 110489
+  * Extra - facing: right
+  * Extra - x: 0
+  * Extra - y: 192
   > Vertical Dock to Varia Chamber Access Water Pipe
       Can Use Any Bombs and High Mid-Air Morph Tunnel Climb
   > Event - Alpha
@@ -532,6 +580,10 @@ an open transition!
 > Horizontal Dock to Inner Alpha Nest South; Heals? False
   * Layers: default
   * 4-Tiles High Dock to Inner Alpha Nest South/Horizontal Dock to Water Turbine Station
+  * Extra - instance_id: 110796
+  * Extra - facing: left
+  * Extra - x: 320
+  * Extra - y: 448
   > Event - Bottom Water Turbine
       Trivial
 
@@ -591,6 +643,10 @@ Extra - minimap_data: [{'x': 33, 'y': 23}, {'x': 34, 'y': 23}, {'x': 35, 'y': 23
 > Horizontal Dock to Water Turbine Station; Heals? False
   * Layers: default
   * 4-Tiles High Dock to Water Turbine Station/Horizontal Dock to Inner Alpha Nest South
+  * Extra - instance_id: 110869
+  * Extra - facing: right
+  * Extra - x: 0
+  * Extra - y: 208
   > Vertical Dock to Wave Beam Chamber Access Water Pipe
       Any of the following:
           Hi-Jump Boots or Space Jump or Walljump (Intermediate) or Can Use Spider Ball
@@ -628,6 +684,10 @@ Extra - minimap_data: [{'x': 33, 'y': 23}, {'x': 34, 'y': 23}, {'x': 35, 'y': 23
 > Horizontal Dock to Inner Hydro Station Pipe; Heals? False
   * Layers: default
   * 4-Tiles High Dock to Inner Hydro Station Pipe/Horizontal Dock to Inner Alpha Nest South
+  * Extra - instance_id: 110877
+  * Extra - facing: right
+  * Extra - x: 960
+  * Extra - y: 144
   > Horizontal Dock to Water Turbine Station
       Screw Attack or Disabled Screw Attack Pipe Blocks
 
@@ -691,6 +751,10 @@ Extra - minimap_data: [{'x': 34, 'y': 22}, {'x': 35, 'y': 22}, {'x': 36, 'y': 22
 > Horizontal Dock to Shootblock Stairway; Heals? False
   * Layers: default
   * 4-Tiles High Dock to Shootblock Stairway/Horizontal Dock to Wave Beam Chamber Access
+  * Extra - instance_id: 111054
+  * Extra - facing: left
+  * Extra - x: 1280
+  * Extra - y: 160
   > Waterpipe
       Can Use Any Bombs
 
@@ -739,24 +803,40 @@ Extra - minimap_data: [{'x': 38, 'y': 22}, {'x': 38, 'y': 23}, {'x': 38, 'y': 24
 > Horizontal Dock to Wave Beam Chamber Access; Heals? False
   * Layers: default
   * 4-Tiles High Dock to Wave Beam Chamber Access/Horizontal Dock to Shootblock Stairway
+  * Extra - instance_id: 111183
+  * Extra - facing: right
+  * Extra - x: 0
+  * Extra - y: 160
   > Middle
       Trivial
 
 > Horizontal Dock to Hi-Jump Chamber Access; Heals? False
   * Layers: default
   * 4-Tiles High Dock to Hi-Jump Chamber Access/Horizontal Dock to Shootblock Stairway
+  * Extra - instance_id: 111186
+  * Extra - facing: left
+  * Extra - x: 320
+  * Extra - y: 400
   > Middle
       Trivial
 
 > Horizontal Dock to Autoad Playground; Heals? False
   * Layers: default
   * 3-Tiles High Dock to Autoad Playground/Horizontal Dock to Shootblock Stairway
+  * Extra - instance_id: 111187
+  * Extra - facing: right
+  * Extra - x: 0
+  * Extra - y: 640
   > Middle
       Trivial
 
 > Horizontal Dock to Inner Hydro Station Pipe; Heals? False
   * Layers: default
   * 4-Tiles High Dock to Inner Hydro Station Pipe/Horizontal Dock to Shootblock Stairway
+  * Extra - instance_id: 111194
+  * Extra - facing: right
+  * Extra - x: 0
+  * Extra - y: 384
   > Middle
       Screw Attack or Disabled Screw Attack Pipe Blocks
 
@@ -797,6 +877,10 @@ Extra - minimap_data: [{'x': 39, 'y': 23}, {'x': 39, 'y': 24}, {'x': 39, 'y': 25
 > Horizontal Dock to Shootblock Stairway; Heals? False
   * Layers: default
   * 4-Tiles High Dock to Shootblock Stairway/Horizontal Dock to Hi-Jump Chamber Access
+  * Extra - instance_id: 111242
+  * Extra - facing: right
+  * Extra - x: 0
+  * Extra - y: 160
   > Door to Hi-Jump Chamber
       Trivial
 
@@ -833,6 +917,10 @@ Extra - minimap_data: [{'x': 35, 'y': 24}, {'x': 36, 'y': 24}, {'x': 37, 'y': 24
 > Horizontal Dock to Wallfire Venue; Heals? False
   * Layers: default
   * 4-Tiles High Dock to Wallfire Venue/Horizontal Dock to Autoad Playground
+  * Extra - instance_id: 111532
+  * Extra - facing: right
+  * Extra - x: 0
+  * Extra - y: 160
   > Horizontal Dock to Shootblock Stairway
       Trivial
   > Pickup (Top Missile Tank)
@@ -877,12 +965,20 @@ Extra - minimap_data: [{'x': 34, 'y': 24}, {'x': 34, 'y': 25}]
 > Horizontal Dock to Autoad Playground; Heals? False
   * Layers: default
   * 4-Tiles High Dock to Autoad Playground/Horizontal Dock to Wallfire Venue
+  * Extra - instance_id: 111580
+  * Extra - facing: left
+  * Extra - x: 320
+  * Extra - y: 160
   > Horizontal Dock to Hydro Station Basement
       Trivial
 
 > Horizontal Dock to Hydro Station Basement; Heals? False
   * Layers: default
   * 4-Tiles High Dock to Hydro Station Basement/Horizontal Dock to Wallfire Venue
+  * Extra - instance_id: 111581
+  * Extra - facing: left
+  * Extra - x: 320
+  * Extra - y: 400
   > Horizontal Dock to Autoad Playground
       Power Grip Wall
 
@@ -893,6 +989,10 @@ Extra - minimap_data: [{'x': 35, 'y': 25}, {'x': 36, 'y': 25}, {'x': 37, 'y': 25
 > Horizontal Dock to Wallfire Venue; Heals? False
   * Layers: default
   * 4-Tiles High Dock to Wallfire Venue/Horizontal Dock to Hydro Station Basement
+  * Extra - instance_id: 111649
+  * Extra - facing: right
+  * Extra - x: 0
+  * Extra - y: 160
   > Pickup (Left Missile Tank)
       Can Use Any Bombs and Tunnel Climb
 
@@ -943,12 +1043,20 @@ Extra - minimap_data: [{'x': 36, 'y': 23}, {'x': 37, 'y': 23}]
 > Horizontal Dock to Inner Alpha Nest South; Heals? False; Default Node
   * Layers: default
   * 4-Tiles High Dock to Inner Alpha Nest South/Horizontal Dock to Inner Hydro Station Pipe
+  * Extra - instance_id: 111667
+  * Extra - facing: right
+  * Extra - x: 0
+  * Extra - y: 144
   > Horizontal Dock to Shootblock Stairway
       Trivial
 
 > Horizontal Dock to Shootblock Stairway; Heals? False
   * Layers: default
   * 4-Tiles High Dock to Shootblock Stairway/Horizontal Dock to Inner Hydro Station Pipe
+  * Extra - instance_id: 111668
+  * Extra - facing: left
+  * Extra - x: 640
+  * Extra - y: 144
   > Horizontal Dock to Inner Alpha Nest South
       Trivial
   > Pipe to The Tower
@@ -1085,12 +1193,13 @@ Extra - minimap_data: [{'x': 28, 'y': 19}, {'x': 28, 'y': 20}, {'x': 28, 'y': 21
   > Event - EMP Slot
       All of the following:
           After Area 5 - Distribution Center Energy Activated
-          Missile Launcher ≥ 20 or Can Use Bombs
+          Missiles ≥ 20 or Can Use Bombs
 
 ----------------
 Breeding Grounds Save Station
 Extra - map_name: rm_a2c02
 Extra - minimap_data: [{'x': 27, 'y': 22}]
+Extra - unlocked_save_station: True
 > Save Station; Heals? True; Spawn Point; Default Node
   * Layers: default
   * Extra - save_room: 7
@@ -1108,6 +1217,10 @@ Extra - minimap_data: [{'x': 27, 'y': 22}]
 > Horizontal Dock to Breeding Grounds Shaft; Heals? False
   * Layers: default
   * 4-Tiles High Dock to Breeding Grounds Shaft/Horizontal Dock to Breeding Grounds Save Station
+  * Extra - instance_id: 111840
+  * Extra - facing: right
+  * Extra - x: 0
+  * Extra - y: 128
   > Save Station
       Trivial
 
@@ -1118,12 +1231,20 @@ Extra - minimap_data: [{'x': 26, 'y': 22}, {'x': 26, 'y': 23}, {'x': 26, 'y': 24
 > Horizontal Dock to Breeding Grounds Save Station; Heals? False
   * Layers: default
   * 4-Tiles High Dock to Breeding Grounds Save Station/Horizontal Dock to Breeding Grounds Shaft
+  * Extra - instance_id: 112031
+  * Extra - facing: left
+  * Extra - x: 320
+  * Extra - y: 128
   > Middle
       Trivial
 
 > Horizontal Dock to Breeding Grounds Alpha Nest East; Heals? False
   * Layers: default
   * 4-Tiles High Dock to Breeding Grounds Alpha Nest East/Horizontal Dock to Breeding Grounds Shaft
+  * Extra - instance_id: 112032
+  * Extra - facing: left
+  * Extra - x: 320
+  * Extra - y: 624
   > Horizontal Dock to Breeding Grounds Lobby
       Trivial
   > Middle
@@ -1139,6 +1260,10 @@ Extra - minimap_data: [{'x': 26, 'y': 22}, {'x': 26, 'y': 23}, {'x': 26, 'y': 24
 > Horizontal Dock to Breeding Grounds Lobby; Heals? False
   * Layers: default
   * 4-Tiles High Dock to Breeding Grounds Lobby/Horizontal Dock to Breeding Grounds Shaft
+  * Extra - instance_id: 112033
+  * Extra - facing: right
+  * Extra - x: 0
+  * Extra - y: 864
   > Horizontal Dock to Breeding Grounds Alpha Nest East
       Hijump Wall
 
@@ -1178,6 +1303,10 @@ Extra - minimap_data: [{'x': 27, 'y': 24}, {'x': 28, 'y': 24}, {'x': 28, 'y': 25
 > Horizontal Dock to Breeding Grounds Shaft; Heals? False
   * Layers: default
   * 4-Tiles High Dock to Breeding Grounds Shaft/Horizontal Dock to Breeding Grounds Alpha Nest East
+  * Extra - instance_id: 112388
+  * Extra - facing: right
+  * Extra - x: 0
+  * Extra - y: 144
   > Event - Alpha
       All of the following:
           Defeat dodging Alpha
@@ -1210,6 +1339,10 @@ Extra - minimap_data: [{'x': 24, 'y': 25}, {'x': 24, 'y': 26}, {'x': 24, 'y': 27
 > Horizontal Dock to Breeding Grounds Shaft; Heals? False
   * Layers: default
   * 4-Tiles High Dock to Breeding Grounds Shaft/Horizontal Dock to Breeding Grounds Lobby
+  * Extra - instance_id: 112629
+  * Extra - facing: left
+  * Extra - x: 640
+  * Extra - y: 144
   > Top
       Trivial
 
@@ -1222,6 +1355,10 @@ Extra - minimap_data: [{'x': 24, 'y': 25}, {'x': 24, 'y': 26}, {'x': 24, 'y': 27
 > Horizontal Dock to Breeding Grounds Alpha Nest West; Heals? False
   * Layers: default
   * 4-Tiles High Dock to Breeding Grounds Alpha Nest West/Horizontal Dock to Breeding Grounds Lobby
+  * Extra - instance_id: 112631
+  * Extra - facing: right
+  * Extra - x: 0
+  * Extra - y: 144
   > Top
       Trivial
 
@@ -1256,6 +1393,10 @@ Extra - minimap_data: [{'x': 19, 'y': 23}, {'x': 19, 'y': 24}, {'x': 20, 'y': 23
 > Horizontal Dock to Breeding Grounds Lobby; Heals? False
   * Layers: default
   * 4-Tiles High Dock to Breeding Grounds Lobby/Horizontal Dock to Breeding Grounds Alpha Nest West
+  * Extra - instance_id: 113031
+  * Extra - facing: left
+  * Extra - x: 1600
+  * Extra - y: 624
   > Dock to Breeding Grounds Overgrown Alley
       All of the following:
           Speed Booster and Shinesparking Tricks (Beginner)
@@ -1457,8 +1598,11 @@ Extra - minimap_data: [{'x': 25, 'y': 21}, {'x': 26, 'y': 21}, {'x': 27, 'y': 21
   > Pickup (Super Missile Tank)
       All of the following:
           Speed Booster
-          # Get charge
-          Super Missiles or Knowledge (Intermediate)
+          Any of the following:
+              # Get charge
+              Super Missiles
+              # https://youtu.be/VLu8ujljuGg
+              Knowledge (Intermediate)
           # Destroy blocks
           Movement (Beginner) or Shinesparking Tricks (Beginner)
 

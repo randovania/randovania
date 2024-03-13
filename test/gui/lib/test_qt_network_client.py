@@ -78,7 +78,7 @@ async def test_handle_network_errors_exception(skip_qtbot, qapp, mocker, excepti
 
 
 async def test_login_to_discord(client, mocker: pytest_mock.MockerFixture):
-    mock_browser_open = mocker.patch("webbrowser.open")
+    mock_browser_open = mocker.patch("PySide6.QtGui.QDesktopServices.openUrl")
     client.server_call = AsyncMock(return_value="THE_SID")
 
     # Run
@@ -87,6 +87,14 @@ async def test_login_to_discord(client, mocker: pytest_mock.MockerFixture):
     # Assert
     mock_browser_open.assert_called_once_with("http://localhost:5000/login?sid=THE_SID")
     client.server_call.assert_awaited_once_with("start_discord_login_flow")
+
+
+async def test_login_to_discord_raise(client, mocker: pytest_mock.MockerFixture):
+    mocker.patch("PySide6.QtGui.QDesktopServices.openUrl", return_value=False)
+    client.server_call = AsyncMock(return_value="THE_SID")
+
+    with pytest.raises(RuntimeError, match="Unable to open a web-browser to login into Discord"):
+        await client.login_with_discord()
 
 
 @pytest.mark.parametrize("connection_state", [ConnectionState.Disconnected, ConnectionState.Connected])

@@ -68,9 +68,11 @@ async def test_generate_new_layout(
                 if is_dev_version
                 else "These features are not available outside of development builds."
             ),
-            buttons=async_dialog.StandardButton.Yes | async_dialog.StandardButton.No
-            if is_dev_version
-            else async_dialog.StandardButton.No,
+            buttons=(
+                async_dialog.StandardButton.Yes | async_dialog.StandardButton.No
+                if is_dev_version
+                else async_dialog.StandardButton.No
+            ),
             default_button=async_dialog.StandardButton.No,
         )
     else:

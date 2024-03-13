@@ -116,11 +116,14 @@ class OldGeneratorReach(GeneratorReach):
             if extra_requirement is not None:
                 requirement = RequirementAnd([requirement, extra_requirement])
 
-            yield target_node, requirement.patch_requirements(
-                self._state.resources,
-                1.0,
-                self._state.resource_database,
-            ).as_set(self._state.resource_database)
+            yield (
+                target_node,
+                requirement.patch_requirements(
+                    self._state.resources,
+                    1.0,
+                    self._state.resource_database,
+                ).as_set(self._state.resource_database),
+            )
 
     def _expand_graph(self, paths_to_check: list[GraphPath]) -> None:
         # print("!! _expand_graph", len(paths_to_check))

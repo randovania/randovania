@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import asyncio
 from unittest.mock import AsyncMock, MagicMock, call
 
 import pytest
@@ -139,15 +138,14 @@ async def test_connect_when_connected(executor: NintendontExecutor):
 
 async def test_connect_invalid_ip(executor: NintendontExecutor):
     # Setup
-    executor._ip = "127..0.0.1"
+    executor._ip = "127@0.0.1"
 
     # Run
-    assert "Unable to connect to 127..0.0.1:43673" in await executor.connect()
+    assert "Unable to connect to 127@0.0.1:43673" in await executor.connect()
 
     # Assert
     assert executor._socket is None
-    assert type(executor._socket_error) is UnicodeError
-    assert "encoding with 'idna' codec failed" in str(executor._socket_error)
+    assert isinstance(executor._socket_error, OSError)
 
 
 def test_disconnect_not_connected(executor: NintendontExecutor):
@@ -177,7 +175,7 @@ async def test_send_requests_to_socket_timeout(executor: NintendontExecutor, use
 
     socket = AsyncMock()
     socket.writer.write = MagicMock()
-    socket.writer.drain.side_effect = asyncio.TimeoutError() if use_timeout else OSError("test-exp")
+    socket.writer.drain.side_effect = TimeoutError() if use_timeout else OSError("test-exp")
     executor._socket = socket
     reqs = [RequestBatch()]
     if use_timeout:

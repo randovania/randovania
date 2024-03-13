@@ -12,7 +12,7 @@ from randovania.game_description.resources.item_resource_info import ItemResourc
 from randovania.games.game import RandovaniaGame
 
 if TYPE_CHECKING:
-    from collections.abc import Iterable, Iterator
+    from collections.abc import Iterator
 
     from randovania.game_description.pickup.pickup_category import PickupCategory
     from randovania.game_description.resources.location_category import LocationCategory
@@ -64,8 +64,8 @@ class PickupModel(JsonDataclass):
 @dataclass(frozen=True)
 class PickupGeneratorParams:
     preferred_location_category: LocationCategory
-    probability_offset: float = 0
-    probability_multiplier: float = 1
+    probability_offset: float = 0.0
+    probability_multiplier: float = 1.0
     required_progression: int = 0
 
 
@@ -117,7 +117,7 @@ class PickupEntry:
         return self.name < other.name
 
     @property
-    def conditional_resources(self) -> Iterable[ConditionalResources]:
+    def conditional_resources(self) -> Iterator[ConditionalResources]:
         previous: ItemResourceInfo | None = None
         for progression in self.progression:
             yield ConditionalResources(

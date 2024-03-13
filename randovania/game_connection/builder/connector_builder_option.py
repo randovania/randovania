@@ -4,6 +4,7 @@ import dataclasses
 from typing import TYPE_CHECKING
 
 from randovania.bitpacking.json_dataclass import JsonDataclass
+from randovania.game_connection.builder.am2r_connector_builder import AM2RConnectorBuilder
 from randovania.game_connection.builder.cs_connector_builder import CSConnectorBuilder
 from randovania.game_connection.builder.debug_connector_builder import DebugConnectorBuilder
 from randovania.game_connection.builder.dolphin_connector_builder import DolphinConnectorBuilder
@@ -20,6 +21,7 @@ _CHOICE_TO_BUILDER = {
     ConnectorBuilderChoice.NINTENDONT: NintendontConnectorBuilder,
     ConnectorBuilderChoice.DREAD: DreadConnectorBuilder,
     ConnectorBuilderChoice.CS: CSConnectorBuilder,
+    ConnectorBuilderChoice.AM2R: AM2RConnectorBuilder,
 }
 
 

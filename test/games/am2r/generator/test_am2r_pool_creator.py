@@ -12,7 +12,7 @@ from randovania.layout.exceptions import InvalidConfiguration
 def test_am2r_pool_creator(am2r_game_description, dna_count):
     db = am2r_game_description.resource_database
     # Run
-    results = artifact_pool(am2r_game_description, AM2RArtifactConfig(True, True, dna_count))
+    results = artifact_pool(am2r_game_description, AM2RArtifactConfig(True, True, True, dna_count))
 
     # Assert
     assert results == PoolResults(
@@ -23,11 +23,22 @@ def test_am2r_pool_creator(am2r_game_description, dna_count):
 
 
 @pytest.mark.parametrize(
-    ("metroids", "bosses", "artifacts"), [(False, False, 1), (False, True, 7), (True, False, 47), (True, True, 47)]
+    ("metroids", "bosses", "anywhere", "artifacts"),
+    [
+        (False, False, False, 1),
+        (False, True, False, 7),
+        (True, False, False, 47),
+        (True, True, False, 47),
+        (False, False, True, 47),
+    ],
 )
-def test_am2r_artifact_pool_should_throw_on_invalid_config(am2r_game_description, metroids, bosses, artifacts):
+def test_am2r_artifact_pool_should_throw_on_invalid_config(
+    am2r_game_description, metroids, bosses, anywhere, artifacts
+):
     # Setup
-    configuration = AM2RArtifactConfig(prefer_metroids=metroids, prefer_bosses=bosses, required_artifacts=artifacts)
+    configuration = AM2RArtifactConfig(
+        prefer_metroids=metroids, prefer_bosses=bosses, prefer_anywhere=anywhere, required_artifacts=artifacts
+    )
 
     # Run
     with pytest.raises(InvalidConfiguration, match="More Metroid DNA than allowed!"):

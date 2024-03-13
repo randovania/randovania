@@ -6,8 +6,9 @@ Extra - minimap_data: [{'x': 44, 'y': 44}, {'x': 45, 'y': 44}, {'x': 46, 'y': 44
   * Layers: default
   * 4-Tiles High Dock to The Descent/Horizontal Dock to Distribution Center
   * Extra - instance_id: 131683
-  * Extra - source_x: 0
-  * Extra - source_y: 128
+  * Extra - facing: right
+  * Extra - x: 0
+  * Extra - y: 128
   > Horizontal Dock to Meboid Blockade Exterior 
       Trivial
 
@@ -68,7 +69,7 @@ Extra - minimap_data: [{'x': 52, 'y': 45}, {'x': 52, 'y': 46}, {'x': 52, 'y': 47
   > Door to Pipe Hub Access
       Gravity Suit and Speed Booster and Shinesparking Tricks (Beginner)
   > Pickup (Missile Tank)
-      Gravity Suit and Speed Booster and Shinesparking Tricks (Beginner)
+      Gravity Suit and Speed Booster and Shinesparking Tricks (Intermediate)
 
 > Horizontal Dock to Distribution Center Exterior West Access; Heals? False
   * Layers: default
@@ -184,6 +185,7 @@ Extra - minimap_data: [{'x': 58, 'y': 46}, {'x': 58, 'y': 47}, {'x': 59, 'y': 46
 Energy Distribution Entrance Save Station
 Extra - map_name: rm_a5c03
 Extra - minimap_data: [{'x': 60, 'y': 47}]
+Extra - unlocked_save_station: True
 > Save Station; Heals? True; Spawn Point; Default Node
   * Layers: default
   * Extra - save_room: 17
@@ -311,16 +313,14 @@ Extra - minimap_data: [{'x': 60, 'y': 43}, {'x': 61, 'y': 43}, {'x': 62, 'y': 43
   * Normal Door to Energy Distribution Activation/Door to Energy Distribution Emergency Exit
   * Extra - instance_id: 133805
   > Door to EMP Ball Introduction
-      Any of the following:
-          Speed Booster
-          Morph Ball and Enabled Softlock Prevention
+      Speed Booster
 
 > Door to EMP Ball Introduction; Heals? False
   * Layers: default
   * Normal Door to EMP Ball Introduction/Door to Energy Distribution Emergency Exit
   * Extra - instance_id: 133806
   > Door to Energy Distribution Activation
-      Enabled Softlock Prevention and Hijump Tunnel Climb
+      Speed Booster and Enabled Softlock Prevention and Hijump Wall
   > Pickup (Super Missile Tank)
       Screw Attack
 
@@ -930,6 +930,7 @@ Extra - minimap_data: [{'x': 67, 'y': 45}, {'x': 67, 'y': 46}, {'x': 68, 'y': 45
 Distribution Facility Save Station
 Extra - map_name: rm_a5c19
 Extra - minimap_data: [{'x': 70, 'y': 43}]
+Extra - unlocked_save_station: True
 > Save Station; Heals? True; Spawn Point; Default Node
   * Layers: default
   * Extra - save_room: 18
@@ -1009,12 +1010,12 @@ Extra - minimap_data: [{'x': 70, 'y': 44}, {'x': 70, 'y': 45}, {'x': 70, 'y': 46
           Infinite Bomb Jumping (Expert) and Can Use Bombs
           All of the following:
               # Shinespark before door to Bullet Hell
-              Speed Booster and Shinesparking Tricks (Beginner)
+              Speed Booster and Shinesparking Tricks (Intermediate)
               Any of the following:
                   Short Charge (Intermediate)
                   # Charge speed from other room
                   After EMP - Area 5 Bullet Hell Room Access and Disabled Door Lock Rando
-          # HJ + CBJ
+          # HJ + CBJ https://youtu.be/yDjHOQ-aG1w?si=PpW01Hv6797Savpq&t=9
           Hi-Jump Boots and Charged Bomb Jump (Advanced) and Walljump (Intermediate) and Can Use Charged Bomb Jump
 
 > Event - EMP Slot; Heals? False
@@ -1028,7 +1029,7 @@ Extra - minimap_data: [{'x': 70, 'y': 44}, {'x': 70, 'y': 45}, {'x': 70, 'y': 46
           All of the following:
               Walljump (Beginner)
               Hi-Jump Boots or Enabled Septogg Helpers
-          # HJ + CBJ
+          # HJ + CBJ https://youtu.be/yDjHOQ-aG1w?si=zPe36NJtWJCEMhPd
           Hi-Jump Boots and Charged Bomb Jump (Intermediate) and Can Use Charged Bomb Jump
 
 > EMP Ball; Heals? False
@@ -1215,6 +1216,7 @@ Extra - minimap_data: [{'x': 64, 'y': 48}, {'x': 65, 'y': 48}, {'x': 66, 'y': 48
 Facility Storage Save Station
 Extra - map_name: rm_a5c28
 Extra - minimap_data: [{'x': 68, 'y': 48}]
+Extra - unlocked_save_station: True
 > Door to Facility Storage Intersection East; Heals? False
   * Layers: default
   * Normal Door to Facility Storage Intersection East/Door to Facility Storage Save Station; Dock Lock Rando incompatible with: Spider Ball Door, Screw Attack Door
@@ -1423,7 +1425,7 @@ Extra - minimap_data: [{'x': 66, 'y': 49}, {'x': 66, 'y': 50}, {'x': 66, 'y': 51
 
 > Door to Serris Arena; Heals? False
   * Layers: default
-  * Missile Door to Serris Arena/Door to Serris Arena Access; Dock Lock Rando incompatible with: Spider Ball Door, Screw Attack Door, Hydro Station Water Turbine
+  * Missile Door to Serris Arena/Door to Serris Arena Access; Dock Lock Rando incompatible with: Spider Ball Door, Screw Attack Door, Hydro Station Water Turbine, Research Site Open Hatch
   * Extra - instance_id: 135404
   > Horizontal Dock to Spiky Spider Trial
       Trivial
@@ -1448,14 +1450,14 @@ Extra - map_name: rm_a5b03a
 Extra - minimap_data: [{'x': 64, 'y': 49}, {'x': 64, 'y': 50}, {'x': 65, 'y': 49}, {'x': 65, 'y': 50}]
 > Door to Serris Arena Access; Heals? False
   * Layers: default
-  * Normal Door to Serris Arena Access/Door to Serris Arena; Dock Lock Rando incompatible with: Spider Ball Door, Screw Attack Door, Hydro Station Water Turbine
+  * Normal Door to Serris Arena Access/Door to Serris Arena; Dock Lock Rando incompatible with: Spider Ball Door, Screw Attack Door, Hydro Station Water Turbine, Research Site Open Hatch
   * Extra - instance_id: 135449
   > Left Platform
       Power Grip Wall
 
 > Door to Serris Arena Pipe; Heals? False
   * Layers: default
-  * Normal Door to Serris Arena Pipe/Door to Serris Arena; Dock Lock Rando incompatible with: Spider Ball Door, Screw Attack Door, Hydro Station Water Turbine
+  * Normal Door to Serris Arena Pipe/Door to Serris Arena; Dock Lock Rando incompatible with: Spider Ball Door, Screw Attack Door, Hydro Station Water Turbine, Research Site Open Hatch
   * Extra - instance_id: 135448
   > Left Platform
       Before Area 5 - Distribution Center Item at Ice location Collected or After Boss - Serris Defeated
@@ -1481,8 +1483,6 @@ Extra - minimap_data: [{'x': 64, 'y': 49}, {'x': 64, 'y': 50}, {'x': 65, 'y': 49
   * Layers: default
   > Event - Serris
       All of the following:
-          # Path requirements
-          After Area 5 - Distribution Center Item at Ice location Collected and Before Boss - Serris Defeated
           Any of the following:
               # Item requirements
               Combat (Advanced)
@@ -1510,7 +1510,7 @@ Extra - map_name: rm_a5b03
 Extra - minimap_data: [{'x': 63, 'y': 50}]
 > Door to Serris Arena; Heals? False; Default Node
   * Layers: default
-  * Normal Door to Serris Arena/Door to Serris Arena Pipe; Dock Lock Rando incompatible with: Spider Ball Door, Screw Attack Door, Hydro Station Water Turbine
+  * Normal Door to Serris Arena/Door to Serris Arena Pipe; Dock Lock Rando incompatible with: Spider Ball Door, Screw Attack Door, Hydro Station Water Turbine, Research Site Open Hatch
   * Extra - instance_id: 135598
   > Pipe to Ice Beam Chamber Access
       Morph Ball
@@ -1740,6 +1740,10 @@ Extra - minimap_data: [{'x': 67, 'y': 52}, {'x': 67, 'y': 53}, {'x': 68, 'y': 51
 > Horizontal Dock to Spiky Space Jump Trial Reward Room; Heals? False
   * Layers: default
   * 4-Tiles High Dock to Spiky Space Jump Trial Reward Room/Horizontal Dock to Spiky Space Jump Trial
+  * Extra - facing: left
+  * Extra - instance_id: 136064
+  * Extra - x: 1280
+  * Extra - y: 304
   > Horizontal Dock to Spiky Space Jump Trial Entrance
       Any of the following:
           All of the following:
@@ -1793,6 +1797,10 @@ Extra - minimap_data: [{'x': 71, 'y': 52}, {'x': 71, 'y': 53}]
 > Horizontal Dock to Spiky Space Jump Trial; Heals? False
   * Layers: default
   * 4-Tiles High Dock to Spiky Space Jump Trial/Horizontal Dock to Spiky Space Jump Trial Reward Room
+  * Extra - facing: right
+  * Extra - instance_id: 136099
+  * Extra - x: 0
+  * Extra - y: 144
   > Pickup (Energy Tank)
       Can Use Power Bombs
 

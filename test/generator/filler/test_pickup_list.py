@@ -223,6 +223,10 @@ async def test_get_pickups_that_solves_unreachable_quad(
     mocker.patch(
         "randovania.game_description.default_database.game_description_for", return_value=small_echoes_game_description
     )
+    mocker.patch(
+        "randovania.generator.base_patches_factory.BasePatchesFactory.check_item_pool",
+        autospec=True,
+    )
 
     config = default_echoes_preset.configuration
     config = dataclasses.replace(

@@ -20,7 +20,6 @@ Extra - asset_id: collision_camera_000
       Trivial
   > Event - Proteus Ridley
       All of the following:
-          # TODO: Add fight requirements
           Any of the following:
               # Energy Requirements
               Combat (Advanced) or Normal Damage ≥ 599
@@ -64,7 +63,7 @@ Extra - asset_id: collision_camera_017
 
 > Elevator to Area 8; Heals? False; Spawn Point; Default Node
   * Layers: default
-  * Elevator to Transport to Surface West/Elevator to Surface - West
+  * Elevator to Transport to Surface/Elevator to Surface - West
   * Extra - actor_name: LE_Platform_Elevator_FromArea10
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: ST_FromArea10
@@ -79,34 +78,33 @@ Extra - asset_id: collision_camera_017
   * Layers: default
   * Extra - actor_name: LE_Platform_EnergyRecharge_001
   * Extra - actor_type: weightactivatedplatform
-  > Save Station
-      All of the following:
-          Baby Metroid
-          Lightning Armor or Space Jump or Can Spiderspark
-  > Pickup (Missile Tank)
-      All of the following:
-          Baby Metroid and Morph Ball
-          Any of the following:
-              Can Spiderspark
-              All of the following:
-                  Spider Ball
-                  Any of the following:
-                      Simple IBJ
-                      Space Jump and Mid-Air Morph (Beginner)
   > DNA Check
-      Walljump (Intermediate) or Climb Rooms Vertically (No High Jump)
+      Any of the following:
+          Wall Jump (Advanced)
+          Screw Attack and Wall Jump (Intermediate)
+          All of the following:
+              Space Jump
+              Screw Attack or Dodge Enemies (Beginner)
+          Dodge Enemies (Beginner) and Use Spider Ball
+          Spider Boost (Intermediate) and Can Spider Boost
+          Combat (Intermediate) and Infinite Bomb Jump (Advanced) and Lay Bomb
+  > Below Ceiling Pickup
+      Any of the following:
+          Spider Boost (Intermediate) and Can Spider Boost
+          Space Jump and Movement (Beginner)
+          All of the following:
+              Lightning Armor
+              Baby Metroid or Morph Ball
 
 > Save Station; Heals? False; Spawn Point
   * Layers: default
   * Extra - actor_name: LE_Platform_SaveStation_003
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: ST_SaveStation_003
-  > Energy Recharge Station
-      All of the following:
-          Baby Metroid
-          Lightning Armor or Space Jump or Can Spiderspark
   > Above Elevator
       Trivial
+  > Below Ceiling Pickup
+      Baby Metroid
 
 > Teleporter; Heals? False
   * Layers: default
@@ -122,7 +120,7 @@ Extra - asset_id: collision_camera_017
   * Pickup 170; Category? Minor
   * Extra - actor_name: HiddenPowerup002
   * Extra - actor_type: item_missiletank
-  > Energy Recharge Station
+  > Below Ceiling Pickup
       Trivial
 
 > Dock to Landing Site; Heals? False
@@ -144,7 +142,7 @@ Extra - asset_id: collision_camera_017
   > Elevator to Area 8
       Baby Metroid
   > Save Station
-      Single-wall Wall Jump (Beginner) or Walljump (Beginner) or Climb Rooms Vertically (No High Jump)
+      Single-wall Wall Jump (Beginner) or Wall Jump (Intermediate) or Climb Rooms Vertically (No High Jump)
 
 > Dock to Surface - East; Heals? False
   * Layers: default
@@ -165,19 +163,35 @@ Extra - asset_id: collision_camera_017
   > Dock to Surface - East
       Baby Metroid
 
-----------------
-Landing Site Storage
-Extra - total_boundings: {'x1': -19000.0, 'x2': -16300.0, 'y1': 4500.0, 'y2': 6900.0}
-Extra - polygon: [[-19000.0, 6900.0], [-19000.0, 4500.0], [-16300.0, 4500.0], [-16300.0, 6900.0]]
-Extra - asset_id: collision_camera_018
-> Placeholder room. See Surface - East for the actual connections; Heals? False
+> Below Ceiling Pickup; Heals? False
   * Layers: default
-
-----------------
-Crumble Drop Shaft
-Extra - total_boundings: {'x1': -24900.0, 'x2': -23000.0, 'y1': 7200.0, 'y2': 11100.0}
-Extra - polygon: [[-24900.0, 11100.0], [-24900.0, 7200.0], [-23000.0, 7200.0], [-23000.0, 11100.0]]
-Extra - asset_id: collision_camera_019
-> Placeholder room. See Surface - East for the actual connections; Heals? False
-  * Layers: default
+  > Energy Recharge Station
+      Any of the following:
+          Spider Boost (Intermediate) and Can Spider Boost
+          Space Jump and Movement (Beginner)
+          All of the following:
+              Lightning Armor
+              Baby Metroid or Morph Ball
+  > Save Station
+      All of the following:
+          Baby Metroid
+          Wall Jump (Beginner) or Climb Rooms Vertically (High Jump)
+  > Pickup (Missile Tank)
+      All of the following:
+          Baby Metroid
+          Any of the following:
+              Spider Boost (Beginner) and Can Spider Boost
+              Spider Ball and Simple IBJ
+              All of the following:
+                  Any of the following:
+                      # Break the bomb block
+                      Lay Power Bomb
+                      Mid-Air Morph (Beginner) and Lay Bomb
+                      Lightning Armor and Simple IBJ
+                  Any of the following:
+                      # Break the baby blocks
+                      # SJ Movement: https://www.youtube.com/watch?v=9BBVrE-_2UU
+                      Space Jump and Movement (Advanced)
+                      # Freeze enemy: https://www.youtube.com/watch?v=3WCWdGmymCU
+                      Lightning Armor and Stand on Frozen Enemy (Intermediate) and Fully Freeze Enemy
 

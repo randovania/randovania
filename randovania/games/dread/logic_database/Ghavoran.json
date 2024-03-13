@@ -672,12 +672,20 @@
                                                                     "comment": null,
                                                                     "items": [
                                                                         {
-                                                                            "type": "resource",
+                                                                            "type": "and",
                                                                             "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "GrappleMovement",
-                                                                                "amount": 2,
-                                                                                "negate": false
+                                                                                "comment": "https://youtu.be/NCHKHKs1e4o",
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "GrappleMovement",
+                                                                                            "amount": 2,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
                                                                             }
                                                                         },
                                                                         {
@@ -713,6 +721,53 @@
                                                                                         }
                                                                                     }
                                                                                 ]
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "https://youtu.be/huq3AdoS8pk",
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Lay Normal Bomb"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "DBJ",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "or",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Gravity",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "WBJ",
+                                                                                "amount": 2,
+                                                                                "negate": false
                                                                             }
                                                                         }
                                                                     ]
@@ -8875,6 +8930,41 @@
                                                 }
                                             ]
                                         }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "https://youtu.be/17MNab3SmMc",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Speed",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "GhavoranAmmoRechargeEnkyAbove",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Speedbooster",
+                                                        "amount": 4,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -9803,38 +9893,9 @@
                                 "items": []
                             }
                         },
-                        "Pickup (Energy Part)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Ballspark"
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Space",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "template",
-                                                    "data": "Simple IBJ"
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
-                            }
+                        "Inside Speed Booster Tunnel": {
+                            "type": "template",
+                            "data": "Ballspark"
                         }
                     }
                 },
@@ -9942,7 +10003,7 @@
                     "pickup_index": 112,
                     "location_category": "minor",
                     "connections": {
-                        "Door to Energy Recharge Station": {
+                        "Inside Speed Booster Tunnel": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -10113,36 +10174,19 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "The pseudo for this is a melee pseudo next to the tunnel",
                                                         "items": [
                                                             {
                                                                 "type": "template",
-                                                                "data": "Shoot Charge Beam"
+                                                                "data": "Shoot Diffusion Beam"
                                                             },
                                                             {
-                                                                "type": "or",
+                                                                "type": "resource",
                                                                 "data": {
-                                                                    "comment": "The pseudo for this is a melee pseudo next to the tunnel",
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "items",
-                                                                                "name": "Wave",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "Pseudo",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
-                                                                        }
-                                                                    ]
+                                                                    "type": "tricks",
+                                                                    "name": "Pseudo",
+                                                                    "amount": 1,
+                                                                    "negate": false
                                                                 }
                                                             }
                                                         ]
@@ -10454,36 +10498,6 @@
                                 "negate": false
                             }
                         },
-                        "Pickup (Energy Part)": {
-                            "type": "and",
-                            "data": {
-                                "comment": "Eyedoors are excluded from door lock randomizer",
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Use Spin Boost"
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Speed",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "tricks",
-                                            "name": "Speedbooster",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        },
                         "Pickup (Missile Tank)": {
                             "type": "resource",
                             "data": {
@@ -10498,6 +10512,187 @@
                             "data": {
                                 "comment": null,
                                 "items": []
+                            }
+                        }
+                    }
+                },
+                "Inside Speed Booster Tunnel": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 5436.231333839534,
+                        "y": 6678.687927107061,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Energy Recharge Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Above Pulse Radar": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Knowledge",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Wave",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Pseudo",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Shoot Charge Beam"
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Lay Bomb"
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Lay Power Bomb"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "PBAmmo",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "DoorLocks",
+                                            "amount": 1,
+                                            "negate": true
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Pickup (Energy Part)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Space",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Simple IBJ"
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "Charge Speed from the other side of the Eyedoor and spark up the shaft after jumping in here with Spin Boost.",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Speed",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Speedbooster",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Use Spin Boost"
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -12495,6 +12690,10 @@
                                                                                             "amount": 2,
                                                                                             "negate": false
                                                                                         }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "template",
+                                                                                        "data": "Shoot Missile"
                                                                                     }
                                                                                 ]
                                                                             }
@@ -12564,6 +12763,10 @@
                                                                                                 }
                                                                                             ]
                                                                                         }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "template",
+                                                                                        "data": "Shoot Missile"
                                                                                     }
                                                                                 ]
                                                                             }

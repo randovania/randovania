@@ -1,6 +1,7 @@
 """
 Some constants related to specific Prime 1 items that the logic needs to deal with.
 """
+
 from __future__ import annotations
 
 ARTIFACT_ITEMS = [

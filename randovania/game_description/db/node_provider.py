@@ -12,6 +12,7 @@ if TYPE_CHECKING:
     from randovania.game_description.db.node import Node, NodeContext
     from randovania.game_description.db.node_identifier import NodeIdentifier
     from randovania.game_description.db.region import Region
+    from randovania.game_description.db.teleporter_network_node import TeleporterNetworkNode
     from randovania.game_description.requirements.base import Requirement
 
 
@@ -87,3 +88,6 @@ class NodeProvider:
     def lock_requirement_for(self, weakness: DockWeakness) -> Requirement:
         assert weakness.lock is not None
         return weakness.lock.requirement
+
+    def nodes_in_network(self, network_name: str) -> list[TeleporterNetworkNode]:
+        raise NotImplementedError

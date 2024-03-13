@@ -40,6 +40,29 @@ def test_certain_field(skip_qtbot: pytestqt.qtbot.QtBot, widget_field: str, fiel
     assert dialog.cosmetic_patches == DreadCosmeticPatches(**{field_name: True})  # type: ignore[arg-type]
 
 
+@pytest.mark.parametrize(
+    ("slider_name", "label_name", "field_name"),
+    [
+        ("music_slider", "music_label", "music_volume"),
+        ("sfx_slider", "sfx_label", "sfx_volume"),
+        ("ambience_slider", "ambience_label", "ambience_volume"),
+    ],
+)
+def test_certain_slider(skip_qtbot: pytestqt.qtbot.QtBot, slider_name: str, label_name: str, field_name: str) -> None:
+    cosmetic_patches = DreadCosmeticPatches(**{field_name: 0})  # type: ignore[arg-type]
+
+    dialog = DreadCosmeticPatchesDialog(None, cosmetic_patches)
+    label = getattr(dialog, label_name)
+    skip_qtbot.addWidget(dialog)
+    assert label.text() == "  0%"
+
+    slider = getattr(dialog, slider_name)
+    slider.setValue(80)
+
+    assert dialog.cosmetic_patches == DreadCosmeticPatches(**{field_name: 80})  # type: ignore[arg-type]
+    assert label.text() == " 80%"
+
+
 def test_room_names_dropdown(skip_qtbot: pytestqt.qtbot.QtBot) -> None:
     cosmetic_patches = DreadCosmeticPatches(show_room_names=DreadRoomGuiType.NONE)
 

@@ -1016,6 +1016,41 @@ def _migrate_v68(preset: dict) -> dict:
     return preset
 
 
+def _migrate_v69(preset: dict) -> dict:
+    if preset["game"] == "am2r":
+        preset["configuration"]["artifacts"]["prefer_anywhere"] = False
+
+    return preset
+
+
+def _migrate_v70(preset: dict) -> dict:
+    if preset["game"] == "am2r":
+        preset["configuration"]["blue_save_doors"] = False
+
+    return preset
+
+
+def _migrate_v71(preset: dict) -> dict:
+    if preset["game"] == "am2r":
+        preset["configuration"]["force_blue_labs"] = False
+
+    return preset
+
+
+def _migrate_v72(preset: dict) -> dict:
+    if preset["game"] == "prime1":
+        preset["configuration"]["artifact_required"] = preset["configuration"]["artifact_target"]
+
+    return preset
+
+
+def _migrate_v73(preset: dict) -> dict:
+    if preset["game"] == "dread":
+        preset["configuration"]["warp_to_start"] = True
+
+    return preset
+
+
 _MIGRATIONS = [
     _migrate_v1,  # v1.1.1-247-gaf9e4a69
     _migrate_v2,  # v1.2.2-71-g0fbabe91
@@ -1085,6 +1120,11 @@ _MIGRATIONS = [
     _migrate_v66,
     _migrate_v67,
     _migrate_v68,
+    _migrate_v69,
+    _migrate_v70,
+    _migrate_v71,
+    _migrate_v72,
+    _migrate_v73,
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 

@@ -4,7 +4,8 @@ from typing import TYPE_CHECKING
 
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.games.samus_returns.generator.pool_creator import METROID_DNA_CATEGORY
-from randovania.games.samus_returns.layout.msr_configuration import MSRConfiguration
+from randovania.games.samus_returns.layout import MSRConfiguration
+from randovania.layout.base.dock_rando_configuration import DockRandoMode
 from randovania.layout.exceptions import InvalidConfiguration
 from randovania.resolver.bootstrap import MetroidBootstrap
 
@@ -37,11 +38,8 @@ def all_dna_locations(game: GameDescription, config: MSRArtifactConfig) -> list[
                     locations.append(node)
                 elif config.prefer_stronger_metroids and pickup_index in _stronger_metroid_indices:
                     locations.append(node)
-            # Boss pickups
+            # Boss pickups/locations
             elif config.prefer_bosses and pickup_index in _boss_indices:
-                locations.append(node)
-            # DNA anywhere
-            elif not config.prefer_metroids and not config.prefer_stronger_metroids and not config.prefer_bosses:
                 locations.append(node)
 
     return locations
@@ -59,6 +57,7 @@ class MSRBootstrap(MetroidBootstrap):
             "charge_door_buff": "ChargeDoorBuff",
             "beam_door_buff": "BeamDoorBuff",
             "nerf_super_missiles": "NerfSupers",
+            "beam_burst_buff": "BeamBurstBuff",
             "surface_crumbles": "SurfaceCrumbles",
             "area1_crumbles": "Area1Crumbles",
             "reverse_area8": "ReverseArea8",
@@ -66,6 +65,12 @@ class MSRBootstrap(MetroidBootstrap):
         for name, index in logical_patches.items():
             if getattr(configuration, name):
                 enabled_resources.add(index)
+
+        if configuration.dock_rando.is_enabled():
+            enabled_resources.add("DoorLocks")
+
+        if configuration.dock_rando.mode == DockRandoMode.WEAKNESSES:
+            enabled_resources.add("DoorLockRandoTypes")
 
         return enabled_resources
 
@@ -78,21 +83,27 @@ class MSRBootstrap(MetroidBootstrap):
 
         if configuration.elevator_grapple_blocks:
             for name in [
-                "Area 4 (West) - Transport Area Grapple Block Pull Right",
-                "Area 5 (Entrance) - Chozo Seal Grapple Block Bottom",
+                "Area 4 (Central Caves) - Transport to Area 3 and Crystal Mines Grapple Block Pull Right",
+                "Area 5 (Tower Lobby) - Transport to Areas 4 and 6 Grapple Block Bottom",
                 "Area 6 - Transport to Area 7 Grapple Block Pull",
                 "Area 7 - Transport to Area 8 Grapple Block",
             ]:
                 yield resource_database.get_event(name), 1
 
         if configuration.area3_interior_shortcut_no_grapple:
-            yield resource_database.get_event(
-                "Area 3 (Interior East) - Transport to Area 3 Interior West Grapple Block"
-            ), 1
+            yield (
+                resource_database.get_event(
+                    "Area 3 (Factory Interior) - Gamma Arena & Transport to Metroid Caverns East Grapple Block"
+                ),
+                1,
+            )
 
     def assign_pool_results(self, rng: Random, patches: GamePatches, pool_results: PoolResults) -> GamePatches:
         assert isinstance(patches.configuration, MSRConfiguration)
         config = patches.configuration.artifacts
+
+        if config.prefer_anywhere:
+            return super().assign_pool_results(rng, patches, pool_results)
 
         locations = all_dna_locations(patches.game, config)
         rng.shuffle(locations)

@@ -2,21 +2,20 @@ from __future__ import annotations
 
 import copy
 import dataclasses
-from typing import TYPE_CHECKING
+from pathlib import Path
 
 from caver import patcher as caver_patcher
+from caver.patcher import CSPlatform
 
 from randovania.exporter.game_exporter import GameExporter, GameExportParams
 from randovania.games.game import RandovaniaGame
 from randovania.lib import json_lib, status_update_lib
 
-if TYPE_CHECKING:
-    from pathlib import Path
-
 
 @dataclasses.dataclass(frozen=True)
 class CSGameExportParams(GameExportParams):
     output_path: Path
+    platform: CSPlatform
 
 
 class CSGameExporter(GameExporter):
@@ -36,6 +35,12 @@ class CSGameExporter(GameExporter):
         """
         return False
 
+    def export_params_type(self) -> type[GameExportParams]:
+        """
+        Returns the type of the GameExportParams expected by this exporter.
+        """
+        return CSGameExportParams
+
     def _before_export(self):
         assert not self._busy
         self._busy = True
@@ -53,7 +58,9 @@ class CSGameExporter(GameExporter):
         new_patch = copy.copy(patch_data)
         if new_patch["mychar"] is not None:
             new_patch["mychar"] = str(RandovaniaGame.CAVE_STORY.data_path.joinpath(patch_data["mychar"]))
+
+        new_patch["platform"] = export_params.platform.value
         try:
-            caver_patcher.patch_files(new_patch, export_params.output_path, progress_update)
+            caver_patcher.patch_files(new_patch, export_params.output_path, export_params.platform, progress_update)
         finally:
             json_lib.write_path(export_params.output_path.joinpath("data", "patcher_data.json"), patch_data)

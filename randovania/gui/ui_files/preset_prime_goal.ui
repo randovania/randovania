@@ -34,7 +34,7 @@
      <number>0</number>
     </property>
     <item>
-     <widget class="QLabel" name="goal_description">
+     <widget class="QLabel" name="placed_description">
       <property name="text">
        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Controls how many Artifacts will be placed.&lt;/p&gt;&lt;p&gt;You can always check Artifact Temple for hints where the artifacts were placed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
@@ -46,7 +46,7 @@
     <item>
      <layout class="QHBoxLayout" name="slider_layout">
       <item>
-       <widget class="QSlider" name="slider">
+       <widget class="QSlider" name="placed_slider">
         <property name="maximum">
          <number>12</number>
         </property>
@@ -62,7 +62,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QLabel" name="slider_label">
+       <widget class="QLabel" name="placed_slider_label">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
           <horstretch>0</horstretch>
@@ -80,6 +80,43 @@
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <widget class="QLabel" name="required_description">
+      <property name="text">
+       <string>
+Controls how many Artifacts are required.
+
+This controls how many Artifacts are needed in order to unlock Impact Crater. This can be different from the amount of placed Artifacts.</string>
+      </property>
+      <property name="wordWrap">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <widget class="QSlider" name="required_slider">
+        <property name="maximum">
+         <number>12</number>
+        </property>
+        <property name="pageStep">
+         <number>2</number>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="required_slider_label">
+        <property name="text">
+         <string>0</string>
         </property>
        </widget>
       </item>

@@ -12,22 +12,40 @@ from randovania.games.game import RandovaniaGame
 from randovania.interface_common.preset_manager import PresetManager
 
 
-@pytest.mark.parametrize(("has_artifacts"), [(False), (True)])
-def test_am2r_format_params(has_artifacts: bool):
+@pytest.mark.parametrize(
+    ("artifacts"),
+    [
+        AM2RArtifactConfig(True, True, False, 5),
+        AM2RArtifactConfig(True, False, False, 46),
+        AM2RArtifactConfig(False, True, False, 6),
+        AM2RArtifactConfig(False, False, False, 0),
+        AM2RArtifactConfig(False, False, True, 2),
+        AM2RArtifactConfig(False, True, True, 10),
+        AM2RArtifactConfig(True, False, True, 30),
+    ],
+)
+def test_am2r_format_params(artifacts):
     # Setup
     preset = PresetManager(None).default_preset_for_game(RandovaniaGame.AM2R).get_preset()
     assert isinstance(preset.configuration, AM2RConfiguration)
     configuration = dataclasses.replace(
         preset.configuration,
-        artifacts=AM2RArtifactConfig(
-            prefer_metroids=True,
-            prefer_bosses=False,
-            required_artifacts=3 if has_artifacts else 0,
-        ),
+        artifacts=artifacts,
     )
 
     # Run
     result = RandovaniaGame.AM2R.data.layout.preset_describer.format_params(configuration)
+
+    if artifacts.prefer_anywhere:
+        dna_where = "Place anywhere"
+    elif artifacts.prefer_metroids and artifacts.prefer_bosses:
+        dna_where = "Prefers Metroids, Prefers major bosses"
+    elif artifacts.prefer_metroids:
+        dna_where = "Prefers Metroids"
+    elif artifacts.prefer_bosses:
+        dna_where = "Prefers major bosses"
+    else:
+        dna_where = "Kill the Queen"
 
     # Assert
     assert dict(result) == {
@@ -38,8 +56,10 @@ def test_am2r_format_params(has_artifacts: bool):
             "Skip gameplay cutscenes, Open Missile Doors with Supers",
         ],
         "Gameplay": ["Starts at Main Caves - Landing Site"],
-        "Goal": ["3 Metroid DNA", "Prefers Metroids"] if has_artifacts else ["Kill the Queen"],
+        "Goal": (
+            [f"{artifacts.required_artifacts} Metroid DNA", dna_where] if artifacts.required_artifacts else [dna_where]
+        ),
         "Hints": ["DNA Hint: Area and room", "Ice Beam Hint: Area only"],
-        "Item Pool": ["Size: 121 of 134" if has_artifacts else "Size: 118 of 134", "Vanilla starting items"],
+        "Item Pool": [f"Size: {118+artifacts.required_artifacts} of 134", "Vanilla starting items"],
         "Logic Settings": ["All tricks disabled"],
     }
