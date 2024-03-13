@@ -64,6 +64,16 @@ game_data: game.GameData = game.GameData(
         {"path": "starter_preset.rdvpreset"},
     ],
     faq=[],
+    web_info=game.GameWebInfo(
+        what_can_randomize=(
+            "Everything",
+            "Nothing",
+        ),
+        need_to_play=(
+            "A Nintendo Virtual Boy",
+            "Your original Virtual Boy Game Cartridge",
+        ),
+    ),
     layout=game.GameLayout(
         configuration=layout.BlankConfiguration,
         cosmetic_patches=layout.BlankCosmeticPatches,

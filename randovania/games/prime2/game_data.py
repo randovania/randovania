@@ -111,6 +111,19 @@ This means you need Boost Ball to fight Spider Guardian.""",
             "The energy gate that disappears after the pirate fight in Torvus Temple blocks this door.",
         ),
     ],
+    web_info=game.GameWebInfo(
+        what_can_randomize=[
+            "All items including Temple Keys",
+            "Elevator destinations",
+            "Starting locations",
+            "Door locks",
+            "Translator gate requirements",
+        ],
+        need_to_play=[
+            "An ISO of any NTSC-U or PAL Gamecube release of the game",
+            "A modded Wii, or Dolphin Emulator",
+        ],
+    ),
     layout=game.GameLayout(
         configuration=EchoesConfiguration,
         cosmetic_patches=EchoesCosmeticPatches,
