@@ -43,9 +43,7 @@ def _validate_pickup_pool_size(
     min_starting_pickups = configuration.standard_pickup_configuration.minimum_random_starting_pickups
     if len(item_pool) > game.region_list.num_pickup_nodes + min_starting_pickups:
         raise InvalidConfiguration(
-            "Item pool has {} items, which is more than {} (game) + {} (minimum starting items)".format(
-                len(item_pool), game.region_list.num_pickup_nodes, min_starting_pickups
-            )
+            f"Item pool has {len(item_pool)} items, which is more than {game.region_list.num_pickup_nodes} (game) + {min_starting_pickups} (minimum starting items)"
         )
 
     max_starting_pickups = configuration.standard_pickup_configuration.maximum_random_starting_pickups
@@ -206,9 +204,7 @@ def _distribute_remaining_items(rng: Random, filler_results: FillerResults, pres
 
     if len(all_remaining_pickups) > len(unassigned_pickup_nodes):
         raise InvalidConfiguration(
-            "Received {} remaining pickups, but there's only {} unassigned locations.".format(
-                len(all_remaining_pickups), len(unassigned_pickup_nodes)
-            )
+            f"Received {len(all_remaining_pickups)} remaining pickups, but there's only {len(unassigned_pickup_nodes)} unassigned locations."
         )
 
     for (node_player, remaining_node), remaining_pickup in zip(unassigned_pickup_nodes, all_remaining_pickups):

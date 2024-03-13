@@ -126,10 +126,7 @@ class GamePresetDescriber:
         if standard_pickups.minimum_random_starting_pickups == standard_pickups.maximum_random_starting_pickups:
             random_starting_pickups = f"{standard_pickups.minimum_random_starting_pickups}"
         else:
-            random_starting_pickups = "{} to {}".format(
-                standard_pickups.minimum_random_starting_pickups,
-                standard_pickups.maximum_random_starting_pickups,
-            )
+            random_starting_pickups = f"{standard_pickups.minimum_random_starting_pickups} to {standard_pickups.maximum_random_starting_pickups}"
 
         template_strings["Logic Settings"].append(configuration.trick_level.pretty_description(game_description))
 

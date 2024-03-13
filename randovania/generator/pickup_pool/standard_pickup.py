@@ -46,9 +46,7 @@ def add_standard_pickups(
     for pickup, state in standard_pickup_configuration.pickups_state.items():
         if len(pickup.ammo) != len(state.included_ammo):
             raise InvalidConfiguration(
-                "Item {0.name} uses {0.ammo} as ammo, but there's only {1} values in included_ammo".format(
-                    pickup, len(state.included_ammo)
-                )
+                f"Item {pickup.name} uses {pickup.ammo} as ammo, but there's only {len(state.included_ammo)} values in included_ammo"
             )
 
         ammo, locked_ammo = _find_ammo_for(pickup.ammo, ammo_pickup_configuration)

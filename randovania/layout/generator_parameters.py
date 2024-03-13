@@ -106,11 +106,7 @@ class GeneratorParameters(BitPackValue):
                 expected_data_hash = game_db_hash(game)
                 if included_data_hash != expected_data_hash:
                     raise ValueError(
-                        "Expected {} database with hash {}, but found {} instead.".format(
-                            game.long_name,
-                            included_data_hash,
-                            expected_data_hash,
-                        )
+                        f"Expected {game.long_name} database with hash {included_data_hash}, but found {expected_data_hash} instead."
                     )
 
         return GeneratorParameters(seed_number, spoiler, presets, development=development)

@@ -22,11 +22,7 @@ def create_permalink(args):
         versioned = preset_manager.included_preset_with(game, preset_name)
         if versioned is None:
             raise ValueError(
-                "Unknown included preset '{}' for game {}. Valid options are: {}".format(
-                    preset_name,
-                    game.long_name,
-                    [preset.name for preset in preset_manager.included_presets.values() if preset.game == game],
-                )
+                f"Unknown included preset '{preset_name}' for game {game.long_name}. Valid options are: {[preset.name for preset in preset_manager.included_presets.values() if preset.game == game]}"
             )
         presets.append(versioned.get_preset())
 

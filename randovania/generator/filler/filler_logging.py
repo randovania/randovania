@@ -37,27 +37,15 @@ def print_retcon_loop_start(
 
         print("\n===============================")
         print(
-            (
-                "\n>>> Player {}: From {}, {} reachable nodes, {} safe nodes, "
-                "{} open pickup indices, {} open events{}"
-            ).format(
-                player_index,
-                game.region_list.node_name(reach.state.node, with_region=True),
-                sum(1 for n in reach.nodes if reach.is_reachable_node(n)),
-                sum(1 for n in reach.nodes if reach.is_safe_node(n)),
-                len(current_uncollected.indices),
-                len(current_uncollected.events),
-                extra,
-            )
+            f"\n>>> Player {player_index}: From {game.region_list.node_name(reach.state.node, with_region=True)}, {sum(1 for n in reach.nodes if reach.is_reachable_node(n))} reachable nodes, {sum(1 for n in reach.nodes if reach.is_safe_node(n))} safe nodes, "
+            f"{len(current_uncollected.indices)} open pickup indices, {len(current_uncollected.events)} open events{extra}"
         )
 
         if debug.debug_level() > 2:
             print("\nCurrent reach:")
             for node in reach.nodes:
                 print(
-                    "[{!s:>5}, {!s:>5}] {}".format(
-                        reach.is_reachable_node(node), reach.is_safe_node(node), game.region_list.node_name(node)
-                    )
+                    f"[{reach.is_reachable_node(node)!s:>5}, {reach.is_safe_node(node)!s:>5}] {game.region_list.node_name(node)}"
                 )
 
 

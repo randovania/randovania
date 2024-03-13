@@ -189,9 +189,7 @@ class DreadRemoteConnector(RemoteConnector):
 
         parent = LuaEditor.get_parent_for(None, main_item_id)
 
-        execute_string = "RL.ReceivePickup({},{},{},{},{})".format(
-            repr(message), parent, repr(progression_as_lua), num_pickups, self.inventory_index
-        )
+        execute_string = f"RL.ReceivePickup({repr(message)},{parent},{repr(progression_as_lua)},{num_pickups},{self.inventory_index})"
 
         await self.executor.run_lua_code(execute_string)
         return

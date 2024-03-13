@@ -102,11 +102,7 @@ class PrimeFamilyHintNamer(HintNamer):
         if player_name is not None:
             determiner = self.format_player(player_name, with_color=with_color) + "'s "
 
-        return "{} is located in {}{}.".format(
-            colorize_text(self.color_item, resource.long_name, with_color),
-            determiner,
-            self.format_location(location, with_region=True, with_area=not hide_area, with_color=with_color),
-        )
+        return f"{colorize_text(self.color_item, resource.long_name, with_color)} is located in {determiner}{self.format_location(location, with_region=True, with_area=not hide_area, with_color=with_color)}."
 
     def format_temple_name(self, temple_name: str, with_color: bool) -> str:
         raise NotImplementedError

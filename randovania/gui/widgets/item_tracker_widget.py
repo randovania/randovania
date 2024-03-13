@@ -39,9 +39,7 @@ class Element:
     def __post_init__(self):
         if len(self.labels) > 1 and len(self.labels) != len(self.resources):
             raise ValueError(
-                "Label has {} progressive icons, but has {} resources ({}).".format(
-                    len(self.labels), len(self.resources), str([r.long_name for r in self.resources])
-                )
+                f"Label has {len(self.labels)} progressive icons, but has {len(self.resources)} resources ({str([r.long_name for r in self.resources])})."
             )
 
 

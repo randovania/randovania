@@ -264,10 +264,7 @@ class SelectPresetWidget(QtWidgets.QWidget, Ui_SelectPresetWidget):
             user_response = QtWidgets.QMessageBox.warning(
                 self._window_manager,
                 "Preset ID conflict",
-                "The new preset '{}' has the same ID as existing '{}'. Do you want to overwrite it?".format(
-                    preset.name,
-                    existing_preset.name,
-                ),
+                f"The new preset '{preset.name}' has the same ID as existing '{existing_preset.name}'. Do you want to overwrite it?",
                 async_dialog.StandardButton.Yes | async_dialog.StandardButton.No | async_dialog.StandardButton.Cancel,
                 async_dialog.StandardButton.Cancel,
             )

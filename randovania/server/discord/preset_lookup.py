@@ -112,10 +112,7 @@ async def look_for_permalinks(message: discord.Message):
             continue
 
         if seed_hash is not None:
-            pretty_hash = "Seed Hash: {} ({})".format(
-                layout_description.shareable_word_hash(seed_hash, games),
-                base64.b32encode(seed_hash).decode(),
-            )
+            pretty_hash = f"Seed Hash: {layout_description.shareable_word_hash(seed_hash, games)} ({base64.b32encode(seed_hash).decode()})"
         else:
             pretty_hash = "Unknown seed hash"
 
@@ -178,12 +175,7 @@ async def reply_for_layout_description(message: discord.Message, description: La
 
     if description.world_count == 1:
         preset = description.get_preset(0)
-        embed.description = "{}, with preset {}.\nSeed Hash: {}\nPermalink: {}".format(
-            preset.game.long_name,
-            preset.name,
-            description.shareable_word_hash,
-            description.permalink.as_base64_str,
-        )
+        embed.description = f"{preset.game.long_name}, with preset {preset.name}.\nSeed Hash: {description.shareable_word_hash}\nPermalink: {description.permalink.as_base64_str}"
         _add_preset_description_to_embed(embed, preset)
     else:
         games = {preset.game.long_name for preset in description.all_presets}
@@ -195,12 +187,7 @@ async def reply_for_layout_description(message: discord.Message, description: La
             games_text += " and "
         games_text += last_game
 
-        embed.description = "{} player multiworld for {}.\nSeed Hash: {}\nPermalink: {}".format(
-            description.world_count,
-            games_text,
-            description.shareable_word_hash,
-            description.permalink.as_base64_str,
-        )
+        embed.description = f"{description.world_count} player multiworld for {games_text}.\nSeed Hash: {description.shareable_word_hash}\nPermalink: {description.permalink.as_base64_str}"
 
     await message.reply(embed=embed, mention_author=False)
 

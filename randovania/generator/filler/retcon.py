@@ -302,11 +302,7 @@ def debug_print_weighted_locations(all_locations_weighted: WeightedLocations) ->
     print("==> Weighted Locations")
     for owner, index, weight in all_locations_weighted.all_items():
         print(
-            "[Player {}] {} - {}".format(
-                owner.index,
-                owner.game.region_list.node_name(owner.game.region_list.node_from_pickup_index(index)),
-                weight,
-            )
+            f"[Player {owner.index}] {owner.game.region_list.node_name(owner.game.region_list.node_from_pickup_index(index))} - {weight}"
         )
 
 

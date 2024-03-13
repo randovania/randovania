@@ -122,9 +122,7 @@ class Permalink:
     def _raise_if_different_schema_version(cls, version: int):
         if version != cls.current_schema_version():
             raise ValueError(
-                "Given permalink has version {}, but this Randovania support only permalink of version {}.".format(
-                    version, cls.current_schema_version()
-                )
+                f"Given permalink has version {version}, but this Randovania support only permalink of version {cls.current_schema_version()}."
             )
 
     @classmethod
@@ -196,7 +194,5 @@ class Permalink:
 
             msg = f"{e}"
             if data.randovania_version != cls.current_randovania_version():
-                msg += "\nDetected version {}, current version is {}".format(
-                    data.randovania_version.hex(), cls.current_randovania_version().hex()
-                )
+                msg += f"\nDetected version {data.randovania_version.hex()}, current version is {cls.current_randovania_version().hex()}"
             raise UnsupportedPermalink(msg, data.seed_hash, data.randovania_version, games) from e

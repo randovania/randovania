@@ -478,11 +478,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
             msg = f"Unable to describe node: {e}"
 
         if isinstance(node, DockNode):
-            msg = '{} to <a href="node://{}">{}</a>'.format(
-                node.default_dock_weakness.name,
-                node.default_connection.as_string,
-                node.default_connection.node_name,
-            )
+            msg = f'{node.default_dock_weakness.name} to <a href="node://{node.default_connection.as_string}">{node.default_connection.node_name}</a>'
 
         self.node_name_label.setText(node.name)
         self.node_details_label.setText(msg)
