@@ -28,7 +28,7 @@ New here or looking to install? Check [our website](https://randovania.github.io
 
 <!-- Begin WELCOME -->
 
-Here you will be able to randomize many aspects of either game, while still being ensured it's possible to 
+Here you will be able to randomize many aspects of either game, while still being ensured it's possible to
 finish without any trick or glitch! What can be randomized?
 
 * Randomize what can be found in each pickup location, including major upgrades, expansions, keys and artifacts.
@@ -36,10 +36,10 @@ finish without any trick or glitch! What can be randomized?
 * Play with multiple people, via multiworld sessions. Your pickups will be shuffled among the games of
 everyone involved, no matter what game they're playing!
 
-* Randomize where each teleporter goes, or what you need to unlock a translator gate. In either case, 
+* Randomize where each teleporter goes, or what you need to unlock a translator gate. In either case,
 there's advanced options for how they're shuffled.
 
-* The location you start the game in as well as the items you start with. If you're feeling brave, 
+* The location you start the game in as well as the items you start with. If you're feeling brave,
 you can even shuffle items you normally start with, like the Power Beam and Scan Visor.
 
 So have fun and start randomizing.
@@ -66,7 +66,7 @@ with everything ready to use. Just extract and run!
 
    `$ git checkout v4.0.1`
 5. Prepare the virtual environment and install dependencies:
-   
+
    `$ tools/prepare_virtual_env.sh`
 6. Run the program from source:
 
@@ -98,12 +98,12 @@ Invite links for specific games' servers can be found in the `#game-communities`
 
 # Credits
 
-GUI and logic written by [Henrique Gemignani](https://github.com/henriquegemignani/), with contributions 
+GUI and logic written by [Henrique Gemignani](https://github.com/henriquegemignani/), with contributions
 by [SpaghettiToastBook](https://www.twitch.tv/spaghettitoastbook), [gollop](https://github.com/gollop) and [many others](https://github.com/randovania/randovania/graphs/contributors).
 
 [BashPrime](https://www.twitch.tv/bashprime), [Pwootage](https://github.com/Pwootage), and [April Wade](https://github.com/aprilwade) made <https://randomizer.metroidprime.run/>, from which the GUI was based.
 
-Website created by [Hugoshido](https://twitch.tv/hugoshido).
+Website created by [Hugoshido](https://twitch.tv/hugoshido) and [duncathan_salt](https://twitter.com/duncathan_salt). portfolYOU Jekyll theme by Youssef Raafat. Free for personal and commercial use under the [MIT license](https://github.com/YoussefRaafatNasry/portfolYOU/blob/master/LICENSE).
 
 Installer is powered by [Advanced Installer](https://www.advancedinstaller.com/), which has graciously provided us with an open source license.
 
@@ -112,7 +112,7 @@ Linux Flatpak build contributed by [Ethan Lee](https://flibitijibibo.com/).
 ## Games
 
 ### Metroid Prime 1
-* Game patching via [randomprime](https://github.com/aprilwade/randomprime) from April Wade, with contributions from [UltiNaruto](https://github.com/UltiNaruto), BashPrime and toasterparty.
+* Game patching via [randomprime](https://github.com/randovania/randomprime). Originally authored by [April Wade](https://github.com/aprilwade), it is now maintained and developed by [toasterparty](https://github.com/toasterparty) with contributions from [others](https://github.com/randovania/randomprime/graphs/contributors)
 * Room data collected by UltiNaruto, [EthanArmbrust](https://github.com/EthanArmbrust) and [SolventMercury](https://github.com/SolventMercury).
 * Converting Metroid Prime 2 models by [Migs](https://www.twitch.tv/migslive).
 
@@ -165,7 +165,7 @@ Linux Flatpak build contributed by [Ethan Lee](https://flibitijibibo.com/).
 * Game Patching by:
   * [Miepee](https://github.com/Miepee)
   * [JesRight](https://github.com/Jesright73)
-  
+
 * Logic Database by:
   * [Miepee](https://github.com/Miepee)
   * [DruidVorse](https://www.youtube.com/@DruidVorse)
@@ -175,7 +175,7 @@ Linux Flatpak build contributed by [Ethan Lee](https://flibitijibibo.com/).
   * Morph Ball, and the Missile Launcher sprites were made by ShirtyScarab554 licensed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
   * Power Grip and the Shiny Nothing Orb were made by ShirtyScarab554, used under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/), modified by [AbyssalCreature](https://github.com/AbyssalCreature) and licensed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
   * New door sprites and other AM2R item sprites were made by [AbyssalCreature](https://github.com/AbyssalCreature) licensed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
-  
+
 ## Auto Tracker
 * Game theme assets were provided by [MaskedTAS](https://twitter.com/MaskedTAS).
 * Pixel theme assets were provided by [Uncle Reggie](https://www.twitch.tv/unclereggie).
@@ -184,7 +184,21 @@ Linux Flatpak build contributed by [Ethan Lee](https://flibitijibibo.com/).
 * The AM2R Morph Ball and Power Grip sprites were made by ShirtyScarab554 licensed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
 
 ## Multiworld
-Server and logic written by Henrique, including Dolphin and Nintendont integrations. These were based on [Dolphin Memory Engine](https://github.com/aldelaro5/Dolphin-memory-engine) and Pwootage's Nintendont fork, respectively. In-game message alert initially written by [encounter](https://github.com/encounter).
+Server and logic written by [Henrique "Darkszero" Gemignani](https://github.com/henriquegemignani/).
+
+### Primes
+Dolphin and Nintendont integrations written by [Henrique "Darkszero" Gemignani](https://github.com/henriquegemignani/). These were based on [Dolphin Memory Engine](https://github.com/aldelaro5/Dolphin-memory-engine) and Pwootage's Nintendont fork, respectively. In-game message alert initially written by [encounter](https://github.com/encounter).
+
+### Cave Story
+Cave Story Doukutsu and CSE2 Tweaked integations written by [duncathan_salt](https://twitter.com/duncathan_salt), [periwinkle](https://github.com/periwinkle9) and [ikuyo](https://github.com/calvarado194).
+
+### Metroid Dread
+Integration written by [Thanatos](https://github.com/ThanatosGit) and [Henrique "Darkszero" Gemignani](https://github.com/henriquegemignani/).
+The "unplug" icon is by tezar tantular from [Noun Project](https://thenounproject.com/browse/icons/term/unplug/) (licensed under [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/)).
+
+### Another Metroid 2 Remake
+Integration written by [Miepee](https://github.com/Miepee). Offworld sprites are licensed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) and are made by [AbyssalCreature](https://github.com/AbyssalCreature), ShirtyScarab554 and [many others](https://github.com/randovania/YAMS/blob/main/YAMS-LIB/sprites/Attribution.md).
+
 
 <!-- End CREDITS -->
 
@@ -207,7 +221,7 @@ Getting started:
 
 In order to start Randovania, open:
    1. Windows: `tools/start_client.bat`
-   2. Linux/macOS: `tools/start_client.sh` 
+   2. Linux/macOS: `tools/start_client.sh`
 
 In order to update your repository:
    1. Update the git repository. (With `git pull` or anything else)
@@ -217,23 +231,23 @@ In order to update your repository:
    4. Open Randovania normally.
 
 In order to run the tests:
-   1. Run both "Getting started" and "Start Randovania" steps. 
+   1. Run both "Getting started" and "Start Randovania" steps.
    2. Activate the virtual env. Check start_client.bat/sh for details.
    3. Run `python -m pip install -r requirements.txt`.
    4. Run `python -m pytest test`.
 
 In order to run the server:
-   1. Run both "Getting started" and "Start Randovania" steps. 
+   1. Run both "Getting started" and "Start Randovania" steps.
    2. Activate the virtual env. Check start_client.bat/sh for details.
    3. Run `python -m pip install -r requirements.txt`.
    4. Run `python tools/prepare_dev_server_config.py` once.
-   5. If you wish to use any Discord functionality, you'll need to create an app in Discord 
-   and fill both ids in `tools/dev-server-configuration.json`.  
+   5. If you wish to use any Discord functionality, you'll need to create an app in Discord
+   and fill both ids in `tools/dev-server-configuration.json`.
    6. Run the server and client. You can this on
       1. Windows with `tools/start_dev_server.bat` for the server and `tools/start_debug_client.bat` for the client
       2. Linux/macOS with `tools/start_dev_server.sh` for the server and `tools_start_debug_client.sh` for client
-   
-This repository uses [pre-commit](https://pre-commit.com/). The hook is automatically configured with 
+
+This repository uses [pre-commit](https://pre-commit.com/). The hook is automatically configured with
 the `prepare_virtual_env` scripts.
 
 Suggested IDE: [PyCharm Community](https://www.jetbrains.com/pycharm/download/)
