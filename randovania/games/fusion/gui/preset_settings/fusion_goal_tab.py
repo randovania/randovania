@@ -28,7 +28,8 @@ class PresetFusionGoal(PresetTab, Ui_PresetFusionGoal):
         self.restrict_placement_radiobutton.toggled.connect(self._on_restrict_placement)
         self.free_placement_radiobutton.toggled.connect(self._on_free_placement)
         signal_handling.on_checked(self.prefer_bosses_check, self._on_prefer_bosses)
-        self.metroid_slider.valueChanged.connect(self._on_metroid_slider_changed)
+        self.required_slider.valueChanged.connect(self._on_required_slider_changed)
+        self.placed_slider.valueChanged.connect(self._on_placed_slider_changed)
 
     @classmethod
     def tab_title(cls) -> str:
@@ -39,8 +40,8 @@ class PresetFusionGoal(PresetTab, Ui_PresetFusionGoal):
         return False
 
     def _update_slider_max(self) -> None:
-        self.metroid_slider.setMaximum(self.num_preferred_locations)
-        self.metroid_slider.setEnabled(self.num_preferred_locations > 0)
+        self.placed_slider.setMaximum(self.num_preferred_locations)
+        self.placed_slider.setEnabled(self.num_preferred_locations > 0)
 
     def _edit_config(self, call: Callable[[FusionArtifactConfig], FusionArtifactConfig]) -> None:
         config = self._editor.configuration
@@ -86,11 +87,21 @@ class PresetFusionGoal(PresetTab, Ui_PresetFusionGoal):
         self._edit_config(edit)
         self._update_slider_max()
 
-    def _on_metroid_slider_changed(self) -> None:
-        self.metroid_slider_label.setText(f"{self.metroid_slider.value()} Infant Metroids")
+    def _on_required_slider_changed(self) -> None:
+        self.required_slider_label.setText(f"{self.required_slider.value()} Metroids Required")
 
         def edit(config: FusionArtifactConfig) -> FusionArtifactConfig:
-            return dataclasses.replace(config, required_artifacts=self.metroid_slider.value())
+            return dataclasses.replace(config, required_artifacts=self.required_slider.value())
+
+        self._edit_config(edit)
+
+    def _on_placed_slider_changed(self) -> None:
+        self.placed_slider_label.setText(f"{self.placed_slider.value()} Metroids in Pool")
+        self.required_slider.setMaximum(self.placed_slider.value())
+        self.required_slider.setEnabled(self.placed_slider.value() > 0)
+
+        def edit(config: FusionArtifactConfig) -> FusionArtifactConfig:
+            return dataclasses.replace(config, placed_artifacts=self.placed_slider.value())
 
         self._edit_config(edit)
 
@@ -100,4 +111,5 @@ class PresetFusionGoal(PresetTab, Ui_PresetFusionGoal):
         self.free_placement_radiobutton.setChecked(artifacts.prefer_anywhere)
         self.restrict_placement_radiobutton.setChecked(not artifacts.prefer_anywhere)
         self.prefer_bosses_check.setChecked(artifacts.prefer_bosses)
-        self.metroid_slider.setValue(artifacts.required_artifacts)
+        self.required_slider.setValue(artifacts.required_artifacts)
+        self.placed_slider.setValue(artifacts.placed_artifacts)
