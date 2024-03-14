@@ -102,6 +102,11 @@ def extract_game_data(game: RandovaniaGame, games_dir: Path, covers_dir: Path):
         "faq": [{"question": question, "answer": answer} for question, answer in data.faq],
     }
 
+    if game is RandovaniaGame.BLANK:
+        # in dev builds, this would normally be true
+        # but we don't want the website to know that
+        output["multiworld"] = False
+
     yaml = YAML()
     yaml.allow_unicode = False
     with games_dir.joinpath(f"{game.value}.md").open("w") as out_file:
