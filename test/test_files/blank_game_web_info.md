@@ -8,7 +8,7 @@ randomize:
 need-to-play:
 - A Nintendo Virtual Boy
 - Your original Virtual Boy Game Cartridge
-multiworld: true
+multiworld: false
 development-state: experimental
 faq: []
 ---
