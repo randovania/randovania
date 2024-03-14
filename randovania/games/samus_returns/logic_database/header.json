@@ -4543,7 +4543,7 @@
                     }
                 }
             },
-            "Defeat Swarms": {
+            "Deal with Swarms": {
                 "display_name": "Defeat Swarms",
                 "requirement": {
                     "type": "or",
@@ -4562,114 +4562,23 @@
                             {
                                 "type": "resource",
                                 "data": {
-                                    "type": "tricks",
-                                    "name": "Combat",
-                                    "amount": 2,
-                                    "negate": false
-                                }
-                            },
-                            {
-                                "type": "and",
-                                "data": {
-                                    "comment": null,
-                                    "items": [
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": "tricks",
-                                                "name": "Combat",
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        },
-                                        {
-                                            "type": "or",
-                                            "data": {
-                                                "comment": null,
-                                                "items": [
-                                                    {
-                                                        "type": "template",
-                                                        "data": "Lay Power Bomb"
-                                                    },
-                                                    {
-                                                        "type": "template",
-                                                        "data": "Shoot Beam Burst"
-                                                    }
-                                                ]
-                                            }
-                                        }
-                                    ]
-                                }
-                            }
-                        ]
-                    }
-                }
-            },
-            "Deal with Black Gravitt in Low Ceiling": {
-                "display_name": "Deal with Black Gravitt in Low Ceiling",
-                "requirement": {
-                    "type": "or",
-                    "data": {
-                        "comment": null,
-                        "items": [
-                            {
-                                "type": "resource",
-                                "data": {
                                     "type": "items",
-                                    "name": "Armor",
+                                    "name": "Plasma",
                                     "amount": 1,
                                     "negate": false
                                 }
                             },
                             {
                                 "type": "template",
-                                "data": "Use Spider Ball"
+                                "data": "Shoot Beam Burst"
                             },
                             {
-                                "type": "template",
-                                "data": "Defeat Non-Counterable Enemies"
-                            },
-                            {
-                                "type": "and",
+                                "type": "resource",
                                 "data": {
-                                    "comment": null,
-                                    "items": [
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": "tricks",
-                                                "name": "DBoost",
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        },
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": "damage",
-                                                "name": "Damage",
-                                                "amount": 45,
-                                                "negate": false
-                                            }
-                                        }
-                                    ]
-                                }
-                            },
-                            {
-                                "type": "and",
-                                "data": {
-                                    "comment": "Spin Jump over the Gravitt when it lunges",
-                                    "items": [
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": "tricks",
-                                                "name": "Dodge",
-                                                "amount": 2,
-                                                "negate": false
-                                            }
-                                        }
-                                    ]
+                                    "type": "tricks",
+                                    "name": "Combat",
+                                    "amount": 2,
+                                    "negate": false
                                 }
                             }
                         ]
@@ -4679,10 +4588,14 @@
             "Defeat Gold Autrack": {
                 "display_name": "Defeat Gold Autrack",
                 "requirement": {
-                    "type": "or",
+                    "type": "and",
                     "data": {
                         "comment": null,
                         "items": [
+                            {
+                                "type": "template",
+                                "data": "Defeat Gold Robots"
+                            },
                             {
                                 "type": "resource",
                                 "data": {
@@ -4700,10 +4613,6 @@
                                     "amount": 4,
                                     "negate": false
                                 }
-                            },
-                            {
-                                "type": "template",
-                                "data": "Defeat Gold Robots"
                             }
                         ]
                     }
@@ -5371,7 +5280,154 @@
             "to_shuffle_proportion": 1.0
         }
     },
-    "used_trick_levels": null,
+    "used_trick_levels": {
+        "Knowledge": [
+            1,
+            2
+        ],
+        "IBJ": [
+            1,
+            2,
+            3,
+            4,
+            5
+        ],
+        "SWJ": [
+            1,
+            2,
+            3,
+            4,
+            5
+        ],
+        "SuperJump": [
+            1,
+            2,
+            3,
+            4
+        ],
+        "FrozenEnemy": [
+            1,
+            2,
+            3
+        ],
+        "Combat": [
+            1,
+            2,
+            3,
+            4,
+            5
+        ],
+        "UnmorphExtend": [
+            1,
+            2,
+            3,
+            4
+        ],
+        "MissilelessMetroids": [
+            1,
+            2,
+            3,
+            4
+        ],
+        "CornerClip": [
+            2
+        ],
+        "OoB": [
+            1,
+            2,
+            3,
+            4
+        ],
+        "Walljump": [
+            1,
+            2,
+            3,
+            4
+        ],
+        "Freeze": [
+            1,
+            2
+        ],
+        "Spider Boost": [
+            1,
+            2,
+            3,
+            4
+        ],
+        "DBJ": [
+            1,
+            2,
+            3,
+            5
+        ],
+        "AirMorph": [
+            1,
+            2,
+            3
+        ],
+        "PhaseSkip": [
+            2,
+            3,
+            4,
+            5
+        ],
+        "Movement": [
+            1,
+            2,
+            3,
+            4,
+            5
+        ],
+        "IceClip": [
+            1,
+            2,
+            3,
+            4
+        ],
+        "MeleeClip": [
+            1,
+            2,
+            3
+        ],
+        "DBoost": [
+            1,
+            2,
+            3,
+            4
+        ],
+        "PreciseAiming": [
+            1,
+            2,
+            3
+        ],
+        "UBJ": [
+            1,
+            2,
+            3,
+            4
+        ],
+        "SpiderClip": [
+            1,
+            2,
+            3,
+            4
+        ],
+        "PhaseClip": [
+            2,
+            3
+        ],
+        "Dodge": [
+            1,
+            2,
+            3,
+            4
+        ],
+        "HazardRun": [
+            1,
+            2,
+            3
+        ]
+    },
     "regions": [
         "Surface - East.json",
         "Area 1.json",
