@@ -5,7 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [7.4.0] - 2024-03-??
+
+
+## [7.4.1] - 2024-03-13
+
+### AM2R
+- Fixed: Hitting Zetas with Charge Beam works again.
+
+## [7.4.0] - 2024-03-08
 
 - Added: A warning will be shown when trying to generate a game where more items are in the pool than the maximum amount of items.
 - Added: When a game is exported via ftp, a message is displayed indicating that an attempt is being made to connect to the ftp server instead of the patcher's misleading "Done" message.
