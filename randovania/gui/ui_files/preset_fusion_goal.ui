@@ -36,7 +36,7 @@
     <item>
      <widget class="QLabel" name="description_label">
       <property name="text">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;In addition to preparing for battle with the SA-X, it is now necessary to collect the escaped Infant Metroids in order to reach the Operations Room. The minimum and maximum are limited to 0 and 20 Infant Metroids.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;In addition to preparing for battle with the SA-X, it is now necessary to collect the escaped Infant Metroids in order to reach the Operations Room. The minimum and maximum are limited to 0 and 20 Infant Metroids. You can choose to place more Metroids than required.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
       <property name="wordWrap">
        <bool>true</bool>
@@ -44,9 +44,19 @@
      </widget>
     </item>
     <item>
-     <layout class="QHBoxLayout" name="metroid_slider_layout">
+     <widget class="QLabel" name="placed_label">
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Controls how many Infant Metroids will be placed in the game.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+      <property name="wordWrap">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="placed_slider_layout">
       <item>
-       <widget class="QSlider" name="metroid_slider">
+       <widget class="QSlider" name="placed_slider">
         <property name="maximum">
          <number>46</number>
         </property>
@@ -62,7 +72,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QLabel" name="metroid_slider_label">
+       <widget class="QLabel" name="placed_slider_label">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
           <horstretch>0</horstretch>
@@ -71,7 +81,59 @@
         </property>
         <property name="minimumSize">
          <size>
-          <width>20</width>
+          <width>150</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>0</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <widget class="QLabel" name="required_label">
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Controls how many Infant Metroids are required to beat the game.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+      <property name="wordWrap">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="required_slider_layout">
+      <item>
+       <widget class="QSlider" name="required_slider">
+        <property name="maximum">
+         <number>46</number>
+        </property>
+        <property name="pageStep">
+         <number>2</number>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="tickPosition">
+         <enum>QSlider::TicksBelow</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="required_slider_label">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>150</width>
           <height>0</height>
          </size>
         </property>
