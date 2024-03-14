@@ -3,9 +3,6 @@ from __future__ import annotations
 import datetime
 from typing import TYPE_CHECKING, Any
 
-from htmlmin import minify
-from ruamel.yaml import YAML
-
 from randovania.game_description import default_database
 from randovania.game_description.requirements.array_base import RequirementArrayBase
 from randovania.game_description.requirements.requirement_and import RequirementAnd
@@ -279,6 +276,8 @@ def generate_region_html(name: str, areas: dict[str, dict[str, dict[str, list[tu
 
     html = header + toc + body + HTML_FOOTER
 
+    from htmlmin import minify
+
     return minify(html, remove_comments=True, remove_all_empty_space=True)
 
 
@@ -333,6 +332,8 @@ def export_as_yaml(game: RandovaniaGame, out_dir: Path, as_frontmatter: bool):
     if as_frontmatter:
         tr = lambda s: f"---\n{s}---\n"
         fmt = "md"
+
+    from ruamel.yaml import YAML
 
     yaml = YAML(typ="safe")
     with out_dir.joinpath(f"{game.value}.{fmt}").open("w") as out_file:
