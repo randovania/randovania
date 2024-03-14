@@ -501,6 +501,8 @@ class MSRPatchDataFactory(PatchDataFactory):
             "cosmetic_patches": self._create_cosmetics(),
             "configuration_identifier": self.description.shareable_hash,
             "door_patches": self._door_patches(),
+            "layout_uuid": str(self.players_config.get_own_uuid()),
+            "enable_remote_lua": self.cosmetic_patches.enable_remote_lua or self.players_config.is_multiworld,
         }
 
 

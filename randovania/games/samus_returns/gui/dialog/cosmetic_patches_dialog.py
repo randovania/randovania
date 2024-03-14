@@ -34,6 +34,7 @@ class MSRCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_MSRCosmeticPatchesD
         self._persist_check_field(self.custom_energy_tank_color_check, "use_energy_tank_color")
         self._persist_check_field(self.custom_aeion_bar_color_check, "use_aeion_bar_color")
         self._persist_check_field(self.custom_ammo_hud_color_check, "use_ammo_hud_color")
+        self._persist_check_field(self.enable_remote_lua, "enable_remote_lua")
         self.custom_laser_locked_color_button.clicked.connect(
             lambda: self._open_color_picker(self._cosmetic_patches.laser_locked_color, "laser_locked")
         )
@@ -66,6 +67,7 @@ class MSRCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_MSRCosmeticPatchesD
         self.custom_energy_tank_color_check.setChecked(patches.use_energy_tank_color)
         self.custom_aeion_bar_color_check.setChecked(patches.use_aeion_bar_color)
         self.custom_ammo_hud_color_check.setChecked(patches.use_ammo_hud_color)
+        self.enable_remote_lua.setChecked(patches.enable_remote_lua)
 
         box_mapping = [
             (self.custom_laser_locked_color_square, patches.laser_locked_color),
