@@ -27,6 +27,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### AM2R
 - Fixed: Hitting Zetas with Charge Beam works again.
 
+### Cave Story
+- Fixed: Cave Story exports with CS:Tweaked now prioritize the mod-specific files over Freeware's. This solves several issues with missing graphics when exporting over a Freeeware game.
+- Fixed: Missing graphical assets for rando-exclusive inventory entries in Cave Story: Tweaked exports
+
 ## [7.4.0] - 2024-03-08
 
 - Added: A warning will be shown when trying to generate a game where more items are in the pool than the maximum amount of items.
