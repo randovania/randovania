@@ -72,7 +72,7 @@ by [SpaghettiToastBook](https://www.twitch.tv/spaghettitoastbook), [gollop](http
 
 [BashPrime](https://www.twitch.tv/bashprime), [Pwootage](https://github.com/Pwootage), and [April Wade](https://github.com/aprilwade) made <https://randomizer.metroidprime.run/>, from which the GUI was based.
 
-Website created by [Hugoshido](https://twitch.tv/hugoshido).
+Website created by [Hugoshido](https://twitch.tv/hugoshido) and [duncathan_salt](https://twitter.com/duncathan_salt). portfolYOU Jekyll theme by Youssef Raafat. Free for personal and commercial use under the [MIT license](https://github.com/YoussefRaafatNasry/portfolYOU/blob/master/LICENSE).
 
 Installer is powered by [Advanced Installer](https://www.advancedinstaller.com/), which has graciously provided us with an open source license.
 

@@ -96,6 +96,15 @@ class GameGenerator:
     """Use AllJokesDistributor if not using hints."""
 
 
+@dataclass(frozen=True)
+class GameWebInfo:
+    what_can_randomize: Iterable[str] = ()
+    """What can be randomized?"""
+
+    need_to_play: Iterable[str] = ()
+    """What do you need to play?"""
+
+
 class DevelopmentState(Enum):
     STABLE = "stable"
     EXPERIMENTAL = "experimental"
@@ -158,6 +167,9 @@ class GameData:
 
     multiple_start_nodes_per_area: bool = False
     """If this game allows multiple start nodes per area."""
+
+    web_info: GameWebInfo = GameWebInfo()
+    """Contains a handful of fields displayed primarily on the website."""
 
 
 class RandovaniaGame(BitPackEnum, Enum):
