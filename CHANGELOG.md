@@ -22,7 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: Updated A-Kul's scan with the 2023 CGC Tournament winners.
 
-## [7.4.1] - 2024-03-xx
+## [7.4.1] - 2024-03-13
 
 ### AM2R
 - Fixed: Hitting Zetas with Charge Beam works again.
