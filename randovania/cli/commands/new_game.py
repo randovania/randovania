@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import dataclasses
 import re
-import shutil
 import subprocess
 import sys
 import uuid
@@ -81,10 +80,6 @@ def copy_python_code(
     new_root = _GAMES_PATH.joinpath(enum_value)
 
     new_root.mkdir(exist_ok=True)
-
-    # Copy cover art
-    new_root.joinpath("assets").mkdir(exist_ok=True)
-    shutil.copyfile(blank_root.joinpath("assets/cover.png"), new_root.joinpath("assets/cover.png"))
 
     # Copy game dir
     for file in blank_root.rglob("*"):
