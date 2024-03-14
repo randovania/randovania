@@ -41,6 +41,12 @@ class EchoesGameExporter(GameExporter):
         """
         return True
 
+    def export_params_type(self) -> type[GameExportParams]:
+        """
+        Returns the type of the GameExportParams expected by this exporter.
+        """
+        return EchoesGameExportParams
+
     def _before_export(self):
         assert not self._busy
         self._busy = True

@@ -328,7 +328,7 @@ def test_room_rando_map_maker(test_files_dir, mocker, tmp_path):
         "randovania.games.prime1.exporter.game_exporter.create_map_using_matplotlib"
     )
 
-    patch_data = test_files_dir.read_json("randomprime_expected_data_crazy.json")
+    patch_data = test_files_dir.read_json("patcher_data", "prime1", "prime1_crazy_seed", "world_1.json")
 
     exporter = PrimeGameExporter()
 

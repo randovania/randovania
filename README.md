@@ -174,7 +174,7 @@ Integration written by [Miepee](https://github.com/Miepee). Offworld sprites are
 
 ## Dependencies
 
-* [Python 3.11 64-bit](https://www.python.org/ftp/python/3.11.0/python-3.11.0rc1-amd64.exe)
+* [Python 3.12 64-bit](https://www.python.org/ftp/python/3.12.1/python-3.12.1-amd64.exe)
 * [Git](https://git-scm.com/downloads)
 
 ## Setup

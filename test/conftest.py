@@ -6,7 +6,7 @@ import uuid
 from importlib.util import find_spec
 from pathlib import Path
 from typing import TYPE_CHECKING
-from unittest.mock import MagicMock
+from unittest.mock import MagicMock, PropertyMock
 
 import pytest
 from frozendict import frozendict
@@ -28,6 +28,8 @@ from randovania.layout.preset import Preset
 from randovania.lib import json_lib
 
 if TYPE_CHECKING:
+    import pytest_mock
+
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.pickup.pickup_database import PickupDatabase
     from randovania.game_description.resources.resource_database import ResourceDatabase
@@ -200,6 +202,11 @@ def am2r_game_description() -> GameDescription:
 @pytest.fixture(scope="session")
 def msr_game_description() -> GameDescription:
     return default_database.game_description_for(RandovaniaGame.METROID_SAMUS_RETURNS)
+
+
+@pytest.fixture(scope="session")
+def fusion_game_description() -> GameDescription:
+    return default_database.game_description_for(RandovaniaGame.FUSION)
 
 
 @pytest.fixture(scope="session")
@@ -376,6 +383,25 @@ def dataclass_test_lib() -> DataclassTestLib:
 def empty_patches(default_blank_configuration, blank_game_description) -> GamePatches:
     configuration = default_blank_configuration
     return GamePatches.create_from_game(blank_game_description, 0, configuration)
+
+
+@pytest.fixture()
+def _mock_seed_hash(mocker: pytest_mock.MockerFixture):
+    mocker.patch(
+        "randovania.layout.layout_description.LayoutDescription.shareable_hash_bytes",
+        new_callable=PropertyMock,
+        return_value=b"\x00\x00\x00\x00\x00",
+    )
+    mocker.patch(
+        "randovania.layout.layout_description.LayoutDescription.shareable_word_hash",
+        new_callable=PropertyMock,
+        return_value="Some Words",
+    )
+    mocker.patch(
+        "randovania.layout.layout_description.LayoutDescription.shareable_hash",
+        new_callable=PropertyMock,
+        return_value="XXXXXXXX",
+    )
 
 
 @pytest.fixture()

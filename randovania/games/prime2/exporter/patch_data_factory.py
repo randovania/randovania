@@ -472,7 +472,8 @@ def _logbook_title_string_patches() -> list[dict[str, typing.Any]]:
 
 def _akul_testament_string_patch(namer: HintNamer) -> list[dict[str, typing.Any]]:
     # update after each tournament! ordered from newest to oldest
-    champs = [
+    raw_champs = [
+        {"title": "CGC 2023 Champions", "name": "TheGingerChris and BajaBlood"},
         {"title": "2022 Champion", "name": "Cestrion"},
         {"title": "CGC 2022 Champions", "name": "Cosmonawt and Cestrion"},
         {"title": "2021 Champion", "name": "Dyceron"},
@@ -480,18 +481,15 @@ def _akul_testament_string_patch(namer: HintNamer) -> list[dict[str, typing.Any]
     ]
 
     title = "Metroid Prime 2: Echoes Randomizer Tournament"
-    champ_string = "\n".join(
-        [f'{champ["title"]}: {namer.format_player(champ["name"], with_color=True)}' for champ in champs]
-    )
-    latest = champ_string.partition("\n")[0]
+    champs = [f'{champ["title"]}\n{namer.format_player(champ["name"], with_color=True)}' for champ in raw_champs]
 
     return [
         {
             "asset_id": 0x080BBD00,
             "strings": [
                 "Luminoth Datapac translated.\n(Champions of Aether)",
-                f"{title}\n\n{latest}",
-                f"{title}\n\n{champ_string}",
+                f"{title}\n\n\n{champs[0]}",
+                f"{title}\n\n\n" + "\n".join(champs),
             ],
         },
     ]

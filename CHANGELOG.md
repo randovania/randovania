@@ -5,7 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [7.5.0] - 2024-04-??
 
+- Added: Command line arguments for exporting games. These commands are intended for advanced uses only.
+- Fixed: During generation, actions that involves multiple progressive pickups are now properly considered.
+
+### Metroid Dread
+
+#### Logic Database
+
+##### Elun
+
+- Changed: Releasing the X without Bombs or Cross Bombs now requires Knowledge (Beginner).
+
+### Metroid Prime 2: Echoes
+
+- Added: Updated A-Kul's scan with the 2023 CGC Tournament winners.
 
 ## [7.4.1] - 2024-03-13
 
@@ -86,13 +101,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Hive Mecha: Fight skip via walkway lowered to Intermediate Movement
 - Added: Hive Mecha: Fight skip NSJ Advanced Movement bunny hop
 - Added: Furnace: Spider track climb trick description
-- Added: Furnace: Bombless Intermediate Movement to West Furnace Access 
-- Added: Burn Dome Access: Advanced Movement and Wallboost bombless escape 
+- Added: Furnace: Bombless Intermediate Movement to West Furnace Access
+- Added: Burn Dome Access: Advanced Movement and Wallboost bombless escape
 - Added: Hall of the Elders: Advanced Complex Bomb Jump wave slot skip
 
 ##### Phazon Mines
 
-- Added: Elite Research: Advanced IUJ scanless climb 
+- Added: Elite Research: Advanced IUJ scanless climb
 - Added: Main Quarry: Advanced BSJ to Waste Disposal
 - Added: Metroid Quarantine B: Hypermode Single Room OOB NSJ bombless
 - Added: Elevator Access A: Hypermode bombless spiderless climb from Elevator A

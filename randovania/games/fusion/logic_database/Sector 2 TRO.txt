@@ -1,0 +1,1589 @@
+----------------
+Entrance Hub
+Extra - map_name: Sector 20
+Extra - room_id: [0]
+> Door to Entrance Recharge Room; Heals? False
+  * Layers: default
+  * L0 Hatch to Entrance Recharge Room/Door to Entrance Hub
+  * Extra - door_idx: (1,)
+  > Door to Data Hub Access
+      Trivial
+
+> Door to Data Hub Access; Heals? False
+  * Layers: default
+  * L0 Hatch to Data Hub Access/Door to Entrance Hub
+  * Extra - door_idx: (2,)
+  > Door to Entrance Recharge Room
+      Trivial
+  > Other to Kihunter Hallway
+      All of the following:
+          Can Use Power Bombs
+          Combat (Beginner) or Can Climb High Jump Wall
+  > Door to Owtch Cache A
+      Trivial
+  > Door to Security Corridor
+      Trivial
+  > Door to Kago Room
+      Trivial
+  > Other to Entrance Hub Underside
+      Can Use Any Bombs
+
+> Other to Kihunter Hallway; Heals? False
+  * Layers: default
+  * Tunnel to Kihunter Hallway/Other to Entrance Hub
+  * Extra - door_idx: (3,)
+  > Door to Data Hub Access
+      Can Use Power Bombs
+
+> Door to Owtch Cache A; Heals? False
+  * Layers: default
+  * L1 Hatch to Owtch Cache A/Door to Entrance Hub
+  * Extra - door_idx: (4,)
+  > Door to Data Hub Access
+      Trivial
+
+> Door to Security Corridor; Heals? False
+  * Layers: default
+  * L0 Hatch to Security Corridor/Door to Entrance Hub
+  * Extra - door_idx: (5,)
+  > Door to Data Hub Access
+      Trivial
+
+> Door to Kago Room; Heals? False
+  * Layers: default
+  * L0 Hatch to Kago Room/Door to Entrance Hub
+  * Extra - door_idx: (15,)
+  > Door to Data Hub Access
+      Trivial
+
+> Other to Entrance Hub Underside; Heals? False
+  * Layers: default
+  * Tunnel to Entrance Hub Underside/Other to Entrance Hub
+  * Extra - door_idx: (32,)
+  > Door to Data Hub Access
+      Can Use Any Bombs
+
+----------------
+Entrance Save Room
+Extra - map_name: Sector 21
+Extra - room_id: [1]
+> Door to Entrance Recharge Room; Heals? False
+  * Layers: default
+  * L0 Hatch to Entrance Recharge Room/Door to Entrance Save Room
+  * Extra - door_idx: (6,)
+  > Door to Entrance Navigation Room
+      Trivial
+
+> Door to Entrance Navigation Room; Heals? False
+  * Layers: default
+  * L0 Hatch to Entrance Navigation Room/Door to Entrance Save Room
+  * Extra - door_idx: (7,)
+  > Door to Entrance Recharge Room
+      Trivial
+  > Save Station
+      Trivial
+
+> Save Station; Heals? False; Spawn Point
+  * Layers: default
+  * Extra - X: 9
+  * Extra - Y: 10
+  > Door to Entrance Navigation Room
+      Trivial
+
+----------------
+Entrance Navigation Room
+Extra - map_name: Sector 22
+Extra - room_id: [2]
+> Door to Entrance Save Room; Heals? False
+  * Layers: default
+  * Open Hatch to Entrance Save Room/Door to Entrance Navigation Room
+  * Extra - door_idx: (8,)
+  > Door to Elevator to Main Deck
+      Trivial
+
+> Door to Elevator to Main Deck; Heals? False
+  * Layers: default
+  * Open Hatch to Elevator to Main Deck/Door to Entrance Navigation Room
+  * Extra - door_idx: (67,)
+  > Door to Entrance Save Room
+      Trivial
+  > Navigation Terminal
+      Trivial
+
+> Navigation Terminal; Heals? False
+  * Layers: default
+  * Hint
+  * Extra - hint_name: Sector2Entrance
+  * Extra - location_precision: REGION_ONLY
+  * Extra - item_precision: PRECISE_CATEGORY
+  > Door to Elevator to Main Deck
+      Trivial
+
+----------------
+Data Hub Access
+Extra - map_name: Sector 23
+Extra - room_id: [3, 30]
+> Door to Entrance Hub; Heals? False
+  * Layers: default
+  * L0 Hatch to Entrance Hub/Door to Data Hub Access
+  * Extra - door_idx: (9, 68)
+  > Door to Data Hub
+      Trivial
+
+> Door to Data Hub; Heals? False
+  * Layers: default
+  * L0 Hatch to Data Hub/Door to Data Hub Access
+  * Extra - door_idx: (10,)
+  > Door to Entrance Hub
+      Trivial
+
+----------------
+Security Corridor
+Extra - map_name: Sector 24
+Extra - room_id: [4]
+> Door to Entrance Hub; Heals? False
+  * Layers: default
+  * L0 Hatch to Entrance Hub/Door to Security Corridor
+  * Extra - door_idx: (11,)
+  > Door to Security Access
+      Trivial
+
+> Door to Security Access; Heals? False
+  * Layers: default
+  * L0 Hatch to Security Access/Door to Security Corridor
+  * Extra - door_idx: (12,)
+  > Door to Entrance Hub
+      Trivial
+
+----------------
+Security Access
+Extra - map_name: Sector 25
+Extra - room_id: [5]
+> Door to Security Corridor; Heals? False
+  * Layers: default
+  * L0 Hatch to Security Corridor/Door to Security Access
+  * Extra - door_idx: (13,)
+  > Door to Level 1 Security Room (Lower)
+      Trivial
+  > Door to Level 1 Security Room (Upper)
+      Trivial
+  > Door to Connection to Sector 4 (AQA)
+      Screw Attack
+
+> Door to Level 1 Security Room (Lower); Heals? False
+  * Layers: default
+  * L1 Hatch to Level 1 Security Room/Door to Security Access (Lower)
+  * Extra - door_idx: (58,)
+  > Door to Security Corridor
+      Trivial
+
+> Door to Level 1 Security Room (Upper); Heals? False
+  * Layers: default
+  * L0 Hatch to Level 1 Security Room/Door to Security Access (Upper)
+  * Extra - door_idx: (60,)
+  > Door to Security Corridor
+      Trivial
+
+> Door to Connection to Sector 4 (AQA); Heals? False
+  * Layers: default
+  * L0 Hatch to Connection to Sector 4 (AQA)/Door to Security Access
+  * Extra - door_idx: (128,)
+  > Door to Security Corridor
+      Screw Attack
+
+----------------
+Owtch Cache A
+Extra - map_name: Sector 26
+Extra - room_id: [6]
+> Pickup (Missile Tank); Heals? False
+  * Layers: default
+  * Pickup 25; Category? Minor
+  * Extra - area: 2
+  * Extra - room: 6
+  * Extra - blockx: 29
+  * Extra - blocky: 8
+  > Door to Entrance Hub
+      Can Use Any Bombs
+
+> Door to Entrance Hub; Heals? False
+  * Layers: default
+  * L1 Hatch to Entrance Hub/Door to Owtch Cache A
+  * Extra - door_idx: (14,)
+  > Pickup (Missile Tank)
+      Can Use Any Bombs
+
+----------------
+Data Room
+Extra - map_name: Sector 28
+Extra - room_id: [8]
+> Door to Data Hub; Heals? False
+  * Layers: default
+  * L1 Hatch to Data Hub/Door to Data Room
+  * Extra - door_idx: (19,)
+  > Pickup (Morph Ball Bombs)
+      Trivial
+
+> Pickup (Morph Ball Bombs); Heals? False
+  * Layers: default
+  * Pickup 105; Category? Major
+  * Extra - area: 2
+  * Extra - room: 8
+  * Extra - source: TroData
+  > Door to Data Hub
+      Trivial
+
+----------------
+Zoro Zig-Zag
+Extra - map_name: Sector 29
+Extra - room_id: [9]
+> Pickup (Missile Tank); Heals? False
+  * Layers: default
+  * Pickup 26; Category? Minor
+  * Extra - area: 2
+  * Extra - room: 9
+  * Extra - blockx: 13
+  * Extra - blocky: 4
+  > Door to Data Hub
+      Morph Ball
+
+> Door to Data Hub; Heals? False
+  * Layers: default
+  * L0 Hatch to Data Hub/Door to Zoro Zig-Zag
+  * Extra - door_idx: (20,)
+  > Pickup (Missile Tank)
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Can Activate Pillar or Can Climb High Jump Wall
+              # Stand on Frozen Reo
+              Combat (Beginner) and Stand On Frozen Enemies (Beginner) and Can Freeze Enemies
+  > Door to Maintenance Annex
+      Can Bounce in Ball and Can Use Any Bombs
+
+> Door to Maintenance Annex; Heals? False
+  * Layers: default
+  * L0 Hatch to Maintenance Annex/Door to Zoro Zig-Zag
+  * Extra - door_idx: (21,)
+  > Door to Data Hub
+      All of the following:
+          Morph Ball
+          Any of the following:
+              All of the following:
+                  Space Jump
+                  Any of the following:
+                      Power Bombs
+                      All of the following:
+                          Morph Ball Bomb Data
+                          Any of the following:
+                              Jump Bombjump (Expert)
+                              Screw Attack and Knowledge (Beginner)
+              All of the following:
+                  High Jump
+                  Any of the following:
+                      Power Bombs
+                      All of the following:
+                          Morph Ball Bomb Data
+                          Any of the following:
+                              Jump Bombjump (Advanced)
+                              Screw Attack and Knowledge (Beginner) and Wall Jump (Intermediate)
+
+----------------
+Cultivation Station
+Extra - map_name: Sector 210
+Extra - room_id: [10]
+> Pickup (Missile Tank); Heals? False
+  * Layers: default
+  * Pickup 27; Category? Minor
+  * Extra - area: 2
+  * Extra - room: 10
+  * Extra - blockx: 19
+  * Extra - blocky: 35
+  > Door to Puyo Corridor
+      Can Use Any Bombs
+
+> Door to Maintenance Annex; Heals? False
+  * Layers: default
+  * L0 Hatch to Maintenance Annex/Door to Cultivation Station
+  * Extra - door_idx: (22,)
+  > Door to Puyo Corridor
+      Can Break Single Bomb Blocks
+
+> Door to Puyo Corridor; Heals? False
+  * Layers: default
+  * L0 Hatch to Puyo Corridor/Door to Cultivation Station
+  * Extra - door_idx: (23,)
+  > Pickup (Missile Tank)
+      Can Use Any Bombs
+  > Door to Maintenance Annex
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Power Bombs
+              Morph Ball Bomb Data and Mid-Air Morph (Advanced)
+              Screw Attack and Knowledge (Beginner)
+
+----------------
+Puyo Corridor
+Extra - map_name: Sector 211
+Extra - room_id: [11]
+> Door to Cultivation Station; Heals? False
+  * Layers: default
+  * L0 Hatch to Cultivation Station/Door to Puyo Corridor
+  * Extra - door_idx: (24,)
+  > Door to Central Shaft
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Can Activate Pillar or Can Climb High Jump Wall
+              Stand On Frozen Enemies (Beginner) and Can Freeze Enemies
+
+> Door to Central Shaft; Heals? False
+  * Layers: default
+  * L0 Hatch to Central Shaft/Door to Puyo Corridor
+  * Extra - door_idx: (27,)
+  > Door to Cultivation Station
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Can Climb High Jump Wall
+              Stand On Frozen Enemies (Beginner) and Can Freeze Enemies
+              Morph Ball Bomb Data and Jump Bombjump (Expert)
+
+----------------
+Shooting Gallery
+Extra - map_name: Sector 212
+Extra - room_id: [12]
+> Door to Nettori Access; Heals? False
+  * Layers: default
+  * L0 Hatch to Nettori Access/Door to Shooting Gallery
+  * Extra - door_idx: (25,)
+  > Door to Nettori Arena
+      Trivial
+
+> Door to Nettori Arena; Heals? False
+  * Layers: default
+  * L0 Hatch to Nettori Arena/Door to Shooting Gallery
+  * Extra - door_idx: (26,)
+  > Door to Nettori Access
+      Trivial
+
+----------------
+Central Shaft
+Extra - map_name: Sector 213
+Extra - room_id: [13, 46]
+> Door to Puyo Corridor; Heals? False
+  * Layers: default
+  * L0 Hatch to Puyo Corridor/Door to Central Shaft
+  * Extra - door_idx: (28, 104)
+  > Door to Southern Save Access
+      Trivial
+  > Door to Dessgeega Dormitory
+      Trivial
+  > Door to Oasis
+      Trivial
+  > Door to Conceiled Ceiling
+      Trivial
+  > Door to Puyo Palace
+      Trivial
+  > Beside Drop
+      Any of the following:
+          Space Jump
+          All of the following:
+              High Jump
+              After Boss Zazabi Defeated or Wall Jump (Beginner)
+          Stand On Frozen Enemies (Beginner) and Can Freeze Enemies
+          # https://discord.com/channels/914291389293027329/1204806625244872835/1211159157424652318
+          Jump Bombjump (Hypermode) and Wall Jump (Hypermode) and Can Use Bombs
+
+> Door to Southern Save Access; Heals? False
+  * Layers: default
+  * L0 Hatch to Southern Save Access/Door to Central Shaft
+  * Extra - door_idx: (29, 105)
+  > Door to Puyo Corridor
+      Trivial
+
+> Door to Dessgeega Dormitory; Heals? False
+  * Layers: default
+  * L0 Hatch to Dessgeega Dormitory/Door to Central Shaft
+  * Extra - door_idx: (30,)
+  > Door to Puyo Corridor
+      Wall Jump (Beginner) or Can Climb High Jump Wall
+
+> Door to Oasis; Heals? False
+  * Layers: default
+  * L0 Hatch to Oasis/Door to Central Shaft
+  * Extra - door_idx: (94, 106)
+  > Door to Puyo Corridor
+      Trivial
+
+> Door to Conceiled Ceiling; Heals? False
+  * Layers: default
+  * L0 Hatch to Conceiled Ceiling/Door to Central Shaft
+  * Extra - door_idx: (96, 107)
+  > Door to Puyo Corridor
+      Trivial
+
+> Door to Puyo Palace; Heals? False
+  * Layers: default
+  * Open Hatch to Puyo Palace/Door to Central Shaft
+  * Extra - door_idx: (111, 112)
+  > Door to Puyo Corridor
+      Trivial
+
+> Door to Reo Room; Heals? False
+  * Layers: default
+  * L0 Hatch to Reo Room/Door to Central Shaft
+  * Extra - door_idx: (31,)
+  > Beside Drop
+      Can Use Any Bombs
+
+> Door to Ripper Roost; Heals? False
+  * Layers: default
+  * Open Hatch to Ripper Roost/Door to Central Shaft
+  * Extra - door_idx: (113,)
+  > Beside Drop
+      Morph Ball
+
+> Beside Drop; Heals? False
+  * Layers: default
+  > Door to Puyo Corridor
+      Trivial
+  > Door to Reo Room
+      All of the following:
+          Can Use Any Bombs
+          Wall Jump (Beginner) or Can Climb High Jump Wall
+  > Door to Ripper Roost
+      Morph Ball
+
+----------------
+Dessgeega Dormitory
+Extra - map_name: Sector 214
+Extra - room_id: [14]
+> Door to Central Shaft; Heals? False
+  * Layers: default
+  * L0 Hatch to Central Shaft/Door to Dessgeega Dormitory
+  * Extra - door_idx: (33,)
+  > Door to Collapsed Shaft
+      Trivial
+
+> Door to Collapsed Shaft; Heals? False
+  * Layers: default
+  * L0 Hatch to Collapsed Shaft/Door to Dessgeega Dormitory
+  * Extra - door_idx: (34, 100)
+  > Door to Central Shaft
+      Trivial
+
+----------------
+Southern Save Access
+Extra - map_name: Sector 215
+Extra - room_id: [15]
+> Door to Central Shaft; Heals? False
+  * Layers: default
+  * L0 Hatch to Central Shaft/Door to Southern Save Access
+  * Extra - door_idx: (35,)
+  > Door to Save Room South
+      Trivial
+
+> Door to Save Room South; Heals? False
+  * Layers: default
+  * L0 Hatch to Save Room South/Door to Southern Save Access
+  * Extra - door_idx: (36,)
+  > Door to Central Shaft
+      Trivial
+
+----------------
+Save Room South
+Extra - map_name: Sector 216
+Extra - room_id: [16]
+> Door to Southern Save Access; Heals? False
+  * Layers: default
+  * L0 Hatch to Southern Save Access/Door to Save Room South
+  * Extra - door_idx: (37,)
+  > Save Station
+      Trivial
+
+> Save Station; Heals? False; Spawn Point
+  * Layers: default
+  * Extra - X: 10
+  * Extra - Y: 10
+  > Door to Southern Save Access
+      Trivial
+
+----------------
+Zazabi Access
+Extra - map_name: Sector 217
+Extra - room_id: [17]
+> Pickup (Energy Tank); Heals? False
+  * Layers: default
+  * Pickup 28; Category? Major
+  * Extra - area: 2
+  * Extra - room: 17
+  * Extra - blockx: 44
+  * Extra - blocky: 7
+  > Door to Owtch Office
+      Trivial
+
+> Door to Collapsed Shaft; Heals? False
+  * Layers: default
+  * L0 Hatch to Collapsed Shaft/Door to Zazabi Access
+  * Extra - door_idx: (38,)
+
+> Door to Zazabi Arena; Heals? False
+  * Layers: default
+  * L0 Hatch to Zazabi Arena/Door to Zazabi Access
+  * Extra - door_idx: (39,)
+  > Door to Owtch Office
+      Trivial
+
+> Door to Owtch Office; Heals? False
+  * Layers: default
+  * L0 Hatch to Owtch Office/Door to Zazabi Access
+  * Extra - door_idx: (93,)
+  > Pickup (Energy Tank)
+      Trivial
+  > Door to Zazabi Arena
+      Can Kill Eye Door
+
+----------------
+Zazabi Arena
+Extra - map_name: Sector 218
+Extra - room_id: [18]
+> Door to Zazabi Access; Heals? False
+  * Layers: default
+  * L0 Hatch to Zazabi Access/Door to Zazabi Arena
+  * Extra - door_idx: (40,)
+  > Arena Floor
+      Trivial
+
+> Door to Zazabi Speedway; Heals? False
+  * Layers: default
+  * L0 Hatch to Zazabi Speedway/Door to Zazabi Arena
+  * Extra - door_idx: (133,)
+  > Door to Zazabi Access
+      Impossible
+  > Arena Floor
+      Screw Attack
+
+> Event - Zazabi; Heals? False
+  * Layers: default
+  * Event Boss Zazabi Defeated
+  > Pickup (High Jump)
+      Trivial
+
+> Pickup (High Jump); Heals? False
+  * Layers: default
+  * Pickup 107; Category? Major
+  * Extra - area: 2
+  * Extra - room: 18
+  * Extra - source: Zazabi
+  > Arena Floor
+      Trivial
+
+> Arena Floor; Heals? False
+  * Layers: default
+  > Door to Zazabi Access
+      After Boss Zazabi Defeated and Can Climb High Jump Wall
+  > Door to Zazabi Speedway
+      Screw Attack and Space Jump and After Boss Zazabi Defeated
+  > Event - Zazabi
+      All of the following:
+          All of the following:
+              # Zazabi Requirements
+              Any of the following:
+                  # Weapon Requirements
+                  Charge Beam or Missiles ≥ 30
+                  Missiles ≥ 10 and Combat (Beginner)
+              # Other
+              Combat (Advanced) or Can Use Bombs
+          # Core-X Requirements
+          Missiles
+          Any of the following:
+              # Health Requirements
+              Combat (Advanced) or Normal Damage ≥ 300
+              Combat (Beginner) and Normal Damage ≥ 200
+              Combat (Intermediate) and Normal Damage ≥ 100
+
+----------------
+Collapsed Shaft
+Extra - map_name: Sector 219
+Extra - room_id: [19]
+> Door to Zazabi Access; Heals? False
+  * Layers: default
+  * L0 Hatch to Zazabi Access/Door to Collapsed Shaft
+  * Extra - door_idx: (41,)
+  > Door to Dessgeega Dormitory
+      Trivial
+
+> Door to Dessgeega Dormitory; Heals? False
+  * Layers: default
+  * L0 Hatch to Dessgeega Dormitory/Door to Collapsed Shaft
+  * Extra - door_idx: (42,)
+  > Door to Zazabi Access
+      Trivial
+  > Door to Zazabi Save Room
+      Trivial
+  > Door to Puyo Palace
+      Can Use Power Bombs
+
+> Door to Eastern Shaft; Heals? False
+  * Layers: default
+  * Open Hatch to Eastern Shaft/Door to Collapsed Shaft
+  * Extra - door_idx: (70,)
+  > Door to Puyo Palace
+      Trivial
+
+> Door to Zazabi Save Room; Heals? False
+  * Layers: default
+  * L0 Hatch to Zazabi Save Room/Door to Collapsed Shaft
+  * Extra - door_idx: (88,)
+  > Door to Dessgeega Dormitory
+      Trivial
+
+> Door to Puyo Palace; Heals? False
+  * Layers: default
+  * Open Hatch to Puyo Palace/Door to Collapsed Shaft
+  * Extra - door_idx: (108,)
+  > Door to Dessgeega Dormitory
+      Can Use Power Bombs
+  > Door to Eastern Shaft
+      Trivial
+
+----------------
+Nettori Access
+Extra - map_name: Sector 220
+Extra - room_id: [20, 34]
+> Door to Eastern Shaft; Heals? False
+  * Layers: default
+  * Open Hatch to Eastern Shaft/Door to Nettori Access
+  * Extra - door_idx: (46, 76)
+  > Door to Shooting Gallery
+      Can Kill Tough Beam-Weak Enemy
+  > Door to Nettori Arena
+      All of the following:
+          Can Kill Eye Door
+          Wall Jump (Beginner) or Can Climb High Jump Wall
+
+> Door to Shooting Gallery; Heals? False
+  * Layers: default
+  * L0 Hatch to Shooting Gallery/Door to Nettori Access
+  * Extra - door_idx: (47, 75)
+  > Door to Eastern Shaft
+      Can Kill Tough Beam-Weak Enemy
+
+> Door to Nettori Arena; Heals? False
+  * Layers: default
+  * Open Hatch to Nettori Arena/Door to Nettori Access
+  * Extra - door_idx: (48, 74)
+  > Door to Eastern Shaft
+      Trivial
+
+----------------
+Owtch Cache B
+Extra - map_name: Sector 221
+Extra - room_id: [21]
+> Pickup (Hidden Energy Tank); Heals? False
+  * Layers: default
+  * Pickup 29; Category? Major
+  * Extra - area: 2
+  * Extra - room: 21
+  * Extra - blockx: 29
+  * Extra - blocky: 4
+  > Door to Eastern Shaft
+      Morph Ball
+
+> Door to Eastern Shaft; Heals? False
+  * Layers: default
+  * L0 Hatch to Eastern Shaft/Door to Owtch Cache B
+  * Extra - door_idx: (49,)
+  > Pickup (Hidden Energy Tank)
+      Morph Ball
+
+----------------
+Nettori Arena
+Extra - map_name: Sector 222
+Extra - room_id: [22, 51]
+> Door to Shooting Gallery; Heals? False
+  * Layers: default
+  * L0 Hatch to Shooting Gallery/Door to Nettori Arena
+  * Extra - door_idx: (50, 123)
+  > Arena
+      After Boss Nettori Defeated
+
+> Door to Nettori Access; Heals? False
+  * Layers: default
+  * Open Hatch to Nettori Access/Door to Nettori Arena
+  * Extra - door_idx: (51, 124)
+  > Arena
+      Trivial
+
+> Arena; Heals? False
+  * Layers: default
+  > Door to Shooting Gallery
+      After Boss Nettori Defeated
+  > Event - Nettori
+      All of the following:
+          Any of the following:
+              # Statue Requirements
+              All of the following:
+                  Charge Beam
+                  Ice Beam or Wave Beam or Wide Beam or Combat (Intermediate)
+              Missiles ≥ 60 and 45 DMG Missiles
+              Missiles ≥ 80 and 30 DMG Missiles
+              Missiles ≥ 120 and Combat (Beginner) and 20 DMG Missiles
+              Missiles ≥ 220 and Combat (Advanced) and 10 DMG Missiles
+          All of the following:
+              # Core-X Requirements
+              Missiles
+              Any of the following:
+                  30 DMG Missiles
+                  Combat (Beginner) and 20 DMG Missiles
+                  Combat (Intermediate) and 10 DMG Missiles
+          Any of the following:
+              # Health Requirements
+              Combat (Expert) or Normal Damage ≥ 800
+              Combat (Beginner) and Normal Damage ≥ 700
+              Combat (Intermediate) and Normal Damage ≥ 500
+              Combat (Advanced) and Normal Damage ≥ 200
+          # Avoid Samus Eaters
+          High Jump or Combat (Intermediate)
+
+> Pickup (Plasma Beam); Heals? False
+  * Layers: default
+  * Pickup 115; Category? Major
+  * Extra - area: 2
+  * Extra - room: 22
+  * Extra - source: Nettori
+  > Arena
+      Trivial
+
+> Event - Nettori; Heals? False
+  * Layers: default
+  * Event Boss Nettori Defeated
+  > Pickup (Plasma Beam)
+      Trivial
+
+----------------
+Kihunter Hallway
+Extra - map_name: Sector 223
+Extra - room_id: [23]
+> Door to Eastern Shaft; Heals? False
+  * Layers: default
+  * L0 Hatch to Eastern Shaft/Door to Kihunter Hallway
+  * Extra - door_idx: (52,)
+  > Other to Entrance Hub
+      Combat (Advanced) or Can Kill Tough Beam-Weak Enemy
+
+> Other to Entrance Hub; Heals? False
+  * Layers: default
+  * Tunnel to Entrance Hub/Other to Kihunter Hallway
+  * Extra - door_idx: (53,)
+  > Door to Eastern Shaft
+      Combat (Advanced) or Can Kill Tough Beam-Weak Enemy
+
+----------------
+Overgrown Entrance
+Extra - map_name: Sector 224
+Extra - room_id: [24, 36]
+> Area Transition to Main Deck; Heals? False
+  * Layers: default
+  * Open Passage to Silo Tunnel/Area Transition to Sector 2 (TRO)
+  * Extra - door_idx: (55, 83)
+  > Door to Overgrown Hallway
+      Trivial
+
+> Door to Overgrown Hallway; Heals? False
+  * Layers: default
+  * Open Hatch to Overgrown Hallway/Door to Overgrown Entrance
+  * Extra - door_idx: (135, 145)
+  > Area Transition to Main Deck
+      All of the following:
+          Morph Ball and After Boss Nettori Defeated
+          Any of the following:
+              Space Jump
+              # Shinespark up
+              Speed Booster and Shinespark Tricks (Beginner) and Disabled Door Lock Rando and Disabled Entrance Rando
+              High Jump and Wall Jump (Intermediate)
+
+----------------
+Oasis Storage
+Extra - map_name: Sector 225
+Extra - room_id: [25]
+> Pickup (Missile Tank); Heals? False
+  * Layers: default
+  * Pickup 30; Category? Minor
+  * Extra - area: 2
+  * Extra - room: 25
+  * Extra - blockx: 4
+  * Extra - blocky: 8
+  > Door to Oasis
+      Trivial
+
+> Door to Oasis; Heals? False
+  * Layers: default
+  * L0 Hatch to Oasis/Door to Oasis Storage
+  * Extra - door_idx: (57,)
+  > Pickup (Missile Tank)
+      Any of the following:
+          Can Use Power Bombs
+          All of the following:
+              Can Use Bombs
+              Any of the following:
+                  All of the following:
+                      Can Activate Pillar
+                      Mid-Air Morph (Advanced) or Can Use Springball
+                  Mid-Air Morph (Advanced) and Underwater Wall Jump (Expert)
+
+----------------
+Level 1 Security Room
+Extra - map_name: Sector 226
+Extra - room_id: [26]
+> Door to Security Access (Lower); Heals? False
+  * Layers: default
+  * L1 Hatch to Security Access/Door to Level 1 Security Room (Lower)
+  * Extra - door_idx: (59,)
+  > Door to Security Access (Upper)
+      Space Jump
+  > Door to Crumble City
+      # TODO: Look into requirements further and possibly add SWJ trick. The requirement of space jump makes the advanced tricks in crumble city invalid in non-entrance rando.
+      Screw Attack and Space Jump
+  > Event - L1 Locks
+      Trivial
+
+> Door to Security Access (Upper); Heals? False
+  * Layers: default
+  * L0 Hatch to Security Access/Door to Level 1 Security Room (Upper)
+  * Extra - door_idx: (61,)
+  > Door to Security Access (Lower)
+      Trivial
+
+> Door to Crumble City; Heals? False
+  * Layers: default
+  * L0 Hatch to Crumble City/Door to Level 1 Security Room
+  * Extra - door_idx: (131,)
+  > Door to Security Access (Lower)
+      Screw Attack
+
+> Event - L1 Locks; Heals? False
+  * Layers: default
+  * Event Level 1 Locks Released
+  > Pickup (L1 Locks)
+      Trivial
+
+> Pickup (L1 Locks); Heals? False
+  * Layers: default
+  * Pickup 116; Category? Major
+  * Extra - area: 2
+  * Extra - room: 26
+  * Extra - source: Level1
+  > Door to Security Access (Lower)
+      Trivial
+
+----------------
+Entrance Hub Underside
+Extra - map_name: Sector 227
+Extra - room_id: [27]
+> Pickup (Missile Tank); Heals? False
+  * Layers: default
+  * Pickup 31; Category? Minor
+  * Extra - area: 2
+  * Extra - room: 27
+  * Extra - blockx: 28
+  * Extra - blocky: 7
+  > Other to Entrance Hub
+      Can Use Any Bombs
+
+> Other to Entrance Hub; Heals? False
+  * Layers: default
+  * Tunnel to Entrance Hub/Other to Entrance Hub Underside
+  * Extra - door_idx: (62,)
+  > Pickup (Missile Tank)
+      Can Break Single Bomb Blocks
+  > Door to Reo Room
+      Trivial
+
+> Door to Reo Room; Heals? False
+  * Layers: default
+  * L0 Hatch to Reo Room/Door to Entrance Hub Underside
+  * Extra - door_idx: (63,)
+  > Other to Entrance Hub
+      Trivial
+
+----------------
+Reo Room
+Extra - map_name: Sector 228
+Extra - room_id: [28]
+> Door to Entrance Hub Underside; Heals? False
+  * Layers: default
+  * L0 Hatch to Entrance Hub Underside/Door to Reo Room
+  * Extra - door_idx: (64,)
+  > Door to Central Shaft
+      Trivial
+
+> Door to Central Shaft; Heals? False
+  * Layers: default
+  * L0 Hatch to Central Shaft/Door to Reo Room
+  * Extra - door_idx: (65,)
+  > Door to Entrance Hub Underside
+      Trivial
+
+----------------
+Elevator to Main Deck
+Extra - map_name: Sector 229
+Extra - room_id: [29]
+> Elevator to Main Deck; Heals? False
+  * Layers: default
+  * Elevator to Elevator to Sector 2 (TRO)/Elevator to Sector 2 (TRO)
+  * Extra - door_idx: (0,)
+  > Door to Entrance Navigation Room
+      Trivial
+
+> Door to Entrance Navigation Room; Heals? False
+  * Layers: default
+  * L0 Hatch to Entrance Navigation Room/Door to Elevator to Main Deck
+  * Extra - door_idx: (66,)
+  > Elevator to Main Deck
+      Trivial
+
+----------------
+Data Hub
+Extra - map_name: Sector 231
+Extra - room_id: [31, 7]
+> Pickup (Missile Tank); Heals? False
+  * Layers: default
+  * Pickup 32; Category? Minor
+  * Extra - area: 2
+  * Extra - room: 31
+  * Extra - blockx: 40
+  * Extra - blocky: 7
+  > Door to Data Hub Access
+      Can Use Any Bombs
+
+> Door to Zoro Zig-Zag; Heals? False
+  * Layers: default
+  * L0 Hatch to Zoro Zig-Zag/Door to Data Hub
+  * Extra - door_idx: (18,)
+  > Door to Data Save Room
+      Trivial
+
+> Door to Data Room; Heals? False
+  * Layers: default
+  * L1 Hatch to Data Room/Door to Data Hub
+  * Extra - door_idx: (69, 17)
+  > Door to Data Hub Access
+      Trivial
+
+> Door to Data Save Room; Heals? False
+  * Layers: default
+  * L0 Hatch to Data Save Room/Door to Data Hub
+  * Extra - door_idx: (84,)
+  > Door to Zoro Zig-Zag
+      Trivial
+  > Door to Data Hub Access
+      All of the following:
+          Can Bounce in Ball
+          Any of the following:
+              Can Use Power Bombs
+              Screw Attack and Knowledge (Beginner)
+              All of the following:
+                  Morph Ball Bomb Data
+                  Jump Bombjump (Advanced) or Can Use Springball
+
+> Door to Data Hub Access; Heals? False
+  * Layers: default
+  * L0 Hatch to Data Hub Access/Door to Data Hub
+  * Extra - door_idx: (16,)
+  > Pickup (Missile Tank)
+      Can Use Any Bombs
+  > Door to Data Room
+      Trivial
+  > Door to Data Save Room
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Can Break Single Bomb Blocks
+              Speed Booster and Knowledge (Intermediate) and Movement (Intermediate) and Disabled Door Lock Rando and Disabled Entrance Rando
+
+----------------
+Eastern Shaft
+Extra - map_name: Sector 232
+Extra - room_id: [32, 35]
+> Door to Nettori Access; Heals? False
+  * Layers: default
+  * Open Hatch to Nettori Access/Door to Eastern Shaft
+  * Extra - door_idx: (43, 79)
+  > Door to Nettori Save Room
+      Trivial
+
+> Door to Owtch Cache B; Heals? False
+  * Layers: default
+  * L0 Hatch to Owtch Cache B/Door to Eastern Shaft
+  * Extra - door_idx: (44, 78)
+  > Door to Kihunter Hallway
+      Trivial
+
+> Door to Kihunter Hallway; Heals? False
+  * Layers: default
+  * L0 Hatch to Kihunter Hallway/Door to Eastern Shaft
+  * Extra - door_idx: (45, 77)
+  > Door to Owtch Cache B
+      Trivial
+  > Other to Hidden Recharge Room
+      Morph Ball and Knowledge (Advanced)
+  > Door to Nettori Save Room
+      Can Kill Tough Beam-Weak Enemy
+
+> Door to Collapsed Shaft; Heals? False
+  * Layers: default
+  * Open Hatch to Collapsed Shaft/Door to Eastern Shaft
+  * Extra - door_idx: (71, 80)
+  > Door to Overgrown Checkpoint
+      Any of the following:
+          Space Jump or After Boss Nettori Defeated or Wall Jump (Beginner)
+          # Use vines as platforms
+          Movement (Beginner)
+  > Door to Nettori Save Room
+      All of the following:
+          After Boss Nettori Defeated
+          Any of the following:
+              Space Jump
+              High Jump and Stand On Frozen Enemies (Intermediate) and Wall Jump (Intermediate) and Can Freeze Enemies
+
+> Door to Overgrown Checkpoint; Heals? False
+  * Layers: default
+  * Open Hatch to Overgrown Checkpoint/Door to Eastern Shaft
+  * Extra - door_idx: (72, 81)
+  > Door to Collapsed Shaft
+      Any of the following:
+          Space Jump or After Boss Nettori Defeated or Wall Jump (Intermediate)
+          Stand On Frozen Enemies (Intermediate) and Can Freeze Enemies
+
+> Other to Hidden Recharge Room; Heals? False
+  * Layers: default
+  * Tunnel to Hidden Recharge Room/Other to Eastern Shaft
+  * Extra - door_idx: (117, 122)
+  > Door to Kihunter Hallway
+      Trivial
+
+> Door to Nettori Save Room; Heals? False
+  * Layers: default
+  * Open Hatch to Nettori Save Room/Door to Eastern Shaft
+  * Extra - door_idx: (120, 121)
+  > Door to Nettori Access
+      Trivial
+  > Door to Kihunter Hallway
+      All of the following:
+          Any of the following:
+              # Movement Requirements
+              Space Jump
+              All of the following:
+                  High Jump
+                  Any of the following:
+                      Wall Jump (Beginner)
+                      Stand On Frozen Enemies (Beginner) and Can Freeze Enemies
+          # Weapon Requirements
+          Can Kill Tough Beam-Weak Enemy
+  > Door to Collapsed Shaft
+      After Boss Nettori Defeated
+
+----------------
+Kago Room
+Extra - map_name: Sector 233
+Extra - room_id: [33]
+> Pickup (Missile Tank); Heals? False
+  * Layers: default
+  * Pickup 33; Category? Minor
+  * Extra - area: 2
+  * Extra - room: 33
+  * Extra - blockx: 21
+  * Extra - blocky: 8
+  > Beside missile tank
+      Trivial
+
+> Door to Entrance Hub; Heals? False
+  * Layers: default
+  * L0 Hatch to Entrance Hub/Door to Kago Room
+  * Extra - door_idx: (73,)
+  > Beside missile tank
+      Any of the following:
+          Screw Attack or Space Jump or Can Freeze Enemies
+          All of the following:
+              # dmg expectations
+              High Jump
+              Movement (Intermediate) or Normal Damage ≥ 34
+          # Kago Jump
+          Damage Boosts (Expert) and Wall Jump (Expert) and Normal Damage ≥ 34
+          # Shinespark from entrance rooms
+          Speed Booster and Shinespark Tricks (Beginner) and Disabled Door Lock Rando and Disabled Entrance Rando
+
+> Door to Connection to Sector 1 (SRX); Heals? False
+  * Layers: default
+  * L0 Hatch to Connection to Sector 1 (SRX)/Door to Kago Room
+  * Extra - door_idx: (125,)
+  > Beside missile tank
+      Screw Attack
+
+> Beside missile tank; Heals? False
+  * Layers: default
+  > Pickup (Missile Tank)
+      Trivial
+  > Door to Entrance Hub
+      Any of the following:
+          Screw Attack or Space Jump or Movement (Intermediate) or Normal Damage ≥ 34 or Can Freeze Enemies
+          # Assumes you shinesparked in and killed the Kago
+          Speed Booster and Shinespark Tricks (Beginner) and Disabled Door Lock Rando and Disabled Entrance Rando
+  > Door to Connection to Sector 1 (SRX)
+      Screw Attack
+
+----------------
+Entrance Recharge Room
+Extra - map_name: Sector 237
+Extra - room_id: [37]
+> Door to Entrance Save Room; Heals? False
+  * Layers: default
+  * L0 Hatch to Entrance Save Room/Door to Entrance Recharge Room
+  * Extra - door_idx: (85,)
+  > Recharge Terminal
+      Trivial
+
+> Door to Entrance Hub; Heals? False
+  * Layers: default
+  * L0 Hatch to Entrance Hub/Door to Entrance Recharge Room
+  * Extra - door_idx: (86,)
+  > Recharge Terminal
+      Trivial
+
+> Recharge Terminal; Heals? True
+  * Layers: default
+  > Door to Entrance Save Room
+      Trivial
+  > Door to Entrance Hub
+      Trivial
+
+----------------
+Data Save Room
+Extra - map_name: Sector 238
+Extra - room_id: [38]
+> Door to Data Hub; Heals? False
+  * Layers: default
+  * L0 Hatch to Data Hub/Door to Data Save Room
+  * Extra - door_idx: (87,)
+  > Save Station
+      Trivial
+
+> Save Station; Heals? False
+  * Layers: default
+  > Door to Data Hub
+      Trivial
+
+----------------
+Owtch Office
+Extra - map_name: Sector 239
+Extra - room_id: [39]
+> Door to Zazabi Save Room; Heals? False
+  * Layers: default
+  * L0 Hatch to Zazabi Save Room/Door to Owtch Office
+  * Extra - door_idx: (89,)
+  > Door to Zazabi Access
+      Trivial
+
+> Door to Zazabi Access; Heals? False
+  * Layers: default
+  * L0 Hatch to Zazabi Access/Door to Owtch Office
+  * Extra - door_idx: (90,)
+  > Door to Zazabi Save Room
+      Trivial
+
+----------------
+Zazabi Save Room
+Extra - map_name: Sector 240
+Extra - room_id: [40]
+> Door to Collapsed Shaft; Heals? False
+  * Layers: default
+  * L0 Hatch to Collapsed Shaft/Door to Zazabi Save Room
+  * Extra - door_idx: (91,)
+  > Door to Owtch Office
+      Trivial
+  > Save Station
+      Trivial
+
+> Door to Owtch Office; Heals? False
+  * Layers: default
+  * L0 Hatch to Owtch Office/Door to Zazabi Save Room
+  * Extra - door_idx: (92,)
+  > Door to Collapsed Shaft
+      Trivial
+
+> Save Station; Heals? False; Spawn Point
+  * Layers: default
+  * Extra - X: 9
+  * Extra - Y: 10
+  > Door to Collapsed Shaft
+      Trivial
+
+----------------
+Conceiled Ceiling
+Extra - map_name: Sector 241
+Extra - room_id: [41]
+> Door to Central Shaft; Heals? False
+  * Layers: default
+  * L0 Hatch to Central Shaft/Door to Conceiled Ceiling
+  * Extra - door_idx: (97,)
+
+----------------
+Oasis
+Extra - map_name: Sector 242
+Extra - room_id: [42]
+> Pickup (Missile Tank); Heals? False
+  * Layers: default
+  * Pickup 34; Category? Minor
+  * Extra - area: 2
+  * Extra - room: 42
+  * Extra - blockx: 5
+  * Extra - blocky: 8
+  > Door to Central Shaft
+      Trivial
+
+> Door to Oasis Storage; Heals? False
+  * Layers: default
+  * L0 Hatch to Oasis Storage/Door to Oasis
+  * Extra - door_idx: (56,)
+  > Door to Central Shaft
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Underwater Wall Jump (Advanced) or Can Activate Pillar
+              Gravity Suit and High Jump
+
+> Door to Central Shaft; Heals? False
+  * Layers: default
+  * L0 Hatch to Central Shaft/Door to Oasis
+  * Extra - door_idx: (95,)
+  > Pickup (Missile Tank)
+      Any of the following:
+          Can Climb High Jump Wall
+          Stand On Frozen Enemies (Intermediate) and Can Freeze Enemies
+  > Door to Oasis Storage
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Underwater Wall Jump (Advanced) or Can Activate Pillar
+              Gravity Suit and High Jump
+
+----------------
+Maintenance Annex
+Extra - map_name: Sector 243
+Extra - room_id: [43]
+> Door to Zoro Zig-Zag; Heals? False
+  * Layers: default
+  * L0 Hatch to Zoro Zig-Zag/Door to Maintenance Annex
+  * Extra - door_idx: (98,)
+  > Door to Cultivation Station
+      Trivial
+
+> Door to Cultivation Station; Heals? False
+  * Layers: default
+  * L0 Hatch to Cultivation Station/Door to Maintenance Annex
+  * Extra - door_idx: (99,)
+  > Door to Zoro Zig-Zag
+      Any of the following:
+          Space Jump
+          High Jump and Jump Extends (Advanced) and Wall Jump (Advanced)
+
+----------------
+Puyo Palace
+Extra - map_name: Sector 247
+Extra - room_id: [47]
+> Pickup (Power Bomb Tank); Heals? False
+  * Layers: default
+  * Pickup 35; Category? Minor
+  * Extra - area: 2
+  * Extra - room: 47
+  * Extra - blockx: 29
+  * Extra - blocky: 16
+  > Door to Central Shaft
+      Trivial
+  > Door to Nettori Save Room
+      Can Climb High Jump Wall
+
+> Door to Collapsed Shaft; Heals? False
+  * Layers: default
+  * Open Hatch to Collapsed Shaft/Door to Puyo Palace
+  * Extra - door_idx: (109,)
+  > Door to Central Shaft
+      Can Climb High Jump Wall
+
+> Door to Central Shaft; Heals? False
+  * Layers: default
+  * Open Hatch to Central Shaft/Door to Puyo Palace
+  * Extra - door_idx: (110,)
+  > Door to Collapsed Shaft
+      Space Jump
+  > Door to Nettori Save Room
+      Space Jump
+
+> Door to Nettori Save Room; Heals? False
+  * Layers: default
+  * Open Hatch to Nettori Save Room/Door to Puyo Palace
+  * Extra - door_idx: (115,)
+  > Pickup (Power Bomb Tank)
+      Space Jump or Movement (Intermediate)
+  > Door to Collapsed Shaft
+      Speed Booster and Shinespark Tricks (Expert) and Disabled Door Lock Rando and Disabled Entrance Rando
+  > Door to Central Shaft
+      Trivial
+
+----------------
+Hidden Recharge Room
+Extra - map_name: Sector 248
+Extra - room_id: [48]
+> Other to Eastern Shaft; Heals? False
+  * Layers: default
+  * Tunnel to Eastern Shaft/Other to Hidden Recharge Room
+  * Extra - door_idx: (116,)
+  > Recharge Terminal
+      Trivial
+
+> Recharge Terminal; Heals? True
+  * Layers: default
+  > Other to Eastern Shaft
+      Trivial
+
+----------------
+Nettori Save Room
+Extra - map_name: Sector 249
+Extra - room_id: [49]
+> Door to Puyo Palace; Heals? False
+  * Layers: default
+  * Open Hatch to Puyo Palace/Door to Nettori Save Room
+  * Extra - door_idx: (118,)
+  > Door to Eastern Shaft
+      Trivial
+  > Save Station
+      Trivial
+
+> Door to Eastern Shaft; Heals? False
+  * Layers: default
+  * Open Hatch to Eastern Shaft/Door to Nettori Save Room
+  * Extra - door_idx: (119,)
+  > Door to Puyo Palace
+      Trivial
+
+> Save Station; Heals? False; Spawn Point
+  * Layers: default
+  * Extra - X: 9
+  * Extra - Y: 10
+  > Door to Puyo Palace
+      Trivial
+
+----------------
+Ripper Roost
+Extra - map_name: Sector 250
+Extra - room_id: [50]
+> Pickup (Power Bomb Tank); Heals? False
+  * Layers: default
+  * Pickup 36; Category? Minor
+  * Extra - area: 2
+  * Extra - room: 50
+  * Extra - blockx: 3
+  * Extra - blocky: 7
+  > Pickup (Hidden Power Bomb Tank)
+      Trivial
+  > Door to Central Shaft
+      Trivial
+
+> Pickup (Hidden Power Bomb Tank); Heals? False
+  * Layers: default
+  * Pickup 37; Category? Minor
+  * Extra - area: 2
+  * Extra - room: 50
+  * Extra - blockx: 3
+  * Extra - blocky: 24
+  > Door to Central Shaft
+      Any of the following:
+          Can Use Any Bombs
+          # Knowledge: You need to beforehand break the block with Screw Attack
+          Morph Ball and Screw Attack and Knowledge (Intermediate)
+
+> Door to Central Shaft; Heals? False
+  * Layers: default
+  * L0 Hatch to Central Shaft/Door to Ripper Roost
+  * Extra - door_idx: (114,)
+  > Pickup (Power Bomb Tank)
+      Any of the following:
+          Movement (Expert)
+          Morph Ball and Can Freeze Enemies
+          Space Jump and Movement (Advanced)
+
+----------------
+Connection to Sector 1 (SRX)
+Extra - map_name: Sector 252
+Extra - room_id: [52]
+> Door to Kago Room; Heals? False
+  * Layers: default
+  * L0 Hatch to Kago Room/Door to Connection to Sector 1 (SRX)
+  * Extra - door_idx: (126,)
+  > Area Transition to Sector 1 (SRX)
+      Trivial
+
+> Area Transition to Sector 1 (SRX); Heals? False
+  * Layers: default
+  * Open Passage to Connection to Sector 2 (TRO)/Area Transition to Sector 2 (TRO)
+  * Extra - door_idx: (127,)
+  > Door to Kago Room
+      Trivial
+
+----------------
+Connection to Sector 4 (AQA)
+Extra - map_name: Sector 253
+Extra - room_id: [53]
+> Door to Security Access; Heals? False
+  * Layers: default
+  * L0 Hatch to Security Access/Door to Connection to Sector 4 (AQA)
+  * Extra - door_idx: (129,)
+  > Area Transition to Sector 4 (AQA)
+      Trivial
+
+> Area Transition to Sector 4 (AQA); Heals? False
+  * Layers: default
+  * Open Passage to Connection to Sector 2 (TRO)/Area Transition to Sector 2 (TRO)
+  * Extra - door_idx: (130,)
+  > Door to Security Access
+      Trivial
+
+----------------
+Crumble City
+Extra - map_name: Sector 254
+Extra - room_id: [54]
+> Pickup (Energy Tank); Heals? False
+  * Layers: default
+  * Pickup 38; Category? Major
+  * Extra - area: 2
+  * Extra - room: 54
+  * Extra - blockx: 4
+  * Extra - blocky: 5
+  > Beside Pickups
+      Trivial
+
+> Pickup (Power Bomb Tank); Heals? False
+  * Layers: default
+  * Pickup 39; Category? Minor
+  * Extra - area: 2
+  * Extra - room: 54
+  * Extra - blockx: 9
+  * Extra - blocky: 14
+  > Beside Pickups
+      Trivial
+
+> Door to Level 1 Security Room; Heals? False
+  * Layers: default
+  * L0 Hatch to Level 1 Security Room/Door to Crumble City
+  * Extra - door_idx: (132,)
+  > Beside Pickups
+      Any of the following:
+          Space Jump
+          All of the following:
+              High Jump and Wall Jump (Advanced)
+              Any of the following:
+                  Movement (Hypermode)
+                  Speed Booster and Movement (Expert) and Shinespark Tricks (Expert)
+
+> Beside Pickups; Heals? False
+  * Layers: default
+  > Pickup (Energy Tank)
+      Trivial
+  > Pickup (Power Bomb Tank)
+      Trivial
+  > Door to Level 1 Security Room
+      Any of the following:
+          Wall Jump (Beginner) or Can Climb High Jump Wall
+          Speed Booster and Shinespark Tricks (Beginner)
+
+----------------
+Zazabi Speedway
+Extra - map_name: Sector 255
+Extra - room_id: [55]
+> Pickup (Power Bomb Tank); Heals? False
+  * Layers: default
+  * Pickup 40; Category? Minor
+  * Extra - area: 2
+  * Extra - room: 55
+  * Extra - blockx: 7
+  * Extra - blocky: 4
+  > Door to Zazabi Arena
+      Trivial
+
+> Pickup (Hidden Missile Tank); Heals? False
+  * Layers: default
+  * Pickup 41; Category? Minor
+  * Extra - area: 2
+  * Extra - room: 55
+  * Extra - blockx: 10
+  * Extra - blocky: 26
+  > Door to Zazabi Arena
+      Trivial
+
+> Door to Zazabi Arena; Heals? False
+  * Layers: default
+  * L0 Hatch to Zazabi Arena/Door to Zazabi Speedway
+  * Extra - door_idx: (134,)
+  > Pickup (Power Bomb Tank)
+      Speed Booster
+  > Pickup (Hidden Missile Tank)
+      Speed Booster
+
+----------------
+Overgrown Hallway
+Extra - map_name: Sector 256
+Extra - room_id: [56, 60]
+> Door to Overgrown Entrance; Heals? False
+  * Layers: default
+  * Open Hatch to Overgrown Entrance/Door to Overgrown Hallway
+  * Extra - door_idx: (136, 144)
+  > Door to Overgrown Checkpoint
+      Can Use Any Bombs
+
+> Door to Overgrown Checkpoint; Heals? False
+  * Layers: default
+  * Open Hatch to Overgrown Checkpoint/Door to Overgrown Hallway
+  * Extra - door_idx: (137, 143)
+  > Door to Overgrown Entrance
+      Can Use Any Bombs
+
+----------------
+Overgrown Checkpoint
+Extra - map_name: Sector 257
+Extra - room_id: [57, 58]
+> Door to Eastern Shaft; Heals? False
+  * Layers: default
+  * Open Hatch to Eastern Shaft/Door to Overgrown Checkpoint
+  * Extra - door_idx: (54, 82)
+  > Door to Cubby
+      Missiles
+
+> Door to Overgrown Hallway; Heals? False
+  * Layers: default
+  * Open Hatch to Overgrown Hallway/Door to Overgrown Checkpoint
+  * Extra - door_idx: (138, 142)
+  > Door to Cubby
+      Trivial
+
+> Door to Cubby; Heals? False
+  * Layers: default
+  * Open Hatch to Cubby/Door to Overgrown Checkpoint
+  * Extra - door_idx: (139, 141)
+  > Door to Eastern Shaft
+      Missiles
+  > Door to Overgrown Hallway
+      Any of the following:
+          Wave Beam
+          Morph Ball and After Boss Nettori Defeated
+
+----------------
+Cubby
+Extra - map_name: Sector 259
+Extra - room_id: [59]
+> Door to Overgrown Checkpoint; Heals? False
+  * Layers: default
+  * Open Hatch to Overgrown Checkpoint/Door to Cubby
+  * Extra - door_idx: (140,)
+

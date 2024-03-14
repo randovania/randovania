@@ -2,18 +2,14 @@ from __future__ import annotations
 
 import copy
 import dataclasses
-from typing import TYPE_CHECKING
+from pathlib import Path
 
 from caver import patcher as caver_patcher
+from caver.patcher import CSPlatform
 
 from randovania.exporter.game_exporter import GameExporter, GameExportParams
 from randovania.games.game import RandovaniaGame
 from randovania.lib import json_lib, status_update_lib
-
-if TYPE_CHECKING:
-    from pathlib import Path
-
-    from caver_patcher import CSPlatform
 
 
 @dataclasses.dataclass(frozen=True)
@@ -38,6 +34,12 @@ class CSGameExporter(GameExporter):
         Checks if export_game can be aborted
         """
         return False
+
+    def export_params_type(self) -> type[GameExportParams]:
+        """
+        Returns the type of the GameExportParams expected by this exporter.
+        """
+        return CSGameExportParams
 
     def _before_export(self):
         assert not self._busy

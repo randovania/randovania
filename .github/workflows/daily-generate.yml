@@ -45,7 +45,7 @@ jobs:
           fetch-depth: 0
 
       - name: Create venv
-        run: python3.11 -m venv venv
+        run: python3.12 -m venv venv
 
       - name: Install core Python packages
         run: venv/bin/python -m pip install --upgrade -r requirements-setuptools.txt
@@ -94,8 +94,6 @@ jobs:
         if: inputs.game == 'samus_returns' || github.event.schedule == '0 16 * * 4'
         env:
           WEBHOOK_URL: ${{ secrets.SR_DEV_TALK_WEBHOOK }}
-
-
 
   notify_failure:
     runs-on: ubuntu-latest
