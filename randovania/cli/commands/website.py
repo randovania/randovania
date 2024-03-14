@@ -5,8 +5,6 @@ import shutil
 from argparse import ArgumentParser
 from pathlib import Path
 
-from ruamel.yaml import YAML
-
 from randovania import get_readme_section
 from randovania.games.game import RandovaniaGame
 
@@ -106,6 +104,8 @@ def extract_game_data(game: RandovaniaGame, games_dir: Path, covers_dir: Path):
         # in dev builds, this would normally be true
         # but we don't want the website to know that
         output["multiworld"] = False
+
+    from ruamel.yaml import YAML
 
     yaml = YAML()
     yaml.allow_unicode = False
