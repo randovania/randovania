@@ -3129,7 +3129,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": "Get up",
+                                            "comment": null,
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -3143,21 +3143,25 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "Jump on frozen Space Pirates TODO: someone please get a video of this. Also, how much harder is this with Diffusion, worth splitting out from template?",
+                                                        "comment": "Jump on frozen Space Pirates",
                                                         "items": [
                                                             {
                                                                 "type": "template",
                                                                 "data": "Can Freeze Enemies"
                                                             },
                                                             {
+                                                                "type": "template",
+                                                                "data": "Can Screw Single Walljump"
+                                                            },
+                                                            {
                                                                 "type": "or",
                                                                 "data": {
-                                                                    "comment": null,
+                                                                    "comment": "Wall Jump req",
                                                                     "items": [
                                                                         {
                                                                             "type": "and",
                                                                             "data": {
-                                                                                "comment": "HJ method. Some RNG involved due to pirates moving.",
+                                                                                "comment": null,
                                                                                 "items": [
                                                                                     {
                                                                                         "type": "resource",
@@ -3172,9 +3176,69 @@
                                                                                         "type": "resource",
                                                                                         "data": {
                                                                                             "type": "tricks",
-                                                                                            "name": "StandOnFrozenEnemies",
-                                                                                            "amount": 3,
+                                                                                            "name": "WallJump",
+                                                                                            "amount": 2,
                                                                                             "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "WallJump",
+                                                                                "amount": 3,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "or",
+                                                                "data": {
+                                                                    "comment": "Ice req",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "and",
+                                                                            "data": {
+                                                                                "comment": null,
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "StandOnFrozenEnemies",
+                                                                                            "amount": 4,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "or",
+                                                                                        "data": {
+                                                                                            "comment": "https://youtu.be/6ha7hZ0iW1I",
+                                                                                            "items": [
+                                                                                                {
+                                                                                                    "type": "resource",
+                                                                                                    "data": {
+                                                                                                        "type": "items",
+                                                                                                        "name": "IceBeam",
+                                                                                                        "amount": 1,
+                                                                                                        "negate": false
+                                                                                                    }
+                                                                                                },
+                                                                                                {
+                                                                                                    "type": "resource",
+                                                                                                    "data": {
+                                                                                                        "type": "items",
+                                                                                                        "name": "IceMissileData",
+                                                                                                        "amount": 1,
+                                                                                                        "negate": false
+                                                                                                    }
+                                                                                                }
+                                                                                            ]
                                                                                         }
                                                                                     }
                                                                                 ]
@@ -3183,13 +3247,13 @@
                                                                         {
                                                                             "type": "and",
                                                                             "data": {
-                                                                                "comment": "Walljump method. Heavy RNG involved due to pirates jumping",
+                                                                                "comment": "https://youtu.be/o91JwaZoFTg",
                                                                                 "items": [
                                                                                     {
                                                                                         "type": "resource",
                                                                                         "data": {
-                                                                                            "type": "tricks",
-                                                                                            "name": "WallJump",
+                                                                                            "type": "items",
+                                                                                            "name": "DiffusionMissileData",
                                                                                             "amount": 1,
                                                                                             "negate": false
                                                                                         }
