@@ -18,9 +18,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ##### Burenia
 
-- Added: Crossing the gap in Underneath Drogyga with Cross Bomb Launch (Advanced).
-- Added: Reaching the Missile Tank Pickup in Main Hub Tower Top using Cross Bomb Launch (Intermediate).
-- Changed: Using Cross Bombs to reach the item next to the fan in Burenia Hub to Dairon now Requires Cross Bomb Launch (Beginner) instead of Movement (Beginner).
+- Added: Crossing the gap in Underneath Drogyga with Cross Bomb Launch (Intermediate).
+- Added: Reaching the Missile Tank Pickup in Main Hub Tower Top using Cross Bomb Launch (Advanced).
 
 ##### Cataris
 
@@ -29,22 +28,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ##### Dairon
 
-- Added: Getting across the right gap in Early Grapple Room with Cross Bomb Launch (Beginner).
+- Added: Getting across the right gap in Early Grapple Room with Cross Bomb.
 
 ##### Elun
 
 - Changed: Releasing the X without Bombs or Cross Bombs now requires Knowledge (Beginner).
-- Changed: Getting through the fan in Fan Room using Cross Bombs now additionally requires Cross Bomb Launch (Beginner).
 
 ##### Ferenia
 
-- Changed: Using Cross Bombs to get through the fan in Fan Room now additionally requires Cross Bomb Launch (Beginner).
 - Changed: Getting across the water in EMMI Zone Exit East with Cross Bombs now additionally requires Cross Bomb Launch (Advanced).
 
 ##### Ghavoran
 
 - Added: Cross Bomb Launch (Advanced) to get to the Save Station Door in Golzuna Tower from the Missile Tank Pickup.
-- Changed: Using Cross Bomb to get the Missile Tank Pickup in Golzuna Tower now requires Cross Bomb Launch (Beginner).
+- Changed: Using Cross Bomb to get the Missile Tank Pickup in Golzuna Tower now requires Movement (Beginner).
 - Changed: The Cross Bomb Skip to get across the Pitfall blocks in Cross Bomb Tutorial has been reduced from Expert to Advanced.
 
 ## [7.4.0] - 2024-03-08
