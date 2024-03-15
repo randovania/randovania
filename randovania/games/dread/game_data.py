@@ -117,6 +117,19 @@ game_data: game.GameData = game.GameData(
             "You must set your language to English to see all the text the randomizer changes.",
         ),
     ],
+    web_info=game.GameWebInfo(
+        what_can_randomize=[
+            "All items",
+            "Elevator and shuttle destinations",
+            "Starting locations",
+            "Door locks",
+            "A new goal has been added (DNA Hunt)",
+        ],
+        need_to_play=[
+            "A modded Switch with Atmosphere and SimpleModManager; or Ryujinx",
+            "A dumped RomFS of your original game. Either version 1.0.0 or 2.1.0",
+        ],
+    ),
     layout=game.GameLayout(
         configuration=DreadConfiguration, cosmetic_patches=DreadCosmeticPatches, preset_describer=DreadPresetDescriber()
     ),
