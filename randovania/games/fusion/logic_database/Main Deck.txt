@@ -71,23 +71,23 @@ Extra - room_id: [6]
   * Layers: default
   * Open Hatch to Docking Bay Access/Door to Docking Bay Shaft
   * Extra - door_idx: (8,)
-  > Other to Silo Access
+  > Other to Silo Entry
       Can Use Power Bombs
-  > Door to Silo Access
+  > Door to Silo Entry
       Trivial
   > Door to Station Entrance
       Trivial
 
-> Other to Silo Access; Heals? False
+> Other to Silo Entry; Heals? False
   * Layers: default
-  * Open Passage to Silo Access/Other to Docking Bay Shaft
+  * Open Passage to Silo Entry/Other to Docking Bay Shaft
   * Extra - door_idx: (13,)
   > Door to Docking Bay Access
       Can Use Power Bombs
 
-> Door to Silo Access; Heals? False
+> Door to Silo Entry; Heals? False
   * Layers: default
-  * L4 Hatch to Silo Access/Door to Docking Bay Shaft
+  * L4 Hatch to Silo Entry/Door to Docking Bay Shaft
   * Extra - door_idx: (15,)
   > Door to Docking Bay Access
       Trivial
@@ -562,7 +562,7 @@ Extra - room_id: [20]
       Trivial
   > Door to Sub-Zero Containment
       Trivial
-  > Other to Western Hub Cache
+  > Other to Cubby Hole
       Morph Ball
   > Other to Central Hub
       Screw Attack and Knowledge (Beginner) and Can Bounce in Ball
@@ -581,9 +581,9 @@ Extra - room_id: [20]
   > Door to Main Deck Navigation Room West
       Trivial
 
-> Other to Western Hub Cache; Heals? False
+> Other to Cubby Hole; Heals? False
   * Layers: default
-  * Tunnel to Western Hub Cache/Other to Western Hub
+  * Tunnel to Cubby Hole/Other to Western Hub
   * Extra - door_idx: (168,)
   > Door to Main Deck Navigation Room West
       Morph Ball
@@ -632,19 +632,19 @@ Extra - room_id: [21]
       Trivial
 
 ----------------
-Habitation Maintenance
+Habitation Ventilation
 Extra - map_name: Main Deck22
 Extra - room_id: [22]
 > Other to Habitation Deck (Upper); Heals? False
   * Layers: default
-  * Open Passage to Habitation Deck/Other to Habitation Maintenance (Upper)
+  * Open Passage to Habitation Deck/Other to Habitation Ventilation (Upper)
   * Extra - door_idx: (46,)
   > Other to Habitation Deck (Lower)
       Trivial
 
 > Other to Habitation Deck (Lower); Heals? False
   * Layers: default
-  * Open Passage to Habitation Deck/Other to Habitation Maintenance (Lower)
+  * Open Passage to Habitation Deck/Other to Habitation Ventilation (Lower)
   * Extra - door_idx: (47,)
   > Other to Habitation Deck (Upper)
       Space Jump or Can Freeze Enemies
@@ -1209,19 +1209,19 @@ Extra - room_id: [47]
           Wall Jump (Beginner) or Can Climb High Jump Wall
 
 ----------------
-Silo Access
+Silo Entry
 Extra - map_name: Main Deck48
 Extra - room_id: [48, 83]
 > Door to Docking Bay Shaft; Heals? False
   * Layers: default
-  * L4 Hatch to Docking Bay Shaft/Door to Silo Access
+  * L4 Hatch to Docking Bay Shaft/Door to Silo Entry
   * Extra - door_idx: (109, 197)
   > Other to Docking Bay Shaft
       Trivial
 
 > Other to Docking Bay Shaft; Heals? False
   * Layers: default
-  * Open Passage to Docking Bay Shaft/Other to Silo Access
+  * Open Passage to Docking Bay Shaft/Other to Silo Entry
   * Extra - door_idx: (110,)
   > Door to Docking Bay Shaft
       Wall Jump (Beginner) or Can Climb High Jump Wall
@@ -1231,7 +1231,7 @@ Extra - room_id: [48, 83]
 
 > Door to Central Reactor Core; Heals? False
   * Layers: default
-  * Open Hatch to Central Reactor Core/Door to Silo Access
+  * Open Hatch to Central Reactor Core/Door to Silo Entry
   * Extra - door_idx: (111, 198)
   > Other to Docking Bay Shaft
       # The cocoon has been moved
@@ -1241,16 +1241,16 @@ Extra - room_id: [48, 83]
 Central Reactor Core
 Extra - map_name: Main Deck49
 Extra - room_id: [49, 59]
-> Door to Silo Access; Heals? False
+> Door to Silo Entry; Heals? False
   * Layers: default
-  * Open Hatch to Silo Access/Door to Central Reactor Core
+  * Open Hatch to Silo Entry/Door to Central Reactor Core
   * Extra - door_idx: (112, 134)
   > Door to Reactor Save Room
       Trivial
 
-> Door to Silo Scaffolding A; Heals? False
+> Door to Scaffolding Access; Heals? False
   * Layers: default
-  * Open Hatch to Silo Scaffolding A/Door to Central Reactor Core
+  * Open Hatch to Scaffolding Access/Door to Central Reactor Core
   * Extra - door_idx: (113, 136)
   > Door to Reactor Save Room
       Trivial
@@ -1273,14 +1273,14 @@ Extra - room_id: [49, 59]
   * Layers: default
   * Open Hatch to Reactor Save Room/Door to Central Reactor Core
   * Extra - door_idx: (130, 138)
-  > Door to Silo Access
+  > Door to Silo Entry
       Any of the following:
           Space Jump
           All of the following:
               Speed Booster and Shinespark Tricks (Beginner) and Disabled Door Lock Rando and Disabled Entrance Rando
               # Needed to break the vines
               Wave Beam or Wide Beam
-  > Door to Silo Scaffolding A
+  > Door to Scaffolding Access
       Wall Jump (Beginner) or Can Climb High Jump Wall
   > Door to Reactor Checkpoint
       Trivial
@@ -1288,7 +1288,7 @@ Extra - room_id: [49, 59]
       Space Jump
 
 ----------------
-Silo Scaffolding A
+Scaffolding Access
 Extra - map_name: Main Deck50
 Extra - room_id: [50]
 > Pickup (Energy Tank); Heals? False
@@ -1298,21 +1298,21 @@ Extra - room_id: [50]
   * Extra - room: 50
   * Extra - blockx: 54
   * Extra - blocky: 8
-  > Other to Silo Scaffolding B
+  > Other to Silo Scaffolding
       Trivial
   > Beside Pickup
       Trivial
 
 > Door to Central Reactor Core; Heals? False
   * Layers: default
-  * Open Hatch to Central Reactor Core/Door to Silo Scaffolding A
+  * Open Hatch to Central Reactor Core/Door to Scaffolding Access
   * Extra - door_idx: (114,)
   > Beside Pickup
       Space Jump or Combat (Intermediate) or Can Kill Tough Beam-Resistant Enemy
 
-> Other to Silo Scaffolding B; Heals? False
+> Other to Silo Scaffolding; Heals? False
   * Layers: default
-  * Open Passage to Silo Scaffolding B/Other to Silo Scaffolding A
+  * Open Passage to Silo Scaffolding/Other to Scaffolding Access
   * Extra - door_idx: (115,)
   > Pickup (Energy Tank)
       Trivial
@@ -1325,11 +1325,11 @@ Extra - room_id: [50]
       Trivial
   > Door to Central Reactor Core
       Space Jump or Combat (Intermediate) or Can Kill Tough Beam-Resistant Enemy
-  > Other to Silo Scaffolding B
+  > Other to Silo Scaffolding
       Movement (Intermediate)
 
 ----------------
-Silo Scaffolding B
+Silo Scaffolding
 Extra - map_name: Main Deck51
 Extra - room_id: [51]
 > Pickup (Missile Tank); Heals? False
@@ -1342,9 +1342,9 @@ Extra - room_id: [51]
   > Beside Pickup
       Morph Ball
 
-> Other to Silo Scaffolding A; Heals? False
+> Other to Scaffolding Access; Heals? False
   * Layers: default
-  * Open Passage to Silo Scaffolding A/Other to Silo Scaffolding B
+  * Open Passage to Scaffolding Access/Other to Silo Scaffolding
   * Extra - door_idx: (116,)
   > Beside Pickup
       Any of the following:
@@ -1358,14 +1358,14 @@ Extra - room_id: [51]
 
 > Door to Yakuza Arena; Heals? False
   * Layers: default
-  * Open Hatch to Yakuza Arena/Door to Silo Scaffolding B
+  * Open Hatch to Yakuza Arena/Door to Silo Scaffolding
   * Extra - door_idx: (117,)
 
 > Beside Pickup; Heals? False
   * Layers: default
   > Pickup (Missile Tank)
       Morph Ball
-  > Other to Silo Scaffolding A
+  > Other to Scaffolding Access
       All of the following:
           Wall Jump (Advanced) or Can Climb High Jump Wall
           Any of the following:
@@ -1703,21 +1703,21 @@ Extra - room_id: [69]
   * Extra - door_idx: (161,)
   > Door to Habitation Deck Entrance (Middle)
       Trivial
-  > Other to Habitation Maintenance (Upper)
+  > Other to Habitation Ventilation (Upper)
       After Animals Released
   > Above Pickup
       Trivial
 
-> Other to Habitation Maintenance (Lower); Heals? False
+> Other to Habitation Ventilation (Lower); Heals? False
   * Layers: default
-  * Open Passage to Habitation Maintenance/Other to Habitation Deck (Lower)
+  * Open Passage to Habitation Ventilation/Other to Habitation Deck (Lower)
   * Extra - door_idx: (162,)
   > Beside Pickup
       Trivial
 
-> Other to Habitation Maintenance (Upper); Heals? False
+> Other to Habitation Ventilation (Upper); Heals? False
   * Layers: default
-  * Open Passage to Habitation Maintenance/Other to Habitation Deck (Upper)
+  * Open Passage to Habitation Ventilation/Other to Habitation Deck (Upper)
   * Extra - door_idx: (163,)
   > Door to Habitation Deck Entrance (Upper)
       After Animals Released
@@ -1727,12 +1727,12 @@ Extra - room_id: [69]
 > Event - Save the Animals; Heals? False
   * Layers: default
   * Event Animals Released
-  > Other to Habitation Maintenance (Upper)
+  > Other to Habitation Ventilation (Upper)
       Trivial
 
 > Above Pickup; Heals? False
   * Layers: default
-  > Other to Habitation Maintenance (Lower)
+  > Other to Habitation Ventilation (Lower)
       Speed Booster
   > Beside Pickup
       Trivial
@@ -1743,7 +1743,7 @@ Extra - room_id: [69]
       Trivial
   > Door to Habitation Deck Entrance (Lower)
       Trivial
-  > Other to Habitation Maintenance (Lower)
+  > Other to Habitation Ventilation (Lower)
       Wave Beam
 
 ----------------
@@ -1781,7 +1781,7 @@ Extra - room_id: [71]
       Trivial
 
 ----------------
-Western Hub Cache
+Cubby Hole
 Extra - map_name: Main Deck72
 Extra - room_id: [72]
 > Pickup (Missile Tank); Heals? False
@@ -1796,7 +1796,7 @@ Extra - room_id: [72]
 
 > Other to Western Hub; Heals? False
   * Layers: default
-  * Tunnel to Western Hub/Other to Western Hub Cache
+  * Tunnel to Western Hub/Other to Cubby Hole
   * Extra - door_idx: (169,)
   > Pickup (Missile Tank)
       Morph Ball
@@ -1934,9 +1934,9 @@ Extra - room_id: [84]
 Yakuza Arena
 Extra - map_name: Main Deck86
 Extra - room_id: [86]
-> Door to Silo Scaffolding B; Heals? False
+> Door to Silo Scaffolding; Heals? False
   * Layers: default
-  * Open Hatch to Silo Scaffolding B/Door to Yakuza Arena
+  * Open Hatch to Silo Scaffolding/Door to Yakuza Arena
   * Extra - door_idx: (3,)
   > Arena
       Trivial
@@ -1965,7 +1965,7 @@ Extra - room_id: [86]
 
 > Arena; Heals? False
   * Layers: default
-  > Door to Silo Scaffolding B
+  > Door to Silo Scaffolding
       Space Jump and After Boss Yakuza Defeated
   > Other to Auxiliary Power Station
       Space Jump
