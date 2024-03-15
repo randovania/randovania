@@ -3146,51 +3146,55 @@
                                                         "comment": "Jump on frozen Space Pirates",
                                                         "items": [
                                                             {
-                                                                "type": "template",
-                                                                "data": "Can Freeze Enemies"
-                                                            },
-                                                            {
-                                                                "type": "template",
-                                                                "data": "Can Screw Single Walljump"
-                                                            },
-                                                            {
-                                                                "type": "or",
+                                                                "type": "and",
                                                                 "data": {
                                                                     "comment": "Wall Jump req",
                                                                     "items": [
                                                                         {
-                                                                            "type": "and",
+                                                                            "type": "template",
+                                                                            "data": "Can Screw Single Walljump"
+                                                                        },
+                                                                        {
+                                                                            "type": "or",
                                                                             "data": {
                                                                                 "comment": null,
                                                                                 "items": [
                                                                                     {
                                                                                         "type": "resource",
                                                                                         "data": {
-                                                                                            "type": "items",
-                                                                                            "name": "Hi-Jump",
-                                                                                            "amount": 1,
+                                                                                            "type": "tricks",
+                                                                                            "name": "WallJump",
+                                                                                            "amount": 3,
                                                                                             "negate": false
                                                                                         }
                                                                                     },
                                                                                     {
-                                                                                        "type": "resource",
+                                                                                        "type": "and",
                                                                                         "data": {
-                                                                                            "type": "tricks",
-                                                                                            "name": "WallJump",
-                                                                                            "amount": 2,
-                                                                                            "negate": false
+                                                                                            "comment": null,
+                                                                                            "items": [
+                                                                                                {
+                                                                                                    "type": "resource",
+                                                                                                    "data": {
+                                                                                                        "type": "items",
+                                                                                                        "name": "Hi-Jump",
+                                                                                                        "amount": 1,
+                                                                                                        "negate": false
+                                                                                                    }
+                                                                                                },
+                                                                                                {
+                                                                                                    "type": "resource",
+                                                                                                    "data": {
+                                                                                                        "type": "tricks",
+                                                                                                        "name": "WallJump",
+                                                                                                        "amount": 2,
+                                                                                                        "negate": false
+                                                                                                    }
+                                                                                                }
+                                                                                            ]
                                                                                         }
                                                                                     }
                                                                                 ]
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "WallJump",
-                                                                                "amount": 3,
-                                                                                "negate": false
                                                                             }
                                                                         }
                                                                     ]
