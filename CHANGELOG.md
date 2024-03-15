@@ -24,7 +24,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ##### Cataris
 
 - Added: Reaching the Pickup in EMMI Zone Item Tunnel using Cross Bomb Launch (Advanced).
-- Changed: The Cross Bomb Skip to each the Pickup in EMMI Zone Item Tunnel has been reduced from HyperMode to Expert.
+- Changed: The Cross Bomb Skip to reach the Pickup in EMMI Zone Item Tunnel has been reduced from HyperMode to Expert.
 
 ##### Dairon
 
