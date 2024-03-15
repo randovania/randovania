@@ -4,7 +4,7 @@ import typing
 
 from randovania.games import game
 from randovania.games.fusion import layout
-from randovania.layout.preset_describer import GamePresetDescriber
+from randovania.games.fusion.layout.preset_describer import FusionPresetDescriber
 
 if typing.TYPE_CHECKING:
     from randovania.exporter.game_exporter import GameExporter
@@ -13,9 +13,9 @@ if typing.TYPE_CHECKING:
 
 
 def _options() -> type[PerGameOptions]:
-    from randovania.interface_common.options import PerGameOptions
+    from randovania.games.fusion.exporter.options import FusionPerGameOptions
 
-    return PerGameOptions
+    return FusionPerGameOptions
 
 
 def _gui() -> game.GameGui:
@@ -83,7 +83,7 @@ game_data: game.GameData = game.GameData(
     layout=game.GameLayout(
         configuration=layout.FusionConfiguration,
         cosmetic_patches=layout.FusionCosmeticPatches,
-        preset_describer=GamePresetDescriber(),
+        preset_describer=FusionPresetDescriber(),
     ),
     options=_options,
     gui=_gui,
