@@ -115,6 +115,7 @@ def prime1_pickup_details_to_patcher(
     if detail.other_player:
         pickup_type = "Unknown Item 1"
         count = detail.index.index + 1
+        max_count = count
     else:
         for resource, quantity in detail.conditional_resources[0].resources:
             if resource.extra["item_id"] >= 1000:
