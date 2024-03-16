@@ -4542,6 +4542,68 @@
                         ]
                     }
                 }
+            },
+            "Defeat Swarms": {
+                "display_name": "Defeat Swarms",
+                "requirement": {
+                    "type": "or",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Armor",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "tricks",
+                                    "name": "Combat",
+                                    "amount": 2,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "and",
+                                "data": {
+                                    "comment": null,
+                                    "items": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "tricks",
+                                                "name": "Combat",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "or",
+                                            "data": {
+                                                "comment": null,
+                                                "items": [
+                                                    {
+                                                        "type": "template",
+                                                        "data": "Lay Power Bomb"
+                                                    },
+                                                    {
+                                                        "type": "template",
+                                                        "data": "Shoot Beam Burst"
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    }
+                }
             }
         },
         "damage_reductions": [
