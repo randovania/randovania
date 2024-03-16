@@ -96,6 +96,18 @@ game_data: game.GameData = game.GameData(
             "NTSC 0-00, meaning that all versions of Prime are guaranteed to be logically completable when randomized.",
         ),
     ],
+    web_info=game.GameWebInfo(
+        what_can_randomize=[
+            "All items including Artifacts",
+            "Elevator destinations",
+            "Starting locations",
+            "Door locks",
+        ],
+        need_to_play=[
+            "An ISO of any Gamecube release of the game",
+            "A modded Wii, or Dolphin Emulator",
+        ],
+    ),
     layout=game.GameLayout(
         configuration=PrimeConfiguration,
         cosmetic_patches=PrimeCosmeticPatches,

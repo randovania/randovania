@@ -2039,7 +2039,7 @@
                 }
             }
         },
-        "Energy Tank Storage": {
+        "Mimic Storage": {
             "default_node": null,
             "extra": {
                 "map_name": "Sector 512",
@@ -2106,7 +2106,7 @@
                     "default_connection": {
                         "region": "Sector 5 (ARC)",
                         "area": "Frozen Tower",
-                        "node": "Door to Energy Tank Storage"
+                        "node": "Door to Mimic Storage"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -2148,7 +2148,7 @@
                 ]
             },
             "nodes": {
-                "Door to Energy Tank Storage": {
+                "Door to Mimic Storage": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2169,7 +2169,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 5 (ARC)",
-                        "area": "Energy Tank Storage",
+                        "area": "Mimic Storage",
                         "node": "Door to Frozen Tower"
                     },
                     "default_dock_weakness": "L0 Hatch",
@@ -2244,7 +2244,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Energy Tank Storage": {
+                        "Door to Mimic Storage": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5515,7 +5515,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Entrance Hub": {
+                        "Recharge Terminal": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5554,13 +5554,6 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Entrance Save Room": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
                         "Recharge Terminal": {
                             "type": "and",
                             "data": {
@@ -5585,6 +5578,13 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
+                        "Door to Entrance Save Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Door to Entrance Hub": {
                             "type": "and",
                             "data": {

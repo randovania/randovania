@@ -65,6 +65,15 @@ game_data: game.GameData = game.GameData(
         {"path": "classic.rdvpreset"},
     ],
     faq=[],
+    web_info=game.GameWebInfo(
+        what_can_randomize=[
+            "All items",
+            "Starting locations",
+        ],
+        need_to_play=[
+            "Windows, Linux, or Wine. The game is included with Randovania",
+        ],
+    ),
     layout=game.GameLayout(
         configuration=CSConfiguration,
         cosmetic_patches=CSCosmeticPatches,
