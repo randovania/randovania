@@ -559,8 +559,6 @@ Extra - room_id: [18]
   * Layers: default
   * L0 Hatch to Zazabi Speedway/Door to Zazabi Arena
   * Extra - door_idx: (133,)
-  > Door to Zazabi Access
-      Impossible
   > Arena Floor
       Screw Attack
 
@@ -584,7 +582,11 @@ Extra - room_id: [18]
   > Door to Zazabi Access
       After Boss Zazabi Defeated and Can Climb High Jump Wall
   > Door to Zazabi Speedway
-      Screw Attack and Space Jump and After Boss Zazabi Defeated
+      All of the following:
+          Screw Attack and After Boss Zazabi Defeated
+          Any of the following:
+              Space Jump
+              Wall Jump (Advanced) and Can Single Walljump
   > Event - Zazabi
       All of the following:
           All of the following:
@@ -844,8 +846,17 @@ Extra - room_id: [26]
   > Door to Security Access (Upper)
       Space Jump
   > Door to Crumble City
-      # TODO: Look into requirements further and possibly add SWJ trick. The requirement of space jump makes the advanced tricks in crumble city invalid in non-entrance rando.
-      Screw Attack and Space Jump
+      All of the following:
+          Screw Attack
+          Any of the following:
+              Space Jump or Can Single Walljump
+              All of the following:
+                  Level 0 Locks and Speed Booster and Disabled Door Lock Rando and Disabled Entrance Rando
+                  Any of the following:
+                      # TODO: add trick video
+                      Level 1 Locks and Knowledge (Advanced) and Movement (Beginner) and Shinespark Tricks (Expert)
+                      # TODO: add trick video
+                      Shinespark Tricks (Expert) and Wall Jump (Advanced)
   > Event - L1 Locks
       Trivial
 
@@ -1511,6 +1522,8 @@ Extra - room_id: [55]
   * Extra - blocky: 4
   > Door to Zazabi Arena
       Trivial
+  > Bottom of Room
+      Trivial
 
 > Pickup (Hidden Missile Tank); Heals? False
   * Layers: default
@@ -1519,17 +1532,26 @@ Extra - room_id: [55]
   * Extra - room: 55
   * Extra - blockx: 10
   * Extra - blocky: 26
-  > Door to Zazabi Arena
+  > Bottom of Room
       Trivial
 
 > Door to Zazabi Arena; Heals? False
   * Layers: default
   * L0 Hatch to Zazabi Arena/Door to Zazabi Speedway
   * Extra - door_idx: (134,)
+  > Bottom of Room
+      Trivial
+
+> Bottom of Room; Heals? False
+  * Layers: default
   > Pickup (Power Bomb Tank)
       Speed Booster
   > Pickup (Hidden Missile Tank)
       Speed Booster
+  > Door to Zazabi Arena
+      Any of the following:
+          Wall Jump (Beginner) or Can Climb High Jump Wall
+          Speed Booster and Shinespark Tricks (Beginner)
 
 ----------------
 Overgrown Hallway
