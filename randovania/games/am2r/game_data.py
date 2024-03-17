@@ -20,7 +20,7 @@ def _gui() -> game.GameGui:
         cosmetic_dialog=gui.AM2RCosmeticPatchesDialog,
         export_dialog=gui.AM2RGameExportDialog,
         progressive_item_gui_tuples=progressive_items.tuples(),
-        spoiler_visualizer=(),
+        spoiler_visualizer=(gui.AM2RTeleporterDetailsTab,),
     )
 
 

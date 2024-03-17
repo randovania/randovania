@@ -7,6 +7,7 @@ from randovania.games.am2r.gui.preset_settings import preset_tabs
 
 __all__ = [
     "AM2RGameTabWidget",
+    "AM2RTeleporterDetailsTab",
     "AM2RCosmeticPatchesDialog",
     "AM2RGameExportDialog",
     "preset_tabs",
