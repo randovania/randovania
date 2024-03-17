@@ -22,6 +22,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: Updated A-Kul's scan with the 2023 CGC Tournament winners.
 
+#### Logic Database
+
+##### Torvus Bog
+
+- Added: The reverse air underwater in Training Chamber now has a method with and without Space Jump (Advanced and Expert respectively). This can be used to get to the bomb slot as well as the door to Fortress Transport Access.
+
 ## [7.4.1] - 2024-03-13
 
 ### AM2R
@@ -30,6 +36,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Cave Story
 - Fixed: Cave Story exports with CS:Tweaked now prioritize the mod-specific files over Freeware's. This solves several issues with missing graphics when exporting over a Freeeware game.
 - Fixed: Missing graphical assets for rando-exclusive inventory entries in Cave Story: Tweaked exports
+
 
 ## [7.4.0] - 2024-03-08
 
