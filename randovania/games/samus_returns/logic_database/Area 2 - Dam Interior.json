@@ -183,7 +183,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "https://youtu.be/ZxJmPtS7qm0",
+                                            "comment": "Freeze the Gullugg https://youtu.be/ZxJmPtS7qm0",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -284,6 +284,15 @@
                                                         "amount": 1,
                                                         "negate": false
                                                     }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Movement",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
                                                 }
                                             ]
                                         }
@@ -358,7 +367,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "https://youtu.be/m5HGLIJHLl8",
+                                                        "comment": "Freeze the Gullugg https://youtu.be/m5HGLIJHLl8",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -437,7 +446,7 @@
                                                             {
                                                                 "type": "or",
                                                                 "data": {
-                                                                    "comment": "Avoid or deal with the Wall Fire",
+                                                                    "comment": "Avoid or deal with the Wallfire",
                                                                     "items": [
                                                                         {
                                                                             "type": "resource",
@@ -608,7 +617,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "https://youtu.be/zuGivFAN4HI",
+                                                        "comment": "Manipulate the Gullugg to go left then boost right to ledge grab https://youtu.be/zuGivFAN4HI",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -716,8 +725,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -5756.313911900608,
-                        "y": -1471.4441742570998,
+                        "x": -5756.31,
+                        "y": -1471.44,
                         "z": 0.0
                     },
                     "description": "",
@@ -737,7 +746,9 @@
                     },
                     "default_dock_weakness": "Charge Beam Door",
                     "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
+                    "incompatible_dock_weaknesses": [
+                        "Wave Beam Door"
+                    ],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -1499,7 +1510,7 @@
                         "Right Shaft": {
                             "type": "and",
                             "data": {
-                                "comment": "https://youtu.be/UQe0WO500mI?t=12",
+                                "comment": "Clip off the platform and release spider on the right underside https://youtu.be/UQe0WO500mI?t=12",
                                 "items": [
                                     {
                                         "type": "template",
@@ -1529,7 +1540,7 @@
                         "Dock to Varia Suit Chamber (OoB)": {
                             "type": "and",
                             "data": {
-                                "comment": "https://youtu.be/UQe0WO500mI",
+                                "comment": "Clip off the platform and unmorph in the tunnel, then clip the wall corner under the platform<br>https://youtu.be/UQe0WO500mI",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -1586,17 +1597,34 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "resource",
+                                                    "type": "template",
+                                                    "data": "Shoot Any Missile"
+                                                },
+                                                {
+                                                    "type": "and",
                                                     "data": {
-                                                        "type": "tricks",
-                                                        "name": "Combat",
-                                                        "amount": 1,
-                                                        "negate": false
+                                                        "comment": "Enter the tunnel to bait it to attack, then exit and quickly Melee Counter it",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Combat",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 },
                                                 {
-                                                    "type": "template",
-                                                    "data": "Shoot Any Missile"
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Dodge",
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
                                                 },
                                                 {
                                                     "type": "and",
@@ -1943,6 +1971,15 @@
                                                                         }
                                                                     ]
                                                                 }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Movement",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
                                                             }
                                                         ]
                                                     }
@@ -1950,7 +1987,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "https://youtu.be/UmmVvm5H4Ms?t=21",
+                                                        "comment": "Jump from the tunnel to enter the top tunnel https://youtu.be/UmmVvm5H4Ms?t=21",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -1971,7 +2008,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "https://youtu.be/UmmVvm5H4Ms?t=12",
+                                                        "comment": "Jump from the tunnel to lay the bomb and again to enter the top tunnel<br>https://youtu.be/UmmVvm5H4Ms?t=12",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -1985,6 +2022,15 @@
                                                             {
                                                                 "type": "template",
                                                                 "data": "Lay Bomb"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "AirMorph",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
                                                             }
                                                         ]
                                                     }
@@ -3039,7 +3085,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "https://youtu.be/9tJDGsnqVeo",
+                                                        "comment": "Boost just below the spike to be able to grab the ceiling before the blocks break<br>https://youtu.be/9tJDGsnqVeo",
                                                         "items": [
                                                             {
                                                                 "type": "template",
@@ -4317,7 +4363,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Dealing with the Gravitt",
                                             "items": [
                                                 {
                                                     "type": "template",
@@ -4764,7 +4810,7 @@
                                                                         {
                                                                             "type": "and",
                                                                             "data": {
-                                                                                "comment": "Jump over the Black Wall Fires",
+                                                                                "comment": "Jump over the Black Wallfires",
                                                                                 "items": [
                                                                                     {
                                                                                         "type": "resource",
@@ -4790,7 +4836,7 @@
                                                                         {
                                                                             "type": "and",
                                                                             "data": {
-                                                                                "comment": "Defeat the Black Wall Fires",
+                                                                                "comment": "Defeat the Black Wallfires",
                                                                                 "items": [
                                                                                     {
                                                                                         "type": "template",
@@ -4878,14 +4924,14 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "Jump over the Black Wall Fires",
+                                                        "comment": "Jump over the Black Wallfires https://youtu.be/XZq_Bb2m5_U",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "tricks",
                                                                     "name": "Walljump",
-                                                                    "amount": 3,
+                                                                    "amount": 2,
                                                                     "negate": false
                                                                 }
                                                             },
@@ -4894,6 +4940,15 @@
                                                                 "data": {
                                                                     "type": "tricks",
                                                                     "name": "SWJ",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Dodge",
                                                                     "amount": 2,
                                                                     "negate": false
                                                                 }
