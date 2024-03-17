@@ -164,6 +164,11 @@ def test_select_preset_incompatible_preset(
     assert "The following settings are incompatible with multiworld" in widget.create_preset_description.text()
 
 
+# TODO: do this
+def test_create_new_preset(widget: SelectPresetWidget, preset_manager, mocker: pytest_mock.MockerFixture) -> None:
+    raise NotImplementedError
+
+
 def test_on_tree_context_menu_on_item(widget: SelectPresetWidget):
     widget._preset_menu.exec = MagicMock()
 

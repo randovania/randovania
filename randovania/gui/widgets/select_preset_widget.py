@@ -163,14 +163,14 @@ class SelectPresetWidget(QtWidgets.QWidget, Ui_SelectPresetWidget):
         self.create_preset_tree.select_preset(preset)
 
     @asyncSlot()
-    async def _on_customize_preset(self):
+    async def _on_customize_preset(self) -> None:
         if self._logic_settings_window is not None:
             self._logic_settings_window.raise_()
             return
         await self.customize_preset(self._current_preset_data)
 
     @asyncSlot()
-    async def customize_preset(self, current_preset: VersionedPreset):
+    async def customize_preset(self, current_preset: VersionedPreset) -> None:
         old_preset = current_preset.get_preset()
         if current_preset.is_included_preset:
             parent_uuid = old_preset.uuid
@@ -258,7 +258,7 @@ class SelectPresetWidget(QtWidgets.QWidget, Ui_SelectPresetWidget):
         raise RuntimeError("Feature not implemented")
 
     @asyncSlot()
-    async def _on_new_preset(self):
+    async def _on_new_preset(self) -> None:
         item = self.create_preset_tree.topLevelItem(0)
         await self.customize_preset(self.create_preset_tree.preset_for_item(item))
 
