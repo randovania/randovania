@@ -40,6 +40,7 @@ class PresetMenu(QtWidgets.QMenu):
 
     action_import: QtGui.QAction
     action_view_deleted: QtGui.QAction
+    action_new_preset: QtGui.QAction
 
     def __init__(self, parent: QtWidgets.QWidget):
         super().__init__(parent)
@@ -52,6 +53,7 @@ class PresetMenu(QtWidgets.QMenu):
         self.action_required_tricks = QtGui.QAction(parent)
         self.action_import = QtGui.QAction(parent)
         self.action_view_deleted = QtGui.QAction(parent)
+        self.action_new_preset = QtGui.QAction(parent)
 
         self.action_customize.setText("Customize")
         self.action_delete.setText("Delete")
@@ -62,6 +64,7 @@ class PresetMenu(QtWidgets.QMenu):
         self.action_required_tricks.setText("View expected trick usage")
         self.action_import.setText("Import")
         self.action_view_deleted.setText("View deleted presets")
+        self.action_new_preset.setText("Create new preset")
 
         self.addAction(self.action_customize)
         self.addAction(self.action_delete)
@@ -73,6 +76,7 @@ class PresetMenu(QtWidgets.QMenu):
         self.addSeparator()
         self.addAction(self.action_import)
         self.addAction(self.action_view_deleted)
+        self.addAction(self.action_new_preset)
 
         # TODO: Hide the ones that aren't implemented
         self.action_view_deleted.setVisible(False)
@@ -137,6 +141,7 @@ class SelectPresetWidget(QtWidgets.QWidget, Ui_SelectPresetWidget):
         self._preset_menu.action_required_tricks.triggered.connect(self._on_open_required_tricks_for_preset)
         self._preset_menu.action_import.triggered.connect(self._on_import_preset)
         self._preset_menu.action_view_deleted.triggered.connect(self._on_view_deleted)
+        self._preset_menu.action_new_preset.triggered.connect(self._on_new_preset)
         self.create_preset_description.linkActivated.connect(self._on_click_create_preset_description)
 
         self._update_preset_tree_items()
@@ -162,9 +167,12 @@ class SelectPresetWidget(QtWidgets.QWidget, Ui_SelectPresetWidget):
         if self._logic_settings_window is not None:
             self._logic_settings_window.raise_()
             return
+        await self.customize_preset(self._current_preset_data)
 
-        old_preset = self._current_preset_data.get_preset()
-        if self._current_preset_data.is_included_preset:
+    @asyncSlot()
+    async def customize_preset(self, current_preset: VersionedPreset):
+        old_preset = current_preset.get_preset()
+        if current_preset.is_included_preset:
             parent_uuid = old_preset.uuid
             old_preset = old_preset.fork()
         else:
@@ -248,6 +256,11 @@ class SelectPresetWidget(QtWidgets.QWidget, Ui_SelectPresetWidget):
 
     def _on_view_deleted(self):
         raise RuntimeError("Feature not implemented")
+
+    @asyncSlot()
+    async def _on_new_preset(self):
+        item = self.create_preset_tree.topLevelItem(0)
+        await self.customize_preset(self.create_preset_tree.preset_for_item(item))
 
     def import_preset_file(self, path: Path):
         try:

@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [7.5.0] - 2024-04-??
 
 - Added: Command line arguments for exporting games. These commands are intended for advanced uses only.
+- Added: Option to create a new preset from the right click preset menu.
 - Fixed: During generation, actions that involves multiple progressive pickups are now properly considered.
 
 ### Metroid Dread
