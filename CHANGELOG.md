@@ -42,6 +42,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: Cross Bomb Launch (Advanced) to get to the Save Station Door in Golzuna Tower from the Missile Tank Pickup.
 - Added: Cross Bomb Launch (Beginner) to get the Missile Tank Pickup in Golzuna Tower.
+- Added: Video showing the Climb Sloped Tunnels trick to get from the Missile Tank Pickup to the Save Station Door in Golzuna Tower.
 - Changed: Using Cross Bomb to get the Missile Tank Pickup in Golzuna Tower now requires Movement (Beginner).
 - Changed: The Cross Bomb Skip to get across the Pitfall blocks in Cross Bomb Tutorial has been reduced from Expert to Advanced.
 
