@@ -1081,12 +1081,16 @@ def _migrate_v75(preset: dict) -> dict:
 
     return preset
 
-
 def _migrate_v76(preset: dict) -> dict:
     if preset["game"] == "samus_returns":
         preset = _update_default_dock_rando(preset)
     return preset
 
+def _migrate_v77(preset: dict) -> dict:
+    if preset["game"] == "am2r":
+        preset["configuration"]["teleporters"] = {"mode": "vanilla", "excluded_teleporters": [], "excluded_targets": []}
+
+    return preset
 
 _MIGRATIONS = [
     _migrate_v1,  # v1.1.1-247-gaf9e4a69
@@ -1165,6 +1169,7 @@ _MIGRATIONS = [
     _migrate_v74,
     _migrate_v75,
     _migrate_v76,  # msr door lock rando
+    _migrate_v77,
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 

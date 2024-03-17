@@ -8,12 +8,14 @@ from randovania.exporter import item_names, pickup_exporter
 from randovania.exporter.hints import credits_spoiler, guaranteed_item_hint
 from randovania.exporter.patch_data_factory import PatchDataFactory
 from randovania.game_description.assignment import PickupTarget
+from randovania.game_description.db.dock_node import DockNode
 from randovania.games.am2r.exporter.hint_namer import AM2RHintNamer
 from randovania.games.am2r.exporter.joke_hints import JOKE_HINTS
 from randovania.games.am2r.layout.am2r_cosmetic_patches import AM2RCosmeticPatches, MusicMode
 from randovania.games.am2r.layout.hint_configuration import ItemHintMode
 from randovania.games.game import RandovaniaGame
 from randovania.generator.pickup_pool import pickup_creator
+from randovania.layout.lib.teleporters import TeleporterShuffleMode
 from randovania.lib import json_lib, random_lib
 
 if TYPE_CHECKING:
@@ -429,6 +431,21 @@ class AM2RPatchDataFactory(PatchDataFactory):
             visual_nothing=pickup_creator.create_visual_nothing(self.game_enum(), "sItemUnknown"),
         )
 
+        pipes = {
+            node.extra["instance_id"]: {
+                "dest_x": connection.extra["dest_x"],
+                "dest_y": connection.extra["dest_y"],
+                "dest_room": self.game.region_list.area_by_area_location(connection.identifier.area_identifier).extra[
+                    "map_name"
+                ],
+            }
+            for node, connection in self.patches.all_dock_connections()
+            if (
+                isinstance(node, DockNode)
+                and node.dock_type in self.game.dock_weakness_database.all_teleporter_dock_types
+            )
+        }
+
         return {
             "configuration_identifier": self._create_hash_dict(),
             "starting_items": self._create_starting_items_dict(),
@@ -436,6 +453,7 @@ class AM2RPatchDataFactory(PatchDataFactory):
             "pickups": self._create_pickups_dict(pickup_list, text_data, model_data, self.rng),
             "rooms": self._create_room_dict(),
             "game_patches": self._create_game_patches(self.configuration, pickup_list, text_data, self.rng),
+            "pipes": pipes if self.configuration.teleporters.mode != TeleporterShuffleMode.VANILLA else {},
             "door_locks": self._create_door_locks(),
             "hints": self._create_hints(self.rng),
             "cosmetics": self._create_cosmetics(self.description.get_seed_for_player(self.players_config.player_index)),
