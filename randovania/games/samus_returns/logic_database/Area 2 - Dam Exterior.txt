@@ -115,15 +115,18 @@ Extra - asset_id: collision_camera_005
       Trivial
   > Door to Exterior Alpha+ Arena
       Any of the following:
-          Space Jump or Simple IBJ
+          Space Jump
           Spider Boost (Intermediate) and Can Spider Boost
+          Infinite Bomb Jump (Intermediate) and Lay Bomb
           All of the following:
               Use Spider Ball
               Any of the following:
                   Lightning Armor
                   Hazard Runs (Beginner) and Hazard Damage ≥ 325
   > Top of Wall
-      Climb Rooms Vertically (No High Jump)
+      Any of the following:
+          Space Jump or Use Spider Ball
+          Infinite Bomb Jump (Intermediate) and Lay Bomb
 
 > Door from Maintenance Tunnel; Heals? False
   * Layers: default
@@ -227,8 +230,9 @@ Extra - asset_id: collision_camera_006
   > Event - Arachnus
       Any of the following:
           # Energy Requirements
-          Combat (Intermediate) or Normal Damage ≥ 199
+          Combat (Advanced) or Normal Damage ≥ 199
           Combat (Beginner) and Normal Damage ≥ 99
+          Combat (Intermediate) and Normal Damage ≥ 65
 
 ----------------
 Fan Funnel
@@ -259,6 +263,14 @@ Extra - asset_id: collision_camera_008
   * Pickup 35; Category? Minor
   * Extra - actor_name: LE_Item_005
   * Extra - actor_type: item_missiletank
+  > Door to Rock Icicle Corridor
+      All of the following:
+          Baby Metroid
+          Any of the following:
+              # Hang off ledge and jump left
+              High Jump Boots and Movement (Beginner)
+              # From the ledge
+              Morph Ball and Unmorph Extend (Intermediate)
   > Tunnel to Dam Exterior
       Lay Any Bomb
   > Below Baby Blocks
@@ -289,7 +301,7 @@ Extra - asset_id: collision_camera_008
   * Extra - actor_type: doorpowerpower
   > Pickup (Missile Tank)
       # Hang off ledge and jump right
-      Baby Metroid
+      Baby Metroid and Movement (Beginner)
   > Door to Inner Alpha Arena
       Trivial
   > Below Baby Blocks
@@ -308,7 +320,7 @@ Extra - asset_id: collision_camera_008
               # Collect the pickup
               Lay Any Bomb
               All of the following:
-                  # https://youtu.be/FVdiaUALOvw
+                  # Freeze the left Rock Icicle and Melee Clip left https://youtu.be/FVdiaUALOvw
                   Ice Beam and Morph Ball and Stand on Frozen Enemy (Beginner) and Out of Bounds Movement (Beginner)
                   Any of the following:
                       Charge Beam and Melee Clip (Intermediate)
@@ -322,23 +334,23 @@ Extra - asset_id: collision_camera_008
           Any of the following:
               Use Spider Ball
               All of the following:
-                  # https://youtu.be/TjVwz2ZOIg4
+                  # Freeze a Moheek https://youtu.be/TjVwz2ZOIg4
                   Ice Beam
                   Any of the following:
                       Charge Beam and Stand on Frozen Enemy (Beginner)
                       Freeze Enemy with Melee (Intermediate) and Stand on Frozen Enemy (Intermediate)
               All of the following:
-                  # https://youtu.be/fcLnCxG4DRo
-                  Morph Ball and Movement (Beginner)
+                  # Aim up while jumping so the Baby can break a block https://youtu.be/fcLnCxG4DRo
+                  Movement (Beginner)
                   Any of the following:
-                      High Jump Boots or Super Jump (Advanced) or Unmorph Extend (Intermediate)
-                      Bomb and Infinite Bomb Jump (Beginner)
+                      High Jump Boots or Super Jump (Advanced) or Simple IBJ
+                      Morph Ball and Unmorph Extend (Intermediate)
   > Door to Dam Exterior
       Morph Ball
   > Door to Rock Icicle Corridor
       Any of the following:
           Single-wall Wall Jump (Beginner) or Climb Rooms Vertically (No High Jump)
-          # https://youtu.be/TjVwz2ZOIg4
+          # Freeze the left Moheek https://youtu.be/TjVwz2ZOIg4
           Stand on Frozen Enemy (Beginner) and Fully Freeze Enemy
 
 > Start Point; Heals? False; Default Node
@@ -453,7 +465,7 @@ Extra - asset_id: collision_camera_024
           Any of the following:
               Grapple Beam
               All of the following:
-                  # https://youtu.be/rfZa-HK-3mE
+                  # Damage Boost up the spikes to reach the item https://youtu.be/rfZa-HK-3mE
                   Mid-Air Morph (Intermediate) and Damage Boost (Advanced) and Movement (Advanced) and Wall Jump (Advanced)
                   Lightning Armor or Normal Damage ≥ 60
   > Tunnel to Metroid Caverns Entrance (Bottom)
@@ -508,15 +520,23 @@ Extra - asset_id: collision_camera_027
   * Layers: default
   * Extra - actor_name: LE_Platform_EnergyCharge001
   * Extra - actor_type: weightactivatedplatform
+  > Save Station
+      Trivial
+  > Door to Metroid Caverns Entrance
+      Trivial
   > Door to Metroid Caverns Alpha Arena North West
       Trivial
+  > Dock to Metroid Caverns Alpha Arena East Access
+      Trivial
+  > Tunnel to Metroid Caverns Maze
+      Lay Any Bomb
 
 > Save Station; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Extra - actor_name: LE_Platform_SaveStation003
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: ST_SaveStation003
-  > Door to Metroid Caverns Alpha Arena North West
+  > Energy Recharge Station
       Trivial
 
 > Door to Metroid Caverns Entrance; Heals? False
@@ -524,7 +544,7 @@ Extra - asset_id: collision_camera_027
   * Power Beam Door to Metroid Caverns Entrance/Door to Metroid Caverns Save Station
   * Extra - actor_name: Door008
   * Extra - actor_type: doorpowerpower
-  > Door to Metroid Caverns Alpha Arena North West
+  > Energy Recharge Station
       Trivial
 
 > Door to Metroid Caverns Alpha Arena North West; Heals? False
@@ -534,25 +554,17 @@ Extra - asset_id: collision_camera_027
   * Extra - actor_type: doorpowerpower
   > Energy Recharge Station
       Trivial
-  > Save Station
-      Trivial
-  > Door to Metroid Caverns Entrance
-      Trivial
-  > Dock to Metroid Caverns Alpha Arena East Access
-      Trivial
-  > Tunnel to Metroid Caverns Maze
-      Lay Any Bomb
 
 > Dock to Metroid Caverns Alpha Arena East Access; Heals? False
   * Layers: default
   * Open Passage to Metroid Caverns Alpha Arena East Access/Dock to Metroid Caverns Save Station
-  > Door to Metroid Caverns Alpha Arena North West
+  > Energy Recharge Station
       Trivial
 
 > Tunnel to Metroid Caverns Maze; Heals? False
   * Layers: default
   * Tunnel with Bomb Block to Metroid Caverns Maze/Tunnel to Metroid Caverns Save Station
-  > Door to Metroid Caverns Alpha Arena North West
+  > Energy Recharge Station
       Morph Ball
 
 ----------------
@@ -592,11 +604,17 @@ Extra - asset_id: collision_camera_028
               Lay Bomb
               # Infinite Bomb Jump from water
               Mid-Air Morph (Intermediate) or Diagonal Bomb Jump (Beginner) or Infinite Bomb Jump (Advanced)
+          # Start from the very edge to reach the ledge https://youtu.be/7dhwZuT3kLk
+          Morph Ball and Super Jump (Advanced) and Unmorph Extend (Intermediate)
   > Door to Metroid Caverns Save Station
       Any of the following:
           Gravity Suit or Space Jump or Single-wall Wall Jump (Beginner) or Super Jump (Beginner) or Use Spider Ball
-          # Late Jump
-          High Jump Boots and Movement (Beginner)
+          All of the following:
+              High Jump Boots
+              Any of the following:
+                  # Movement is a late jump
+                  Movement (Beginner) or Super Jump (Beginner)
+                  Morph Ball and Unmorph Extend (Intermediate)
           All of the following:
               Lay Bomb
               # Infinite Bomb Jump from water
@@ -709,7 +727,7 @@ Extra - asset_id: collision_camera_031
               Lay Bomb
               Any of the following:
                   Spring Ball
-                  # https://youtu.be/iGcQA25DM_Y
+                  # Lay a Bomb before the fan and move right to be propelled upwardshttps://youtu.be/iGcQA25DM_Y
                   Movement (Intermediate)
 
 > Start Point; Heals? False; Default Node
@@ -750,7 +768,7 @@ Extra - asset_id: collision_camera_032
           Varia Suit
           Any of the following:
               Gravity Suit or Ice Beam or Morph Ball or Space Jump
-              # https://youtu.be/ALxqgGCN0kI?t=6
+              # Boost off the left side of the Chute Leech near its peak https://youtu.be/ALxqgGCN0kI?t=6
               Damage Boost (Intermediate) and Normal Damage ≥ 20
   > Start Point
       Trivial
@@ -789,8 +807,8 @@ Extra - asset_id: collision_camera_032
           Any of the following:
               High Jump Boots or Space Jump
               Mid-Air Morph (Intermediate) and Lay Bomb
-              # https://youtu.be/HzVUSS4h8EU
-              Super Jump (Advanced) and Unmorph Extend (Advanced)
+              # Requires a precise button speed to gain the perfect height needed https://youtu.be/HzVUSS4h8EU
+              Morph Ball and Super Jump (Advanced) and Unmorph Extend (Advanced)
 
 > Right of Missile Block; Heals? False
   * Layers: default
@@ -799,9 +817,9 @@ Extra - asset_id: collision_camera_032
           Varia Suit
           Any of the following:
               Gravity Suit or Ice Beam or Space Jump or Use Spider Ball
-              # https://youtu.be/xzjJjZDal84
+              # Unmorph at the ceiling to grab the ledge https://youtu.be/xzjJjZDal84
               Diagonal Bomb Jump (Intermediate) and Lay Bomb
-              # https://youtu.be/ALxqgGCN0kI
+              # Boost off the right side of the Chute Leech near its peak https://youtu.be/ALxqgGCN0kI
               Damage Boost (Intermediate) and Normal Damage ≥ 20
   > Below Pickup
       Varia Suit and Shoot Any Missile
@@ -876,20 +894,24 @@ Extra - asset_id: collision_camera_034
   * Extra - actor_name: Door012
   * Extra - actor_type: doorpowerpower
   > Pickup (Super Missile Tank)
-      All of the following:
-          # Reaching the pickup
-          Wall Jump (Beginner) or Climb Rooms Vertically (No High Jump)
-          Any of the following:
-              # Collecting the pickup
-              Lay Bomb
-              All of the following:
-                  Lay Power Bomb
-                  Any of the following:
-                      Phase Drift or Space Jump
-                      # Lay PB next to Bomb block and respin once the blocks break
-                      Movement (Intermediate)
-                      # https://youtu.be/J1Ah6rkxmlA
-                      Melee Clip (Intermediate) and Out of Bounds Movement (Beginner)
+      Any of the following:
+          # To reach the tunnel and collect the pickup with Bombs
+          Simple IBJ
+          All of the following:
+              Morph Ball
+              # Reaching the tunnel
+              Space Jump or Spider Ball or Wall Jump (Beginner)
+              Any of the following:
+                  # Collecting the pickup
+                  Bomb
+                  # Melee Clip under the top blocks and hold right https://youtu.be/J1Ah6rkxmlA
+                  Melee Clip (Intermediate) and Out of Bounds Movement (Beginner)
+                  All of the following:
+                      Power Bomb
+                      Any of the following:
+                          Phase Drift or Space Jump
+                          # Lay PB next to Bomb block and respin once the blocks break
+                          Movement (Intermediate)
 
 ----------------
 Metroid Caverns Alpha+ Arena
@@ -1044,13 +1066,15 @@ Extra - asset_id: collision_camera_040
   > Tunnel to Metroid Caverns Alpha Arena East Access
       Any of the following:
           Simple IBJ
-          Spider Ball and Lay Any Bomb
           All of the following:
-              Lay Power Bomb
+              Any of the following:
+                  # Break the Bomb block
+                  Lay Power Bomb
+                  All of the following:
+                      Lay Bomb
+                      Spring Ball or Mid-Air Morph (Beginner)
+              # Exit the room
               High Jump Boots or Space Jump or Single-wall Wall Jump (Beginner) or Super Jump (Intermediate) or Unmorph Extend (Beginner)
-          All of the following:
-              Mid-Air Morph (Beginner) and Lay Bomb
-              High Jump Boots or Space Jump
   > Event - Alpha Metroid
       Defeat Alpha Metroid
 
