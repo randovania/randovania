@@ -8,7 +8,7 @@ from randovania.exporter.hints.hint_formatters import LocationFormatter, Relativ
 from randovania.exporter.hints.hint_namer import HintNamer, PickupLocation
 from randovania.exporter.hints.relative_item_formatter import RelativeItemFormatter
 from randovania.game_description import default_database
-from randovania.game_description.hint import Hint, HintLocationPrecision
+from randovania.game_description.hint import Hint, HintLocationPrecision, PrecisionPair
 
 if TYPE_CHECKING:
     from randovania.exporter.hints.pickup_hint import PickupHint
@@ -100,7 +100,9 @@ class FusionHintNamer(HintNamer):
         )
 
     def format_location_hint(self, game: RandovaniaGame, pick_hint: PickupHint, hint: Hint, with_color: bool) -> str:
-        msg = self.location_formatters[hint.precision.location].format(
+        precision = hint.precision
+        assert isinstance(precision, PrecisionPair)
+        msg = self.location_formatters[precision.location].format(
             game,
             dataclasses.replace(
                 pick_hint, pickup_name=colorize_text(self.color_item, pick_hint.pickup_name, with_color)
