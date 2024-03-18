@@ -27,19 +27,19 @@ def _gui() -> game.GameGui:
         cosmetic_dialog=gui.FusionCosmeticPatchesDialog,
         export_dialog=gui.FusionGameExportDialog,
         progressive_item_gui_tuples=(),
-        spoiler_visualizer=(),
+        spoiler_visualizer=(gui.FusionHintDetailsTab,),
     )
 
 
 def _generator() -> game.GameGenerator:
     from randovania.games.fusion import generator
-    from randovania.generator.hint_distributor import AllJokesHintDistributor
+    from randovania.games.fusion.generator.hint_distributor import FusionHintDistributor
 
     return game.GameGenerator(
         pickup_pool_creator=generator.pool_creator,
         bootstrap=generator.FusionBootstrap(),
         base_patches_factory=generator.FusionBasePatchesFactory(),
-        hint_distributor=AllJokesHintDistributor(),
+        hint_distributor=FusionHintDistributor(),
     )
 
 
