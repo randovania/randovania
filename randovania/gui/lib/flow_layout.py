@@ -40,6 +40,7 @@
 #############################################################################
 
 """PySide6 port of the widgets/layouts/flowlayout example from Qt v6.x"""
+
 from __future__ import annotations
 
 from PySide6.QtCore import QMargins, QPoint, QRect, QSize, Qt
