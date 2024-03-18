@@ -161,7 +161,7 @@ Extra - room_id: [4]
   * L0 Hatch to Nightmare Training Grounds/Door to Aerie
   * Extra - door_idx: (10,)
   > Pickup (Power Bomb Tank)
-      Speed Booster and Disabled Door Lock Rando and Disabled Entrance Rando
+      Speed Booster and Disabled Entrance Rando
   > Pickup (Missile Tank)
       Trivial
 
@@ -189,9 +189,11 @@ Extra - room_id: [7, 15]
       Varia Suit
   > Door to Artic Underside
       All of the following:
-          Speed Booster and Disabled Door Lock Rando and Disabled Entrance Rando
+          Level 0 Locks and Speed Booster and Disabled Door Lock Rando and Disabled Entrance Rando
           # Damage Run
           Varia Suit
+          # Needed for charging in previous room
+          Can Kill PB Geron
 
 > Door to Waver Ward; Heals? False
   * Layers: default
@@ -285,8 +287,7 @@ Extra - room_id: [9]
       All of the following:
           # TODO:  damage reqs
           Varia Suit
-          # TODO: High Jump should also be efficient to climb the room. Test before adding additional option requirement.
-          Wall Jump (Beginner) or Can Use Any Bombs
+          Wall Jump (Beginner) or Can Climb High Jump Wall or Can Use Any Bombs
 
 ----------------
 Level 3 Security Room
@@ -831,6 +832,7 @@ Extra - room_id: [27]
   * L0 Hatch to Nightmare Arena/Door to Nightmare Access
   * Extra - door_idx: (59,)
   > Door to Nightmare Hub West
+      # This can safely not have Door Lock Rando check
       Gravity Suit and Speed Booster and Disabled Entrance Rando
 
 > Door to Nightmare Hub West; Heals? False
@@ -838,6 +840,7 @@ Extra - room_id: [27]
   * L0 Hatch to Nightmare Hub West/Door to Nightmare Access
   * Extra - door_idx: (60,)
   > Door to Nightmare Arena
+      # This can safely not have Door Lock Rando check
       Gravity Suit and Speed Booster and Disabled Entrance Rando
 
 ----------------
@@ -1198,8 +1201,8 @@ Extra - room_id: [42]
   * L0 Hatch to Kago Speedway/Door to Artic Underside
   * Extra - door_idx: (101,)
   > Door to Arctic Containment
-      # Need to charge spark in other room
-      Speed Booster and Varia Suit and Disabled Door Lock Rando and Disabled Entrance Rando and Can Freeze Enemies
+      # Need to charge spark in other room, This can safely not have Door Lock Rando check
+      Speed Booster and Varia Suit and Disabled Entrance Rando and Can Freeze Enemies
 
 ----------------
 Groznyj Grad
@@ -1373,19 +1376,25 @@ Extra - room_id: [50]
   * L0 Hatch to Zebesian Waters/Door to Flooded Airlock to Sector 4 (AQA)
   * Extra - door_idx: (115,)
   > Pickup (Power Bomb Tank)
-      Gravity Suit and Speed Booster and Disabled Door Lock Rando and Disabled Entrance Rando
+      All of the following:
+          # This can safely not have Door Lock Rando check
+          Gravity Suit and Speed Booster and Disabled Entrance Rando
+          # Some way to kill the pirates
+          Combat (Expert) or Can Kill Tough Beam-Resistant Enemy
   > Area Transition to Sector 4 (AQA)
       All of the following:
-          Gravity Suit and Speed Booster and Disabled Door Lock Rando and Disabled Entrance Rando
+          # This can safely not have Door Lock Rando check
+          Gravity Suit and Speed Booster and Disabled Entrance Rando
           # Some way to kill the pirates
-          Charge Beam or Missiles ≥ 10 or Screw Attack or Can Use Power Bombs
+          Combat (Expert) or Can Kill Tough Beam-Resistant Enemy
 
 > Area Transition to Sector 4 (AQA); Heals? False
   * Layers: default
   * Open Passage to Cargo Hold to Sector 5 (ARC)/Area Transition to Sector 5 (ARC)
   * Extra - door_idx: (123,)
   > Door to Zebesian Waters
-      Gravity Suit and Speed Booster and Disabled Door Lock Rando and Disabled Entrance Rando
+      # This can safely not have Door Lock Rando check
+      Gravity Suit and Speed Booster and Disabled Entrance Rando
 
 ----------------
 Transformation Trial
