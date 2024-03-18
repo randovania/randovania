@@ -558,9 +558,9 @@ def _create_starting_popup(patches: GamePatches) -> list:
 
 def _simplified_memo_data() -> dict[str, str]:
     result = pickup_exporter.GenericAcquiredMemo()
-    result[
-        "Locked Power Bomb Expansion"
-    ] = "Power Bomb Expansion acquired, but the main Power Bomb is required to use it."
+    result["Locked Power Bomb Expansion"] = (
+        "Power Bomb Expansion acquired, but the main Power Bomb is required to use it."
+    )
     result["Locked Missile Expansion"] = "Missile Expansion acquired, but the Missile Launcher is required to use it."
     result["Locked Seeker Launcher"] = "Seeker Launcher acquired, but the Missile Launcher is required to use it."
     return result

@@ -307,9 +307,9 @@ class MSRPatchDataFactory(PatchDataFactory):
             )
 
         # Intro Text
-        text[
-            "GUI_CUTSCENE_OPENING_1"
-        ] = "Welcome to the Metroid: Samus Returns Randomizer!|Here are some useful tips to help you on your journey."
+        text["GUI_CUTSCENE_OPENING_1"] = (
+            "Welcome to the Metroid: Samus Returns Randomizer!|Here are some useful tips to help you on your journey."
+        )
         text["GUI_CUTSCENE_OPENING_2"] = (
             "All of the hazardous liquid has been drained. You can thus freely explore the planet.|"
             "Metroids now also drop items."
@@ -331,16 +331,16 @@ class MSRPatchDataFactory(PatchDataFactory):
             "All the Chozo Seals have been repurposed to give hints on the region where a specific item is located.|"
             "Additionally, more distinct Chozo Seals have been placed that give hints on DNA locations."
         )
-        text[
-            "GUI_CUTSCENE_OPENING_7"
-        ] = "If you're interested in knowing more on how the DNA Seals work, you can check the Hint page in Randovania."
+        text["GUI_CUTSCENE_OPENING_7"] = (
+            "If you're interested in knowing more on how the DNA Seals work, you can check the Hint page in Randovania."
+        )
         text["GUI_CUTSCENE_OPENING_8"] = (
             "Some other helpful tips:|You can warp to your starting location by cancelling the save at a Save Station.|"
             "Scan Pulse can be used to reveal more of your map."
         )
-        text[
-            "GUI_CUTSCENE_OPENING_9"
-        ] = "If you still have more questions, check out the FAQ and Differences pages in Randovania."
+        text["GUI_CUTSCENE_OPENING_9"] = (
+            "If you still have more questions, check out the FAQ and Differences pages in Randovania."
+        )
         text["GUI_CUTSCENE_OPENING_10"] = "Good luck and have fun!"
 
         return text
@@ -473,9 +473,9 @@ class MSRAcquiredMemo(dict):
     def with_expansion_text(cls) -> MSRAcquiredMemo:
         result = cls()
         result["Missile Tank"] = "Missile Tank acquired.\nMissile capacity increased by {Missile}."
-        result[
-            "Super Missile Tank"
-        ] = "Super Missile Tank acquired.\nSuper Missile capacity increased by {Super Missile}."
+        result["Super Missile Tank"] = (
+            "Super Missile Tank acquired.\nSuper Missile capacity increased by {Super Missile}."
+        )
         result["Power Bomb Tank"] = "Power Bomb Tank acquired.\nPower Bomb capacity increased by {Power Bomb}."
         result["Energy Tank"] = "Energy Tank acquired.\nEnergy capacity increased by 100."
         result["Aeion Tank"] = "Aeion Tank acquired.\nAeion Gauge expanded."
