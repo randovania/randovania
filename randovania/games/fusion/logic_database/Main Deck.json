@@ -9690,15 +9690,13 @@
                         "Other to Habitation Ventilation (Upper)": {
                             "type": "or",
                             "data": {
-                                "comment": null,
+                                "comment": "Animals causes issues in generation with DLR, removed as an event for now",
                                 "items": [
                                     {
-                                        "type": "resource",
+                                        "type": "or",
                                         "data": {
-                                            "type": "events",
-                                            "name": "Animals",
-                                            "amount": 1,
-                                            "negate": false
+                                            "comment": null,
+                                            "items": []
                                         }
                                     }
                                 ]
@@ -9783,17 +9781,15 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Habitation Deck Entrance (Upper)": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "Animals causes issues in generation with DLR, removed as an event for now",
                                 "items": [
                                     {
-                                        "type": "resource",
+                                        "type": "and",
                                         "data": {
-                                            "type": "events",
-                                            "name": "Animals",
-                                            "amount": 1,
-                                            "negate": false
+                                            "comment": null,
+                                            "items": []
                                         }
                                     }
                                 ]
