@@ -31,7 +31,7 @@ class FusionColor(Enum):
     TEAL = "[COLOR=6]"
 
 
-def colorize_text(color: FusionColor, text: str, with_color: bool):
+def colorize_text(color: FusionColor, text: str, with_color: bool) -> str:
     if with_color:
         return f"{color.value}{text}{FusionColor.RESET.value}"
     else:

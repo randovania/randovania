@@ -3,6 +3,7 @@ import dataclasses
 from PySide6 import QtCore
 
 from randovania.game_description.game_description import GameDescription
+from randovania.games.fusion.layout.fusion_configuration import FusionConfiguration
 from randovania.games.fusion.layout.hint_configuration import ItemHintMode
 from randovania.gui.generated.preset_fusion_hints_ui import Ui_PresetFusionHints
 from randovania.gui.lib.signal_handling import set_combo_with_value
@@ -34,20 +35,21 @@ class PresetFusionHints(PresetTab, Ui_PresetFusionHints):
     def uses_patches_tab(cls) -> bool:
         return False
 
-    def _on_art_combo_changed(self, new_index: int):
+    def _on_art_combo_changed(self, new_index: int) -> None:
         with self._editor as editor:
             editor.set_configuration_field(
                 "hints",
                 dataclasses.replace(editor.configuration.hints, artifacts=self.hint_artifact_combo.currentData()),
             )
 
-    def _on_cbeam_combo_changed(self, new_index: int):
+    def _on_cbeam_combo_changed(self, new_index: int) -> None:
         with self._editor as editor:
             editor.set_configuration_field(
                 "hints",
                 dataclasses.replace(editor.configuration.hints, charge_beam=self.charge_beam_hint_combo.currentData()),
             )
 
-    def on_preset_changed(self, preset: Preset):
+    def on_preset_changed(self, preset: Preset) -> None:
+        assert isinstance(preset.configuration, FusionConfiguration)
         set_combo_with_value(self.hint_artifact_combo, preset.configuration.hints.artifacts)
         set_combo_with_value(self.charge_beam_hint_combo, preset.configuration.hints.charge_beam)
