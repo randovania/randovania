@@ -14,9 +14,37 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Logic Database
 
+- Added: New trick, Cross Bomb Launch.
+
+##### Burenia
+
+- Added: Crossing the gap in Underneath Drogyga with Cross Bomb Launch (Intermediate).
+- Added: Reaching the Missile Tank Pickup in Main Hub Tower Top using Cross Bomb Launch (Advanced).
+
+##### Cataris
+
+- Added: Reaching the Pickup in EMMI Zone Item Tunnel using Cross Bomb Launch (Advanced).
+- Changed: The Cross Bomb Skip to reach the Pickup in EMMI Zone Item Tunnel has been reduced from HyperMode to Expert.
+
+##### Dairon
+
+- Added: Getting across the right gap in Early Grapple Room with Cross Bomb.
+
 ##### Elun
 
 - Changed: Releasing the X without Bombs or Cross Bombs now requires Knowledge (Beginner).
+
+##### Ferenia
+
+- Changed: Getting across the water in EMMI Zone Exit East with Cross Bombs now additionally requires Cross Bomb Launch (Advanced).
+
+##### Ghavoran
+
+- Added: Cross Bomb Launch (Advanced) to get to the Save Station Door in Golzuna Tower from the Missile Tank Pickup.
+- Added: Cross Bomb Launch (Beginner) to get the Missile Tank Pickup in Golzuna Tower.
+- Added: Video showing the Climb Sloped Tunnels trick to get from the Missile Tank Pickup to the Save Station Door in Golzuna Tower.
+- Changed: Using Cross Bomb to get the Missile Tank Pickup in Golzuna Tower now requires Movement (Beginner).
+- Changed: The Cross Bomb Skip to get across the Pitfall blocks in Cross Bomb Tutorial has been reduced from Expert to Advanced.
 
 ### Metroid Prime 2: Echoes
 

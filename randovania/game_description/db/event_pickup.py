@@ -40,10 +40,8 @@ class EventPickupNode(ResourceNode):
         )
 
     def __repr__(self) -> str:
-        return "EventPickupNode({!r} -> {}+{})".format(
-            self.name,
-            self.event_node.event.long_name,
-            self.pickup_node.pickup_index.index,
+        return (
+            f"EventPickupNode({self.name!r} -> {self.event_node.event.long_name}+{self.pickup_node.pickup_index.index})"
         )
 
     @property
