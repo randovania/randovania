@@ -301,9 +301,8 @@ def retcon_playthrough_filler(
 def debug_print_weighted_locations(all_locations_weighted: WeightedLocations) -> None:
     print("==> Weighted Locations")
     for owner, index, weight in all_locations_weighted.all_items():
-        print(
-            f"[Player {owner.index}] {owner.game.region_list.node_name(owner.game.region_list.node_from_pickup_index(index))} - {weight}"
-        )
+        node_name = owner.game.region_list.node_name(owner.game.region_list.node_from_pickup_index(index))
+        print(f"[Player {owner.index}] {node_name} - {weight}")
 
 
 def should_be_starting_pickup(player: PlayerState, locations: WeightedLocations) -> bool:

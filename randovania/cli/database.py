@@ -308,7 +308,8 @@ def list_paths_with_dangerous_logic(args):
                             area_had_resource = True
                             if not print_only_area:
                                 print(
-                                    f"At {game.region_list.area_name(area)}, from {area} to {source.name}:\n{sorted(individual for individual in alternative.values())}\n"
+                                    f"At {game.region_list.area_name(area)}, from {area} to {source.name}:\n"
+                                    f"{sorted(individual for individual in alternative.values())}\n"
                                 )
                             count += 1
 

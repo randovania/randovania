@@ -98,7 +98,13 @@ def versions_to_display_for_releases(
 
             if strict_version > last_changelog_version:
                 if MAJOR_ENTRY in log:
-                    log = f"## {version.tag_name} - Major Changes\n---\n\n{_get_major_entries(log)}\n\n---\nFor more details, check the Change Log tab."
+                    log = (
+                        f"## {version.tag_name} - Major Changes\n"
+                        f"---\n\n"
+                        f"{_get_major_entries(log)}\n\n"
+                        f"---\n"
+                        f"For more details, check the Change Log tab."
+                    )
                 new_change_logs.append(log)
 
     return all_change_logs, new_change_logs, version_to_display

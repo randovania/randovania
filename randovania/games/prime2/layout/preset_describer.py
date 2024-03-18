@@ -109,7 +109,8 @@ class EchoesPresetDescriber(GamePresetDescriber):
             1.2,
         ):
             template_strings["Difficulty"].append(
-                f"Dark Aether deals {configuration.varia_suit_damage:.2f} dmg/s to Varia, {configuration.dark_suit_damage:.2f} dmg/s to Dark Suit"
+                f"Dark Aether deals {configuration.varia_suit_damage:.2f} dmg/s to Varia, "
+                f"{configuration.dark_suit_damage:.2f} dmg/s to Dark Suit"
             )
 
         if configuration.energy_per_tank != 100:

@@ -428,10 +428,11 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
             return
 
         if permalink.seed_hash is not None and permalink.seed_hash != new_layout.shareable_hash_bytes:
+            expected = base64.b32encode(permalink.seed_hash).decode()
             response = await async_dialog.warning(
                 self,
                 "Unexpected hash",
-                f"Expected has to be {base64.b32encode(permalink.seed_hash).decode()}. got {new_layout.shareable_hash}. Do you wish to continue?",
+                f"Expected has to be {expected}. got {new_layout.shareable_hash}. Do you wish to continue?",
                 QtWidgets.QMessageBox.StandardButton.Yes | QtWidgets.QMessageBox.StandardButton.No,
             )
             if response != QtWidgets.QMessageBox.StandardButton.Yes:

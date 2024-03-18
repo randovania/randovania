@@ -100,7 +100,11 @@ class BuilderUi:
             else:
                 name = "Unknown Multiworld game."
 
-            msg = f"{name} {len(data.collected_locations)} collected locations, with {len(set(data.collected_locations) - set(data.uploaded_locations))} pending delivery to other players."
+            msg = (
+                f"{name} {len(data.collected_locations)} collected locations, "
+                f"with {len(set(data.collected_locations) - set(data.uploaded_locations))} "
+                f"pending delivery to other players."
+            )
 
             err = multiworld_client.get_world_sync_error(world_uid)
             if err is not None:
