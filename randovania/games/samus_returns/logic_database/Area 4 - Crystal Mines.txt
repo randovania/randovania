@@ -954,18 +954,18 @@ Extra - asset_id: collision_camera_AfterChase_001
   * Pickup 91; Category? Minor
   * Extra - actor_name: LE_Item_004
   * Extra - actor_type: item_missiletank
-  > Middle Level
-      # Jump from alcove ledge
-      Movement (Beginner) and Lay Any Bomb
   > Bottom Level
       Lay Any Bomb
+  > Left of Top Paraby Swarm
+      # Jump from alcove ledge
+      Movement (Intermediate) and Lay Bomb
 
 > Pickup (Missile Tank Bottom); Heals? False
   * Layers: default
   * Pickup 95; Category? Minor
   * Extra - actor_name: LE_Item_010
   * Extra - actor_type: item_missiletank
-  > Bottom Level
+  > Right of Bottom Paraby Swarm
       Trivial
 
 > Ammo Recharge Station; Heals? False
@@ -1004,8 +1004,8 @@ Extra - asset_id: collision_camera_AfterChase_001
 > Tunnel to Space Jump Chamber (Bottom); Heals? False
   * Layers: default
   * Tunnel to Space Jump Chamber/Tunnel to Diggernaut Excavation Tunnels (Bottom)
-  > Bottom Level
-      Spider Ball and Lay Any Bomb
+  > Right of Bottom Paraby Swarm
+      Spider Ball or Lay Any Bomb
 
 > Tunnel to Space Jump Chamber (Top); Heals? False
   * Layers: default
@@ -1042,13 +1042,6 @@ Extra - asset_id: collision_camera_AfterChase_001
           Any of the following:
               Lightning Armor
               Hazard Runs (Beginner) and Hazard Damage ≥ 45
-  > Pickup (Missile Tank Middle)
-      Any of the following:
-          Lay Power Bomb
-          # Stagger the Bomb blocks to climb up
-          Movement (Intermediate) and Lay Bomb
-  > Ammo Recharge Station
-      Trivial
   > Tunnel to Space Jump Chamber (Middle)
       Morph Ball and After Area 4 (Crystal Mines) - Diggernaut Chase Arena Grapple Block
   > Top Level
@@ -1059,8 +1052,11 @@ Extra - asset_id: collision_camera_AfterChase_001
               Super Jump (Intermediate) or Unmorph Extend (Intermediate)
   > Event - Grapple Block
       Grapple Beam
-  > Bottom Level
-      Trivial
+  > Left of Top Paraby Swarm
+      Any of the following:
+          # Roll under or defeat the Paraby swarm
+          Defeat Swarms
+          Morph Ball and Dodge Enemies (Beginner)
 
 > Event - Grapple Block; Heals? False
   * Layers: default
@@ -1071,13 +1067,44 @@ Extra - asset_id: collision_camera_AfterChase_001
 > Bottom Level; Heals? False
   * Layers: default
   * Extra - start_point_actor_name: ST_ManicMinerBot_Stage3
+  > Left of Top Paraby Swarm
+      Any of the following:
+          Super Jump (Intermediate) or Wall Jump (Beginner) or Climb Rooms Vertically (High Jump)
+          Morph Ball and Unmorph Extend (Intermediate)
+          # Freeze the Red Tsumuri
+          Charge Beam and Ice Beam and Stand on Frozen Enemy (Intermediate)
+  > Right of Bottom Paraby Swarm
+      Any of the following:
+          # Roll under or defeat Paraby swarm
+          Defeat Swarms
+          Morph Ball and Dodge Enemies (Intermediate)
+
+> Left of Top Paraby Swarm; Heals? False
+  * Layers: default
+  > Pickup (Missile Tank Middle)
+      Any of the following:
+          Lay Power Bomb
+          # Stagger the Bomb blocks to climb up
+          Movement (Intermediate) and Lay Bomb
+  > Ammo Recharge Station
+      Trivial
+  > Middle Level
+      Any of the following:
+          # Roll under or defeat the Paraby swarm
+          Defeat Swarms
+          Morph Ball and Dodge Enemies (Beginner)
+  > Bottom Level
+      Trivial
+
+> Right of Bottom Paraby Swarm; Heals? False
+  * Layers: default
   > Pickup (Missile Tank Bottom)
       Lay Any Bomb
   > Tunnel to Space Jump Chamber (Bottom)
       Super Missile and Lay Any Bomb
-  > Middle Level
+  > Bottom Level
       Any of the following:
-          Super Jump (Intermediate) or Unmorph Extend (Beginner) or Wall Jump (Beginner) or Climb Rooms Vertically (High Jump)
-          # Freeze the Red Tsumuri
-          Charge Beam and Ice Beam and Stand on Frozen Enemy (Intermediate)
+          # Roll under or defeat Paraby swarm
+          Defeat Swarms
+          Morph Ball and Dodge Enemies (Intermediate)
 

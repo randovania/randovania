@@ -6787,30 +6787,30 @@
                     "pickup_index": 91,
                     "location_category": "minor",
                     "connections": {
-                        "Middle Level": {
+                        "Bottom Level": {
+                            "type": "template",
+                            "data": "Lay Any Bomb"
+                        },
+                        "Left of Top Paraby Swarm": {
                             "type": "and",
                             "data": {
                                 "comment": "Jump from alcove ledge",
                                 "items": [
                                     {
-                                        "type": "template",
-                                        "data": "Lay Any Bomb"
-                                    },
-                                    {
                                         "type": "resource",
                                         "data": {
                                             "type": "tricks",
                                             "name": "Movement",
-                                            "amount": 1,
+                                            "amount": 2,
                                             "negate": false
                                         }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Lay Bomb"
                                     }
                                 ]
                             }
-                        },
-                        "Bottom Level": {
-                            "type": "template",
-                            "data": "Lay Any Bomb"
                         }
                     }
                 },
@@ -6834,7 +6834,7 @@
                     "pickup_index": 95,
                     "location_category": "minor",
                     "connections": {
-                        "Bottom Level": {
+                        "Right of Bottom Paraby Swarm": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7043,15 +7043,11 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Bottom Level": {
-                            "type": "and",
+                        "Right of Bottom Paraby Swarm": {
+                            "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Lay Any Bomb"
-                                    },
                                     {
                                         "type": "resource",
                                         "data": {
@@ -7060,6 +7056,10 @@
                                             "amount": 1,
                                             "negate": false
                                         }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Lay Any Bomb"
                                     }
                                 ]
                             }
@@ -7375,46 +7375,6 @@
                                 ]
                             }
                         },
-                        "Pickup (Missile Tank Middle)": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Lay Power Bomb"
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": "Stagger the Bomb blocks to climb up",
-                                            "items": [
-                                                {
-                                                    "type": "template",
-                                                    "data": "Lay Bomb"
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "Movement",
-                                                        "amount": 2,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
-                            }
-                        },
-                        "Ammo Recharge Station": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
                         "Tunnel to Space Jump Chamber (Middle)": {
                             "type": "and",
                             "data": {
@@ -7514,11 +7474,42 @@
                                 "negate": false
                             }
                         },
-                        "Bottom Level": {
-                            "type": "and",
+                        "Left of Top Paraby Swarm": {
+                            "type": "or",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "comment": "Roll under or defeat the Paraby swarm",
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Defeat Swarms"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Morph",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Dodge",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -7565,39 +7556,45 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Pickup (Missile Tank Bottom)": {
-                            "type": "template",
-                            "data": "Lay Any Bomb"
-                        },
-                        "Tunnel to Space Jump Chamber (Bottom)": {
-                            "type": "and",
+                        "Left of Top Paraby Swarm": {
+                            "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
                                         "type": "resource",
                                         "data": {
-                                            "type": "items",
-                                            "name": "SMAmmo",
-                                            "amount": 1,
+                                            "type": "tricks",
+                                            "name": "SuperJump",
+                                            "amount": 2,
                                             "negate": false
                                         }
                                     },
                                     {
-                                        "type": "template",
-                                        "data": "Lay Any Bomb"
-                                    }
-                                ]
-                            }
-                        },
-                        "Middle Level": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Climb Rooms Vertically (High Jump)"
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Morph",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "UnmorphExtend",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     },
                                     {
                                         "type": "resource",
@@ -7609,37 +7606,14 @@
                                         }
                                     },
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "tricks",
-                                            "name": "SuperJump",
-                                            "amount": 2,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "tricks",
-                                            "name": "UnmorphExtend",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
+                                        "type": "template",
+                                        "data": "Climb Rooms Vertically (High Jump)"
                                     },
                                     {
                                         "type": "and",
                                         "data": {
                                             "comment": "Freeze the Red Tsumuri",
                                             "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Ice",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
                                                 {
                                                     "type": "resource",
                                                     "data": {
@@ -7652,8 +7626,237 @@
                                                 {
                                                     "type": "resource",
                                                     "data": {
+                                                        "type": "items",
+                                                        "name": "Ice",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
                                                         "type": "tricks",
                                                         "name": "FrozenEnemy",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Right of Bottom Paraby Swarm": {
+                            "type": "or",
+                            "data": {
+                                "comment": "Roll under or defeat Paraby swarm",
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Defeat Swarms"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Morph",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Dodge",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Left of Top Paraby Swarm": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 326.92,
+                        "y": -6333.63,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Pickup (Missile Tank Middle)": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Lay Power Bomb"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "Stagger the Bomb blocks to climb up",
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Lay Bomb"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Movement",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Ammo Recharge Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Middle Level": {
+                            "type": "or",
+                            "data": {
+                                "comment": "Roll under or defeat the Paraby swarm",
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Defeat Swarms"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Morph",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Dodge",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Bottom Level": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Right of Bottom Paraby Swarm": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 6065.172613867131,
+                        "y": -8203.154917319407,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Pickup (Missile Tank Bottom)": {
+                            "type": "template",
+                            "data": "Lay Any Bomb"
+                        },
+                        "Tunnel to Space Jump Chamber (Bottom)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Lay Any Bomb"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "SMAmmo",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Bottom Level": {
+                            "type": "or",
+                            "data": {
+                                "comment": "Roll under or defeat Paraby swarm",
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Defeat Swarms"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Morph",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Dodge",
                                                         "amount": 2,
                                                         "negate": false
                                                     }
