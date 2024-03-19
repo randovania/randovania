@@ -76,11 +76,6 @@ game_data: game.GameData = game.GameData(
             "due to limitations these models are not animated or have any additional effects.",
         ),
         (
-            "Can I play on Yuzu?",
-            "Yuzu is not officially supported so you're on your own.\n\n"
-            "It has been reported to work fine, but there are planned features that are known to be incompatible.",
-        ),
-        (
             "Can I use other mods?",
             "Depending on which files the other mods change, it can go from simple to impossible.\n\n"
             "* If a Lua file is modified, very likely it's not compatible.\n"

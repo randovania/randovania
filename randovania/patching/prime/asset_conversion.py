@@ -263,7 +263,7 @@ def _convert_prime1_assets(
     for asset in converter.converted_assets.values():
         assetdata = format_for(asset.type).build(asset.resource, target_game=Game.ECHOES)
         if len(assetdata) % 32 != 0:
-            assetdata += b"\xFF" * (32 - (len(assetdata) % 32))
+            assetdata += b"\xff" * (32 - (len(assetdata) % 32))
         assets_path.joinpath(f"{asset.id}.{asset.type.upper()}").write_bytes(
             assetdata
         )
@@ -468,7 +468,7 @@ def convert_prime2_pickups(input_path: Path, output_path: Path, status_update: P
     for asset in converter.converted_assets.values():
         assetdata = format_for(asset.type).build(asset.resource, target_game=RDSGame.PRIME)
         if len(assetdata) % 32 != 0:
-            assetdata += b"\xFF" * (32 - (len(assetdata) % 32))
+            assetdata += b"\xff" * (32 - (len(assetdata) % 32))
         output_path.joinpath(f"{asset.id}.{asset.type.upper()}").write_bytes(assetdata)
 
     logging.info(f"Time took to write files: {time.time() - start}")

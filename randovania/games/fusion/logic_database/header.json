@@ -412,10 +412,6 @@
                 "long_name": "Sector 4 Water Level Lowered",
                 "extra": {}
             },
-            "Animals": {
-                "long_name": "Animals Released",
-                "extra": {}
-            },
             "Wide X": {
                 "long_name": "Boss Wide Core-X Defeated",
                 "extra": {}
@@ -1885,6 +1881,17 @@
                         },
                         "lock": null
                     },
+                    "Locked Hatch": {
+                        "extra": {},
+                        "requirement": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "lock": null
+                    },
                     "L0 Hatch": {
                         "extra": {},
                         "requirement": {
@@ -1953,7 +1960,7 @@
                 },
                 "dock_rando": {
                     "unlocked": "Open Hatch",
-                    "locked": "Open Hatch",
+                    "locked": "Locked Hatch",
                     "change_from": [
                         "L0 Hatch",
                         "L1 Hatch",
@@ -1968,6 +1975,7 @@
                         "L2 Hatch",
                         "L3 Hatch",
                         "L4 Hatch",
+                        "Locked Hatch",
                         "Open Hatch"
                     ]
                 }

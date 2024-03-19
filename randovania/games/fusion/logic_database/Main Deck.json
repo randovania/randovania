@@ -1662,7 +1662,8 @@
                     "extra": {
                         "door_idx": [
                             141,
-                            174
+                            174,
+                            204
                         ]
                     },
                     "valid_starting_location": false,
@@ -2893,7 +2894,7 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Pickup (Power Bomb Tank)": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
                                 "comment": "Check the connection from item to restricted corridor for way to only go halfway up",
                                 "items": [
@@ -2905,14 +2906,31 @@
                                             "amount": 1,
                                             "negate": false
                                         }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "This can safely not have Door Lock Rando check",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "EntranceRando",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
                         },
                         "Door to Restricted Navigation Room": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "This can safely not have Door Lock Rando check",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -2921,6 +2939,15 @@
                                             "name": "SpeedBooster",
                                             "amount": 1,
                                             "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "EntranceRando",
+                                            "amount": 1,
+                                            "negate": true
                                         }
                                     }
                                 ]
@@ -9663,15 +9690,13 @@
                         "Other to Habitation Ventilation (Upper)": {
                             "type": "or",
                             "data": {
-                                "comment": null,
+                                "comment": "Animals causes issues in generation with DLR, removed as an event for now",
                                 "items": [
                                     {
-                                        "type": "resource",
+                                        "type": "or",
                                         "data": {
-                                            "type": "events",
-                                            "name": "Animals",
-                                            "amount": 1,
-                                            "negate": false
+                                            "comment": null,
+                                            "items": []
                                         }
                                     }
                                 ]
@@ -9756,23 +9781,21 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Habitation Deck Entrance (Upper)": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "Animals causes issues in generation with DLR, removed as an event for now",
                                 "items": [
                                     {
-                                        "type": "resource",
+                                        "type": "and",
                                         "data": {
-                                            "type": "events",
-                                            "name": "Animals",
-                                            "amount": 1,
-                                            "negate": false
+                                            "comment": null,
+                                            "items": []
                                         }
                                     }
                                 ]
                             }
                         },
-                        "Event - Save the Animals": {
+                        "Save the Animals": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -9781,21 +9804,20 @@
                         }
                     }
                 },
-                "Event - Save the Animals": {
-                    "node_type": "event",
+                "Save the Animals": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": {
                         "x": 312.28,
                         "y": 410.23,
                         "z": 0.0
                     },
-                    "description": "",
+                    "description": "Causes issues with door lock rando.\n\nGeneration gets stuck after giving SJ and speed and trying to reach this event.",
                     "layers": [
                         "default"
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "event_name": "Animals",
                     "connections": {
                         "Other to Habitation Ventilation (Upper)": {
                             "type": "and",
@@ -10243,15 +10265,6 @@
                                             "name": "SpeedBooster",
                                             "amount": 1,
                                             "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "misc",
-                                            "name": "DoorLockRando",
-                                            "amount": 1,
-                                            "negate": true
                                         }
                                     },
                                     {
