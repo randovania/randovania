@@ -28,13 +28,11 @@ EXPECTED_VERSIONS_COUNT = len(CUSTOM_LOGS_KEYS)
 
 async def test_create(skip_qtbot: QtBot, mocker):
     # Setup
-    mocked_fetch = mocker.patch("randovania.gui.widgets.changelog_widget.ChangeLogWidget.start_fetching_data")
     widget = ChangeLogWidget(CUSTOM_LOGS)
     skip_qtbot.addWidget(widget)
 
     # Assert
     with skip_qtbot.waitSignal(widget.done_fetching_data):
-        mocked_fetch.emit.assert_called()
         await widget.setup_labels()
         assert widget.select_version.count() == EXPECTED_VERSIONS_COUNT
 

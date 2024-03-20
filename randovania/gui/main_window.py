@@ -851,7 +851,9 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         if self.changelog_window is None:
             from randovania.gui.widgets.changelog_widget import ChangeLogWidget
 
-            self.changelog_tab = ChangeLogWidget(self.all_change_logs)
+            tab = ChangeLogWidget(self.all_change_logs)
+            tab.start_fetching_data()
+            self.changelog_tab = tab
             self.changelog_window = self._create_generic_window(self.changelog_tab, "Change Log")
 
         self.changelog_window.show()
