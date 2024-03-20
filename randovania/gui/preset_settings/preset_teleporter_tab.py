@@ -105,10 +105,11 @@ class PresetTeleporterTab(PresetTab, NodeListHelper):
                 excluded_targets=config.excluded_targets.ensure_has_locations(areas, not checked),
             )
 
-    def _create_check_for_source_teleporters(self, location: NodeIdentifier):
+    def _create_check_for_source_teleporters(self, location: NodeIdentifier, name_suffix: str = ""):
         name = elevators.get_elevator_or_area_name(
             self.game_enum, self.game_description.region_list, location.area_location, True
         )
+        name += name_suffix
 
         check = QtWidgets.QCheckBox(self.teleporters_source_group)
         check.setText(name)
