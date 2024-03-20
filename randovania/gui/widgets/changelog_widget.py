@@ -53,7 +53,7 @@ class ChangeLogWidget(QtWidgets.QWidget):
         label.setTextFormat(QtCore.Qt.TextFormat.MarkdownText)
         label.setWordWrap(True)
 
-    def start_fetching_data(self):
+    def start_fetching_data(self) -> None:
         self._internal_start_fetching_data.emit()
 
     @asyncSlot()
