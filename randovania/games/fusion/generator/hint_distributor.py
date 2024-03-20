@@ -23,6 +23,7 @@ if TYPE_CHECKING:
     from randovania.generator.hint_distributor import HintProvider
 
 
+# TODO: add tests for distributor after hint system is confirmed
 class FusionHintDistributor(HintDistributor):
     def precision_pair_weighted_list(self) -> list[PrecisionPair]:
         return [
