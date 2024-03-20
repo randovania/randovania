@@ -12,6 +12,7 @@ if TYPE_CHECKING:
 
 def preset_tabs(editor: PresetEditor, window_manager: WindowManager) -> list[type[PresetTab]]:
     from randovania.games.fusion.gui.preset_settings.fusion_goal_tab import PresetFusionGoal
+    from randovania.games.fusion.gui.preset_settings.fusion_hints_tab import PresetFusionHints
     from randovania.games.fusion.gui.preset_settings.fusion_patches_tab import PresetFusionPatches
     from randovania.gui.preset_settings.dock_rando_tab import PresetDockRando
     from randovania.gui.preset_settings.generation_tab import PresetGeneration
@@ -24,6 +25,7 @@ def preset_tabs(editor: PresetEditor, window_manager: WindowManager) -> list[typ
         PresetTrickLevel,
         PresetGeneration,
         PresetFusionGoal,
+        PresetFusionHints,
         PresetLocationPool,
         MetroidPresetItemPool,
         PresetPatcherEnergy,

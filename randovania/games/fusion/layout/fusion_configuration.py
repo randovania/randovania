@@ -4,6 +4,7 @@ import dataclasses
 
 from randovania.bitpacking.bitpacking import BitPackDataclass
 from randovania.bitpacking.json_dataclass import JsonDataclass
+from randovania.games.fusion.layout.hint_configuration import HintConfiguration
 from randovania.games.game import RandovaniaGame
 from randovania.layout.base.base_configuration import BaseConfiguration
 
@@ -21,6 +22,7 @@ class FusionConfiguration(BaseConfiguration):
     instant_transitions: bool
     energy_per_tank: int = dataclasses.field(metadata={"min": 1, "max": 1000, "precision": 1})
     artifacts: FusionArtifactConfig
+    hints: HintConfiguration
 
     @classmethod
     def game_enum(cls) -> RandovaniaGame:
