@@ -990,14 +990,15 @@ Extra - room_id: [31, 7]
   > Door to Zoro Zig-Zag
       Trivial
   > Door to Data Hub Access
-      All of the following:
-          Can Bounce in Ball
-          Any of the following:
-              Can Use Power Bombs
-              Screw Attack and Knowledge (Beginner)
-              All of the following:
-                  Morph Ball Bomb Data
-                  Jump Bombjump (Advanced) or Can Use Springball
+      After Sector 2 Data Hub Bomb Block Destroyed and Can Bounce in Ball
+  > Event - Bomb Block
+      Any of the following:
+          Can Use Power Bombs
+          Screw Attack and Knowledge (Beginner)
+          All of the following:
+              Can Use Bombs
+              # JBJ requires using bomb explosions to gain a small bit of height so that a bomb can be placed high enough to break the block, without using spring ball. TODO - video of this
+              Jump Bombjump (Advanced) or Can Use Springball
 
 > Door to Data Hub Access; Heals? False
   * Layers: default
@@ -1008,11 +1009,19 @@ Extra - room_id: [31, 7]
   > Door to Data Room
       Trivial
   > Door to Data Save Room
-      All of the following:
-          Morph Ball
-          Any of the following:
-              Can Break Single Bomb Blocks
-              Speed Booster and Knowledge (Intermediate) and Movement (Intermediate) and Disabled Door Lock Rando and Disabled Entrance Rando
+      Morph Ball and After Sector 2 Data Hub Bomb Block Destroyed
+  > Event - Bomb Block
+      Any of the following:
+          Can Break Single Bomb Blocks
+          Speed Booster and Knowledge (Intermediate) and Movement (Intermediate) and Disabled Door Lock Rando and Disabled Entrance Rando
+
+> Event - Bomb Block; Heals? False
+  * Layers: default
+  * Event Sector 2 Data Hub Bomb Block Destroyed
+  > Door to Data Save Room
+      Morph Ball
+  > Door to Data Hub Access
+      Trivial
 
 ----------------
 Eastern Shaft

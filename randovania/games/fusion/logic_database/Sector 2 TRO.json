@@ -5972,74 +5972,78 @@
                                         "data": "Can Bounce in Ball"
                                     },
                                     {
-                                        "type": "or",
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "S2BombBlock",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Event - Bomb Block": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Use Power Bombs"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "ScrewAttack",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Knowledge",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
                                         "data": {
                                             "comment": null,
                                             "items": [
                                                 {
                                                     "type": "template",
-                                                    "data": "Can Use Power Bombs"
+                                                    "data": "Can Use Bombs"
                                                 },
                                                 {
-                                                    "type": "and",
+                                                    "type": "or",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "JBJ requires using bomb explosions to gain a small bit of height so that a bomb can be placed high enough to break the block, without using spring ball. TODO - video of this",
                                                         "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "ScrewAttack",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
                                                             {
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "tricks",
-                                                                    "name": "Knowledge",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "MorphBallBombData",
-                                                                    "amount": 1,
+                                                                    "name": "JBJ",
+                                                                    "amount": 3,
                                                                     "negate": false
                                                                 }
                                                             },
                                                             {
-                                                                "type": "or",
-                                                                "data": {
-                                                                    "comment": null,
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "template",
-                                                                            "data": "Can Use Springball"
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "JBJ",
-                                                                                "amount": 3,
-                                                                                "negate": false
-                                                                            }
-                                                                        }
-                                                                    ]
-                                                                }
+                                                                "type": "template",
+                                                                "data": "Can Use Springball"
                                                             }
                                                         ]
                                                     }
@@ -6116,71 +6120,114 @@
                                         }
                                     },
                                     {
-                                        "type": "or",
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "S2BombBlock",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Event - Bomb Block": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Break Single Bomb Blocks"
+                                    },
+                                    {
+                                        "type": "and",
                                         "data": {
                                             "comment": null,
                                             "items": [
                                                 {
-                                                    "type": "template",
-                                                    "data": "Can Break Single Bomb Blocks"
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "SpeedBooster",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
                                                 },
                                                 {
-                                                    "type": "and",
+                                                    "type": "resource",
                                                     "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "SpeedBooster",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Knowledge",
-                                                                    "amount": 2,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Movement",
-                                                                    "amount": 2,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "misc",
-                                                                    "name": "EntranceRando",
-                                                                    "amount": 1,
-                                                                    "negate": true
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "misc",
-                                                                    "name": "DoorLockRando",
-                                                                    "amount": 1,
-                                                                    "negate": true
-                                                                }
-                                                            }
-                                                        ]
+                                                        "type": "tricks",
+                                                        "name": "Knowledge",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Movement",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "DoorLockRando",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "EntranceRando",
+                                                        "amount": 1,
+                                                        "negate": true
                                                     }
                                                 }
                                             ]
                                         }
                                     }
                                 ]
+                            }
+                        }
+                    }
+                },
+                "Event - Bomb Block": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 70.71,
+                        "y": 230.48,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "S2BombBlock",
+                    "connections": {
+                        "Door to Data Save Room": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "MorphBall",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Door to Data Hub Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
