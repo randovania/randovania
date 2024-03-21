@@ -1601,7 +1601,7 @@
                 }
             },
             "Lay Bomb": {
-                "display_name": "Lay Bomb",
+                "display_name": "Lay Small Bomb",
                 "requirement": {
                     "type": "and",
                     "data": {
@@ -5441,6 +5441,78 @@
                                                 "name": "Wave",
                                                 "amount": 1,
                                                 "negate": false
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            "Lay Any Bomb": {
+                "display_name": "Lay Any Bomb",
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Morph",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "or",
+                                "data": {
+                                    "comment": null,
+                                    "items": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "Bomb",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "Cross",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "and",
+                                            "data": {
+                                                "comment": null,
+                                                "items": [
+                                                    {
+                                                        "type": "resource",
+                                                        "data": {
+                                                            "type": "items",
+                                                            "name": "MainPB",
+                                                            "amount": 1,
+                                                            "negate": false
+                                                        }
+                                                    },
+                                                    {
+                                                        "type": "resource",
+                                                        "data": {
+                                                            "type": "items",
+                                                            "name": "PBAmmo",
+                                                            "amount": 1,
+                                                            "negate": false
+                                                        }
+                                                    }
+                                                ]
                                             }
                                         }
                                     ]
