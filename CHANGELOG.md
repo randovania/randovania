@@ -46,6 +46,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Using Cross Bomb to get the Missile Tank Pickup in Golzuna Tower now requires Movement (Beginner).
 - Changed: The Cross Bomb Skip to get across the Pitfall blocks in Cross Bomb Tutorial has been reduced from Expert to Advanced.
 
+### Metroid Prime
+
+#### Logic Database
+
+##### Phendrana Drifts
+
+- Added: Ruined Courtyard: Scan/X-Ray Beginner dash to Specimen Storage
+
+##### Tallon Overworld
+
+- Changed: Frigate Crash Site: Overgrown Cavern Climb L-Jump adjusted to Beginner
+
 ### Metroid Prime 2: Echoes
 
 - Added: Updated A-Kul's scan with the 2023 CGC Tournament winners.
