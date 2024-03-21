@@ -42,6 +42,7 @@ class PickupNode(ResourceNode):
         yield self.resource(context), 1
 
         patches = context.patches
+        assert patches is not None
         target = patches.pickup_assignment.get(self.pickup_index)
         if target is not None and target.player == patches.player_index:
             yield from target.pickup.resource_gain(context.current_resources, force_lock=True)

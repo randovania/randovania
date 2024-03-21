@@ -106,6 +106,11 @@ def blank_resource_db(blank_game_description) -> ResourceDatabase:
     return blank_game_description.resource_database
 
 
+@pytest.fixture()
+def blank_game_patches(default_blank_configuration, blank_game_description) -> GamePatches:
+    return GamePatches.create_from_game(blank_game_description, 0, default_blank_configuration)
+
+
 @pytest.fixture(scope="session")
 def customized_preset(default_preset) -> Preset:
     return Preset(
