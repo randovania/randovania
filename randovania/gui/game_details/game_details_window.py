@@ -132,10 +132,8 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
         else:
             game_name = f"{list(all_games)[0].short_name} Randomizer"
 
-        default_name = "{} - {}.{}".format(
-            game_name,
-            self.layout_description.shareable_word_hash,
-            self.layout_description.file_extension(),
+        default_name = (
+            f"{game_name} - {self.layout_description.shareable_word_hash}.{self.layout_description.file_extension()}"
         )
         json_path = prompt_user_for_output_game_log(self, default_name=default_name)
         if json_path is not None:

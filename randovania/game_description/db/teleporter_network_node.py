@@ -50,22 +50,21 @@ class TeleporterNetworkNode(ResourceNode):
         resources = context.current_resources
         req = self.requirement_to_activate
 
-        if resources.has_resource(self.resource(context)) or req.satisfied(resources, 0, context.database):
+        if resources.has_resource(self.resource(context)) or req.satisfied(context, 0):
             return not self.is_collected(context)
         else:
             return False
 
     def is_collected(self, context: NodeContext) -> bool:
-        current_resources = context.current_resources
         return all(
             context.has_resource(node.resource(context))
             for node in context.node_provider.nodes_in_network(self.network)
-            if node.is_unlocked.satisfied(current_resources, 0, context.database)
+            if node.is_unlocked.satisfied(context, 0)
         )
 
     def resource_gain_on_collect(self, context: NodeContext) -> ResourceGain:
         for node in context.node_provider.nodes_in_network(self.network):
-            if node.is_unlocked.satisfied(context.current_resources, 0, context.database):
+            if node.is_unlocked.satisfied(context, 0):
                 yield node.resource(context), 1
 
     def connections_from(self, context: NodeContext) -> typing.Iterator[tuple[Node, Requirement]]:

@@ -8,9 +8,8 @@ from randovania.game_description.resources.resource_type import ResourceType
 if typing.TYPE_CHECKING:
     from collections.abc import Iterable, Iterator
 
+    from randovania.game_description.db.node import NodeContext
     from randovania.game_description.requirements.resource_requirement import ResourceRequirement
-    from randovania.game_description.resources.resource_collection import ResourceCollection
-    from randovania.game_description.resources.resource_database import ResourceDatabase
     from randovania.game_description.resources.resource_info import ResourceInfo
 
 _ItemKey = tuple[int, int, bool]
@@ -70,26 +69,25 @@ class RequirementList:
         else:
             return "Trivial"
 
-    def damage(self, current_resources: ResourceCollection, database: ResourceDatabase) -> int:
-        return sum(requirement.damage(current_resources, database) for requirement in self._extra)
+    def damage(self, context: NodeContext) -> int:
+        return sum(requirement.damage(context) for requirement in self._extra)
 
-    def satisfied(self, current_resources: ResourceCollection, current_energy: int, database: ResourceDatabase) -> bool:
+    def satisfied(self, context: NodeContext, current_energy: int) -> bool:
         """
         A list is considered satisfied if each IndividualRequirement that belongs to it is satisfied.
         In particular, an empty RequirementList is considered satisfied.
-        :param current_resources:
+        :param context:
         :param current_energy:
-        :param database:
         :return:
         """
-        if self._bitmask & current_resources.resource_bitmask != self._bitmask:
+        if self._bitmask & context.current_resources.resource_bitmask != self._bitmask:
             return False
 
         energy = current_energy
         for requirement in self._extra:
-            if requirement.satisfied(current_resources, energy, database):
+            if requirement.satisfied(context, energy):
                 if requirement.resource.resource_type == ResourceType.DAMAGE:
-                    energy -= requirement.damage(current_resources, database)
+                    energy -= requirement.damage(context)
             else:
                 return False
         return True

@@ -7,25 +7,24 @@ from randovania.game_description.requirements.base import MAX_DAMAGE, Requiremen
 from randovania.game_description.requirements.requirement_set import RequirementSet
 
 if TYPE_CHECKING:
-    from randovania.game_description.resources.resource_collection import ResourceCollection
-    from randovania.game_description.resources.resource_database import ResourceDatabase
+    from randovania.game_description.db.node import NodeContext
 
 
 class RequirementAnd(RequirementArrayBase):
-    def damage(self, current_resources: ResourceCollection, database: ResourceDatabase) -> int:
+    def damage(self, context: NodeContext) -> int:
         result = 0
         for item in self.items:
-            result += item.damage(current_resources, database)
+            result += item.damage(context)
             if result >= MAX_DAMAGE:
                 return MAX_DAMAGE
         return result
 
-    def satisfied(self, current_resources: ResourceCollection, current_energy: int, database: ResourceDatabase) -> bool:
+    def satisfied(self, context: NodeContext, current_energy: int) -> bool:
         for item in self.items:
-            if not item.satisfied(current_resources, current_energy, database):
+            if not item.satisfied(context, current_energy):
                 return False
             else:
-                current_energy -= item.damage(current_resources, database)
+                current_energy -= item.damage(context)
 
         return True
 
@@ -39,10 +38,10 @@ class RequirementAnd(RequirementArrayBase):
 
         return RequirementAnd(new_items, comment=self.comment)
 
-    def as_set(self, database: ResourceDatabase) -> RequirementSet:
+    def as_set(self, context: NodeContext) -> RequirementSet:
         result = RequirementSet.trivial()
         for item in self.items:
-            result = result.union(item.as_set(database))
+            result = result.union(item.as_set(context))
         return result
 
     @classmethod

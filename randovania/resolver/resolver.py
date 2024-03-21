@@ -34,10 +34,12 @@ def _simplify_requirement_list(
     damage_reqs = []
     current_energy = state.energy
     are_damage_reqs_satisfied = True
-    for item in self.values():
-        item_damage = item.damage(state.resources, state.resource_database)
+    ctx = state.node_context()
 
-        if item.satisfied(state.resources, current_energy, state.resource_database):
+    for item in self.values():
+        item_damage = item.damage(ctx)
+
+        if item.satisfied(ctx, current_energy):
             if item_damage:
                 damage_reqs.append(item)
                 current_energy -= item_damage
@@ -132,8 +134,9 @@ async def _inner_advance_depth(
     """
 
     logic.start_new_attempt(state, max_attempts)
+    context = state.node_context()
 
-    if logic.victory_condition(state).satisfied(state.resources, state.energy, state.resource_database):
+    if logic.victory_condition(state).satisfied(context, state.energy):
         return state, True
 
     # Yield back to the asyncio runner, so cancel can do something
@@ -204,7 +207,7 @@ async def _inner_advance_depth(
     has_action = False
     for action, energy in actions:
         action_additional_requirements = logic.get_additional_requirements(action)
-        if not action_additional_requirements.satisfied(state.resources, energy, state.resource_database):
+        if not action_additional_requirements.satisfied(context, energy):
             logic.log_skip_action_missing_requirement(action, logic.game)
             continue
         new_result = await _inner_advance_depth(
@@ -236,7 +239,7 @@ async def _inner_advance_depth(
 
     if has_action:
         additional = set()
-        for resource_node in reach.collectable_resource_nodes(state):
+        for resource_node in reach.collectable_resource_nodes(context):
             additional |= logic.get_additional_requirements(resource_node).alternatives
 
         additional_requirements = additional_requirements.union(additional)

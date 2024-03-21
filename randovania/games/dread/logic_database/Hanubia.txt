@@ -98,7 +98,7 @@ Extra - asset_id: collision_camera_002
   * Layers: default
   * Morph Ball Tunnel to Speedboost Puzzle Room/Tunnel to Ferenia Shortcut
   > Missile Tank Alcove
-      Lay Bomb or Lay Power Bomb
+      Lay Any Bomb
   > Shortcut Room
       Screw Attack
 
@@ -116,13 +116,13 @@ Extra - asset_id: collision_camera_002
       All of the following:
           Screw Attack
           Any of the following:
-              Lay Bomb
+              Lay Small Bomb
               Power Bombs ≥ 2 and Lay Power Bomb
   > Pickup (Missile Tank)
       Trivial
   > Tunnel to Speedboost Puzzle Room
       Any of the following:
-          Lay Bomb
+          Lay Small Bomb
           Power Bombs ≥ 2 and Lay Power Bomb
 
 > Shortcut Room; Heals? False
@@ -446,8 +446,10 @@ Ship Room
 Extra - total_boundings: {'x1': -19100.0, 'x2': -6400.0, 'y1': 1700.0, 'y2': 9000.0}
 Extra - polygon: [[-7600.0, 9000.0], [-19100.0, 9000.0], [-19100.0, 6400.0], [-12100.0, 5300.0], [-12100.0, 1700.0], [-6400.0, 1700.0], [-6400.0, 4300.0], [-7600.0, 4900.0]]
 Extra - asset_id: collision_camera_008
-> This room is here for technical reasons; Heals? False
+> Start Point; Heals? False
   * Layers: default
+  * Extra - start_point_actor_name: SP_Checkpoint_Endgame
+  * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
 
 ----------------
 Speedboost Puzzle Room
@@ -466,7 +468,7 @@ Extra - asset_id: collision_camera_009
   > Door to Navigation Station (Top)
       Wave Beam and Disabled Door Lock Randomizer
   > Start Point 1
-      Lay Bomb or Lay Power Bomb
+      Lay Any Bomb
 
 > Door to Tank Room; Heals? False
   * Layers: default
@@ -487,7 +489,7 @@ Extra - asset_id: collision_camera_009
   * Extra - actor_def: actordef:actors/items/item_powerbombtank/charclasses/item_powerbombtank.bmsad
   > Door from Tank Room
       Any of the following:
-          Lay Bomb
+          Lay Small Bomb
           Power Bombs ≥ 2 and Lay Power Bomb
 
 > Door from Tank Room; Heals? False
@@ -500,9 +502,7 @@ Extra - asset_id: collision_camera_009
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
   > Pickup (Power Bomb Tank)
-      All of the following:
-          Ballspark
-          Lay Bomb or Lay Power Bomb
+      Ballspark and Lay Any Bomb
   > Door to Navigation Station (Top)
       Trivial
 
@@ -539,7 +539,7 @@ Extra - asset_id: collision_camera_009
   * Extra - start_point_actor_name: SP_Checkpoint_StrongReaction
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
   > Door to Navigation Station (Bottom)
-      Lay Bomb or Lay Power Bomb
+      Lay Any Bomb
   > Door to Tank Room
       Trivial
   > Tunnel to Ferenia Shortcut
@@ -580,7 +580,7 @@ Extra - asset_id: collision_camera_010
       Trivial
   > Center Platform
       Any of the following:
-          Lay Bomb
+          Lay Small Bomb
           All of the following:
               Lay Power Bomb
               Any of the following:
@@ -612,7 +612,7 @@ Extra - asset_id: collision_camera_010
 > Center Platform; Heals? False
   * Layers: default
   > Dock to EMMI Zone Exit West (Bottom)
-      Lay Bomb or Lay Power Bomb
+      Lay Any Bomb
   > Dock to EMMI Zone Exit West (Top)
       Lay Power Bomb
 
@@ -635,7 +635,7 @@ Extra - asset_id: collision_camera_011
   * Extra - actor_name: dooremmy_001
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
   > Tunnel to Central Unit
-      Lay Bomb or Lay Power Bomb
+      Lay Any Bomb
 
 > Door to Orange EMMI Introduction; Heals? False
   * Layers: default
@@ -653,7 +653,7 @@ Extra - asset_id: collision_camera_011
   * Layers: default
   * Morph Ball Tunnel to Central Unit/Tunnel to EMMI Zone Exit West
   > Dock to Tank Room (Top)
-      Lay Bomb or Lay Power Bomb
+      Lay Any Bomb
 
 ----------------
 Central Unit
@@ -835,15 +835,17 @@ Raven Beak X Arena
 Extra - total_boundings: {'x1': 11800.0, 'x2': 18600.0, 'y1': -8700.0, 'y2': -4500.0}
 Extra - polygon: [[18600.0, -4500.0], [15400.0, -4500.0], [15400.0, -6100.0], [11800.0, -6100.0], [11800.0, -8700.0], [18600.0, -8700.0]]
 Extra - asset_id: collision_camera_020
-> This room is here for technical reasons; Heals? False
+> Start Point; Heals? False
   * Layers: default
+  * Extra - start_point_actor_name: SP_Checkpoint_Escape
+  * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
 
 ----------------
 Escape Room 3
 Extra - total_boundings: {'x1': -500.0, 'x2': 6500.0, 'y1': -8600.0, 'y2': -1900.0}
 Extra - polygon: [[6500.0, -1900.0], [4400.0, -1900.0], [4400.0, -3800.0], [-500.0, -3900.0], [-500.0, -7600.0], [900.0, -7600.0], [1500.0, -7900.0], [2700.0, -7900.0], [4100.0, -8600.0], [6500.0, -8600.0]]
 Extra - asset_id: collision_camera_016
-> This room is here for technical reasons; Heals? False
+> Start Point; Heals? False
   * Layers: default
 
 ----------------
@@ -851,7 +853,7 @@ Escape Room 2
 Extra - total_boundings: {'x1': 11400.0, 'x2': 13500.0, 'y1': -5900.0, 'y2': -3300.0}
 Extra - polygon: [[13500.0, -3300.0], [11400.0, -3300.0], [11400.0, -5900.0], [13500.0, -5900.0]]
 Extra - asset_id: collision_camera_018
-> This room is here for technical reasons; Heals? False
+> Start Point; Heals? False
   * Layers: default
 
 ----------------
@@ -859,7 +861,7 @@ Escape Room 1
 Extra - total_boundings: {'x1': 13400.0, 'x2': 15500.0, 'y1': -6100.0, 'y2': -4200.0}
 Extra - polygon: [[15500.0, -4200.0], [13400.0, -4200.0], [13400.0, -6100.0], [15500.0, -6100.0]]
 Extra - asset_id: collision_camera_019
-> This room is here for technical reasons; Heals? False
+> Start Point; Heals? False
   * Layers: default
 
 ----------------

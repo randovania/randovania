@@ -12,7 +12,7 @@ from randovania.gui.widgets.delayed_text_label import DelayedTextLabel
 
 class ChangeLogWidget(QtWidgets.QWidget):
     done_fetching_data = QtCore.Signal()
-    start_fetching_data = QtCore.Signal()
+    _internal_start_fetching_data = QtCore.Signal()
 
     def __init__(self, all_change_logs: dict[str, str]) -> None:
         super().__init__()
@@ -36,10 +36,8 @@ class ChangeLogWidget(QtWidgets.QWidget):
         self.changelog = QtWidgets.QStackedWidget(self)
         layout.addWidget(self.changelog)
 
-        self.start_fetching_data.connect(self.setup_labels)
+        self._internal_start_fetching_data.connect(self.setup_labels)
         self.done_fetching_data.connect(lambda: self.changelog.setCurrentIndex(0))
-
-        self.start_fetching_data.emit()
 
     def select_version_index_changed(self) -> None:
         selected_widget = cast(
@@ -54,6 +52,9 @@ class ChangeLogWidget(QtWidgets.QWidget):
         label.setOpenExternalLinks(True)
         label.setTextFormat(QtCore.Qt.TextFormat.MarkdownText)
         label.setWordWrap(True)
+
+    def start_fetching_data(self) -> None:
+        self._internal_start_fetching_data.emit()
 
     @asyncSlot()
     async def setup_labels(self) -> None:

@@ -1200,6 +1200,11 @@
                 "long_name": "Ledge Warp",
                 "description": "A frame perfect trick that allows you to warp to a ledge you have previously been at by entering Morph Ball during the mantle animation. See https://youtu.be/3QE0tEC2tgc",
                 "extra": {}
+            },
+            "CBL": {
+                "long_name": "Cross Bomb Launch",
+                "description": "By sliding and morphing as the Cross Bomb is exploding, Samus gains a lot of horizontal momentum. This can be used to reach places where other power ups would otherwise be required.",
+                "extra": {}
             }
         },
         "damage": {
@@ -1596,7 +1601,7 @@
                 }
             },
             "Lay Bomb": {
-                "display_name": "Lay Bomb",
+                "display_name": "Lay Small Bomb",
                 "requirement": {
                     "type": "and",
                     "data": {
@@ -5444,6 +5449,78 @@
                         ]
                     }
                 }
+            },
+            "Lay Any Bomb": {
+                "display_name": "Lay Any Bomb",
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Morph",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "or",
+                                "data": {
+                                    "comment": null,
+                                    "items": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "Bomb",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "Cross",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "and",
+                                            "data": {
+                                                "comment": null,
+                                                "items": [
+                                                    {
+                                                        "type": "resource",
+                                                        "data": {
+                                                            "type": "items",
+                                                            "name": "MainPB",
+                                                            "amount": 1,
+                                                            "negate": false
+                                                        }
+                                                    },
+                                                    {
+                                                        "type": "resource",
+                                                        "data": {
+                                                            "type": "items",
+                                                            "name": "PBAmmo",
+                                                            "amount": 1,
+                                                            "negate": false
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    }
+                }
             }
         },
         "damage_reductions": [
@@ -6444,8 +6521,12 @@
             1,
             2,
             3,
-            4,
-            5
+            4
+        ],
+        "CBL": [
+            1,
+            2,
+            3
         ],
         "LedgeWarp": [
             2

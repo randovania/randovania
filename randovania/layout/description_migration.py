@@ -140,12 +140,12 @@ def _migrate_v6(json_dict: dict) -> dict:
             if area_name in game["locations"]:
                 if identify_game == "prime1":
                     game["locations"]["Frigate Orpheon"] = {}
-                    game["teleporters"][
-                        "Frigate Orpheon/Exterior Docking Hangar/Teleport to Landing Site"
-                    ] = "Tallon Overworld/Landing Site"
-                    game["teleporters"][
-                        "Impact Crater/Metroid Prime Lair/Teleporter to Credits"
-                    ] = "End of Game/Credits"
+                    game["teleporters"]["Frigate Orpheon/Exterior Docking Hangar/Teleport to Landing Site"] = (
+                        "Tallon Overworld/Landing Site"
+                    )
+                    game["teleporters"]["Impact Crater/Metroid Prime Lair/Teleporter to Credits"] = (
+                        "End of Game/Credits"
+                    )
                 game["game"] = identify_game
                 break
     return json_dict

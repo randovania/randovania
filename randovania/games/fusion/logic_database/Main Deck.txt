@@ -298,7 +298,7 @@ Extra - room_id: [13, 74, 85]
 > Door to Elevator to Crew Quarters; Heals? False
   * Layers: default
   * L0 Hatch to Elevator to Crew Quarters/Door to Operations Deck
-  * Extra - door_idx: (141, 174)
+  * Extra - door_idx: (141, 174, 204)
   > Door to Operations Deck Navigation Room
       Trivial
   > Door to Operations Deck Recharge Room
@@ -387,7 +387,7 @@ Extra - room_id: [15]
           All of the following:
               Can Freeze Enemies
               Any of the following:
-                  High Jump
+                  Hi-Jump
                   # https://discord.com/channels/119665192110915584/1205560315652349962/1210970374741823499
                   Movement (Intermediate) and Wall Jump (Intermediate)
 
@@ -474,10 +474,14 @@ Extra - room_id: [17, 77]
   * L4 Hatch to Restricted Corridor/Door to Restricted Airlock
   * Extra - door_idx: (34, 183)
   > Pickup (Power Bomb Tank)
-      # Check the connection from item to restricted corridor for way to only go halfway up
-      Speed Booster
+      All of the following:
+          # Check the connection from item to restricted corridor for way to only go halfway up
+          Speed Booster
+          # This can safely not have Door Lock Rando check
+          Disabled Entrance Rando
   > Door to Restricted Navigation Room
-      Speed Booster
+      # This can safely not have Door Lock Rando check
+      Speed Booster and Disabled Entrance Rando
 
 ----------------
 Central Hub
@@ -1704,7 +1708,7 @@ Extra - room_id: [69]
   > Door to Habitation Deck Entrance (Middle)
       Trivial
   > Other to Habitation Ventilation (Upper)
-      After Animals Released
+      Impossible
   > Above Pickup
       Trivial
 
@@ -1720,13 +1724,15 @@ Extra - room_id: [69]
   * Open Passage to Habitation Ventilation/Other to Habitation Deck (Upper)
   * Extra - door_idx: (163,)
   > Door to Habitation Deck Entrance (Upper)
-      After Animals Released
-  > Event - Save the Animals
+      Trivial
+  > Save the Animals
       Trivial
 
-> Event - Save the Animals; Heals? False
+> Save the Animals; Heals? False
   * Layers: default
-  * Event Animals Released
+  * Causes issues with door lock rando.
+
+Generation gets stuck after giving SJ and speed and trying to reach this event.
   > Other to Habitation Ventilation (Upper)
       Trivial
 
@@ -1820,7 +1826,7 @@ Extra - room_id: [73]
   * Open Passage to Elevator to Sector Hub/Other to Main Elevator Cache
   * Extra - door_idx: (170,)
   > Pickup (Missile Tank)
-      Speed Booster and Disabled Door Lock Rando and Disabled Entrance Rando
+      Speed Booster and Disabled Entrance Rando
 
 ----------------
 Elevator to Habitation Deck
